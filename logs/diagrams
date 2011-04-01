@@ -9,3 +9,30 @@
 2011-03-31 18:56:13 UTC <fryguybob> http://www.patch-tag.com/r/byorgey/diagrams-doc/home
 2011-03-31 18:56:57 UTC <byorgey> hi luite!  Nothing much has happened in this channel, but I have been doing lots of hacking =)
 2011-03-31 18:58:08 UTC <luite> cool :) I've just been doing lots of skiing ;)
+2011-03-31 18:59:14 UTC <byorgey> sounds fun =)
+2011-03-31 19:00:16 UTC <byorgey> In the next half-hour or so I'm going to implement a mode for the cairo CmdLine module which watches to see when the source of a diagram has been modified, and automatically recompiles itself
+2011-03-31 19:00:19 UTC <luite> hehe it would've been more fun if my boots didn't hurt so much (actually it's my feet that hurt, not my boots). need to get them adjusted, or maybe a new pair, for next season
+2011-03-31 19:00:42 UTC <byorgey> so you can just be editing a diagram and have a PDF viewer open and see it update every time you hit save in the editor =)
+2011-03-31 19:00:59 UTC <byorgey> yikes, yes, well-fitting boots are essential
+2011-03-31 19:01:13 UTC <byorgey> glad to hear the boots were not in pain though.
+2011-03-31 19:02:40 UTC <luite> ah sounds good. what kind of diagrams do you want to use that feature for?
+2011-03-31 19:04:05 UTC <byorgey> what kind of diagrams would you not want to use that feature for? ;)
+2011-03-31 19:05:06 UTC <byorgey> seriously though, when developing one-off diagrams (e.g. to illustrate a blog post or something like that) it just dramatically cuts down the time you spend in the edit-compile-view cycle.
+2011-03-31 19:07:06 UTC <byorgey> only problem I guess is that I don't know how to make it portable so it works on Windows too.
+2011-03-31 19:07:19 UTC <fryguybob> I can work on that :D
+2011-03-31 19:07:26 UTC <byorgey> ok, sounds good =)
+2011-03-31 19:07:27 UTC <luite> oh I have a windows machine with cairo, so I can check
+2011-03-31 19:07:29 UTC <luite> oh
+2011-03-31 19:07:38 UTC <luite> great :)
+2011-03-31 19:07:59 UTC <fryguybob> ACTION is a slave to windows for his day job... but not for long.
+2011-03-31 19:08:32 UTC <luite> I need windows at home for adobe products
+2011-03-31 19:08:57 UTC <luite> and uhm, itunes...
+2011-03-31 19:40:15 UTC <byorgey> hmm, this CmdLine module needs to be split out into its own package, it's pulling too many dependencies into diagrams-cairo...
+2011-03-31 20:24:42 UTC <byorgey> it works! =D
+2011-03-31 20:37:11 UTC <byorgey> oh man, this is so much fun =)
+2011-03-31 20:37:51 UTC <byorgey> there's something magical about processes with near-instant feedback
+2011-03-31 20:59:53 UTC <fryguybob> :D
+2011-03-31 22:01:05 UTC <fryguybob> byorgey: If the only thing from unix you need executeFile that should be easy.
+2011-03-31 22:01:37 UTC <fryguybob> Alternatively we could use something like hint.  It seems to work fine for me on Windows.
+2011-04-01 00:38:44 UTC <fryguybob> byorgey: There were only a couple of issues.  I could replace executeFile with runProcess and then build without the unix dependency.
+2011-04-01 00:39:32 UTC <fryguybob> On Windows you can't overwrite the executing program, so I had to monkey with alternating the file name that it writes to.
