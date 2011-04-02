@@ -36,3 +36,37 @@
 2011-03-31 22:01:37 UTC <fryguybob> Alternatively we could use something like hint.  It seems to work fine for me on Windows.
 2011-04-01 00:38:44 UTC <fryguybob> byorgey: There were only a couple of issues.  I could replace executeFile with runProcess and then build without the unix dependency.
 2011-04-01 00:39:32 UTC <fryguybob> On Windows you can't overwrite the executing program, so I had to monkey with alternating the file name that it writes to.
+2011-04-01 17:25:18 UTC <byorgey> fryguybob: hmm, won't using runProcess instead of executeFile result in having a bunch of processes all running at once, all except the last one waiting for the others to finish?
+2011-04-01 17:26:40 UTC <fryguybob> byorgey: I thought that, but looking at the running processes, the previous one does exit.  So I don't think there is any parent/child process relationship with that particular call on windows.
+2011-04-01 17:27:38 UTC <byorgey> oh, I see.  Actually, that makes sense -- note how the call to GHC has to use a call to 'waitForProcess', presumably otherwise it would just plow ahead without waiting for GHC to finish
+2011-04-01 17:28:08 UTC <byorgey> ok, cool.
+2011-04-01 17:28:58 UTC <byorgey> we might want to look into using hint anyway, since that could allow us to do things like externally specify which diagram you want to render, without changing main
+2011-04-01 17:29:07 UTC <fryguybob> right
+2011-04-01 17:30:28 UTC <byorgey> It would also be simpler since then we could make a standalone application that just watches for changes and then recompiles the diagram, rather than having this funny thing that recompiles and restarts itself
+2011-04-01 17:30:54 UTC <fryguybob> Yeah, I was just going to say as it is you can compile yourself into a corner.
+2011-04-01 17:31:22 UTC <byorgey> Right.
+2011-04-01 17:34:08 UTC <byorgey> so I'm thinking that we (a) keep the basic command-line stuff in the cairo package, and (b) take out the looping stuff and make it into a standalone application using hint
+2011-04-01 17:35:14 UTC <byorgey> what do you think?
+2011-04-01 17:36:01 UTC <fryguybob> Sounds good.  I'm trying to think of other interesting things we could do with hint.
+2011-04-01 17:37:13 UTC <byorgey> all sorts of things I'm sure.
+2011-04-01 17:38:17 UTC <byorgey> How about a mode where it takes all the top-level things of type Diagram in a file and renders them in a grid.
+2011-04-01 17:38:27 UTC <fryguybob> Yeah.
+2011-04-01 17:38:32 UTC <byorgey> and then you could click on any one of them to "focus" and have it only render that one
+2011-04-01 17:38:42 UTC <byorgey> if it was a gtk application or something
+2011-04-01 17:39:20 UTC <byorgey> that would be a neat way to develop.  Work on the whole thing for a while, then you want to focus on some subpart so you have it just render that until you're happy with it, then go back to looking at the whole diagram...
+2011-04-01 17:39:31 UTC <fryguybob> Yeah
+2011-04-01 17:39:33 UTC <fryguybob> Another would be parameterized diagrams where it asked for values to functions that return diagrams.
+2011-04-01 17:39:53 UTC <byorgey> yeah, with little sliders and input boxes!
+2011-04-01 17:40:28 UTC <fryguybob> Kind of like what luite is doing.
+2011-04-01 17:40:37 UTC <byorgey> indeed.
+2011-04-01 17:40:48 UTC <fryguybob> luite: Are your sliders explicitly specified?
+2011-04-01 17:41:13 UTC <fryguybob> ACTION hears a woosh of skis...
+2011-04-01 17:41:22 UTC <byorgey> hehe
+2011-04-01 17:41:32 UTC <luite> fryguybob: yes, unfortunately I don't know a better way
+2011-04-01 17:41:38 UTC <fryguybob> Ah ok.
+2011-04-01 17:42:53 UTC <luite> but my execution model is more limited than a local one, I can't use thunks or pass partially applied functions. every request has to be an expression, text based
+2011-04-01 17:43:55 UTC <byorgey> fryguybob: is this standalone recompiling/previewing thing something you are interested in working on? (Feel free to say "no".)
+2011-04-01 17:44:23 UTC <byorgey> It's not a huge priority but it is fun.
+2011-04-01 17:44:44 UTC <fryguybob> Yeah, I don't think I will have time to do anything until mid June though.
+2011-04-01 17:44:54 UTC <byorgey> ah, ok.
+2011-04-01 17:46:27 UTC <byorgey> well, I may work on it if I get around to it, but the itch is scratched enough for now with the current hacked-up version, and I have a long list of other things to work on first.
