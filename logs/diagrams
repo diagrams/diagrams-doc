@@ -70,3 +70,98 @@
 2011-04-01 17:44:44 UTC <fryguybob> Yeah, I don't think I will have time to do anything until mid June though.
 2011-04-01 17:44:54 UTC <byorgey> ah, ok.
 2011-04-01 17:46:27 UTC <byorgey> well, I may work on it if I get around to it, but the itch is scratched enough for now with the current hacked-up version, and I have a long list of other things to work on first.
+2011-04-06 13:35:28 UTC <fryguybob> I made a minimal example of using Diagrams with hint: http://hpaste.org/45365/diagrams_with_hint
+2011-04-06 15:15:50 UTC <byorgey> fryguybob: awesome, thanks!
+2011-04-06 15:16:38 UTC <fryguybob> byorgey: I wasn't sure if the standalone deriving was going to work but it seemed to work fine.
+2011-04-06 15:18:02 UTC <fryguybob> It also wasn't clear to me why I had to import what I did.
+2011-04-06 15:18:16 UTC <byorgey> fryguybob: ah, yes, I see.  well, the instances for AnnDiagram and Cairo should be added.  not much we can do about Any. =)
+2011-04-06 15:18:59 UTC <byorgey> yeah, I would have thought you would only need to import Diagrams.Prelude and Diagrams.Backend.Cairo.CmdLine
+2011-04-06 15:19:46 UTC <fryguybob> Yeah I added deriving Typeable for AnnDiagram and Cairo then noticed Any and tried the standalone and it all worked.
+2011-04-06 15:22:21 UTC <byorgey> I don't know if you've seen the stuff I've been playing around with in UDTree.  Freezing complicates everything =(
+2011-04-06 15:26:28 UTC <fryguybob> byorgey: I looked at it a little bit this morning.  I'll try and look at it some more soon.
+2011-04-06 15:36:34 UTC <byorgey> no rush, just wondering.
+2011-04-08 18:12:45 UTC <fryguybob> byorgey: So, on issue 13.  I'm a little confused by diagrams-cairo's cairoStyle renderAttr.
+2011-04-08 18:13:31 UTC <byorgey> me too.
+2011-04-08 18:13:40 UTC <fryguybob> :D
+2011-04-08 18:14:19 UTC <byorgey> don't waste brainpower thinking about #13 until I'm done with #15.
+2011-04-08 18:14:19 UTC <fryguybob> cairoTransf t >> f a >> cairoTransf (inv t)  -- seems more correct
+2011-04-08 18:14:41 UTC <byorgey> yes, but I think I tried that and it doesn't work.
+2011-04-08 18:15:05 UTC <byorgey> I need to look more carefully into how setting attributes in cairo interacts with the current transformation.
+2011-04-08 18:15:53 UTC <byorgey> well, *someone* needs to look more carefully into it, it doesn't necessarily have to be me =)
+2011-04-08 18:16:40 UTC <fryguybob> Hehe, I'm mostly trying to get up to speed on things and write down some "laws" for how things should behave in the presence of freeze.
+2011-04-08 18:17:10 UTC <byorgey> ah, great.
+2011-04-08 18:17:25 UTC <fryguybob> Certainly   d # freeze # lc x == d # lc x # freeze :D
+2011-04-08 18:17:48 UTC <byorgey> yes, which doesn't hold currently =)
+2011-04-08 18:18:21 UTC <byorgey> also  freeze . f . freeze === freeze . f
+2011-04-08 18:18:28 UTC <fryguybob> yes
+2011-04-08 18:18:32 UTC <byorgey> err, f . freeze
+2011-04-08 18:18:58 UTC <byorgey> I shouldn't mix # and .
+2011-04-08 18:19:54 UTC <fryguybob> On the canvas backend   canvasTransf t >> f a >> canvasTransf (inv t)    lc x does commute correctly so it does seem like it is some strange interaction with Cairo.  I don't think the canvas output is correct yet though :D.
+2011-04-08 18:21:19 UTC <byorgey> hehe =)
+2011-04-08 18:28:03 UTC <fryguybob> One thing that is entirely clear to me is what something like  d # freeze # scale 2 # lw 2  means.
+2011-04-08 19:03:57 UTC <byorgey> fryguybob: well I'm glad it's entirely clear to you! ;)
+2011-04-08 19:04:59 UTC <fryguybob> byorgey: Ooops, I meant to say, *not* entirely clear.
+2011-04-08 19:05:10 UTC <byorgey> hehe, I figured =)
+2011-04-08 19:05:18 UTC <fryguybob> yeah
+2011-04-08 19:06:06 UTC <fryguybob> It almost seems to me that freeze should be a type change.
+2011-04-08 19:06:38 UTC <byorgey> hmm.  and then you can't apply transformable attributes to frozen things, or something?
+2011-04-08 19:07:14 UTC <fryguybob> Yeah attributes that commute with freeze can be on either side.  But I haven't thought it through all the way.
+2011-04-08 19:12:37 UTC <fryguybob> Humm, I think I have something I can test with Cairo that should clear a few things up.
+2011-04-08 19:42:40 UTC <byorgey> actually, I think d # freeze # scale 2 # lw 2  makes sense.
+2011-04-08 19:43:12 UTC <byorgey> it means that the line width should be uniformly equal to 2 with respect to the diagram's local vector space after applying the scale.
+2011-04-08 19:43:29 UTC <byorgey> but since it's frozen any further transformations will affect the line width.
+2011-04-08 19:43:56 UTC <byorgey> so e.g.  d # freeze # scale 2 # lw 2 # scale 2 === d # freeze # scale 4 # lw 4
+2011-04-08 19:44:13 UTC <byorgey> === d # freeze # lw 1 # scale 4
+2011-04-08 19:44:55 UTC <fryguybob> ok so on the other side   d # lw x # scale s # freeze === d # scale s # lw x # freeze
+2011-04-08 19:48:23 UTC <byorgey> yes
+2011-04-08 19:50:05 UTC <fryguybob> And  lw x # lw y === lw y
+2011-04-08 19:50:58 UTC <byorgey> no, lw x
+2011-04-08 19:51:03 UTC <fryguybob> ok
+2011-04-08 19:51:26 UTC <byorgey> inner things i.e. things lower down in the AST override outer/higher things
+2011-04-08 19:51:47 UTC <byorgey> so if you have some d and you apply an attribute to it, it only has an effect if that attribute was not already set
+2011-04-08 19:52:13 UTC <byorgey> ok, I've got to go, talk to you later
+2011-04-08 19:52:18 UTC <fryguybob> ok
+2011-04-08 20:53:29 UTC <fryguybob> byorgey: I forgot to recompile (hint makes you forget about these things) so when I tested   cairoTransf t >> f a >> cairoTransf (inv t)   before I didn't see a change, but now after recompiling it appears to make lc x commute correctly.
+2011-04-08 21:10:45 UTC <fryguybob> Ahh cairoTransf t >> f a >> cairoTransf (inv t)   makes lw always act as though it is unfrozen.
+2011-04-08 22:20:19 UTC <byorgey> fryguybob: right, that was the problem.
+2011-04-08 22:20:59 UTC <luite_> hmm, what does freeze do?
+2011-04-08 22:21:08 UTC <luite_> (too busy in #haskell at the moment :p )
+2011-04-08 22:22:49 UTC <byorgey> luite_: normally if you set, say, the line width of a diagram, the line width will be relative to the vector space of the *final* rendered diagram
+2011-04-08 22:23:29 UTC <byorgey> this is so you can have a bunch of diagrams set to say lw 2 and have them all come out looking like they are drawn with the same size lines, even if you transformed some of them
+2011-04-08 22:23:54 UTC <luite_> does it do the same for alpha values and compositing?
+2011-04-08 22:23:55 UTC <fryguybob> I updated issue 13, don't know if you saw.
+2011-04-08 22:24:02 UTC <byorgey> but once you freeze a diagram, transformations start affecting attributes like the line width as well, so scaling a diagram makes the lines get thicker/thinner, etc.
+2011-04-08 22:24:21 UTC <byorgey> luite_: I'm not sure what effect transformations would have on alpha values
+2011-04-08 22:24:52 UTC <byorgey> fryguybob: I did see, but I haven't had a chance to look at the patch yet
+2011-04-08 22:25:21 UTC <luite_> hmm, ok. because I wondered, when you have two crossing lines, and then change the alpha to 0.5, does that make the whole cross 0.5, or will the point where the two lines cross be darker
+2011-04-08 22:25:30 UTC <luite_> and how can you get both behaviours :)
+2011-04-08 22:26:32 UTC <fryguybob> luite_: That's a good point.  I'm not sure what would happen in that situation right now.
+2011-04-08 22:27:22 UTC <luite_> I'm pretty sure that you can get both with svg with grouping, don't know about cairo though
+2011-04-08 22:27:33 UTC <byorgey> you can do grouping with cairo too
+2011-04-08 22:27:46 UTC <byorgey> right now the intersection point would be darker
+2011-04-08 22:28:14 UTC <byorgey> but we could probably just add a 'group' primitive, which backends would be free to ignore if they don't have a notion of grouping
+2011-04-08 22:29:25 UTC <byorgey> I don't think I've actually played around with transparency at all even thought the current colour library + cairo backend can totally handle it =)
+2011-04-08 22:29:39 UTC <luite_> groupign would probably be very useful for other things, like stencil groups, where one group determines where another is visible
+2011-04-08 22:29:52 UTC <luite_> or compositing groups
+2011-04-08 22:30:16 UTC <byorgey> right, good idea.
+2011-04-08 22:30:51 UTC <luite_> don't know how good the backend support is for those things. pdf has a lot of transparency things, but postscript doesn't
+2011-04-08 22:33:41 UTC <luite_> it would be messy if diagrams had to do all the compositing (especially if the output format is vector based)
+2011-04-08 22:34:30 UTC <byorgey> yeah, we definitely don't want to get ourselves into the business of compositing.
+2011-04-08 22:35:16 UTC <luite_> I looked at the pdf spec some time ago and apparently there's a lot involved in building a flexible transparency model, fortunately I didn't need to bother with all that :)
+2011-04-08 22:41:42 UTC <byorgey> fryguybob: if I'm understanding your patch correctly, wouldn't that break if there was more than one type of transformable attribute?
+2011-04-08 22:41:58 UTC <fryguybob> Yes
+2011-04-08 22:42:05 UTC <byorgey> =(
+2011-04-08 22:42:24 UTC <luite_> . o O ( #haskell is getting too big for beginners to get proper help with monads )
+2011-04-08 22:42:43 UTC <fryguybob> But it depends on the kind of transformations that attribute allows.
+2011-04-08 22:43:32 UTC <fryguybob> I think we could just as easily transform the line width value itself instead of building the matrix, but then if you do scaleX you won't get a varying line width like you should.
+2011-04-08 22:43:46 UTC <byorgey> right.
+2011-04-08 22:44:14 UTC <fryguybob> So attributes where that kind of transformation isn't needed would be fine.
+2011-04-08 22:45:00 UTC <luite_> hmm, can't you combine the freezing with grouping, so that you don't need a separate freeze after all
+2011-04-08 22:45:13 UTC <fryguybob> Like if you had an attribute for arrows at the end of a path.  You don't want those squished anyway..
+2011-04-08 22:46:46 UTC <fryguybob> Another way to get the same scaling behavior for lines would be to convert them to filled areas on a freeze.
+2011-04-08 22:47:11 UTC <byorgey> but then you can't later set their color.
+2011-04-08 22:47:35 UTC <fryguybob> Right
+2011-04-08 22:47:38 UTC <fryguybob> I think this is why I was confused about d # freeze # lw x
+2011-04-08 22:48:13 UTC <fryguybob> I think what I think of with freeze is getting the semantics of  type image = VectorSpace v => v -> Pixel
+2011-04-08 22:48:37 UTC <fryguybob> I've got to run.  Talk to you all later.
+2011-04-08 22:48:43 UTC <byorgey> ok, see you
