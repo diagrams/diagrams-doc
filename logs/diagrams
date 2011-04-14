@@ -165,3 +165,24 @@
 2011-04-08 22:48:13 UTC <fryguybob> I think what I think of with freeze is getting the semantics of  type image = VectorSpace v => v -> Pixel
 2011-04-08 22:48:37 UTC <fryguybob> I've got to run.  Talk to you all later.
 2011-04-08 22:48:43 UTC <byorgey> ok, see you
+2011-04-09 01:30:26 UTC <byorgey> making some good progress on switching over to a tree representation. I've ripped out the guts, stuck a tree in its place, and now carefully suturing the wound closed ;)
+2011-04-09 01:47:48 UTC <fryguybob> :D
+2011-04-09 01:52:05 UTC <byorgey> fryguybob: did you read my comments on #13?  Do they make sense?
+2011-04-09 01:52:59 UTC <fryguybob> Still reading :D
+2011-04-09 01:53:04 UTC <byorgey> ok =)
+2011-04-09 02:01:47 UTC <fryguybob> byorgey: Yes that makes sense to me!
+2011-04-09 02:05:03 UTC <byorgey> ok, good =)
+2011-04-09 11:42:16 UTC <byorgey> refactoring done. looks like it introduced a few bugs.
+2011-04-09 11:42:38 UTC <byorgey> haven't had much time to test and track them down, will get to it on Monday.
+2011-04-09 12:42:38 UTC <byorgey> hmm, one bug down, but others yet remain =)
+2011-04-09 16:42:46 UTC <fryguybob> byorgey: ping
+2011-04-09 16:51:26 UTC <fryguybob> I added a fuller example of using hint here: http://hpaste.org/45484/hint_diagrams_20
+2011-04-11 00:23:34 UTC <fryguybob> byorgey: I can now successfully load a module and find all the top level expressions that are diagrams.
+2011-04-11 18:14:53 UTC <byorgey> fryguybob: diagrams-hint looks promising, thanks!
+2011-04-11 18:16:08 UTC <byorgey> also, I just found out that the HCAR submission deadline is May 1, and it would be really nice to have something released by then so we can talk about it
+2011-04-11 18:16:21 UTC <fryguybob> Yeah, it's fun.  Shouldn't be too much more work and it will be ready to do the really fun stuff.
+2011-04-11 18:16:42 UTC <byorgey> so I'm arbitrarily setting April 30 as the deadline for having a preview release out
+2011-04-11 18:16:46 UTC <byorgey> =)
+2011-04-11 18:17:08 UTC <fryguybob> Excellent
+2011-04-11 18:17:20 UTC <fryguybob> The prestigious 20th edition.
+2011-04-11 18:17:36 UTC <byorgey> oh, is it?  I didn't even realize that
