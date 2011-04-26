@@ -304,3 +304,6 @@
 2011-04-26 22:02:05 UTC <byorgey> shiny =)
 2011-04-26 22:02:59 UTC <fryguybob> ACTION runs off to diner.
 2011-04-26 22:03:13 UTC <byorgey> ok, enjoy your dinner. talk to you later.
+2011-04-26 22:06:51 UTC <luite> proper font support could be an issue, with cairo or a native svg backend
+2011-04-26 22:20:14 UTC <luite> hmm, I don't think there are haskell libraries that can convert a ttf/otf font to svg, but you can get the outlines for glyphs with the freetype2 bindings
+2011-04-26 22:37:14 UTC <byorgey> luite: yeah, I was planning to look into getting glyph outlines with freetype2
