@@ -186,3 +186,121 @@
 2011-04-11 18:17:08 UTC <fryguybob> Excellent
 2011-04-11 18:17:20 UTC <fryguybob> The prestigious 20th edition.
 2011-04-11 18:17:36 UTC <byorgey> oh, is it?  I didn't even realize that
+2011-04-26 13:40:42 UTC <fryguybob> byorgey: Which would be better `segmentSplitAtParam` or `splitAtParam` or something else?
+2011-04-26 14:49:41 UTC <fryguybob> byorgey: The latest isn't building for me because of some of the imports that were removed.
+2011-04-26 15:08:22 UTC <fryguybob> I think you just forgot to push some changes from core.
+2011-04-26 16:11:33 UTC <byorgey> fryguybob: yes, sorry, I was trying to push them last night before going to bed but my connection died =(
+2011-04-26 16:11:38 UTC <byorgey> I'm pushing them now
+2011-04-26 16:12:34 UTC <byorgey> last night I actually thought "I hope Ryan does not try to work on diagrams tomorrow morning because it will not build for him"
+2011-04-26 17:10:13 UTC <fryguybob> byorgey: Hehe, no problem :D.
+2011-04-26 17:24:53 UTC <byorgey> fryguybob: pushed
+2011-04-26 17:25:21 UTC <byorgey> fryguybob: when I said "I'm pushing them now" it turns out I meant "after my computer crashes and I eat lunch and I talk for an hour with my officemates" =P
+2011-04-26 17:25:37 UTC <fryguybob> of course, that's how all pushes work :D
+2011-04-26 17:25:55 UTC <byorgey> sort of like "it's in the mail" =)
+2011-04-26 17:26:39 UTC <fryguybob> did you have an opinion on the name?
+2011-04-26 17:26:55 UTC <fryguybob> I think I'm leaning splitAtParam
+2011-04-26 17:29:50 UTC <byorgey> yes, I like splitAtParam better too
+2011-04-26 17:30:01 UTC <byorgey> the type should make it clear it is acting on segments.
+2011-04-26 18:35:24 UTC <fryguybob> byorgey: Humm, does: class Arbitrary (Segment Q2) where ...  not make sense?
+2011-04-26 18:35:46 UTC <byorgey> fryguybob: should be fine, why?
+2011-04-26 18:37:35 UTC <fryguybob> I get the following error: http://hpaste.org/46059/quickcheck
+2011-04-26 18:38:30 UTC <byorgey> oh! s/class/instance/  =)
+2011-04-26 18:38:46 UTC <byorgey> that's not a very helpful error message
+2011-04-26 18:39:22 UTC <fryguybob> ha, oops
+2011-04-26 18:48:18 UTC <fryguybob> byorgey: Ok, I pushed.
+2011-04-26 18:49:12 UTC <byorgey> cool, thanks!
+2011-04-26 18:51:19 UTC <byorgey> haha, "lerp lerp lerp lerp lerp lerp"
+2011-04-26 18:51:34 UTC <byorgey> call me juvenile but I find that hilarious =)
+2011-04-26 18:51:47 UTC <fryguybob> :D
+2011-04-26 18:55:20 UTC <byorgey> fryguybob: I am surprised to learn that there is no closed form for cubic Bezier arc length!
+2011-04-26 18:55:56 UTC <byorgey> everything else about Bezier curves seems so neat and tidy
+2011-04-26 18:55:57 UTC <fryguybob> Yeah it seams it is a sacrifice that you have to make to get nice subdivision.
+2011-04-26 18:56:30 UTC <byorgey> well, I think it's useful in its own right as well
+2011-04-26 18:57:13 UTC <byorgey> for example one thing I thought of that might be useful is an operation like "shorten this segment to 80% of its former length"
+2011-04-26 18:57:44 UTC <byorgey> e.g. if you want a curved arrow pointing between two things but you want a little space between the arrow endpoints and the things being pointed from/to
+2011-04-26 18:58:54 UTC <fryguybob> Yeah, it might be nice to have a more computationally heavy segment that is a Cubic with a length based parameterization.
+2011-04-26 19:00:33 UTC <fryguybob> So "80% its former length" would be:  fst (splitAtParam c 0.8)
+2011-04-26 19:01:35 UTC <byorgey> hmm, indeed
+2011-04-26 19:02:10 UTC <byorgey> well, or maybe we can just provide a different operation, like splitAtParam, but which works by length instead of by t?
+2011-04-26 19:02:45 UTC <byorgey> fundamentally I suppose we just need to be able to convert between t-values and arc length values
+2011-04-26 19:03:25 UTC <byorgey> t -> arc length is easy given splitAtParam and arcLength
+2011-04-26 19:03:31 UTC <luite> is shortening by a percentage really a good way? typically if you wanted to have your image look consistent, you'd want to have all arrowheads the same distance from the thing they point to, regardless of arrow length
+2011-04-26 19:04:04 UTC <byorgey> ok, sure, we would also want a way to adjust the length by an absolute amount
+2011-04-26 19:04:44 UTC <byorgey> but all these sorts of things can be easily implemented in terms of just a few fundamental pieces
+2011-04-26 19:04:46 UTC <luite> tikz uses a shortening parameter for the arrow head I think
+2011-04-26 19:06:08 UTC <fryguybob> One case where the map from t -> arc length is important is when placing things at length along a bezier.  Stroking with patterns for instance.
+2011-04-26 19:06:26 UTC <luite> yeah or a label anchored at some point
+2011-04-26 19:06:36 UTC <fryguybob> Right
+2011-04-26 19:06:39 UTC <byorgey> hmm, don't you want arc length -> t for that?
+2011-04-26 19:07:08 UTC <fryguybob> byorgey: Oops yes.
+2011-04-26 19:07:29 UTC <byorgey> but I agree being able to convert in both directions is important
+2011-04-26 19:08:23 UTC <byorgey> I suppose arc length -> t is done by some sort of subdivision as well
+2011-04-26 19:09:28 UTC <fryguybob> If the invariant in the test that I pushed holds then we can share %arc length -> t maps across subdivisions.
+2011-04-26 19:09:34 UTC <fryguybob> I don't know if that is helpful though.
+2011-04-26 19:11:05 UTC <fryguybob> As in, if you know f :: %arc length -> t for  b, then you can compute it based on f for  (l,r) =  splitAtParam b t
+2011-04-26 19:11:35 UTC <byorgey> makes sense
+2011-04-26 19:15:03 UTC <fryguybob> byorgey: I haven't had time to play around with it, but this package could have some interesting stuff: http://hackage.haskell.org/package/polynomials-bernstein
+2011-04-26 19:15:56 UTC <byorgey> woah, crazy
+2011-04-26 19:16:29 UTC <byorgey> "Computes the intersection of a given Bezier hypersurface, given by its graph, with plane z=0."
+2011-04-26 19:16:33 UTC <byorgey> o.O
+2011-04-26 19:17:20 UTC <byorgey> It might be useful, but it's so abstract I can't tell yet =)
+2011-04-26 19:17:28 UTC <fryguybob> Yeah :D
+2011-04-26 19:17:46 UTC <byorgey> let's see if any other packages depend on it...
+2011-04-26 19:18:55 UTC <byorgey> indeed, http://hackage.haskell.org/package/typography-geometry
+2011-04-26 19:19:31 UTC <byorgey> ooh
+2011-04-26 19:19:33 UTC <byorgey> approximate :: [Curve] -> [(Bernsteinp Int Double, Bernsteinp Int Double)]Source
+2011-04-26 19:19:36 UTC <byorgey> Approximates a list of Curves with a list of degree 3 Bernstein curves.
+2011-04-26 19:20:14 UTC <fryguybob> fun
+2011-04-26 19:21:19 UTC <byorgey> looks like he was implementing a bunch of algorithms for essentially making a Haskell implementation of Metafont
+2011-04-26 19:24:06 UTC <byorgey> and he was working on it as recently as four days ago, judging by the timestamps in his darcs repo =)
+2011-04-26 19:24:43 UTC <byorgey> perhaps we can convince him to help with the implementation of text for diagrams
+2011-04-26 19:25:30 UTC <fryguybob> Indeed.
+2011-04-26 19:29:35 UTC <byorgey> sigh, this is boring
+2011-04-26 19:29:50 UTC <byorgey> I am kicking myself now for not being better about writing good documentation along the way =P
+2011-04-26 19:31:19 UTC <fryguybob> Yeah, I have that problem at work, but the backlog goes back 13 years...
+2011-04-26 19:32:04 UTC <byorgey> haha, wow
+2011-04-26 21:46:31 UTC <byorgey> whew, finally done adding Haddock documentation
+2011-04-26 21:47:05 UTC <byorgey> of course, we will still need a tutorial and a user's manual but those can wait =)
+2011-04-26 21:48:59 UTC <fryguybob> ACTION has been considering writing a blog post or two...
+2011-04-26 21:49:23 UTC <byorgey> sure, that sounds fun
+2011-04-26 21:49:34 UTC <byorgey> but wait until we put something up on Hackage of course
+2011-04-26 21:49:43 UTC <fryguybob> yeah
+2011-04-26 21:50:02 UTC <byorgey> hmm, so what still needs to be done before we do put something up on Hackage?
+2011-04-26 21:51:16 UTC <byorgey> I'm imagining just announcing it as a "preview" release, i.e. enough for curious people to take a look, but not to expect too much
+2011-04-26 21:51:26 UTC <byorgey> I want to start attracting more contributors
+2011-04-26 21:51:41 UTC <fryguybob> I think as it is it doesn't build on Windows.  I have a patch that makes it build for me but also has stuff trying to do the looped compile thing.
+2011-04-26 21:52:38 UTC <fryguybob> Should I cut that patch down to something that conditionally removes that functionality?
+2011-04-26 21:52:44 UTC <byorgey> sure
+2011-04-26 21:52:51 UTC <byorgey> and how hard is cairo to install on Windows?
+2011-04-26 21:52:52 UTC <fryguybob> Ok.
+2011-04-26 21:53:01 UTC <byorgey> I seem to recall that being a showstopper for Windows people before
+2011-04-26 21:53:29 UTC <byorgey> which is part of the reason this version is more backend-pluggable
+2011-04-26 21:53:38 UTC <fryguybob> Well it was quite easy but 7.0.3 requires some patching to the setup files unfortunately.
+2011-04-26 21:53:47 UTC <byorgey> ah =(
+2011-04-26 21:54:01 UTC <fryguybob> I don't think it has been fixed yet.
+2011-04-26 21:54:21 UTC <byorgey> well, again, this is a preview release -- I think it's OK if we say up front "it's probably difficult to get working on Windows, but just wait!"
+2011-04-26 21:54:35 UTC <fryguybob> http://hackage.haskell.org/trac/gtk2hs/ticket/1203
+2011-04-26 21:54:42 UTC <fryguybob> Yeah that's fine.
+2011-04-26 21:55:23 UTC <byorgey> long-term, we'll want to start pushing some other backends that are easier to get going on Windows
+2011-04-26 21:55:34 UTC <byorgey> like maybe a native SVG backend or something
+2011-04-26 21:55:38 UTC <byorgey> ?
+2011-04-26 21:55:59 UTC <fryguybob> Yeah that wouldn't be very hard.
+2011-04-26 21:57:21 UTC <byorgey> I'd like to get this path-inside-outside-testing thing working before the preview release
+2011-04-26 21:58:06 UTC <fryguybob> One thing that I was wondering is are we going to consider line thickness when calculating bounds?
+2011-04-26 21:58:12 UTC <byorgey> other than that I don't think there's anything critical
+2011-04-26 21:58:19 UTC <byorgey> no
+2011-04-26 21:58:25 UTC <fryguybob> ok that makes it easy :D
+2011-04-26 21:58:53 UTC <byorgey> especially because the relative line thickness might change if the diagram isn't frozen and you do a scale
+2011-04-26 21:59:34 UTC <byorgey> although having the ability to include the line thickness in the bounds would probably be a good idea.  but in any case it can wait.
+2011-04-26 22:00:14 UTC <fryguybob> I suppose there could be some use to a "hardFreeze" that changes to a filled closed path, but that requires a lot of work.
+2011-04-26 22:00:28 UTC <byorgey> yeah.
+2011-04-26 22:00:32 UTC <fryguybob> But that would naturally include line thickness in the bounds.
+2011-04-26 22:00:55 UTC <byorgey> yes, that's probably the right way to do it.  i.e. do the 'stroking' ourselves, manually.
+2011-04-26 22:01:12 UTC <byorgey> why is it a lot of work?
+2011-04-26 22:01:38 UTC <fryguybob> Well calculating the offset of a bezier is not easy.
+2011-04-26 22:01:52 UTC <byorgey> oh, hm, yes, I see!
+2011-04-26 22:01:58 UTC <fryguybob> I think there was something for that in the typography package we were looking at though.
+2011-04-26 22:02:04 UTC <fryguybob> That made me excited.
+2011-04-26 22:02:05 UTC <byorgey> shiny =)
+2011-04-26 22:02:59 UTC <fryguybob> ACTION runs off to diner.
+2011-04-26 22:03:13 UTC <byorgey> ok, enjoy your dinner. talk to you later.
