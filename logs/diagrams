@@ -307,3 +307,32 @@
 2011-04-26 22:06:51 UTC <luite> proper font support could be an issue, with cairo or a native svg backend
 2011-04-26 22:20:14 UTC <luite> hmm, I don't think there are haskell libraries that can convert a ttf/otf font to svg, but you can get the outlines for glyphs with the freetype2 bindings
 2011-04-26 22:37:14 UTC <byorgey> luite: yeah, I was planning to look into getting glyph outlines with freetype2
+2011-04-28 00:00:02 UTC <fryguybob> byorgey: I can't get anything conclusive about the accuracy.
+2011-04-28 13:53:16 UTC <fryguybob> ACTION loves darcs amend-record.
+2011-04-28 13:54:00 UTC <fryguybob> byorgey: I have a patch that avoids the looping stuff for Windows via CPP, do you want to look it over before I push?
+2011-04-28 14:45:06 UTC <byorgey> amend-record is nice indeed =)
+2011-04-28 14:46:03 UTC <byorgey> fryguybob: not really, go ahead =)
+2011-04-28 14:46:15 UTC <fryguybob> ok
+2011-04-28 21:29:22 UTC <fryguybob> byorgey: Is there an alignment aware atop combinator?
+2011-04-28 21:29:50 UTC <byorgey> fryguybob: what do you mean?
+2011-04-28 21:30:18 UTC <byorgey> there is no such thing as alignment, really
+2011-04-28 21:30:24 UTC <byorgey> only local origins
+2011-04-28 21:30:47 UTC <byorgey> atop matches up the local origins of two diagrams
+2011-04-28 21:32:38 UTC <fryguybob> I think I know how to write what I want.
+2011-04-28 21:33:08 UTC <fryguybob> The specific problem is given a box, put a smaller box in each corner of that box.
+2011-04-28 21:34:39 UTC <fryguybob> byorgey: I want to be able to write that as:  acat [ sheet, aTL corner, aTR corner, aBL corner, aBR corner ]
+2011-04-28 21:35:54 UTC <byorgey> hmm
+2011-04-28 21:38:02 UTC <byorgey> you could do something like  acat :: D -> [(D, D -> D)];  acat = foldr (\d (other, algn) -> algn other <> algn d),  maybe?
+2011-04-28 21:38:53 UTC <byorgey> otherwise you have to write code to look at a diagram and figure out "how it's aligned" by looking at its local origin in relation to its bounding region
+2011-04-28 21:39:08 UTC <byorgey> that might be useful but I'm not sure what it would do in general.
+2011-04-28 21:40:37 UTC <fryguybob> I'll experiment some and let you know what works for me.
+2011-04-28 21:40:44 UTC <fryguybob> Thanks!
+2011-04-28 21:41:56 UTC <byorgey> ok
+2011-04-28 21:43:42 UTC <byorgey> fryguybob: what's stripProg?  I get a not-in-scope error
+2011-04-28 21:44:01 UTC <byorgey> in D.B.Cairo.CmdLine
+2011-04-28 21:44:07 UTC <fryguybob> Humm
+2011-04-28 21:45:55 UTC <fryguybob> Yeah I missed that line.
+2011-04-28 21:46:09 UTC <byorgey> hehe
+2011-04-28 21:47:02 UTC <byorgey> well, see if you can push a fix when you get a chance, but no rush, I'm about to head home
+2011-04-28 21:47:48 UTC <fryguybob> Ok, I pushed with that line removed.
+2011-04-28 21:49:27 UTC <byorgey> thanks, works now =)
