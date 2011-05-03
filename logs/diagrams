@@ -336,3 +336,6 @@
 2011-04-28 21:47:02 UTC <byorgey> well, see if you can push a fix when you get a chance, but no rush, I'm about to head home
 2011-04-28 21:47:48 UTC <fryguybob> Ok, I pushed with that line removed.
 2011-04-28 21:49:27 UTC <byorgey> thanks, works now =)
+2011-04-29 22:56:46 UTC <fryguybob> byorgey: Here's what I ended up with: http://hpaste.org/46174/acat
+2011-04-29 23:04:10 UTC <fryguybob> I'm not sure about it, but it seems a little better than what I had before.
+2011-05-02 21:18:52 UTC <byorgey> fryguybob: can you explain what the 'phantom b' in your example is for?  I'm not sure I understand what it is doing.
