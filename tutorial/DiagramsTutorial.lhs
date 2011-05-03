@@ -2,7 +2,7 @@ Introduction
 ============
 
 This tutorial will walk you through the basics of using the diagrams
-DSL to create XXX
+DSL to create declarative graphics.
 
 This is not a Haskell tutorial (although a
 Haskell-tutorial-via-diagrams is a fun idea and may happen in the
@@ -43,8 +43,15 @@ later of [GHC](http://haskell.org/ghc) and a recent version of the [cabal-instal
 
 > {-# LANGUAGE NoMonomorphismRestriction #-}
 >
+> module DiagramsTutorial where
+>
 > import Diagrams.Prelude
 > import Diagrams.Backend.Cairo.CmdLine
 
-
 > main = defaultMain mempty
+>
+> d = circle # fc red
+
+    [dia] d
+
+The above should actually be a diagram!
