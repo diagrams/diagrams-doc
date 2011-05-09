@@ -339,3 +339,50 @@
 2011-04-29 22:56:46 UTC <fryguybob> byorgey: Here's what I ended up with: http://hpaste.org/46174/acat
 2011-04-29 23:04:10 UTC <fryguybob> I'm not sure about it, but it seems a little better than what I had before.
 2011-05-02 21:18:52 UTC <byorgey> fryguybob: can you explain what the 'phantom b' in your example is for?  I'm not sure I understand what it is doing.
+2011-05-05 13:20:49 UTC <fryguybob> byorgey: Nice work on issue 17!
+2011-05-05 13:21:45 UTC <fryguybob> I was not thinking clearly before on that and was confusing the issue with general clipping with beziers.
+2011-05-05 14:21:44 UTC <byorgey> fryguybob: thanks!
+2011-05-05 14:22:33 UTC <byorgey> not sure what you mean by general clipping
+2011-05-05 14:23:19 UTC <fryguybob> byorgey: Computing intersection and union of closed paths.
+2011-05-05 14:23:24 UTC <byorgey> ah, right
+2011-05-05 14:23:37 UTC <byorgey> we will want that too, eventually, but it sounds difficult
+2011-05-05 14:24:07 UTC <fryguybob> byorgey: Yeah we gave up at work and used GPC :D.
+2011-05-05 14:24:39 UTC <byorgey> hehe
+2011-05-05 14:29:50 UTC <byorgey> fryguybob: getting close to a preview release now.
+2011-05-05 14:30:01 UTC <fryguybob> Excellent.
+2011-05-05 14:30:17 UTC <byorgey> anything else you can think of that we ought to do before releasing?
+2011-05-05 14:31:23 UTC <fryguybob> I wish I had more time to do some stuff with hint, but my replacement has been hired at work and so I'm quite busy training.
+2011-05-05 14:31:38 UTC <byorgey> right, no worries
+2011-05-05 14:32:28 UTC <byorgey> how much longer will you be at your job?
+2011-05-05 14:32:44 UTC <fryguybob> Until the end of May.
+2011-05-05 14:32:54 UTC <byorgey> just out of curiosity, this is not  version of "when will you start working on stuff with hint" =)
+2011-05-05 14:33:00 UTC <byorgey> *not a coded version
+2011-05-05 14:33:14 UTC <fryguybob> Right
+2011-05-05 14:33:34 UTC <byorgey> any fun plans for the summer before you start school?
+2011-05-05 14:33:38 UTC <fryguybob> Then in June I'm at the ACMS conference and after that I'm free.
+2011-05-05 14:33:55 UTC <fryguybob> Hacphi!!
+2011-05-05 14:34:10 UTC <fryguybob> I'm going to try and study up on some things and do a lot of cycling.
+2011-05-05 14:34:12 UTC <byorgey> yay!
+2011-05-05 14:34:28 UTC <byorgey> sounds nice =)
+2011-05-05 14:34:39 UTC <byorgey> ACMS?
+2011-05-05 14:34:50 UTC <fryguybob> http://acmsonline.org/
+2011-05-05 14:35:18 UTC <fryguybob> It is mostly math people but that fits nicely with my wife and me.
+2011-05-05 14:35:36 UTC <byorgey> oh, neat!
+2011-05-05 14:35:48 UTC <fryguybob> I'm excited that Brooks is talking at this one.
+2011-05-05 14:36:08 UTC <byorgey> I didn't know you're a Christian, so am I =)
+2011-05-05 14:36:54 UTC <fryguybob> :D
+2011-05-05 14:37:48 UTC <byorgey> for some reason I don't remember hearing about ACMS before, although I'm sure I did hear about it at InterVarsity's Following Christ conference a few years back
+2011-05-05 14:39:07 UTC <fryguybob> Yeah I went to Wheaton for undergrad and the guy that started it was the head of the Math department there.
+2011-05-05 14:39:27 UTC <byorgey> I see, cool
+2011-05-08 12:57:43 UTC <luite> http://hackage.haskell.org/packages/archive/dia-base/0.1/doc/html/Graphics-Diagrams.html <- hmm, more competition :p
+2011-05-08 12:58:14 UTC <luite> http://pnyf.inf.elte.hu/fp/Diagrams_en.xml
+2011-05-08 18:04:54 UTC <byorgey> that's very cool!
+2011-05-08 18:04:59 UTC <byorgey> it's not competition.
+2011-05-08 18:06:01 UTC <byorgey> the scope is obviously MUCH smaller.
+2011-05-08 19:10:31 UTC <luite> hehe yes, but it's a cool result
+2011-05-08 19:13:57 UTC <luite> by the way, I have a demo of a reworked interface online now: http://jabberwock.xs4all.nl/exp/jquery-console/
+2011-05-08 19:14:46 UTC <luite> the interactive graphics are done with wumpus at the moment, until there's a native svg backend for diagrams that supports annotations, such as onclick event handlers :)
+2011-05-08 19:15:33 UTC <luite> it only supports expression cells at the moment, but I'm going to add comment cells (with markdown) and definitions
+2011-05-08 22:22:39 UTC <luite> I was wondering, is something like "defs" planned or implemented in diagrams, where you can make building blocks that are reused, even in the output image?
+2011-05-09 11:17:34 UTC <byorgey> luite: oh, interesting question, I'd have to think about it
+2011-05-09 11:17:58 UTC <byorgey> Something like this should definitely be possible but I'm not sure what the best way to go about it would be
