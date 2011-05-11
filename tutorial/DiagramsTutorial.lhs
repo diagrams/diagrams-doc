@@ -114,3 +114,59 @@ determined automatically by the extension of the output file name.
 There are several more options besides `-o`; you can see what they are
 by typing `./DiagramsTutorial --help`.
 
+Attributes
+==========
+
+Suppose we want our circle to be blue, with a thick dashed purple
+outline (there's no accounting for taste).  We can apply attributes to
+the `circle` diagram with the `(#)` operator:
+
+> ex1 = circle # fc blue
+>              # lw 0.05
+>              # lc purple
+>              # dashing [0.2,0.05] 0
+
+(To render this new diagram, just replace `defaultMain circle` with
+`defaultMain ex1`.)
+
+Note that the dashed purple border is cut off a bit at the edges of
+the PDF. This is by design: diagrams' bounds are computed based on
+their "abstract shapes", without taking into account how they are
+actually drawn.  Future versions of diagrams may give you the option
+of taking things such as thick borders into account when computing
+boundaries.  For now, we can simply add a bit of "padding" to make the
+whole drawing visible. 10% should do nicely:
+
+> ex2 = ex1 # pad 1.1
+
+This also illustrates that there's actually nothing special about the
+`(#)` operator: it's just reverse function application, that is,
+
+~~~ {.haskell}
+x # f = f x
+~~~
+
+Just to illustrate,
+
+> ex3 = pad 1.1 . dashing [0.2,0.05] 0 . lc purple . lw 0.05 . fc blue $ circle
+
+produces exactly the same diagram as `ex2`.  So why bother with `(#)`?
+First, it's often more natural to write (and easier to read) what a
+diagram *is* first, and what it is *like* second.  Second, `(#)` has a
+high precedence (8), making it more convenient to combine diagrams
+with specified attributes.  For example,
+
+~~~ {.haskell}
+circle # fc red # lw 0 ||| circle # fc green # lw 0
+~~~
+
+places a red circle with no border next to a green circle with no
+border; without `(#)` we would have to write something like
+
+~~~ {.haskell}
+(fc red . lw 0 $ circle) ||| (fc green . lw 0 $ circle)
+~~~
+
+For information on other standard attributes, see
+[Diagrams.Attributes](http://hackage.haskell.org/packages/archive/diagrams-lib/0.1/doc/html/Diagrams-Attributes.html).
+
