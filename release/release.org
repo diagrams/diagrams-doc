@@ -1,0 +1,16 @@
+* Tasks to complete before release of preview version
+
+
+  + [X] Prepare new version of old 'diagrams' package that notes it is no
+	longer supported and suggests looking at diagrams-core, etc.
+  + [X] showOrigin function
+  + [ ] Work a bit more on tutorial ... just enough to get people
+        started.
+  + [ ] Write release announcement. Right after uploading, post on
+    - [ ] Haskell, cafe
+    - [ ] blog
+    - [ ] reddit
+  + [ ] upload to Hackage!
+    - [ ] upload new packages
+    - [ ] upload deprecated version of old diagrams package
+
