@@ -4,6 +4,7 @@
   + [X] Prepare new version of old 'diagrams' package that notes it is no
 	longer supported and suggests looking at diagrams-core, etc.
   + [X] showOrigin function
+  + [ ] aTR -> alignTR and so on
   + [ ] Work a bit more on tutorial ... just enough to get people
         started.
   + [ ] Write release announcement. Right after uploading, post on

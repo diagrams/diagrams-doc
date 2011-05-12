@@ -3,6 +3,8 @@ Introduction
 
 This tutorial will walk you through the basics of using the diagrams
 DSL to create graphics in a powerful, modular, and declarative way.
+It is still in the process of being written, but hopefully there's
+enough here to get you started.
 
 This is not a Haskell tutorial (although a
 Haskell-tutorial-via-diagrams is a fun idea and may happen in the
@@ -75,6 +77,19 @@ since the other two packages will be pulled in as dependencies.)
 
 * `diagrams-cairo` is a backend which renders diagrams using Cairo.
 
+Philosophy
+==========
+
+Before diving in to create some diagrams, it's worth taking a minute
+to explain some of the philosophy that drove many of the design
+decisions. (If you're impatient, feel free to skip this section for
+now---but you might want to come back and read it later!)
+
+* Relative -- local vector spaces only.  No global coordinates.
+  Reason: modularity. XXX
+
+* XXX
+
 Your first diagram
 ==================
 
@@ -86,7 +101,7 @@ with the following contents (or you can simply edit this file itself):
 > import Diagrams.Prelude
 > import Diagrams.Backend.Cairo.CmdLine
 >
-> main = defaultMain circleSqWithO  -- XXX
+> main = defaultMain circlesTop  -- XXX
 
 Turning off the Dreaded Monomorphism Restriction is quite important:
 if you don't, you will almost certainly run into it (and be very
@@ -140,8 +155,8 @@ whole drawing visible. 10% should do nicely:
 
 > pCircle1 = circle1 # pad 1.1
 
-This also illustrates that there's actually nothing special about the
-`(#)` operator: it's just reverse function application, that is,
+There's actually nothing special about the `(#)` operator: it's just
+reverse function application, that is,
 
 ~~~ {.haskell}
 x # f = f x
@@ -221,5 +236,160 @@ Side-by-side
 Another fundamental way to combine two diagrams is by placing them
 *next to* each other.  The `(|||)` and `(===)` operators let us
 conveniently put two diagrams next to each other in the horizontal or
-vertical directions, respectively.
+vertical directions, respectively.  For example:
 
+> circleSqH = circle ||| square
+>
+> circleSqV = circle === square
+
+The two diagrams are arranged next to each other so that their local
+origins are on the same horizontal or vertical line.  As you can
+ascertain for yourself with `showOrigin`, the local origin of the new,
+combined diagram is at the point of tangency between the two
+subdiagrams.
+
+`(|||)` and `(===)` are actually just convenient specializations of
+the more general `beside` combinator. `beside` takes as arguments a
+*vector* and two diagrams, and places them next to each other "along
+the vector" --- that is, in such a way that the vector points from the
+local origin of the first diagram to the local origin of the second.
+
+> circleSqV1 = beside (1,1) circle square
+>
+> circleSqV2 = beside (1,-2) circle square
+
+Bounding regions
+----------------
+
+How does the diagrams library figure out how to place two diagrams
+"next to" each other?  And what exactly does "next to" mean?  There
+are many possible definitions of "next to" that one could imagine, XXX
+
+
+Transforming diagrams
+=====================
+
+As you would expect, there is a range of standard functions available
+for transforming diagrams, such as:
+
+* `scale` (scale uniformly)
+* `scaleX` and `scaleY` (scale in the X or Y axis only)
+* `rotate` (rotate by an angle in radians)
+* `rotateBy` (rotate by a fraction of a circle)
+* `reflectX` and `reflectY` for reflecting along the X and Y axes
+
+For example:
+
+> circleRect = circle # scale 0.5 ||| square # scaleX 0.3
+>
+> circleRect2 = circle # scale 0.5 ||| square # scaleX 0.3 
+>                                             # rotateBy (1/6) 
+>                                             # scaleX 0.5
+
+Freezing
+--------
+
+Note that the transformed circles and squares in the examples above
+were all drawn with the same uniform lines.  This is because by
+default, transformations operate on the abstract geometric ideal of a
+diagram, and not on its attributes.  Often this is what you want; but
+occasionally you want scaling a diagram to have an effect on the width
+of its lines, and so on.  This can be accomplished with the `freeze`
+combinator: whereas transformations normally do not affect a diagram's
+attributes, transformations *do* affect the attributes of a frozen diagram.
+
+Here is an example. On the left is an untransformed circle drawn with
+a line 0.1 units thick.  The next circle is a scaled version of the
+first: notice how the line thickness is the same.  The third circle
+was produced by first freezing, then scaling the first circle,
+resulting in a line twice as thick.  The last two circles illustrate a
+non-uniform scale applied to an unfrozen circle (which is drawn with a
+uniform line) and to a frozen one (in which the line gets thicker and
+thinner according to the non-uniform scale).
+
+> c = circle # lw 0.1
+>
+> circles = hcat' with {sep = 0.5} 
+>           [ c 
+>
+>           , c # scale 2
+>           , c # freeze # scale 2
+>
+>           , c # scaleX 0.2
+>           , c # freeze # scaleX 0.2
+>           ]
+>           # centerXY
+>           # pad 1.1
+
+This example also illustrates the `hcat'` function, which takes a list
+of diagrams and lays them out horizontally, here with a separation of
+0.5 units between each one.  For more information on `hcat'` and
+similar combinators, see the
+[Diagrams.TwoD.Combinators](http://hackage.haskell.org/packages/archive/diagrams-lib/0.1/doc/html/Diagrams-TwoD-Combinators.html)
+documentation.
+
+Translation
+-----------
+
+Of course, there are also translation transformations like
+`translate`, `translateX`, and `translateY`.  These operations
+translate a diagram within its *local vector space* --- that is,
+relative to their local origin.
+
+> circleT = circle # translate (0.5, 0.3) # showOrigin
+
+As `circleT` shows, translating a diagram by `(0.5, 0.3)` is the same
+as moving its local origin by `(-0.5, -0.3)`.
+
+Since diagrams are always composed with respect to their local
+origins, translation can affect the way diagrams are composed.
+
+> circleSqT   = square `atop` circle # translate (0.5, 0.3)
+> circleSqHT  = square ||| circle # translate (0.5, 0.3)
+> circleSqHT2 = square ||| circle # translate (19.5, 0.3)
+
+As `circleSqHT` and `circleSqHT2` demonstrate, when we place a
+translated circle next to a square, it doesn't matter how much the
+circle was translated in the *horizontal* direction --- the square and
+circle will always simply be placed next to each other.  The vertical
+direction matters, though, since the local origins of the square and
+circle are placed on the same horizontal line.
+
+Aligning
+--------
+
+It's quite common to want to *align* some diagrams in a certain way
+when placing them next to one another --- for example, we might want a
+horizontal row of diagrams aligned along their top edges.  The
+*alignment* of a diagram simply refers to its position relative to its
+local origin, and convenient alignment functions are provided for
+aligning a diagram with respect to its bounding region.  For example,
+`alignT` translates a diagram in a vertical direction so that its
+local origin ends up exactly on the edge of its bounding region.
+
+> circlesTop = hrule (2 * sum sizes) # lw 0.1 === circles # centerX
+>   where circles = hcat . map alignT . zipWith scale sizes 
+>                 $ repeat (circle # lw 0.1)
+>         sizes   = [2,5,4,7,1,3]
+
+See [Diagrams.TwoD.Align](http://hackage.haskell.org/packages/archive/diagrams-lib/0.1/doc/html/Diagrams-TwoD-Align.html) for other alignment combinators.
+
+Next steps
+==========
+
+Eventually this tutorial will include additional material.  For now,
+here are pointers to some resources for learning more:
+
+* The diagrams-lib API is generally well-documented; start with the
+documentation for
+[Diagrams.Prelude](http://hackage.haskell.org/packages/archive/diagrams-lib/0.1/doc/html/Diagrams-Prelude.html),
+and then drill down from there to learn about whatever you are
+interested in.
+
+* The `diagrams-cairo` package includes a number of examples.
+Download the source tarball with `cabal unpack diagrams-cairo` and
+look in the `examples/` directory.
+
+* If you run into difficulty or have any questions, join the #diagrams
+IRC channel on freenode.org, or the [diagrams-discuss mailing
+list](http://groups.google.com/group/diagrams-discuss).
