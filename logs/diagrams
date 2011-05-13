@@ -386,3 +386,57 @@
 2011-05-08 22:22:39 UTC <luite> I was wondering, is something like "defs" planned or implemented in diagrams, where you can make building blocks that are reused, even in the output image?
 2011-05-09 11:17:34 UTC <byorgey> luite: oh, interesting question, I'd have to think about it
 2011-05-09 11:17:58 UTC <byorgey> Something like this should definitely be possible but I'm not sure what the best way to go about it would be
+2011-05-13 20:19:51 UTC <byorgey> fryguybob: do you have a link to something about getting cairo to build/work on Windows?
+2011-05-13 20:20:02 UTC <byorgey> I'd like to mention it in the tutorial
+2011-05-13 20:21:05 UTC <fryguybob> Yeah, let me dig up a couple things.
+2011-05-13 20:21:21 UTC <byorgey> aiming for a release on Monday!
+2011-05-13 20:22:19 UTC <fryguybob> Super!
+2011-05-13 20:22:32 UTC <fryguybob> http://www.haskell.org/pipermail/haskell-cafe/2011-May/091656.html  is the latest from someone having trouble.
+2011-05-13 20:22:48 UTC <fryguybob> http://hackage.haskell.org/trac/gtk2hs/ticket/1203 is the issue with 7.0.x
+2011-05-13 20:23:56 UTC <fryguybob> I think the steps normally followed to get the gtk libraries are on the gtk2hs project page, but that is down (as mentioned in the thread).
+2011-05-13 20:27:58 UTC <byorgey> ok, thanks!
+2011-05-13 20:28:09 UTC <fryguybob> These steps should work with the exception of the #1203 issue:  http://jystic.com/2010/10/20/installing-gtk2hs-on-windows/
+2011-05-13 20:28:40 UTC <fryguybob> But doing  --global is the easiest way around that (if you don't mind the consequences)
+2011-05-13 20:29:52 UTC <byorgey> doing --global for what?
+2011-05-13 20:32:42 UTC <luite> hmm, where was the darcs repository for diagrams again?
+2011-05-13 20:33:13 UTC <byorgey> patch-tag.com/r/byorgey/diagrams-X
+2011-05-13 20:33:20 UTC <fryguybob> sorry, looked away.
+2011-05-13 20:33:25 UTC <byorgey> where X is an element of {core,lib,cairo,doc}
+2011-05-13 20:33:27 UTC <fryguybob> cabal install cairo --global
+2011-05-13 20:33:33 UTC <byorgey> oh, ok, I see
+2011-05-13 20:33:44 UTC <byorgey> I think I'll just make a page about this on the wiki and link to it from the tutorial
+2011-05-13 20:34:02 UTC <fryguybob> Sounds good.  I can fill in details there.
+2011-05-13 20:34:35 UTC <byorgey> cool, thanks.
+2011-05-13 20:51:39 UTC <luite> hmm, looks like my mysterious cairo linking problems have been solved with the upgrade to 7.0.3
+2011-05-13 20:52:15 UTC <luite> at least I can compile the cairo examples now, from the darcs repository :)
+2011-05-13 20:55:49 UTC <byorgey> excellent =)
+2011-05-13 20:56:56 UTC <luite> is there any support for text in this release?
+2011-05-13 20:58:12 UTC <byorgey> fryguybob: http://code.google.com/p/diagrams/wiki/CairoOnWindows
+2011-05-13 20:58:17 UTC <byorgey> luite: no, there isn't
+2011-05-13 20:58:40 UTC <byorgey> but that's high on the list of things to work on.
+2011-05-13 20:58:51 UTC <byorgey> it's quite difficult to do well.
+2011-05-13 20:58:53 UTC <luite> hmm, yes, but tricky to get right
+2011-05-13 20:58:58 UTC <byorgey> indeed.
+2011-05-13 20:59:28 UTC <luite> only local coordinates would be a problem in many applications
+2011-05-13 21:00:00 UTC <byorgey> why is that?
+2011-05-13 21:01:07 UTC <luite> because you often want consistent font sizes I think, and the positioning of the text could depend on its relative size compared to the geometry
+2011-05-13 21:01:48 UTC <byorgey> ah, right, indeed.  I didn't realize you were still specifically talking about text
+2011-05-13 21:01:56 UTC <luite> oh ok :)
+2011-05-13 21:02:23 UTC <luite> text metrics might even depend on their size, some fonts have glyph sets for different sizes
+2011-05-13 21:02:40 UTC <byorgey> yikes, indeed
+2011-05-13 21:03:43 UTC <luite> are there existing and usable libraries for proper typesetting in exotic situations, like text along a bezier?
+2011-05-13 21:04:28 UTC <byorgey> there is a library fryguybob and I were looking at the other day which looks promising -- it basically looked like someone was trying to reimplement metafont in Haskell =)
+2011-05-13 21:04:41 UTC <byorgey> so we might see if he is interested in contributing
+2011-05-13 21:10:21 UTC <byorgey> a first-order approximation would be to have text take up no space, and make font size an attribute (hence not affected by transformations unless frozen)
+2011-05-13 21:10:44 UTC <byorgey> if you wanted text to take up space you'd have to add an explicit bounding function yourself
+2011-05-13 21:11:13 UTC <byorgey> to actually get it to automatically adjust everything according to the final size of the text will require first implementing a module to do constraint-based layout
+2011-05-13 21:11:17 UTC <byorgey> which is also on the todo list anyway
+2011-05-13 21:11:49 UTC <luite> I imagine that people will want LaTeX like math things once you add text :)
+2011-05-13 21:12:00 UTC <byorgey> oh, of course =)
+2011-05-13 21:12:18 UTC <byorgey> but that will be the domain of a backend that knows how to interpret LaTeX
+2011-05-13 21:12:30 UTC <byorgey> or that can generate latex + pstex
+2011-05-13 21:12:42 UTC <luite> or someone who wants to invent a new edsl for math :p
+2011-05-13 21:12:46 UTC <byorgey> haha
+2011-05-13 21:13:17 UTC <byorgey> well, I'm certainly not stopping them =)
+2011-05-13 21:16:05 UTC <luite> where is this metafont lib by the way?
+2011-05-13 21:18:37 UTC <byorgey> http://hackage.haskell.org/package/typography-geometry
