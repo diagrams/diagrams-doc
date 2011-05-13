@@ -55,8 +55,12 @@ supported one is [Cairo](http://cairographics.org/).  If you don't
 already have them, you will need to [install the Cairo development
 libraries](http://cairographics.org/download/).
 
-Unfortunately, the Haskell Cairo bindings currently do not work on
-Windows out of the box. XXX info on how to get it working?
+If you are on Linux or MacOS, the Haskell Cairo bindings should be
+automatically installed in the next step (Installation). If you are on
+Windows, [here are some
+instructions](http://code.google.com/p/diagrams/wiki/CairoOnWindows)
+for installing the Haskell Cairo bindings; unfortunately it is
+something of a pain.
 
 Installation
 ------------
@@ -85,10 +89,15 @@ to explain some of the philosophy that drove many of the design
 decisions. (If you're impatient, feel free to skip this section for
 now---but you might want to come back and read it later!)
 
-* Relative -- local vector spaces only.  No global coordinates.
-  Reason: modularity. XXX
+* Positioning and scaling are always *relative*.  There is never any
+global coordinate system to think about; everything is done relative
+to diagrams' *local* vector spaces.  This is not only easier to think
+about, it also increases modularity/compositionality, since diagrams
+can always be designed without thought for the context in which they
+will eventually be used.  Doing things this way is more work for the
+*library* and less work for the *user*, which is the way it should be.
 
-* XXX
+* 
 
 Your first diagram
 ==================
@@ -101,7 +110,7 @@ with the following contents (or you can simply edit this file itself):
 > import Diagrams.Prelude
 > import Diagrams.Backend.Cairo.CmdLine
 >
-> main = defaultMain circlesTop  -- XXX
+> main = defaultMain e2  -- XXX
 
 Turning off the Dreaded Monomorphism Restriction is quite important:
 if you don't, you will almost certainly run into it (and be very
@@ -258,13 +267,47 @@ local origin of the first diagram to the local origin of the second.
 >
 > circleSqV2 = beside (1,-2) circle square
 
-Bounding regions
-----------------
+Bounding functions
+------------------
 
 How does the diagrams library figure out how to place two diagrams
 "next to" each other?  And what exactly does "next to" mean?  There
-are many possible definitions of "next to" that one could imagine, XXX
+are many possible definitions of "next to" that one could imagine
+choosing, with varying degrees of flexibility, simplicity, and
+tractability.  The definition of "next to" adopted by diagrams is as follows:
 
+To place two diagrams next to each other in the direction
+of a vector *v*, place them as close as possible so that there is a
+*separating line* perpendicular to *v*, that is, a line perpendicular
+to *v* such that the first diagram lies completely on one side of the
+line and the other diagrams lies completely on the other side.
+
+There are certainly some tradeoffs in this choice. The biggest
+downside is that adjacent diagrams sometimes end up with undesired
+space in between them.  For example, the two rotated ellipses in the
+diagram below have some space between them. (Try adding a vertical
+line between them with `vrule` and you will see why.)
+
+> e2 = ell ||| ell
+>   where ell = circle # scaleX 0.5 # rotateBy (1/6)
+
+If we want to position these ellipses next to each other horizontally
+so that they are tangent, it is not clear how to accomplish this.
+(However, it should be possible to create higher-level modules for
+automatically accomplishing this in certain cases.)
+
+However:
+
+* This rule is very *simple*, in that it is easy to predict what will
+  happen when placing two diagrams next to each other.
+
+* It is also *tractable*.  Every diagram carries along with it a
+*bounding function* which takes as input a vector *v*, and returns the
+minimum distance to a separating line from the local origin in the
+direction of *v*.  When composing two diagrams with 'atop' we take the
+pointwise maximum of their bounding functions; to place two diagrams
+next to each other we use their bounding functions to decide how to
+reposition their local origins before composing them with 'atop'.
 
 Transforming diagrams
 =====================
@@ -373,6 +416,19 @@ local origin ends up exactly on the edge of its bounding region.
 >         sizes   = [2,5,4,7,1,3]
 
 See [Diagrams.TwoD.Align](http://hackage.haskell.org/packages/archive/diagrams-lib/0.1/doc/html/Diagrams-TwoD-Align.html) for other alignment combinators.
+
+Diagrams as a monoid
+====================
+
+As you may have already suspected if you are familiar with monoids,
+diagrams form a monoid under `atop`.  The diagrams standard library
+provides `(<>)` as a convenient synonym for `mappend`, so `(<>)` can
+also be used to superimpose diagrams.  This also means that `mempty`
+is available to construct the "empty diagram", which takes up no space
+and produces no output.
+
+Quite a few other things in the diagrams standard library are also
+monoids (transformations, trails, paths, styles, and colors).
 
 Next steps
 ==========
