@@ -110,7 +110,7 @@ with the following contents (or you can simply edit this file itself):
 > import Diagrams.Prelude
 > import Diagrams.Backend.Cairo.CmdLine
 >
-> main = defaultMain e2  -- XXX
+> main = defaultMain circle
 
 Turning off the Dreaded Monomorphism Restriction is quite important:
 if you don't, you will almost certainly run into it (and be very
@@ -440,7 +440,9 @@ here are pointers to some resources for learning more:
 documentation for
 [Diagrams.Prelude](http://hackage.haskell.org/packages/archive/diagrams-lib/0.1/doc/html/Diagrams-Prelude.html),
 and then drill down from there to learn about whatever you are
-interested in.
+interested in.  If there is anything in the API documentation that you find
+unclear or confusing, please
+[http://code.google.com/p/diagrams/issues/list report it as a bug]!
 
 * The `diagrams-cairo` package includes a number of examples.
 Download the source tarball with `cabal unpack diagrams-cairo` and
