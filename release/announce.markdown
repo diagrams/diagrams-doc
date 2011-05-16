@@ -1,9 +1,10 @@
 I am extremely pleased to announce a "developer preview" release of
-the diagrams framework for declarative drawing.  This is a
-well-thought-out, well-documented, working release with all core
-functionality in place, but with many planned features still missing
-(for example, support for rendering text and higher-level tools for
-constructing curves).  If you are interested in
+the [diagrams framework](http://code.google.com/p/diagrams/) for
+declarative drawing.  This is a well-thought-out, well-documented,
+working release with all core functionality in place, but with many
+planned features still missing (for example, support for rendering
+text and higher-level tools for constructing curves).  If you are
+interested in
 
 * trying out a new way of producing vector graphics,
 
@@ -62,7 +63,7 @@ Start by reading the XXX quick tutorial, which has detailed
 information about how to install the necessary packages and will
 introduce you to the fundamentals of the framework.
 
-For the truly impatient:
+Or, for the truly impatient:
 
     cabal install diagrams-core diagrams-lib diagrams-cairo
 
@@ -92,7 +93,10 @@ hang out in the <code>#diagrams</code> IRC channel on freenode.org.
   it goes!
 
 * Above all, just try it out for your pet graphics generation needs
-  and contribute your bug reports and feature requests!
+  and contribute your bug reports and feature requests.
+
+
+Happy diagramming!
 
 ~~~~
 
