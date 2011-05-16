@@ -461,3 +461,48 @@
 2011-05-13 21:34:57 UTC <byorgey> =)
 2011-05-13 21:35:38 UTC <luite> for some reason the quality of javascript code samples seems to be lower than haskell...
 2011-05-14 15:47:13 UTC <fryguybob> byorgey: I like the tutorial.  It inspired me to add a command to diagrams-hint that renders all the top level diagrams in a module.
+2011-05-16 17:50:07 UTC <byorgey> fryguybob: glad you like the tutorial.  And rendering all top-level diagrams sounds cool, unfortunately I can't try it out just yet since I only have ghc 6.12 on this computer (and waiting for them to up my disk quota so I can install 7.0.3 as well)
+2011-05-16 17:50:29 UTC <byorgey> I'm working on a release announcement.
+2011-05-16 17:51:18 UTC <fryguybob> Moar disk!!!
+2011-05-16 18:07:13 UTC <byorgey> 8 GB is not enough when you start having things like multiple copies of the GHC development repository =P
+2011-05-16 18:22:26 UTC <fryguybob> Yeah diagrams-hint links to 21.2 MB for me.
+2011-05-16 20:02:10 UTC <byorgey> compile compile compile...
+2011-05-16 20:09:01 UTC <luite> hmm, have you guys talked with tg_ some more? I saw him recommending a paper to byorgey
+2011-05-16 20:09:38 UTC <byorgey> luite: he recommended a number theory paper to me, it had nothing to do with diagrams
+2011-05-16 20:09:44 UTC <luite> he has all kinds of fantastic physical/mathematical theories, and apparently he needs me to integrate my haskell web interface with gitit to explain them
+2011-05-16 20:09:45 UTC <byorgey> was tg_ talking about diagram stuff?
+2011-05-16 20:09:53 UTC <byorgey> ah, hehe
+2011-05-16 20:10:38 UTC <luite> I had seen the paper before, but I don't know much of the field, would take me a long time to make sense of it :)
+2011-05-16 20:12:30 UTC <byorgey> same for me
+2011-05-16 20:12:31 UTC <luite> he did talk about diagrams related stuff too though, and mentioned protovis, which has declarative visualization with basic interactivity. that's about waht I'd like to do with diagrams :)
+2011-05-16 20:12:51 UTC <byorgey> hmm, I'd never heard of protovis
+2011-05-16 20:13:01 UTC <byorgey> ah, looks cool
+2011-05-16 20:14:04 UTC <byorgey> they call that "declarative"?
+2011-05-16 20:14:16 UTC <luite> yeah I  have to admit that I was a bit disapponted too :p
+2011-05-16 20:14:54 UTC <byorgey> I guess the style is mostly declarative, but with function names and syntax that make it sound imperative =P
+2011-05-16 20:15:31 UTC <byorgey> anyway, I think a protovis-like library built on top of diagrams would be really cooll
+2011-05-16 20:15:32 UTC <luite> but I think it should be perfectly possible to do these things with diagrams
+2011-05-16 20:15:35 UTC <byorgey> yeah
+2011-05-16 20:15:37 UTC <luite> yes!
+2011-05-16 20:15:42 UTC <luite> but you need a native svg generator
+2011-05-16 20:15:43 UTC <luite> :)
+2011-05-16 20:15:58 UTC <byorgey> yep, shouldn't be too hard =)
+2011-05-16 20:16:07 UTC <byorgey> no one's stopping you from writing one ;)
+2011-05-16 20:16:37 UTC <luite> yeah I already started, but I didn't get much further than module SVGGenerator ;p
+2011-05-16 20:16:54 UTC <byorgey> I see =)
+2011-05-16 20:17:13 UTC <byorgey> well, feel free to link to what you've done from http://code.google.com/p/diagrams/wiki/BackendProjects, perhaps others can pick up where you left off
+2011-05-16 20:17:16 UTC <luite> problem was that I didn't know how to do things like fonts
+2011-05-16 20:17:38 UTC <byorgey> we don't even have text objects yet, why are you worrying about fonts?
+2011-05-16 20:17:50 UTC <byorgey> just get it working without text to start
+2011-05-16 20:17:52 UTC <luite> and that I wanted to work on my web things first, and hoped that a svg backend would appear magically in the meantime ;p
+2011-05-16 20:18:04 UTC <byorgey> hehe, fair enough =)
+2011-05-16 20:18:26 UTC <fryguybob> ACTION waits for magic 3d printer backend.
+2011-05-16 20:18:45 UTC <byorgey> =O
+2011-05-16 20:19:08 UTC <byorgey> ACTION wants a magic 4d printer backend, as long as we are wishing for magical backends
+2011-05-16 20:19:21 UTC <luite> fryguybob: does diagrams do 3d already?
+2011-05-16 20:20:02 UTC <byorgey> luite: there's no reason in principle why it can't, although we have not yet added any 3d-specific primitives or transformations to the standard library
+2011-05-16 20:20:27 UTC <byorgey> but that will just be a matter of taking the time to do it, there's nothing difficult about it
+2011-05-16 20:20:47 UTC <byorgey> thanks for reminding me, I should make a ticket for that
+2011-05-16 20:24:40 UTC <luite> hehe ok
+2011-05-16 20:25:17 UTC <luite> bah I feel a bit guilty doing other stuffs while tg_ is explaining his theories to me :)
+2011-05-16 20:26:27 UTC <byorgey> hehe
