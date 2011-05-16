@@ -440,3 +440,24 @@
 2011-05-13 21:13:17 UTC <byorgey> well, I'm certainly not stopping them =)
 2011-05-13 21:16:05 UTC <luite> where is this metafont lib by the way?
 2011-05-13 21:18:37 UTC <byorgey> http://hackage.haskell.org/package/typography-geometry
+2011-05-13 21:20:46 UTC <luite> ah still relatively low level
+2011-05-13 21:21:54 UTC <byorgey> yes, it seems so
+2011-05-13 21:22:30 UTC <byorgey> but combined with the freetype2 bindings that lispy has been putting together I think we will be able to get something working without having to reinvent the wheel
+2011-05-13 21:22:32 UTC <luite> whoah 10 let, 4 if/else, 2 case in a single function :)
+2011-05-13 21:22:46 UTC <byorgey> haha, wow =)
+2011-05-13 21:24:05 UTC <fryguybob> But how many lerps?
+2011-05-13 21:24:47 UTC <luite> using freetype is going to take some work, getting the outlines for a glyph is supported, but requires some very low level manipulation
+2011-05-13 21:25:00 UTC <byorgey> fryguybob: hahaha
+2011-05-13 21:25:17 UTC <byorgey> luite: yeah.
+2011-05-13 21:25:53 UTC <luite> reading fonts would require some part of the diagrams things to be in IO :(
+2011-05-13 21:26:30 UTC <byorgey> yeah, that is sad indeed =(
+2011-05-13 21:27:32 UTC <fryguybob> unsafePerformFont ...
+2011-05-13 21:28:15 UTC <luite> initially just supporting svg fonts might be an alternative to freetype, at least it's relatively easy to parse
+2011-05-13 21:29:39 UTC <fryguybob> Just bake all the users fonts in at compile time with template haskell =P
+2011-05-13 21:29:46 UTC <luite> but I guess it depends on the output type
+2011-05-13 21:30:00 UTC <luite> I don't think you can embed svg fonts in pdf
+2011-05-13 21:30:03 UTC <luite> not sure though
+2011-05-13 21:34:37 UTC <luite> hmm, I should get back to writing javascript if I ever want to finish this thing :)
+2011-05-13 21:34:57 UTC <byorgey> =)
+2011-05-13 21:35:38 UTC <luite> for some reason the quality of javascript code samples seems to be lower than haskell...
+2011-05-14 15:47:13 UTC <fryguybob> byorgey: I like the tutorial.  It inspired me to add a command to diagrams-hint that renders all the top level diagrams in a module.
