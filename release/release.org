@@ -14,4 +14,6 @@
   + [ ] upload to Hackage!
     - [ ] upload new packages
     - [ ] upload deprecated version of old diagrams package
+    - [ ] Update Google Code wiki front page to note the released
+      versions are available and link to them
 
