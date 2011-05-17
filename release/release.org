@@ -8,13 +8,13 @@
   + [X] Work a bit more on tutorial ... just enough to get people
         started.
   + [X] Write release announcement. 
-  + [ ] Right after uploading, post on
-    - [ ] Haskell, cafe
-    - [ ] blog
-    - [ ] reddit
-  + [-] upload to Hackage!
-    - [ ] upload new packages
-    - [ ] upload deprecated version of old diagrams package
+  + [X] Right after uploading, post on
+    - [X] Haskell, cafe
+    - [X] blog
+    - [X] reddit
+  + [X] upload to Hackage!
+    - [X] upload new packages
+    - [X] upload deprecated version of old diagrams package
     - [X] Update Google Code wiki front page to note the released
       versions are available and link to them
 
