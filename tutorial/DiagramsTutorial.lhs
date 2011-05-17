@@ -39,17 +39,21 @@ Before getting on with generating beautiful diagrams, you'll need a few things:
 GHC/The Haskell Platform
 ------------------------
 
-You'll need a recent version (at least 7.0.2) of the [Glasgow Haskell
-Compiler](http://haskell.org/ghc), as well as some standard libraries
-and tools.  There are several methods for obtaining these:
+You'll need a recent version of the [Glasgow Haskell
+Compiler](http://haskell.org/ghc) (6.12.3 *or* 7.0.2 or later; avoid
+7.0.1 since it has a typechecking bug which some of the path drawing
+functions run afoul of), as well as some standard libraries and tools.
+There are several methods for obtaining these:
 
 * [The Haskell Platform](http://hackage.haskell.org/platform/) has
 everything you need in one convenient package. If you are unsure, you
 should use this.
 
 * If you already have GHC and/or know what you are doing and want to
-install things yourself, just make sure you have version 7.0.2 or
-later of [GHC](http://haskell.org/ghc) and a recent version of the [cabal-install tool](http://hackage.haskell.org/trac/hackage/wiki/CabalInstall).
+install things yourself, just make sure you have
+[GHC](http://haskell.org/ghc) and a recent version of the
+[cabal-install
+tool](http://hackage.haskell.org/trac/hackage/wiki/CabalInstall).
 
 Cairo
 -----
