@@ -7,13 +7,19 @@
   + [X] aTR -> alignTR and so on
   + [X] Work a bit more on tutorial ... just enough to get people
         started.
-  + [ ] Write release announcement. Right after uploading, post on
+  + [X] Write release announcement. 
+  + [ ] Right after uploading, post on
     - [ ] Haskell, cafe
     - [ ] blog
     - [ ] reddit
-  + [ ] upload to Hackage!
+  + [-] upload to Hackage!
     - [ ] upload new packages
     - [ ] upload deprecated version of old diagrams package
-    - [ ] Update Google Code wiki front page to note the released
+    - [X] Update Google Code wiki front page to note the released
       versions are available and link to them
 
+* Later tasks
+
+  + [ ] make website (with hakyll?)
+  + [ ] put Haddock documentation on website
+  + [ ] change "homepage" link in .cabal files to website

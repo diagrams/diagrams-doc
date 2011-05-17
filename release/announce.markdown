@@ -103,17 +103,16 @@ hang out in the <code>#diagrams</code> IRC channel on freenode.org.
 
 Happy diagramming!
 
-~~~~
 
 Brought to you by the diagrams team:
 
-  Brent Yorgey
-  Ryan Yates
+* Brent Yorgey
+* Ryan Yates
 
 with contributions from:
 
-  Sam Griffin
-  Vilhelm Sjöberg
-  Luite Stegeman
-  Kanchalai Suveepattananont
-  Scott Walck
+* Sam Griffin
+* Vilhelm Sjöberg
+* Luite Stegeman
+* Kanchalai Suveepattananont
+* Scott Walck
