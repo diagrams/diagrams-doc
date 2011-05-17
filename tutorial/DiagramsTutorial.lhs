@@ -62,15 +62,15 @@ Unlike its previous incarnation, diagrams has been designed from the
 ground up with modularity in mind, and makes it extremely easy to plug
 in new rendering backends.  Eventually there will be many different
 rendering backends; at the moment, however, the only seriously
-supported one is [Cairo](http://cairographics.org/).  If you don't
-already have them, you will need to [install the Cairo development
+supported one is [cairo](http://cairographics.org/).  If you don't
+already have them, you will need to [install the cairo development
 libraries](http://cairographics.org/download/).
 
-If you are on Linux or MacOS, the Haskell Cairo bindings should be
+If you are on Linux or MacOS, the Haskell bindings to cairo should be
 automatically installed in the next step (Installation). If you are on
 Windows, [here are some
 instructions](http://code.google.com/p/diagrams/wiki/CairoOnWindows)
-for installing the Haskell Cairo bindings; unfortunately it is
+for installing the Haskell cairo bindings; unfortunately it is
 something of a pain.
 
 Installation
@@ -90,7 +90,7 @@ since the other two packages will be pulled in as dependencies.)
 * `diagrams-lib` is a standard library of drawing primitives,
   attributes, and combinators built on top of the core library.
 
-* `diagrams-cairo` is a backend which renders diagrams using Cairo.
+* `diagrams-cairo` is a backend which renders diagrams using cairo.
 
 Philosophy
 ==========
@@ -129,7 +129,7 @@ confused by the resulting error messages).
 
 The first `import` statement brings into scope the entire diagrams DSL
 and standard library.  The second `import` is so that we can use the
-Cairo backend for rendering diagrams.  Among other things, it provides
+cairo backend for rendering diagrams.  Among other things, it provides
 the function `defaultMain`, which takes a diagram as input and creates
 a command-line-driven application for rendering it.
 
@@ -144,7 +144,7 @@ If you now view `circle.pdf` in your favorite PDF viewer, you should
 see an unfilled black circle on a white background (actually, it's on
 a transparent background, but most PDF viewers I know of use white).
 
-A few things to note: in addition to PDF, the Cairo backend can
+A few things to note: in addition to PDF, the cairo backend can
 generate `.png`, `.ps`, and `.svg` formats; the format to use is
 determined automatically by the extension of the output file name.
 There are several more options besides `-o`; you can see what they are
