@@ -527,3 +527,58 @@
 2011-05-16 21:28:22 UTC <fryguybob> byorgey: Super!
 2011-05-17 00:46:30 UTC <fryguybob> byorgey: Are you around?
 2011-05-17 00:50:33 UTC <fryguybob> byorgey: I'll be traveling for the next three weeks or so and won't have much irc access but I'll be around with email.
+2011-05-17 14:58:41 UTC <luite> byorgey: have you already released the new diagrams?
+2011-05-17 14:59:08 UTC <byorgey> luite: not quite!
+2011-05-17 14:59:29 UTC <byorgey> probably in the next half hour or so
+2011-05-17 14:59:34 UTC <luite> ok cool :)
+2011-05-17 14:59:44 UTC <byorgey> doing a few final tweaks to the documentation, release announcement, etc.
+2011-05-17 14:59:52 UTC <luite> ah good
+2011-05-17 15:01:07 UTC <luite> I hope to have module support in my web thing soon, so you can just copy the source from a diagrams example
+2011-05-17 15:07:42 UTC <byorgey> neat
+2011-05-17 15:13:34 UTC <luite> hmm, looks like the server-side support works, the rest is just javascribbling :)
+2011-05-17 15:14:21 UTC <luite> and I need to whitelist the imports for Diagrams of course, I hope you didn't sneak some unsafePerformIO in there ;)
+2011-05-17 15:36:53 UTC <byorgey> nope =)
+2011-05-17 15:37:00 UTC <byorgey> uploaded!
+2011-05-17 15:37:07 UTC <byorgey> now to spam the release announcement everywhere
+2011-05-17 15:37:09 UTC <luite> sweet :)
+2011-05-17 15:39:37 UTC <luite> I'll be javascripting for a few more hours, then I'll install it :)  the code should automatically be uploaded to the server and typechecked as the user types. when it typechecks, the user can evaluate expressions and generate diagrams
+2011-05-17 15:44:48 UTC <byorgey> released!
+2011-05-17 15:46:22 UTC <luite> I'm anxiously waiting for the hackagebot announce!
+2011-05-17 15:46:34 UTC <byorgey> you mised them!
+2011-05-17 15:46:36 UTC <byorgey> *missed
+2011-05-17 15:46:38 UTC <luite> oh really?
+2011-05-17 15:46:39 UTC <luite> :(
+2011-05-17 15:46:51 UTC <byorgey> aroudn 11:37-11:38
+2011-05-17 15:46:55 UTC <luite> ah I see
+2011-05-17 15:47:01 UTC <byorgey> grah, I cnat spel tody
+2011-05-17 15:53:54 UTC <byorgey> I just uploaded a new version of the 'diagrams' package saying it is deprecated.  But I wonder whether we ought to make 'diagrams' just a wrapper package that depends on diagrams-core and diagrams-lib or something like that, and move the old version of diagrams to 'diagrams-old' or something like that
+2011-05-17 15:57:11 UTC <byorgey> and now we wait =)
+2011-05-17 16:02:14 UTC <luite> yes, we should see a huge influx of users in this channel soon
+2011-05-17 16:33:10 UTC <alpounet> hey
+2011-05-17 16:33:28 UTC <alpounet> this release looks fun!
+2011-05-17 16:33:30 UTC <luite> woohoo
+2011-05-17 16:33:37 UTC <luite> a new user in the channel
+2011-05-17 16:33:46 UTC <luite> the first after the new release
+2011-05-17 16:34:27 UTC <alpounet> byorgey's on his way to fame and fortune
+2011-05-17 16:34:53 UTC <byorgey> =D
+2011-05-17 16:35:14 UTC <byorgey> thanks alpounet, glad it looks fun!
+2011-05-17 16:35:43 UTC <byorgey> I'm off to lunch, back later
+2011-05-17 16:41:00 UTC <alpounet> gonna try to make some fun graphics if i have some spare time tonight
+2011-05-17 16:44:30 UTC <luite> please share the code if you have something, I want more examples :)
+2011-05-17 16:44:50 UTC <alpounet> sure
+2011-05-17 16:45:03 UTC <alpounet> are you working on the library or "just" using it ?
+2011-05-17 16:46:50 UTC <luite> just using it
+2011-05-17 16:47:22 UTC <luite> I want to use it for interactive web graphics
+2011-05-17 16:47:42 UTC <alpounet> how interactive ?
+2011-05-17 16:49:48 UTC <luite> basic "local" functionality (with generated javascript), and callbacks to the server for requesting new image data
+2011-05-17 16:51:44 UTC <luite> I have a demo here http://jabberwock.xs4all.nl/exp/wolfgang/
+2011-05-17 16:52:04 UTC <luite> but I'm hacking on it, and I don't have a separate production version :)
+2011-05-17 16:52:23 UTC <alpounet> okay
+2011-05-17 16:52:36 UTC <luite> there are a few demo's with a javascript ui and a non-interactive image, and the tic-tac-toe is a basic demonstration of server callbacks
+2011-05-17 16:52:44 UTC <luite> oh it doesn't work in IE, use Chrome for best results
+2011-05-17 16:53:19 UTC <alpounet> i'm using chrome
+2011-05-17 16:53:53 UTC <luite> I hope it works :)
+2011-05-17 16:54:05 UTC <alpounet> it seems to yeah
+2011-05-17 16:54:22 UTC <luite> note that the "definitions" cell is just a fake, I'm adding real support soon, it already works on the server side
+2011-05-17 16:55:28 UTC <luite> oh the highlight3 cell has interaction as well, but that one is much simpler than the tictactoe cell
+2011-05-17 20:15:21 UTC <luite> hmm, almost done :)
