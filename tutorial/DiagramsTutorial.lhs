@@ -460,12 +460,12 @@ documentation for
 and then drill down from there to learn about whatever you are
 interested in.  If there is anything in the API documentation that you find
 unclear or confusing, please
-[http://code.google.com/p/diagrams/issues/list report it as a bug]!
+[report it as a bug](http://code.google.com/p/diagrams/issues/list)!
 
 * The `diagrams-cairo` package includes a number of examples.
 Download the source tarball with `cabal unpack diagrams-cairo` and
 look in the `examples/` directory.
 
-* If you run into difficulty or have any questions, join the #diagrams
+* If you run into difficulty or have any questions, join the `#diagrams`
 IRC channel on freenode.org, or the [diagrams-discuss mailing
 list](http://groups.google.com/group/diagrams-discuss).
