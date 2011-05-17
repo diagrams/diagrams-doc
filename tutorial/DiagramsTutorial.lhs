@@ -108,7 +108,14 @@ can always be designed without thought for the context in which they
 will eventually be used.  Doing things this way is more work for the
 *library* and less work for the *user*, which is the way it should be.
 
-* 
+* Almost everything is based around the concept of *monoids* (more on
+this later).
+
+* The core library is as simple and elegant as possible -- almost
+everything is built up from a very small set of primitive types and
+operations.  One consequence is that diagrams is optimized for
+simplicity and flexibility rather than for speed: using it for
+real-time graphics generation is not recommended!
 
 Your first diagram
 ==================
