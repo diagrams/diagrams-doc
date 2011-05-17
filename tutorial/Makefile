@@ -5,3 +5,6 @@ default : DiagramsTutorial.html
 
 %.html : %.lhs
 	pandoc -f markdown+lhs -t html+lhs -s -o $@ $<
+
+export : DiagramsTutorial.html DiagramsTutorial.lhs
+	scp DiagramsTutorial.lhs DiagramsTutorial.html byorgey@projects.haskell.org:/srv/projects/diagrams/tutorial/
