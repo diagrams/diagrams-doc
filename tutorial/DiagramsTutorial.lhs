@@ -59,8 +59,8 @@ Cairo
 -----
 
 Unlike its previous incarnation, diagrams has been designed from the
-ground up with modularity in mind, and makes it extremely easy to plug
-in new rendering backends.  Eventually there will be many different
+ground up with modularity in mind, and makes plugging in new rendering
+backends extremely easy.  Eventually there will be many different
 rendering backends; at the moment, however, the only seriously
 supported one is [cairo](http://cairographics.org/).  If you don't
 already have them, you will need to [install the cairo development
