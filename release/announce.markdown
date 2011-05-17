@@ -59,9 +59,10 @@ Diagrams is:
 Cool, how can I try it out?
 ---------------------------
 
-Start by reading the XXX quick tutorial, which has detailed
-information about how to install the necessary packages and will
-introduce you to the fundamentals of the framework.
+Start by reading the [quick
+tutorial](http://projects.haskell.org/diagrams/tutorial/DiagramsTutorial.html),
+which has detailed information about how to install the necessary
+packages and will introduce you to the fundamentals of the framework.
 
 Or, for the truly impatient:
 
@@ -89,11 +90,15 @@ hang out in the <code>#diagrams</code> IRC channel on freenode.org.
   and submit it for inclusion in a special diagrams-contrib package
   which will be created for such higher-level user-contributed modules.
 
+* Use diagrams to create some cool graphics and submit them for
+  inclusion in a gallery of examples (to be created soon).
+
 * Start your own project built on top of diagrams and let us know how
   it goes!
 
-* Above all, just try it out for your pet graphics generation needs
-  and contribute your bug reports and feature requests.
+* Last but certainly not least, just try it out for your pet graphics
+  generation needs and contribute your bug reports and feature
+  requests.
 
 
 Happy diagramming!
