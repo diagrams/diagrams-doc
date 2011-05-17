@@ -34,10 +34,10 @@ Some resources that may be helpful to you as you learn about diagrams:
 Getting started
 ===============
 
-Before being able to easily generate beautiful diagrams, you'll need a few things:
+Before getting on with generating beautiful diagrams, you'll need a few things:
 
 GHC/The Haskell Platform
---------------------
+------------------------
 
 You'll need a recent version (at least 7.0.2) of the [Glasgow Haskell
 Compiler](http://haskell.org/ghc), as well as some standard libraries
