@@ -1,0 +1,7 @@
+Stuff that should be added to the tutorial:
+
+  + "named arguments" using Data.Default, with, etc.
+  + trails and paths
+  + queries
+  + styles
+  + named points
