@@ -734,3 +734,19 @@
 2011-05-18 20:12:01 UTC <luite> great, I think I should prepare for an IPO soon ;)
 2011-05-18 20:12:14 UTC <byorgey> hehe
 2011-05-18 20:12:24 UTC <luite> perhaps some venture capital fundraising first
+2011-05-18 20:19:40 UTC <luite> but it's really cool that people like it. I'll try to add the loading/saving feature with permanent url's soon
+2011-05-18 20:20:26 UTC <luite> probably with the persistent package, from yesod, which seems relatively nice to use, while still storing data in a standard way, that can be accessed from other, non-haskell, applications
+2011-05-18 20:23:15 UTC <luite> byorgey: I already asked Cale not to reddit it :)
+2011-05-18 20:23:54 UTC <luite> until I have a somewhat production version that doesn't break so often
+2011-05-18 20:24:04 UTC <byorgey> right.
+2011-05-18 20:25:06 UTC <luite> and I'm not quite comfortable with the security yet :)
+2011-05-18 20:25:17 UTC <byorgey> hehe, fair =)
+2011-05-18 20:25:18 UTC <luite> since it does write haskell files to disk and runs them
+2011-05-18 20:25:29 UTC <luite> which is quite a bit more than lambdabot does
+2011-05-18 20:25:40 UTC <byorgey> so should I not link to it yet from the diagrams website?
+2011-05-18 20:26:12 UTC <luite> not yet I think
+2011-05-18 20:26:19 UTC <byorgey> ok.
+2011-05-18 20:26:25 UTC <byorgey> I will comment that part out
+2011-05-18 20:26:30 UTC <luite> hehe ok
+2011-05-18 20:27:04 UTC <luite> it's also just my home server, if I download something it will become really slow
+2011-05-18 20:27:33 UTC <byorgey> oh, haha
