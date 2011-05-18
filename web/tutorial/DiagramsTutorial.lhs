@@ -1,3 +1,6 @@
+---
+title: Tutorial
+---
 Introduction
 ============
 
@@ -13,12 +16,14 @@ Haskell](http://learnyouahaskell.com/) for a nice introduction to
 Haskell; Chapters 1-6 should give you pretty much all you need for
 working with diagrams.
 
-This tutorial is available in both
-[HTML](http://projects.haskell.org/diagrams/tutorial/DiagramsTutorial.html)
-and [literate
-Haskell](http://projects.haskell.org/diagrams/tutorial/DiagramsTutorial.lhs)
-formats.  Don't just read it: download the `.lhs` version so you can
-play around with it interactively!
+This tutorial is available in several formats:
+
+* [HTML](/tutorial/DiagramsTutorial.html)
+* [Literate Haskell](/tutorial/DiagramsTutorial.lhs)
+* An experimental [web-based interactive version](http://jabberwock.xs4all.nl/exp/wolfgang/) (click the "Load diagrams tutorial" button)
+
+Whatever you do, don't just read it: download the `.lhs` version or
+use web version so you can play around with the content of the tutorial interactively!
 
 Resources
 =========
