@@ -582,3 +582,76 @@
 2011-05-17 16:54:22 UTC <luite> note that the "definitions" cell is just a fake, I'm adding real support soon, it already works on the server side
 2011-05-17 16:55:28 UTC <luite> oh the highlight3 cell has interaction as well, but that one is much simpler than the tictactoe cell
 2011-05-17 20:15:21 UTC <luite> hmm, almost done :)
+2011-05-17 20:42:21 UTC <luite> yay module support done, I can now add diagrams examples
+2011-05-17 21:12:29 UTC <ezyang> test
+2011-05-17 21:14:07 UTC <alpounet> successful
+2011-05-17 21:20:49 UTC <ezyang> Oh blah, the last time I tried to play with diagrams I got stuck installing Cairo.
+2011-05-17 21:21:02 UTC <luite> on windows?
+2011-05-17 21:21:32 UTC <ezyang> Linux.
+2011-05-17 21:21:34 UTC <luite> I'm busy making the diagrams tutorial available in your web browser, should be ready in a few hours
+2011-05-17 21:22:04 UTC <ezyang> http://hpaste.org/46767/cairo_error
+2011-05-17 21:22:24 UTC <luite> cabal install gtk2hs-buildtools
+2011-05-17 21:22:41 UTC <luite> that's a dependency of all gtk2hs things, cannot be installed automatically by cabal-install
+2011-05-17 21:23:52 UTC <ezyang> srsly
+2011-05-17 21:25:24 UTC <alpounet> yup
+2011-05-17 21:25:40 UTC <ezyang> Excellent, installed and ready to go.
+2011-05-17 22:43:53 UTC <luite> byorgey: http://jabberwock.xs4all.nl/exp/wolfgang/   check this, I stoled your tutorial and put it on a site
+2011-05-18 03:07:26 UTC <byorgey> luite: that is super hot
+2011-05-18 03:07:49 UTC <byorgey> luite: there seem to be some problems with your rendering though
+2011-05-18 03:08:23 UTC <byorgey> anyway, I'm off to bed
+2011-05-18 05:23:20 UTC <luite> it just uses cairo, but for some reason the scale is off or something
+2011-05-18 08:56:27 UTC <luite> byorgey: but some of it is caused by the code in the tutorial, for example the circle ||| square example uses those elements without extra attributes, they get rendered with no fill and a stroke width of 0.01 here
+2011-05-18 11:16:11 UTC <DrSyzygy> Has anyone had any luck getting diagrams-cairo up and running on MacOSX (without MacPorts of Fink or any of that)?
+2011-05-18 11:24:52 UTC <alpounet> what problem do you encounter ?
+2011-05-18 11:35:20 UTC <luite> byorgey: hmm, it looks like the rendering problems are caused by diagrams or the cairo svg generator. if you just run the tutorial lhs and -o something.svg, it looks the same
+2011-05-18 11:53:48 UTC <luite> byorgey: reload http://jabberwock.xs4all.nl/exp/wolfgang/ , I've worked around the issue by generating png instead of svg, for now
+2011-05-18 12:40:57 UTC <byorgey> luite: awesome, looks great now!
+2011-05-18 12:41:21 UTC <byorgey> I will have to look into why there are problems with SVG generation
+2011-05-18 12:52:13 UTC <luite> if you have updates to the tutorial I'd be happy to add them. I only need to add the extra first paragraph and extra import line to the .lhs and then run a small script to publish it :)
+2011-05-18 12:55:34 UTC <luite> unfortunately the markdown parser cannot cope with the ~~~(.haskell) syntax highlighting
+2011-05-18 13:22:51 UTC <byorgey> luite: ok, and by the way, the tutorial lives in http://patch-tag.com/r/byorgey/diagrams-doc so you can pull changes from there
+2011-05-18 13:23:13 UTC <byorgey> luite: I noticed the thing with the ~~~~ syntax.  That's a pandoc-specific extension I think.
+2011-05-18 13:24:04 UTC <byorgey> I was using it to get syntax highlighting on code that I don't want to be actually seen by ghc(i).
+2011-05-18 13:24:56 UTC <byorgey> luite: if you have any suggestions on how we can make it work I'm all ears. I think Wolfram|Lambda (haha) is super awesome and I'm really excited to have it as a vehicle for the diagrams tutorial!
+2011-05-18 13:25:31 UTC <byorgey> DrSyzygy: what problem(s) are you running into specifically?
+2011-05-18 13:39:28 UTC <luite> byorgey: yes that's where I pulled the current version from (yesterday). I already have haskell syntax highlighting and markdown in javascript, but it might be tricky to combine them because they are from completely different libraries
+2011-05-18 13:39:42 UTC <luite> but the markdown parser does have some intermediate tree representation of the code
+2011-05-18 13:39:47 UTC <luite> so it should be possible
+2011-05-18 13:40:11 UTC <byorgey> OK. Let me know if you need any help or want to change the tutorial in some way that would make it easier
+2011-05-18 13:40:21 UTC <luite> it's (for me) a minor detail though, there are more important things to do first
+2011-05-18 13:40:27 UTC <byorgey> yes, I agree
+2011-05-18 13:45:46 UTC <luite> but I'll make a note in my todo list :) it should also not try to replace $....$ math things in the haskell code :)
+2011-05-18 13:46:57 UTC <byorgey> hehe, indeed =)
+2011-05-18 13:53:08 UTC <DrSyzygy> byorgey: pkg-config cairo-pdf yields a build-error
+2011-05-18 13:53:35 UTC <DrSyzygy> Configuring cairo-0.12.0...
+2011-05-18 13:53:36 UTC <DrSyzygy> setup: The pkg-config package cairo-pdf is required but it could not be found.
+2011-05-18 13:53:36 UTC <DrSyzygy> cabal: Error: some packages failed to install:
+2011-05-18 13:53:36 UTC <DrSyzygy> cairo-0.12.0 failed during the configure step. The exception was:
+2011-05-18 13:53:36 UTC <DrSyzygy> ExitFailure 1
+2011-05-18 13:53:38 UTC <DrSyzygy> diagrams-cairo-0.1 depends on cairo-0.12.0 which failed to install.
+2011-05-18 13:53:52 UTC <byorgey> ugh
+2011-05-18 13:54:31 UTC <byorgey> no idea
+2011-05-18 13:54:35 UTC <byorgey> have you googled it?
+2011-05-18 13:56:43 UTC <DrSyzygy> Yeah, and all I see is talk about Cairo on linux. :-(
+2011-05-18 13:56:53 UTC <byorgey> =(
+2011-05-18 13:57:09 UTC <byorgey> I found a couple places of people posting the same error, but no solutions
+2011-05-18 13:57:34 UTC <byorgey> well, I will redouble my efforts to get a non-cairo backend working
+2011-05-18 13:57:49 UTC <ezyang> What are the other possible backends?
+2011-05-18 13:58:56 UTC <byorgey> there are lots.  Natively generating SVG is one possibility.  Along a similar line it may also work to convert diagrams into wumpus-core data structures which can natively generate SVG.
+2011-05-18 13:59:27 UTC <ezyang> ah, ok.
+2011-05-18 13:59:38 UTC <luite> DrSyzygy: that means that you haven't installed the development libraries for cairo-pdf
+2011-05-18 13:59:44 UTC <byorgey> There's also been some work (although stalled at the moment) on OpenGL and on HTML5 canvas.
+2011-05-18 13:59:49 UTC <DrSyzygy> luite: Aight. Any idea where I can get that?
+2011-05-18 13:59:51 UTC <luite> DrSyzygy: those are an external dependency
+2011-05-18 13:59:59 UTC <luite> DrSyzygy: your package manager usually
+2011-05-18 14:00:19 UTC <luite> oh which operating system by the way?
+2011-05-18 14:00:22 UTC <DrSyzygy> .... which I don't have one, since I'm on MacOSX and both fink and macports have a habit of disintegrating when I use them.
+2011-05-18 14:00:27 UTC <luite> oh right
+2011-05-18 14:00:51 UTC <luite> hmm, I don't really use OS X, last time I tried, it felt quite messy, compared to linux
+2011-05-18 14:01:26 UTC <DrSyzygy> If you try to do linux on OS X, it _is_ messy. For the things it does well, though, it is incredibly comfortable.
+2011-05-18 14:01:35 UTC <DrSyzygy> ACTION tries not to get stuck in OS holy wars. ;-)
+2011-05-18 14:02:02 UTC <luite> yeah that's what I meant
+2011-05-18 14:02:21 UTC <luite> sorry for that :)
+2011-05-18 14:02:59 UTC <DrSyzygy> luite: Don't worry: you're nowhere near holy war standards yet. You haven't even suggested I install ubuntu instead of OS X. ;-)
+2011-05-18 14:03:52 UTC <byorgey> "oh, getting diagrams to work on MacOSX is easy. First, install Ubuntu..." ;)
+2011-05-18 14:44:07 UTC <byorgey> http://byorgey.wordpress.com/2011/05/18/tic-tac-toe-maps-with-diagrams/  =)
