@@ -655,3 +655,82 @@
 2011-05-18 14:02:59 UTC <DrSyzygy> luite: Don't worry: you're nowhere near holy war standards yet. You haven't even suggested I install ubuntu instead of OS X. ;-)
 2011-05-18 14:03:52 UTC <byorgey> "oh, getting diagrams to work on MacOSX is easy. First, install Ubuntu..." ;)
 2011-05-18 14:44:07 UTC <byorgey> http://byorgey.wordpress.com/2011/05/18/tic-tac-toe-maps-with-diagrams/  =)
+2011-05-18 14:47:50 UTC <luite> byorgey: I added syntax highlighting of the ~~~{.haskell} sections
+2011-05-18 14:48:23 UTC <byorgey> luite: sweet! I guess this means you must have also gotten a bunch of other higher-priority things done too ;)
+2011-05-18 14:49:16 UTC <luite> hehe yes ;p
+2011-05-18 14:49:58 UTC <luite> nah I cheated by matching ~~~{.xxxx} things in the output with a regexp instead of properly patching the markdown code
+2011-05-18 14:50:44 UTC <byorgey> eh, works for me =)
+2011-05-18 14:50:59 UTC <luite> I don't want to touch the library code too much, because this is probably a nonstandard extension, and I'd have to maintain my own branch, I don't want to do that :)
+2011-05-18 14:52:57 UTC <luite> oh I guess the highlighter doesn't work if you have empty lines in your haskell code, since those would end up in different p tags
+2011-05-18 14:53:50 UTC <luite> hmm, but that can be fixed
+2011-05-18 14:54:18 UTC <byorgey> luite: is it possible to create a Wolfgang|Lambda worksheet and then somehow save it/get a link which allows other people to view it?
+2011-05-18 14:54:45 UTC <luite> not yet, but that's of course one of the more important things being planned :p
+2011-05-18 14:55:00 UTC <byorgey> ok, sounds good =)
+2011-05-18 14:55:30 UTC <luite> I don't know how exactly to do it. the easiest would be something like hpaste, you edit a worksheet, click save, and then you get a permanent url
+2011-05-18 14:55:53 UTC <byorgey> yeah
+2011-05-18 14:55:54 UTC <luite> but you wouldn't be able to edit existing docs, because you'd get a new url every time
+2011-05-18 14:56:25 UTC <byorgey> right, I wasn't necessarily meaning that you should be able to collaboratively edit a doc
+2011-05-18 14:56:30 UTC <byorgey> that sounds much more complicated
+2011-05-18 14:56:54 UTC <byorgey> just that you could save something and then hand it out to other people as a starting point for their explorations
+2011-05-18 14:57:24 UTC <byorgey> it might even be sufficient to give people the option to download/upload worksheets
+2011-05-18 14:57:25 UTC <luite> collaborative editing could still be based on this
+2011-05-18 14:57:33 UTC <luite> using the unique urls as revisions
+2011-05-18 14:57:41 UTC <luite> and some other system to linke them to some canonical name
+2011-05-18 14:57:45 UTC <byorgey> that way you don't have to worry about storing them on the server
+2011-05-18 14:57:50 UTC <byorgey> yes, you could do that
+2011-05-18 15:00:11 UTC <byorgey> luite: hmm, it seems that clicking on hyperlinks does not work?
+2011-05-18 15:00:16 UTC <luite> nah I think they should be stored on the server, it's easier for the user. although uploading files should be possible of course
+2011-05-18 15:00:40 UTC <byorgey> sure, I'm just trying to brainstorm an easy incremental path
+2011-05-18 15:00:44 UTC <luite> I have a rudimentary .lhs preprocessor that just adds definitions sections and text sections
+2011-05-18 15:01:07 UTC <luite> and for diagrams, I add an expression cell for each line that starts with   > something =
+2011-05-18 15:01:36 UTC <byorgey> ah, I was wondering how you did that =)
+2011-05-18 15:01:42 UTC <luite> a proper preprocessor might use haskell-src-exts and ghci to infer types :)
+2011-05-18 15:02:24 UTC <byorgey> yes, fryguybob has been working on a diagrams-hint project which already does this sort of type inference to find top-level diagrams
+2011-05-18 15:02:55 UTC <luite> yeah I already have hint and stuff, and haskell-src-exts, so it shouldn't be too much work to add
+2011-05-18 15:03:07 UTC <byorgey> yup, just take a look at the diagrams-hint repo
+2011-05-18 15:05:22 UTC <luite> oh I think I already have most of the code in place, since I haskell-src-exts the code to filter allowed imports and language extensions
+2011-05-18 15:05:33 UTC <luite> it's a very minor addition to get a list of top-level exprs
+2011-05-18 15:05:44 UTC <luite> and I already run hint for all evaluation
+2011-05-18 15:06:13 UTC <luite> but I still need to think about how I'd go about mapping types to output functions
+2011-05-18 15:06:29 UTC <luite> I manually added renderWebPNG to all diagrams lines
+2011-05-18 15:07:16 UTC <luite> but I think that some kind of Showable class would be better
+2011-05-18 15:07:27 UTC <luite> with a default display function for each type
+2011-05-18 15:07:58 UTC <luite> and that the user can still use explicit render functions for more options
+2011-05-18 15:08:32 UTC <byorgey> sounds reasonable
+2011-05-18 15:11:43 UTC <luite> ultimately I'd like to make some showcase with worksheets in categories, some might show how to use some haskell module, but there could be categories for various math topics, including high school level with fun things to play with
+2011-05-18 15:12:34 UTC <luite> the haskell definitions sections may be collaped in such pages
+2011-05-18 15:15:57 UTC <luite> oh don't know about the hyperlinks by the way, I think it's probably some problem with an event handler that captures the click before it reaches the <a/> element
+2011-05-18 15:16:06 UTC <luite> I need to fix that
+2011-05-18 15:16:28 UTC <byorgey> luite: your ultimate vision sounds fantastic
+2011-05-18 15:17:34 UTC <byorgey> luite: I don't think it is possible to convey over IRC how totally sweet I think W|L is.  I hope someday to buy you a beverage (or several) of your choice.
+2011-05-18 15:17:43 UTC <luite> aha
+2011-05-18 15:17:45 UTC <luite> haha
+2011-05-18 15:18:34 UTC <luite> the name isn't final by the way, I'm open to suggestions
+2011-05-18 15:18:52 UTC <byorgey> I think the name is pretty funny =)
+2011-05-18 15:19:29 UTC <byorgey> as long as Wolfram doesn't send you a cease-and-desist letter
+2011-05-18 15:19:32 UTC <luite> hehe, but it might get me in trouble for trademark infringement, Wolfram has more budget for lawyers than me ;p
+2011-05-18 15:19:51 UTC <byorgey> well, if they send you a letter, you change the name, oh well.
+2011-05-18 15:20:01 UTC <luite> yean that's true
+2011-05-18 15:20:36 UTC <byorgey> I think it's probably protected as satire but it's not worth fighting it in court =)
+2011-05-18 15:23:20 UTC <luite> apart from the domain name, I need some permament place to run this site. I already have a dedicated server somewhere, but it's relatively slow and outdated... might need to find something else
+2011-05-18 15:23:58 UTC <luite> the backend needs lots of ram, and possible a virtual machine for security
+2011-05-18 15:28:38 UTC <luite> but I can probably save ram by reworking how new interpreter processes are created. I'd need a single "big" process with lots of commonly used haskell modules preloaded, and use fork to create new instances
+2011-05-18 15:28:54 UTC <luite> linux probably uses copy on write, so the new ones wouldn't necessarily consume a lot of extra memory
+2011-05-18 15:30:47 UTC <luite> it already minimizes the number of code reloads as much as possible, it has a pool of available workers, and when a request is made, it tries to pick an interpreter with the correct module (L2340928-somelongnumberhere-234234 typically, for pages with user generated code) already loaded
+2011-05-18 15:31:17 UTC <luite> and if none of the available workers in the pool has this module, it just picks the least recently used one
+2011-05-18 15:53:43 UTC <byorgey> blarg, hakyll won't install =(
+2011-05-18 15:54:09 UTC <byorgey> too many dependencies (hakyll), not enough root access (me)
+2011-05-18 15:58:21 UTC <byorgey> hah, got it to work by replacing regex-pcre with regex-pcre-builtin =)
+2011-05-18 17:34:16 UTC <luite> ok multi-line haskell works as well, and I reimported the tutorial to remove empty lines at the end of each code section
+2011-05-18 17:34:50 UTC <luite> and I had to add some ugly hacks to prevent the highlighter (which actually is a read-only editor) from stealing the focus :p
+2011-05-18 17:52:40 UTC <byorgey> cool
+2011-05-18 18:15:39 UTC <luite> ok error reporting works properly now
+2011-05-18 18:16:04 UTC <luite> if you for example comment out the line import Diagrams.Prelude in the tutorial, you'll get lots of lines with multiple errors
+2011-05-18 18:16:15 UTC <luite> neatly organized in one tooltip :)
+2011-05-18 18:17:15 UTC <luite> unfortunately line numbers aren't accurate, because of the source parsing+prettyprinting combination, which is lossy
+2011-05-18 18:17:40 UTC <luite> they're close, but not completely the same
+2011-05-18 20:11:34 UTC <byorgey> luite: I just showed W|L to my officemates, and they thought it was one of the coolest things they have ever seen =)
+2011-05-18 20:11:53 UTC <byorgey> but don't worry, I'm not going to post it on slashdot yet ;)
+2011-05-18 20:12:01 UTC <luite> great, I think I should prepare for an IPO soon ;)
+2011-05-18 20:12:14 UTC <byorgey> hehe
+2011-05-18 20:12:24 UTC <luite> perhaps some venture capital fundraising first
