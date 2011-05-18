@@ -7,10 +7,6 @@ Tutorials
 
 * [Quick start diagrams tutorial](/tutorial/DiagramsTutorial.html)
 
-* The above tutorial is also available in an (experimental) [web-based
-  interactive version](http://jabberwock.xs4all.nl/exp/wolfgang/)
-  (click the "Load diagrams tutorial" button at the top).
-
 API documentation
 -----------------
 
