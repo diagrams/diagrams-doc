@@ -750,3 +750,83 @@
 2011-05-18 20:26:30 UTC <luite> hehe ok
 2011-05-18 20:27:04 UTC <luite> it's also just my home server, if I download something it will become really slow
 2011-05-18 20:27:33 UTC <byorgey> oh, haha
+2011-05-18 20:30:23 UTC <luite> it's the only linux server that I have, that's fast enough. I have a dedicated server with an old pentium 4 and 2GB RAM, but that already runs a lot of other things, not much memory is left for this
+2011-05-18 20:30:52 UTC <luite> oh I meant colocated
+2011-05-18 20:57:14 UTC <luite> but it's probably no problem to replace it with a better one, if the costs aren't much higher
+2011-05-18 21:01:49 UTC <alpounet> ok i'm gonna try to get diagrams working on win7
+2011-05-18 21:03:16 UTC <luite> ah finally some on-topic discussion ;)
+2011-05-18 21:03:32 UTC <alpounet> how's a web version of the tutorial off-topic ? :p
+2011-05-18 21:04:18 UTC <luite> it's not just a web version of the tutorial, it's a complete knowledge engine ;)
+2011-05-18 21:05:39 UTC <alpounet> yeah yeah
+2011-05-18 21:05:41 UTC <byorgey> new website is now up:  http://projects.haskell.org/diagrams
+2011-05-18 21:05:42 UTC <luite> although at the moment its knowledge consists of the diagrams tutorial and a hardcoded demo worksheet
+2011-05-18 21:06:00 UTC <byorgey> alpounet: cool, let us know how it goes
+2011-05-18 21:06:16 UTC <alpounet> yup
+2011-05-18 21:10:21 UTC <alpounet> installing gtk atm
+2011-05-18 21:18:11 UTC <alpounet> encountered some errors
+2011-05-18 21:18:16 UTC <alpounet> found a solution apparently
+2011-05-18 21:33:12 UTC <alpounet> hooray! gtk installed
+2011-05-18 21:46:46 UTC <byorgey> =D
+2011-05-18 21:51:00 UTC <Tyr42> Hello
+2011-05-18 21:51:20 UTC <byorgey> hi Tyr42, welcome
+2011-05-18 21:52:02 UTC <luite> ooh 11 users, that means that diagrams is now more popular on irc than yesod
+2011-05-18 21:52:08 UTC <byorgey> haha
+2011-05-18 21:55:31 UTC <Tyr42> So, I was looking, and I would like to help out
+2011-05-18 21:55:47 UTC <byorgey> great!
+2011-05-18 21:56:30 UTC <byorgey> anything in particular you're interested in working on?
+2011-05-18 21:57:28 UTC <Tyr42> Umm
+2011-05-18 21:57:56 UTC <Tyr42> I haven't really looked too deeply yet
+2011-05-18 21:58:24 UTC <luite> what do you want to use it for?
+2011-05-18 21:59:51 UTC <byorgey> Tyr42: you could look at the tickets listed at http://code.google.com/p/diagrams/issues/list
+2011-05-18 22:00:25 UTC <byorgey> Tyr42: but probably the best way to get started is just start creating some diagrams and see what's missing that you want
+2011-05-18 22:00:27 UTC <alpounet> ok byorgey how would you go for drawing, for example, the successive iterations of the cantor set construction ?
+2011-05-18 22:00:32 UTC <byorgey> then do that =)
+2011-05-18 22:00:59 UTC <luite> oh there was a sierpinski example in the older diagrams package
+2011-05-18 22:01:07 UTC <luite> if you like your cantor sets triangular ;)
+2011-05-18 22:01:19 UTC <byorgey> there's a sierpinski example in diagrams-cairo/examples/Fractal.hs
+2011-05-18 22:01:36 UTC <alpounet> oh woot
+2011-05-18 22:01:41 UTC <luite> oh sorry, it thought it was in the older one :)
+2011-05-18 22:01:50 UTC <byorgey> alpounet: just do the natural recursive construction.  make a function cantor :: Int -> Diagram Cairo R2
+2011-05-18 22:01:54 UTC <byorgey> the base case is a rectangle
+2011-05-18 22:02:22 UTC <byorgey> and in the recursive case you construct two recursive ones and hcat them together with a strut in between
+2011-05-18 22:03:08 UTC <byorgey> you can get fancier than that but that's the basic idea
+2011-05-18 22:03:20 UTC <alpounet> yeah ok
+2011-05-18 22:04:01 UTC <luite> interestingly the file size of the cantor set goes to infinity as its measure goes to zero
+2011-05-18 22:04:10 UTC <byorgey> hehe
+2011-05-18 22:05:52 UTC <Tyr42> well, I can't seem to get the repo from the google code page using hg
+2011-05-18 22:06:16 UTC <byorgey> Tyr42: the repo isn't actually hosted there, we just use google code for the wiki and issue tracker
+2011-05-18 22:06:48 UTC <byorgey> under "How to get involved" it lists how to get the darcs repositories
+2011-05-18 22:06:51 UTC <alpounet> it's on patch-tag
+2011-05-18 22:06:57 UTC <Tyr42> byorgey:  Ah, that explains why it was empty
+2011-05-18 22:08:19 UTC <byorgey> luite: a sierpinski example was in the older one too, sierpinski is just the sort of prototypical example that has to be done by every drawing library =)
+2011-05-18 22:09:17 UTC <luite> it's like the teapot of 2d drawing
+2011-05-18 22:09:23 UTC <byorgey> exactly =)
+2011-05-18 22:10:38 UTC <byorgey> OK, I'm off homewards, probably won't be online again until tomorrow morning
+2011-05-18 22:10:45 UTC <byorgey> but I'll see any messages left for me here
+2011-05-19 14:14:04 UTC <byorgey> hi fryguybob =)
+2011-05-19 14:29:41 UTC <luite> someone linked wolfgang on reddit
+2011-05-19 14:30:28 UTC <fryguybob> Howdy.  I read the logs good to have a bunch of people here!
+2011-05-19 14:39:40 UTC <byorgey> luite: uh oh =(
+2011-05-19 14:40:48 UTC <luite> byorgey: hehe it could be worse, but I wanted to add persistent storage, but now I'd feel guilty taking it offline for that ;p
+2011-05-19 14:41:32 UTC <luite> people seem to like it though, already some feature suggestions
+2011-05-19 14:44:51 UTC <byorgey> nah, don't feel bad taking it offline
+2011-05-19 14:45:24 UTC <byorgey> or maybe wait a day or two until it falls off the haskell reddit front page if you really want
+2011-05-19 14:45:35 UTC <byorgey> but I wouldn't worry about it too much.
+2011-05-19 14:45:36 UTC <fryguybob> luite: With regard to using hint with diagrams, I'm not doing anything special and just sorting through all the top level declarations and checking each to see if they type check as a diagram.
+2011-05-19 14:46:14 UTC <byorgey> fryguybob: diagrams-hint is built with gtk, right?
+2011-05-19 14:46:18 UTC <luite> fryguybob: yeah that's what I plan to do as well
+2011-05-19 14:46:34 UTC <luite> fryguybob: I already parse all the code with haskell-src-exts
+2011-05-19 14:46:42 UTC <fryguybob> byorgey: Yeah, I have some CPP for switching backends though.
+2011-05-19 14:47:09 UTC <byorgey> fryguybob: ok, so we should modify the cairo backend to return not just IO () but an (IO (), Cairo ()) pair, so to use cairo you don't have to go via the filesystem
+2011-05-19 14:47:26 UTC <byorgey> just render it directly to the gtk window
+2011-05-19 14:47:43 UTC <byorgey> will probably make it faster too
+2011-05-19 14:47:53 UTC <fryguybob> Yeah
+2011-05-19 14:48:07 UTC <byorgey> anyway, just a random thought =)
+2011-05-19 14:49:27 UTC <luite> fryguybob: have you seen the interactive web tutorial?
+2011-05-19 14:51:05 UTC <fryguybob> luite: Yeah it is a lot of fun!
+2011-05-19 18:43:03 UTC <luite> byorgey: I'm going to write a thing in javascript to convert between .lhs and worksheets (lhs with some extra markup), that way, the .lhs files can simply be served through gitit or mediawiki
+2011-05-19 18:43:29 UTC <byorgey> luite: yes, that sounds like a great idea
+2011-05-19 18:43:42 UTC <luite> free versioning stuff and all :)
+2011-05-19 18:43:48 UTC <byorgey> yup =)
+2011-05-19 19:12:24 UTC <luite> ugh now it's on ycombinator and dons made another reddit
+2011-05-19 19:16:25 UTC <mightybyte> Hehe
