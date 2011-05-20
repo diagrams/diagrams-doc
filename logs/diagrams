@@ -830,3 +830,79 @@
 2011-05-19 18:43:48 UTC <byorgey> yup =)
 2011-05-19 19:12:24 UTC <luite> ugh now it's on ycombinator and dons made another reddit
 2011-05-19 19:16:25 UTC <mightybyte> Hehe
+2011-05-19 22:29:53 UTC <alpounet> luite, awesome heh
+2011-05-20 13:46:58 UTC <luite> http://jabberwock.xs4all.nl/exp/wolfgang/wolfgang-logo1.png what do you think of my first wolfgang logo design try?
+2011-05-20 13:48:16 UTC <mightybyte> I like it.
+2011-05-20 13:48:42 UTC <mightybyte> Did you use diagrams to create it?  :)
+2011-05-20 13:48:45 UTC <luite> it's based on the lambda logo cut in half ;p
+2011-05-20 13:48:53 UTC <luite> actually yes
+2011-05-20 13:49:17 UTC <luite> the diagrams-drawn haskell logo
+2011-05-20 13:52:38 UTC <luite> but I edited it too much in photoshop, so it doesn't really look that good anymore at pixel level
+2011-05-20 14:02:45 UTC <luite> suggestions for the page design are welcome too :)
+2011-05-20 14:27:47 UTC <byorgey> I like it too
+2011-05-20 14:41:30 UTC <luite> lol someone reported a bug in the tic-tac-toe engine
+2011-05-20 14:42:40 UTC <mightybyte> Haha
+2011-05-20 14:43:43 UTC <luite> actually it isn't a bug, because it still plays perfectly, but it doesn't always play in such a way that it wins in the fewest possible moves
+2011-05-20 14:44:20 UTC <mightybyte> Ahhh, yes.  I'm familiar with that problem.
+2011-05-20 14:46:01 UTC <mightybyte> I usually solve it with something like this at the end of the minimax/alphabeta function: if score > INF-1000 then score-1 else if score < -INF+1000 then score+1 else score
+2011-05-20 14:46:34 UTC <luite> yes this one just uses win/lose/tie as evaluations
+2011-05-20 15:06:21 UTC <byorgey> I solved that problem too if you look at the tic-tac-toe solver in the examples directory (or in my blog post)
+2011-05-20 15:06:59 UTC <byorgey> Along with "win/lose" it keeps track of the number of moves until the win, and sorts results accordingly
+2011-05-20 15:07:07 UTC <sordina> Hey. Is there an easy way to create a color? I tried creating a RGBA datatype that is an instance of ColorAlpha, but diagrams complains that it's not using Color.Internal (or something like that). Is there a 'fromRGBA' or something similar?
+2011-05-20 15:07:25 UTC <luite> hehe what's the ELO rating of your tic-tac-toe solver? ;)
+2011-05-20 15:07:45 UTC <byorgey> sordina: there should be, just a second
+2011-05-20 15:07:57 UTC <byorgey> luite: infinity, I suppose =)
+2011-05-20 15:08:56 UTC <luite> byorgey: I do like it that someone pointed this out, it's exactly the kind of things you can explain easily with this kind of interface
+2011-05-20 15:09:02 UTC <byorgey> sordina: what's the actual error message you get?
+2011-05-20 15:09:34 UTC <byorgey> sordina: oh, wait, you made your own color datatype?
+2011-05-20 15:09:45 UTC <sordina> Couldn't match expected type `colour-2.3.1:Data.Colour.Internal.Colour
+2011-05-20 15:09:47 UTC <sordina>                                     Double'
+2011-05-20 15:09:49 UTC <sordina>                 with actual type `ColorData'
+2011-05-20 15:10:37 UTC <sordina> I'm using the fc function.
+2011-05-20 15:10:52 UTC <byorgey> if you want to use your own color data type you just have to make it an instance of Color from Diagrams.Attributes
+2011-05-20 15:10:57 UTC <byorgey> http://hackage.haskell.org/packages/archive/diagrams-lib/0.1.1/doc/html/Diagrams-Attributes.html#t:Color
+2011-05-20 15:11:09 UTC <byorgey> although I'm not sure why you would want to use your own color type
+2011-05-20 15:11:40 UTC <byorgey> and then use fillColor instead of fc
+2011-05-20 15:11:41 UTC <sordina> byorgey: Ah cool. I don't really want to I was just trying that since I couldn't find a function to construct a color from rgba values.
+2011-05-20 15:13:45 UTC <sordina> I'm looking at creating a data-oriented EDSL wrapper similar to how gloss works since I love how gloss diagrams are inspectable. Would that be derivable somehow?
+2011-05-20 15:14:08 UTC <byorgey> sordina: try using the sRGB function from Data.Colour.SRGB, followed by a call to withOpacity
+2011-05-20 15:14:25 UTC <byorgey> perhaps a function like this should be added to diagrams-lib
+2011-05-20 15:15:14 UTC <byorgey> sordina: I'm not actually familiar with gloss
+2011-05-20 15:15:22 UTC <ezyang> link?
+2011-05-20 15:17:13 UTC <sordina> http://hackage.haskell.org/package/gloss
+2011-05-20 15:18:15 UTC <byorgey> ah, right, I remember that now
+2011-05-20 15:18:31 UTC <byorgey> sordina: so can you explain a bit more what you are trying to achieve?
+2011-05-20 15:18:34 UTC <sordina> fillColor worked by the way :)
+2011-05-20 15:18:39 UTC <byorgey> great =)
+2011-05-20 15:19:59 UTC <byorgey> oh, I see what you mean, you actually build up a Picture AST which you can inspect
+2011-05-20 15:20:16 UTC <sordina> Yes!
+2011-05-20 15:20:21 UTC <sordina> It's great
+2011-05-20 15:20:40 UTC <sordina> Most intuitive image construction I've come across.
+2011-05-20 15:21:35 UTC <sordina> Color red (Translate (10,15) (Scale 2 Circle))
+2011-05-20 15:21:39 UTC <sordina> something like that
+2011-05-20 15:22:29 UTC <byorgey> well, you can still *construct* things like that using diagrams, of course.  But the way things are currently implemented you can't inspect them.
+2011-05-20 15:23:06 UTC <sordina> byorgey: yes, it's almost identical in how things are constructed which is why I'm interested in writing an inspectable wrapper.
+2011-05-20 15:23:24 UTC <byorgey> But you could certainly make a little AST language which you can "compile" into diagrams
+2011-05-20 15:23:28 UTC <byorgey> that would be very easy.
+2011-05-20 15:23:30 UTC <byorgey> and cool.
+2011-05-20 15:23:32 UTC <sordina> with a runImage function to convert to Diagrams.
+2011-05-20 15:23:36 UTC <byorgey> right.
+2011-05-20 15:23:55 UTC <sordina> It would enable serialization and such things trivially too.
+2011-05-20 15:24:06 UTC <byorgey> yup.
+2011-05-20 15:24:34 UTC <sordina> I was just wondering if such a wrapper could be derived somehow, or if it would just be a by-hand affair.
+2011-05-20 15:25:09 UTC <byorgey> Yeah, I don't think there would be any way to derive it.
+2011-05-20 15:25:59 UTC <byorgey> I'll have to think more about whether there's a fundamental reason diagrams is not internally implemented in terms of an AST.
+2011-05-20 15:26:20 UTC <byorgey> Intuitively it seems it would make things less flexible/extensible but I am not sure.
+2011-05-20 15:26:21 UTC <sordina> Ah okay. Well it shouldn't be a huge task to create one anyway. I'll give it a go :)
+2011-05-20 15:26:26 UTC <byorgey> great!
+2011-05-20 15:26:51 UTC <ezyang> Does diagrams have any internal rep, or is it tagless?
+2011-05-20 15:27:42 UTC <byorgey> you might even be able to just reuse parts of gloss
+2011-05-20 15:28:07 UTC <byorgey> ezyang: I'm not sure I understand your question.
+2011-05-20 15:28:28 UTC <sordina> Probably, although I think Diagrams is much more feature rich for static images.
+2011-05-20 15:30:54 UTC <sordina> The AST datatypes have no tricks involved at all as far as I can tell, so I'm not sure there would be much to gain by using the existing gloss definitions.
+2011-05-20 15:32:13 UTC <byorgey> yes, I guess you're right.
+2011-05-20 15:33:31 UTC <sordina> Anyway, I'm got to drive home now. Thanks for the awesome package guys. I'd been waiting for something like diagrams to come along for a while now :)
+2011-05-20 15:33:53 UTC <byorgey> sordina: thanks, glad you like it =)
+2011-05-20 15:34:41 UTC <byorgey> I'm off as well, to walk to school
+2011-05-20 15:34:58 UTC <byorgey> ezyang: if you explain your question a bit more I will try to answer when I get to school
+2011-05-20 15:35:31 UTC <ezyang> Ah, it's not particularly important.
