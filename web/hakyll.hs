@@ -75,7 +75,7 @@ buildGallery = second (mapCompiler compileExample >>> sortDate >>> arr (map page
   where sortDate = arr (sortBy $ flip (comparing (getField "date")))
 
 compileExample :: Compiler (Page String) (Page String)
-compileExample = applyTemplateCompiler "templates/example.html"
+compileExample = (setHtmlURL . setImgURL) ^>> applyTemplateCompiler "templates/example.html"
 
 modBody :: (a -> b) -> Page a -> Page b
 modBody f p = p { pageBody = f (pageBody p) }
