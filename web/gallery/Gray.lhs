@@ -19,11 +19,19 @@ width: 400
 > import Control.Applicative
 > import Data.Monoid          (mconcat)
 > import Data.List            (transpose)
-> 
+
+`gray n` recursively generates an n-bit Gray code, where each n-bit
+binary number differs from the next in exactly one position.
+
 > gray 0 = [[]]
 > gray n = map (False:) g ++ map (True:) (reverse g)
 >   where g = gray (n-1)
-> 
+
+Construct a circular diagram from the n-bit gray code: each bit
+position corresponds to a concentric ring, with black/white indicating
+0/1.  `ringOffsets` converts a list of booleans into a list of angular
+segments corresponding to consecutive runs of `True`.
+
 > rings n = mkRingsDia . map ringOffsets . transpose . gray $ n
 >   where ringOffsets :: [Bool] -> [(Angle, Angle)]
 >         ringOffsets = map l2t . chunk 2 . findEdges . zip [0,2*pi/(2^n)..2*pi]
@@ -34,7 +42,9 @@ width: 400
 > findEdges = catMaybes . (zipWith edge <*> tail)
 >   where edge (_,c1) (a,c2) | c1 /= c2  = Just a
 >                            | otherwise = Nothing
-> 
+
+Generate concentric circular arcs from lists of angular segments.
+
 > mkRingsDia = freeze . mconcat . zipWith mkRingDia [2,3..]
 >   where mkRingDia r = lw 1.05 . mconcat . map (stroke . scale r . uncurry arc)
 > 

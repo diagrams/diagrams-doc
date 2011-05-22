@@ -16,7 +16,9 @@ width: 400
 > fibs = 0 : 1 : zipWith (+) fibs (tail fibs)
 > 
 > thick = 0.15
-> 
+
+Create a grid by gluing together a bunch of squares.
+
 > grid x y = frame <> lattice
 >   where s       = square # lw 0.02 # freeze
 >         frame   = square
@@ -24,12 +26,17 @@ width: 400
 >                 # scaleY (fromIntegral y)
 >                 # lw thick # freeze
 >         lattice = centerXY . vcat . map hcat . replicate y . replicate x $ s
-> 
+
+The trapezoid and triangle shapes, with sides lengths based on two
+Fibonacci numbers.
+
 > trap s1 s2 = lw 0 . strokeT . close
 >            $ fromOffsets [(0,-s2), (s2,0), (0,s1)]
 > tri s1 s2  = lw 0 .  strokeT . close
 >            $ fromOffsets [(s1,0), (0,s1+s2)]
-> 
+
+Draw the paradox diagram based on the nth Fibonacci number.
+
 > paradox n drawDiags = sq ||| strutX s2 ||| rect
 >   where f1 = fibs !! n
 >         f2 = fibs !! (n+1)
@@ -42,7 +49,9 @@ width: 400
 > 
 >         tri1  = tri s1 s2  # fc red
 >         tri2  = tri s1 s2  # fc blue
-> 
+
+The four shapes assembled into a square.
+
 >         sq = (if drawDiags then sqDiags else mempty)
 >              <> grid (f1+f2) (f1+f2)
 >              <> sqShapes
@@ -62,7 +71,9 @@ width: 400
 >         tris  = tri1 # alignBL
 >              <> tri2 # rotateBy (1/2)
 >                      # alignBL
-> 
+
+The four shapes assembled into a rectangle.
+
 >         rect = (if drawDiags then rDiags else mempty)
 >                <> grid (2*f2 + f1) f2
 >                <> rShapes
@@ -80,5 +91,11 @@ width: 400
 >                  # lineCap LineCapRound
 >                  # freeze
 >                  # centerXY
-> 
+
+Draw the order-4 diagram with thick lines in the middle. Passing the
+argument `False` causes the thick lines to be omitted, revealing the
+skinny gap in the rectangular assembly.  Lower-order diagrams make the
+gap more obvious; higher-order diagrams make it increasingly less
+obvious (but make the grid smaller).
+
 > example = pad 1.1 $ paradox 4 True
