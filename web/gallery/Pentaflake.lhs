@@ -2,7 +2,7 @@
 title: Pentaflake
 author: Brent Yorgey
 authorurl: http://www.cis.upenn.edu/~byorgey/
-date: 2001-05-22
+date: 2011-05-22
 description: Fractal construction with pentagons.
 tags: fractal, pentagon
 height: 400

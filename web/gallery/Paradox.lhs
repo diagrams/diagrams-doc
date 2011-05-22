@@ -2,7 +2,7 @@
 title: Fibonacci paradox
 author: Brent Yorgey
 authorurl: http://www.cis.upenn.edu/~byorgey/
-date: 2001-05-21
+date: 2011-05-21
 description: A favorite puzzle/paradox of Lewis Carroll based on Fibonacci numbers.  The two figures are "obviously" composed of the same pieces, yet they have different areas!
 tags: area, paradox, Fibonacci
 height: 200

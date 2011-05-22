@@ -2,7 +2,7 @@
 title: Circular gray code
 author: Brent Yorgey
 authorurl: http://www.cis.upenn.edu/~byorgey/
-date: 2001-05-21
+date: 2011-05-21
 description: Circular gray code, like that used on some rotational sensors.
 tags: gray, code
 height: 400

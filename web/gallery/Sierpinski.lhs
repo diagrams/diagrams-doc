@@ -2,7 +2,7 @@
 title: Sierpinski triangle
 author: Brent Yorgey
 authorurl: http://www.cis.upenn.edu/~byorgey/
-date: 2001-05-21
+date: 2011-05-21
 description: Sierpinski's classic fractal.
 tags: fractal, Sierpinski, triangle
 height: 400
