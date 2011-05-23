@@ -10,6 +10,8 @@ import Data.Monoid
 import Data.String
 
 import System.FilePath
+import System.Process (system)
+import qualified Data.ByteString.Lazy as LB
 
 import Hakyll
 
@@ -44,9 +46,14 @@ main = hakyll $ do
             >>> mainCompiler
 
       -- export .png files
-    match "gallery/*.png" $ do
-        route idRoute
-        compile copyFileCompiler
+--    match "gallery/*.png" $ do
+--        route idRoute
+--        compile copyFileCompiler
+
+      -- generate .png from .lhs
+    group "png" $ match "gallery/*.lhs" $ do
+        route $ setExtension "png"
+        compile $ unsafeCompiler compilePng
 
       -- build syntax-highlighted source code for examples
     group "gallery" $ match "gallery/*.lhs" $ do
@@ -61,6 +68,14 @@ main = hakyll $ do
     group "raw" $ forM_ lhs $ flip match $ do
         route idRoute
         compile (readPageCompiler >>^ pageBody)
+
+compilePng :: Resource -> IO LB.ByteString
+compilePng resource = do
+    _ <- system $ "cd gallery && ./Build " ++ moduleName ++ " " ++ tmpPath
+    LB.readFile tmpPath
+  where
+    moduleName = takeBaseName $ unResource resource
+    tmpPath    = "/tmp/" ++ moduleName ++ ".png"
 
 mainCompiler = applyTemplateCompiler "templates/default.html"
            >>> relativizeUrlsCompiler

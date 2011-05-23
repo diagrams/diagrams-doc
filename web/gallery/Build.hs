@@ -54,6 +54,6 @@ extractDimens = (getW &&& getH) . lines
     getField f = read . drop (length f + 2) . head . filter ((f ++ ":") `isPrefixOf`)
 
 main = do
-  [name] <- getArgs
+  [name, outFile] <- getArgs
   (w,h) <- getDimens (name ++ ".lhs")
-  compileExample name (name ++ ".png") w h
+  compileExample name outFile w h

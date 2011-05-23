@@ -1,11 +1,11 @@
-EXAMPLES = $(shell ls *.lhs)
-IMAGES   = $(EXAMPLES:.lhs=.png)
+# EXAMPLES = $(shell ls *.lhs)
+# IMAGES   = $(EXAMPLES:.lhs=.png)
 
-all : $(IMAGES)
+all : Build
 
 Build : Build.hs
 	ghc --make Build
 
-%.png : %.lhs
-	./Build $(basename $<)
+# %.png : %.lhs Build
+# 	./Build $(basename $<)
 
