@@ -28,7 +28,7 @@ An order-0 pentaflake is just a pentagon:
 > 
 > pentaflake 0 = p
 
-An order-n pentaflake is an order-(n-1) pentaflake surrounded by five
+An [order-n pentaflake](http://mathworld.wolfram.com/Pentaflake.html) is an order-(n-1) pentaflake surrounded by five
 more.  The `appends` function is useful here for positioning the five
 pentaflakes around the central one.
 
