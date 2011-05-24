@@ -906,3 +906,119 @@
 2011-05-20 15:34:41 UTC <byorgey> I'm off as well, to walk to school
 2011-05-20 15:34:58 UTC <byorgey> ezyang: if you explain your question a bit more I will try to answer when I get to school
 2011-05-20 15:35:31 UTC <ezyang> Ah, it's not particularly important.
+2011-05-21 10:37:44 UTC <luite> byorgey: does the diagrams lambda logo example render properly for you, when you use svg output?
+2011-05-21 10:38:16 UTC <luite> it did work here with an older version of diagrams, but not with the latest
+2011-05-21 10:38:25 UTC <luite> png is ok
+2011-05-21 10:40:05 UTC <luite> it might be some problem with my cairo lib (I use the standard cairo lib from ubuntu 10.04)
+2011-05-21 22:19:49 UTC <byorgey> luite: generating SVG from hslogo works fine for me
+2011-05-21 23:27:40 UTC <alpounet> hey byorgey
+2011-05-21 23:27:44 UTC <alpounet> are you around ?
+2011-05-22 00:00:26 UTC <luite> byorgey: hmm, interesting...
+2011-05-22 01:19:08 UTC <luite> byorgey: made a start with integrating the wiki, it now loads this page from the wiki: http://jabberwock.xs4all.nl/wiki/Diagrams%20Tutorial
+2011-05-22 01:19:43 UTC <luite> you can edit it if you register, but only if you edit the raw data directly
+2011-05-22 01:20:08 UTC <luite> oh and most of the user interface doesn't work :)
+2011-05-22 11:11:13 UTC <luite> also added the demo: http://jabberwock.xs4all.nl/wiki/Demo
+2011-05-22 13:52:38 UTC <luite> byorgey: there's a few things I want to add, apart from getting the user interface working properly. pages in /Paste (or /Scratch or something like that) should be free to add without logging in (this should be what the "save" button defaults to if not logged in), other pages are editable with login
+2011-05-22 13:53:16 UTC <luite> but authors can set their own page to read-only and specify a list of users that can edit them
+2011-05-22 13:54:12 UTC <luite> and the lhs code for for example /wiki/Demo should be available as the module Wolfgang.Demo, so other pages can import it and use the code
+2011-05-22 13:58:07 UTC <luite> other ideas or suggestions are welcome :)
+2011-05-22 13:59:14 UTC <ezyang> Hmm... with Repa, I don't seem to be able to actually draw individual pixels. Is this intentional?
+2011-05-22 13:59:55 UTC <ezyang> Ah! mix :-(
+2011-05-22 14:08:45 UTC <luite> does repa have a safe mode where all operations are bounds checked?
+2011-05-22 16:12:05 UTC <byorgey> luite: very cool!  I don't have any other suggestions at the moment...
+2011-05-22 16:23:23 UTC <luite> byorgey: ok, I'm going to do the easy bits first (exporting modules when they are saved can be done with a PreCommit plugin for gitit), the more difficult parts will come later (authentication and file ownership and permissions will probably require some gitit patching)
+2011-05-22 16:24:59 UTC <byorgey> sure, sounds good
+2011-05-22 16:25:23 UTC <byorgey> and I will get back to actually hacking on the actual diagrams library =)
+2011-05-22 16:27:07 UTC <luite> hehe there have been some users asking for the wolfgang source coude and I've been trying to gently push them towards contributing to diagrams... but I guess most of them just want to see how it's done
+2011-05-22 16:31:47 UTC <byorgey> hehe
+2011-05-22 16:32:25 UTC <byorgey> luite: just a random thought, I think it would be cool to eventually integrate the 'Gallery' portion of the diagrams website with Wolfgang
+2011-05-22 16:32:44 UTC <byorgey> so you could be looking at an example and just click a button to load it up in Wolfgang
+2011-05-22 16:33:00 UTC <byorgey> or maybe just have Wolfgang be embedded directly
+2011-05-22 16:36:37 UTC <luite> hmm, are there some extra features required for that? I'd be difficult to integrate it in another site without having the whole page in an iframe or something, because of security restrictions for cross-domain javascript requests
+2011-05-22 16:37:11 UTC <byorgey> oh, ok, well forget the direct embedding then
+2011-05-22 16:37:11 UTC <luite> there's a way to get around it, but it would require a few changes...
+2011-05-22 16:37:25 UTC <byorgey> you're right, I guess it's just up to me to create the links =)
+2011-05-22 16:42:30 UTC <luite> where is this diagrams gallery by the way?
+2011-05-22 16:43:21 UTC <byorgey> http://projects.haskell.org/diagrams/gallery.html
+2011-05-22 16:43:43 UTC <luite> oh that's the server-that-never-works
+2011-05-22 16:43:54 UTC <byorgey> hmm?  seems to be working fine
+2011-05-22 16:44:12 UTC <luite> really, it's never worked here
+2011-05-22 16:44:29 UTC <byorgey> really? strange
+2011-05-22 16:45:37 UTC <byorgey> well, if you have hakyll and hint installed you can build yourself a local version from diagrams-doc/web
+2011-05-22 16:45:55 UTC <byorgey> and perhaps I should look into better hosting solutions
+2011-05-22 16:46:09 UTC <byorgey> but projects.h.o seemed easiest for the moment
+2011-05-22 16:48:58 UTC <luite> oh lol
+2011-05-22 16:49:03 UTC <luite> it was my fault
+2011-05-22 16:49:17 UTC <byorgey> haha, how?
+2011-05-22 16:50:10 UTC <luite> when the haskell.org domain was offline there was a list of items to add to your hosts file. and I still had a backup of that in my /etc, probably copied the wrong backup over the real file some time ago...
+2011-05-22 16:50:49 UTC <luite> the other haskell servers apparently still have the same IP address :)
+2011-05-22 16:52:18 UTC <byorgey> ah, haha
+2011-05-22 16:53:55 UTC <luite> 2001-05-21 huh?
+2011-05-22 16:56:28 UTC <luite> hadn't seen the gray code one before, nice
+2011-05-22 17:30:09 UTC <luite> do you know who hosts projects.haskell.org?
+2011-05-22 17:32:16 UTC <luite> "This server is run by a mysterious group of Haskell hackers who do not wish to be known as a Cabal, and is funded from money earned by haskell.org mentors in the Google Summer-of-Code programme."
+2011-05-22 17:32:20 UTC <luite> hehe
+2011-05-22 17:40:33 UTC <luite> probably not very suitable for wolfgang anyway
+2011-05-22 17:47:18 UTC <luite> hmm their hosting provider is quite cheap, 49 euro per month for a quad core i7 920 server with 8GB RAM
+2011-05-22 17:47:25 UTC <luite> 149 setup
+2011-05-22 17:48:55 UTC <byorgey> luite: 2001, haha whoops =)
+2011-05-22 17:49:45 UTC <byorgey> luite: I don't really know exactly who runs projects.h.o
+2011-05-22 17:50:34 UTC <luite> hmm, I'll ask in #haskell
+2011-05-22 17:57:06 UTC <luite> the identity of the admins seems to be a closely guarded secret
+2011-05-23 01:07:47 UTC <byorgey> alpounet: sorry I missed you
+2011-05-23 01:08:43 UTC <byorgey> FYI, if I am not around you can always just leave questions etc. here and I will read them later
+2011-05-23 07:03:37 UTC <alpounet> byorgey, any idea why http://hpaste.org/46955/diagrams__cantor only yields one of the iterations of the cantor set, whereas what i want is draw the first 5 iterations, on the same diagram, at different heights
+2011-05-23 10:33:07 UTC <byorgey> alpounet: struts and hrules have height 0, so combining them with === just puts them on top of each other
+2011-05-23 10:33:40 UTC <byorgey> alpounet: try using rectangles (i.e. scaled squares) in place of the hrules.
+2011-05-23 10:39:36 UTC <byorgey> alpounet: you'll also want to scale the iterations so they are all the same width
+2011-05-23 10:40:01 UTC <byorgey> using something like  scaleTo w d = d # scaleX (w / width d)
+2011-05-23 19:21:34 UTC <alpounet> oh ok, thanks byorgey
+2011-05-23 19:21:41 UTC <alpounet> will try this soon
+2011-05-23 20:42:08 UTC <tromp> what would be the shortest program to draw a path of 3 lines in U shape
+2011-05-23 20:43:11 UTC <tromp> or the most straightforward program
+2011-05-23 21:15:22 UTC <byorgey> tromp: well, you could do something like   stroke $ fromSegments [(0,-1),(1,0),(0,1)]
+2011-05-23 21:30:59 UTC <tromp> thx; i'll try that
+2011-05-23 21:41:43 UTC <tromp> @pl \(x, y) -> (f y, f x)
+2011-05-23 21:44:40 UTC <byorgey> (f &&& f) . swap
+2011-05-23 22:17:46 UTC <tromp> does Diagrams work with Complex to represent the plane?
+2011-05-23 22:19:39 UTC <byorgey> tromp: interesting question!
+2011-05-23 22:20:00 UTC <byorgey> tromp: are you asking about how it is implemented, or whether it could be made to work with Complex?
+2011-05-23 22:20:21 UTC <byorgey> it is not implemented in terms of Complex
+2011-05-23 22:21:36 UTC <byorgey> but since complex numbers form a vector space you could easily construct diagrams over (Complex Double)
+2011-05-23 22:23:41 UTC <tromp> so i could do pathFromVectors [-i,1,i] ?
+2011-05-23 22:25:40 UTC <byorgey> you could do  fromOffsets [-i,1,i] :: Path (Complex Double)
+2011-05-23 22:25:52 UTC <byorgey> or fromVertices (map P [-i,1,i])
+2011-05-23 22:26:15 UTC <byorgey> tromp: by the way, I just realized I said fromSegments before when I should have said fromOffsets, sorry about that
+2011-05-23 22:26:26 UTC <byorgey> maybe you already figured that out
+2011-05-23 22:28:49 UTC <tromp> yeah, fromSegments didnt look right
+2011-05-23 22:29:56 UTC <tromp> but hen what's difference between pathFromVectors and fromOffsets?
+2011-05-23 22:30:40 UTC <byorgey> hmm, which module is pathFromVectors in?
+2011-05-23 22:31:55 UTC <byorgey> fromOffsets constructs either a Path or a Trail from a list of vectors
+2011-05-23 22:32:50 UTC <tromp> i see it used in http://en.wikipedia.org/wiki/Hilbert_curve#Haskell_Implementation
+2011-05-23 22:33:32 UTC <byorgey> oh, that is from the old version of diagrams
+2011-05-23 22:34:15 UTC <tromp> that explains
+2011-05-23 22:34:25 UTC <byorgey> ok, so fromOffsets is essentially a much more general version of what pathFromVectors used to be
+2011-05-23 22:36:26 UTC <byorgey> tromp: there are more up-to-date examples here: http://projects.haskell.org/diagrams/gallery.html
+2011-05-23 22:36:39 UTC <byorgey> although now that I think about it none of those examples uses paths in a very interesting way
+2011-05-23 22:37:13 UTC <byorgey> tromp: if there's a particular sort of example you'd like to see let me know and I could probably work something up
+2011-05-23 22:38:45 UTC <tromp> oh, a working hilbert curve would be nice
+2011-05-23 22:41:12 UTC <byorgey> ok, sure
+2011-05-23 22:56:34 UTC <byorgey> tromp: http://hpaste.org/46985/hilbert_curve_with_diagrams
+2011-05-23 22:57:57 UTC <byorgey> this is one way to do it.  It's a bit longer than the previous one but I think it's a little nicer since it builds up the path directly by gluing the sections together, rather than dealing with coordinates
+2011-05-23 22:58:18 UTC <byorgey> also, while doing this I realized I wanted a function to reverse trails, so I wrote it, but I will add it to the standard library
+2011-05-23 23:06:00 UTC <tromp> you could even try to compose the diagrams instead of the trails
+2011-05-23 23:07:01 UTC <tromp> you start with a diagram t, then put a unitY diagram below and a rotated t below that
+2011-05-23 23:07:20 UTC <tromp> then call that diagram y
+2011-05-23 23:07:37 UTC <tromp> put y beside a unitX diagram beside a reflected y
+2011-05-23 23:07:59 UTC <tromp> then re-assign the origin to be in bottom left
+2011-05-23 23:08:46 UTC <tromp> funny that you can compse at so many levels: vectors, trails, diagrams
+2011-05-24 01:13:53 UTC <byorgey> tromp: yes, you could do it that way too
+2011-05-24 01:14:05 UTC <byorgey> tromp: but you would have to do some annoying fiddling to get things to line up properly
+2011-05-24 01:14:53 UTC <byorgey> tromp: personally I find the ability to compose at so many levels quite useful, since the different sorts of composition have different semantics
+2011-05-24 01:15:01 UTC <byorgey> then again, I am obviously biased =)
+2011-05-24 01:15:37 UTC <tromp> yes, it's a nice feature for sure
+2011-05-24 01:16:19 UTC <tromp> to align properly, i need the origin in the lower left, and the vertical composition should keep the origin of the top object
+2011-05-24 01:16:53 UTC <tromp> i believe that's not too much fiddling:)
+2011-05-24 01:16:59 UTC <byorgey> I guess not =)
+2011-05-24 01:17:29 UTC <byorgey> if you want vertical composition that preserves the top object's origin you can use  append (negateV unitY)
+2011-05-24 01:18:21 UTC <byorgey> append v d1 d2  places d1 and d2 next to each other with v pointing from d1 to d2, and preserves d1's origin
