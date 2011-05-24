@@ -33,7 +33,7 @@ compileExample m outFile w h = do
     x <- runInterpreter $ do
       setDiagramImports m
       d <- interpret "example" diagramWitness
-      liftIO $ renderDia Cairo (CairoOptions outFile (PNG (w,h))) d
+      liftIO . fst $ renderDia Cairo (CairoOptions outFile (PNG (w,h))) d
     case x of
       Left e -> ppError e
       Right _ -> return ()
