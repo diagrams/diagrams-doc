@@ -15,8 +15,9 @@ width: 400
 > import Diagrams.Prelude
 > import qualified Data.Colour as C
 
-We can use the `colour` library to generate successively lighter
-shades of blue:
+We can use the [`colour`
+library](http://hackage.haskell.org/package/colour) to generate
+successively lighter shades of blue:
 
 > colors = iterate (C.blend 0.1 white) blue
 
