@@ -1028,3 +1028,145 @@
 2011-05-24 01:24:00 UTC <byorgey> s/I guess//  =)
 2011-05-24 01:25:01 UTC <tromp> i'll try when i get home
 2011-05-24 16:29:18 UTC <luite> ugh I feel a bit guilty about not giving tg_ the latest wolfgang sources he asked for, suggesting that he'd better improve diagrams instead if he really wanted to help
+2011-05-24 18:00:44 UTC <byorgey> luite: hehe, I wouldn't =)
+2011-05-24 18:01:44 UTC <byorgey> luite: I'm all for open source, but "open source" doesn't preclude keeping the source private for a while at first
+2011-05-24 18:03:04 UTC <hpc> "eventually open source" :Q
+2011-05-24 18:03:10 UTC <hpc> *:P
+2011-05-24 18:30:47 UTC <luite> byorgey: hehe he's been bugging me all week about "our" project and how the things he's going to write are totally going to supersede wolfgang :)
+2011-05-24 18:41:34 UTC <hpc> heh
+2011-05-24 19:24:13 UTC <byorgey> hah, yikes
+2011-05-24 19:25:19 UTC <tg_> what do you know
+2011-05-24 19:25:36 UTC <tg_> byorgey: curiously enough, all of the work I'll end up doing in haskell is to support physics research
+2011-05-24 19:26:01 UTC <tg_> i'm interested in testing the validity of a (really the, there's only one) circle fractal
+2011-05-24 19:26:37 UTC <tg_> as a geometric spacetime.
+2011-05-24 19:26:50 UTC <tg_> (I'm a physicist, a computer scientist 2nd)
+2011-05-24 19:27:03 UTC <tg_> anyway, one thing that might throw me for a loop
+2011-05-24 19:27:11 UTC <tg_> is that the circle fractal is strongly Integer addressed
+2011-05-24 19:27:55 UTC <tg_> So R2 isn't the most natural place to work
+2011-05-24 19:28:33 UTC <tg_> how much work do you see extending diagrams to work in some arbitrary space?
+2011-05-24 19:28:55 UTC <byorgey> diagrams already supports arbitrary vector spaces.
+2011-05-24 19:29:07 UTC <tg_> through VectorSpace?
+2011-05-24 19:29:12 UTC <byorgey> yes
+2011-05-24 19:29:35 UTC <tg_> hm
+2011-05-24 19:29:52 UTC <tg_> so I need a new HasBasis
+2011-05-24 19:30:18 UTC <byorgey> tg_: what vector space do you want?
+2011-05-24 19:30:47 UTC <tg_> byorgey: that's the question I have to answer
+2011-05-24 19:31:13 UTC <tg_> it's probably 28 dimensional
+2011-05-24 19:31:16 UTC <tg_> whatever it is
+2011-05-24 19:31:28 UTC <tg_> (there is lots of literature about the fractal, inclding some recent PhD paper discoveries)
+2011-05-24 19:31:31 UTC <byorgey> ok
+2011-05-24 19:31:33 UTC <tg_> one thing that's interesting/nice
+2011-05-24 19:31:47 UTC <tg_> is that you can essentially make two modifications to the normal equations for circles:
+2011-05-24 19:32:09 UTC <byorgey> so you want to produce some sort of concrete visualizations of this 28-dimensional fractal?
+2011-05-24 19:32:13 UTC <tg_> one, [2,3] aren't prime, and there is an explicit division algebra on 0
+2011-05-24 19:32:42 UTC <tg_> two, there are 28 "almost prime" 4-vectors that serve as a basis
+2011-05-24 19:33:04 UTC <tg_> although they are probably not 4-vectors, they are probably 4-vectors (quaternions) embedded in a octonion basis
+2011-05-24 19:33:12 UTC <tg_> oh, third rule
+2011-05-24 19:33:15 UTC <tg_> leave pi out
+2011-05-24 19:33:26 UTC <byorgey> um, I will take your word for it.
+2011-05-24 19:33:58 UTC <tg_> well I need to figure out how to get it to work, but I have done about 1.5 years of research into studying the mathematics of the fractal, its group
+2011-05-24 19:34:33 UTC <tg_> anyway, you clarified the point - since you use an abstract vector space
+2011-05-24 19:34:37 UTC <tg_> i don't need to worry about that
+2011-05-24 19:35:15 UTC <byorgey> this sounds cool though, I was hoping someone would try to draw things in funny vector spaces =)
+2011-05-24 19:35:27 UTC <tg_> byorgey: well, what I really hope to prove
+2011-05-24 19:35:37 UTC <byorgey> you would also have to create your own backend that knows how to render 28-dimensional diagrams or whatever
+2011-05-24 19:35:40 UTC <tg_> is that if you use the circle fractal as the lowest basis
+2011-05-24 19:35:49 UTC <tg_> well, it's 3-dimensional
+2011-05-24 19:35:50 UTC <tg_> in terms of rendering
+2011-05-24 19:37:26 UTC <tg_> you can view it as a coupling of a set of 8, 3-dimensional vector spaces
+2011-05-24 19:37:28 UTC <tg_> but it's recursively defined
+2011-05-24 19:37:45 UTC <tg_> have you even encountered the apollonian fractal before?
+2011-05-24 19:37:46 UTC <tg_> for some reason it's not very well known
+2011-05-24 19:38:17 UTC <byorgey> yes, I have
+2011-05-24 19:38:37 UTC <tg_> well, a very bright PhD student used a technique called an 'affine sieve' to prove properties
+2011-05-24 19:38:40 UTC <tg_> about the fractal
+2011-05-24 19:38:49 UTC <tg_> though lots has been discovered generally in the last 10 years
+2011-05-24 19:39:01 UTC <luite> ah that's a fun thing to draw
+2011-05-24 19:39:10 UTC <tg_> but the PhD student (Elena Fuchs) got her PhD for proving that, in the context of the fractal
+2011-05-24 19:39:15 UTC <tg_> 2 and 3 are not numbers
+2011-05-24 19:39:21 UTC <tg_> (rather, they aren't prime "curvatures"
+2011-05-24 19:39:23 UTC <tg_> )
+2011-05-24 19:39:41 UTC <tg_> and that the smallest reprsentation group is something very much like D_28h
+2011-05-24 19:39:58 UTC <tg_> though she proved it using mappings in and out of the complex numbers
+2011-05-24 19:40:26 UTC <tg_> but the group has all kinds of weird properties
+2011-05-24 19:40:38 UTC <byorgey> luite: yeah, I had a version of it drawn with the old version of diagrams, someone ought to recreate it
+2011-05-24 19:41:02 UTC <tg_> one of which is that the joint spectral radius of the generators is equal to the golden ratio
+2011-05-24 19:41:41 UTC <tg_> byorgey: yeah that'll probably be me
+2011-05-24 19:41:44 UTC <tg_> i'm just getting running
+2011-05-24 19:41:50 UTC <byorgey> great =)
+2011-05-24 19:41:58 UTC <luite> oh that would be a good exercise
+2011-05-24 19:42:02 UTC <tg_> i have spent two years struggling with mathematica
+2011-05-24 19:42:05 UTC <luite> only 26 more dimenstions to go afterwards ;p
+2011-05-24 19:42:15 UTC <tg_> luite: like I said, it's not "really" 28 dimensional
+2011-05-24 19:42:20 UTC <tg_> the fractal is strictly 3 dimensional
+2011-05-24 19:42:30 UTC <tg_> there is a fourth dimension, but it's an inner product dimension
+2011-05-24 19:43:29 UTC <tg_> after four, the fractal is degenerate - whereas you started addressing evertyhing (the (center * curvature), the depth, the area, and the volume) of the objects with Integers
+2011-05-24 19:43:45 UTC <tg_> you start getting n-spheres which are no longer Integers
+2011-05-24 19:44:21 UTC <luite> hmm, I'm getting type errors in my head, expected type Integer, actual type n-sphere
+2011-05-24 19:44:31 UTC <tg_> luite: right, it doesn't make sense intuitively
+2011-05-24 19:44:39 UTC <tg_> but the circles are *addressed* *uniquely* by integers
+2011-05-24 19:45:13 UTC <tg_> which surprisngly implies that n-spheres
+2011-05-24 19:45:19 UTC <tg_> are addressed by products of integers
+2011-05-24 19:45:25 UTC <tg_> which are still integers :O
+2011-05-24 19:45:54 UTC <tg_> i realize it sounds crazy, but it was proved about 10 years ago
+2011-05-24 19:46:09 UTC <tg_> I have about 1200 pages of material I've digested about the fractal
+2011-05-24 19:46:18 UTC <tg_> most of it was done by Jeffery Lagarias at AT&T Labs
+2011-05-24 19:46:31 UTC <tg_> some by Ron Graham
+2011-05-24 19:47:16 UTC <tg_> byorgey: i love how most of the answers to even the most absurdly strange ideas from you guys have been "yeah, that should be doable."
+2011-05-24 19:47:22 UTC <tg_> this community is awesome
+2011-05-24 19:47:25 UTC <byorgey> =)
+2011-05-24 19:48:26 UTC <byorgey> "Haskell: making difficult things easy and easy things into zygohistomorphic prepromorphisms since 1987"
+2011-05-24 19:49:04 UTC <tg_> hahaha
+2011-05-24 19:49:11 UTC <tg_> that's wonderful
+2011-05-24 19:49:42 UTC <tg_> incedentally, I had already "decided" to use ||| as a geometric operator
+2011-05-24 19:49:46 UTC <tg_> and you beat me to that one
+2011-05-24 19:51:01 UTC <luite> tg_: yeah that happens quite often. actually I worked out non-euclidean geometry some 30 years before Gauss did, but I didn't publish it because I thought the results wouldn't be interesting to others ;)
+2011-05-24 19:51:15 UTC <tg_> luite: hey now
+2011-05-24 19:51:41 UTC <tg_> I think that's the role of mathemiticians in the universe
+2011-05-24 19:52:03 UTC <tg_> to invent useless things for no reason, ironically
+2011-05-24 19:52:11 UTC <tg_> and then for them to to turn out to be useful
+2011-05-24 19:53:17 UTC <tg_> the ones that really confound me are those like Ramajuran who were better calculators than I am, with a quad core processor
+2011-05-24 19:55:11 UTC <tg_> byorgey: how many years have you been studying this-and-that-morphisms?
+2011-05-24 19:55:44 UTC <byorgey> tg_: category theory?  I think I first started learning it 3 or 4 years ago
+2011-05-24 19:56:08 UTC <byorgey> not that I have been studying it intensively ever since.
+2011-05-24 19:56:10 UTC <tg_> how long have you been in a PhD program? do you consider yourself an expert (on that)?
+2011-05-24 19:57:07 UTC <byorgey> I've been in my PhD program 3 years, and as far as category theory goes, I consider myself comfortably conversant but far from expert.
+2011-05-24 19:57:27 UTC <byorgey> then again, "expert" is a relative term.
+2011-05-24 19:57:33 UTC <tg_> yeah
+2011-05-24 19:57:49 UTC <tg_> what areas "underneath" (more abstract) have you studied, if any?
+2011-05-24 19:58:08 UTC <byorgey> I don't understand the question.
+2011-05-24 19:58:15 UTC <tg_> like, have you studied model theory?
+2011-05-24 19:58:20 UTC <byorgey> yes, a bit
+2011-05-24 19:58:22 UTC <tg_> or any of the even more abstract ideas
+2011-05-24 19:58:37 UTC <tg_> is it incorrect to think of that as "more abstract" than category theory?
+2011-05-24 19:59:41 UTC <byorgey> I don't know.
+2011-05-24 20:02:50 UTC <luite> hmm, I don't know too much model theory, compactness theorem is about as much as I can actively recall, but I wouldn't really say that, it just seems to focus on a different aspect
+2011-05-24 20:06:04 UTC <tg_> luite: well, to even hint that a circle fractal could be interpreted as a real, physical possibility is so far outside the comfort zone of physicists
+2011-05-24 20:06:38 UTC <tg_> so I'm used to pretty much everything I deal with is so far removed from typical quantum physics calculations that I used to do all the time
+2011-05-24 20:07:30 UTC <tg_> ironically, the first place I thought such an idea was worth investigating was after going through all of the modern physical theory (QM -> QFT -> Gauge Theory -> Yang-Mills theories -> String theories)
+2011-05-24 20:07:35 UTC <tg_> was all the way at the end
+2011-05-24 20:13:34 UTC <luite> what idea? sorry for not following you
+2011-05-24 20:14:04 UTC <tg_> the idea of propsing a fractal theory of quantum physics
+2011-05-24 20:14:20 UTC <tg_> it's "wrong" in physics circles for two reasons
+2011-05-24 20:14:37 UTC <tg_> outside of the subfields of [string theory, quantum loop gravity], it's considered completely absurd
+2011-05-24 20:14:54 UTC <tg_> inside the field of string theory, spherical solutions are currently though to be ruled out
+2011-05-24 20:15:47 UTC <tg_> and QLG is one of the least explored areas in theory
+2011-05-24 20:21:35 UTC <luite> do you think the regular non-fractal string theories are wrong?
+2011-05-24 20:23:54 UTC <tg_> no, I think (as do many physicists) think that string theory is a mathematical, not a physical, framework
+2011-05-24 20:25:14 UTC <tg_> As Leonard Susskind (one of the "fathers" of string theory) says, "When one wants to sit down and do a calculation, one immediately discovers that you are off by at least 22 dimensions."
+2011-05-24 20:26:35 UTC <tg_> string theory is (in my view) a mathematical framework to the quanta of spacetime by solving 26 seperate (no cross-product terms) electrostatics problems
+2011-05-24 20:26:41 UTC <luite> hehe I like leonard susskinds lectures (the ones on itunes), but that immediately shows how little I know about this
+2011-05-24 20:26:53 UTC <tg_> how many did you watch?
+2011-05-24 20:27:13 UTC <tg_> the best ones, really, are the string theory ones
+2011-05-24 20:27:16 UTC <tg_> and the m-theory ones
+2011-05-24 20:27:25 UTC <luite> not too many, classical and quantum mechanics I think, still need to do the modern physics ones, one day
+2011-05-24 20:27:25 UTC <tg_> (which don't cover m-theory at all, but that's the title of them)
+2011-05-24 20:27:47 UTC <tg_> string theory basically lets you reduce physics to electrostatic problems over conformal spaces
+2011-05-24 20:27:57 UTC <tg_> where you have 26 different types of charges
+2011-05-24 20:29:37 UTC <tg_> the equations for string theory really are pretty simple (at least the canonical integral is)
+2011-05-24 20:30:53 UTC <tg_> the main problem I suppose
+2011-05-24 20:31:00 UTC <tg_> is that in order to not have cross products
+2011-05-24 20:31:16 UTC <tg_> all of the "dimensions" have to satisfy the cauchy-riemann equations
+2011-05-24 20:32:15 UTC <luite> hehe one day I'll watch them. perhaps this summer when I'm on holiday in the alps, camping, it's been raining for a few days, nothing better to do ;)
+2011-05-24 20:32:30 UTC <tg_> susskind in the alps
+2011-05-24 20:32:34 UTC <tg_> sounds like a good time to me
