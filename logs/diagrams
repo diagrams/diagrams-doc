@@ -1022,3 +1022,9 @@
 2011-05-24 01:16:59 UTC <byorgey> I guess not =)
 2011-05-24 01:17:29 UTC <byorgey> if you want vertical composition that preserves the top object's origin you can use  append (negateV unitY)
 2011-05-24 01:18:21 UTC <byorgey> append v d1 d2  places d1 and d2 next to each other with v pointing from d1 to d2, and preserves d1's origin
+2011-05-24 01:22:21 UTC <tromp> doesn't vcat do something similar on a list?
+2011-05-24 01:23:25 UTC <byorgey> yes
+2011-05-24 01:23:40 UTC <byorgey> so I guess you could also do  vcat [d1,d2]  in this particular case
+2011-05-24 01:24:00 UTC <byorgey> s/I guess//  =)
+2011-05-24 01:25:01 UTC <tromp> i'll try when i get home
+2011-05-24 16:29:18 UTC <luite> ugh I feel a bit guilty about not giving tg_ the latest wolfgang sources he asked for, suggesting that he'd better improve diagrams instead if he really wanted to help
