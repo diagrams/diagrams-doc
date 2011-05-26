@@ -1170,3 +1170,360 @@
 2011-05-24 20:32:15 UTC <luite> hehe one day I'll watch them. perhaps this summer when I'm on holiday in the alps, camping, it's been raining for a few days, nothing better to do ;)
 2011-05-24 20:32:30 UTC <tg_> susskind in the alps
 2011-05-24 20:32:34 UTC <tg_> sounds like a good time to me
+2011-05-25 00:29:15 UTC <hpc> susskind gave a ted talk about feynmann
+2011-05-25 00:29:29 UTC <hpc> that's three awesome things in one tiny .mp4
+2011-05-25 00:44:24 UTC <luite> hmm
+2011-05-25 15:33:16 UTC <tromp> i have to say there was a certain artistic quality to the hrule/vrule mixup:-)
+2011-05-25 15:34:27 UTC <byorgey> hehe, indeed =)
+2011-05-25 15:35:12 UTC <byorgey> sometimes I like just running a diagram in looped-compile mode (with the -l option) and then fiddling around with the source and seeing what comes out =)
+2011-05-25 15:35:55 UTC <byorgey> http://projects.haskell.org/diagrams/gallery/Hilbert.html
+2011-05-25 15:37:15 UTC <tromp> oh, you only need to import the Prelude. i'
+2011-05-25 15:37:23 UTC <tromp> i'll update the wikipedia accordingly
+2011-05-25 15:37:27 UTC <byorgey> no
+2011-05-25 15:37:39 UTC <byorgey> if you want to compile it with the Cairo backend you have to import that
+2011-05-25 15:38:13 UTC <byorgey> I just have things set up in the gallery so that it looks for something named "example" and renders it using the Cairo backend
+2011-05-25 15:38:23 UTC <tromp> ic
+2011-05-25 15:38:27 UTC <byorgey> just to make the examples less backend-specific
+2011-05-25 15:48:50 UTC <tromp> I included a link to Diagrams in the wikipedia version
+2011-05-25 15:49:58 UTC <byorgey> good idea
+2011-05-25 16:02:25 UTC <Lemmih> http://mirror.seize.it/outlines.svg
+2011-05-25 16:03:24 UTC <Lemmih> Add printer + arts&crafts to get a 3D sin wave.
+2011-05-25 16:03:46 UTC <luite> hehe
+2011-05-25 16:05:48 UTC <Lemmih> I am gonna make a matric ton of these.
+2011-05-25 16:06:31 UTC <luite> add a HPGL2 backend to automate production on a cutting table :p
+2011-05-25 16:09:21 UTC <Lemmih> ACTION considers plotting two optimization parameters for GHC and making a cutout.
+2011-05-25 16:11:06 UTC <luite> do you have a sine cutter? ;)
+2011-05-25 16:47:00 UTC <byorgey> Lemmih: did you make those outlines with diagrams too?
+2011-05-25 18:51:04 UTC <luite> whoah it uses ipv6 :O)
+2011-05-25 19:39:45 UTC <sjoerd_visscher> hi!
+2011-05-25 19:39:55 UTC <byorgey> hi sjoerd_visscher!
+2011-05-25 19:39:55 UTC <sjoerd_visscher> who knows something about the UDTree?
+2011-05-25 19:40:15 UTC <byorgey> I pretend to ;)
+2011-05-25 19:40:28 UTC <sjoerd_visscher> I'm confused by the branch having a list of d's instead of just one
+2011-05-25 19:40:54 UTC <sjoerd_visscher> it looks like that was originally the case even
+2011-05-25 19:41:18 UTC <byorgey> sjoerd_visscher: it's sort of a hack
+2011-05-25 19:41:53 UTC <sjoerd_visscher> what do you need it for?
+2011-05-25 19:41:55 UTC <byorgey> sjoerd_visscher: the basic idea is that by delaying composition of the d's we move a Monoid constraint from some creation function to some elimination function
+2011-05-25 19:42:09 UTC <byorgey> and there was some reason why I wanted that but I couldn't tell you now.
+2011-05-25 19:43:26 UTC <sjoerd_visscher> I want to make a version using Fix from http://hackage.haskell.org/packages/archive/recursion-schemes/0.4.3/doc/html/Data-Functor-Foldable.html
+2011-05-25 19:43:34 UTC <byorgey> cool.
+2011-05-25 19:44:07 UTC <sjoerd_visscher> But I'll stick to one d then for now.
+2011-05-25 19:44:22 UTC <byorgey> yes, that makes sense.
+2011-05-25 19:45:17 UTC <sjoerd_visscher> If the u's would have been a list I would understand, as u doesn't need to be a Monoid for Actions to be defined on it
+2011-05-25 19:45:52 UTC <byorgey> yeah
+2011-05-25 19:46:03 UTC <sjoerd_visscher> wait
+2011-05-25 19:46:18 UTC <sjoerd_visscher> still confused
+2011-05-25 19:46:23 UTC <byorgey> I probably need to go back at some point and rethink/clean up UDTree, at the time I just really wanted to get it to work so I could get on with making diagrams =)
+2011-05-25 19:47:42 UTC <sjoerd_visscher> you should move the repo to github if you want more people to send patches I think
+2011-05-25 19:47:59 UTC <byorgey> but then I would have to use git, right?
+2011-05-25 19:48:16 UTC <byorgey> or can I mirror it somehow?
+2011-05-25 19:48:31 UTC <sjoerd_visscher> how did they do it with GHC?
+2011-05-25 19:48:39 UTC <byorgey> I don't really know.
+2011-05-25 19:49:42 UTC <sjoerd_visscher> Google says there are ways to mirror darcs to git
+2011-05-25 19:51:54 UTC <byorgey> sjoerd_visscher: thanks, I will look into it
+2011-05-25 19:52:11 UTC <byorgey> I love github but I can't say I am a big fan of git
+2011-05-25 19:52:45 UTC <sjoerd_visscher> I'm not a fan of command-line tools
+2011-05-25 19:53:06 UTC <luite> what do you use instead, for git? git gui?
+2011-05-25 19:53:11 UTC <sjoerd_visscher> GitX
+2011-05-25 19:53:39 UTC <luite> hmm, havent seen that one yet
+2011-05-25 19:53:48 UTC <sjoerd_visscher> it's for MacOS
+2011-05-25 19:54:21 UTC <luite> oh right, I use UbuntuOS
+2011-05-25 19:54:56 UTC <byorgey> what do you know, https://github.com/purcell/darcs-to-git
+2011-05-25 19:59:19 UTC <Lemmih> byorgey: Yes, I made the outlines with disgrams.
+2011-05-25 19:59:43 UTC <Lemmih> It's amazing what you can do in a few lines of Haskell.
+2011-05-25 19:59:51 UTC <byorgey> Lemmih: impressive, did you use beziers, or just lots of tiny straight lines?
+2011-05-25 20:00:11 UTC <Lemmih> byorgey: Lots of straight lines.
+2011-05-25 20:00:44 UTC <byorgey> I mean eventually I hope someone will write an extension module to let you plot function curves, but I didn't expect it would be that easy to do it from scratch =)
+2011-05-25 20:01:02 UTC <byorgey> yes, having Haskell at your disposal is rather powerful.
+2011-05-25 20:02:45 UTC <Lemmih> The entire code (both for rendering outlines and generating top-down color views) is less than 60 lines.
+2011-05-25 20:03:06 UTC <byorgey> nice
+2011-05-25 20:03:48 UTC <byorgey> Lemmih: while writing it, were there any things you wished were in the standard library, but weren't?
+2011-05-25 20:06:04 UTC <Lemmih> Not really. The hardest part was figuring out how to draw lines.
+2011-05-25 20:07:29 UTC <byorgey> ok.
+2011-05-25 20:07:33 UTC <luite> I think the hard parts of plotting are in all the extra details, choosing a proper range, the right number of ticks, labels, placing the legend somewhere
+2011-05-25 20:16:55 UTC <tromp> that's why the plot script i maintain at work is over 3000 lines of perl:(
+2011-05-25 20:18:41 UTC <tromp> just parsing all the options is over 300 lines:(
+2011-05-25 20:20:35 UTC <byorgey> yikes!
+2011-05-25 20:21:49 UTC <luite> tromp: did you have to do tricky things? like reading font metrics for determining the size and placement of a label or legend box?
+2011-05-25 20:22:18 UTC <tromp> it queries pgplot routines for that
+2011-05-25 20:22:42 UTC <luite> hehe so doing everything in haskell would be even more work :)
+2011-05-25 20:23:28 UTC <tromp> also, it's not self contained, but uses other perl modules for manipulating time series
+2011-05-25 20:23:53 UTC <tromp> rewriting in haskell is not even a consideration:(
+2011-05-25 20:24:15 UTC <luite> aw ;p
+2011-05-25 20:24:39 UTC <tromp> i'm one of the few ppl in my company who has even heard of haskell
+2011-05-25 20:25:29 UTC <luite> show them diagrams and they'll see how awesome it is (just don't mention that there's no text support yet)
+2011-05-25 20:47:30 UTC <byorgey> so we currently have both rotate (which takes an angle in radians) and rotateBy (which takes a fraction of a circle)
+2011-05-25 20:48:01 UTC <byorgey> should we keep both? or drop the radians one? or make one function that takes an argument in some Angle class with instances for both?
+2011-05-25 20:48:58 UTC <byorgey> I'm kind of leaning towards the type class approach but could be talked out of it
+2011-05-25 20:50:07 UTC <tromp> it's hard to imagine why you'd need to rotate by an angle that's not a fraction of pi
+2011-05-25 20:50:45 UTC <alpounet> agreed
+2011-05-25 20:50:56 UTC <byorgey> what if you wanted a particular slope?
+2011-05-25 20:51:06 UTC <byorgey> then you would compute the angle with atan2 or something like that
+2011-05-25 20:52:00 UTC <tromp> yes, then you might need to divide by 2*pi  to get the fraction:(
+2011-05-25 20:52:44 UTC <tromp> is there a way now to use 360 degree type angles?
+2011-05-25 20:53:01 UTC <byorgey> sure, divide by 360 and multiply by 2*pi  ;)
+2011-05-25 20:53:12 UTC <tromp> but not direct?
+2011-05-25 20:53:16 UTC <byorgey> but there are no functions that specifically take angles in degrees
+2011-05-25 20:53:16 UTC <byorgey> right
+2011-05-25 20:54:03 UTC <tromp> it's not clear that fractions like 1/4 are an improvement over degrees like 90
+2011-05-25 20:54:19 UTC <tromp> which many other frameworks use
+2011-05-25 20:54:35 UTC <byorgey> but degrees are arbitrary and dumb.
+2011-05-25 20:54:47 UTC <byorgey> anyway, I am envisioning something like the ability to say   rotate (1/3)   or  rotate (Rad (2*pi/3))   or  rotate (Deg 120)
+2011-05-25 20:54:49 UTC <tromp> arbitrary, dumb, and familiar:(
+2011-05-25 20:54:56 UTC <byorgey> sadly, yes
+2011-05-25 20:55:17 UTC <sjoerd_visscher> the default unit is tau?
+2011-05-25 20:55:27 UTC <tromp> shouldn't the 1/3 be a proper Data.Ratio 1%3 ?
+2011-05-25 20:55:28 UTC <byorgey> yes
+2011-05-25 20:55:34 UTC <sjoerd_visscher> cool
+2011-05-25 20:56:16 UTC <byorgey> tromp: perhaps, but (1/3 :: Rational) == 1%3
+2011-05-25 20:56:38 UTC <byorgey> ok, off to bridge club
+2011-05-25 20:56:51 UTC <tromp> happy bidding
+2011-05-25 20:56:56 UTC <byorgey> thanks
+2011-05-25 21:12:12 UTC <Lemmih> http://mirror.seize.it/spiral.png http://mirror.seize.it/spiral.svg
+2011-05-25 21:13:14 UTC <luite> cool, but it's discontinuous :(
+2011-05-25 21:24:22 UTC <Lemmih> Discontinuous?
+2011-05-25 21:25:40 UTC <luite> yes at the horizontal line from the center to the right
+2011-05-25 21:26:03 UTC <Lemmih> Ah, yeah.
+2011-05-25 21:43:25 UTC <Lemmih> ACTION doesn't know how to fix that /-:
+2011-05-25 21:44:42 UTC <sjoerd_visscher> multiply by pi somewhere
+2011-05-25 21:45:24 UTC <sjoerd_visscher> pi/3
+2011-05-26 13:13:29 UTC <hpc> :( the wolfgang site is down
+2011-05-26 13:13:40 UTC <hpc> or rather, it's no longer up
+2011-05-26 13:44:08 UTC <luite> sorry :p
+2011-05-26 13:44:48 UTC <luite> there were some hanging interpreter processes yesterday, the autokiller doesn't work properly in all situations
+2011-05-26 13:45:43 UTC <luite> and I've added some other things that might decrease security (loading code from one worksheet in another, uploading your own data files)
+2011-05-26 13:45:55 UTC <luite> so I want to fix that first, before making it public again
+2011-05-26 13:46:18 UTC <hpc> ah, makes sense
+2011-05-26 13:55:29 UTC <hpc> can someone review my svg package and give thoughts?
+2011-05-26 13:55:30 UTC <hpc> https://code.google.com/p/hs-svg/
+2011-05-26 13:56:01 UTC <hpc> i could use some input before i start adding more functionality
+2011-05-26 14:06:21 UTC <byorgey> hpc: looks nice!
+2011-05-26 14:06:26 UTC <byorgey> needs moar comments ;)
+2011-05-26 14:07:20 UTC <byorgey> also I think there is a lot of repeated stuff in Out.hs that can be factored into some common routines
+2011-05-26 14:07:58 UTC <luite> using Show to do the output might not be ideal
+2011-05-26 14:08:48 UTC <byorgey> oh, good point.  just derive the Show instance and make another class for serializing SVG stuff
+2011-05-26 14:09:20 UTC <byorgey> then all the functions like showPoint, showElem, etc. can just be instances of that class
+2011-05-26 14:12:44 UTC <luite> and SVGTree may not be the ideal data type for this: SVG is often just a flat list of elements, drawn from top to bottom (painter's algorithm), you  may want to have some (Monoidal) operation to combine two lists of drawing instructions, without adding extra root elements
+2011-05-26 14:13:35 UTC <luite> so even though the XML is always a tree, having a forest for intermediate operation could make sense. I haven't thought about it too much, so I might be wrong :)
+2011-05-26 14:13:57 UTC <hpc> i already have a forest, [SVGTree]
+2011-05-26 14:13:58 UTC <hpc> i think
+2011-05-26 14:14:43 UTC <luite> yes that could work
+2011-05-26 14:15:07 UTC <hpc> i thought about making SVGTree a monoid, then got hung up on mempty
+2011-05-26 14:15:10 UTC <luite> maybe there's already enough
+2011-05-26 14:15:21 UTC <luite> with the g function and a list of trees
+2011-05-26 14:16:44 UTC <hpc> also, i want to keep the types deliberately simple
+2011-05-26 14:16:48 UTC <hpc> strut :: (Backend b v, InnerSpace v, OrderedField (Scalar v), Monoid m) => v -> AnnDiagram b v m -- yuck
+2011-05-26 14:16:53 UTC <luite> haha
+2011-05-26 14:17:24 UTC <hpc> g :: [SVGTree] -> SVGTree -- win
+2011-05-26 14:17:26 UTC <luite> you're supposed to say "how wonderfully polymorphic" ;p
+2011-05-26 14:17:32 UTC <hpc> haha
+2011-05-26 14:18:27 UTC <hpc> (on a side note, the culture of making libs with complex types might be contributing to the perception that there aren't good libs for haskell)
+2011-05-26 14:18:47 UTC <hpc> (because everything looks like ghc internals or whatever, and not like something meant to be used by programmers)
+2011-05-26 14:19:05 UTC <hpc> anyhoo
+2011-05-26 14:19:13 UTC <byorgey> hehe, I have worried about this.
+2011-05-26 14:19:14 UTC <luite> either that, or there should be some syntax for context synonyms :p
+2011-05-26 14:19:33 UTC <byorgey> there is a big tension between making things as useful and general as possible, and making the types comprehensible.
+2011-05-26 14:19:52 UTC <hpc> yeah
+2011-05-26 14:20:09 UTC <byorgey> I have even wondered about making a "beginner version" of diagrams that re-exports all the basic functions but with monomorphic types.
+2011-05-26 14:20:15 UTC <byorgey> or nearly monomorphic.
+2011-05-26 14:20:27 UTC <byorgey> it could be a pain to maintain though.
+2011-05-26 14:20:29 UTC <hpc> i come from the bizarro half-world between java and perl, so i am mostly content with using concrete types as glue
+2011-05-26 14:20:44 UTC <byorgey> perhaps it could be done with some sort of automated tool though.
+2011-05-26 14:21:19 UTC <hpc> i think the big issue is that the class constraints don't separate concerns
+2011-05-26 14:21:20 UTC <byorgey> luite: I already do use some constraint synonyms!
+2011-05-26 14:21:34 UTC <hpc> your backend 'b' leaks through types and goes everywhere
+2011-05-26 14:21:50 UTC <hpc> judging from what 'strut' has to do with the backend (nothing) at least
+2011-05-26 14:22:28 UTC <luite> byorgey: how do you make them? I've used some before, but I think that required some (for me at least) less desirable language pragma's
+2011-05-26 14:22:43 UTC <byorgey> hpc: you can only use a strut in vector space v with backends that work with that vector space.
+2011-05-26 14:23:06 UTC <hpc> oh
+2011-05-26 14:23:27 UTC <byorgey> luite: it's kind of a hack, you make a class with no methods  class (Some, Constraints, Here) => Synonym
+2011-05-26 14:23:36 UTC <luite> ah yes, that's the same method
+2011-05-26 14:23:42 UTC <byorgey> luite: and then a trivial instance   instance (Some, Constraints, Here) => Synonym a
+2011-05-26 14:23:46 UTC <hpc> isn't that a bit beyond the scope of "an EDSL for diagrams"?
+2011-05-26 14:24:10 UTC <byorgey> hpc: um... no? =)
+2011-05-26 14:24:22 UTC <luite> but that requires OverlappingInstances or UndecidableInstances right?
+2011-05-26 14:24:37 UTC <byorgey> luite: I don't remember.
+2011-05-26 14:24:59 UTC <byorgey> luite: I do need those extensions though, but I don't know if it's for that or for other things
+2011-05-26 14:25:04 UTC <luite> hehe after a while all your .hs files start with a few kilobyte of extensions :p
+2011-05-26 14:25:14 UTC <byorgey> yeah =P
+2011-05-26 14:25:46 UTC <hpc> ACTION can happily say he has never used an extension in code that does anything productive
+2011-05-26 14:29:29 UTC <hpc> so, review of your review:
+2011-05-26 14:29:49 UTC <hpc> make stuff derive Show, and make my own class for prettyprinting the elements and trees
+2011-05-26 14:30:23 UTC <hpc> and see how appending trees works, and what i can do to make it easier
+2011-05-26 14:33:52 UTC <luite> yes, and something you may want to keep in mind: it will be useful to store elements and reference them in other locations (defs/symbol + use)
+2011-05-26 14:34:03 UTC <hpc> yeah, that i already have on my todo list
+2011-05-26 14:34:06 UTC <hpc> for textpath
+2011-05-26 14:34:33 UTC <luite> it's also useful for other things, like clipping paths, and groups that you just want to render a lot of times
+2011-05-26 14:34:44 UTC <hpc> indeed
+2011-05-26 14:35:18 UTC <luite> have you thought about how to make that in some way safe? no duplicate symbols, and that you can only refer to an existing symbol?
+2011-05-26 14:36:50 UTC <hpc> that would be intractable
+2011-05-26 14:36:54 UTC <hpc> you can reference lower ids
+2011-05-26 14:36:57 UTC <luite> maybe you can just use Eq to combine equal trees
+2011-05-26 14:37:06 UTC <luite> and generate id's when you write the svg
+2011-05-26 14:37:27 UTC <hpc> so <foo href=bar>...[oodles of complex stuff]...<def id=bar>
+2011-05-26 14:37:47 UTC <luite> some hashing of trees could make the Eq comparisons efficient
+2011-05-26 14:38:37 UTC <hpc> i think ill start out just with a mostly 1:1 mapping of svg <-> haskell
+2011-05-26 14:38:42 UTC <hpc> and add more safety later
+2011-05-26 14:38:50 UTC <hpc> in the rewrite, perhaps
+2011-05-26 14:39:35 UTC <luite> xlink :: SVGTree -> SVGTree -> SVGTree, where you store the references SVGTree in some attribute of the tree
+2011-05-26 14:39:44 UTC <luite> the referenced SVGTree
+2011-05-26 14:40:30 UTC <luite> and when you write the SVG file, you just collect all xlink attributes
+2011-05-26 14:40:37 UTC <luite> and give them some id
+2011-05-26 14:40:48 UTC <luite> combining identical trees
+2011-05-26 14:41:14 UTC <luite> but maybe not ;p
+2011-05-26 14:41:26 UTC <hpc> data SVG = SVG Context SVGTree?
+2011-05-26 14:41:50 UTC <hpc> if anything in C can be solved with a deeper pointer, anything in haskell can be solved with another data structure
+2011-05-26 14:42:30 UTC <luite> hehe, there's a difference though, in C you can use pointer comparison to check whether things refer to the same other thing
+2011-05-26 14:42:45 UTC <hpc> heh
+2011-05-26 14:42:48 UTC <luite> in haskell not really, unless you want to do things that look scary ;)
+2011-05-26 14:43:34 UTC <luite> and with C you can have some global counter to generate your id's
+2011-05-26 14:44:11 UTC <luite> whereas in haskell it's difficult to make unique things in a pure context
+2011-05-26 14:52:11 UTC <tromp> you need to run in a State monad then
+2011-05-26 14:53:29 UTC <luite> there are more specialized monads for that, MonadSupply in particular... but I think it's not ideal to make everything monadic
+2011-05-26 14:54:32 UTC <luite> but maybe the pure alternatives are even worse
+2011-05-26 14:54:33 UTC <tromp> better that than giving up purity, no?
+2011-05-26 14:55:15 UTC <tromp> or passing the state around explicitly
+2011-05-26 14:55:28 UTC <hpc> it's not purity i am worried about, so much as the extra pointless polymorphism
+2011-05-26 14:55:53 UTC <hpc> because the 'a' in your State s a is only ever going to be SVGTree
+2011-05-26 14:56:18 UTC <tromp> how does the polymorphism hurt you?
+2011-05-26 14:56:36 UTC <hpc> it's just annoying is all
+2011-05-26 14:56:50 UTC <hpc> it implies useful types that aren't actually there
+2011-05-26 15:03:46 UTC <hpc> hmm, appendTree l@Leaf{} t = g [l,t]
+2011-05-26 15:04:11 UTC <hpc> appendTree t t' = -- crap, can't even make mappend that way
+2011-05-26 15:29:42 UTC <byorgey> hey there fryguybob
+2011-05-26 15:29:46 UTC <fryguybob> Howdy
+2011-05-26 15:30:37 UTC <byorgey> are you traveling or something? I forget
+2011-05-26 15:31:00 UTC <fryguybob> Yeah, finishing up at my job.
+2011-05-26 15:31:11 UTC <byorgey> ah, cool
+2011-05-26 15:31:22 UTC <fryguybob> Then a conference
+2011-05-26 15:31:34 UTC <byorgey> right, fun
+2011-05-26 15:31:51 UTC <fryguybob> The gallery is coming along nicely.
+2011-05-26 15:32:24 UTC <byorgey> thanks! I had fun coding it up with hakyll
+2011-05-26 15:33:12 UTC <byorgey> now you just add a single .lhs file and it auto-generates the diagram, the gallery itself, the page for the example with syntax-highlighted code, the download link... =D
+2011-05-26 15:41:21 UTC <tg_> byorgey: how do you see animated diagrams working in the future?
+2011-05-26 15:41:29 UTC <tg_> byorgey: or interactive ones, or...
+2011-05-26 15:42:12 UTC <byorgey> animated and interactive are two very different things =)
+2011-05-26 15:43:02 UTC <byorgey> in theory, making animations should work very nicely: in place of diagrams over some vector space v we look at diagrams over  time -> v  (which also form a vector space).
+2011-05-26 15:43:27 UTC <byorgey> however there are a lot of interesting practical details to be worked out.  at some point I need to sit down and think through it carefull again.
+2011-05-26 15:43:42 UTC <tg_> byorgey: have you surveyed the field?
+2011-05-26 15:43:53 UTC <tg_> byorgey: I mention: protovis, prototype(.js), raphael
+2011-05-26 15:44:02 UTC <tg_> et al
+2011-05-26 15:44:23 UTC <byorgey> yes, thanks for the reminder, I should look into those.
+2011-05-26 15:44:26 UTC <tg_> protovis, to me, is the closest to being haskell-friendly because it's (1) declarative, and has (2) discrete time functions
+2011-05-26 15:44:36 UTC <tg_> it's also exceedingly small
+2011-05-26 15:44:43 UTC <tg_> (800 KB)
+2011-05-26 15:44:52 UTC <tg_> prototype.js is very big, very slow
+2011-05-26 15:45:01 UTC <tg_> raphael is *tiny* (55 KB)
+2011-05-26 15:45:41 UTC <hpc> those are javascript libraries?
+2011-05-26 15:46:13 UTC <tg_> yep
+2011-05-26 15:46:22 UTC <byorgey> I really don't understand what the protovis people mean when they say it is "declarative"
+2011-05-26 15:46:33 UTC <tg_> byorgey: you can't write loops in it
+2011-05-26 15:46:39 UTC <byorgey> looking at the code examples it looks quite imperative to me.
+2011-05-26 15:46:50 UTC <byorgey> northbound.forEach(function(stop) stop.bound = "N");
+2011-05-26 15:46:53 UTC <byorgey> what do you call that?
+2011-05-26 15:47:00 UTC <tg_> an iterator
+2011-05-26 15:47:20 UTC <byorgey> what's the difference?  it's looping over a list of things and mutating them.
+2011-05-26 15:47:28 UTC <tg_> you can't (or shouldn/'t?) write a *drawing* loop
+2011-05-26 15:47:37 UTC <tg_> which is one step back (toward) your correct abstraction
+2011-05-26 15:47:45 UTC <tg_> of describing what it should be, not how to draw it
+2011-05-26 15:47:48 UTC <byorgey> ok, fair enough.
+2011-05-26 15:48:01 UTC <tg_> whereas prototype explicity requires drawing loops
+2011-05-26 15:49:25 UTC <tg_> byorgey: I was (ignorantly) considering trying to connect protovis as a backend to diagrams as a stopgap
+2011-05-26 15:49:57 UTC <tg_> a key thing with my work (in haskell, and in general) is that I *always* want animated (& sometimes interactive) diagrams
+2011-05-26 15:50:12 UTC <byorgey> yes, the interactivity yk (toward) your correct abstraction
+2011-05-26 15:50:22 UTC <byorgey> er, sorry,
+2011-05-26 15:50:41 UTC <byorgey> the interactivity you get with protovis et al is extremely nice
+2011-05-26 15:51:05 UTC <tg_> byorgey: yes, some processing examples *really* shine
+2011-05-26 15:51:09 UTC <tg_> and the raphael ones are nice enough
+2011-05-26 15:51:27 UTC <tg_> byorgey: there's also ExtJS, which is made by the Sencha people (who pay the salary of the person who wrote raphael)
+2011-05-26 15:51:27 UTC <byorgey> I think this sort of thing will eventually be possible with diagrams.
+2011-05-26 15:51:36 UTC <tg_> I hope so, I hope I can have a hand in it
+2011-05-26 15:52:00 UTC <tg_> but I have been clamoring for what I'm terming a "visual" or "visceral" isomorphism between haskell code and diagrams
+2011-05-26 15:52:07 UTC <byorgey> however it's important to note that data visualization was not one of the primary drivers behind the design
+2011-05-26 15:52:29 UTC <tg_> which is to say, I want something like a: deriving (Show2D)
+2011-05-26 15:52:44 UTC <tg_> and/or even visual representations of type declerations, classes, signatures
+2011-05-26 15:52:57 UTC <hpc> hmm, text seems to have forced me to redo my output code
+2011-05-26 15:53:17 UTC <tg_> byorgey: one area that I think you might take particular inspiration
+2011-05-26 15:53:21 UTC <hpc> i can't express text as an element with my current code, because it is "shaped" like a block
+2011-05-26 15:53:29 UTC <tg_> byorgey: is the handling of textual information in protovis
+2011-05-26 15:53:38 UTC <byorgey> tg_: ok, I'll take a look at it
+2011-05-26 15:53:39 UTC <tg_> byorgey: where they are integrated using "anchors"
+2011-05-26 15:53:53 UTC <byorgey> tg_: thanks for the tip
+2011-05-26 15:54:04 UTC <hpc> ill work on this tomorrow, perhaps
+2011-05-26 15:54:13 UTC <tg_> byorgey: I know I've heard a few people complain about the lack of annotation in Diagrams
+2011-05-26 15:54:19 UTC <tg_> byorgey: not that they have a right to :O
+2011-05-26 15:54:29 UTC <tg_> byorgey: http://vis.stanford.edu/protovis/docs/anchor.html
+2011-05-26 15:55:45 UTC <byorgey> tg_: the lack of annotation? you mean text?
+2011-05-26 15:56:00 UTC <tg_> byorgey: yes
+2011-05-26 15:56:37 UTC <tg_> byorgey: it may be reasonable to think of "lifting" the TwoD space into a strictly augmented ThreeD space, where the third D only contains "anchors" (points) which serve as reference for text
+2011-05-26 15:57:06 UTC <tg_> so the ThreeD space isn't really ThreeD, it's TwoD ++ text only
+2011-05-26 15:57:25 UTC <byorgey> tg_: that doesn't really make sense to me
+2011-05-26 15:57:27 UTC <tg_> where I use "lift" not in the monad sense, I think
+2011-05-26 15:57:33 UTC <byorgey> tg_: anyway, diagrams has something like anchors already
+2011-05-26 15:57:39 UTC <byorgey> now that I know what they are
+2011-05-26 15:58:15 UTC <byorgey> you can always find out where the "boundary" of a diagram is in any direction
+2011-05-26 15:58:26 UTC <byorgey> and it also supports having named points that you can refer to later
+2011-05-26 15:58:38 UTC <tg_> byorgey: btw, even though I haven't exhaustively read it, the documentation in Diagrams is first class, so cheers for that
+2011-05-26 15:58:42 UTC <byorgey> although the API for using this capability is not very well-developed yet
+2011-05-26 15:58:49 UTC <byorgey> tg_: thanks =)
+2011-05-26 15:58:56 UTC <byorgey> I care a lot about documentation.
+2011-05-26 15:59:01 UTC <tg_> byorgey: i get *very* angry at packages without documentation in haskell
+2011-05-26 15:59:04 UTC <tg_> it's just asking for trouble
+2011-05-26 15:59:06 UTC <byorgey> me too.
+2011-05-26 15:59:23 UTC <tg_> and you're essentially dooming your users to perpetual ignorance unless they write the code themselves
+2011-05-26 16:00:00 UTC <tg_> I've begun to think that there is no other language in which it's more important to *understand* the tools (modules) you're working with than in haskell.
+2011-05-26 16:00:11 UTC <tg_> In many other languages, you are encouraged to get by wtih using the tools without fully understanding them
+2011-05-26 16:00:21 UTC <tg_> I think that's always a mistake in haskell, and I think conal would agree :)
+2011-05-26 16:00:56 UTC <byorgey> =)
+2011-05-26 16:00:58 UTC <tg_> it reminds me of the very wise words of Richard Feynman: "What I cannot create, I do not understand."
+2011-05-26 16:02:16 UTC <tg_> that was the phrase at the top of his blackboard in his office, when he died
+2011-05-26 16:02:24 UTC <tg_> in fact, it was probably there for at least several years before that
+2011-05-26 16:03:44 UTC <tg_> anyway, to work!
+2011-05-26 17:53:14 UTC <ClaudiusMaximus> i want to align my diagrams in a regular grid - what's the best way?
+2011-05-26 17:54:36 UTC <byorgey> ClaudiusMaximus: probably the easiest is to use some combination of phantom and/or withBounds to make their bounding regions square, then compose them with hcat and vcat
+2011-05-26 17:55:44 UTC <byorgey> ClaudiusMaximus: longer term, I'd like to have a 'grid' combinator in Diagrams.TwoD.Combinators, so if you come up with something nice we could incorporate your code
+2011-05-26 17:56:32 UTC <hpc> i think you could do it as two folds
+2011-05-26 17:57:02 UTC <hpc> fold the inner lists with (|||) and mempty (because those things are monoids, yes?)
+2011-05-26 17:57:14 UTC <hpc> then fold the resulting list with (===)
+2011-05-26 17:57:29 UTC <ClaudiusMaximus> i already used   vcat . map hcat  or similar
+2011-05-26 17:57:35 UTC <hpc> or that
+2011-05-26 17:57:59 UTC <ClaudiusMaximus> i think i'd want to get the extents of the largest diagram in the grid first, then expand it a bit for separation purposes, then withBounds . centerXY or something along those lines
+2011-05-26 17:59:31 UTC <byorgey> hpc: vcat and hcat are essentially synonyms for folds with (===) and (|||)
+2011-05-26 17:59:54 UTC <hpc> yeah, i figured
+2011-05-26 18:00:23 UTC <byorgey> ClaudiusMaximus: yes, that sounds good
+2011-05-26 18:01:14 UTC <byorgey> ClaudiusMaximus: withBounds (rect maxX maxY) . centerXY
+2011-05-26 18:01:34 UTC <byorgey> where (rect x y) = square # scaleX x # scaleY y  -- this ought to be added to the std lib...
+2011-05-26 18:08:10 UTC <ClaudiusMaximus> wow, got something working :)
+2011-05-26 18:10:15 UTC <ClaudiusMaximus> http://claudiusmaximus.goto10.org/g/tilings/ammann-a3-grid.png http://hpaste.org/47097/diagram_grid
+2011-05-26 18:12:38 UTC <byorgey> sweet!!
+2011-05-26 18:13:59 UTC <byorgey> ClaudiusMaximus: by the way, taking the mconcat of all the bounds like that is probably less efficient than finding the maximum width/height and doing withBounds with a rectangle
+2011-05-26 18:14:20 UTC <byorgey> although it is a bit more general if you wanted to put things in some arrangement other than a square grid
+2011-05-26 18:14:29 UTC <luite> ClaudiusMaximus: nice
+2011-05-26 18:14:38 UTC <luite> infinite tangram puzzles
+2011-05-26 18:15:53 UTC <ClaudiusMaximus> :)
+2011-05-26 18:15:54 UTC <luite> ClaudiusMaximus: can your program find all ways to tile the pieces?
+2011-05-26 18:16:35 UTC <ClaudiusMaximus> it's deterministic, based on substitution rules (the top row are the seed prototiles, and the row below is after the first substitution
+2011-05-26 18:16:53 UTC <byorgey> ClaudiusMaximus: and it's aperiodic, right?
+2011-05-26 18:17:28 UTC <ClaudiusMaximus> i think this one is, http://tilings.math.uni-bielefeld.de/substitution_rules/ammann_a3
+2011-05-26 18:18:36 UTC <byorgey> awesome
+2011-05-26 18:18:55 UTC <byorgey> just out of curiosity, how long is the code to generate those?
+2011-05-26 18:19:18 UTC <ClaudiusMaximus> is there a nice way to check if bounds intersect?  doesn't have to be perfectly accurate, but knowing if something is outside the viewport could save time subdividing that further...
+2011-05-26 18:19:36 UTC <ClaudiusMaximus> i guess i can convert to rectangles and compare them
+2011-05-26 18:20:20 UTC <byorgey> hmm, an intersection test for bounds is a nice idea
+2011-05-26 18:20:39 UTC <byorgey> I will add it, although there's nothing to do it nicely at the moment
+2011-05-26 18:20:50 UTC <ClaudiusMaximus> i saw there was an (eventually) for testing if paths intersect
+2011-05-26 18:21:19 UTC <byorgey> yes, that would be much more accurate for path-based things
+2011-05-26 18:21:29 UTC <byorgey> testing the bounds will always be an overapproximation
+2011-05-26 18:21:44 UTC <byorgey> but testing paths for intersection is much more difficult
+2011-05-26 18:22:07 UTC <luite> is there a non-approximate way to test intersection of bezier curves?
+2011-05-26 18:22:13 UTC <hpc> yes
+2011-05-26 18:22:41 UTC <hpc> not sure if there's an exact way that always terminates
+2011-05-26 18:22:53 UTC <hpc> :P
+2011-05-26 18:24:05 UTC <luite> termination might be useful in some code ;)
+2011-05-26 18:25:18 UTC <hpc> http://www.truetex.com/bezint.htm
+2011-05-26 18:25:26 UTC <hpc> ^ finding the intersections themselves
+2011-05-26 18:26:21 UTC <hpc> ...which doesn't give an algorithm
+2011-05-26 18:26:44 UTC <byorgey> "I am not going to reveal that unpublished algorithm here..."  =P
+2011-05-26 18:28:22 UTC <luite> there's De Casteljau's algorithm on wikipedia
+2011-05-26 18:28:34 UTC <luite> which recursively splits the curves
+2011-05-26 18:29:20 UTC <luite> and then you can use bounding boxes for the halves or something like that
