@@ -33,12 +33,12 @@ position corresponds to a concentric ring, with black/white indicating
 segments corresponding to consecutive runs of `True`.
 
 > rings n = mkRingsDia . map ringOffsets . transpose . gray $ n
->   where ringOffsets :: [Bool] -> [(Angle, Angle)]
->         ringOffsets = map l2t . chunk 2 . findEdges . zip [0,2*pi/(2^n)..2*pi]
+>   where ringOffsets :: [Bool] -> [(CircleFraction, CircleFraction)]
+>         ringOffsets = map l2t . chunk 2 . findEdges . zip [0,1/(2^n)..1]
 >         l2t [x,y] = (x,y)
->         l2t [x]   = (x,2*pi)
+>         l2t [x]   = (x,1)
 > 
-> findEdges :: Eq a => [(Angle, a)] -> [Angle]
+> findEdges :: Eq a => [(CircleFraction, a)] -> [CircleFraction]
 > findEdges = catMaybes . (zipWith edge <*> tail)
 >   where edge (_,c1) (a,c2) | c1 /= c2  = Just a
 >                            | otherwise = Nothing
