@@ -3,7 +3,7 @@ title: Hilbert curve
 author: John Tromp
 authorurl: http://homepages.cwi.nl/~tromp/
 date: 2011-05-25
-description: An order-5 space-filling Hilbert curve.
+description: An order-5 approximation to the space-filling Hilbert curve.
 tags: fractal, hilbert, curve
 height: 400
 width: 400
