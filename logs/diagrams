@@ -1527,3 +1527,156 @@
 2011-05-26 18:28:22 UTC <luite> there's De Casteljau's algorithm on wikipedia
 2011-05-26 18:28:34 UTC <luite> which recursively splits the curves
 2011-05-26 18:29:20 UTC <luite> and then you can use bounding boxes for the halves or something like that
+2011-05-26 18:30:20 UTC <hpc> and then you know the lines intersect when...?
+2011-05-26 18:30:39 UTC <hpc> well, you know they don't intersect if you can get the bounding boxes to span the whole curve and not touch
+2011-05-26 18:31:29 UTC <byorgey> I know de Casteljau but I've never heard of it being used to test intersection of two Bezier curves... then again, there's quite a lot I don't know =)
+2011-05-26 18:32:14 UTC <luite> byorgey: oh I just found that on stackoverflow, apparently that's the method asymptote uses
+2011-05-26 18:32:32 UTC <byorgey> oh, interesting! link?
+2011-05-26 18:33:13 UTC <luite> http://stackoverflow.com/questions/4039229/checking-if-two-cubic-bezier-curves-intersect
+2011-05-26 18:33:34 UTC <luite> but that algorithm doesn't really check intersection, step 2
+2011-05-26 18:33:41 UTC <luite> I have the feeling that it must be possible to do better
+2011-05-26 18:35:53 UTC <hpc> that top answer is awesome
+2011-05-26 18:38:11 UTC <luite> if you can somehow make a bounding box of parts of the two curves, and the intersection points of the curves with the box alternate when you walk around the box clockwise, then they must intersect
+2011-05-26 18:39:18 UTC <hpc> not even that!
+2011-05-26 18:39:30 UTC <hpc> or rather, you can get more general
+2011-05-26 18:39:49 UTC <luite> probably, show me :)
+2011-05-26 18:39:58 UTC <hpc> crap, i need pictures
+2011-05-26 18:39:59 UTC <hpc> sec
+2011-05-26 18:41:13 UTC <hpc> so
+2011-05-26 18:41:14 UTC <hpc> http://dl.dropbox.com/u/37707/1.png
+2011-05-26 18:41:32 UTC <hpc> suppose you have a blue curve and a red curve, as pictured
+2011-05-26 18:42:15 UTC <luite> haha
+2011-05-26 18:42:27 UTC <luite> what order are those? ;)
+2011-05-26 18:42:43 UTC <hpc> who cares, so long as they hit their respective corners
+2011-05-26 18:42:44 UTC <hpc> anyhoo
+2011-05-26 18:42:49 UTC <hpc> http://dl.dropbox.com/u/37707/2.png
+2011-05-26 18:42:55 UTC <hpc> the bounding boxes intersect like that
+2011-05-26 18:43:00 UTC <luite> but you're right, if you just take the union of the bounding boxes
+2011-05-26 18:43:16 UTC <luite> of any compact region :p
+2011-05-26 18:44:09 UTC <hpc> yes, but not what i meant to say, and god i suck at explaining things
+2011-05-26 18:44:15 UTC <luite> oh
+2011-05-26 18:44:18 UTC <hpc> lol
+2011-05-26 18:44:21 UTC <luite> well at least you have nice pictures
+2011-05-26 18:44:34 UTC <hpc> lemme try again...
+2011-05-26 18:45:04 UTC <luite> ooh
+2011-05-26 18:45:08 UTC <luite> I think I see what you mean
+2011-05-26 18:45:34 UTC <luite> oh no I don't
+2011-05-26 18:45:36 UTC <luite> I was wrong
+2011-05-26 18:45:39 UTC <luite> :p
+2011-05-26 18:45:57 UTC <hpc> http://dl.dropbox.com/u/37707/1.png
+2011-05-26 18:46:00 UTC <hpc> THERE we go
+2011-05-26 18:46:09 UTC <luite> yes
+2011-05-26 18:46:25 UTC <luite> so I was right after all ;p
+2011-05-26 18:46:28 UTC <luite> :D
+2011-05-26 18:46:45 UTC <luite> that's what I thought you meant
+2011-05-26 18:46:49 UTC <byorgey> we need to have a diabot
+2011-05-26 18:46:52 UTC <hpc> yeah, you can take advantage of the fact that there exists a point on the bezier curve for all x
+2011-05-26 18:46:57 UTC <hpc> and blahblah for all y
+2011-05-26 18:47:10 UTC <byorgey> you type diagrams code in the IRC channel and it posts the output to some image hosting site somewhere
+2011-05-26 18:47:15 UTC <hpc> so if you can construct a pair of BB like that, you can say there MUST be an intersection
+2011-05-26 18:47:16 UTC <luite> hpc: yeah but that only works if the bounding boxes have some guaranteed approximation accuracy
+2011-05-26 18:47:50 UTC <hpc> ah right, good point
+2011-05-26 18:48:10 UTC <hpc> and you can't compare two arbitrary precision numbers for > or <
+2011-05-26 18:48:18 UTC <hpc> not in guaranteed finite time
+2011-05-26 18:49:14 UTC <luite> but you could just run the check for finite time, if it doesn't return, you recurse with smaller boxes
+2011-05-26 18:49:28 UTC <hpc> or translated boxes
+2011-05-26 18:49:42 UTC <hpc> just pick different points until they are different enough
+2011-05-26 18:50:02 UTC <luite> it doesn't seem terribly practical to build an algorithm out of this though
+2011-05-26 18:50:12 UTC <hpc> not really
+2011-05-26 18:50:38 UTC <hpc> i like your idea better
+2011-05-26 18:50:59 UTC <hpc> build a BB out of points from the curves, and check what order the points go in
+2011-05-26 18:51:07 UTC <luite> we could reddit both and see who gets the most upvotes ;)
+2011-05-26 18:51:21 UTC <hpc> ACTION doesn't reddit
+2011-05-26 18:51:55 UTC <hpc> wait, problem
+2011-05-26 18:52:29 UTC <hpc> http://dl.dropbox.com/u/37707/Untitled.png
+2011-05-26 18:52:40 UTC <hpc> that bounding box meets the condition, but the curves don't intersect
+2011-05-26 18:52:46 UTC <luite> not exactly a bounding box right?
+2011-05-26 18:52:49 UTC <hpc> er
+2011-05-26 18:52:52 UTC <hpc> oh, derp
+2011-05-26 18:54:42 UTC <hpc> this is so strange
+2011-05-26 18:54:57 UTC <hpc> i just finished math 446, which covers bezier curves
+2011-05-26 18:55:02 UTC <hpc> and now they are everywhere
+2011-05-26 18:55:53 UTC <byorgey> haha, that always happens to me too
+2011-05-26 18:56:07 UTC <hpc> i think i see what this algorithm would be now, i think
+2011-05-26 18:56:38 UTC <hpc> subdivide each bezier curve so the axis-aligned bounding box at all points intersects the curve at opposite corners
+2011-05-26 18:56:49 UTC <hpc> (aka, split where slope is 0 or infinity)
+2011-05-26 18:58:10 UTC <hpc> then do your thing, recursively shrinking the bounding boxes until they either don't intersect, or until there exists a bounding box that the two curves have in common
+2011-05-26 18:59:09 UTC <luite> bah I've never had bezier math :(
+2011-05-26 18:59:51 UTC <hpc> it's a hard class
+2011-05-26 19:45:01 UTC <luite> who's going to come to CamHac? :)
+2011-05-26 19:46:00 UTC <alpounet> wish i could
+2011-05-26 19:46:03 UTC <alpounet> :/
+2011-05-26 19:46:38 UTC <luite> at least it's closer than HacPhi
+2011-05-26 19:46:51 UTC <luite> for me :p
+2011-05-26 19:48:08 UTC <byorgey> luite: I wish I could come to CamHac too, but had already planned to go on vacation with my family during that time
+2011-05-26 19:48:32 UTC <luite> aw :(
+2011-05-26 19:48:50 UTC <luite> don't they enjoy haskell hacking? ;)
+2011-05-26 19:48:51 UTC <byorgey> also my wife might not want me traveling across the ocean when she is eight months pregnant ;)
+2011-05-26 19:49:16 UTC <byorgey> luite: my brother-in-law does, but not really any of the rest of them =)
+2011-05-26 19:49:19 UTC <luite> oh cool. first child?
+2011-05-26 19:49:22 UTC <byorgey> yes =D
+2011-05-26 19:49:47 UTC <luite> for some reason that reminds me of the DOM manipulation API
+2011-05-26 19:50:02 UTC <byorgey> ...?
+2011-05-26 19:50:05 UTC <byorgey> which part?
+2011-05-26 19:50:32 UTC <luite> node.firstChild
+2011-05-26 19:50:35 UTC <luite> .nextSibling :p
+2011-05-26 19:51:43 UTC <byorgey> hehe
+2011-05-26 19:52:45 UTC <byorgey> hmm, should I have commit messages sent to the diagrams-discuss mailing list?  Or maybe I should make a separate diagrams-devel list for that sort of thing?
+2011-05-26 19:54:28 UTC <alpounet> wait what
+2011-05-26 19:54:33 UTC <alpounet> congrats byorgey!
+2011-05-26 19:54:45 UTC <byorgey> thanks alpounet =)
+2011-05-26 19:55:05 UTC <alpounet> i guess you're gonna be the 'cool' kind of father
+2011-05-26 19:55:12 UTC <alpounet> heh
+2011-05-26 19:55:34 UTC <byorgey> hehe, thanks
+2011-05-26 19:55:57 UTC <alpounet> soooo
+2011-05-26 19:56:03 UTC <alpounet> once i'll be done with my undergrad thesis
+2011-05-26 19:56:08 UTC <alpounet> i'll play with diagrams more seriously
+2011-05-26 19:56:27 UTC <alpounet> what's up since the pre-release ?
+2011-05-26 19:58:09 UTC <byorgey> alpounet: we have a nice-ish website now with a gallery of examples, hpc is working on an SVG package that could form the basis of a native SVG backend, I've added various bits of functionality here and there...
+2011-05-26 19:58:32 UTC <byorgey> and several people have already done some cool things with it
+2011-05-26 20:00:00 UTC <alpounet> cool
+2011-05-26 20:09:13 UTC <byorgey> alpounet: what's your thesis about?
+2011-05-26 20:10:40 UTC <alpounet> a link between continued fractions and hyperbolic geometry
+2011-05-26 20:10:52 UTC <byorgey> ooh, very cool
+2011-05-26 20:11:13 UTC <byorgey> I studied a bit about both those subjects in undergrad
+2011-05-26 20:11:30 UTC <byorgey> although I don't remember if I learned about any links between the two
+2011-05-26 20:12:04 UTC <alpounet> well
+2011-05-26 20:13:30 UTC <alpounet> to sum up, both ends of some geodesics related to isometries of the upper-half hyperbolic plane have specific continued fraction developments
+2011-05-26 20:14:17 UTC <byorgey> ok, that makes sense on a high level
+2011-05-26 20:14:58 UTC <byorgey> you'll have to send me a copy of your thesis once you're done =)
+2011-05-26 20:15:32 UTC <alpounet> sure
+2011-05-26 20:15:36 UTC <alpounet> as long as you read French :]
+2011-05-26 20:16:21 UTC <byorgey> oh, haha, I don't, sadly
+2011-05-26 20:16:43 UTC <byorgey> if you have pretty pictures I could just look at those ;)
+2011-05-26 20:16:47 UTC <luite> hmm, how difficult is the french?
+2011-05-26 20:17:33 UTC <luite> lots of difficult arguments, or is it easy to follow from the equations?
+2011-05-26 20:17:50 UTC <alpounet> well
+2011-05-26 20:17:52 UTC <alpounet> for now
+2011-05-26 20:17:56 UTC <alpounet> nothing really complicated
+2011-05-26 20:18:04 UTC <alpounet> i'm writing about infinite continued fractions right now
+2011-05-26 20:18:19 UTC <luite> hmm, probably still too complicated for me :)
+2011-05-26 20:18:30 UTC <alpounet> thus i don't know yet how easy it'll be to guess what i'm telling about hyperbolic geometry :P
+2011-05-26 20:20:38 UTC <luite> are french math terms often similar to the english ones?
+2011-05-26 20:21:14 UTC <alpounet> yeah, a lot of similarities
+2011-05-26 20:24:21 UTC <luite> hmm, at least I can understand most of the french wikipedia article about continued fractions, but that's fairly basic material of course :)
+2011-05-26 20:26:21 UTC <alpounet> well, continued fractions are quite simple anyway
+2011-05-26 20:41:59 UTC <tg_> alpounet: what kind of hyperbolic geometry are you working with>?
+2011-05-26 20:42:50 UTC <alpounet> PoincarÃ©'s upper half plane
+2011-05-26 20:43:08 UTC <tg_> H3 hyperbolid model?
+2011-05-26 20:43:14 UTC <alpounet> studying the action of PSL(2,Z) on the fundamental domain of PoincarÃ©'s upper half plane
+2011-05-26 20:43:20 UTC <alpounet> (among other things)
+2011-05-26 20:43:28 UTC <tg_> you working with a fractal?
+2011-05-26 20:43:29 UTC <tg_> or?
+2011-05-26 20:43:32 UTC <alpounet> nope :P
+2011-05-26 20:43:38 UTC <alpounet> seems like you're a lot into fractals
+2011-05-26 20:44:03 UTC <tg_> well a lot of interesting congruences in PSL2,Z are fractal
+2011-05-26 20:44:23 UTC <tg_> someone recently proved a general statement about zariski density in that space
+2011-05-26 20:44:43 UTC <tg_> can't think of his name
+2011-05-26 20:46:59 UTC <tg_> http://imrn.oxfordjournals.org/content/2010/19/3649.abstract
+2011-05-26 20:48:06 UTC <alpounet> don't have the level to understand this yet :P
+2011-05-26 21:16:41 UTC <byorgey> haha, I went to find the function to look up a named point in a diagram, and I couldn't find it
+2011-05-26 21:16:49 UTC <byorgey> I was pretty sure I had added one...
+2011-05-26 21:17:08 UTC <byorgey> then I found withName :: HasLinearMap v => Name -> (Point v -> AnnDiagram b v m -> AnnDiagram b v m) -> AnnDiagram b v m -> AnnDiagram b v m
+2011-05-26 21:17:40 UTC <byorgey> I don't remember adding it but it's pretty cool =D
+2011-05-26 21:18:14 UTC <byorgey> and way better than the function I thought I had added
+2011-05-26 21:22:02 UTC <byorgey> check it out: http://hpaste.org/47104/referring_to_named_points_in_a  http://www.cis.upenn.edu/~byorgey/Connect.png
