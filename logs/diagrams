@@ -1680,3 +1680,698 @@
 2011-05-26 21:17:40 UTC <byorgey> I don't remember adding it but it's pretty cool =D
 2011-05-26 21:18:14 UTC <byorgey> and way better than the function I thought I had added
 2011-05-26 21:22:02 UTC <byorgey> check it out: http://hpaste.org/47104/referring_to_named_points_in_a  http://www.cis.upenn.edu/~byorgey/Connect.png
+2011-05-26 22:05:23 UTC <tg_> luite: any progress to report, good sir?
+2011-05-26 22:10:13 UTC <luite> tg_: not much to see since I still need to redo security before I online it again
+2011-05-26 22:13:12 UTC <luite> tg_: but the basic customization of gitit is almost done (that is, you can import a page for example /wiki/Diagrams/Tutorial as Wolfgang.Diagrams.Tutorial in other pages, you can upload png images etc, /wiki/Spj.png would be available as spj in Wolfgang.Spj, ByteString, every user has a home dir /Users/Username where only that user and admins can create and edit pages
+2011-05-26 22:13:31 UTC <luite> a public dir /Scratch where everyone can create pages without logging in, and the rest are regular dirs
+2011-05-26 22:15:32 UTC <luite> but I'm a bit unhappy that .lhs doesn't work nicely together with markdown
+2011-05-26 22:16:12 UTC <tg_> luite: i thought that was the whole damn point of the markdown work in gitit?
+2011-05-26 22:16:35 UTC <luite> well, markdown syntax just clashes with .lhs
+2011-05-26 22:16:57 UTC <luite> you can't start a line in a .lhs with ## for example, while that's used for headings in markdown
+2011-05-26 22:17:14 UTC <luite> and blockquotes with > obviously aren't going to work
+2011-05-26 22:19:44 UTC <luite> if all goes well, I only to patch a few lines of gitit source
+2011-05-26 22:20:01 UTC <luite> for the modifications mentioned above
+2011-05-26 22:20:07 UTC <tg_> what about <code> html tags?
+2011-05-26 22:20:12 UTC <tg_> and no >
+2011-05-26 22:20:28 UTC <tg_> i'm sure you've thought of everything
+2011-05-26 22:20:39 UTC <luite> hehe not at all :p
+2011-05-26 22:20:51 UTC <tg_> luite: well, I'm sure you've thought of all of the simple solutions
+2011-05-26 22:21:27 UTC <tg_> I read somewhere that when using .lhs syntax, you need spaces before and after birdbeaks ">" anyway
+2011-05-26 22:21:45 UTC <luite> only after I think
+2011-05-26 22:22:08 UTC <tg_> "In Bird-style you have to leave a blank before the code."
+2011-05-26 22:22:11 UTC <tg_> at
+2011-05-26 22:22:21 UTC <luite> yeah that's after the > :)
+2011-05-26 22:22:35 UTC <tg_> And you have to leave a blank line after the code as well.
+2011-05-26 22:22:40 UTC <luite> yes I know
+2011-05-26 22:22:46 UTC <tg_> isn't that "before and after"?
+2011-05-26 22:22:53 UTC <tg_> i am quoting from
+2011-05-26 22:22:55 UTC <luite> oh I use before and after
+2011-05-26 22:22:57 UTC <tg_> http://www.haskell.org/haskellwiki/Literate_programming
+2011-05-26 22:24:14 UTC <luite> anyway I can work around the ### issue by preprocessing the files, don't know about the blockquote thing though, you can also make a blockquote in markdown by indenting 4 spaces
+2011-05-26 22:24:26 UTC <tg_> :/
+2011-05-26 22:24:39 UTC <tg_> i always get weary of things like that, even though I want to impose similar kinds of things on my own code standsards
+2011-05-26 22:24:42 UTC <luite> yes, especially for multiple levels of quoting
+2011-05-26 22:24:44 UTC <tg_> s/standsards/standards/
+2011-05-26 22:24:56 UTC <luite> I really want to support full markdown in the text cells
+2011-05-26 22:25:06 UTC <tg_> I don't see what the big fuss about markdown is, though
+2011-05-26 22:25:29 UTC <luite> what else? it's simpler than the alternatives
+2011-05-26 22:25:54 UTC <tg_> it is, but strictly in the you're-already-using-ascii sense
+2011-05-26 22:26:06 UTC <tg_> is pandoc fast? any idea?
+2011-05-26 22:26:27 UTC <luite> dunno fast enough for saving pages probably :)
+2011-05-26 22:27:12 UTC <tg_> i may drop out here... tornados and thunderstorms galore around here
+2011-05-26 22:27:32 UTC <tg_> wish me well! :o
+2011-05-26 22:29:00 UTC <tg_> gonna go ahead nd shutdown
+2011-05-27 01:11:50 UTC <hpc> hpc's CMS template postulate: unambiguous, easy to use, powerful: pick any two
+2011-05-27 01:13:04 UTC <byorgey> heh, that makes a lot of sense
+2011-05-27 01:13:17 UTC <byorgey> with diagrams I have tried to go with "easy to use" and "powerful"
+2011-05-27 01:13:30 UTC <byorgey> and I am literally struggling with "ambiguous type" errors =P
+2011-05-27 01:13:40 UTC <hpc> i think i hit unambiguous + easy
+2011-05-27 01:13:55 UTC <hpc> you can always make things more powerful after the fact
+2011-05-27 01:14:21 UTC <byorgey> I don't think that's true
+2011-05-27 01:14:22 UTC <hpc> but it's very hard to recover from ambiguity, or superfluous complexity
+2011-05-27 01:14:38 UTC <hpc> well, you can do it more easily
+2011-05-27 01:15:04 UTC <byorgey> "making things more powerful after the fact" usually leads to horrible complex design with stuff bolted on all over the place
+2011-05-27 01:15:40 UTC <hpc> it's still easier to do, in small amounts
+2011-05-27 01:15:42 UTC <tg_> ACTION casts a one-third valued vote for byorgey in this disagreement
+2011-05-27 01:16:15 UTC <hpc> to recover from ambiguity is very hard, even for minor things
+2011-05-27 01:16:30 UTC <tg_> hm. the source code for lambdabot has an embarrasingly frequent number of references to blowjobs
+2011-05-27 01:16:43 UTC <byorgey> what
+2011-05-27 01:16:43 UTC <hpc> :D
+2011-05-27 01:16:53 UTC <tg_> https://github.com/seliopou/lambdabot/blob/master/State/vixen
+2011-05-27 01:17:08 UTC <hpc> oh god the line endings
+2011-05-27 01:17:15 UTC <tg_> yeah i don't know what's up with that
+2011-05-27 01:18:29 UTC <tg_> i also don't understand why the contents of "quote" are so messed up
+2011-05-27 01:20:16 UTC <tg_> byorgey: yeah, but as I said, embarassingly many
+2011-05-27 01:22:19 UTC <luite> ah you survived the storm, good :)
+2011-05-27 01:22:30 UTC <tg_> luite: indeed, though several people did not :(
+2011-05-27 01:22:37 UTC <luite> :(
+2011-05-27 01:22:42 UTC <tg_> at least 4 more dead today in my state
+2011-05-27 01:22:42 UTC <hpc> :(
+2011-05-27 01:22:53 UTC <tg_> these strings of tornados have been brutal
+2011-05-27 01:23:10 UTC <tg_> and many of them are all-time record holders - 200+ mph winds (for several of them)
+2011-05-27 01:23:17 UTC <tg_> some of them have been more than 2 miles in diameter
+2011-05-27 01:23:24 UTC <hpc> 2 MILES?
+2011-05-27 01:23:26 UTC <tg_> yeah
+2011-05-27 01:23:28 UTC <tg_> i know
+2011-05-27 01:23:33 UTC <tg_> it sounds wrong, but it's not
+2011-05-27 01:23:34 UTC <hpc> how the fuck wide can a tornado get?
+2011-05-27 01:23:40 UTC <tg_> that's about it, as far as we know
+2011-05-27 01:23:46 UTC <hpc> wow
+2011-05-27 01:23:50 UTC <hpc> class over, bbl
+2011-05-27 13:26:56 UTC <manju_> .
+2011-05-27 13:27:11 UTC <luite> byorgey: http://hpaste.org/47137/type_error
+2011-05-27 13:27:19 UTC <byorgey> cabal install GLUT is doing its magic...
+2011-05-27 13:27:40 UTC <manju_> byorgey, yes...that would work too
+2011-05-27 13:28:28 UTC <byorgey> luite: ah, yes, I added some stuff to the cairo backend for manju_
+2011-05-27 13:28:41 UTC <byorgey> so I think you have to use the darcs version
+2011-05-27 13:28:45 UTC <luite> oh ok
+2011-05-27 13:29:53 UTC <byorgey> compile compile compile
+2011-05-27 13:30:10 UTC <luite> oh that means that I also need the darcs from -core and -lib
+2011-05-27 13:30:14 UTC <byorgey> yeah
+2011-05-27 13:31:15 UTC <luite> keeps my cpu busy :)
+2011-05-27 13:31:33 UTC <luite> whoah
+2011-05-27 13:31:34 UTC <luite> err
+2011-05-27 13:31:38 UTC <byorgey> ?
+2011-05-27 13:31:40 UTC <luite> that looks like a snowflake
+2011-05-27 13:31:43 UTC <luite> not a sierpinski
+2011-05-27 13:31:43 UTC <manju_> my first opengl program in years
+2011-05-27 13:31:53 UTC <manju_> luite, I changed it from 5 to 6 :-)
+2011-05-27 13:32:05 UTC <manju_> pentaflake' is actuall hxaflake'
+2011-05-27 13:32:10 UTC <manju_> hexaflake'
+2011-05-27 13:32:13 UTC <manju_> heh
+2011-05-27 13:32:17 UTC <byorgey> manju_: haha, awesome!
+2011-05-27 13:32:21 UTC <luite> but it works, very nice :)
+2011-05-27 13:32:27 UTC <luite> (on windows even)
+2011-05-27 13:32:28 UTC <byorgey> I just got it to run too
+2011-05-27 13:32:32 UTC <manju_> was trying to show my wife that programming was :-)
+2011-05-27 13:32:39 UTC <manju_> s/that/what
+2011-05-27 13:32:40 UTC <luite> the frame rate is low, is that due to diagrams, or do you limit it?
+2011-05-27 13:33:05 UTC <manju_> luite, I am not limiting it
+2011-05-27 13:33:22 UTC <luite> oh I'd estimate it only runs at 10fps here
+2011-05-27 13:33:38 UTC <byorgey> I'm not surprised, diagrams isn't really designed for doing real-time animations
+2011-05-27 13:33:52 UTC <byorgey> although there is almost certainly a lot of room for optimization.
+2011-05-27 13:34:17 UTC <luite> lots of specialize and inline pragma's ;)
+2011-05-27 13:34:28 UTC <byorgey> hehe
+2011-05-27 13:35:08 UTC <manju_> 30 fps ought to be enough for anyone :-)
+2011-05-27 13:35:55 UTC <luite> does it run faster on your system?
+2011-05-27 13:36:50 UTC <manju_> luite, I don't know the FPS, mine is a ATI 5870, but it still seems kinda jerky
+2011-05-27 13:37:09 UTC <luite> yeah my card is old, ati x1900
+2011-05-27 13:37:11 UTC <manju_> luite, it maybe due to me changing the angle by a huge amount (1/6) * 360
+2011-05-27 13:37:17 UTC <luite> oh right
+2011-05-27 13:37:46 UTC <luite> but it still uses 100% cpu on a single core
+2011-05-27 13:37:48 UTC <byorgey> mine runs at about 2 fps
+2011-05-27 13:37:49 UTC <manju_> luite, maybe if I modified it to move a lesser angle it might probably look better
+2011-05-27 13:37:56 UTC <manju_> byorgey, heh
+2011-05-27 13:38:13 UTC <luite> hehe how do you time that?
+2011-05-27 13:38:14 UTC <manju_> wow
+2011-05-27 13:38:28 UTC <byorgey> uh, I just counted =)
+2011-05-27 13:38:34 UTC <luite> hehe
+2011-05-27 13:38:42 UTC <luite> ok, it runs slightly too fast for that here
+2011-05-27 13:39:04 UTC <manju_> yeah, mine is not slow enough to count manually
+2011-05-27 13:39:24 UTC <luite> put I guess it's just cpu limited
+2011-05-27 13:39:46 UTC <luite> any old gfx card should be able to render a few triangles with a single texture faster than this
+2011-05-27 13:40:22 UTC <byorgey> manju_: so is diagrams actually rendering the pentaflake for each frame?
+2011-05-27 13:40:29 UTC <manju_> byorgey, yes
+2011-05-27 13:40:56 UTC <manju_> luite, surely, gears runs at like 20000+ fps on my box, this is definitely slow
+2011-05-27 13:41:22 UTC <byorgey> it would be a lot faster to generate the pentaflake once, then set up a 3d object with this as a texture and rotate the object
+2011-05-27 13:41:31 UTC <manju_> rather that should 2000 not 20000
+2011-05-27 13:41:34 UTC <manju_> 2223.800 FPS
+2011-05-27 13:41:54 UTC <manju_> byorgey, but my target was to do some sort of traffic simulator
+2011-05-27 13:42:20 UTC <manju_> byorgey, I can't do this for that
+2011-05-27 13:42:58 UTC <luite> hmm, there was some traffic simulator demo in one of the hackage packages
+2011-05-27 13:43:08 UTC <luite> don't remember which one
+2011-05-27 13:43:14 UTC <luite> or if it even was hackage :)
+2011-05-27 13:43:36 UTC <manju_> luite, traffic as in real vehicle traffic
+2011-05-27 13:43:52 UTC <manju_> luite, not network packet traffic
+2011-05-27 13:43:53 UTC <luite> yeah that one was just a toy example to demonstrate a gui
+2011-05-27 13:43:59 UTC <manju_> luite, ah...ok
+2011-05-27 13:44:02 UTC <luite> oh yes I meant vehicle traffic
+2011-05-27 13:44:14 UTC <manju_> luite, I would be interested in it
+2011-05-27 13:44:17 UTC <luite> "cars" were driving around in circles and you could slow some of them down
+2011-05-27 13:44:28 UTC <manju_> but byorgey can use this to optimize :-)
+2011-05-27 13:44:36 UTC <manju_> luite, hmm...interesting
+2011-05-27 13:45:32 UTC <byorgey> manju_: sounds cool
+2011-05-27 13:45:55 UTC <manju_> byorgey, yeah I am stuck in the traffic 3 hours a day
+2011-05-27 13:46:07 UTC <byorgey> haha, ouch
+2011-05-27 13:46:09 UTC <manju_> byorgey, I want to see if I can model how to make it better
+2011-05-27 13:46:19 UTC <manju_> byorgey, yeah...I know
+2011-05-27 13:46:20 UTC <luite> haha
+2011-05-27 13:46:27 UTC <manju_> haha
+2011-05-27 13:46:33 UTC <byorgey> if you can model how the actions of a single car can make it better?
+2011-05-27 13:46:46 UTC <luite> you should teach all other drivers how to react
+2011-05-27 13:47:13 UTC <manju_> byorgey, not really I see that traffic pretty much follows a pattern of cars being connected by springs (mass spring model)
+2011-05-27 13:47:14 UTC <byorgey> I am imagining manju_ driving with his traffic simulator running on a laptop in the passenger seat
+2011-05-27 13:47:21 UTC <manju_> byorgey, haha
+2011-05-27 13:47:42 UTC <byorgey> the laptop says, "calculating... calculating... TURN HARD LEFT RIGHT NOW"
+2011-05-27 13:47:48 UTC <luite> manju_: hmm, I thought it was in gloss, but I can't find it
+2011-05-27 13:47:55 UTC <manju_> ...and then I hit a tree
+2011-05-27 13:48:15 UTC <byorgey> well, there are a few bugs to be worked out of the simulator
+2011-05-27 13:48:20 UTC <manju_> luite, that is ok, if you stumble upon it, I can pick it up on the channel
+2011-05-27 13:48:24 UTC <manju_> byorgey, hehe...
+2011-05-27 13:48:43 UTC <luite> your process doesn't exit if I close the window by the way
+2011-05-27 13:48:44 UTC <manju_> this was my first program in years...
+2011-05-27 13:48:53 UTC <manju_> luite, that is a bug
+2011-05-27 13:48:55 UTC <luite> althoguh that might be a problem with the version of freeglut I use
+2011-05-27 13:48:57 UTC <luite> oh ok
+2011-05-27 13:49:20 UTC <manju_> hmmm...it exits in mine though
+2011-05-27 13:49:42 UTC <luite> do you use windows?
+2011-05-27 13:49:53 UTC <manju_> luite, no ubuntu
+2011-05-27 13:51:37 UTC <manju_> ok I am off for now, got to take my kid and wife out
+2011-05-27 13:51:46 UTC <manju_> talk to you guys later
+2011-05-27 13:52:02 UTC <byorgey> ok, bye manju_
+2011-05-27 13:52:12 UTC <manju_> byorgey, thanks again
+2011-05-27 13:52:23 UTC <byorgey> sure
+2011-05-27 13:52:50 UTC <d13724> hi diagraming people
+2011-05-27 13:53:00 UTC <byorgey> hi d13724
+2011-05-27 13:53:44 UTC <d13724> byorgey, I have another question but on diagrams this time
+2011-05-27 13:53:46 UTC <byorgey> trying to produce images from your geometry lib? =)
+2011-05-27 13:54:06 UTC <byorgey> sure, ask away
+2011-05-27 13:54:41 UTC <d13724> yeah one day when I manage to chose a design and start coding it'd be nice if it could draw
+2011-05-27 13:55:43 UTC <d13724> my question is about the scope of diagrams (haven't really tried it yet), does it 'only' draw or is there some geometry functions ?
+2011-05-27 13:56:32 UTC <byorgey> d13724: there is a bit of geometry, but it depends what you are looking for.
+2011-05-27 13:58:19 UTC <d13724> basically I'm thinking of Asymptote + it's geometry module, for example: take a line, make a perpendicular trough a point, then draw both lines and their intersection
+2011-05-27 13:58:19 UTC <byorgey> d13724: what sorts of functions are you interested in?
+2011-05-27 13:58:32 UTC <byorgey> ok, I see
+2011-05-27 13:59:15 UTC <byorgey> It should be pretty easy to add that kind of stuff, and I hope to add it eventually
+2011-05-27 13:59:44 UTC <byorgey> but it doesn't have that sort of thing at the moment
+2011-05-27 14:07:14 UTC <d13724> ok
+2011-05-27 14:29:48 UTC <d13724> byorgey, thanks for the answer, I'll try diagrams and maybe come back here with more questions
+2011-05-27 14:30:04 UTC <byorgey> ok.
+2011-05-27 14:30:05 UTC <d13724> answerS, even
+2011-05-27 15:18:15 UTC <ClaudiusMaximus> still trying to figure out how to test if two diagrams are disjoint - if i could find the vector between the two local origins then i could check whether the Bounds overlap in that direction...
+2011-05-27 15:24:03 UTC <byorgey> ClaudiusMaximus: hmm, so these are two diagrams that you have already composed into one diagram somehow?
+2011-05-27 15:24:15 UTC <byorgey> and now you want to find whether the subpieces are disjoint?
+2011-05-27 15:25:38 UTC <byorgey> or is it just two separate diagrams you have?
+2011-05-27 15:25:40 UTC <ClaudiusMaximus> byorgey: ah, i suppose so (i guess it doesn't make sense to think of it without that composition)
+2011-05-27 15:26:08 UTC <byorgey> right, otherwise there is no particular relationship between the two local origins
+2011-05-27 15:26:09 UTC <ClaudiusMaximus> byorgey: they are separate, but will be composed with atop
+2011-05-27 15:26:22 UTC <byorgey> oh, ok, that makes it easier
+2011-05-27 15:27:03 UTC <byorgey> hmm, let me think
+2011-05-27 15:27:05 UTC <ClaudiusMaximus> and i guess atop will force the local origins to be identical?
+2011-05-27 15:27:21 UTC <byorgey> right
+2011-05-27 15:28:20 UTC <byorgey> hmm, actually, perhaps it is not quite as easy as I thought
+2011-05-27 15:28:31 UTC <ClaudiusMaximus> which doesn't exactly help because the 0 vector has no direction
+2011-05-27 15:28:36 UTC <byorgey> right
+2011-05-27 15:29:01 UTC <byorgey> so presumably these two diagrams have been translated in some way so that "atop" won't necessarily put them directly on top of each other
+2011-05-27 15:29:05 UTC <ClaudiusMaximus> yes
+2011-05-27 15:29:15 UTC <byorgey> so do you know where the "used to" be?
+2011-05-27 15:29:19 UTC <byorgey> where *they
+2011-05-27 15:30:07 UTC <byorgey> ah, wait
+2011-05-27 15:30:08 UTC <ClaudiusMaximus> sort of - i have the initial position and a Transformation
+2011-05-27 15:30:30 UTC <byorgey> would it be sufficient to construct a bounding box for each and test for intersection of those?
+2011-05-27 15:30:34 UTC <byorgey> because that is not difficult
+2011-05-27 15:31:39 UTC <ClaudiusMaximus> yeah that would be fine in this case
+2011-05-27 15:31:52 UTC <byorgey> use boundary unitX, boundary (negateV unitX), boundary unitY, etc. on each to get the coordinates of the boxes
+2011-05-27 15:32:12 UTC <ClaudiusMaximus> cool
+2011-05-27 15:32:54 UTC <byorgey> that's something else that should be added to the standard library, but not too hard to do it manually for now
+2011-05-27 15:32:57 UTC <ClaudiusMaximus> is there a way to clip diagrams?
+2011-05-27 15:33:07 UTC <byorgey> no, not currently.
+2011-05-27 15:33:27 UTC <byorgey> wouldn't be too hard to add for backends that support clipping though.
+2011-05-27 15:33:37 UTC <ClaudiusMaximus> ah.  clipping to a rectangle is what i'll need at the final stage to avoid ragged edges...
+2011-05-27 15:33:52 UTC <byorgey> ok. I will add it for you =)
+2011-05-27 15:35:15 UTC <byorgey> ClaudiusMaximus: would it be sufficient to just have a single "clipping path" as an attribute?
+2011-05-27 15:35:37 UTC <byorgey> if it's just a rectangle I guess that should be fine.
+2011-05-27 15:36:31 UTC <ClaudiusMaximus> byorgey: well, i can imagine things like wanting to have a textured background covering everything, then clipped to show through arbitrary shapes
+2011-05-27 15:37:53 UTC <byorgey> ok. I'll have to look into what, say, cairo can do with clipping, and figure out the best API for supporting it
+2011-05-27 15:38:13 UTC <byorgey> but it should be very easy (probably about 15 minutes of hacking) to get something simple working
+2011-05-27 15:39:19 UTC <fryguybob> Is this clipping going to change the bounds for a diagram?
+2011-05-27 15:42:19 UTC <ClaudiusMaximus> i guess (bounds $ x `clippedBy` y) should be (bounds y), as i don't know if pointwise minimum would work
+2011-05-27 15:44:37 UTC <ClaudiusMaximus> could make it a choice - you could always do  withBounds x (x `clippedBy` y) if you didn't like it?
+2011-05-27 15:45:57 UTC <ClaudiusMaximus> maybe pointwise minimum would work but it breaks my head thinking about it
+2011-05-27 15:50:15 UTC <byorgey> ClaudiusMaximus: why wouldn't pointwise minimum work?
+2011-05-27 15:50:40 UTC <byorgey> fryguybob: I hadn't thought about it.  I suppose you should be able to choose?
+2011-05-27 15:51:00 UTC <byorgey> kind of depends what you are using the clipping for I guess
+2011-05-27 15:51:44 UTC <ClaudiusMaximus> byorgey: i suppose all bounds are convex, then the intersection of two convex regions is always convex (needs a proof maybe?)
+2011-05-27 15:51:45 UTC <fryguybob> Yeah.
+2011-05-27 15:52:43 UTC <ClaudiusMaximus> maybe have two names, perhaps clippedBy and clippedTo
+2011-05-27 15:53:24 UTC <ClaudiusMaximus> where bounds (x`clippedBy`y) = bounds x, bounds (x`clippedTo`y) = bounds y ?
+2011-05-27 15:53:42 UTC <byorgey> well, those two names in particular give me no intuition as to which does which, but yes, having two different clipping functions could work
+2011-05-27 15:54:06 UTC <byorgey> hmm, actually, maybe they do
+2011-05-27 15:57:32 UTC <ClaudiusMaximus> i need a better name for   data TreeFilterThing = Discard | Keep | KeepAllRecursive   (or maybe i should just use Maybe Bool ..)
+2011-05-27 15:59:42 UTC <byorgey> anything but Maybe Bool
+2011-05-27 16:00:54 UTC <fryguybob> Maybe (Either () ())
+2011-05-27 16:02:41 UTC <byorgey> Either () (Either [Void] (Int -> ()))
+2011-05-27 16:03:48 UTC <fryguybob> Wait, which one is FileNotFound?
+2011-05-27 16:06:20 UTC <byorgey> Right (Left [undefined])
+2011-05-27 16:07:17 UTC <byorgey> if the file is found, you get a continuation which takes a byte offset and then computes ()
+2011-05-27 16:09:05 UTC <luite> that looks risky for large files on 32 bit systems
+2011-05-27 16:09:41 UTC <fryguybob> better do (Double -> ())
+2011-05-27 16:10:46 UTC <luite> f :: Double -> (),  f 1 = (), f 2 = (), f 1.5 = )(
+2011-05-27 16:10:53 UTC <luite> obviously
+2011-05-27 16:11:01 UTC <fryguybob> ha!
+2011-05-27 16:12:06 UTC <byorgey> hehehe
+2011-05-27 17:43:25 UTC <tg_> byorgey: here?
+2011-05-27 17:50:23 UTC <luite> tg_: I want to rely less on the type system for security, so I'm adding some things
+2011-05-27 17:51:23 UTC <tg_> luite: "security" here means "safe execution of arbitrary code", yes?
+2011-05-27 17:51:32 UTC <luite> yes
+2011-05-27 17:51:42 UTC <tg_> ok, the document I sent you has little to do with that
+2011-05-27 17:51:56 UTC <tg_> but it does have examples on very smartly handling resource limits, time limits, execution pruning
+2011-05-27 17:52:09 UTC <tg_> and handling killing of processes with cleanup
+2011-05-27 17:53:58 UTC <tg_> luite: in particular, the sections on asynchronous exceptions, timeouts, and the STM versions of those
+2011-05-27 17:56:48 UTC <luite> http://hpaste.org/47141/how_to_be_eval <- perhaps anyone here knows how to do this?
+2011-05-27 18:13:31 UTC <luite> (I accept hacky solutions, as long as they work ;p )
+2011-05-27 18:19:45 UTC <byorgey> luite: you probably need to call  runInterpreter on the call to eval before passing it to forkProcess
+2011-05-27 18:19:50 UTC <byorgey> I guess
+2011-05-27 18:20:02 UTC <byorgey> I don't have much experience with hint but the types work out =)
+2011-05-27 18:20:15 UTC <byorgey> hi tg_
+2011-05-27 18:20:15 UTC <luite> yeah I was afraid of that, because that's exactly the thing I wanted to avoid in the forked process
+2011-05-27 18:20:19 UTC <byorgey> ah
+2011-05-27 18:20:44 UTC <luite> runInterpreter and loadModules need to construct the complete hint environment, parsing the haskell files, loading interfaces etc
+2011-05-27 18:23:17 UTC <tg_> fork seperate processes for eval and runInterpreter
+2011-05-27 18:23:54 UTC <tg_> and then just only call eval on things whose runInterpreter doesn't error out
+2011-05-27 18:23:58 UTC <luite> euh...
+2011-05-27 18:24:08 UTC <tg_> luite: I'm guessing, mang :o
+2011-05-27 18:24:41 UTC <luite> tg_: the point is that I want to run runInterpreter in one process, and then do eval, without runInterpreter in a child, the problem is getting the interpreter state into the child
+2011-05-27 18:27:20 UTC <tg_> luite: this sounds like exactly what that PDF I sent you is desribing how to do, but I can't be sure of that
+2011-05-27 18:27:29 UTC <tg_> he's talking about using concurrent parers and passing the results along
+2011-05-27 18:27:51 UTC <luite> nah the problem really is with this specific module
+2011-05-27 18:28:06 UTC <tg_> luite: hint, you mean?
+2011-05-27 18:29:04 UTC <luite> yes, the InterpreterT type is opaque, you cannot see into it, extract its state or something
+2011-05-27 18:34:17 UTC <tg_> byorgey: I am planning on writing documention for mpppc as exercise today - does anyone even use it?
+2011-05-27 18:35:04 UTC <byorgey> I didn't even know what that was, so I went to the Hackage page to see -- and was surprised to see myself listed as an author
+2011-05-27 18:35:11 UTC <tg_> byorgey: lol
+2011-05-27 18:35:35 UTC <tg_> it has no documentation, and I need practice understanding other's modules and writing documentation
+2011-05-27 18:35:38 UTC <tg_> so I figured I'd do both
+2011-05-27 18:35:43 UTC <byorgey> tg_: I think I am listed as an author because they based it on some code I wrote, probably http://hackage.haskell.org/package/boxes
+2011-05-27 18:35:51 UTC <byorgey> but I don't know anything about it really
+2011-05-27 18:35:57 UTC <tg_> i figured it might be
+2011-05-27 18:36:10 UTC <tg_> oh well, hopefully it actually does something
+2011-05-27 18:36:12 UTC <tg_> and works, etc
+2011-05-27 18:38:06 UTC <byorgey> hehe
+2011-05-27 18:39:19 UTC <ClaudiusMaximus> does this look like a reasonable API for bounding boxes?  http://hpaste.org/47142/bounding_boxes
+2011-05-27 18:39:41 UTC <byorgey> tg_: looks like they just uploaded a new version about a week ago, so at least it's current
+2011-05-27 18:39:51 UTC <luite> ClaudiusMaximus: lol
+2011-05-27 18:40:25 UTC <ClaudiusMaximus> luite: the type signatures are a bit messy..
+2011-05-27 18:40:43 UTC <luite> yes, give me a few hours to read them all and I'll get back to you ;)
+2011-05-27 18:42:11 UTC <byorgey> ah,  Ord (Basis v), I see
+2011-05-27 18:42:30 UTC <luite> ClaudiusMaximus: what's the difference between the primed and unprimed versions?
+2011-05-27 18:42:41 UTC <byorgey> ClaudiusMaximus: yes, looks nice, although I might give inside' and outside' better names
+2011-05-27 18:42:47 UTC <ClaudiusMaximus> luite: a bit of a pun, inside uses <= and inside' uses <
+2011-05-27 18:43:08 UTC <byorgey> oh, wait, I see
+2011-05-27 18:43:21 UTC <ClaudiusMaximus> so non-strict vs strict comparison - i could call them inside and strictlyInside, etc
+2011-05-27 18:43:22 UTC <byorgey> oh, I was confused, I thought one was for testing points and the other for testing boxes
+2011-05-27 18:43:35 UTC <byorgey> no, if that's the difference I think the prime is OK
+2011-05-27 18:44:00 UTC <byorgey> ClaudiusMaximus: but it would probably be useful to also have a function for testing whether a point is inside a BB
+2011-05-27 18:44:19 UTC <ClaudiusMaximus> byorgey: good point
+2011-05-27 18:44:25 UTC <byorgey> hehe
+2011-05-27 18:44:37 UTC <tg_> i gotta convince people to stop using "points" :O
+2011-05-27 18:44:40 UTC <tg_> one day :o
+2011-05-27 18:45:24 UTC <byorgey> what's wrong with points?
+2011-05-27 18:45:36 UTC <tg_> byorgey: nothing's wrong, but there is a more powerful abstraction
+2011-05-27 18:45:45 UTC <tg_> byorgey: let me try and run through it with you real quickly:
+2011-05-27 18:45:52 UTC <ClaudiusMaximus> so i'll add   contains, contains' :: (spam) => BoundingBox v -> v -> Bool
+2011-05-27 18:46:03 UTC <byorgey> haha (spam) =>  =)
+2011-05-27 18:46:17 UTC <tg_> byorgey: don't worry about right or wrong answers, just answer :o
+2011-05-27 18:46:20 UTC <byorgey> ClaudiusMaximus: should be  BoundingBox v -> Point v -> Bool
+2011-05-27 18:46:23 UTC <tg_> draw 1 dimensional line
+2011-05-27 18:46:47 UTC <tg_> -----\
+2011-05-27 18:46:49 UTC <tg_> minus the \
+2011-05-27 18:46:52 UTC <byorgey> ok
+2011-05-27 18:46:57 UTC <tg_> draw a 2D line:
+2011-05-27 18:47:00 UTC <tg_> |
+2011-05-27 18:47:01 UTC <tg_> |
+2011-05-27 18:47:02 UTC <tg_> ---
+2011-05-27 18:47:27 UTC <byorgey> o.... k
+2011-05-27 18:47:28 UTC <tg_> a 3d line will look the same, but with another axis
+2011-05-27 18:47:35 UTC <byorgey> sure
+2011-05-27 18:47:45 UTC <tg_> so lines are the basis vectors for a n-d euclidian space
+2011-05-27 18:48:01 UTC <tg_> so what is a 0-dimensional line?
+2011-05-27 18:48:07 UTC <tg_> .
+2011-05-27 18:48:11 UTC <luite> ClaudiusMaximus: but does a `inside` b mean that a is completely inside b, every point in a is in b?
+2011-05-27 18:48:26 UTC <luite> or that there are points of a in b?
+2011-05-27 18:48:26 UTC <tg_> a 0-dimensional line is a thing without a basis
+2011-05-27 18:48:49 UTC <byorgey> tg_: got it
+2011-05-27 18:49:07 UTC <tg_> ok, so now let's talk about volumes instead of lines (skipping over areas)
+2011-05-27 18:49:48 UTC <tg_> a 3-cube is a normal cube
+2011-05-27 18:49:52 UTC <tg_> a 2-cube is a square
+2011-05-27 18:49:57 UTC <tg_> a 1-cube is a line
+2011-05-27 18:50:01 UTC <tg_> a 0-cube is...?
+2011-05-27 18:50:25 UTC <byorgey> a point, of course
+2011-05-27 18:50:42 UTC <tg_> ok, not, let's do the same, but for spheres and balls
+2011-05-27 18:50:54 UTC <tg_> the weird thing
+2011-05-27 18:51:01 UTC <tg_> is that the "cube" is a 3-cube
+2011-05-27 18:51:07 UTC <tg_> but a "sphere" is a 2-sphere
+2011-05-27 18:51:25 UTC <tg_> going downward, a 1-sphere is a circle
+2011-05-27 18:51:33 UTC <ClaudiusMaximus> luite: the first interpretation
+2011-05-27 18:51:34 UTC <tg_> a 0-sphere is a line *segment*
+2011-05-27 18:51:48 UTC <byorgey> tg_: what? why is it a line segment?
+2011-05-27 18:51:53 UTC <byorgey> that makes no sense
+2011-05-27 18:51:59 UTC <tg_> byorgey: because a 1-sphere is orientable
+2011-05-27 18:52:11 UTC <luite> ClaudiusMaximus: and a `outside` b? does that mean that intersection a b == Nothing, or that b `inside` a?
+2011-05-27 18:52:12 UTC <byorgey> tg_: what is your definition of sphere?
+2011-05-27 18:52:20 UTC <tg_> if you have a circle, you don't automatically know if you're talking about the area inside of the inside or the outside
+2011-05-27 18:52:40 UTC <byorgey> tg_: sure
+2011-05-27 18:52:57 UTC <ClaudiusMaximus> a `intersection` b = Nothing ==> a `outside'` b
+2011-05-27 18:53:11 UTC <tg_> byorgey: is there an analogy for the same fact (orientability) with a line?
+2011-05-27 18:53:54 UTC <luite> ClaudiusMaximus: hmm, perhaps non-class function overlaps would be better than outside?
+2011-05-27 18:53:57 UTC <tg_> it's kind of tricky
+2011-05-27 18:54:04 UTC <tg_> there is, but it only shows up in the complex numbers
+2011-05-27 18:54:52 UTC <tg_> the orientability is the freedom of choice in which direction is (i) or (-i)
+2011-05-27 18:55:21 UTC <tg_> make sense?
+2011-05-27 18:55:38 UTC <byorgey> tg_: no. what is the definition of 'sphere' you are using?
+2011-05-27 18:55:51 UTC <tg_> byorgey: the one that you derivce from the apollonian group fractal
+2011-05-27 18:55:59 UTC <tg_> s/derivce/derive/
+2011-05-27 18:56:05 UTC <byorgey> haha, I should have known =P
+2011-05-27 18:56:23 UTC <tg_> byorgey: it's similar in every way to the Riemannian definition
+2011-05-27 18:56:24 UTC <byorgey> anyway, I don't see why all of this means that we should "stop using points"
+2011-05-27 18:56:31 UTC <tg_> byorgey: because, there's a -1-sphere
+2011-05-27 18:56:38 UTC <tg_> which is a point
+2011-05-27 18:56:47 UTC <ClaudiusMaximus> luite: a`overlaps`b = not (a`outside'`b) ; a`overlaps'`b  is something i need to think about a bit harder (does it mean that the box has >0 size in every dimension?)
+2011-05-27 18:56:48 UTC <tg_> for any-sphere
+2011-05-27 18:57:06 UTC <tg_> you are *guaranteed* that you can take those two points, and invert them about their center
+2011-05-27 18:57:06 UTC <byorgey> so we should talk about -1-spheres instead of points?
+2011-05-27 18:57:17 UTC <tg_> no, but once you have this concept
+2011-05-27 18:57:33 UTC <tg_> then the smallest geometric concept that one can rigoriously talk about is areas
+2011-05-27 18:58:27 UTC <tg_> because if you mention points, you don't know if it's the point on an arc, or if it's center of a circle, or if it's an affine point
+2011-05-27 18:58:43 UTC <tg_> but if you talk about only areas the whole time, then you can still discuss points, but *only* as sets
+2011-05-27 18:59:15 UTC <tg_> if you did electromagnetism, this analogy is very close to that of gauge symmetry
+2011-05-27 18:59:26 UTC <tg_> where only differences in energy are meaningful
+2011-05-27 18:59:42 UTC <tg_> in this geometry, only differences in areas (or equivalently, differences in sets of points) are meaningful
+2011-05-27 18:59:55 UTC <tg_> I didn't invent this concept, several others did, I'm just characterizing it
+2011-05-27 19:00:08 UTC <byorgey> ok, you have lost me now, but it sounds interesting =)
+2011-05-27 19:00:20 UTC <tg_> byorgey: another way to look at it, if you want to not talk about spheres at all
+2011-05-27 19:00:48 UTC <tg_> imagine dividing up some part of your screen into squares
+2011-05-27 19:00:57 UTC <luite> ClaudiusMaximus: hmm, good point...
+2011-05-27 19:01:11 UTC <tg_> the smallest thing you can possibly get is a pixel
+2011-05-27 19:01:41 UTC <tg_> so, I ask the question, what is the smallest thing you can get which has an area?
+2011-05-27 19:01:53 UTC <tg_> in terms of the display itself (and the pixel pitch that it has), it's a single pixel
+2011-05-27 19:02:04 UTC <tg_> but in terms of something which is invariant relative to the screen
+2011-05-27 19:02:09 UTC <tg_> it's a box of 9 pixels:
+2011-05-27 19:02:11 UTC <tg_> . . .
+2011-05-27 19:02:12 UTC <tg_> . . .
+2011-05-27 19:02:13 UTC <tg_> . . .
+2011-05-27 19:02:35 UTC <tg_> it's a square, all of the sides have the same length, and it encloses at least 1 "unit" of area (a pixel)
+2011-05-27 19:02:47 UTC <tg_> however, this:
+2011-05-27 19:02:48 UTC <tg_> . .
+2011-05-27 19:02:48 UTC <tg_> . .
+2011-05-27 19:02:59 UTC <tg_> is not similarly invariant over different monitors, screens, or pixel pitches
+2011-05-27 19:03:09 UTC <tg_> its area changes when the pixel pitch changes
+2011-05-27 19:04:08 UTC <tg_> so if you imagine changing the pixel pitch, then you will get different areas with the four-point-square formulation
+2011-05-27 19:04:24 UTC <tg_> but with the nine-point-square formulation, you can absorb the new pixel pitch in the definition of unit length
+2011-05-27 19:04:32 UTC <tg_> does *that* make more sense?
+2011-05-27 19:05:46 UTC <tg_> if not, then I will have to cede defeat for now :o
+2011-05-27 19:08:02 UTC <luite> why can you change the unit length in one case, but not in the other?
+2011-05-27 19:08:24 UTC <tg_> luite: because there's no single point which can act as a reference for the change
+2011-05-27 19:09:04 UTC <tg_> . .
+2011-05-27 19:09:06 UTC <tg_> . .*
+2011-05-27 19:09:10 UTC <tg_> you can choose to fix that point
+2011-05-27 19:09:14 UTC <tg_> and then change the area
+2011-05-27 19:09:19 UTC <tg_> .  .
+2011-05-27 19:09:21 UTC <tg_> .  .*
+2011-05-27 19:09:47 UTC <tg_> but none of them are guaranteed to be cubes
+2011-05-27 19:10:07 UTC <tg_> in the 9-point-case, there is a point which is equidistant from all of the others (the centeroid point)
+2011-05-27 19:10:11 UTC <tg_> so you can:
+2011-05-27 19:10:20 UTC <luite> err...
+2011-05-27 19:10:20 UTC <tg_> .  .  .
+2011-05-27 19:10:23 UTC <tg_> .  .  .
+2011-05-27 19:10:25 UTC <tg_> .  .
+2011-05-27 19:10:32 UTC <tg_> .   .   .
+2011-05-27 19:10:35 UTC <tg_> .   .   .
+2011-05-27 19:10:39 UTC <tg_> .   .   .
+2011-05-27 19:11:07 UTC <tg_> all of the outer 8 points are invertable through the centroid point
+2011-05-27 19:11:55 UTC <luite> how are those point equidistant, wouldn't they have to lie on a circle?
+2011-05-27 19:12:18 UTC <tg_> luite: no, but there is a transform which can draw them using triangles with a single length
+2011-05-27 19:12:34 UTC <tg_> l = sqrt (h^2 - (1/4)a^2)
+2011-05-27 19:13:02 UTC <tg_> a = (1/2) a h
+2011-05-27 19:13:10 UTC <tg_> big A
+2011-05-27 19:13:11 UTC <tg_> for that one
+2011-05-27 19:13:13 UTC <tg_> A = (1/2) a h
+2011-05-27 19:13:37 UTC <tg_> A = (1/2) a sqrt (h^2 - (1/4)a^2)
+2011-05-27 19:13:56 UTC <tg_> A = (1/2) a^2 sqrt[ b^2 / a^2 - (1/4)]
+2011-05-27 19:14:00 UTC <tg_> that last step
+2011-05-27 19:14:14 UTC <tg_> is the important one
+2011-05-27 19:14:15 UTC <luite> I have no idea what you're even using the triangles for, sorry
+2011-05-27 19:14:24 UTC <tg_> luite: because that's how you draw everything
+2011-05-27 19:14:39 UTC <luite> still no idea ;p
+2011-05-27 19:14:46 UTC <tg_> you can't draw a unit square without triangles
+2011-05-27 19:15:02 UTC <byorgey> ClaudiusMaximus: so do you want to incorporate this bounding box API as a module in diagrams-lib?
+2011-05-27 19:15:27 UTC <tg_> luite: anyway, it doesn't have anything to do with triangles
+2011-05-27 19:15:32 UTC <luite> lol
+2011-05-27 19:15:34 UTC <tg_> the last equation is lorentz-invariant
+2011-05-27 19:15:50 UTC <tg_> it takes areas to areas
+2011-05-27 19:16:45 UTC <tg_> luite: I should change: you can't draw a unit square or a unit circle using a [countable] number system
+2011-05-27 19:16:58 UTC <ClaudiusMaximus> byorgey: yes, but i'm having major doubts and getting confused about Points, Vectors, etc
+2011-05-27 19:17:15 UTC <byorgey> hehe
+2011-05-27 19:17:17 UTC <tg_> ClaudiusMaximus: by all means ignore me :O
+2011-05-27 19:17:51 UTC <byorgey> tg_: I think ClaudiusMaximus was referring to the diagrams types, not to you =)
+2011-05-27 19:18:02 UTC <tg_> byorgey: yeah, but I don't want to confuse anymore more
+2011-05-27 19:18:07 UTC <ClaudiusMaximus> tg_: hehe
+2011-05-27 19:18:07 UTC <luite> tg_: hmm, why? the algebraic numbers, or even algebraic integers are countable
+2011-05-27 19:18:08 UTC <tg_> byorgey: this is certainly confusing enough as is
+2011-05-27 19:18:48 UTC <tg_> byorgey: the definition of sphere I'm using, as you asked earlier, is a quadruple cover of the Poincare half-sphere model
+2011-05-27 19:19:18 UTC <byorgey> ClaudiusMaximus: a vector is a direction with a magnitude
+2011-05-27 19:19:26 UTC <luite> tg_: or do you mean that any collection of points on a line is uncountable?
+2011-05-27 19:19:32 UTC <luite> err
+2011-05-27 19:19:46 UTC <luite> meh
+2011-05-27 19:19:52 UTC <luite> forget that
+2011-05-27 19:19:54 UTC <tg_> luite: the definitions of lines we typically use in euclidian (Reals) space
+2011-05-27 19:19:59 UTC <tg_> are typicall uncountable by definition
+2011-05-27 19:20:05 UTC <ClaudiusMaximus> byorgey: yep, and a point only makes sense in relation to an origin
+2011-05-27 19:21:03 UTC <tg_> luite: I'll try to convince you with the tools we make, instead of tying to do it over IRC
+2011-05-27 19:21:15 UTC <tg_> luite: but I am rather serious about it, even if I can't explain it simply with the tools at hand
+2011-05-27 19:21:20 UTC <byorgey> ClaudiusMaximus: right.  and vectors are unaffected by translations, whereas points are.
+2011-05-27 19:21:36 UTC <ClaudiusMaximus> so, i've been using vectors when i think i should have been using points
+2011-05-27 19:22:00 UTC <luite> tg_: k
+2011-05-27 19:22:16 UTC <byorgey> ClaudiusMaximus: it's quite possible, I did that for quite a while when I started developing diagrams
+2011-05-27 19:22:33 UTC <byorgey> ClaudiusMaximus: and then I ran into some serious bugs that boiled down to a failure to distinguish between them =)
+2011-05-27 19:23:23 UTC <tg_> luite: the amazing thing about this construction, when you follow it all the way through, is that it allows you to compute something like the area of some circles, and turn them into the area of some triangles, and then into the area of some squares - **without** using irrational (or worse) numbers
+2011-05-27 19:23:53 UTC <tg_> which is to say, one can convert between one fractal geometry (the sierpinski gasket) and another (the apollonian gasket) at will
+2011-05-27 19:23:57 UTC <byorgey> ClaudiusMaximus: anyway, converting from a point to a vector can be done with  \p -> p .-. origin
+2011-05-27 19:24:02 UTC <tg_> which is to say, there is an invariant which exists outside of those constructions
+2011-05-27 19:24:20 UTC <byorgey> and converting the other way is  \v -> origin .+^ v
+2011-05-27 19:24:30 UTC <tg_> which is really very surprisg, but it seems to be true
+2011-05-27 19:25:27 UTC <tg_> luite: I always find it somewhat funny how the "cube" model is sort of the "trivial" fractal, but we don't see it as such
+2011-05-27 19:25:32 UTC <ClaudiusMaximus> byorgey: is origin defined somewhere?  i keep seeing references to it, like moveOriginTo (origin .^+ v) === translate (negateV v)
+2011-05-27 19:25:46 UTC <tg_> luite: in the dimension-counting sense
+2011-05-27 19:25:50 UTC <byorgey> ClaudiusMaximus: yes, I forget where off the top of my head
+2011-05-27 19:25:57 UTC <ClaudiusMaximus> byorgey: .. but i assumed that mean forall origin
+2011-05-27 19:26:18 UTC <byorgey> forall origin?
+2011-05-27 19:26:31 UTC <byorgey> ClaudiusMaximus: it is defined in Graphics.Rendering.Diagrams.Points, from diagrams-core
+2011-05-27 19:26:34 UTC <ClaudiusMaximus> like i said, bit confused :)
+2011-05-27 19:26:48 UTC <ClaudiusMaximus> aha, cool
+2011-05-27 19:27:17 UTC <byorgey> origin is just the local origin of whatever vector space you are working in at the time
+2011-05-27 19:27:24 UTC <byorgey> of course it is just defined as  P (0,0)
+2011-05-27 19:27:33 UTC <byorgey> err, P zeroV
+2011-05-27 19:28:29 UTC <byorgey> ClaudiusMaximus: this is useful for getting a sense of what needs to be explained better when I go to write more documentation/tutorial =)
+2011-05-27 19:28:44 UTC <ClaudiusMaximus> cool
+2011-05-27 19:28:53 UTC <byorgey> at some point in the not-too-distant future I plan to write a user guide
+2011-05-27 19:29:32 UTC <byorgey> putting good explanations in the Haddock is good but it's not helpful if you don't even know what you're looking for =)
+2011-05-27 19:30:04 UTC <luite> tg_: hmm, sorry not really following you, I'm still struggling with the fork problem. I'm starting te believe that it's just impossible to do
+2011-05-27 19:30:15 UTC <luite> which is annoying since it's so trivial in C
+2011-05-27 19:31:46 UTC <tg_> luite: i hope not impossible
+2011-05-27 19:31:59 UTC <tg_> luite: explain it to me (so I can learn it) and I'll switch to tryign to help
+2011-05-27 19:32:08 UTC <tg_> what do you mean that you can't see what's inside InterperterT?
+2011-05-27 19:32:13 UTC <byorgey> luite: maybe ask about it in #haskell?
+2011-05-27 19:32:19 UTC <tg_> byorgey: he did, to no avail
+2011-05-27 19:32:22 UTC <byorgey> oh =(
+2011-05-27 19:32:24 UTC <tg_> byorgey: though it might be time to ask again
+2011-05-27 19:32:55 UTC <tg_> luite: I would have thought InterpeterT and eval would ultiamtely do the same thing - run the code and produce a result
+2011-05-27 19:32:58 UTC <luite> byorgey: people usually get suspiciouly quiet when something is actually tricky :p
+2011-05-27 19:33:03 UTC <byorgey> haha
+2011-05-27 19:33:08 UTC <tg_> luite: so perhaps you want a Parser and then an Interpeter?
+2011-05-27 19:33:15 UTC <tg_> or am i totally off base?
+2011-05-27 19:33:44 UTC <luite> tg_: InterpreterT is something completely different, it's a monad transformer for an interpreter state
+2011-05-27 19:34:16 UTC <luite> that state contains the parsed code
+2011-05-27 19:34:33 UTC <luite> byorgey: perhaps #ghc, since it's rather low-level
+2011-05-27 19:34:55 UTC <byorgey> it's not really about ghc though
+2011-05-27 19:35:10 UTC <luite> true, though indirectly it's about the ghc api :)
+2011-05-27 19:35:23 UTC <byorgey> luite: oh, well, actually, that's true =)
+2011-05-27 19:35:35 UTC <byorgey> cairo_copy_clip_rectangle_list (): Gets the current clip region as a list of rectangles in user coordinates.  -- whaaaat
+2011-05-27 19:35:52 UTC <luite> the problem I have at the moment, after some minor patches to hint, is that GhcT is not a MonadPeelIO
+2011-05-27 19:40:12 UTC <byorgey> hmm, can you make it on?
+2011-05-27 19:40:15 UTC <byorgey> *one
+2011-05-27 19:40:57 UTC <luite> not with standalone deriving instance :)
+2011-05-27 19:41:22 UTC <luite> I'm still trying to figure out what exactly it does
+2011-05-27 19:42:09 UTC <byorgey> looks like you're supposed to just put  peelIO = liftPeel peelIO  and implement MonadTransPeel
+2011-05-27 19:42:33 UTC <byorgey> for that you would have to implement
+2011-05-27 19:42:55 UTC <byorgey> peel :: (Monad m, Monad n, Monad o) => GhcT n (GhcT m a -> m (GhcT o a))
+2011-05-27 19:44:56 UTC <byorgey> peel has to capture the current state of the GhcT computation and then return a function which runs the GhcT m a computation using the captured state
+2011-05-27 19:45:26 UTC <byorgey> I don't quite understand what the GhcT o a  is supposed to be
+2011-05-27 19:45:31 UTC <byorgey> an example would be nice =P
+2011-05-27 19:45:39 UTC <tg_> looks like a mnmeonic to remember something
+2011-05-27 19:45:57 UTC <tg_> soh-coh-toa
+2011-05-27 19:46:31 UTC <byorgey> hehe
+2011-05-27 19:46:56 UTC <byorgey> luite: GhcT is from the GHC API?
+2011-05-27 19:47:24 UTC <luite> byorgey: it's some wrapper http://hackage.haskell.org/packages/archive/ghc-mtl/1.0.1.0/doc/html/src/Control-Monad-Ghc.html
+2011-05-27 19:47:57 UTC <tg_> it's time for some good news from our favorite Professor: http://www.youtube.com/watch?v=1D1cap6yETA
+2011-05-27 19:48:40 UTC <byorgey> luite: oh =(
+2011-05-27 19:49:57 UTC <luite> but the other one is also called GhcT
+2011-05-27 19:50:01 UTC <byorgey> luite: I don't think you can implement MonadTransPeel for that without access to its internals
+2011-05-27 19:50:17 UTC <byorgey> because otherwise you have no idea what sort of state it is carrying around
+2011-05-27 19:50:37 UTC <tg_> is MonadTransPeel supposed to "peel" something off?
+2011-05-27 19:51:11 UTC <byorgey> I think the idea is that it lets you "peel off" layers of monad transformers
+2011-05-27 19:51:13 UTC <luite> it's more for doing something under the peel without actually taking the whole peel off :)
+2011-05-27 19:51:21 UTC <byorgey> but I am not sure in what exact sense that is true
+2011-05-27 19:51:40 UTC <tg_> so like, you peel off the skin of an apple, inject some posion, and then glue it back? :o
+2011-05-27 19:51:57 UTC <byorgey> exactly!
+2011-05-27 19:52:08 UTC <tg_> Alan Turing would be proud!
+2011-05-27 19:52:11 UTC <tg_> [too soon?]
+2011-05-27 19:52:53 UTC <tg_> there's a guy whos time on this Earth was cut *far* too short
+2011-05-27 19:53:04 UTC <byorgey> indeed
+2011-05-27 19:53:06 UTC <luite> byorgey: that's why I thought some lower level hack might be appropriate here, something that looks more like the C fork() call, but that doesn't destroy the RTS
+2011-05-27 19:53:14 UTC <tg_> he was just getting started, too
+2011-05-27 19:53:15 UTC <tg_> :(
+2011-05-27 19:53:40 UTC <byorgey> luite: maybe post it as a stack overflow question
+2011-05-27 19:59:15 UTC <luite> that might be a good idea
+2011-05-27 20:05:11 UTC <luite> I'll try to find out some more about the GhcT type first
+2011-05-27 20:05:17 UTC <luite> and bug a few more irc channels ;p
+2011-05-27 20:05:25 UTC <byorgey> =)
+2011-05-27 20:06:04 UTC <byorgey> I'm going to go finish adding clipping
+2011-05-27 20:20:43 UTC <tg_> byorgey: can you tell me how I should change the "import Prelude" line to get rid of the compiler warning
+2011-05-27 20:20:57 UTC <tg_> https://github.com/technogeeky/mpppc/blob/master/src/Text/PrettyPrint/MPPPC/OneDim/Combinators/Tok.hs
+2011-05-27 20:21:54 UTC <tg_> Warning: The import of prelude is redundant except perhaps to import instances from 'Prelude'
+2011-05-27 20:23:03 UTC <tg_> i'll ask in #haskell with hpaste
+2011-05-27 20:23:05 UTC <ClaudiusMaximus> tg_: import Prelude() ;maybe?
+2011-05-27 20:23:15 UTC <tg_> ClaudiusMaximus: nope, that's an error
+2011-05-27 20:25:04 UTC <ClaudiusMaximus> tg_: omit the line completely?
+2011-05-27 20:25:20 UTC <tg_> ClaudiusMaximus: i'm afraid to do that because he actually uses a function replicate()
+2011-05-27 20:25:30 UTC <tg_> it does get rid of the error, though
+2011-05-27 20:26:31 UTC <ClaudiusMaximus> i think you can have multiple definitions of the same name in scope, but it's only an error when you try to use it unqualified
+2011-05-27 20:34:22 UTC <tg_> ClaudiusMaximus: I think he's intends to do that, but I haven't a clue yet
+2011-05-27 20:34:32 UTC <tg_> ClaudiusMaximus: #haskell told me to get rid it using a pragma
+2011-05-27 20:35:11 UTC <ClaudiusMaximus> pasted my bounding box implementation here http://hpaste.org/paste/47142/bounding_boxes_annotation#p47145
+2011-05-27 21:01:54 UTC <ClaudiusMaximus> what's the best way to layer diagrams with transparency?
+2011-05-27 21:27:46 UTC <tg_> ClaudiusMaximus: I think byorgey is working on that now? that's alpha stuff, right?
+2011-05-27 21:36:37 UTC <ClaudiusMaximus> i guess so
+2011-05-27 21:53:17 UTC <luite> hmm, I think I almost have a MonadtransPeel instance now, but the GhcT type has some restrictions on the underlying monad that I need to get into it
+2011-05-27 21:55:43 UTC <tg_> luite: fight through it, I need yoU! :o
+2011-05-27 21:55:59 UTC <luite> hehe ;p
+2011-05-27 21:56:10 UTC <luite> insert rocky music
+2011-05-27 21:57:04 UTC <tg_> indeed
+2011-05-27 21:57:22 UTC <byorgey> ClaudiusMaximus: well, you can draw diagrams with transparent colors using lcA and fcA
+2011-05-27 21:57:38 UTC <tg_> (but ...)
+2011-05-27 21:57:39 UTC <byorgey> something like    foo # fcA (blue `withOpacity` 0.3)
+2011-05-27 21:57:44 UTC <tg_> oh, no but
+2011-05-27 21:57:51 UTC <byorgey> there is a but
+2011-05-27 21:58:52 UTC <byorgey> the but is that if you want to take a diagram that you have already given colors to, there's (currently) no way to say "now make this whole diagram transparent"
+2011-05-27 21:59:09 UTC <byorgey> but if that's something people want I could think about how to add that
+2011-05-27 21:59:56 UTC <byorgey> actually, I was just working on generalizing style combination to use arbitrary semigroup instances for attributes
+2011-05-27 22:00:01 UTC <byorgey> which should make it easier
+2011-05-27 22:01:03 UTC <byorgey> ClaudiusMaximus: thanks for the bounding box implementation
+2011-05-27 22:01:13 UTC <tg_> byorgey: this time, I get to say: I'll take your word for it
+2011-05-27 22:01:22 UTC <byorgey> tg_: haha =)
+2011-05-27 22:01:37 UTC <byorgey> ClaudiusMaximus: do you want to stick it in a module in diagrams-lib and send me a darcs patch? or would you like me to do it?
+2011-05-27 22:02:40 UTC <tg_> byorgey: ok, can you walk me through a troubleshooting step? I'm trying to do:
+2011-05-27 22:02:41 UTC <luite> tg_: this is what I have, but it's not correct (last annotation), because of the constraints on the underlying monads http://hpaste.org/paste/47141/how_to_be_eval_annotation#p47148
+2011-05-27 22:02:47 UTC <tg_> cabal install darcs
+2011-05-27 22:02:50 UTC <tg_> but first, I did:
+2011-05-27 22:02:58 UTC <tg_> cabal install --only-deps darcs
+2011-05-27 22:03:05 UTC <tg_> which worked all the way through hashed-storage
+2011-05-27 22:03:17 UTC <tg_> that fails to link with ExitError 9
+2011-05-27 22:03:18 UTC <tg_> http://hackage.haskell.org/packages/archive/hashed-storage/0.5.7/hashed-storage.cabal
+2011-05-27 22:03:23 UTC <tg_> that is the link to its cabal file
+2011-05-27 22:03:26 UTC <byorgey> tg_: no idea, sorry
+2011-05-27 22:03:34 UTC <tg_> what in there tells me where I should look for C libs and whatnot
+2011-05-27 22:03:43 UTC <tg_> things outside of haskell
+2011-05-27 22:04:46 UTC <tg_> kk
+2011-05-27 22:09:48 UTC <ClaudiusMaximus> byorgey: i'm not too familiar with darcs, but if you want to clean it up and put it in diagrams-lib, would be handy i think
+2011-05-27 22:12:21 UTC <luite> tg_: it doesn't use external C dependencies as far as I can see
+2011-05-27 22:12:36 UTC <luite> tg_: but it does have a C source file
+2011-05-27 22:14:31 UTC <ClaudiusMaximus> gnarg.  adjustDia in diagrams-cairo defeats my attempt to clip my diagram
+2011-05-27 22:17:15 UTC <tg_> luite: I gave up and used the distro version
+2011-05-27 22:17:31 UTC <tg_> luite: since it's the same version
+2011-05-27 22:28:37 UTC <luite> tg_: I'm going to try to use the GHC API directly instead of going through hint
+2011-05-27 22:30:42 UTC <tg_> luite: ok
+2011-05-27 22:31:15 UTC <tg_> hint is "a huge subset of the GHCI api" "wrapped in a simpler API"
+2011-05-27 22:31:18 UTC <tg_> hmmmmm
+2011-05-27 22:31:45 UTC <luite> yes, the main problem is that the GHC API changes often
+2011-05-27 22:32:29 UTC <tg_> luite: so hint "wraps" that up in an API that is less likely to change?
+2011-05-27 22:33:52 UTC <luite> yes, and is easier to use, it re-throws exceptions and stuff
+2011-05-27 22:33:56 UTC <luite> and probably much more :)
+2011-05-27 22:35:10 UTC <tg_> at this point then
+2011-05-27 22:35:16 UTC <tg_> I would go ahead and post a general question on stackexchange
+2011-05-27 22:35:24 UTC <tg_> and see if there might be another angle of attack
+2011-05-27 22:35:34 UTC <tg_> and then, try moving up to the ghc lib
+2011-05-27 22:35:50 UTC <tg_> that way if in 10 hours or so you haven't gotten it going, maybe someone else will point you in another direction
+2011-05-27 22:46:52 UTC <ClaudiusMaximus> oops, not cairo backend to blame, it's withBounds that is -- XXX this isn't quite right!  Need to think about this a bit more...
+2011-05-27 22:58:50 UTC <tg_> holy crap
+2011-05-27 22:58:59 UTC <tg_> compiling just locked up my vm!
+2011-05-27 23:01:59 UTC <luite> did you have swap space enabled?
+2011-05-27 23:02:07 UTC <tg_> yep
+2011-05-27 23:02:15 UTC <tg_> i rebooted it, building
+2011-05-27 23:02:17 UTC <tg_> i am getting a GHC panic
+2011-05-27 23:02:34 UTC <tg_> loading package ghc-7.0.2 ... ghc: This ELF file contains no symtab
+2011-05-27 23:02:46 UTC <tg_> ghc: panic! the ('impossible' happened)
+2011-05-27 23:04:10 UTC <tg_> In the meantime, the workaround is to not strip it.
+2011-05-27 23:04:45 UTC <luite> what did you strip, and why?
+2011-05-27 23:04:49 UTC <tg_> I didn't
+2011-05-27 23:04:50 UTC <tg_> it's a known bug
+2011-05-27 23:04:54 UTC <tg_> http://hackage.haskell.org/trac/ghc/ticket/5004
+2011-05-27 23:06:33 UTC <tg_> ok i'm tired of messing with this
+2011-05-27 23:06:36 UTC <tg_> i'm gonna go workout, bbl
+2011-05-27 23:29:59 UTC <ClaudiusMaximus> some layers of substitutions superimposed http://claudiusmaximus.goto10.org/g/tilings/ammann-a3-patch-alpha-enhanced.png  (cropped and colour-enhanced in gimp)
+2011-05-27 23:32:14 UTC <luite> oooh
+2011-05-27 23:35:46 UTC <ClaudiusMaximus> my roadmap (such as there is one..) for this messing around is to make zooming animations where larger layers fade out and smaller layers fade in
+2011-05-27 23:36:18 UTC <luite> your next task is to optimize diagrams to make that possible ;)
+2011-05-27 23:37:00 UTC <ClaudiusMaximus> i don't mind the waiting (that image took around 30 seconds for the svg)
+2011-05-27 23:37:13 UTC <luite> whoah
+2011-05-27 23:37:23 UTC <ClaudiusMaximus> but i was running in ghci uncompiled
+2011-05-27 23:38:25 UTC <ClaudiusMaximus> last 7 levels of a tree 12 levels deep, with an average of 3 subtiles per tile
+2011-05-28 00:09:47 UTC <byorgey> ClaudiusMaximus: woah, cool!!
+2011-05-28 00:10:02 UTC <byorgey> ClaudiusMaximus: the withBounds thing is fixed in darcs
+2011-05-28 00:16:19 UTC <byorgey> ClaudiusMaximus: also, clipping turns out to be slightly more difficult than I thought
+2011-05-28 00:16:37 UTC <byorgey> it is still quite possible, I just have to think for a bit about the right way to refactor things to allow it cleanly
+2011-05-28 00:22:15 UTC <ClaudiusMaximus> i'm currently trying to figure out how to modify the style of a diagram
+2011-05-28 00:23:20 UTC <ClaudiusMaximus> http://hpaste.org/47154/modify_style is how far i've got, which is not very
+2011-05-28 00:36:27 UTC <byorgey> hmmm
+2011-05-28 00:37:25 UTC <byorgey> you're not really supposed to be able to directly 'modify' attributes
+2011-05-28 00:37:39 UTC <ClaudiusMaximus> ok
+2011-05-28 00:37:48 UTC <byorgey> but in the darcs version every attribute forms a Semigroup (i.e. Monoid without identity element)
+2011-05-28 00:38:17 UTC <byorgey> so we need to come up with an appropriate semigroup for combining colors
+2011-05-28 00:38:33 UTC <byorgey> oh! I've got it
+2011-05-28 00:38:43 UTC <byorgey> what if opacity is a separate attribute from color
+2011-05-28 00:39:03 UTC <byorgey> that forms a monoid under multiplication
+2011-05-28 00:39:16 UTC <byorgey> er, semigroup
+2011-05-28 00:39:28 UTC <byorgey> so you would be able to say "make this diagram 25% more transparent" or whatever
+2011-05-28 00:39:36 UTC <ClaudiusMaximus> yeah that'd be cool
+2011-05-28 00:40:07 UTC <byorgey> ok that's not actually that hard to implement (famous last words)
+2011-05-28 00:40:49 UTC <ClaudiusMaximus> but then you might want to do funky stuff like "rotate this diagram's colours 37.4 degrees clockwise in YUV colour space" - would that be possible too?  or am i thinking about this in the wrong way...
+2011-05-28 00:41:01 UTC <byorgey> haha, woah
+2011-05-28 00:42:06 UTC <byorgey> I'll have to think about it more
+2011-05-28 00:42:21 UTC <byorgey> I'm definitely not convinced we have exactly the right design for attributes yet
+2011-05-28 00:42:46 UTC <ClaudiusMaximus> i guess there comes a point where you have to decide what the scope of the library is, and the name makes it fairly clear
+2011-05-28 00:43:48 UTC <ClaudiusMaximus> at the moment i have colours etc hardcoded in my diagrams - i think i'd be better off "naming" them
+2011-05-28 00:43:58 UTC <byorgey> yeah, I think if you wanted to do something like that color rotation thing, then you should just parametrize your diagram creation functions by a YUV colour space rotation in the first place
+2011-05-28 00:44:09 UTC <byorgey> yeah
+2011-05-28 00:44:26 UTC <byorgey> of course you can do the opacity like that too -- make the opacity a parameter to your diagrams
+2011-05-28 00:44:58 UTC <byorgey> but opacity is common enough and it seems easy enough to add it as a separate attribute
+2011-05-28 00:45:24 UTC <ClaudiusMaximus> then using something like CSS - say, every tile with a name "L-shaped tile" has this colour, every tile in level "n" has opacity 1 - 1/n, or something like that
+2011-05-28 00:46:14 UTC <byorgey> yeah, I wanted to avoid a complicated system like that for specifying properties after the fact
+2011-05-28 00:46:31 UTC <byorgey> although I certainly am sympathetic to the idea of separating styling from "content"
+2011-05-28 00:47:00 UTC <ClaudiusMaximus> ok
+2011-05-28 00:47:15 UTC <byorgey> but since a function to construct a diagram can just take a Style as an argument and use it, it's not that bad
+2011-05-28 00:47:44 UTC <byorgey> you don't have to think of everything you might want to customize beforehand and make a separate argument for each thing
+2011-05-28 00:48:12 UTC <ClaudiusMaximus> hm
+2011-05-28 00:50:11 UTC <ClaudiusMaximus> do you mean something like in my case i could make a    Map (TileID, ZoomLevel) Style   and pass that to my tiling generator?
+2011-05-28 00:51:04 UTC <luite> ugh I'm getting frustrated... I tried making my own forkProcess ghc primitive from the original rts sources, but it's difficult to compile because you need way too many rts internals...
+2011-05-28 00:51:41 UTC <byorgey> ClaudiusMaximus: sure, or just a function  TileID -> ZoomLevel -> Style
+2011-05-28 00:52:30 UTC <byorgey> ClaudiusMaximus: then your tiling generator uses it to compute a style and apply it
+2011-05-28 00:53:11 UTC <byorgey> ClaudiusMaximus: and if there are some attributes that will always be the same you can just apply those directly -- and they can be overridden by the Style depending on which you apply first
+2011-05-28 00:54:21 UTC <ClaudiusMaximus> maybe actually using CSS would be the best in my case - can cairo svg backend include embedded CSS?
+2011-05-28 00:54:41 UTC <byorgey> I don't know
+2011-05-28 00:54:59 UTC <byorgey> probably not, I don't remember seeing anything about CSS in the cairo docs
+2011-05-28 00:55:05 UTC <ClaudiusMaximus> ok
+2011-05-28 00:55:11 UTC <ClaudiusMaximus> ainly i just want to tweak the opacity of a few layers without having to render the whole thing again :)
+2011-05-28 00:56:23 UTC <byorgey> makes sense =)
+2011-05-28 00:59:27 UTC <byorgey> ClaudiusMaximus: I'm recording the darcs patch importing your bounding box code, how should I list your name and email?
+2011-05-28 00:59:40 UTC <byorgey> so you are properly credited
