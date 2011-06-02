@@ -2375,3 +2375,313 @@
 2011-05-28 00:56:23 UTC <byorgey> makes sense =)
 2011-05-28 00:59:27 UTC <byorgey> ClaudiusMaximus: I'm recording the darcs patch importing your bounding box code, how should I list your name and email?
 2011-05-28 00:59:40 UTC <byorgey> so you are properly credited
+2011-05-28 01:01:17 UTC <ClaudiusMaximus> byorgey: if you must, Claude Heiland-Allen claudiusmaximus#goto10.org
+2011-05-28 01:01:28 UTC <ClaudiusMaximus> :)
+2011-05-28 01:01:37 UTC <byorgey> yes, I insist =)
+2011-05-28 01:04:18 UTC <ClaudiusMaximus> so, cairo gives no control over svg output it seems from a message on a graphviz list
+2011-05-28 01:06:17 UTC <luite> yay I can fork off new processes now, and evaluate hint in them
+2011-05-28 01:06:22 UTC <byorgey> ah, too bad
+2011-05-28 01:06:26 UTC <byorgey> luite: yay!!
+2011-05-28 01:06:47 UTC <luite> byorgey: unfortunately I probably leave the rts in an inconsistent state
+2011-05-28 01:06:51 UTC <byorgey> ClaudiusMaximus: hpc was working on a native SVG library for Haskell
+2011-05-28 01:06:54 UTC <byorgey> luite: heh
+2011-05-28 01:07:03 UTC <luite> so this might have been a pointless exercise
+2011-05-28 01:07:16 UTC <byorgey> ClaudiusMaximus: so perhaps eventually it will be possible to go directly via that and have a bit more control over it
+2011-05-28 01:07:58 UTC <luite> byorgey: I copied the forkProcess primitive from the rts, renamed the function and modified it to just return to the code, instead of running an IO action
+2011-05-28 01:09:29 UTC <byorgey> wow, yuck =)
+2011-05-28 01:09:30 UTC <ClaudiusMaximus> byorgey: cool
+2011-05-28 01:10:00 UTC <luite> this might be the most terriblest thing I've done with haskell :)
+2011-05-28 01:10:45 UTC <ClaudiusMaximus> i think i'll adopt a hybrid approach for my mini-project - render images with 'diagrams', then composite the layers with opengl
+2011-05-28 01:11:12 UTC <byorgey> ClaudiusMaximus: that sounds like a good approach
+2011-05-28 01:11:57 UTC <byorgey> ClaudiusMaximus: especially if you are going to be doing some fading in/out or whatever, compositing with OpenGL will be MUCH faster than re-rendering each frame with different opacities using diagrams
+2011-05-28 01:15:27 UTC <ClaudiusMaximus> yep
+2011-05-28 01:16:21 UTC <ClaudiusMaximus> maybe it would be fun to have a diagrams-cairo-opengl thingy to render diagrams using cairo to opengl textures
+2011-05-28 01:17:44 UTC <byorgey> oh, I helped manju_ get some code working to do that
+2011-05-28 01:18:23 UTC <luite> aren't there packages that can do that without cairo?
+2011-05-28 01:18:44 UTC <byorgey> ClaudiusMaximus: http://hpaste.org/47135/spinning_sierpinski_opengl
+2011-05-28 01:18:51 UTC <luite> not that it's very important, but the haskell platform does contain glut and gl, so that would make windowed graphics possible without extra deps
+2011-05-28 01:19:10 UTC <byorgey> yes, I'd like to have an opengl backend for diagrams eventually
+2011-05-28 01:23:57 UTC <hpc> ooh, that would be awesome
+2011-05-28 01:24:06 UTC <alpounet> indeed
+2011-05-28 01:24:34 UTC <ClaudiusMaximus> byorgey: cool, will have to try it later
+2011-05-28 02:53:37 UTC <tg_> byorgey: you don't need necessarily to go all the way
+2011-05-28 02:53:51 UTC <tg_> one could just use a CUDA- or OpenCL- type background to do computation
+2011-05-28 03:30:39 UTC <ClaudiusMaximus> it worked! http://claudiusmaximus.goto10.org/g/tilings/ammann-a3-zoom.ogv
+2011-05-28 03:37:35 UTC <luite> nice. did you use opengl for compositing?
+2011-05-28 03:38:04 UTC <ClaudiusMaximus> yep
+2011-05-28 04:01:28 UTC <ClaudiusMaximus> better version (mipmaps etc) http://claudiusmaximus.goto10.org/g/tilings/ammann-a3-zoom-2.ogv
+2011-05-28 04:14:15 UTC <luite> do you have a hd version? :)
+2011-05-28 04:15:17 UTC <ClaudiusMaximus> can do, but the textures are only 1024x1024 so it might not look that great - i could reconvert from the svg i suppose..
+2011-05-28 05:39:01 UTC <ClaudiusMaximus> luite: http://claudiusmaximus.goto10.org/v/misc/ammann_a3_dynamo.mkv (30MB)
+2011-05-28 12:30:32 UTC <hpc> haha, that music
+2011-05-28 12:38:53 UTC <ClaudiusMaximus> i ported the opengl compositing part from haskell to puredata+gem to sync it up with music in real time - changing colours, zooming in and out, spinning around - needs more work though, is a bit too random at the moment...
+2011-05-28 12:53:41 UTC <luite> oh I hadn't even notice that there was sound :)
+2011-05-28 12:56:38 UTC <luite> bah these ubuntu scrollbars are buggy
+2011-05-28 13:50:53 UTC <luite> tg_: I have fork support working by the way
+2011-05-28 13:51:35 UTC <luite> but some underlying issues need to be resolved, I need to force the GHC API to load all modules before the fork
+2011-05-28 13:51:45 UTC <luite> otherwise it doesn't help much :)
+2011-05-28 14:03:07 UTC <luite> byorgey: don't your text adventures have grues?
+2011-05-28 16:28:32 UTC <tg_> [ You are eaten by a grue. ]
+2011-05-28 17:53:52 UTC <hpc> someone should write a text adventure in haskell with opengl
+2011-05-28 17:53:56 UTC <hpc> just to be pointless
+2011-05-28 18:21:57 UTC <tg_> I also nominate that 'pointless' never be used in the sense that 'pointfree' could be used.
+2011-05-28 18:22:00 UTC <tg_> that irritates me
+2011-05-28 18:51:24 UTC <luite> tgeeky: yay solved the forking problem stuff
+2011-05-28 18:51:35 UTC <tgeeky> luite: excellent
+2011-05-28 18:52:16 UTC <luite> I can now fork a new, completely initialized, ghc api process in 0.04 seconds
+2011-05-28 18:52:37 UTC <tgeeky> define "completely initalized"?
+2011-05-28 18:52:51 UTC <tgeeky> "ready to accept input for evalution"?
+2011-05-28 18:52:53 UTC <luite> around 100 packages from hackage linked in memory
+2011-05-28 18:53:12 UTC <tgeeky> that's pretty fast
+2011-05-28 18:53:23 UTC <luite> nah loading the 100 packages takes a few seconds
+2011-05-28 18:53:27 UTC <luite> but I do that in the main process
+2011-05-28 18:53:36 UTC <luite> forking the child just copies the entire memory space
+2011-05-28 18:53:36 UTC <tgeeky> the fork-ed processes inherit that?
+2011-05-28 18:53:41 UTC <tgeeky> how big is it?
+2011-05-28 18:53:46 UTC <luite> dunno, big probably ;p
+2011-05-28 18:53:49 UTC <luite> but it's copy on write
+2011-05-28 18:53:57 UTC <luite> so that shouldn't matter
+2011-05-28 18:54:10 UTC <tgeeky> depends on the OS, I guess
+2011-05-28 18:54:18 UTC <luite> yes but the OS is fixed, linux
+2011-05-28 18:54:37 UTC <luite> I'll need to add more OS specific stuff later
+2011-05-28 18:54:41 UTC <tgeeky> can you check to see how big it is with just Prelude and then with the 100 packages, just for reference?
+2011-05-28 18:54:55 UTC <luite> ptracing the children, to catch them when they try to fork or do illegal system calls
+2011-05-28 18:55:59 UTC <luite> I want to allow a few forks (for example for calling graphviz or another external program in a safe way), but fork bombs should be defused
+2011-05-28 18:56:52 UTC <luite> I don't have the complete program yet, only a benchmark thing that loads a few modules, then forks off 100 processes and does a simple evaluation in each of them
+2011-05-28 18:57:19 UTC <tgeeky> ok, but progress aplenty still
+2011-05-28 18:57:28 UTC <luite> with forking, those 100 evals take ~3.4 seconds on my home server
+2011-05-28 18:57:40 UTC <luite> if I do those 100 evals in the same process it's about 125ms
+2011-05-28 18:58:20 UTC <luite> so forking still has a lot of overhead, but it only needs to be done when the process is killed due to some abnormal circumstance, timeout, crash, illegal action etc
+2011-05-28 18:58:20 UTC <tgeeky> hum
+2011-05-28 18:58:47 UTC <tgeeky> are you setting up a [thread, spark, whatever] pool?
+2011-05-28 18:58:52 UTC <tgeeky> and pulling them out to eval?
+2011-05-28 18:58:57 UTC <luite> no I use separate processes for isolation
+2011-05-28 18:59:15 UTC <tgeeky> but can't you still do that within the seperate proces?
+2011-05-28 18:59:31 UTC <tgeeky> you mean each eval being totally isolated from every other eval
+2011-05-28 18:59:40 UTC <tgeeky> and all of them isolated from the server
+2011-05-28 18:59:51 UTC <luite> well not totally isolated form each other, evals still run in the same process sequentially
+2011-05-28 19:00:10 UTC <luite> otherwise each request would need a fork, that's too much overhead
+2011-05-28 19:00:27 UTC <tgeeky> hm
+2011-05-28 19:00:29 UTC <luite> and the evaluators are single-threaded (necessary due to limitations in the RTS)
+2011-05-28 19:00:36 UTC <luite> but I run a pool of evaluators
+2011-05-28 19:00:43 UTC <luite> currently 10, can be increased
+2011-05-28 19:01:16 UTC <tgeeky> ok
+2011-05-28 19:01:23 UTC <luite> anyway I do need a patched hint, where I just expose some constructors that are normally hidden, so that I can get to the underlying GHC monad
+2011-05-28 19:01:42 UTC <tgeeky> you went back to hint?
+2011-05-28 19:02:11 UTC <luite> yeah, hint is still useful, but I do need some low level ghc api things
+2011-05-28 19:02:27 UTC <luite> but redoing everything without hint would take a lot more time
+2011-05-28 19:02:42 UTC <luite> so I'll do this for now, it's only a few lines that need to be changed
+2011-05-28 19:02:44 UTC <tgeeky> gonna wrap that up into a new hint-something hackage file?
+2011-05-28 19:02:51 UTC <tgeeky> s/hackage/cabal/
+2011-05-28 19:02:57 UTC <luite> yes, but I won't upload it to hackage
+2011-05-28 19:03:03 UTC <luite> since it really breaks encapsulation
+2011-05-28 19:03:10 UTC <luite> probably just gitit
+2011-05-28 19:03:18 UTC <luite> err
+2011-05-28 19:03:19 UTC <luite> github
+2011-05-28 19:03:55 UTC <tgeeky> kk
+2011-05-28 19:04:00 UTC <tgeeky> let me know when you upload something I can play with
+2011-05-28 19:04:11 UTC <luite> not yet, security first
+2011-05-28 19:04:14 UTC <tgeeky> i am currently getting experience understanding and documenting other people's (undocumented) code
+2011-05-28 19:04:19 UTC <luite> that's the next thing
+2011-05-28 19:04:25 UTC <luite> oh don't look at my code for that
+2011-05-28 19:04:26 UTC <luite> :p
+2011-05-28 19:04:30 UTC <tgeeky> nah
+2011-05-28 19:04:31 UTC <tgeeky> i won't :)
+2011-05-28 19:04:36 UTC <tgeeky> i am messing with mpppc
+2011-05-28 19:04:42 UTC <tgeeky> which has 0 docs
+2011-05-28 19:04:42 UTC <luite> really, it's quite bad, lots of things that I don't have experience with
+2011-05-28 19:04:52 UTC <tgeeky> blah all good
+2011-05-28 19:05:02 UTC <luite> and low level api stuff for not terribly well documented api's etc ;p
+2011-05-28 19:05:09 UTC <tgeeky> well this package
+2011-05-28 19:05:15 UTC <tgeeky> has 0 documentation, 0 usage, 0 examples
+2011-05-28 19:05:20 UTC <tgeeky> I don't even know if it does anything :o
+2011-05-28 19:05:31 UTC <luite> yeah that's a common problem with hackage packages...
+2011-05-28 19:05:55 UTC <tgeeky> i figure I can kill two birds with one stone: document it myself (to learn good practices with haddock)
+2011-05-28 19:06:02 UTC <tgeeky> and then publish it with docs
+2011-05-28 19:06:06 UTC <luite> hehe good idea
+2011-05-28 19:06:10 UTC <tgeeky> and also learn how to read code that I had no hand in writing
+2011-05-28 19:06:15 UTC <tgeeky> to figure out the process
+2011-05-28 19:06:25 UTC <tgeeky> it doesn't use too many weird extensions, so I should be good
+2011-05-28 19:06:46 UTC <tgeeky> and there exist other, similar packages (pretty printers of various types) that are similar enough that I can use them to figure out this thing
+2011-05-28 19:06:49 UTC <luite> anyway I'm going to do something else now, already spent far too long with this forking thing
+2011-05-28 19:06:57 UTC <tgeeky> how punny
+2011-05-28 19:07:20 UTC <tgeeky> by the way
+2011-05-28 19:07:30 UTC <tgeeky> nevermind
+2011-05-28 19:07:31 UTC <tgeeky> back to work
+2011-05-28 19:07:33 UTC <luite> hopefully the syscall tracing is the last really low-level thing that's necessary, and the remaining performance issues can be solved by caching results
+2011-05-28 19:08:46 UTC <tgeeky> yeah, that sounds like a "bad thing" to me, given my knowledge of the linux kernel (my CS degree was in systems and kernels)
+2011-05-28 19:08:59 UTC <tgeeky> in the sense that intercepting syscalls is rather damn low-level
+2011-05-28 19:09:16 UTC <tgeeky> then again, it *is* the "membrane" where all the exploits will fall through
+2011-05-28 19:09:21 UTC <luite> there's already an example (in haskell even) that does something similar
+2011-05-28 19:09:25 UTC <tgeeky> so it might be the most appropriate place to do it
+2011-05-28 19:09:51 UTC <luite> it's for the #c++ channel lambdabot, a thing that can evaluate c++ code safely
+2011-05-28 19:09:59 UTC <luite> an it's written in haskell
+2011-05-28 19:10:21 UTC <tgeeky> that's clever
+2011-05-28 19:10:32 UTC <tgeeky> i was going to mention (before nevermind)
+2011-05-28 19:10:40 UTC <tgeeky> that you are unwittingly implementing the idea backend for lambdabot2.0
+2011-05-28 19:10:47 UTC <tgeeky> s/idea/ideal/
+2011-05-28 19:11:27 UTC <luite> probably not, setup is going to much more complex than ideal for lambdabot
+2011-05-28 19:11:34 UTC <tgeeky> have you seen lambdabot?
+2011-05-28 19:11:39 UTC <tgeeky> lol
+2011-05-28 19:11:51 UTC <luite> lambdabot is pretty simple, just the mueval command line program for eval
+2011-05-28 19:11:59 UTC <luite> ok the lambdabot code is messy
+2011-05-28 19:12:08 UTC <tgeeky> right, but all of the structure outside of the eval is sitting there
+2011-05-28 19:12:15 UTC <luite> but it doesn't need additional daemons, or specific operating system support
+2011-05-28 19:12:16 UTC <tgeeky> you're building an eval that could subsume that structure
+2011-05-28 19:12:33 UTC <tgeeky> it does require linux
+2011-05-28 19:12:45 UTC <luite> doesn't it build on bsd or os x?
+2011-05-28 19:12:55 UTC <tgeeky> s/linux/unix/
+2011-05-28 19:13:11 UTC <tgeeky> anyway, we'll see
+2011-05-28 19:13:15 UTC <tgeeky> just get on with it, we'll see what we can do with it later
+2011-05-28 19:13:27 UTC <luite> hmm, ok, well this eval thing can probably be made to work on other systems that support the appropriate posix calls
+2011-05-28 19:13:51 UTC <tgeeky> the thing that your work would let one do
+2011-05-28 19:14:01 UTC <tgeeky> is allow the backend to be seperate from the irc-bot connector
+2011-05-28 19:14:21 UTC <luite> it already is somewhat, a separate executable
+2011-05-28 19:14:23 UTC <tgeeky> and hence, you can imagine, if your backend caches things that are typed in Wolfgang, the same cached results would be accessable from the ircbot frontend
+2011-05-28 19:14:49 UTC <luite> oh that's true, it would be possible to enter code on the wiki and show results in irc
+2011-05-28 19:14:57 UTC <tgeeky> you could do a relatively simple transform of, instead of displaying images (inline), you just display a link to the result
+2011-05-28 19:15:13 UTC <tgeeky> which is still terribly useful
+2011-05-29 15:40:57 UTC <byorgey> ClaudiusMaximus: http://patch-tag.com/r/byorgey/diagrams-lib/snapshot/hash/20110529020846-1e371-4944a1a5c65f35d6c719db59a165bd7560b9d008/patch
+2011-05-29 15:51:10 UTC <luite> nice, does it also have transparency grouping?
+2011-06-02 14:52:10 UTC <manjunath> hello
+2011-06-02 14:52:14 UTC <manjunath> byorgey, are you around ?
+2011-06-02 14:52:24 UTC <manjunath> anyone here ?
+2011-06-02 14:52:25 UTC <byorgey> hi manjunath
+2011-06-02 14:52:35 UTC <manjunath> I am trying to compile diagrams-cairo
+2011-06-02 14:52:41 UTC <manjunath> so I built Setup.hs
+2011-06-02 14:52:56 UTC <manjunath> I have downloaded the diagrams-cairo from patch-tag darcs
+2011-06-02 14:53:03 UTC <byorgey> ok
+2011-06-02 14:53:15 UTC <manjunath> Configuring diagrams-cairo-0.2...
+2011-06-02 14:53:15 UTC <manjunath> Setup: At least the following dependencies are missing:
+2011-06-02 14:53:15 UTC <manjunath> cmdargs ==0.6.*,
+2011-06-02 14:53:15 UTC <manjunath> diagrams-core >=0.1 && <0.3,
+2011-06-02 14:53:15 UTC <manjunath> diagrams-lib >=0.1 && <0.3
+2011-06-02 14:53:18 UTC <manjunath> I get this error
+2011-06-02 14:53:30 UTC <manjunath> I have diagrams-lib and diagrams-core installed
+2011-06-02 14:53:33 UTC <manjunath> using cabal
+2011-06-02 14:54:19 UTC <byorgey> manjunath: what is the output of  ghc-pkg list diagrams-core  ?
+2011-06-02 14:54:21 UTC <manjunath> diagrams-core and diagrams-lib is 1.1
+2011-06-02 14:54:40 UTC <manjunath> /home/manjunath/.ghc/x86_64-linux-6.12.3/package.conf.d
+2011-06-02 14:54:41 UTC <manjunath>    diagrams-core-0.1.1
+2011-06-02 14:55:47 UTC <byorgey> manjunath: well, for one thing, you should not compile Setup.hs yourself, you can just run 'cabal install' from within the diagrams-cairo directory
+2011-06-02 14:56:06 UTC <byorgey> but I am still trying to figure out why it says diagrams-core and diagrams-lib are missing
+2011-06-02 14:56:24 UTC <manjunath> /home/manjunath/.ghc/x86_64-linux-6.12.3/package.conf.d
+2011-06-02 14:56:24 UTC <manjunath>    diagrams-cairo-0.1.2
+2011-06-02 14:56:32 UTC <manjunath> so does it mean it is already installed
+2011-06-02 14:56:35 UTC <manjunath> I did that
+2011-06-02 14:56:51 UTC <manjunath> I thought it download older version from internet and installed it
+2011-06-02 14:56:58 UTC <byorgey> oh, I know why, it is because if you run Setup.hs yourself it by default tries to install it globally, so it cannot use the locally installed packages
+2011-06-02 14:57:08 UTC <manjunath> ah...ok
+2011-06-02 14:57:08 UTC <byorgey> 0.1.2 is not the latest darcs version
+2011-06-02 14:57:19 UTC <manjunath> ok...one more thing then
+2011-06-02 14:57:51 UTC <byorgey> however, the latest darcs version of diagrams-cairo needs the latest darcs versions of diagrams-core and diagrams-lib as well
+2011-06-02 14:58:03 UTC <byorgey> so I think you do not have all the latest patches
+2011-06-02 14:58:13 UTC <manjunath> diagrams-cairo how to install profiling libraries then ?
+2011-06-02 14:58:21 UTC <manjunath> ah..ok
+2011-06-02 14:59:13 UTC <byorgey> manjunath: my recommendation is to get diagrams-core, diagrams-lib, and diagrams-cairo all from patch-tag (make sure you do  'darcs pull' in the diagrams-cairo directory you already have)
+2011-06-02 14:59:41 UTC <manjunath> darcs failed:  Not a repository: http://patch-tag.com/r/byorgey/diagrams-lib (Failed to download URL http://patch-tag.com/r/byorgey/diagrams-lib/_darcs/inventory: HTTP response code said error)
+2011-06-02 14:59:52 UTC <byorgey> then install them in that order by going into each directory and executing 'cabal install -p'
+2011-06-02 14:59:57 UTC <manjunath> darcs get http://patch-tag.com/r/byorgey/diagrams-lib
+2011-06-02 15:00:03 UTC <manjunath> is that correct ?
+2011-06-02 15:00:05 UTC <byorgey> the -p will enable profiling
+2011-06-02 15:00:12 UTC <byorgey> hmm, it should be
+2011-06-02 15:00:12 UTC <manjunath> ah...ok
+2011-06-02 15:00:54 UTC <manjunath> it fails I am using commands from here http://code.google.com/p/diagrams/
+2011-06-02 15:01:21 UTC <byorgey> yes, it seems that patch-tag is down =(
+2011-06-02 15:01:35 UTC <manjunath> ah :-(
+2011-06-02 15:01:47 UTC <manjunath> I am o-_-o BTW
+2011-06-02 15:02:02 UTC <manjunath> reinstalled Ubuntu OS so I could profile the app
+2011-06-02 15:02:13 UTC <byorgey> ah, ok
+2011-06-02 15:02:16 UTC <manjunath> the OpenGL + Diagrams
+2011-06-02 15:02:28 UTC <byorgey> right
+2011-06-02 15:02:29 UTC <manjunath> in hindsight that was a stupid thing to do
+2011-06-02 15:02:34 UTC <byorgey> hehe
+2011-06-02 15:02:43 UTC <manjunath> because I just should've installed the profiling libraries
+2011-06-02 15:03:23 UTC <byorgey> yes, I don't see how reinstalling your OS will help =)
+2011-06-02 15:03:41 UTC <byorgey> if you learn anything interesting from the profiling I would be very interested to hear it
+2011-06-02 15:03:48 UTC <manjunath> sudo apt-get install libghc6-cairo-prof failed in the older version of the OS
+2011-06-02 15:04:06 UTC <byorgey> I have not done any work yet optimizing diagrams and I am sure that it can be sped up quite a lot.
+2011-06-02 15:04:28 UTC <manjunath> I will take a look, I definitely want to see, if I am doing anything stupid
+2011-06-02 15:04:44 UTC <byorgey> I doubt it
+2011-06-02 15:05:22 UTC <manjunath> oh..don't be so sure, I couldn't program myself out of a wet paper bag
+2011-06-02 15:05:49 UTC <byorgey> haha
+2011-06-02 15:09:08 UTC <byorgey> I have sent an email to the patch-tag administrator and also to the user group
+2011-06-02 15:09:13 UTC <byorgey> seems like the web server is down
+2011-06-02 16:22:09 UTC <tg_> byorgey: thanks for all of your help yesterday
+2011-06-02 16:22:20 UTC <tg_> I restarted my investigation with a new set of notes and got all the way to the end of that section
+2011-06-02 16:22:35 UTC <tg_> the hiccups were:
+2011-06-02 16:22:53 UTC <tg_> my incorrect reading of driver step state (which you corrected)
+2011-06-02 16:23:00 UTC <tg_> my misuse of ***, in that
+2011-06-02 16:23:06 UTC <tg_> :t id (***) id
+2011-06-02 16:23:07 UTC <tg_> and
+2011-06-02 16:23:13 UTC <tg_> :t (id *** id)
+2011-06-02 16:23:31 UTC <tg_> are not the same in terms of what the type checker spits out
+2011-06-02 16:23:37 UTC <tg_> so hence
+2011-06-02 16:24:00 UTC <tg_> :t (id (***) inverse cons) -- is not the same as :t (id *** inverse cons)
+2011-06-02 16:24:28 UTC <tg_> lot of lost time due to those two misunderstandings, but onward!
+2011-06-02 16:28:05 UTC <byorgey> ah, yes, that's sort of sneaky
+2011-06-02 16:28:09 UTC <byorgey> glad you got it figured out
+2011-06-02 16:29:47 UTC <tg_> a hopefully quick question:
+2011-06-02 16:30:09 UTC <tg_> the point of why Control.Isomorphism.Partial.Unsafe is 'unsafe'
+2011-06-02 16:30:43 UTC <tg_> is because the haskell type check cannot prove the safety of Iso fg?
+2011-06-02 16:30:56 UTC <byorgey> right
+2011-06-02 16:31:11 UTC <byorgey> it exports the constructor Iso so you are free to stick any old functions you like in there
+2011-06-02 16:31:21 UTC <tg_> And this is forever hopeless, it can't ever be done - one must demonstrate that the specific thing your are making using Iso f g, is safe
+2011-06-02 16:31:23 UTC <byorgey> and there is no way to check that they actually form a partial isomorphism
+2011-06-02 16:31:36 UTC <byorgey> tg_: it could be done in, say, AGda
+2011-06-02 16:31:40 UTC <byorgey> but not Haskell
+2011-06-02 16:31:58 UTC <tg_> so instead of proof, this thing is 'demoted' to asking for a demonstration of correctness (in terms of what haskell will let you do)
+2011-06-02 16:32:06 UTC <tg_> but if you can demonstrate correctness, then haskellers should just get on with it?
+2011-06-02 16:32:50 UTC <tg_> that is, demonstrate isomorhisms for a specific set of functions you claim to cover enough cases to be useful (list, trees, whatever)
+2011-06-02 16:33:15 UTC <byorgey> I'm not sure I understand what you are asking
+2011-06-02 16:33:20 UTC <tg_> ok, it seems to me
+2011-06-02 16:33:28 UTC <tg_> the entire paper up through the chapter I was working with yesterday
+2011-06-02 16:33:30 UTC <tg_> was all about
+2011-06-02 16:33:56 UTC <tg_> partial isomorphisms on: data [a] = ...
+2011-06-02 16:34:26 UTC <tg_> it was all about partial isomorphisms on Lists, and how you could use that to make a parser/printer
+2011-06-02 16:34:34 UTC <tg_> but not partial isomorphisms on more complicated structures
+2011-06-02 16:34:49 UTC <tg_> is that right?
+2011-06-02 16:35:20 UTC <byorgey> right, they used lists in many of their examples (since lists are in some sense the simplest non-trivial recursive type) but it is not hard to see how to extend the techniques to more complicated structures
+2011-06-02 16:35:45 UTC <tg_> but they have only *demonstrated* (so far) that this technique works on Lists
+2011-06-02 16:35:52 UTC <byorgey> at least, it is not hard for people familiar with such things
+2011-06-02 16:36:27 UTC <byorgey> well, but again, anyone familiar with functional programming can easily see that the technique works on a large class of data types
+2011-06-02 16:36:43 UTC <tg_> ok, can you quickly think of a counterexample?
+2011-06-02 16:36:50 UTC <byorgey> a counterexample to what?
+2011-06-02 16:37:06 UTC <tg_> something that can't be demonstrated to be safe
+2011-06-02 16:37:15 UTC <tg_> they mention (|||) isn't something because of mplus
+2011-06-02 16:37:51 UTC <tg_> 'the mediating aroow for sums is constructed with 'Either' - this is not a proper partial iso because of 'mplus'
+2011-06-02 16:38:12 UTC <tg_> while I like that word 'aroow', i meant 'arrow' lol
+2011-06-02 16:38:16 UTC <byorgey> hmm, let me go read that again
+2011-06-02 16:38:49 UTC <tg_> byorgey: http://hackage.haskell.org/packages/archive/partial-isomorphisms/0.2/doc/html/src/Control-Isomorphism-Partial-Prim.html
+2011-06-02 16:40:47 UTC <byorgey> I think what they mean there is that if some x :: a  and y :: b  both map to the same  z :: c  in the forward direction, then in the backward direction z will only map to a
+2011-06-02 16:40:56 UTC <byorgey> because mplus always chooses the first alternative if it is successful
+2011-06-02 16:41:29 UTC <byorgey> do they talk about (|||) in the paper?
+2011-06-02 16:41:41 UTC <tg_> at the end, after all of the main stuff
+2011-06-02 16:41:46 UTC <tg_> in 'things needing further work'
+2011-06-02 16:41:54 UTC <tg_> I haven't gotten to it, because I need to do simple template haskell stuff now
+2011-06-02 16:42:54 UTC <byorgey> I don't see any mention of it in the future work section
+2011-06-02 16:43:53 UTC <tg_> nope, not in the paper
+2011-06-02 16:44:02 UTC <tg_> i assumed that it was in there since they talked about the other Either things
+2011-06-02 16:44:14 UTC <tg_> but I guess it's included in the source as a warning?
+2011-06-02 16:44:58 UTC <byorgey> I don't think they ever need (|||) in the paper
+2011-06-02 16:45:05 UTC <tg_> they don't, or they never typed it :o
+2011-06-02 16:45:06 UTC <byorgey> and you can do a lot with Either without needing it
+2011-06-02 16:46:25 UTC <tg_> I once asked this from conal, and got some great papers out of it
+2011-06-02 16:46:43 UTC <tg_> can you give me your short list of 'must read' papers about [funpro, haskell, types, category theory, etc]
+2011-06-02 16:46:52 UTC <tg_> even if these include *your* papers
+2011-06-02 16:47:03 UTC <tg_> just a small list would be nice :o
+2011-06-02 16:47:44 UTC <tg_> conal gave me 'Why Functional Programming Matters', 'The next 700 Programming Languages', and 'Can programming be liberated from the Von Nuemann architecture?'
+2011-06-02 16:48:14 UTC <byorgey> those are good ones
+2011-06-02 16:48:20 UTC <byorgey> let's see...
+2011-06-02 16:50:28 UTC <byorgey> I am having trouble coming up with good recommendations off the top of my head
+2011-06-02 16:50:37 UTC <byorgey> but I am sure I will think of some eventually
+2011-06-02 16:51:16 UTC <tg_> ok, books would be fine too
+2011-06-02 16:51:30 UTC <tg_> but if you think of one, just blurt it out ;)
+2011-06-02 16:52:38 UTC <byorgey> tg_: "Types and Programming Languages" by Benjamin Pierce is good
+2011-06-02 16:52:56 UTC <tg_> hehe, is he your advisor? :o
+2011-06-02 16:53:05 UTC <tg_> upenn :o
+2011-06-02 16:53:14 UTC <byorgey> he isn't actually my advisor =)
+2011-06-02 16:53:19 UTC <byorgey> but I do work with him
+2011-06-02 16:53:19 UTC <tg_> hehe
+2011-06-02 16:53:27 UTC <tg_> hey, inside information!
+2011-06-02 16:53:34 UTC <byorgey> I already thought it was a good book before I came to penn =)
