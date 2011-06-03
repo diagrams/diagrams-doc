@@ -2685,3 +2685,74 @@
 2011-06-02 16:53:19 UTC <tg_> hehe
 2011-06-02 16:53:27 UTC <tg_> hey, inside information!
 2011-06-02 16:53:34 UTC <byorgey> I already thought it was a good book before I came to penn =)
+2011-06-02 21:06:28 UTC <byorgey> STOP: clipping time   http://www.cis.upenn.edu/~byorgey/Clip.png
+2011-06-02 21:06:32 UTC <byorgey> =D
+2011-06-02 21:35:49 UTC <alpounet> uh ?
+2011-06-02 21:46:42 UTC <alpounet> what's... this ? :p
+2011-06-02 21:52:10 UTC <byorgey> alpounet: diagrams now supports clipping paths
+2011-06-02 21:52:30 UTC <byorgey> alpounet: that picture is of a square being clipped by another square at a 45 degree angle
+2011-06-02 21:54:56 UTC <alpounet> oooh
+2011-06-02 21:55:01 UTC <alpounet> great!
+2011-06-02 21:58:07 UTC <byorgey> hmm, now to decide what to work on next
+2011-06-02 21:58:17 UTC <byorgey> probably I should make another release
+2011-06-02 22:01:18 UTC <alpounet> well
+2011-06-02 22:01:22 UTC <alpounet> what's your roadmap ?
+2011-06-02 22:48:30 UTC <byorgey> alpounet: that's what I need to decide =)
+2011-06-02 23:02:23 UTC <luite> ooh ooh, pick me, pick me ;p
+2011-06-02 23:02:28 UTC <luite> I want to suggest text support
+2011-06-02 23:04:37 UTC <tg_> byorgey: liar! that's a stop sign before printing TEXT
+2011-06-02 23:04:48 UTC <tg_> which, happily, luite suggests you solve! That stop sign is missing letters!
+2011-06-02 23:05:18 UTC <tg_> s/TEXT/STOP/
+2011-06-02 23:14:47 UTC <alpounet> so that the next sample will be a complete STOP sign
+2011-06-02 23:15:20 UTC <alpounet> diagrams, drawing stop signs since 2011
+2011-06-02 23:16:50 UTC <tg_> byorgey: plus, once you complete text rendering and make the sign say STOP, you'll also have further instructions.
+2011-06-03 01:50:52 UTC <tg_> luite: how goes it today, good sir
+2011-06-03 01:52:36 UTC <luite> headache :(  perhaps 3:50 am isn't te best time to be trying to do sysadmin stuffs
+2011-06-03 01:53:04 UTC <tg_> indeed not :(
+2011-06-03 01:53:10 UTC <tg_> best of luck though
+2011-06-03 15:25:45 UTC <byorgey> luite: OK.  Text is Next! =)
+2011-06-03 16:10:51 UTC <luite> byorgey: great :)
+2011-06-03 17:24:00 UTC <tgeeky> byorgey: so what's the approach?
+2011-06-03 17:24:10 UTC <tgeeky> if you wouldn't mind laying out in english in a few lines
+2011-06-03 17:24:13 UTC <tgeeky> how do you approach something like that
+2011-06-03 18:07:04 UTC <byorgey> tgeeky: http://code.google.com/p/diagrams/wiki/TextSupport
+2011-06-03 18:07:23 UTC <byorgey> although I think I already don't agree with a couple things I wrote there
+2011-06-03 18:07:25 UTC <byorgey> but I forget which
+2011-06-03 18:09:30 UTC <tgeeky> byorgey: that's good
+2011-06-03 18:09:32 UTC <tgeeky> (that yo forgot)
+2011-06-03 18:11:14 UTC <luite> byorgey: hmm, I don't think converting text to path should be the only way to handle text dimensions
+2011-06-03 18:11:36 UTC <tgeeky> byorgey: should that say: glyph (height, width) is an attribute?
+2011-06-03 18:12:03 UTC <luite> byorgey: although it will probably be a nice feature to have
+2011-06-03 18:12:30 UTC <tgeeky> it's clear to me however
+2011-06-03 18:12:39 UTC <tgeeky> that you are attacking this in a much more sophisticated manner than I can even think
+2011-06-03 18:14:03 UTC <luite> text is extremely tricky if you want to get everything right :)
+2011-06-03 18:14:20 UTC <luite> so it's best not to want that :p
+2011-06-03 18:14:36 UTC <tgeeky> yes, obviously
+2011-06-03 18:14:42 UTC <tgeeky> Knuth has a thing or two hundred to say about that
+2011-06-03 18:15:10 UTC <luite> but it would be great if there's basic text support so that diagrams can be used in some packages that use cairo at the moment
+2011-06-03 18:16:39 UTC <luite> although wolfgang should support cairo directly as well
+2011-06-03 18:17:23 UTC <tgeeky> i don't see cairo as being that useful, but that's maybe because I don't understand it and/or that I really need to emphasize animation (and interactivity)
+2011-06-03 18:17:42 UTC <tgeeky> but I clearly don't understand it that well, since supposedly you can just an SVG into a web browser, and assign attributes to its parts
+2011-06-03 18:17:59 UTC <luite> it's useful because it's already being used for some things, some plotting packages use it for example
+2011-06-03 18:18:17 UTC <luite> I don't think cairo supports those attributes
+2011-06-03 18:18:48 UTC <tgeeky> i thought it was the browser that had to do it
+2011-06-03 18:18:55 UTC <tgeeky> ACTION shrugs
+2011-06-03 18:18:58 UTC <tgeeky> i can't focus on that yet
+2011-06-03 18:19:02 UTC <tgeeky> my haskell chops need to come a long way
+2011-06-03 18:19:18 UTC <luite> you still need to output the javascript for them, or at least id's for the nodes
+2011-06-03 18:19:25 UTC <tgeeky> yeah, which is pretty easy
+2011-06-03 18:19:31 UTC <tgeeky> once you have a diagrams description of things
+2011-06-03 18:19:38 UTC <tgeeky> parse the code you used to generate it
+2011-06-03 18:19:46 UTC <luite> yes with diagrams, but not with just cairo
+2011-06-03 18:20:54 UTC <luite> I have privilege domain transitions working at the moment by the way, and I'm installing a new virtual machine for developing the wolfgang backend in the new more secure (hopefully) setting
+2011-06-03 18:22:33 UTC <tgeeky> ok
+2011-06-03 18:22:48 UTC <luite> oh and selinux is annoying... if your policy violates some global constraint, it will just say which line in your policy is not accepted, but it doesn't say which constraint... you can just grep the whole selinux policy for all constraints (neverallow lines) and check them all manually...
+2011-06-03 18:23:08 UTC <tgeeky> surely there's a package that supports that
+2011-06-03 18:23:30 UTC <tgeeky> but yeah
+2011-06-03 18:23:39 UTC <tgeeky> any security package whose default troubleshooting is "turn it off"
+2011-06-03 18:23:39 UTC <tgeeky> lol
+2011-06-03 18:25:56 UTC <luite> there's a "turn it off" mode for selinux that still logs all policy violations
+2011-06-03 18:26:48 UTC <tgeeky> good for figuring out who hosed your system :o
+2011-06-03 18:27:17 UTC <luite> it's meant for debugging :)
+2011-06-03 18:29:03 UTC <luite> when I have a proper server for wolfgang, and the evaluator finally works in selinux, I'll invite a few irc people to try and break it
+2011-06-03 18:33:16 UTC <luite> still thinking of getting a hetzner server
