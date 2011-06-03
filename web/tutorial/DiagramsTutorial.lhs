@@ -70,12 +70,24 @@ supported one is [cairo](http://cairographics.org/).  If you don't
 already have them, you will need to [install the cairo development
 libraries](http://cairographics.org/download/).
 
-If you are on Linux or MacOS, the Haskell bindings to cairo should be
-automatically installed in the next step (Installation). If you are on
-Windows, [here are some
+If you are on Linux, you can now install the Haskell Cairo bindings with
+
+    cabal install gtk2hs-buildtools cairo
+
+Hopefully this should Just Work (tm). (Reports to the contrary gladly
+welcomed.)  If you have already installed gtk2hs-related packages
+before you can probably omit `gtk2hs-buildtools`.
+
+If you are on Windows, [here are some
 instructions](http://code.google.com/p/diagrams/wiki/CairoOnWindows)
 for installing the Haskell cairo bindings; unfortunately it is
 something of a pain.
+
+If you are on MacOS, the Linux instructions above Ought To Work (tm)
+but there have been reports to the contrary.  Hopefully soon we will
+have more detailed instructions on how to get it to work, and/or a
+simpler native backend that doesn't require as many outside
+dependencies.
 
 Installation
 ------------
@@ -83,10 +95,10 @@ Installation
 Once you have the prerequisites, installing the diagrams libraries
 themselves should be a snap:
 
-    cabal install diagrams-core diagrams-lib diagrams-cairo
+    cabal install diagrams
 
-(Actually, in practice just `cabal install diagrams-cairo` is enough,
-since the other two packages will be pulled in as dependencies.)
+`diagrams` is just a wrapper package which pulls in the following
+three packages:
 
 * `diagrams-core` contains the core data structures and definitions
   that form the abstract heart of the library.
