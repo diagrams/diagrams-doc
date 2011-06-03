@@ -302,7 +302,7 @@ To place two diagrams next to each other in the direction
 of a vector *v*, place them as close as possible so that there is a
 *separating line* perpendicular to *v*, that is, a line perpendicular
 to *v* such that the first diagram lies completely on one side of the
-line and the other diagrams lies completely on the other side.
+line and the other diagram lies completely on the other side.
 
 There are certainly some tradeoffs in this choice. The biggest
 downside is that adjacent diagrams sometimes end up with undesired
