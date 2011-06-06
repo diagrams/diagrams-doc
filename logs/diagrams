@@ -2756,3 +2756,305 @@
 2011-06-03 18:27:17 UTC <luite> it's meant for debugging :)
 2011-06-03 18:29:03 UTC <luite> when I have a proper server for wolfgang, and the evaluator finally works in selinux, I'll invite a few irc people to try and break it
 2011-06-03 18:33:16 UTC <luite> still thinking of getting a hetzner server
+2011-06-03 21:10:05 UTC <byorgey> 0.2 is released!
+2011-06-03 21:10:21 UTC <byorgey> nothing too amazing, just lots of little accumulated improvements
+2011-06-04 02:18:57 UTC <luite> yay partial selinux bindings done
+2011-06-04 05:37:10 UTC <sordina> I've been working on an AST representation for diagrams similar to gloss: https://github.com/sordina/Diagrams-AST
+2011-06-04 05:37:26 UTC <sordina> It's still incomplete, but I thought you guys might be interested :)
+2011-06-04 08:02:24 UTC <manjunath> anyone here ?
+2011-06-04 08:05:08 UTC <manjunath> http://hpaste.org/47422/diagramslib_error
+2011-06-04 08:05:25 UTC <manjunath> I get this error when comiling latest diagramslib
+2011-06-04 08:05:32 UTC <manjunath> diagrams-lib
+2011-06-04 19:39:01 UTC <byorgey> sordina: cool =)
+2011-06-04 19:39:29 UTC <byorgey> sordina: let us know when you want to add a link to it from the diagrams website
+2011-06-04 19:39:52 UTC <byorgey> Somewhere on the website I am going to create a section of links to related projects
+2011-06-04 20:47:34 UTC <tgeeky> hum.
+2011-06-04 20:48:23 UTC <tgeeky> byorgey: so, after reading [Hutton 99] on universality and expressiveness of folding
+2011-06-04 20:48:32 UTC <tgeeky> I understand several things *much* better
+2011-06-04 20:48:44 UTC <tgeeky> and, I think this ought to be mandatory reading (or a derivative document)
+2011-06-04 20:49:16 UTC <tgeeky> ideally, maybe even introduced *before* many other things (such as introduced early in LYAH, or earlier in RWH)
+2011-06-04 20:51:04 UTC <tgeeky> As a matter of personal taste, I think there's something strange about introducing lists, then all of the functions over them (many of which can or are implemented using folding), and then say, by the way we've got this folding thing
+2011-06-04 20:51:57 UTC <tgeeky> I see a similar correlation to what many (but not all) physics introductions do which is to explain applications here and there, implementations, and rules, and then at the "end", explain the foundational role of symmetry and invariants
+2011-06-04 20:52:57 UTC <tgeeky> A rather critical observation about symmetries and invariants of them, is that our brains *are* in a sense hardwired to percieve them
+2011-06-04 21:01:17 UTC <luite> I also think it's strange that elementary school teaches arithmetic and numbers before properly covering the foundations. In fact it's hard to see how children can even use those things without proper knowledge of mathematical logic and the axiom schemes, and skipping intermediate things like group and ring theory altogether. They are even required to use abstract symbols like '1' and '2', that don't even have a direct connection with the axioms.
+2011-06-04 21:04:28 UTC <tgeeky> luite: I have to think that's satirical
+2011-06-04 21:04:40 UTC <tgeeky> but I am serious, and think those (satirical) objections can be dealt with
+2011-06-04 21:06:13 UTC <tgeeky> by the time someone is learning haskell, they probably have a pretty much correct of what a list is
+2011-06-04 21:07:50 UTC <luite> for someone who only knows strict languages, a list in haskell probably does have some unexpected properties
+2011-06-04 21:08:12 UTC <tgeeky> for someone who knows next to nothing about programming languages
+2011-06-04 21:08:17 UTC <tgeeky> you can say simply:
+2011-06-04 21:08:38 UTC <tgeeky> a list is a thing with a start and an end
+2011-06-04 21:08:58 UTC <tgeeky> the smallest list is that whose start is its end
+2011-06-04 21:09:08 UTC <tgeeky> all other lists are bigger (in the middle)
+2011-06-04 21:09:22 UTC <tgeeky> or something like that
+2011-06-04 21:09:49 UTC <tgeeky> luite: have you read the paper, btw? Hutton 99?
+2011-06-04 21:10:11 UTC <luite> I might have, but then it would've been some time ago
+2011-06-04 21:10:17 UTC <tgeeky> ok
+2011-06-04 21:10:29 UTC <luite> I don't understand your "start" and "end" terminology by the way
+2011-06-04 21:10:46 UTC <tgeeky> data List a = Nil | Cons a
+2011-06-04 21:11:13 UTC <luite> if you mean "head" and "tail", then it's wrong for the empty list (the smallest list?)
+2011-06-04 21:11:18 UTC <tgeeky> no, I don't mean head tail
+2011-06-04 21:11:40 UTC <tgeeky> Nil is the end of the list
+2011-06-04 21:11:45 UTC <tgeeky> if you have an empty list, that's all you have
+2011-06-04 21:11:50 UTC <tgeeky> if you have anything more complicated
+2011-06-04 21:11:51 UTC <luite> but in that case, your definition is wrong
+2011-06-04 21:12:00 UTC <luite> because not every list has a Nul
+2011-06-04 21:12:02 UTC <luite> err, Nil
+2011-06-04 21:12:14 UTC <tgeeky> which doesn't?
+2011-06-04 21:12:24 UTC <luite> > fix (1:)
+2011-06-04 21:12:29 UTC <luite> err no lambdabot
+2011-06-04 21:12:42 UTC <tgeeky> that's not a list, that's a function on a list
+2011-06-04 21:12:48 UTC <luite> no that is a list
+2011-06-04 21:13:07 UTC <tgeeky> ok, sorry
+2011-06-04 21:13:10 UTC <tgeeky> I should have said finite
+2011-06-04 21:13:10 UTC <tgeeky> above
+2011-06-04 21:13:14 UTC <tgeeky> as he does in the paper
+2011-06-04 21:13:24 UTC <tgeeky> i thought about typing it several times, but just didn't
+2011-06-04 21:13:44 UTC <luite> yeah but infinite lists are exactly one of the differences that will be important for beginners to understand
+2011-06-04 21:13:47 UTC <tgeeky> that is more in line with most people's (non-programmers) intuitive understanding of a list
+2011-06-04 21:13:58 UTC <tgeeky> yes, true, but then you can specify the differences simply
+2011-06-04 21:14:02 UTC <tgeeky> if you've introduced folds
+2011-06-04 21:14:44 UTC <tgeeky> as a person writing a tutorial or a book, you want to use *as much existing brainpower* as your reader has
+2011-06-04 21:14:51 UTC <tgeeky> not more (because they won't understand)
+2011-06-04 21:15:08 UTC <tgeeky> and not less (because they will either be wasting their time, OR they will miss the forest through the trees)
+2011-06-04 21:15:36 UTC <tgeeky> most people (non-programmers) will have a notion of a "grocery list"
+2011-06-04 21:16:09 UTC <tgeeky> and a notion of doing something to such a list like fold (buying all groceries on the list) -> a kiss on the cheek from a happy wife
+2011-06-04 21:16:27 UTC <tgeeky> and something like folding with Maybe
+2011-06-04 21:17:01 UTC <tgeeky> (attempting to buy all the groceries on the list, but finding that some are out of stock) -> an explanation of why you didn't get your wife her favorite candies
+2011-06-04 21:17:10 UTC <tgeeky> hehe
+2011-06-04 21:17:50 UTC <luite> that's starting to sound suspiciously like an explanation with burrito's
+2011-06-04 21:18:06 UTC <tgeeky> luite: it seems like the general point of the paper is that [folding] <-> [lists] are more closely connected than any of the things you could actually implement
+2011-06-04 21:18:13 UTC <tgeeky> using folding
+2011-06-04 21:18:25 UTC <tgeeky> luite: oh? is there some burrito tutorial? :O
+2011-06-04 21:19:05 UTC <tgeeky> a google search says monads are like burritos
+2011-06-04 21:19:08 UTC <luite> no I mean the "Monads are like burrito's" theme
+2011-06-04 21:19:13 UTC <tgeeky> lol, I don't know anything about that
+2011-06-04 21:19:46 UTC <tgeeky> anyway, it was just an observation
+2011-06-04 21:20:07 UTC <tgeeky> I get the satirical point about learning mathematics in school - that's a hard problem
+2011-06-04 21:20:16 UTC <luite> it's sme kind of a joke, in general it's about how monad tutorials try to explain what monads are in general
+2011-06-04 21:20:25 UTC <tgeeky> luite: yeah, I see that now
+2011-06-04 21:20:25 UTC <luite> and that doesn't help people at all
+2011-06-04 21:20:33 UTC <tgeeky> I think my explanation above
+2011-06-04 21:20:36 UTC <tgeeky> is perfectly suitable for lists
+2011-06-04 21:20:42 UTC <luite> while what does help, is explaining concrete things first
+2011-06-04 21:20:43 UTC <tgeeky> because most people have been asked to grocery shop :o
+2011-06-04 21:22:26 UTC <tgeeky> any expression like all of my useless exposition above
+2011-06-04 21:22:31 UTC <luite> that thing about elementary school by the way, was inspired by the book Mathematics made difficult by Carl E Linederholm
+2011-06-04 21:22:35 UTC <tgeeky> can always be taken to mean 'for a person who learns exactly like I do'
+2011-06-04 21:22:46 UTC <luite> Linderholm
+2011-06-04 21:22:55 UTC <tgeeky> luite: yeah, I have read excerpts from it
+2011-06-04 21:23:00 UTC <tgeeky> as well as A Mathemitician's Lament
+2011-06-04 21:23:08 UTC <tgeeky> but it is also a very good point
+2011-06-04 21:23:30 UTC <tgeeky> learing of mathematics is dominated by historical precedent
+2011-06-04 21:23:36 UTC <tgeeky> not by intentional educational design
+2011-06-04 21:24:00 UTC <luite> I personally think that a historical context is quite important
+2011-06-04 21:24:08 UTC <luite> +teaching
+2011-06-04 21:24:10 UTC <tgeeky> I do too
+2011-06-04 21:24:14 UTC <tgeeky> *but
+2011-06-04 21:24:25 UTC <tgeeky> you have to teach people history before historical contexts make sense
+2011-06-04 21:24:31 UTC <tgeeky> and I don't mean the content of history
+2011-06-04 21:24:35 UTC <tgeeky> the process of history
+2011-06-04 21:24:44 UTC <tgeeky> reconstructing the past through evidence
+2011-06-04 21:25:05 UTC <tgeeky> history didn't deal with mathematics at the abstract level we do today
+2011-06-04 21:25:36 UTC <tgeeky> evidence that we taught things in some [particular manner], historically
+2011-06-04 21:25:47 UTC <tgeeky> is only evidence that we did "good enough" to get to where we are today
+2011-06-04 21:26:03 UTC <tgeeky> it's not evidence that we could have done much worse, or much better
+2011-06-04 21:26:39 UTC <tgeeky> and it's not evidence that past methods are the only context for future methods [of teaching]
+2011-06-04 21:26:46 UTC <tgeeky> in fact, we have good evidence that they should not be :O
+2011-06-04 21:27:19 UTC <tgeeky> luite: one interesting example that's *very* recent is that of Kahn Academy, and the reversal of [homework] and [lectures]
+2011-06-04 21:28:03 UTC <tgeeky> some middle and elementary school teachers are prescribing homework to watch videos online on youtube about subjects (sets of a few short, 10 min each lectures)
+2011-06-04 21:28:15 UTC <tgeeky> and then what would have been homework before
+2011-06-04 21:28:25 UTC <tgeeky> becomes group-homework, in the class, with the teacher, and your peers
+2011-06-04 21:28:42 UTC <tgeeky> the studies that have been done surrounding this is that they learn *much* more rapidly, and with much better retention
+2011-06-04 21:29:49 UTC <tgeeky> it works so well that they are having trouble adding enough extra material to keep the old course plans from falling too short of the entire [semester, quarter, whatever]
+2011-06-04 21:30:20 UTC <tgeeky> granted, this is American schools, so it doesn't say much :o
+2011-06-04 21:31:14 UTC <luite> but this is about the form of presentation, the order of practice/lectures. not really a restructuring of the order in which the material is presented
+2011-06-04 21:31:44 UTC <tgeeky> luite: it actually is
+2011-06-04 21:31:51 UTC <tgeeky> because they are finding that they have to restructure even the order
+2011-06-04 21:31:58 UTC <tgeeky> to fit in enough lectures to cover a whole semester
+2011-06-04 21:32:12 UTC <tgeeky> because they found themselves covering more than 3 times the amount of material than other classes
+2011-06-04 21:32:28 UTC <tgeeky> I mean, first of all, 1) this is an example, not proof
+2011-06-04 21:32:40 UTC <tgeeky> 2) this is more about student's mindsets (homework sucks, but watching youtube is fun)
+2011-06-04 21:32:55 UTC <tgeeky> the point is, we have lots of assumptions on what is and isn't possible to teach young people
+2011-06-04 21:33:01 UTC <tgeeky> and they can very well be wrong
+2011-06-04 21:33:26 UTC <tgeeky> I sincerely hope wolfgang becomes a tool for teaching
+2011-06-04 21:33:33 UTC <tgeeky> as it naturally ought to be
+2011-06-04 21:34:03 UTC <luite> well that's exactly what I want it to be
+2011-06-04 21:34:08 UTC <tgeeky> yep
+2011-06-04 21:34:21 UTC <tgeeky> I also think it could kill several other birds with one stone
+2011-06-04 21:34:31 UTC <tgeeky> including a nice web-based haskell IDE
+2011-06-04 21:34:38 UTC <tgeeky> and an interactive data explorer
+2011-06-04 21:34:51 UTC <tgeeky> and a nice way to write haskell papers
+2011-06-04 21:34:51 UTC <luite> not sure about the first, getting a proper IDE gui in javascript is tricky
+2011-06-04 21:35:01 UTC <tgeeky> well, we'll find out
+2011-06-04 21:35:08 UTC <luite> but I hope to add things like "view type under mouse pointer" and stuff
+2011-06-04 21:35:38 UTC <tgeeky> i have a lot of ideas and drawings of what I want to be able to do (in some cases, *need* to be able to do, in order to get a complex point across)
+2011-06-04 21:35:54 UTC <tgeeky> and I can see a lot of them being easy once you have the general wolfgang backend going
+2011-06-04 21:36:12 UTC <tgeeky> and the more we can write in haskell, the better, of course
+2011-06-04 21:36:13 UTC <luite> I hope so, what backend things to you think are required?
+2011-06-04 21:37:16 UTC <tgeeky> I'm not totally sure, but one of them is the [literate haskell code] <-> [haskell AST, [comments AST, html AST, computational example AST]] isomorphism
+2011-06-04 21:37:34 UTC <tgeeky> which I think can be done relatively easily with this PIso work combined with some hashing trickery
+2011-06-04 21:38:09 UTC <tgeeky> if ones has that, it's not hard to build very simple (but very, very rich) wiki
+2011-06-04 21:38:25 UTC <tgeeky> if one has that, it's not hard to build arbitrary documents which can reference any of those things (including the wiki)
+2011-06-04 21:38:26 UTC <luite> it would be interesting to have a better relation between the ast and text, for ide purposes
+2011-06-04 21:38:40 UTC <tgeeky> luite: that's precisely what I am working on
+2011-06-04 21:38:46 UTC <tgeeky> a "literate haskell tensor"
+2011-06-04 21:38:51 UTC <luite> but I you don't need the wolfgang backend for that
+2011-06-04 21:39:02 UTC <tgeeky> I need it to actually evalue the haskell code
+2011-06-04 21:39:16 UTC <luite> oh but ghci could also work, right?
+2011-06-04 21:39:35 UTC <tgeeky> possibly, but a console enviroment is already obviously too restrictive
+2011-06-04 21:39:41 UTC <tgeeky> - no math symbols
+2011-06-04 21:39:49 UTC <tgeeky> - no standard pretty anything
+2011-06-04 21:39:54 UTC <luite> yes but I mean, for testing your isomorphism program?
+2011-06-04 21:39:58 UTC <tgeeky> oh absolutey
+2011-06-04 21:40:05 UTC <luite> the pretty typesetting could be added later :)
+2011-06-04 21:40:05 UTC <tgeeky> yeah, that's fine
+2011-06-04 21:40:08 UTC <tgeeky> i'm not waiting on you
+2011-06-04 21:40:13 UTC <tgeeky> in that regard
+2011-06-04 21:40:26 UTC <tgeeky> I don't think it is sufficiently easy to write a "tensor" for this in console
+2011-06-04 21:40:30 UTC <tgeeky> because of the heavy dependence on readline
+2011-06-04 21:40:35 UTC <tgeeky> but maybe it is, I don't know how powerful readline is
+2011-06-04 21:40:51 UTC <luite> oh but you could work with an external text file?
+2011-06-04 21:40:53 UTC <tgeeky> but I know it's rather easy in HTML, because you can change the document contents "in lace"
+2011-06-04 21:41:08 UTC <tgeeky> yeah, the transform looks something like
+2011-06-04 21:43:12 UTC <tgeeky> [Document] -> [Expander: (Set AST, MultiSet AST)] <-> Session <-> [Contractor: (Set AST, MultiSet AST)] -> [Document]
+2011-06-04 21:44:01 UTC <tgeeky> where the Expanders and Contractors are the abitrarily (document-) ordered
+2011-06-04 21:44:13 UTC <tgeeky> the Set AST is the abstract syntax (haskell code)
+2011-06-04 21:44:36 UTC <tgeeky> and the Multiset AST is tree of "rich" substitutions in place of whitespace
+2011-06-04 21:44:56 UTC <tgeeky> which can be as smiple as replacing whitespace with morewhitespace: ' ' with '   '
+2011-06-04 21:45:07 UTC <tgeeky> or can be as complicated as replacing whitespace with a Diagram png file
+2011-06-04 21:45:35 UTC <tgeeky> that's basically it, if it makes sense
+2011-06-04 21:45:55 UTC <tgeeky> in the console, you have limtations on the transforms
+2011-06-04 21:45:58 UTC <luite> not really, but once you have somethign a bit more concrete, it probably will
+2011-06-04 21:46:14 UTC <tgeeky> i write an example in hpaste very quickly
+2011-06-04 21:46:18 UTC <tgeeky> one sec
+2011-06-04 22:10:10 UTC <luite> that is quite a long second
+2011-06-04 22:10:17 UTC <tgeeky> luite: one must write :o
+2011-06-04 22:10:50 UTC <luite> I might not read it immediately because i'm doing other stuffs, like haskell, in the meantime :p
+2011-06-04 22:20:10 UTC <byorgey> http://www.cis.upenn.edu/~byorgey/HelloWorld.png
+2011-06-04 22:20:25 UTC <tgeeky> byorgey: you must be in Australia, mate!
+2011-06-04 22:20:33 UTC <tgeeky> everything's upside down and backwards!
+2011-06-04 22:20:37 UTC <byorgey> a few kinks to be worked out still but we're well on our way to text support =)
+2011-06-04 22:20:54 UTC <luite> cool
+2011-06-04 22:21:21 UTC <byorgey> I was pleasantly surprised when that actually caused text to show up, even if it is upside-down =)
+2011-06-04 22:21:43 UTC <luite> hehe I thought it was intentional :)
+2011-06-04 22:21:51 UTC <byorgey> nope =)
+2011-06-04 22:21:56 UTC <byorgey> I think I know why it is upside-down though
+2011-06-04 22:21:59 UTC <tgeeky> byorgey: I'm sure that someone in Australia can decipher that :o
+2011-06-04 22:22:03 UTC <byorgey> hehe
+2011-06-04 22:22:08 UTC <tgeeky> it's also backwards, isn't it?
+2011-06-04 22:22:17 UTC <tgeeky> it's not a 180 degree rotation, that is
+2011-06-04 22:22:32 UTC <tgeeky> it's a per-character 180 degree rotation? :o
+2011-06-04 22:22:33 UTC <luite> it's just flipped vertically
+2011-06-04 22:22:44 UTC <byorgey> yes, just reflected vertically
+2011-06-04 22:22:46 UTC <tgeeky> i didn't look long
+2011-06-04 22:22:50 UTC <tgeeky> flipped != reflected :o
+2011-06-04 22:22:53 UTC <tgeeky> but yeah
+2011-06-04 22:22:57 UTC <luite> not?
+2011-06-04 22:23:25 UTC <tgeeky> luite: no, look at it upside down
+2011-06-04 22:23:27 UTC <byorgey> it's because cairo uses a coordinate system with the positive y-axis pointing down, but diagrams uses one with the y-axis pointing up
+2011-06-04 22:23:40 UTC <byorgey> and I didn't correct for it yet
+2011-06-04 22:23:53 UTC <tgeeky> byorgey: a ha! I actually mentioned that a week or two ago :o
+2011-06-04 22:24:13 UTC <byorgey> I could be convinced that diagrams should also use a downward-pointing y-axis
+2011-06-04 22:24:14 UTC <tgeeky> byorgey: the freedom of choice for {+ or -} with the imaginary axis :o
+2011-06-04 22:24:26 UTC <luite> tgeeky: oh "flip vertical" in photoshop actually means reflect in some horizontal line
+2011-06-04 22:24:42 UTC <tgeeky> luite: ok
+2011-06-04 22:25:12 UTC <byorgey> ok, I'm off for now, talk to you all later
+2011-06-04 22:25:59 UTC <tgeeky> cya byorgey
+2011-06-04 22:26:51 UTC <tgeeky> luite: ok, hopefully this makes it a little clearer
+2011-06-04 22:26:56 UTC <tgeeky> but it demonstrates the idea at least
+2011-06-04 22:27:00 UTC <tgeeky> http://hpaste.org/paste/47443/htensor_step_example_annotati#p47447
+2011-06-04 22:27:10 UTC <tgeeky> read the post -> annotation 1 -> annotation 2
+2011-06-04 22:28:16 UTC <tgeeky> luite: the basic idea is simply: *very* slightly augmented spacing rules on the printing side, and you can recover an isomorphism on a paragrah-of-code level between [printing] and [parsing]
+2011-06-04 22:33:41 UTC <luite> don't know about the clearer part...
+2011-06-04 22:35:18 UTC <luite> that spacing multiset stuff is from the partial isomorphisms article?
+2011-06-04 22:38:48 UTC <tgeeky> no, he specifies it without the multiset, but with an element in the set (' ') which is replaced by functions
+2011-06-04 22:39:12 UTC <tgeeky> one for parsing (always used the smallest amount of space allowed)
+2011-06-04 22:39:19 UTC <luite> maybe I should read the paper first
+2011-06-04 22:39:30 UTC <tgeeky> well, assuming his technique is correct (and he demonstrates)
+2011-06-04 22:39:46 UTC <tgeeky> then you can augment it by insisting that all spacing tokens, in each paragrah, are unique
+2011-06-04 22:40:42 UTC <tgeeky> and then by injecting a bunch of extra spacing around tokens, you can expand some haskell code out
+2011-06-04 22:40:50 UTC <tgeeky> to a "with extra spaces" version
+2011-06-04 22:41:00 UTC <tgeeky> then you can just use the fact that
+2011-06-04 22:41:06 UTC <tgeeky> [spaces before][token][spaces after]
+2011-06-04 22:41:09 UTC <tgeeky> will always be unique
+2011-06-04 22:41:11 UTC <tgeeky> to comment the code
+2011-06-04 22:41:28 UTC <tgeeky> (per paragraph)
+2011-06-04 22:42:04 UTC <luite> but you add comments to the ast? how would you serialize that again?
+2011-06-04 22:42:27 UTC <tgeeky> you don't have to, the whole point of his paper
+2011-06-04 22:42:31 UTC <tgeeky> is to avoid serialization
+2011-06-04 22:43:12 UTC <tgeeky> (not the "whole point" but a large part of it) is to do take this typical situation:
+2011-06-04 22:43:15 UTC <luite> but editing code doesn't really work without serialization
+2011-06-04 22:44:01 UTC <tgeeky> concrete <throguh> [parser] <gives> abstract
+2011-06-04 22:44:02 UTC <tgeeky> and
+2011-06-04 22:44:13 UTC <tgeeky> abstract <through> [pretty printer] <gives> concrete
+2011-06-04 22:44:20 UTC <tgeeky> there the things between
+2011-06-04 22:44:23 UTC <tgeeky> <through> and <gives>
+2011-06-04 22:44:30 UTC <tgeeky> are done using serialization and deserialization
+2011-06-04 22:44:39 UTC <tgeeky> insetead, use:
+2011-06-04 22:44:40 UTC <luite> hmm, sorry I'm too tired to really follow this stuff, we could come back to it later
+2011-06-04 22:44:46 UTC <tgeeky> yeah, ok
+2011-06-04 22:44:49 UTC <tgeeky> the point is
+2011-06-04 22:44:55 UTC <tgeeky> the extension to his paper
+2011-06-04 22:45:01 UTC <tgeeky> is to simply take more control over spacing
+2011-06-04 22:45:21 UTC <tgeeky> just enough to ensure that each paragarph of code has some additional spacing properties
+2011-06-04 22:45:29 UTC <tgeeky> that is enough (hopefully I can prove this!)
+2011-06-04 22:47:06 UTC <luite> I have no idea what exactly the purpose of th eextension is, or what you want to prove :)
+2011-06-04 22:47:24 UTC <tgeeky> the purpose is to parse lhs without seperating comments from code
+2011-06-04 22:47:38 UTC <tgeeky> so that the comments stay localized to the code
+2011-06-04 22:48:41 UTC <tgeeky> it's all about chunking up lhs files into small bits (but not too small) and keeping documentation for specific expressions *near* those expressions
+2011-06-04 22:48:52 UTC <tgeeky> but no worries, another failed attempt at explaining
+2011-06-04 22:48:57 UTC <tgeeky> just indicates that I need demonstrations, not explanations
+2011-06-04 22:49:03 UTC <tgeeky> which I suppose I should accept and stop attempting
+2011-06-04 22:49:10 UTC <tgeeky> to explain and not demonstrate
+2011-06-04 22:49:13 UTC <luite> yes a simple example would probably help a lot
+2011-06-04 22:49:24 UTC <tgeeky> well the example was supposed to be all of those dots and ^^^s
+2011-06-04 22:49:30 UTC <tgeeky> but it's not clear enough
+2011-06-04 22:49:31 UTC <tgeeky> and it was hand written
+2011-06-04 22:49:32 UTC <tgeeky> :o
+2011-06-04 22:51:25 UTC <luite> was that myFilter function supposed to be the result of prettyprinting some ast with some whitespace transformation?
+2011-06-04 22:54:08 UTC <tgeeky> luite: no, it was the observation that using those token lengths, and the fact that the spacing around tokens of the same length (p and x) are different
+2011-06-04 22:54:13 UTC <tgeeky> lets you uniquely identify each token
+2011-06-04 22:54:45 UTC <tgeeky> you wouldn't print those dots, nor would you ask the programmer to document his code like that
+2011-06-04 22:55:33 UTC <tgeeky> but if you have the isomorphism, you could comment it like the top example (where you write comments for the autogenerated ^^^^^^^^'s)
+2011-06-04 22:55:46 UTC <tgeeky> and rendered all nice and pretty (however you see fit, with html)
+2011-06-04 22:55:57 UTC <tgeeky> using overlays (like you mentioned)
+2011-06-04 22:56:11 UTC <tgeeky> or popups, or underlines, or other text decoration, or color
+2011-06-04 22:56:17 UTC <tgeeky> or any combination of those things
+2011-06-04 23:00:59 UTC <luite> hmm, I don't really see how you can preserve such annotations in an editor
+2011-06-04 23:01:37 UTC <luite> suppose the user copies and pastes some of the code to move things around
+2011-06-04 23:02:14 UTC <tgeeky> reordering of lines in a paragraph doesn't change the conclusion
+2011-06-04 23:02:22 UTC <tgeeky> introducing new lines from outside a paragraph into a paragraph does
+2011-06-04 23:02:30 UTC <tgeeky> and so the tensor would have to respace the entire paragraph
+2011-06-04 23:03:08 UTC <tgeeky> you can imagine it informally like this:
+2011-06-04 23:03:19 UTC <tgeeky> with an editor, we "give up" the tab charcter, replacing it by n-spaces
+2011-06-04 23:03:24 UTC <tgeeky> (with haskell in particular)
+2011-06-04 23:03:42 UTC <tgeeky> in a browser, we "give up" the tab key, because it takes out out of a text box (though this isn't mandatory)
+2011-06-04 23:04:00 UTC <tgeeky> in this editor, we "give up" our spacebar to an auto-tabber-spacer
+2011-06-04 23:04:33 UTC <tgeeky> when we press space, it could move us by varying number of spaces, based on the layout of the current paragrah
+2011-06-04 23:06:15 UTC <tgeeky> when you copy/paste, whatever rules you came up with for your auto-tabber-spacer, apply to the pasted code
+2011-06-04 23:06:50 UTC <tgeeky> we'll see how good it works, it may be infuriating ;)
+2011-06-04 23:07:04 UTC <tgeeky> but I am pretty sure it can be done, even if it's weird to use
+2011-06-05 04:31:30 UTC <manjunath_> hello
+2011-06-05 04:38:03 UTC <luite> morning
+2011-06-05 06:07:09 UTC <sordina> Is anyone working on adding text to diagrams?
+2011-06-05 06:07:54 UTC <luite> yes byorgey
+2011-06-05 06:08:07 UTC <luite> and it works, if you like upside-down reflected text
+2011-06-05 18:20:05 UTC <tgeeky> luite: lol
+2011-06-05 18:20:35 UTC <tgeeky> luite: Now with text support! (120 lines below) Bug report: text has slight orientation issue.
+2011-06-05 19:58:34 UTC <hpc> haha
+2011-06-05 20:03:23 UTC <byorgey> I don't see what the big deal is.  Just view your diagrams in a mirror.  While standing on your head.  It's not that hard.
+2011-06-06 01:17:02 UTC <luite> hmm, this is great. I talked to conal and he wants exactly what I had in mind for wolfgang, for interactive graphics (the only difference is that I want callbacks to the server) :)
+2011-06-06 01:17:50 UTC <luite> although, should I be afraid now that conal can read my mind and steal my ideas? ;p
+2011-06-06 02:36:13 UTC <tgeeky> luite: conal, you, and I have been seeing this same project manifest in our mind's eye for some time
+2011-06-06 03:05:23 UTC <luite> lalala not hearing you. it was me who thought of it first ;)
+2011-06-06 09:11:27 UTC <o-_-o> Hello
+2011-06-06 09:11:38 UTC <o-_-o> Is byorgey around ?
+2011-06-06 09:13:07 UTC <o-_-o> http://hpaste.org/47502/diagramslib_compile_error
+2011-06-06 09:13:23 UTC <o-_-o> I am getting this error can anyone tell me what is wrong ?
+2011-06-06 14:45:08 UTC <o-_-o> byorgey: are you around ?
+2011-06-06 15:46:08 UTC <byorgey> gah I keep missing o-_-o/manjunath
+2011-06-06 15:49:02 UTC <luite> hehe
+2011-06-06 15:49:21 UTC <luite> do you know what causes the problem?
+2011-06-06 16:03:29 UTC <byorgey> no idea
+2011-06-06 16:03:44 UTC <byorgey> probably incompatible versions, unpulled patches, or something like that
