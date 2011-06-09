@@ -3058,3 +3058,579 @@
 2011-06-06 15:49:21 UTC <luite> do you know what causes the problem?
 2011-06-06 16:03:29 UTC <byorgey> no idea
 2011-06-06 16:03:44 UTC <byorgey> probably incompatible versions, unpulled patches, or something like that
+2011-06-06 19:14:02 UTC <sordina> luite: Thanks for that! Getting a bit closer with the AST interface. Would it make sense to have this defined in Graphics.Rendering.Diagrams.AST, or not underneath the Diagrams namespace?
+2011-06-06 19:16:14 UTC <luite> dunno, byorgey should probably know what he wants to do with that namespace :)
+2011-06-06 19:18:02 UTC <byorgey> sordina: my idea was to just use Graphics.Rendering.Diagrams.* for the core library, and put everything else under the top-level Diagrams namespace
+2011-06-06 19:18:11 UTC <byorgey> dunno if that's a good idea or not =)
+2011-06-06 19:18:22 UTC <byorgey> but otherwise the module names just get too long.
+2011-06-06 19:18:31 UTC <sordina> Mmm.
+2011-06-06 19:19:09 UTC <byorgey> I guess I wouldn't care as much if there were better tools for managing import lists when writing code =)
+2011-06-06 19:19:14 UTC <luite> byorgey: I did find it slighly confusing at first, why not Diagrams.Core or something?
+2011-06-06 19:19:57 UTC <byorgey> I don't know.  like I said, it may not have been the best choice.
+2011-06-06 19:20:30 UTC <byorgey> perhaps we should discuss it on the mailing list and make a principled decision before it's too late to change?
+2011-06-06 19:20:40 UTC <luite> it does make sense if you expect some lower level packages to only use the core
+2011-06-06 19:20:56 UTC <sordina> Am I being naive in creating this btw? I'm beginning to think that the same kind of thing might be able to be achieved with Backend.
+2011-06-06 19:21:02 UTC <luite> where name clashes may be more likely
+2011-06-06 19:22:02 UTC <byorgey> sordina: I don't think so.  I am not sure what you mean by "achieving the same kind of thing with Backend".  Achieving what exactly?
+2011-06-06 19:22:23 UTC <luite> "using namespace Graphics.Rendering" "import Diagrams.Monoids" :)
+2011-06-06 19:22:48 UTC <luite> that syntax probably not a good idea
+2011-06-06 19:24:02 UTC <byorgey> hehe
+2011-06-06 19:25:37 UTC <sordina> byorgey: Optimizations, programatic modifications of diagrams, serialization, that sort of thing..
+2011-06-06 19:26:03 UTC <luite> hmm, with a backend, you're not supposed to get a diagram back I think?
+2011-06-06 19:27:04 UTC <byorgey> sordina: you could write a Backend that will compile to an AST (and you probably should).  But it will lose some information.  You will only get a big list of primitives.
+2011-06-06 19:29:02 UTC <sordina> byorgey: Ah. Good idea! I just thought there may be a way to bypass the AST.
+2011-06-06 19:30:34 UTC <byorgey> right, not really.  Diagrams does not use a full deep embedding, so unless you build an AST yourself at first there is no way to get all of that information back
+2011-06-06 19:38:20 UTC <sordina> Ah. Makes sense. Thanks for your help :)
+2011-06-06 21:32:18 UTC <byorgey> hi fryguybob
+2011-06-06 21:53:59 UTC <luite> bah my wolfgang backend code is getting way more hairy than I had hoped... lots of unix sockets, signal handlers, message queues
+2011-06-06 21:56:52 UTC <fryguybob> Howdy!
+2011-06-06 21:56:59 UTC <byorgey> luite: yikes =(
+2011-06-06 22:01:13 UTC <luite> byorgey: It's because of all the isolation things. the processes that run the untrusted haskell code each have their own socket.
+2011-06-06 22:01:33 UTC <byorgey> luite: right, makes sense.
+2011-06-06 22:41:33 UTC <byorgey> almost done with basic text support (font family, size, slant, and weight attributes, and text alignment)
+2011-06-06 22:41:49 UTC <byorgey> no text -> path conversion yet.
+2011-06-06 22:42:25 UTC <byorgey> going home now, you can expect some nice text support in darcs tomorrow =)
+2011-06-06 22:43:08 UTC <luite> oh cool
+2011-06-06 22:46:29 UTC <fryguybob> sweet, I've been gone too long :D.
+2011-06-07 00:57:40 UTC <byorgey> ok, quick poll: should the color of text be determined by the fill color, the line color, or by a completely separate third attribute?
+2011-06-07 00:57:55 UTC <byorgey> what would seem most intuitive/natural to you?
+2011-06-07 01:09:00 UTC <fryguybob> byorgey: I would go for fill.
+2011-06-07 01:12:52 UTC <luite> hmm
+2011-06-07 01:14:19 UTC <luite> fill sounds best
+2011-06-07 01:16:30 UTC <byorgey> the people have spoken
+2011-06-07 01:17:19 UTC <byorgey> the most blessed attribute for determining the hue of words shall be fill
+2011-06-07 01:35:06 UTC <byorgey> http://www.cis.upenn.edu/~byorgey/Text.png
+2011-06-07 01:35:24 UTC <luite> yay tekst
+2011-06-07 01:35:26 UTC <luite> err text
+2011-06-07 01:35:34 UTC <luite> tekst is dutch :)
+2011-06-07 01:35:34 UTC <fryguybob> It's beautiful
+2011-06-07 01:40:59 UTC <byorgey> and... pushed!
+2011-06-07 01:41:08 UTC <byorgey> still needs a bit more commenting/cleanup
+2011-06-07 01:41:20 UTC <luite> grate
+2011-06-07 01:41:23 UTC <byorgey> but it seems to work!
+2011-06-07 01:42:53 UTC <alpounet> good job!
+2011-06-07 01:43:03 UTC <luite> have you talked to conal about his plans by the way?
+2011-06-07 01:43:33 UTC <byorgey> luite: no, what are his plans?
+2011-06-07 01:44:52 UTC <luite> byorgey: he wants to generate "client side interactive graphics", basically something like diagrams that outputs svg or webgl with javascript for basic interactions
+2011-06-07 01:45:01 UTC <byorgey> ah, cool
+2011-06-07 01:46:46 UTC <luite> yes, and almost exactly the extensions I'd like to see for wolfgang ;)
+2011-06-07 01:47:07 UTC <luite> the only difference is that wolfgang can get extra data from the server if required
+2011-06-07 01:47:43 UTC <byorgey> right
+2011-06-07 01:48:11 UTC <byorgey> but getting extra data from the server is slow, so obviously you would want to do as much as possible in the client
+2011-06-07 01:48:16 UTC <luite> yeah
+2011-06-07 01:48:37 UTC <luite> but it's not always possible to load everything to the client
+2011-06-07 01:48:46 UTC <byorgey> sure.
+2011-06-07 01:48:48 UTC <luite> ideally it would work something like google maps
+2011-06-07 01:49:03 UTC <byorgey> oh, I see, cool
+2011-06-07 01:49:34 UTC <luite> anyway, what conal wants is a pure and declarative way to describe those interactions, something like that would already be a great start
+2011-06-07 01:50:07 UTC <alpounet> he's gonna want a frp-ish library for that of course.
+2011-06-07 01:50:37 UTC <luite> hehe possibly, but it must all be done within the limitations of statically generated javascript code
+2011-06-07 01:51:20 UTC <luite> of course that's not terribly limited because you could generate a haskell interpreter, in theory :)
+2011-06-07 01:51:27 UTC <alpounet> :D
+2011-06-07 11:21:44 UTC <byorgey> o-_-o: ah, we can talk here
+2011-06-07 11:22:12 UTC <byorgey> o-_-o: and diagrams-core compiles without error?
+2011-06-07 11:22:30 UTC <o-_-o> byorgey: ok
+2011-06-07 11:22:36 UTC <o-_-o> byorgey: yes
+2011-06-07 11:23:06 UTC <byorgey> o-_-o: hmm, and then you still get that error with diagrams-lib
+2011-06-07 11:23:22 UTC <byorgey> o-_-o: what version of ghc?
+2011-06-07 11:23:46 UTC <o-_-o> byorgey: Yes, I just did a darcs pull and then did a cabal -p install and same error
+2011-06-07 11:23:58 UTC <o-_-o> 6.12.1
+2011-06-07 11:24:23 UTC <byorgey> o-_-o: the other thing to check is whether you have made any inadvertent changes -- what is the result of running 'darcs whatsnew' in diagrams-core and diagrams-lib?
+2011-06-07 11:24:24 UTC <o-_-o> It is a problem with semigroups
+2011-06-07 11:24:39 UTC <byorgey> hmm?
+2011-06-07 11:24:47 UTC <o-_-o> No changes!
+2011-06-07 11:25:02 UTC <o-_-o> I changed diagrams-lib.cabal I think
+2011-06-07 11:25:31 UTC <o-_-o> The semigroups currently available is 0.5 and diagrams wants 0.4 or less
+2011-06-07 11:25:45 UTC <o-_-o> so I bumped up the number, I think that is what is wrong
+2011-06-07 11:26:01 UTC <o-_-o> what version of semigroups do you have ? (How do I find mine ?)
+2011-06-07 11:26:06 UTC <byorgey> that would not cause this problem
+2011-06-07 11:26:29 UTC <byorgey> and I changed the upper bound on semigroups a while ago
+2011-06-07 11:26:36 UTC <o-_-o> I have 0.5.0
+2011-06-07 11:26:39 UTC <byorgey> so if you have done a darcs pull you would have gotten that change anyway
+2011-06-07 11:26:41 UTC <byorgey> so do I
+2011-06-07 11:26:46 UTC <o-_-o> ok
+2011-06-07 11:26:53 UTC <o-_-o> I thought that was the problem
+2011-06-07 11:28:50 UTC <byorgey> hmm, strange
+2011-06-07 11:30:18 UTC <byorgey> o-_-o: try going into diagrams-core, do a 'cabal clean' and then 'cabal -p install' and then the same for diagrams-lib
+2011-06-07 11:30:28 UTC <o-_-o> byorgey: ok
+2011-06-07 11:30:29 UTC <byorgey> worth a try
+2011-06-07 11:31:29 UTC <o-_-o> byorgey: It did not work. Same error.
+2011-06-07 11:31:33 UTC <byorgey> ok.
+2011-06-07 11:31:37 UTC <o-_-o> byorgey: diagrams-core compiled though
+2011-06-07 11:31:56 UTC <byorgey> at this point I am wondering if it is a ghc bug.
+2011-06-07 11:32:38 UTC <byorgey> o-_-o: when I get to school I will try installing 6.12.1 and see if I get the same error.
+2011-06-07 11:32:46 UTC <o-_-o> byorgey: ok
+2011-06-07 11:32:57 UTC <o-_-o> how do I install some other version of ghc ?
+2011-06-07 11:33:12 UTC <o-_-o> is it possible to just use a different binary or is it more complicated ?
+2011-06-07 11:33:15 UTC <byorgey> o-_-o: what operating system do you have?
+2011-06-07 11:33:20 UTC <o-_-o> byorgey: ubuntu
+2011-06-07 11:33:34 UTC <byorgey> no, it's a little more complicated
+2011-06-07 11:33:45 UTC <o-_-o> byorgey: ok...*sigh*
+2011-06-07 11:33:49 UTC <byorgey> which ubuntu release?
+2011-06-07 11:34:05 UTC <o-_-o> 10.10
+2011-06-07 11:34:09 UTC <o-_-o> maverick
+2011-06-07 11:36:23 UTC <byorgey> ok, let me look
+2011-06-07 11:36:53 UTC <o-_-o> weird cabal update stopped working
+2011-06-07 11:38:04 UTC <byorgey> what do you mean?
+2011-06-07 11:38:10 UTC <o-_-o> byorgey: nothing it worked
+2011-06-07 11:38:13 UTC <o-_-o> I am stupid
+2011-06-07 11:38:20 UTC <byorgey> oh, I see, hehe
+2011-06-07 11:38:53 UTC <o-_-o> sudo needs to env vars to be respecified on the command-line
+2011-06-07 11:39:16 UTC <byorgey> o-_-o: ok, so maverick has version 2010.1.0.0.1 of the Haskell Platform, which is rather old
+2011-06-07 11:39:42 UTC <o-_-o> byorgey: ok...anyway to magically upgrade it without upgrading the entire OS ?
+2011-06-07 11:40:07 UTC <o-_-o> I am updating cabal to 1.10.1.08711
+2011-06-07 11:40:15 UTC <byorgey> o-_-o: if you want to upgrade you should (1) get a binary distribution of ghc from here: http://haskell.org/ghc/download_ghc_7_0_3
+2011-06-07 11:40:27 UTC <byorgey> (ignore the STOP warning about the Haskell Platform)
+2011-06-07 11:41:03 UTC <byorgey> then (2) get the source distribution of the Haskell Platform here http://hackage.haskell.org/platform/linux.html
+2011-06-07 11:41:47 UTC <byorgey> oh, but first for step (0) you should uninstall whatever haskell packages you have through ubuntu
+2011-06-07 11:42:00 UTC <o-_-o> byorgey: ok
+2011-06-07 11:42:01 UTC <byorgey> so that next time you upgrade it won't clobber your manual install
+2011-06-07 11:42:13 UTC <o-_-o> *sigh*
+2011-06-07 11:42:20 UTC <o-_-o> oh...well
+2011-06-07 11:42:31 UTC <o-_-o> they don't make it easy like in windows do they
+2011-06-07 11:42:31 UTC <byorgey> yeah, ubuntu/debian are always rather out of date when it comes to haskell =(
+2011-06-07 11:42:43 UTC <o-_-o> ACTION shakes fist at the ghc guys
+2011-06-07 11:42:54 UTC <byorgey> it's not the ghc guys' fault.
+2011-06-07 11:43:04 UTC <o-_-o> byorgey: I know :-)
+2011-06-07 11:45:39 UTC <byorgey> o-_-o: I just realized that I can ssh into my machine at school, so it's currently downloading ghc 6.12.1 =)
+2011-06-07 11:45:50 UTC <byorgey> even if you upgrade I still want to check and see
+2011-06-07 11:46:21 UTC <o-_-o> hmmm...you know what, I have a recent install of this on one of our clusters
+2011-06-07 11:46:38 UTC <o-_-o> I am currently going to get something to eat, I'll be back in a bit
+2011-06-07 11:46:47 UTC <byorgey> ok.
+2011-06-07 13:06:19 UTC <byorgey> o-_-o: I get the same error when I build with ghc 6.12.1
+2011-06-07 13:06:39 UTC <byorgey> o-_-o: so it seems to be a bug in ghc 6.12.1
+2011-06-07 13:07:01 UTC <byorgey> o-_-o: however, I have just pushed a workaround (basically just adding a type signature to help out the type inferencer)
+2011-06-07 13:07:19 UTC <byorgey> o-_-o: so if you do a darcs pull in diagrams-lib and recompile it ought to work now
+2011-06-07 13:26:27 UTC <luite> hmm, my ubuntu has ghc 6.12.3 packages
+2011-06-07 13:26:33 UTC <luite> oh
+2011-06-07 13:26:34 UTC <luite> maverick
+2011-06-07 13:26:43 UTC <o-_-o> luite: can you help with one more error ?
+2011-06-07 13:27:06 UTC <luite> uh I can try, but byorgey knows much more about diagrams than I do :)
+2011-06-07 13:27:16 UTC <o-_-o> http://hpaste.org/47556/datacolournames_error
+2011-06-07 13:27:37 UTC <o-_-o> luite: I have installed the profiling libraries and I still get this error
+2011-06-07 13:28:38 UTC <byorgey> o-_-o: you will have to reinstall the colour library with profiling enabled
+2011-06-07 13:28:50 UTC <luite> did the profiling libraries install succesfully for everything? it's a known limitation of cabal that it doesn't properly keep track of which profiling libraries are installed
+2011-06-07 13:29:11 UTC <o-_-o> Ok...reinstalling again
+2011-06-07 13:29:17 UTC <luite> but if you installed the profiling libs for diagrams and it said that all was fine, than this is a strange error
+2011-06-07 13:29:23 UTC <luite> then
+2011-06-07 13:30:29 UTC <o-_-o> yay!
+2011-06-07 13:30:48 UTC <o-_-o> ok...I did a cabal -p install of all the error libraries and now it seems to have built
+2011-06-07 13:31:03 UTC <o-_-o> now for diagrams-cairo (dun, dun, dunnnnnnnnn)
+2011-06-07 13:31:36 UTC <byorgey> =D
+2011-06-07 13:36:09 UTC <o-_-o> cabal: dist/build/autogen/: permission denied
+2011-06-07 13:36:09 UTC <o-_-o> cabal: Error: some packages failed to install:
+2011-06-07 13:36:12 UTC <o-_-o> any idea ?
+2011-06-07 13:36:21 UTC <o-_-o> where will this directory be ?
+2011-06-07 13:36:55 UTC <o-_-o> nevermind...I found it
+2011-06-07 13:37:37 UTC <byorgey> maybe the permissions got messed up if you accidentally did 'sudo cabal install' at some point in the past?
+2011-06-07 13:38:10 UTC <o-_-o> TIL, if cabal says new version of cabal is available why don't you go ahead and do cabal install cabal-install, don't do it!
+2011-06-07 13:38:32 UTC <o-_-o> I'm having to rebuild everything
+2011-06-07 13:38:45 UTC <o-_-o> yay...diagrams-cairo built
+2011-06-07 13:39:05 UTC <o-_-o> actually I don't remember why I was building it in the first place now
+2011-06-07 13:39:10 UTC <o-_-o> hmm...
+2011-06-07 13:39:50 UTC <o-_-o> heh...I don't remember the name of the directory where I have my programs
+2011-06-07 13:39:58 UTC <byorgey> hehe, oops =)
+2011-06-07 13:40:07 UTC <byorgey> the new version of cabal-install is nice though
+2011-06-07 13:40:28 UTC <o-_-o> ok..found i
+2011-06-07 13:40:29 UTC <o-_-o> t
+2011-06-07 13:42:25 UTC <o-_-o> toSurface is the one taking the most time
+2011-06-07 13:42:36 UTC <o-_-o> I think I wrote it...hmmm
+2011-06-07 13:43:05 UTC <o-_-o> no byorgey wrote it :-p
+2011-06-07 13:43:44 UTC <o-_-o> byorgey: http://hpaste.org/47557/tosurface
+2011-06-07 13:43:49 UTC <byorgey> ACTION whistles innocently
+2011-06-07 13:44:16 UTC <o-_-o> heh...
+2011-06-07 13:44:59 UTC <byorgey> o-_-o: I expect it is not toSurface itself, but rather the call to renderDia (which actually forces the computation of the whole diagram) which is taking the bulk of the time
+2011-06-07 13:45:20 UTC <byorgey> like I said, diagrams is so far completely unoptimized
+2011-06-07 13:45:20 UTC <o-_-o> I'll paste the profiling information
+2011-06-07 13:46:25 UTC <o-_-o> http://hpaste.org/47558/triangle_profiling_info
+2011-06-07 13:46:57 UTC <luite> hmm hpaste is slow
+2011-06-07 13:49:05 UTC <o-_-o> Can you optimize lapply' ?
+2011-06-07 13:50:12 UTC <luite> I think those thinks should be much faster if they're properly specialized
+2011-06-07 13:51:00 UTC <byorgey> sorry, I was playing nikki and the robots
+2011-06-07 13:52:00 UTC <o-_-o> haha
+2011-06-07 13:52:22 UTC <byorgey> lapply' is from vector-space
+2011-06-07 13:52:24 UTC <luite> hehe I don't really want to play a game now but I couldn't resist downloading it :(
+2011-06-07 13:52:41 UTC <o-_-o> what ?!
+2011-06-07 13:52:52 UTC <byorgey> as luite says, perhaps specialization would help
+2011-06-07 13:52:55 UTC <o-_-o> are luite and byorgey same person ?
+2011-06-07 13:53:00 UTC <o-_-o> With different nicks ?
+2011-06-07 13:53:04 UTC <luite> hehe
+2011-06-07 13:53:08 UTC <byorgey> not last time I checked...
+2011-06-07 13:53:34 UTC <byorgey> unfortunately, I know approximately zero about haskell optimization
+2011-06-07 13:53:44 UTC <o-_-o> byorgey: sorry, I was playing nikki and the robots
+2011-06-07 13:53:44 UTC <o-_-o> luite: hehe I don't really want to play a game now but I couldn't resist downloading it :( ?
+2011-06-07 13:53:56 UTC <luite> o-_-o: yes, because byorgey mentioned it
+2011-06-07 13:54:02 UTC <luite> I didn't know it before
+2011-06-07 13:54:05 UTC <luite> but it looked cute
+2011-06-07 13:54:07 UTC <o-_-o> luite: I got it now
+2011-06-07 13:54:09 UTC <byorgey> we are not the same person, I *did* want to play a game right now ;-)
+2011-06-07 13:54:16 UTC <o-_-o> hehe
+2011-06-07 13:54:46 UTC <byorgey> anyway, I'm hoping that someone more knowledgeable about optimization will come along and improve diagrams speed
+2011-06-07 13:55:00 UTC <byorgey> because at the moment I think my time is best spent improving it in other ways
+2011-06-07 13:55:02 UTC <o-_-o> byorgey: haha
+2011-06-07 13:55:07 UTC <o-_-o> byorgey: ok
+2011-06-07 13:58:38 UTC <luite> hmm, waht do I do when a robot is upside down sitting on its head?
+2011-06-07 14:11:17 UTC <byorgey> luite: restart the level, I think =(
+2011-06-07 15:57:58 UTC <luite> byorgey: aw :( that might be a usability issue :p
+2011-06-07 15:58:30 UTC <byorgey> you mean the robots with the little rockets, right?
+2011-06-07 15:58:34 UTC <luite> yes
+2011-06-07 15:58:42 UTC <luite> are there more types of robots?
+2011-06-07 15:58:48 UTC <byorgey> yes, there are lots
+2011-06-07 15:59:00 UTC <luite> oh ok, I've only played a few levels :)
+2011-06-07 15:59:28 UTC <byorgey> I think someone else I know was able to turn over a rocket-robot that was on its head somehow
+2011-06-07 15:59:31 UTC <byorgey> but I don't know how
+2011-06-07 16:00:06 UTC <byorgey> the solution is: Don't Put Robots On Their Head
+2011-06-07 16:00:10 UTC <luite> hehe
+2011-06-07 16:00:24 UTC <tgeeky> the robots thank you for your efforts
+2011-06-07 16:01:19 UTC <tgeeky> byorgey: does this game mean that, finally, someone has code which 'fires the missiles!' as SPJ loves to mention?
+2011-06-07 16:03:22 UTC <luite> hmm
+2011-06-07 16:06:55 UTC <byorgey> tgeeky: I don't know if there are actually any missiles involved
+2011-06-07 16:07:07 UTC <byorgey> tgeeky: but perhaps that should be suggested for future versions =)
+2011-06-07 16:08:17 UTC <luite> for Wolfgang, I have regular expressions, which currently must have the typeclass Show. the result of the evaluation is the type of the expression, a String with the result via show.
+2011-06-07 16:08:21 UTC <luite> with the new backend that can do IO, and queries can have a result with additional resources. The result (in the communication over the unix socket between interpreter and web service) has type (EvalResult Type Result [Resource], where Type=Result=Data.Text.Text, data Resource = Resource FileName MimeType ByteString  )
+2011-06-07 16:09:02 UTC <tgeeky> hmmm
+2011-06-07 16:09:24 UTC <luite> but what would be a good way to present those things to the user? it would be quite inconvenient if users had to create IO EvalResult actions for everything
+2011-06-07 16:09:41 UTC <tgeeky> i'm not sure I understood what you said already, let me re-read
+2011-06-07 16:10:16 UTC <luite> oh by "regular expressions" I meant "pure expressions"
+2011-06-07 16:10:22 UTC <luite> sorry for any confusion :p
+2011-06-07 16:10:27 UTC <tgeeky> oh
+2011-06-07 16:10:28 UTC <tgeeky> lol
+2011-06-07 16:10:33 UTC <tgeeky> ok, much less confusing :o
+2011-06-07 16:10:51 UTC <tgeeky> i was thinking... why in the world is he using regular expressions to represent evalution?
+2011-06-07 16:11:09 UTC <luite> so you can have a pure expression: sum [1..10] or something, and then it will just use Show on the result
+2011-06-07 16:11:21 UTC <tgeeky> yeah, ok
+2011-06-07 16:11:22 UTC <luite> so the result is then ("55", "Integer")
+2011-06-07 16:12:05 UTC <tgeeky> with [Resource] you essentially something that's wrapping around file accesses and the result of accesses?
+2011-06-07 16:12:06 UTC <luite> (or actually "(Num a, Enum a) => a" )
+2011-06-07 16:12:20 UTC <tgeeky> FileName, MimeType is the type of the file?, and ByteString is the result of reading?
+2011-06-07 16:12:44 UTC <luite> hmm
+2011-06-07 16:12:54 UTC <luite> I think it might be best to wrap it into some simple library
+2011-06-07 16:12:56 UTC <tgeeky> data Resource = Resource FileName MimeType Bytestring
+2011-06-07 16:13:02 UTC <tgeeky> well, I was going to suggest
+2011-06-07 16:13:05 UTC <tgeeky> the other thing that ought to be in there
+2011-06-07 16:13:09 UTC <tgeeky> are the resource limits
+2011-06-07 16:13:22 UTC <tgeeky> amount of (time, memory) allowed for work
+2011-06-07 16:13:44 UTC <tgeeky> unless that's obviously wrong
+2011-06-07 16:13:44 UTC <luite> those aren't visisble to the evaluator at the moment
+2011-06-07 16:13:45 UTC <tgeeky> ?
+2011-06-07 16:14:08 UTC <tgeeky> so an example that fulfills this type is
+2011-06-07 16:14:27 UTC <tgeeky> Resource PrettyPicture.png {picture mimetype} {picture bits} ?
+2011-06-07 16:14:28 UTC <luite> I'll add a module later, that has those as constants, but it's not terribly important for most requests
+2011-06-07 16:15:08 UTC <luite> every interpreter has a file quota, and the web service won't accept more than some number of resources
+2011-06-07 16:15:21 UTC <tgeeky> so, say
+2011-06-07 16:15:26 UTC <luite> the expression will automatically get IO exceptions if it runs into those :)
+2011-06-07 16:15:42 UTC <tgeeky> Resource /dev/random {text mimetype} {100MB of random bits}
+2011-06-07 16:15:47 UTC <tgeeky> wouldn't even finish anyway? :o
+2011-06-07 16:16:01 UTC <luite> you can't open /dev/random anyway :)
+2011-06-07 16:16:07 UTC <tgeeky> hehe ok
+2011-06-07 16:17:04 UTC <luite> but suppose you try to make a 100MB ByteString, then there are three things that can go wrong: 1. you hit the resource limits set for the user/process, interpreter is killed by the operating system killer
+2011-06-07 16:17:49 UTC <luite> 2. you take too long (more than 2 seconds) to allocate everything, the control process kills the interpreter
+2011-06-07 16:18:25 UTC <luite> 3. you were able to allocate the bytestring in the interpreter and try to send it to the web service. web service denies responses over a certain size
+2011-06-07 16:18:34 UTC <luite> (and then requests a kill from the control process)
+2011-06-07 16:18:49 UTC <tgeeky> ok
+2011-06-07 16:19:07 UTC <luite> actually it's a bit more complicated
+2011-06-07 16:20:03 UTC <luite> when a request comes in, the web service will find out which of the interpreters currently serves the client (it doesn't use inteterpreters for multiple clients, unless they are reset first)
+2011-06-07 16:20:32 UTC <luite> it then contacts the controller to acquire a lock on that interpreter
+2011-06-07 16:20:55 UTC <luite> when the lock is granted, it sends the request over the unix socket for the interpreter and waits for the result
+2011-06-07 16:21:20 UTC <luite> the web service has a built-in timeout, if no response is received in the allotted time, then it sends a timeout message to the controller
+2011-06-07 16:21:27 UTC <luite> which releases the lock and kills the interpreter
+2011-06-07 16:21:57 UTC <luite> if a proper response is received within the time limit, then it just sends a releaseinterpreter query to to the controller, and the interpreter is kept running
+2011-06-07 16:23:21 UTC <luite> the controller starts interpreters when a lock is requested. it also kills interpreters that are older than a certain amount of time, and it makes sure that locks are never held for more than a few seconds (kills the interpreter and releases lock after that timeout)
+2011-06-07 16:23:50 UTC <byorgey> sounds fancy =D
+2011-06-07 16:24:30 UTC <luite> yes, it's much more communication than I'd like, because everything runs under a different userid
+2011-06-07 16:25:57 UTC <luite> the controller part is done now :)
+2011-06-07 16:26:33 UTC <luite> the interpreter part almost (is not much code anyway), I just need to figure out how to do requests with resources
+2011-06-07 16:27:11 UTC <luite> and the web service still needs to me modified to use the new (binary) protocol, and to keep track of which clients use which interpreter
+2011-06-07 16:27:16 UTC <byorgey> luite: the resources are for things like e.g. graphics?
+2011-06-07 16:27:30 UTC <luite> byorgey: yes
+2011-06-07 16:28:26 UTC <luite> for example an SVG with some additional things, like a font or a bitmap that is loaded from a url
+2011-06-07 16:29:16 UTC <byorgey> luite: how about just allowing the user to type in expressions of any type; if they enter an expression of type  IO EvalResult then it will be run directly; if they enter an expression of any other type it will get wrapped up in an EvalResult and run
+2011-06-07 16:29:29 UTC <byorgey> er, not wrapped up in an EvalResult
+2011-06-07 16:29:34 UTC <byorgey> but hopefully you know what I mean
+2011-06-07 16:30:28 UTC <byorgey> I also might be misinterpreting your question.
+2011-06-07 16:32:46 UTC <luite> I might not have asked my question correctly :) I'm just looking for what would be easiest for the user
+2011-06-07 16:33:23 UTC <luite> I'll probably just use Show for pure things
+2011-06-07 16:33:46 UTC <luite> and for Show a => IO a, probably execute the IO action and show the a
+2011-06-07 16:34:07 UTC <byorgey> yes, that's exactly what ghci does
+2011-06-07 16:36:13 UTC <luite> but for resources I either need a different type class EvalResult or something, that would be used instead of Show when available (could be again used in both pure and IO settings in the same way)
+2011-06-07 16:36:44 UTC <luite> or some other way, a wrapper type, just an EvalResult a data type, something else?
+2011-06-07 16:37:08 UTC <luite> EvalResult a => IO a?
+2011-06-07 16:37:59 UTC <luite> the problem is that it might be slightly tricky to get extra type classes into the interpreter :)
+2011-06-07 16:38:20 UTC <byorgey> luite: also, what do you do for something that is both EvalReesult and Show?
+2011-06-07 16:38:31 UTC <luite> EvalResult probably
+2011-06-07 16:38:37 UTC <byorgey> I guess you could handle it but it might be confusing for the user.
+2011-06-07 16:38:43 UTC <luite> the result should be the same for the user if it has no resources
+2011-06-07 16:39:19 UTC <luite> brb, dinner :)
+2011-06-07 16:39:33 UTC <byorgey> luite: ok, I have some other ideas, I'll tell you when you get back
+2011-06-07 17:06:42 UTC <luite> I am back
+2011-06-07 17:07:22 UTC <byorgey> ok, now let's see if I can remember what my ideas were =)
+2011-06-07 17:08:23 UTC <byorgey> oh yes, I was just going to point out that most *end users* of wolfgang are never going to know about this EvalResult thing
+2011-06-07 17:08:42 UTC <byorgey> they are just going to use functions provided by someone else which happen to have that return type
+2011-06-07 17:09:06 UTC <byorgey> however I imagine you will want people to be able to write plugins etc., and obviously they need to know the types involved
+2011-06-07 17:09:57 UTC <luite> true, my reasoning for a typeclass would be that users could enter an expression with type IO (Diagram ...) or just Diagram ...  directly, and then see the result as an image
+2011-06-07 17:10:14 UTC <byorgey> oh, I see
+2011-06-07 17:10:17 UTC <byorgey> yes, that would be neat
+2011-06-07 17:13:37 UTC <luite> maybe something like this would work: class EvalWithResourceAble a where toEvalWithResources :: a -> EvalResult a,   and for non-standard rendering you could make an EvalResult a, or IO (EvalResult a) directly
+2011-06-07 17:13:53 UTC <luite> obviously I need to get better at coming up with names ;)
+2011-06-07 17:14:07 UTC <byorgey> hehe =)
+2011-06-07 17:14:26 UTC <byorgey> well, you can drop the 'to' from 'toEvalWithResources'
+2011-06-07 17:14:53 UTC <byorgey> and maybe just 'Eval' instead of 'EvalWithResourceAble'?
+2011-06-07 17:14:57 UTC <byorgey> in parallel with 'Show'
+2011-06-07 17:14:59 UTC <luite> yes :)
+2011-06-07 17:17:20 UTC <luite> I'll have to experiment a bit to see if I can make this work somehow
+2011-06-07 17:21:30 UTC <luite> it probably can't be worse than what I have in the current version, which uses show for everything, and writes files behind the user's back with unsafePerformIO :)
+2011-06-07 17:27:52 UTC <byorgey> yes, I doubt anything would be worse than that ;)
+2011-06-07 17:30:59 UTC <luite> do you know people who are good at linux security by the way? I want someone to try and break it while I can still fix things :)
+2011-06-07 17:31:37 UTC <byorgey> hehe, right =)
+2011-06-07 17:31:48 UTC <byorgey> I don't, not really
+2011-06-07 17:46:12 UTC <luite> I'll ask in -blah when I have the server then, there must be people in there who like breaking stuff
+2011-06-07 17:48:23 UTC <byorgey> sounds like a good idea
+2011-06-07 22:15:34 UTC <tgeeky> i forgot about -blah
+2011-06-08 03:12:07 UTC <luite> byorgey: I have it working now (in a small text program), I try the following, with typeclass Eval a where evalResult :: a -> EvalRes, data EvalRes = EvalRes Text [Resource]
+2011-06-08 03:12:16 UTC <luite> and then I evaluate in this order:
+2011-06-08 03:12:21 UTC <luite> (expr :: EvalRes)
+2011-06-08 03:12:26 UTC <luite> (eval :: IO EvalRes)
+2011-06-08 03:12:28 UTC <luite> oops
+2011-06-08 03:12:33 UTC <luite> (expr :: IO EvalRes)
+2011-06-08 03:12:50 UTC <luite> (evalResult expr :: EvalRes)
+2011-06-08 03:12:58 UTC <luite> (evalResult expr :: IO EvalRes)
+2011-06-08 03:13:05 UTC <luite> (show expr :: String)
+2011-06-08 03:13:18 UTC <luite> (fmap show expr :: IO String)
+2011-06-08 03:13:24 UTC <luite> and there's a fmap missing somewhere
+2011-06-08 03:13:31 UTC <luite> the first one that succeeds is the result
+2011-06-08 03:13:40 UTC <byorgey> fmap evalResult expr :: IO EvalRes
+2011-06-08 03:13:54 UTC <luite> that one :)
+2011-06-08 03:14:02 UTC <byorgey> cool, that makes sense to me
+2011-06-08 03:14:18 UTC <luite> I had hoped to use the typechecker api, instead of just trying to evaluate
+2011-06-08 03:14:18 UTC <byorgey> the first one that *succeeds*, or the first one that *typechecks*?
+2011-06-08 03:14:27 UTC <byorgey> ah, ok
+2011-06-08 03:14:35 UTC <byorgey> but?
+2011-06-08 03:14:40 UTC <luite> if you just typechecks, it doesn't check whether there are actually instances for it
+2011-06-08 03:15:10 UTC <luite> so for expr="1+1", it typechecks for all these types
+2011-06-08 03:15:56 UTC <byorgey> really?
+2011-06-08 03:16:03 UTC <luite> err wait, not all
+2011-06-08 03:16:17 UTC <luite> not the IO ones
+2011-06-08 03:16:26 UTC <luite> and not the monomorphic EvalExpr
+2011-06-08 03:16:55 UTC <byorgey> hmm
+2011-06-08 03:17:08 UTC <luite> 1+1
+2011-06-08 03:17:10 UTC <luite> typeChecks: idER False
+2011-06-08 03:17:10 UTC <luite> typeChecks: idS True
+2011-06-08 03:17:10 UTC <luite> typeChecks: idIOS True
+2011-06-08 03:17:10 UTC <luite> typeChecks: idE True
+2011-06-08 03:17:13 UTC <luite> typeChecks: idIOE True
+2011-06-08 03:17:15 UTC <luite> 1+1
+2011-06-08 03:17:55 UTC <luite> IOE = (Eval a) => IO a
+2011-06-08 03:18:04 UTC <luite> E = (Eval a) => a
+2011-06-08 03:18:10 UTC <luite> even though there are no instances
+2011-06-08 03:18:56 UTC <luite> maybe there are better ways to typecheck :)
+2011-06-08 03:19:08 UTC <luite> but I used something like:
+2011-06-08 03:19:25 UTC <luite> idIOE :: (Eval a) => IO a -> IO a
+2011-06-08 03:19:33 UTC <byorgey> oh, well I certainly believe 1+1 typechecks at type Eval a => a
+2011-06-08 03:19:37 UTC <luite> GHC.typeCheck ("idIOE " ++ expr)
+2011-06-08 03:19:54 UTC <byorgey> but I *don't* believe that  evalResult (1+1) :: EvalRes  would typecheck
+2011-06-08 03:20:04 UTC <luite> oh that's true, that doesn't
+2011-06-08 03:20:15 UTC <byorgey> I think you have to actually typecheck the expression wrapped in the evalResult and show calls
+2011-06-08 03:21:18 UTC <byorgey> i.e. typecheck the expressions you told me above are the ones that you run =)
+2011-06-08 03:23:32 UTC <luite> hmm, I'm afraid you're right ;p
+2011-06-08 03:24:13 UTC <luite> although the fmap ones would require some type annotation
+2011-06-08 03:25:22 UTC <byorgey> ah, yes
+2011-06-08 03:25:29 UTC <byorgey> but you might as well stick type annotations on them all
+2011-06-08 03:25:40 UTC <byorgey> since if they typecheck at all you know exactly what types they will be
+2011-06-08 03:26:32 UTC <luite> yes everything must be monomorphic
+2011-06-08 03:26:49 UTC <luite> since the types might not be available in the wolfgang program
+2011-06-08 03:27:24 UTC <luite> hmm
+2011-06-08 03:27:28 UTC <luite> don't know if that makes sense
+2011-06-08 03:28:08 UTC <byorgey> I'm not sure what you mean by that
+2011-06-08 03:28:12 UTC <byorgey> but the types you have make sense to me
+2011-06-08 03:28:17 UTC <luite> me neither :)
+2011-06-08 03:28:55 UTC <byorgey> =)
+2011-06-08 03:30:16 UTC <luite> but it is possible that the first one that typechecks is not the first one that evaluates
+2011-06-08 03:31:12 UTC <luite> although it's probable better to fail in those situations
+2011-06-08 03:31:18 UTC <luite> *probably
+2011-06-08 03:32:03 UTC <byorgey> yes, you do have a choice to make there
+2011-06-08 03:35:33 UTC <byorgey> I agree it's probably better to just fail.
+2011-06-08 03:49:30 UTC <luite> ok got it working again
+2011-06-08 03:49:56 UTC <luite> but I have one last problem
+2011-06-08 03:51:39 UTC <luite> if you generate an SVG for example, and you have resources in the EvalRes, for example bitmap images
+2011-06-08 03:51:51 UTC <luite> then you need refer to those with a url inside the SVG
+2011-06-08 03:52:16 UTC <luite> so you need to know the base location
+2011-06-08 03:53:22 UTC <luite> but a fixed base url means that results will overwrite each other, more than one user could generate "image.png" for different pages
+2011-06-08 03:53:54 UTC <byorgey> ah, yes, that sounds less than ideal =)
+2011-06-08 03:54:30 UTC <luite> a unique prefix for each request would be better, but I need to find a way to present that to the user
+2011-06-08 03:54:56 UTC <luite> a global constant baseURL :: String could be done, but I loading constants requires reloading the .hs files\
+2011-06-08 03:55:03 UTC <luite> +think
+2011-06-08 03:55:31 UTC <byorgey> can't the URL be included with the Resource?
+2011-06-08 03:55:55 UTC <luite> no the problem is the other way around
+2011-06-08 03:55:59 UTC <byorgey> perhaps I am not understanding the problem
+2011-06-08 03:57:15 UTC <luite> for example say you have  type = HTML, EvalRes "<html><img src=http://sompage/image.png"></html>" [Resource "image.png" ByteString]
+2011-06-08 03:57:50 UTC <luite> but you need to know where a resource with name "image.png" will end up before you can output the html
+2011-06-08 03:58:17 UTC <luite> so it needs to be in the request, not in the result
+2011-06-08 04:04:40 UTC <luite> so the type would be something like:   eval :: Expression -> Module -> BaseURL -> IO (EvalRes, Type)
+2011-06-08 04:07:41 UTC <luite> hmm, I think I will just make a baseURL :: IO String  in the Wolfgang Prelude
+2011-06-08 04:09:22 UTC <luite> since that could just be a readFile "/tmp/baseurl.txt" or something, which can be changed without reloading code
+2011-06-08 04:10:30 UTC <luite> (every worker has its own /tmp, that's the only dir the client can write to, and it's cleaned after every request)
+2011-06-08 18:20:15 UTC <luite> whoah I can evaluate stuffs in the new backed now
+2011-06-08 18:20:25 UTC <luite> within the selinux sandbox
+2011-06-08 18:30:56 UTC <tgeeky> sweet!
+2011-06-08 18:44:07 UTC <luite> performance seems ok, starting a new worker for a new user takes around 0.04 sec on my test server
+2011-06-08 18:44:35 UTC <luite> loading and typechecking a module for a user takes 0.1 sec, time spent in the ghc api and hint
+2011-06-08 18:45:02 UTC <byorgey> luite: yay!
+2011-06-08 18:48:51 UTC <byorgey> I've almost got Issue 32 squashed (mempty not working properly in things like hcat' with {sep = 1})... it was surprisingly subtle
+2011-06-08 18:49:08 UTC <luite> oh, what was the problem?
+2011-06-08 18:53:04 UTC <luite> tgeeky: unfortunately the code size is now 10x bigger
+2011-06-08 19:01:18 UTC <byorgey> luite: see the note I wrote on the closed ticket if you really want to know: http://code.google.com/p/diagrams/issues/detail?id=32
+2011-06-08 19:01:58 UTC <byorgey> it boils down to the fact that composing with the empty diagram doesn't change the bounding region, so you can't rely on the bounding region for doing any positioning afterwards
+2011-06-08 19:06:33 UTC <luite> ah
+2011-06-08 19:35:18 UTC <tgeeky> luite: but now it's quantifiable in terms of security
+2011-06-08 19:35:25 UTC <tgeeky> luite: apples to oranges, then
+2011-06-08 19:36:57 UTC <luite> I do need to add a few more security things, but that's just configuration scripts, setting quota and stuff
+2011-06-08 19:42:18 UTC <tgeeky> and document the hell out of it :o
+2011-06-08 19:42:22 UTC <tgeeky> so us mere mortals can comprehend
+2011-06-08 19:43:47 UTC <luite> it's not difficult, just a messy hack job of all kinds of linux security features
+2011-06-08 19:45:36 UTC <luite> I hope that it's secure enough, but I still need some people to check (or try to break)
+2011-06-08 19:47:59 UTC <tgeeky> i'm sure they'll take the challenge
+2011-06-09 01:01:24 UTC <byorgey> hmm, I'm thinking it might be nicer to have things like 'square' and 'circle' take a parameter giving their edge length/radius respectively
+2011-06-09 01:01:49 UTC <byorgey> any thoughts? yes? no?
+2011-06-09 01:10:14 UTC <hpc> i don't feel i understand enough about diagrams to say what's best
+2011-06-09 01:11:26 UTC <hpc> er, about using diagrams
+2011-06-09 01:11:37 UTC <tgeeky> byorgey: I could say something about that
+2011-06-09 01:12:28 UTC <byorgey> the question is whether it's better to have extremely simple primitives like 'square', 'circle' that you then have to transform... or let them have a parameter or two to customize them
+2011-06-09 01:12:29 UTC <hpc> i know that adding the required fields is working well for my SVG library, because those parameters already exist in the spec
+2011-06-09 01:12:38 UTC <byorgey> there's a balance to be struck
+2011-06-09 01:13:23 UTC <byorgey> tgeeky: ?
+2011-06-09 01:14:05 UTC <tgeeky> byorgey: for a circle, you ought to be able specify the circle with (1/radius)*(center x, center y)
+2011-06-09 01:14:38 UTC <tgeeky> hmm, but yes
+2011-06-09 01:15:04 UTC <tgeeky> you can do squares with an angle and a length only (the length being the distance from the center of the square to one corner)
+2011-06-09 01:15:49 UTC <luite> yes it sounds really userfriendly to require irrational numbers for making a unit suare =)
+2011-06-09 01:15:52 UTC <luite> square
+2011-06-09 01:16:02 UTC <tgeeky> well, I recommend *not allowing* a unit=1 square :o
+2011-06-09 01:16:08 UTC <tgeeky> but that's me :o
+2011-06-09 01:16:33 UTC <byorgey> o.O
+2011-06-09 01:16:38 UTC <tgeeky> byorgey: yeah :(
+2011-06-09 01:17:04 UTC <tgeeky> byorgey: circle Area = r * r
+2011-06-09 01:17:12 UTC <byorgey> I'm just trying to find the right balance between simplicity and user-friendliness
+2011-06-09 01:17:16 UTC <tgeeky> yeah
+2011-06-09 01:17:19 UTC <tgeeky> i get it
+2011-06-09 01:17:24 UTC <hpc> byorgey: do you want the natural units of diagrams to be dimensions, or do you want the natural dimension to be proportions and scales?
+2011-06-09 01:17:25 UTC <tgeeky> just have primitive primitives
+2011-06-09 01:17:35 UTC <hpc> "this square is 10 wide, this one 20 wide" vs
+2011-06-09 01:17:43 UTC <hpc> "this square is twice the size of that one"
+2011-06-09 01:17:48 UTC <tgeeky> byorgey: yeah, that's a better specification - make the minimum thing you can specify is the *area*
+2011-06-09 01:17:51 UTC <tgeeky> don't allow specification of points
+2011-06-09 01:17:54 UTC <luite> yeah I'd say that square could get a size, and is defined in terms of unitSquare
+2011-06-09 01:17:55 UTC <tgeeky> in the default implementations
+2011-06-09 01:18:10 UTC <byorgey> luite: yeah, that's what I'm leaning towards
+2011-06-09 01:18:44 UTC <byorgey> hpc: well, it's more the first, but the units are arbitrary
+2011-06-09 01:19:38 UTC <byorgey> However, I would eventually like to add some constraint-solving sorts of stuff to let you say things like "this square should be twice the size of that one"
+2011-06-09 01:19:52 UTC <tgeeky> byorgey: yeah, if you only allow specification of area
+2011-06-09 01:20:00 UTC <tgeeky> I guess the key thing
+2011-06-09 01:20:05 UTC <tgeeky> is to know the center of everything :o
+2011-06-09 01:20:45 UTC <tgeeky> ACTION shrugs
+2011-06-09 01:20:45 UTC <byorgey> tgeeky: "only allowing specification of area" may be theoretically interesting but it is intuitively bizarre
+2011-06-09 01:20:55 UTC <tgeeky> byorgey: it's implementationally simple, no?
+2011-06-09 01:21:04 UTC <tgeeky> then you always know the answer to that constraint-solving
+2011-06-09 01:21:31 UTC <byorgey> I am interested in making the *interface* as simple and intuitive as possible, not the implementation
+2011-06-09 01:21:35 UTC <luite> hmm, in what situations would you rather specify area than length?
+2011-06-09 01:22:01 UTC <byorgey> if there is a tradeoff between simplicity of the user API and the implementation the user API always wins.
+2011-06-09 01:22:06 UTC <tgeeky> luite: if you're working with fractals (and most importantly, translating the area of one fractal to another)
+2011-06-09 01:22:11 UTC <tgeeky> byorgey: yeah, your library, your choise
+2011-06-09 01:22:15 UTC <tgeeky> I am thinking about what I will want, eventually
+2011-06-09 01:22:25 UTC <tgeeky> without even knowing how I'd do it in haskell
+2011-06-09 01:22:40 UTC <tgeeky> luite: but imagine, for instance, translating the areas of elements inside the sierpinski gasket to a circle fractal
+2011-06-09 01:22:49 UTC <tgeeky> it sounds difficult as hell
+2011-06-09 01:23:37 UTC <tgeeky> but it ought to not only be possible, but trivially calculable (given the depth)
+2011-06-09 01:23:46 UTC <luite> yeah that operation is so common that postscript and asymptote have primitives for that ;)
+2011-06-09 01:24:13 UTC <tgeeky> luite: yeah, it sounds nutso, but it's pretty easy to see how it works once you work through all of the circle fractal stuff
+2011-06-09 01:24:16 UTC <hpc> perhaps the more ideal approach would be to just give lots of options for creating shapes?
+2011-06-09 01:24:24 UTC <tgeeky> hpc: I presume that will be available anyway
+2011-06-09 01:24:41 UTC <tgeeky> byorgey: but without going into all of that
+2011-06-09 01:24:47 UTC <hpc> "square from this corner to this corner" vs "square this big" vs "primitive square, scaled" vs "circle through these three points" vs "circle with radius blah"
+2011-06-09 01:24:51 UTC <hpc> etc
+2011-06-09 01:25:12 UTC <byorgey> hpc: well, yes, we can provide lots of different functions for doing things like that
+2011-06-09 01:25:13 UTC <tgeeky> byorgey: if the default specification of something is: a center point, a length to a (vertex operator - just a vertex in all simple cases) on an edge
+2011-06-09 01:25:44 UTC <tgeeky> that's the obvious implementation for a circle
+2011-06-09 01:25:54 UTC <hpc> byorgey: then from the user-interface side, you can implement scaled primitives and primitives with set dimensions in terms of each other
+2011-06-09 01:25:58 UTC <luite> hpc: hehe tgeeky would probably suggest that you should then create lines by having it draw a circle through 3 collinear points ;)
+2011-06-09 01:26:03 UTC <tgeeky> but it's pretty easy with a square too, if only you give up sqrt(2)/2 as the unit.
+2011-06-09 01:26:07 UTC <hpc> luite: lol
+2011-06-09 01:26:23 UTC <hpc> byorgey: pick the one that makes the back end simple, and give both options
+2011-06-09 01:26:53 UTC <tgeeky> byorgey: in existing diagrams, what is the (x,y) specification in?
+2011-06-09 01:27:12 UTC <tgeeky> I have to admit I haven't even used it yet (because luite took down my toys as soon as they worked!)
+2011-06-09 01:27:47 UTC <hpc> this reminds me of how little time i have spent on hs-svg now
+2011-06-09 01:27:48 UTC <luite> you can still cabal install it yourself!
+2011-06-09 01:27:54 UTC <hpc> i think i wrote 5 lines this week
+2011-06-09 01:27:55 UTC <byorgey> tgeeky: yes, that might be a nice way to *implement* squares, but it is not a nice way to let the user of the library specify them
+2011-06-09 01:28:08 UTC <tgeeky> luite: yes, I can, if I didn't have trouble with much more trivial haskell code, and need to learn first
+2011-06-09 01:28:32 UTC <tgeeky> luite: I'm not blaming you, there's also the agda/haskell site that has diagrams
+2011-06-09 01:28:34 UTC <byorgey> tgeeky: "what is the (x,y) specification in"? -- I don't understand the question
+2011-06-09 01:28:52 UTC <tgeeky> byorgey: if I want to create a square and then translate it, what kind of coordinates do I specify? pixels?
+2011-06-09 01:29:00 UTC <tgeeky> relative furlongs?
+2011-06-09 01:29:07 UTC <byorgey> tgeeky: the units are arbitrary.
+2011-06-09 01:29:27 UTC <byorgey> you specify it in terms of whatever units you want
+2011-06-09 01:29:36 UTC <tgeeky> byorgey: ok, then you have already solved all of my requests as listed above
+2011-06-09 01:29:36 UTC <byorgey> and then at the end you request it to be rendered at a certain size.
+2011-06-09 01:29:42 UTC <hpc> i think he means "which way is up", not "how far is six"
+2011-06-09 01:30:11 UTC <tgeeky> hpc: yes, but if they are truly arbitrary (and I think they are, since I think the backend us VectorSpace)
+2011-06-09 01:30:20 UTC <tgeeky> then all of my strange demands are nearly satisfied :o
+2011-06-09 01:30:55 UTC <tgeeky> byorgey: you sould ignore me re:diagrams until I have 1) used it, 2) implemented my work in haskell (and not mathematica, which always has preferred coordinate systems)
+2011-06-09 01:30:59 UTC <byorgey> six is as far as you want it to be, and up is up, if "up" makes sense in your vector space =)
+2011-06-09 01:31:13 UTC <hpc> :P
+2011-06-09 01:31:31 UTC <byorgey> tgeeky: hehe, well, I won't ignore you, but I'll take your opinions with a grain of salt ;)
+2011-06-09 01:31:40 UTC <tgeeky> byorgey: at least with #diagrams
+2011-06-09 01:31:51 UTC <tgeeky> If you have a lingering quantum physics question, I'm your guy.
+2011-06-09 01:32:07 UTC <byorgey> hehe, not at the moment, for some strange reason ;)
+2011-06-09 01:32:52 UTC <tgeeky> Our working relationship and shared knowledge base are [unidirectional, barely overlapping] at this point :o
+2011-06-09 01:33:17 UTC <luite> you could make a nice venn diagram out of that
+2011-06-09 01:33:26 UTC <tgeeky> luite: for science!
+2011-06-09 01:33:29 UTC <luite> specified by area's in arbitrary coordinates
+2011-06-09 01:33:36 UTC <tgeeky> hey now
+2011-06-09 01:33:38 UTC <tgeeky> be nice :)
+2011-06-09 01:34:07 UTC <tgeeky> If you spent two years learning everything you can about a seemingly esoteric fractal geometry, you would sound a little nutso, too.
+2011-06-09 01:34:08 UTC <byorgey> circle ||| strutX (-0.03) ||| circle?
+2011-06-09 01:34:22 UTC <byorgey> hmm, actually, I wonder if negative struts work like that
+2011-06-09 01:34:36 UTC <tgeeky> that direction
+2011-06-09 01:34:50 UTC <tgeeky> would require you know some preferred direction from one of the two circles, no?
+2011-06-09 01:35:14 UTC <luite> my knowledge has lots of holes. if you would examine it closely you'd probably see that it's a set of zero measure ;p
+2011-06-09 01:35:36 UTC <luite> I'm a bit dense, but only in the rationals
+2011-06-09 01:35:45 UTC <luite> ugh so mcuh for the bad jokes :p
+2011-06-09 01:35:45 UTC <tgeeky> booooo
+2011-06-09 01:36:00 UTC <byorgey> tgeeky: I don't think it requires a preferred direction
+2011-06-09 01:36:09 UTC <tgeeky> luite: by the way, a more complicated construction than the Cantor set/Cantor dust
+2011-06-09 01:36:15 UTC <tgeeky> luite: lies in the circle fractal :o
+2011-06-09 01:36:22 UTC <tgeeky> but a set of the same type
+2011-06-09 01:36:42 UTC <tgeeky> byorgey: let me see what strutx is
+2011-06-09 01:37:06 UTC <tgeeky> byorgey: diagrams-0.3 has no docs listed on hackage
+2011-06-09 01:37:14 UTC <luite> that's the old package
+2011-06-09 01:37:17 UTC <tgeeky> 0.3?
+2011-06-09 01:37:29 UTC <luite> yeah, well, it's just an empty one now
+2011-06-09 01:37:34 UTC <luite> that depends on the real packages
+2011-06-09 01:37:35 UTC <tgeeky> oh, right.
+2011-06-09 01:40:02 UTC <byorgey> strutX doesn't work that way
+2011-06-09 01:40:11 UTC <tgeeky> byorgey: can you describe what that should denote?
+2011-06-09 01:40:31 UTC <tgeeky> were it to work
+2011-06-09 01:40:48 UTC <byorgey> tgeeky: it denotes a circle next to a strut next to a circle
+2011-06-09 01:40:55 UTC <byorgey> ||| places things next to each other horizontally
+2011-06-09 01:41:12 UTC <byorgey> it turns out that strutX n === strutX (-n)
+2011-06-09 01:41:23 UTC <byorgey> but I'm going to make a primitive which acts like a circle with negative radius, for moving things closer together =)
+2011-06-09 01:42:20 UTC <tgeeky> byorgey: is it true that seeing this package (diagrams) with all of the nicely seperated modules (bounds, core, hasorigin, mlist, monoids, etc)
+2011-06-09 01:42:34 UTC <tgeeky> that the trend of having seperation like that, indiciates a well designed library, in general
+2011-06-09 01:42:56 UTC <byorgey> not necessarily
+2011-06-09 01:43:16 UTC <byorgey> although I do hope diagrams is well designed.
+2011-06-09 01:43:31 UTC <byorgey> but it's easy enough to throw some code in a bunch of different modules
+2011-06-09 01:46:16 UTC <tgeeky> byorgey: your use of tau makes me warm inside
+2011-06-09 01:47:11 UTC <byorgey> =D
+2011-06-09 01:47:22 UTC <tgeeky> that it comes without explanation, even warmer :0
+2011-06-09 01:47:44 UTC <byorgey> one should not need to explain the Fundamental Circle Constant. ;)
+2011-06-09 01:47:57 UTC <tgeeky> hehe
+2011-06-09 01:48:21 UTC <tgeeky> byorgey: actually, and you'll have to take my word for it/consider me crazy
+2011-06-09 01:48:27 UTC <byorgey> however, I guess for the sake of evangelism I should link to the Tau Manifesto in the docs
+2011-06-09 01:48:41 UTC <tgeeky> but you can take the Tau Manifesto one step further
+2011-06-09 01:49:08 UTC <tgeeky> in terms of physics, where people throw around things like 4pi (quantum mechanics), 8pi (gravitation), sqrt(2pi) (fine structure constant)
+2011-06-09 01:49:22 UTC <tgeeky> that ought *not* be allowed
+2011-06-09 01:49:42 UTC <tgeeky> in terms of maintaining dimensional consistency
+2011-06-09 01:50:25 UTC <tgeeky> in physics, they do two major tricks: first - set c = hbar = e = 1
+2011-06-09 01:50:30 UTC <tgeeky> and second, ignore constants
+2011-06-09 01:51:09 UTC <tgeeky> but then, we include such things in "dimensionless constants" which include those factors
+2011-06-09 01:52:58 UTC <tgeeky> byorgey: this is a mind blowing statement:
+2011-06-09 01:53:00 UTC <tgeeky> http://cosmiclog.msnbc.msn.com/_news/2011/05/25/6718088-electron-acts-like-a-perfect-sphere
+2011-06-09 01:53:06 UTC <tgeeky> "This means that if the electron was magnified to the size of the solar system, it would still appear spherical to within the width of a human hair," Imperial College said in its news release.
