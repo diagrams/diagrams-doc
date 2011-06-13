@@ -3634,3 +3634,478 @@
 2011-06-09 01:52:58 UTC <tgeeky> byorgey: this is a mind blowing statement:
 2011-06-09 01:53:00 UTC <tgeeky> http://cosmiclog.msnbc.msn.com/_news/2011/05/25/6718088-electron-acts-like-a-perfect-sphere
 2011-06-09 01:53:06 UTC <tgeeky> "This means that if the electron was magnified to the size of the solar system, it would still appear spherical to within the width of a human hair," Imperial College said in its news release.
+2011-06-09 23:34:49 UTC <luite> tgeeky_: haven't coded much today, but I'm trying to make arrangements for a server. Trying to get my brother to pay part of the monthly fee, because he wants to host a few websites :)
+2011-06-09 23:35:53 UTC <hpc> luite: you could get the server, and sell site space at a markup
+2011-06-09 23:35:55 UTC <hpc> :D
+2011-06-09 23:36:35 UTC <luite> nah don't really want to do that, you'd have to compete with the millions of ultra low cost virtual hosting and virtual private server providers
+2011-06-09 23:39:22 UTC <luite> my brother can host his sites on a low-cost vps, but he can't do linux admin stuff, so I usually do the installation and configuration for him
+2011-06-09 23:58:16 UTC <tgeeky_> hmm
+2011-06-09 23:58:38 UTC <tgeeky_> luite: any pushes?
+2011-06-09 23:58:59 UTC <tgeeky_> nawp
+2011-06-10 01:03:38 UTC <luite> tgeeky_: nah that will be a while
+2011-06-10 01:04:21 UTC <tgeeky_> a metric while? we use imperial over here in the US, so I might screw up the conversion. *stupid US*
+2011-06-10 01:05:02 UTC <luite> "when it's done" ;p
+2011-06-10 01:05:13 UTC <luite> well not really done, because that won't happen any time soon
+2011-06-10 01:05:32 UTC <luite> but at least "done enough" to have the complete site running on it, and usable
+2011-06-10 01:22:12 UTC <luite> it should be easier to help with other bits
+2011-06-10 01:22:18 UTC <luite> frontend related
+2011-06-10 01:26:49 UTC <luite> ou were interested in protovis right? there's going to be a way to generate html (loaded in an iframe). you could write all code you need directly on the site, no extra support needed
+2011-06-10 01:33:17 UTC <luite> so if you want to write something and already get results, you could design a DSL for protovis, if you let it spit out a html file with everyhing, and additional resources like images, then it would be extremely easy to add it
+2011-06-10 13:37:49 UTC <tgeeky_> byorgey: do you have a link to the "fast and sound random generation" paper? I can find some, but it's not the one I was linked to earlier
+2011-06-10 13:53:53 UTC <tgeeky_> found it.
+2011-06-10 17:42:53 UTC <tgeeky_> byorgey: I'm trying to compile np-extras (so I can get species) against the new numeric-prelude
+2011-06-10 17:43:19 UTC <tgeeky_> and I'm running into problems with numeric literals ("1")
+2011-06-10 17:45:19 UTC <tgeeky_> I just switched out the dual imports (NumericPrelude, Base) with the new combined single import (NumericPrelude)
+2011-06-10 17:45:50 UTC <tgeeky_> and i get a problem with Monomial.hs:62 could not deduce GHC.Num.Num a arising from literal 1
+2011-06-10 17:46:42 UTC <byorgey> oh, yeah, I need to update np-extras and species to compile with newer versions of things
+2011-06-10 17:46:59 UTC <tgeeky_> byorgey: i was trying to do it, but I don't know what do to next :o
+2011-06-10 17:47:00 UTC <byorgey> but I haven't looked at it so I have no advice to give you
+2011-06-10 17:47:31 UTC <tgeeky_> ok, if you can take a look at some point in the next few days, I'd appreciate it
+2011-06-10 17:48:39 UTC <byorgey> I don't think I will have time in the next few days.  Is it really important that you use the new numeric-prelude?
+2011-06-10 17:49:42 UTC <tgeeky_> byorgey: I doubt it. I guess I'll just proceed and find out.
+2011-06-10 18:15:03 UTC <luite> I've been thinking of how to present the frontpage for Wolfgang. I've come up with a two-column layout with a scrolling gallery of featured pages, and made a quick photoshop mockup to show what it might look like: http://jabberwock.xs4all.nl/exp/wolfgang/wolfgang-fp-mockup.png
+2011-06-10 18:15:07 UTC <luite> comments?
+2011-06-10 18:15:36 UTC <luite> the "showcase" section would then contain a more compelte list of these images with short descriptions
+2011-06-10 18:15:58 UTC <luite> oh I stoled byorgeys image for one :p
+2011-06-10 18:16:55 UTC <byorgey> oooooooh
+2011-06-10 18:17:01 UTC <byorgey> looks nice!
+2011-06-10 18:17:32 UTC <byorgey> what will go in the "headlines"?
+2011-06-10 18:17:44 UTC <luite> I think it's important to give content with nice pictures a prominent place '[p
+2011-06-10 18:18:06 UTC <byorgey> yes, the showcase at the top with pictures is really nice
+2011-06-10 18:19:29 UTC <luite> byorgey: my idea was general news for visitors, for example if a tutorial is added, or other notable pages
+2011-06-10 18:19:49 UTC <byorgey> ah, I see, cool
+2011-06-10 18:20:06 UTC <byorgey> ok, and the right column is more technical updates on the software running the site itself?
+2011-06-10 18:20:17 UTC <luite> yeah
+2011-06-10 18:21:16 UTC <byorgey> sounds good
+2011-06-10 18:21:22 UTC <byorgey> anyway, I think it looks fantastic
+2011-06-10 18:23:01 UTC <luite> the other pages must be one column though (except for maybe some special pages like categories), but I don't really think that's a problem
+2011-06-10 18:23:58 UTC <byorgey> sure
+2011-06-10 18:29:26 UTC <luite> ok, great, 100% positive comments so far ;) I guess I'll see if I can convince gitit to make a page look something like this
+2011-06-10 18:38:03 UTC <tgeeky_> 1/1 ain't bad
+2011-06-10 18:38:19 UTC <tgeeky_> i suggest that whatever you have in the top banner, you have generating/interactive/diagram code for
+2011-06-10 18:38:22 UTC <tgeeky_> ala processing.js
+2011-06-10 18:38:27 UTC <tgeeky_> other than that, looks great
+2011-06-10 18:39:28 UTC <luite> tgeeky_: not sure about that yet. processing.js code would have to run in an iframe from a different domain, for security
+2011-06-10 18:39:40 UTC <tgeeky_> what? i'm not saying to use processing
+2011-06-10 18:39:55 UTC <tgeeky_> http://processingjs.org/
+2011-06-10 18:39:55 UTC <luite> oh sorry
+2011-06-10 18:39:58 UTC <tgeeky_> notice how the top bar
+2011-06-10 18:40:00 UTC <luite> but I mean any javascript would
+2011-06-10 18:40:02 UTC <tgeeky_> is actually processing
+2011-06-10 18:40:19 UTC <tgeeky_> (with "view source")
+2011-06-10 18:40:30 UTC <tgeeky_> even if you do the same thing by generating your topbar with Diagram (and hence a static picture)
+2011-06-10 18:40:41 UTC <tgeeky_> draw the header picture with wolfgang, and include "view source"
+2011-06-10 18:40:47 UTC <luite> hmm, not sure about that
+2011-06-10 18:40:55 UTC <tgeeky_> to show that you're serious about the power
+2011-06-10 18:40:57 UTC <tgeeky_> of wolfgang
+2011-06-10 18:41:00 UTC <luite> it would be interesting, but a link to the page would also give you the source
+2011-06-10 18:42:05 UTC <luite> the problem really is security, anything that can generate javascript must either be loaded from a different domain, or the code must be checked by the web service, or individually approved by an admin
+2011-06-10 18:42:26 UTC <tgeeky_> i'm not even saying that you should use javascript
+2011-06-10 18:42:30 UTC <tgeeky_> I'm just saying, if you have pictures up there
+2011-06-10 18:42:34 UTC <tgeeky_> that represent something wolfgang can do
+2011-06-10 18:42:45 UTC <tgeeky_> make sure you link them to the demonstration of wolfgang doing it
+2011-06-10 18:43:00 UTC <luite> yes that was the whole point of the showcase :p
+2011-06-10 18:43:09 UTC <tgeeky_> it's a "at-the-top-of-the-page" version of "this page generated by wolfgang"
+2011-06-10 18:43:41 UTC <tgeeky_> ok, back to work
+2011-06-10 18:43:58 UTC <luite> although it's incorrect for the apollonian gasket, I took the svg from wikipedia
+2011-06-10 18:44:55 UTC <luite> tgeeky_: you should make one with diagrams, with the radii of the initial circles as parameters :p
+2011-06-10 18:45:36 UTC <tgeeky_> luite: I should, but I'm working on other things first :/
+2011-06-10 18:45:49 UTC <tgeeky_> and there aren't "initial circles"
+2011-06-10 18:46:02 UTC <tgeeky_> there are several different sets of "initial circles"
+2011-06-10 18:46:17 UTC <tgeeky_> (just for reference)
+2011-06-10 18:47:02 UTC <tgeeky_> but you already have the sierpinksi code
+2011-06-10 18:47:14 UTC <tgeeky_> I suggest you use that instead, because it's more familiar
+2011-06-10 18:47:28 UTC <luite> err it's correct in this direction? you can make all possible gaskets with this, without having to specify more than this?
+2011-06-10 18:48:09 UTC <tgeeky_> no, there is a finite set of "root" gaskets which don't have the same starting point
+2011-06-10 18:48:12 UTC <luite> even though you can't tell from just the image which circles were those with the specified radii
+2011-06-10 18:49:02 UTC <tgeeky_> for instance, (0,0,1,1) is one, (-1,2,2,3) is one, (-4,8,8,9) is another, ...
+2011-06-10 18:49:18 UTC <tgeeky_> for any four integers satisfying the descartes equation
+2011-06-10 18:49:22 UTC <tgeeky_> you will find that you'll end up in one of those
+2011-06-10 18:49:43 UTC <tgeeky_> but when you start from one of those and get bigger (in magnitude) integers, you aren't covering the whole gasket
+2011-06-10 18:49:43 UTC <luite> what do those numbers mean?
+2011-06-10 18:49:53 UTC <tgeeky_> they are the curvatures of the circles inside the gasket
+2011-06-10 18:49:58 UTC <tgeeky_> 1/radius
+2011-06-10 18:50:31 UTC <luite> all your examples have either zero or negative curvature...
+2011-06-10 18:50:57 UTC <tgeeky_> only 3 circles of positive curvature can ever be mutually tangent
+2011-06-10 18:51:33 UTC <tgeeky_> another way to look at it
+2011-06-10 18:51:35 UTC <tgeeky_> if you have
+2011-06-10 18:51:40 UTC <tgeeky_> (2,2,3)
+2011-06-10 18:51:47 UTC <tgeeky_> you can go left and get (-1)
+2011-06-10 18:52:17 UTC <luite> uhg call me stupid if you want, but I usually find your explanations extremely confusing :p
+2011-06-10 18:52:22 UTC <luite> what is going left
+2011-06-10 18:52:31 UTC <tgeeky_> (-1,2,2,3)
+2011-06-10 18:52:50 UTC <tgeeky_> that is a infinite sequence, defined by traversal using the descartes equation
+2011-06-10 18:53:02 UTC <tgeeky_> (-1,2,2) -> 3
+2011-06-10 18:53:09 UTC <tgeeky_> (2,2,3) -> another number
+2011-06-10 18:54:02 UTC <tgeeky_> I wouldn't call you stpid, and I don't know how best to explain it other than read as much of the literature about it until it makes sense :o
+2011-06-10 18:54:46 UTC <tgeeky_> easiest way to explain it:
+2011-06-10 18:54:47 UTC <tgeeky_> http://en.wikipedia.org/wiki/Apollonian_gasket
+2011-06-10 18:55:00 UTC <tgeeky_> under bottom area "gaskets with near-D3 symmetry"
+2011-06-10 18:55:11 UTC <tgeeky_> each of those first four sequences under curvature
+2011-06-10 18:55:28 UTC <tgeeky_> is, in haskell, something like:
+2011-06-10 18:55:37 UTC <tgeeky_> [-1,2,2,3...]
+2011-06-10 18:55:42 UTC <tgeeky_> [-4,8,8,9,...]
+2011-06-10 18:55:51 UTC <tgeeky_> [-15,32,32,33...]
+2011-06-10 18:55:56 UTC <tgeeky_> there are a set of those
+2011-06-10 18:56:14 UTC <tgeeky_> there are more than what are listed on the wikipedia page
+2011-06-10 18:56:18 UTC <luite> right, I see :)
+2011-06-10 18:56:24 UTC <tgeeky_> they go off to the right ------------>
+2011-06-10 18:56:26 UTC <tgeeky_> each one of them does
+2011-06-10 18:56:41 UTC <tgeeky_> but they also go off to the bottom
+2011-06-10 18:57:17 UTC <tgeeky_> at some point, however, in the downward direction
+2011-06-10 18:57:28 UTC <luite> but I don't really see what's "wrong" with them?
+2011-06-10 18:57:28 UTC <tgeeky_> they are all integer congruences of the top ones
+2011-06-10 18:57:40 UTC <tgeeky_> luite: wrong? nothing's wrong with them
+2011-06-10 18:57:52 UTC <tgeeky_> what do you mean?
+2011-06-10 18:57:59 UTC <tgeeky_> the fact that they have "almost" symmetry?
+2011-06-10 18:58:47 UTC <luite> no I mean, but you can calculate a from (b,c,d) right?
+2011-06-10 18:59:33 UTC <tgeeky_> http://upload.wikimedia.org/wikipedia/commons/2/26/ApollonianGasket-15_32_32_33-Labels.png
+2011-06-10 18:59:43 UTC <tgeeky_> from (b,c,d) here (32,32,33)
+2011-06-10 18:59:46 UTC <tgeeky_> you can either get
+2011-06-10 18:59:54 UTC <tgeeky_> the outer circle which touches (b,c,d)
+2011-06-10 19:00:03 UTC <tgeeky_> or the inner circle which touches (b,c,d) = 209
+2011-06-10 19:00:11 UTC <tgeeky_> the outer = -15
+2011-06-10 19:00:29 UTC <tgeeky_> given any triplet, you have two choices of a 4th circle
+2011-06-10 19:01:00 UTC <luite> yes I know
+2011-06-10 19:01:05 UTC <tgeeky_> the "left" or "outer" or whatever you want to call it (-15, in this case), or the right, or inner (209)
+2011-06-10 19:01:10 UTC <tgeeky_> that process just repeats as you zoom in the gasket
+2011-06-10 19:01:45 UTC <tgeeky_> luite: ok, so, given three random numbers which satisfy the descartes equation
+2011-06-10 19:02:04 UTC <tgeeky_> you will always end up at one of those near-D3 gaskets when run the algorithim that takes you toward the outermost circle
+2011-06-10 19:03:31 UTC <tgeeky_> but you don't know which one you'll end up at
+2011-06-10 19:04:36 UTC <tgeeky_> anyway, you don't worry about the circle fractal :o
+2011-06-10 19:04:42 UTC <tgeeky_> i'll worry about that :)
+2011-06-10 19:05:27 UTC <tgeeky_> but as you know, I still need some haskell (and combinatorical, and other) background first
+2011-06-10 19:05:32 UTC <tgeeky_> before I can attack it in diagrams
+2011-06-10 19:07:14 UTC <luite> hmm,  I'll read some more about it later. I thought that (unless you have some degenerate case with zero curvature somewhere) you always ended up with a single negative curvature one in a finite number of steps
+2011-06-10 19:09:21 UTC <tgeeky_> anytime you have four curvatures (and you always have 4 - given (b,c,d) you have (-a) and (e) to choose) one of them will be negative
+2011-06-10 19:09:55 UTC <tgeeky_> it's strange to describe it that way, I suppose
+2011-06-10 19:10:06 UTC <tgeeky_> but zero and negative curvature aren't degenerate cases, either :o
+2011-06-10 19:10:22 UTC <tgeeky_> the only "degenerate" case is the hyperbolic case: (0,0,1,1)
+2011-06-10 19:10:24 UTC <luite> really? suppose you start with (100,1,1), I thought both would be positive here
+2011-06-10 19:10:34 UTC <tgeeky_> 1,1 is the hyperbolic case
+2011-06-10 19:10:42 UTC <luite> but maybe my intuition is wrong here :p
+2011-06-10 19:10:52 UTC <tgeeky_> so, this whole discussion started
+2011-06-10 19:10:56 UTC <tgeeky_> on there not being "one" circle fractal
+2011-06-10 19:11:14 UTC <luite> oops, I meant (100,100,1)
+2011-06-10 19:11:21 UTC <tgeeky_> if you want to say there is a "one" circle fractal, it's the tesselation of (0,0,1,1)
+2011-06-10 19:11:22 UTC <luite> ugh
+2011-06-10 19:11:28 UTC <luite> sorry I did mean (100,1,1)
+2011-06-10 19:11:30 UTC <luite> :D
+2011-06-10 19:11:31 UTC <tgeeky_> and that's the only degenerate one
+2011-06-10 19:11:37 UTC <tgeeky_> hehe yeah, anytime you have 1,1
+2011-06-10 19:11:42 UTC <tgeeky_> you're talking about the hyperbolic case
+2011-06-10 19:11:44 UTC <tgeeky_> which is actually pretty neat
+2011-06-10 19:12:01 UTC <tgeeky_> it's the only one
+2011-06-10 19:12:06 UTC <tgeeky_> that's important, which isn't shown on that wiki page
+2011-06-10 19:12:06 UTC <luite> well it also works for (100,1,1001/1000)
+2011-06-10 19:12:25 UTC <tgeeky_> yeah, but that's non-integer
+2011-06-10 19:12:36 UTC <tgeeky_> (though that is still valid in other senses)
+2011-06-10 19:12:55 UTC <luite> anyway it looks interesting enough to make a page about this when that's possible :)
+2011-06-10 19:13:47 UTC <tgeeky_> luite: I plan to make a whole book out of it
+2011-06-10 19:13:52 UTC <tgeeky_> and I have a lot of the material in mathematica :)
+2011-06-10 19:14:07 UTC <tgeeky_> if only mathematica could be freely (BSD3) published, and it were a nice platform for web publishing
+2011-06-10 19:14:10 UTC <tgeeky_> http://arxiv.org/pdf/math/0101066
+2011-06-10 19:14:13 UTC <tgeeky_> look at page 20
+2011-06-10 19:14:49 UTC <tgeeky_> clearly something fishy going on with that picture :)
+2011-06-10 19:15:03 UTC <luite> maybe later, I want to do some work on the web service irst
+2011-06-10 19:15:06 UTC <tgeeky_> easy to explain though, all circles who touch the bounding circle
+2011-06-10 19:15:06 UTC <luite> oh picture
+2011-06-10 19:15:09 UTC <luite> then ok :p
+2011-06-10 19:15:10 UTC <tgeeky_> luite: it's just a single picture
+2011-06-10 19:15:25 UTC <tgeeky_> all circles that touch the bounding circle have curvature 1
+2011-06-10 19:15:29 UTC <tgeeky_> everything else has integer curvature
+2011-06-10 19:16:23 UTC <tgeeky_> that is the "mother of all" apollonian gaskets, technically
+2011-06-10 19:16:27 UTC <luite> oh yes the same one is on wikipedia
+2011-06-10 19:16:44 UTC <luite> hmm, or not
+2011-06-10 19:16:48 UTC <luite> I'm sure I've seen it before :D
+2011-06-10 19:16:50 UTC <tgeeky_> luite: didn't think so :o
+2011-06-10 19:18:25 UTC <luite> but thanks for the link, it looks interesting, and much of it should be presentable at high school level
+2011-06-10 19:19:09 UTC <tgeeky_> yeah, the amazing thing about it is just that
+2011-06-10 19:19:24 UTC <tgeeky_> when you have the right tools (and I think it's going to take interactivity as well as declarative structure)
+2011-06-10 19:19:45 UTC <tgeeky_> you don't necessarily need to understand the math to understand the picture(s)
+2011-06-11 19:04:44 UTC <tgeeky> byorgey: I read through the paper "fast and sound random generation for automated testing in Ocaml" and played with the example haskell implemntation...
+2011-06-11 19:04:59 UTC <tgeeky> you mentioned it in your species functional pearl paper
+2011-06-11 19:05:59 UTC <tgeeky> but the algorithim they use seems to pretty closely depend on using the Real numbers
+2011-06-11 19:06:37 UTC <tgeeky> which i guess should be obvious since they are generating probabilities
+2011-06-11 19:07:05 UTC <tgeeky> would it even make sense to try and attempt such a thing using species and quickcheck?
+2011-06-11 19:07:35 UTC <tgeeky> i need to read those two references at the end of your paper
+2011-06-11 19:08:43 UTC <tgeeky> [quotient containers]
+2011-06-11 19:09:25 UTC <byorgey> oh, don't read about quotient containers
+2011-06-11 19:09:36 UTC <byorgey> you need to know three metric tons of category theory for it to make sense
+2011-06-11 19:09:47 UTC <byorgey> I don't even understand it.
+2011-06-11 19:10:19 UTC <byorgey> tgeeky: anyway, yes, it would make a lot of sense to attempt this with species + quickcheck
+2011-06-11 19:10:44 UTC <tgeeky> hehe
+2011-06-11 19:10:52 UTC <tgeeky> finally something I've thought or said makes sense ;)
+2011-06-11 19:11:46 UTC <byorgey> a PhD student of Jacques Carette is actually working on something like this... I hope it will get released soon
+2011-06-11 19:13:50 UTC <luite> an actual implementation in haskell?
+2011-06-11 19:14:22 UTC <byorgey> yes
+2011-06-11 19:14:24 UTC <tgeeky> it seems like GHC 7.2 is going to be a rather big jump forward with generics and a lot of related features
+2011-06-11 19:14:30 UTC <luite> ah quite interesting
+2011-06-11 19:14:55 UTC <luite> really? I thought 7.2 was going to be a relatively small release because of the darcs -> git move
+2011-06-11 19:15:36 UTC <tgeeky> 'a generic deriving mechanism for haskell' is supposedly slated for 7.2
+2011-06-11 19:16:53 UTC <luite> hmm that could be useful
+2011-06-11 19:17:00 UTC <luite> but I don't know anything about it :)
+2011-06-11 19:28:48 UTC <luite> bah, haskell-src-exts rewrites {-#LANGUAGE NoMonomorphismRestriction #-} to {-# LANGUAGENoMonomorphismRestriction #-}
+2011-06-11 19:29:09 UTC <tgeeky> that's a bad bug
+2011-06-11 19:29:21 UTC <luite> it makes it more fail :(
+2011-06-11 19:29:38 UTC <tgeeky> and we're already full up on fail 'round here
+2011-06-11 19:38:27 UTC <byorgey> luite: is it because of not having a space between # and LANGUAGE?
+2011-06-11 19:38:42 UTC <byorgey> I agree it's a nasty bug =(
+2011-06-11 19:52:00 UTC <luite> byorgey: yeah it doesn't correctly store the location of that keyword
+2011-06-11 19:52:50 UTC <byorgey> how hard do you think it is to fix?
+2011-06-11 19:53:21 UTC <luite> dunno, not very hard probably, at least a workaround is simple, always start the LANGUAGE word directly after the #
+2011-06-11 19:53:54 UTC <luite> that would at least not make invalid source files :)
+2011-06-11 19:54:52 UTC <luite> this whole thing is very annoying by the way, patching source files without destroying the layout
+2011-06-11 20:00:13 UTC <luite> http://hackage.haskell.org/packages/archive/haskell-src-exts/1.11.1/doc/html/src/Language-Haskell-Exts-Annotated-ExactPrint.html#line-455 <- all pragma ExactP instances seem to be wrong
+2011-06-11 20:08:10 UTC <luite> it should store an extra srcInfoPoint for the location of "LANGUAGE", looks like it's not difficult to fix
+2011-06-11 20:10:07 UTC <byorgey> yeah, patching source files without destroying layout is annoying indeed =(
+2011-06-11 20:10:32 UTC <byorgey> I look forward to the day when we will all just edit trees, and configure out editors to display them using whatever style we prefer
+2011-06-11 20:43:25 UTC <luite> I think this annotated syntax tree thing would be much more usable if it stored relative positions instead of absolute ones
+2011-06-12 00:19:22 UTC <luite> phew
+2011-06-12 00:19:25 UTC <luite> I think it works now
+2011-06-12 00:34:46 UTC <luite> my code to rename a haskell module went from 1 line to 110 lines, but it preserves layout now :p
+2011-06-12 03:19:20 UTC <byorgey> luite: yikes!
+2011-06-12 18:44:13 UTC <byorgey> http://www.cis.upenn.edu/~byorgey/Star.png
+2011-06-12 18:51:40 UTC <luite> nice pic, does it use some new diagrams feature?
+2011-06-12 19:24:54 UTC <byorgey> luite: I've been improving the infrastructure for creating named points/subdiagrams and then being able to refer to them later
+2011-06-12 19:25:09 UTC <luite> ah very useful
+2011-06-12 19:25:48 UTC <byorgey> so that diagram is created without ever having to specifically refer to any coordinates
+2011-06-12 19:27:58 UTC <luite> by the way, I think it would be useful to have some notion of absolute scale in diagrams, is that possible? for example if I write a paper and have some graphs or petri nets or something, I'd like nodes to have a consistent size
+2011-06-12 19:28:39 UTC <luite> across diagrams
+2011-06-12 19:39:56 UTC <byorgey> luite: yes, that's sensible.
+2011-06-12 19:43:54 UTC <byorgey> luite: but this can be achieved just by the way you use it
+2011-06-12 19:44:36 UTC <byorgey> luite: one way is to always post-compose your diagrams with a blank rectangle of a fixed size
+2011-06-12 19:44:50 UTC <byorgey> then they will always be rescaled by the same factor
+2011-06-12 19:45:00 UTC <byorgey> but that assumes that all your images are the same dimensions.
+2011-06-12 19:45:41 UTC <byorgey> the other way to do it is to simply work in absolute coordinates the whole time, and then request that the backend not do any rescaling, only recentering
+2011-06-12 19:45:59 UTC <byorgey> so that is actually an option we should add to e.g. the cairo backend
+2011-06-12 19:52:31 UTC <luite> ah yes that would be a good idea
+2011-06-12 19:56:16 UTC <byorgey> luite: want to file a ticket for it?
+2011-06-12 19:56:24 UTC <byorgey> so we don't forget
+2011-06-12 20:00:52 UTC <luite> ok, will do that later this evening, bug be if I don't ;)
+2011-06-12 20:01:01 UTC <luite> *me
+2011-06-12 20:01:38 UTC <byorgey> ok =)
+2011-06-12 20:24:13 UTC <luite> ah just read your weblog post on the Collatz conjecture "proof" :) I only skimmed the paper, but I have to admit that I would've been disappointed if it was actually proved in a paper that looked like that
+2011-06-12 21:28:21 UTC <tgeeky> collatz is one of the best example of how deceiptively complicated mathematics can be
+2011-06-12 21:33:16 UTC <luite> yes that's why it would be disappointing if it was settled without uncovering new deep insights or connections... and in a paper full of tables and matlab (?) code...
+2011-06-12 21:33:24 UTC <tgeeky> hehe
+2011-06-12 21:33:43 UTC <tgeeky> luite: yeah, I am deathly afraid of presenting my work in such an ugly manner
+2011-06-12 21:33:54 UTC <tgeeky> and Mathematica is about 2.5 times more beautiful than Matlab
+2011-06-13 00:40:13 UTC <byorgey> only 2.5?
+2011-06-13 00:50:16 UTC <tgeeky> byorgey: well, it's 8.212 times more awesome
+2011-06-13 00:50:28 UTC <tgeeky> but beauty, for me, is a high standard :)
+2011-06-13 00:50:58 UTC <byorgey> ah, hehe, makes sense now =)
+2011-06-13 00:51:45 UTC <byorgey> luite: have you added that ticket yet?
+2011-06-13 00:51:46 UTC <tgeeky> I always got the feeling, from Matlab, that no matter how "good at it" I got, it would never be worth sharing Matlab code
+2011-06-13 00:51:50 UTC <luite> byorgey: hehe no :p
+2011-06-13 00:51:55 UTC <byorgey> =)
+2011-06-13 00:52:09 UTC <luite> working on the code that allocates workers for wolfgang
+2011-06-13 00:52:23 UTC <byorgey> ok, that's more important
+2011-06-13 00:52:32 UTC <luite> at the moment my worker pool is 5 maps, 1 priority search queue and one set
+2011-06-13 00:55:33 UTC <luite> and I should probably use fclables or something
+2011-06-13 00:55:44 UTC <luite> too much record update syntax
+2011-06-13 00:56:15 UTC <tgeeky> i got really turned off by record syntax at first
+2011-06-13 00:57:23 UTC <luite> hmm, I've only used it in 9 places so far, not too bad :)
+2011-06-13 00:57:39 UTC <tgeeky> byorgey: I got through your Species paper. Good work.
+2011-06-13 00:58:14 UTC <tgeeky> You're the 2nd most clear expositor in the Haskell-verse I've yeat had the time to read.
+2011-06-13 00:58:37 UTC <tgeeky> s/yeat/yet/
+2011-06-13 00:58:50 UTC <tgeeky> and I have the feeling you'll be happy to know the first is conal :)
+2011-06-13 00:58:55 UTC <tgeeky> so you're in good company
+2011-06-13 01:03:53 UTC <tgeeky> byorgey: what do you read outside the domain of computer science?
+2011-06-13 01:08:53 UTC <luite> he has a librarything pager :p
+2011-06-13 01:08:54 UTC <luite> page
+2011-06-13 01:09:12 UTC <tgeeky> didn't even know what that was
+2011-06-13 01:09:14 UTC <tgeeky> interesting
+2011-06-13 01:09:21 UTC <luite> I found it by accident while searching for interesting books :)
+2011-06-13 01:12:02 UTC <tgeeky> lol
+2011-06-13 01:12:04 UTC <tgeeky> I have heard of a touchy owner of a yacht to whom a guest, on first seeing it, remarked, 'I thought your yacht was larger than it is'; and the owner replied, 'No, my yacht is not larger than it is'.
+2011-06-13 01:12:09 UTC <tgeeky> - Bertrand Russell
+2011-06-13 01:13:56 UTC <tgeeky> you have read GEB, which I was going to ask about ;0
+2011-06-13 01:14:12 UTC <luite> I'd guess that most of #haskell has read it
+2011-06-13 01:14:17 UTC <tgeeky> yeah
+2011-06-13 01:29:29 UTC <alpounet> that looks very interesting
+2011-06-13 01:29:41 UTC <alpounet> didn't know about it until now
+2011-06-13 01:39:24 UTC <tgeeky> It's a unique book.
+2011-06-13 01:44:30 UTC <alpounet> seems so indeed
+2011-06-13 01:44:36 UTC <alpounet> i think i'm gonna order it
+2011-06-13 02:52:56 UTC <byorgey> tgeeky: re: clear exposition, thanks =)
+2011-06-13 02:53:24 UTC <tgeeky> you're welcome, but you did all the work :)
+2011-06-13 02:53:29 UTC <byorgey> hehe
+2011-06-13 02:53:51 UTC <tgeeky> i am still sort of annoyed that it's true that the 0 and 1 species are like they are
+2011-06-13 02:54:10 UTC <byorgey> annoyed? why?
+2011-06-13 02:54:25 UTC <tgeeky> I keep wanting to approach the idea of some implicit configuration possibilities
+2011-06-13 02:54:35 UTC <tgeeky> like a set of colors coming first
+2011-06-13 02:54:57 UTC <tgeeky> but I was rather convinced that it doesn't make any sense through that framework
+2011-06-13 02:55:22 UTC <tgeeky> for instance, the boxes themselves could have coloration
+2011-06-13 02:56:05 UTC <tgeeky> but again, doesn't make sense :/
+2011-06-13 02:56:28 UTC <tgeeky> one quick question, though
+2011-06-13 02:56:41 UTC <tgeeky> you referred, several times, to the enumeration [1..n]
+2011-06-13 02:58:08 UTC <tgeeky> re "we can often take the set [n] as the canonical label set
+2011-06-13 02:58:09 UTC <tgeeky> "
+2011-06-13 02:58:29 UTC <tgeeky> if that set is really the Peano construction, could you not start from any number?
+2011-06-13 02:58:47 UTC <tgeeky> like, arbitrarily choose [5..n]
+2011-06-13 02:59:13 UTC <tgeeky> so the resulting list of labels has the same magnitude, but there are implicit choices before labeling?
+2011-06-13 02:59:51 UTC <tgeeky> or does even this not make a difference?
+2011-06-13 03:00:46 UTC <byorgey> tgeeky: you can choose any n-element set you want
+2011-06-13 03:01:01 UTC <tgeeky> that just changes the labeling, though, it doesn't add any structure
+2011-06-13 03:01:04 UTC <tgeeky> correct?
+2011-06-13 03:01:06 UTC <byorgey> the functoriality of species is exactly what tells us that it doesn't matter
+2011-06-13 03:01:07 UTC <byorgey> right
+2011-06-13 03:03:32 UTC <tgeeky> pretty cool, though
+2011-06-13 03:03:44 UTC <tgeeky> I am rather angry that I hadn't been introduced to it earlier
+2011-06-13 03:04:06 UTC <tgeeky> it seems like a *large* section of the combinatorics course I struggled through could have been lubricated by the clarity of your paper
+2011-06-13 03:04:21 UTC <tgeeky> similarly so with conal's paper/talk about automatic differentiation
+2011-06-13 03:04:47 UTC <byorgey> yeah, but I don't think your teachers were holding out on you; they just didn't know about it
+2011-06-13 03:05:19 UTC <byorgey> besides, maybe you wouldn't have understood it so well without struggling through the combinatorics class first =)
+2011-06-13 03:06:04 UTC <tgeeky> that's true, but the same cannot be said for differentials and conal's talk :)
+2011-06-13 03:06:09 UTC <tgeeky> and I don't hold anyone responsible.
+2011-06-13 03:06:26 UTC <tgeeky> we are blessed to live in the golden age of information
+2011-06-13 03:07:49 UTC <tgeeky> byorgey: are both you and your wife reading the theology/christianity books?
+2011-06-13 03:08:01 UTC <tgeeky> or is that her primary interest?
+2011-06-13 03:08:07 UTC <byorgey> tgeeky: both of us
+2011-06-13 03:08:29 UTC <tgeeky> you guys read a lot, I bet you don't have much time for TV :)
+2011-06-13 03:08:37 UTC <tgeeky> (rather a good thing!)
+2011-06-13 03:09:03 UTC <byorgey> we don't watch TV at all =)
+2011-06-13 03:09:16 UTC <byorgey> we have one but we use it only for watching movies occasionally
+2011-06-13 03:10:35 UTC <tgeeky> byorgey: do you have a thesis in mind, by the way?
+2011-06-13 03:11:14 UTC <tgeeky> or do you see your existing work as a start for it?
+2011-06-13 03:11:51 UTC <byorgey> tgeeky: not quite sure yet, but it looks like it may end up having to do with adding dependent-type-ish features to GHC
+2011-06-13 03:12:00 UTC <tgeeky> awh :(
+2011-06-13 03:12:17 UTC <byorgey> tgeeky: but don't mention that in #haskell, some people may get too excited ;)
+2011-06-13 03:12:29 UTC <tgeeky> maybe not awh, but I keep getting the feeling like DpTs are going to come to haskell in one HUGE chunk
+2011-06-13 03:12:51 UTC <tgeeky> hehe :)
+2011-06-13 03:12:55 UTC <luite> byorgey: ooh :p
+2011-06-13 03:13:35 UTC <luite> I would really like things like type-level naturals and stuff to be more readable and usable :)
+2011-06-13 03:15:54 UTC <byorgey> luite: someone is currently working on adding type-level naturals as a special case
+2011-06-13 03:16:39 UTC <luite> I'm sure people want more if those are useful :)
+2011-06-13 03:16:53 UTC <byorgey> anyway, I'm off to bed, talk to you all later
+2011-06-13 13:06:49 UTC <fryguybob> byorgey: I think you missed pushing a change to core on the latest.  Lib needs  instance Atomic ()  to build.
+2011-06-13 13:47:10 UTC <byorgey> fryguybob: ah, so I did, sorry about that.  pushed now.
+2011-06-13 13:47:36 UTC <fryguybob> byorgey: No problem.  I have a lot to catch up on :D.
+2011-06-13 13:47:52 UTC <byorgey> hehe, I guess you do =)
+2011-06-13 13:48:00 UTC <byorgey> ping me if you have any questions.
+2011-06-13 13:48:33 UTC <fryguybob> ok
+2011-06-13 14:06:25 UTC <fryguybob> byorgey: Should   text "abc"   result in something at this point?
+2011-06-13 14:06:43 UTC <byorgey> fryguybob: yes, why?
+2011-06-13 14:07:00 UTC <byorgey> oh, wait, just text "abc" by itself won't work
+2011-06-13 14:07:06 UTC <fryguybob> ok
+2011-06-13 14:07:07 UTC <byorgey> because text objects have zero size
+2011-06-13 14:07:16 UTC <byorgey> put it on top of a square or something.
+2011-06-13 14:08:27 UTC <fryguybob> square 1 <> text "abc"   just a square for me.
+2011-06-13 14:09:33 UTC <byorgey> hmm, let me try
+2011-06-13 14:12:18 UTC <byorgey> hmm, I see giant letters
+2011-06-13 14:12:57 UTC <byorgey> fryguybob: what about dia-cairo/test/Text.hs ?
+2011-06-13 14:13:16 UTC <fryguybob> ah, I missed that, I'll try it.
+2011-06-13 14:14:10 UTC <fryguybob> Just a red dot.
+2011-06-13 14:14:29 UTC <byorgey> ok, weird.
+2011-06-13 14:14:47 UTC <fryguybob> Perhaps there is some Cairo setting for default font?
+2011-06-13 14:14:49 UTC <byorgey> fryguybob: try specifying a font that you know you have installed?
+2011-06-13 14:14:59 UTC <byorgey> yeah, I don't know how it chooses a default font
+2011-06-13 14:15:18 UTC <byorgey> text "abc" # font "blah"
+2011-06-13 14:21:51 UTC <fryguybob> byorgey: Still nothing.  I'll see if I can find anything about cairo, fonts, and windows.
+2011-06-13 14:21:57 UTC <byorgey> ok.
+2011-06-13 15:29:00 UTC <fryguybob> byorgey: I looked at the PostScript output and where I would expect an output of text I get:  q ... 0 0 m S Q  (save, ..., move to (0,0), stroke, restore)
+2011-06-13 15:33:15 UTC <byorgey> weird, my postscript output has lots of text-y looking stuff
+2011-06-13 15:33:36 UTC <byorgey> not that I know all that much about postscript
+2011-06-13 15:33:58 UTC <fryguybob> byorgey: The Chart package's ps output has a font embedded.  As far as I can tell it is calling Cairo the same way as Diagrams.
+2011-06-13 15:34:11 UTC <fryguybob> I will have to dig some more.
+2011-06-13 15:34:14 UTC <byorgey> yes, my output has a font embedded too
+2011-06-13 15:35:17 UTC <byorgey> I'm sad you have to do all this extra work to get things to work on Windows, but also glad that someone is doing it, because otherwise windows users would be out of luck!
+2011-06-13 15:43:28 UTC <fryguybob> I don't mind :D, makes me feel useful.
+2011-06-13 15:43:32 UTC <luite> hehe
+2011-06-13 15:43:47 UTC <luite> I'd find it usefull too, since I use windows on my deskto
+2011-06-13 15:43:54 UTC <luite> useful
+2011-06-13 15:43:57 UTC <luite> desktop
+2011-06-13 15:44:02 UTC <tgeeky> me too :(
+2011-06-13 15:44:30 UTC <luite> still I hope that it will eventually work without cairo :)
+2011-06-13 15:44:37 UTC <byorgey> we really need to work on a non-cairo backend
+2011-06-13 15:44:38 UTC <byorgey> yeah
+2011-06-13 16:01:25 UTC <byorgey> just pushed some patches adding support for external image primitives
+2011-06-13 16:01:52 UTC <byorgey> currently only works with PNG, and if you give it a size other than the actual size of the image it probably won't do what you think
+2011-06-13 16:01:55 UTC <byorgey> but it's a good start =)
+2011-06-13 16:04:24 UTC <byorgey> see dia-cairo/test/Image.hs for an example
+2011-06-13 16:07:41 UTC <fryguybob> ACTION sighs.
+2011-06-13 16:07:51 UTC <fryguybob> test = C.withPSSurface "test.ps" 500 500 (\s -> C.renderWith s (C.showText "hello world")) -- this works fine...
+2011-06-13 16:11:14 UTC <byorgey> what!
+2011-06-13 16:11:50 UTC <byorgey> In theory that is exactly what the cairo backend is doing, only with a few more transformations and such
+2011-06-13 16:12:07 UTC <fryguybob> I know, it doesn't make sense.
+2011-06-13 16:14:50 UTC <fryguybob> It appears to be the   cairoTransf  call that kills it.
+2011-06-13 16:16:07 UTC <byorgey> oh, interesting
+2011-06-13 16:17:27 UTC <byorgey> fryguybob: maybe stick some calls to Debug.Trace.traceShow into cairoTransf and see what coefficients it is seeing?
+2011-06-13 16:17:37 UTC <fryguybob> Yeah, doing that now.
+2011-06-13 16:17:54 UTC <byorgey> I don't know why this would be platform-dependent.
+2011-06-13 16:18:19 UTC <byorgey> maybe the call to textExtents is not working properly?
+2011-06-13 16:19:38 UTC <fryguybob> the coefficients I get are: [1.0,0.0,0.0,1.0,-0.6132568359375004,7.580566406250003e-2]
+2011-06-13 16:20:49 UTC <fryguybob> Which is just a translation...
+2011-06-13 16:21:54 UTC <byorgey> as it should be
+2011-06-13 16:21:59 UTC <fryguybob> If I change the translation to (0,0) I get the font in the file again.
+2011-06-13 16:22:15 UTC <byorgey> most strange
+2011-06-13 16:22:27 UTC <fryguybob> I'll try changing the order of things.
+2011-06-13 16:24:46 UTC <byorgey> fryguybob: what version of cairo do you have installed?
+2011-06-13 16:25:00 UTC <byorgey> I mean cairo itself, not the Haskell bindings
+2011-06-13 16:25:32 UTC <fryguybob> 2.20.0
+2011-06-13 16:25:55 UTC <byorgey> ok. just trying to google around for bug reports that might be relevant
+2011-06-13 16:35:35 UTC <fryguybob> byorgey: Actually it appears to be 1.8.10 of cairo.
+2011-06-13 16:37:22 UTC <byorgey> ok. I haven't found anything relevant.
+2011-06-13 16:38:48 UTC <fryguybob> calling  C.translate  instead of  C.transform  works.  I think that might be why chart works.
+2011-06-13 16:40:58 UTC <byorgey> fascinating.
+2011-06-13 16:41:30 UTC <luite> hmm, might be font rendering backend related. is it possible to force cairo to use freetype?
+2011-06-13 16:42:23 UTC <byorgey> I mean, if necessary we can special-case cairoTransf to use C.translate when possible...
+2011-06-13 16:42:42 UTC <byorgey> but that seems unsatisfactory and hackish
+2011-06-13 16:43:26 UTC <luite> yeah would also cause more problems in the future, when windows users can't render scaled or rotated text
+2011-06-13 16:45:22 UTC <byorgey> good point.
+2011-06-13 16:46:27 UTC <fryguybob> Here is the minimal test case:  http://hpaste.org/47765
+2011-06-13 16:49:07 UTC <fryguybob> Rotating and scaling both work when called directly.
+2011-06-13 16:49:59 UTC <luite> hmm then at least most use cases should be covered
+2011-06-13 16:50:14 UTC <fryguybob> I suppose I should try a newer version of Cairo but I think that is going to be a pain.
+2011-06-13 16:50:48 UTC <byorgey> fryguybob: hmm, of the three lines in that example, which do you think should generate text? the first and third?
+2011-06-13 16:51:36 UTC <byorgey> I tried it here (linux) and only see text generated by the third one
+2011-06-13 16:52:06 UTC <byorgey> fryguybob: I think you switched 100.0 and 0.0 in the first line
+2011-06-13 16:52:27 UTC <fryguybob> oops yes.
+2011-06-13 16:52:27 UTC <byorgey> when I change it to .... 0.0 100.0 then I see some text
+2011-06-13 16:53:20 UTC <fryguybob> If you add a   C.moveTo 0 100  before everything then you should see text for all three, I only see text for the translate and the trivial matrix.
+2011-06-13 16:55:16 UTC <byorgey> ok, yes, I can confirm that I see text for all three after adding the moveTo.
+2011-06-13 17:01:33 UTC <byorgey> I wonder if we should file a bug against cairo?
+2011-06-13 17:03:14 UTC <fryguybob> ACTION cabal install gtk --reinstall
+2011-06-13 17:08:19 UTC <byorgey> whee
+2011-06-13 17:41:58 UTC <luite> yay my new wolfgang backend handles web requests now
+2011-06-13 17:44:24 UTC <byorgey> \o/
+2011-06-13 17:45:06 UTC <tgeeky> ACTION coughs release! :o
+2011-06-13 17:45:33 UTC <luite> oh niklas broberg responded to my haskell-src-exts bug report, he says that it's tricky to fix
+2011-06-13 17:47:08 UTC <luite> tgeeky: nah it's still incomplete, I still need to add resource management (when a request generates an image for example, an extra image resource file must be written), and by backend, I mean that it's not a site now, but just a url where you enter an expression, and get a json response
+2011-06-13 17:52:56 UTC <luite> and apparently some things still go wrong with exceptions
+2011-06-13 17:54:02 UTC <tgeeky> luite: but I *want* that
+2011-06-13 17:54:05 UTC <tgeeky> lol
+2011-06-13 17:54:09 UTC <tgeeky> i want the backend more than I want the frontend :o
+2011-06-13 17:54:22 UTC <tgeeky> but it's your choice
+2011-06-13 17:54:52 UTC <luite> all in due time ;)
+2011-06-13 17:55:20 UTC <luite> what do you want with just a backend though, can't you use ghci?
+2011-06-13 17:55:54 UTC <tgeeky> ghci isn't a good starting point for pretty[parse,print]-ing
+2011-06-13 17:55:59 UTC <tgeeky> especially not in windows
+2011-06-13 17:56:23 UTC <tgeeky> plus, I really want to deal with wrapped objects in a browser so I can toy with D3 and protovis and diagrams
+2011-06-13 17:56:27 UTC <luite> hmm, I don't really see the use of this for pretty printing
+2011-06-13 17:56:41 UTC <tgeeky> it's just an interpreter, right?
+2011-06-13 17:57:16 UTC <fryguybob> byorgey: Thanks for the help, I'll try to get the newer version of Cairo working tomorrow or later today if I have time.
+2011-06-13 17:57:17 UTC <luite> well the main point of all this work is making safe execution of code, including IO, fast enough
+2011-06-13 17:57:44 UTC <tgeeky> sure, but the point from my perspective is
+2011-06-13 17:57:50 UTC <luite> if it doesn't need to be safe, then there's no point to installing this :)
+2011-06-13 17:57:52 UTC <tgeeky> to pretty-print in an environment that's not fixed-width
+2011-06-13 17:58:08 UTC <tgeeky> well, I still don't have any interpreter snap backends
+2011-06-13 17:58:17 UTC <byorgey> fryguybob: great, thanks!
+2011-06-13 17:58:28 UTC <tgeeky> though I did stumble upon something like that on github
+2011-06-13 17:58:33 UTC <luite> tgeeky: if you just want to evaluate some code, you can use hint
+2011-06-13 17:58:59 UTC <luite> but that's not really acceptable if you want to deal with timeouts and proper isolation between clients
+2011-06-13 17:59:05 UTC <tgeeky> ;)
+2011-06-13 17:59:19 UTC <tgeeky> which is why I'd like what you're doing, regardless of the frontend
+2011-06-13 17:59:33 UTC <tgeeky> but like I said, it's your choice, and in due time is fine, since I'm still catching up
+2011-06-13 18:02:20 UTC <luite> keep in mind that it will only work on a special ubuntu server install with selinux and a lot of extra user accounts. you can probably not run it on your desktop linux unless you want to do a lot of selinux hacking
+2011-06-13 18:02:53 UTC <tgeeky> that might be fine, I can just use VMs like (i'm guessing) you also do
+2011-06-13 18:02:57 UTC <tgeeky> but just keep going
+2011-06-13 18:03:10 UTC <tgeeky> anything that slows you down (such as publishing your code) slows me down too :)
+2011-06-13 18:03:17 UTC <tgeeky> I doubt I could even quickly understand everything you're doing yet
+2011-06-13 18:04:05 UTC <luite> I'm not using anything complicated, a proper grasp of monad transformers is probably all that's required to understand it
+2011-06-13 18:04:15 UTC <tgeeky> byorgey: It occurs to me that there's some overlap between the invertible-syntax / partial iso paper, and lenses (and bidirectional lenses) in general...
+2011-06-13 18:04:20 UTC <tgeeky> luite: then you've proved my point :)
+2011-06-13 18:04:47 UTC <tgeeky> byorgey: is there a concise description you would apply to the concepts?
+2011-06-13 18:05:37 UTC <byorgey> tgeeky: indeed, there is a strong connection between the two, but I'm not sure I could precisely articulate the relationship
+2011-06-13 18:06:41 UTC <byorgey> tgeeky: if you're interested you should ask dmwit, he's a colleague of mine who is doing work on lenses
