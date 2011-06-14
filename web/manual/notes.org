@@ -1,0 +1,8 @@
+Features I need to figure out how to support:
+
+  - include type signatures of functions automatically?
+    How to indicate a placeholder for such inserted type signatures?
+  - cross-links to other sections
+  - links to Diagrams API documentation -- just put in placeholders
+  - special markup for function names that should be links to the
+    haddocks (in addition to being set in a monospaced font)
