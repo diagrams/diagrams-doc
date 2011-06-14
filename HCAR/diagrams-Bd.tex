@@ -1,14 +1,6 @@
-% \documentclass{article}
-
-% \usepackage{hcar}
-% \usepackage{graphicx}
-% \usepackage{paralist}
-
-% \begin{document}
-
 % diagrams-Bd.tex
 \begin{hcarentry}[updated]{diagrams}
-\report{Brent Yorgey}%11/10
+\report{Brent Yorgey}%05/11
 \status{alpha, active development}
 \participants{Ryan Yates}
 \makeheader
@@ -20,17 +12,23 @@ advantages of being \emph{declarative}, describing what to draw, not
 how to draw it, and \emph{embedded}, putting the entire power of
 Haskell (and Hackage) at the service of diagram creation.
 
+%**<img width=500 src="./paradox.jpg">
+%*ignore
 \begin{center}
-\includegraphics[width=0.47\textwidth]{paradox.jpg}
+\includegraphics[width=0.47\textwidth]{html/paradox.jpg}
 \end{center}
+%*endignore
 
 Since the last HCAR, the library has undergone a complete rewrite, and
 now features an elegant foundational model, pluggable rendering
 backends, and support for arbitrary vector spaces.
 
+%**<img width=500 src="./triangular-numbers.jpg">
+%*ignore
 \begin{center}
-\includegraphics[width=0.47\textwidth]{triangular-numbers.jpg}  
+\includegraphics[width=0.47\textwidth]{html/triangular-numbers.jpg}
 \end{center}
+%*endignore
 
 \FuturePlans
 
@@ -41,9 +39,5 @@ attract many contributors to expand the standard library and build
 higher-level drawing modules on top of the flexible core.
 
 \FurtherReading
-\begin{compactitem}
-\item  \url{http://code.google.com/p/diagrams}
-\end{compactitem}
+\url{http://code.google.com/p/diagrams}
 \end{hcarentry}
-
-% \end{document}
