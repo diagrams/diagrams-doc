@@ -1,0 +1,2 @@
+pandoc -s -S -w docbook -r markdown+lhs DiagramsManual.lhs -o DiagramsManual.db
+xmlto xhtml -m config.xsl DiagramsManual.db -o DiagramsManual/
