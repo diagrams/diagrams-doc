@@ -20,10 +20,8 @@ width: 400
 Create a grid by gluing together a bunch of squares.
 
 > grid x y = frame <> lattice
->   where s       = square # lw 0.02 # freeze
->         frame   = square
->                 # scaleX (fromIntegral x)
->                 # scaleY (fromIntegral y)
+>   where s       = unitSquare # lw 0.02 # freeze
+>         frame   = rect (fromIntegral x) (fromIntegral y)
 >                 # lw thick # freeze
 >         lattice = centerXY . vcat . map hcat . replicate y . replicate x $ s
 
