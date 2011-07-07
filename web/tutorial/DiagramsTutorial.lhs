@@ -144,7 +144,7 @@ with the following contents (or you can simply edit this file itself):
 > import Diagrams.Prelude
 > import Diagrams.Backend.Cairo.CmdLine
 >
-> main = defaultMain circle
+> main = defaultMain (circle 1)
 
 Turning off the Dreaded Monomorphism Restriction is quite important:
 if you don't, you will almost certainly run into it (and be very
@@ -153,8 +153,9 @@ confused by the resulting error messages).
 The first `import` statement brings into scope the entire diagrams DSL
 and standard library.  The second `import` is so that we can use the
 cairo backend for rendering diagrams.  Among other things, it provides
-the function `defaultMain`, which takes a diagram as input and creates
-a command-line-driven application for rendering it.
+the function `defaultMain`, which takes a diagram as input (in this
+case, a circle of radius 1) and creates a command-line-driven
+application for rendering it.
 
 Let's compile and run it:
 
@@ -180,10 +181,10 @@ Suppose we want our circle to be blue, with a thick dashed purple
 outline (there's no accounting for taste).  We can apply attributes to
 the `circle` diagram with the `(#)` operator:
 
-> circle1 = circle # fc blue
->                  # lw 0.05
->                  # lc purple
->                  # dashing [0.2,0.05] 0
+> circle1 = circle 1 # fc blue
+>                    # lw 0.05
+>                    # lc purple
+>                    # dashing [0.2,0.05] 0
 
 (To render this new diagram, just replace `defaultMain circle` with
 `defaultMain circle1`.)
@@ -207,7 +208,7 @@ x # f = f x
 
 Just to illustrate,
 
-> pCircle1' = pad 1.1 . dashing [0.2,0.05] 0 . lc purple . lw 0.05 . fc blue $ circle
+> pCircle1' = pad 1.1 . dashing [0.2,0.05] 0 . lc purple . lw 0.05 . fc blue $ circle 1
 
 produces exactly the same diagram as `pCircle1`.  So why bother with `(#)`?
 First, it's often more natural to write (and easier to read) what a
@@ -216,7 +217,7 @@ high precedence (8), making it more convenient to combine diagrams
 with specified attributes.  For example,
 
 ~~~ {.haskell}
-circle # fc red # lw 0 ||| circle # fc green # lw 0
+circle 1 # fc red # lw 0 ||| circle 1 # fc green # lw 0
 ~~~
 
 places a red circle with no border next to a green circle with no
@@ -224,7 +225,7 @@ border (we'll see more about the `(|||)` operator shortly). Without
 `(#)` we would have to write something with more parentheses, like
 
 ~~~ {.haskell}
-(fc red . lw 0 $ circle) ||| (fc green . lw 0 $ circle)
+(fc red . lw 0 $ circle 1) ||| (fc green . lw 0 $ circle 1)
 ~~~
 
 For information on other standard attributes, see
@@ -241,12 +242,9 @@ Let's start with the most basic way of combining two diagrams:
 superimposing one diagram on top of another.  We can accomplish this
 with `atop`:
 
-> circleSq = square # fc aqua `atop` pCircle1
+> circleSq = square 1 # fc aqua `atop` pCircle1
 
 (Incidentally, these colors are coming from [Data.Colour.Names](http://hackage.haskell.org/packages/archive/colour/2.3.1/doc/html/Data-Colour-Names.html).)
-
-(Also, if you're wondering, the circle has a radius of 1, while the square
-has sides of length 1.)
 
 "Putting one thing on top of another" sounds rather vague: how do we
 know exactly where the circle and square will end up relative to one
@@ -265,10 +263,10 @@ this point becomes the local origin of the new, combined diagram).
 The `showOrigin` function is provided for conveniently visualizing the
 local origin of a diagram.
 
-> circleWithO = circle # showOrigin
+> circleWithO = circle 1 # showOrigin
 
 Not surprisingly, the local origin of `circle` is at its center.  So
-is the local origin of `square`.  This is why ``square `atop` circle``
+is the local origin of `square`.  This is why ``square 1 `atop` circle 1``
 produces a square centered on a circle.
 
 > circleSqWithO = circleSq # showOrigin
@@ -281,9 +279,9 @@ Another fundamental way to combine two diagrams is by placing them
 conveniently put two diagrams next to each other in the horizontal or
 vertical directions, respectively.  For example:
 
-> circleSqH = circle ||| square
+> circleSqH = circle 1 ||| square 2
 >
-> circleSqV = circle === square
+> circleSqV = circle 1 === square 2
 
 The two diagrams are arranged next to each other so that their local
 origins are on the same horizontal or vertical line.  As you can
@@ -297,9 +295,9 @@ the more general `beside` combinator. `beside` takes as arguments a
 the vector" --- that is, in such a way that the vector points from the
 local origin of the first diagram to the local origin of the second.
 
-> circleSqV1 = beside (1,1) circle square
+> circleSqV1 = beside (1,1) (circle 1) (square 2)
 >
-> circleSqV2 = beside (1,-2) circle square
+> circleSqV2 = beside (1,-2) (circle 1) (square 2)
 
 Bounding functions
 ------------------
@@ -323,7 +321,7 @@ diagram below have some space between them. (Try adding a vertical
 line between them with `vrule` and you will see why.)
 
 > e2 = ell ||| ell
->   where ell = circle # scaleX 0.5 # rotateBy (1/6)
+>   where ell = circle 1 # scaleX 0.5 # rotateBy (1/6)
 
 If we want to position these ellipses next to each other horizontally
 so that they are tangent, it is not clear how to accomplish this.
@@ -357,11 +355,13 @@ for transforming diagrams, such as:
 
 For example:
 
-> circleRect = circle # scale 0.5 ||| square # scaleX 0.3
+> circleRect  = circle 1 # scale 0.5 ||| square 1 # scaleX 0.3
 >
-> circleRect2 = circle # scale 0.5 ||| square # scaleX 0.3 
->                                             # rotateBy (1/6) 
->                                             # scaleX 0.5
+> circleRect2 = circle 1 # scale 0.5 ||| square 1 # scaleX 0.3 
+>                                                 # rotateBy (1/6) 
+>                                                 # scaleX 0.5
+
+(Of course, `circle 1 # scale 0.5` would be better written as just `circle 0.5`.)
 
 Freezing
 --------
@@ -384,7 +384,7 @@ non-uniform scale applied to an unfrozen circle (which is drawn with a
 uniform line) and to a frozen one (in which the line gets thicker and
 thinner according to the non-uniform scale).
 
-> c = circle # lw 0.1
+> c = circle 1 # lw 0.1
 >
 > circles = hcat' with {sep = 0.5} 
 >           [ c 
@@ -413,7 +413,7 @@ Of course, there are also translation transformations like
 translate a diagram within its *local vector space* --- that is,
 relative to their local origin.
 
-> circleT = circle # translate (0.5, 0.3) # showOrigin
+> circleT = circle 1 # translate (0.5, 0.3) # showOrigin
 
 As `circleT` shows, translating a diagram by `(0.5, 0.3)` is the same
 as moving its local origin by `(-0.5, -0.3)`.
@@ -421,9 +421,9 @@ as moving its local origin by `(-0.5, -0.3)`.
 Since diagrams are always composed with respect to their local
 origins, translation can affect the way diagrams are composed.
 
-> circleSqT   = square `atop` circle # translate (0.5, 0.3)
-> circleSqHT  = square ||| circle # translate (0.5, 0.3)
-> circleSqHT2 = square ||| circle # translate (19.5, 0.3)
+> circleSqT   = square 1 `atop` circle 1 # translate (0.5, 0.3)
+> circleSqHT  = square 1 ||| circle 1 # translate (0.5, 0.3)
+> circleSqHT2 = square 1 ||| circle 1 # translate (19.5, 0.3)
 
 As `circleSqHT` and `circleSqHT2` demonstrate, when we place a
 translated circle next to a square, it doesn't matter how much the
@@ -446,7 +446,7 @@ local origin ends up exactly on the edge of its bounding region.
 
 > circlesTop = hrule (2 * sum sizes) # lw 0.1 === circles # centerX
 >   where circles = hcat . map alignT . zipWith scale sizes 
->                 $ repeat (circle # lw 0.1)
+>                 $ repeat (circle 1 # lw 0.1)
 >         sizes   = [2,5,4,7,1,3]
 
 See [Diagrams.TwoD.Align](http://hackage.haskell.org/packages/archive/diagrams-lib/0.1/doc/html/Diagrams-TwoD-Align.html) for other alignment combinators.
