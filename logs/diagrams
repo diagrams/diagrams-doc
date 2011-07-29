@@ -4109,3 +4109,480 @@
 2011-06-13 18:04:47 UTC <tgeeky> byorgey: is there a concise description you would apply to the concepts?
 2011-06-13 18:05:37 UTC <byorgey> tgeeky: indeed, there is a strong connection between the two, but I'm not sure I could precisely articulate the relationship
 2011-06-13 18:06:41 UTC <byorgey> tgeeky: if you're interested you should ask dmwit, he's a colleague of mine who is doing work on lenses
+2011-06-13 18:10:29 UTC <tgeeky> byorgey: ah, he is the author of the symmetric lenses paper I read a while ago but didn't understand. I should read it again.
+2011-06-13 21:07:12 UTC <fryguybob> Looks like I run into this issue: http://hackage.haskell.org/trac/gtk2hs/ticket/1211  with a newer cairo.
+2011-06-13 21:15:57 UTC <luite> ah I had similar errors
+2011-06-13 21:17:09 UTC <luite> but I thought that doing other things was more fun than trying to fix that issue ;)
+2011-06-13 22:04:37 UTC <byorgey> ugh
+2011-06-13 22:14:15 UTC <byorgey> I am super confused.  The image stuff was working, and I haven't changed anything, and now it isn't.
+2011-06-13 22:14:38 UTC <fryguybob> solar flares.
+2011-06-13 22:14:48 UTC <byorgey> obviously one of those three is incorrect.
+2011-06-13 22:14:55 UTC <byorgey> ah yes, or solar flares
+2011-06-13 22:15:02 UTC <fryguybob> Or ants.
+2011-06-13 22:18:42 UTC <byorgey> those tricksy ants!
+2011-06-13 22:20:16 UTC <fryguybob> You must debug them.
+2011-06-13 22:33:17 UTC <fryguybob> byorgey: With a newer cairo I get an error message:  user error (invalid matrix (not invertible))
+2011-06-13 22:33:56 UTC <fryguybob> My guess is that it is related to the code here:  http://cgit.freedesktop.org/cairo/commit/?id=4ce2b62bcea49eccc0a4ee3781a115e4a34d3ad4
+2011-06-13 22:35:35 UTC <luite> how did you install the newer cairo?
+2011-06-13 22:36:29 UTC <fryguybob> I didn't really get around that issue, just using --make.
+2011-06-14 01:18:44 UTC <byorgey> fryguybob: hmm, but we shouldn't ever be passing noninvertible matrices to cairo.
+2011-06-14 01:56:41 UTC <tgeeky> > instance Show a => Show (ESW a) where
+2011-06-14 01:56:41 UTC <tgeeky> >   show m = "Log:\n"  ++ log ++ "\n" ++
+2011-06-14 01:56:41 UTC <tgeeky> >            "Count: " ++ show cnt ++ "\n" ++
+2011-06-14 01:56:41 UTC <tgeeky> >            result
+2011-06-14 01:56:41 UTC <tgeeky> >     where ((res, cnt), log) = runWriter (runStateT (runErrorT m) 0)
+2011-06-14 01:56:43 UTC <tgeeky> >           result   = case res of
+2011-06-14 01:56:46 UTC <tgeeky> >                        Left s -> "Error: " ++ s
+2011-06-14 01:56:48 UTC <tgeeky> bah, sorry.
+2011-06-14 01:56:56 UTC <tgeeky> evidently right-click + something else pastes
+2011-06-14 13:48:37 UTC <fryguybob> byorgey: I don't think it is an issue with the data on our side beyond something potentially not being initialized (at the gtk2hs cairo level).  I'm attempting to build Cairo locally here to probe at what the actual data is.
+2011-06-14 14:01:22 UTC <luite> whoah stil fixing those same text rendering problems?
+2011-06-14 14:17:29 UTC <byorgey> luite: fryguybob does not give up easily =)
+2011-06-14 14:17:35 UTC <byorgey> fryguybob: thanks, sounds good
+2011-06-14 14:18:42 UTC <luite> I remember the first time installing gtk2hs on windows, took me a few days :(
+2011-06-14 14:19:07 UTC <luite> fortunately the situation has improved :)
+2011-06-14 14:23:16 UTC <byorgey> =)
+2011-06-14 16:17:21 UTC <luite> byorgey: hmm, I have a problem with polymorphism and Diagrams in Wolfgang, maybe you know how to solve it
+2011-06-14 16:20:54 UTC <luite> byorgey: this is the Wolfgang module with the Eval and EvalIO typeclasses for types that can be rendered: http://pastebin.com/6aE6Q8E8
+2011-06-14 16:21:10 UTC <luite> http://pastebin.com/rnSMg2Uh  and the instance for Diagrams
+2011-06-14 16:21:28 UTC <luite> but now    circle :: Diagrams Cairo R2  works
+2011-06-14 16:21:50 UTC <luite> but without a type annotation, it doesnt
+2011-06-14 17:12:28 UTC <tgeeky> hm
+2011-06-14 17:12:31 UTC <tgeeky> interesting idea
+2011-06-14 17:17:48 UTC <tgeeky> byorgey: do you follow any of Baez's work?
+2011-06-14 17:20:47 UTC <tgeeky> anyway, I just got http://www.amazon.com/Deep-Beauty-Understanding-Mathematical-Innovation/dp/1107005701
+2011-06-14 17:20:58 UTC <tgeeky> I read the introduction and some of Baez's (introductory) chapter
+2011-06-14 17:21:03 UTC <tgeeky> seems very good, and clear
+2011-06-14 17:22:02 UTC <luite> he's from n-Cat cafe right?
+2011-06-14 17:22:10 UTC <tgeeky> yeah, I think he's the ringleader over there
+2011-06-14 17:22:25 UTC <tgeeky> but the introduction of the book
+2011-06-14 17:23:32 UTC <tgeeky> is an argument about the utility of taking a look at things, [more abstract] than current mathematical physics, [more mathematical] than current physical mathematics, and [alternately philosophical] interpretations of those two
+2011-06-14 17:23:55 UTC <tgeeky> 'current mathematical physics' is taken to mean operator algebras on hilbert spaces
+2011-06-14 17:26:24 UTC <luite> hm, I've added it to my to-read queue
+2011-06-14 18:11:32 UTC <byorgey> luite: I get "unknown paste id" for both of those links
+2011-06-14 18:11:56 UTC <byorgey> luite: but I think I can explain what is going on
+2011-06-14 18:12:26 UTC <luite> byorgey: oh sorry I set them to expire
+2011-06-14 18:12:48 UTC <luite> I have some code on hpaste with a simplified version
+2011-06-14 18:13:04 UTC <byorgey> luite: do you understand why  (show . read) :: String -> String   does not type check?
+2011-06-14 18:13:13 UTC <luite> yeah
+2011-06-14 18:13:14 UTC <byorgey> it is the same problem here
+2011-06-14 18:13:27 UTC <luite> but ghci solves some of it with defaulting
+2011-06-14 18:14:00 UTC <byorgey> true, but the defaulting mechanism is not extensible
+2011-06-14 18:14:05 UTC <luite> indeed :(
+2011-06-14 18:14:41 UTC <byorgey> it's a bit more annoying in this case because there are situations where we know that the choice of type for a certain unconstrained type variable will not affect the semantics at all
+2011-06-14 18:14:47 UTC <byorgey> but there is no way to tell ghc that.
+2011-06-14 18:15:09 UTC <byorgey> it insists on having a concrete instantiation for everything.
+2011-06-14 18:16:22 UTC <byorgey> luite: I think you should just add  eval (foo :: Diagram Cairo R2)  etc. to your list of expressions to try
+2011-06-14 18:16:33 UTC <byorgey> a bit kludgy, perhaps, but I can't think of a better solution at the moment.
+2011-06-14 18:16:39 UTC <luite> that's horribly non-extensible :p
+2011-06-14 18:16:53 UTC <byorgey> indeed.
+2011-06-14 18:17:13 UTC <luite> I was thinking to use the ghci :info functionality from the GHC API instead
+2011-06-14 18:17:29 UTC <byorgey> another possibility is to maintain a "cairo-only" version of the diagrams Prelude, which just re-exports everything from Diagrams.Prelude but with monomorphic types
+2011-06-14 18:17:44 UTC <luite> basically doing :info Eval and :info EvalIO
+2011-06-14 18:17:46 UTC <byorgey> then provide that version in Wolfgang instead of the real polymorphic Prelude
+2011-06-14 18:18:12 UTC <byorgey> luite: I don't understand, how would :info Eval help?
+2011-06-14 18:18:39 UTC <luite> you list the instances of Eval and try to find one that fits the inferred type of the expression
+2011-06-14 18:18:56 UTC <byorgey> ah, I see, that's clever
+2011-06-14 18:19:08 UTC <luite> still not terribly elegant :)
+2011-06-14 18:19:12 UTC <byorgey> no =)
+2011-06-14 18:19:29 UTC <byorgey> well, it's a lot better than putting in a special case for diagrams =)
+2011-06-14 18:19:59 UTC <luite> yeah I really wanted to avoid that
+2011-06-14 18:26:51 UTC <luite> I suspect that there will be much more situations here where defaulting will be desirable
+2011-06-14 18:58:44 UTC <fryguybob> Well, I finally got cairo to build and link and now it doesn't have a problem with the matrix, but now it leaves the 'h' off of "hello world".
+2011-06-14 19:05:03 UTC <byorgey> o.O
+2011-06-14 19:07:58 UTC <byorgey> perhaps you accidentally have your localization settings on "Cockney"?
+2011-06-14 19:12:42 UTC <fryguybob> If you do "howdy" it outputs: "top of the morning to ya gov'na"
+2011-06-14 19:13:53 UTC <byorgey> amazing
+2011-06-14 19:21:27 UTC <fryguybob> This only happens when I use a matrix, though.
+2011-06-14 19:22:26 UTC <byorgey> quite bizarre.
+2011-06-14 19:24:36 UTC <fryguybob> Yeah.  My build is not using freetype so I assume that it is using the windows api for those things (the builds I was using before do use freetype).
+2011-06-14 19:27:13 UTC <byorgey> fryguybob: the funny thing is that I have not been able to find much of anything about other people struggling with cairo+text on windows.  you'd think others would have run into whatever this is before.
+2011-06-14 19:27:20 UTC <byorgey> but maybe I am just not searching for the right things.
+2011-06-14 19:44:17 UTC <fryguybob> byorgey: Yeah, poking at the code there appears to be a bunch of strange paths for things to take that I would not be surprised if they do not get called very often.
+2011-06-14 20:06:38 UTC <luite> byorgey: do you still have so many ants? you should feed them this ;) http://themetapicture.com/media/funny-ants-eating-jell-o.jpg
+2011-06-14 20:08:11 UTC <byorgey> hehe
+2011-06-14 20:08:29 UTC <byorgey> I don't think my ants are see-through like that
+2011-06-14 20:09:11 UTC <luite> oh then I guess feeding them would only make the problem worse :)
+2011-06-14 20:09:17 UTC <luite> +then
+2011-06-14 20:09:24 UTC <byorgey> indeed.
+2011-06-14 20:09:53 UTC <byorgey> if you want your mind blown search on youtube for "time-laps ants dead lizard" or something like that
+2011-06-14 20:10:00 UTC <byorgey> *lapse
+2011-06-14 20:10:21 UTC <byorgey> I can't tell you the precise URL since I have youtube blocked at work
+2011-06-14 20:11:05 UTC <luite> ah found it
+2011-06-14 20:23:52 UTC <tgeeky> 15:07 < byorgey> perhaps you accidentally have your localization settings on "Cockney"?
+2011-06-14 20:23:57 UTC <tgeeky> lol!
+2011-06-14 20:24:08 UTC <tgeeky> that brightened my day
+2011-06-14 20:35:33 UTC <byorgey> tgeeky: =)
+2011-06-14 20:35:55 UTC <tgeeky> byorgey: did you check out "Deep Beauty" the new book?
+2011-06-14 20:36:44 UTC <byorgey> no
+2011-06-14 20:37:11 UTC <tgeeky> I suggest it. I read a few dozen pages. It may be interesting to you merely for the historical bent on category theory
+2011-06-14 20:37:22 UTC <tgeeky> http://www.amazon.com/Deep-Beauty-Understanding-Mathematical-Innovation/dp/1107005701
+2011-06-14 20:37:27 UTC <byorgey> OK, I'll add it to my list.
+2011-06-14 20:45:11 UTC <luite> I added it to  my ipad :p
+2011-06-14 20:46:54 UTC <byorgey> btw luite tgeeky fryguybob, tomorrow morning I'm headed to http://www.cs.uoregon.edu/Activities/summerschool/summer11/ for a week, don't know how much time/internet access I'll have
+2011-06-14 20:46:59 UTC <byorgey> just fyi
+2011-06-14 20:47:04 UTC <tgeeky> byorgey: we'll miss you :o
+2011-06-14 20:47:23 UTC <byorgey> heh, I'll miss you too =)
+2011-06-14 20:47:30 UTC <luite> hehe
+2011-06-14 20:47:43 UTC <tgeeky> you're not presenting? but Pierce is
+2011-06-14 20:47:57 UTC <luite> have fun and stuff :)
+2011-06-14 20:48:24 UTC <byorgey> tgeeky: I'm going as his TA, I'm running some labs associated with his lectures
+2011-06-14 20:48:28 UTC <byorgey> luite: thanks =)
+2011-06-14 20:48:35 UTC <tgeeky> ok.
+2011-06-14 20:48:48 UTC <tgeeky> is there expected to be anything groundbreaking at this conference?
+2011-06-14 20:48:53 UTC <tgeeky> or is a "summary" conference?
+2011-06-14 20:49:11 UTC <byorgey> it's not a conference at all, it's a summer school
+2011-06-14 20:49:29 UTC <tgeeky> oh.
+2011-06-14 20:49:35 UTC <byorgey> although there will be some really smart people presenting so maybe they will present some new ideas
+2011-06-14 20:49:54 UTC <byorgey> but mostly it's to teach beginning PhD students as much about programming languages as possible in 2.5 weeks
+2011-06-14 20:50:04 UTC <tgeeky> hehe
+2011-06-14 20:50:09 UTC <tgeeky> slam'n'cram
+2011-06-14 20:50:19 UTC <byorgey> yep, I hear it is quite exhausting
+2011-06-14 20:50:23 UTC <tgeeky> it looks like it
+2011-06-14 20:50:24 UTC <byorgey> =)
+2011-06-14 20:50:32 UTC <tgeeky> that schedule, 2 weeks
+2011-06-14 20:50:37 UTC <tgeeky> it sounds like a mathematical hangover
+2011-06-14 20:50:41 UTC <byorgey> yeah, pretty insane
+2011-06-14 20:51:05 UTC <byorgey> I am only going for a week so hopefully it won't be too bad.
+2011-06-14 20:53:46 UTC <tgeeky> I suppose it's gotta be somewhat exhausting for you, since you have to try to quickly decipher the minds of the unintiated
+2011-06-14 20:54:12 UTC <tgeeky> I found being a *good* 'lab TA' was more difficult than being a good lecture TA
+2011-06-16 06:06:35 UTC <luite> tgeeky: thanks for the book suggestion yesterday, I skimmed the first chapter and have already seen lots of things that were covered in CS and FP related weblogs or papers. interesting to see them in a different context
+2011-06-16 12:26:10 UTC <tgeeky> luite: GEB?
+2011-06-16 15:40:05 UTC <luite> tgeeky: no, I've already read that one a long time ago :p
+2011-06-16 16:30:40 UTC <tgeeky> luite: oh, deep beauty then
+2011-06-16 17:01:01 UTC <luite> yes
+2011-06-16 19:28:24 UTC <tgeeky> glad you liked it
+2011-06-17 12:55:03 UTC <ClaudiusMaximus> so, i ended up resorting to svg+js for my latest diagram[1], mainly because i needed browser-viewable animation - i guess this is not something that 'diagrams' is likely to ever support? [1] http://claudiusmaximus.goto10.org/g/mandelbrot/exponential_strip.svg
+2011-06-17 12:56:34 UTC <luite> ClaudiusMaximus: there are at least three other people interested in that ;p
+2011-06-17 12:56:52 UTC <luite> conal, tgeeky and me
+2011-06-17 12:57:29 UTC <ClaudiusMaximus> :)  i guess it'll have to be a custom backend, because cairo offers 0 control over svg (which i found out when i wondered about using CSS)
+2011-06-17 12:57:53 UTC <luite> yes, we need a new native svg backend, and not only for this reason
+2011-06-17 12:58:07 UTC <luite> it would make installation much less painful for many users
+2011-06-17 12:58:15 UTC <ClaudiusMaximus> yes
+2011-06-17 12:58:27 UTC <luite> nice animation by the way
+2011-06-17 12:58:35 UTC <ClaudiusMaximus> thanks :)
+2011-06-17 12:58:37 UTC <luite> although I don't immediately see what it's supposed to mean :)
+2011-06-17 12:59:30 UTC <ClaudiusMaximus> heh, well on the left is a cartesian zoom sequence at successively 2x zoom levels, and on the right is the same pixel data unwrapped into exponential polar form
+2011-06-17 13:01:10 UTC <ClaudiusMaximus> the red pixel on the right pulls from the red pixels on the left using linear interpolation
+2011-06-17 13:01:38 UTC <luite> yeah that's what I expected :)
+2011-06-17 13:02:13 UTC <luite> the javascript was hand-written right, not generated?
+2011-06-17 13:02:16 UTC <ClaudiusMaximus> yeah
+2011-06-17 13:02:28 UTC <ClaudiusMaximus> and it's somewhat ugly!
+2011-06-17 13:02:47 UTC <ClaudiusMaximus> initially it was more elegant, but way too slow
+2011-06-17 13:02:58 UTC <luite> hehe no problem, I'm used to ugly ;p
+2011-06-17 13:03:27 UTC <ClaudiusMaximus> so instead of having a grid of <rect> pixels and highlighting them, i have a grid of <line> and a few <rect> that i move around
+2011-06-17 13:05:22 UTC <luite> anyway if you think you can come up with some way of describing this kind of animation with diagrams, that would probably be
+2011-06-17 13:05:32 UTC <luite> a good starting point for discussions
+2011-06-17 13:07:12 UTC <ClaudiusMaximus> i'm not so good at that stuff, i tend to just hack at things until they seem to work..
+2011-06-17 13:07:35 UTC <luite> I personally want to add a few more things, interactivity with mouse, callbacks to the server, so that the svg can get extra data when required
+2011-06-17 13:07:47 UTC <ClaudiusMaximus> yeah that would be fun too
+2011-06-17 13:07:54 UTC <luite> but animations seem to be a good place to start
+2011-06-17 14:55:57 UTC <fryguybob> When I compile Cairo debug it produces correct output.  Is that progress? :D
+2011-06-17 15:08:03 UTC <byorgey> uh, I guess?
+2011-06-17 15:12:42 UTC <fryguybob> At least I now know where to probe the release version.
+2011-06-17 15:14:51 UTC <fryguybob> There is also an interesting comment:  "The cairo_show_text() function call is part of what the cairo designers call the "toy" text API."
+2011-06-17 15:15:22 UTC <fryguybob> "It is convenient for short demos and simple programs, but it is not expected to be adequate for serious text-using applications. See cairo_show_glyphs() for the "real" text display API in cairo."
+2011-06-17 15:15:36 UTC <byorgey> oh, yeah, I know about that
+2011-06-17 15:15:46 UTC <byorgey> but still, it ought to at least work!
+2011-06-17 15:16:08 UTC <fryguybob> Yeah, but that might explain why it doesn't get much cross platform testing love.
+2011-06-17 15:16:17 UTC <byorgey> that's probably true.
+2011-06-17 15:16:53 UTC <fryguybob> Is is common practice to have a #define in the middle of a function?
+2011-06-17 15:22:30 UTC <tgeeky> well *I'm* such an awesome programmer that I program my functions in terms of #define macros, so yes - it's the only way!
+2011-06-17 15:23:22 UTC <tgeeky> </sarcasm>
+2011-06-17 15:23:31 UTC <tgeeky> byorgey: hope you're having a good trip
+2011-06-17 15:24:06 UTC <ClaudiusMaximus> i tend to do things like switch (x) { #define CASE(y,z) { .... }; break    CASE(1,2); CASE(3,4); .... #undef CASE }
+2011-06-17 15:26:04 UTC <byorgey> tgeeky: I am, thanks =)
+2011-06-17 15:47:21 UTC <fryguybob> And adding a bunch of printfs also makes things work in release...
+2011-06-17 19:44:04 UTC <fryguybob> fryguybob: As best as I can tell the compiler (msvc) is slipping up on some loop unrolling.  With optimization off on one function all seems well.
+2011-06-17 23:08:20 UTC <longh> has anyone already thought of writing a TikZ-backend for diagrams? :3
+2011-06-17 23:09:05 UTC <byorgey> longh: yes, but no one has done it yet =)
+2011-06-17 23:09:28 UTC <longh> but it is possible, isn't it?
+2011-06-17 23:10:06 UTC <byorgey> sure!
+2011-06-17 23:10:23 UTC <byorgey> there are no technical hurdles to overcome
+2011-06-17 23:10:37 UTC <byorgey> just requires some work to actually do it
+2011-06-17 23:10:43 UTC <longh> nice :)
+2011-06-17 23:11:30 UTC <longh> can diagrams handle text? that would be one pretty good reason to use TikZ/metapost/etc. instead of cairo
+2011-06-17 23:13:29 UTC <longh> for example if you want to use the output in a latex document
+2011-06-17 23:14:35 UTC <luite> it can, but text support is limited at the moment, basic support was only very recently added
+2011-06-17 23:15:45 UTC <longh> i see, hope you keep up the great work guys :)
+2011-06-18 05:55:08 UTC <byorgey> ah, this refactoring is going swimmingly
+2011-06-18 05:55:19 UTC <byorgey> now Diagrams are instances of PathLike too
+2011-06-18 05:55:39 UTC <byorgey> so we no longer need separate polygon/polygonPath, roundedRect/roundedRectPath etc. functions
+2011-06-18 05:56:01 UTC <tgeeky> clever
+2011-06-18 05:56:03 UTC <byorgey> you just say 'polygon' and if you use it as a diagram, it's a diagram.  If you use it as a path, it's a path. Or a trail.
+2011-06-18 08:23:39 UTC <luite> sounds good
+2011-06-18 08:34:29 UTC <luite> byorgey: you suggested some time ago that it would be nice to be able to embed wolfgang expressions (+result and maybe some source code) in other sites. do you think that using an iframe would be acceptable for that?
+2011-06-18 12:53:02 UTC <luite> yay I ordered a server for wolfgang :)
+2011-06-18 15:57:29 UTC <byorgey> luite: I don't even know what an iframe is.
+2011-06-18 15:57:32 UTC <byorgey> luite: yay, server!
+2011-06-18 15:58:16 UTC <luite> byorgey: oh it basically means that you load a completely different page in an element of your own page
+2011-06-18 15:58:31 UTC <luite> it's a rectangle, similar to including an image
+2011-06-18 15:59:13 UTC <luite> the difference with loading code on your own page is that interaction is much more limited
+2011-06-18 15:59:25 UTC <luite> you can't have your own javascript interact with the data
+2011-06-18 15:59:38 UTC <byorgey> right
+2011-06-18 16:00:03 UTC <byorgey> well, I don't know, I don't really care too much either way, just thought it would be interesting
+2011-06-18 16:00:31 UTC <luite> ok :)
+2011-06-18 16:01:26 UTC <luite> it's much easier to implement that way
+2011-06-18 16:10:35 UTC <luite> it's the same type of server as projects.haskell.org
+2011-06-18 16:11:45 UTC <byorgey> luite: sweet
+2011-06-19 13:49:21 UTC <luite> byorgey: do you know how to typecheck and evaluate with the GHC api expressions like show.read where you want a specific type constraint on the intermediate type? I have a Type for it, but don't know how to use it
+2011-06-19 14:01:17 UTC <fryguybob> show . flip asTypeOf (undefined :: (Int,[Int])) . read $ "(1  ,  [ 1, 2, 3 ] )"
+2011-06-19 14:01:55 UTC <luite> fryguybob: I have a Type but the names of the types may not be in scope
+2011-06-19 14:03:28 UTC <fryguybob> You can use any witness with asTypeOf:   show . flip asTypeOf (2,[3]) . read $ "(1  ,  [ 1, 2, 3 ] )"
+2011-06-19 14:22:13 UTC <fryguybob> luite: A TypeRep from Data.Typeable?
+2011-06-19 14:23:42 UTC <luite> no a Type, TypeRep.Type from GHC
+2011-06-19 14:23:54 UTC <fryguybob> ok
+2011-06-19 14:24:35 UTC <luite> sorry I'm slow, I'm trying to make an example, but it exits with an exception
+2011-06-19 14:32:53 UTC <fryguybob> Maybe using  applyTy  with something like this:   \w -> show . flip asTypeOf w . read
+2011-06-19 14:33:16 UTC <luite> ok it works
+2011-06-19 14:33:41 UTC <luite> fryguybob: nah the problem is that the type isn't in scope, I can't make values of the type, and no type signatures either
+2011-06-19 14:33:55 UTC <luite> I'll hpaste an example
+2011-06-19 14:33:59 UTC <fryguybob> ok
+2011-06-19 14:34:18 UTC <luite> the problem was the strict security of my thing, access to my example code was blocked :p
+2011-06-19 14:35:00 UTC <fryguybob> That reminds me, is the new SafeHaskell stuff going to be helpful for you down the road?
+2011-06-19 14:35:46 UTC <luite> nope
+2011-06-19 14:36:22 UTC <luite> at least probably not
+2011-06-19 14:37:39 UTC <luite> everything is built in such a way that the code can be untrusted
+2011-06-19 14:38:41 UTC <luite> it's a much "heavier" solution than safe haskell, because it relies on lots of operating system features, but there's no risk that a vulnerability in a trusted haskell module can be exploited to gain more privileges
+2011-06-19 14:39:16 UTC <fryguybob> Yeah
+2011-06-19 14:40:13 UTC <luite> safe haskell might be useful in the future, for performance in some situations. for now, because everything is untrusted, all processes must be reset before another client (remote ip address) can use them, generated files are not shared between clients
+2011-06-19 14:40:33 UTC <luite> having some safe subset may allow more caching and reuse
+2011-06-19 14:42:22 UTC <luite> the only way that a user can make changes that are visible to others is through a wiki commit, which is always clearly visible in the history, and associated with a user account
+2011-06-19 14:42:34 UTC <luite> anyway, here's my example: http://hpaste.org/47975
+2011-06-19 14:43:08 UTC <luite> in module Test, there's an instance of C in scope for a type DI that's not in scope
+2011-06-19 14:43:45 UTC <luite> if you load them in GHCI, then it will hide this instance if you type :info C, for this reason
+2011-06-19 14:43:48 UTC <luite> but the instance is there
+2011-06-19 14:46:02 UTC <luite> now for my extended defaulting stuff I want to see if for some expr, I can constrain its type so that there's an instance of C for it
+2011-06-19 14:46:31 UTC <luite> so if you have in Test.hs a definition  x = undefined
+2011-06-19 14:46:51 UTC <luite> then with that defaulting, c x should work, with output "DI"
+2011-06-19 14:47:12 UTC <luite> because there's an instance for DI, and x can be of type DI
+2011-06-19 14:47:47 UTC <luite> but there's no way that I can specify that type within an expression in the scope of Test
+2011-06-19 14:49:27 UTC <luite> this example may seem a bit artificial, but in many cases, instances rely on additional types that are not in scope
+2011-06-19 14:49:37 UTC <luite> for example with Diagrams you have the backend and vector space
+2011-06-19 15:00:46 UTC <fryguybob> So something like  applyTy (typeOf (\w -> show . flip asTypeOf w . read))  typeDI  should result in a Type that is  DI -> String -> String?
+2011-06-19 15:03:54 UTC <luite> err that would be String -> String?
+2011-06-19 15:04:20 UTC <fryguybob> (\w -> show . flip asTypeOf w . read)  :: forall a. (Show a, Read a) => a -> String -> String
+2011-06-19 15:04:44 UTC <luite> yeah without the typeDI
+2011-06-19 15:05:15 UTC <fryguybob> applyTy is applying to the forall, not the parameter.
+2011-06-19 15:05:36 UTC <luite> oh right
+2011-06-19 15:05:46 UTC <luite> hmm
+2011-06-19 15:06:23 UTC <fryguybob> So I think applyTy would fail if it couldn't find Show DI or Read DI otherwise it would give you the Type  DI -> String -> String.
+2011-06-19 15:08:00 UTC <luite> I still don't really understand what it's supposed to do :)
+2011-06-19 15:10:17 UTC <fryguybob> I don't think  typeOf  is quite right, is there some function  a -> Type  or  TypeRep -> Type ?
+2011-06-19 15:11:29 UTC <luite> well you can get the Type of an expression
+2011-06-19 15:11:43 UTC <luite> which is somewhate like String -> m Type
+2011-06-19 15:11:48 UTC <fryguybob> ok
+2011-06-19 15:12:19 UTC <luite> so   exprType "1" = Num a => a, exprType "1::Int" = Int
+2011-06-19 15:15:01 UTC <fryguybob> Where is exprType defined?
+2011-06-19 15:16:15 UTC <luite> GHC
+2011-06-19 15:16:26 UTC <luite> oh sorry
+2011-06-19 15:16:28 UTC <luite> InteractiveEval
+2011-06-19 15:16:37 UTC <luite> it's reexported by GHC
+2011-06-19 15:16:44 UTC <fryguybob> ah ok
+2011-06-19 15:17:36 UTC <luite> it caslls hscTcExpr in HscMain
+2011-06-19 15:19:20 UTC <luite> and that one tcRnExpr in TcRnDriver, the expression is parsed here
+2011-06-19 15:20:09 UTC <luite>  and that one is where it seems to get hairy ;p
+2011-06-19 15:28:07 UTC <fryguybob> So is the goal to just check to see if an instance is in place or to build an expression that uses a specific instance?
+2011-06-19 15:30:41 UTC <luite> the goal is to find out which instances can be used, and then evaluate an expression that uses one
+2011-06-19 15:30:58 UTC <fryguybob> ok
+2011-06-19 15:31:52 UTC <luite> I don't really care how, but it looks like it's not possible to just generate an expression :: String, that accomplishes this :)
+2011-06-19 15:32:46 UTC <luite> expressions are evaluated with compileExpr :: String -> m HValue
+2011-06-19 15:32:54 UTC <luite> where the HValue is unsafeCoerced into the actual type
+2011-06-19 15:38:08 UTC <fryguybob> I don't suppose this would work:  "show . flip asTypeOf (undefined :: " ++ ppType typeDI "" ++ ") . read"
+2011-06-19 15:38:24 UTC <luite> no
+2011-06-19 15:38:27 UTC <luite> because DI is not in scope
+2011-06-19 15:39:11 UTC <luite> exprType "(undefined :: DI)" gives an exception
+2011-06-19 15:40:39 UTC <fryguybob> So we need some  compileExprAs :: String -> Type -> m HValue ?
+2011-06-19 15:41:05 UTC <luite> yeah that would be useful
+2011-06-19 15:41:48 UTC <fryguybob> (where it isn't implemented by showing the type and tacking it onto the string :D).
+2011-06-19 15:41:57 UTC <luite> yeah :(
+2011-06-19 15:44:03 UTC <luite> a better name would be something like: showExprAs :: String -> Type -> m HValue, where it evaluates ("show $ " ++ expr) with expr constrained to Type
+2011-06-19 15:44:33 UTC <luite> might be slightly easier than digging inside a complete expression
+2011-06-19 15:51:18 UTC <byorgey> about to release 0.3 unless there are any objections
+2011-06-19 15:51:39 UTC <luite> not from me :)
+2011-06-19 15:52:15 UTC <fryguybob> release away :D
+2011-06-19 15:53:51 UTC <luite> fryguybob: I think that somehow the typecheck check (finding the instance to use) could be done separately from the eval step... but I don't know how to do it. the types that the user sees are "zonked"
+2011-06-19 15:54:00 UTC <fryguybob> luite: It looks like we want different behavior in TcRnDriver.lhs mkPlan.
+2011-06-19 15:56:04 UTC <luite> hmm, that's after defaulting right?
+2011-06-19 15:58:35 UTC <fryguybob> I'm not sure.
+2011-06-19 15:58:54 UTC <luite> tcGhciStmts contains an interesting comment, but I don't really know what it does :)
+2011-06-19 16:02:34 UTC <luite> ooh
+2011-06-19 16:02:42 UTC <luite> that thing works with Type :p
+2011-06-19 16:12:12 UTC <fryguybob> ACTION must go mow the lawn.
+2011-06-20 06:28:06 UTC <luite> fryguybob: hmm, I finally got it working, at least some of it
+2011-06-20 07:02:25 UTC <luite> fryguybob: it involves messing with the AST, you can add a type annotation based on a Type (that doesn't need to be in scope)
+2011-06-21 12:47:47 UTC <fryguybob> luite: Excellent.  It would be nice if there was extensible defaulting/show in GHCI.  I wonder what the best way to do that would be.
+2011-06-21 13:00:14 UTC <luite> yeah
+2011-06-22 18:53:38 UTC <luite> defaulting implemented and works \o/ :)
+2011-06-22 19:10:21 UTC <tgeeky> ok
+2011-06-29 00:46:37 UTC <byorgey> tgeeky: haven't had much time for diagrams hacking lately, but hope to get back to it soon
+2011-06-29 00:47:36 UTC <hpc> i finally got time to fix the output code for hs-svg a few days ago
+2011-06-29 00:47:51 UTC <hpc> using far more printf than i would like, but it's so much better than lots of (++)
+2011-06-29 00:48:09 UTC <hpc> presumably faster too, because base can guarantee that it folds in the right direction
+2011-06-29 00:51:59 UTC <tgeeky> byorgey: np, I haven't had much time for things other than sysadmin work in the last week :(
+2011-06-29 00:52:38 UTC <byorgey> hpc: ah, cool
+2011-06-29 00:52:48 UTC <byorgey> hpc: is there a repo for it somewhere?
+2011-06-29 00:52:57 UTC <hpc> https://code.google.com/p/hs-svg/
+2011-06-29 01:01:56 UTC <hpc> hmm, i go on vacation in boston starting friday...
+2011-06-29 01:02:03 UTC <hpc> i might find time to code more then
+2011-06-29 01:07:04 UTC <byorgey> hpc: printf, ick
+2011-06-29 01:07:14 UTC <byorgey> hpc: why not use Text.PrettyPrint.HughesPJ?
+2011-06-29 01:07:23 UTC <byorgey> and factor out all the repeated formatting of attributes, tags, etc.
+2011-06-29 01:08:05 UTC <hpc> it's an extra dependency
+2011-06-29 01:09:19 UTC <hpc> im operating on the assumption that cabalizing this package is going to somehow be a huge pain in the ass
+2011-06-29 01:09:30 UTC <byorgey> well, yes, but pretty is in the Haskell Platform
+2011-06-29 01:09:43 UTC <hpc> don't have the platform, im afraid
+2011-06-29 01:09:46 UTC <hpc> installed ghc through apt
+2011-06-29 01:09:47 UTC <byorgey> I have no reason to think that will be true
+2011-06-29 01:12:28 UTC <byorgey> well, then I don't know what to say other than that I really recommend installing the Platform
+2011-06-29 01:12:43 UTC <byorgey> isn't there a Debian package for the Platform, anyway?
+2011-06-29 01:13:17 UTC <hpc> nope
+2011-06-29 01:13:34 UTC <hpc> apt-cache search platform | grep haskell
+2011-06-29 01:13:37 UTC <hpc> apt-cache search platform | grep ghc
+2011-06-29 01:14:38 UTC <hpc> at some point, probably before the end of summer, im gonna stab this box and do a fresh install
+2011-06-29 01:14:53 UTC <byorgey> http://packages.debian.org/search?keywords=haskell-platform
+2011-06-29 01:16:03 UTC <hpc> im on ubuntu
+2011-06-29 01:16:08 UTC <hpc> but http://packages.ubuntu.com/oneiric/haskell-platform
+2011-06-29 01:16:10 UTC <hpc> so yay
+2011-06-29 01:16:32 UTC <byorgey> oh, there you go
+2011-06-29 01:17:26 UTC <hpc> im using an older version of ubuntu, so that will have to wait for the upgrade too :P
+2011-06-29 01:17:50 UTC <hpc> also im too lazy to switch when printf is working, for the moment
+2011-06-29 01:18:15 UTC <hpc> ill hit a roadblock, or just get sick of the repeated code, then upgrade
+2011-06-29 01:18:54 UTC <byorgey> heh, ok
+2011-06-29 01:19:21 UTC <hpc> the way of the programmer :P
+2011-06-29 02:06:36 UTC <tgeeky> i am getting somewhat frustrated with dpkg's and archpkgs, and ...
+2011-06-29 02:07:08 UTC <tgeeky> it seems that very often, installing from source is the required mantra
+2011-06-29 02:07:20 UTC <tgeeky> actually, haskell seems to be the exception to this trend :o
+2011-06-29 02:14:47 UTC <tgeeky> luite: how have you been doing? have you read any more of Deep Beauty?
+2011-06-29 10:38:25 UTC <luite> tgeeky: I'm not yet very far
+2011-06-29 10:39:48 UTC <luite> I'll probably have to re-read bits and do more calculations and diagrams of my own to get a proper grasp of many of the things discussed
+2011-06-29 16:55:14 UTC <tgeeky> yeah
+2011-06-29 16:55:25 UTC <tgeeky> luite: I've read much of Baez's introductory chapter
+2011-06-29 16:55:28 UTC <tgeeky> and my head nearly asploded
+2011-06-29 16:55:43 UTC <tgeeky> I felt like I was decieving myself with his pretty pictures too
+2011-07-04 11:39:06 UTC <sordina1> I'm having a bit of trouble figureing out how to write a good backend. Are there any nice examples around somewhere?
+2011-07-04 15:13:27 UTC <luite> hmm, I think there's canvas backend by fryguybob, but it's probably incomplete
+2011-07-04 16:01:02 UTC <sordina1> I'm reading that now. It's great, but it's so high-level I'm getting a bit dizzy :)
+2011-07-04 16:04:02 UTC <luite> sorry I don't know much about it either, I want to use diagrams more in the future, but at the moment I'm still busy writing other stuffs before I can do that :)
+2011-07-04 16:05:00 UTC <fryguybob> sordina1: The diagrams-canvas stuff is not much different from the cairo back end.  It is probably a little out of date too.
+2011-07-04 16:05:58 UTC <sordina1> luite: What are you working on now if I may ask? I saw the wolfgang site. It was fantastic :D
+2011-07-04 16:08:27 UTC <fryguybob> I think the plan was at some point to have a backend tutorial of sorts.  There probably could be a simple abstraction for any sort of backend that is "postscript like" that would be even simpler if your backend didn't need anything fancy.
+2011-07-04 16:40:54 UTC <luite> sordina1: oh it's more or less a complete rewrite of wolfgang to make it actually usable and somewhat scalable
+2011-07-04 16:42:14 UTC <luite> sordina1: the main differences are that in the new version, you can run arbitrary code, including IO, and that it's integrated with a wiki, where you can store pages/code, and import code from other wiki pages
+2011-07-04 16:47:25 UTC <luite> I hope to have a usable version by the end of the summer, with basic diagrams support
+2011-07-04 17:28:09 UTC <byorgey> sordina1: what sort of backend are you working on?
+2011-07-04 17:48:50 UTC <fryguybob> byorgey: How was Oregon?
+2011-07-04 17:49:01 UTC <byorgey> fryguybob: fun!
+2011-07-04 17:54:58 UTC <luite> oh you're back?
+2011-07-04 18:00:00 UTC <byorgey> yep
+2011-07-04 18:00:14 UTC <byorgey> haven't had too much time to work on diagrams since I got back though
+2011-07-04 18:00:38 UTC <byorgey> catching up on stuff, kicking off a new research project, etc.
+2011-07-04 18:02:33 UTC <luite> what are you going to research?
+2011-07-04 18:03:19 UTC <byorgey> oh, finally getting around to actually implementing this "type lifting" in GHC
+2011-07-04 18:05:50 UTC <luite> oh cool
+2011-07-04 22:10:07 UTC <tgeeky> ACTION has no idea what that is :o
+2011-07-05 21:23:16 UTC <dixie> hi, I didn't know where to write so I'm writing here :)
+2011-07-05 21:23:42 UTC <dixie> there is small typo in http://projects.haskell.org/diagrams/tutorial/DiagramsTutorial.html first example
+2011-07-05 21:24:04 UTC <dixie> > main = defaultMain circle
+2011-07-05 21:24:17 UTC <dixie> but of course circle needs radius :-)
+2011-07-05 21:29:38 UTC <byorgey> dixie: oh, thanks, I didn't update the tutorial when I changed the circle function
+2011-07-05 21:30:37 UTC <byorgey> dixie: circle used to take no arguments and just create a unit circle
+2011-07-05 21:37:27 UTC <byorgey> I will update it tomorrow.
+2011-07-11 21:31:10 UTC <dixie> stupid & lazy question :)
+2011-07-11 21:32:00 UTC <dixie> i have for example three rects of the same size, I concate them into one big rect using "vcat [box1,box2,box1]"
+2011-07-11 21:32:22 UTC <dixie> ops, I mean "vcat [box1,box2,box3]"
+2011-07-11 21:35:36 UTC <dixie> the local origin (showOrigin red dot) is middle of box1, but I want to have it in middle of merged box (somewhere in middle of box2).
+2011-07-11 21:45:32 UTC <dixie> http://rampa.sk/up/upload/haskell/trees.png
+2011-07-11 21:45:47 UTC <dixie> first is what I'm getting and second is edited in gimp what I want :)
+2011-07-11 21:47:21 UTC <dixie> oops, I found :) sorry ... it is centerXY.
+2011-07-12 02:00:26 UTC <byorgey> dixie: sorry I missed your question, glad you figured it out =)
+2011-07-13 17:06:12 UTC <luite_> so quiet here
+2011-07-13 17:07:47 UTC <byorgey> yeah, I guess that's my fault =)
+2011-07-13 17:07:58 UTC <byorgey> haven't had much time to work on diagrams recently
+2011-07-13 17:08:43 UTC <byorgey> luite_: what have you been up to?
+2011-07-13 17:12:10 UTC <luite_> haven't had too much time to do haskell lately, but I've been working on the website for wolfgang. the boring bits, authentication, wiki file storage etc
+2011-07-13 17:12:41 UTC <byorgey> ah, cool
+2011-07-13 17:15:43 UTC <luite_> most of the server side code is finished, at least for the basic site (user registration / login, editing your profile, creating/editing wiki pages, uploading images and data files), but a lot of javascript needs to be written before it's actually useful
+2011-07-13 17:16:39 UTC <luite_> since most responses from the server (for example when requesting a diff, or the history of a file) are not a complete page, but just a json object
+2011-07-13 17:17:38 UTC <luite_> it took me a while to build this because I used yesod, which I had never used before
+2011-07-13 17:21:01 UTC <byorgey> ah, neat
+2011-07-13 17:21:08 UTC <byorgey> would love to hear your impressions of yesod
+2011-07-13 17:23:41 UTC <luite_> hmm, I'm still very new to it, so I don't know a lot of things... the main impression still is that it's very new and unfinished. lots of missing docs, features that don't really work
+2011-07-13 17:24:44 UTC <luite_> for example I want to use mathjax, which has around 30000 files. yesod uses some static site thing that generates a haskell name for every single file, and it has to calculate a hash for each file at compile time
+2011-07-13 17:25:03 UTC <luite_> so that didn't really help compilation speed ;p
+2011-07-13 17:25:54 UTC <byorgey> yikes
+2011-07-13 17:26:45 UTC <luite_> I now serve mathjax with a different web server, but an updated yesod static file server should be finished soon
+2011-07-13 17:28:15 UTC <luite_> but other than that, hamlet and the other template things are quite practical, probably easier to work with and more concise than the snap equivalent
+2011-07-13 17:28:38 UTC <luite_> but it's slightly confusing to work with, and sometimes difficult to find errors, because there's so much generated code that you can't see
+2011-07-13 17:30:02 UTC <byorgey> I may end up using some yesod-based stuff for the diagrams user manual
+2011-07-13 17:30:09 UTC <luite_> instead of explicitly binding tags or keys to values, you just use names in scope, but especially when the template is in a different file, it's a bit confusing what eactly it uses
+2011-07-13 17:30:10 UTC <byorgey> which is why I am interested
+2011-07-13 17:30:14 UTC <luite_> for example you use:
+2011-07-13 17:30:20 UTC <luite_> userName <- getUsernameSomehow
+2011-07-13 17:30:29 UTC <byorgey> oh, I can see how that would be confusing
+2011-07-13 17:30:35 UTC <luite_> [hamlet| <div>welcome #{userName}
+2011-07-13 17:30:37 UTC <luite_> |]
+2011-07-13 17:30:54 UTC <byorgey> right, and that hamlet template could be put in a separate file?
+2011-07-13 17:31:10 UTC <luite_> yeah
+2011-07-13 17:31:33 UTC <luite_> but it uses the template haskell magic to read and parse the file at compile time of course
+2011-07-13 17:31:53 UTC <byorgey> right
+2011-07-13 17:32:45 UTC <luite_> so you do have to recompile the application when you make template changes. there's a yesod devel server that automatically tries to do this, but it's not terribly good yet
+2011-07-13 17:33:17 UTC <luite_> it basically keeps track of changes in template files, then touches the corresponding .hs file and then runs cabal build again
+2011-07-13 17:33:33 UTC <luite_> so your editor complains about changed haskell files all the time :)
+2011-07-13 17:33:43 UTC <luite_> (at least mine, emacs, does)
+2011-07-13 17:33:47 UTC <byorgey> heh
+2011-07-13 17:34:14 UTC <luite_> and it's also rather slow, it would be better if it just used the app in interpreted mode and called the ghc api to reload the files when necessary
+2011-07-13 17:35:26 UTC <luite_> and I heard some complaints about yesod using so much quasiquotation in #snapframework, for example where you define your persistent data structures, or the routing table for the site
+2011-07-13 17:35:55 UTC <luite_> those could've probably been done in a more haskelly way, with more regular haskell, and a few bits of template haskell
+2011-07-13 17:36:40 UTC <luite_> so it does uses its own special format there, but in practice it's not a big problem for me
+2011-07-13 17:39:15 UTC <luite_> I've done a little bit of form and input validation with yesod (yesod-form), but I don't really know how it compares to digestive-functors and snap
+2011-07-13 17:40:06 UTC <luite_> it's fairly easy to work with, but of course the things I need for wolfgang need all kinds of hacks ;p
+2011-07-13 17:41:09 UTC <luite_> (since I cannot reload a complete page for a form submission, because the user might have an open worksheet with unsaved contents)
+2011-07-13 17:43:05 UTC <luite_> the yesod guys have been talking about a 1.0 release for some time, that would give it a more stable api... but I have the feeling that it's not ready yet, that it would be better to let the api evolve freely for some more time
+2011-07-13 17:47:31 UTC <luite_> persistent is also quite practical, within its limitations. it will get some big api changes as they're trying to borrow new features from groundhog
+2011-07-13 18:28:47 UTC <luite_> hmm interesting, hadn't read your paper about unbound yet
+2011-07-21 12:00:14 UTC <luite> just so you guys know that I haven't forgotten about wolfgang, I'm working on the login authentication stuffs: http://jabberwock.xs4all.nl/exp/wolfgang/login.png
+2011-07-21 12:10:27 UTC <luite> http://jabberwock.xs4all.nl/exp/wolfgang/popup.png
+2011-07-21 15:40:25 UTC <byorgey> luite: excellent =)
+2011-07-21 15:40:41 UTC <byorgey> oooooh
+2011-07-21 15:40:50 UTC <tgeeky> pretty pictures
+2011-07-21 15:48:01 UTC <luite> it's a lot of annoying fiddly work and the code is still messy, but hopefully I can use most of this for the other dialogs, for saving pages, handling merge conflicts etc
+2011-07-21 15:50:37 UTC <tgeeky> this is a 'fake' viral video set inside of the universe inside the new Deus Ex game: http://www.youtube.com/watch?v=uGzpzlvf0Gs
+2011-07-21 15:50:41 UTC <tgeeky> pretty cool, pretty chilling
+2011-07-21 16:09:26 UTC <fryguybob> byorgey: How is it going?
+2011-07-21 16:09:59 UTC <byorgey> fryguybob: good, thanks!
+2011-07-21 16:10:08 UTC <byorgey> fryguybob: how are you?
+2011-07-21 16:10:30 UTC <fryguybob> Excellent.  Hanging out in California.
+2011-07-21 16:10:37 UTC <fryguybob> Hac Phi is just around the corner.  I'm excited!
+2011-07-21 16:11:05 UTC <fryguybob> I'm glad to be missing the heat wave :D.
+2011-07-21 16:11:15 UTC <byorgey> hehe
+2011-07-21 16:11:24 UTC <byorgey> I'm excited for hac phi too!!
+2011-07-21 16:11:32 UTC <byorgey> not so excited about the heat wave though.
+2011-07-28 17:41:32 UTC <luite> bah I hate web programming :p
+2011-07-28 18:10:13 UTC <byorgey> =(
+2011-07-28 18:10:24 UTC <byorgey> I thought you just said the other day that you like web programming.
+2011-07-28 18:11:03 UTC <luite> I might have changed my mind ;)
+2011-07-28 18:12:29 UTC <byorgey> hehe
+2011-07-28 22:06:27 UTC <hpc> i don't mind web programming
+2011-07-28 22:06:37 UTC <hpc> it lends itself nicely to separation of concerns
+2011-07-28 22:14:47 UTC <luite> dunno, it's always lots of work to make something work, all kinds of small things that end up taking a lot of time
+2011-07-28 22:15:57 UTC <luite> and in the end, I never feel that I've actually learned new things, yeah maybe how to do some weird css positioning thing, or obsure differences in font rendering between platforms, browser bugs etc... dunno, feels like useless knowledge that will be obsolete in a year
+2011-07-28 22:16:15 UTC <hpc> this is true
+2011-07-28 22:19:02 UTC <luite> and the haskell web framework stuff aren't really at the point where everything just works
+2011-07-28 22:20:59 UTC <luite> oh and I'm bad at web design, I tend to tinker in photoshop with mockups or screenshots because I'm unhappy about them, but I never really improve them :p
+2011-07-28 22:21:46 UTC <tgeeky> luite: :)
+2011-07-28 22:21:53 UTC <tgeeky> i hate web design for almost exactly the same reasons
+2011-07-28 22:22:02 UTC <tgeeky> specifically the insurmountable pile of small things
+2011-07-28 22:23:50 UTC <luite> the pile also doesn't seem to get smaller, ever... but at least the pile of solved things grows, slowly
+2011-07-28 23:49:52 UTC <hpc> im writing a web/database backend for my irc bot atm
+2011-07-28 23:50:31 UTC <hpc> current plan is to have a web interface to the important stuff like catchphrases and remote admin
+2011-07-28 23:50:53 UTC <hpc> then include a meta tag with the bot-friendly output
+2011-07-28 23:51:30 UTC <hpc> i should probably just have the two share libraries...
+2011-07-29 00:06:11 UTC <luite> ok :)
+2011-07-29 00:06:18 UTC <luite> I think my laptop just died :(
+2011-07-29 00:06:36 UTC <byorgey> =(
+2011-07-29 00:08:18 UTC <luite> beep code says it's system board or ram modules, I'm going to try swapping ram first, but a new system board is probably way too expensive
+2011-07-29 00:42:46 UTC <luite> not the ram...
+2011-07-29 00:43:02 UTC <fryguybob> web programming killed it :(
+2011-07-29 00:43:19 UTC <luite> yes.. I was debugging javascript when it died
+2011-07-29 00:48:41 UTC <luite> hmm, apparently the most likely cause is a faulty nvidia gpu. lenovo extended the warranty for affected models by a few months, but mine is still out of warranty even after the extension
