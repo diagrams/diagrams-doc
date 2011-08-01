@@ -229,7 +229,7 @@ border (we'll see more about the `(|||)` operator shortly). Without
 ~~~
 
 For information on other standard attributes, see
-[Diagrams.Attributes](http://hackage.haskell.org/packages/archive/diagrams-lib/0.1/doc/html/Diagrams-Attributes.html).
+[Diagrams.Attributes](http://hackage.haskell.org/packages/archive/diagrams-lib/latest/doc/html/Diagrams-Attributes.html).
 
 Combining diagrams
 ==================
@@ -402,7 +402,7 @@ This example also illustrates the `hcat'` function, which takes a list
 of diagrams and lays them out horizontally, here with a separation of
 0.5 units between each one.  For more information on `hcat'` and
 similar combinators, see the
-[Diagrams.TwoD.Combinators](http://hackage.haskell.org/packages/archive/diagrams-lib/0.1/doc/html/Diagrams-TwoD-Combinators.html)
+[Diagrams.TwoD.Combinators](http://hackage.haskell.org/packages/archive/diagrams-lib/latest/doc/html/Diagrams-TwoD-Combinators.html)
 documentation.
 
 Translation
@@ -449,7 +449,7 @@ local origin ends up exactly on the edge of its bounding region.
 >                 $ repeat (circle 1 # lw 0.1)
 >         sizes   = [2,5,4,7,1,3]
 
-See [Diagrams.TwoD.Align](http://hackage.haskell.org/packages/archive/diagrams-lib/0.1/doc/html/Diagrams-TwoD-Align.html) for other alignment combinators.
+See [Diagrams.TwoD.Align](http://hackage.haskell.org/packages/archive/diagrams-lib/latest/doc/html/Diagrams-TwoD-Align.html) for other alignment combinators.
 
 Diagrams as a monoid
 ====================
@@ -472,7 +472,7 @@ here are pointers to some resources for learning more:
 
 * The diagrams-lib API is generally well-documented; start with the
 documentation for
-[Diagrams.Prelude](http://hackage.haskell.org/packages/archive/diagrams-lib/0.1/doc/html/Diagrams-Prelude.html),
+[Diagrams.Prelude](http://hackage.haskell.org/packages/archive/diagrams-lib/latest/doc/html/Diagrams-Prelude.html),
 and then drill down from there to learn about whatever you are
 interested in.  If there is anything in the API documentation that you find
 unclear or confusing, please
