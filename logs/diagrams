@@ -4586,3 +4586,84 @@
 2011-07-29 00:43:02 UTC <fryguybob> web programming killed it :(
 2011-07-29 00:43:19 UTC <luite> yes.. I was debugging javascript when it died
 2011-07-29 00:48:41 UTC <luite> hmm, apparently the most likely cause is a faulty nvidia gpu. lenovo extended the warranty for affected models by a few months, but mine is still out of warranty even after the extension
+2011-08-03 16:11:50 UTC <fryguybob> ACTION now has closed cubic splines.
+2011-08-03 16:54:23 UTC <fryguybob> byorgey: Should I add a Newtype instance for Point in core?
+2011-08-03 16:55:07 UTC <byorgey> fryguybob: oh, sure
+2011-08-03 16:55:14 UTC <byorgey> fryguybob: and hooray for closed cubic splines!
+2011-08-03 16:55:21 UTC <fryguybob> :D
+2011-08-03 16:56:02 UTC <luite> :)
+2011-08-03 16:56:35 UTC <byorgey> I hereby authorize everyone to add Newtype instances for any newtype anywhere
+2011-08-03 17:34:18 UTC <fryguybob> ACTION hugs overF
+2011-08-03 17:58:22 UTC <fryguybob> Cubic splines are now pushed.
+2011-08-03 18:55:41 UTC <byorgey> ACTION tries building diagrams with ghc-7.2.0rc1
+2011-08-03 18:56:02 UTC <byorgey> Ambiguous module name `Prelude': it was found in multiple packages: base haskell98-2.0.0.0
+2011-08-03 18:56:06 UTC <byorgey> eek
+2011-08-03 18:57:07 UTC <byorgey> well, -core and -lib build just fine.  looks like we may have to wait a bit for gtk2hs to catch up though.
+2011-08-03 18:57:27 UTC <fryguybob> There was a patch for that on the mailing list.
+2011-08-03 18:57:46 UTC <fryguybob> ACTION looks it up...
+2011-08-03 18:58:31 UTC <fryguybob> http://blog.gmane.org/gmane.comp.lang.haskell.gtk2hs.devel
+2011-08-03 18:59:51 UTC <byorgey> oh, nice
+2011-08-03 19:00:08 UTC <byorgey> oh, it was from my officemate Daniel. yesterday. =)
+2011-08-03 19:05:16 UTC <fryguybob> I think I'm going to try to bind to the spiro lib now.  I'll make that a couple of new projects something like  spiro-raw  and  diagrams-spiro.
+2011-08-03 19:06:29 UTC <byorgey> fryguybob: cool, sounds great!
+2011-08-03 19:07:25 UTC <fryguybob> brb
+2011-08-03 21:29:46 UTC <byorgey> yaaaaayy making curvy shapes makes me happy
+2011-08-03 21:32:43 UTC <byorgey> fryguybob_: I may try coding up Metafont/Hobby, unless you were itching to do that
+2011-08-03 21:33:03 UTC <fryguybob_> byorgey: Go ahead.
+2011-08-03 21:33:43 UTC <fryguybob_> I'm slogging through FFI for function pointers at the moment.  If anyone has any *pointers* on how best to do that, let me know :D.
+2011-08-03 21:33:53 UTC <byorgey> haha!
+2011-08-03 21:34:59 UTC <byorgey> Sorry to leave you dangling, but I've never used the FFI...
+2011-08-03 21:36:24 UTC <fryguybob_> I'm just writing the boiler plate that seems obvious and hoping that it works like magic.  FFI is magic after all right?
+2011-08-03 21:36:57 UTC <byorgey> Right!
+2011-08-03 21:38:21 UTC <byorgey> OK, I'm off homeward
+2011-08-03 21:38:26 UTC <fryguybob_> later
+2011-08-03 21:42:49 UTC <fryguybob_> Humm, that's scary it compiles...
+2011-08-04 00:44:25 UTC <byorgey> fryguybob: it's scary what compiles?
+2011-08-04 00:44:33 UTC <byorgey> oh, your FFI thing?
+2011-08-04 00:44:36 UTC <fryguybob> Yeah
+2011-08-04 00:44:58 UTC <byorgey> dmwit (Daniel Wagner) wanted to know whether you are using some tool to generate FFI stuff or just writing it by hand
+2011-08-04 00:45:13 UTC <byorgey> (with the implication being that you should use such a tool if you are not)
+2011-08-04 00:45:24 UTC <fryguybob> hsc2hs
+2011-08-04 00:45:29 UTC <byorgey> OK
+2011-08-04 00:45:46 UTC <fryguybob> But I may not be using it's full power.
+2011-08-04 00:46:26 UTC <byorgey> I wouldn't know.
+2011-08-04 00:46:51 UTC <fryguybob> I'm not sure how to do what I really want to do.
+2011-08-04 00:47:30 UTC <fryguybob> The libspiro calls take a struct of function pointers that gives a postscript like context.
+2011-08-04 00:48:32 UTC <fryguybob> So I would like to be able to write my api as:  spiroCall :: PostscriptLike m => [R2] -> m ()
+2011-08-04 00:48:56 UTC <fryguybob> With   class MonadIO m => PostscriptLike m where ...
+2011-08-04 00:59:42 UTC <fryguybob> I made it do something with   spiroCall :: PostscriptLike IO => [R2] -> IO ()   ...
+2011-08-04 01:05:20 UTC <byorgey> nice
+2011-08-04 01:09:15 UTC <fryguybob> Yeah, what I want to do would require a type on the foreign call that it cannot have :(.
+2011-08-04 01:09:21 UTC <fryguybob> At least to do it directly.
+2011-08-04 01:10:47 UTC <byorgey> sad =(
+2011-08-04 01:11:03 UTC <fryguybob> So perhaps I can stuff the context of what I want into an MVar and look it up as I go along...
+2011-08-04 01:54:56 UTC <byorgey> ooooh, Text.XML.HaXml.DtdToHaskell.Convert
+2011-08-04 01:55:26 UTC <byorgey> looks like it generates Haskell type definitions corresponding to a DTD
+2011-08-04 14:25:55 UTC <fryguybob> byorgey: I got things working with spiro via MVar.  I have a repo up if you want to try it out:  https://patch-tag.com/r/fryguybob/spiro-raw/
+2011-08-04 14:26:19 UTC <byorgey> fryguybob: nifty!
+2011-08-04 14:26:53 UTC <byorgey> I'll take a look
+2011-08-04 14:27:36 UTC <fryguybob> I haven't convinced myself that it is quite right, but I have yet to segfault :D.
+2011-08-04 14:28:12 UTC <byorgey> if it typechecks and doesn't segfault it must be right! ;)
+2011-08-04 14:28:22 UTC <fryguybob> Exactly.
+2011-08-04 14:28:43 UTC <fryguybob> It also appears that spiro likes to be over specified compared with what I would expect for a spline.
+2011-08-04 14:29:29 UTC <fryguybob> Which is fine, I was just a little surprised by the results at first, but I think they are correct.
+2011-08-04 14:29:51 UTC <fryguybob> I can't remember, do Paths form a monoid?
+2011-08-04 14:30:36 UTC <byorgey> Paths form a monoid under superposition
+2011-08-04 14:30:41 UTC <byorgey> Trails form a monoid under concatenation
+2011-08-04 14:30:57 UTC <fryguybob> Ok
+2011-08-04 14:31:14 UTC <byorgey> In general, the answer to "is X a monoid" is probably "yes" =)
+2011-08-04 14:33:23 UTC <byorgey> fryguybob: re: the -- ???  note in test/diagrams.hs, you can do degree elevation using  B(t) = (1-t)B(t) + tB(t)
+2011-08-04 14:33:48 UTC <fryguybob> byorgey: Good to know.
+2011-08-04 14:33:53 UTC <byorgey> fryguybob: if you do that for degree 2 -> degree 3 you end up with something like  p0, (p0 + 2p1), (2p1 + p2), p2
+2011-08-04 14:34:11 UTC <fryguybob> ok
+2011-08-04 14:34:11 UTC <byorgey> this is on the Wikipedia page for Bezier curves, in the "Degree elevation" section
+2011-08-04 14:34:57 UTC <byorgey> I don't know if that leaves the parameterization the same but it does keep the shape the same
+2011-08-04 14:35:37 UTC <fryguybob> So the PostscriptLike instance for diagrams will be fairly general.  We could then make a PostscriptLike backend, then turn diagrams into diagrams.  Yo dawg?
+2011-08-04 14:35:48 UTC <byorgey> hehe
+2011-08-04 14:39:31 UTC <fryguybob> One of the nice examples for spiro is if you give it the corners of a square you get a circle.
+2011-08-04 14:40:30 UTC <byorgey> oh, nice
+2011-08-04 14:40:53 UTC <byorgey> I seem to recall that Metafont has a special case built in so if you give it two points you get a circle =)
+2011-08-04 14:45:16 UTC <fryguybob> When it comes to importing font glyphs PostscriptLike might come in handy too.  I can't remember what that freetype binding was like.
+2011-08-04 14:53:30 UTC <fryguybob> ACTION disapears...
+2011-08-05 20:35:06 UTC <fryguybob> byorgey: I finished up diagrams-spiro.
+2011-08-05 20:40:19 UTC <fryguybob> https://patch-tag.com/r/fryguybob/diagrams-spiro/
