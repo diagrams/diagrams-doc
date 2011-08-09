@@ -1,0 +1,33 @@
+body {
+    width: 600px;
+    margin: 0px auto 0px auto;
+}
+
+div#navigation {
+    text-align: center;
+    border-bottom: 4px solid black;
+}
+
+div#navigation a {
+    color: white;
+    text-decoration: none;
+    background-color: black;
+    padding: 3px 10px 3px 10px;
+    margin: 0px 10px 0px 10px;
+}
+
+div#footer {
+    padding-top: 50px;
+    text-align: center;
+    font-size: small;
+}
+
+div#exampleimg {
+    padding-top: 30px;
+    padding-bottom: 20px;
+    text-align: center;
+}
+
+div#examplesrc {
+    padding-top: 30px;
+}

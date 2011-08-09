@@ -1,5 +1,6 @@
 .. role:: pkg(literal)
 .. role:: hs(literal)
+.. role:: mod(literal)
 
 .. default-role:: hs
 
@@ -45,10 +46,8 @@ Primitive shapes
 Circles and ellipses
 ~~~~~~~~~~~~~~~~~~~~
 
-XXX link to Diagrams.TwoD.Ellipse
-
 Circles can be created with the `unitCircle` and `circle`
-functions. 
+functions, defined in `Diagrams.TwoD.Ellipse`:mod:.
 
 XXX insert type signatures of unitCircle and circle?
 
@@ -56,23 +55,25 @@ XXX insert type signatures of unitCircle and circle?
 origin; `circle` takes the desired radius as an argument.
 
 Every ellipse is the image of the unit circle under some affine
-transformation, so ellipses can be created by appropriately (scaling
-and rotating XXX link to 'transformations' section) circles.  For
-convenience the standard library also provides `ellipse`, for creating
-an ellipse with a given eccentricity, and `ellipseXY`, for creating an
-axis-aligned ellipse with specified radii in the x and y directions.
+transformation, so ellipses can be created by appropriately `scaling
+and rotating`__ circles.  For convenience the standard library also
+provides `ellipse`, for creating an ellipse with a given eccentricity,
+and `ellipseXY`, for creating an axis-aligned ellipse with specified
+radii in the x and y directions.
+
+__ `2D Transformations`_
 
 Arcs
 ~~~~
 
-XXX link to Diagrams.TwoD.Arc
+`Diagrams.TwoD.Arc`:mod:
 
 XXX write me
 
 Squares and rectangles
 ~~~~~~~~~~~~~~~~~~~~~~
 
-XXX link to Diagrams.TwoD.Shapes
+`Diagrams.TwoD.Shapes`:mod:
 
 XXX write me
 
@@ -99,11 +100,13 @@ top of the other with `atop`.  The diagram `d1 \`atop\` d2` is formed
 by placing `d1`'s local origin on top of `d2`'s local origin; that is,
 by identifying their local vector spaces.  
 
-As noted before, diagrams form a (XXX link to monoid section monoid)
+As noted before, diagrams form a monoid_
 with composition given by identification of vector spaces.  `atop` is
 simply a synonym for `mappend` (or `(<>)`) , specialized to two
 dimensions.  (XXX more here about how it is commutative in higher
 dimensions?)
+
+.. _monoid: Monoids_
 
 This also means that a list of diagrams can be stacked with `mconcat`;
 that is, `mconcat [d1, d2, d3, ...]` is the diagram with `d1` on top
@@ -125,8 +128,8 @@ Concatenating diagrams
 Modifying diagrams
 ------------------
 
-Transformations
-~~~~~~~~~~~~~~~
+2D Transformations
+~~~~~~~~~~~~~~~~~~
 
 Alignment
 ~~~~~~~~~

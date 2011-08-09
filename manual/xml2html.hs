@@ -8,4 +8,14 @@ import Text.Docutils.Writers.HTML
 import Text.Docutils.Transformers.Haskell
 
 main :: IO ()
-main = docutilsCmdLine (doTransforms [hackage] >>> xml2html)
+main = docutilsCmdLine diagramsManual
+
+diagramsManual = 
+  doTransforms [ linkifyHackage
+               , linkifyModules "diagrams-lib"
+               , highlightHS
+               ] 
+  >>> xml2html 
+  >>> doTransforms [ styleFile "default.css"
+                   , styleFile "syntax.css"
+                   ]
