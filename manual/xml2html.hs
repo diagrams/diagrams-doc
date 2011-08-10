@@ -8,14 +8,19 @@ import Text.Docutils.Writers.HTML
 import Text.Docutils.Transformers.Haskell
 
 main :: IO ()
-main = docutilsCmdLine diagramsManual
+main = do
+  modMap <- buildModuleMap [ "diagrams-core"
+                           , "diagrams-lib"
+                           , "diagrams-cairo"
+                           ]
+  docutilsCmdLine (diagramsManual modMap)
 
-diagramsManual = 
+diagramsManual modMap =
   doTransforms [ linkifyHackage
-               , linkifyModules "diagrams-lib"
+               , linkifyModules modMap
                , highlightHS
-               ] 
-  >>> xml2html 
+               ]
+  >>> xml2html
   >>> doTransforms [ styleFile "default.css"
                    , styleFile "syntax.css"
                    ]
