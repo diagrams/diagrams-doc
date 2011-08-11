@@ -21,17 +21,19 @@ import Build
 
 main :: IO ()
 main = do
-  modMap <- buildModuleMap [ "diagrams-core"
-                           , "diagrams-lib"
-                           , "diagrams-cairo"
-                           ]
-  docutilsCmdLine (diagramsManual modMap)
+  (modMap, nameMap) <- buildPackageMaps 
+                       [ "diagrams-core"
+                       , "diagrams-lib"
+                       , "diagrams-cairo"
+                       ]
+  docutilsCmdLine (diagramsManual modMap nameMap)
 
-diagramsManual modMap =
+diagramsManual modMap nameMap =
   doTransforms [ linkifyHackage
                , linkifyModules modMap
                , highlightInlineHS
                , highlightBlockHS
+--               , linkifyHS nameMap modMap
                , compileDiagrams
                , compileDiagramsLHS
                ]

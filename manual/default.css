@@ -37,3 +37,7 @@ div.dia-lhs {
     border-style: solid;
     border-width: thin;
 }
+
+code a {
+    text-decoration: none;
+}
