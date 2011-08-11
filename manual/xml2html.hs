@@ -33,7 +33,7 @@ diagramsManual modMap nameMap =
                , linkifyModules modMap
                , highlightInlineHS
                , highlightBlockHS
---               , linkifyHS nameMap modMap
+               , linkifyHS nameMap modMap
                , compileDiagrams
                , compileDiagramsLHS
                ]
