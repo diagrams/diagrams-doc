@@ -42,11 +42,64 @@ The main purpose of ``diagrams`` is to construct two-dimensional
 vector graphics, although it can be used for more general purposes as
 well.  This section explains the building blocks provided by
 `diagrams-core`:pkg: and `diagrams-lib`:pkg: for constructing
-two-dimensional diagrams.  All 2D-specific things can be found in
-`Diagrams.TwoD`:mod:, which re-exports most of the contents of
-``Diagrams.TwoD.*`` modules.  This section also covers many things
-which are not specific to two dimensions; later sections will make
-clear which are which.
+two-dimensional diagrams:
+
+* `Basic 2D types`_
+* `Primitive shapes`_
+* Methods for `Combining`_ and `Modifying diagrams`_
+* `Working with paths`_
+* Working with `Text`_
+* Working with `Named subdiagrams`_
+
+.. _Combining: `Combining diagrams`_
+
+All 2D-specific things can be found in `Diagrams.TwoD`:mod:, which
+re-exports most of the contents of ``Diagrams.TwoD.*`` modules.  This
+section also covers many things which are not specific to two
+dimensions; later sections will make clear which are which.
+
+Basic 2D types
+--------------
+
+`Diagrams.TwoD.Types`:mod: defines types for working with
+two-dimensional Euclidean space and with angles.
+
+Euclidean 2-space
+~~~~~~~~~~~~~~~~~
+
+There are three main types synonyms defined for referring to
+two-dimensional space:
+
+* `R2` is the type of the two-dimensional Euclidean vector space.  It
+  is a synonym for `(Double, Double)`.
+* `P2` is the type of points in two-dimensional space. It is a synonym
+  for `Point R2`.
+* `T2` is the type of two-dimensional affine transformations.  It is a
+  synonym for `Transformation R2`.
+
+XXX note re: vectors vs points.
+
+Angles
+~~~~~~
+
+The `Angle` type class classifies types which measure two-dimensional
+angles.  Three instances are provided by default (you can, of course,
+also make your own):
+
+* `CircleFrac` represents fractions of a circle.  A value of `1`
+  represents a full turn.
+* `Rad` represents angles measured in radians.  A value of `tau` (that
+  is, `2 * pi`) represents a full turn. (If you don't know what `tau`
+  is, see `The Tau Manifesto`__.)
+* `Deg` represents angles measured in degrees.  A value of `360`
+  represents a full turn.
+
+__ http://tauday.com
+
+The intention is that to pass an argument to a function that expects a
+value of some `Angle` type, you can write something like `(3 :: Deg)`
+or `(3 :: Rad)`.  The `convertAngle` function is also provided for
+converting between different angle representations.
 
 Primitive shapes
 ----------------
@@ -64,26 +117,31 @@ For example,
 
 .. codeblock:: dia-lhs
 
-   > example = pad 1.1 $ circle 1 # fc red
-
-XXX insert type signatures of unitCircle and circle?
+   > example = circle 0.5 <> unitCircle
 
 `unitCircle` creates a circle of radius 1 centered at the
 origin; `circle` takes the desired radius as an argument.
 
 Every ellipse is the image of the unit circle under some affine
 transformation, so ellipses can be created by appropriately `scaling
-and rotating`__ circles.  For convenience the standard library also
-provides `ellipse`, for creating an ellipse with a given eccentricity,
-and `ellipseXY`, for creating an axis-aligned ellipse with specified
-radii in the x and y directions.
+and rotating`__ circles.
+
+.. codeblock:: dia-lhs
+
+   > example = unitCircle # scaleX 0.5 # rotateBy (1/6)
+
+For convenience the standard library also provides `ellipse`, for
+creating an ellipse with a given eccentricity, and `ellipseXY`, for
+creating an axis-aligned ellipse with specified radii in the x and y
+directions.
 
 __ `2D Transformations`_
 
 Arcs
 ~~~~
 
-`Diagrams.TwoD.Arc`:mod:
+`Diagrams.TwoD.Arc`:mod: provides a function `arc` for constructing
+circular arcs.
 
 XXX write me
 
@@ -154,8 +212,8 @@ Alignment
 Attributes and styles
 ~~~~~~~~~~~~~~~~~~~~~
 
-Paths
------
+Working with paths
+------------------
 
 Segments
 ~~~~~~~~
@@ -172,8 +230,8 @@ The `PathLike` class
 Text
 ----
 
-Names
------
+Named subdiagrams
+-----------------
 
 Bounding boxes
 --------------
