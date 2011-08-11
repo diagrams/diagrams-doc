@@ -1,6 +1,6 @@
 default : diagrams-manual.html
 
-%.exe : %.hs
+xml2html.exe : xml2html.hs Build.hs
 	ghc --make $< -o $@
 
 %.html : %.xml xml2html.exe
