@@ -7,12 +7,12 @@ default : diagrams-manual.html
 	./xml2html.exe $< $@
 
 %.xml : %.rst
-	rst2xml.py $< $@
+	./dia-rst2xml.py $< $@
 
 %-du.html : %.rst
 	rst2html.py $< $@
 
-.SECONDARY : xml2html.exe
+.SECONDARY : xml2html.exe diagrams-manual.xml
 
 clean : 
 	rm -f *.exe *.html *.o *.hi
