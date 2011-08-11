@@ -35,19 +35,36 @@ Bounding functions
 Monoids
 -------
 
-2D standard library
-===================
+Creating 2D diagrams
+====================
 
-The `diagrams-lib`:pkg: package provides a standard library XXX
+The main purpose of ``diagrams`` is to construct two-dimensional
+vector graphics, although it can be used for more general purposes as
+well.  This section explains the building blocks provided by
+`diagrams-core`:pkg: and `diagrams-lib`:pkg: for constructing
+two-dimensional diagrams.  All 2D-specific things can be found in
+`Diagrams.TwoD`:mod:, which re-exports most of the contents of
+``Diagrams.TwoD.*`` modules.  This section also covers many things
+which are not specific to two dimensions; later sections will make
+clear which are which.
 
 Primitive shapes
 ----------------
+
+`diagrams-lib`:pkg: provides many standard two-dimensional shapes for
+use in constructing diagrams.
 
 Circles and ellipses
 ~~~~~~~~~~~~~~~~~~~~
 
 Circles can be created with the `unitCircle` and `circle`
 functions, defined in `Diagrams.TwoD.Ellipse`:mod:.
+
+For example,
+
+.. codeblock:: dia-lhs
+
+   > example = pad 1.1 $ circle 1 # fc red
 
 XXX insert type signatures of unitCircle and circle?
 

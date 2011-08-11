@@ -30,15 +30,32 @@ main = do
 diagramsManual modMap =
   doTransforms [ linkifyHackage
                , linkifyModules modMap
-               , highlightHS
+               , highlightInlineHS
+               , highlightBlockHS
                , compileDiagrams
+               , compileDiagramsLHS
                ]
   >>> xml2html
   >>> doTransforms [ styleFile "default.css"
                    , styleFile "syntax.css"
                    ]
   
-compileDiagrams = onElemA "raw" [("format", "lhs")] $
+compileDiagrams :: XmlT (IOSLA (XIOState ()))
+compileDiagrams = onElemA "raw" [("format", "dia")] $ 
+  eelem "div"
+    += attr "class" (txt "exampleimg")
+    += compileDiaArr
+
+-- | Compile code blocks intended to generate both a diagram and the
+--   syntax highlighted code.
+compileDiagramsLHS :: XmlT (IOSLA (XIOState ()))
+compileDiagramsLHS = onElemA "raw" [("format", "dia-lhs")] $
+  eelem "div"
+    += attr "class" (txt "dia-lhs")
+    += (compileDiaArr <+> highlightBlockHSArr)
+
+compileDiaArr :: (ArrowXml (~>), ArrowIO (~>)) => XmlT (~>)
+compileDiaArr =
   getChildren >>>
   getText >>>
   arrIO compileDiagram >>>

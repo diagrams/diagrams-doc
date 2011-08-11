@@ -22,12 +22,18 @@ div#footer {
     font-size: small;
 }
 
-div#exampleimg {
+div.exampleimg {
     padding-top: 30px;
     padding-bottom: 20px;
     text-align: center;
 }
 
-div#examplesrc {
+div.examplesrc {
     padding-top: 30px;
+}
+
+div.dia-lhs {
+    padding: 20px;
+    border-style: solid;
+    border-width: thin;
 }
