@@ -39,5 +39,16 @@ div.dia-lhs {
 }
 
 code a {
+    color: green;
     text-decoration: none;
+}
+
+.module a {
+    color: #333333;
+    text-decoration: underline;
+}
+
+.package a {
+    color: blue;
+    text-decoration: underline;
 }
