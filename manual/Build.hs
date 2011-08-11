@@ -11,6 +11,7 @@ import Language.Haskell.Interpreter
 
 import System.IO
 import System.FilePath
+import System.Directory
 
 import Data.Typeable
 
@@ -19,7 +20,7 @@ deriving instance Typeable Any
 setDiagramImports :: MonadInterpreter m => String -> m ()
 setDiagramImports m = do
     loadModules [m]
-    setTopLevelModules [m]
+    setTopLevelModules [takeBaseName m]
     setImports [ "Prelude"
                , "Diagrams.Prelude"
                , "Graphics.Rendering.Diagrams.Core"
@@ -48,13 +49,16 @@ ppError (GhcException e) = putStrLn $ "GhcException: " ++ e  -- TODO: can we act
 --   render it as requested
 buildDiagram :: String -> Options Cairo R2 -> IO ()
 buildDiagram source opts = do
-  (tmp, h) <- openTempFile "/tmp" "Diagram.lhs"
-  hPutStr h (prefix $ takeBaseName tmp)
+  tmpDir <- getTemporaryDirectory
+  (tmp, h) <- openTempFile tmpDir "Diagram.lhs"
+  hPutStr h (diagramFileHeader $ takeBaseName tmp)
   hPutStr h source
+  hClose h
   compileExample tmp opts
+  removeFile tmp
 
-prefix :: String -> String
-prefix modName = unlines $
+diagramFileHeader :: String -> String
+diagramFileHeader modName = unlines $
   [ "> {-# LANGUAGE NoMonomorphismRestriction #-}"
   , "> module " ++ modName ++ " where"
   , "> import Diagrams.Prelude"
