@@ -32,7 +32,7 @@ compileExample :: String -> Options Cairo R2 -> IO ()
 compileExample m opts = do
     x <- runInterpreter $ do
       setDiagramImports m
-      d <- interpret "example" (as :: Diagram Cairo R2)
+      d <- interpret "pad 1.1 example" (as :: Diagram Cairo R2)
       liftIO . fst $ renderDia Cairo opts d
     case x of
       Left e -> ppError e
