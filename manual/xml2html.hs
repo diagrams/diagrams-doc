@@ -75,5 +75,5 @@ compileDiagram src = do
   ex <- doesFileExist imgFile
   when (not ex) $ do
     putStrLn $ "Generating " ++ imgFile ++ "..."
-    buildDiagram src (CairoOptions imgFile (PNG (200,200)))
+    buildDiagram src (CairoOptions imgFile (PNG (500,200)))
   return imgFile
