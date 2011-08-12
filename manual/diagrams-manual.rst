@@ -20,20 +20,14 @@ Installation
 Getting started
 ---------------
 
-Tutorial
-========
-
-Important concepts
+Essential concepts
 ==================
-
-Local vector spaces
--------------------
-
-Bounding functions
-------------------
 
 Monoids
 -------
+
+Faking optional named arguments
+-------------------------------
 
 Creating 2D diagrams
 ====================
@@ -126,6 +120,8 @@ Every ellipse is the image of the unit circle under some affine
 transformation, so ellipses can be created by appropriately `scaling
 and rotating`__ circles.
 
+__ `2D Transformations`_
+
 .. codeblock:: dia-lhs
 
    > example = unitCircle # scaleX 0.5 # rotateBy (1/6)
@@ -135,25 +131,78 @@ creating an ellipse with a given eccentricity, and `ellipseXY`, for
 creating an axis-aligned ellipse with specified radii in the x and y
 directions.
 
-__ `2D Transformations`_
-
 Arcs
 ~~~~
 
-`Diagrams.TwoD.Arc`:mod: provides a function `arc` for constructing
-circular arcs.
+`Diagrams.TwoD.Arc`:mod: provides a function `arc`, which constructs a
+radius-one circular arc starting at a first angle and extending
+counterclockwise to the second.
 
-XXX write me
+.. codeblock:: dia-lhs
 
-Squares and rectangles
-~~~~~~~~~~~~~~~~~~~~~~
-
-`Diagrams.TwoD.Shapes`:mod:
-
-XXX write me
+   > example = arc (tau/4 :: Rad) (4 * tau / 7 :: Rad)
 
 Polygons
 ~~~~~~~~
+
+The `polygon` function from `Diagrams.TwoD.Shapes`:mod: constructs
+regular radius-one polygons centered at the origin.  Its argument is a
+record of optional arguments that control the generated polygon:
+
+* `sides` determines the number of sides (default: `5`).
+* `edgeSkip` allows for the creation of star polygons by specifying
+  that edges should connect every nth vertex.  The default is `1`.
+* `orientation` specifies the `PolygonOrientation`.
+
+.. codeblock:: dia-lhs
+
+   > poly1 = polygon with { sides = 6, orientation = OrientToX }
+   > poly2 = polygon with { sides = 7, edgeSkip = 2 }
+   > poly3 = polygon with { sides = 5 }
+   > example = poly1 ||| poly2 ||| poly3
+
+Notice the idiom of using `with` to construct a record of default
+options and selectively overriding particular options by name. `with`
+is a synonym for `def` from the type class `Default`, which specifies
+a default value for types which are instances.  You can read more
+about this idiom in the section `Faking optional named arguments`_.
+
+A future version of the library will likely expand the `polygon` function
+with additional options; if there are particular options you would
+like to see, record your request in the `bug tracker`_.
+
+.. _`bug tracker` : http://code.google.com/p/diagrams/issues/list
+
+Squares, rectangles, and other polygons
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+`Diagrams.TwoD.Shapes`:mod: also provides a number of other
+specialized path-based shapes.  In principle you could construct all
+of these shapes explicitly using various polygons.
+
+* `square` constructs a square with a given side length; `unitSquare`
+  constructs a square with sides of length `1`.
+* `rect` constructs a rectangle of a given width and height.
+* `eqTriangle` constructs an equilateral triangle with radius `1`.
+* `roundedRect` constructs a rectangle with circular rounded corners.
+
+.. codeblock:: dia-lhs
+
+  > example = square 1 ||| rect 0.3 0.5 ||| eqTriangle ||| roundedRect (0.7,0.4) 0.1
+
+More special polygons will likely be added in future versions of the
+library.
+
+Other
+~~~~~
+
+Completing the hodgepodge in `Diagrams.TwoD.Shapes`:mod: for now, the
+functions `hrule` and `vrule` create horizontal and vertical lines,
+respectively.
+
+.. codeblock:: dia-lhs
+
+   > example = circle 1 ||| hrule 2 ||| circle 1
 
 Combining diagrams
 ------------------
@@ -195,7 +244,7 @@ however, there are a number of other combining methods (all ultimately
 implemented in terms of `atop`) provided for convenience.
 
 Two diagrams can be placed *next to* each other in a certain direction
-using `beside`. 
+using `beside`.
 
 Concatenating diagrams
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -225,7 +274,7 @@ Paths
 ~~~~~
 
 The `PathLike` class
-~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
 
 Text
 ----
