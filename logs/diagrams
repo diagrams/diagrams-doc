@@ -4667,3 +4667,137 @@
 2011-08-04 14:53:30 UTC <fryguybob> ACTION disapears...
 2011-08-05 20:35:06 UTC <fryguybob> byorgey: I finished up diagrams-spiro.
 2011-08-05 20:40:19 UTC <fryguybob> https://patch-tag.com/r/fryguybob/diagrams-spiro/
+2011-08-08 21:19:51 UTC <fryguybob> byorgey: I got fed up with Cairo and wrote a native postscript backend.
+2011-08-08 21:20:26 UTC <fryguybob> (fed up with Cairo on Windows specifically).
+2011-08-08 21:20:51 UTC <fryguybob> ACTION goes on a bike ride...
+2011-08-08 21:23:08 UTC <byorgey> fryguybob: awesome!
+2011-08-08 21:23:13 UTC <byorgey> enjoy your bike ride =)
+2011-08-08 21:24:01 UTC <luite> yay
+2011-08-09 00:00:14 UTC <fryguybob> Still in progress but mostly functional: https://patch-tag.com/r/fryguybob/diagrams-postscript/
+2011-08-09 00:51:37 UTC <alpounet> excellent
+2011-08-09 01:06:01 UTC <byorgey> fryguybob: great! add it to the wiki!
+2011-08-09 01:06:54 UTC <byorgey> ACTION is working hard on some secret documentation tools
+2011-08-09 01:07:13 UTC <byorgey> diagrams is going to have the best documentation EVAR
+2011-08-09 02:02:11 UTC <alpounet> wow
+2011-08-09 02:02:17 UTC <alpounet> tell us more!
+2011-08-09 02:02:26 UTC <alpounet> you just can't tease us like this
+2011-08-09 03:17:27 UTC <byorgey> alpounet: hehe
+2011-08-09 03:17:59 UTC <byorgey> alpounet: I'm writing some tools to convert docutils XML to various other formats
+2011-08-09 03:18:20 UTC <byorgey> alpounet: so I can write in reStructuredText and output HTML, PDF, etc.
+2011-08-09 03:18:56 UTC <byorgey> the nice thing about reST is that it is extensible so you can easily do arbitrary semantic markup, then insert transformations into the pipeline
+2011-08-09 03:20:01 UTC <byorgey> e.g. automatically generate images from embedded diagram code, do syntax highlighting, linking to API, and anything else we think of
+2011-08-09 03:24:34 UTC <byorgey> I want this for more than just diagrams, but writing the diagrams user manual was the original impetus
+2011-08-09 03:29:47 UTC <fryguybob> Wiki updated.
+2011-08-09 07:12:00 UTC <alpounet> sounds awesome byorgey!
+2011-08-09 10:24:09 UTC <luite> are there javascript parsers for reST? :p
+2011-08-09 14:04:13 UTC <byorgey> luite: don't worry, we can write a little backend to output whatever format you want for W|L
+2011-08-09 14:04:19 UTC <byorgey> if that's what you're worried about
+2011-08-09 14:09:53 UTC <luite> oh I have markdown lhs at the moment, but I'm slightly unhappy with the markdown heading syntax interfering with CPP. I'll probably keep this though, because I already have a good javascript parser for it
+2011-08-09 14:29:06 UTC <byorgey> OK.
+2011-08-09 16:32:32 UTC <fryguybob> byorgey: Is text "centered" both vertically and horizontally?
+2011-08-09 16:36:19 UTC <fryguybob> Specifically  text "l" || text "j"  would not have matching baselines right?
+2011-08-09 17:52:59 UTC <byorgey> fryguybob: yes, but I consider this a bug
+2011-08-09 17:53:13 UTC <fryguybob> right
+2011-08-09 17:54:04 UTC <byorgey> I spent an hour trying to fix it a while ago but got my brain so twisted up with transformations and coordinate spaces that I gave up
+2011-08-09 17:54:42 UTC <fryguybob> What behavior were you going for with the fix?
+2011-08-09 17:57:13 UTC <byorgey> I wanted text to be centered horizontally the same as it currently is, but vertically it should be centered with respect to the descent and ascent lines defined by the font, not the actual extent of the text
+2011-08-09 17:57:19 UTC <byorgey> or something like that
+2011-08-09 17:58:42 UTC <fryguybob> Ok.  I know of some hacky ways of doing that.
+2011-08-09 17:58:51 UTC <byorgey> heh, ok =)
+2011-08-09 18:05:45 UTC <luite> hmm, isn't centering the x-height better, ignoring the ascenders and descenders?
+2011-08-09 18:06:45 UTC <fryguybob> luite: I think eventually we will have to have both.
+2011-08-09 18:07:06 UTC <fryguybob> ACTION pushes minimal text support for diagrams-postscript.
+2011-08-09 18:09:02 UTC <luite> the latest postscript still doesn't support transparency and blending, does it?
+2011-08-09 18:10:21 UTC <fryguybob> Not that I am aware of (at least not directly).
+2011-08-09 18:10:59 UTC <luite> do you think it would be difficult to adapt the code to output pdf instead?
+2011-08-09 18:13:40 UTC <fryguybob> I don't think so, I was hoping to do that at some point.  It is mostly a matter of doing the right setup and encoding.
+2011-08-09 18:13:51 UTC <fryguybob> There might be a bit more that has to be precomputed.
+2011-08-09 18:16:11 UTC <luite> do you actually use postscript control structures to draw some things?
+2011-08-09 18:18:03 UTC <fryguybob> Only things like measuring text and checking current line width at this point.
+2011-08-09 18:18:14 UTC <fryguybob> I don't know if those are allowed in PDF or not.
+2011-08-09 18:19:08 UTC <luite> oh, hmm, me neither, I've only done relatively simple graphics output with pdf in haskell
+2011-08-09 18:21:26 UTC <fryguybob> The linewidth is something that I should be doing on the backend side of things anyway, but it was slightly easier to do it in the setup instead.
+2011-08-09 18:23:13 UTC <luite> I wanted to make something that substituted "bad" letters (scanned, or low quality bitmap fonts) with proper fonts, based on some visual similarity measures, word lists and user feedback, but it was too much work and tricky to get right
+2011-08-09 18:25:27 UTC <fryguybob> Yeah, that would get tricky
+2011-08-09 18:27:25 UTC <luite> I had some success, by ignoring the letter spacing within words
+2011-08-09 18:28:32 UTC <luite> so I had a substituted font, estimated some tracking (fixed letter spacing) value from the bounds and then used that for the word
+2011-08-09 18:29:01 UTC <luite> but it was still not usable
+2011-08-09 18:30:43 UTC <luite> I'd have to inspect the glyphs to do proper alignment, there I stopped :p
+2011-08-10 01:08:31 UTC <byorgey> ACTION is deep in icky ghc api hacking
+2011-08-10 01:09:22 UTC <byorgey> got it to work though: I can now write something like `Diagrams.Prelude`:mod: and have it turn into a link to that module's Haddocks
+2011-08-10 01:09:29 UTC <byorgey> and it uses the GHC API to figure out which package provides that module
+2011-08-10 01:09:55 UTC <luite> hmm, why GHC API? you can do that with the Cabal API
+2011-08-10 01:10:35 UTC <byorgey> oh!
+2011-08-10 01:10:39 UTC <luite> oh but Cabal does run ghc-pkg for that, so it's probably less efficient
+2011-08-10 01:11:01 UTC <byorgey> well, no matter, it's working now
+2011-08-10 01:11:21 UTC <byorgey> it's not that much code, it just took a while to figure out the right magic incantations
+2011-08-10 01:11:44 UTC <luite> yeah same here for the things that I did with the GHC API
+2011-08-10 01:12:56 UTC <byorgey> hmm one thing I want to do is be able to automatically typeset ghci sessions
+2011-08-10 01:13:22 UTC <byorgey> i.e. just write the inputs and have it automatically run them though ghci and futputs
+2011-08-10 01:13:39 UTC <byorgey> should I use the ghc API or just pipe stuff into ghci and parse the output?
+2011-08-10 01:14:21 UTC <byorgey> hmm "futputs" was supposed to read "format the outputs"
+2011-08-10 01:14:37 UTC <fryguybob> There are some parts of ghci that seem tricky to duplicate with just hint (at least for me :D)
+2011-08-10 01:15:12 UTC <byorgey> yeah, hint hides a lot from you
+2011-08-10 01:15:35 UTC <byorgey> I didn't even bother trying to use hint for this
+2011-08-10 01:16:35 UTC <byorgey> you know what? I have not actually made any DIAGRAMS for weeks!
+2011-08-10 01:16:52 UTC <byorgey> this is sad, I will go make some =)
+2011-08-10 01:17:03 UTC <fryguybob> I just used cubicSplines for the first time in something that wasn't a test  :D.
+2011-08-10 01:17:05 UTC <fryguybob> It looked nice.
+2011-08-10 01:17:15 UTC <byorgey> hehe, excellent =)
+2011-08-10 01:17:32 UTC <byorgey> link?
+2011-08-10 01:18:27 UTC <fryguybob> Well it doesn't look that nice (yet)
+2011-08-10 01:18:59 UTC <byorgey> ok, I am patient.
+2011-08-10 01:19:34 UTC <luite> hehe, show it to me then, I'm easily impressed ;)
+2011-08-10 01:19:50 UTC <byorgey> ACTION pulls diagrams-postscript and diagrams-tikz
+2011-08-10 01:20:25 UTC <luite> whoah tikz too, what did I miss?
+2011-08-10 01:20:26 UTC <luite> :)
+2011-08-10 01:21:08 UTC <byorgey> luite: aren't you on the mailing list?
+2011-08-10 01:21:23 UTC <byorgey> luite: Scott Walck was working on a tikz backend at hac phi
+2011-08-10 01:22:02 UTC <luite> ah, err, apparently I'm not on the mailing list
+2011-08-10 01:22:41 UTC <byorgey> well, you're welcome to join it if you like =)
+2011-08-10 01:24:52 UTC <luite> oh I have to write a motivation letter
+2011-08-10 01:37:40 UTC <fryguybob> Here are mine spline pictures:  http://goo.gl/nfKtr  vs  http://goo.gl/lknWM
+2011-08-10 01:39:08 UTC <luite> hmm, it seems to be rendered as straight line segments?
+2011-08-10 01:39:55 UTC <fryguybob> The bad one is, the other is using cubicSpline.
+2011-08-10 01:41:35 UTC <luite> ah I see, very smooth :p
+2011-08-10 05:26:26 UTC <alpounet> i will have to test all these new stuffs guys
+2011-08-10 05:26:39 UTC <alpounet> i haven't looked at diagrams for a while
+2011-08-10 05:33:59 UTC <alpounet> soon, you'll be able to relax on my bomberman (only network mode) :P
+2011-08-10 05:34:03 UTC <alpounet> anyway, off to work
+2011-08-10 14:49:31 UTC <fryguybob> byorgey: We still haven't implemented the scale invariant thing right?
+2011-08-10 14:49:41 UTC <byorgey> fryguybob: right, not yet
+2011-08-10 15:35:56 UTC <byorgey> fryguybob: your diagrams-postscript repo seems to be missing a .cabal file
+2011-08-10 16:38:57 UTC <fryguybob> byorgey: Oops!
+2011-08-10 16:40:39 UTC <fryguybob> cabal file pushed.
+2011-08-10 18:27:48 UTC <byorgey> fryguybob: thanks, works now.
+2011-08-10 20:53:36 UTC <fryguybob> byorgey: Is there a reverse path?
+2011-08-10 20:53:58 UTC <byorgey> fryguybob: yes, I just pushde it
+2011-08-10 20:54:09 UTC <fryguybob> excellent timing :D
+2011-08-10 20:54:20 UTC <byorgey> I knew you were about to ask for it ;)
+2011-08-10 20:54:49 UTC <byorgey> actually I wanted to make a filled annulus and realized I needed it
+2011-08-10 20:55:14 UTC <byorgey> we should add a 'circlePath' function to D.TwoD.Arc
+2011-08-10 20:55:39 UTC <fryguybob> I was trying to figure out how many fmaps I was going to need and decided to ask for it :D.
+2011-08-10 20:55:56 UTC <byorgey> hehe =)
+2011-08-10 20:56:18 UTC <byorgey> well, and while implementing  it  I found a bug in reverseTrail anyway
+2011-08-10 20:56:28 UTC <byorgey> itdidn't work for closed trails
+2011-08-12 05:36:08 UTC <luite> http://hdiff.luite.com/cgit/diagrams-core/commit/?id=0.3
+2011-08-12 05:36:27 UTC <luite> (sorry for the wrong author field, I'm not claiming to have written diagrams :p )
+2011-08-12 06:57:58 UTC <luite> ok fixed
+2011-08-12 14:27:07 UTC <fryguybob> byorgey: I'm just getting back to things.  The new reversePath is confusing me: http://hpaste.org/50222
+2011-08-12 14:34:06 UTC <fryguybob> Is reverseRootedPath flipped?   reverseRootedTrail (p, t)  | isClosed t = (p .+^ trailOffset t, reverseTrail t)   | otherwise  = (p, reverseTrail t)   seems like it should be the cases are switched.
+2011-08-12 14:37:31 UTC <fryguybob> byorgey: Switching those cases gives the behavior I expect, I have a patch ready, let me know if you agree.
+2011-08-12 17:06:43 UTC <byorgey> fryguybob: doh, yes
+2011-08-12 17:06:55 UTC <byorgey> fryguybob: that's what I get for not testing it very well.
+2011-08-12 17:07:08 UTC <byorgey> sorry, I ought to know better
+2011-08-12 17:07:21 UTC <byorgey> ACTION slaps his own wrist
+2011-08-12 17:08:00 UTC <byorgey> luite: what's this?
+2011-08-12 17:08:03 UTC <fryguybob> :D no problem
+2011-08-12 17:08:06 UTC <fryguybob> I'll push the fix.
+2011-08-12 17:09:33 UTC <luite> byorgey: oh I was annoyed that many authors of hackage packages don't have public repositories and that there's no easy way to view what has changed in a package
+2011-08-12 17:09:44 UTC <luite> other than downloading/diffing multiple versions
+2011-08-12 17:10:05 UTC <luite> so I've imported all versions of all packages in a git repository with a web interface :)
+2011-08-12 17:12:19 UTC <byorgey> luite: very cool =)
+2011-08-12 17:15:15 UTC <luite> I'm going to add a title page with recent changes and a small javscript bookmarklet that you can click on a hackage page, that directly takes you to the diff with the previous version
+2011-08-12 17:15:38 UTC <luite> and then email cafe, maybe some other people will find it useful
+2011-08-12 17:19:19 UTC <luite> had to download 16000 packages from hackage for this, but I  haven't heard any complaints from server admins :)
+2011-08-12 17:21:51 UTC <byorgey> luite: awesome =)
