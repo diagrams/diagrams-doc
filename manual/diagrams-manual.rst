@@ -29,6 +29,9 @@ Monoids
 Faking optional named arguments
 -------------------------------
 
+Bounding functions and local vector spaces
+------------------------------------------
+
 Creating 2D diagrams
 ====================
 
@@ -65,7 +68,12 @@ There are three main types synonyms defined for referring to
 two-dimensional space:
 
 * `R2` is the type of the two-dimensional Euclidean vector space.  It
-  is a synonym for `(Double, Double)`.
+  is a synonym for `(Double, Double)`.  The positive x-axis extends to
+  the right, and the positive y-axis extends *upwards*.  This is
+  consistent with standard mathematical practice, but upside-down with
+  respect to many common graphics systems.  This is intentional: the
+  goal is to provide an elegant interface which is abstracted as much
+  as possible from implementation details.
 * `P2` is the type of points in two-dimensional space. It is a synonym
   for `Point R2`.
 * `T2` is the type of two-dimensional affine transformations.  It is a
@@ -209,32 +217,39 @@ Combining diagrams
 
 The ``diagrams`` framework is fundamentally *compositional*: complex
 diagrams are created by combining simpler diagrams in various ways.
+Many of the combination methods discussed in this section are defined
+in `Diagrams.Combinators`:mod:.
 
 Superimposing diagrams with `atop`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-[XXX should this actually go somewhere more general?  `atop` is not
-just for 2D diagrams.  Or maybe the general section should talk about
-the diagrams monoid instance, and atop should just be for 2D?  Or
-maybe we should just start by talking about 2D, and later show how it
-generalizes?]
 
 The most fundamental way to combine two diagrams is to place one on
 top of the other with `atop`.  The diagram `d1 \`atop\` d2` is formed
 by placing `d1`'s local origin on top of `d2`'s local origin; that is,
 by identifying their local vector spaces.  
 
+.. codeblock:: dia-lhs
+
+  > example = circle 1 `atop` square (sqrt 2)
+
 As noted before, diagrams form a monoid_
 with composition given by identification of vector spaces.  `atop` is
-simply a synonym for `mappend` (or `(<>)`) , specialized to two
-dimensions.  (XXX more here about how it is commutative in higher
-dimensions?)
+simply a synonym for `mappend` (or `(<>)`), specialized to two
+dimensions.
 
 .. _monoid: Monoids_
 
 This also means that a list of diagrams can be stacked with `mconcat`;
 that is, `mconcat [d1, d2, d3, ...]` is the diagram with `d1` on top
 of `d2` on top of `d3` on top of...
+
+.. codeblock:: dia-lhs
+
+  > example = mconcat [ circle 0.1 # fc green
+  >                   , eqTriangle # scale 0.4 # fc yellow
+  >                   , square 1 # fc blue
+  >                   , circle 1 # fc red
+  >                   ]
 
 Juxtaposing diagrams
 ~~~~~~~~~~~~~~~~~~~~
@@ -243,8 +258,18 @@ Fundamentally, `atop` is actually the *only* way to compose diagrams;
 however, there are a number of other combining methods (all ultimately
 implemented in terms of `atop`) provided for convenience.
 
-Two diagrams can be placed *next to* each other in a certain direction
-using `beside`.
+Two diagrams can be placed *next to* each other using `beside`.  The
+first argument to `beside` is a vector specifying a direction.  The
+second and third arguments are diagrams, which are placed next to each
+other so that the vector points from the first diagram to the second.
+
+.. codeblock:: dia-lhs
+
+  > example = beside (20,30) (circle 1 # fc orange) (circle 1.5 # fc purple)
+
+As can be seen from the above example, the *length* of the vector
+makes no difference, only its *direction* is taken into account. (To
+place diagrams at a certain fixed distance from each other, see `cat'`.)
 
 Concatenating diagrams
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -252,14 +277,14 @@ Concatenating diagrams
 Modifying diagrams
 ------------------
 
+Attributes and styles
+~~~~~~~~~~~~~~~~~~~~~
+
 2D Transformations
 ~~~~~~~~~~~~~~~~~~
 
 Alignment
 ~~~~~~~~~
-
-Attributes and styles
-~~~~~~~~~~~~~~~~~~~~~
 
 Working with paths
 ------------------
