@@ -16,3 +16,6 @@ xml2html.exe : xml2html.hs Build.hs
 
 clean : 
 	rm -f *.exe *.html *.o *.hi
+
+veryclean : clean
+	rm -f images/*.png
