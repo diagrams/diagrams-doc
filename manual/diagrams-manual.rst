@@ -79,7 +79,7 @@ two-dimensional space:
 * `T2` is the type of two-dimensional affine transformations.  It is a
   synonym for `Transformation R2`.
 
-XXX note re: vectors vs points.
+[TODO: note re: vectors vs points.]
 
 Angles
 ~~~~~~
@@ -269,10 +269,27 @@ other so that the vector points from the first diagram to the second.
 
 As can be seen from the above example, the *length* of the vector
 makes no difference, only its *direction* is taken into account. (To
-place diagrams at a certain fixed distance from each other, see `cat'`.)
+place diagrams at a certain fixed distance from each other, see
+`cat'`.)
+
+Since placing diagrams next to one another horizontally and vertically
+is quite common, specialized combinators are provided for this
+purpose: `(|||)` and `(===)` juxtapose diagrams in the x and
+y-directions, respectively.
+
+.. codeblock:: dia-lhs
+
+  > d1 = circle 1 # fc red
+  > d2 = square 1 # fc blue
+  > example = (d1 ||| d2) ||| strutX 3 ||| (d1 === d2)
+
+See `Bounding functions`_ for precise details on what "next to" means.
 
 Concatenating diagrams
 ~~~~~~~~~~~~~~~~~~~~~~
+
+We have already seen one way to combine a list of diagrams, using
+`mconcat` to stack them.  
 
 Modifying diagrams
 ------------------
