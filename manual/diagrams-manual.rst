@@ -38,6 +38,13 @@ Bounding functions and local vector spaces
 [TODO: write about the basics/intuition of bounding functions]
 [TODO: write about local origin, note 'showOrigin' function]
 
+[TODO: write about strut, pad, withBounds, phantom somewhere]
+
+Postfix transformation
+----------------------
+
+[TODO: write about # operator]
+
 Creating 2D diagrams
 ====================
 
@@ -314,7 +321,14 @@ We have already seen one way to combine a list of diagrams, using
 diagrams are also provided in `Diagrams.Combinators`:mod:.
 
 The simplest method of combining multiple diagrams is `position`,
-which takes a list of diagrams paired with points, assigns 
+which takes a list of diagrams paired with points, and places the
+local origin of each diagram at the indicated point.
+
+.. codeblock:: dia-lhs
+
+  > example = position (zip (map mkPoint [-3, -2.8 .. 3]) (repeat dot))
+  >   where dot       = circle 0.2 # fc black
+  >         mkPoint x = P (x,x^2)
 
 `cat` is like an iterated version of `beside`, which takes a direction
 vector and a list of diagrams, laying out the diagrams beside one
@@ -341,13 +355,128 @@ possibilities.
   >                                        # scale (1 + fromIntegral n/4)
   >                                        # showOrigin
 
+For convenience, `Diagrams.TwoD.Combinators`:mod: also provides `hcat`, `hcat'`,
+`vcat`, and `vcat'`, variants of `cat` and `cat'` which concatenate
+diagrams horizontally and vertically.
+
+Finally, `appends` is like an iterated variant of `append`, with the
+important difference that multiple diagrams are placed next to a
+single central diagram without reference to one another; simply
+iterating `append` causes each of the previously appended diagrams to
+be taken into account when deciding where to place the next one.
+
+.. codeblock:: dia-lhs
+
+  > c        = circle 1 # lw 0.03
+  > dirs     = iterate (rotateBy (1/7)) unitX
+  > cdirs    = zip dirs (replicate 7 c)
+  > example1 = appends c cdirs
+  > example2 = foldl (\a (v,b) -> append v a b) c cdirs
+  > example  = example1 ||| strutX 3 ||| example2
+
+`Diagrams.Combinators`:mod: also provides `decoratePath` and
+`decorateTrail`, which are described in `Stroking and decorating
+paths`_.
+
 Modifying diagrams
 ------------------
 
-
+[TODO: some sort of general statement about modifying diagrams]
 
 Attributes and styles
 ~~~~~~~~~~~~~~~~~~~~~
+
+Every diagram has a *style* which is an arbitrary collection of
+*attributes*.  This section will describe some of the default
+attributes which are provided by the ``diagrams`` library and
+recognized by most backends.  However, you can easily create your own
+attributes as well; for details, see `Style and attribute internals`_.
+
+In many examples, you will see attributes applied to diagrams using
+the `(#)` operator.  However, keep in mind that there is nothing
+special about this operator as far as attributes are concerned. It is
+merely backwards function application, which is used for attributes
+since it often reads better to have the main diagram come first,
+followed by modifications to its attributes.
+
+In general, inner attributes (that is, attributes applied earlier)
+override outer ones.  Note, however, that this is not a requirement.
+Each attribute may define its own specific method for combining
+multiple instances.  See `Style and attribute internals`_ for more
+details.
+
+Most of the attributes discussed in this section are defined in
+`Diagrams.Attributes`:mod:.
+
+Color
+^^^^^
+
+Two-dimensional diagrams have two main colors, the color used to
+stroke the paths in the diagram and the color used to fill them.
+These can be set, respectively, with the `lc` (line color) and `fc`
+(fill color) functions.
+
+.. codeblock:: dia-lhs
+
+  > example = circle 0.2 # lc purple # fc yellow
+
+By default, diagrams use a black line color and a completely
+transparent fill color.
+
+Colors themselves are handled by the `colour`:pkg: package, which
+provides a large set of predefined color names as well as many more
+sophisticated color operations; see its documentation for more
+information.  The `colour`:pkg: package uses a different type for
+colors with an alpha channel (*i.e.* transparency). To make use of
+transparent colors you can use `lcA` and `fcA`.
+
+.. codeblock:: dia-lhs
+  
+  > import Data.Colour (withOpacity)
+  >
+  > colors  = map (blue `withOpacity`) [0.1, 0.2 .. 1.0]
+  > example = hcat' with { catMethod = Distrib, sep = 1 } 
+  >                 (zipWith fcA colors (repeat (circle 1)))
+
+Transparency can also be tweaked with the `Opacity` attribute, which
+sets the opacity/transparency of a diagram as a whole. Applying
+`opacity p` to a diagram, where `p` is a value between `0` and `1`,
+results in a diagram `p` times as opaque.
+
+.. codeblock:: dia-lhs
+
+  > s c     = square 1 # fc c
+  > reds    = (s darkred ||| s red) === (s pink ||| s indianred)
+  > example = hcat' with { sep = 1 } . take 4 . iterate (opacity 0.7) $ reds
+
+Line width
+^^^^^^^^^^
+
+Other line parameters
+^^^^^^^^^^^^^^^^^^^^^
+
+Many rendering backends provide some control over the particular way
+in which lines are drawn.  Currently, ``diagrams`` provides support
+for three aspects of line drawing:
+
+* `lineCap` sets the `LineCap` style.
+* `lineJoin` sets the `LineJoin` style.
+* `dashing` allows for drawing dashed lines with arbitrary dashing
+  patterns.
+
+.. codeblock:: dia-lhs
+
+  > path = fromVertices (map P [(0,0), (1,0.3), (2,0), (2.2,0.3)]) # lw 0.1
+  > example = centerXY . vcat' with { sep = 0.1 } 
+  >           $ map (path #)
+  >             [ lineCap LineCapButt   . lineJoin LineJoinMiter
+  >             , lineCap LineCapRound  . lineJoin LineJoinRound
+  >             , lineCap LineCapSquare . lineJoin LineJoinBevel
+  >             , dashing [0.1,0.2,0.3,0.1] 0
+  >             ]
+
+Style objects
+^^^^^^^^^^^^^
 
 2D Transformations
 ~~~~~~~~~~~~~~~~~~
@@ -372,6 +501,12 @@ The `PathLike` class
 
 Splines
 ~~~~~~~
+
+Stroking and decorating paths
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Clipping
+~~~~~~~~
 
 Text
 ----
@@ -406,8 +541,8 @@ Bounding functions
 Queries
 -------
 
-Styles
-------
+Style and attribute internals
+-----------------------------
 
 Names
 -----
