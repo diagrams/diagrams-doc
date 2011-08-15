@@ -15,7 +15,7 @@ xml2html.exe : xml2html.hs Build.hs
 .SECONDARY : xml2html.exe diagrams-manual.xml
 
 clean : 
-	rm -f *.exe *.html *.o *.hi
+	rm -f *.exe *.html *.o *.hi *.xml
 
 veryclean : clean
 	rm -f images/*.png
