@@ -29,8 +29,14 @@ Monoids
 Faking optional named arguments
 -------------------------------
 
+Vectors and points
+------------------
+
 Bounding functions and local vector spaces
 ------------------------------------------
+
+[TODO: write about the basics/intuition of bounding functions]
+[TODO: write about local origin, note 'showOrigin' function]
 
 Creating 2D diagrams
 ====================
@@ -185,8 +191,8 @@ Squares, rectangles, and other polygons
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 `Diagrams.TwoD.Shapes`:mod: also provides a number of other
-specialized path-based shapes.  In principle you could construct all
-of these shapes explicitly using various polygons.
+specialized path-based shapes.   For constructing more general shapes,
+see `Working with paths`_.
 
 * `square` constructs a square with a given side length; `unitSquare`
   constructs a square with sides of length `1`.
@@ -266,33 +272,79 @@ other so that the vector points from the first diagram to the second.
 .. codeblock:: dia-lhs
 
   > example = beside (20,30) (circle 1 # fc orange) (circle 1.5 # fc purple)
+  >           # showOrigin
 
 As can be seen from the above example, the *length* of the vector
 makes no difference, only its *direction* is taken into account. (To
 place diagrams at a certain fixed distance from each other, see
-`cat'`.)
+`cat'`.)  As can also be seen, the local origin of the new, combined
+diagram is at the point of tangency between the two subdiagrams.
+
+To place diagrams next to each other while leaving the local origin of
+the combined diagram in the same place as the local origin of the
+first subdiagram, use `append` instead of `beside`:
+
+.. codeblock:: dia-lhs
+
+  > example = append (20,30) (circle 1 # fc orange) (circle 1.5 # fc purple)
+  >           # showOrigin
 
 Since placing diagrams next to one another horizontally and vertically
-is quite common, specialized combinators are provided for this
-purpose: `(|||)` and `(===)` juxtapose diagrams in the x and
-y-directions, respectively.
+is quite common, special combinators are provided for convenience.
+`(|||)` and `(===)` are specializations of `beside` which juxtapose
+diagrams in the x and y-directions, respectively.
 
 .. codeblock:: dia-lhs
 
   > d1 = circle 1 # fc red
   > d2 = square 1 # fc blue
-  > example = (d1 ||| d2) ||| strutX 3 ||| (d1 === d2)
+  > example = (d1 ||| d2) ||| strutX 3 ||| ( d1 
+  >                                          === 
+  >                                          d2  )
 
-See `Bounding functions`_ for precise details on what "next to" means.
+See `Bounding functions and local vector spaces`_ for more information
+on what "next to" means, or see `Bounding functions`_ for precise
+details.
 
 Concatenating diagrams
 ~~~~~~~~~~~~~~~~~~~~~~
 
 We have already seen one way to combine a list of diagrams, using
-`mconcat` to stack them.  
+`mconcat` to stack them.  Several other methods for combining lists of
+diagrams are also provided in `Diagrams.Combinators`:mod:.
+
+The simplest method of combining multiple diagrams is `position`,
+which takes a list of diagrams paired with points, assigns 
+
+`cat` is like an iterated version of `beside`, which takes a direction
+vector and a list of diagrams, laying out the diagrams beside one
+another in a row.  The local origins of the subdiagrams will be placed
+along a straight line in the direction of the given vector.
+
+.. codeblock:: dia-lhs
+
+  > example = cat (2,-1) (map p [3..8]) # showOrigin
+  >   where p n = polygon with {sides = n} # lw 0.03
+
+Note, however, that the local origin of the final diagram is placed at
+the local origin of the first diagram in the list.
+
+For more control over the way in which the diagrams are laid out, use
+`cat'`, a variant of `cat` which also takes a `CatOpts` record.  See
+the documentation for `cat'` and `CatOpts` to learn about the various
+possibilities.
+
+.. codeblock:: dia-lhs
+
+  > example = cat' (2,-1) with { catMethod = Distrib, sep = 2 } (map p [3..8])
+  >   where p n = polygon with {sides = n} # lw 0.03 
+  >                                        # scale (1 + fromIntegral n/4)
+  >                                        # showOrigin
 
 Modifying diagrams
 ------------------
+
+
 
 Attributes and styles
 ~~~~~~~~~~~~~~~~~~~~~
@@ -317,6 +369,9 @@ Paths
 
 The `PathLike` class
 ~~~~~~~~~~~~~~~~~~~~
+
+Splines
+~~~~~~~
 
 Text
 ----
