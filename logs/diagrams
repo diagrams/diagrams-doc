@@ -4801,3 +4801,55 @@
 2011-08-12 17:15:38 UTC <luite> and then email cafe, maybe some other people will find it useful
 2011-08-12 17:19:19 UTC <luite> had to download 16000 packages from hackage for this, but I  haven't heard any complaints from server admins :)
 2011-08-12 17:21:51 UTC <byorgey> luite: awesome =)
+2011-08-12 18:37:26 UTC <byorgey> check it out: http://www.cis.upenn.edu/~byorgey/diagrams-manual/diagrams-manual.html
+2011-08-12 18:37:37 UTC <byorgey> generated from this source: http://www.cis.upenn.edu/~byorgey/diagrams-manual/diagrams-manual.rst
+2011-08-12 18:38:00 UTC <byorgey> just a preview of course
+2011-08-12 19:17:17 UTC <fryguybob> Very nice!
+2011-08-12 19:48:29 UTC <alpounet> agreed
+2011-08-12 19:50:29 UTC <alpounet> luite, for hdiff, that would be nice to have several rows of page numbers, rather than this almost infinite line of page numbers, making us scroll beyond the limits of the universe :P
+2011-08-13 07:51:12 UTC <luite> alpounet: fixed
+2011-08-13 07:51:32 UTC <alpounet> thanks! :)
+2011-08-15 01:03:40 UTC <copumpkin> anyone have plans for a pure svg backend for it?
+2011-08-15 01:03:45 UTC <copumpkin> without the cairo dependency?
+2011-08-15 01:05:59 UTC <luite> \o/
+2011-08-15 01:06:04 UTC <luite> make one and give it to me!
+2011-08-15 01:06:12 UTC <luite> with javascript support for wolfgang|lambda ;p
+2011-08-15 01:06:21 UTC <copumpkin> hah
+2011-08-15 01:06:31 UTC <copumpkin> I've dealt with svg before and didn't enjoy it muc
+2011-08-15 01:06:32 UTC <copumpkin> h
+2011-08-15 01:06:39 UTC <copumpkin> the path syntax is ugly :(
+2011-08-15 01:51:15 UTC <fryguybob> copumpkin: Robin Morisset was working on one at Hacphi: http://code.google.com/p/diagrams/wiki/BackendProjects
+2011-08-15 02:36:33 UTC <luite> https://github.com/yesodweb/persistent/issues/17
+2011-08-15 02:36:39 UTC <luite> whoops wrong chan
+2011-08-15 03:13:12 UTC <byorgey> I hope to sit down with Robin sometime this week and figure out what still needs to be done to get the SVG backend released
+2011-08-15 03:14:05 UTC <luite> byorgey: do you know something about changes in type families between 7.0 and 7.2?
+2011-08-15 03:14:30 UTC <luite> I have some code that results in top-level data families in 7.2, but not with 7.0
+2011-08-15 03:14:45 UTC <byorgey> I might but I must be off t obed at the moment
+2011-08-15 03:14:49 UTC <byorgey> ask me again tomorrow
+2011-08-15 03:15:07 UTC <luite> ok, good night the n :)
+2011-08-15 03:15:40 UTC <byorgey> night =)
+2011-08-15 03:47:13 UTC <luite> http://hpaste.org/50325 -- this seems to show the problem, an extra top-level data family F with ghc 7.2.1
+2011-08-15 15:16:50 UTC <byorgey> luite: hmm, interesting, I have not seen anything like this before
+2011-08-15 15:17:01 UTC <byorgey> luite: which behavior do you want/which do you think is correct?
+2011-08-15 15:19:23 UTC <luite> well, the 7.0.4 behaviour works :p
+2011-08-15 15:19:32 UTC <luite> (with the current version of these libraries)
+2011-08-15 15:19:55 UTC <luite> but I haven't really thought about which one would be better
+2011-08-15 15:21:05 UTC <luite> why is it useful to add a top-level data family when you only use associated types?
+2011-08-15 15:21:40 UTC <luite> I've posted this to glasgow-haskell-users by the way
+2011-08-15 15:23:54 UTC <luite> https://github.com/yesodweb/persistent/issues/17 <- here's the issue with the persistent library in yesod
+2011-08-15 15:25:07 UTC <byorgey> ah, yeah, I just saw your email to g-h-u
+2011-08-15 15:26:41 UTC <luite> I added the data family D a to show that :browse also prints these families in ghci 7.0.4
+2011-08-15 15:27:14 UTC <byorgey> as for why it's useful to add a top-level data family when you only use associated types, I am not sure
+2011-08-15 15:27:34 UTC <byorgey> at the level of ghc's core language, there is no difference between top-level and associated families
+2011-08-15 15:27:54 UTC <byorgey> but that doesn't mean there ought not to be a difference at the surface level
+2011-08-15 15:28:03 UTC <luite> hmm, but at that point, the names should've been disambiguated
+2011-08-15 15:28:10 UTC <luite> if that's how it's spelled :p
+2011-08-15 15:28:29 UTC <byorgey> I guess :browse gives you a list of top-level *names* that are exported, i.e. things that can be referred to
+2011-08-15 15:28:51 UTC <byorgey> it is still illegal to try to specify a top-level instance for D or F
+2011-08-15 15:29:13 UTC <byorgey> but in that case it is surprising to me that 7.2.1 lists F, since you cannot refer to it as F, only as C.F
+2011-08-15 15:29:48 UTC <luite> yes, that's why I imported it qualified, surprised (and confused) me as well
+2011-08-15 15:41:04 UTC <luite> 7.3.20110814 shows the same as 7.2.1
+2011-08-15 16:19:48 UTC <luite> apparently not many people on g-h-u know much about this, or they're all tired from camhac :)
+2011-08-15 17:21:45 UTC <byorgey> luite: or maybe both =)
+2011-08-15 17:22:10 UTC <byorgey> luite: my guess is that it was an unintentional change
+2011-08-15 17:24:44 UTC <luite> yeah I would've expected some documentation/discussion about it if it was intentional, but I can't find any
