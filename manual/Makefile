@@ -7,7 +7,7 @@ xml2html.exe : xml2html.hs Build.hs
 	./xml2html.exe $< $@
 
 %.xml : %.rst
-	./dia-rst2xml.py $< | sed -e 's/http:\/\/docutils.sourceforge.net\/docs\/ref\/docutils.dtd/\/home\/brent\/downloads\/docutils\/docs\/ref\/docutils.dtd/' > $@
+	./dia-rst2xml.py $< $@
 
 %-du.html : %.rst
 	rst2html.py $< $@
