@@ -4853,3 +4853,128 @@
 2011-08-15 17:21:45 UTC <byorgey> luite: or maybe both =)
 2011-08-15 17:22:10 UTC <byorgey> luite: my guess is that it was an unintentional change
 2011-08-15 17:24:44 UTC <luite> yeah I would've expected some documentation/discussion about it if it was intentional, but I can't find any
+2011-08-15 19:24:52 UTC <d-d> byorgey: any reason you decided on .rst for that?
+2011-08-15 20:29:18 UTC <byorgey> d-day: yes, because .rst is extensible
+2011-08-15 20:30:00 UTC <byorgey> d-day: you can register arbitrary new tags for both inline and block markup and then decide what to do with them later.
+2011-08-15 20:30:47 UTC <byorgey> d-day: so for example I use it to mark the names of packages, the names of modules, literate haskell code, literate haskell code that should also produce a diagram automatically, etc.
+2011-08-15 20:31:56 UTC <byorgey> to do something similar with (say) Markdown would require lots of ugly hacks.
+2011-08-15 21:46:26 UTC <d-day> byorgey: oh, then I suppose that the software I am writing today is 'lots of ugly hacks' :o
+2011-08-15 21:46:37 UTC <byorgey> d-day: what are you working on?
+2011-08-15 21:46:39 UTC <d-day> hehe
+2011-08-15 21:47:45 UTC <d-day> I am writing a parser/printer for markdown that has explicit color schemes encoded into the document, support for automatic code/indentation detection (by understanding tabstop-like settings)
+2011-08-15 21:48:02 UTC <d-day> automatic linking of words that have reference links
+2011-08-15 21:48:53 UTC <d-day> and a metadata tag for markdown (by absorbing out #^6 and (optionally, #^5))
+2011-08-15 21:49:36 UTC <d-day> the idea is basically to allow people to write (.hs, .rb, .etc) files with markdown in comments, but with (.hs, .rb, .etc) code in fences in comments
+2011-08-15 21:50:59 UTC <d-day> i am absorbing some of the freedom that's there in markdown (such as not differentiating between +, -, and *, in lists, and the different styles of refrence links '', "", and () )
+2011-08-15 21:51:49 UTC <d-day> i don't know much about rst, I'll have to check it out
+2011-08-15 21:52:37 UTC <d-day> the really cool part is the colors, though, and I'm not quite sure how I'm going to do it
+2011-08-15 21:52:55 UTC <d-day> byorgey: are you a vimmer?
+2011-08-15 21:53:29 UTC <byorgey> d-day: sounds cool
+2011-08-15 21:53:32 UTC <byorgey> d-day: no, I use emacs
+2011-08-15 21:53:50 UTC <luite> yay emacs
+2011-08-15 21:53:57 UTC <d-day> byorgey: the early mockups are like this (rendered in vim, because it's where I found it)
+2011-08-15 21:54:00 UTC <d-day> http://imgur.com/a/IBxKo
+2011-08-15 21:55:16 UTC <d-day> the idea is, if you know (or set an explicit) tabstop width, you decree that some portion of that (first three character columns, in this case) should 'commute' in the sense that you could run characters up and down in the extra 2 characters
+2011-08-15 21:56:17 UTC <d-day> then, you assign colors (varaiations on a color, I'm not trying to make people trip while coding) to the blocks based on the contents of the start and/or end
+2011-08-15 21:56:54 UTC <d-day> so, for instance, if some code causes a compilation error (like something in wolfgang) or has an alignment bug, you can just change the color to lead them to the right spot
+2011-08-15 21:58:37 UTC <d-day> (the content of this document is just meandering self-talk to fill it)
+2011-08-15 21:59:37 UTC <d-day> unfortunately, I'm not smart enough to do this in Haskell yet, so I'm doing in C/Ruby and using regular expressions in a somewhat applicative style
+2011-08-15 22:01:53 UTC <d-day> byorgey: another goal, actually, is to do similar things that you're doing with .rst - in particular, pulling out document-wide portions of code (in haskell, this means imports/modules/some pragmas) and putting them in markdown format, in a way that "commutes" in the sense above
+2011-08-15 22:03:39 UTC <d-day> byorgey: haven't talked in a while. you back with a full head of steam toward diagrams?
+2011-08-15 22:04:02 UTC <d-day> and luite: what's going on with w'gang?
+2011-08-15 22:04:19 UTC <byorgey> d-day: are you tgeeky?
+2011-08-15 22:04:51 UTC <d-day> byorgey: yep
+2011-08-15 22:04:55 UTC <byorgey> d-day: I don't know if I'd say "full head of steam" exactly -- I have other projects to work on too -- but yes, I have been working on it a bunch more lately
+2011-08-15 22:05:09 UTC <byorgey> mostly writing documentation but a bit of coding as well
+2011-08-15 22:05:10 UTC <d-day> this more closely matches my real name
+2011-08-15 22:05:14 UTC <byorgey> ok =)
+2011-08-15 22:05:29 UTC <byorgey> just making the connection
+2011-08-15 22:06:40 UTC <d-day> byorgey: another thing I have on the list for this parser (but I have almost no idea how to implement in practice)
+2011-08-15 22:07:24 UTC <d-day> is something like regular exprsesions that match characters that look the same (their glyph looks the same) -- such as the letter 'A' in ASCII, and in various mathematical reps (blackboard bold, etc)
+2011-08-15 22:07:46 UTC <d-day> not automatically, but just so that someone can do something like:
+2011-08-15 22:08:08 UTC <d-day> d, dd (to get a derivative-style d), ddd (to get a bold style d) -- something along those lines
+2011-08-15 22:08:28 UTC <d-day> rep-letters -> math letters
+2011-08-15 22:09:16 UTC <d-day> but I haven't a clue where to start there
+2011-08-15 22:24:01 UTC <d-day> man, some of the things in this book 'pearls of functional algorithim design' blow my mind lol
+2011-08-15 22:29:31 UTC <luite> d-day: still working on it from time to time, bug I'm currently stuck because of some strange issue with ghc
+2011-08-15 22:29:45 UTC <luite> but
+2011-08-15 22:31:35 UTC <d-day> k
+2011-08-15 22:31:43 UTC <luite> I have some of my code converted to yesod 0.9 (from github) and ghc 7.2.1, because I need some new yesod features, and wanted to update the evaluator to the 7.2.1 api
+2011-08-15 22:31:57 UTC <luite> but the combination is not runnign smoothly
+2011-08-15 22:32:02 UTC <luite> not at all actually :p
+2011-08-15 22:32:04 UTC <d-day> hehe
+2011-08-15 22:32:06 UTC <d-day> why yesod?
+2011-08-15 22:32:15 UTC <d-day> what happened to happstack (for gitit) and/or snap?
+2011-08-15 22:32:21 UTC <luite> oh that's what the front-end is written in
+2011-08-15 22:32:32 UTC <luite> snap is still the backend, I don't use gitit anymore
+2011-08-15 22:32:42 UTC <d-day> ok
+2011-08-15 22:32:59 UTC <d-day> are you still using codemirror2 for the texted?
+2011-08-15 22:33:11 UTC <luite> gitit is basically unmaintained, or at the very least very lightly maintained :p
+2011-08-15 22:33:28 UTC <d-day> yeah, but I understand, jmac is only one man
+2011-08-15 22:33:34 UTC <d-day> and he has tons of widely used projects
+2011-08-15 22:33:48 UTC <luite> and it was easier to do authentication and json interface with file-store
+2011-08-15 22:33:59 UTC <luite> and yesod
+2011-08-15 22:34:13 UTC <d-day> one difference between our ideas of what's going on, I realized
+2011-08-15 22:34:40 UTC <d-day> is I essentially see something where you have the server (say, snap) behind the public interface
+2011-08-15 22:34:57 UTC <d-day> but also, if a user wants to download the server, s/he would gain his local evalulator as well
+2011-08-15 22:35:53 UTC <luite> oh I also think that should eventually be possible
+2011-08-15 22:35:59 UTC <d-day> sort of like a distributed IDE
+2011-08-15 22:36:02 UTC <d-day> the main point
+2011-08-15 22:36:10 UTC <d-day> is to show, hey, this really is 'distributed'
+2011-08-15 22:36:25 UTC <d-day> if you want to download 1000 copies of it and run it on your server farm, you can :o
+2011-08-15 22:36:56 UTC <d-day> but as you said earlier, I think the only secure way to do that is to have at least 2 domains built in from the start
+2011-08-15 22:37:04 UTC <luite> still codemirror2 by the way, I don't know anything that's better and accessible enough
+2011-08-15 22:37:24 UTC <d-day> yeah
+2011-08-15 22:37:38 UTC <d-day> i plan on implementing this markdown/highlighter/indenter thing in it, eventually
+2011-08-15 22:37:43 UTC <d-day> so you/we can use it
+2011-08-15 22:37:47 UTC <luite> oh that would be fun
+2011-08-15 22:37:57 UTC <d-day> i'm writing it using javascript code already (d3.js)
+2011-08-15 22:38:04 UTC <d-day> just so I can port it easily
+2011-08-15 22:41:22 UTC <luite> how do you plan on handling long lines with codemirror?
+2011-08-15 22:41:32 UTC <luite> since it still doesn't support wrapping
+2011-08-15 22:41:44 UTC <d-day> hehe, the whole point of this program
+2011-08-15 22:41:58 UTC <d-day> is to have a document set an explicit minimum size and maximum size
+2011-08-15 22:42:04 UTC <d-day> in terms of width
+2011-08-15 22:42:33 UTC <d-day> like, if you want a document of code that's 81 chars wide
+2011-08-15 22:42:42 UTC <d-day> then you make a document that's ~ 120 chars wide
+2011-08-15 22:42:50 UTC <d-day> and you fill out the first line with 81 spaces
+2011-08-15 22:44:00 UTC <d-day> then, you basically always load at least 2 documents - one for the source in question, one for the [metadata / markup / color instructions / meta-comments]
+2011-08-15 22:44:13 UTC <d-day> and you zip the two together using whatever the line-comment character is (--, for haskell)
+2011-08-15 22:44:51 UTC <luite> hmm, do you have an example of how you intend that zipping together to wokr?
+2011-08-15 22:45:14 UTC <d-day> yeeah, from the pics above
+2011-08-15 22:45:26 UTC <d-day> any markdown header with more than '###'
+2011-08-15 22:46:05 UTC <d-day> must be indented (because it would fill up the 4th character column) - that is, it's implying a code block of at least 2*tabstop characters (in this case, 10)
+2011-08-15 22:46:19 UTC <d-day> likewise, six comments (######)
+2011-08-15 22:46:49 UTC <d-day> imply that something is taking up the entire document (as the marker itself doesn't fit in a single column, so it expands out to the entire document)
+2011-08-15 22:47:03 UTC <d-day> i have a flag up
+2011-08-15 22:47:05 UTC <d-day> one sec
+2011-08-15 22:48:21 UTC <luite> hmm, Idon't really see it
+2011-08-15 22:50:07 UTC <d-day> http://i.imgur.com/h9u5j.gif
+2011-08-15 22:50:25 UTC <d-day> i'm calling it a 'flag' because that's what it actually looks like :O
+2011-08-15 22:50:52 UTC <d-day> the initial section is #^6, so it's an escape from the document in question
+2011-08-15 22:51:05 UTC <d-day> the indentation of the escape is taken to be the desired width of the source
+2011-08-15 22:52:23 UTC <d-day> the width of the source won't trigger an alarm, but the width of the rendering (of the source) will
+2011-08-15 22:52:54 UTC <d-day> so that long line (#2) is fine in the source document, because it will compress down into a width that (in a console-like font) will be < the flagpole
+2011-08-15 22:55:07 UTC <luite> hmm
+2011-08-15 22:55:59 UTC <d-day> it's a work in progress, though, I may change things
+2011-08-15 22:56:42 UTC <d-day> the only reason I picked markdown is because github's support for it is nice (and they have already said they will be happy to include extended markdown/javascript combos in their parsers)
+2011-08-16 01:12:37 UTC <d-day> hm. just today, github released the new 'cloud9' / ajax editor
+2011-08-16 01:13:18 UTC <luite> did github do that?
+2011-08-16 01:13:34 UTC <d-day> i don't think they made it
+2011-08-16 01:13:37 UTC <d-day> but they are supporting it
+2011-08-16 01:13:38 UTC <d-day> ACE
+2011-08-16 01:13:47 UTC <d-day> https://github.com/ajaxorg/ace
+2011-08-16 01:14:44 UTC <luite> yeah I know the editor and stuff
+2011-08-16 01:14:50 UTC <d-day> yeah
+2011-08-16 01:16:02 UTC <d-day> ttps://github.com/blog/905-edit-like-an-ace
+2011-08-16 01:16:05 UTC <d-day> + h
+2011-08-16 01:18:11 UTC <luite> hmm, ah... codemirror is much simpler, but is very much a one-man project, possibly not ideal for the longer term
+2011-08-16 01:22:36 UTC <luite> on the other hand, once codemirror2 supports line wrapping, I'd be happy with it :)
+2011-08-16 01:24:15 UTC <luite> probably best to try not to do too much customization so that it will be easy to switch if necessary
+2011-08-16 02:09:01 UTC <d-day> luite: yeah. and the work that I'm doing is almost entirely restricted to dealing with whitespace of one sort or another (really, left whitespace (indentation) and the whitespace "underneath" comments on the left)
+2011-08-16 02:09:16 UTC <d-day> s/left.*$/right/
+2011-08-16 02:10:01 UTC <d-day> luite: plus, this thing that edwardk is working on seems rather powerful
+2011-08-16 02:10:08 UTC <d-day> I say seems because I don't understand much of it
+2011-08-16 02:12:50 UTC <luite> which of the ten million things he's working on?
+2011-08-16 19:45:54 UTC <d-day> luite: trifecta
+2011-08-16 19:46:07 UTC <d-day> his fancy parser/printer/diagnostic-er
