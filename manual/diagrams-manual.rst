@@ -156,8 +156,10 @@ Arcs
 ~~~~
 
 `Diagrams.TwoD.Arc`:mod: provides a function `arc`, which constructs a
-radius-one circular arc starting at a first angle and extending
+radius-one circular arc starting at a first angle__ and extending
 counterclockwise to the second.
+
+__ `Angles`_
 
 .. codeblock:: dia-lhs
 
@@ -239,7 +241,7 @@ Superimposing diagrams with `atop`
 The most fundamental way to combine two diagrams is to place one on
 top of the other with `atop`.  The diagram `d1 \`atop\` d2` is formed
 by placing `d1`'s local origin on top of `d2`'s local origin; that is,
-by identifying their local vector spaces.  
+by identifying their local vector spaces.
 
 .. codeblock:: dia-lhs
 
@@ -305,8 +307,8 @@ diagrams in the x and y-directions, respectively.
 
   > d1 = circle 1 # fc red
   > d2 = square 1 # fc blue
-  > example = (d1 ||| d2) ||| strutX 3 ||| ( d1 
-  >                                          === 
+  > example = (d1 ||| d2) ||| strutX 3 ||| ( d1
+  >                                          ===
   >                                          d2  )
 
 See `Bounding functions and local vector spaces`_ for more information
@@ -351,7 +353,7 @@ possibilities.
 .. codeblock:: dia-lhs
 
   > example = cat' (2,-1) with { catMethod = Distrib, sep = 2 } (map p [3..8])
-  >   where p n = polygon with {sides = n} # lw 0.03 
+  >   where p n = polygon with {sides = n} # lw 0.03
   >                                        # scale (1 + fromIntegral n/4)
   >                                        # showOrigin
 
@@ -431,11 +433,11 @@ colors with an alpha channel (*i.e.* transparency). To make use of
 transparent colors you can use `lcA` and `fcA`.
 
 .. codeblock:: dia-lhs
-  
+
   > import Data.Colour (withOpacity)
   >
   > colors  = map (blue `withOpacity`) [0.1, 0.2 .. 1.0]
-  > example = hcat' with { catMethod = Distrib, sep = 1 } 
+  > example = hcat' with { catMethod = Distrib, sep = 1 }
   >                 (zipWith fcA colors (repeat (circle 1)))
 
 Transparency can also be tweaked with the `Opacity` attribute, which
@@ -467,7 +469,7 @@ for three aspects of line drawing:
 .. codeblock:: dia-lhs
 
   > path = fromVertices (map P [(0,0), (1,0.3), (2,0), (2.2,0.3)]) # lw 0.1
-  > example = centerXY . vcat' with { sep = 0.1 } 
+  > example = centerXY . vcat' with { sep = 0.1 }
   >           $ map (path #)
   >             [ lineCap LineCapButt   . lineJoin LineJoinMiter
   >             , lineCap LineCapRound  . lineJoin LineJoinRound
@@ -475,11 +477,93 @@ for three aspects of line drawing:
   >             , dashing [0.1,0.2,0.3,0.1] 0
   >             ]
 
-Style objects
-^^^^^^^^^^^^^
-
 2D Transformations
 ~~~~~~~~~~~~~~~~~~
+
+Any diagram can be transformed by applying arbitrary affine
+transformations to it. *Affine* transformations include *linear*
+transformations (rotation, scaling, reflection, shears --- anything
+which leaves the origin fixed and sends lines to lines) as well as
+translations.  `Diagrams.TwoD.Transform`:mod: defines a number of
+common affine transformations in two-dimensional space. (To construct
+transformations more directly, see
+`Graphics.Rendering.Diagrams.Transform`:mod:.)
+
+Every transformation comes in two variants, a noun form and a verb
+form.  For example, there are two functions for scaling along the
+x-axis, `scalingX` and `scaleX`.  The noun form constructs a
+transformation object, which can then be stored in a data structure,
+passed as an argument, combined with other transformations, *etc.*,
+and ultimately applied to a diagram with the `transform` function.
+The verb form directly applies the transformation to a diagram.  The
+verb form is much more common (and the documentation below will only
+discuss verb forms), but getting one's hands on a transformation can
+occasionally be useful.
+
+Rotation
+^^^^^^^^
+
+Use `rotate` to rotate a diagram by a given angle__ about the origin.
+Since `rotate` takes an angle, you must specify an angle type, as in
+`rotate (80 :: Deg)`.  In the common case that you wish to rotate by
+an angle specified as a certain fraction of a circle, like `rotate
+(1/8 :: CircleFrac)`, you can use `rotateBy` instead. `rotateBy` is
+specialized to only accept fractions of a circle, so in this example
+you would only have to write `rotateBy (1/8)`.
+
+You can also use `rotateAbout` in the case that you want to rotate
+about some point other than the origin.
+
+__ `Angles`_
+
+Scaling and reflection
+^^^^^^^^^^^^^^^^^^^^^^
+
+Scaling by a given factor is accomplished with `scale` (scale
+uniformly), `scaleX` (scale along the x-axis only), or `scaleY` (scale
+along the y-axis only).  All of these can be used both for enlarging
+(with a factor greater than one) and shrinking (with a factor less
+than one).  Using a negative factor results in a reflection (in the
+case of `scaleX` and `scaleY`) or a 180-degree rotation (in the case
+of `scale`).
+
+.. codeblock:: dia-lhs
+
+  > eff = text "F" <> square 1 # lw 0
+  > ts  = [ id, scale 2,    scaleX 2,    scaleY 2
+  >       ,     scale (-1), scaleX (-1), scaleY (-1)
+  >       ]
+  >
+  > example = hcat . map (eff #) $ ts
+
+Scaling by zero is forbidden.  Let us never speak of it again.
+
+For convenience, `reflectX` and `reflectY` perform reflection along
+the x- and y-axes, respectively; but I think you can guess how they
+are implemented.  Their names are slightly confusing (does `reflectX`
+reflect *along* the x-axis or *across* the x-axis?) but you can just
+remember that `reflectX = scaleX (-1)`.
+
+To reflect in some line other than an axis, use `reflectAbout`.
+
+.. codeblock:: dia-lhs
+
+  > eff = text "F" <> square 1 # lw 0
+  > example = eff 
+  >        <> reflectAbout (P (0.2,0.2)) (rotateBy (-1/10) unitX) eff
+
+Translation
+^^^^^^^^^^^
+
+Translation is achieved with `translate`, `translateX`, and
+`translateY`, which should be self-explanatory.
+
+Conjugation
+^^^^^^^^^^^
+
+`Diagrams.Transform`:mod: also provides [TODO]
+
+use to e.g. scale along some direction other than x/y
 
 Alignment
 ~~~~~~~~~
