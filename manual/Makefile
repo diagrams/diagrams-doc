@@ -1,7 +1,9 @@
+WEB = ${HOME}/public_html/diagrams-manual
+
 default : diagrams-manual.html
 
 xml2html.exe : xml2html.hs Build.hs
-	ghc --make $< -o $@
+	ghc --make -O2 $< -o $@
 
 %.html : %.xml xml2html.exe
 	./xml2html.exe $< $@
@@ -19,3 +21,9 @@ clean :
 
 veryclean : clean
 	rm -f images/*.png
+
+preview : diagrams-manual.html
+	cp diagrams-manual.{html,rst} ${WEB}
+	cp *.css ${WEB}
+	cp images/* ${WEB}/images
+	chmod -R go+rX ${WEB}
