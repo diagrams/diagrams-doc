@@ -500,6 +500,31 @@ verb form is much more common (and the documentation below will only
 discuss verb forms), but getting one's hands on a transformation can
 occasionally be useful.
 
+Transformations in general
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Before looking at specific two-dimensional transformations, it's worth
+saying a bit about transformations in general (a fuller treatment can
+be found under `Transformations`_).  The `Transformation` type is
+defined in `Graphics.Rendering.Diagrams.Transform`:mod:, from the
+`diagrams-core`:pkg: package.  `Transformation` is parameterized by
+the vector space over which it acts; recall that `T2` is provided as a
+synonym for `Transformation R2`.
+
+`Transformation v` is a `Monoid` for any vector space `v`:
+
+* `mempty` is the identity transformation;
+* `mappend` is composition of transformations (`t1 \`mappend\` t2`
+  performs first `t2`, then `t1`).
+
+To invert a transformation, use `inv`.  For any transformation `t`,
+
+`t <> inv t == mempty`.
+
+To apply a transformation to a diagram, use `transform`.  (In fact,
+transformations can be applied not just to diagrams but to any
+`Transformable` type, including vectors, points, bounding functions...)
+
 Rotation
 ^^^^^^^^
 
@@ -516,21 +541,27 @@ about some point other than the origin.
 
 __ `Angles`_
 
+.. codeblock:: dia-lhs
+
+  > eff = text "F" <> square 1 # lw 0
+  > rs  = map rotateBy [1/7, 2/7 .. 6/7]
+  > example = hcat . map (eff #) $ rs
+
 Scaling and reflection
 ^^^^^^^^^^^^^^^^^^^^^^
 
-Scaling by a given factor is accomplished with `scale` (scale
-uniformly), `scaleX` (scale along the x-axis only), or `scaleY` (scale
-along the y-axis only).  All of these can be used both for enlarging
-(with a factor greater than one) and shrinking (with a factor less
-than one).  Using a negative factor results in a reflection (in the
-case of `scaleX` and `scaleY`) or a 180-degree rotation (in the case
-of `scale`).
+Scaling by a given factor is accomplished with `scale` (which scales
+uniformly in all directions), `scaleX` (which scales along the x-axis
+only), or `scaleY` (which scales along the y-axis only).  All of these
+can be used both for enlarging (with a factor greater than one) and
+shrinking (with a factor less than one).  Using a negative factor
+results in a reflection (in the case of `scaleX` and `scaleY`) or a
+180-degree rotation (in the case of `scale`).
 
 .. codeblock:: dia-lhs
 
   > eff = text "F" <> square 1 # lw 0
-  > ts  = [ id, scale 2,    scaleX 2,    scaleY 2
+  > ts  = [ scale (1/2), id, scale 2,    scaleX 2,    scaleY 2
   >       ,     scale (-1), scaleX (-1), scaleY (-1)
   >       ]
   >
@@ -540,7 +571,7 @@ Scaling by zero is forbidden.  Let us never speak of it again.
 
 For convenience, `reflectX` and `reflectY` perform reflection along
 the x- and y-axes, respectively; but I think you can guess how they
-are implemented.  Their names are slightly confusing (does `reflectX`
+are implemented.  Their names can be confusing (does `reflectX`
 reflect *along* the x-axis or *across* the x-axis?) but you can just
 remember that `reflectX = scaleX (-1)`.
 
@@ -549,7 +580,7 @@ To reflect in some line other than an axis, use `reflectAbout`.
 .. codeblock:: dia-lhs
 
   > eff = text "F" <> square 1 # lw 0
-  > example = eff 
+  > example = eff
   >        <> reflectAbout (P (0.2,0.2)) (rotateBy (-1/10) unitX) eff
 
 Translation
@@ -561,21 +592,160 @@ Translation is achieved with `translate`, `translateX`, and
 Conjugation
 ^^^^^^^^^^^
 
-`Diagrams.Transform`:mod: also provides [TODO]
+`Diagrams.Transform`:mod: exports useful transformation utilities
+which are not specific to two dimensions.  At the moment there are
+only two: `conjugate` and `under`.  The first simply performs
+conjugation: `conjugate t1 t2 == inv t1 <> t2 <> t1`, that is,
+performs `t1`, then `t2`, then undoes `t1`.
 
-use to e.g. scale along some direction other than x/y
+`under` performs a transformation using conjugation.  It takes as
+arguments a function to perform some transformation as well as a
+transformation to conjugate by.  For example, scaling by a factor of 2
+along the diagonal line y = x can be accomplished thus:
+
+.. codeblock:: dia-lhs
+
+  > eff = text "F" <> square 1 # lw 0
+  > example = (scaleX 2 `under` rotation (-1/8 :: CircleFrac)) eff
+
+The letter F is first rotated so that the desired scaling axis lies
+along the x-axis; then `scaleX` is performed; then it is rotated back
+to its original position.
+
+Note that `reflectAbout` and `rotateAbout` are implemented using
+`under`.
 
 Alignment
 ~~~~~~~~~
 
+Since diagrams are always combined with respect to their local
+origins, moving a diagram's local origin affects the way it combines
+with others.  The position of a diagram's local origin is referred to
+as its *alignment*.
+
+The functions `moveOriginBy` and `moveOriginTo` are provided for
+explicitly moving a diagram's origin, by an absolute amount and to an
+absolute location, respectively.  `moveOriginBy` and `translate` are
+actually dual, in the sense that
+
+.. codeblock:: law
+
+  moveOriginBy v === translate (negateV v).
+
+This duality comes about since `translate` moves a diagram with
+respect to its origin, whereas `moveOriginBy` moves the *origin* with
+respect to the *diagram*.  Both are provided so that you can use
+whichever one corresponds to the most natural point of view in a given
+situation, without having to worry about inserting calls to `negateV`.
+
+Often, however, one wishes to move a diagram's origin with respect to
+its bounding function.  To this end, some general tools are provided
+in `Diagrams.Align`:mod:, and specialized 2D-specific ones by
+`Diagrams.TwoD.Align`:mod:.
+
+Functions like `alignT` (align Top) and `alignBR` (align Bottom Right)
+move the local origin to the edge of the bounding region:
+
+.. codeblock:: dia-lhs
+
+  > s = square 1 # fc yellow
+  > x |-| y = x ||| strutX 0.5 ||| y
+  > example =  (s # showOrigin)
+  >        |-| (s # alignT  # showOrigin)
+  >        |-| (s # alignBR # showOrigin)
+
+There are two things to note about the above example.  First, notice
+how `alignT` and `alignBR` move the local origin of the square in the
+way you would expect.  Second, notice that when placed "next to" each
+other using the `(|||)` operator, the squares are placed so that their
+local origins fall on a horizontal line.
+
+Functions like `alignY` allow finer control over the alignment.  In
+the below example, the origin is moved to a series of locations
+interpolating between the bottom and top of the square:
+
+.. codeblock:: dia-lhs
+
+  > s = square 1 # fc yellow
+  > example = hcat . map showOrigin
+  >         $ zipWith alignY [-1, -0.8 .. 1] (repeat s)
+
 Working with paths
 ------------------
+
+[TODO write something general about paths]
 
 Segments
 ~~~~~~~~
 
+The most basic path component is a `Segment`, which is some sort of
+primitive path from one point to another.  Segments are
+*translationally invariant*; that is, they have no inherent location,
+and applying a translation to a segment has no effect (however, other
+sorts of transformations, such as rotations and scales, have the
+effect you would expect on segments). Currently, ``diagrams`` supports
+two types of segment, defined in `Diagrams.Segment`:mod:\:
+
+* A *linear* segment is simply a straight line between two points; you
+  can construct one using `straight`.
+
+* A *bezier* segment is a cubic curve defined by two endpoints and two
+  control points; you can construct one using `bezier3`.  An example
+  is shown below, with the endpoints shown in red and the control
+  points in blue.  Cubic `bezier curves`__ are always tangent at their
+  endpoints to the lines from endpoint to control point (shown as
+  dotted lines in the diagram below).
+
+__ http://en.wikipedia.org/wiki/Bézier_curve
+
+.. codeblock:: dia-lhs
+
+  > illustrateBezier c1 c2 p2
+  >   	=  endpt
+  >   	<> endpt  # translate p2
+  >   	<> ctrlpt # translate c1
+  >   	<> ctrlpt # translate c2
+  >     <> l1
+  >   	<> l2
+  >     <> fromSegments [bezier3 c1 c2 p2]
+  >   where
+  >     dashed  = dashing [0.1,0.1] 0
+  >     endpt   = circle 0.05 # fc red  # lw 0
+  > 	ctrlpt  = circle 0.05 # fc blue # lw 0
+  > 	l1      = fromOffsets [c1] # dashed
+  > 	l2      = fromOffsets [p2 ^-^ c2] # translate c2 # dashed
+  >
+  > p2      = (3,-1) :: R2     -- endpoint
+  > [c1,c2] = [(1,2), (3,0)]   -- control points
+  >
+  > example = illustrateBezier c1 c2 p2
+
+`Diagrams.Segment`:mod: also provides a few tools for working with
+segments:
+
+* `atParam` for computing points along a segment;
+* `segOffset` for computing the offset from the start of a segment to its endpoint;
+* `splitAtParam` for splitting a segment into two smaller segments;
+* `arcLength` for approximating the arc length of a segment;
+* `arcLengthToParam` for approximating the parameter corresponding to
+  a given arc length along the segment; and
+* `adjustSegment` for extending or shrinking a segment.
+
+Finally, `Diagrams.Segment`:mod: exports a `FixedSegment` type,
+representing segments which *do* have an inherent starting location.
+This is of interest to, say, authors of rendering backends, who
+can "compile" paths into lists of segments with absolute locations.
+
 Trails
 ~~~~~~
+
+A `Trail` is essentially a list of segments laid end-to-end.  Since
+segments are translationally invariant, so are trails; that is, trails
+have no inherent starting location, and translating them has no
+effect.
+
+Trails form a `Monoid` [TODO finish]
+
 
 Paths
 ~~~~~
