@@ -130,9 +130,11 @@ functions, defined in `Diagrams.TwoD.Ellipse`:mod:.
 
 For example,
 
-.. codeblock:: dia-lhs
+.. class:: dia-lhs
 
-   > example = circle 0.5 <> unitCircle
+::
+
+> example = circle 0.5 <> unitCircle
 
 `unitCircle` creates a circle of radius 1 centered at the
 origin; `circle` takes the desired radius as an argument.
@@ -143,9 +145,11 @@ and rotating`__ circles.
 
 __ `2D Transformations`_
 
-.. codeblock:: dia-lhs
+.. class:: dia-lhs
 
-   > example = unitCircle # scaleX 0.5 # rotateBy (1/6)
+::
+
+> example = unitCircle # scaleX 0.5 # rotateBy (1/6)
 
 For convenience the standard library also provides `ellipse`, for
 creating an ellipse with a given eccentricity, and `ellipseXY`, for
@@ -161,9 +165,11 @@ counterclockwise to the second.
 
 __ `Angles`_
 
-.. codeblock:: dia-lhs
+.. class:: dia-lhs
 
-   > example = arc (tau/4 :: Rad) (4 * tau / 7 :: Rad)
+::
+
+> example = arc (tau/4 :: Rad) (4 * tau / 7 :: Rad)
 
 Polygons
 ~~~~~~~~
@@ -177,12 +183,14 @@ record of optional arguments that control the generated polygon:
   that edges should connect every nth vertex.  The default is `1`.
 * `orientation` specifies the `PolygonOrientation`.
 
-.. codeblock:: dia-lhs
+.. class:: dia-lhs
 
-   > poly1 = polygon with { sides = 6, orientation = OrientToX }
-   > poly2 = polygon with { sides = 7, edgeSkip = 2 }
-   > poly3 = polygon with { sides = 5 }
-   > example = poly1 ||| poly2 ||| poly3
+::
+
+> poly1 = polygon with { sides = 6, orientation = OrientToX }
+> poly2 = polygon with { sides = 7, edgeSkip = 2 }
+> poly3 = polygon with { sides = 5 }
+> example = poly1 ||| poly2 ||| poly3
 
 Notice the idiom of using `with` to construct a record of default
 options and selectively overriding particular options by name. `with`
@@ -209,9 +217,11 @@ see `Working with paths`_.
 * `eqTriangle` constructs an equilateral triangle with radius `1`.
 * `roundedRect` constructs a rectangle with circular rounded corners.
 
-.. codeblock:: dia-lhs
+.. class:: dia-lhs
 
-  > example = square 1 ||| rect 0.3 0.5 ||| eqTriangle ||| roundedRect (0.7,0.4) 0.1
+::
+
+> example = square 1 ||| rect 0.3 0.5 ||| eqTriangle ||| roundedRect (0.7,0.4) 0.1
 
 More special polygons will likely be added in future versions of the
 library.
@@ -223,9 +233,11 @@ Completing the hodgepodge in `Diagrams.TwoD.Shapes`:mod: for now, the
 functions `hrule` and `vrule` create horizontal and vertical lines,
 respectively.
 
-.. codeblock:: dia-lhs
+.. class:: dia-lhs
 
-   > example = circle 1 ||| hrule 2 ||| circle 1
+::
+
+> example = circle 1 ||| hrule 2 ||| circle 1
 
 Combining diagrams
 ------------------
@@ -243,9 +255,11 @@ top of the other with `atop`.  The diagram `d1 \`atop\` d2` is formed
 by placing `d1`'s local origin on top of `d2`'s local origin; that is,
 by identifying their local vector spaces.
 
-.. codeblock:: dia-lhs
+.. class:: dia-lhs
 
-  > example = circle 1 `atop` square (sqrt 2)
+::
+
+> example = circle 1 `atop` square (sqrt 2)
 
 As noted before, diagrams form a monoid_
 with composition given by identification of vector spaces.  `atop` is
@@ -258,13 +272,15 @@ This also means that a list of diagrams can be stacked with `mconcat`;
 that is, `mconcat [d1, d2, d3, ...]` is the diagram with `d1` on top
 of `d2` on top of `d3` on top of...
 
-.. codeblock:: dia-lhs
+.. class:: dia-lhs
 
-  > example = mconcat [ circle 0.1 # fc green
-  >                   , eqTriangle # scale 0.4 # fc yellow
-  >                   , square 1 # fc blue
-  >                   , circle 1 # fc red
-  >                   ]
+::
+
+> example = mconcat [ circle 0.1 # fc green
+>                   , eqTriangle # scale 0.4 # fc yellow
+>                   , square 1 # fc blue
+>                   , circle 1 # fc red
+>                   ]
 
 Juxtaposing diagrams
 ~~~~~~~~~~~~~~~~~~~~
@@ -278,10 +294,12 @@ first argument to `beside` is a vector specifying a direction.  The
 second and third arguments are diagrams, which are placed next to each
 other so that the vector points from the first diagram to the second.
 
-.. codeblock:: dia-lhs
+.. class:: dia-lhs
 
-  > example = beside (20,30) (circle 1 # fc orange) (circle 1.5 # fc purple)
-  >           # showOrigin
+::
+
+> example = beside (20,30) (circle 1 # fc orange) (circle 1.5 # fc purple)
+>           # showOrigin
 
 As can be seen from the above example, the *length* of the vector
 makes no difference, only its *direction* is taken into account. (To
@@ -293,23 +311,27 @@ To place diagrams next to each other while leaving the local origin of
 the combined diagram in the same place as the local origin of the
 first subdiagram, use `append` instead of `beside`:
 
-.. codeblock:: dia-lhs
+.. class:: dia-lhs
 
-  > example = append (20,30) (circle 1 # fc orange) (circle 1.5 # fc purple)
-  >           # showOrigin
+::
+
+> example = append (20,30) (circle 1 # fc orange) (circle 1.5 # fc purple)
+>           # showOrigin
 
 Since placing diagrams next to one another horizontally and vertically
 is quite common, special combinators are provided for convenience.
 `(|||)` and `(===)` are specializations of `beside` which juxtapose
 diagrams in the x and y-directions, respectively.
 
-.. codeblock:: dia-lhs
+.. class:: dia-lhs
 
-  > d1 = circle 1 # fc red
-  > d2 = square 1 # fc blue
-  > example = (d1 ||| d2) ||| strutX 3 ||| ( d1
-  >                                          ===
-  >                                          d2  )
+::
+
+> d1 = circle 1 # fc red
+> d2 = square 1 # fc blue
+> example = (d1 ||| d2) ||| strutX 3 ||| ( d1
+>                                          ===
+>                                          d2  )
 
 See `Bounding functions and local vector spaces`_ for more information
 on what "next to" means, or see `Bounding functions`_ for precise
@@ -326,21 +348,25 @@ The simplest method of combining multiple diagrams is `position`,
 which takes a list of diagrams paired with points, and places the
 local origin of each diagram at the indicated point.
 
-.. codeblock:: dia-lhs
+.. class:: dia-lhs
 
-  > example = position (zip (map mkPoint [-3, -2.8 .. 3]) (repeat dot))
-  >   where dot       = circle 0.2 # fc black
-  >         mkPoint x = P (x,x^2)
+::
+
+> example = position (zip (map mkPoint [-3, -2.8 .. 3]) (repeat dot))
+>   where dot       = circle 0.2 # fc black
+>         mkPoint x = P (x,x^2)
 
 `cat` is like an iterated version of `beside`, which takes a direction
 vector and a list of diagrams, laying out the diagrams beside one
 another in a row.  The local origins of the subdiagrams will be placed
 along a straight line in the direction of the given vector.
 
-.. codeblock:: dia-lhs
+.. class:: dia-lhs
 
-  > example = cat (2,-1) (map p [3..8]) # showOrigin
-  >   where p n = polygon with {sides = n} # lw 0.03
+::
+
+> example = cat (2,-1) (map p [3..8]) # showOrigin
+>   where p n = polygon with {sides = n} # lw 0.03
 
 Note, however, that the local origin of the final diagram is placed at
 the local origin of the first diagram in the list.
@@ -350,12 +376,14 @@ For more control over the way in which the diagrams are laid out, use
 the documentation for `cat'` and `CatOpts` to learn about the various
 possibilities.
 
-.. codeblock:: dia-lhs
+.. class:: dia-lhs
 
-  > example = cat' (2,-1) with { catMethod = Distrib, sep = 2 } (map p [3..8])
-  >   where p n = polygon with {sides = n} # lw 0.03
-  >                                        # scale (1 + fromIntegral n/4)
-  >                                        # showOrigin
+::
+
+> example = cat' (2,-1) with { catMethod = Distrib, sep = 2 } (map p [3..8])
+>   where p n = polygon with {sides = n} # lw 0.03
+>                                        # scale (1 + fromIntegral n/4)
+>                                        # showOrigin
 
 For convenience, `Diagrams.TwoD.Combinators`:mod: also provides `hcat`, `hcat'`,
 `vcat`, and `vcat'`, variants of `cat` and `cat'` which concatenate
@@ -367,14 +395,16 @@ single central diagram without reference to one another; simply
 iterating `append` causes each of the previously appended diagrams to
 be taken into account when deciding where to place the next one.
 
-.. codeblock:: dia-lhs
+.. class:: dia-lhs
 
-  > c        = circle 1 # lw 0.03
-  > dirs     = iterate (rotateBy (1/7)) unitX
-  > cdirs    = zip dirs (replicate 7 c)
-  > example1 = appends c cdirs
-  > example2 = foldl (\a (v,b) -> append v a b) c cdirs
-  > example  = example1 ||| strutX 3 ||| example2
+::
+
+> c        = circle 1 # lw 0.03
+> dirs     = iterate (rotateBy (1/7)) unitX
+> cdirs    = zip dirs (replicate 7 c)
+> example1 = appends c cdirs
+> example2 = foldl (\a (v,b) -> append v a b) c cdirs
+> example  = example1 ||| strutX 3 ||| example2
 
 `Diagrams.Combinators`:mod: also provides `decoratePath` and
 `decorateTrail`, which are described in `Stroking and decorating
@@ -418,9 +448,11 @@ stroke the paths in the diagram and the color used to fill them.
 These can be set, respectively, with the `lc` (line color) and `fc`
 (fill color) functions.
 
-.. codeblock:: dia-lhs
+.. class:: dia-lhs
 
-  > example = circle 0.2 # lc purple # fc yellow
+::
+
+> example = circle 0.2 # lc purple # fc yellow
 
 By default, diagrams use a black line color and a completely
 transparent fill color.
@@ -432,24 +464,28 @@ information.  The `colour`:pkg: package uses a different type for
 colors with an alpha channel (*i.e.* transparency). To make use of
 transparent colors you can use `lcA` and `fcA`.
 
-.. codeblock:: dia-lhs
+.. class:: dia-lhs
 
-  > import Data.Colour (withOpacity)
-  >
-  > colors  = map (blue `withOpacity`) [0.1, 0.2 .. 1.0]
-  > example = hcat' with { catMethod = Distrib, sep = 1 }
-  >                 (zipWith fcA colors (repeat (circle 1)))
+::
+
+> import Data.Colour (withOpacity)
+>
+> colors  = map (blue `withOpacity`) [0.1, 0.2 .. 1.0]
+> example = hcat' with { catMethod = Distrib, sep = 1 }
+>                 (zipWith fcA colors (repeat (circle 1)))
 
 Transparency can also be tweaked with the `Opacity` attribute, which
 sets the opacity/transparency of a diagram as a whole. Applying
 `opacity p` to a diagram, where `p` is a value between `0` and `1`,
 results in a diagram `p` times as opaque.
 
-.. codeblock:: dia-lhs
+.. class:: dia-lhs
 
-  > s c     = square 1 # fc c
-  > reds    = (s darkred ||| s red) === (s pink ||| s indianred)
-  > example = hcat' with { sep = 1 } . take 4 . iterate (opacity 0.7) $ reds
+::
+
+> s c     = square 1 # fc c
+> reds    = (s darkred ||| s red) === (s pink ||| s indianred)
+> example = hcat' with { sep = 1 } . take 4 . iterate (opacity 0.7) $ reds
 
 Line width
 ^^^^^^^^^^
@@ -466,16 +502,18 @@ for three aspects of line drawing:
 * `dashing` allows for drawing dashed lines with arbitrary dashing
   patterns.
 
-.. codeblock:: dia-lhs
+.. class:: dia-lhs
 
-  > path = fromVertices (map P [(0,0), (1,0.3), (2,0), (2.2,0.3)]) # lw 0.1
-  > example = centerXY . vcat' with { sep = 0.1 }
-  >           $ map (path #)
-  >             [ lineCap LineCapButt   . lineJoin LineJoinMiter
-  >             , lineCap LineCapRound  . lineJoin LineJoinRound
-  >             , lineCap LineCapSquare . lineJoin LineJoinBevel
-  >             , dashing [0.1,0.2,0.3,0.1] 0
-  >             ]
+::
+
+> path = fromVertices (map P [(0,0), (1,0.3), (2,0), (2.2,0.3)]) # lw 0.1
+> example = centerXY . vcat' with { sep = 0.1 }
+>           $ map (path #)
+>             [ lineCap LineCapButt   . lineJoin LineJoinMiter
+>             , lineCap LineCapRound  . lineJoin LineJoinRound
+>             , lineCap LineCapSquare . lineJoin LineJoinBevel
+>             , dashing [0.1,0.2,0.3,0.1] 0
+>             ]
 
 2D Transformations
 ~~~~~~~~~~~~~~~~~~
@@ -541,11 +579,13 @@ about some point other than the origin.
 
 __ `Angles`_
 
-.. codeblock:: dia-lhs
+.. class:: dia-lhs
 
-  > eff = text "F" <> square 1 # lw 0
-  > rs  = map rotateBy [1/7, 2/7 .. 6/7]
-  > example = hcat . map (eff #) $ rs
+::
+
+> eff = text "F" <> square 1 # lw 0
+> rs  = map rotateBy [1/7, 2/7 .. 6/7]
+> example = hcat . map (eff #) $ rs
 
 Scaling and reflection
 ^^^^^^^^^^^^^^^^^^^^^^
@@ -558,14 +598,16 @@ shrinking (with a factor less than one).  Using a negative factor
 results in a reflection (in the case of `scaleX` and `scaleY`) or a
 180-degree rotation (in the case of `scale`).
 
-.. codeblock:: dia-lhs
+.. class:: dia-lhs
 
-  > eff = text "F" <> square 1 # lw 0
-  > ts  = [ scale (1/2), id, scale 2,    scaleX 2,    scaleY 2
-  >       ,     scale (-1), scaleX (-1), scaleY (-1)
-  >       ]
-  >
-  > example = hcat . map (eff #) $ ts
+::
+
+> eff = text "F" <> square 1 # lw 0
+> ts  = [ scale (1/2), id, scale 2,    scaleX 2,    scaleY 2
+>       ,     scale (-1), scaleX (-1), scaleY (-1)
+>       ]
+>
+> example = hcat . map (eff #) $ ts
 
 Scaling by zero is forbidden.  Let us never speak of it again.
 
@@ -577,11 +619,13 @@ remember that `reflectX = scaleX (-1)`.
 
 To reflect in some line other than an axis, use `reflectAbout`.
 
-.. codeblock:: dia-lhs
+.. class:: dia-lhs
 
-  > eff = text "F" <> square 1 # lw 0
-  > example = eff
-  >        <> reflectAbout (P (0.2,0.2)) (rotateBy (-1/10) unitX) eff
+::
+
+> eff = text "F" <> square 1 # lw 0
+> example = eff
+>        <> reflectAbout (P (0.2,0.2)) (rotateBy (-1/10) unitX) eff
 
 Translation
 ^^^^^^^^^^^
@@ -603,10 +647,12 @@ arguments a function to perform some transformation as well as a
 transformation to conjugate by.  For example, scaling by a factor of 2
 along the diagonal line y = x can be accomplished thus:
 
-.. codeblock:: dia-lhs
+.. class:: dia-lhs
 
-  > eff = text "F" <> square 1 # lw 0
-  > example = (scaleX 2 `under` rotation (-1/8 :: CircleFrac)) eff
+::
+
+> eff = text "F" <> square 1 # lw 0
+> example = (scaleX 2 `under` rotation (-1/8 :: CircleFrac)) eff
 
 The letter F is first rotated so that the desired scaling axis lies
 along the x-axis; then `scaleX` is performed; then it is rotated back
@@ -628,9 +674,11 @@ explicitly moving a diagram's origin, by an absolute amount and to an
 absolute location, respectively.  `moveOriginBy` and `translate` are
 actually dual, in the sense that
 
-.. codeblock:: law
+.. class:: law
 
-  moveOriginBy v === translate (negateV v).
+::
+
+    moveOriginBy v === translate (negateV v).
 
 This duality comes about since `translate` moves a diagram with
 respect to its origin, whereas `moveOriginBy` moves the *origin* with
@@ -646,13 +694,15 @@ in `Diagrams.Align`:mod:, and specialized 2D-specific ones by
 Functions like `alignT` (align Top) and `alignBR` (align Bottom Right)
 move the local origin to the edge of the bounding region:
 
-.. codeblock:: dia-lhs
+.. class:: dia-lhs
 
-  > s = square 1 # fc yellow
-  > x |-| y = x ||| strutX 0.5 ||| y
-  > example =  (s # showOrigin)
-  >        |-| (s # alignT  # showOrigin)
-  >        |-| (s # alignBR # showOrigin)
+::
+
+> s = square 1 # fc yellow
+> x |-| y = x ||| strutX 0.5 ||| y
+> example =  (s # showOrigin)
+>        |-| (s # alignT  # showOrigin)
+>        |-| (s # alignBR # showOrigin)
 
 There are two things to note about the above example.  First, notice
 how `alignT` and `alignBR` move the local origin of the square in the
@@ -664,11 +714,13 @@ Functions like `alignY` allow finer control over the alignment.  In
 the below example, the origin is moved to a series of locations
 interpolating between the bottom and top of the square:
 
-.. codeblock:: dia-lhs
+.. class:: dia-lhs
 
-  > s = square 1 # fc yellow
-  > example = hcat . map showOrigin
-  >         $ zipWith alignY [-1, -0.8 .. 1] (repeat s)
+::
+
+> s = square 1 # fc yellow
+> example = hcat . map showOrigin
+>         $ zipWith alignY [-1, -0.8 .. 1] (repeat s)
 
 Working with paths
 ------------------
@@ -698,27 +750,29 @@ two types of segment, defined in `Diagrams.Segment`:mod:\:
 
 __ http://en.wikipedia.org/wiki/Bézier_curve
 
-.. codeblock:: dia-lhs
+.. class:: dia-lhs
 
-  > illustrateBezier c1 c2 p2
-  >   	=  endpt
-  >   	<> endpt  # translate p2
-  >   	<> ctrlpt # translate c1
-  >   	<> ctrlpt # translate c2
-  >     <> l1
-  >   	<> l2
-  >     <> fromSegments [bezier3 c1 c2 p2]
-  >   where
-  >     dashed  = dashing [0.1,0.1] 0
-  >     endpt   = circle 0.05 # fc red  # lw 0
-  > 	ctrlpt  = circle 0.05 # fc blue # lw 0
-  > 	l1      = fromOffsets [c1] # dashed
-  > 	l2      = fromOffsets [p2 ^-^ c2] # translate c2 # dashed
-  >
-  > p2      = (3,-1) :: R2     -- endpoint
-  > [c1,c2] = [(1,2), (3,0)]   -- control points
-  >
-  > example = illustrateBezier c1 c2 p2
+::
+
+> illustrateBezier c1 c2 p2
+>     =  endpt
+>     <> endpt  # translate p2
+>     <> ctrlpt # translate c1
+>     <> ctrlpt # translate c2
+>     <> l1
+>     <> l2
+>     <> fromSegments [bezier3 c1 c2 p2]
+>   where
+>     dashed  = dashing [0.1,0.1] 0
+>     endpt   = circle 0.05 # fc red  # lw 0
+>     ctrlpt  = circle 0.05 # fc blue # lw 0
+>     l1      = fromOffsets [c1] # dashed
+>     l2      = fromOffsets [p2 ^-^ c2] # translate c2 # dashed
+>
+> p2      = (3,-1) :: R2     -- endpoint
+> [c1,c2] = [(1,2), (3,0)]   -- control points
+>
+> example = illustrateBezier c1 c2 p2
 
 `Diagrams.Segment`:mod: also provides a few tools for working with
 segments:

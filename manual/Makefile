@@ -9,7 +9,7 @@ xml2html.exe : xml2html.hs Build.hs
 	./xml2html.exe $< $@
 
 %.xml : %.rst
-	./dia-rst2xml.py $< $@
+	rst2xml.py $< $@
 
 %-du.html : %.rst
 	rst2html.py $< $@
@@ -19,8 +19,10 @@ xml2html.exe : xml2html.hs Build.hs
 clean : 
 	rm -f *.exe *.html *.o *.hi *.xml
 
-veryclean : clean
+imgclean :
 	rm -f images/*.png
+
+veryclean : clean imgclean
 
 preview : diagrams-manual.html
 	cp diagrams-manual.{html,rst} ${WEB}

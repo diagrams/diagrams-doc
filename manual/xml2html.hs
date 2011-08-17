@@ -43,7 +43,7 @@ diagramsManual modMap nameMap =
                    ]
   
 compileDiagrams :: XmlT (IOSLA (XIOState ()))
-compileDiagrams = onElemA "raw" [("format", "dia")] $ 
+compileDiagrams = onElemA "literal_block" [("classes", "dia")] $ 
   eelem "div"
     += attr "class" (txt "exampleimg")
     += compileDiaArr
@@ -51,7 +51,7 @@ compileDiagrams = onElemA "raw" [("format", "dia")] $
 -- | Compile code blocks intended to generate both a diagram and the
 --   syntax highlighted code.
 compileDiagramsLHS :: XmlT (IOSLA (XIOState ()))
-compileDiagramsLHS = onElemA "raw" [("format", "dia-lhs")] $
+compileDiagramsLHS = onElemA "literal_block" [("classes", "dia-lhs")] $
   eelem "div"
     += attr "class" (txt "dia-lhs")
     += (compileDiaArr <+> highlightBlockHSArr)
