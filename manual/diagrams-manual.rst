@@ -787,10 +787,10 @@ two types of segment, defined in `Diagrams.Segment`:mod:\:
 * A *linear* segment is simply a straight line between two points; you
   can construct one using `straight`.
 
-* A *bezier* segment is a cubic curve defined by two endpoints and two
+* A *Bézier* segment is a cubic curve defined by two endpoints and two
   control points; you can construct one using `bezier3`.  An example
   is shown below, with the endpoints shown in red and the control
-  points in blue.  Cubic `bezier curves`__ are always tangent at their
+  points in blue.  Cubic `Bézier curves`__ are always tangent at their
   endpoints to the lines from endpoint to control point (shown as
   dotted lines in the diagram below).
 
@@ -844,9 +844,22 @@ segments are translationally invariant, so are trails; that is, trails
 have no inherent starting location, and translating them has no
 effect.
 
-.. container:: todo
+Trails form a `Monoid` with *concatenation* as the binary operation,
+and the empty (no-segment) trail as the identity element.  The example
+below constructs a two-segment trail called ``spike`` and then
+constructs a starburst path by concatenating a number of rotated
+copies.
 
-  Trails form a `Monoid`...
+.. class:: dia-lhs
+
+::
+
+> spike :: Trail R2
+> spike = fromOffsets [(1,3), (1,-3)]
+>
+> burst = mconcat . take 13 . iterate (rotateBy (-1/13)) $ spike
+>
+> example = strokeT burst # fc yellow # lw 0.1 # lc orange
 
 
 Paths
@@ -858,11 +871,46 @@ The ``PathLike`` class
 Splines
 ~~~~~~~
 
+Constructing Bézier segments by hand is tedious.  The
+`Diagrams.CubicSpline`:mod: module provides the `cubicSpline`
+function, which, given a list of points, constructs a smooth curved
+path passing through each point in turn.  The first argument to
+`cubicSpline` is a boolean value indicating whether the path should be
+closed.
+
+.. class:: dia-lhs
+
+::
+
+> pts = map P [(0,0), (2,3), (5,-2), (-4,1), (0,3)]
+> dot = circle 0.2 # fc blue # lw 0
+> mkPath closed = position (zip pts (repeat dot))
+>              <> cubicSpline closed pts # lw 0.05
+> example = mkPath False ||| strutX 2 ||| mkPath True
+
+For more control over the generation of curved paths, see the
+`diagrams-spiro`:pkg: package.
+
 Stroking and decorating paths
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Clipping
 ~~~~~~~~
+
+With backends that support clipping, paths can be used to *clip* other
+diagrams.  Only the portion of a clipped diagram falling inside the
+clipping path will be drawn.  Note that the diagram's bounding
+function is unaffected.
+
+.. class:: dia-lhs
+
+::
+
+> 
+> example = square 3 
+>         # fc green 
+>         # lw 0.05
+>         # clipBy (square 3.2 # rotateBy (1/10))
 
 Text
 ----
