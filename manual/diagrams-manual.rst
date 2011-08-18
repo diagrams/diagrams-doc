@@ -49,9 +49,6 @@ Bounding functions and local vector spaces
   * Basics/intuition of bounding functions
   * Local origin 
   * `showOrigin` function
-  * 
-
-.. container:: todo
 
   * `strut`, `pad`, `withBounds`, `phantom` should be written about
     somewhere (not necessarily here)
@@ -110,7 +107,9 @@ two-dimensional space:
 * `T2` is the type of two-dimensional affine transformations.  It is a
   synonym for `Transformation R2`.
 
-[TODO: note re: vectors vs points.]
+.. container:: todo
+
+  Note important difference between vectors and points.
 
 Angles
 ~~~~~~
@@ -431,7 +430,9 @@ paths`_.
 Modifying diagrams
 ------------------
 
-[TODO: some sort of general statement about modifying diagrams]
+.. container:: todo
+
+  Some sort of general statement about modifying diagrams
 
 Attributes and styles
 ~~~~~~~~~~~~~~~~~~~~~
@@ -743,7 +744,9 @@ interpolating between the bottom and top of the square:
 Working with paths
 ------------------
 
-[TODO write something general about paths]
+.. container:: todo
+
+  Write something general about paths
 
 Segments
 ~~~~~~~~
@@ -816,7 +819,9 @@ segments are translationally invariant, so are trails; that is, trails
 have no inherent starting location, and translating them has no
 effect.
 
-Trails form a `Monoid` [TODO finish]
+.. container:: todo
+
+  Trails form a `Monoid`...
 
 
 Paths

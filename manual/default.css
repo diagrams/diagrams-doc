@@ -48,3 +48,19 @@ code a {
     color: blue;
     text-decoration: underline;
 }
+
+div.todo:before {
+    content: 'To do:'
+}
+
+div.todo:before {
+    content: url(icons/towrite.png);
+    float: right;
+}
+
+div.todo {
+    padding: 20px;
+    border-style: solid;
+    border-width: thin;
+    background-color: #ffdddd;
+}
