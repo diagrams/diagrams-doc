@@ -5,14 +5,14 @@ default : diagrams-manual.html
 xml2html.exe : xml2html.hs Build.hs
 	ghc --make -O2 $< -o $@
 
-%.html : %.xml xml2html.exe
+%.html : %.xml xml2html.exe build-icons
 	./xml2html.exe $< $@
+
+build-icons :
+	make -C icons
 
 %.xml : %.rst
 	rst2xml.py $< $@
-
-%-du.html : %.rst
-	rst2html.py $< $@
 
 .SECONDARY : xml2html.exe diagrams-manual.xml
 
@@ -25,7 +25,7 @@ imgclean :
 veryclean : clean imgclean
 
 preview : diagrams-manual.html
-	cp diagrams-manual.{html,rst} ${WEB}
-	cp *.css ${WEB}
-	cp images/* ${WEB}/images
-	chmod -R go+rX ${WEB}
+	cp diagrams-manual.{html,rst} $(WEB)
+	cp *.css $(WEB)
+	cp images/* $(WEB)/images
+	chmod -R go+rX $(WEB)

@@ -3,8 +3,8 @@
 
 all : Build
 
-Build : Build.hs
-	ghc --make Build
+Build.exe : Build.hs
+	ghc --make Build -o Build.exe
 
 # %.png : %.lhs Build
 # 	./Build $(basename $<)
