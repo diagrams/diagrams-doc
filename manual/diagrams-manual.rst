@@ -839,10 +839,14 @@ can "compile" paths into lists of segments with absolute locations.
 Trails
 ~~~~~~
 
-A `Trail` is essentially a list of segments laid end-to-end.  Since
-segments are translationally invariant, so are trails; that is, trails
-have no inherent starting location, and translating them has no
-effect.
+`Trail`s, defined in `Diagrams.Path`:mod:, are essentially a list of
+segments laid end-to-end.  Since segments are translationally
+invariant, so are trails; that is, trails have no inherent starting
+location, and translating them has no effect.
+
+Trails can also be *open* or *closed*: a closed trail is one with an
+implicit (linear) segment connecting the endpoint of the trail to the
+starting point.
 
 Trails form a `Monoid` with *concatenation* as the binary operation,
 and the empty (no-segment) trail as the identity element.  The example
@@ -861,9 +865,31 @@ copies.
 >
 > example = strokeT burst # fc yellow # lw 0.1 # lc orange
 
+For details on the functions provided for manipulating trails, see the
+documentation for `Diagrams.Path`:mod:.
+
+.. container:: todo
+
+  `explodeTrail`
 
 Paths
 ~~~~~
+
+A `Path`, also defined in `Diagrams.Path`:mod:, is a (possibly empty)
+collection of trails, along with an absolute starting location for
+each trail.  `Path`s also form a `Monoid`, but the binary operation is
+*superposition* (just like `mappend` for diagrams).  Paths with
+multiple components can be used, for example, to create shapes with
+holes:
+
+.. class:: dia-lhs
+
+::
+
+> ring :: Path R2
+> ring = circlePath 3 <> circlePath 2 # reversePath
+>
+> example = stroke ring # fc purple
 
 The ``PathLike`` class
 ~~~~~~~~~~~~~~~~~~~~~~
