@@ -264,8 +264,8 @@ diagrams are created by combining simpler diagrams in various ways.
 Many of the combination methods discussed in this section are defined
 in `Diagrams.Combinators`:mod:.
 
-Superimposing diagrams with `atop`
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Superimposing diagrams with ``atop``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The most fundamental way to combine two diagrams is to place one on
 top of the other with `atop`.  The diagram `d1 \`atop\` d2` is formed
@@ -827,8 +827,8 @@ effect.
 Paths
 ~~~~~
 
-The `PathLike` class
-~~~~~~~~~~~~~~~~~~~~
+The ``PathLike`` class
+~~~~~~~~~~~~~~~~~~~~~~
 
 Splines
 ~~~~~~~
@@ -884,10 +884,10 @@ UD-Trees
 Backends
 --------
 
-The `Backend` class
+The ``Backend`` class
 ~~~~~~~~~~~~~~~~~~~~~
 
-The `Renderable` class
+The ``Renderable`` class
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 Cairo backend
