@@ -16,11 +16,36 @@ Preliminaries
 Introduction
 ------------
 
+.. container:: todo
+
+  * Purpose of ``diagrams``
+  * A cool example or two
+
 Installation
 ------------
 
+.. container:: todo
+
+  * Prerequisites
+    - GHC 7
+    - Haskell Platform
+  * Installation
+
 Getting started
 ---------------
+
+.. container:: todo
+
+  * Creating your first diagram
+  * Where to go for further information
+
+About this document
+-------------------
+
+.. container:: todo
+
+  * What to expect from this document
+  * Markup used
 
 Essential concepts
 ==================
