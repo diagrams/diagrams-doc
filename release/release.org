@@ -1,5 +1,7 @@
 * Planning for release of version 0.4
 
+  + [ ] release docutils package
+    - [ ] choose a different name for it??
   + [ ] user manual
     - [ ] finish writing
     - [ ] get it on the web (don't worry yet about making a
@@ -17,6 +19,9 @@
   + [ ] create diagrams-contrib repository and create a module or two
         for it?
   + [ ] write a contributor tutorial?
+  + [ ] update/extend tutorial a bit?
+  + [ ] update diagrams package to depend on new versions of -core,
+        -lib, etc.
 
 * Tasks to complete before release of preview version
 
