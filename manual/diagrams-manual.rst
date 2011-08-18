@@ -8,6 +8,8 @@
 Diagrams User Manual
 ====================
 
+.. contents::
+
 Preliminaries
 =============
 
@@ -32,18 +34,34 @@ Faking optional named arguments
 Vectors and points
 ------------------
 
+.. container:: todo
+
+  * Vector spaces
+  * Operations on vectors
+  * Important distinction between points and vectors
+  * Operations on points/vectors
+
 Bounding functions and local vector spaces
 ------------------------------------------
 
-[TODO: write about the basics/intuition of bounding functions]
-[TODO: write about local origin, note 'showOrigin' function]
+.. container:: todo
 
-[TODO: write about strut, pad, withBounds, phantom somewhere]
+  * Basics/intuition of bounding functions
+  * Local origin 
+  * `showOrigin` function
+  * 
+
+.. container:: todo
+
+  * `strut`, `pad`, `withBounds`, `phantom` should be written about
+    somewhere (not necessarily here)
 
 Postfix transformation
 ----------------------
 
-[TODO: write about # operator]
+.. container:: todo
+
+  * `(#)` operator
 
 Creating 2D diagrams
 ====================
