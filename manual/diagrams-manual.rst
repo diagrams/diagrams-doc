@@ -839,7 +839,7 @@ can "compile" paths into lists of segments with absolute locations.
 Trails
 ~~~~~~
 
-`Trail`s, defined in `Diagrams.Path`:mod:, are essentially a list of
+`Trail`\s, defined in `Diagrams.Path`:mod:, are essentially a list of
 segments laid end-to-end.  Since segments are translationally
 invariant, so are trails; that is, trails have no inherent starting
 location, and translating them has no effect.
@@ -891,8 +891,26 @@ holes:
 >
 > example = stroke ring # fc purple
 
+`reversePath` is needed on the second segment because of the way path
+filling is done; see `Fill rules`_.
+
+Stroking and decorating paths
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Fill rules
+~~~~~~~~~~
+
 The ``PathLike`` class
 ~~~~~~~~~~~~~~~~~~~~~~
+
+.. container:: todo
+
+  * Explain `PathLike` class
+  * Many functions can actually construct any `PathLike`
+  * Convenient, but also have to be careful because it can change
+    semantics (Monoid instances etc.)
+  * note strokeT and stroke functions
+  * Major exception: `circle`; use `circlePath` instead
 
 Splines
 ~~~~~~~
@@ -916,9 +934,6 @@ closed.
 
 For more control over the generation of curved paths, see the
 `diagrams-spiro`:pkg: package.
-
-Stroking and decorating paths
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Clipping
 ~~~~~~~~
@@ -949,6 +964,9 @@ Bounding boxes
 
 Tools for backends
 ------------------
+
+Tips and tricks
+---------------
 
 Core library
 ============
