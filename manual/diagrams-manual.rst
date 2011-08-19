@@ -1024,7 +1024,6 @@ function is unaffected.
 
 ::
 
->
 > example = square 3
 >         # fc green
 >         # lw 0.05
@@ -1032,6 +1031,14 @@ function is unaffected.
 
 Text
 ----
+
+.. container:: todo
+
+  * Creating text objects
+  * Text objects take up no space
+  * Font size
+  * Other text attributes
+  * Planned for future versions: better alignment, converting to paths
 
 Named subdiagrams
 -----------------
