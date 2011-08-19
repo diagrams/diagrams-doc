@@ -37,7 +37,16 @@ Getting started
 .. container:: todo
 
   * Creating your first diagram
-  * Where to go for further information
+
+Other resources
+---------------
+
+.. container:: todo
+
+  * API documentation
+  * Website gallery
+  * IRC channel
+  * Mailing list
 
 About this document
 -------------------
@@ -50,11 +59,35 @@ About this document
 Essential concepts
 ==================
 
+.. container:: todo
+
+  * General ideas used throughout
+  * If you're eager to skip right to the good stuff, feel free to skip
+    this section at first
+  * Not that anyone really reads user manuals straight through anyway.
+
 Monoids
 -------
 
+.. container:: todo
+
+  * Explanation of monoids; the `Monoid` class
+  * Note provided `(<>)` synonym for `mappend` (may soon become
+    standard)
+  * Many things are monoids: diagrams, transformations, trails, paths,
+    styles, colors
+
 Faking optional named arguments
 -------------------------------
+
+.. container:: todo
+
+  * Many functions take a record of arguments
+  * Default arguments defined via `Default` type class
+  * `with` is synonym for `def`, enables blah with {foo = bar} syntax
+  * Note that record update binds more tightly than function
+    application (!)
+  * Give example
 
 Vectors and points
 ------------------
@@ -72,7 +105,7 @@ Bounding functions and local vector spaces
 .. container:: todo
 
   * Basics/intuition of bounding functions
-  * Local origin 
+  * Local origin
   * `showOrigin` function
 
   * `strut`, `pad`, `withBounds`, `phantom` should be written about
@@ -87,6 +120,10 @@ Postfix transformation
 
 Creating 2D diagrams
 ====================
+
+.. container:: todo
+
+  * add some fun diagrams here?
 
 The main purpose of ``diagrams`` is to construct two-dimensional
 vector graphics, although it can be used for more general purposes as
@@ -449,7 +486,7 @@ be taken into account when deciding where to place the next one.
 > example  = example1 ||| strutX 3 ||| example2
 
 `Diagrams.Combinators`:mod: also provides `decoratePath` and
-`decorateTrail`, which are described in `Stroking and decorating
+`decorateTrail`, which are described in `Decorating trails and
 paths`_.
 
 Modifying diagrams
@@ -781,18 +818,26 @@ primitive path from one point to another.  Segments are
 *translationally invariant*; that is, they have no inherent location,
 and applying a translation to a segment has no effect (however, other
 sorts of transformations, such as rotations and scales, have the
-effect you would expect on segments). Currently, ``diagrams`` supports
+effect you would expect). In other words, a segment is not
+a way to get from point A to point B; it is a way to get from
+*wherever you are* to *somewhere else*.
+
+Currently, ``diagrams`` supports
 two types of segment, defined in `Diagrams.Segment`:mod:\:
 
-* A *linear* segment is simply a straight line between two points; you
-  can construct one using `straight`.
+* A *linear* segment is simply a straight line, defined by an offset
+  from its beginning point to its end point; you can construct one
+  using `straight`.
 
-* A *Bézier* segment is a cubic curve defined by two endpoints and two
-  control points; you can construct one using `bezier3`.  An example
-  is shown below, with the endpoints shown in red and the control
-  points in blue.  Cubic `Bézier curves`__ are always tangent at their
-  endpoints to the lines from endpoint to control point (shown as
-  dotted lines in the diagram below).
+* A *Bézier* segment is a cubic curve defined by an offset from its
+  beginning to its end, along with two control points; you can
+  construct one using `bezier3`.  An example is shown below, with the
+  endpoints shown in red and the control points in blue.  Cubic
+  `Bézier curves`__ always start off from the beginning point heading
+  towards the first control point, and end up at the final point
+  heading away from the second control point.  That is, in any drawing
+  of a cubic Bézier curve like the one below, the curve will be
+  tangent to the two dotted lines.
 
 __ http://en.wikipedia.org/wiki/Bézier_curve
 
@@ -839,7 +884,7 @@ can "compile" paths into lists of segments with absolute locations.
 Trails
 ~~~~~~
 
-`Trail`\s, defined in `Diagrams.Path`:mod:, are essentially a list of
+`Trail`\s, defined in `Diagrams.Path`:mod:, are essentially lists of
 segments laid end-to-end.  Since segments are translationally
 invariant, so are trails; that is, trails have no inherent starting
 location, and translating them has no effect.
@@ -847,6 +892,13 @@ location, and translating them has no effect.
 Trails can also be *open* or *closed*: a closed trail is one with an
 implicit (linear) segment connecting the endpoint of the trail to the
 starting point.
+
+.. container:: todo
+
+  * Methods for constructing trails: `fromSegments`, `fromOffsets`,
+    `fromVertices`, `(~~)`, `cubicSpline` (see later).
+  * Note these all construct `PathLike` instances, more general than
+    trails: see section about `PathLike` class.
 
 Trails form a `Monoid` with *concatenation* as the binary operation,
 and the empty (no-segment) trail as the identity element.  The example
@@ -877,8 +929,12 @@ Paths
 
 A `Path`, also defined in `Diagrams.Path`:mod:, is a (possibly empty)
 collection of trails, along with an absolute starting location for
-each trail.  `Path`s also form a `Monoid`, but the binary operation is
-*superposition* (just like `mappend` for diagrams).  Paths with
+each trail. Paths of a single trail can be constructed using the same
+functions described in the previous section: `fromSegments`,
+`fromOffsets`, `fromVertices`, `(~~)`, and `cubicSpline`.
+
+`Path`s also form a `Monoid`, but the binary operation is
+*superposition* (just like that of diagrams).  Paths with
 multiple components can be used, for example, to create shapes with
 holes:
 
@@ -894,8 +950,29 @@ holes:
 `reversePath` is needed on the second segment because of the way path
 filling is done; see `Fill rules`_.
 
-Stroking and decorating paths
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.. container:: todo
+
+  * path functions (`pathFromTrail`, `pathFromTrailAt`,
+    `pathVertices`, `pathOffsets`, `reversePath`, `fixPath`,
+    `explodePath`).  Don't necessarily need to discuss every one, just
+    discuss important/nonobvious ones and give a pointer to the API
+    docs for the rest.
+
+Stroking trails and paths
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. container:: todo
+
+  * `stroke` and `strokeT` functions for turning paths (resp. trails)
+    into diagrams
+
+Decorating trails and paths
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. container:: todo
+
+  * `decoratePath` and `decorateTrail` functions for placing items at
+    the vertices of a path or trail
 
 Fill rules
 ~~~~~~~~~~
@@ -908,8 +985,8 @@ The ``PathLike`` class
   * Explain `PathLike` class
   * Many functions can actually construct any `PathLike`
   * Convenient, but also have to be careful because it can change
-    semantics (Monoid instances etc.)
-  * note strokeT and stroke functions
+    semantics (`Monoid` instances etc.)
+  * note `strokeT` and `stroke` functions
   * Major exception: `circle`; use `circlePath` instead
 
 Splines
@@ -947,9 +1024,9 @@ function is unaffected.
 
 ::
 
-> 
-> example = square 3 
->         # fc green 
+>
+> example = square 3
+>         # fc green
 >         # lw 0.05
 >         # clipBy (square 3.2 # rotateBy (1/10))
 
