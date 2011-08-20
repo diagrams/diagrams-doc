@@ -127,7 +127,10 @@ about ``diagrams``:
     where you can get help from other ``diagrams`` developers and users.
   * Consider joining the `diagrams mailing list`_ for discussions
     and announcements about ``diagrams``.
-  * See the `developer wiki`_ for XXX
+  * See the `developer wiki`_ for more specialized documentation and
+    information on planned and ongoing development.
+  * See the `bug tracker`_ for a list of open tickets.  If you find a
+    bug or would like to request a feature, please file a ticket!
 
 .. _`report it as a bug`: http://code.google.com/p/diagrams/issues/list
 .. _website: http://projects.haskell.org/diagrams
@@ -135,17 +138,24 @@ about ``diagrams``:
 .. _`diagrams mailing list`: http://groups.google.com/group/diagrams-discuss?pli=1
 .. _`developer wiki`: http://code.google.com/p/diagrams/
 
-.. container:: todo
-
-   finish
-
 About this document
 -------------------
 
+This document attempts to explain all major aspects of using the
+``diagrams`` core and standard libraries, organized by topic to make
+it easy to find what you are looking for.  It is not, however, a
+complete reference of every single function in the standard library:
+for that, see the API documentation listed under `Other resources`_.
+Most sections contain links to relevant module(s) you can follow to
+read about other functions not covered in the text.
+
+Content that has yet to be written is noted by a light red box with
+a "document" icon on the right hand side, like this:
+
 .. container:: todo
 
-  * What to expect from this document
-  * Markup used
+  * Explain zygohistomorphic prepromorphisms
+  * Essay on postmodernist critiques of ``diagrams`` vis-a-vis Kant
 
 Essential concepts
 ==================
