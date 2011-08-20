@@ -24,29 +24,120 @@ Introduction
 Installation
 ------------
 
+Before installing ``diagrams``, you will need the following:
+
+  * The `Glasgow Haskell Compiler`_ (GHC), version 7.0.2 or later.
+  * The latest release of the `Haskell Platform`_ (currently
+    2011.2.0.1).
+
+If you are on a Mac or Windows, GHC itself comes with the Haskell
+Platform; if you are on Linux, you will have to install GHC first.
+
+.. _`Glasgow Haskell Compiler`: http://www.haskell.org/ghc/
+.. _`Haskell Platform`: http://hackage.haskell.org/platform/
+
+Once you have successfully installed the Haskell platform, installing
+``diagrams`` should be as easy as issuing the command:
+
+::
+
+  cabal install diagrams
+
 .. container:: todo
 
-  * Prerequisites
-    - GHC 7
-    - Haskell Platform
-  * Installation
+  Currently this isn't quite true because of difficulty of installing
+  cairo.  Make sure we either have an alternate backend in place OR
+  add more information about installing cairo here before releasing.
 
 Getting started
 ---------------
 
+Create a file called ``TestDiagram.hs`` (or whatever you like) with
+the following contents:
+
+::
+
+  {-# LANGUAGE NoMonomorphismRestriction #-}
+
+  import Diagrams.Prelude
+  import Diagrams.Backend.Cairo.CmdLine
+
+  main = defaultMain (circle 1)
+
+The first line turns off the evil monomorphism restriction, which is
+quite important when using ``diagrams``: otherwise you will quickly
+run into lots of crazy error messages.
+
+`Diagrams.Prelude`:mod: re-exports most everything from the standard
+library; `Diagrams.Backend.Cairo.CmdLine`:mod: provides a command-line
+interface to the cairo rendering backend.
+
+To compile your program, type
+
+::
+
+  ghc --make TestDiagram
+
+Then execute ``TestDiagram`` with some appropriate options:
+
+::
+
+  ./TestDiagram -w 100 -h 100 -o TestDiagram.png
+
+The above will generate a 100x100 PNG that should look like this:
+
+.. class:: dia
+
+::
+
+> example = circle 1
+
+Try typing
+
+::
+
+  ./TestDiagram --help
+
+to see the other options that are supported.
+
 .. container:: todo
 
-  * Creating your first diagram
+  * Link to the tutorial
+  * Change the above for whatever the recommended starter backend is,
+    if it changes
 
 Other resources
 ---------------
 
+Here are some other resources that may be helpful to you as you learn
+about ``diagrams``:
+
+  * The API reference documentation for all the ``diagrams`` packages
+    is intended to be high-quality and up-to-date.  If you find an
+    omission, error, or something confusing, please `report it as a
+    bug`_!
+
+        - `diagrams-core`:pkg:
+        - `diagrams-lib`:pkg:
+        - `diagrams-cairo`:pkg:
+
+  * The ``diagrams`` website_ has a `gallery of examples`_ and links
+    to tutorials, blog posts, and other documentation.
+  * The ``#diagrams`` IRC channel on Freenode is a friendly place
+    where you can get help from other ``diagrams`` developers and users.
+  * Consider joining the `diagrams mailing list`_ for discussions
+    and announcements about ``diagrams``.
+  * See the `developer wiki`_ for XXX
+
+.. _`report it as a bug`: http://code.google.com/p/diagrams/issues/list
+.. _website: http://projects.haskell.org/diagrams
+.. _`gallery of examples`: http://projects.haskell.org/diagrams/gallery.html
+.. _`diagrams mailing list`: http://groups.google.com/group/diagrams-discuss?pli=1
+.. _`developer wiki`: http://code.google.com/p/diagrams/
+
 .. container:: todo
 
-  * API documentation
-  * Website gallery
-  * IRC channel
-  * Mailing list
+   finish
 
 About this document
 -------------------
@@ -129,16 +220,7 @@ The main purpose of ``diagrams`` is to construct two-dimensional
 vector graphics, although it can be used for more general purposes as
 well.  This section explains the building blocks provided by
 `diagrams-core`:pkg: and `diagrams-lib`:pkg: for constructing
-two-dimensional diagrams:
-
-* `Basic 2D types`_
-* `Primitive shapes`_
-* Methods for `Combining`_ and `Modifying diagrams`_
-* `Working with paths`_
-* Working with `Text`_
-* Working with `Named subdiagrams`_
-
-.. _Combining: `Combining diagrams`_
+two-dimensional diagrams.
 
 All 2D-specific things can be found in `Diagrams.TwoD`:mod:, which
 re-exports most of the contents of ``Diagrams.TwoD.*`` modules.  This
@@ -171,7 +253,10 @@ two-dimensional space:
 
 .. container:: todo
 
-  Note important difference between vectors and points.
+  * Note important difference between vectors and points.
+  * `unitX`, `unit_X`, etc., `direction`
+  * `width`, `height`, etc. from `Diagrams.TwoD.Util`:mod: need to be
+    written about somewhere (not necessarily here)
 
 Angles
 ~~~~~~
@@ -1040,8 +1125,14 @@ Text
   * Other text attributes
   * Planned for future versions: better alignment, converting to paths
 
+Images
+------
+
 Named subdiagrams
 -----------------
+
+Using queries
+-------------
 
 Bounding boxes
 --------------
@@ -1051,6 +1142,9 @@ Tools for backends
 
 Tips and tricks
 ---------------
+
+Deciphering error messages
+--------------------------
 
 Core library
 ============
