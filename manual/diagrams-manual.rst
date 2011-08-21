@@ -76,13 +76,15 @@ To compile your program, type
 
 ::
 
-  ghc --make TestDiagram
+  $ ghc --make TestDiagram
 
-Then execute ``TestDiagram`` with some appropriate options:
+(Note that the ``$`` indicates a command prompt and should not
+actually be typed.)  Then execute ``TestDiagram`` with some
+appropriate options:
 
 ::
 
-  ./TestDiagram -w 100 -h 100 -o TestDiagram.png
+  $ ./TestDiagram -w 100 -h 100 -o TestDiagram.png
 
 The above will generate a 100x100 PNG that should look like this:
 
@@ -96,7 +98,7 @@ Try typing
 
 ::
 
-  ./TestDiagram --help
+  $ ./TestDiagram --help
 
 to see the other options that are supported.
 
@@ -149,13 +151,19 @@ for that, see the API documentation listed under `Other resources`_.
 Most sections contain links to relevant module(s) you can follow to
 read about other functions not covered in the text.
 
-Content that has yet to be written is noted by a light red box with
-a "document" icon on the right hand side, like this:
+This user manual is still under construction.  Content that has yet to
+be written is noted by a light red box with a "document" icon on the
+right hand side, like this:
 
 .. container:: todo
 
   * Explain zygohistomorphic prepromorphisms
   * Essay on postmodernist critiques of ``diagrams`` vis-a-vis Kant
+
+If you see a box like this in the place of something you would really
+like to know about, please bug the developers (using the ``#diagrams`` IRC
+channel on Freenode, or the `diagrams mailing list`_) so they can
+prioritize it!
 
 Essential concepts
 ==================
