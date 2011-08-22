@@ -33,9 +33,9 @@ diagramsManual modMap nameMap =
                , linkifyModules modMap
                , highlightInlineHS
                , highlightBlockHS
-               , linkifyHS nameMap modMap
                , compileDiagrams
                , compileDiagramsLHS
+               , linkifyHS nameMap modMap
                ]
   >>> xml2html
   >>> doTransforms [ styleFile "default.css"
