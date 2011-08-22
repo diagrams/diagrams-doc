@@ -168,15 +168,34 @@ prioritize it!
 Essential concepts
 ==================
 
-.. container:: todo
-
-  * General ideas used throughout
-  * If you're eager to skip right to the good stuff, feel free to skip
-    this section at first
-  * Not that anyone really reads user manuals straight through anyway.
+Before we jump into the main content of the manual, this chapter
+explains a number of general ideas and central concepts that will
+recur throughought.  If you're eager to skip right to the good stuff,
+feel free to skip this section at first, and come back to it when
+necessary; there are many links to this chapter from elsewhere in the
+manual.
 
 Monoids
 -------
+
+A *monoid* consists of
+
+  * A set of elements `S`:math:
+  * An *associative binary operation* on the set, that is, some
+    operation
+
+    `\oplus \colon S \to S \to S`:math:
+
+    for which
+
+    `(x \oplus y) \oplus z = x \oplus (y \oplus z)`:math:.
+
+  * An *identity element* `i \in S`:math: which is the identity for
+    `\oplus`:math:, that is,
+
+    `x \oplus i = i \oplus x = x`:math:.
+
+Monoids show up all over the place in programming.
 
 .. container:: todo
 
