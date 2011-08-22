@@ -21,6 +21,74 @@ Introduction
   * Purpose of ``diagrams``
   * A cool example or two
 
+About this document
+-------------------
+
+This document attempts to explain all major aspects of using the
+``diagrams`` core and standard libraries, organized by topic to make
+it easy to find what you are looking for.  It is not, however, a
+complete reference of every single function in the standard library:
+for that, see the API documentation listed under `Other resources`_.
+Most sections contain links to relevant module(s) you can follow to
+read about other functions not covered in the text.
+
+Module names in the text are typeset like this:
+`Diagrams.Prelude`:mod:.  Click on a module name to visit its
+documentation.  You can also click on any function or operator name in
+code examples to take you to its documentation.  Try it:
+
+.. class:: lhs
+
+::
+
+  example = circle 2 ||| unitCircle
+
+This user manual is still under construction.  Content that has yet to
+be written is noted by a light red box with a "document" icon on the
+right hand side, like this:
+
+.. container:: todo
+
+  * Explain zygohistomorphic prepromorphisms
+  * Essay on postmodernist critiques of ``diagrams`` vis-a-vis Kant
+
+If you see a box like this in the place of something you would really
+like to know about, please bug the developers (using the ``#diagrams`` IRC
+channel on Freenode, or the `diagrams mailing list`_) so they can
+prioritize it!
+
+Other resources
+---------------
+
+Here are some other resources that may be helpful to you as you learn
+about ``diagrams``:
+
+  * The API reference documentation for all the ``diagrams`` packages
+    is intended to be high-quality and up-to-date.  If you find an
+    omission, error, or something confusing, please `report it as a
+    bug`_!
+
+        - `diagrams-core`:pkg:
+        - `diagrams-lib`:pkg:
+        - `diagrams-cairo`:pkg:
+
+  * The ``diagrams`` website_ has a `gallery of examples`_ and links
+    to tutorials, blog posts, and other documentation.
+  * The ``#diagrams`` IRC channel on Freenode is a friendly place
+    where you can get help from other ``diagrams`` developers and users.
+  * Consider joining the `diagrams mailing list`_ for discussions
+    and announcements about ``diagrams``.
+  * See the `developer wiki`_ for more specialized documentation and
+    information on planned and ongoing development.
+  * See the `bug tracker`_ for a list of open tickets.  If you find a
+    bug or would like to request a feature, please file a ticket!
+
+.. _`report it as a bug`: http://code.google.com/p/diagrams/issues/list
+.. _website: http://projects.haskell.org/diagrams
+.. _`gallery of examples`: http://projects.haskell.org/diagrams/gallery.html
+.. _`diagrams mailing list`: http://groups.google.com/group/diagrams-discuss?pli=1
+.. _`developer wiki`: http://code.google.com/p/diagrams/
+
 Installation
 ------------
 
@@ -108,63 +176,6 @@ to see the other options that are supported.
   * Change the above for whatever the recommended starter backend is,
     if it changes
 
-Other resources
----------------
-
-Here are some other resources that may be helpful to you as you learn
-about ``diagrams``:
-
-  * The API reference documentation for all the ``diagrams`` packages
-    is intended to be high-quality and up-to-date.  If you find an
-    omission, error, or something confusing, please `report it as a
-    bug`_!
-
-        - `diagrams-core`:pkg:
-        - `diagrams-lib`:pkg:
-        - `diagrams-cairo`:pkg:
-
-  * The ``diagrams`` website_ has a `gallery of examples`_ and links
-    to tutorials, blog posts, and other documentation.
-  * The ``#diagrams`` IRC channel on Freenode is a friendly place
-    where you can get help from other ``diagrams`` developers and users.
-  * Consider joining the `diagrams mailing list`_ for discussions
-    and announcements about ``diagrams``.
-  * See the `developer wiki`_ for more specialized documentation and
-    information on planned and ongoing development.
-  * See the `bug tracker`_ for a list of open tickets.  If you find a
-    bug or would like to request a feature, please file a ticket!
-
-.. _`report it as a bug`: http://code.google.com/p/diagrams/issues/list
-.. _website: http://projects.haskell.org/diagrams
-.. _`gallery of examples`: http://projects.haskell.org/diagrams/gallery.html
-.. _`diagrams mailing list`: http://groups.google.com/group/diagrams-discuss?pli=1
-.. _`developer wiki`: http://code.google.com/p/diagrams/
-
-About this document
--------------------
-
-This document attempts to explain all major aspects of using the
-``diagrams`` core and standard libraries, organized by topic to make
-it easy to find what you are looking for.  It is not, however, a
-complete reference of every single function in the standard library:
-for that, see the API documentation listed under `Other resources`_.
-Most sections contain links to relevant module(s) you can follow to
-read about other functions not covered in the text.
-
-This user manual is still under construction.  Content that has yet to
-be written is noted by a light red box with a "document" icon on the
-right hand side, like this:
-
-.. container:: todo
-
-  * Explain zygohistomorphic prepromorphisms
-  * Essay on postmodernist critiques of ``diagrams`` vis-a-vis Kant
-
-If you see a box like this in the place of something you would really
-like to know about, please bug the developers (using the ``#diagrams`` IRC
-channel on Freenode, or the `diagrams mailing list`_) so they can
-prioritize it!
-
 Essential concepts
 ==================
 
@@ -188,22 +199,43 @@ A *monoid* consists of
 
     for which
 
-    `(x \oplus y) \oplus z = x \oplus (y \oplus z)`:math:.
+    `(x \oplus y) \oplus z = x \oplus (y \oplus z).`:math:
 
   * An *identity element* `i \in S`:math: which is the identity for
     `\oplus`:math:, that is,
 
-    `x \oplus i = i \oplus x = x`:math:.
+    `x \oplus i = i \oplus x = x.`:math:
 
-Monoids show up all over the place in programming.
+In Haskell, monoids are expressed using the `Monoid` type class,
+defined in ``Data.Monoid``:
 
-.. container:: todo
+.. class:: lhs
 
-  * Explanation of monoids; the `Monoid` class
-  * Note provided `(<>)` synonym for `mappend` (may soon become
-    standard)
-  * Many things are monoids: diagrams, transformations, trails, paths,
-    styles, colors
+::
+
+  class Monoid m where
+    mempty  :: m
+    mappend :: m -> m -> m
+
+The `mappend` function represents the associative binary operation,
+and `mempty` is the identity element.  A function
+
+.. class:: lhs
+
+::
+
+  mconcat :: Monoid m => [m] -> m
+
+is also provided as a shorthand for the common operation of combining
+a whole list of elements with `mappend`.
+
+Since `mappend` is tediously long to write, ``diagrams`` provides the
+operator `(<>)` as a synonym. (Hopefully this synonym will soon become
+part of ``Data.Monoid`` itself!)
+
+Monoids are used extensively in ``diagrams``: diagrams,
+transformations, trails, paths, styles, and colors are all
+instances.
 
 Faking optional named arguments
 -------------------------------
