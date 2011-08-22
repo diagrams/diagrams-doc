@@ -16,9 +16,12 @@ Preliminaries
 Introduction
 ------------
 
+``diagrams`` is a flexible, powerful embedded domain-specific language
+(EDSL) for creating vector graphics.  It can be used for creating a
+wide range of graphics, such as ...
+
 .. container:: todo
 
-  * Purpose of ``diagrams``
   * A cool example or two
 
 About this document
