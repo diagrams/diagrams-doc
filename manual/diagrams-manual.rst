@@ -46,6 +46,13 @@ code examples to take you to its documentation.  Try it:
 
   example = circle 2 ||| unitCircle
 
+Mathematical equations are typeset using MathJax_.  Right-click on any
+equation to access MathJax options, like displaying the LaTeX source,
+switching between MathML and HTML/CSS for display, zoom settings, and
+so on.
+
+.. _MathJax: http://www.mathjax.org/
+
 This user manual is still under construction.  Content that has yet to
 be written is noted by a light red box with a "document" icon on the
 right hand side, like this:
@@ -243,14 +250,48 @@ instances.
 Faking optional named arguments
 -------------------------------
 
-.. container:: todo
+Many diagram-related operations can be customized in a wide variety of
+ways.  For example, when creating a regular polygon, one can customize
+the number of sides, the radius, the orientation, and so on. However,
+to have a single function that takes all of these options as separate
+arguments is a real pain: it's hard to remember what the arugments are
+and what order they should go in, and often one wants to use default
+values for many of the options and only override a few.  Some
+languages (such as Python) support *optional, named* function
+arguments, which are ideal for this sort of situation.  Sadly, Haskell
+does not.  However, we can fake it!
 
-  * Many functions take a record of arguments
-  * Default arguments defined via `Default` type class
-  * `with` is synonym for `def`, enables blah with {foo = bar} syntax
-  * Note that record update binds more tightly than function
-    application (!)
-  * Give example
+Any function which should take some optional, named arguments instead
+takes a single argument which is a record of options.  The record type
+is declared to be an instance of the `Default` type class:
+
+.. class:: lhs
+
+::
+
+> class Default d where
+>   def :: d
+
+That is, types which have a `Default` instance have some default value
+called `def`.  For option records, `def` is declared to be the record
+containing all the default arguments.  The idea is that you can pass
+`def` as an argument to a function which takes a record of options,
+and use record update syntax to override only the fields you want,
+like this:
+
+::
+
+  foo (def { arg1 = someValue, arg6 = blah })
+
+There are a couple more things to note.  First, record update actually
+binds *more tightly* than function application, so the parentheses
+above are actually not necessary.  Second, ``diagrams`` also defines
+`with` as a synonym for `def`, which makes the syntax a bit more
+natural.  So, instead of the above, you could write
+
+::
+
+  foo with { arg1 = someValue, arg6 = blah }
 
 Vectors and points
 ------------------
@@ -277,9 +318,39 @@ Bounding functions and local vector spaces
 Postfix transformation
 ----------------------
 
-.. container:: todo
+You will often see idiomatic ``diagrams`` code that looks like this:
 
-  * `(#)` operator
+::
+
+  foobar # attr1
+         # attr2
+         # attr3
+         # transform1
+
+There is nothing magical about `(#)`, and it is not required in order
+to apply attributes or transformations. In fact, it is nothing more
+than reverse function application with a high precedence (namely, 8):
+
+::
+
+  x # f = f x
+
+`(#)` is provided simply because it often reads better to first write
+down what a diagram *is*, and then afterwards write down attributes
+and modifications.  Additionally, `(#)` has a high precedence so it
+can be used to make "local" modifications without using lots of
+parentheses:
+
+.. class:: lhs
+
+::
+
+> example =     square 2 # fc red # rotateBy (1/3)
+>           ||| circle 1 # lc blue # fc green
+
+Note how the modifiers `fc red` and `rotateBy (1/3)` apply only to the square,
+and `lc blue` and `fc green` only to the circle (`(|||)` has a
+precedence of 6).
 
 Creating 2D diagrams
 ====================
