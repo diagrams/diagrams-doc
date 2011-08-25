@@ -25,6 +25,7 @@ main = do
                        [ "diagrams-core"
                        , "diagrams-lib"
                        , "diagrams-cairo"
+                       , "vector-space"
                        ]
   docutilsCmdLine (diagramsManual modMap nameMap)
 

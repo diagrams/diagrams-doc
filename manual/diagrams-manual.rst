@@ -296,12 +296,48 @@ natural.  So, instead of the above, you could write
 Vectors and points
 ------------------
 
-.. container:: todo
+Although much of this user manual focuses on constructing
+two-dimensional diagrams, the definitions in the core library in fact
+work for *any* vector space.  Vector spaces are defined in
+`Data.VectorSpace`:mod: from the `vector-space`:pkg: package.
 
-  * Vector spaces
-  * Operations on vectors
-  * Important distinction between points and vectors
-  * Operations on points/vectors
+Many objects (diagrams, paths, backends...) are always defined in the
+context of some vector space.  The vector space associated to any type
+can be computed by the type function `V`.  So, for example, the type
+
+::
+
+  Foo d => V d -> d -> d
+
+is the type of a two-argument function whose first argument is a
+vector in whatever vector space corresponds to the type `d` (which
+must be an instance of `Foo`).
+
+Each vector space has a type of *vectors* `v` and an associated type
+of *scalars*, `Scalar v`.  A vector represents a direction and
+magnitude, whereas a scalar represents only a magnitude.  Important
+operations on vectors and scalars include:
+
+  * Adding and subtracting vectors with `(^+^)` and `(^-^)`
+  * Multiplying a vector by a scalar with `(*^)`
+
+See `Data.VectorSpace`:mod: for other functions and operators.
+
+One might think we could also identify *points* in a space with
+vectors having one end at the origin.  However, this turns out to be a
+poor idea. There is a very important difference between vectors and
+points: namely, vectors are translationally invariant whereas points
+are not.  A vector represents a direction and magnitude, not a
+location. Translating a vector has no effect.  Points, on the other
+hand, represent a specific location. Translating a point results in a
+different point.
+
+Although it is a bad idea to *conflate* vectors and points, we can
+certainly *represent* points using vectors. ``diagrams`` defines a
+newtype wrapper around vectors called `Point`.  The most important
+connection between points and vectors is given by `(.-.)`, defined in
+`Data.AffineSpace`:mod:. If `p1` and `p2` are points, `p2 .-. p1` is
+the vector giving the direction and distance from `p1` to `p2`.
 
 Bounding functions and local vector spaces
 ------------------------------------------
@@ -798,6 +834,11 @@ results in a diagram `p` times as opaque.
 
 Line width
 ^^^^^^^^^^
+
+.. container:: todo
+
+  * setting line width
+  * freeze
 
 Other line parameters
 ^^^^^^^^^^^^^^^^^^^^^
