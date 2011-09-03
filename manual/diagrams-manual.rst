@@ -477,7 +477,7 @@ two-dimensional Euclidean space and with angles.
 Euclidean 2-space
 ~~~~~~~~~~~~~~~~~
 
-There are three main types synonyms defined for referring to
+There are three main type synonyms defined for referring to
 two-dimensional space:
 
 * `R2` is the type of the two-dimensional Euclidean vector space.  It
