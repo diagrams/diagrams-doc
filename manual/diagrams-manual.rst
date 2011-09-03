@@ -1170,12 +1170,12 @@ two types of segment, defined in `Diagrams.Segment`:mod:\:
 * A *Bézier* segment is a cubic curve defined by an offset from its
   beginning to its end, along with two control points; you can
   construct one using `bezier3`.  An example is shown below, with the
-  endpoints shown in red and the control points in blue.  Cubic
-  `Bézier curves`__ always start off from the beginning point heading
-  towards the first control point, and end up at the final point
-  heading away from the second control point.  That is, in any drawing
-  of a cubic Bézier curve like the one below, the curve will be
-  tangent to the two dotted lines.
+  endpoints shown in red and the control points in blue.  `Bézier
+  curves`__ always start off from the beginning point heading towards
+  the first control point, and end up at the final point heading away
+  from the last control point.  That is, in any drawing of a Bézier
+  curve like the one below, the curve will be tangent to the two
+  dotted lines.
 
 __ http://en.wikipedia.org/wiki/Bézier_curve
 
