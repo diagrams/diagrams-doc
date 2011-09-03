@@ -298,12 +298,12 @@ Vectors and points
 
 Although much of this user manual focuses on constructing
 two-dimensional diagrams, the definitions in the core library in fact
-work for *any* vector space.  Vector spaces are defined in
-`Data.VectorSpace`:mod: from the `vector-space`:pkg: package.
+work for *any* vector space.  Vector spaces are defined in the
+`Data.VectorSpace`:mod: module from the `vector-space`:pkg: package.
 
-Many objects (diagrams, paths, backends...) are always defined in the
-context of some vector space.  The vector space associated to any type
-can be computed by the type function `V`.  So, for example, the type
+Many objects (diagrams, paths, backends...) inherently live in some
+particular vector space.  The vector space associated to any type can
+be computed by the type function `V`.  So, for example, the type
 
 ::
 
@@ -328,7 +328,7 @@ vectors having one end at the origin.  However, this turns out to be a
 poor idea. There is a very important difference between vectors and
 points: namely, vectors are translationally invariant whereas points
 are not.  A vector represents a direction and magnitude, not a
-location. Translating a vector has no effect.  Points, on the other
+location. Translating a vector has no effect. Points, on the other
 hand, represent a specific location. Translating a point results in a
 different point.
 
@@ -338,18 +338,80 @@ newtype wrapper around vectors called `Point`.  The most important
 connection between points and vectors is given by `(.-.)`, defined in
 `Data.AffineSpace`:mod:. If `p1` and `p2` are points, `p2 .-. p1` is
 the vector giving the direction and distance from `p1` to `p2`.
+Offsetting a point by a vector (resulting in a new point) is
+accomplished with `(.+^)`.
 
 Bounding functions and local vector spaces
 ------------------------------------------
 
+In order to be able to position diagrams relative to one another, each
+diagram must keep track of some bounding information.  Rather than use
+a bounding *box* (which is neither general nor compositional) or even a
+more general bounding *path* (which is rather complicated to deal with),
+each diagram has an associated bounding *function*.  Given some
+direction (represented by a vector) as input, the bounding function
+answers the question: "how far in this direction must one go before
+reaching a perpendicular (hyper)plane that completely encloses the
+diagram on one side of it?"
+
+That's a bit of a mouthful, so hopefully the below illustration will
+help clarify things if you found the above description confusing.
+
+.. class:: dia-lhs
+
+::
+
+> illustrateBound v d 
+>   = mconcat 
+>     [ origin ~~ (origin .+^ v)
+>       # lc black # lw 0.03
+>     , polygon with { polyType   = PolyRegular 3 0.1
+>                    , polyOrient = OrientTo (negateV v)
+>                    }
+>       # fc black
+>       # translate v
+>     , origin ~~ b
+>       # lc green # lw 0.05
+>     , p1 ~~ p2
+>       # lc red # lw 0.02
+>     ]
+>     where 
+>       b  = boundary v d
+>       v' = normalized v
+>       p1 = b .+^ (rotateBy (1/4) v')
+>       p2 = b .+^ (rotateBy (-1/4) v')
+>                     
+> d1 :: Path R2
+> d1 = circlePath 1
+>
+> d2 :: Path R2
+> d2 = (pentagon 1 === roundedRect (1.5,0.7) 0.3)
+>
+> example = (stroke d1 # showOrigin <> illustrateBound (-0.5,0.3) d1)
+>       ||| (stroke d2 # showOrigin <> illustrateBound (0.5, 0.2) d2)
+
+The black arrows represent inputs to the bounding functions for the
+two diagrams; the bounding functions' outputs are the distances
+represented by the thick green lines.  The red lines illustrate the
+enclosing (hyper)planes (which are really to be thought of as
+extending infinitely to either side): notice how they are as close as
+possible to the diagrams without intersecting them at all.
+
+Of course, the *base point* from which the bounding function is
+measuring matters quite a lot!  If there were no base point, questions
+of the form "*how far do you have to go...*" would be meaningless --
+how far *from where*?  This base point (indicated by the red dots in
+the diagram above) is called the *local origin* of a diagram.  Every
+diagram has its own intrinsic *local vector space*; operations on
+diagrams are always with respect to their local origin, and you can
+affect the way diagrams are combined with one another by moving their
+local origins.  The `showOrigin` function is provided as a quick way
+of visualizing the local origin of a diagram (also illustrated above).
+
 .. container:: todo
 
-  * Basics/intuition of bounding functions
-  * Local origin
-  * `showOrigin` function
-
   * `strut`, `pad`, `withBounds`, `phantom` should be written about
-    somewhere (not necessarily here)
+    somewhere (but not here!)
 
 Postfix transformation
 ----------------------
