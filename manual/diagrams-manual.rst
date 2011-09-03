@@ -487,17 +487,22 @@ two-dimensional space:
   respect to many common graphics systems.  This is intentional: the
   goal is to provide an elegant interface which is abstracted as much
   as possible from implementation details.
+
+  `unitX` and `unitY` are unit vectors in the positive x- and
+  y-directions, respectively.  Their negated counterparts are `unit_X`
+  and `unit_Y`.
+
 * `P2` is the type of points in two-dimensional space. It is a synonym
-  for `Point R2`.
+  for `Point R2`.  The distinction between points and vectors is
+  important; see `Vectors and points`_.
+
 * `T2` is the type of two-dimensional affine transformations.  It is a
   synonym for `Transformation R2`.
 
 .. container:: todo
 
-  * Note important difference between vectors and points.
-  * `unitX`, `unit_X`, etc., `direction`
   * `width`, `height`, etc. from `Diagrams.TwoD.Util`:mod: need to be
-    written about somewhere (not necessarily here)
+    written about somewhere (but not here)
 
 Angles
 ~~~~~~
@@ -520,6 +525,8 @@ The intention is that to pass an argument to a function that expects a
 value of some `Angle` type, you can write something like `(3 :: Deg)`
 or `(3 :: Rad)`.  The `convertAngle` function is also provided for
 converting between different angle representations.
+
+The `direction` function computes the angle of a vector.
 
 Primitive shapes
 ----------------
