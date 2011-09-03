@@ -98,6 +98,7 @@ about ``diagrams``:
 .. _`gallery of examples`: http://projects.haskell.org/diagrams/gallery.html
 .. _`diagrams mailing list`: http://groups.google.com/group/diagrams-discuss?pli=1
 .. _`developer wiki`: http://code.google.com/p/diagrams/
+.. _`bug tracker` : http://code.google.com/p/diagrams/issues/list
 
 Installation
 ------------
@@ -590,6 +591,10 @@ The `polygon` function from `Diagrams.TwoD.Shapes`:mod: constructs
 regular radius-one polygons centered at the origin.  Its argument is a
 record of optional arguments that control the generated polygon:
 
+.. container:: todo
+
+   * update this to correspond to the latest overhaul of polygon API
+
 * `sides` determines the number of sides (default: `5`).
 * `edgeSkip` allows for the creation of star polygons by specifying
   that edges should connect every nth vertex.  The default is `1`.
@@ -610,12 +615,6 @@ is a synonym for `def` from the type class `Default`, which specifies
 a default value for types which are instances.  You can read more
 about this idiom in the section `Faking optional named arguments`_.
 
-A future version of the library will likely expand the `polygon` function
-with additional options; if there are particular options you would
-like to see, record your request in the `bug tracker`_.
-
-.. _`bug tracker` : http://code.google.com/p/diagrams/issues/list
-
 Squares, rectangles, and other polygons
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -626,14 +625,15 @@ see `Working with paths`_.
 * `square` constructs a square with a given side length; `unitSquare`
   constructs a square with sides of length `1`.
 * `rect` constructs a rectangle of a given width and height.
-* `eqTriangle` constructs an equilateral triangle with radius `1`.
+* `eqTriangle` constructs an equilateral triangle of a given radius.
 * `roundedRect` constructs a rectangle with circular rounded corners.
 
 .. class:: dia-lhs
 
 ::
 
-> example = square 1 ||| rect 0.3 0.5 ||| eqTriangle ||| roundedRect (0.7,0.4) 0.1
+> example = square 1 ||| rect 0.3 0.5 
+>       ||| eqTriangle 1 ||| roundedRect (0.7,0.4) 0.1
 
 More special polygons will likely be added in future versions of the
 library.
@@ -689,7 +689,7 @@ of `d2` on top of `d3` on top of...
 ::
 
 > example = mconcat [ circle 0.1 # fc green
->                   , eqTriangle # scale 0.4 # fc yellow
+>                   , eqTriangle 1 # scale 0.4 # fc yellow
 >                   , square 1 # fc blue
 >                   , circle 1 # fc red
 >                   ]
@@ -778,7 +778,7 @@ along a straight line in the direction of the given vector.
 ::
 
 > example = cat (2,-1) (map p [3..8]) # showOrigin
->   where p n = polygon with {sides = n} # lw 0.03
+>   where p n = regPoly n 1 # lw 0.03
 
 Note, however, that the local origin of the final diagram is placed at
 the local origin of the first diagram in the list.
@@ -793,9 +793,9 @@ possibilities.
 ::
 
 > example = cat' (2,-1) with { catMethod = Distrib, sep = 2 } (map p [3..8])
->   where p n = polygon with {sides = n} # lw 0.03
->                                        # scale (1 + fromIntegral n/4)
->                                        # showOrigin
+>   where p n = regPoly n 1 # lw 0.03
+>                           # scale (1 + fromIntegral n/4)
+>                           # showOrigin
 
 For convenience, `Diagrams.TwoD.Combinators`:mod: also provides `hcat`, `hcat'`,
 `vcat`, and `vcat'`, variants of `cat` and `cat'` which concatenate
