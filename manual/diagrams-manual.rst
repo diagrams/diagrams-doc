@@ -584,48 +584,21 @@ __ `Angles`_
 
 > example = arc (tau/4 :: Rad) (4 * tau / 7 :: Rad)
 
-Polygons
-~~~~~~~~
+Pre-defined shapes
+~~~~~~~~~~~~~~~~~~
 
-The `polygon` function from `Diagrams.TwoD.Shapes`:mod: constructs
-regular radius-one polygons centered at the origin.  Its argument is a
-record of optional arguments that control the generated polygon:
+`Diagrams.TwoD.Shapes`:mod: provides a number of pre-defined
+polygons and other path-based shapes.  For example:
 
-.. container:: todo
-
-   * update this to correspond to the latest overhaul of polygon API
-
-* `sides` determines the number of sides (default: `5`).
-* `edgeSkip` allows for the creation of star polygons by specifying
-  that edges should connect every nth vertex.  The default is `1`.
-* `orientation` specifies the `PolygonOrientation`.
-
-.. class:: dia-lhs
-
-::
-
-> poly1 = polygon with { sides = 6, orientation = OrientToX }
-> poly2 = polygon with { sides = 7, edgeSkip = 2 }
-> poly3 = polygon with { sides = 5 }
-> example = poly1 ||| poly2 ||| poly3
-
-Notice the idiom of using `with` to construct a record of default
-options and selectively overriding particular options by name. `with`
-is a synonym for `def` from the type class `Default`, which specifies
-a default value for types which are instances.  You can read more
-about this idiom in the section `Faking optional named arguments`_.
-
-Squares, rectangles, and other polygons
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-`Diagrams.TwoD.Shapes`:mod: also provides a number of other
-specialized path-based shapes.   For constructing more general shapes,
-see `Working with paths`_.
-
+* `eqTriangle` constructs an equilateral triangle with sides of a
+  given length.
 * `square` constructs a square with a given side length; `unitSquare`
   constructs a square with sides of length `1`.
+* `pentagon`, `hexagon`, ..., `dodecagon` construct other regular
+  polygons with sides of a given length.
+* In general, `regPoly` constructs a regular polygon with any number
+  of sides.
 * `rect` constructs a rectangle of a given width and height.
-* `eqTriangle` constructs an equilateral triangle of a given radius.
 * `roundedRect` constructs a rectangle with circular rounded corners.
 
 .. class:: dia-lhs
@@ -638,9 +611,6 @@ see `Working with paths`_.
 More special polygons will likely be added in future versions of the
 library.
 
-Other
-~~~~~
-
 Completing the hodgepodge in `Diagrams.TwoD.Shapes`:mod: for now, the
 functions `hrule` and `vrule` create horizontal and vertical lines,
 respectively.
@@ -650,6 +620,117 @@ respectively.
 ::
 
 > example = circle 1 ||| hrule 2 ||| circle 1
+
+General polygons
+~~~~~~~~~~~~~~~~
+
+The `polygon` function from `Diagrams.TwoD.Polygons`:mod: can be used
+to construct a wide variety of polygons.  Its argument is a record of
+optional arguments that control the generated polygon:
+
+* `polyType` specifies one of several methods for determining the
+  vertices of the polygon:
+
+    * `PolyRegular` indicates a regular polygon with a certain number
+      of sides and a given *radius*.
+    * `PolySides` specifies the vertices using a list of angles
+      between edges, and a list of edge lengths.
+    * `PolyPolar` specifies the vertices using polar coordinates: a
+      list of central angles between vertices, and a list of vertex
+      radii.
+
+* `polyOrient` specifies the `PolyOrientation`: the polygon can be
+  oriented with an edge parallel to the x-axis. with an edge parallel
+  to the y-axis, or with an edge perpendicular to any given vector.
+  You may also specify that no special orientation should be applied,
+  in which case the first vertex of the polygon will be located along the
+  positive x-axis.
+
+* Additionally, a center other than the origin can be specified using
+  `polyCenter`.
+
+.. class:: dia-lhs
+
+::
+
+> poly1 = polygon with { polyType   = PolyRegular 13 5
+>                      , polyOrient = OrientV }
+> poly2 = polygon with { polyType   = PolyPolar (repeat (1/40 :: CircleFrac))
+>                                               (take 40 $ cycle [2,7,4,6]) }
+> example = (poly1 ||| strutX 1 ||| poly2) # lw 0.05
+
+Notice the idiom of using `with` to construct a record of default
+options and selectively overriding particular options by name. `with`
+is a synonym for `def` from the type class `Default`, which specifies
+a default value for types which are instances.  You can read more
+about this idiom in the section `Faking optional named arguments`_.
+
+Star polygons
+~~~~~~~~~~~~~
+
+A "star polygon" is a polygon where the edges do not connect
+consecutive vertices; for example:
+
+.. class:: dia-lhs
+
+::
+
+> example = star (StarSkip 3) (regPoly 13 1) # stroke
+
+`Diagrams.TwoD.Polygons`:mod: provides the `star` function for
+creating star polygons of this sort, although it is actually quite a
+bit more general.
+
+As its second argument, `star` expects a list of points.  One way
+to generate a list of points is with polygon-generating functions such
+as `polygon` or `regPoly`, or indeed, any function which can output
+any `PathLike` type (see the section about `PathLike`_), since a list
+of points is an instance of the `PathLike` class.  Of course, you are
+free to construct the list of points using whatever method you like!
+
+As its first argument, `star` takes a value of type `StarOpts`, for
+which there are two possibilities:
+
+* `StarSkip` specifies that every math:`n` th vertex should be
+  connected by an edge.
+
+  .. class:: dia-lhs
+
+  ::
+
+  > example = stroke (star (StarSkip 2) (regPoly 8 1))
+  >       ||| strutX 1
+  >       ||| stroke (star (StarSkip 3) (regPoly 8 1))
+
+  As you can see, `star` may result in a path with multiple components,
+  if the argument to `StarSkip` evenly divides the number of vertices.
+
+* `StarFun` takes as an argument a function of type `(Int -> Int)`,
+  which specifies which vertices should be connected to which other
+  vertices.  Given the function `f`:math:, vertex `i`:math: is
+  connected to vertex `j`:math: if and only if `f(i) \equiv j \pmod
+  n`:math:, where `n`:math: is the number of vertices.  This can be
+  used as a compact, precise way of specifying how to connect a set of
+  points (or as a fun way to visualize functions in `Z_n`:math:!).
+
+  .. class:: dia-lhs
+
+  ::
+
+  > funs          = map (flip (^)) [2..6]
+  > visualize f	  = fontSize 0.5 . showLabels $
+  >                 stroke (star (StarFun f) (regPoly 7 1)) # lw 0.05 # lc red
+  >                 <> stroke' with { vertexNames = [[0 .. 6 :: Integer]] }
+  >                            (regPoly 7 1)
+  >                    # lw 0.02
+  > example       = centerXY . hcat' with {sep = 0.5} $ map visualize funs
+
+You may notice that all the above examples need to call `stroke`,
+which converts a path into a diagram.  Many functions similar to
+`star` are polymorphic in their return type over any `PathLike`, but
+`star` is not. As we have seen, `star` may need to construct a path
+with multiple components, which is not supported by the `PathLike`
+class.
 
 Combining diagrams
 ------------------
@@ -1314,6 +1395,8 @@ Decorating trails and paths
 
 Fill rules
 ~~~~~~~~~~
+
+.. _PathLike:
 
 The ``PathLike`` class
 ~~~~~~~~~~~~~~~~~~~~~~
