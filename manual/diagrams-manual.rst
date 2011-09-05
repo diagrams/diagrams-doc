@@ -143,9 +143,11 @@ the following contents:
 
   main = defaultMain (circle 1)
 
-The first line turns off the evil monomorphism restriction, which is
+The first line turns off the evil `monomorphism restriction`_, which is
 quite important when using ``diagrams``: otherwise you will quickly
 run into lots of crazy error messages.
+
+.. _`monomorphism restriction`: http://www.haskell.org/haskellwiki/Monomorphism_restriction
 
 `Diagrams.Prelude`:mod: re-exports most everything from the standard
 library; `Diagrams.Backend.Cairo.CmdLine`:mod: provides a command-line
