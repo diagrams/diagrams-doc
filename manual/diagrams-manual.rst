@@ -359,6 +359,9 @@ diagram on one side of it?"
 
 That's a bit of a mouthful, so hopefully the below illustration will
 help clarify things if you found the above description confusing.
+(For completeness, the code used to generate the illustration is
+included, although you certainly aren't expected to understand it yet
+if you are just reading this manual for the first time!)
 
 .. class:: dia-lhs
 
@@ -410,11 +413,6 @@ diagrams are always with respect to their local origin, and you can
 affect the way diagrams are combined with one another by moving their
 local origins.  The `showOrigin` function is provided as a quick way
 of visualizing the local origin of a diagram (also illustrated above).
-
-.. container:: todo
-
-  * `strut`, `pad`, `withBounds`, `phantom` should be written about
-    somewhere (but not here!)
 
 Postfix transformation
 ----------------------
@@ -484,15 +482,15 @@ There are three main type synonyms defined for referring to
 two-dimensional space:
 
 * `R2` is the type of the two-dimensional Euclidean vector space.  It
-  is a synonym for `(Double, Double)`.  The positive x-axis extends to
-  the right, and the positive y-axis extends *upwards*.  This is
+  is a synonym for `(Double, Double)`.  The positive `x`:math:\-axis extends to
+  the right, and the positive `y`:math:\-axis extends *upwards*.  This is
   consistent with standard mathematical practice, but upside-down with
   respect to many common graphics systems.  This is intentional: the
   goal is to provide an elegant interface which is abstracted as much
   as possible from implementation details.
 
-  `unitX` and `unitY` are unit vectors in the positive x- and
-  y-directions, respectively.  Their negated counterparts are `unit_X`
+  `unitX` and `unitY` are unit vectors in the positive `x`:math:\- and
+  `y`:math:\-directions, respectively.  Their negated counterparts are `unit_X`
   and `unit_Y`.
 
 * `P2` is the type of points in two-dimensional space. It is a synonym
@@ -501,11 +499,6 @@ two-dimensional space:
 
 * `T2` is the type of two-dimensional affine transformations.  It is a
   synonym for `Transformation R2`.
-
-.. container:: todo
-
-  * `width`, `height`, etc. from `Diagrams.TwoD.Util`:mod: need to be
-    written about somewhere (but not here)
 
 Angles
 ~~~~~~
@@ -517,8 +510,8 @@ also make your own):
 * `CircleFrac` represents fractions of a circle.  A value of `1`
   represents a full turn.
 * `Rad` represents angles measured in radians.  A value of `tau` (that
-  is, `2 * pi`) represents a full turn. (If you don't know what `tau`
-  is, see `The Tau Manifesto`__.)
+  is, `\tau = 2 \pi`:math:) represents a full turn. (If you haven't heard of
+  `\tau`:math:, see `The Tau Manifesto`__.)
 * `Deg` represents angles measured in degrees.  A value of `360`
   represents a full turn.
 
@@ -529,7 +522,8 @@ value of some `Angle` type, you can write something like `(3 :: Deg)`
 or `(3 :: Rad)`.  The `convertAngle` function is also provided for
 converting between different angle representations.
 
-The `direction` function computes the angle of a vector.
+The `direction` function computes the angle of a vector, measured
+clockwise from the positive `x`:math:\-axis.
 
 Primitive shapes
 ----------------
@@ -642,11 +636,11 @@ optional arguments that control the generated polygon:
       radii.
 
 * `polyOrient` specifies the `PolyOrientation`: the polygon can be
-  oriented with an edge parallel to the x-axis. with an edge parallel
-  to the y-axis, or with an edge perpendicular to any given vector.
+  oriented with an edge parallel to the `x`:math:\-axis. with an edge parallel
+  to the `y`:math:\-axis, or with an edge perpendicular to any given vector.
   You may also specify that no special orientation should be applied,
   in which case the first vertex of the polygon will be located along the
-  positive x-axis.
+  positive `x`:math:\-axis.
 
 * Additionally, a center other than the origin can be specified using
   `polyCenter`.
@@ -720,19 +714,21 @@ which there are two possibilities:
   ::
 
   > funs          = map (flip (^)) [2..6]
-  > visualize f	  = fontSize 0.5 . showLabels $
-  >                 stroke (star (StarFun f) (regPoly 7 1)) # lw 0.05 # lc red
-  >                 <> stroke' with { vertexNames = [[0 .. 6 :: Integer]] }
-  >                            (regPoly 7 1)
-  >                    # lw 0.02
+  > visualize f	  = stroke' with { vertexNames = [[0 .. 6 :: Int]] }
+  >                     (regPoly 7 1)
+  >                   # lw 0
+  >                   # showLabels
+  >                   # fontSize 0.6
+  >              <> star (StarFun f) (regPoly 7 1)
+  >                   # stroke # lw 0.05 # lc red
   > example       = centerXY . hcat' with {sep = 0.5} $ map visualize funs
 
-You may notice that all the above examples need to call `stroke`,
-which converts a path into a diagram.  Many functions similar to
-`star` are polymorphic in their return type over any `PathLike`, but
-`star` is not. As we have seen, `star` may need to construct a path
-with multiple components, which is not supported by the `PathLike`
-class.
+You may notice that all the above examples need to call `stroke` (or
+`stroke'`), which converts a path into a diagram.  Many functions
+similar to `star` are polymorphic in their return type over any
+`PathLike`, but `star` is not. As we have seen, `star` may need to
+construct a path with multiple components, which is not supported by
+the `PathLike` class.
 
 Combining diagrams
 ------------------
@@ -816,7 +812,7 @@ first subdiagram, use `append` instead of `beside`:
 Since placing diagrams next to one another horizontally and vertically
 is quite common, special combinators are provided for convenience.
 `(|||)` and `(===)` are specializations of `beside` which juxtapose
-diagrams in the x and y-directions, respectively.
+diagrams in the `x`:math:\- and `y`:math:\-directions, respectively.
 
 .. class:: dia-lhs
 
@@ -908,10 +904,6 @@ paths`_.
 Modifying diagrams
 ------------------
 
-.. container:: todo
-
-  Some sort of general statement about modifying diagrams
-
 Attributes and styles
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -987,7 +979,27 @@ results in a diagram `p` times as opaque.
 Line width
 ^^^^^^^^^^
 
-.. container:: todo
+To alter the *width* of the lines used to stroke paths, use `lw`. The
+default line width is (arbitrarily) `0.01`.  You can also set the line
+width to zero if you do not want a path stroked at all.
+
+Line width actually more subtle than you might think.  Suppose you
+create a diagram consisting of a square, and another square twice as
+large next to it (using `scale 2`).  How should they be drawn?  Should
+the lines be the same width, or should the larger square use a line
+twice as thick?
+
+In fact, in many situations the lines should actually be the *same*
+thickness, so a collection of shapes will be drawn in a uniform way.
+This is the default in ``diagrams``.  Specifically, the argument to
+`lw` is measured with respect to the *final* vector space of a
+complete, rendered diagram, *not* with respect to the local vector
+space at the time the `lw` function is applied.  Put another way,
+subsequent transformations do not affect the line width.  This is
+perhaps a bit confusing, but trying to get line widths to look
+reasonable would be a nightmare otherwise.
+
+.. class:: dia-lhs
 
   * setting line width
   * freeze
@@ -1031,7 +1043,7 @@ transformations more directly, see
 
 Every transformation comes in two variants, a noun form and a verb
 form.  For example, there are two functions for scaling along the
-x-axis, `scalingX` and `scaleX`.  The noun form constructs a
+`x`:math:\-axis, `scalingX` and `scaleX`.  The noun form constructs a
 transformation object, which can then be stored in a data structure,
 passed as an argument, combined with other transformations, *etc.*,
 and ultimately applied to a diagram with the `transform` function.
@@ -1093,8 +1105,8 @@ Scaling and reflection
 ^^^^^^^^^^^^^^^^^^^^^^
 
 Scaling by a given factor is accomplished with `scale` (which scales
-uniformly in all directions), `scaleX` (which scales along the x-axis
-only), or `scaleY` (which scales along the y-axis only).  All of these
+uniformly in all directions), `scaleX` (which scales along the `x`:math:\-axis
+only), or `scaleY` (which scales along the `y`:math:\-axis only).  All of these
 can be used both for enlarging (with a factor greater than one) and
 shrinking (with a factor less than one).  Using a negative factor
 results in a reflection (in the case of `scaleX` and `scaleY`) or a
@@ -1114,9 +1126,9 @@ results in a reflection (in the case of `scaleX` and `scaleY`) or a
 Scaling by zero is forbidden.  Let us never speak of it again.
 
 For convenience, `reflectX` and `reflectY` perform reflection along
-the x- and y-axes, respectively; but I think you can guess how they
+the `x`:math:\- and `y`:math:\-axes, respectively; but I think you can guess how they
 are implemented.  Their names can be confusing (does `reflectX`
-reflect *along* the x-axis or *across* the x-axis?) but you can just
+reflect *along* the `x`:math:\-axis or *across* the `x`:math:\-axis?) but you can just
 remember that `reflectX = scaleX (-1)`.
 
 To reflect in some line other than an axis, use `reflectAbout`.
@@ -1157,7 +1169,7 @@ along the diagonal line y = x can be accomplished thus:
 > example = (scaleX 2 `under` rotation (-1/8 :: CircleFrac)) eff
 
 The letter F is first rotated so that the desired scaling axis lies
-along the x-axis; then `scaleX` is performed; then it is rotated back
+along the `x`:math:\-axis; then `scaleX` is performed; then it is rotated back
 to its original position.
 
 Note that `reflectAbout` and `rotateAbout` are implemented using
@@ -1465,6 +1477,15 @@ Text
 
 Images
 ------
+
+Working with bounds
+-------------------
+
+.. container:: todo
+
+  * `strut`, `pad`, `withBounds`, `phantom`
+
+  * `width`, `height`, etc. from `Diagrams.TwoD.Util`:mod:
 
 Named subdiagrams
 -----------------
