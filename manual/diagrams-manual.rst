@@ -367,8 +367,8 @@ if you are just reading this manual for the first time!)
 
 ::
 
-> illustrateBound v d 
->   = mconcat 
+> illustrateBound v d
+>   = mconcat
 >     [ origin ~~ (origin .+^ v)
 >       # lc black # lw 0.03
 >     , polygon with { polyType   = PolyRegular 3 0.1
@@ -381,12 +381,12 @@ if you are just reading this manual for the first time!)
 >     , p1 ~~ p2
 >       # lc red # lw 0.02
 >     ]
->     where 
+>     where
 >       b  = boundary v d
 >       v' = normalized v
 >       p1 = b .+^ (rotateBy (1/4) v')
 >       p2 = b .+^ (rotateBy (-1/4) v')
->                     
+>
 > d1 :: Path R2
 > d1 = circlePath 1
 >
@@ -601,7 +601,7 @@ polygons and other path-based shapes.  For example:
 
 ::
 
-> example = square 1 ||| rect 0.3 0.5 
+> example = square 1 ||| rect 0.3 0.5
 >       ||| eqTriangle 1 ||| roundedRect (0.7,0.4) 0.1
 
 More special polygons will likely be added in future versions of the
@@ -1001,8 +1001,29 @@ reasonable would be a nightmare otherwise.
 
 .. class:: dia-lhs
 
-  * setting line width
-  * freeze
+::
+
+> example = (square 1
+>       ||| square 1 # scale 2
+>       ||| circle 1 # scaleX 3)   # lw 0.03
+
+However, occasionally you *do* want subsequent transformations to
+affect line width.  The `freeze` function is supplied for this
+purpose.  Once `freeze` has been applied to a diagram, any subsequent
+transformations will affect the line width.
+
+.. class:: dia-lhs
+
+::
+
+> example = (square 1
+>       ||| square 1 # freeze # scale 2
+>       ||| circle 1 # freeze # scaleX 3)  # lw 0.03
+
+Note that line width does not affect the bounding function of diagrams
+at all.  Future versions of the standard library may provide a
+function to convert a stroked path into an actual region, which would
+allow line width to be taken into account.
 
 Other line parameters
 ^^^^^^^^^^^^^^^^^^^^^
@@ -1066,27 +1087,29 @@ synonym for `Transformation R2`.
 `Transformation v` is a `Monoid` for any vector space `v`:
 
 * `mempty` is the identity transformation;
-* `mappend` is composition of transformations (`t1 \`mappend\` t2`
-  performs first `t2`, then `t1`).
+* `mappend` is composition of transformations: `t1 \`mappend\` t2`
+  (also written `t1 <> t2`) performs first `t2`, then `t1`.
 
 To invert a transformation, use `inv`.  For any transformation `t`,
 
-`t <> inv t == mempty`.
+`t <> inv t == inv t <> t == mempty`.
 
 To apply a transformation to a diagram, use `transform`.  (In fact,
 transformations can be applied not just to diagrams but to any
-`Transformable` type, including vectors, points, bounding functions...)
+`Transformable` type, including vectors, points, trails, paths,
+bounding functions, lists of `Transformable` things...)
 
 Rotation
 ^^^^^^^^
 
-Use `rotate` to rotate a diagram by a given angle__ about the origin.
-Since `rotate` takes an angle, you must specify an angle type, as in
-`rotate (80 :: Deg)`.  In the common case that you wish to rotate by
-an angle specified as a certain fraction of a circle, like `rotate
-(1/8 :: CircleFrac)`, you can use `rotateBy` instead. `rotateBy` is
-specialized to only accept fractions of a circle, so in this example
-you would only have to write `rotateBy (1/8)`.
+Use `rotate` to rotate a diagram couterclockwise by a given angle__
+about the origin.  Since `rotate` takes an angle, you must specify an
+angle type, as in `rotate (80 :: Deg)`.  In the common case that you
+wish to rotate by an angle specified as a certain fraction of a
+circle, like `rotate (1/8 :: CircleFrac)`, you can use `rotateBy`
+instead. `rotateBy` is specialized to only accept fractions of a
+circle, so in this example you would only have to write `rotateBy
+(1/8)`.
 
 You can also use `rotateAbout` in the case that you want to rotate
 about some point other than the origin.
@@ -1159,7 +1182,7 @@ performs `t1`, then `t2`, then undoes `t1`.
 `under` performs a transformation using conjugation.  It takes as
 arguments a function to perform some transformation as well as a
 transformation to conjugate by.  For example, scaling by a factor of 2
-along the diagonal line y = x can be accomplished thus:
+along the diagonal line `y = x`:math: can be accomplished thus:
 
 .. class:: dia-lhs
 
@@ -1326,18 +1349,29 @@ Trails can also be *open* or *closed*: a closed trail is one with an
 implicit (linear) segment connecting the endpoint of the trail to the
 starting point.
 
-.. container:: todo
+To construct a `Trail`, you can use one of the following:
 
-  * Methods for constructing trails: `fromSegments`, `fromOffsets`,
-    `fromVertices`, `(~~)`, `cubicSpline` (see later).
-  * Note these all construct `PathLike` instances, more general than
-    trails: see section about `PathLike` class.
+* `fromSegments` takes an explicit list of `Segment`\s.
+* `fromOffsets` takes a list of vectors, and turns each one into a
+  linear segment.
+* `fromVertices` takes a list of vertices, generating linear segments
+  between them.
+* `(~~)` creates a simple linear trail between two points.
+* `cubicSpline` creates a smooth curve passing through a given list of
+  points; it is described in more detail in the section on `Splines`_.
+
+If you look at the types of these functions, you will note that they
+do not, in fact, return just `Trail`\s: they actually return any type
+which is an instance of `PathLike`, which includes `Trail`\s, `Path`\s
+(to be covered in the next section), `Diagram`\s, and lists of points.
+See the `PathLike`_ section for more on the `PathLike` class.
 
 Trails form a `Monoid` with *concatenation* as the binary operation,
 and the empty (no-segment) trail as the identity element.  The example
-below constructs a two-segment trail called ``spike`` and then
-constructs a starburst path by concatenating a number of rotated
-copies.
+below creates a two-segment trail called ``spike`` and then constructs
+a starburst path by concatenating a number of rotated copies.
+`strokeT` turns a trail into a diagram, with the start of the trail at
+the local origin.
 
 .. class:: dia-lhs
 
@@ -1351,11 +1385,33 @@ copies.
 > example = strokeT burst # fc yellow # lw 0.1 # lc orange
 
 For details on the functions provided for manipulating trails, see the
-documentation for `Diagrams.Path`:mod:.
+documentation for `Diagrams.Path`:mod:.  One other function worth
+mentioning is `explodeTrail`, which turns each segment in a trail into
+its own individual `Path`.  This is useful when you want to construct
+a trail but then do different things with its individual segments.
+For example, we could construct the same starburst as above but color
+the edges individually:
 
-.. container:: todo
+.. class:: dia-lhs
 
-  `explodeTrail`
+::
+
+> spike :: Trail R2
+> spike = fromOffsets [(1,3), (1,-3)]
+>
+> burst = mconcat . take 13 . iterate (rotateBy (-1/13)) $ spike
+>
+> colors = cycle [aqua, beige, deeppink, blueviolet, crimson, darkgreen]
+>
+> example = lw 0.1
+>         . mconcat
+>         . zipWith lc colors
+>         . map stroke . explodeTrail origin
+>         $ burst
+
+(If we wanted to fill the starburst with yellow as before, we would
+have to separately draw another copy of the trail with a line width of
+zero before exploding it; this is left as an exercise for the reader.)
 
 Paths
 ~~~~~
