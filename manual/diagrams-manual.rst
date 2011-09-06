@@ -1332,11 +1332,6 @@ segments:
   a given arc length along the segment; and
 * `adjustSegment` for extending or shrinking a segment.
 
-Finally, `Diagrams.Segment`:mod: exports a `FixedSegment` type,
-representing segments which *do* have an inherent starting location.
-This is of interest to, say, authors of rendering backends, who
-can "compile" paths into lists of segments with absolute locations.
-
 Trails
 ~~~~~~
 
@@ -1401,7 +1396,7 @@ the edges individually:
 >
 > burst = mconcat . take 13 . iterate (rotateBy (-1/13)) $ spike
 >
-> colors = cycle [aqua, beige, deeppink, blueviolet, crimson, darkgreen]
+> colors = cycle [aqua, orange, deeppink, blueviolet, crimson, darkgreen]
 >
 > example = lw 0.1
 >         . mconcat
@@ -1422,7 +1417,7 @@ each trail. Paths of a single trail can be constructed using the same
 functions described in the previous section: `fromSegments`,
 `fromOffsets`, `fromVertices`, `(~~)`, and `cubicSpline`.
 
-`Path`s also form a `Monoid`, but the binary operation is
+`Path`\s also form a `Monoid`\, but the binary operation is
 *superposition* (just like that of diagrams).  Paths with
 multiple components can be used, for example, to create shapes with
 holes:
@@ -1439,21 +1434,18 @@ holes:
 `reversePath` is needed on the second segment because of the way path
 filling is done; see `Fill rules`_.
 
-.. container:: todo
+`stroke` turns a path into a diagram, just as `strokeT` turns a trail
+into a diagram. (In fact, `strokeT` really works by first turning the
+trail into a path and then calling `stroke` on the result.)
 
-  * path functions (`pathFromTrail`, `pathFromTrailAt`,
-    `pathVertices`, `pathOffsets`, `reversePath`, `fixPath`,
-    `explodePath`).  Don't necessarily need to discuss every one, just
-    discuss important/nonobvious ones and give a pointer to the API
-    docs for the rest.
+`explodePath`, similar to `explodeTrail`, turns the segments of a path
+into individual paths.  Since a path is a collection of trails, each
+of which is a sequence of segments, `explodePath` actually returns a
+list of lists of paths.
 
-Stroking trails and paths
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. container:: todo
-
-  * `stroke` and `strokeT` functions for turning paths (resp. trails)
-    into diagrams
+For information on other path manipulation functions such as
+`pathFromTrail`, `pathFromTrailAt`, `pathVertices`, and `pathOffsets`,
+see the documentation in `Diagrams.Path`:mod:.
 
 Decorating trails and paths
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1465,6 +1457,11 @@ Decorating trails and paths
 
 Fill rules
 ~~~~~~~~~~
+
+.. container:: todo
+
+   * Even-odd rule
+   * Winding rule
 
 .. _PathLike:
 
@@ -1554,6 +1551,17 @@ Bounding boxes
 
 Tools for backends
 ------------------
+
+.. container:: todo
+
+  * lots more stuff goes in this section
+
+`Diagrams.Segment`:mod: exports a `FixedSegment` type, representing
+segments which *do* have an inherent starting location. Trails and
+paths can be "compiled" into lists of `FixedSegment`\s with absolute
+locations using `fixTrail` and `fixPath`.  This is of interest to
+authors of rendering backends that do not support relative drawing
+commands.
 
 Tips and tricks
 ---------------
