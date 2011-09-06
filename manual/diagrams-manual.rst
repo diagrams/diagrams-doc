@@ -1450,10 +1450,35 @@ see the documentation in `Diagrams.Path`:mod:.
 Decorating trails and paths
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. container:: todo
+Paths (and trails) can be used not just to draw certain shapes, but
+also as tools for positioning other objects.  To this end,
+``diagrams`` provides `decoratePath` and `decorateTrail`, which
+position a list of objects at the vertices of a given path or trail,
+respectively.
 
-  * `decoratePath` and `decorateTrail` functions for placing items at
-    the vertices of a path or trail
+For example, suppose we want to create an equilateral triangular
+arrangement of dots.  One possibility is to create horizontal rows of
+dots, center them, and stack them vertically.  However, this is
+annoying, because we must manually compute the proper vertical
+stacking distance between rows. Whether you think this sounds easy or
+not, it is certainly going to involve the `sqrt` function, or perhaps
+some trig, and we'd rather avoid all that.
+
+Fortunately, there's an easier way: after creating the horizontal
+rows, we create the path corresponding to the left-hand side of the
+triangle (which can be done using a simple rotation), and then
+decorate it with the rows.
+
+.. class:: dia-lhs
+
+::
+
+> dot = circle 1 # fc black
+> mkRow n = hcat' with {sep = 0.5} (replicate n dot)
+> mkTri n = decoratePath 
+>             (fromOffsets (replicate (n-1) (2.5 *^ unitX)) # rotateBy (1/6))
+>             (map mkRow [n, n-1 .. 1])
+> example = mkTri 5
 
 Fill rules
 ~~~~~~~~~~
