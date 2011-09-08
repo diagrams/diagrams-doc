@@ -1602,13 +1602,57 @@ function is unaffected.
 Text
 ----
 
-.. container:: todo
+Text objects, defined in `Diagrams.TwoD.Text`:mod:, can be created
+with the `text` function.
 
-  * Creating text objects
-  * Text objects take up no space
-  * Font size
-  * Other text attributes
-  * Planned for future versions: better alignment, converting to paths
+.. class:: dia-lhs
+
+::
+
+> example = text "Hello world!" <> rect 8 1
+
+The most important thing to keep in mind when working with text
+objects is that they *take up no space*; that is, the bounding
+function for a text object is constantly zero.  If we omitted the
+rectangle from the above example, there would be no output.  There are
+two reasons for this.  First, computing the size of some text in a
+given font is rather complicated, and ``diagrams`` cannot (yet) do it
+natively.  The only way it would be able to discover the size of a
+text object is to query some backend (such as cairo) which knows how
+to compute it, but this would result in the `text` function being no
+longer pure.
+
+The second reason is that font size is handled similarly to line
+width, so the size of a text object cannot be known at the time of its
+creation anyway!  (Future versions of ``diagrams`` may include some
+sort of constraint-solving engine to be able to handle this sort of
+situation, but don't hold your breath.)  Font size is treated
+similarly to line width for a similar reason: we often want disparate
+text elements to be the same size, but those text elements may be part
+of subdiagrams that have been transformed in various ways.
+
+To set the font size, use the `fontSize` function; the default font
+size is (arbitrarily) 1.
+
+Other attributes of text can be set using `font`, `bold` (or, more
+generally, `fontWeight`), `italic`, and `oblique` (or, more generally,
+`fontSlant`).  Text is colored with the current fill color (see
+`Color`_).
+
+.. class:: dia-lhs
+
+::
+
+> text' s t = text t # fontSize s <> strutY (s * 1.3)
+> example = centerXY $
+>       text' 10 "Hello" # italic
+>   === text' 5 "there"  # bold # font "freeserif"
+>   === text' 3 "world"  # fc green
+
+The current text support is certainly meagre: planned features for
+future versions of ``diagrams`` include better alignment between text
+objects placed side-by-side, and the ability to convert text objects
+to paths.
 
 Images
 ------
