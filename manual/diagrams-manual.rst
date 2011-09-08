@@ -1480,14 +1480,6 @@ decorate it with the rows.
 >             (map mkRow [n, n-1 .. 1])
 > example = mkTri 5
 
-Fill rules
-~~~~~~~~~~
-
-.. container:: todo
-
-   * Even-odd rule
-   * Winding rule
-
 .. _PathLike:
 
 The ``PathLike`` class
@@ -1524,6 +1516,71 @@ closed.
 
 For more control over the generation of curved paths, see the
 `diagrams-spiro`:pkg: package.
+
+Fill rules
+~~~~~~~~~~
+
+There are two main algorithms or "rules" used when determining which
+areas to fill with color when filling the interior of a path: the
+*winding rule* and the *even-odd rule*.  The rule used to draw a
+path-based diagram can be set with `fillRule`. For simple,
+non-self-intersecting paths determining which points are inside is
+quite simple, and the two algorithms give the same results. However,
+for self-intersecting paths, they usually result in
+different regions being filled.
+
+.. class:: dia-lhs
+
+::
+
+> loopyStar = fc red
+>           . mconcat . map (cubicSpline True)
+>           . pathVertices
+>           . star (StarSkip 3)
+>           $ regPoly 7 1
+> example = loopyStar # fillRule EvenOdd
+>       ||| strutX 1
+>       ||| loopyStar # fillRule Winding
+
+* The *even-odd rule* specifies that a point is inside the path if a
+  straight line extended from the point off to infinity (in one
+  direction only) crosses the path an odd number of times.  Points
+  with an even number of crossings are outside the path.  This rule is
+  simple to implement and works perfectly well for
+  non-self-intersecting paths.  For self-intersecting paths, however,
+  it results in a funny pattern of alternatingly filled and unfilled
+  regions, as seen in the above example.  Sometimes this pattern is
+  desirable for its own sake.
+
+* The *winding rule* specifies that a point is inside the path if its
+  *winding number* is nonzero.  The winding number measures how many
+  times the path "winds" around the point, and can be intuitively
+  computed as follows: imagine yourself standing at the given point,
+  facing some point on the path.  You hold one end of an (infinitely
+  stretchy) rope; the other end of the rope is attached to a train
+  sitting at the point on the path at which you are looking.  Now the
+  train begins traveling around the path. As it goes, you keep hold of
+  your end of the rope while standing fixed in place, not turning at
+  all.  After the train has completed one circuit around the path,
+  look at the rope: if it is wrapped around you some number of times,
+  you are inside the path; if it is not wrapped around you, you are
+  outside the path.  More generally, we say that the number of times
+  the rope is wrapped around you (positive for one direction and
+  negative for the other) is the point's winding number.
+
+  .. container:: todo
+
+      Draw a picture of you and the train
+
+  For example, if you stand outside a circle looking at a train
+  traveling around it, the rope will move from side to side as the
+  train goes around the circle, but ultimately will return to exactly
+  the state in which it started.  If you are standing inside the
+  circle, however, the rope will end up wrapped around you once.
+
+  This rule does a much better job with self-intersecting paths, and
+  it turns out to be (with some clever optimizations) not much more
+  difficult to implement or inefficient than the even-odd rule.
 
 Clipping
 ~~~~~~~~
