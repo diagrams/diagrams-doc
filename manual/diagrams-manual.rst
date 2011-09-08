@@ -1524,7 +1524,7 @@ There are two main algorithms or "rules" used when determining which
 areas to fill with color when filling the interior of a path: the
 *winding rule* and the *even-odd rule*.  The rule used to draw a
 path-based diagram can be set with `fillRule`. For simple,
-non-self-intersecting paths determining which points are inside is
+non-self-intersecting paths, determining which points are inside is
 quite simple, and the two algorithms give the same results. However,
 for self-intersecting paths, they usually result in
 different regions being filled.
