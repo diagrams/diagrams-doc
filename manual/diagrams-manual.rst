@@ -1490,17 +1490,129 @@ decorate it with the rows.
 
 .. _PathLike:
 
-The ``PathLike`` class
-~~~~~~~~~~~~~~~~~~~~~~
+``PathLike`` and ``Closeable``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+As you may have noticed by now, a large class of functions in the
+standard library---such as `square`, `polygon`, `fromVertices`, and so
+on---generate not just diagrams, but *any* type which is an instance
+of the `PathLike` type class.
+
+The `PathLike` type class has only a single method, `pathLike`:
+
+.. class:: lhs
+
+::
+
+> pathLike :: Point (V p)
+>          -> Bool
+>          -> [Segment (V p)]
+>          -> p
+
+* The first argument is a starting point for the path-like thing;
+  path-like things which are translationally invariant (such as
+  `Trail`\s) simply ignore this argument.
+
+* The second argument indicates whether the path-like thing should be
+  closed.
+
+* The third argument specifies the segments of the path-like thing.
+
+Currently, there are four instances of `PathLike`:
+
+* `Trail`: as noted before, the implementation of `pathLike` for
+  `Trail`\s ignores the first argument, since `Trail`\s have no inherent
+  starting location.
+* `Path`: of course, `pathLike` can only construct paths of a single
+  component.
+* `Diagram b R2`: as long as the backend `b` knows how to render 2D
+  paths, `pathLike` can construct a diagram by stroking the generated
+  single-component path.
+* `[Point v]`: this instance generates the vertices of the path.
+
+It is quite convenient to be able to use, say, `square 2` as a
+diagram, path, trail, or list of vertices, whichever suits one's
+needs.  Otherwise, either four different functions would be needed for
+each primitive (like ``square``, ``squarePath``, ``squareTrail``, and
+``squareVertices``, ugh), or else explicit conversion functions would
+have to be inserted when you wanted something other than what the
+`square` function gave you by default.
+
+As an (admittedly contrived) example, the following diagram defines
+`s` as an alias for `square 2` and then uses it at all four instances of
+`PathLike`:
+
+.. class:: dia-lhs
+
+::
+
+> s = square 2  -- a squarish thing.
+>
+> blueSquares = decoratePath s {- 1 -}
+>                 (replicate 4 (s {- 2 -} # scale 0.5) # fc blue)
+> paths       = lc purple . stroke $ star (StarSkip 2) s {- 3 -}
+> plus        = centerXY . lc green . strokeT
+>             . mconcat . take 5 . iterate (rotateBy (1/5))
+>             $ s {- 4 -}
+> example = (blueSquares <> plus <> paths) # lw 0.05
+
+Exercise: figure out which occurrence of `s` has which type. (Answers
+below.)
+
+At best, this type-directed behavior can result in an "it just
+works/do what I mean" experience.  However, it can occasionally be
+confusing, and care is needed.  The biggest gotcha occurs when
+combining a number of shapes using `(<>)` or `mconcat`: diagrams,
+paths, trails, and lists of vertices all have `Monoid` instances, but
+they are all different, so the combination of shapes has different
+semantics depending on which type is inferred.
+
+.. class:: dia-lhs
+
+::
+
+> ts = mconcat . take 3 . iterate (rotateBy (1/9)) $ eqTriangle 1
+> example = (ts ||| stroke ts ||| strokeT ts ||| fromVertices ts) # fc red
+
+The above example defines `ts` by generating three equilateral
+triangles offset by 1/9 rotations, then combining them with `mconcat`.
+The sneaky thing about this is that `ts` can have the type of any
+`PathLike` instance, and it has completely different meanings
+depending on which type is chosen.  The example uses `ts` at each of
+the four `PathLike` types:
+
+* Since `example` is a diagram, the first `ts`, used by itself, is
+  also a `diagram`; hence it is interpreted as three equilateral
+  triangle diagrams superimposed on one another with `atop`.
+
+* `stroke` turns `Path`\s into diagrams, so the second `ts` has type
+  `Path R2`.  Hence it is interpreted as three triangular paths
+  superimposed into one three-component path, which is then stroked.
+
+* `strokeT` turns `Trail`\s into diagrams, so the third occurrence of
+  `ts` has type `Trail R2`.  It is thus interpreted as three
+  triangular trails (*without* the implicit closing segments)
+  sequenced end-to-end into one long trail.
+
+* The last occurrence of `ts` is a list of points, namely, the
+  concatenation of the vertices of the three triangles.  Turning this
+  into a diagram with `fromVertices` generates a single-component,
+  open path that visits each of the points in turn.  The generated
+  diagram looks passingly similar to the one from the second
+  occurrence of `ts`, but a careful look reveals that they are quite
+  different.
 
 .. container:: todo
 
-  * Explain `PathLike` class
-  * Many functions can actually construct any `PathLike`
-  * Convenient, but also have to be careful because it can change
-    semantics (`Monoid` instances etc.)
   * note `strokeT` and `stroke` functions
   * Major exception: `circle`; use `circlePath` instead
+
+Answers to the `square 2` type inference challenge:
+
+#. `Path R2`
+#. `Diagram b R2`
+#. `[P2]`
+#. `Trail R2`
 
 Splines
 ~~~~~~~
