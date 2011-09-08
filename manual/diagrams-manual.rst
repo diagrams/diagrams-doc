@@ -1050,6 +1050,14 @@ for three aspects of line drawing:
 >             , dashing [0.1,0.2,0.3,0.1] 0
 >             ]
 
+The ``HasStyle`` class
+^^^^^^^^^^^^^^^^^^^^^^
+
+.. container:: todo
+
+   * Write about `HasStyle`
+   * Note e.g. list instance
+
 2D Transformations
 ~~~~~~~~~~~~~~~~~~
 
