@@ -1632,7 +1632,9 @@ text elements to be the same size, but those text elements may be part
 of subdiagrams that have been transformed in various ways.
 
 To set the font size, use the `fontSize` function; the default font
-size is (arbitrarily) 1.
+size is (arbitrarily) 1.  Remember, however, that the font size is
+measured in the *final* vector space of the diagram, rather than in
+the local vector space in effect at the time of the text's creation.
 
 Other attributes of text can be set using `font`, `bold` (or, more
 generally, `fontWeight`), `italic`, and `oblique` (or, more generally,
