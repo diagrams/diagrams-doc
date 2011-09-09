@@ -54,7 +54,7 @@ so on.
 .. _MathJax: http://www.mathjax.org/
 
 This user manual is still under construction.  Content that has yet to
-be written is noted by a light red box with a "document" icon on the
+be written is noted by a light blue box with a "document" icon on the
 right hand side, like this:
 
 .. container:: todo
@@ -66,6 +66,16 @@ If you see a box like this in the place of something you would really
 like to know about, please bug the developers (using the ``#diagrams`` IRC
 channel on Freenode, or the `diagrams mailing list`_) so they can
 prioritize it!
+
+Warnings, "gotchas", and other important asides are in a red box with
+a "warning" icon, like this:
+
+.. warning::
+
+   Diagrams is extremely addictive and may be hazardous to your
+   health!
+
+You would do well to pay special attention to the contents of such boxes.
 
 Other resources
 ---------------
@@ -1751,13 +1761,18 @@ with the `text` function.
 The most important thing to keep in mind when working with text
 objects is that they *take up no space*; that is, the bounding
 function for a text object is constantly zero.  If we omitted the
-rectangle from the above example, there would be no output.  There are
-two reasons for this.  First, computing the size of some text in a
-given font is rather complicated, and ``diagrams`` cannot (yet) do it
-natively.  The only way it would be able to discover the size of a
-text object is to query some backend (such as cairo) which knows how
-to compute it, but this would result in the `text` function being no
-longer pure.
+rectangle from the above example, there would be no output. 
+
+.. warning::
+
+   Text objects take up no space!
+
+There are two reasons for this.  First, computing the size of some
+text in a given font is rather complicated, and ``diagrams`` cannot
+(yet) do it natively.  The only way it would be able to discover the
+size of a text object is to query some backend (such as cairo) which
+knows how to compute it, but this would result in the `text` function
+being no longer pure.
 
 The second reason is that font size is handled similarly to line
 width, so the size of a text object cannot be known at the time of its
