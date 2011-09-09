@@ -50,15 +50,23 @@ code a {
 }
 
 div.todo:before {
-    content: 'To do:'
-}
-
-div.todo:before {
     content: url(icons/towrite.png);
     float: right;
 }
 
 div.todo {
+    padding: 20px;
+    border-style: solid;
+    border-width: thin;
+    background-color: #ddddff;
+}
+
+div.warning:before {
+    content: url(icons/warning.png);
+    float: right;
+}
+
+div.warning {
     padding: 20px;
     border-style: solid;
     border-width: thin;
