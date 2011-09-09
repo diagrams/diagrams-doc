@@ -1490,13 +1490,22 @@ decorate it with the rows.
 
 .. _PathLike:
 
-``PathLike`` and ``Closeable``
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The ``PathLike`` class
+~~~~~~~~~~~~~~~~~~~~~~
 
 As you may have noticed by now, a large class of functions in the
 standard library---such as `square`, `polygon`, `fromVertices`, and so
 on---generate not just diagrams, but *any* type which is an instance
 of the `PathLike` type class.
+
+.. warning::
+
+   Currently, the `circle` function does *not* return any instance of
+   the `PathLike` class!  It can only return a diagram.  To get any
+   `PathLike`, use the `circlePath` function instead.  If you find
+   this annoying, you are `welcome to fix it`_.
+
+.. _`welcome to fix it`: http://code.google.com/p/diagrams/issues/detail?id=53
 
 The `PathLike` type class has only a single method, `pathLike`:
 
@@ -1559,7 +1568,7 @@ As an (admittedly contrived) example, the following diagram defines
 Exercise: figure out which occurrence of `s` has which type. (Answers
 below.)
 
-At best, this type-directed behavior can result in an "it just
+At its best, this type-directed behavior results in a "it just
 works/do what I mean" experience.  However, it can occasionally be
 confusing, and care is needed.  The biggest gotcha occurs when
 combining a number of shapes using `(<>)` or `mconcat`: diagrams,
@@ -1602,6 +1611,11 @@ the four `PathLike` types:
   occurrence of `ts`, but a careful look reveals that they are quite
   different.
 
+Of course, one way to avoid all this would be to give `ts` a specific
+type annotation, if you know which type you would like it to be.  Then
+using it at a different type will result in a type error, rather than
+confusing semantics.
+
 .. container:: todo
 
   * note `strokeT` and `stroke` functions
@@ -1613,6 +1627,9 @@ Answers to the `square 2` type inference challenge:
 #. `Diagram b R2`
 #. `[P2]`
 #. `Trail R2`
+
+The ``Closeable`` class
+~~~~~~~~~~~~~~~~~~~~~~~
 
 Splines
 ~~~~~~~
