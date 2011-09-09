@@ -1954,7 +1954,7 @@ For example,
 
 .. container:: todo
 
-  * `strut`, `pad`, `withBounds`, `phantom`
+  * `withBounds`, `phantom`
 
   * `width`, `height`, etc. from `Diagrams.TwoD.Util`:mod:
 
@@ -1964,11 +1964,28 @@ For example,
 Named subdiagrams
 -----------------
 
+.. container:: todo
+
+   * IsName
+   * Giving names to diagrams
+   * qualifying names
+   * withName etc.
+   * idiomatic use of withName etc.
+
 Using queries
 -------------
 
+.. container:: todo
+
+   * Queries
+   * Using queries with different monoids
+
 Bounding boxes
 --------------
+
+.. container:: todo
+
+   * mention bounding box library
 
 Tools for backends
 ------------------
