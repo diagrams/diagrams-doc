@@ -70,7 +70,7 @@ prioritize it!
 Warnings, "gotchas", and other important asides are in a red box with
 a "warning" icon, like this:
 
-.. warning::
+.. container:: warning
 
    Diagrams is extremely addictive and may be hazardous to your
    health!
@@ -740,7 +740,7 @@ similar to `star` are polymorphic in their return type over any
 construct a path with multiple components, which is not supported by
 the `PathLike` class.
 
-Combining diagrams
+Composing diagrams
 ------------------
 
 The ``diagrams`` framework is fundamentally *compositional*: complex
@@ -1063,10 +1063,42 @@ for three aspects of line drawing:
 The ``HasStyle`` class
 ^^^^^^^^^^^^^^^^^^^^^^
 
-.. container:: todo
+Functions such as `fc`, `lc`, `lw`, `lineCap`, and so on, do not
+actually take only diagrams as arguments.  They take any type which is
+an instance of the `HasStyle` type class.  Of course, diagrams
+themselves are an instance.
 
-   * Write about `HasStyle`
-   * Note e.g. list instance
+However, the `Style` type is also an instance.  This is useful in
+writing functions which offer the caller flexible control over the
+style of generated diagrams.  The general pattern is to take a `Style`
+(or several) as an argument, then apply it to a diagram along with
+some default attributes:
+
+.. class:: lhs
+
+::
+
+> myFun style = d # applyStyle style # lc red # ...
+>   where d = ...
+
+This way, any attributes provided by the user in the `style` argument
+will override the default attributes specified afterwards.
+
+To call `myFun`, a user can construct a `Style` by starting with an
+empty style (`mempty`, since `Style` is an instance of `Monoid`) and
+applying the desired attributes:
+
+.. class:: lhs
+
+::
+
+> foo = myFun (mempty # fontSize 10 # lw 0 # fc green)
+
+If the type `T` is an instance of `HasStyle`, then `[T]` is also.
+This means that you can apply styles uniformly to entire lists of
+diagrams at once, which occasionally comes in handy.  The function
+type `a -> T` is also an instance of `HasStyle` whenever `T` is, which
+comes in handy even more occasionally.
 
 2D Transformations
 ~~~~~~~~~~~~~~~~~~
@@ -1112,10 +1144,7 @@ To invert a transformation, use `inv`.  For any transformation `t`,
 
 `t <> inv t == inv t <> t == mempty`.
 
-To apply a transformation to a diagram, use `transform`.  (In fact,
-transformations can be applied not just to diagrams but to any
-`Transformable` type, including vectors, points, trails, paths,
-bounding functions, lists of `Transformable` things...)
+To apply a transformation to a diagram, use `transform`.
 
 Rotation
 ^^^^^^^^
@@ -1216,6 +1245,16 @@ to its original position.
 Note that `reflectAbout` and `rotateAbout` are implemented using
 `under`.
 
+The ``Transformable`` class
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Transformations can be applied not just to diagrams, but values of any
+type which is an instance of the `Transformable` type class.
+Instances of `Transformable` include vectors, points, trails, paths,
+bounding functions, and `Transformations` themselves.  In addition,
+lists, maps, or sets of `Transformable` things are also
+`Transformable` in the obvious way.
+
 Alignment
 ~~~~~~~~~
 
@@ -1280,9 +1319,9 @@ interpolating between the bottom and top of the square:
 Working with paths
 ------------------
 
-.. container:: todo
-
-  Write something general about paths
+Paths are one of the most fundamental tools in ``diagrams``.  They can
+be used not only directly to draw things, but also as guides to help
+create and position other diagrams.
 
 Segments
 ~~~~~~~~
@@ -1445,12 +1484,12 @@ holes:
 ::
 
 > ring :: Path R2
-> ring = circlePath 3 <> circlePath 2 # reversePath
+> ring = circlePath 3 <> circlePath 2
 >
-> example = stroke ring # fc purple
+> example = stroke ring # fc purple # fillRule EvenOdd
 
-`reversePath` is needed on the second segment because of the way path
-filling is done; see `Fill rules`_.
+(See `Fill rules`_ for an explanation of the call to `fillRule
+EvenOdd`.)
 
 `stroke` turns a path into a diagram, just as `strokeT` turns a trail
 into a diagram. (In fact, `strokeT` really works by first turning the
@@ -1508,7 +1547,7 @@ standard library---such as `square`, `polygon`, `fromVertices`, and so
 on---generate not just diagrams, but *any* type which is an instance
 of the `PathLike` type class.
 
-.. warning::
+.. container:: warning
 
    Currently, the `circle` function does *not* return any instance of
    the `PathLike` class!  It can only return a diagram.  To get any
@@ -1626,11 +1665,6 @@ type annotation, if you know which type you would like it to be.  Then
 using it at a different type will result in a type error, rather than
 confusing semantics.
 
-.. container:: todo
-
-  * note `strokeT` and `stroke` functions
-  * Major exception: `circle`; use `circlePath` instead
-
 Answers to the `square 2` type inference challenge:
 
 #. `Path R2`
@@ -1640,6 +1674,11 @@ Answers to the `square 2` type inference challenge:
 
 The ``Closeable`` class
 ~~~~~~~~~~~~~~~~~~~~~~~
+
+Creating closed paths can be accomplished with the `close` method of
+the `Closeable` type class.  There is also an `open` method, which
+does what you would think.  Currently, there are only two instances of
+`Closeable`: `Trail` and `Path`.
 
 Splines
 ~~~~~~~
@@ -1725,6 +1764,12 @@ different regions being filled.
   the state in which it started.  If you are standing inside the
   circle, however, the rope will end up wrapped around you once.
 
+  For paths with multiple components, the winding number is simply the
+  sum of the winding numbers for the individual components.  This
+  means, for example, that "holes" can be created in shapes using a
+  path component traveling in the *opposite direction* from the outer
+  path.
+
   This rule does a much better job with self-intersecting paths, and
   it turns out to be (with some clever optimizations) not much more
   difficult to implement or inefficient than the even-odd rule.
@@ -1761,9 +1806,9 @@ with the `text` function.
 The most important thing to keep in mind when working with text
 objects is that they *take up no space*; that is, the bounding
 function for a text object is constantly zero.  If we omitted the
-rectangle from the above example, there would be no output. 
+rectangle from the above example, there would be no output.
 
-.. warning::
+.. container:: warning
 
    Text objects take up no space!
 
@@ -1849,11 +1894,72 @@ backends may be able to handle other types of external images.
 Working with bounds
 -------------------
 
+The `Bounds` type, defined in
+`Graphics.Rendering.Diagrams.Bounds`:mod:, encapsulates *bounding
+functions* (see `Bounding functions and local vector spaces`_).
+Things which have an associated bounding function---including
+diagrams, segments, trails, and paths---are instances of the
+`Boundable` type class.
+
+Bounding functions are used implicitly when placing diagrams next to
+each other (see `Juxtaposing diagrams`_) or when aligning diagrams
+(see `Alignment`_).  There are also
+
+* `strut` creates a diagram which produces no output but takes up the
+  same space as a line segment.  There are also versions specialized
+  to two dimensions, `strutX` and `strutY`.  These functions are
+  useful for putting space in between diagrams.
+
+.. class:: dia-lhs
+
+::
+
+> example = circle 1 ||| strutX 2 ||| square 2
+
+* `pad` increases the bounding function of a diagram by a certain
+  factor in all directions.
+
+.. class:: dia-lhs
+
+::
+
+> surround d = c === (c ||| d ||| c) # centerXY === c
+>   where c = circle 0.5
+>
+> example = surround (square 1) ||| strutX 1
+>       ||| surround (pad 1.2 $ square 1)
+
+However, the behavior of `pad` often trips up first-time users of
+``diagrams``:
+
+.. container:: warning
+
+   `pad` expands the bounding function *relative to the local
+   origin*.  So if you want the padding to be equal on all sides, use
+   `centerXY` first.
+
+For example,
+
+   .. class:: dia-lhs
+
+   ::
+
+   > surround d = c === (c ||| d ||| c) # centerXY === c
+   >   where c = circle 0.5
+   >
+   > p = strokeT (square 1)
+   >
+   > example = surround (pad 1.2 $ p # showOrigin) ||| strutX 1
+   >       ||| surround (pad 1.2 $ p # centerXY # showOrigin)
+
 .. container:: todo
 
   * `strut`, `pad`, `withBounds`, `phantom`
 
   * `width`, `height`, etc. from `Diagrams.TwoD.Util`:mod:
+
+  * `Boundable` class.  Note list instance, e.g. can call alignment
+    functions on lists to align as a group
 
 Named subdiagrams
 -----------------
