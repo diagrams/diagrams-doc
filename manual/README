@@ -11,6 +11,9 @@ Things you will need
 
     http://docutils.sourceforge.net/
 
+  In particular, you will need the 'rst2xml.py' program which comes
+  standard with the docutils distribution.
+
 * Haskell docutils package
 
   A collection of some utilities for transforming docutils documents.
