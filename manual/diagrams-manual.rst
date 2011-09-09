@@ -2010,6 +2010,17 @@ Deciphering error messages
 Core library
 ============
 
+This chapter explains the low-level inner workings of
+`diagrams-core`:pkg:.  Casual users of ``diagrams`` should not need to
+read this section (although a quick skim may well turn up something
+interesting).  It is intended more for developers and power users who
+want to learn how ``diagrams`` actually works under the hood.
+
+.. container:: todo
+
+   This section may not get written for a while; yell if you'd like to
+   read it.  The more people who yell, the faster it will get done. =)
+
 Vector spaces
 -------------
 
@@ -2046,5 +2057,24 @@ The ``Backend`` class
 The ``Renderable`` class
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Cairo backend
-=============
+The cairo backend
+=================
+
+Other backends
+==============
+
+.. container:: todo
+
+   * SVG
+   * postscript
+   * TikZ
+   * povray
+   * OpenGL?
+
+Related projects
+================
+
+.. container:: todo
+
+   * diagrams-spiro
+   * diagrams-hint
