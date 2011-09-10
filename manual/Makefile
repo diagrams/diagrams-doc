@@ -28,4 +28,5 @@ preview : diagrams-manual.html
 	cp diagrams-manual.{html,rst} $(WEB)
 	cp *.css $(WEB)
 	cp images/* $(WEB)/images
+	cp icons/* $(WEB)/icons
 	chmod -R go+rX $(WEB)
