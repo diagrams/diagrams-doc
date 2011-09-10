@@ -4978,3 +4978,165 @@
 2011-08-16 02:12:50 UTC <luite> which of the ten million things he's working on?
 2011-08-16 19:45:54 UTC <d-day> luite: trifecta
 2011-08-16 19:46:07 UTC <d-day> his fancy parser/printer/diagnostic-er
+2011-08-22 21:15:25 UTC <fryguybob> Progress!
+2011-08-22 21:17:14 UTC <luite> hello
+2011-08-22 21:23:12 UTC <fryguybob> http://imgur.com/yuWj1  -- now for clipping...
+2011-08-22 21:25:43 UTC <luite> nice dots :p
+2011-08-22 21:42:25 UTC <alpounet> haha
+2011-08-23 00:30:59 UTC <fryguybob> more progress http://imgur.com/8AePj
+2011-08-23 00:31:52 UTC <luite> very nice
+2011-08-23 00:55:04 UTC <byorgey> sweet!
+2011-08-23 01:01:22 UTC <fryguybob> Hummm, I wonder how hard it is to make a latex package to redirect some inline input to something else.
+2011-08-23 01:01:38 UTC <fryguybob> Probably isn't too bad.
+2011-08-23 01:02:26 UTC <byorgey> what do you mean, redirect some inline input to something else?
+2011-08-23 01:03:04 UTC <byorgey> you mean you want to be able to redirect embedded diagrams code through diagrams?
+2011-08-23 01:03:33 UTC <byorgey> I would have thought to do that with a preprocessor, but I guess making a latex package to do it makes a lot more sense
+2011-08-23 01:03:54 UTC <fryguybob> Yeah
+2011-08-23 01:03:56 UTC <byorgey> by the way, while we're on the subject of progress: http://www.cis.upenn.edu/~byorgey/diagrams-manual/diagrams-manual.html  <-- coming along nicely!
+2011-08-23 01:04:09 UTC <fryguybob> Excellent!
+2011-08-23 01:04:33 UTC <fryguybob> "diagrams vis-a-vis Kant", I can't wait!
+2011-08-23 01:04:50 UTC <byorgey> with clickable module and function names, auto-generated diagrams, MathJax, ...
+2011-08-23 01:05:14 UTC <byorgey> fryguybob: actually, I was hoping you could help out a bit and write that essay
+2011-08-23 01:05:32 UTC <luite> hm, the mathjax menu appears at the worng place
+2011-08-23 01:05:40 UTC <byorgey> menu?
+2011-08-23 01:05:57 UTC <luite> if you right-click on the equation
+2011-08-23 01:06:19 UTC <byorgey> oh, I didn't know about that, cool
+2011-08-23 01:06:25 UTC <byorgey> where is the menu supposed to appear?
+2011-08-23 01:06:37 UTC <luite> uh under your pointer, like a context menu
+2011-08-23 01:06:49 UTC <byorgey> yeah I guess so
+2011-08-23 01:07:26 UTC <byorgey> hmm, for me they always appear at the same x-coordinate independent of the equation
+2011-08-23 01:10:58 UTC <luite> same here, somewhere in the left margin
+2011-08-23 01:11:23 UTC <fryguybob> ACTION fires up the debugger...
+2011-08-23 01:12:01 UTC <luite> are the filenames a sha1 of the contents?
+2011-08-23 01:17:22 UTC <luite> SPJ has fixed that type families bug I mentioned by the way... well fixed, he patched it so that what I did isn't allowed anymore :)
+2011-08-23 01:37:51 UTC <d-day> lol
+2011-08-23 02:02:02 UTC <byorgey> luite: well, they're md5 actually (I wouldn't know the difference really), but yes, that way it only has to generate new or modified diagrams when you build
+2011-08-23 02:02:26 UTC <byorgey> luite: oh, nice =)
+2011-08-23 02:03:23 UTC <luite> I used something like: instance C.Cls (B a) where data C.Cd = ....
+2011-08-23 02:03:37 UTC <luite> but that's not allowed anymore, only where data Cd = ....
+2011-08-23 02:03:52 UTC <luite> and then you have a Cd in your exports
+2011-08-23 02:08:03 UTC <luite> I'm still not sure why, and it shows as C.Cd in :browse, but SPJ says it's fixed now, so I guess I should believe him ;)
+2011-08-23 02:10:07 UTC <luite> does diagrams work ok on os x?
+2011-08-23 02:37:01 UTC <byorgey> luite: there's no reason it shouldn't
+2011-08-23 02:37:20 UTC <byorgey> although I don't know what the status is of cairo on OS X
+2011-08-23 10:57:44 UTC <fryguybob> byorgey: last night I found this: http://www.fauskes.net/nb/introducing-dot2texi/
+2011-08-23 10:58:00 UTC <fryguybob> It might be a way to go about embedding in latex with a package.
+2011-08-23 10:58:34 UTC <byorgey> oh, I see, nice!
+2011-08-23 10:58:46 UTC <byorgey> you're going to look at the package and see how it's implemented?
+2011-08-23 10:59:52 UTC <fryguybob> yeah
+2011-08-23 11:00:35 UTC <fryguybob> It looks like it uses the command line tool dot2tex then embeds TikZ.
+2011-08-23 11:01:04 UTC <byorgey> right, but how do you call out to a command line tool from TeX code?
+2011-08-23 11:01:14 UTC <byorgey> I guess I am not surprised you can do it but I wouldn't know how
+2011-08-23 11:01:20 UTC <fryguybob> The source is here: http://ctan.mackichan.com/macros/latex/contrib/dot2texi/dot2texi.sty
+2011-08-23 11:03:05 UTC <byorgey> ugh I hate reading TeX =P
+2011-08-23 11:03:13 UTC <fryguybob> Not that its particularly readable...
+2011-08-23 11:04:31 UTC <byorgey> The TeX \write primitive instruction is used to write to different file âstreamsâ; TeX refers to each open file by number, not by name (although most of the time we hide this). Stream 18 is special: it is not a file but means that TeX asking the operative system to do something.
+2011-08-23 11:04:34 UTC <fryguybob> I think the key is the shell-excape flag, I'll have to read up on that.
+2011-08-23 11:04:44 UTC <byorgey> of course, stream 18!  makes perfect sense. =P
+2011-08-23 11:04:46 UTC <fryguybob> ah ok
+2011-08-23 11:04:50 UTC <byorgey> http://www.texdev.net/2009/10/06/what-does-write18-mean/
+2011-08-23 11:05:43 UTC <fryguybob> Indeed the magic 18 shows up in the source. (No one will ever need more then 17 files!)
+2011-08-23 11:06:42 UTC <byorgey> yes, that's why I knew what to google
+2011-08-23 11:07:51 UTC <fryguybob> My eyes were focused on finding something sensible :D.
+2011-08-23 11:29:37 UTC <fryguybob> byorgey: This little test worked  http://hpaste.org/50583  now for stealing the input.
+2011-08-23 12:38:59 UTC <fryguybob> Seems the approach used in dot2texi does not work with my latex.  It successfully redirects the input and calls out to the shell, but it doesn't ignore the input in the file correctly.
+2011-08-23 12:54:56 UTC <byorgey> hmm, staging TeX-as-data vs TeX-as-code is a dark art indeed
+2011-08-23 13:12:28 UTC <fryguybob> Ah, found the issue.
+2011-08-23 13:15:08 UTC <fryguybob> I've got to run now, but I do know it can work.
+2011-08-23 13:15:44 UTC <byorgey> great!
+2011-08-23 13:16:36 UTC <fryguybob> I need a little more robust command line on my program to see if it will do multiple entries in one file correctly, but I think it should be happy.
+2011-08-23 13:16:53 UTC <fryguybob> It looks like some of the code is based on this: http://www.tug.org/texlive/Contents/live/texmf-dist/doc/latex/tools/verbatim.pdf
+2011-08-23 13:17:33 UTC <fryguybob> And it has a comment about \verbatim@out needing to be defined.  Doing that with \newwrite\verbatim@out did the trick.
+2011-09-07 19:19:53 UTC <byorgey> wheeee  http://www.cis.upenn.edu/~byorgey/Swirl.png
+2011-09-07 19:20:32 UTC <luite> hehe I had that stuff when I was a kid
+2011-09-07 19:20:50 UTC <luite> spirograph
+2011-09-07 19:20:53 UTC <byorgey> code is here: http://hpaste.org/51061
+2011-09-07 19:21:02 UTC <byorgey> yeah, me too =)
+2011-09-07 19:21:09 UTC <byorgey> we should make a spirograph module
+2011-09-07 19:21:24 UTC <byorgey> that image is not exactly doing the same thing as spirograph mathematically, but it sure looks like it
+2011-09-07 19:22:21 UTC <byorgey> I was about to say "man, we should have something like hpaste except you can paste diagrams and it will render them for you!" and then I remembered that is what Wolfgang is =)
+2011-09-07 19:22:33 UTC <byorgey> at least, ONE of the many things
+2011-09-07 19:22:46 UTC <luite> you mean "get back to work you lazy ass" ;p
+2011-09-07 19:23:09 UTC <byorgey> haha, no, I didn't actually mean that =)
+2011-09-07 19:23:29 UTC <byorgey> I actually did just have that thought process
+2011-09-07 19:23:42 UTC <luite> hehe
+2011-09-07 19:24:42 UTC <byorgey> fryguybob: check it out, I am putting cubic splines to good use ;)
+2011-09-07 19:25:11 UTC <fryguybob> :D
+2011-09-07 19:25:13 UTC <fryguybob> I
+2011-09-07 19:25:38 UTC <fryguybob> I'm going to see what it looks like with spiro :D.
+2011-09-07 19:26:54 UTC <byorgey> sweet
+2011-09-07 19:27:51 UTC <fryguybob> ACTION rebuilds everything...
+2011-09-07 19:27:59 UTC <byorgey> it would actually be fun to make a module for spirograph emulation -- I mean to accurately model the actual paths you get using various combinations of gears
+2011-09-07 19:28:52 UTC <fryguybob> Humm is there a new vector-space?
+2011-09-07 19:29:02 UTC <byorgey> fryguybob: yes
+2011-09-07 19:29:15 UTC <byorgey> just cabal update first
+2011-09-07 19:29:47 UTC <byorgey> I needed a function to do vector projection, and decided it would be a nice general function to have in vector-space, so I sent conal a patch
+2011-09-07 19:29:55 UTC <byorgey> he released a new version within about 15 minutes
+2011-09-07 19:29:56 UTC <fryguybob> excellent.
+2011-09-07 19:43:32 UTC <fryguybob> I've got to go.
+2011-09-07 19:56:09 UTC <tgeeky> conal is -the- man
+2011-09-07 23:22:09 UTC <fryguybob> byorgey: hehe.  With spiro they come out as three concentric circles.
+2011-09-08 01:42:28 UTC <byorgey> fryguybob: haha, really?
+2011-09-08 01:46:59 UTC <fryguybob> Yeah, it is kind of optimized to be a circle if the control points lie on a circle.
+2011-09-08 02:05:49 UTC <fryguybob> byorgey: They are circles with angle > tao
+2011-09-08 02:29:31 UTC <byorgey> aha, I see.
+2011-09-08 21:25:39 UTC <byorgey> woohoo, user manual just passed 10K words!
+2011-09-08 21:27:56 UTC <fryguybob> nice!
+2011-09-08 21:28:52 UTC <luite> :)
+2011-09-08 21:29:04 UTC <byorgey> about 1/4 done!
+2011-09-08 21:29:09 UTC <byorgey> haha, just kidding
+2011-09-08 21:29:33 UTC <byorgey> documentation for the standard library should be done soon
+2011-09-08 21:29:46 UTC <byorgey> although there's still a lot to write about the internals of diagrams-core, but that can wait
+2011-09-08 22:20:01 UTC <tgeeky> byorgey: Do you want me to do an editing pass?
+2011-09-08 22:20:08 UTC <tgeeky> byorgey: that's one thing that I *know* I'm good at
+2011-09-08 22:20:23 UTC <byorgey> tgeeky: sure, that would be great!
+2011-09-08 22:20:54 UTC <tgeeky> byorgey: just point me to it in here when you think it's suitable for a pass
+2011-09-08 22:21:16 UTC <byorgey> tgeeky: oh, it's suitable now
+2011-09-08 22:21:53 UTC <byorgey> tgeeky: darcs get http://patch-tag.com/r/byorgey/diagrams-doc
+2011-09-08 22:23:03 UTC <byorgey> tgeeky: hmm, well, to build it you will need a few things, let me write up some instructions on how to get it to build
+2011-09-08 22:23:29 UTC <tgeeky> ok. I'm still on windows, so I may not be able to do that easily - but I'm about to deploy a few VMs
+2011-09-08 22:23:32 UTC <tgeeky> so I can do it there
+2011-09-08 22:24:10 UTC <byorgey> ok.  I just figured it would be easier for you to be able to edit and push the changes directly, rather than mailing me with changes or whatever
+2011-09-08 22:24:19 UTC <tgeeky> byorgey: yeah, certainly
+2011-09-08 22:43:22 UTC <byorgey> tgeeky: ok, whenever you get set up, look in the manual/ directory in that repository
+2011-09-08 22:43:34 UTC <byorgey> tgeeky: I just pushed a README file with instructions on how to get it to build
+2011-09-08 22:44:15 UTC <byorgey> tgeeky: I almost certainly forgot something, so ping me if you have any trouble, or if you have to do something that isn't written in the README file, so I can add it
+2011-09-08 22:46:03 UTC <byorgey> tgeeky: also, do you have a patch-tag account?
+2011-09-08 22:46:48 UTC <byorgey> if you don't already have one, set one up and let me know your username, and I can give you commit access to the diagrams-doc repo
+2011-09-09 09:21:55 UTC <luite> will  a diagrams that works with ghc 7.2 be released soon?
+2011-09-09 12:23:31 UTC <byorgey> luite: yes
+2011-09-09 12:23:40 UTC <byorgey> luite: I believe the current darcs version of diagrams works with ghc 7.2, if you use the (as of yet unreleased) darcs version of cairo
+2011-09-09 12:26:56 UTC <luite> ok, I'll try them
+2011-09-09 12:30:56 UTC <byorgey> luite: hang on, dcoutts had some .tgzs prepared, let me find them for you
+2011-09-09 12:31:13 UTC <byorgey> cabal install http://code.haskell.org/~duncan/gtk2hs/glib-0.12.1.tar.gz http://code.haskell.org/~duncan/gtk2hs/gio-0.12.1.tar.gz http://code.haskell.org/~duncan/gtk2hs/pango-0.12.1.tar.gz http://code.haskell.org/~duncan/gtk2hs/cairo-0.12.1.tar.gz http://code.haskell.org/~duncan/gtk2hs/gtk-0.12.1.tar.gz http://code.haskell.org/~duncan/gtk2hs/soegtk-0.12.0.tar.gz
+2011-09-09 12:31:37 UTC <luite> oh thanks
+2011-09-09 12:36:29 UTC <luite> soegtk version has changed to 0.12.1
+2011-09-09 12:46:45 UTC <byorgey> ah, ok
+2011-09-09 12:47:02 UTC <byorgey> hopefully they will all get released soon
+2011-09-09 12:48:53 UTC <luite> I hope the transition to 7.4 will be easier
+2011-09-09 12:51:23 UTC <luite> not that so much had to be changed for 7.2, but the method of contacting all individual package authors and hope that they will upload a new version is rather inefficient
+2011-09-09 12:52:49 UTC <byorgey> yeah, but what other method is there?
+2011-09-09 12:55:39 UTC <luite> perhaps something similar to what some port trees (gentoo portage, freebsd ports, macports) do, a repository of patches for specific versions. but that might make it even more complicated
+2011-09-09 12:56:51 UTC <luite> I get this error when darcs getting diagrams-lib darcs: /Users/luite/.darcs/cache/patches/0000000456-6236e447b99ddfd81bff3ff1bea28c6f885f289a52f2120c6dd108a9741d7d73-new_6430147fa39e6875563251c6967d8157: getSymbolicLinkStatus: does not exist (No such file or directory)
+2011-09-09 12:58:56 UTC <luite> looks more like a darcs problem than something with the repository though
+2011-09-09 13:05:24 UTC <byorgey> weird
+2011-09-09 13:05:35 UTC <byorgey> maybe try clearing out the cache?
+2011-09-09 13:08:33 UTC <luite> the package still installs, so I don't think it really affects the contents (maybe some older patch)
+2011-09-09 13:08:42 UTC <byorgey> ok, strange
+2011-09-09 13:08:49 UTC <luite> but I can't link programs, undefined symbols
+2011-09-09 13:09:06 UTC <byorgey> what?
+2011-09-09 13:12:28 UTC <luite> something with iconv: http://hpaste.org/51136
+2011-09-09 13:13:05 UTC <luite> not really diagrams related, maybe i installed something wrong
+2011-09-09 13:13:24 UTC <byorgey> hmm, weird, guess so
+2011-09-09 13:30:11 UTC <aleator> su
+2011-09-09 13:30:33 UTC <byorgey> root #
+2011-09-09 13:31:16 UTC <luite> hehe
+2011-09-09 13:31:38 UTC <luite> byorgey: oh I might have the wrong ghc version for my operating system
+2011-09-09 13:31:51 UTC <byorgey> luite: hehe, that would do it =)
+2011-09-09 13:31:52 UTC <luite> but for some reason I could install/compile yesod and lots of other things
+2011-09-09 13:33:43 UTC <byorgey> well don't ask me.
+2011-09-09 15:39:44 UTC <tgeeky> byorgey: https://patch-tag.com/r/dday <-- me
+2011-09-09 15:45:08 UTC <byorgey> tgeeky: ok, I added you to the repo, you should have push permissions now.
+2011-09-09 16:37:48 UTC <luite> yay, finally a workign diagrams/ghc install
+2011-09-09 16:38:24 UTC <luite> had to recompile ghc with a --with-iconv-libraries= because of two conflicting iconv libraries
+2011-09-09 17:42:17 UTC <byorgey> luite: yay!
