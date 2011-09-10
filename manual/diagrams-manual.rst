@@ -1957,7 +1957,7 @@ For example,
 
   * `withBounds`, `phantom`
 
-  * `width`, `height`, etc. from `Diagrams.TwoD.Util`:mod:
+  * `width`, `height`, etc. from `Diagrams.TwoD.Size`:mod:
 
   * `Boundable` class.  Note list instance, e.g. can call alignment
     functions on lists to align as a group
