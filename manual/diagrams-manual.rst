@@ -1989,7 +1989,7 @@ as apply an alignment to a list of diagrams *considered as a group*.
 
 .. container:: todo
 
-   example
+   Add example
 
 Named subdiagrams
 -----------------
