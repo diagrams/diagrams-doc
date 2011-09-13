@@ -257,8 +257,8 @@ operator `(<>)` as a synonym. (Hopefully this synonym will soon become
 part of ``Data.Monoid`` itself!)
 
 Monoids are used extensively in ``diagrams``: diagrams,
-transformations, trails, paths, styles, and colors are all
-instances.
+transformations, bounding functions, trails, paths, styles, and colors
+are all instances.
 
 Faking optional named arguments
 -------------------------------
@@ -835,8 +835,9 @@ diagrams in the `x`:math:\- and `y`:math:\-directions, respectively.
 >                                          d2  )
 
 See `Bounding functions and local vector spaces`_ for more information
-on what "next to" means, or see `Bounding functions`_ for precise
-details.
+on what "next to" means, `Working with bounds`_ for information
+functions available for manipulating bounds, or `Bounding
+functions`_ for precise details.
 
 Concatenating diagrams
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -1244,6 +1245,8 @@ to its original position.
 
 Note that `reflectAbout` and `rotateAbout` are implemented using
 `under`.
+
+.. _`The Transformable class`:
 
 The ``Transformable`` class
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1904,63 +1907,89 @@ diagrams, segments, trails, and paths---are instances of the
 
 Bounding functions are used implicitly when placing diagrams next to
 each other (see `Juxtaposing diagrams`_) or when aligning diagrams
-(see `Alignment`_).  There are also
+(see `Alignment`_).
+
+Bound-related functions
+~~~~~~~~~~~~~~~~~~~~~~~
 
 * `strut` creates a diagram which produces no output but takes up the
   same space as a line segment.  There are also versions specialized
   to two dimensions, `strutX` and `strutY`.  These functions are
   useful for putting space in between diagrams.
 
-.. class:: dia-lhs
+  .. class:: dia-lhs
 
-::
+  ::
 
-> example = circle 1 ||| strutX 2 ||| square 2
+  > example = circle 1 ||| strutX 2 ||| square 2
 
 * `pad` increases the bounding function of a diagram by a certain
   factor in all directions.
 
-.. class:: dia-lhs
+  .. class:: dia-lhs
 
-::
+  ::
 
-> surround d = c === (c ||| d ||| c) # centerXY === c
->   where c = circle 0.5
->
-> example = surround (square 1) ||| strutX 1
->       ||| surround (pad 1.2 $ square 1)
+  > surround d = c === (c ||| d ||| c) # centerXY === c
+  >   where c = circle 0.5
+  >
+  > example = surround (square 1) ||| strutX 1
+  >       ||| surround (pad 1.2 $ square 1)
 
-However, the behavior of `pad` often trips up first-time users of
-``diagrams``:
+  However, the behavior of `pad` often trips up first-time users of
+  ``diagrams``:
 
-.. container:: warning
+  .. container:: warning
 
-   `pad` expands the bounding function *relative to the local
-   origin*.  So if you want the padding to be equal on all sides, use
-   `centerXY` first.
+     `pad` expands the bounding function *relative to the local
+     origin*.  So if you want the padding to be equal on all sides, use
+     `centerXY` first.
 
-For example,
+  For example,
 
-   .. class:: dia-lhs
+  .. class:: dia-lhs
 
-   ::
+  ::
 
-   > surround d = c === (c ||| d ||| c) # centerXY === c
-   >   where c = circle 0.5
-   >
-   > p = strokeT (square 1)
-   >
-   > example = surround (pad 1.2 $ p # showOrigin) ||| strutX 1
-   >       ||| surround (pad 1.2 $ p # centerXY # showOrigin)
+  > surround d = c === (c ||| d ||| c) # centerXY === c
+  >   where c = circle 0.5
+  >
+  > p = strokeT (square 1)
+  >
+  > example = surround (pad 1.2 $ p # showOrigin) ||| strutX 1
+  >       ||| surround (pad 1.2 $ p # centerXY # showOrigin)
+
+* Manually setting the bounding function of a diagram can be
+  accomplished using `withBounds`.  Additionally, `phantom` can be
+  used to create a diagram which produces no output but takes up a
+  certain amount of space, for use in positioning other diagrams.
+
+  .. container:: todo
+
+     example diagram
+
+* `Diagrams.TwoD.Size`:mod: provides functions for extracting
+  information from the bounding functions of two-dimensional diagrams,
+  such as `width`, `height`, `extentX`, `extentY`, and `center2D`.
+
+The ``Boundable`` class
+~~~~~~~~~~~~~~~~~~~~~~~
+
+All objects with an associated bounding function are instances of the
+`Boundable` type class.  This includes diagrams, segments, trails, and
+paths.
+
+In addition, the list type `[b]` is an instance of `Boundable`
+whenever `b` is.  The bounding function for a list is simply the
+combination of all the individual bounding functions of the list's
+elements---that is, a bounding function that contains all of the list
+elements.  In conjunction with the `Transformable` instance for lists
+(see `The Transformable class`_), this can be used to do things such
+as apply an alignment to a list of diagrams *considered as a group*.
 
 .. container:: todo
 
-  * `withBounds`, `phantom`
-
-  * `width`, `height`, etc. from `Diagrams.TwoD.Size`:mod:
-
-  * `Boundable` class.  Note list instance, e.g. can call alignment
-    functions on lists to align as a group
+   example
 
 Named subdiagrams
 -----------------
