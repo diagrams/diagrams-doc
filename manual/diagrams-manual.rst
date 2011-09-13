@@ -2013,9 +2013,17 @@ Using queries
 Bounding boxes
 --------------
 
-.. container:: todo
+Bounding functions (see `Working with bounds`_) are more flexible and
+compositional than bounding boxes for the purposes of combining
+diagrams.  However, occasionally it is useful for certain applications
+to be able to work with bounding boxes, which support fast tests for
+inclusion as well as union and intersection operations.
 
-   * mention bounding box library
+To this end, a generic implementation of arbitrary-dimension bounding
+boxes is provided in `Diagrams.BoundingBox`:mod:.  Bounding boxes can
+be created from sets of points or from any `Boundable` object, used
+for inclusion or exclusion testing, and combined via union or
+intersection.
 
 Tools for backends
 ------------------
