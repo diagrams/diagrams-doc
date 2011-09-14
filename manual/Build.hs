@@ -59,7 +59,8 @@ buildDiagram source opts = do
 
 diagramFileHeader :: String -> String
 diagramFileHeader modName = unlines $
-  [ "> {-# LANGUAGE NoMonomorphismRestriction #-}"
+  [ "> {-# LANGUAGE NoMonomorphismRestriction, DeriveDataTypeable #-}"
   , "> module " ++ modName ++ " where"
   , "> import Diagrams.Prelude"
+  , "> import Data.Typeable"
   ]
