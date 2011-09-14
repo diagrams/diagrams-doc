@@ -1994,13 +1994,132 @@ as apply an alignment to a list of diagrams *considered as a group*.
 Named subdiagrams
 -----------------
 
+Although the simple combinatorial approach to composing diagrams can
+get you a long way, for many tasks it becomes necessary (or, at least,
+much simpler) to have a way to refer to previously placed subdiagrams.
+That is, we want a way to give a name to a particular diagram, combine
+it with some others, and then later be able to ask "now where did that
+diagram end up?" in order to help us position other diagrams.
+
+.. container:: warning
+
+   The name mechanism described in this section should be considered
+   experimental; it is quite likely to change (in both small and large
+   ways) in future versions of diagrams.  Your feedback on the current
+   design is greatly appreciated!
+
+Any diagram can be given a name with the `named` function.  The local
+origin and bounding function of the diagram will be associated with
+the name, and they will be tracked as the diagram is incorporated into
+other larger diagrams and transformed.
+
+Anything can be used as a name, as long as its type is an instance of
+the `IsName` type class; to be an instance of the `IsName` class, it
+suffices for a type to be an instance of `Typeable`, `Ord`, and
+`Show`.  Making a user-defined type an instance of `IsName` is as
+simple as:
+
+.. class:: lhs
+
+::
+
+> {-# LANGUAGE DeriveDataTypeable #-}
+>
+> data Foo = Baz | Bar | Wibble
+>   deriving (Typeable, Eq, Ord, Show)
+>
+> instance IsName Foo
+
+That's it!  No method definitions are even needed for the `IsName`
+instance, since `toName` (the sole method of `IsName`) has a default
+implementation which works just fine.
+
+Once we have given names to one or more diagrams, what can we do with
+them?  The primary tool for working with names is `withName`, which
+has the (admittedly scary-looking!) type
+
+.. class:: lhs
+
+::
+
+  withName :: ( IsName n, AdditiveGroup (Scalar v), Floating (Scalar v)
+              , InnerSpace v, HasLinearMap v)
+           => n -> ((Point v, Bounds v) -> AnnDiagram b v m -> AnnDiagram b v m)
+                -> (AnnDiagram b v m -> AnnDiagram b v m)
+
+Let's pick this apart a bit.  First, we see that the type `n` must be
+a name type. So far so good.  Then there are a bunch of constraints
+involving `v`, but we can ignore those; they just ensure that `v` is a
+vector space with the right properties.  So the first argument of
+`withName` is a name---that makes sense.  The second argument is a
+function of type
+
+.. class:: lhs
+
+::
+
+  (Point v, Bounds v) -> AnnDiagram b v m -> AnnDiagram b v m
+
+We can see this function as a transformation on diagrams, except that
+it also gets to use some extra information---namely, a point and a
+bounding function.  In particular, it gets to know the point and
+bounding function associated with the name we pass as the first
+argument to `withName`.
+
+Finally, the return type of `withName` is itself a transformation of
+diagrams.
+
+So here's how `withName` works.  Suppose we call it with the arguments
+`withName n f d`.  If some subdiagram of `d` has the name `n`, then
+`f` is called with the point and bounding region associated with `n`
+as its first argument, and `d` itself as its second argument.  So we
+get to transform `d` based on information about where the subdiagram
+named `n` is located within it.  And what if there is no subdiagram
+named `n` in `d`? In that case `f` is ignored, and `d` is returned
+unmodified.
+
+A simple example should help to clarify the use of `withName`:
+
+.. class:: dia-lhs
+
+::
+
+> data Foo = Baz | Bar | Wibble
+>   deriving (Typeable, Eq, Ord, Show)
+>
+> instance IsName Foo
+>
+> connect n1 n2
+>   = withName n1 $ \(p1,_) ->
+>     withName n2 $ \(p2,_) ->
+>       atop ((p1 ~~ p2) # lc red # lw 0.03)
+>
+> example = (square 3 # named Baz ||| circle 2.3 # named Bar)
+>         # connect Baz Bar
+
+The `connect` function takes two names and returns a *transformation*
+on diagrams, which adds a red line connecting the two names.  Note how
+the two calls to `withName` are chained, and how we have written the
+second arguments to `withName` using lambda expressions (this is a
+common style). We use pattern matching to ignore the bounding
+functions since we don't need them. Finally, we draw a line between
+the two points, give it a style, and specify that it should be
+layered on top of the diagram given as an argument to `connect`.
+
+We then draw a square and a circle, give them names, and use `connect`
+to draw a line between their centers.  Of course, in this example, it
+would not be too hard to manually compute the endpoints of the line;
+but in more complex examples such manual calculation is usually out of
+the question.
+
 .. container:: todo
 
-   * IsName
-   * Giving names to diagrams
+   * withName variants
    * qualifying names
-   * withName etc.
    * idiomatic use of withName etc.
+   * the `names` function
+   * using the given bounding functions
+   * link to other examples?
 
 Using queries
 -------------
