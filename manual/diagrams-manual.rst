@@ -2013,9 +2013,12 @@ origin and bounding function of the diagram will be associated with
 the name, and they will be tracked as the diagram is incorporated into
 other larger diagrams and transformed.
 
+User-defined names
+~~~~~~~~~~~~~~~~~~
+
 Anything can be used as a name, as long as its type is an instance of
 the `IsName` type class; to be an instance of the `IsName` class, it
-suffices for a type to be an instance of `Typeable`, `Ord`, and
+suffices for a type to be an instance of `Typeable`, `Eq`, `Ord`, and
 `Show`.  Making a user-defined type an instance of `IsName` is as
 simple as:
 
@@ -2033,6 +2036,9 @@ simple as:
 That's it!  No method definitions are even needed for the `IsName`
 instance, since `toName` (the sole method of `IsName`) has a default
 implementation which works just fine.
+
+Accessing names
+~~~~~~~~~~~~~~~
 
 Once we have given names to one or more diagrams, what can we do with
 them?  The primary tool for working with names is `withName`, which
@@ -2078,7 +2084,8 @@ named `n` is located within it.  And what if there is no subdiagram
 named `n` in `d`? In that case `f` is ignored, and `d` is returned
 unmodified.
 
-A simple example should help to clarify the use of `withName`:
+Here's a simple example making use of names to draw a line connecting
+the centers of two subdiagrams.
 
 .. class:: dia-lhs
 
@@ -2098,26 +2105,95 @@ A simple example should help to clarify the use of `withName`:
 >         # connect Baz Bar
 
 The `connect` function takes two names and returns a *transformation*
-on diagrams, which adds a red line connecting the two names.  Note how
-the two calls to `withName` are chained, and how we have written the
-second arguments to `withName` using lambda expressions (this is a
-common style). We use pattern matching to ignore the bounding
-functions since we don't need them. Finally, we draw a line between
-the two points, give it a style, and specify that it should be
-layered on top of the diagram given as an argument to `connect`.
+on diagrams, which adds a red line connecting the locations denoted by
+the two names.  Note how the two calls to `withName` are chained, and
+how we have written the second arguments to `withName` using lambda
+expressions (this is a common style). We use pattern matching to
+ignore the bounding functions associated with the names since we don't
+need them. Finally, we draw a line between the two points, give it a
+style, and specify that it should be layered on top of the diagram
+given as the third argument to `connect`.
 
 We then draw a square and a circle, give them names, and use `connect`
 to draw a line between their centers.  Of course, in this example, it
-would not be too hard to manually compute the endpoints of the line;
-but in more complex examples such manual calculation is usually out of
-the question.
+would not be too hard to manually compute the endpoints of the line
+(this is left as an exercise for the reader); but in more complex
+examples such manual calculation can be quite out of the question.
+
+`withName` also has two other useful variants:
+
+* `withNameAll` takes a single name and makes available a list of
+  *all* (point, bounding function) pairs associated with that name.
+  (`withName`, by contrast, returns only the most recent.)  This is
+  useful when you want to work with a collection of named points all
+  at once.
+
+* `withNames` takes a list of names, and makes available a list of the
+  most recent (point, bounding function) pairs associated with each.
+
+Listing names
+~~~~~~~~~~~~~
+
+Sometimes you may not be sure what names exist within a diagram---for
+example, if you have obtained the diagram from some external module,
+or are debugging your own code.  The `names` function extracts a list
+of all the names recorded within a diagram and their associated
+points.
+
+Unfortunately, calling `names` on a diagram directly usually results
+in a complaint from GHC about an ambiguous type variable:
+
+::
+
+    ghci> :m +Diagrams.Prelude
+    ghci> names (circle 1 # named "joe" ||| circle 2 # named "bob")
+
+    <interactive>:0:35:
+        No instances for (Renderable Diagrams.TwoD.Ellipse.Ellipse b0,
+                          Backend b0 R2)
+          arising from a use of `circle'
+        Possible fix:
+          add instance declarations for
+          (Renderable Diagrams.TwoD.Ellipse.Ellipse b0, Backend b0 R2)
+        In the first argument of `(#)', namely `circle 2'
+        In the second argument of `(|||)', namely `circle 2 # named "bob"'
+        In the first argument of `names', namely
+          `(circle 1 # named "joe" ||| circle 2 # named "bob")'
+
+Since the diagram is polymorphic in the backend used to render it, and
+`names` is polymorphic in its input but monomorphic in its output, GHC
+has no way of knowing what backend type to choose.  This is similar to
+the ambiguity that arises when writing `show . read`.  Unfortunately,
+in this case (unlike in the case of `show . read`) the choice of
+backends cannot possibly affect the semantics of the `names`
+function---but there is no way to tell GHC that.
+
+Sadly, the only solution is to give the diagram a concrete type
+annotation with a concrete backend type.  If you are using a
+particular backend like cairo, you can use that.  Otherwise, you can
+also use the `ShowBackend`, provided for debugging purposes in
+`Diagrams.Backend.Show`:mod:.
+
+::
+
+    ghci> :m +Diagrams.Prelude Diagrams.Backend.Show
+    ghci> names (circle 1 # named "joe" ||| circle 2 # named "bob" 
+                   :: Diagram ShowBackend R2)
+    NameMap (fromList [("bob",[(P (2.0,0.0),TransInv {unTransInv = <bounds>})]) 
+                      ,("joe",[(P (-1.0,0.0),TransInv {unTransInv = <bounds>})])])
+
+Bounding functions, being functions, of course cannot be printed, but
+the output of `names` can be manipulated in other ways than just printing.
+
+Using named bounding functions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Qualifying names
+~~~~~~~~~~~~~~~~
 
 .. container:: todo
 
-   * withName variants
    * qualifying names
-   * idiomatic use of withName etc.
-   * the `names` function
    * using the given bounding functions
    * link to other examples?
 
