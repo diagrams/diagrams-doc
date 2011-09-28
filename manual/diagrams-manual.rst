@@ -257,8 +257,8 @@ operator `(<>)` as a synonym. (Hopefully this synonym will soon become
 part of ``Data.Monoid`` itself!)
 
 Monoids are used extensively in ``diagrams``: diagrams,
-transformations, bounding functions, trails, paths, styles, and colors
-are all instances.
+transformations, bounding functions, trails, paths, styles, colors,
+and queries are all instances.
 
 Faking optional named arguments
 -------------------------------
@@ -2177,9 +2177,9 @@ also use the `ShowBackend`, provided for debugging purposes in
 ::
 
     ghci> :m +Diagrams.Prelude Diagrams.Backend.Show
-    ghci> names (circle 1 # named "joe" ||| circle 2 # named "bob" 
+    ghci> names (circle 1 # named "joe" ||| circle 2 # named "bob"
                    :: Diagram ShowBackend R2)
-    NameMap (fromList [("bob",[(P (2.0,0.0),TransInv {unTransInv = <bounds>})]) 
+    NameMap (fromList [("bob",[(P (2.0,0.0),TransInv {unTransInv = <bounds>})])
                       ,("joe",[(P (-1.0,0.0),TransInv {unTransInv = <bounds>})])])
 
 Bounding functions, being functions, of course cannot be printed, but
@@ -2188,22 +2188,180 @@ the output of `names` can be manipulated in other ways than just printing.
 Using named bounding functions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+So far the examples we have seen have only made use of the local
+origin associated with each name.  However, the bounding function of
+every named subdiagram is also tracked, and can be used to identify
+points other than the local origin.  The below example uses this
+ability to connect the *bottom* edge of the parent circle to the *top*
+edge of each child circle, instead of connecting their centers.
+
+.. class:: dia-lhs
+
+::
+
+> root   = circle 1 # named "root"
+> leaves = centerXY
+>        . hcat' with {sep = 0.5}
+>        $ map (\c -> circle 1 # named c) "abcde"
+>
+> parentToChild child
+>   = withName "root" $ \(pp, pb) ->
+>     withName child  $ \(cp, cb) ->
+>       atop (boundaryFrom pp unit_Y pb ~~ boundaryFrom cp unitY cb)
+>
+> nodes  = root === strutY 2 === leaves
+>
+> example = nodes # applyAll (map parentToChild "abcde")
+
+The `boundaryFrom` function is used to compute boundary points:
+`boundaryFrom p v b` computes the boundary point in direction `v` when
+the bounding function `b` is based at the point `p`.
+
 Qualifying names
 ~~~~~~~~~~~~~~~~
 
-.. container:: todo
+To avoid name clashes, sometimes it is useful to be able to *qualify*
+existing names with one or more prefixes.  Names actually consist of a
+*sequence* of atomic names, much like Haskell module names consist of
+a sequence of identifiers like `Diagrams.TwoD.Shapes`:mod:.
 
-   * qualifying names
-   * using the given bounding functions
-   * link to other examples?
+To qualify an existing name, use the `(|>)` operator, which can be
+applied not only to individual names but also to an entire diagram
+(resulting in all names in the diagram being qualified).  To construct
+a qualified name explicitly, separate the components with `(.>)`.
+
+.. class:: dia-lhs
+
+::
+
+> data Corner = NW | NE | SW | SE
+>   deriving (Typeable, Eq, Ord, Show)
+> instance IsName Corner
+>
+> connect n1 n2
+>   = withName n1 $ \(p1,_) ->
+>     withName n2 $ \(p2,_) ->
+>       atop ((p1 ~~ p2) # lc red # lw 0.03)
+>
+> squares =  (s # named NW ||| s # named NE)
+>        === (s # named SW ||| s # named SE)
+>   where s = square 1
+>
+> d = hcat' with {sep = 0.5} (zipWith (|>) [0::Int ..] (replicate 5 squares))
+>
+> pairs :: [(Name, Name)]
+> pairs = [ ((0::Int) .> NE, (2::Int) .> SW)
+>         , ((1::Int) .> SE, (4::Int) .> NE)
+>         , ((3::Int) .> NW, (3::Int) .> SE)
+>         , ((0::Int) .> SE, (1::Int) .> NW)
+>         ]
+>
+> example = d # applyAll (map (uncurry connect) pairs)
+
+We create a four-paned square with a name for each of its panes; we
+then make five copies of it.  At this point, each of the copies has
+the same names, so there would be no way to refer to any of them
+individually.  The solution is to qualify each of the copies
+differently; here we have used a numeric prefix.
+
+(As an aside, note how we had to use a type annotation on the integers
+that we used as names; numeric literals are polymorphic and `(|>)`
+needs to know what type of atomic name we are using. Without the type
+annotations, we would get an error about an "ambiguous type variable".
+It's a bit annoying to insert all these annotations, of course;
+another option would be to use monomorphic constants like `String`\s
+or `Char`\s instead, or to create our own data type with a short
+constructor name that wraps an `Int`.)
+
+Note how we also made use of `applyAll`, which takes a list of
+functions as an argument and composes them into one; that is,
+`applyAll [f, g, h] === f . g . h`.
 
 Using queries
 -------------
 
+Every diagram has an associated *query*, which assigns a value to
+every point in the diagram.  These values must be taken from some
+monoid (see `Monoids`_).  Combining two diagrams results in their
+queries being combined pointwise.
+
+The default query
+~~~~~~~~~~~~~~~~~
+
+The default query assigns a value of type `Any` to each point in a
+diagram.  In fact, `Diagram b v` is really a synonym for
+`AnnDiagram b v Any`.  `Any` represents the monoid on the booleans
+with logical or as the binary operation (and hence `False` as the
+identity).  The default query simply indicates which points are
+"inside" the diagram and which are "outside".
+
+.. container:: warning
+
+   The default `Any` query and the bounding function are quite
+   different, and may give unrelated results.  The bounding function
+   is an approximation used to be able to place diagrams next to one
+   another; the `Any` query is a more accurate record of which points
+   are enclosed by the diagram.  (Note, however, that using the query
+   in order to position diagrams next to each other more
+   accurately/snugly would be computationally infeasible.)
+
+The following example queries an ellipse (using the `sample` function
+to sample it at a set of particular points), coloring points inside
+the ellipse red and points outside it blue.
+
+.. class:: dia-lhs
+
+::
+
+> c :: Diagram Cairo R2
+> c = circle 5 # scaleX 2 # rotateBy (1/14) # lw 0.03
+>
+> -- Generated by fair dice roll, guaranteed to be random
+> points = map P $
+>          [ (0.8936218079179525,6.501173563301563)
+>          , (0.33932828810065985,9.06458375044167)
+>          , (2.12546952534467,4.603130561299622)
+>          , (-8.036711369641125,6.741718165576458)
+>          , (-9.636495308950543,-8.960315063595772)
+>          , (-5.125008672475815,-4.196763141080737)
+>          , (-8.740284494124353,-1.748269759118557)
+>          , (-2.7303729625418782,-9.902752498164773)
+>          , (-1.6317121405154467,-6.026127282530069)
+>          , (-3.363167801871896,7.5571909081190825)
+>          , (5.109759075567126,-5.433154460042715)
+>          , (8.492015791125596,-9.813023637980223)
+>          , (7.762080919928849,8.340037921443582)
+>          , (-6.8589746952056885,3.9604472182691097)
+>          , (-0.6083773449063301,-3.7738202372565866)
+>          , (1.3444943726062775,1.1363744735717773)
+>          , (0.13720748480409384,8.718934659846127)
+>          , (-5.091010760515928,-8.887260649353266)
+>          , (-5.828490639105439,-9.392594425007701)
+>          , (0.7190148020163178,1.4832069771364331)
+>          ]
+>
+> mkPoint p = (p, circle 0.3
+>           	  # lw 0
+>           	  # fc (case sample c p of
+>           	          Any True  -> red
+>           	          Any False -> blue
+>           	       )
+>             )
+>
+> example = c <> position (map mkPoint points)
+
+Using other monoids
+~~~~~~~~~~~~~~~~~~~
+
+You can use monoids besides `Any` to record other information about a
+diagram.  For example, the `Sum` monoid could be used to keep a count
+of the number of overlapping shapes at any given point.
+
 .. container:: todo
 
-   * Queries
    * Using queries with different monoids
+       * example: Sum
+       * example: name/id info for identifying clicks
 
 Bounding boxes
 --------------
@@ -2239,6 +2397,53 @@ Tips and tricks
 
 Deciphering error messages
 --------------------------
+
+::
+
+    ghci> names (circle 1 # named "joe" ||| circle 2 # named "bob")
+
+    <interactive>:0:35:
+        No instances for (Renderable Diagrams.TwoD.Ellipse.Ellipse b0,
+                          Backend b0 R2)
+          arising from a use of `circle'
+        Possible fix:
+          add instance declarations for
+          (Renderable Diagrams.TwoD.Ellipse.Ellipse b0, Backend b0 R2)
+        In the first argument of `(#)', namely `circle 2'
+        In the second argument of `(|||)', namely `circle 2 # named "bob"'
+        In the first argument of `names', namely
+          `(circle 1 # named "joe" ||| circle 2 # named "bob")'
+
+::
+
+    Ambiguous type variable `a0' in the constraints:
+      (IsName a0) arising from a use of `|>'
+                  at /tmp/Diagram2499.lhs:13:39-42
+      (Num a0) arising from the literal `0' at /tmp/Diagram2499.lhs:13:45
+      (Enum a0) arising from the arithmetic sequence `0 .. '
+                at /tmp/Diagram2499.lhs:13:44-49
+    Probable fix: add a type signature that fixes these type variable(s)
+    In the first argument of `zipWith', namely `(|>)'
+    In the second argument of `hcat'', namely
+      `(zipWith (|>) [0 .. ] (replicate 5 squares))'
+    In the expression:
+      hcat'
+        (with {sep = 0.5}) (zipWith (|>) [0 .. ] (replicate 5 squares))
+
+    Ambiguous type variable `a0' in the constraints:
+      (IsName a0) arising from a use of `|>'
+                  at /tmp/Diagram2499.lhs:13:39-42
+      (Num a0) arising from the literal `0' at /tmp/Diagram2499.lhs:13:45
+      (Enum a0) arising from the arithmetic sequence `0 .. '
+                at /tmp/Diagram2499.lhs:13:44-49
+    Probable fix: add a type signature that fixes these type variable(s)
+    In the first argument of `zipWith', namely `(|>)'
+    In the second argument of `hcat'', namely
+      `(zipWith (|>) [0 .. ] (replicate 5 squares))'
+    In the expression:
+      hcat'
+        (with {sep = 0.5}) (zipWith (|>) [0 .. ] (replicate 5 squares))
+
 
 Core library
 ============

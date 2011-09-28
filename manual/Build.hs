@@ -62,5 +62,6 @@ diagramFileHeader modName = unlines $
   [ "> {-# LANGUAGE NoMonomorphismRestriction, DeriveDataTypeable #-}"
   , "> module " ++ modName ++ " where"
   , "> import Diagrams.Prelude"
+  , "> import Diagrams.Backend.Cairo"
   , "> import Data.Typeable"
   ]
