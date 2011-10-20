@@ -39,8 +39,8 @@ diagramsManual modMap nameMap =
                , linkifyHS nameMap modMap
                ]
   >>> xml2html
-  >>> doTransforms [ styleFile "default.css"
-                   , styleFile "syntax.css"
+  >>> doTransforms [ styleFile "css/default.css"
+                   , styleFile "css/syntax.css"
                    ]
   
 compileDiagrams :: XmlT (IOSLA (XIOState ()))

@@ -7,6 +7,11 @@ Tutorials
 
 * [Quick start diagrams tutorial](/tutorial/DiagramsTutorial.html)
 
+User manual
+-----------
+
+* [User manual](/manual/diagrams-manual.html)
+
 API documentation
 -----------------
 

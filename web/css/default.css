@@ -22,12 +22,53 @@ div#footer {
     font-size: small;
 }
 
-div#exampleimg {
+div.exampleimg {
     padding-top: 30px;
     padding-bottom: 20px;
     text-align: center;
 }
 
-div#examplesrc {
-    padding-top: 30px;
+div.dia-lhs {
+    padding: 20px;
+    border-style: solid;
+    border-width: thin;
+}
+
+code a {
+    color: #330099;
+    text-decoration: none;
+}
+
+.module a {
+    color: #333333;
+    text-decoration: underline;
+}
+
+.package a {
+    color: blue;
+    text-decoration: underline;
+}
+
+div.todo:before {
+    content: url(icons/towrite.png);
+    float: right;
+}
+
+div.todo {
+    padding: 20px;
+    border-style: solid;
+    border-width: thin;
+    background-color: #ddddff;
+}
+
+div.warning:before {
+    content: url(icons/warning.png);
+    float: right;
+}
+
+div.warning {
+    padding: 20px;
+    border-style: solid;
+    border-width: thin;
+    background-color: #ffdddd;
 }

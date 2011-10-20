@@ -24,6 +24,11 @@ main = hakyll $ do
 
     match "templates/*" $ compile templateCompiler
 
+    -- User manual --------------------------------
+    match "manual/**" $ do
+        route idRoute
+        compile copyFileCompiler
+
     -- Normal .html pages, built from .markdown ---
     forM_ pages $ flip match $ do
         route   $ setExtension "html"
