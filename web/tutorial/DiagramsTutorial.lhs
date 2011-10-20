@@ -6,8 +6,8 @@ Introduction
 
 This tutorial will walk you through the basics of using the diagrams
 DSL to create graphics in a powerful, modular, and declarative way.
-It is still in the process of being written, but hopefully there's
-enough here to get you started.
+There's enough here to get you started quickly; for more in-depth
+information, see the [user manual](/manual/diagrams-manual.html).
 
 This is not a Haskell tutorial (although a
 Haskell-tutorial-via-diagrams is a fun idea and may happen in the
@@ -29,6 +29,7 @@ Resources
 
 Some resources that may be helpful to you as you learn about diagrams:
 
+* The [user manual](/manual/diagrams-manual.html)
 * The API documentation:
     * [diagrams-core](http://hackage.haskell.org/package/diagrams-core)
     * [diagrams-lib](http://hackage.haskell.org/package/diagrams-lib)
@@ -65,9 +66,10 @@ Cairo
 Unlike its previous incarnation, diagrams has been designed from the
 ground up with modularity in mind, and makes plugging in new rendering
 backends extremely easy.  Eventually there will be many different
-rendering backends; at the moment, however, the only seriously
-supported one is [cairo](http://cairographics.org/).  If you don't
-already have them, you will need to [install the cairo development
+rendering backends (indeed, there are several backend projects
+underway); at the moment, however, the only seriously supported one is
+[cairo](http://cairographics.org/).  If you don't already have them,
+you will need to [install the cairo development
 libraries](http://cairographics.org/download/).
 
 If you are on Linux, you can now install the Haskell Cairo bindings with
@@ -76,7 +78,7 @@ If you are on Linux, you can now install the Haskell Cairo bindings with
 
 Hopefully this should Just Work (tm). (Reports to the contrary gladly
 welcomed.)  If you have already installed gtk2hs-related packages
-before you can probably omit `gtk2hs-buildtools`.
+before, you can probably omit `gtk2hs-buildtools`.
 
 If you are on Windows, [here are some
 instructions](http://code.google.com/p/diagrams/wiki/CairoOnWindows)
@@ -113,13 +115,13 @@ Philosophy
 
 Before diving in to create some diagrams, it's worth taking a minute
 to explain some of the philosophy that drove many of the design
-decisions. (If you're impatient, feel free to skip this section for
-now---but you might want to come back and read it later!)
+decisions. (If you're particularly impatient, feel free to skip this
+section for now---but you might want to come back and read it later!)
 
 * Positioning and scaling are always *relative*.  There is never any
 global coordinate system to think about; everything is done relative
 to diagrams' *local* vector spaces.  This is not only easier to think
-about, it also increases modularity/compositionality, since diagrams
+about, it also increases modularity and compositionality, since diagrams
 can always be designed without thought for the context in which they
 will eventually be used.  Doing things this way is more work for the
 *library* and less work for the *user*, which is the way it should be.
@@ -467,8 +469,14 @@ monoids (transformations, trails, paths, styles, and colors).
 Next steps
 ==========
 
-Eventually this tutorial will include additional material.  For now,
-here are pointers to some resources for learning more:
+This tutorial has really only scratched the surface of what is possible.
+Here are pointers to some resources for learning more:
+
+* The diagrams [user manual](/manual/diagrams-manual.html) goes into
+  much more depth on all the topics covered in this tutorial, plus many
+  others, and includes lots of illustrative examples.  If there is anything in the manual that you find
+unclear, confusing, or omitted, please
+[report it as a bug](http://code.google.com/p/diagrams/issues/list)!
 
 * The diagrams-lib API is generally well-documented; start with the
 documentation for
