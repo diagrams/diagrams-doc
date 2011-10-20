@@ -2217,6 +2217,10 @@ The `boundaryFrom` function is used to compute boundary points:
 `boundaryFrom p v b` computes the boundary point in direction `v` when
 the bounding function `b` is based at the point `p`.
 
+.. container:: todo
+
+   Mention `place` function
+
 Qualifying names
 ~~~~~~~~~~~~~~~~
 
