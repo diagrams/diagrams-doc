@@ -1,27 +1,32 @@
 * Planning for release of version 0.4
 
+  + [X] user manual
+    - [X] finish writing
+    - [X] get it on the web (don't worry yet about making a
+          commentable etc. version...?)
+  + [X] tickets to resolve
+    - [X] [[http://code.google.com/p/diagrams/issues/detail%3Fid%3D2&colspec%3DID%20Type%20Status%20Priority%20Difficulty%20Milestone%20Component%20Owner%20Summary][#2: polygon stuff from Dmitry]]
+    - [X] [[http://code.google.com/p/diagrams/issues/detail%3Fid%3D18&colspec%3DID%20Type%20Status%20Priority%20Difficulty%20Milestone%20Component%20Owner%20Summary][#18: high-level path construction]]
+    - [X] [[http://code.google.com/p/diagrams/issues/detail%3Fid%3D28&colspec%3DID%20Type%20Status%20Priority%20Difficulty%20Milestone%20Component%20Owner%20Summary][#28: user-controlled fill rule for paths]]
+  + [ ] update/extend tutorial a bit
+	(at least make sure it is up-to-date)
+  + [ ] write announcement for blog + email
+  + [ ] update diagrams package to depend on new versions of -core,
+        -lib, etc.
+
+* Put off to version 0.5
+
   + [ ] release docutils package
     - [ ] choose a different name for it??
-  + [ ] user manual
-    - [ ] finish writing
-    - [ ] get it on the web (don't worry yet about making a
-          commentable etc. version...?)
   + [-] tickets to resolve
     - [ ] [[http://code.google.com/p/diagrams/issues/detail%3Fid%3D1&colspec%3DID%20Type%20Status%20Priority%20Difficulty%20Milestone%20Component%20Owner%20Summary][#1: test suites]]
-    - [X] [[http://code.google.com/p/diagrams/issues/detail%3Fid%3D2&colspec%3DID%20Type%20Status%20Priority%20Difficulty%20Milestone%20Component%20Owner%20Summary][#2: polygon stuff from Dmitry]]
     - [ ] [[http://code.google.com/p/diagrams/issues/detail%3Fid%3D6&colspec%3DID%20Type%20Status%20Priority%20Difficulty%20Milestone%20Component%20Owner%20Summary][#6: new logo]]
-    - [X] [[http://code.google.com/p/diagrams/issues/detail%3Fid%3D18&colspec%3DID%20Type%20Status%20Priority%20Difficulty%20Milestone%20Component%20Owner%20Summary][#18: high-level path construction]]
     - [ ] [[http://code.google.com/p/diagrams/issues/detail%3Fid%3D26&colspec%3DID%20Type%20Status%20Priority%20Difficulty%20Milestone%20Component%20Owner%20Summary][#26: add support for path-oriented diagrams]]
     - [ ] [[http://code.google.com/p/diagrams/issues/detail%3Fid%3D27&colspec%3DID%20Type%20Status%20Priority%20Difficulty%20Milestone%20Component%20Owner%20Summary][#27: cairo handling of command-line w/h]]
-    - [X] [[http://code.google.com/p/diagrams/issues/detail%3Fid%3D28&colspec%3DID%20Type%20Status%20Priority%20Difficulty%20Milestone%20Component%20Owner%20Summary][#28: user-controlled fill rule for paths]]
   + [ ] release SVG backend
-  + [ ] write announcement for blog + email
   + [ ] create diagrams-contrib repository and create a module or two
         for it?
   + [ ] write a contributor tutorial?
-  + [ ] update/extend tutorial a bit?
-  + [ ] update diagrams package to depend on new versions of -core,
-        -lib, etc.
 
 * Tasks to complete before release of preview version
 
@@ -45,6 +50,6 @@
 
 * Later tasks
 
-  + [ ] make website (with hakyll?)
+  + [X] make website (with hakyll?)
   + [ ] put Haddock documentation on website
-  + [ ] change "homepage" link in .cabal files to website
+  + [X] change "homepage" link in .cabal files to website
