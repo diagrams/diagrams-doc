@@ -25,12 +25,10 @@ we can refer to later.  Names can be almost any type; here we choose
 >         v = stroke' with {vertexNames = [map ("y",) [0..n]]} (p unitY)
 
 To connect two named using index `i`, we request the points
-corresponding to those names, and draw a line between the points:
+corresponding to those names, and superimpose a line between the points:
 
-> connect n i = withAName ("x",i) $ \x ->
->               withAName ("y", n - i) $ \y ->
->                 drawConnect [x,y]
->   where drawConnect = atop . fromVertices
+> connect n i = withNames [("x",i), ("y", n - i)]
+>               $ atop . fromVertices . map fst
 
 Finish creating one quarter of the diagram by connecting corresponding
 points.

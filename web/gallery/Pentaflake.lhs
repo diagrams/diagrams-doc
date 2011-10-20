@@ -23,8 +23,7 @@ successively lighter shades of blue:
 
 An order-0 pentaflake is just a pentagon:
 
-> p = polygon with { sides = 5, orientation = OrientToX }
->     # lw 0
+> p = regPoly 5 1 # lw 0
 > 
 > pentaflake 0 = p
 

@@ -19,7 +19,7 @@ width: 400
 >                (s ||| s)
 >   where s = sierpinski (n-1)
 > 
-> t = polygon with { sides = 3, orientation = OrientToX }
+> t = regPoly 3 1
 >     # lw 0
 >     # fc black
 > 
