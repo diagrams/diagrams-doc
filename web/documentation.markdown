@@ -19,10 +19,14 @@ Documentation on Hackage:
 
 * [diagrams-core](http://hackage.haskell.org/package/diagrams-core)
 * [diagrams-lib](http://hackage.haskell.org/package/diagrams-lib)
+* [diagrams-cairo](http://hackage.haskell.org/package/diagrams-cairo)
 
 Blog posts/other
 ----------------
 
-* [Tic-tac-toe maps with diagrams](http://byorgey.wordpress.com/2011/05/18/tic-tac-toe-maps-with-diagrams/) (18 May 2011)
-* [Announcing diagrams preview release](http://byorgey.wordpress.com/2011/05/17/announcing-diagrams-preview-release/) (17 May 2011)
+* [Interfacing Haskell to the Concorde solver for Traveling Salesperson Problem](http://mainisusuallyafunction.blogspot.com/2011/10/interfacing-haskell-to-concorde-solver.html) (Keegan McAllister, 21 October 2011)
+* [Tic-tac-toe maps with diagrams](http://byorgey.wordpress.com/2011/05/18/tic-tac-toe-maps-with-diagrams/)
+  (Brent Yorgey, 18 May 2011)
+* [Announcing diagrams preview release](http://byorgey.wordpress.com/2011/05/17/announcing-diagrams-preview-release/)
+  (Brent Yorgey, 17 May 2011)
 
