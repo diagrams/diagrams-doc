@@ -8,14 +8,23 @@
     - [X] [[http://code.google.com/p/diagrams/issues/detail%3Fid%3D2&colspec%3DID%20Type%20Status%20Priority%20Difficulty%20Milestone%20Component%20Owner%20Summary][#2: polygon stuff from Dmitry]]
     - [X] [[http://code.google.com/p/diagrams/issues/detail%3Fid%3D18&colspec%3DID%20Type%20Status%20Priority%20Difficulty%20Milestone%20Component%20Owner%20Summary][#18: high-level path construction]]
     - [X] [[http://code.google.com/p/diagrams/issues/detail%3Fid%3D28&colspec%3DID%20Type%20Status%20Priority%20Difficulty%20Milestone%20Component%20Owner%20Summary][#28: user-controlled fill rule for paths]]
-  + [ ] update/extend tutorial a bit
+  + [X] update/extend tutorial a bit
 	(at least make sure it is up-to-date)
-  + [ ] write announcement for blog + email
-  + [ ] update diagrams package to depend on new versions of -core,
+  + [X] update diagrams package to depend on new versions of -core,
         -lib, etc.
+  + [X] test build:
+     - [X] ghc 6.12.3
+     - [X] ghc 7.2.1
+  + [ ] try out gtk backend
+  + [ ] write announcement for blog + email
+    + [ ] list major new features since 0.1
+    + [ ] link to gallery (email)/include some examples (blog)
+    + [ ] say where/how to get involved
+  + [ ] upload diagrams, diagrams-core, diagrams-lib, diagrams-cairo
 
 * Put off to version 0.5
 
+  + [ ] contact Robin re: SVG backend
   + [ ] release docutils package
     - [ ] choose a different name for it??
   + [-] tickets to resolve
@@ -37,7 +46,7 @@
   + [X] aTR -> alignTR and so on
   + [X] Work a bit more on tutorial ... just enough to get people
         started.
-  + [X] Write release announcement. 
+  + [X] Write release announcement.
   + [X] Right after uploading, post on
     - [X] Haskell, cafe
     - [X] blog
