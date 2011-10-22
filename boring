@@ -115,7 +115,10 @@
 (^|/)_site($|/)
 (^|/)_cache($|/)
 (^|/)manual/images($|/)
+(^|/)web/manual($|/)
 \.xml$
 \.png$
 \.exe$
 \.html$
+
+web/gallery/Build
