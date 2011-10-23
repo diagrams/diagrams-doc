@@ -216,6 +216,34 @@ manual.
   * Change the above for whatever the recommended starter backend is,
     if it changes
 
+Contributing
+------------
+
+``diagrams`` is an open-source project, and contributions are
+encouraged!  You can get the sources using either darcs_ or git_:
+
+::
+
+    darcs get http://patch-tag.com/r/byorgey/diagrams-FOO
+    git clone git://github.com/byorgey/diagrams-FOO.git
+
+where ``FOO`` is one of
+
+  * ``core``: the core diagrams framework
+  * ``lib``: standard library of combinators and utilities
+  * ``cairo``: rendering backend using cairo
+  * ``doc``: documentation, including website, manual, tutorials, etc.
+
+Use whichever you feel more comfortable with. Thanks to `Owen
+Stephens's`_ great work on `darcs-bridge`_, patches/pull requests are
+accepted via both!  See the `bug tracker`_ for a list of bugs
+and feature requests.
+
+.. _`darcs`: http://darcs.net/
+.. _`git`: http://git-scm.com/
+.. _`Owen Stephens's`: http://www.owenstephens.co.uk/
+.. _`darcs-bridge`: http://wiki.darcs.net/DarcsBridgeUsage
+
 Essential concepts
 ==================
 
