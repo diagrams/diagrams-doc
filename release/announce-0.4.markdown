@@ -56,6 +56,11 @@ hang out in the `#diagrams` IRC channel on freenode.org.
   [bug tracker](http://code.google.com/p/diagrams/issues/list) for a
   list of open tickets.
 
+  The source repositories are mirrored using both darcs (on
+  patch-tag.com) and git (on github.com), and patches are accepted in
+  either place, thanks to Owen Stephen's great work on
+  [darcs-bridge](http://wiki.darcs.net/DarcsBridgeUsage).
+
 * Create a higher-level module built on top of the diagrams framework
   (e.g. tree or graph layout, generating Turing machine configuration
   diagrams, Penrose tilings ... your imagination is the only limit!)

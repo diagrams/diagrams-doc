@@ -22,11 +22,11 @@
     + [X] link to gallery (email)/include some examples (blog)
     + [X] say where/how to get involved
   + [X] add README files for the benefit of github
-  + [ ] note re: git/github in...
-    - [ ] announcement
-    - [ ] manual
-    - [ ] wiki
-    - [ ] web page
+  + [X] note re: git/github in...
+    - [X] announcement
+    - [X] manual
+    - [X] wiki
+    - [X] web page
   + [ ] upload diagrams, diagrams-core, diagrams-lib, diagrams-cairo
   + [ ] upload/send announcement
     + [ ] blog
