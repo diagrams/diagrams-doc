@@ -27,11 +27,11 @@
     - [X] manual
     - [X] wiki
     - [X] web page
-  + [ ] upload diagrams, diagrams-core, diagrams-lib, diagrams-cairo
-  + [ ] upload/send announcement
-    + [ ] blog
-    + [ ] google+
-    + [ ] email
+  + [X] upload diagrams, diagrams-core, diagrams-lib, diagrams-cairo
+  + [X] publish new website
+  + [-] upload/send announcement
+    + [X] blog
+    + [X] email
 
 * Put off to version 0.5
 
