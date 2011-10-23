@@ -15,12 +15,23 @@
   + [X] test build:
      - [X] ghc 6.12.3
      - [X] ghc 7.2.1
-  + [ ] try out gtk backend
-  + [ ] write announcement for blog + email
-    + [ ] list major new features since 0.1
-    + [ ] link to gallery (email)/include some examples (blog)
-    + [ ] say where/how to get involved
+  + [X] update LICENSE files
+  + [X] try out gtk backend
+  + [X] write announcement for blog + email
+    + [X] list major new features since 0.1
+    + [X] link to gallery (email)/include some examples (blog)
+    + [X] say where/how to get involved
+  + [X] add README files for the benefit of github
+  + [ ] note re: git/github in...
+    - [ ] announcement
+    - [ ] manual
+    - [ ] wiki
+    - [ ] web page
   + [ ] upload diagrams, diagrams-core, diagrams-lib, diagrams-cairo
+  + [ ] upload/send announcement
+    + [ ] blog
+    + [ ] google+
+    + [ ] email
 
 * Put off to version 0.5
 
