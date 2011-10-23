@@ -205,9 +205,14 @@ Try typing
 
 to see the other options that are supported.
 
+To get started quickly, you may wish to continue by reading the `quick
+start tutorial`_; or you can continue reading the rest of this user
+manual.
+
+.. _`quick start tutorial`: http://projects.haskell.org/diagrams/tutorial/DiagramsTutorial.html
+
 .. container:: todo
 
-  * Link to the tutorial
   * Change the above for whatever the recommended starter backend is,
     if it changes
 
