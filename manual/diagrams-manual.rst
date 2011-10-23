@@ -115,9 +115,15 @@ Installation
 
 Before installing ``diagrams``, you will need the following:
 
-  * The `Glasgow Haskell Compiler`_ (GHC), version 7.0.2 or later.
-  * The latest release of the `Haskell Platform`_ (currently
-    2011.2.0.1).
+  * The `Glasgow Haskell Compiler`_ (GHC), version 6.12 or later
+    (*except* 7.0.1, which has a type inference bug making
+    ``diagrams`` hard to use).
+
+  * It is recommended (but not required) to have the latest release of
+    the `Haskell Platform`_ (currently 2011.2.0.1).  At the very least
+    you will want the `cabal-install`_ tool.
+
+.. _`cabal-install`: http://hackage.haskell.org/trac/hackage/wiki/CabalInstall
 
 If you are on a Mac or Windows, GHC itself comes with the Haskell
 Platform; if you are on Linux, you will have to install GHC first.
@@ -130,13 +136,19 @@ Once you have successfully installed the Haskell platform, installing
 
 ::
 
-  cabal install diagrams
+  cabal install gtk2hs-buildtools diagrams
 
-.. container:: todo
+Unfortunately, on some platforms you may run into difficulties
+installing cairo.  Some `resources for installing cairo under Windows
+can be found here`_.  If you have trouble installing cairo on other
+platforms, feel free to send email to the `diagrams mailing list`_; we
+would like to collect reports of problems and solutions on various
+platforms.
 
-  Currently this isn't quite true because of difficulty of installing
-  cairo.  Make sure we either have an alternate backend in place OR
-  add more information about installing cairo here before releasing.
+.. _`resources for installing cairo under Windows can be found here`: http://code.google.com/p/diagrams/wiki/CairoOnWindows
+
+A native SVG backend is being worked on, and hopefully the next
+release of diagrams will include it by default instead of cairo.
 
 Getting started
 ---------------
