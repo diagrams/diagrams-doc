@@ -1,15 +1,15 @@
 % diagrams-Bd.tex
 \begin{hcarentry}[updated]{diagrams}
 \report{Brent Yorgey}%05/11
-\status{alpha, active development}
+\status{active development}
 \participants{Ryan Yates}
 \makeheader
 
 The diagrams library provides an embedded domain-specific language for
 declarative drawing.  The overall vision is for diagrams to become a
 viable alternative to DSLs like MetaPost or Asymptote, but with the
-advantages of being \emph{declarative}, describing what to draw, not
-how to draw it, and \emph{embedded}, putting the entire power of
+advantages of being \emph{declarative}---describing what to draw, not
+how to draw it---and \emph{embedded}---putting the entire power of
 Haskell (and Hackage) at the service of diagram creation.
 
 %**<img width=500 src="./paradox.jpg">
@@ -19,9 +19,14 @@ Haskell (and Hackage) at the service of diagram creation.
 \end{center}
 %*endignore
 
-Since the last HCAR, the library has undergone a complete rewrite, and
-now features an elegant foundational model, pluggable rendering
-backends, and support for arbitrary vector spaces.
+Development on the library has proceeded apace since the last HCAR,
+and the 0.4 release now features a comprehensive user manual as well
+as support for a large collection of primitive shapes, many different
+modes of composition, paths, cubic splines, images, text, arbitrary
+monoidal annotations, named subdiagrams, and more.
+
+There is plenty more work to be done; new contributors are
+particularly welcome!
 
 %**<img width=500 src="./triangular-numbers.jpg">
 %*ignore
@@ -32,12 +37,13 @@ backends, and support for arbitrary vector spaces.
 
 \FuturePlans
 
-A preview release is imminent, with a full-featured release including
-extensive documentation and tutorials planned by the end of the
-summer.  Now that the core library has mostly stabilized, we hope to
-attract many contributors to expand the standard library and build
-higher-level drawing modules on top of the flexible core.
+Plans for the near future include a native SVG backend, improved font
+support, arrowheads, and improvements to the handling of named
+subdiagrams.  Longer-term plans include support for animations, a
+custom Gtk application for editing diagrams, and any other awesome
+stuff we think of.
 
 \FurtherReading
-\url{http://code.google.com/p/diagrams}
+\url{http://projects.haskell.org/diagrams}
+\url{http://code.google.com/p/diagrams/issues/list}
 \end{hcarentry}
