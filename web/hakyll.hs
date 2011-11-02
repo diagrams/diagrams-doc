@@ -76,7 +76,7 @@ main = hakyll $ do
 
 compilePng :: Resource -> IO LB.ByteString
 compilePng resource = do
-    _ <- system $ "cd gallery && ./Build " ++ moduleName ++ " " ++ tmpPath
+    _ <- system $ "cd gallery && ./Build.exe " ++ moduleName ++ " " ++ tmpPath
     LB.readFile tmpPath
   where
     moduleName = takeBaseName $ unResource resource
