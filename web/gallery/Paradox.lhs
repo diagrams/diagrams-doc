@@ -35,7 +35,7 @@ Fibonacci numbers.
 
 Draw the paradox diagram based on the nth Fibonacci number.
 
-> paradox n drawDiags = sq ||| strutX s2 ||| rect
+> paradox n drawDiags = (sq ||| strutX s2 ||| rect) # centerXY
 >   where f1 = fibs !! n
 >         f2 = fibs !! (n+1)
 >         s1 = fromIntegral f1

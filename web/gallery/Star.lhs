@@ -38,6 +38,6 @@ points.
 The final diagram is created by assembling four copies of the above.
  
 > d n = half === rotateBy (1/2) half
->   where half = rotateBy (1/4) (pic n) ||| pic n
+>   where half = (rotateBy (1/4) (pic n) ||| pic n) # centerX
 >         
 > example = pad 1.1 $ d 20 # lc blue

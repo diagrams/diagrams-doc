@@ -16,11 +16,11 @@ width: 400
 > sierpinski 1 = t
 > sierpinski n =     s
 >                   ===
->                (s ||| s)
+>                (s ||| s) # centerX
 >   where s = sierpinski (n-1)
 > 
 > t = regPoly 3 1
 >     # lw 0
 >     # fc black
 > 
-> example = pad 1.1 $ sierpinski 7
+> example = pad 1.1 $ sierpinski 7 # centerXY
