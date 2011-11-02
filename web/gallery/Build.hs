@@ -5,6 +5,7 @@ import Diagrams.Backend.Cairo
 
 import Language.Haskell.Interpreter
 
+import qualified System.FilePath as FP
 import System.Environment
 
 import Data.Typeable
@@ -33,7 +34,9 @@ compileExample m outFile w h = do
     x <- runInterpreter $ do
       setDiagramImports m
       d <- interpret "example" diagramWitness
-      liftIO . fst $ renderDia Cairo (CairoOptions outFile (PNG (w,h))) d
+      let w' = fromIntegral w
+          h' = fromIntegral h
+      liftIO . fst $ renderDia Cairo (CairoOptions outFile (Dims w' h') PNG) d
     case x of
       Left e -> ppError e
       Right _ -> return ()
@@ -55,5 +58,6 @@ extractDimens = (getW &&& getH) . lines
 
 main = do
   [name, outFile] <- getArgs
-  (w,h) <- getDimens (name ++ ".lhs")
-  compileExample name outFile w h
+  let name' = FP.dropExtension name
+  (w,h) <- getDimens ((FP.<.>) name' "lhs")
+  compileExample name' outFile w h
