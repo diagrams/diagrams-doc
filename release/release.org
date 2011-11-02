@@ -29,16 +29,16 @@
     - [X] web page
   + [X] upload diagrams, diagrams-core, diagrams-lib, diagrams-cairo
   + [X] publish new website
-  + [-] upload/send announcement
+  + [X] upload/send announcement
     + [X] blog
     + [X] email
 
 * Put off to version 0.5
 
-  + [ ] contact Robin re: SVG backend
+  + [X] contact Robin re: SVG backend
   + [ ] release docutils package
     - [ ] choose a different name for it??
-  + [-] tickets to resolve
+  + [ ] tickets to resolve
     - [ ] [[http://code.google.com/p/diagrams/issues/detail%3Fid%3D1&colspec%3DID%20Type%20Status%20Priority%20Difficulty%20Milestone%20Component%20Owner%20Summary][#1: test suites]]
     - [ ] [[http://code.google.com/p/diagrams/issues/detail%3Fid%3D6&colspec%3DID%20Type%20Status%20Priority%20Difficulty%20Milestone%20Component%20Owner%20Summary][#6: new logo]]
     - [ ] [[http://code.google.com/p/diagrams/issues/detail%3Fid%3D26&colspec%3DID%20Type%20Status%20Priority%20Difficulty%20Milestone%20Component%20Owner%20Summary][#26: add support for path-oriented diagrams]]
