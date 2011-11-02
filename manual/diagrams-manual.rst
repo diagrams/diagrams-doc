@@ -851,17 +851,22 @@ As can be seen from the above example, the *length* of the vector
 makes no difference, only its *direction* is taken into account. (To
 place diagrams at a certain fixed distance from each other, see
 `cat'`.)  As can also be seen, the local origin of the new, combined
-diagram is at the point of tangency between the two subdiagrams.
+diagram is the same as the local origin of the first diagram.  (This
+makes `beside v` associative, so diagrams under `beside v` form a
+semigroup---but *not* a monoid, since there is no identity
+element. `mempty` is a right but not a left identity for `beside v`.)
 
-To place diagrams next to each other while leaving the local origin of
-the combined diagram in the same place as the local origin of the
-first subdiagram, use `append` instead of `beside`:
+In older versions of ``diagrams``, the local origin of the combined
+diagram was at the point of tangency between the two diagrams.  To
+recover the old behavior, simply perform an alignment on the first in
+the same direction before combining (see `Alignment`_):
 
 .. class:: dia-lhs
 
 ::
 
-> example = append (20,30) (circle 1 # fc orange) (circle 1.5 # fc purple)
+> example = beside (20,30) (circle 1   # fc orange # align (20,30)) 
+>                          (circle 1.5 # fc purple)
 >           # showOrigin
 
 Since placing diagrams next to one another horizontally and vertically
@@ -903,10 +908,12 @@ local origin of each diagram at the indicated point.
 >   where dot       = circle 0.2 # fc black
 >         mkPoint x = P (x,x^2)
 
-`cat` is like an iterated version of `beside`, which takes a direction
+`cat` is an iterated version of `beside`, which takes a direction
 vector and a list of diagrams, laying out the diagrams beside one
 another in a row.  The local origins of the subdiagrams will be placed
-along a straight line in the direction of the given vector.
+along a straight line in the direction of the given vector, and the
+local origin of the first diagram in the list will be used as the
+local origin of the final result.
 
 .. class:: dia-lhs
 
@@ -915,8 +922,7 @@ along a straight line in the direction of the given vector.
 > example = cat (2,-1) (map p [3..8]) # showOrigin
 >   where p n = regPoly n 1 # lw 0.03
 
-Note, however, that the local origin of the final diagram is placed at
-the local origin of the first diagram in the list.
+Semantically speaking, `cat v === foldr (beside v) mempty`.
 
 For more control over the way in which the diagrams are laid out, use
 `cat'`, a variant of `cat` which also takes a `CatOpts` record.  See
@@ -936,10 +942,10 @@ For convenience, `Diagrams.TwoD.Combinators`:mod: also provides `hcat`, `hcat'`,
 `vcat`, and `vcat'`, variants of `cat` and `cat'` which concatenate
 diagrams horizontally and vertically.
 
-Finally, `appends` is like an iterated variant of `append`, with the
+Finally, `appends` is like an iterated variant of `beside`, with the
 important difference that multiple diagrams are placed next to a
 single central diagram without reference to one another; simply
-iterating `append` causes each of the previously appended diagrams to
+iterating `beside` causes each of the previously appended diagrams to
 be taken into account when deciding where to place the next one.
 
 .. class:: dia-lhs
@@ -950,7 +956,7 @@ be taken into account when deciding where to place the next one.
 > dirs     = iterate (rotateBy (1/7)) unitX
 > cdirs    = zip dirs (replicate 7 c)
 > example1 = appends c cdirs
-> example2 = foldl (\a (v,b) -> append v a b) c cdirs
+> example2 = foldl (\a (v,b) -> beside v a b) c cdirs
 > example  = example1 ||| strutX 3 ||| example2
 
 `Diagrams.Combinators`:mod: also provides `decoratePath` and
