@@ -16,6 +16,7 @@ import Crypto.Hash.MD5
 import qualified Data.ByteString.Char8 as B
 import Data.ByteString.Base16
 
+import Diagrams.TwoD.Size (SizeSpec2D(Dims))
 import Diagrams.Backend.Cairo
 import Build
 
@@ -76,5 +77,5 @@ compileDiagram src = do
   ex <- doesFileExist imgFile
   when (not ex) $ do
     putStrLn $ "Generating " ++ imgFile ++ "..."
-    buildDiagram src (CairoOptions imgFile (PNG (500,200)))
+    buildDiagram src (CairoOptions imgFile (Dims 500 200) PNG)
   return imgFile
