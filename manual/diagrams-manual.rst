@@ -1517,7 +1517,7 @@ the edges individually:
 
 (If we wanted to fill the starburst with yellow as before, we would
 have to separately draw another copy of the trail with a line width of
-zero before exploding it; this is left as an exercise for the reader.)
+zero and fill that; this is left as an exercise for the reader.)
 
 Paths
 ~~~~~
@@ -1573,7 +1573,7 @@ dots, center them, and stack them vertically.  However, this is
 annoying, because we must manually compute the proper vertical
 stacking distance between rows. Whether you think this sounds easy or
 not, it is certainly going to involve the `sqrt` function, or perhaps
-some trig, and we'd rather avoid all that.
+some trig, or both, and we'd rather avoid all that.
 
 Fortunately, there's an easier way: after creating the horizontal
 rows, we create the path corresponding to the left-hand side of the
@@ -1664,10 +1664,10 @@ As an (admittedly contrived) example, the following diagram defines
 > blueSquares = decoratePath s {- 1 -}
 >                 (replicate 4 (s {- 2 -} # scale 0.5) # fc blue)
 > paths       = lc purple . stroke $ star (StarSkip 2) s {- 3 -}
-> plus        = centerXY . lc green . strokeT
+> aster       = centerXY . lc green . strokeT
 >             . mconcat . take 5 . iterate (rotateBy (1/5))
 >             $ s {- 4 -}
-> example = (blueSquares <> plus <> paths) # lw 0.05
+> example = (blueSquares <> aster <> paths) # lw 0.05
 
 Exercise: figure out which occurrence of `s` has which type. (Answers
 below.)
@@ -1716,7 +1716,7 @@ the four `PathLike` types:
   different.
 
 Of course, one way to avoid all this would be to give `ts` a specific
-type annotation, if you know which type you would like it to be.  Then
+type signature, if you know which type you would like it to be.  Then
 using it at a different type will result in a type error, rather than
 confusing semantics.
 
@@ -2356,9 +2356,9 @@ identity).  The default query simply indicates which points are
    different, and may give unrelated results.  The bounding function
    is an approximation used to be able to place diagrams next to one
    another; the `Any` query is a more accurate record of which points
-   are enclosed by the diagram.  (Note, however, that using the query
-   in order to position diagrams next to each other more
-   accurately/snugly would be computationally infeasible.)
+   are enclosed by the diagram.  (Using the query in order to position
+   diagrams next to each other more accurately/snugly would be,
+   generally speaking, computationally infeasible.)
 
 The following example queries an ellipse (using the `sample` function
 to sample it at a set of particular points), coloring points inside
