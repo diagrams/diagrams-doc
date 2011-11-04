@@ -2101,7 +2101,7 @@ has the (admittedly scary-looking!) type
 
   withName :: ( IsName n, AdditiveGroup (Scalar v), Floating (Scalar v)
               , InnerSpace v, HasLinearMap v)
-           => n -> ((Point v, Bounds v) -> AnnDiagram b v m -> AnnDiagram b v m)
+           => n -> (LocatedBounds v -> AnnDiagram b v m -> AnnDiagram b v m)
                 -> (AnnDiagram b v m -> AnnDiagram b v m)
 
 Let's pick this apart a bit.  First, we see that the type `n` must be
@@ -2115,20 +2115,19 @@ function of type
 
 ::
 
-  (Point v, Bounds v) -> AnnDiagram b v m -> AnnDiagram b v m
+  LocatedBounds v -> AnnDiagram b v m -> AnnDiagram b v m
 
 We can see this function as a transformation on diagrams, except that
-it also gets to use some extra information---namely, a point and a
-bounding function.  In particular, it gets to know the point and
-bounding function associated with the name we pass as the first
-argument to `withName`.
+it also gets to use some extra information---namely, a "`LocatedBounds
+v`", which records the local origin and bounding function associated
+with the name we pass as the first argument to `withName`.
 
 Finally, the return type of `withName` is itself a transformation of
 diagrams.
 
 So here's how `withName` works.  Suppose we call it with the arguments
 `withName n f d`.  If some subdiagram of `d` has the name `n`, then
-`f` is called with the point and bounding region associated with `n`
+`f` is called with the located bounding function associated with `n`
 as its first argument, and `d` itself as its second argument.  So we
 get to transform `d` based on information about where the subdiagram
 named `n` is located within it.  And what if there is no subdiagram
@@ -2148,9 +2147,9 @@ the centers of two subdiagrams.
 > instance IsName Foo
 >
 > connect n1 n2
->   = withName n1 $ \(p1,_) ->
->     withName n2 $ \(p2,_) ->
->       atop ((p1 ~~ p2) # lc red # lw 0.03)
+>   = withName n1 $ \b1 ->
+>     withName n2 $ \b2 ->
+>       atop ((location b1 ~~ location b2) # lc red # lw 0.03)
 >
 > example = (square 3 # named Baz ||| circle 2.3 # named Bar)
 >         # connect Baz Bar
@@ -2159,11 +2158,11 @@ The `connect` function takes two names and returns a *transformation*
 on diagrams, which adds a red line connecting the locations denoted by
 the two names.  Note how the two calls to `withName` are chained, and
 how we have written the second arguments to `withName` using lambda
-expressions (this is a common style). We use pattern matching to
-ignore the bounding functions associated with the names since we don't
-need them. Finally, we draw a line between the two points, give it a
-style, and specify that it should be layered on top of the diagram
-given as the third argument to `connect`.
+expressions (this is a common style).  Finally, we draw a line between
+the two points (using the `location` function to access the base
+points of the located bounding functions), give it a style, and
+specify that it should be layered on top of the diagram given as the
+third argument to `connect`.
 
 We then draw a square and a circle, give them names, and use `connect`
 to draw a line between their centers.  Of course, in this example, it
@@ -2174,13 +2173,13 @@ examples such manual calculation can be quite out of the question.
 `withName` also has two other useful variants:
 
 * `withNameAll` takes a single name and makes available a list of
-  *all* (point, bounding function) pairs associated with that name.
+  *all* located bounding functions associated with that name.
   (`withName`, by contrast, returns only the most recent.)  This is
-  useful when you want to work with a collection of named points all
+  useful when you want to work with a collection of named subdiagrams all
   at once.
 
 * `withNames` takes a list of names, and makes available a list of the
-  most recent (point, bounding function) pairs associated with each.
+  most recent located bounding functions associated with each.
 
 Listing names
 ~~~~~~~~~~~~~
@@ -2189,7 +2188,7 @@ Sometimes you may not be sure what names exist within a diagram---for
 example, if you have obtained the diagram from some external module,
 or are debugging your own code.  The `names` function extracts a list
 of all the names recorded within a diagram and their associated
-points.
+located bounding functions.
 
 Unfortunately, calling `names` on a diagram directly usually results
 in a complaint from GHC about an ambiguous type variable:
@@ -2217,7 +2216,7 @@ has no way of knowing what backend type to choose.  This is similar to
 the ambiguity that arises when writing `show . read`.  Unfortunately,
 in this case (unlike in the case of `show . read`) the choice of
 backends cannot possibly affect the semantics of the `names`
-function---but there is no way to tell GHC that.
+function---but there is no way to tell GHC that!
 
 Sadly, the only solution is to give the diagram a concrete type
 annotation with a concrete backend type.  If you are using a
@@ -2230,8 +2229,19 @@ also use the `ShowBackend`, provided for debugging purposes in
     ghci> :m +Diagrams.Prelude Diagrams.Backend.Show
     ghci> names (circle 1 # named "joe" ||| circle 2 # named "bob"
                    :: Diagram ShowBackend R2)
-    NameMap (fromList [("bob",[(P (2.0,0.0),TransInv {unTransInv = <bounds>})])
-                      ,("joe",[(P (-1.0,0.0),TransInv {unTransInv = <bounds>})])])
+    NameMap (fromList [	("bob", [ LocatedBounds 
+                       	            (P (3.0,0.0)) 
+                       	            (TransInv {unTransInv = <bounds>})
+                       	        ]
+                       	)
+                       	,
+                       	("joe", [ LocatedBounds 
+                       	            (P (0.0,0.0)) 
+                       	            (TransInv {unTransInv = <bounds>})
+                       	        ]
+                       	)
+                      ]
+            )
 
 Bounding functions, being functions, of course cannot be printed, but
 the output of `names` can be manipulated in other ways than just printing.
@@ -2256,17 +2266,17 @@ edge of each child circle, instead of connecting their centers.
 >        $ map (\c -> circle 1 # named c) "abcde"
 >
 > parentToChild child
->   = withName "root" $ \(pp, pb) ->
->     withName child  $ \(cp, cb) ->
->       atop (boundaryFrom pp unit_Y pb ~~ boundaryFrom cp unitY cb)
+>   = withName "root" $ \rb ->
+>     withName child  $ \cb ->
+>       atop (boundaryFrom rb unit_Y ~~ boundaryFrom cb unitY)
 >
 > nodes  = root === strutY 2 === leaves
 >
 > example = nodes # applyAll (map parentToChild "abcde")
 
 The `boundaryFrom` function is used to compute boundary points:
-`boundaryFrom p v b` computes the boundary point in direction `v` when
-the bounding function `b` is based at the point `p`.
+`boundaryFrom lb v` computes the boundary point in direction `v` for
+the located bounding function `lb`.
 
 .. container:: todo
 
@@ -2294,9 +2304,9 @@ a qualified name explicitly, separate the components with `(.>)`.
 > instance IsName Corner
 >
 > connect n1 n2
->   = withName n1 $ \(p1,_) ->
->     withName n2 $ \(p2,_) ->
->       atop ((p1 ~~ p2) # lc red # lw 0.03)
+>   = withName n1 $ \b1 ->
+>     withName n2 $ \b2 ->
+>       atop ((location b1 ~~ location b2) # lc red # lw 0.03)
 >
 > squares =  (s # named NW ||| s # named NE)
 >        === (s # named SW ||| s # named SE)
