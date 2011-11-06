@@ -2190,45 +2190,13 @@ or are debugging your own code.  The `names` function extracts a list
 of all the names recorded within a diagram and their associated
 located bounding functions.
 
-Unfortunately, calling `names` on a diagram directly usually results
-in a complaint from GHC about an ambiguous type variable:
+When using `names` you will often need to add a type annotation such
+as `D R2` to its argument, as shown below---for an explanation and
+more information, see `No instances for Backend b0 R2 ...`_.
 
 ::
 
-    ghci> :m +Diagrams.Prelude
-    ghci> names (circle 1 # named "joe" ||| circle 2 # named "bob")
-
-    <interactive>:0:35:
-        No instances for (Renderable Diagrams.TwoD.Ellipse.Ellipse b0,
-                          Backend b0 R2)
-          arising from a use of `circle'
-        Possible fix:
-          add instance declarations for
-          (Renderable Diagrams.TwoD.Ellipse.Ellipse b0, Backend b0 R2)
-        In the first argument of `(#)', namely `circle 2'
-        In the second argument of `(|||)', namely `circle 2 # named "bob"'
-        In the first argument of `names', namely
-          `(circle 1 # named "joe" ||| circle 2 # named "bob")'
-
-Since the diagram is polymorphic in the backend used to render it, and
-`names` is polymorphic in its input but monomorphic in its output, GHC
-has no way of knowing what backend type to choose.  This is similar to
-the ambiguity that arises when writing `show . read`.  Unfortunately,
-in this case (unlike in the case of `show . read`) the choice of
-backends cannot possibly affect the semantics of the `names`
-function---but there is no way to tell GHC that!
-
-Sadly, the only solution is to give the diagram a concrete type
-annotation with a concrete backend type.  If you are using a
-particular backend like cairo, you can use that.  Otherwise, you can
-also use the `ShowBackend`, provided for debugging purposes in
-`Diagrams.Backend.Show`:mod:.
-
-::
-
-    ghci> :m +Diagrams.Prelude Diagrams.Backend.Show
-    ghci> names (circle 1 # named "joe" ||| circle 2 # named "bob"
-                   :: Diagram ShowBackend R2)
+    ghci> names (circle 1 # named "joe" ||| circle 2 # named "bob" :: D R2)
     NameMap (fromList [	("bob", [ LocatedBounds 
                        	            (P (3.0,0.0)) 
                        	            (TransInv {unTransInv = <bounds>})
@@ -2512,21 +2480,79 @@ Tips and tricks
 Deciphering error messages
 --------------------------
 
+No instances for Backend b0 R2 ...
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+There will probably come a time when you get an error message such as 
+
 ::
 
-    ghci> names (circle 1 # named "joe" ||| circle 2 # named "bob")
+    <interactive>:1:8:
+        No instances for (Backend b0 R2,
+                          Renderable Diagrams.TwoD.Ellipse.Ellipse b0)
+          arising from a use of `circle'
 
-    <interactive>:0:35:
-        No instances for (Renderable Diagrams.TwoD.Ellipse.Ellipse b0,
-                          Backend b0 R2)
+The problem really has nothing to do with missing instances, but with
+the fact that a concrete backend type has not been filled in for `b0`.
+Such errors arise when you pass a diagram to a
+function which is polymorphic in its input but monomorphic in its
+output, such as 'width', 'height', 'phantom', or 'names'.  Such
+functions compute some property of the diagram, or use it to
+accomplish some other purpose, but do not result in the diagram
+being rendered.  If the diagram does not have a monomorphic type,
+GHC complains that it cannot determine the diagram's type.
+
+For example, here is the error we get if we try to compute the
+width of a radius-1 circle:
+
+::
+
+    ghci> width (circle 1)
+
+    <interactive>:1:8:
+        No instances for (Backend b0 R2,
+                          Renderable Diagrams.TwoD.Ellipse.Ellipse b0)
           arising from a use of `circle'
         Possible fix:
           add instance declarations for
-          (Renderable Diagrams.TwoD.Ellipse.Ellipse b0, Backend b0 R2)
-        In the first argument of `(#)', namely `circle 2'
-        In the second argument of `(|||)', namely `circle 2 # named "bob"'
-        In the first argument of `names', namely
-          `(circle 1 # named "joe" ||| circle 2 # named "bob")'
+          (Backend b0 R2, Renderable Diagrams.TwoD.Ellipse.Ellipse b0)
+        In the first argument of `width', namely `(circle 1)'
+        In the expression: width (circle 1)
+        In an equation for `it': it = width (circle 1)
+
+GHC complains that it cannot find an instance for "`Backend b0
+R2`"; what is really going on is that it does not have enough
+information to decide which backend to use for the circle (hence
+the type variable `b0`).  This is annoying because *we* know that
+the choice of backend cannot possibly affect the width of the
+circle; but there is no way for GHC to know that.
+
+The special type `D` is provided for exactly this purpose, defined as
+
+.. class:: lhs
+
+::
+
+> type D v = Diagram NullBackend v
+
+`NullBackend` is a "backend" which simply does nothing: perfect
+for use in cases where GHC insists on knowing what backend to use but
+the backend really does not matter.
+
+The solution to the problem with `width` is to annotate `circle 1`
+with the type `D R2`, like so:
+
+::
+
+    ghci> width (circle 1 :: D R2)
+    2.0 
+
+More ambiguity
+~~~~~~~~~~~~~~
+
+.. container:: todo
+
+   Write about these errors
 
 ::
 
