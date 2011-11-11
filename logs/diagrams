@@ -5140,3 +5140,421 @@
 2011-09-09 16:37:48 UTC <luite> yay, finally a workign diagrams/ghc install
 2011-09-09 16:38:24 UTC <luite> had to recompile ghc with a --with-iconv-libraries= because of two conflicting iconv libraries
 2011-09-09 17:42:17 UTC <byorgey> luite: yay!
+2011-09-10 23:10:27 UTC <byorgey> diagrams-lib is now mirrored on github using darcs-bridge: https://github.com/byorgey/diagrams-lib
+2011-09-10 23:10:41 UTC <byorgey> I'll mirror the other ones soon
+2011-09-10 23:46:00 UTC <luite> cool, now I can finally use it :p
+2011-09-10 23:46:08 UTC <luite> is the bridge bidirectional?
+2011-09-10 23:51:06 UTC <byorgey> it should be
+2011-09-10 23:51:26 UTC <byorgey> obviously I haven't yet tested the git -> darcs direction
+2011-09-11 01:39:25 UTC <tgeeky> byorgey: i'll test it to test my puppet recipie for darcs (which I haven't written yet)
+2011-09-11 01:39:28 UTC <tgeeky> and let you know
+2011-09-14 19:14:43 UTC <tgeeky> byorgey: you've taught about the Real Numbers in classes before right?
+2011-09-14 19:21:39 UTC <tgeeky> This paper: http://arxiv.org/PS_cache/arxiv/pdf/1103/1103.4508v1.pdf  -- Theorem 1.1, 1.4, 1.5, and 5.4 -- seems (to me) like a pretty important development in general. Any thoughts?
+2011-09-14 19:30:26 UTC <byorgey> tgeeky: I don't have the background to have any idea whether that is an important development.
+2011-09-14 19:30:50 UTC <tgeeky> byorgey: ok. :o
+2011-09-14 19:34:57 UTC <tgeeky> i need to watch the casters series on limit points
+2011-10-06 21:07:01 UTC <luite> byorgey: are you going to release diagrams 0.4 soon?
+2011-10-06 21:07:20 UTC <byorgey> luite: yes, I plan to
+2011-10-06 21:10:05 UTC <luite> great :) that will help with ghc 7.2.1
+2011-10-06 21:14:00 UTC <byorgey> luite: just now starting to come up for air after the birth of my son =)
+2011-10-06 21:17:40 UTC <luite> oh yeah, I heard, but I hadn't spoken to you since. congrats! :)
+2011-10-06 21:17:45 UTC <byorgey> thanks =)
+2011-10-07 02:48:17 UTC <alpounet> congratulations byorgey!
+2011-10-07 02:48:32 UTC <byorgey> alpounet: thanks =)
+2011-10-08 01:12:36 UTC <tgeeky> byorgey: i'm back from semi-vacation, so back to work
+2011-10-08 01:12:40 UTC <tgeeky> but congrats on the little rascal!
+2011-10-08 01:12:51 UTC <tgeeky> best wishes to you and your missus and the health of the little one :O
+2011-10-08 02:05:53 UTC <byorgey> tgeeky: thanks!
+2011-10-08 02:07:00 UTC <tgeeky> byorgey: first one, right?
+2011-10-08 02:07:08 UTC <byorgey> tgeeky: yep
+2011-10-08 02:07:27 UTC <tgeeky> hehe. you two are both brilliant people, so remember not to overthink things :O
+2011-10-08 02:07:49 UTC <byorgey> he is asleep in my right arm so I am a bit slow at typing atm =)
+2011-10-08 02:08:03 UTC <tgeeky> byorgey: best feeling in the world, so I'm told :o
+2011-10-08 02:08:04 UTC <byorgey> tgeeky: heh, thanks =)
+2011-10-08 02:08:31 UTC <tgeeky> i'm gonna be an uncle in a few months, but no kids for me for a while :O
+2011-10-08 02:09:10 UTC <byorgey> uncle is fun though, you get to have fun with them and then give them to someone else when they start crying =)
+2011-10-08 02:09:51 UTC <tgeeky> sounds like a parenthood test drive
+2011-10-08 02:13:50 UTC <tgeeky> byorgey: but everyone is happy/healthy? no complications or anything?
+2011-10-08 02:19:21 UTC <tgeeky> my brother had to have CF genetic testing to rule it out, since his wife had several of the genes
+2011-10-08 13:39:32 UTC <byorgey> tgeeky: yes, we're all doing great
+2011-10-09 03:23:49 UTC <tgeeky> byorgey: that's a load off
+2011-10-09 03:23:52 UTC <tgeeky> good to hear
+2011-10-13 02:17:24 UTC <tgeeky> byorgey: here?
+2011-10-13 11:29:55 UTC <byorgey> hi tgeeky
+2011-10-13 13:26:05 UTC <cicatristeza> hi there
+2011-10-13 13:26:16 UTC <cicatristeza> how do i draw some text to an svg using diagrams?
+2011-10-13 13:26:46 UTC <cicatristeza> could anyone show me the docs for it? i tried looking in http://hackage.haskell.org/packages/archive/diagrams-lib/latest/doc/html/Diagrams-Prelude.html
+2011-10-13 14:12:43 UTC <byorgey> hi cicatristeza, aha, sorry, it looks like there are some things I forgot to list there
+2011-10-13 14:13:00 UTC <byorgey> cicatristeza: if you look here http://hackage.haskell.org/package/diagrams-lib-0.3  you can see a list of all the modules
+2011-10-13 14:13:16 UTC <byorgey> cicatristeza: for text you want this module: http://hackage.haskell.org/packages/archive/diagrams-lib/0.3/doc/html/Diagrams-TwoD-Text.html
+2011-10-13 14:13:57 UTC <byorgey> cicatristeza: you may also be interested in the user manual, it is not quite done but there is a preview version here: http://www.cis.upenn.edu/~byorgey/diagrams-manual/diagrams-manual.html
+2011-10-13 14:14:40 UTC <cicatristeza> are you brent yorgey of the monad reader?
+2011-10-13 14:14:49 UTC <byorgey> yes, that's me
+2011-10-13 14:15:03 UTC <byorgey> I'm the only Brent Yorgey I know of
+2011-10-13 14:15:10 UTC <cicatristeza> whens the next issue
+2011-10-13 14:20:08 UTC <byorgey> should be out next week
+2011-10-13 15:43:53 UTC <cicatristeza> ok
+2011-10-13 16:11:35 UTC <tgeeky> byorgey: I made this using Mathematica http://i.imgur.com/JhAWS.png
+2011-10-13 16:11:44 UTC <tgeeky> i'll try to make the same thing with diagrams soonish
+2011-10-13 16:12:04 UTC <byorgey> tgeeky: ooh, awesome!
+2011-10-13 16:12:21 UTC <tgeeky> byorgey: that's the sum of squares view
+2011-10-13 16:12:33 UTC <byorgey> tgeeky: sadly, I fear making that with diagrams would take a really long time
+2011-10-13 16:12:43 UTC <byorgey> but perhaps this can serve as an impetus for improving the performance.
+2011-10-13 16:13:00 UTC <byorgey> it would certainly make for a nice benchmark/test case.
+2011-10-13 16:13:06 UTC <tgeeky> byorgey: that's why I want to do it with Haskell / diagrams, because I know I can generate the numerics of the table *far* faster than mathematica
+2011-10-13 16:13:28 UTC <tgeeky> using Bird's fast inversion algorithim
+2011-10-13 16:13:45 UTC <tgeeky> byorgey: anyway, it's curious that this spherical strucutre is in there at all
+2011-10-13 16:15:14 UTC <tgeeky> but yes, it would be a nice test case
+2011-10-13 16:15:58 UTC <tgeeky> byorgey: (163 was chosen because it's one of the imaginary quadratic fields)
+2011-10-13 16:16:17 UTC <tgeeky> byorgey: you'll notice that there are no black squares on the image (No zeros)
+2011-10-13 16:23:05 UTC <tgeeky> byorgey: by the way, do you mean [writing the code] will take a really long time, or [rendering it] will?
+2011-10-13 16:38:10 UTC <byorgey> tgeeky: I mean rendering it
+2011-10-24 06:36:56 UTC <mgsloan> so is it already possible to play with your extension?
+2011-10-24 06:37:09 UTC <byorgey> mgsloan: yes
+2011-10-24 06:37:46 UTC <byorgey> mgsloan: let me find you a link
+2011-10-24 06:39:52 UTC <byorgey> mgsloan: see  http://hackage.haskell.org/trac/ghc/wiki/GhcKinds  and  http://haskell.org/haskellwiki/GHC/Kinds
+2011-10-24 06:40:06 UTC <byorgey> the latter has instructions on how to build the GHC branch so you can play with it
+2011-10-24 06:40:46 UTC <mgsloan> great! the amount of code involved in making a quasi-quoter sufficient for simultaneously writing type-level and value-level functions is fairly insignificant
+2011-10-24 06:41:11 UTC <mgsloan> pretty sweet low hanging fruit I daresay :D
+2011-10-24 06:41:23 UTC <byorgey> true, be my guest!
+2011-10-24 06:42:07 UTC <byorgey> only downside is that won't work with functions that already exist, e.g. (++)
+2011-10-24 06:42:45 UTC <mgsloan> aye
+2011-10-24 06:43:09 UTC <mgsloan> would it work for map?
+2011-10-24 06:46:56 UTC <byorgey> I don't see why not
+2011-10-24 20:07:53 UTC <smeltzek> hi all -- i am new to Diagrams but am interested in using it as part of a project. Unfortunately I need my graphical output to handle mouse events tied to specific graphic elements
+2011-10-24 20:08:06 UTC <smeltzek> is this something that i could reasonably implement over the top of Diagrams?
+2011-10-24 20:08:08 UTC <byorgey> hi smeltzek
+2011-10-24 20:08:21 UTC <byorgey> yes, you can already do that.
+2011-10-24 20:08:30 UTC <smeltzek> oh, really?
+2011-10-24 20:08:38 UTC <smeltzek> great! i guess i should do a better job reading the documentation
+2011-10-24 20:08:56 UTC <smeltzek> thanks
+2011-10-24 20:09:16 UTC <byorgey> smeltzek: let me get you some links, just a sec
+2011-10-24 20:09:33 UTC <byorgey> smeltzek: http://projects.haskell.org/diagrams/manual/diagrams-manual.html#using-queries
+2011-10-24 20:09:49 UTC <byorgey> smeltzek: you'll want to use the Gtk backend that comes with diagrams-cairo
+2011-10-24 20:10:04 UTC <byorgey> smeltzek: John Lato has been doing something like this already
+2011-10-24 20:10:57 UTC <smeltzek> interesting, thanks
+2011-10-24 20:11:02 UTC <smeltzek> i will see if i can dig up some information on his work
+2011-10-24 20:11:30 UTC <byorgey> smeltzek: here it is, http://www.tiresiaspress.us/haskell/jaek
+2011-10-24 20:11:54 UTC <byorgey> smeltzek: he doesn't hang out in here but you should email him, jwlato at gmail
+2011-10-24 20:14:51 UTC <smeltzek> thanks, will do
+2011-10-26 21:33:56 UTC <smeltzek> Hi again -- this is pretty basic, but is it expected behavior that I am not able to use the pre-defined shapes in Diagrams.TwoD.Shapes with gtk as a backend?
+2011-10-26 21:34:12 UTC <smeltzek> i am able to render circles perfectly fine using 'defaultRender'
+2011-10-26 21:34:59 UTC <smeltzek> but other shapes such as squares are not instances of PathLike (...)
+2011-10-26 21:38:17 UTC <byorgey> smeltzek: no, others shapes should be fine
+2011-10-26 21:38:40 UTC <byorgey> smeltzek: can you show me some sample code that is giving you the error, and the error itself, say on hpaste.org?
+2011-10-26 21:38:51 UTC <smeltzek> sure, one minute
+2011-10-26 21:41:02 UTC <smeltzek> hpaste.org/53175
+2011-10-26 21:41:42 UTC <smeltzek> i am new to gtk2hs as well, so it's possible i'm making beginner mistakes
+2011-10-26 21:53:56 UTC <byorgey> smeltzek: let me take a look
+2011-10-26 21:54:40 UTC <byorgey> smeltzek: oh, I see what's going on.
+2011-10-26 21:55:30 UTC <byorgey> smeltzek: the problem is that 'square' is polymorphic in its output, and defaultRender is polymorphic in its input... so GHC does not know how to choose a concrete type for the diagram being generated
+2011-10-26 21:56:01 UTC <byorgey> smeltzek: the solution is to give a type signature to 'square 1'
+2011-10-26 21:56:30 UTC <byorgey> smeltzek: so you could write  defaultRender da (square 1 :: Diagram Cairo R2)
+2011-10-26 21:56:55 UTC <byorgey> smeltzek: or you could say  defaultRender da dia  and elsewhere declare  dia :: Diagram Cairo R2; dia = square 1
+2011-10-26 21:57:42 UTC <byorgey> smeltzek: it's an annoying issue and will probably trip up a bunch of people... I should add an explanation to the user manual
+2011-10-26 21:58:24 UTC <byorgey> but in general, if you see an error that says 'no instance for ...' for some type with a *type variable* (in your case notice the m0) this is probably what is going on
+2011-10-26 21:58:39 UTC <smeltzek> ah, okay. that makes perfect sense
+2011-10-26 21:58:46 UTC <smeltzek> thank you for looking into it
+2011-10-26 21:58:49 UTC <byorgey> sure
+2011-10-26 22:26:18 UTC <tgeeky> byorgey: I'm scratching my head here. I thought I myself read about Alternative from the original McBride Applicative paper
+2011-10-26 22:26:21 UTC <tgeeky> but it's not in there?
+2011-10-26 22:26:47 UTC <tgeeky> oh, it is, but he doesn't name it that.
+2011-10-26 22:27:07 UTC <byorgey> yeah
+2011-10-26 22:27:36 UTC <tgeeky> i think I'm confused about something subtle.
+2011-10-26 22:28:09 UTC <byorgey> wait, is it? I don't see it either
+2011-10-26 22:28:57 UTC <tgeeky> well, he shows
+2011-10-26 22:29:03 UTC <tgeeky> instance Monoid o => Applicative (Accy o)
+2011-10-26 22:29:50 UTC <byorgey> that's not Alternative
+2011-10-26 22:30:09 UTC <tgeeky> right, but that is the starting point of defining alternative, right?
+2011-10-26 22:30:12 UTC <byorgey> that's just showing that monoids are in some sense "degenerate" applicatives
+2011-10-26 22:30:21 UTC <byorgey> no, it isn't
+2011-10-26 22:32:27 UTC <tgeeky> byorgey: do you know what kind of structure underlies the usage of (+-, -+) in equation here? http://en.wikipedia.org/wiki/Plastic_number
+2011-10-26 22:33:11 UTC <tgeeky> where the sign of the left conjugator is tied to the sign of the right one, but the other additions and subtractions remain the same?
+2011-10-26 22:33:26 UTC <tgeeky> from "The plastic number is the smallest Pisot.Vijayaraghavan number. Its algebraic conjugates are:"
+2011-10-26 22:34:28 UTC <tgeeky> byorgey: I'm not sure if I said so, but I played a bunch with Diagrams, and read and understood much of the source code. That is a really *fantastic* library.
+2011-10-26 22:34:34 UTC <tgeeky> It's very addictive :)
+2011-10-26 22:34:40 UTC <tgeeky> doh
+2011-10-26 22:34:47 UTC <tgeeky> s/diagrams/species/
+2011-10-26 22:34:54 UTC <tgeeky> I haven't run through diagrams yet :)
+2011-10-26 22:35:05 UTC <byorgey> tgeeky: ah, I see, thanks! glad you like it
+2011-10-26 22:35:16 UTC <byorgey> I have sadly let it bitrot somewhat
+2011-10-26 22:35:20 UTC <tgeeky> byorgey: but I noticed your cubic equation solver in diagrams
+2011-10-26 22:35:28 UTC <byorgey> but would like to get back to working on it at some point
+2011-10-26 22:35:39 UTC <byorgey> tgeeky: yes?
+2011-10-26 22:36:17 UTC <tgeeky> well, i was curious about the role of the plastic constant
+2011-10-26 22:36:27 UTC <byorgey> oh. I have no idea.
+2011-10-26 22:37:13 UTC <tgeeky> byorgey: you are familiar with it at all? I feel confident you're enough of a rec. mathemitician to have awed the golden ratio
+2011-10-26 22:37:35 UTC <byorgey> no, I'm not
+2011-10-26 22:37:48 UTC <tgeeky> (you're not familiar)?
+2011-10-26 22:38:20 UTC <byorgey> I had never even heard of the plastic constant until just now.
+2011-10-26 22:38:24 UTC <tgeeky> oh.
+2011-10-26 22:38:28 UTC <tgeeky> yeah, that's a pretty weird fact
+2011-10-26 22:38:34 UTC <tgeeky> very few people know about it
+2011-10-26 22:48:42 UTC <tgeeky> well heck I figured something like http://hackage.haskell.org/package/action-permutations existed, but never found it until now.
+2011-10-26 22:49:57 UTC <tgeeky> byorgey: how long have you been (working on) and then (writing) the 'promoting' paper?
+2011-10-26 22:50:40 UTC <byorgey> tgeeky: well, we started working on it during the summer of 2010
+2011-10-26 22:51:08 UTC <byorgey> tgeeky: then we all did other things for a while, then we began working on it again this past spring
+2011-10-26 22:51:24 UTC <tgeeky> temporarily masking hubris and bashfulness, isn't this a pretty big deal for Haskell?
+2011-10-26 22:51:45 UTC <byorgey> we started writing the paper in... August
+2011-10-26 22:51:56 UTC <byorgey> yes, I think it's a pretty big deal
+2011-10-26 22:52:26 UTC <tgeeky> it seems like a lot of major libraries over all kinds of mathematical structures can be greatly generalized
+2011-10-26 22:52:39 UTC <tgeeky> and things like NumericPrelude could be really made much better
+2011-10-26 22:53:29 UTC <byorgey> yes, I hope so
+2011-10-27 19:11:48 UTC <tgeeky> byorgey: J = " "?
+2011-10-27 19:13:31 UTC <tgeeky> I personally hope that you just generated random letters.
+2011-10-28 17:36:53 UTC <byorgey> fryguybob: got a minute to chat about diagrams-hint ?
+2011-10-28 17:41:25 UTC <fryguybob> Yeah
+2011-10-28 17:41:48 UTC <fryguybob> byorgey: (If I can remember things :D)
+2011-10-28 17:44:30 UTC <luite> :)
+2011-10-28 17:47:00 UTC <byorgey> fryguybob: well, I'm just trying to figure out the best way forward to create a nicely packaged interface for dynamically interpreting diagrams
+2011-10-28 17:47:15 UTC <byorgey> hacking on diagrams-hint? or split out some of its code into a separate package?
+2011-10-28 17:47:27 UTC <byorgey> diagrams-hint also has a bunch of command-line stuff as well
+2011-10-28 17:47:44 UTC <byorgey> at this point I'm not even sure what the right API would be, anyway =)
+2011-10-28 17:48:17 UTC <luite> it's a bit annoying that a 7.2 compatible hint has still not been released :(
+2011-10-28 17:48:37 UTC <fryguybob> byorgey: Yeah that is tricky.
+2011-10-28 17:49:21 UTC <fryguybob> I think the parts of diagrams-hint that are pertinent are pretty much isolated to: http://www.patch-tag.com/r/fryguybob/diagrams-hint/snapshot/current/content/pretty/src/Diagrams/Compiler/Run.hs
+2011-10-28 17:49:29 UTC <byorgey> luite: oh, boo =(
+2011-10-28 17:49:37 UTC <byorgey> fryguybob: yeah
+2011-10-28 17:49:58 UTC <luite> byorgey: the link to the src repo doesn't work, you have to get it from the secret repository
+2011-10-28 17:50:32 UTC <byorgey> we may have to resort to GHC API directly anyway... there's no way to use hint to do type inference.  it will only give you a String representation of the type.
+2011-10-28 17:51:04 UTC <fryguybob> Yeah, I'm just concating the type and doing a type check to search for diagrams.
+2011-10-28 17:51:20 UTC <luite> yeah I had similar issues, have now removed hint completely from my code
+2011-10-28 17:55:56 UTC <luite> btw, sorry for off-topic: does anyone have experience with monad-control exception handling for a monad transformer stack that includes an iteratee?
+2011-10-31 03:42:25 UTC <byorgey> http://www.cis.upenn.edu/~byorgey/noah-schedule.png
+2011-10-31 03:42:44 UTC <byorgey> My son's sleep/eat/wake schedule for the past 3 weeks =)
+2011-10-31 03:43:28 UTC <byorgey> (created using diagrams of course)
+2011-10-31 03:46:46 UTC <luite> blue is sleep?
+2011-10-31 04:56:22 UTC <byorgey> luite: yes, otherwise we would be in big trouble =)
+2011-10-31 04:57:39 UTC <byorgey> yellow = nursing, green = awake
+2011-10-31 04:58:25 UTC <luite> I guess if you gradually decrease the amount of sleep, he's well on his way to the uberman sleeping schedule ;)
+2011-10-31 04:58:53 UTC <byorgey> haha, well, we don't have much control over it at the moment =)
+2011-10-31 11:20:44 UTC <fryguybob> byorgey: Nice! Phase one of automated baby book complete.
+2011-10-31 19:31:33 UTC <tgeeky> lol
+2011-10-31 19:31:47 UTC <tgeeky> world's first polyphasic sleeping infant
+2011-10-31 19:45:04 UTC <byorgey> tgeeky: uh, every infant ever does polyphasic sleep =)
+2011-10-31 19:46:09 UTC <tgeeky> byorgey: true story? I've never thought about it that way, but I guess you're right :o
+2011-10-31 19:46:19 UTC <tgeeky> byorgey: it's just us "adults" that can't cope :)
+2011-10-31 19:46:38 UTC <byorgey> tgeeky: exactly =)
+2011-10-31 19:47:03 UTC <tgeeky> nice observation, that I suppose is currently being rigoriously drummed into your brain :)
+2011-10-31 19:48:50 UTC <byorgey> "polyphasic" technically just means "sleeping multiples times each day" although often has the connotation (for adults) of using it to try to sleep less in total
+2011-10-31 19:49:35 UTC <byorgey> but Noah seems to use it in order to sleep *more* in total. =)  Currently about 12-14h per day.
+2011-10-31 19:49:57 UTC <tgeeky> yes, I refuse to give the term technical meaning since state-of-the-art neuroscience doesn't have a good understanding of... pretty much anything ... involving sleep.
+2011-10-31 19:50:11 UTC <tgeeky> I just know it as "that thing I'll never be able to do"
+2011-10-31 20:00:09 UTC <tgeeky> byorgey: question: Do you know what kind of thing is "the set of all finite simple whose order contains a factor of (n)"?
+2011-10-31 20:00:48 UTC <tgeeky> s/finite simple/finite simple groups/
+2011-10-31 20:01:05 UTC <tgeeky> is that something which could be resonably modelled using a multiset?
+2011-10-31 20:01:36 UTC <byorgey> tgeeky: well, it is infinite, for starters
+2011-10-31 20:01:48 UTC <byorgey> I think
+2011-10-31 20:01:59 UTC <byorgey> hmm, I forget the precise definition of "simple"
+2011-10-31 20:02:12 UTC <tgeeky> well, if that is left to be infinite, then I'll use 'sporadic'
+2011-10-31 20:02:16 UTC <tgeeky> which is certainly finite
+2011-10-31 20:02:53 UTC <tgeeky> basically, from the ATLAS, i gleaned out all groups with a factor of (29) in them (on a hunch)
+2011-10-31 20:03:39 UTC <byorgey> well, there are only 26 sporadic simple groups
+2011-10-31 20:04:13 UTC <tgeeky> they are: L2 (29), L2 (58), L3 (29),  U3 (29), S4 (17), S4 (29), S4 (41), Suzuki (128), Ru, Janko4, Fischer24, and Monster
+2011-10-31 20:05:42 UTC <tgeeky> I figured, for efficiency, I would store the small factors seperately -- the ones for which all of these groups have many components
+2011-10-31 20:06:16 UTC <tgeeky> ie: (2^n, 3^n, 5^n, 7^n, 11^n, 13^n)
+2011-10-31 20:07:29 UTC <tgeeky> and then just adjoin a list of factors specific to each group
+2011-10-31 20:07:46 UTC <tgeeky> so the structure I would have is:
+2011-10-31 20:09:41 UTC <tgeeky> (2^n, 3^n, 5^n, 7^n, 11^n, 13^n, ... , 29^n) ++ [59, 113, 127, 871, 271, 421, 113, 127, 37, 45)
+2011-10-31 20:10:20 UTC <tgeeky> where ++ isn't the right function here :o
+2011-10-31 20:10:34 UTC <tgeeky> i guess another question: do you think there is any efficiency reason to mix sets and multisets?
+2011-10-31 20:13:47 UTC <tgeeky> I don't want to construct these groups, I just want to enumerate and compare them in terms of index and order
+2011-10-31 20:14:55 UTC <byorgey> no, I would just use a Map from primes to ints
+2011-10-31 20:15:20 UTC <byorgey> I see no reason to distinguish between the "common" small factors and the larger ones
+2011-10-31 20:15:52 UTC <byorgey> or, that is, just use a multiset for the whole thing
+2011-10-31 20:15:57 UTC <tgeeky> byorgey: I have an a priori reason to try to tease out such a distinction
+2011-10-31 20:16:24 UTC <byorgey> tgeeky: and is the distinction more subtle than "those factors which occur more than once vs. those which occur only once"?
+2011-10-31 20:17:01 UTC <tgeeky> byorgey: nope, the question is what happens when you distribute the small factors over the large factors
+2011-10-31 20:17:07 UTC <tgeeky> in a structured way
+2011-10-31 20:19:02 UTC <tgeeky> (the other problem is even more subtle -- assuming some of the primes are "bad primes" in the sense used in understanding the Apollonian gasket)
+2011-10-31 20:20:14 UTC <tgeeky> (2) and (3) are "bad" primes in some topological sense that I don't fully understand (demonstrated by Peter Sarnak and Elena Fuchs, for some name dropping)
+2011-10-31 20:21:20 UTC <tgeeky> what happens if you just drop all of the factors of 2? of 3? of both? what happens if you push all of the factors down through the singleton elements?
+2011-10-31 20:25:25 UTC <tgeeky> byorgey: and so on :)
+2011-10-31 20:25:46 UTC <tgeeky> byorgey: I guess i'll try both for one example (29), and then see how it goes - and decide from there
+2011-10-31 20:26:04 UTC <byorgey> o
+2011-10-31 20:26:08 UTC <byorgey> *ok
+2011-10-31 20:26:18 UTC <tgeeky> did you mean a map to the Nats?
+2011-10-31 20:26:21 UTC <tgeeky> or did you really mean Ints?
+2011-10-31 20:26:29 UTC <tgeeky> i suppose it doesn't matter :/
+2011-10-31 20:30:18 UTC <byorgey> I meant Nats
+2011-10-31 20:30:23 UTC <byorgey> but Haskell doesn't really have a Nat type
+2011-10-31 20:30:41 UTC <tgeeky> yeah, and I'm definately not doing this type-level at the first shot :)
+2011-10-31 20:30:47 UTC <byorgey> i.e. the powers
+2011-10-31 20:31:56 UTC <tgeeky> this is the hand-drawn diagram that made me want such a tool generally
+2011-10-31 20:31:57 UTC <tgeeky> http://i.imgur.com/99iDQ.jpg
+2011-10-31 20:34:57 UTC <tgeeky> it also makes me wonder exactly how the number base used to represent the orders, affects the presentation of this list
+2011-11-01 02:38:43 UTC <fryguybob> byorgey: Applied and pushed.  Thanks!
+2011-11-01 02:38:53 UTC <byorgey> great!
+2011-11-02 02:27:05 UTC <byorgey> ACTION is considering changing the semantics of 'beside' (and hence (|||) and (===)) so that the local origin of the combined object is the local origin of the first object
+2011-11-02 02:27:21 UTC <byorgey> as opposed to the current semantics of putting the combined local origin at the point of tangency
+2011-11-02 02:28:05 UTC <byorgey> pros: (1) it makes 'beside v', (|||) and (===) associative
+2011-11-02 02:29:14 UTC <byorgey> (2) if you want the old semantics it is easy: just do e.g.  d1 # alignR ||| d2; getting the new semantics from the current is tricky and requires naming d1 to remember its origin and then restoring it
+2011-11-02 02:29:53 UTC <byorgey> (3) it matches the existing behavior of cat
+2011-11-02 02:30:51 UTC <byorgey> (indeed, 'cat v' would be semantically equivalent to 'foldr (beside v)'; currently there's no easily stated relationship)
+2011-11-02 02:31:18 UTC <byorgey> the only downside is that it might break a lot of examples etc.  Then again, it might not.
+2011-11-02 02:32:10 UTC <byorgey> anywhere you compose two diagrams and then immediately align the result would not change
+2011-11-02 02:52:46 UTC <fryguybob> byorgey: Makes sense to me.
+2011-11-02 02:55:59 UTC <byorgey> well if fryguybob says it makes sense that's good enough for me.
+2011-11-02 02:56:23 UTC <byorgey> We don't have enough users to get angry yet, might as well break stuff to make it better while we can ;)
+2011-11-02 02:56:37 UTC <tgeeky_> let g:netrw_dirhistmax  =10
+2011-11-02 02:56:37 UTC <tgeeky_> let g:netrw_dirhist_cnt =3
+2011-11-02 02:56:37 UTC <tgeeky_> let g:netrw_dirhist_1='C:/msg/home/tg/d-hs/hs-HaskellForMaths-0.4.0/Math/Algebra'
+2011-11-02 02:56:40 UTC <tgeeky_> let g:netrw_dirhist_2='C:/msg/home/tg/hs/factory-0.2.0.0'
+2011-11-02 02:56:41 UTC <tgeeky_> apologies.
+2011-11-02 02:56:43 UTC <tgeeky_> let g:netrw_dirhist_3='C:/msg/home/tg/hs/tkyprof-0.0.6.3/double-conversion/double-conversion'
+2011-11-02 02:56:46 UTC <tgeeky_> spurrious paste.
+2011-11-02 02:57:09 UTC <fryguybob> :D
+2011-11-02 03:00:45 UTC <byorgey> note that diagrams under the new 'beside' are an interesting example of something which is a semigroup but NOT a monoid (since there is no identity)
+2011-11-02 03:06:14 UTC <fryguybob> no right identity, but there is a left one right?
+2011-11-02 03:06:28 UTC <fryguybob> Ooops, other way around.
+2011-11-02 03:06:35 UTC <byorgey> ah, yes, you're right
+2011-11-02 03:06:41 UTC <byorgey> ACTION adds that to the documentation
+2011-11-02 03:06:58 UTC <byorgey> so what is that called? a hemisemigroup?
+2011-11-02 03:07:07 UTC <fryguybob> somewhatmonoid
+2011-11-02 03:07:19 UTC <byorgey> hehe
+2011-11-02 03:07:37 UTC <fryguybob> ACTION goes to bed...
+2011-11-02 03:08:49 UTC <byorgey> g'night
+2011-11-02 13:30:42 UTC <luite_> byorgey: are you still working on animations?
+2011-11-02 13:42:08 UTC <byorgey> luite_: I'm still thinking about it, though I haven't yet written a single line of code =)
+2011-11-02 13:42:11 UTC <byorgey> why?
+2011-11-02 13:42:48 UTC <luite_> oh I was wondering what kind of things you wanted to support, and what it would look like in haskell code
+2011-11-02 13:49:32 UTC <byorgey> luite_: not exactly sure yet =)
+2011-11-02 13:51:19 UTC <luite_> I think it would be a great feature, especially if combined with a native svg backend
+2011-11-02 14:33:52 UTC <luite_> being able to use diagrams to make images like the animated quasicrystals gif in kmc's blog would be lotsa fun
+2011-11-02 14:37:53 UTC <byorgey> luite_: agreed.  well, the quasicrystals thing is specifically raster-oriented
+2011-11-02 14:38:03 UTC <byorgey> but yes, we'll be able to make some cool animations =)
+2011-11-02 14:39:04 UTC <luite_> is it? you can probably get the same effect with some clever use of alpha channels in vector images
+2011-11-02 14:41:11 UTC <luite_> but it would require gradient support
+2011-11-02 14:46:53 UTC <byorgey> oh, true
+2011-11-02 17:54:20 UTC <luite_> cool a new package that uses diagrams :)
+2011-11-02 18:02:24 UTC <byorgey> luite_: yeah, I just saw that =D
+2011-11-02 18:06:53 UTC <byorgey> ah, interesting, he made a balanced version of hcat which has better performance
+2011-11-02 18:07:00 UTC <byorgey> that makes a lot of sense
+2011-11-03 20:22:25 UTC <smeltzek> has anyone been successful in linking diagrams with gtk+quartz on OSX? I have it working nicely on my linux box but would like to work in a native (non-X11) environment on my laptop, too
+2011-11-03 20:24:15 UTC <luite_> hmm haven't tried yet
+2011-11-03 20:25:09 UTC <smeltzek> i am not entirely sure how to go about it -- the typical osx "package managers" like homebrew and macports don't seem to make GTK available with the quartz backend
+2011-11-03 20:25:40 UTC <luite_> yeah I've just used the lazy method, installing it with macports
+2011-11-03 20:25:46 UTC <luite_> with the x11 backend probably
+2011-11-03 20:27:06 UTC <smeltzek> unfortunately i think that is all macports supports, unless it's a buried option somewhere
+2011-11-03 20:41:56 UTC <smeltzek> actually, it looks like there is a macports variant for quartz. i'll give it a try
+2011-11-03 20:46:12 UTC <luite_> oh tell me how to use it if it works :)
+2011-11-04 03:00:18 UTC <smeltzek> sorry for the delay -- it does appear to work!
+2011-11-04 03:00:36 UTC <smeltzek> you have to build gtk using macports with the flags -x11 +no_x and +quartz
+2011-11-04 03:00:59 UTC <smeltzek> and i was also forced to use the 64 bit version of haskell platform installed directly from haskell.org
+2011-11-04 03:01:04 UTC <smeltzek> but it works!
+2011-11-04 03:53:03 UTC <byorgey> smeltzek: put it on the wiki!
+2011-11-04 07:04:01 UTC <smeltzek> good idea -- i will add it soon
+2011-11-04 07:04:38 UTC <smeltzek> also, i am having a little bit of conceptual difficulty with the two coordinate systems offered by defaultRender as opposed to renderToGtk
+2011-11-04 07:05:14 UTC <smeltzek> is there a way to get the nice scaling of defaultRender but without breaking the query coordinate space?
+2011-11-04 07:05:48 UTC <smeltzek> 'toGtkCoords' doesn't seem to solve that problem for me
+2011-11-04 07:08:26 UTC <luite_> smeltzek: ah great, I'll try it if you have instructions. i already have 64 bit ghc (but not the haskell platform, using 7.2.1)
+2011-11-04 07:13:25 UTC <smeltzek> luite_: i'll try to write something simple up when i have time, but in the meantime you should be able to remove any gtk/cairo/pango packages you currently have installed and issue the macports command 'port install gtk2 -x11 +no_x11 +quartz'
+2011-11-04 07:14:01 UTC <smeltzek> that should be enough, i think
+2011-11-04 07:14:39 UTC <luite_> hmm, I wonder if that will break dependencies, will try it later when I have time to rebuild things if it does
+2011-11-04 07:23:33 UTC <smeltzek> to explain my coordinate misunderstanding, please see: http://hpaste.org/53536
+2011-11-04 07:23:54 UTC <smeltzek> it detects the click in the top left corner, as if i were drawing the circle without any scaling or centering
+2011-11-04 17:23:21 UTC <luite_> does anyone want to volunteer to revive ghcjs, change its codegen to something sane (hjavascript?) and write a diagrams svg backend that works with it? :p
+2011-11-04 18:13:01 UTC <byorgey> luite_: well, Felipe Lessa is working on a diagrams svg backend now
+2011-11-04 18:13:13 UTC <byorgey> reviving ghcjs sounds more complicated =)
+2011-11-04 18:14:54 UTC <luite_> oh that's already great news
+2011-11-04 18:15:22 UTC <byorgey> luite_: are you not subscribed to the mailing list?
+2011-11-04 18:15:33 UTC <byorgey> not that you're required to =)
+2011-11-04 18:15:48 UTC <luite_> hmm, I thought I was, but I can't remember receiving a message for a long time
+2011-11-04 18:16:07 UTC <byorgey> well there has been quite a bit of traffic recently
+2011-11-04 18:16:18 UTC <byorgey> (relatively speaking)
+2011-11-04 18:16:34 UTC <luite_> oh I know
+2011-11-04 18:17:04 UTC <luite_> I had to write a motivation letter to subscribe, but never finished that
+2011-11-04 18:18:33 UTC <byorgey> what? no you don't
+2011-11-04 18:18:57 UTC <byorgey> because I already know you
+2011-11-04 18:19:18 UTC <byorgey> it's just to keep spambots out =P
+2011-11-04 18:19:30 UTC <luite_> "Please write a sentence about yourself and why you are interested in diagrams.", everyone knows that you're never going to get accepted if you just do the bare minimum ;)
+2011-11-04 18:19:40 UTC <byorgey> hehe
+2011-11-04 18:20:04 UTC <byorgey> it's a CAPTCHA, not an application process =)
+2011-11-04 21:01:30 UTC <smeltzek> just to elaborate on my problem from above -- i sort of see two ways of structuring simple hit detection code using the GTK backend
+2011-11-04 21:01:56 UTC <smeltzek> (1) scale and transform the diagrams autoamtically and somehow bring pixel coordinates from the mouse click event into that coordinate space, which is not something that appears to be supported currently
+2011-11-04 21:02:58 UTC <smeltzek> (2) don't use the automatica scaling and transforming. the problem i see here is that the queries don't seem to automatically account for transformations or use of 'position' on diagrams, so while the hit detection works, it frequently works in the wrong place
+2011-11-04 21:03:12 UTC <smeltzek> any advice on the optimal way of handling this?
+2011-11-04 21:07:14 UTC <smeltzek> some transformations seem to be respected, such as scale and translateX/Y, but direct positioning does not
+2011-11-05 02:45:33 UTC <byorgey> smeltzek: hmm, queries should account for any transformations on diagrams
+2011-11-05 02:45:48 UTC <byorgey> smeltzek: if you have an example where it doesn't please file it as a bug.
+2011-11-05 02:46:37 UTC <byorgey> smeltzek: you may want to send an email to John Lato (jwlato at gmail), who has done this sort of click detection, he can probably tell you how he has done it.
+2011-11-05 02:47:17 UTC <byorgey> I have no experience with it so couldn't tell you offhand what the best way is.
+2011-11-05 19:16:38 UTC <smeltzek> Thanks, I will contact John before I file a bug -- it's quite possibly my mistake
+2011-11-06 16:07:31 UTC <luite_> hmm
+2011-11-06 17:45:25 UTC <luite_> bah I hate building websites :p
+2011-11-06 17:59:52 UTC <luite_> in other news, I think I finally have the search functions for wolfgang working
+2011-11-06 18:09:23 UTC <luite_> and it's really fast in my test install with 11 documents ;)
+2011-11-06 18:25:01 UTC <byorgey> luite_: yay!
+2011-11-06 18:28:11 UTC <byorgey> luite_: so how much is left before the release of WL 1.0?
+2011-11-06 18:32:19 UTC <luite_> hmm, lots of smaller front-end stuff, I think that almost all of the server side stuff for the wiki is done, saving pages, importing/exporting lhs works, history and diffs also work, user accounts also seem to work (although I still need to test the facebook integration)
+2011-11-06 18:32:36 UTC <luite_> the special pages aren't implemented yet (frontpage, showcase, pastebin)
+2011-11-06 18:33:44 UTC <luite_> user pages should work from authentication point of view ( all pages in /user/username are "private", others can only edit them if you explicitly give them access), but here's no user interface for that yet, but that can probably wait
+2011-11-06 18:35:54 UTC <luite_> backend has been reliable for me, but there are two big things that still need to be done: the network protocol between front-end and backend needs work, probably some attoparsec or iteratee kind of thing to efficiently transfer results like images
+2011-11-06 18:36:38 UTC <luite_> and something that compiles lhs files needs to be added
+2011-11-06 18:36:48 UTC <byorgey> ok
+2011-11-06 18:37:08 UTC <byorgey> I just want to make sure you don't keep adding features forever =)
+2011-11-06 18:37:22 UTC <luite_> but I want to do an invite-only preview before everythign is done :)
+2011-11-06 18:37:23 UTC <byorgey> it will never be perfect.
+2011-11-06 18:37:32 UTC <byorgey> ok =)
+2011-11-06 18:37:46 UTC <luite_> hehe I haven't added features for some time... things like facebook authentication come free with yesod-auth
+2011-11-06 18:37:46 UTC <byorgey> can I have an invitation pretty pleeeeze?
+2011-11-06 18:38:12 UTC <luite_> yeah but I need to install it on the server first :p
+2011-11-06 18:38:33 UTC <byorgey> I love the feeling of just being able to glue together stuff other people have written =)
+2011-11-06 18:38:34 UTC <luite_> which needs to be upgraded from ubuntu 11.04 to 11.10
+2011-11-06 18:39:23 UTC <luite_> hmm, unfortunately all these haskell web things feel really unfinished :(
+2011-11-06 18:39:40 UTC <byorgey> ah, that's too bad =(
+2011-11-06 18:39:51 UTC <byorgey> at least things seem to be headed in the right direction
+2011-11-06 18:39:53 UTC <luite_> that's why adding the search stuff took longer than expected
+2011-11-06 18:40:05 UTC <luite_> greg weber had to release two new versions of the Sphinx package for me :)
+2011-11-06 18:40:10 UTC <luite_> yeah
+2011-11-06 18:40:43 UTC <byorgey> oh, hehe, I noticed the latest sphinx release earlier in #haskell
+2011-11-06 18:41:09 UTC <luite_> a new ghc patch, also by Greg Weber just got merged, it can now track dependencies of external files included by TH
+2011-11-06 18:41:17 UTC <byorgey> nifty =)
+2011-11-06 18:41:26 UTC <luite_> which is really useful for Yesod with usually includes html and css templates via TH
+2011-11-06 18:41:31 UTC <byorgey> right
+2011-11-06 18:41:31 UTC <luite_> which
+2011-11-06 18:42:07 UTC <byorgey> well, keep up the good work =)
+2011-11-06 18:42:13 UTC <byorgey> I'll work on the SVG backend soon
+2011-11-06 18:42:21 UTC <byorgey> ACTION -> shower
+2011-11-06 18:42:27 UTC <luite_> but some things are annoying, I don't like the exception handling in Yesod, or in any monad transformer thing actually
+2011-11-06 18:43:03 UTC <luite_> the generalized exception handling packages like monad-control and MonadCatchIO lose all non-IO side effects if you throw
+2011-11-06 18:45:49 UTC <luite_> and they don't work at all if you have an Iteratee in the stack
+2011-11-06 18:59:24 UTC <luite_> the Yesod guys were interested in a simple hosted weblog platform for haskell users, and seemed to like the idea of wolfgang, so I might get some help from them for adding weblog-specific features like comments or pingback/reddit links
+2011-11-06 19:01:28 UTC <luite_> but that's not going to be in the first version :)
+2011-11-06 19:10:09 UTC <byorgey> luite_: ok =)
+2011-11-06 19:10:22 UTC <byorgey> being able to use wolfgang to author blog posts does sound neat
+2011-11-06 19:16:18 UTC <luite_> yeah I'm not sure if people would really want to use it, and it's going to require a lot of functionality that's not difficult to implement, but still a lot of work
+2011-11-06 19:16:38 UTC <luite_> a problem might be the browser requirements, it only works in IE9 and higher
+2011-11-06 19:16:44 UTC <luite_> non-IE browsers are fine
+2011-11-06 19:18:48 UTC <luite_> and it's already 700kB javascript
+2011-11-06 21:40:19 UTC <fryguybob> So in the SVG images discussion, is this for images embedded into SVG, or just references to an image?
+2011-11-07 03:19:58 UTC <byorgey> fryguybob: not sure, but the discussion is about more than just SVG images
+2011-11-07 03:20:38 UTC <byorgey> I assume embedded, since we want to be able to take the generated SVGs and send them somewhere else, where referenced images may not exist
+2011-11-07 03:20:49 UTC <byorgey> but I don't know much about SVG.
+2011-11-11 21:06:06 UTC <byorgey> the logging bot gets disconnected sometimes
+2011-11-11 21:06:34 UTC <byorgey> I need a way to automatically reconnect it when it gets disconnected
+2011-11-11 21:07:18 UTC <byorgey> Taejo: anyway, the idea is that along with the current bounding function (which tells you the distance to an enclosing line), we will *also* carry around a function which tells you the distance to the actual border of the diagram
+2011-11-11 21:07:45 UTC <byorgey> Taejo: such a function is no harder to maintain than the current one
+2011-11-11 21:07:59 UTC <byorgey> it's just that it's not useful for putting diagrams next to each other which is why we hadn't considered it before
+2011-11-11 21:08:04 UTC <Taejo> byorgey: I was thinking about that -- I couldn't see how you do translation
+2011-11-11 21:08:49 UTC <byorgey> oh! hmm, drat, you may be right
+2011-11-11 21:09:59 UTC <byorgey> it could be maintained under linear transformations but not affine
+2011-11-11 21:12:11 UTC <Taejo> what if instead of distanceFromCenterToBorder :: Vector -> Scalar, you had distanceToBorder :: Point -> Vector -> Scalar
+2011-11-11 21:13:09 UTC <Taejo> that's closed under translation but what about linear transforms?
+2011-11-11 21:13:21 UTC <byorgey> Taejo: oh, I see
+2011-11-11 21:13:26 UTC <byorgey> hmm
+2011-11-11 21:14:05 UTC <byorgey> yeah, linear transformations should be fine
+2011-11-11 21:14:47 UTC <Taejo> is it easy to add that kind of thing or does every datatype need retooling?
+2011-11-11 21:14:57 UTC <Taejo> I haven't really looked at the implementation at all
+2011-11-11 21:14:58 UTC <byorgey> you map the point and vector back to the space of the original diagram using the inverse transformation, then get the scalar result, and rescale
+2011-11-11 21:15:08 UTC <byorgey> hmm, nifty!
+2011-11-11 21:15:26 UTC <byorgey> Taejo: it should be fairly easy to add
+2011-11-11 21:16:10 UTC <byorgey> Taejo: the main 'diagram' datatype is fairly modular, it's composed of primitives and a heterogeneous collection of monoidal annotations
+2011-11-11 21:16:35 UTC <byorgey> so adding some extra information to be carried around is as simple as sticking an extra thing in the list of annotations
+2011-11-11 21:20:49 UTC <Taejo> I wonder if it'd be useful to track the direction of tangency too
+2011-11-11 21:21:01 UTC <Taejo> although there's partiality there
+2011-11-11 21:22:03 UTC <Taejo> perhaps a job for automatic differentiation
+2011-11-11 21:22:15 UTC <byorgey> well, let's not get TOO fancy =)
+2011-11-11 21:22:41 UTC <byorgey> we do know how to track tangency information under affine transformations though, you use the inverse transpose transformation
+2011-11-11 21:23:56 UTC <byorgey> I think the partiality is OK, you can just arbitrarily replace undefined derivatives with a (one-sided) limit
+2011-11-11 21:24:33 UTC <byorgey> if you try to find out the direction of tangency at the corner of a polygon, well, that's your problem =)
