@@ -5558,3 +5558,26 @@
 2011-11-11 21:22:41 UTC <byorgey> we do know how to track tangency information under affine transformations though, you use the inverse transpose transformation
 2011-11-11 21:23:56 UTC <byorgey> I think the partiality is OK, you can just arbitrarily replace undefined derivatives with a (one-sided) limit
 2011-11-11 21:24:33 UTC <byorgey> if you try to find out the direction of tangency at the corner of a polygon, well, that's your problem =)
+2011-11-11 21:32:54 UTC <Taejo> byorgey: I'm trying to see where diagrams currently tracks tangency
+2011-11-11 21:33:49 UTC <Taejo> or was that "we know how to do it, but don't"?
+2011-11-11 21:35:18 UTC <Taejo> just realised, "direction of tangency" isn't actually a vector, but a subspace of codimension 1
+2011-11-11 21:36:17 UTC <byorgey> ah, yes, that's true
+2011-11-11 21:37:24 UTC <byorgey> Taejo: we don't actually track tangency, we just need the inverse transpose trick because the current bounding function implicitly involves a perpendicular hyperplane
+2011-11-11 21:38:08 UTC <byorgey> we could represent subspaces of codimension 1 by a normal vector
+2011-11-11 21:38:30 UTC <byorgey> which transform as the inverse transpose.
+2011-11-11 21:40:31 UTC <Taejo> diagrams: fun with linear algebra and quotients
+2011-11-11 21:40:41 UTC <Taejo> diagrams: the answer to "what's math good for?"
+2011-11-11 21:40:44 UTC <byorgey> =D
+2011-11-11 21:52:06 UTC <luite> byorgey: tnx
+2011-11-11 21:52:14 UTC <luite> sorry was away for a while
+2011-11-11 21:52:35 UTC <byorgey> luite: how dare you!  I demand that you must check #diagrams every 5 minutes
+2011-11-11 21:53:02 UTC <Taejo> ACTION should refresh before commenting
+2011-11-11 21:53:32 UTC <luite> yes I won't let it happen again
+2011-11-11 21:53:50 UTC <byorgey> good.  now, I hope you were away for a while working on Wolfgang. ;)
+2011-11-11 21:54:18 UTC <luite> hehe I was helping my brother with his laptop
+2011-11-11 21:55:18 UTC <byorgey> I suppose that is acceptable
+2011-11-11 21:55:50 UTC <byorgey> Taejo: hehe
+2011-11-11 21:56:23 UTC <byorgey> Taejo: I think your comment explains it better anyway.
+2011-11-11 21:56:35 UTC <Taejo> then I guess I shouldn't have deleted it :|
+2011-11-11 21:58:33 UTC <Taejo> ok, I'm off
+2011-11-11 22:40:48 UTC <fryguybob> Looks like I missed the discussion :D.
