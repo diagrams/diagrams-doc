@@ -1602,15 +1602,6 @@ standard library---such as `square`, `polygon`, `fromVertices`, and so
 on---generate not just diagrams, but *any* type which is an instance
 of the `PathLike` type class.
 
-.. container:: warning
-
-   Currently, the `circle` function does *not* return any instance of
-   the `PathLike` class!  It can only return a diagram.  To get any
-   `PathLike`, use the `circlePath` function instead.  If you find
-   this annoying, you are `welcome to fix it`_.
-
-.. _`welcome to fix it`: http://code.google.com/p/diagrams/issues/detail?id=53
-
 The `PathLike` type class has only a single method, `pathLike`:
 
 .. class:: lhs
