@@ -5581,3 +5581,155 @@
 2011-11-11 21:56:35 UTC <Taejo> then I guess I shouldn't have deleted it :|
 2011-11-11 21:58:33 UTC <Taejo> ok, I'm off
 2011-11-11 22:40:48 UTC <fryguybob> Looks like I missed the discussion :D.
+2011-11-11 22:46:36 UTC <byorgey> fryguybob: you did, yes =)
+2011-11-11 22:46:48 UTC <byorgey> fryguybob: I just pushed the latest logs
+2011-11-11 22:46:55 UTC <byorgey> see the /topic
+2011-11-11 22:53:37 UTC <fryguybob> I can't remember, did someone already do something like this in Diagrams?  http://imgur.com/7TSPA
+2011-11-11 22:54:09 UTC <byorgey> oh, nice
+2011-11-11 22:54:16 UTC <byorgey> I've never seen anyone do that with diagrams
+2011-11-11 22:56:10 UTC <fryguybob> I adapted this: http://warp.povusers.org/MandScripts/haskell.html
+2011-11-11 22:56:40 UTC <byorgey> fryguybob: oh, you made that mandelbrot image?
+2011-11-11 22:57:43 UTC <fryguybob> Well I can only claim the credit for changing it from ascii putStrLn's into hcat and vcat's :D.
+2011-11-11 22:57:59 UTC <byorgey> hehe, fair enough =)
+2011-11-11 23:00:00 UTC <fryguybob> It makes a 3mb eps file, I should work on cutting that down :D
+2011-11-11 23:00:10 UTC <byorgey> 3MB!
+2011-11-11 23:04:02 UTC <fryguybob> Yeah when I was playing with getting text working for postscript I failed to notice that it now sets the current font every time it changes the transform.
+2011-11-11 23:04:53 UTC <fryguybob> Source:  http://patch-tag.com/r/fryguybob/diagrams-postscript/snapshot/current/content/pretty/example/Mandelbrot.hs
+2011-11-11 23:05:54 UTC <byorgey> nice
+2011-11-12 16:41:43 UTC <byorgey> http://byorgey.wordpress.com/2011/11/12/generating-plane-tilings-with-diagrams/
+2011-11-12 16:57:50 UTC <luite> aw you didn't include your intermediate results ;)
+2011-11-12 16:58:03 UTC <Taejo> byorgey: fun! can it do Pythagorean tilings?
+2011-11-12 16:59:51 UTC <tgeeky> this is exactly the kind of thing I love, though
+2011-11-12 17:00:12 UTC <tgeeky> instead of doing what wikipedia does with these sorts of things (showing pictures of each tiling, where you can't be sure they are correct since one can upload an arbitrary picture)
+2011-11-12 17:00:17 UTC <tgeeky> you provide code like
+2011-11-12 17:00:27 UTC <tgeeky> t4 = Tiling (replicate 4 Square) (const t4)
+2011-11-12 17:01:38 UTC <tgeeky> next up, Feynman Diagrams!
+2011-11-12 17:35:29 UTC <byorgey> luite: oh! I forgot!
+2011-11-12 17:35:46 UTC <byorgey> luite: I'll put them in another post =)
+2011-11-12 17:36:43 UTC <byorgey> Taejo: not as written, no
+2011-11-12 18:07:52 UTC <tgeeky> byorgey: a post entitled "this is what progress looks like" :)
+2011-11-12 18:08:27 UTC <byorgey> tgeeky: how about "Modern art with diagrams: the face of progress"
+2011-11-12 18:08:40 UTC <tgeeky> hehe, sure
+2011-11-12 18:08:45 UTC <tgeeky> you should put a [sic] in there somewhere though :O
+2011-11-12 18:08:47 UTC <tgeeky> hahaha
+2011-11-12 18:09:48 UTC <tgeeky> that's really surprising that you only need to adjoin R2 and R3 to Q in order to make all tilings
+2011-11-12 18:10:14 UTC <byorgey> I know! Isn't it great?
+2011-11-12 18:10:33 UTC <tgeeky> pretty slick.
+2011-11-12 18:11:43 UTC <tgeeky> did you discover this fact directly, or did you deduce it from something else?
+2011-11-12 18:12:15 UTC <byorgey> I just discovered it directly.  I don't really remember the thought process that led me to it.
+2011-11-12 18:24:17 UTC <byorgey> http://byorgey.wordpress.com/2011/11/12/modern-art-with-diagrams-the-face-of-progress/
+2011-11-12 18:24:42 UTC <tgeeky> haha
+2011-11-12 18:24:49 UTC <tgeeky> that better be a lot of extra credit points
+2011-11-12 18:25:19 UTC <luite> haha great :) it's interesting that the lines seem to be ok, but the fills are not?
+2011-11-12 18:28:27 UTC <byorgey> luite: yep
+2011-11-12 18:28:58 UTC <byorgey> hence the bugs were in the polygon-drawing code as opposed to the edge-drawing code (or even the vertex-exploring code)
+2011-11-12 18:30:14 UTC <byorgey> tgeeky: yes, it is worth 1356 + 2sqrt(2) + 19sqrt(3) + (497823/31)sqrt(6)  extra credit points ;)
+2011-11-12 18:31:06 UTC <byorgey> luite: I was kind of joking in my post, but in actuality staring at the wrong outputs *did* help me find the bugs =)
+2011-11-12 18:59:44 UTC <Taejo> I've implemented the boundary function datatype... now the hard part is actually creating them for primitives
+2011-11-12 19:01:15 UTC <byorgey> Taejo: oh, nice =)
+2011-11-12 19:04:31 UTC <Taejo> ACTION stares at multiple lines of maxima output trying to untangle the boundary function for a sphere
+2011-11-12 19:05:30 UTC <byorgey> Taejo: basically you're doing raytracing
+2011-11-12 19:05:42 UTC <byorgey> look up ray-sphere intersection testing
+2011-11-12 19:05:50 UTC <Taejo> good point
+2011-11-12 19:06:18 UTC <byorgey> and then un-generalize it to two dimensions for the 2D primitives ;)
+2011-11-12 19:08:41 UTC <Taejo> byorgey: does this definition make sense: http://hpaste.org/53942
+2011-11-12 19:10:35 UTC <byorgey> Taejo: hmm, I'm not sure about the choice re: rays pointing away from the object giving you zero instead of a negative scalar
+2011-11-12 19:11:06 UTC <byorgey> I agree the empty region presents a problem but I think the obvious negative-returning semantics is way more useful
+2011-11-12 19:12:01 UTC <Taejo> hmmm
+2011-11-12 19:12:12 UTC <byorgey> well, it's not just the empty region, I guess any vector whose extension as a line does not intersect the region
+2011-11-12 19:12:26 UTC <Taejo> yeah
+2011-11-12 19:12:48 UTC <byorgey> Taejo: perhaps the right answer is to return not a scalar, but a value from the set of scalars adjoined with negative infinity
+2011-11-12 19:12:55 UTC <Taejo> you can recover the negative scalar by testing in both directions
+2011-11-12 19:13:01 UTC <Taejo> v and negateV
+2011-11-12 19:13:09 UTC <Taejo> *negateV v
+2011-11-12 19:13:38 UTC <byorgey> Taejo: ah, so you can
+2011-11-12 19:13:39 UTC <byorgey> hmm
+2011-11-12 19:14:23 UTC <byorgey> Taejo: actually, I think returning zero will not work once you try to do translations and so on
+2011-11-12 19:14:46 UTC <Taejo> oh?
+2011-11-12 19:15:34 UTC <byorgey> hmm... I'll have to think about it more
+2011-11-12 19:15:41 UTC <byorgey> I have to go right now, be back later
+2011-11-12 19:38:51 UTC <Taejo> byorgey: actually, you can't recover it with the negative vector: that takes you to *far* side of the diagram instead of the near side
+2011-11-12 19:42:24 UTC <byorgey> Taejo: ah, indeed
+2011-11-12 19:43:05 UTC <byorgey> Taejo: another problem I just thought of is that you can't tell the difference between being on top of a line segment and not intersecting the diagram at all
+2011-11-12 19:43:16 UTC <Taejo> yep
+2011-11-12 19:43:24 UTC <byorgey> Taejo: do you see any problems with adjoining negative infinity?
+2011-11-12 19:43:25 UTC <Taejo> maybe the boundary function should return maybe?
+2011-11-12 19:44:01 UTC <Taejo> I don't really see calling the "never intersects" value as negative infinity
+2011-11-12 19:44:10 UTC <Taejo> why not positive infinity?
+2011-11-12 19:44:15 UTC <Taejo> or just Nothing
+2011-11-12 19:44:18 UTC <byorgey> because it's the smallest scalar for which etc. etc.
+2011-11-12 19:44:25 UTC <byorgey> it fits perfectly
+2011-11-12 19:44:25 UTC <Taejo> oh right
+2011-11-12 19:44:54 UTC <byorgey> and it makes the rest of the implementation obvious
+2011-11-12 19:45:05 UTC <byorgey> e.g. you don't have to think hard about how to combine Nothing and Just s
+2011-11-12 19:45:08 UTC <Taejo> yeah you're right
+2011-11-12 19:45:24 UTC <byorgey> e,g, under max or min
+2011-11-12 19:45:44 UTC <Taejo> about adjoining infinity, Double already has one, but Haskellers seem not to like it :)
+2011-11-12 19:45:54 UTC <byorgey> hehe
+2011-11-12 19:46:13 UTC <byorgey> I am NOT suggesting to use Double's infinity =)
+2011-11-12 19:46:22 UTC <Taejo> yeah, I realised
+2011-11-12 21:01:18 UTC <tgeeky> byorgey: surely that's a whole semester worth of points
+2011-11-12 21:04:58 UTC <tgeeky> byorgey: http://ianwookim.org/HROOT/gallery.html
+2011-11-12 21:08:12 UTC <luite> hmm what are good hotel comparison/booking sites that also have cheaper hostels and studio appartment?
+2011-11-12 21:08:26 UTC <luite> whoops I meant to ask that in #haskell-blah
+2011-11-12 21:08:31 UTC <tgeeky> hehe
+2011-11-12 21:13:35 UTC <byorgey> tgeeky: heh, that layout looks familiar =)
+2011-11-12 21:15:05 UTC <luite> hehe yes
+2011-11-13 09:09:57 UTC <tgeeky_> haha
+2011-11-13 09:10:00 UTC <tgeeky_> check this one out:
+2011-11-13 09:10:01 UTC <tgeeky_> http://www.wolframalpha.com/input/?i=A%28n+%2B+5%29+%3D+A%28n+-+2%29+%2B+A%28n+-+3%29
+2011-11-14 03:12:52 UTC <luite> hmm
+2011-11-14 03:13:28 UTC <luite> I've implemented pslq in haskell but now I need some higher precision floats...
+2011-11-14 03:18:09 UTC <byorgey> what's pslq?
+2011-11-14 03:18:48 UTC <luite> algorithm to find integer relations
+2011-11-14 03:19:17 UTC <luite> it's what they used to discover the formula to directly calculate digits of pi
+2011-11-14 03:19:23 UTC <luite> (hex digits)
+2011-11-14 03:19:50 UTC <byorgey> ah, right, cool =)
+2011-11-14 03:20:10 UTC <byorgey> luite: can you use CReal?
+2011-11-14 03:20:33 UTC <byorgey> or is it important to have it be fast?
+2011-11-14 03:23:27 UTC <luite> I think CReal would work for the input value (you supply a vector v with numbers, and it gives you back a integer vector i such that i /= 0 and v.i = 0 (approx)), CReal would probaby be extremely slow for the calculations
+2011-11-14 03:27:27 UTC <luite> I think what would work is to start in low precision, and increase precision when either a solution appears to be found, or when the current precision won't do anymore (the algorithm start with simple relations (low norm) and searches increasingly complex ones, if it fails to find anything, you have a lower bound on the norm of an integer relation)
+2011-11-14 03:32:50 UTC <luite> do you know a matrix package that works with arbitrary numeric types?
+2011-11-14 03:35:29 UTC <tgeeky_> there are several packages which provied fixed precision stuff
+2011-11-14 03:35:44 UTC <luite> yeah one for which you need to recompile ghc...
+2011-11-14 03:36:31 UTC <luite> do you know another?
+2011-11-14 03:36:51 UTC <tgeeky_> http://hackage.haskell.org/package/fixed-point
+2011-11-14 03:37:15 UTC <tgeeky_> http://hackage.haskell.org/package/fixed-precision
+2011-11-14 03:39:53 UTC <luite> oh right, but fixed size floating point would be more appropriate here I think
+2011-11-14 03:40:23 UTC <tgeeky_> there's also that guy's double-conversion package
+2011-11-14 03:41:05 UTC <tgeeky_> luite: I was assuming that wolfgang would use something like repr, even if it's slower internally
+2011-11-14 03:41:21 UTC <luite> that guy is annoying becasue the package breaks th and ghci ;p
+2011-11-14 03:41:49 UTC <tgeeky_> repr, you mean?
+2011-11-14 03:41:59 UTC <tgeeky_> yeah, he's committed to unicode, that's for sure
+2011-11-14 03:43:20 UTC <luite> nah I mean double-conversion
+2011-11-14 03:43:33 UTC <luite> that uses a C++ lib that doesn't work with the ghci linker
+2011-11-14 03:44:25 UTC <luite> but I don't know what repr does :)
+2011-11-14 03:45:12 UTC <tgeeky_> what you really want I think
+2011-11-14 03:45:23 UTC <tgeeky_> is a sliding or adjustable fixed precision thing
+2011-11-14 03:45:32 UTC <tgeeky_> where you can just ask for arbitrarily more digits?
+2011-11-14 03:47:02 UTC <luite> right, though I think the algorithm may need to be restarted for that
+2011-11-14 03:49:08 UTC <tgeeky_> well
+2011-11-14 03:49:15 UTC <tgeeky_> I try to watch for packages
+2011-11-14 03:49:25 UTC <tgeeky_> I know there was one package that just included a lot of optimized Integer stuff
+2011-11-14 03:49:40 UTC <tgeeky_> I haven't seen anything recent about floating or double
+2011-11-14 03:50:06 UTC <luite> I can try to make my own impl based on Integer or something
+2011-11-14 03:53:18 UTC <tgeeky_> you could work in algebraic integers
+2011-11-14 03:53:27 UTC <tgeeky_> I don't even know if there is good implementation in Haskell of them
+2011-11-14 03:53:59 UTC <tgeeky_> luite: there's this, relatively recent: http://hackage.haskell.org/package/yap
+2011-11-14 03:54:17 UTC <tgeeky_> again, doubt it will help, just listing for completeness
+2011-11-14 03:59:20 UTC <luite> ah didn't know that one
+2011-11-14 03:59:30 UTC <tgeeky_> there's also simpleprelude
+2011-11-14 03:59:46 UTC <tgeeky_> which is nice if you want to just discard Num but nothing else
+2011-11-14 04:00:31 UTC <tgeeky_> luite: also this: http://hackage.haskell.org/packages/archive/numeric-tools/0.2.0.0/doc/html/Numeric-ApproxEq.html
+2011-11-14 04:00:50 UTC <luite> I'll look into it later. the current version works with Double, but that's nott terribly useful. ideally it would work with real, complex and quaternion in variable precision
+2011-11-14 04:01:30 UTC <tgeeky_> actually
+2011-11-14 04:01:57 UTC <luite> (I need sqrt, matrix multiplication and triangular matrix inverse)
+2011-11-14 04:11:25 UTC <luite> anyway, first some sleep :) I might upload it later after generalizing it, I think it could be fun to play with
+2011-11-14 04:13:15 UTC <tgeeky_> luite: oh
+2011-11-14 04:13:22 UTC <tgeeky_> and here is the new integer stuff: http://hackage.haskell.org/package/arithmoi
+2011-11-14 04:13:54 UTC <tgeeky_> byorgey: here?
+2011-11-14 04:15:46 UTC <luite> hmm that also looks interesting
+2011-11-14 04:16:07 UTC <luite> but I think there's probably way too much fragmentation for these things
+2011-11-14 04:22:20 UTC <tgeeky_> yep
+2011-11-14 04:22:28 UTC <tgeeky_> good tools will cause these things to settle
+2011-11-14 04:22:30 UTC <tgeeky_> and you're making good tools
