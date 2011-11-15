@@ -2092,8 +2092,8 @@ has the (admittedly scary-looking!) type
 
   withName :: ( IsName n, AdditiveGroup (Scalar v), Floating (Scalar v)
               , InnerSpace v, HasLinearMap v)
-           => n -> (LocatedBounds v -> AnnDiagram b v m -> AnnDiagram b v m)
-                -> (AnnDiagram b v m -> AnnDiagram b v m)
+           => n -> (LocatedBounds v -> QDiagram b v m -> QDiagram b v m)
+                -> (QDiagram b v m -> QDiagram b v m)
 
 Let's pick this apart a bit.  First, we see that the type `n` must be
 a name type. So far so good.  Then there are a bunch of constraints
@@ -2106,7 +2106,7 @@ function of type
 
 ::
 
-  LocatedBounds v -> AnnDiagram b v m -> AnnDiagram b v m
+  LocatedBounds v -> QDiagram b v m -> QDiagram b v m
 
 We can see this function as a transformation on diagrams, except that
 it also gets to use some extra information---namely, a "`LocatedBounds
@@ -2314,7 +2314,7 @@ The default query
 
 The default query assigns a value of type `Any` to each point in a
 diagram.  In fact, `Diagram b v` is really a synonym for
-`AnnDiagram b v Any`.  `Any` represents the monoid on the booleans
+`QDiagram b v Any`.  `Any` represents the monoid on the booleans
 with logical or as the binary operation (and hence `False` as the
 identity).  The default query simply indicates which points are
 "inside" the diagram and which are "outside".
@@ -2390,7 +2390,7 @@ and `Any False` with `mempty`.
 
 > withCount = (# value (Sum 1))
 >
-> c :: AnnDiagram Cairo R2 (Sum Int)
+> c :: QDiagram Cairo R2 (Sum Int)
 > c = (   circle 5 # scaleX 2 # rotateBy (1/14) # withCount
 >      <> circle 2 # scaleX 5 # rotateBy (-4/14) # withCount
 >     )
@@ -2429,7 +2429,7 @@ and `Any False` with `mempty`.
 
 Notice also the use of `clearValue` to get rid of the custom query;
 the program that builds this documentation requires `example` to have
-the type `AnnDiagram Cairo R2 Any`.
+the type `QDiagram Cairo R2 Any`.
 
 As another interesting example, consider using a set monoid to keep
 track of names or identifiers for the diagrams at a given point.  This
