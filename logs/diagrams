@@ -5733,3 +5733,292 @@
 2011-11-14 04:22:20 UTC <tgeeky_> yep
 2011-11-14 04:22:28 UTC <tgeeky_> good tools will cause these things to settle
 2011-11-14 04:22:30 UTC <tgeeky_> and you're making good tools
+2011-11-14 20:02:05 UTC <byorgey> http://www.cis.upenn.edu/~byorgey/Apollonian.png
+2011-11-14 20:02:10 UTC <byorgey> tgeeky_: ^^^ =)
+2011-11-14 20:02:57 UTC <tgeeky_> the familar 223 gasket :)
+2011-11-14 20:03:20 UTC <tgeeky_> noice
+2011-11-14 20:04:19 UTC <tgeeky_> byorgey: how deep did you go? how long did it take to render?
+2011-11-14 20:09:53 UTC <luite> cool :)
+2011-11-14 20:32:37 UTC <byorgey> tgeeky_: that one stops at a radius of 1/500, takes a couple seconds to render
+2011-11-14 20:35:08 UTC <byorgey> need to clean up the code a bit and write some code to generate the centers of an initial 3 circles just given their signed bends
+2011-11-14 20:35:20 UTC <byorgey> then I'll throw it in diagrams-contrib and write a blog post about it =)
+2011-11-14 20:36:14 UTC <byorgey> tgeeky_: that paper you linked me to was super useful, it's really awesome being able to use descartes' theorem for both bends and bends*centers
+2011-11-14 20:36:26 UTC <byorgey> and because of type class polymorphism I only had to implement it once =)
+2011-11-14 20:37:00 UTC <byorgey> anyway, I'm currently doing a bit of cleanup/reorganization in preparation for ANIMATION
+2011-11-14 21:17:21 UTC <tgeeky_> byorgey: well, my hope is that there's actual (read: physical) meaning to that fact
+2011-11-14 21:17:55 UTC <tgeeky_> but cool. I'll be happy to see the code,because then I have a starting point
+2011-11-14 21:18:09 UTC <tgeeky_> I often find myself stuck in Haskell land, until someone provides a starting point for me to tinker
+2011-11-15 23:40:49 UTC <luite> yay booked whistler apartment for a week in  december :)
+2011-11-15 23:46:31 UTC <luite> hopefully it will keep snowing
+2011-11-15 23:53:15 UTC <fryguybob> You will have to carve some lambdas on the slopes.
+2011-11-15 23:54:34 UTC <luite> hmm, a C or a J would be easier to carve ;p
+2011-11-16 02:42:13 UTC <tgeeky> you could do a Y, given sufficient leg strength :o
+2011-11-16 02:49:40 UTC <luite> hehe, make a Y using SKI combinators? ;p
+2011-11-16 02:56:46 UTC <fryguybob> haha
+2011-11-16 03:40:19 UTC <tgeeky> heh
+2011-11-16 03:40:28 UTC <tgeeky> i made a dude firing a lazer out of his mouth
+2011-11-16 03:40:30 UTC <tgeeky> http://www.wolframalpha.com/input/?i=%28%281-z%29%5Ed+-+z+-+1%29z%5E%28d-1%29+%2B+%281-z%29%5E%28d%29+%3D+0.0001+where+d+%3D+42
+2011-11-16 03:40:37 UTC <tgeeky> he even has an eye
+2011-11-16 03:40:39 UTC <tgeeky> lol!
+2011-11-16 07:36:12 UTC <byorgey> tgeeky: http://patch-tag.com/r/byorgey/diagrams-contrib/snapshot/current/content/pretty/src/Diagrams/TwoD/Apollonian.hs
+2011-11-16 18:40:53 UTC <tgeeky> byorgey: that is amazing, isn't it :)
+2011-11-16 19:13:03 UTC <byorgey> tgeeky: yep =)
+2011-11-16 19:13:18 UTC <byorgey> not a single trig function in sight
+2011-11-17 02:18:51 UTC <tgeeky> byorgey: do you have Bird's Functional Pearls book?
+2011-11-17 02:45:32 UTC <byorgey> tgeeky: yes
+2011-11-17 02:45:52 UTC <byorgey> tgeeky: not here though, it's in my office at school
+2011-11-17 02:54:51 UTC <luite> that's pearls of functional algorithm design, right?
+2011-11-17 02:55:06 UTC <tgeeky> yeah
+2011-11-17 02:55:26 UTC <tgeeky> I wanted someone to type out the (type,class,newtype,data) stuff required for #5
+2011-11-17 02:55:27 UTC <luite> yeah that's a fun book :)
+2011-11-17 02:55:48 UTC <tgeeky> since I'm having trouble figuring out what to put where
+2011-11-17 02:56:02 UTC <tgeeky> rather embarassingly
+2011-11-17 02:56:22 UTC <tgeeky> but edwardk is gone :(
+2011-11-17 03:01:14 UTC <tgeeky> http://hpaste.org/54146 <--
+2011-11-17 03:01:55 UTC <tgeeky> luite: I have about 10 of these re-done so far :O
+2011-11-17 03:10:03 UTC <byorgey> tgeeky: I don't understand exactly what you're asking for
+2011-11-17 03:10:14 UTC <luite> me neither :)
+2011-11-17 03:10:27 UTC <byorgey> tgeeky: what is A supposed to be?
+2011-11-17 03:10:41 UTC <tgeeky> byorgey: a linearly ordered set
+2011-11-17 03:11:49 UTC <tgeeky> this is the 'sorting pairwise sums' exercise. A is a linearly ordered set.
+2011-11-17 03:12:04 UTC <tgeeky> it's supposed to have (+) and (-) and (<=)
+2011-11-17 03:12:13 UTC <byorgey> tgeeky: isn't this supposed to be abstract in A?
+2011-11-17 03:12:25 UTC <byorgey> i.e. as long as A is any type with such-and-such properties then we can write this algorithm...?
+2011-11-17 03:12:37 UTC <tgeeky> maybe, but why did he choose uppercase A? :o
+2011-11-17 03:12:44 UTC <luite> why do you have some special name for a semigroup with inverses?
+2011-11-17 03:13:31 UTC <tgeeky> luite: I'm just naming things the way they are written in the book
+2011-11-17 03:14:32 UTC <luite> tgeeky: you don't need a separate type a probably, just a (Group a, Ord a) =>  context for your functions...
+2011-11-17 03:14:54 UTC <tgeeky> luite: edwardk specifically told me to use (Ord a, Semigroup a) =>
+2011-11-17 03:15:03 UTC <tgeeky> which I wrote somewhere in that mass
+2011-11-17 03:15:09 UTC <byorgey> tgeeky: he used an uppercase letter because he's using math-ish notation and uppercase letters are usually used for sets
+2011-11-17 03:15:23 UTC <tgeeky> byorgey: :/
+2011-11-17 03:15:23 UTC <byorgey> I just found that chapter in google books so I am looking at it now
+2011-11-17 03:15:33 UTC <tgeeky> byorgey: oh ok. thank you.
+2011-11-17 03:15:33 UTC <byorgey> it is definitely not a concrete type
+2011-11-17 03:15:37 UTC <luite> ah url?
+2011-11-17 03:15:48 UTC <tgeeky> i could have pasted the PDF excerpt, and will if you don't have enough pages
+2011-11-17 03:15:53 UTC <byorgey> tgeeky: just use   sortsums :: Ord a => [a] -> [a] -> [a]
+2011-11-17 03:16:33 UTC <byorgey> luite: http://books.google.com/books?id=ZQJnYoAmw6gC&lpg=PA241&dq=%22linearly%20ordered%20set%22%20pearls&pg=PA27#v=onepage&q&f=false
+2011-11-17 03:17:26 UTC <byorgey> tgeeky: well, you might need additional constraints to talk about (+) and so on
+2011-11-17 03:18:01 UTC <byorgey> tgeeky: oh, yes, what edwardk told you is what you want
+2011-11-17 03:18:21 UTC <tgeeky> so I write the class (Ord a, Semigroup a) => O a
+2011-11-17 03:18:30 UTC <tgeeky> and put: (+), (-), (<=) in there?
+2011-11-17 03:18:41 UTC <luite> except that you can't define (-) with just semigroup?
+2011-11-17 03:19:11 UTC <tgeeky> luite: he defines
+2011-11-17 03:19:17 UTC <tgeeky> x - y = x + negate y
+2011-11-17 03:19:28 UTC <tgeeky> x + y = x (-) y
+2011-11-17 03:19:32 UTC <luite> yeah but where do you get negate?
+2011-11-17 03:19:38 UTC <tgeeky> Num, I guess?
+2011-11-17 03:19:44 UTC <byorgey> tgeeky: no, Ord a, Semigroup a  already gives you those operations
+2011-11-17 03:19:54 UTC <byorgey> Ord gives you (<=)
+2011-11-17 03:19:57 UTC <byorgey> oh
+2011-11-17 03:20:15 UTC <byorgey> well, if you want a group you do need more than just Semigroup
+2011-11-17 03:20:32 UTC <tgeeky> it's supposed to be an abelian group too
+2011-11-17 03:20:40 UTC <byorgey> tgeeky: define   class Semigroup a => Group a where  inv :: a -> a
+2011-11-17 03:20:59 UTC <byorgey> Semigroup gives you (<>) which you can use in place of +
+2011-11-17 03:21:09 UTC <byorgey> you can give it another name if you want
+2011-11-17 03:21:11 UTC <tgeeky> byorgey: I thought so, too.
+2011-11-17 03:21:17 UTC <tgeeky> and then I'll have all of them.
+2011-11-17 03:21:23 UTC <byorgey> yup
+2011-11-17 03:21:30 UTC <tgeeky> sigh.  thanks.
+2011-11-17 03:22:23 UTC <luite> byorgey: are those still allowed?
+2011-11-17 03:22:46 UTC <byorgey> luite: are what still allowed?
+2011-11-17 03:22:57 UTC <luite> class A a => B a  contexts
+2011-11-17 03:23:09 UTC <byorgey> yes, and they always will be
+2011-11-17 03:23:18 UTC <byorgey> it's  data  A a => B a   which are deprecated
+2011-11-17 03:24:17 UTC <luite> ah right
+2011-11-18 18:30:18 UTC <fryguybob> byorgey: You wrote " 'pure a' would have to be a structure mapping *every* key to a", wouldn't  `lookup _ (PureMap a) = Just a`  do this?
+2011-11-18 18:56:57 UTC <byorgey> fryguybob: yes, but  pure has type   a -> f a
+2011-11-18 18:57:07 UTC <byorgey> fryguybob: so it has to return a Map.
+2011-11-18 18:57:40 UTC <fryguybob> byorgey: Right, I'm saying lift a "constant map" into the map data type.
+2011-11-18 18:57:41 UTC <byorgey> fryguybob: oh, you mean if you make some type   Foo k a = PureMap a | NonPureMap (Map k a)  ?
+2011-11-18 18:57:44 UTC <fryguybob> Right
+2011-11-18 18:57:55 UTC <fryguybob> I guess that might be better as a Map with default.
+2011-11-18 18:58:29 UTC <byorgey> fryguybob: yes, that works.  But that's the same construction I talked about in my email, where you adjoin a special Pure element to turn an Apply into an Applicative
+2011-11-18 18:58:37 UTC <fryguybob> ok
+2011-11-18 18:58:54 UTC <byorgey> the point is that  Map k a  by itself can't be Applicative, unless you add a special PureMap.
+2011-11-18 18:59:22 UTC <byorgey> yeah, map-with-default can be Applicative too
+2011-11-18 18:59:25 UTC <fryguybob> Yeah I can see that.
+2011-11-18 22:04:32 UTC <ezyang> Has Diagrams grown HTML5/Canvas support?
+2011-11-18 22:05:12 UTC <byorgey> ezyang: http://patch-tag.com/r/fryguybob/diagrams-canvas/home
+2011-11-18 22:05:31 UTC <ezyang> ooh, fancy!
+2011-11-18 22:05:32 UTC <byorgey> ezyang: I think fryguybob said it doesn't compile at the moment but shouldn't be hard to fix up
+2011-11-18 22:06:40 UTC <ezyang> I'm looking at dynamically generating interactive 3-colorable graphs, and so Canvas is good for interactivity but I think diagrams might be better for actually, uh, programming the generation.
+2011-11-18 22:07:00 UTC <byorgey> ezyang: sounds cool!
+2011-11-18 22:07:23 UTC <byorgey> yeah, interactive diagrams via HTML5/Canvas would be awesome
+2011-11-18 22:07:49 UTC <byorgey> I haven't thought about it much but it should be doable.
+2011-11-18 22:08:04 UTC <ezyang> Unfortunately, I'm juggling a bazillion things so it's not obvious to me whether or not I want to make a semi-working package working.
+2011-11-18 22:08:12 UTC <byorgey> fair enough =)
+2011-11-18 22:08:43 UTC <byorgey> you could also bug fryguybob to fix it, although I think he's juggling a bazillion things too
+2011-11-18 22:08:55 UTC <ezyang> Yeahhh :^)
+2011-11-18 22:09:15 UTC <ezyang> Also my partner in crime is not well-versed in Haskell, unfortunately :-(
+2011-11-18 22:09:52 UTC <byorgey> a temporary infelicity
+2011-11-18 22:35:58 UTC <tgeeky_> ezyang: can you go ahead and do that for 4-colorings too, please? kthx
+2011-11-18 22:46:09 UTC <ezyang> Hmm, has anyone actually coded up an algo which does this?
+2011-11-18 22:49:37 UTC <ezyang> Apparently, you can do it in O(n^2)
+2011-11-18 22:56:02 UTC <tgeeky_> dunno - I ask because the (mathematical) gem of mine eyes has an inverse representation - http://en.wikipedia.org/wiki/Apollonian_network apollonian networks
+2011-11-18 22:56:15 UTC <tgeeky_> which serve as uniquely 4-colorable *planar* graphs
+2011-11-18 22:57:39 UTC <tgeeky_> there's been all kinds of work on 4-coloring in general, though
+2011-11-21 01:58:35 UTC <ClaudiusMaximus> the user manual is nice :)  just did a little thing tonight, first for ages, and it was pleasant and quick to get into again - will use it for a bigger project next
+2011-11-21 01:59:34 UTC <byorgey> ClaudiusMaximus: glad to hear it!
+2011-11-21 02:00:17 UTC <byorgey> ClaudiusMaximus: I am currently working on a new feature you may be interested in... a little feature I like to call "animation" =D
+2011-11-21 02:00:29 UTC <ClaudiusMaximus> didn't manage to find a grid layout, so i ended up using vcat' and hcat' with a carefully picked sep value
+2011-11-21 02:00:42 UTC <ClaudiusMaximus> cool!
+2011-11-21 02:00:54 UTC <byorgey> yeah, a grid layout combinator is something that should be added to diagrams-lib
+2011-11-21 02:01:10 UTC <ClaudiusMaximus> so many ways to do it though
+2011-11-21 02:01:28 UTC <byorgey> true.
+2011-11-21 02:02:03 UTC <byorgey> perhaps what we really need is a 'Diagrams.GridLayout' module in diagrams-contrib, and we just throw in there every method of grid layout we can think of =)
+2011-11-21 02:02:06 UTC <ClaudiusMaximus> columns all same size or stretch to fit or percentage of whole, what about things that might span more cells (thinking like html tables..)
+2011-11-21 02:02:37 UTC <byorgey> true
+2011-11-21 02:02:49 UTC <byorgey> and don't forget it should all generalize to arbitrary vector spaces ;)
+2011-11-21 02:03:06 UTC <ClaudiusMaximus> haha
+2011-11-21 02:04:11 UTC <ClaudiusMaximus> actually, one thing i would like is (sub)pixel-perfect vector overlay on a bitmap image, is that possible yet?
+2011-11-21 02:08:08 UTC <ClaudiusMaximus> i guess i should try and see
+2011-11-21 02:08:13 UTC <byorgey> ClaudiusMaximus: I'm not sure I understand what that means, can you explain/give an example?
+2011-11-21 02:08:54 UTC <ClaudiusMaximus> byorgey: ok, here's one i made in gimp http://claudiusmaximus.goto10.org/g/mandelbrot/angled_internal_address_diagram_1-3.png , there's a better example i made somewhere but i haven't found it yet...
+2011-11-21 02:09:42 UTC <ClaudiusMaximus> byorgey: ah,a found it - http://claudiusmaximus.goto10.org/g/mandelbrot/periodic-boundary-trace.png (1.5MB)
+2011-11-21 02:10:11 UTC <ClaudiusMaximus> the frizzy edges are a bitmap, overlayed with an svg, emitted as xml text
+2011-11-21 02:11:09 UTC <ClaudiusMaximus> i had to do all the coordinate scaling manually to get it pixel accurate
+2011-11-21 02:11:55 UTC <byorgey> ClaudiusMaximus: I see.  I don't think I understand the relevant issues well enough to know how well it would work in diagrams.
+2011-11-21 02:12:05 UTC <byorgey> which probably means it doesn't =)
+2011-11-21 02:12:24 UTC <byorgey> but if you try it, let me know how it goes (and if you have suggestions for how it could be better)
+2011-11-21 02:13:27 UTC <fryguybob> ClaudiusMaximus: Is what you want something like SnapsToDevicePixels in Xaml?
+2011-11-21 02:13:46 UTC <ClaudiusMaximus> fryguybob: never heard of that, so i don't know!
+2011-11-21 02:14:59 UTC <ClaudiusMaximus> byorgey: sure, it'd probably be as simple as making sure all the vector stuff fits exactly in a box the right aspect ratio in the correct proportions, and rendering at the same size as the bitmap, then combining, or so..
+2011-11-21 02:16:10 UTC <ClaudiusMaximus> oh! one newb question, how to make the cairo defaultMain render with a solid white background?  i dislike inappropriate transparency (my default browser settings are black background => invisible things sometimes...)
+2011-11-21 02:16:51 UTC <fryguybob> This shows the general idea:  http://www.wpftutorial.net/DrawOnPhysicalDevicePixels.html
+2011-11-21 02:18:56 UTC <ClaudiusMaximus> fryguybob: ah, that would be handy in some circumstances - i was more making sure things line up with a bitmap without extraneous padding/scaling knocking things out of alignment
+2011-11-21 02:19:17 UTC <fryguybob> ClaudiusMaximus: Oh, I see.
+2011-11-21 02:19:26 UTC <ClaudiusMaximus> which is probably trivial - i should really try things before asking
+2011-11-21 02:20:52 UTC <byorgey> ClaudiusMaximus: there's no way built into the cairo backend to give a different background (although I suppose we could)
+2011-11-21 02:21:09 UTC <byorgey> ClaudiusMaximus: but you can easily just combine your diagram with a white rectangle before rendering
+2011-11-21 02:21:45 UTC <byorgey> withBackground color d = d <> rect (width d) (height d) # fc white # lw 0
+2011-11-21 02:21:53 UTC <byorgey> er, s/white/color/
+2011-11-21 02:22:43 UTC <byorgey> I dislike inappropriate non-transparency ;)
+2011-11-21 02:23:22 UTC <ClaudiusMaximus> :)
+2011-11-21 02:25:47 UTC <fryguybob> You can have any color you want as long as it is white :p
+2011-11-21 02:48:48 UTC <tgeeky> byorgey: so, re: animation
+2011-11-21 02:49:29 UTC <tgeeky> G. Hutton gave a nice (easy) talk about (contractive functions) and his generators for streams
+2011-11-21 02:50:39 UTC <tgeeky> byorgey: http://www.reddit.com/r/haskell/comments/mj23v/new_video_lecture_how_to_be_more_productive/
+2011-11-21 02:51:22 UTC <byorgey> fryguybob: hahaha
+2011-11-21 02:51:31 UTC <tgeeky> anyway, he introduces a time-based perspective to streams, and a theorem about branach spaces, and stream uniquness, and such.
+2011-11-21 02:51:52 UTC <byorgey> tgeeky: sounds cool
+2011-11-21 02:51:58 UTC <tgeeky> byorgey: it might be worth your read.
+2011-11-21 02:52:14 UTC <tgeeky> I actuall think (hope) there is a "more interesting" generalization of his time-based perspective
+2011-11-21 02:52:23 UTC <tgeeky> but the rest of it is very useful
+2011-11-21 02:52:32 UTC <tgeeky> he calls it a semantic correctness condition for streams
+2011-11-21 02:53:32 UTC <tgeeky> byorgey: anyway, I think using his method I might be able to start peeling away at getting the (general) apollonian fractal represented as multiplate of streams
+2011-11-21 02:53:54 UTC <byorgey> tgeeky: is this based on the work of N. Krishnaswami and N. Benton?
+2011-11-21 02:54:11 UTC <tgeeky> byorgey: I haven't traced references yet, because I didn't have much trouble reading the paper through the first time
+2011-11-21 02:54:28 UTC <byorgey> tgeeky: oh, Hutton's talk was based on a paper?
+2011-11-21 02:54:37 UTC <tgeeky> yes, of his own name
+2011-11-21 02:54:45 UTC <tgeeky> http://www.cs.nott.ac.uk/~gmh/contractive.pdf
+2011-11-21 02:55:45 UTC <tgeeky> byorgey: I also think this might be immediately useful to me working on 'species'
+2011-11-21 02:55:55 UTC <tgeeky> well, probably not
+2011-11-21 02:56:06 UTC <tgeeky> but using species to make some other interesting EGFs
+2011-11-21 02:56:36 UTC <tgeeky> anyway, with the line you threw me with diagrams, and with this paper, I think I will have a good week
+2011-11-21 02:57:27 UTC <luite> hm cool I can view ppt files
+2011-11-21 02:57:29 UTC <byorgey> hehe, great =)
+2011-11-21 02:58:12 UTC <tgeeky> byorgey: the citation fo Kirishnaswami & Benton is 'trivial'
+2011-11-21 02:58:34 UTC <luite> hm not very well though... apparently the -> displays as []
+2011-11-21 03:00:33 UTC <byorgey> tgeeky: ok, I will have to read more carefully to see what the difference is
+2011-11-21 03:00:34 UTC <tgeeky> byorgey: I presume you aren't expert enough to explain ((Krishnaswami & Benton, 2011)) 'ultrametric spaces'  to me
+2011-11-21 03:00:45 UTC <tgeeky> in say, 5 sentences or less.
+2011-11-21 03:00:48 UTC <tgeeky> God this paper looks indigestable.
+2011-11-21 03:01:02 UTC <byorgey> haha, well I did understand it
+2011-11-21 03:01:24 UTC <byorgey> but I don't remember it well enough to explain it in 5 sentences.
+2011-11-21 03:02:15 UTC <byorgey> tgeeky: "A Semantic Model for Graphical User Interfaces" is easier going
+2011-11-21 03:03:03 UTC <tgeeky> byorgey: it shouldn't be that bad, but when I see that huge chunk of denotational semantics all crunched up my brain wants to cry :o
+2011-11-21 03:03:11 UTC <byorgey> mine too
+2011-11-21 03:03:24 UTC <tgeeky> and yet, if I zoom in a whole bunch to a small section
+2011-11-21 03:03:27 UTC <tgeeky> it seems perfectly reasonable
+2011-11-21 03:06:04 UTC <tgeeky> but the way I see it
+2011-11-21 03:06:42 UTC <tgeeky> multiplate is represented by a set of coalgebras, paramterized by an applicative functor
+2011-11-21 03:06:53 UTC <tgeeky> (a possibly mutually recursive set)
+2011-11-21 03:07:41 UTC <tgeeky> then, this paper gives me a method to actually check which streams make sense
+2011-11-21 03:09:35 UTC <tgeeky> the 'unfold from the middle' paper gives you the opportunity to fold/unfold finite segments of infinite trees in both directions on a list -- from same-lengthed initial (centered) segments
+2011-11-21 03:10:47 UTC <tgeeky> so hopefully I'll be able to introduce many of the more complicated streams (lucas, perrin and padovan, pell) that are associated with the apollonian fractal
+2011-11-21 03:11:35 UTC <tgeeky> and the Haskell community can rejoice in not using 20 variations on fib for introductory tutorials
+2011-11-21 05:24:43 UTC <byorgey> http://www.cis.upenn.edu/~byorgey/cycle.mp4  =D
+2011-11-21 05:26:16 UTC <tgeeky> we have liftoff!
+2011-11-21 05:26:24 UTC <tgeeky> orbit, really
+2011-11-21 05:26:50 UTC <byorgey> code used to generate it is here: http://hpaste.org/54359
+2011-11-21 05:27:25 UTC <tgeeky> that's terse
+2011-11-21 05:27:29 UTC <tgeeky> I sense magic afoot
+2011-11-21 05:27:44 UTC <byorgey> I still have a bunch of cleanup/documentation to do, and we'll need to add lots more combinators for practically building animations, but it works! =D
+2011-11-21 05:28:04 UTC <byorgey> tgeeky: no magic. just Haskell. =)
+2011-11-21 05:28:18 UTC <tgeeky> on a Sunday, I can't tell the difference.
+2011-11-21 05:28:21 UTC <luite> oh cool
+2011-11-21 05:28:23 UTC <byorgey> hehe
+2011-11-21 05:28:32 UTC <byorgey> it turns out that Applicative gives you a really nice interface for doing stuff with animations.
+2011-11-21 05:28:36 UTC <luite> how do you output the animation?
+2011-11-21 05:29:07 UTC <byorgey> luite: right now I just have a function 'animMain' defined in the cairo backend that simply outputs an image for each frame
+2011-11-21 05:29:12 UTC <byorgey> then I put them together with ffmpeg
+2011-11-21 05:29:39 UTC <byorgey> of course eventually I'd like to have an OpenGL backend etc.
+2011-11-21 05:29:55 UTC <byorgey> I think perhaps Andy Gill & some of his students may work on that (?)
+2011-11-21 05:32:42 UTC <tgeeky> byorgey: you'd probably be surprised at the quality (and data intensity) of some of the example d3.js animations
+2011-11-21 05:33:10 UTC <tgeeky> http://www.jasondavies.com/toys/ <--
+2011-11-21 05:33:15 UTC <byorgey> I probably would.
+2011-11-21 05:33:18 UTC <tgeeky> try the bifurcations graph and crank it up
+2011-11-21 05:35:08 UTC <byorgey> very cool!
+2011-11-21 05:35:20 UTC <tgeeky> there are tons of others here: https://github.com/mbostock/d3/wiki
+2011-11-21 05:37:05 UTC <tgeeky> byorgey: here's another simple one:
+2011-11-21 05:37:06 UTC <tgeeky> http://bl.ocks.org/1353700
+2011-11-21 05:37:48 UTC <tgeeky> here's an example of something that works at high speed: http://bl.ocks.org/1345853
+2011-11-21 05:38:08 UTC <tgeeky> algorithimcs (merge sort): http://bl.ocks.org/1243323
+2011-11-21 05:38:36 UTC <luite> ah pretty cool demo's :)
+2011-11-21 05:38:49 UTC <tgeeky> yes, it's a little weird that he only puts his own demons on the "examples" page
+2011-11-21 05:38:50 UTC <byorgey> all very cool!  Too bad the code is butt-ugly =)
+2011-11-21 05:38:57 UTC <tgeeky> but you have to go to (documentation -> examples)
+2011-11-21 05:39:21 UTC <tgeeky> byorgey: perhaps, but it might be possible to establish a mapping as a diagrams backend?
+2011-11-21 05:39:40 UTC <tgeeky> s/possible/pratical/. s/practical/useful/?
+2011-11-21 05:40:27 UTC <tgeeky> this here, is probably the most impressive (and most ugly) of them all:
+2011-11-21 05:40:28 UTC <tgeeky> http://bl.ocks.org/1256572
+2011-11-21 05:40:57 UTC <tgeeky> the transition from stick-graph to bar-graph is particular cute
+2011-11-21 05:43:28 UTC <byorgey> yeah, a diagrams backend sounds possible
+2011-11-21 05:43:47 UTC <tgeeky> if I'm clever enough to understand multiplate, it might even be easy
+2011-11-21 05:44:29 UTC <tgeeky> I *need* web-based (and ideally, javascript-based so as to allow ipad)
+2011-11-21 05:44:40 UTC <tgeeky> rendering, and animations
+2011-11-21 05:44:50 UTC <luite> bah I really need some sleep, 6:44am already
+2011-11-21 05:44:56 UTC <tgeeky> yipes.
+2011-11-21 05:45:00 UTC <tgeeky> night luite !
+2011-11-21 05:46:10 UTC <luite> dunno if I can sleep... had some trouble all week :(
+2011-11-21 05:46:36 UTC <tgeeky> are you usually a fluctuating sleeper?
+2011-11-21 05:46:40 UTC <luite> also really unhappy about my productivity
+2011-11-21 05:47:00 UTC <tgeeky> not all of us can be edwardk-s
+2011-11-21 05:47:09 UTC <luite> he's scary :(
+2011-11-21 05:47:13 UTC <tgeeky> seriously
+2011-11-21 05:47:24 UTC <tgeeky> not to mention perfect GPA, all kinds of other stuff
+2011-11-21 05:47:38 UTC <tgeeky> i read his bio and felt inept
+2011-11-21 05:48:27 UTC <tgeeky> don't get me wrong, I'd rather have 5 byorgey's for every edwardk (who refuses to document well, probably because he thinks us creatins should understand it)
+2011-11-21 05:49:00 UTC <byorgey> at least he's friendly =)
+2011-11-21 05:49:08 UTC <tgeeky> very
+2011-11-21 05:49:27 UTC <tgeeky> byorgey: since you loaded it, which are the unfriendly FPers you've met? :o
+2011-11-21 05:49:43 UTC <luite> pick me, pick me ;)
+2011-11-21 05:50:13 UTC <tgeeky> too loaded, and he's a good guy
+2011-11-21 05:50:22 UTC <byorgey> there are probably a few but I can't think of any at the moment =)
+2011-11-21 05:50:27 UTC <tgeeky> that Euler was a real ass.
+2011-11-21 05:51:05 UTC <byorgey> (also this channel is logged publicly ;)
+2011-11-21 05:51:11 UTC <tgeeky> see :)
+2011-11-21 05:52:05 UTC <byorgey> as for edwardk I think he doesn't document because it's all he can do to keep up with the torrent of good ideas.
+2011-11-21 05:52:25 UTC <byorgey> personally I'm glad he doesn't because it means more cool stuff.
+2011-11-21 05:52:28 UTC <tgeeky> perhaps. He gave trifecta the ol' college try
+2011-11-21 05:52:32 UTC <tgeeky> yeah
+2011-11-21 05:52:36 UTC <luite> he also says he's still experimenting
+2011-11-21 05:52:50 UTC <tgeeky> I get the sense that he's on a mission to exhibit as much of category theory as he can
+2011-11-21 05:53:11 UTC <byorgey> that seems to be one of his missions, yes
+2011-11-21 05:53:43 UTC <tgeeky> he's paving the way for... something ... to happen
+2011-11-21 06:04:00 UTC <tgeeky> that's cute. In the context of streams, it looks like Cons could stand equally well for cell Cons, and constant
+2011-11-21 06:23:53 UTC <tgeeky> ACTION loves it. make a stream incorrectly? paste in OEIS. make some other stream correctly!
+2011-11-21 06:26:13 UTC <luite> hm
+2011-11-21 06:26:21 UTC <tgeeky> trying to get Pell
+2011-11-21 06:26:25 UTC <tgeeky> got... Jacobsthal numbers
+2011-11-21 06:27:31 UTC <luite> oj apparemtly im still connected
+2011-11-21 06:27:41 UTC <tgeeky> indeed
+2011-11-21 06:29:07 UTC <luite> it's a bit strange, a few minutes of lag
+2011-11-21 06:31:06 UTC <luite> because I closed myl aopt op for a few minutes, then opened it again
+2011-11-21 06:31:37 UTC <tgeeky> you're so sleep deprived, your internet connection is lagging
+2011-11-21 06:32:17 UTC <luite> weefwehm
+2011-11-21 06:32:25 UTC <luite> oops
+2011-11-21 06:33:06 UTC <luite> made a new connection and took over the screen session, that helps
+2011-11-21 06:36:10 UTC <luite> hm maybe i'll read a bit in bed
