@@ -6022,3 +6022,452 @@
 2011-11-21 06:32:25 UTC <luite> oops
 2011-11-21 06:33:06 UTC <luite> made a new connection and took over the screen session, that helps
 2011-11-21 06:36:10 UTC <luite> hm maybe i'll read a bit in bed
+2011-11-21 17:26:08 UTC <byorgey> http://hpaste.org/54359  -- I added an annotation showing use of the SHE preprocessor to make animation code even more readable
+2011-11-22 01:24:30 UTC <luite> morning
+2011-11-22 01:25:17 UTC <byorgey> evening luite
+2011-11-22 01:25:46 UTC <byorgey> ACTION was under the impression that luite was in a time zone where it is currently something like 1:30 or 2:30am
+2011-11-22 01:25:56 UTC <luite> 2:25am yes
+2011-11-22 01:26:16 UTC <byorgey> well, I'm off to watch a movie
+2011-11-22 01:26:29 UTC <luite> have fun :)
+2011-11-22 02:28:57 UTC <tgeeky> luite: one thing that i've noticed using Wolfram
+2011-11-22 02:29:03 UTC <tgeeky> that I hope to avoid
+2011-11-22 02:29:44 UTC <tgeeky> avoid a situation where the user has to copy/paste data in order to get an expected result
+2011-11-22 02:30:06 UTC <tgeeky> I noticed that even though I could type in equations for cyclotomic polynomials and get graphs, and root structures.
+2011-11-22 02:30:23 UTC <tgeeky> when you actually ask for that polynomial ( Cyclotomic[n,z] )
+2011-11-22 02:30:41 UTC <tgeeky> it will give you the result (it translates it to a polynomial), but then it stops.
+2011-11-22 02:30:52 UTC <tgeeky> and doesn't show the other stuff
+2011-11-22 02:35:19 UTC <luite> everything is just haskell, so you can just give it a name and refer to it later :0
+2011-11-22 03:20:29 UTC <byorgey> yeah, comparing to Wolfram is a red herring since it's basically a crippled Mathematica =P
+2011-11-22 03:42:02 UTC <luite> but you can use Alpha queries directly in Mathematica 8 workbooks now, to use its "do what I mean" functionality :)
+2011-11-22 04:22:28 UTC <byorgey> luite: ah, neat =)
+2011-11-22 16:45:53 UTC <luite> http://hdiff.luite.com/tmp/top.png http://hdiff.luite.com/tmp/bottom.png <- I've emsmallened the top ui / header, but maed it a fixed position element so it stays in view if you scroll, do you think this would be acceptable?
+2011-11-22 17:20:17 UTC <byorgey> luite: looks great to me!
+2011-11-22 17:20:48 UTC <byorgey> luite: I like small fixed position headers, quite useful not to have to scroll back up to the top of the page to do something
+2011-11-22 17:21:04 UTC <byorgey> wordpress.com does it too
+2011-11-22 17:30:27 UTC <byorgey> luite: so I'm going to be teaching an introductory Haskell class starting in January
+2011-11-22 17:30:53 UTC <byorgey> luite: all I'm saying is that if Wolfgang was live by then it would be super-awesome.
+2011-11-22 17:31:00 UTC <byorgey> luite: no pressure though. =)
+2011-11-22 17:31:09 UTC <byorgey> well, OK, maybe just a TINY bit of pressure
+2011-11-22 17:39:48 UTC <luite> haha hmm
+2011-11-22 17:40:38 UTC <luite> byorgey: it's mainly for the login / page menu's
+2011-11-22 17:40:59 UTC <luite> but I think it's nice to have the other links, to encourage people to browse the site :)
+2011-11-22 17:41:35 UTC <luite> I hope to have the user interface thingies that control the document itself in those tabs on the sides (that are also fixed)
+2011-11-22 17:41:35 UTC <byorgey> luite: yes, agreed
+2011-11-22 17:41:42 UTC <byorgey> ah, ok
+2011-11-22 17:41:57 UTC <luite> but it's easy to move them around if it doesn't work
+2011-11-22 17:42:13 UTC <byorgey> I think having those on the side is good
+2011-11-22 17:42:21 UTC <luite> at the moment I only have a "re-evaluate all" button planned, but I'm sure there will be more in the future
+2011-11-22 17:43:24 UTC <byorgey> some suggestions for other buttons: "ask Oleg", "fix errors", "format as PDF and submit to Haskell Symposium"
+2011-11-22 17:43:47 UTC <luite> format as pdf will probably be in the page menu
+2011-11-22 17:44:09 UTC <byorgey> nono but this button will ALSO cause the formatted PDF to be submitted to the Haskell Symposium
+2011-11-22 17:44:32 UTC <luite> right, that's a strictly better button
+2011-11-22 17:45:02 UTC <byorgey> haha you should totally have buttons like this but only on April 1 =)
+2011-11-22 17:46:01 UTC <luite> more seriously though, some reddit, g+ buttons would be nice
+2011-11-22 17:47:15 UTC <luite> hmm, 28" of new snow in whistler
+2011-11-22 17:47:43 UTC <byorgey> sure, the usual bevy of "share this" buttons
+2011-11-22 17:47:45 UTC <tgeeky> put an "ask wolfram alpha" button that doesn't actually translate the program to something suitable
+2011-11-22 17:47:55 UTC <tgeeky> to "demonstrate" how inferior wolfram alpha is
+2011-11-22 17:47:59 UTC <byorgey> hehe
+2011-11-22 17:49:10 UTC <luite> byorgey: yeah I don't really like those buttons though, they're kind of ugly, but could be important to get some visitors
+2011-11-22 17:49:17 UTC <luite> I'll probably hide them in a menu
+2011-11-22 17:49:26 UTC <tgeeky> luite: i really don't like them, especially because I don't use any of those things
+2011-11-22 17:49:58 UTC <byorgey> actually I don't think you're going to have to work very hard to get visitors
+2011-11-22 17:50:25 UTC <byorgey> yeah, just add a "Share" menu in the top bar
+2011-11-22 17:50:29 UTC <luite> bah I have been working on it for a long time now and if I check the logs, the only visitor is me ;)
+2011-11-22 17:50:58 UTC <tgeeky> you are practicing whatever the opposite of 'agile' programming is
+2011-11-22 17:51:01 UTC <byorgey> haha, well, I can assure you that is NOT because of the lack of reddit buttons.
+2011-11-22 17:51:53 UTC <tgeeky> I would paste the antonyms of 'agile' but they aren't very nice
+2011-11-22 17:52:21 UTC <tgeeky> haha
+2011-11-22 17:52:21 UTC <luite> brittle, clumsy, stiff
+2011-11-22 17:52:23 UTC <luite> sounds good
+2011-11-22 17:52:29 UTC <tgeeky> the next group are worse
+2011-11-22 17:52:35 UTC <tgeeky> delicate, feeble, inept, stupid, weak
+2011-11-22 17:52:44 UTC <tgeeky> disintrested, idle, indifferent, lazy, quiescent, quiet
+2011-11-22 17:52:45 UTC <luite> ah right, those are more appropriate
+2011-11-22 17:53:00 UTC <tgeeky> inept sounds like my haskell style
+2011-11-22 17:53:24 UTC <luite> no it's mine! mine is inepter than yours
+2011-11-22 17:53:25 UTC <luite> !
+2011-11-22 17:53:48 UTC <luite> (like the "I wrote the worst lzw decoder" discussion in -blah recently)
+2011-11-22 17:54:20 UTC <tgeeky> sometimes it can take a great deal of skill to produce a solution which *works*, but does so in the worst way possible
+2011-11-22 17:54:48 UTC <luite> can you prove that there are no worse ways?
+2011-11-22 17:55:03 UTC <tgeeky> perhaps.
+2011-11-22 17:55:25 UTC <tgeeky> the only way to make the code run slower is to insert 'wait 1000' statements in your code
+2011-11-22 17:56:17 UTC <tgeeky> "We have demonstrated that it is possible to perform lzw compression in O(n^n^2n) time"
+2011-11-22 18:00:14 UTC <luite> like the "Sorting the slow way" paper? :)
+2011-11-24 00:39:47 UTC <luite> http://hdiff.luite.com/tmp/todo.txt
+2011-11-24 03:39:51 UTC <byorgey> luite: =D
+2011-11-24 03:39:57 UTC <byorgey> my favorite: "- convince people to write a full CAS in haskell"
+2011-11-24 03:40:27 UTC <tgeeky> yes.
+2011-11-24 03:40:52 UTC <tgeeky> that message is missing something when presented in a .txt file
+2011-11-24 03:41:04 UTC <tgeeky> the differences in cost
+2011-11-24 03:41:17 UTC <tgeeky> but I like it
+2011-11-24 03:41:33 UTC <tgeeky> byorgey: but seriously about SPJ? any thoughts on that fact?
+2011-11-24 03:41:37 UTC <tgeeky> he is one of the best speakers I've ever seen
+2011-11-24 03:41:52 UTC <tgeeky> does he do that in 1-on-1 as well?
+2011-11-24 03:41:56 UTC <byorgey> tgeeky: no, I don't know, he just closes his eyes when he's concentrating
+2011-11-24 03:42:00 UTC <byorgey> yes, he does
+2011-11-24 03:49:20 UTC <luite> tgeeky: would it be better as a slide show with comic sans?
+2011-11-24 03:50:33 UTC <luite> I found a math book that uses comic sans btw, earlier this week :)
+2011-11-24 03:50:45 UTC <luite> only on a few pages, sadly
+2011-11-24 04:02:17 UTC <luite> that one is a 50 point exercise :)
+2011-11-24 04:09:26 UTC <tgeeky> haha
+2011-11-24 04:09:30 UTC <tgeeky> not in particular
+2011-11-24 04:09:47 UTC <tgeeky> I think anywhere you have comic sans, you'd be better off using some sort of animated "squiggly" "wiggly" typeface
+2011-11-24 04:10:21 UTC <luite> hehe that doesn't work in books, although this book is actually a pdf file, so I guess it could :)
+2011-11-24 04:12:23 UTC <luite> I really hope that the new constraint solver in ghc 7.4 will speed up things a little
+2011-11-24 04:12:54 UTC <luite> otherwise I can try to overclock the server
+2011-11-24 04:13:38 UTC <tgeeky> i'm thinking about checking it out soon
+2011-11-24 04:13:50 UTC <tgeeky> i'm still doing work with streams
+2011-11-24 04:14:42 UTC <luite> I'm working on the permissions dialog for wolfgang :)
+2011-11-24 04:15:11 UTC <luite> where you can lock pages (as owner or administrator) and allow others to edit your pages (or view them if they're private)
+2011-11-24 04:17:22 UTC <tgeeky> are you working in Whistler?
+2011-11-24 04:17:30 UTC <tgeeky> or you 'off the grid'?
+2011-11-24 04:17:57 UTC <luite> (First I thought I would only do this later on, but this way, most of the core functionality can be a regular page too (for example an instance for Diagrams and other low level stuff))
+2011-11-24 04:18:25 UTC <luite> they can just be locked pages, editable by admins
+2011-11-24 04:18:38 UTC <luite> no special handling needed for the compile daemon etc
+2011-11-24 04:19:10 UTC <luite> no not in whistler yet
+2011-11-24 04:19:15 UTC <luite> from 15-22 dec
+2011-11-24 04:19:58 UTC <luite> I'll try to work on it there as well
+2011-11-24 04:20:13 UTC <luite> the lifts close at around 15:00
+2011-11-24 04:21:18 UTC <luite> so then I can quickly grab a steak at the longhorn bar and then to the apartment for coding
+2011-11-24 04:23:11 UTC <tgeeky> hehe
+2011-11-24 04:23:46 UTC <luite> (not that I plan to eat there every day, I just wanted to say some more windows code names ;p )
+2011-11-24 04:26:03 UTC <tgeeky> damn. I was somehow expecting that this video would introduce something new (and maybe 7.4) related
+2011-11-24 04:26:27 UTC <tgeeky> and because he's so smooth, i'm 30 minute into and I realize that it's "not intended" for me
+2011-11-24 04:26:54 UTC <luite> snow looks good with 131cm (51") fresh in the past week :)
+2011-11-24 04:27:26 UTC <luite> with another 80cm expected this weekend
+2011-11-24 04:27:27 UTC <tgeeky> excellent, I guess. The main thing I know about snow is that it rarely happens here.
+2011-11-24 04:28:29 UTC <luite> hehe
+2011-11-24 04:28:47 UTC <luite> it sometimes snows here, but since there are no mountains, it's not too useful
+2011-11-24 04:28:59 UTC <tgeeky> indeed.
+2011-11-24 04:29:08 UTC <tgeeky> fun to drive on, and fun to laugh at other people (fail) to drive on
+2011-11-24 04:29:13 UTC <luite> I still like snow though, it makes everyhing so pretty :p
+2011-11-24 04:29:23 UTC <tgeeky> i mainly like the silence it brings
+2011-11-24 04:30:07 UTC <tgeeky> you know... it's an acoustic sink so it's really quiet and 'crisp' sounding
+2011-11-24 04:30:44 UTC <luite> hmm I want to move closer to the mountains :)
+2011-11-24 04:34:51 UTC <luite> in the alps the snow is terrible though, most resorts have to delay their opening
+2011-11-24 04:40:26 UTC <tgeeky> if haskell adopts a mascot
+2011-11-24 04:40:34 UTC <tgeeky> it should just be the reddit alien with glasses
+2011-11-24 04:40:38 UTC <tgeeky> and a lambda shirt
+2011-11-24 04:44:56 UTC <luite> why a reddit mascot?
+2011-11-24 04:54:24 UTC <tgeeky> generic, cute, already accepted
+2011-11-24 04:55:54 UTC <luite> not very creative :(
+2011-11-24 04:56:24 UTC <tgeeky> well http://perl6.org/ <-- that is creative
+2011-11-24 04:56:38 UTC <tgeeky> i know
+2011-11-24 04:57:10 UTC <tgeeky> we can have byorgey whip up an mc-escher-like lambda tiling
+2011-11-24 04:57:55 UTC <tgeeky> and put them on the side of a fish
+2011-11-24 04:58:07 UTC <luite> you probably have a samsung ;p ( http://www.youtube.com/watch?v=6h5JSojJN3Y )
+2011-11-24 04:58:11 UTC <tgeeky> http://upload.wikimedia.org/wikipedia/commons/e/e4/Melanogrammus_aeglefinus.jpg
+2011-11-24 04:59:36 UTC <tgeeky> hehe
+2011-11-24 05:01:09 UTC <tgeeky> http://i.imgur.com/Mdaof.jpg
+2011-11-24 05:01:16 UTC <tgeeky> that's...
+2011-11-24 06:49:11 UTC <luite> well that seems to work http://hdiff.luite.com/tmp/permissions.png
+2011-11-24 06:50:40 UTC <luite> unfortunately this wasn't on my todo so I can't even remove a line :(
+2011-11-24 16:29:55 UTC <byorgey> luite: add it to your todo list and then delete it
+2011-11-24 16:40:02 UTC <luite> I started working on an actual todo item instead :(
+2011-11-24 16:40:04 UTC <luite> err
+2011-11-24 16:40:08 UTC <luite> :)
+2011-11-24 16:40:54 UTC <luite> although I've already found another bug so the list is not getting smaller
+2011-11-24 16:41:13 UTC <byorgey> byorgey's Law of Todo Lists: todo lists never get smaller
+2011-11-24 16:41:36 UTC <luite> do they double in size every 18 months? ;)
+2011-11-24 16:41:53 UTC <byorgey> no, that would be Moose's Law
+2011-11-24 16:42:16 UTC <byorgey> of which byorgey's law is a simple corollary
+2011-11-24 16:42:45 UTC <luite> A MÃ¸Ã¸se once bit my sister
+2011-11-24 16:43:39 UTC <byorgey> hehehe
+2011-11-24 16:49:09 UTC <byorgey> Mynd you, mÃ¸Ã¸se bites Kan be pretty nasti...
+2011-11-24 18:27:21 UTC <tgeeky> wee
+2011-11-24 18:27:37 UTC <tgeeky> ACTION using Math.OEIS to verify the correctness of stream definitions
+2011-11-24 18:27:42 UTC <byorgey> =D
+2011-11-24 18:48:12 UTC <tgeeky> this means I'm going to publish my first module soon!! :O
+2011-11-24 18:49:20 UTC <byorgey> =O !
+2011-11-24 18:51:38 UTC <tgeeky> byorgey: so, I emailed Hutton (and he forwarded it to his grad student)
+2011-11-24 18:51:42 UTC <tgeeky> about his streams paper
+2011-11-24 18:52:11 UTC <tgeeky> i brought up two examples which don't fit with his scheme of contractive schemes
+2011-11-24 18:52:16 UTC <tgeeky> but nonetheless seem like streams of some type to me
+2011-11-24 18:52:48 UTC <byorgey> nice
+2011-11-24 18:52:57 UTC <tgeeky> I will post them and ask what you think
+2011-11-24 18:53:00 UTC <tgeeky> hpaste, I guess
+2011-11-24 18:53:02 UTC <tgeeky> one sec :)
+2011-11-24 18:58:11 UTC <tgeeky> oh yeah, just saw this ad
+2011-11-24 18:58:38 UTC <tgeeky> There is a *live* TV show for 1 hour where totally unprotected divers are going to dive and swim with great white sharks
+2011-11-24 18:58:43 UTC <tgeeky> to demonstrate that they aren't killing monsters
+2011-11-24 18:58:48 UTC <tgeeky> this Friday
+2011-11-24 18:58:56 UTC <byorgey> and they are all going to die.
+2011-11-24 18:58:59 UTC <tgeeky> hhaha
+2011-11-24 18:59:09 UTC <tgeeky> you wouldn't even find me on that boat above the divers
+2011-11-24 19:00:13 UTC <tgeeky> byorgey: http://hpaste.org/54462
+2011-11-24 19:00:31 UTC <tgeeky> note take 30 $ fromOEIS ".."
+2011-11-24 19:00:47 UTC <tgeeky> but then, for the apollonian one
+2011-11-24 19:01:07 UTC <tgeeky> well
+2011-11-24 19:01:12 UTC <tgeeky> clearly I've altered (and messed up) the definition
+2011-11-24 19:01:41 UTC <tgeeky> it's off-by-one. but clearly, there are two options for the number after 3
+2011-11-24 19:01:47 UTC <tgeeky> (-1, and 15)
+2011-11-24 19:02:20 UTC <tgeeky> but the whole premise of his paper is that if you know the first (n) elements of two streams, then the (n+1) element will be the same.
+2011-11-24 19:02:38 UTC <tgeeky> so either the apollonian gaskets are "bi-streams"? or they aren't streams at all?
+2011-11-24 19:05:48 UTC <byorgey> tgeeky: they are not streams, they are binary trees
+2011-11-24 19:06:07 UTC <byorgey> oh wait, not really
+2011-11-24 19:06:09 UTC <tgeeky> the one with a cycle in it is a binary tree?
+2011-11-24 19:06:22 UTC <tgeeky> fundamentally, they are orbits in a group
+2011-11-24 19:06:51 UTC <byorgey> yeah, you could arrange it as a binary tree but you'd get lots of duplicates
+2011-11-24 19:06:52 UTC <tgeeky> byorgey: the real difficult case is the family of "near-D3 gaskets"
+2011-11-24 19:07:06 UTC <byorgey> it is... well, it's an Apollonian graph =)
+2011-11-24 19:09:21 UTC <tgeeky> byorgey: at the bottom is my best (but still failed) attempt
+2011-11-24 19:09:22 UTC <tgeeky> http://hpaste.org/54462
+2011-11-24 19:09:29 UTC <tgeeky> of defining the near-D3 table
+2011-11-24 19:10:22 UTC <tgeeky> which was trying to (again, evidently incorrectly) think of length-8 stream pairs
+2011-11-24 19:10:26 UTC <tgeeky> because coding it this way worked in mathematica
+2011-11-24 19:10:33 UTC <tgeeky> but it should be:
+2011-11-24 19:11:16 UTC <tgeeky> ([-1, 2, 2, 3, ...] ++ [-4, 8, 9, 9, ...])  <|| ([-15,32,32,33] ++ [-56, 120, 121, 121])
+2011-11-24 19:13:11 UTC <tgeeky> byorgey: anyway, enough of that nonsense. If I have, say, 4 functions that "should" generate the same stream, and I want to test them all in one statement, I could use zipWithN (==), right?
+2011-11-24 19:13:28 UTC <tgeeky> and try to reduce it to True
+2011-11-24 19:14:12 UTC <byorgey> tgeeky: no, because (==) only takes two arguments
+2011-11-24 19:14:57 UTC <tgeeky> oh. of course.
+2011-11-24 19:15:18 UTC <tgeeky> it doesn't even typecheck!
+2011-11-24 19:15:24 UTC <byorgey> nope =)
+2011-11-24 19:15:39 UTC <tgeeky> i could write a custom 4-way (==) function
+2011-11-24 19:16:02 UTC <byorgey> or you could write a function allEqual :: Eq a => [a] -> Bool
+2011-11-24 19:16:06 UTC <tgeeky> i could use tuple sections
+2011-11-24 19:16:31 UTC <byorgey> and then first combine the strams into one stream of lists with  foldr (zipWith (:)) (repeat [])
+2011-11-24 19:16:39 UTC <byorgey> then  map allEqual
+2011-11-24 19:57:16 UTC <luite> hmm gmail has been terrible here lately, lots of timeouts and connection errors, does anyone else have problems?
+2011-11-24 20:13:31 UTC <tgeeky> nope
+2011-11-24 20:13:45 UTC <tgeeky> my internet connection has been problematic, but not gmail specifically
+2011-11-24 20:20:36 UTC <luite> hmm my internet connection is mostly ok, although my isp had some problems with one of their routers recently
+2011-11-25 04:43:52 UTC <luite> morning tgeeky :)
+2011-11-25 05:07:05 UTC <tgeeky> ello
+2011-11-25 05:20:20 UTC <luite> bah annoying javascript exceptions, why am I using undocumented unreleased scripts
+2011-11-25 05:50:04 UTC <luite> hmm 46 included javascripts :)
+2011-11-25 07:11:21 UTC <tgeeky> oh that's cute
+2011-11-25 07:12:17 UTC <tgeeky> luite: check out this goofy function
+2011-11-25 07:12:18 UTC <tgeeky> http://tinyurl.com/d7p2x2f
+2011-11-25 07:12:47 UTC <tgeeky> the middle coefficients of the polymonial have an interesting convergage
+2011-11-25 07:12:49 UTC <tgeeky> convergance*
+2011-11-25 07:12:52 UTC <luite> err, what kind of redirect is that?
+2011-11-25 07:12:57 UTC <tgeeky> wolfram alpha
+2011-11-25 07:13:20 UTC <tgeeky> but the real trick on what's happening
+2011-11-25 07:13:25 UTC <tgeeky> is the asymtopic behavior of the real solutions
+2011-11-25 07:13:42 UTC <luite> doesn't seem to work, wrong url?
+2011-11-25 07:13:47 UTC <tgeeky> it's converging (slowly) to roots at (1/2) and (2/1)
+2011-11-25 07:13:57 UTC <tgeeky> oh
+2011-11-25 07:13:58 UTC <tgeeky> lol
+2011-11-25 07:14:18 UTC <tgeeky> http://tinyurl.com/7vrhcx2
+2011-11-25 07:14:19 UTC <tgeeky> there we go
+2011-11-25 07:14:39 UTC <tgeeky> the equation comes from solving electrostatics on unit n-spheres
+2011-11-25 07:15:24 UTC <tgeeky> try smaller d (=2), (=4)
+2011-11-25 07:16:03 UTC <tgeeky> (=2) is the fibionacci convergants
+2011-11-25 07:16:16 UTC <tgeeky> (=4) is the padovan sequence
+2011-11-25 07:19:52 UTC <luite> hmm, where's the fibonacci for d=2?
+2011-11-25 07:20:12 UTC <tgeeky> (1/2)*(3-sqrt(5))
+2011-11-25 07:21:15 UTC <tgeeky> well that's not right.
+2011-11-25 07:21:16 UTC <tgeeky> what am i missing
+2011-11-25 07:21:32 UTC <luite> hm right it's shifted
+2011-11-25 07:21:37 UTC <tgeeky> oh yeah
+2011-11-25 07:21:43 UTC <tgeeky> it's approaching from 2
+2011-11-25 07:22:38 UTC <tgeeky> (4) has the 'plastic constant'
+2011-11-25 07:23:03 UTC <tgeeky> also shifted
+2011-11-25 07:23:33 UTC <tgeeky> the really bizzare thing (to me) is the coeffs of the inner terms of the large polynomials
+2011-11-25 07:25:49 UTC <luite> why? is it a generating series for something, or a known sequence?
+2011-11-25 07:26:16 UTC <tgeeky> no, it's a geometric thing
+2011-11-25 07:26:21 UTC <tgeeky> i mean, if it is - i'm not aware
+2011-11-25 07:26:39 UTC <tgeeky> luite: http://www.google.com/url?sa=t&rct=j&q=a%20fascinating%20polynomial%20sequence%20arising&source=web&cd=1&ved=0CCAQFjAA&url=http%3A%2F%2Farxiv.org%2Fabs%2F1103.3086&ei=KUPPTsLbK4bZgQeq26TVDQ&usg=AFQjCNFrdPAJDqbpsxgDaIjrGiPUdf0aAw
+2011-11-25 07:26:45 UTC <tgeeky> http://arxiv.org/abs/1103.3086
+2011-11-25 07:28:41 UTC <luite> ah there's that zero's picture again :)
+2011-11-25 07:29:09 UTC <tgeeky> yeah
+2011-11-25 07:29:18 UTC <tgeeky> i'm guessing the fine structure that shows up
+2011-11-25 07:29:21 UTC <tgeeky> comes from the inversion (in d)
+2011-11-25 07:29:24 UTC <tgeeky> try d = -30, -42
+2011-11-25 07:29:33 UTC <tgeeky> or something smaller
+2011-11-25 07:32:22 UTC <tgeeky> anyway, that's my mathematical curiousity treat for this evening :)
+2011-11-25 07:32:33 UTC <luite> hehe tnx, morning tough
+2011-11-25 07:32:36 UTC <luite> +h
+2011-11-25 07:32:38 UTC <luite> 8:32am
+2011-11-25 07:32:46 UTC <tgeeky> yeah :)
+2011-11-25 07:32:49 UTC <tgeeky> the d = 8 case
+2011-11-25 07:32:59 UTC <tgeeky> is actually the "projector" for lack of a better term
+2011-11-25 07:33:10 UTC <tgeeky> that is, there are roots with identical angles but different moduli
+2011-11-25 07:33:28 UTC <tgeeky> actually
+2011-11-25 07:33:46 UTC <tgeeky> every single root (except the really shallow angle one)
+2011-11-25 07:34:02 UTC <tgeeky> has three points on it
+2011-11-25 07:36:24 UTC <luite> hm cute, is 8 the only one for which it almost works? :p
+2011-11-25 07:36:45 UTC <tgeeky> 18 is the other "exception"
+2011-11-25 07:36:52 UTC <luite> papers should really include wolfram alpha links :p
+2011-11-25 07:37:02 UTC <tgeeky> screw that. wolfgang haskell links!
+2011-11-25 07:37:21 UTC <tgeeky> harder to tell with 12, but it looks like it
+2011-11-25 07:37:43 UTC <luite> yeah once someone writes a proper symbolic manipulation lib for haskell :)
+2011-11-25 07:42:00 UTC <tgeeky> luite: now
+2011-11-25 07:42:02 UTC <tgeeky> for the big finish
+2011-11-25 07:42:15 UTC <tgeeky> ([(z-1)^d - z - 1]*z^(d-1) + (z - 1)^d)=0 where d = 12, z = phi^2 - phi - 1
+2011-11-25 07:42:16 UTC <tgeeky> try that
+2011-11-25 07:42:35 UTC <tgeeky> (where the last term is the supertrace of the generators of the apollonian group)
+2011-11-25 07:42:46 UTC <luite> lol
+2011-11-25 07:42:56 UTC <tgeeky> as well as just some number in the phi number system
+2011-11-25 07:43:17 UTC <luite> there has already been a discussion on implementing mathematica in haskell
+2011-11-25 07:43:25 UTC <tgeeky> and?
+2011-11-25 07:43:39 UTC <tgeeky> I just want/need it to explore number systems that aren't the Reals/Complexes
+2011-11-25 07:43:48 UTC <tgeeky> as well as fractal systems in general
+2011-11-25 07:44:14 UTC <luite> with jon d harrop claiming to have written a "mathematica implementation" in 4 days in ocaml, as one of his first ocaml programs, which he sold to wolfram for $4500 and a few free mathematica copies
+2011-11-25 07:44:31 UTC <tgeeky> pics or didn't happen?
+2011-11-25 07:45:03 UTC <luite> he's a well-known troll
+2011-11-25 07:45:28 UTC <tgeeky> if you could do that
+2011-11-25 07:45:33 UTC <tgeeky> you wouldn't get a check, you'd get a job
+2011-11-25 07:46:43 UTC <tgeeky> Wolfram would say something like: How much are you making? We'll give you (wolframalpha.com - random number between 5 and 10) times that much.
+2011-11-25 07:46:52 UTC <luite> probably better to go immediately for venture capital
+2011-11-25 07:47:27 UTC <tgeeky> perhaps. if you were in it for the science (and not the money), that wouldn't seem like the surest route
+2011-11-25 07:49:12 UTC <tgeeky> but what do I know
+2011-11-25 07:49:20 UTC <luite> dunno, if you write mathematica in 4 days, then write alpha in 2 more, all matlab and R features in a week, and sell everything ;p
+2011-11-25 07:51:54 UTC <tgeeky> hehe. I'm so terrible awed about people who are *so clearly* not bullshitting (Oleg...) that I find it hard to even pay attention to bullshitters
+2011-11-25 07:52:00 UTC <luite> "NDA, although I did most of the reverse engineering independently beforehand.
+2011-11-25 07:52:03 UTC <luite> They use lots of nifty tricks (basically any trick that you can do easily in
+2011-11-25 07:52:05 UTC <luite> C) but there were plenty of other tricks they didn't try because they are far
+2011-11-25 07:52:08 UTC <luite> from obvious in C."
+2011-11-25 07:52:17 UTC <luite> hehe he reverse engineered all mathematica term rewriting tricks beforehand...
+2011-11-25 07:52:40 UTC <luite> but he can't show, because of an NDA :)
+2011-11-25 07:55:16 UTC <tgeeky> hehe. bedtime.
+2011-11-25 07:55:21 UTC <luite> nifhr
+2011-11-25 07:55:22 UTC <luite> night
+2011-11-25 07:55:26 UTC <tgeeky> you better not make me sign an NDA to use wolfgang
+2011-11-25 07:55:44 UTC <luite> no I'm going to sell it to Wolfram before anyone can use it
+2011-11-25 07:55:57 UTC <tgeeky> but.. but.. then..
+2011-11-25 07:56:01 UTC <tgeeky> *head explodes*
+2011-11-25 15:57:57 UTC <ClaudiusMaximus> some nice diagrams in this thread, want to do something similar.. http://new-supercollider-mailing-lists-forums-use-these.2681727.n2.nabble.com/plotting-patterns-td7029715.html
+2011-11-25 16:03:53 UTC <byorgey> nice
+2011-11-25 16:04:47 UTC <ClaudiusMaximus> but so many projects, so little time...
+2011-11-25 16:05:00 UTC <byorgey> hehe
+2011-11-25 16:27:36 UTC <luite> hmm, how do you guys think I should handle package versions for wolfgang? obviously many will become outdated pretty quickly... but it's not good to break people's pages
+2011-11-25 16:28:05 UTC <byorgey> oh, very interesting question
+2011-11-25 16:31:09 UTC <byorgey> I don't know that there's really anything reasonable you can do other than just break people's pages
+2011-11-25 16:31:15 UTC <luite> it's been bugging me for a while now, and I don't really know a good solution. it might affect the next thing i need to write, the daemon that compiles the pages in the background
+2011-11-25 16:31:49 UTC <byorgey> at first I thought of allowing pages to have an associated list of dependencies
+2011-11-25 16:32:03 UTC <byorgey> but then you'd have to maintain a separate cabal-dev sandbox for every page or something like that
+2011-11-25 16:32:17 UTC <luite> yeah that's not efficient enough
+2011-11-25 16:32:21 UTC <byorgey> right
+2011-11-25 16:32:43 UTC <byorgey> but trying to maintain a bunch of different versions of everything in one package DB will just lead to conflicts
+2011-11-25 16:34:02 UTC <luite> I can have a few standard configs, where a page will user the latest config when first saved. when a page is updated later, and there's a newer config available, the user will be prompted to use that one
+2011-11-25 16:34:31 UTC <luite> where one config is just one set of installed pacakge versions, minor upgrades and package additions can be possible within one config
+2011-11-25 16:35:40 UTC <luite> problem is though that there can be dependencies between pages, if your version runs, say, api 12.0, and the other still 11.1, then itm ight not load correctly
+2011-11-25 16:36:11 UTC <luite> or worse: if some lower level page gets updated to 12
+2011-11-25 16:36:20 UTC <fryguybob> This is a problem I would like to explore in general, some sort of automated or assisted code changes for API changes that gives some sort of correctness guarantee in situations where it can.
+2011-11-25 16:37:02 UTC <luite> (problem is that every config takes a large amount of RAM, the current wolfgang server has 8GB, but with a few configs active it might need 16 or 24GB
+2011-11-25 16:38:47 UTC <luite> going to eat now, but tell me if you have any suggestions :)
+2011-11-25 17:36:49 UTC <tgeeky_> luite: well, the only thing I can think of
+2011-11-25 17:36:56 UTC <tgeeky_> is preforming the "brainless" attempts at un-breaking something
+2011-11-25 17:37:10 UTC <tgeeky_> that is, auto-incrementing package versions in cabal files
+2011-11-25 17:41:11 UTC <luite> but how will that help for wiki pages?
+2011-11-25 17:42:07 UTC <tgeeky_> I'm not sure.
+2011-11-25 17:42:41 UTC <luite> say wolfgang starts with diagrams 0.4 and in a few months version 0.5 with awesome new features, but some api incompatibilities, is released, most users will want to upgrade
+2011-11-25 17:42:42 UTC <tgeeky_> 'standard config' includes what?
+2011-11-25 17:43:12 UTC <luite> complete set of packages
+2011-11-25 17:43:30 UTC <luite> a single version of each
+2011-11-25 17:44:02 UTC <tgeeky_> including a specific version of ghc?
+2011-11-25 17:45:07 UTC <luite> yes
+2011-11-25 17:45:25 UTC <tgeeky_> anyway, if one must manually "add" the configs (that is, a user must specify the config), then just run a computer program to "try" and upgrade enough to generate a new config
+2011-11-25 17:45:42 UTC <tgeeky_> that is, ignore if diagrams has API inconsistencies
+2011-11-25 17:45:47 UTC <tgeeky_> and just try to get it to compile automatically
+2011-11-25 17:45:57 UTC <tgeeky_> then, label the configuration as 'exerminetal' or something
+2011-11-25 17:46:05 UTC <luite> hmm
+2011-11-25 17:46:36 UTC <luite> exerimental
+2011-11-25 17:46:40 UTC <luite> err
+2011-11-25 17:46:42 UTC <tgeeky_> hehe
+2011-11-25 17:46:43 UTC <tgeeky_> experimental
+2011-11-25 17:46:44 UTC <luite> exermineal
+2011-11-25 17:46:49 UTC <luite> :p
+2011-11-25 17:47:12 UTC <byorgey> exterminatal
+2011-11-25 17:47:32 UTC <tgeeky_> i presumed (incorecctly) that you had already shot the moon and got the ability to let users interactively ask for a hackage package to be exposed to them
+2011-11-25 17:47:35 UTC <luite> well I thought this: if a page is created with config 11, and any of its dependencies is updated to config 12, then bump it and mark it experimental
+2011-11-25 17:48:20 UTC <byorgey> ACTION thinks version 1 should just punt on the issu
+2011-11-25 17:48:31 UTC <tgeeky_> me too
+2011-11-25 17:48:43 UTC <tgeeky_> but I think that about everything he's doing, because I'm foaming at the mouth to see it/hack it
+2011-11-25 17:48:51 UTC <luite> tgeeky_: unfortunately no, for two reasons
+2011-11-25 17:49:04 UTC <luite> one is that for efficiency all packages need to be prelinked in memory
+2011-11-25 17:49:14 UTC <byorgey> then a later version can include some configuration stuff etc. once you get som experience seeing how much of a problem it is, what people want, etc.
+2011-11-25 17:49:50 UTC <luite> byorgey: yeah I'm certainly not going to write a lot of config/versioning code for the first version
+2011-11-25 17:49:59 UTC <luite> but I do want to think about it a bit :)
+2011-11-25 17:50:17 UTC <byorgey> fair enough =)
+2011-11-25 17:52:11 UTC <tgeeky_> byorgey: re: supercollider
+2011-11-25 17:52:21 UTC <tgeeky_> that is nice to want to have
+2011-11-25 17:52:32 UTC <byorgey> tgeeky_: eh?
+2011-11-25 17:52:41 UTC <luite> tgeeky_: some other alternative would be to disambiguate packages, let them export something like Diagrams.Zero.Four.Diagrams.TwoD
+2011-11-25 17:53:18 UTC <tgeeky_> I will observe, even if it's unhelpful, that the graphing functionality for pretty complex (scientific) graphs is provied by the HROOT package (with ROOT backend)
+2011-11-25 17:53:25 UTC <tgeeky_> byorgey: the supercollider link above
+2011-11-25 17:54:54 UTC <luite> although that might not be better than just package imports
+2011-11-25 17:54:59 UTC <byorgey> ah
+2011-11-25 17:55:27 UTC <byorgey> tgeeky_: yeah, I'm not focusing on data visualization with diagrams
+2011-11-25 17:55:53 UTC <byorgey> for that there is already HROOT, Chart, and hieroglyph
+2011-11-25 18:00:50 UTC <luite> tgeeky_: hmm, I'm going to think about it, maybe it could automatically collect dependencies for every page and let the user choose some of the installed package versions with some dialog
+2011-11-25 18:02:19 UTC <tgeeky_> byorgey: yeah. that said, ROOT is a pretty darn big library to pull in, but it is one of the foremost in the world
+2011-11-25 18:05:27 UTC <byorgey> tgeeky_: indeed
+2011-11-25 18:07:27 UTC <luite> ok I think I have something figured out that will not need extra code now and is probably reasonably upgrade proof :)
+2011-11-25 18:07:52 UTC <byorgey> =O
+2011-11-25 18:07:53 UTC <byorgey> nice
+2011-11-25 18:08:32 UTC <luite> byorgey: well it would require lots of user interface work to actually manage versions
+2011-11-25 18:08:48 UTC <byorgey> agreed. which is part of why I don't think you should bother. =)
+2011-11-25 18:09:11 UTC <luite> yeah that's something for later
+2011-11-25 18:09:35 UTC <luite> but the basic idea is just to compile each wiki page, with all its dependencies, in its own dir
+2011-11-25 18:09:57 UTC <luite> and when package version management is required, to set -package flags at runtime
+2011-11-25 18:10:47 UTC <luite> will require extra disk space, and more cpu power for recompilation, but that won't really be an issue unless people start to update thousands of pages every hour
+2011-11-25 18:11:23 UTC <byorgey> makes sense
+2011-11-25 18:11:24 UTC <luite> and otherwise I'll get jimmy wales to ask for donations for more servers
+2011-11-25 18:11:29 UTC <byorgey> haha
+2011-11-25 18:16:34 UTC <luite> "all its dependencies" just means other wiki pages btw, new cabal packages are not automatically installed or compiled
+2011-11-25 18:16:53 UTC <luite> that would be too much trouble, at least for nwo
+2011-11-25 18:16:54 UTC <luite> now
+2011-11-26 06:49:15 UTC <luite> hmm
+2011-11-26 06:53:19 UTC <tgeeky> hmm indeed
+2011-11-26 06:53:52 UTC <tgeeky> byorgey: or luite: do you know any papers about Streams (or sequences in Stream form that are interesting) other than: Hinze Unique Fixed Point paper, Hinze Streams paper ...
+2011-11-26 06:58:37 UTC <luite> nope I don't know anything about streams
+2011-11-26 07:55:52 UTC <byorgey> tgeeky: J.J.M.M. Rutten, Behavioural Differential Equations: A Coinductive Calculus of Streams, Automata, and Power Series (2000)
+2011-11-26 07:56:06 UTC <byorgey> tgeeky: also Rutten, Elements of Stream Calculus: (An Extensive Exercise in Coinduction)
+2011-11-26 07:56:40 UTC <tgeeky> byorgey: thanks.
+2011-11-26 07:57:02 UTC <tgeeky> I suppose this is turning into a merge and exemplification of the universe of streams
+2011-11-26 07:57:22 UTC <tgeeky> I've got every example from the papers I listed, and the new G. Hutton one
+2011-11-26 07:57:51 UTC <tgeeky> as well as some diffs and sums
+2011-11-26 07:57:59 UTC <tgeeky> and OEIS references (and verification) for everything!
+2011-11-26 08:00:27 UTC <tgeeky> ooh, this paper looks much richer
+2011-11-26 08:06:07 UTC <tgeeky> and this one even more so lol
+2011-11-26 08:16:00 UTC <luite> hmm
+2011-11-26 18:51:55 UTC <tgeeky> luite: hmmmmmm
+2011-11-26 18:54:03 UTC <luite> hmmmmmmmmmmmmmmmmmmmmmm
+2011-11-26 22:19:52 UTC <tgeeky> ok, so for releasing my first hackage package
+2011-11-26 22:20:12 UTC <tgeeky> i should run my code through what things to test: doctest (done), hlint (not done), ... ?
+2011-11-27 02:44:22 UTC <tgeeky> byorgey: I hope you don't mind putting you 'in the loop' on that email
+2011-11-27 02:44:27 UTC <tgeeky> I sent a few hours ago
+2011-11-27 03:02:43 UTC <byorgey> tgeeky: no, I don't mind
+2011-11-27 03:03:01 UTC <byorgey> tgeeky: though I don't really think I have anything to contribute to the discussion =)
+2011-11-27 03:03:27 UTC <byorgey> tgeeky: re: releasing Hackage package, run it through  cabal check  and  cabal upload -c
+2011-11-27 03:04:12 UTC <byorgey> tgeeky: also, do 'cabal sdist', copy the generated .tgz file somewhere else, unpack, and do 'cabal-dev install'  to make sure it builds properly
+2011-11-27 03:04:28 UTC <byorgey> (if you don't have cabal-dev just cabal install it)
+2011-11-27 03:04:45 UTC <byorgey> I mean, if you don't have cabal-dev you should 'cabal install cabal-dev'
+2011-11-27 03:10:58 UTC <tgeeky> yes, I have it
+2011-11-27 03:11:01 UTC <tgeeky> and thanks
+2011-11-27 05:40:16 UTC <luite> bah
+2011-11-27 05:40:25 UTC <luite> building websites is boring and tedious :(
+2011-11-27 05:59:32 UTC <luite> http://hdiff.luite.com/tmp/resources1.png <- working on this, half done
+2011-11-27 06:01:54 UTC <luite> needs some inputs to filter resources (show only resources that I have uploaded, where name contains xxx), and the part where you can preview the file, set attributes (locked/public) and view history, upload a new revision, and more cowbell
+2011-11-27 15:10:05 UTC <byorgey> more cowbell haha =)
+2011-11-27 17:18:20 UTC <luite> byorgey: what's your email address?
+2011-11-27 17:21:44 UTC <byorgey> luite: byorgey at cis.upenn.edu
+2011-11-27 17:22:34 UTC <luite> what's the cifference between cis and seas?
+2011-11-27 17:22:39 UTC <luite> difference
+2011-11-27 17:23:17 UTC <byorgey> luite: oh, they both go the same place
+2011-11-27 17:23:37 UTC <byorgey> luite: SEAS = School of Engineering and Applied Science, CIS = Computer and Information Science
+2011-11-27 17:23:44 UTC <luite> ah ok :)
+2011-11-27 17:23:58 UTC <byorgey> CIS \subset SEAS
+2011-11-27 17:24:00 UTC <luite> hmm, I hope I have the right addresses now for everyone
+2011-11-27 17:24:34 UTC <byorgey> ACTION goes to stare at his inbox while repeatedly hitting 'refresh'
+2011-11-27 17:29:13 UTC <luite> hehe I'm still typing a few things :p
+2011-11-27 17:34:08 UTC <byorgey> refresh refresh refresh refresh
+2011-11-27 17:34:20 UTC <byorgey> hehe, just kidding, I am patient
+2011-11-27 17:35:00 UTC <luite> you may refresh now
+2011-11-27 17:36:54 UTC <byorgey> oh! didn't realize it was for the Haskell committee. you know you can just email committee@haskell.org?
+2011-11-27 17:37:06 UTC <luite> oh I didn't :(
+2011-11-27 17:37:58 UTC <luite> ah I see it now on the wiki page, I would've seen it if it was a real link instead of committee [AT] haskel.org ;)
+2011-11-27 17:40:58 UTC <byorgey> heh
+2011-11-27 17:41:56 UTC <luite> http://haskellorg.wordpress.com/ I looked at this page instead of the wiki
+2011-11-27 17:42:22 UTC <luite> although it's also mentioned there, at the bottom
+2011-11-27 17:45:20 UTC <luite> they will of course deny my request now, for not properly following procedures
+2011-11-27 17:46:47 UTC <byorgey> of course, that's pretty standard policy
+2011-11-27 17:47:49 UTC <byorgey> luite: is this better? http://haskell.org/haskellwiki/Haskell.org_committee
+2011-11-27 17:49:14 UTC <luite> hehe
+2011-11-27 17:49:45 UTC <luite> I probably would've seen it already if I had opened the wiki page
+2011-11-27 17:50:01 UTC <luite> since it's close to the list of members
+2011-11-27 17:50:15 UTC <luite> but when I sent the mail, I only had the haskellorg.wordpress.com page open
