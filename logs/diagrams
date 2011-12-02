@@ -6471,3 +6471,392 @@
 2011-11-27 17:49:45 UTC <luite> I probably would've seen it already if I had opened the wiki page
 2011-11-27 17:50:01 UTC <luite> since it's close to the list of members
 2011-11-27 17:50:15 UTC <luite> but when I sent the mail, I only had the haskellorg.wordpress.com page open
+2011-11-27 21:54:29 UTC <fryguybob> Ah, my diagram has no dashed lines in it because I haven't implemented dashed lines in diagrams-postscript yet.
+2011-11-27 21:55:00 UTC <luite> hehe
+2011-11-27 21:55:26 UTC <luite> does postscript have built-in dashing?
+2011-11-27 21:56:18 UTC <fryguybob> I think so, I think it is basically identical to the interface Cairo gives.
+2011-11-28 15:01:34 UTC <fryguybob> ACTION quietly pushes an update to diagrams-postscript that allows for more colors then just primary and secondary.
+2011-11-28 15:16:05 UTC <byorgey> =)
+2011-11-28 17:27:50 UTC <fryguybob> Now that I have more colors: http://i.imgur.com/Wz12W.png
+2011-11-28 17:30:01 UTC <tgeeky> I'm colorblind, all I see is a mongoose.
+2011-11-28 23:18:14 UTC <byorgey> fryguybob: cool, what's that?
+2011-11-28 23:33:06 UTC <fryguybob> byorgey: Showing that 3-SAT is reducible to 3-colorable.
+2011-11-29 00:50:32 UTC <fryguybob> byorgey: I also discovered that text encoding in postscript is quite weird.  I wanted to use Â¬ but that doesn't map to the expected symbol.
+2011-11-29 02:25:43 UTC <byorgey> fryguybob: oh, boo
+2011-11-29 02:30:38 UTC <fryguybob> byorgey: I'll have to sort it all out at some point, but it might be the case that anything beyond ASCII needs the glyph embedded.
+2011-11-29 02:35:39 UTC <byorgey> I guess postscript was invented back in a time when the world of computers was more Anglo-centric
+2011-11-29 02:48:09 UTC <fryguybob> Ah, ISOLatin1Encoding might help.
+2011-11-29 03:09:50 UTC <fryguybob> I like how Adobe uses "Standard" when it means "non-standard"
+2011-11-29 03:10:59 UTC <byorgey> hehehe
+2011-11-29 03:11:33 UTC <byorgey> fryguybob: so are you using diagrams to illustrate your theory of computation HW or something?
+2011-11-29 03:11:48 UTC <fryguybob> ISOLatin1Encoding does get me Â¬.
+2011-11-29 03:11:54 UTC <fryguybob> byorgey: Indeed.
+2011-11-29 03:13:12 UTC <byorgey> nice =)
+2011-11-29 05:07:05 UTC <fryguybob> byorgey: My diagrams: http://hpaste.org/54637
+2011-11-29 05:22:29 UTC <byorgey> oh drat, I can't try building it myself because I have diagrams-lib in pieces on the floor adding animation
+2011-11-29 05:22:42 UTC <byorgey> this is why I really ought to use cabal-dev for development
+2011-11-29 05:45:41 UTC <tgeeky> it's right in the name!
+2011-11-29 05:46:02 UTC <tgeeky> though now that there's cabal-src, that argument is confusing
+2011-11-29 08:24:39 UTC <luite> hmm
+2011-11-29 08:25:17 UTC <luite> byorgey: you can still use cabal-dev for just the postscript backend, installing from hackage?
+2011-11-29 12:23:18 UTC <fryguybob> luite: The postscript backend isn't on hackage yet.
+2011-11-29 12:24:26 UTC <luite> fryguybob: oh I meant cabal-dev install the postscript backend (From the darcs or git repository) with cabal-dev, downloading all dependencies from hackage
+2011-11-29 12:28:02 UTC <fryguybob> ah
+2011-11-29 13:40:30 UTC <byorgey> luite: no, diagrams-postscript depends on the darcs versions of diagrams-core and diagrams-lib
+2011-11-29 13:43:35 UTC <luite> oh right, but then you can just darcs checkout that branch, cabal-dev add-source ../path/to/checked/out/branch  followed by cabal-dev install
+2011-11-29 18:33:47 UTC <luite> http://hdiff.luite.com/tmp/fp-mockup.png <- hmm, I've updated a mockup for a possible design of the wolfgang frontpage, to match the new fixed-position top-bar. not sure if I like it or not, comments?
+2011-11-29 18:38:16 UTC <tgeeky> quite elegant
+2011-11-29 18:38:28 UTC <tgeeky> pretty beautiful, in fact
+2011-11-29 18:38:29 UTC <tgeeky> good job
+2011-11-29 18:39:18 UTC <luite> oh sorry I forgot to add some pastes/edits by you :p
+2011-11-29 18:39:38 UTC <tgeeky> hm?
+2011-11-29 18:39:51 UTC <luite> oh I used byorgeys and fryguybobs names for some
+2011-11-29 18:40:03 UTC <tgeeky> oh, I see
+2011-11-29 18:40:21 UTC <tgeeky> using my username as a lorum ipsum :)
+2011-11-29 18:40:33 UTC <luite> something like that
+2011-11-29 18:40:37 UTC <tgeeky> really, it's very nice. I'm impressed.
+2011-11-29 18:40:56 UTC <tgeeky> however, the positioning of the 'profile' part
+2011-11-29 18:41:04 UTC <tgeeky> could probably be improved
+2011-11-29 18:41:29 UTC <tgeeky> perhaps -- put an icon in the top bar, which has a pointer directly downward (to a profile bar)
+2011-11-29 18:41:41 UTC <luite> the "page" menu is on the left of it in other pages
+2011-11-29 18:42:38 UTC <luite> and the "search" placeholder is still the wrong color
+2011-11-29 18:42:51 UTC <luite> because I didn't know how to change it in html
+2011-11-29 18:43:27 UTC <luite> tgeeky: would you want another profile bar somewhere?
+2011-11-29 18:43:37 UTC <tgeeky> yeah i'm drawing a mspaint mockup right now
+2011-11-29 18:46:43 UTC <luite> hehe my weapon of choice is photoshops, need to have layers :)
+2011-11-29 18:47:29 UTC <luite> I'm a bit worried about how it will look on windows though, thin fonts are risky, linux and mac usually render them ok
+2011-11-29 18:52:10 UTC <tgeeky> luite: http://i.imgur.com/q5jKS.png
+2011-11-29 18:52:28 UTC <luite> lol
+2011-11-29 18:52:47 UTC <luite> perfectly executed ;p
+2011-11-29 18:52:51 UTC <tgeeky> mspaint ftw
+2011-11-29 18:53:02 UTC <tgeeky> something along those lines :o
+2011-11-29 18:53:29 UTC <luite> hehe actully profile opens a (modal) popup that shows those things
+2011-11-29 18:53:59 UTC <tgeeky> ok, but either way, you want people who (aren't) logged in, to do so - because it's a huge advantage for them in terms of functionality, I presume
+2011-11-29 18:54:24 UTC <tgeeky> anyway
+2011-11-29 18:54:26 UTC <luite> yeah they need it to edit pages (everyone can make pastes) :)
+2011-11-29 18:54:29 UTC <tgeeky> i have to restart my computer to swap out some hard drives
+2011-11-29 18:54:32 UTC <luite> ok
+2011-11-29 18:54:38 UTC <tgeeky> bbiaf
+2011-11-29 19:33:32 UTC <byorgey> luite: hahahahaha I love the "news" items =)
+2011-11-29 19:34:11 UTC <luite> trying to mimic the wolfram|alpha launch news ;p
+2011-11-29 19:37:14 UTC <luite> unfortunately I haven't yet reinvented science by writing a book
+2011-11-29 19:38:34 UTC <luite> ugh it says crows instead of crowds
+2011-11-29 19:38:41 UTC <byorgey> hehe
+2011-11-29 19:38:55 UTC <byorgey> hah, I didn't notice that
+2011-11-29 19:38:58 UTC <byorgey> I like it though
+2011-11-29 19:39:02 UTC <byorgey> those crazy crows!
+2011-11-29 19:39:10 UTC <byorgey> CAW CAW CAW
+2011-11-29 19:43:56 UTC <byorgey> luite: perhaps you ought to include a bit on the front page stating what Wolfgang actually is
+2011-11-29 19:44:04 UTC <luite> hmm, from other channels: it's not clear what's important in the right (grey) columns, change "get started" to a button
+2011-11-29 19:44:29 UTC <byorgey> If I didn't already know it would be hard to figure it out just from looking at that page
+2011-11-29 19:44:47 UTC <byorgey> something about pastes? or about image hosting perhaps?
+2011-11-29 19:45:01 UTC <luite> yeah that's true, good point
+2011-11-29 19:46:10 UTC <luite> I was hoping to do the really important things at the "Get started" and "Updates" locations, maybe that could/should go there
+2011-11-29 19:47:48 UTC <byorgey> I am not going to click "Get started" until I at least have a vague idea what it is I'm getting started with
+2011-11-29 19:48:05 UTC <luite> all those "click to read ..." can be replaced by "more..." links, leaving more space for actually saying something
+2011-11-29 19:49:20 UTC <byorgey> indeed
+2011-11-29 19:52:49 UTC <luite> k noted :) it's a bit annoying that everyone thinks I should change a few things, but those things are never the same ;p
+2011-11-29 19:53:38 UTC <tgeeky> hehe. I note that, if you release, they might change a few things for you :)
+2011-11-29 19:54:01 UTC <tgeeky> but I appreciate that one needs a nice v0.0.1 to be happy with it
+2011-11-29 19:54:32 UTC <luite> hehe yeah I really shouldn't spend much more time stressing all little design details
+2011-11-29 19:54:49 UTC <luite> but it's more fun to work on something if you know that it's going to look ok
+2011-11-29 19:54:58 UTC <tgeeky> yes
+2011-11-29 19:55:38 UTC <luite> I'm not quite happy with the footer in this page btw
+2011-11-29 19:56:05 UTC <luite> it worked somewhat ok in the regular wiki document view, but with the two gray tones here, dunno
+2011-11-29 19:59:05 UTC <luite> byorgey: btw I don't think a second subdomain is necessary after all if I load the risky stuff from an entirely different domain (I can use luite.com for that)
+2011-11-29 19:59:27 UTC <byorgey> luite: ok
+2011-11-29 19:59:39 UTC <luite> it would even be more secure, since it doesn't expose cookies that are (inadvertently?) set for the whole domain
+2011-11-29 19:59:47 UTC <luite> dunno if loading from another domain is ok with the policy
+2011-11-29 20:01:24 UTC <byorgey> I'm sure it would be fine.
+2011-11-29 20:02:12 UTC <byorgey> As far as I can see the point of the policy is just to distinguish between projects that just want some web space and things that are actually provding a service, not to be picky about what exactly counts as content.
+2011-11-29 20:05:27 UTC <luite> is there also a policy for email addresses at subdomains? could moderators@subdomain.haskell.org for example be used for an address for warning people about objectionable content?
+2011-11-29 20:06:59 UTC <byorgey> I don't know.
+2011-11-29 22:28:08 UTC <luite> woohoo, codemirror has support for line wrapping now!
+2011-11-29 22:28:21 UTC <luite> (the editor I use for wolfgang)
+2011-11-29 22:32:37 UTC <fryguybob> ACTION misreads wrapping as rapping.
+2011-11-29 22:36:11 UTC <luite> oh great feature suggestion
+2011-11-29 22:36:24 UTC <luite> should be possible with one of those free text-to-speech webservices
+2011-11-29 22:37:59 UTC <luite> fryguybob: do you have suggestions for my frontpage design :)
+2011-11-29 22:39:29 UTC <fryguybob> I think it looks nice.  There are always lots of people who say you *must* do X.  Then the innovative websites of the year are innovative by not doing X.
+2011-11-29 22:39:58 UTC <luite> hehe
+2011-11-29 22:40:30 UTC <fryguybob> I think the ability to tweak and refresh a look over time is more important then a static "best" look.
+2011-11-29 22:41:10 UTC <fryguybob> That said there are certainly things that can look really bad.  I did not see any of those things in your front page :D.
+2011-11-29 22:41:18 UTC <luite> hehe I've already found out that it's impossible to make a best look
+2011-11-29 22:42:35 UTC <luite> it's really easy to make a very clean and stylish look as long as you don't add any content or functionality :)
+2011-11-29 22:43:19 UTC <fryguybob> Ha, yeah.
+2011-11-29 22:44:05 UTC <luite> hmm the new codemirror still has some bugs on my page, guess fixing those is more important than the design :)
+2011-11-30 04:54:49 UTC <luite> javascript javascript javascript javascript javascript javascript
+2011-11-30 18:06:01 UTC <fryguybob> byorgey: Is the minimal bounds stuff implemented somewhere?
+2011-11-30 21:25:52 UTC <byorgey> fryguybob: I think Taejo might have been working on it but I don't know the status.
+2011-12-01 04:56:38 UTC <byorgey> > 2 + 3
+2011-12-01 04:56:38 UTC <diabot>  Terminated
+2011-12-01 04:56:59 UTC <byorgey> @src map
+2011-12-01 04:56:59 UTC <diabot> map _ []     = []
+2011-12-01 04:56:59 UTC <diabot> map f (x:xs) = f x : map f xs
+2011-12-01 04:59:21 UTC <byorgey> > 2 + 3
+2011-12-01 04:59:21 UTC <diabot>   mueval: Most RTS options are disabled. Link with -rtsopts to enable them.
+2011-12-01 05:01:04 UTC <luite> hehe
+2011-12-01 05:01:13 UTC <luite> map (,1) [1..10]
+2011-12-01 05:01:16 UTC <luite> oops
+2011-12-01 05:01:20 UTC <luite> > map (,1) [1..10]
+2011-12-01 05:01:21 UTC <diabot>   Could not find module `ShowIO'
+2011-12-01 05:01:21 UTC <diabot>  Perhaps you meant ShowQ (from show-0.4.1.1....
+2011-12-01 05:01:28 UTC <byorgey> > 2 + 3
+2011-12-01 05:01:28 UTC <diabot>   Could not find module `ShowIO'
+2011-12-01 05:01:28 UTC <diabot>  Perhaps you meant ShowQ (from show-0.4.1.1....
+2011-12-01 05:01:37 UTC <byorgey> hmm
+2011-12-01 05:01:40 UTC <byorgey> progress!
+2011-12-01 05:02:22 UTC <luite> I don't remember seeing that error
+2011-12-01 05:02:22 UTC <byorgey> This is just lambdabot I've got running
+2011-12-01 05:02:36 UTC <luite> I've run lambdabot on another network for a while
+2011-12-01 05:03:01 UTC <byorgey> but I plan to customize it with diagrams-specific stuff like extensions to @src for diagrams combinators, and a way to generate diagrams
+2011-12-01 05:04:16 UTC <byorgey> ah, the 'show' package used to export ShowIO prio to version 0.4
+2011-12-01 05:04:29 UTC <byorgey> now to figure out what exactly is expecting to find ShowIO
+2011-12-01 05:05:29 UTC <luite> mueval probably :)
+2011-12-01 05:05:40 UTC <byorgey> actually, turns out it's lambdabot, not mueval
+2011-12-01 05:05:42 UTC <luite> I think you can debug most of it by trying mueval on the command line
+2011-12-01 05:05:44 UTC <luite> oh really?
+2011-12-01 05:06:00 UTC <luite> hmm
+2011-12-01 05:06:20 UTC <luite> how do you want to generate diagrams with it? make a clickable web url?
+2011-12-01 05:06:44 UTC <byorgey> yeah, have it upload the generated diagram to some image hosting site and print a short url in the channel
+2011-12-01 05:07:06 UTC <byorgey> dunno how useful it will actually be but it sounds fun =)
+2011-12-01 05:07:31 UTC <byorgey> for a really good time, someone should write an aalib backend, and it can paste the diagram directly into the channel ;)
+2011-12-01 05:08:13 UTC <byorgey> > 2 + 3
+2011-12-01 05:08:14 UTC <diabot>   Could not find module `Control.Parallel.Strategies'
+2011-12-01 05:08:14 UTC <diabot>  Use -v to see a list o...
+2011-12-01 05:08:21 UTC <byorgey> blarg
+2011-12-01 05:08:32 UTC <byorgey> ok, I see what needs to be done
+2011-12-01 05:08:48 UTC <byorgey> L.hs doesn't get compiled with lambdabot, it only gets evaluated by mueval
+2011-12-01 05:09:00 UTC <luite> yeah I remember that problem :)
+2011-12-01 05:09:06 UTC <luite> having to install all those packages by hand
+2011-12-01 05:09:25 UTC <byorgey> well, or just delete some imports from L.hs =)
+2011-12-01 05:09:46 UTC <byorgey> I really don't care whether people get to use parallel strategies for defining diagrams or not
+2011-12-01 05:10:57 UTC <byorgey> > 2 + 3
+2011-12-01 05:10:58 UTC <diabot>   5
+2011-12-01 05:11:03 UTC <luite> yay
+2011-12-01 05:11:03 UTC <byorgey> \o/
+2011-12-01 05:11:09 UTC <luite> > map (,1) [1..10]
+2011-12-01 05:11:10 UTC <diabot>   Illegal tuple section: use -XTupleSections
+2011-12-01 05:11:12 UTC <luite> aw
+2011-12-01 05:11:38 UTC <byorgey> hmm, how would I turn that on?
+2011-12-01 05:11:45 UTC <byorgey> I guess it's a mueval thing
+2011-12-01 05:12:22 UTC <luite> yeah, but I don't know :)
+2011-12-01 05:13:16 UTC <byorgey> well, I've got better things to do at this point =)
+2011-12-01 05:13:52 UTC <byorgey> luite: by the way, you're an admin for diabot
+2011-12-01 05:13:59 UTC <byorgey> dunno what that lets you do
+2011-12-01 05:14:27 UTC <luite> cool! don't know either :p
+2011-12-01 05:14:48 UTC <luite> guess I'll have to make you a Wolfgang admin in return now
+2011-12-01 05:16:19 UTC <byorgey> heh, not necessary =)
+2011-12-01 05:16:51 UTC <byorgey> > map (,1) [1..10]
+2011-12-01 05:16:52 UTC <diabot>   [(1,1),(2,1),(3,1),(4,1),(5,1),(6,1),(7,1),(8,1),(9,1),(10,1)]
+2011-12-01 05:16:58 UTC <byorgey> turns out it was easy =)
+2011-12-01 05:17:36 UTC <byorgey> Plugin/Eval.hs just passes a list of extensions to mueval on the command line
+2011-12-01 05:17:51 UTC <luite> ah
+2011-12-01 05:18:19 UTC <luite> do you want to use unsafePerformIO to write a file for diagrams?
+2011-12-01 05:19:35 UTC <byorgey> luite: hmm... I hadn't really thought through it that carefully
+2011-12-01 05:20:40 UTC <byorgey> maybe I should just wait until Wolfgang is fully operational, then diabot can just create a temporary Wolfgang page and let Wolfgang deal with all the icky sandboxing etc. =)
+2011-12-01 05:21:14 UTC <luite> hehe it will get a pastebin for those
+2011-12-01 05:21:31 UTC <byorgey> exactly =)
+2011-12-01 05:21:50 UTC <byorgey> but a pastebin that will still do things like show you diagrams, right?
+2011-12-01 05:21:53 UTC <luite> but a simple unsafePerformIO wrapper would also work
+2011-12-01 05:21:55 UTC <luite> yeah
+2011-12-01 05:22:30 UTC <byorgey> well, but what if someone submits a diagram that eats up all the memory on my system while generating the output file?
+2011-12-01 05:23:04 UTC <luite> mueval uses some memory limits and lambdabot kills it after a few seconds
+2011-12-01 05:23:39 UTC <byorgey> hmm, I guess what I'd have to do is hack mueval so it can generate diagrams as well as just give textual output
+2011-12-01 05:23:47 UTC <luite> you can still make lambdabot eat all memory though, I think it was with @type or something
+2011-12-01 05:24:00 UTC <byorgey> oh, sure
+2011-12-01 05:24:13 UTC <byorgey> ask for the type of  f . f . f . f . f . f . f . f . f  where f x = (x,x)
+2011-12-01 05:24:50 UTC <luite> hehe I think someone already did that last year and Cale got warning mails from linode that his vps was swapping too much
+2011-12-01 05:24:57 UTC <byorgey> hehehe
+2011-12-01 05:25:22 UTC <byorgey> typechecking as DOS attack
+2011-12-01 05:26:51 UTC <luite> I'm working on file uploads for wolfgang at the moment, it's annoying :(
+2011-12-01 05:27:05 UTC <byorgey> ah, I bet
+2011-12-01 05:28:45 UTC <luite> but most of it works now, I think, some javascript still required to let people upload their .lhs :)
+2011-12-01 05:29:41 UTC <byorgey> nice =)
+2011-12-01 05:30:04 UTC <byorgey> I am impressed by your perseverence
+2011-12-01 05:30:59 UTC <luite> I'm actually quite sick of working on it now =)
+2011-12-01 05:31:53 UTC <luite> the code is also really messy
+2011-12-01 05:32:42 UTC <byorgey> so why don't you try to get some other people to help you work on it?
+2011-12-01 05:34:43 UTC <byorgey> OK, I think I can see how to hack diagram generation into mueval, so that it also falls under the same resource limits
+2011-12-01 05:34:53 UTC <byorgey> but I don't feel like doing it tonight =P
+2011-12-01 05:35:17 UTC <luite> uh I'd have to do a lot of odcumentation for that, don't really feel like that at the moment :) it's relatively difficult to install and there are a lot of small things that don't really work properly yet, which would require a lot of time to explain
+2011-12-01 05:37:29 UTC <byorgey> well, fair enough, but the time spent documenting/cleaning up etc. is usually well worth it anyway
+2011-12-01 05:38:45 UTC <luite> yeah that's true, I will do that, but maybe after launch
+2011-12-01 05:38:47 UTC <byorgey> although I know quite well it's not the most fun thing in the world to do
+2011-12-01 05:39:09 UTC <luite> there will also be much funner things to hack on then, for other contributors
+2011-12-01 05:39:36 UTC <luite> like adding more response type handlers, they can bind javascript libs etc
+2011-12-01 05:52:38 UTC <luite> and since I'll be in canada for 2 weeks in dec and don't know how often I'll be online there it might not be the right time to ask people to help :)
+2011-12-01 05:52:46 UTC <luite> oh it already is dec
+2011-12-01 05:52:59 UTC <luite> here at least :p
+2011-12-01 05:55:28 UTC <byorgey> it is here too
+2011-12-01 05:55:42 UTC <byorgey> happy December!
+2011-12-01 05:57:00 UTC <byorgey> woah, something else that depends on diagrams: http://hackage.haskell.org/package/tidal
+2011-12-01 05:58:08 UTC <luite> cool! but the homepage doesn't work :(
+2011-12-01 05:59:05 UTC <byorgey> I know =(
+2011-12-01 06:01:36 UTC <byorgey> hmm, the source code doesn't seem to actually use diagrams at all!
+2011-12-01 06:01:55 UTC <byorgey> it's just listed as a dependency
+2011-12-01 06:15:47 UTC <luite> hehe that's a fun way to make library authors all excited ;)
+2011-12-01 06:16:05 UTC <byorgey> I know, right?
+2011-12-01 06:32:21 UTC <luite> wget http://localhost/wikidata/tmp/0000000000000000ffff00000100007f-9c749058c157aa872148292e35992b7d2b05f5355879e1bdb8bde00b2469d89d.png
+2011-12-01 06:32:31 UTC <luite> hmm that doesn't work here
+2011-12-01 11:31:20 UTC <fryguybob> @tell byorgey Messages are working.
+2011-12-01 11:31:20 UTC <diabot> Consider it noted.
+2011-12-01 11:31:29 UTC <luite> hehe
+2011-12-01 11:31:42 UTC <luite> uploads are also working \o/
+2011-12-01 11:37:19 UTC <luite> http://hdiff.luite.com/tmp/upload.png
+2011-12-01 13:44:41 UTC <byorgey> luite: yay!
+2011-12-01 13:44:41 UTC <diabot> byorgey: You have 2 new messages. '/msg diabot @messages' to read them.
+2011-12-01 13:44:52 UTC <byorgey> @messages
+2011-12-01 13:44:52 UTC <diabot> edwardk said 1y 7m 4d 21h 56m 23s ago: i may wind up adopting your functional convex hull trick for some generalized taylor models
+2011-12-01 13:44:52 UTC <diabot> fryguybob said 2h 13m 32s ago: Messages are working.
+2011-12-01 13:45:33 UTC <fryguybob> haha, 1y
+2011-12-01 13:45:39 UTC <byorgey> hahahaha, looks like I didn't clear out the @messages database that comes with lambdabot =)
+2011-12-01 13:49:16 UTC <byorgey> @add-repo http://patch-tag.com/r/byorgey/diagrams-core
+2011-12-01 13:49:16 UTC <diabot> Unknown command, try @list
+2011-12-01 13:50:59 UTC <byorgey> @repo-add http://patch-tag.com/r/byorgey/diagrams-core
+2011-12-01 13:50:59 UTC <diabot> Unknown command, try @list
+2011-12-01 13:53:40 UTC <byorgey> @flush
+2011-12-01 13:54:15 UTC <byorgey> @repo-add http://patch-tag.com/r/byorgey/diagrams-core
+2011-12-01 13:54:15 UTC <diabot> Plugin `darcspatchwatch' failed with: http://patch-tag.com/r/byorgey/diagrams-core/_darcs/inventory: fileAccess: does not exist (No such file or directory)
+2011-12-01 13:58:32 UTC <byorgey> oh, it only works on local repos, eh?
+2011-12-01 13:58:45 UTC <byorgey> sad
+2011-12-01 13:59:25 UTC <fryguybob> Humm, does patch-tag pick the content to serve based based on user agent or something?
+2011-12-01 14:12:07 UTC <byorgey> fryguybob: no, the darcspatchwatch plugin was literally trying to look on the filesystem
+2011-12-01 14:12:16 UTC <byorgey> @repo-add http://patch-tag.com/r/byorgey/diagrams-core
+2011-12-01 14:12:16 UTC <diabot> repository {Repository "http://patch-tag.com/r/byorgey/diagrams-core", last announcement: unknown} added
+2011-12-01 14:12:37 UTC <fryguybob> Ah, yeah.  I tried following the link and got 500.
+2011-12-01 14:13:08 UTC <fryguybob> @repos
+2011-12-01 14:13:08 UTC <diabot> {{Repository "http://patch-tag.com/r/byorgey/diagrams-core", last announcement: Thu Dec  1 09:12:55 EST 2011}}
+2011-12-01 14:14:47 UTC <byorgey> hum, now it thinks it's made an announcement?
+2011-12-01 14:16:04 UTC <fryguybob> Well I guess it announced that it was added :D
+2011-12-01 14:17:17 UTC <byorgey> heh
+2011-12-01 14:17:32 UTC <byorgey> I just tried pushing a test change
+2011-12-01 14:18:26 UTC <fryguybob> ACTION waits patiently for an announcement.
+2011-12-01 14:18:40 UTC <byorgey> ACTION waits not-so-patiently for an announcement
+2011-12-01 14:20:23 UTC <byorgey> OH
+2011-12-01 14:21:01 UTC <byorgey> it checks the number of *lines* returned by 'darcs changes', but I initialized it with the number of *characters* =P
+2011-12-01 14:39:28 UTC <byorgey> @repos
+2011-12-01 14:39:28 UTC <diabot> {{Repository "http://patch-tag.com/r/byorgey/diagrams-core", last announcement: Thu Dec  1 09:39:14 EST 2011}}
+2011-12-01 14:40:15 UTC <diabot> [diagrams-core:1 09:39:44 EST 2011  Brent Yorgey <byorgey] yet another test commit
+2011-12-01 14:40:25 UTC <byorgey> \o/
+2011-12-01 14:44:42 UTC <fryguybob> woohoo
+2011-12-01 14:46:58 UTC <byorgey> as you can see, the included changelog parser is rather dumb
+2011-12-01 14:47:03 UTC <byorgey> but I'll work on it later
+2011-12-01 14:47:27 UTC <byorgey> @repo-add http://patch-tag.com/r/byorgey/diagrams-lib
+2011-12-01 14:47:40 UTC <diabot> repository {Repository "http://patch-tag.com/r/byorgey/diagrams-lib", last announcement: unknown} added
+2011-12-01 14:47:55 UTC <byorgey> @repo-add http://patch-tag.com/r/byorgey/diagrams-cairo
+2011-12-01 14:47:56 UTC <diabot> repository {Repository "http://patch-tag.com/r/byorgey/diagrams-cairo", last announcement: unknown} added
+2011-12-01 14:48:09 UTC <byorgey> @repo-add http://patch-tag.com/r/byorgey/active
+2011-12-01 14:48:09 UTC <diabot> repository {Repository "http://patch-tag.com/r/byorgey/active", last announcement: unknown} added
+2011-12-01 14:48:28 UTC <byorgey> @repo-add http://patch-tag.com/r/fryguybob/diagrams-postscript
+2011-12-01 14:48:28 UTC <diabot> repository {Repository "http://patch-tag.com/r/fryguybob/diagrams-postscript", last announcement: unknown} added
+2011-12-01 14:48:55 UTC <byorgey> @repo-add http://patch-tag.com/r/byorgey/diagrams-contrib
+2011-12-01 14:48:55 UTC <diabot> repository {Repository "http://patch-tag.com/r/byorgey/diagrams-contrib", last announcement: unknown} added
+2011-12-01 14:49:31 UTC <byorgey> any others I should add?
+2011-12-01 14:50:13 UTC <fryguybob> Looks good to me.
+2011-12-01 15:09:34 UTC <tgeeky_> ACTION surreptitiously makes diabot track linux repos
+2011-12-01 15:10:45 UTC <tgeeky_> hm. So I watched a 4x1-hour BBC documentary about Symphony(s).
+2011-12-01 15:10:53 UTC <tgeeky_> And I can't help but feeling the original ones were the best.
+2011-12-01 16:15:43 UTC <luite> @vixen asl
+2011-12-01 16:15:43 UTC <diabot> They're not like us. They smell different, they look different, they act different.  The trouble is, you can't find one that's honest.
+2011-12-01 16:15:50 UTC <luite> lol
+2011-12-01 16:20:51 UTC <byorgey> Oh, I should remove @nixon too =P
+2011-12-01 16:21:27 UTC <tgeeky_> @nixon what do you think about china?
+2011-12-01 16:21:27 UTC <diabot> Certainly in the next 50 years we shall see a woman president, perhaps sooner than you think. A woman can and should be able to do any political job that a man can do.
+2011-12-01 17:17:55 UTC <byorgey> @nixon
+2011-12-01 17:17:55 UTC <diabot> Unknown command, try @list
+2011-12-01 17:17:59 UTC <byorgey> much better
+2011-12-01 17:18:18 UTC <byorgey> if you want inane Nixon quotes you can always ask lambdabot =P
+2011-12-01 18:03:08 UTC <tgeeky_> hehe
+2011-12-01 18:03:19 UTC <tgeeky_> insane is almost redundant in that sentence
+2011-12-01 18:09:53 UTC <luite> I don't think byorgey wrote that ;p
+2011-12-01 18:11:16 UTC <tgeeky> oh
+2011-12-01 18:11:23 UTC <tgeeky> inane also perfectly describes Nixon
+2011-12-01 18:11:40 UTC <tgeeky> that man could talk down to you for 2 hours about any subject whatsoever
+2011-12-01 20:07:29 UTC <luite> hackage is down, change hackage.haskell.org to hdiff.luite.com in your cabal config if you want to use my mirror, it has all packages (including older versions), but no haddock
+2011-12-01 20:19:02 UTC <luite> and it's up again :p
+2011-12-02 05:48:35 UTC <byorgey> > let fibs = 0 : 1 : zipWith (+) fibs (tail fibs) in map (^2) fibs
+2011-12-02 05:48:38 UTC <diabot>   [0,1,1,4,9,25,64,169,441,1156,3025,7921,20736,54289,142129,372100,974169,25...
+2011-12-02 05:48:50 UTC <byorgey> =D
+2011-12-02 05:49:15 UTC <byorgey> having my very own robot makes me happy ;)
+2011-12-02 05:51:51 UTC <luite> hehe
+2011-12-02 06:24:01 UTC <luite> can it query oeis for eval results?
+2011-12-02 06:29:30 UTC <luite> are you good with image editors? I need to change an animated gif from orange to blue without destroying the animatedness
+2011-12-02 07:24:14 UTC <byorgey> @oeis 2,3,5,7,11
+2011-12-02 07:24:55 UTC <byorgey> luite: I don't know, I could try
+2011-12-02 07:25:02 UTC <diabot>  The prime numbers.
+2011-12-02 07:25:02 UTC <diabot>  [2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97,101,...
+2011-12-02 07:25:11 UTC <byorgey> I've used GIMP a fair deal, but not for animations
+2011-12-02 07:27:27 UTC <luite> oh I just did it in photoshop, the hard way
+2011-12-02 07:27:35 UTC <luite> changing the colors frame by frame
+2011-12-02 07:30:19 UTC <byorgey> ugh I'm sorry =(
+2011-12-02 07:32:18 UTC <luite> hehe np :)
+2011-12-02 07:32:47 UTC <luite> it means the upload dialog is now done, I think, http://hdiff.luite.com/tmp/upload-step1.png http://hdiff.luite.com/tmp/upload-step2.png
+2011-12-02 07:33:12 UTC <luite> the animated gif was an upload progress bar
+2011-12-02 07:38:55 UTC <byorgey> luite: nice
+2011-12-02 07:39:23 UTC <luite> hopefully I can reuse most of this dialog for the Save as.. dialog for pages
+2011-12-02 07:40:18 UTC <byorgey> luite: if you need more animated gifs I can also make them for you with diagrams =D
+2011-12-02 07:40:48 UTC <luite> hehe, yeah, that would probably be more fun than changing everything by hand in photoshop :)
+2011-12-02 07:41:39 UTC <luite> but I don't really use animated gifs myself, the file upload javascript library that I use has one
+2011-12-02 07:41:58 UTC <byorgey> right
+2011-12-02 07:42:33 UTC <luite> I have some loader animation, but that's also just a standard gif
+2011-12-02 07:47:10 UTC <luite> ah cool, that animation code, hadn't seen it before :)
+2011-12-02 07:47:16 UTC <luite> from your status update
+2011-12-02 07:47:40 UTC <byorgey> yep =)
+2011-12-02 08:05:41 UTC <luite> diagrams-cairo works fine here btw
+2011-12-02 08:09:55 UTC <byorgey> luite: on a Mac?
+2011-12-02 08:10:13 UTC <luite> yeah, OS X 10.7.2 with GHC 7.2.1 64 bit
+2011-12-02 08:10:22 UTC <luite> Cairo+GTK installed with macports
+2011-12-02 08:10:41 UTC <byorgey> luite: good to know. Andy Gill was having trouble getting it installed and I know of others who had trouble as well
+2011-12-02 08:11:31 UTC <luite> hmm, I've only tried -o x.png and x.pdf, is there something that might be more tricky, like opening a window with the diagram?
+2011-12-02 08:11:44 UTC <byorgey> luite: also, I like "Introduction yes".  Perhaps I will make that the actual heading for the introduction ;)
+2011-12-02 08:11:51 UTC <luite> hehe
+2011-12-02 08:11:59 UTC <byorgey> luite: no, I mean he couldn't even get cairo installed at all
+2011-12-02 08:12:51 UTC <byorgey> I've not yet heard of a situation where some aspects of diagrams-cairo work but others don't
+2011-12-02 08:13:10 UTC <luite> I changed that line because I was testing overwriting and diffing files :)
+2011-12-02 08:14:08 UTC <byorgey> yes, I figured =)
+2011-12-02 08:14:29 UTC <luite> I could've changed something further odwn, but then I'd have to scroll more
+2011-12-02 08:14:47 UTC <luite> the diff viewer is still not ideal, a bit slow, will probably be changed later
+2011-12-02 08:24:32 UTC <luite> hopefully I can find a good existing javascript lib for diffing that supports 3-way merging
+2011-12-02 17:36:29 UTC <fryguybob> byorgey: I just went to a great talk by HÃ©lÃ¨ne Martin about CS education: http://www.helenemartin.com/  Thought you might be interested.
+2011-12-02 19:32:14 UTC <ClaudiusMaximus> luite: i know you've figured it out already, but gifsicle is a nice cli tool for manipulating animgifs - not sure if it supports arbitrary colour remapping, though
+2011-12-02 21:03:01 UTC <ClaudiusMaximus> so, i made this y'day with some home-brew code http://claudiusmaximus.goto10.org/g/mandelbrot/gruff-labels-and-rays.png
+2011-12-02 21:03:29 UTC <ClaudiusMaximus> but before i end up re-implementing an inferior version of diagrams, i'm going to try using it directly
+2011-12-02 21:05:03 UTC <ClaudiusMaximus> so, a couple of questions: is there a way to serialize diagrams?  can i build a diagram with coordinates using Rational and then convert to Double at the last possible moment to avoid losing precision?
+2011-12-02 21:06:42 UTC <ClaudiusMaximus> first question is because what i have at the moment is pretty much ./diagram-generating-code | ./fractal-rendering-and-display-overlay-code
+2011-12-02 21:07:07 UTC <ClaudiusMaximus> second question is because Double is not precise enough for some of the things i want to do
+2011-12-02 21:08:07 UTC <ClaudiusMaximus> maybe i should just have the diagram generating code save an arbitrary image
+2011-12-02 21:08:51 UTC <ClaudiusMaximus> because i don't really see myself writing an interactive diagram editor any time soon
+2011-12-02 21:38:42 UTC <byorgey> ClaudiusMaximus: well, diagrams can work over arbitrary vector spaces
+2011-12-02 21:38:59 UTC <byorgey> ClaudiusMaximus: so instead of working over R2 = (Double, Double)  you could try working over Q2 = (Rational, Rational)
+2011-12-02 21:39:34 UTC <byorgey> ClaudiusMaximus: the only thing you might have trouble with is that in Q2 you can't compute the magnitude of vectors, only the magnitude squared
+2011-12-02 21:40:02 UTC <byorgey> and I think there are a few things in diagrams which rely on magnitude.  But if so I'd be interested in figuring out ways to work around them.
+2011-12-02 21:41:05 UTC <ClaudiusMaximus> byorgey: ok, so no need for sin/cos when rotating?
+2011-12-02 21:41:22 UTC <byorgey> ClaudiusMaximus: that's a really cool diagram by the way =)
+2011-12-02 21:41:38 UTC <byorgey> ClaudiusMaximus: oh, well, obviously you can't do arbitrary rotations in Q2 either =P
+2011-12-02 21:41:58 UTC <ClaudiusMaximus> byorgey: thanks! bit too many overlapping labels for my taste, but it's getting there :)
+2011-12-02 21:42:26 UTC <ClaudiusMaximus> true
+2011-12-02 21:43:22 UTC <byorgey> one problem is that all the stuff in Diagrams.TwoD.* is defined in terms of R2
+2011-12-02 21:43:27 UTC <byorgey> probably a lot of it could be generalized
+2011-12-02 21:43:35 UTC <ClaudiusMaximus> about serialization, it also takes a long time to 'read' a 3MB String...
+2011-12-02 21:43:37 UTC <byorgey> but not rotation as you point out
+2011-12-02 21:43:58 UTC <byorgey> ClaudiusMaximus: what do you mean by serialize diagrams?
+2011-12-02 21:45:17 UTC <ClaudiusMaximus> like sending a diagram down a wire to another program that can reconstruct it - but i think it'd be too complicated so i'll stick with "built-in simple stuff like text and lines" and add an "overlay a png/svg/whatever" option
+2011-12-02 21:46:06 UTC <ClaudiusMaximus> the advantage of the first approach is that it works ok with zoom/rotation, the advantage of the second is flexibility of content
+2011-12-02 21:46:13 UTC <byorgey> ClaudiusMaximus: oh, OK, I see. Well, since diagrams contain functions there's no way to serialize them and get back something exactly the same.
+2011-12-02 21:46:23 UTC <ClaudiusMaximus> ahh, ok
+2011-12-02 21:46:35 UTC <byorgey> in principle you could serialize a "compiled" version which just gave you the locations of all the primitives etc.
+2011-12-02 21:46:44 UTC <byorgey> but there's not support for that at the moment
+2011-12-02 21:46:44 UTC <ClaudiusMaximus> yeah, but then you might as well use svg output
+2011-12-02 21:46:47 UTC <byorgey> right.
+2011-12-02 21:47:44 UTC <ClaudiusMaximus> it took 5mins to render that diagram, and only 12 seconds to emit it - i think the bulk of the 5mins is in 'read'
+2011-12-02 21:48:41 UTC <ClaudiusMaximus> and possibly the rational -> screen coordinates transformation, doesn't help that i'm using integer-simple there :(
+2011-12-02 21:53:06 UTC <byorgey> heh
+2011-12-02 21:53:17 UTC <byorgey> yeah, reading a 3MB String sounds fun
+2011-12-02 21:53:26 UTC <byorgey> were you actually using a String?
+2011-12-02 21:53:52 UTC <byorgey> I think there are much faster ways to read in a big chunk of data, although I couldn't tell you what they are.
+2011-12-02 21:53:58 UTC <ClaudiusMaximus> yeah, didn't bother writing a wire protocol, so just used Show/Read
+2011-12-02 21:54:05 UTC <ClaudiusMaximus> *deriving
+2011-12-02 21:54:10 UTC <ClaudiusMaximus> definitely
+2011-12-02 21:55:38 UTC <ClaudiusMaximus> attoparsec is fast for parsing, and floatshow is fast for printing floats (especially if you don't need all the digits)
+2011-12-02 22:03:41 UTC <luite> I'd probably use something liek Cereal, you can do lots of things automatically if you derive Data and Typeable
