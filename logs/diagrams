@@ -6860,3 +6860,639 @@
 2011-12-02 21:54:10 UTC <ClaudiusMaximus> definitely
 2011-12-02 21:55:38 UTC <ClaudiusMaximus> attoparsec is fast for parsing, and floatshow is fast for printing floats (especially if you don't need all the digits)
 2011-12-02 22:03:41 UTC <luite> I'd probably use something liek Cereal, you can do lots of things automatically if you derive Data and Typeable
+2011-12-03 05:08:27 UTC <diabot> [diagrams-contrib:Brent Yorgey <byorgey] add more comments to D.TwoD.Apollonian (and 7 more)
+2011-12-03 05:09:00 UTC <byorgey> eh?
+2011-12-03 05:09:15 UTC <byorgey> that's odd, I haven't touched anything in a week
+2011-12-03 05:09:44 UTC <byorgey> I think the DarcsPatchWatch plugin needs some love
+2011-12-03 05:09:46 UTC <luite> hmm
+2011-12-03 05:56:23 UTC <tgeeky> ACTION sends a (very early, or *very* late) valentine
+2011-12-03 20:37:31 UTC <diabot> [diagrams-cairo:Brent Yorgey <byorgey] rename AnnDiagram -> QDiagram (and 227 more)
+2011-12-04 02:13:52 UTC <tgeeky> 1st package release! :o
+2011-12-04 02:14:13 UTC <tgeeky> http://hackage.haskell.org/packages/archive/recent.html
+2011-12-04 02:14:15 UTC <tgeeky> woohoo!
+2011-12-04 02:14:25 UTC <fryguybob> \o/
+2011-12-04 02:16:30 UTC <luite> :)
+2011-12-04 02:21:50 UTC <luite> cool user icon ;p
+2011-12-04 02:43:18 UTC <tgeeky> why thank you
+2011-12-04 02:43:19 UTC <tgeeky> he's my favorite
+2011-12-04 02:45:39 UTC <tgeeky> wait lol
+2011-12-04 02:45:48 UTC <tgeeky> that's not my personal account, so you're joking
+2011-12-04 02:46:07 UTC <tgeeky> oh, no
+2011-12-04 02:46:09 UTC <tgeeky> that's so strange
+2011-12-04 02:46:21 UTC <tgeeky> i uploaded it using my d-rive account, but it still shows as 'technogeeky'
+2011-12-04 02:49:48 UTC <luite> hehe I meant your technogeeky icon
+2011-12-04 04:40:43 UTC <tgeeky> luite: is hdiff open source?
+2011-12-04 04:40:59 UTC <luite> yes
+2011-12-04 04:41:54 UTC <luite> but 99% is done by cgit, a web viewer for git repositories
+2011-12-04 04:43:31 UTC <luite> I've converted it into a full hackage mirror, so you can download/install from hdiff if you change the host name hackage.haskell.org to hdiff.luite.com in your cabal config :)
+2011-12-04 04:43:57 UTC <tgeeky> ACTION wonders how this will go on windows
+2011-12-04 04:44:00 UTC <luite> but I stil don't have the scripts to build haddock :p
+2011-12-04 04:44:15 UTC <tgeeky> i have (some) of those
+2011-12-04 04:44:17 UTC <luite> you need to get bash 4.x from cygwin probably
+2011-12-04 04:44:24 UTC <tgeeky> yeah, I can't do that (mingw)
+2011-12-04 04:44:33 UTC <luite> then you can get one from msys
+2011-12-04 04:44:57 UTC <luite> I use the msys shell all the time to build 3rd party libs for haskell stuff
+2011-12-04 04:45:49 UTC <tgeeky> i'm guessing bash-4 isn't stable.
+2011-12-04 04:45:54 UTC <tgeeky> it's -3.1 right now as far as I know
+2011-12-04 04:45:56 UTC <luite> although I haven't been running windows very often lately, since my new laptop is almost as fast as my desktop, and it has most developmentt hings I need installed (including wolfgang)
+2011-12-04 04:46:11 UTC <luite> why do you want your own hdiff?
+2011-12-04 04:46:21 UTC <luite> it takes a lot of disk space, huge number of files
+2011-12-04 04:46:25 UTC <tgeeky> hehe
+2011-12-04 04:46:37 UTC <tgeeky> i want hdiff `filter` [ ... packages i want ... ]
+2011-12-04 04:46:52 UTC <tgeeky> and just use it to manage my local cabal repository
+2011-12-04 04:47:06 UTC <luite> ah right
+2011-12-04 04:47:16 UTC <tgeeky> it's the best approach, because everything is already in git
+2011-12-04 04:47:54 UTC <tgeeky> is it just those two bash scripts in your git repo?
+2011-12-04 04:47:58 UTC <luite> yeah
+2011-12-04 04:47:58 UTC <tgeeky> can you update it, if not? :o
+2011-12-04 04:48:01 UTC <tgeeky> ok
+2011-12-04 04:48:54 UTC <luite> the frontpage is a php script that just shows the entries from the latestupdates file
+2011-12-04 04:50:00 UTC <tgeeky> luite: do you know what in particular is bash-4, out of curiosity?
+2011-12-04 04:50:10 UTC <tgeeky> is it all of these ([ ]*) ... things?
+2011-12-04 04:50:17 UTC <tgeeky> i'm assuming those are regexes of one sort or another
+2011-12-04 04:50:42 UTC <luite> I think it's the associative arrarys, not 100% sure
+2011-12-04 04:52:13 UTC <tgeeky> i'm guessing my package didn't build or something
+2011-12-04 05:36:01 UTC <luite> hmm, should I choose vim or emacs keybindings for the editors in wolfgang? ;p
+2011-12-04 05:52:19 UTC <luite> hm I hope no one uses opera
+2011-12-04 06:08:17 UTC <luite> I chose emacs btw
+2011-12-05 05:07:14 UTC <tgeeky> hehe
+2011-12-05 05:07:51 UTC <tgeeky> it appears that we'll have a 95% answer (which is not sufficient for physics) on the 13th of December
+2011-12-05 16:14:09 UTC <byorgey> man, with a 7.5 billion euro piece of equipment, you'd think they would be able to afford better-looking graphs =P
+2011-12-05 16:31:01 UTC <tgeeky> byorgey: hehe
+2011-12-05 16:31:34 UTC <tgeeky> that was the 'alpha' version of luminosity statistics
+2011-12-05 16:31:36 UTC <tgeeky> here is the 'beta' http://lhc-statistics.web.cern.ch/LHC-Statistics/
+2011-12-05 16:31:42 UTC <tgeeky> somewhat better
+2011-12-05 17:24:36 UTC <byorgey> ugh, no, that's worse!!
+2011-12-05 17:25:09 UTC <byorgey> http://en.wikipedia.org/wiki/Chartjunk
+2011-12-05 19:27:15 UTC <luite> oh cool plot style, the one with the green bricks
+2011-12-06 00:38:09 UTC <byorgey> @join #haskell
+2011-12-06 01:59:45 UTC <luite> @part #haskell
+2011-12-06 02:00:58 UTC <luite> cool it worked :)
+2011-12-06 02:02:45 UTC <luite> oh Cale already disconnected lambdabot again since it still has problems :(
+2011-12-06 04:07:46 UTC <tgeeky> @kick tgeeky
+2011-12-06 04:07:47 UTC <diabot> Maybe you meant: dice dict kind
+2011-12-06 04:07:53 UTC <tgeeky> no, i didn't
+2011-12-06 04:08:04 UTC <byorgey> perhaps you meant @slap?
+2011-12-06 04:08:12 UTC <tgeeky> @slap tgeeky
+2011-12-06 04:08:13 UTC <diabot> ACTION slaps tgeeky
+2011-12-06 04:08:16 UTC <tgeeky> i was hoping that it would kick me
+2011-12-06 04:08:51 UTC <byorgey> kick you metaphorically? or kick you out of the channel?
+2011-12-06 04:08:58 UTC <tgeeky> the second
+2011-12-06 04:09:25 UTC <byorgey> heh, I don't think diabot has admin privileges in #diagrams
+2011-12-06 04:09:34 UTC <tgeeky> byorgey: few quick category-theoretic questions, if I may:
+2011-12-06 04:09:39 UTC <byorgey> sure
+2011-12-06 04:09:56 UTC <tgeeky> data Nu f = OutI { out :: f (Nu f) }
+2011-12-06 04:09:56 UTC <tgeeky> data Mu f = Innn { inI :: f (Mu f) }
+2011-12-06 04:10:08 UTC <tgeeky> this is supposed to be (final co-algebra, initial algebra) resp.
+2011-12-06 04:10:11 UTC <byorgey> yep
+2011-12-06 04:10:29 UTC <tgeeky> what is the I in inI supposed to stand for / mean?
+2011-12-06 04:10:39 UTC <byorgey> I'm guessing Inverse
+2011-12-06 04:10:39 UTC <tgeeky> and similarly with the outI that's in the definition of unfold
+2011-12-06 04:11:08 UTC <byorgey> also I have no idea what's with the three n's in  INNN
+2011-12-06 04:11:12 UTC <byorgey> Innn  I mean
+2011-12-06 04:11:22 UTC <tgeeky> that's me being cute and making the definition the same width
+2011-12-06 04:11:25 UTC <tgeeky> so i can line it up in source code
+2011-12-06 04:11:26 UTC <byorgey> ahh =)
+2011-12-06 04:11:43 UTC <tgeeky> so, there must exist the concept of
+2011-12-06 04:11:49 UTC <tgeeky> (initial co-algebra, final algebra) yes?
+2011-12-06 04:11:58 UTC <tgeeky> or are those nonsensical ideas?
+2011-12-06 04:12:11 UTC <byorgey> not necessarily
+2011-12-06 04:12:31 UTC <byorgey> the question is whether the category of F-algebras (for some algebra F) has a final object
+2011-12-06 04:12:41 UTC <byorgey> (resp. dually)
+2011-12-06 04:12:59 UTC <byorgey> the category of F-algebras always has an initial object, but I don't know whether it has a final object
+2011-12-06 04:13:21 UTC <byorgey> I suspect not.
+2011-12-06 04:14:49 UTC <tgeeky> byorgey: if you were working with some thing with a closed limit set, or with sup/inf, would that change the picture?
+2011-12-06 04:15:23 UTC <tgeeky> that is, if <initial F-alg> captures induction, then it "captures" the induction isomorphic to the natural numbers
+2011-12-06 04:15:23 UTC <byorgey> tgeeky: I'm not sure I understand the question.  Can you give an example?
+2011-12-06 04:16:12 UTC <tgeeky> then might a <final F-alg) "capture" the concept of the maximum of some finite thing (like the largest element in a finite field)?
+2011-12-06 04:18:26 UTC <byorgey> Actually, now that I work out the definition, final algebras do exist but they are uninteresting
+2011-12-06 04:18:42 UTC <byorgey> in particular the final algebra is always given by an arrow  F () -> ()
+2011-12-06 04:18:46 UTC <byorgey> just a minute
+2011-12-06 04:19:00 UTC <tgeeky> hm.
+2011-12-06 04:20:16 UTC <tgeeky> the initial co-algebra could be interesting though?
+2011-12-06 04:20:52 UTC <byorgey> no, dually it must be  0 -> F 0
+2011-12-06 04:21:21 UTC <tgeeky> byorgey: I don't mean to be a pedant here, but I asked a similar question before and was confused by why it's a silly idea
+2011-12-06 04:21:25 UTC <tgeeky> with F () -> ()
+2011-12-06 04:21:33 UTC <tgeeky> or even
+2011-12-06 04:21:35 UTC <tgeeky> 0 -> F 0
+2011-12-06 04:22:07 UTC <tgeeky> what if the underlying (space? category? what is the right word here?) thing was already a product of some sort
+2011-12-06 04:22:12 UTC <tgeeky> is it possible to see
+2011-12-06 04:22:20 UTC <byorgey> there is only one arrow F () -> (), i.e. const ().  so it's uninteresting
+2011-12-06 04:22:23 UTC <tgeeky> F () -> ()()()
+2011-12-06 04:22:40 UTC <byorgey> that would still carry no information.
+2011-12-06 04:22:54 UTC <tgeeky> byorgey: that's what I'm confused by
+2011-12-06 04:23:02 UTC <tgeeky> byorgey: I remember the first place i saw it
+2011-12-06 04:23:20 UTC <tgeeky> byorgey: was in LYAH, with mapping things  with a postfix _ or not
+2011-12-06 04:23:32 UTC <tgeeky> and I would get the result of some computation, and it would be ()()()...() many times
+2011-12-06 04:23:42 UTC <tgeeky> why doesn't that count as information?
+2011-12-06 04:23:53 UTC <byorgey> that's different
+2011-12-06 04:23:56 UTC <tgeeky> if you got different numbers of ()s, isn't that telling you something?
+2011-12-06 04:24:15 UTC <byorgey> but we'll have to continue later, sorry, my son is crying
+2011-12-06 04:24:22 UTC <tgeeky> byorgey: np, thanks so far
+2011-12-06 04:35:06 UTC <byorgey> tgeeky: still there?
+2011-12-06 04:35:55 UTC <tgeeky> yep
+2011-12-06 04:36:02 UTC <tgeeky> that was fast. good daddy!
+2011-12-06 04:36:08 UTC <byorgey> he's asleep (for now)
+2011-12-06 04:36:40 UTC <tgeeky> byorgey: as you can tell, I'm working off intuition here, and it's not that great.
+2011-12-06 04:36:55 UTC <byorgey> yes, I can tell =)
+2011-12-06 04:37:08 UTC <byorgey> maybe I can help put some of it on a slightly firmer footing =)
+2011-12-06 04:37:38 UTC <tgeeky> so as a simple (stupid) example
+2011-12-06 04:37:41 UTC <byorgey> tgeeky: first, I completely agree that getting a list of () (with any number of copies) is telling you something.
+2011-12-06 04:37:47 UTC <tgeeky> ok
+2011-12-06 04:37:56 UTC <byorgey> tgeeky: second: do you know the definition of a terminal object?
+2011-12-06 04:38:05 UTC <byorgey> aka final object?
+2011-12-06 04:38:16 UTC <tgeeky> i could look it up, but I'll type:
+2011-12-06 04:38:26 UTC <tgeeky> I felt like it was the greatest fixed point?
+2011-12-06 04:38:28 UTC <tgeeky> err
+2011-12-06 04:38:46 UTC <tgeeky> ACTION looks it up
+2011-12-06 04:38:58 UTC <byorgey> tgeeky: I can just tell you, the definition is quite simple =)
+2011-12-06 04:39:11 UTC <tgeeky> oh right
+2011-12-06 04:39:30 UTC <tgeeky> it's *the* place that the universal morphism takes you
+2011-12-06 04:39:32 UTC <byorgey> a terminal object is an object T such that for any other object in the category, there is one and only one arrow from the other object to T
+2011-12-06 04:39:57 UTC <tgeeky> yeah, so it's like the "handle" of the category
+2011-12-06 04:40:04 UTC <tgeeky> the endpoint or something
+2011-12-06 04:40:13 UTC <byorgey> yes, an endpoint is a good way to think of it
+2011-12-06 04:40:21 UTC <byorgey> but the part about *only one* arrow is also important
+2011-12-06 04:40:50 UTC <tgeeky> yes
+2011-12-06 04:40:58 UTC <byorgey> so, when I wrote () above, what I really meant was "the terminal object"
+2011-12-06 04:41:17 UTC <tgeeky> and 0 was the initial?
+2011-12-06 04:41:21 UTC <byorgey> right
+2011-12-06 04:42:01 UTC <byorgey> so what we should really say is that a category of F-algebras has a terminal object whenever the underlying category has a terminal object
+2011-12-06 04:42:19 UTC <byorgey> and the terminal F-algebra is the unique F-algebra of type  F () -> ()
+2011-12-06 04:42:48 UTC <byorgey> because given any other F-algebra  F A -> A  there is only one way to map it into  F () -> ()  -- by definition, there is a unique arrow from  A -> ()
+2011-12-06 04:43:04 UTC <tgeeky> yeah, I remember this in more detail now from Casters
+2011-12-06 04:43:06 UTC <byorgey> and it's easy to check that makes the required square commute
+2011-12-06 04:43:30 UTC <byorgey> now, you were talking about, say, mapM_
+2011-12-06 04:43:32 UTC <luite> is that an arrow in your pants or am I just a universal attractive object?
+2011-12-06 04:43:41 UTC <byorgey> hehehe
+2011-12-06 04:43:50 UTC <tgeeky> that is just because you're mapping over IO () things
+2011-12-06 04:43:54 UTC <tgeeky> and accumulating the () units?
+2011-12-06 04:43:58 UTC <luite> (another name for terminal object)
+2011-12-06 04:44:13 UTC <byorgey> tgeeky: hmm?
+2011-12-06 04:44:28 UTC <tgeeky> isn't () "unit" in Haskell?
+2011-12-06 04:44:34 UTC <tgeeky> byorgey: nevermind, go on :)
+2011-12-06 04:44:52 UTC <byorgey> tgeeky: yes, () is "unit", the terminal object in the category Hask
+2011-12-06 04:45:05 UTC <tgeeky> ohhhhh
+2011-12-06 04:45:12 UTC <tgeeky> I was never told that last part.
+2011-12-06 04:45:27 UTC <byorgey> really I should have been writing 1 above for the terminal object, I was trying to use your intuition for the unit type
+2011-12-06 04:45:37 UTC <tgeeky> yes, I am happy to use 1 or 0
+2011-12-06 04:45:42 UTC <byorgey> sorry for the confusion =)
+2011-12-06 04:45:44 UTC <byorgey> ok
+2011-12-06 04:46:09 UTC <tgeeky> so
+2011-12-06 04:46:12 UTC <tgeeky> this fact is surprising to me:
+2011-12-06 04:46:17 UTC <tgeeky> In the category of fields, there are no initial or terminal objects. However, in the subcategory of fields of characteristic p, the prime field of characteristic p forms an initial object.
+2011-12-06 04:46:48 UTC <tgeeky> (from wikipedia, so may not be a fact)
+2011-12-06 04:46:56 UTC <byorgey> why is that surprising to you?
+2011-12-06 04:47:34 UTC <tgeeky> ACTION thinks about it.
+2011-12-06 04:47:43 UTC <byorgey> (it's an honest question, didn't mean for it to sound judgmental)
+2011-12-06 04:47:52 UTC <tgeeky> I would have thought something gave you an initial element (like a vector, but that's a vector space over a field)
+2011-12-06 04:47:57 UTC <tgeeky> like a zero vector or something
+2011-12-06 04:48:58 UTC <luite> the objects must be fields here
+2011-12-06 04:49:08 UTC <byorgey> so if the prime field of characteristic p is initial, that means there is a unique field homomorphism from it to any other field of characteristic p
+2011-12-06 04:49:09 UTC <tgeeky> yeah, which is why I'm obviously wrong
+2011-12-06 04:49:30 UTC <tgeeky> byorgey: but that is a trivial fact, isn't it?
+2011-12-06 04:49:38 UTC <tgeeky> there is only one field for every prime p?
+2011-12-06 04:49:45 UTC <byorgey> which is basically saying that all fields of characteristic p have the prime field as a subfield
+2011-12-06 04:50:06 UTC <byorgey> there is only one field with p elements for prime p
+2011-12-06 04:50:14 UTC <byorgey> but there are lots of fields with characteristic p, right?
+2011-12-06 04:50:22 UTC <tgeeky> yes
+2011-12-06 04:51:25 UTC <byorgey> back in a bit
+2011-12-06 05:06:59 UTC <byorgey> back
+2011-12-06 05:57:29 UTC <luite> anyone with some html knowledge here? I'm trying to do a multicolumn layout but the body element box won't scale with the contents div, even though it's not absolutely positioned
+2011-12-06 05:57:55 UTC <tgeeky> pass
+2011-12-06 06:09:11 UTC <luite> hm fixed it
+2011-12-06 06:09:17 UTC <luite> html is annoying
+2011-12-06 06:11:22 UTC <luite> apparently the way to make columns is using floats (those have the same meaning as in latex)
+2011-12-06 06:12:18 UTC <luite> +only
+2011-12-06 06:17:13 UTC <luite> and then you have to carefully place empty elements after the columns to make sure that they get enough space
+2011-12-06 06:21:29 UTC <ClaudiusMaximus> <div style="clear: both;"></div>, or something
+2011-12-06 06:21:55 UTC <ClaudiusMaximus> after the floats, before the end tag of the container
+2011-12-06 06:25:39 UTC <luite> that yes
+2011-12-06 06:26:30 UTC <ClaudiusMaximus> (ot rant)  glewinfo is rubbish - it reports OK for all the fun things, but when i go to use them it segfaults with a jump to 0
+2011-12-06 06:27:41 UTC <luite> hehe everything sucks ;p
+2011-12-06 06:29:58 UTC <ClaudiusMaximus> couldn't sleep, so i thought i'd try and write some fractals in glsl using transform feedback, old laptop only goes to opengl 2, desktop supports it but the other room is warmer..
+2011-12-06 06:35:17 UTC <luite> couldn't sleep either, so i thought i'd try and convert my wolfgang photoshop frontpage mockup to html
+2011-12-06 12:09:51 UTC <ClaudiusMaximus> got it working
+2011-12-06 12:30:56 UTC <luite> any pics to prove it? :p
+2011-12-06 12:38:01 UTC <ClaudiusMaximus> looks like the mandelbrot set to me :)
+2011-12-06 12:38:12 UTC <ClaudiusMaximus> just about to push the code...
+2011-12-06 12:41:20 UTC <ClaudiusMaximus> https://gitorious.org/ruff/ruff-render-gl
+2011-12-06 12:48:31 UTC <luite> is that easy to build?
+2011-12-06 12:49:43 UTC <luite> hmm, errors here
+2011-12-06 12:54:52 UTC <ClaudiusMaximus> probably not - i'm on debian stable with libglew pulled from testing
+2011-12-06 12:55:12 UTC <ClaudiusMaximus> and i've got quite a beefy gpu here
+2011-12-06 12:55:16 UTC <luite> right, os x here, with a very old gcc (4.2 llvm)
+2011-12-06 12:55:59 UTC <luite> a recent gpu, though not a particularly fast one
+2011-12-06 12:56:01 UTC <ClaudiusMaximus> gonna try it on my laptop, maybe that can provide an insight into build issues
+2011-12-06 12:56:11 UTC <luite> forgot the model, lemme check
+2011-12-06 12:57:20 UTC <luite> radeon 6490m
+2011-12-06 12:57:33 UTC <luite> opengl 4.1
+2011-12-06 12:58:22 UTC <ClaudiusMaximus> there are build instructions in the README, it's a bit hacky
+2011-12-06 12:58:49 UTC <ClaudiusMaximus> i based it on some opengl sample code, which has its own framework that isn't distributed sensibly
+2011-12-06 12:58:53 UTC <luite> yeah I don't think I have ogl-samples :)
+2011-12-06 12:59:18 UTC <ClaudiusMaximus> it's quite huge..
+2011-12-06 13:03:32 UTC <ClaudiusMaximus> segfaults on my laptop... heh
+2011-12-06 13:09:25 UTC <ClaudiusMaximus> fixed, laptop doesn't support glDrawArraysInstanced, but glDrawArrays works just as well for my 1 instance
+2011-12-06 23:30:58 UTC <luite> byorgey: has there been any progress in the discussion of my subdomain request? are the issues security related, or is the haskell.org domain maybe not the right place for such a site?
+2011-12-06 23:31:59 UTC <fryguybob> Perhaps they are stalled waiting to see if they can have a domain with the wolf face character.
+2011-12-06 23:32:59 UTC <luite> hehe yeah :)
+2011-12-07 00:41:33 UTC <luite> http://hdiff.luite.com/tmp/frontpage-screenshot.png <- yay, a bit boring maybe since you've already seen this, but now it's a screenshot instead of a photoshopped mockup :)
+2011-12-07 00:44:07 UTC <fryguybob> Nice!
+2011-12-07 00:45:06 UTC <luite> it even automatically changes the image every 15 seconds for added annoyingivity
+2011-12-07 01:14:23 UTC <diabot> [diagrams-contrib:Brent Yorgey <byorgey] add more comments to D.TwoD.Apollonian (and 7 more)
+2011-12-07 01:14:48 UTC <fryguybob> @more
+2011-12-07 04:38:10 UTC <byorgey> luite: nice!
+2011-12-07 04:38:36 UTC <byorgey> fryguybob: the darcs-repo-watching plugin seems broken
+2011-12-07 04:39:12 UTC <byorgey> it was apparently written in 2005, I'm amazed it still compiles.
+2011-12-07 04:40:10 UTC <tgeeky> byorgey: so I thought (and searched some) about "Does the Kleisi category for [] have a terminal object?"
+2011-12-07 04:40:21 UTC <tgeeky> and I am essentially guessing
+2011-12-07 04:40:37 UTC <tgeeky> either (yes), and their terminial and initial object are the same
+2011-12-07 04:42:39 UTC <tgeeky> or (no), because the Kleisi triple is made up with two natural transformations
+2011-12-07 04:42:49 UTC <tgeeky> and I'm hoping that I'm wrong twice!
+2011-12-07 04:43:21 UTC <byorgey> tgeeky: you're right once and wrong once =)
+2011-12-07 04:43:22 UTC <tgeeky> I also wondered if _|_ is the terminal object
+2011-12-07 04:43:47 UTC <tgeeky> byorgey: well, I meant, I was hoping for the situation that my answer (yes or no) was mapped to the wrong reason
+2011-12-07 04:44:03 UTC <byorgey> tgeeky: well, this whole time I have been sort of assuming that we're talking about a variant of Haskell without _|_
+2011-12-07 04:44:25 UTC <byorgey> tgeeky: at any rate _|_ is a *value*, not a type, so it can't be a terminal object
+2011-12-07 04:44:50 UTC <byorgey> tgeeky: the initial object (0) of the underlying category is both the initial and terminal object in the Kleisli category for []
+2011-12-07 04:45:19 UTC <byorgey> it's the initial object in K_[] for the same reason that it's the initial object in the underlying category.
+2011-12-07 04:45:38 UTC <tgeeky> because K_[] just subsumes all of the objects
+2011-12-07 04:46:04 UTC <byorgey> tgeeky: that, and because arrows in K_[] are arrows of the form A -> [B] in the underlying category
+2011-12-07 04:46:25 UTC <tgeeky> ok.
+2011-12-07 04:46:34 UTC <byorgey> so arrows from A in K_[] are also arrows from A in the underlying category (which I will henceforth call C)
+2011-12-07 04:47:05 UTC <byorgey> however, arrows from A to 0 in K_[]  are  arrows from A to [0] in C
+2011-12-07 04:47:22 UTC <byorgey> but [0] has only one element, namely the empty list
+2011-12-07 04:47:37 UTC <byorgey> because 0 corresponds to the 'Void' type with no values
+2011-12-07 04:48:03 UTC <byorgey> so there is always exactly one function from anything to [0], namely, const []
+2011-12-07 04:48:21 UTC <byorgey> I don't know if that made sense.  It's not really that important =P
+2011-12-07 04:48:52 UTC <tgeeky> byorgey: hehe :)
+2011-12-07 04:48:58 UTC <tgeeky> yes,
+2011-12-07 04:49:09 UTC <tgeeky> "const []" was on my list
+2011-12-07 04:49:26 UTC <tgeeky> i'm a little happy about that
+2011-12-07 04:51:15 UTC <byorgey> =)
+2011-12-07 08:26:11 UTC <luite> hmm
+2011-12-07 15:09:46 UTC <luite> oh noes, diabot has the same problems as lambdabot
+2011-12-07 15:33:54 UTC <byorgey> luite: unsurprising since diabot basically *is* lambdabot with a few minor modifications
+2011-12-07 15:34:10 UTC <byorgey> > 2^50
+2011-12-07 15:34:15 UTC <diabot>   mueval-core: Time limit exceeded
+2011-12-07 15:34:18 UTC <byorgey> > 2^50
+2011-12-07 15:34:21 UTC <diabot>   1125899906842624
+2011-12-07 15:37:06 UTC <luite> byorgey: someone in #haskell patched lambdabot to automatically reconnect
+2011-12-07 15:37:19 UTC <byorgey> oh, nice
+2011-12-07 15:37:30 UTC <luite> dunno if it's in the darcs repository :)
+2011-12-07 15:37:45 UTC <byorgey> well, once it is I will merge it =)
+2011-12-07 15:38:12 UTC <byorgey> correction: once it is and once I am done writing this grant proposal, whichever comes later
+2011-12-07 15:38:25 UTC <luite> hehe
+2011-12-07 17:43:59 UTC <diabot> [diagrams-postscript:fryguybob] Fixed colors updated for core 0.5. (and 8 more)
+2011-12-07 18:22:21 UTC <byorgey> ACTION writes a force-based tree layout algorithm using a tree zipper!
+2011-12-07 18:59:56 UTC <ClaudiusMaximus> i wrote a tree layouter once, wasn't very good though
+2011-12-07 19:00:11 UTC <ClaudiusMaximus> everything was too wide and flat
+2011-12-07 19:28:24 UTC <byorgey> ClaudiusMaximus: that's exactly why I'm using an iterative force-based method
+2011-12-07 19:33:14 UTC <byorgey> you start by computing a simple layout which is too wide and flat, then model it as a bunch of point charges connected by springs
+2011-12-07 19:33:23 UTC <byorgey> optionally constraining the nodes to only move horizontally.
+2011-12-07 19:43:23 UTC <ClaudiusMaximus> cool
+2011-12-07 21:24:43 UTC <tgeeky> ugh! cabal build all 140 modules in darcs (twice!) and then complained at the end that the path for libcurl didn't make sense!
+2011-12-07 21:26:13 UTC <tgeeky> byorgey: if I eventually give up on compiling darcs (I might use the precompiled version) -- are your git repositories quickly sycned?
+2011-12-07 21:48:28 UTC <luite> i believe they aren't synched at all due to a bug in the darcs-git bridge
+2011-12-07 21:52:51 UTC <tgeeky> ok. i gave up and downloaded precompiled
+2011-12-07 22:03:32 UTC <luite> you're on windows right?
+2011-12-08 02:50:11 UTC <tgeeky> luite: yeppers
+2011-12-08 02:51:40 UTC <luite> yeeesh
+2011-12-08 02:52:09 UTC <tgeeky> as far as I know, it's still a necessity
+2011-12-08 02:52:32 UTC <tgeeky> there's a bug in the nvidia drivers for linux that causes problems with multi-card multi-gpu setups
+2011-12-08 07:11:32 UTC <byorgey> http://www.cis.upenn.edu/~byorgey/tree.mp4  =)
+2011-12-08 07:17:26 UTC <luite> hehe very springy
+2011-12-08 07:18:21 UTC <luite> one of my first haskell programs was a force directed graph layouter :)
+2011-12-08 07:20:28 UTC <byorgey> nice =)
+2011-12-08 07:21:31 UTC <byorgey> I've written something like it before, but it was pretty ad-hoc.  This time around I actually did research (Hooke's law, Coloumb's law, etc...)
+2011-12-08 07:23:51 UTC <byorgey> another one: http://www.cis.upenn.edu/~byorgey/fulltree.mp4
+2011-12-08 07:26:44 UTC <luite> did you use the diagrams animation things for this?
+2011-12-08 07:27:36 UTC <byorgey> luite: yep
+2011-12-08 07:32:23 UTC <byorgey> http://www.cis.upenn.edu/~byorgey/tree2d.mp4   -- removing the y-coordinate restriction on nodes
+2011-12-08 07:40:45 UTC <luite> hmm, are there trees that it draws with intersecting edges?
+2011-12-08 07:45:11 UTC <byorgey> luite: I don't think so
+2011-12-08 07:45:53 UTC <byorgey> well, perhaps if you thre some massive tree at it you could cause some glitches
+2011-12-08 07:46:09 UTC <byorgey> but in principle I think if you make the simulation fine-grained enough you won't end up with crossing edges
+2011-12-08 07:50:32 UTC <luite> hmm, I think that the global optimum doesn't have them, but maybe you can push it towards some other state with the right initial conditions
+2011-12-08 07:51:12 UTC <byorgey> yes, the initial conditions are important
+2011-12-08 07:51:29 UTC <byorgey> I'm pretty sure you could end up with crossing edges with the right initial conditions.
+2011-12-08 07:51:44 UTC <luite> I mean conditions that don't have crossing edges, that look like what you start with :)
+2011-12-08 07:52:12 UTC <luite> would be too easy otherwise :)
+2011-12-08 07:52:21 UTC <byorgey> ok, in that case, intuitively it seems to me that if you don't have crossing edges to start, you won't get any
+2011-12-08 07:52:26 UTC <byorgey> but I don't have a proof =)
+2011-12-08 07:55:34 UTC <luite> hmm, do your vertices have inertia?
+2011-12-08 08:00:17 UTC <byorgey> luite: yes, assuming I understand your question correctly
+2011-12-08 08:01:23 UTC <byorgey> each node has a velocity which is tracked
+2011-12-08 08:01:38 UTC <byorgey> at each step all the forces acting on a node are used to update the velocity
+2011-12-08 08:01:52 UTC <byorgey> then the velocity is used to update the position.
+2011-12-08 08:02:06 UTC <luite> yeah that's what I mean. the alternative is to "freeze" the system each step, just taking the acceleration into account
+2011-12-08 08:02:14 UTC <byorgey> there's also a damping factor so velocities decay over time even with no forces acting.
+2011-12-08 08:02:43 UTC <luite> I think it should be possible to get crossing edges then :p
+2011-12-08 08:02:49 UTC <luite> at least, it sounds like a challenge
+2011-12-08 08:03:04 UTC <byorgey> hmm, maybe you're right
+2011-12-08 08:03:20 UTC <byorgey> well, once I release it feel free to make crossing edges =)
+2011-12-08 08:04:24 UTC <byorgey> anyway, I'm off to bed, g'night
+2011-12-08 08:04:35 UTC <luite> night :)
+2011-12-08 08:52:43 UTC <diabot> [diagrams-contrib:Brent Yorgey <byorgey] add more comments to D.TwoD.Apollonian (and 7 more)
+2011-12-08 08:52:56 UTC <luite> again?
+2011-12-08 14:12:47 UTC <tgeeky> lol
+2011-12-08 14:12:57 UTC <tgeeky> keeps teasing me
+2011-12-08 14:14:45 UTC <luite> must be a whole lotta comments
+2011-12-08 14:15:33 UTC <tgeeky> luite: do you use hdiff to manage all of your cabal packages?
+2011-12-08 14:15:53 UTC <tgeeky> luite: what tools do you use to manage different versions of ghc, and different cabal package universes
+2011-12-08 14:16:26 UTC <luite> uh I have a simple script that sets up symlinks to the right ghc and cabal-install version, that's it
+2011-12-08 14:19:59 UTC <tgeeky> what the hell. http://science.slashdot.org/story/11/12/08/041253/supreme-court-legitimizing-medical-patents <-- more rediculiousness
+2011-12-08 16:09:35 UTC <tgeeky> byorgey: hey, very specific competition: http://jerseyshots.com/viz/newborn.html
+2011-12-08 16:14:36 UTC <byorgey> tgeeky: hah, nice
+2011-12-08 16:14:58 UTC <tgeeky> that chart makes me think babies are a ton of work
+2011-12-08 16:15:00 UTC <byorgey> tgeeky: they obviously kept much more accurate data than we did!
+2011-12-08 16:15:13 UTC <tgeeky> byorgey: yeah, I am thinking maybe there is false accuracy in there :)
+2011-12-08 16:15:28 UTC <byorgey> Breast feeding (right side): 11 mins 35 secs
+2011-12-08 16:15:47 UTC <byorgey> tgeeky: hehe, that's because babies ARE a ton of work =)
+2011-12-08 16:16:03 UTC <tgeeky> he must have been waiting after his kid's birth with a bag full of stopwatches
+2011-12-08 16:16:36 UTC <byorgey> apparently so
+2011-12-08 16:18:33 UTC <tgeeky> byorgey: I'm looking for docs to help me get diagrams working
+2011-12-08 16:19:05 UTC <tgeeky> i found it. nevermind.
+2011-12-08 16:19:31 UTC <byorgey> heh, ok =)
+2011-12-08 16:33:24 UTC <tgeeky> hmm... installing gtk is "stuck" at 'preprocessing library gtk-0.12.2' .. or at least, it's taking a long time
+2011-12-08 16:34:16 UTC <ClaudiusMaximus> it does take long time
+2011-12-08 16:34:36 UTC <tgeeky> yep. finally just started. 207 modules, wow!
+2011-12-08 16:34:51 UTC <ClaudiusMaximus> and if TMPDIR isn't big enough, build fails (eg, with profiling enabled, 100MB tmpfs isn't enough)
+2011-12-08 16:35:12 UTC <tgeeky> ClaudiusMaximus: ah. I'm on windows, so I have no such problems.
+2011-12-08 16:35:15 UTC <ClaudiusMaximus> :)
+2011-12-08 16:35:47 UTC <ClaudiusMaximus> luckily cabal install respects the TMPDIR env var on linux, i just have to remember to set it when installing gtk
+2011-12-08 16:57:21 UTC <tgeeky> ok, I've got it installed. And I have the Apollonian.lhs in diagrams-contrib, and Apollonius.lhs in diagrams-doc/examples.
+2011-12-08 16:57:31 UTC <tgeeky> How can I can has pretty pictures?
+2011-12-08 17:00:03 UTC <tgeeky> ah. build.hs.
+2011-12-08 17:12:15 UTC <tgeeky> hm. that renders the Apollonius in examples. How do I get a picture out of diagrams-contrib/src/Diagrams/TowD/Apollonian.hs ?
+2011-12-08 17:16:48 UTC <byorgey> tgeeky: IIRC the Apollonius.lhs in diagrams-doc/examples was just some early code and doesn't really do anything
+2011-12-08 17:17:03 UTC <tgeeky> byorgey: yes, it just makes one generation of one gasket
+2011-12-08 17:17:29 UTC <tgeeky> though it does prove that i have diagrams installed on windows. (and it was less hassle then your warning on google code wiki suggests)
+2011-12-08 17:17:40 UTC <byorgey> tgeeky: I should add some documentation to the one in diagrams-contrib explaining how to use it
+2011-12-08 17:17:53 UTC <byorgey> but for the moment I'm trying to find the .hs file I used to generate the pictures in my blog post
+2011-12-08 17:18:03 UTC <byorgey> tgeeky: yay!
+2011-12-08 17:19:03 UTC <byorgey> tgeeky: well, I've got to go now, I'll have to look for it later
+2011-12-08 17:19:09 UTC <tgeeky> byorgey: I don't know if it's ghc7.2.1, or what, but the install process was simply: install gtk-all-in-one; add to $PATH; cabal install gtk; build diagrams
+2011-12-08 17:19:17 UTC <tgeeky> byorgey: ok, thanks, i have to go too
+2011-12-08 17:19:31 UTC <byorgey> tgeeky: in the meantime, the short answer is, if you have something of type  Diagram Cairo R2,  just pass it as an arugment to 'defaultMain' from diagrams-cairo
+2011-12-08 17:20:04 UTC <byorgey> so  import Diagrams.TwoD.Apollonian; use it to make something of type Diagram,   main = defaultMain yourDiagram
+2011-12-08 18:07:08 UTC <ClaudiusMaximus> is this anything like http://claudiusmaximus.goto10.org/g/pack/circles.svg (javascript-powered)?
+2011-12-08 18:15:32 UTC <byorgey> ClaudiusMaximus: yes, it's exactly the same
+2011-12-08 18:16:00 UTC <ClaudiusMaximus> cool :)
+2011-12-08 18:17:12 UTC <byorgey> ClaudiusMaximus: ah, that's a clever way to keep track of the colors, I hadn't thought of that =)
+2011-12-08 18:17:20 UTC <byorgey> 6 - a - b - c
+2011-12-08 18:18:41 UTC <byorgey> ACTION will have to add that to the version in diagrams-contrib
+2011-12-08 18:19:23 UTC <ClaudiusMaximus> i don't remember how i came up with that, i barely remember writing it long time ago
+2011-12-08 18:20:02 UTC <byorgey> hehe
+2011-12-08 18:20:54 UTC <byorgey> you appear to be using the generalized version of Descartes' Theorem in terms of the products of signed bends and center coordinates as complex numbers
+2011-12-08 18:21:06 UTC <byorgey> if you came up with that on your own I would be super-impressed =)
+2011-12-08 18:21:29 UTC <ClaudiusMaximus> i mostly copy/pasted equations from wikipedia from what i remember
+2011-12-08 18:21:45 UTC <byorgey> tgeeky pointed me to http://arxiv.org/PS_cache/math/pdf/0101/0101066v1.pdf  which is how I found out about it
+2011-12-08 18:22:18 UTC <byorgey> I don't recall wikipedia talking about the generalized form of Descartes' Theorem. But maybe I wasn't looking in the right place.
+2011-12-08 18:24:12 UTC <ClaudiusMaximus> http://en.wikipedia.org/wiki/Descartes%27_theorem#Complex_Descartes_theorem
+2011-12-08 18:25:06 UTC <ClaudiusMaximus> nice paper from initial glance, disappointing lack of nD graphics!
+2011-12-08 18:25:33 UTC <ClaudiusMaximus> and woohoo, if arxiv.org now gives sensible filenames with .pdf suffix in general
+2011-12-08 18:26:07 UTC <ClaudiusMaximus> got fed up with renaming all the files to add the extension so tab completion would work
+2011-12-08 18:26:11 UTC <byorgey> hehe
+2011-12-08 18:26:20 UTC <byorgey> what do you know, it is on wikipedia
+2011-12-08 18:26:35 UTC <ClaudiusMaximus> and also fed up with 100s of pdfs with cryptic filenames and not knowing which one i want
+2011-12-08 18:26:56 UTC <ClaudiusMaximus> locate thesis.pdf | wc -l -> some large number
+2011-12-08 18:27:03 UTC <byorgey> hah
+2011-12-08 18:28:03 UTC <ClaudiusMaximus> i once accidentally did evince * in my pdf dir, had to ssh in to kill it...
+2011-12-08 18:28:16 UTC <byorgey> hehehe, whoops
+2011-12-08 18:46:23 UTC <tgeeky> ACTION is back
+2011-12-08 18:46:35 UTC <tgeeky> there is a suite of ~ 8 papers from Lagarais et al
+2011-12-08 18:47:07 UTC <tgeeky> and the apollonian fractal (and the apollonian network) are related to the 4-coloring theorem
+2011-12-08 18:47:19 UTC <tgeeky> and the D3 gaskets are related to the (2-n) coloring problem
+2011-12-08 18:58:23 UTC <tgeeky> ClaudiusMaximus: I have some papers about the 3D (sphere) fractal if you'd like
+2011-12-08 18:58:28 UTC <tgeeky> that include pictures and generation methods
+2011-12-08 18:59:36 UTC <ClaudiusMaximus> tgeeky: not sure i'd have time to do them justice, too many other things...
+2011-12-08 18:59:45 UTC <ClaudiusMaximus> tgeeky: but thanks!
+2011-12-08 19:00:04 UTC <tgeeky> ClaudiusMaximus: you and your mandlebrot love
+2011-12-08 19:00:08 UTC <ClaudiusMaximus> yeah...
+2011-12-08 19:00:36 UTC <tgeeky> the circle fractals are like the orphan annie of the fractal world
+2011-12-08 19:23:29 UTC <byorgey> hahaha
+2011-12-08 20:39:55 UTC <tgeeky> they are!
+2011-12-08 20:40:37 UTC <tgeeky> everyone is so fascinated with the much more complex, and much more arbitrary fractals (like mandlebrot, julia, etc)
+2011-12-08 20:42:37 UTC <tgeeky> http://en.wikipedia.org/wiki/List_of_fractals_by_Hausdorff_dimension
+2011-12-08 20:43:06 UTC <tgeeky> there are only three fractals with circles -- and they are all the same fractal :O
+2011-12-08 20:49:55 UTC <ClaudiusMaximus> the Mandelbrot Set has 1 circle in it..
+2011-12-08 22:08:11 UTC <tgeeky> ClaudiusMaximus: the initial circle?
+2011-12-08 22:08:30 UTC <ClaudiusMaximus> the one to the left of the cardioid
+2011-12-08 22:08:37 UTC <tgeeky> yeah, that's what i meant
+2011-12-08 22:08:51 UTC <tgeeky> none of the other objects deeper are circular?
+2011-12-08 22:09:06 UTC <ClaudiusMaximus> apparently not (though very close to circular)
+2011-12-09 02:05:20 UTC <luite> hmm what's the relation?
+2011-12-09 02:05:54 UTC <luite> (between 4-coloring andthe apollonian fractal)
+2011-12-09 02:09:48 UTC <tgeeky> luite: it's trivially 4-colorable
+2011-12-09 02:10:11 UTC <tgeeky> (and so is its inverse, apollonian networks) -- I think
+2011-12-09 02:10:39 UTC <tgeeky> luite: I don't know what this 2*n color business is about
+2011-12-09 02:10:39 UTC <luite> yeah but is that really an interesting relation? I can think of more things that are trivially 4-colorable :p
+2011-12-09 02:10:52 UTC <tgeeky> luite: yes, because the property holds in higher dimensions too
+2011-12-09 02:11:38 UTC <luite> ah, hmm, still with 4 colors, or does the number increase?
+2011-12-09 02:11:44 UTC <tgeeky> luite: still 4
+2011-12-09 02:12:00 UTC <tgeeky> that said, i'm cheaing in dimensions > 4, because the fractal starts to overlap
+2011-12-09 02:12:12 UTC <tgeeky> I'm not really well versed in the 4-color theorem
+2011-12-09 02:12:58 UTC <luite> I only know it for planar graphs, is there a more general version
+2011-12-09 02:12:59 UTC <luite> ?
+2011-12-09 02:13:23 UTC <tgeeky> luite: I think attempting to prove 4-coloring for nonplanar graphs is always a hard thing
+2011-12-09 02:13:35 UTC <tgeeky> I thought the 4 color theorem was proved in our lifetime ,no?
+2011-12-09 02:13:53 UTC <luite> yes, it's a famous computer assisted proof
+2011-12-09 02:13:55 UTC <tgeeky> luite: I learned about this "n-color compositions of 2n" just recently
+2011-12-09 02:14:00 UTC <tgeeky> http://oeis.org/A001353
+2011-12-09 02:14:08 UTC <tgeeky> see the Guo link
+2011-12-09 02:14:16 UTC <tgeeky> http://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&ved=0CB4QFjAA&url=http%3A%2F%2Fwww.ias.ac.in%2Fmathsci%2Fvol120%2Ffeb2010%2FPM00051.PDF&ei=9G7hTtTxGdGXtweWjdHxAw&usg=AFQjCNGORDm_3Z4DUfKyDdYGtmnwMjVpLw
+2011-12-09 02:14:20 UTC <tgeeky> http://www.ias.ac.in/mathsci/vol120/feb2010/PM00051.PDF
+2011-12-09 02:14:29 UTC <tgeeky> i wish someone could explain that to me :O
+2011-12-09 02:15:02 UTC <luite> oh the first proof was apparently already in 1976
+2011-12-09 02:15:37 UTC <tgeeky> luite: and "obviously" (I say), the vast majority of fractals have no chance at 4-coloring
+2011-12-09 02:15:49 UTC <luite> I heard that some people were trying to re-do the proof with coq or something
+2011-12-09 02:15:57 UTC <tgeeky> that sounds really difficult
+2011-12-09 02:16:58 UTC <tgeeky> Additionally in 2005, the theorem was proven by Georges Gonthier with general purpose theorem proving software.
+2011-12-09 02:17:18 UTC <tgeeky> in Coq
+2011-12-09 02:17:19 UTC <tgeeky> http://research.microsoft.com/en-us/people/gonthier/4colproof.pdf
+2011-12-09 02:18:23 UTC <tgeeky> is byorgey sufficiently clever to do all kinds of stuff in coq, or does he just get by?
+2011-12-09 02:18:25 UTC <luite> ah right that must be what I had heard of, I didn't recall it being already done, though now that I see it, I vaguely remember reading some of that paper :)
+2011-12-09 02:18:46 UTC <luite> I have no idea how much coq byorgey knows
+2011-12-09 02:18:48 UTC <tgeeky> SPJ made it sound like theorem proving experts are rare
+2011-12-09 02:19:24 UTC <luite> it takes a lot of time to get productive in them :(
+2011-12-09 02:20:09 UTC <tgeeky> luite: anyway, if you look at the sequences underlying the apollonian fractal
+2011-12-09 02:20:33 UTC <tgeeky> it's pretty plain that the fractal is connected with Pisot Numbers (and hence Salem numbers)
+2011-12-09 02:20:37 UTC <tgeeky> which might not be surprising
+2011-12-09 02:20:47 UTC <tgeeky> http://en.wikipedia.org/wiki/Pisot%E2%80%93Vijayaraghavan_number
+2011-12-09 02:21:13 UTC <tgeeky> I find it surprising, and hard to understand.
+2011-12-09 02:22:41 UTC <tgeeky> luite: figure out what this 2*n color stuff is all about for me :)
+2011-12-09 02:22:59 UTC <luite> oh I didn't know these Pisot-Vijayaraghavan numbers
+2011-12-09 02:23:08 UTC <tgeeky> luite: yeah
+2011-12-09 02:23:38 UTC <tgeeky> (they are, among other things, what the golden ratio (widely known), silver ratio (less widely known, though A5 paper...), and plastic constant) are minimal examples of
+2011-12-09 02:23:42 UTC <luite> not now, I still have to pack all my stuff and get to the airport in a few hours :p
+2011-12-09 02:23:50 UTC <tgeeky> luite: whistler!?
+2011-12-09 02:23:56 UTC <luite> first vancouver
+2011-12-09 02:24:04 UTC <tgeeky> luite: fun times. have fun. be safe!
+2011-12-09 02:24:24 UTC <tgeeky> you'll still be checking in, I presume. You're hooked on the tubes!
+2011-12-09 02:24:25 UTC <luite> still have to do a lot of work on my presentation (wednesday)
+2011-12-09 02:24:36 UTC <tgeeky> luite: presenting what, where?
+2011-12-09 02:24:41 UTC <luite> paper at icdm2011
+2011-12-09 02:25:20 UTC <luite> yeal all appartments/hotels have wifi these days, and I bring my laptop and ipad :)
+2011-12-09 02:26:22 UTC <tgeeky> luite: well knock em dead.
+2011-12-09 02:26:43 UTC <tgeeky> is this your first paper?
+2011-12-09 02:26:49 UTC <luite> no
+2011-12-09 02:27:01 UTC <tgeeky> ACTION doesn't even know who you are affiliated with
+2011-12-09 02:27:11 UTC <luite> utrecht univ.
+2011-12-09 02:27:36 UTC <tgeeky> On Generating all Optimal Monotone Classifications
+2011-12-09 02:28:32 UTC <tgeeky> ACTION reads the abstract, learns next to nothing
+2011-12-09 02:28:33 UTC <luite> yeah I don't know much about data mining, but the other guy had an idea but it involved some graph algorithm stuff so he asked me to come up with an algorithm
+2011-12-09 02:28:55 UTC <tgeeky> luite: monotonicity comes up a lot in the circle fractal too :O
+2011-12-09 02:29:06 UTC <tgeeky> i don't even know if it's the same sense though
+2011-12-09 02:29:13 UTC <luite> in data mining it really means that your output variable has some order
+2011-12-09 02:29:21 UTC <luite> total order
+2011-12-09 02:29:23 UTC <tgeeky> yeah, I figured
+2011-12-09 02:29:37 UTC <luite> and that your samples are partially ordered somehow
+2011-12-09 02:29:40 UTC <tgeeky> yeah, I think it's the same thing
+2011-12-09 02:29:54 UTC <tgeeky> luite: yeah, that a (provable) total ordering emerges from partial orderings?
+2011-12-09 02:30:05 UTC <tgeeky> or something like that?
+2011-12-09 02:30:38 UTC <luite> well the partial ordering says that if a `pred` b then f(a) =< f(b)
+2011-12-09 02:30:47 UTC <luite> where pred is the partial order on the input
+2011-12-09 02:30:51 UTC <luite> and =< the total order on the output
+2011-12-09 02:31:18 UTC <luite> now if you sample real data, those things are often ot true
+2011-12-09 02:31:30 UTC <tgeeky> but probably not in general?
+2011-12-09 02:32:32 UTC <luite> uh not sure waht you mean, and I'm sure I'm explaining it incorrectly
+2011-12-09 02:32:47 UTC <tgeeky> that last statement was obvious (and not relevant)
+2011-12-09 02:32:52 UTC <tgeeky> of course not all data is montone :O
+2011-12-09 02:32:55 UTC <tgeeky> monotone
+2011-12-09 02:33:18 UTC <tgeeky> luite: I think this is the closest thing to what I found in the apollonian papers (for all integral apollonian gaskets)
+2011-12-09 02:33:21 UTC <tgeeky> http://en.wikipedia.org/wiki/Monotonic_function
+2011-12-09 02:33:25 UTC <tgeeky> the definition under "in computer science"
+2011-12-09 02:34:08 UTC <tgeeky> the guarantee with the circle fractal is, that if you have four numbers (or eight, in complex) numbers which satisfy the descartes equation
+2011-12-09 02:35:04 UTC <tgeeky> that you have termination gurantees all the way back down to that gasket's root quadruple
+2011-12-09 02:35:41 UTC <luite> an example is this: say you want to estimate house prices, and you have two attributes, lot size and distance to prime location. then both attributes have a monotone relation to the output (price category)
+2011-12-09 02:36:03 UTC <tgeeky> that makes very much more sense
+2011-12-09 02:36:33 UTC <tgeeky> yeah, there is no world in which you'll find lots of hidden bargains on (large lots, prime locations)
+2011-12-09 02:36:40 UTC <luite> now you still have a monotone relation, but now with a partial order if you combine the two attributes (product order actually)
+2011-12-09 02:37:00 UTC <luite> so if you have a house that is as close to prime as another, but wiht a bigger lot size, then it can't get a lower cost estimate
+2011-12-09 02:37:11 UTC <tgeeky> luite: i see. it's partial simply because it could flatten out as you trade off in the two attributes.
+2011-12-09 02:37:17 UTC <luite> but since it's a partial order, there is no such restriction if the bigger one ws further away
+2011-12-09 02:37:39 UTC <tgeeky> but nevertheless, the pair of them retains its smoothness
+2011-12-09 02:37:47 UTC <luite> yeah the usual order for data mining applications is just the product order for all attributes
+2011-12-09 02:37:56 UTC <tgeeky> ACTION did not know that
+2011-12-09 02:38:14 UTC <tgeeky> that continues up to n-tuples? (n products, i guess?)
+2011-12-09 02:38:29 UTC <tgeeky> so for (large lots, prime locations, not near sexual offenders)
+2011-12-09 02:38:44 UTC <luite> the algoritm works for arbitrary partial orders
+2011-12-09 02:39:00 UTC <tgeeky> that seems particularly clever. is it?
+2011-12-09 02:39:35 UTC <luite> anway since the actual sampled data usualy has some violations of this order, the goal is to change some samples so that they can be used as input for a monotone classifier
+2011-12-09 02:40:11 UTC <luite> so you have noisy input, you output new samples, but now with all the monotone relations satisifed
+2011-12-09 02:40:38 UTC <luite> but there are often multiple ways to change stuff
+2011-12-09 02:40:55 UTC <luite> for example do you upgrade one house that seems to be valued too low in the sample data
+2011-12-09 02:41:06 UTC <luite> or do you downgrade another one
+2011-12-09 02:41:38 UTC <tgeeky> and there's an optimal way to do this?
+2011-12-09 02:42:31 UTC <luite> yes, you define a loss function, say the number of categories you need to move a house is the loss for that sample
+2011-12-09 02:42:38 UTC <luite> the total loss is the sum of all of those
+2011-12-09 02:43:02 UTC <luite> you can also use the square
+2011-12-09 02:43:57 UTC <luite> anyway, with discrete output vars, you often have multiple ways to relabel stuff
+2011-12-09 02:44:38 UTC <luite> for example house a and b might be both category 3 or category 4, but which one doesn't change your loss
+2011-12-09 02:45:26 UTC <luite> this is the typical pattern: house a needs to be valued as least as high as house b, but it was lower in the sample data. the only optimal solutions are where they have the same category
+2011-12-09 02:46:29 UTC <luite> the usual, existing algorithms would find a single relabeling
+2011-12-09 02:47:03 UTC <luite> the new algorithm from this paper outputs a new partial order, describing all possible optimal ways to do this
+2011-12-09 02:47:45 UTC <tgeeky> luite: that sounds like it involves a complexity jump?
+2011-12-09 02:48:02 UTC <tgeeky> or are you just taking advantage of processing you've already done (ie, to find the single relabelling)
+2011-12-09 02:48:03 UTC <luite> nope it actually doesn't increase complexity at all
+2011-12-09 02:48:38 UTC <luite> but you need a few extra steps
+2011-12-09 02:49:14 UTC <luite> it depends on the loss function how you do it
+2011-12-09 02:49:26 UTC <luite> L2 loss, quadratic distance, is the easiest
+2011-12-09 02:49:32 UTC <luite> you only need one pass
+2011-12-09 02:50:01 UTC <luite> you can also do it for L_1 loss, absolute distance, but you need more passes.
+2011-12-09 02:50:23 UTC <tgeeky> hm. i'll have to ask for a copy of the paper sometime :)
+2011-12-09 02:50:40 UTC <luite> unfortunately that isn't in the paper at all, it required some fun tweaks, modifying an algorithm, amortized complexity analysis
+2011-12-09 02:51:00 UTC <luite> and all proofs are scrappeds ince data miners rather see examples and test data results :(
+2011-12-09 02:51:11 UTC <luite> oh well
+2011-12-09 02:51:24 UTC <tgeeky> scrappeds ince ?
+2011-12-09 02:51:41 UTC <luite> my original unpublished tech report
+2011-12-09 02:51:53 UTC <tgeeky> ok
+2011-12-09 02:51:58 UTC <tgeeky> well it sounds interesting
+2011-12-09 02:52:06 UTC <luite> I'm not sure how useful it is
+2011-12-09 02:52:09 UTC <tgeeky> and hopefully it goes over well in Vancouver
+2011-12-09 02:52:18 UTC <tgeeky> if not, free ski vacation
+2011-12-09 02:52:22 UTC <luite> but I'm only the guy who came up with the algorithms
+2011-12-09 02:52:25 UTC <tgeeky> (almost free)
+2011-12-09 02:52:32 UTC <tgeeky> luite: that's the important part
+2011-12-09 02:52:54 UTC <luite> hehe the lift pass and whistler apartment are still far from almost free ;p
+2011-12-09 02:53:48 UTC <luite> I came up with the algorithm on another ski vacation in zermatt :)
+2011-12-09 02:54:48 UTC <luite> maybe I'll find something interesting in whistler as well
+2011-12-09 02:55:07 UTC <luite> the apartment is close to the library
+2011-12-09 02:58:29 UTC <luite> my return flight is at the 26th
+2011-12-09 02:58:44 UTC <luite> I hope to have lots of room in the airplane then :)
+2011-12-09 02:59:53 UTC <tgeeky> luite: read apollonian fractal stuff and help me out then :)
+2011-12-09 03:02:41 UTC <tgeeky> hehe
+2011-12-09 03:02:45 UTC <tgeeky> ah, have a good time though
+2011-12-09 03:02:51 UTC <tgeeky> i'll see ya around
+2011-12-09 03:03:45 UTC <luite> yeah I'll be online there probably, the lifts close rather early, 2:30pm is the latest upload
+2011-12-09 03:06:57 UTC <luite> and no one (i know) is joining me at whistler so unless i meet some hot ski babes or awesome ski dudes on the slopes, I won't have anything to do other than sadly returning to the apartment, silently weeping until the lifts open again ;)
+2011-12-09 03:18:51 UTC <luite> hmm I really hope that the rumors of a samsung tablet with 11.6" 2560x1600 screen for 2012 are true, that would be so great for reading papers
+2011-12-09 03:19:40 UTC <tgeeky> that sounds really pixel dense
+2011-12-09 03:20:15 UTC <luite> yeah well over 200dpi
+2011-12-09 03:20:32 UTC <tgeeky> that's almost good enough for viewing CT scans and other medical data
+2011-12-09 03:20:44 UTC <luite> the extra inch and the added resolution would really make papers, including two-column ones and those with small math symbols, much mor readable
+2011-12-09 03:21:12 UTC <tgeeky> the extra inch always helps, man. always
+2011-12-09 03:21:18 UTC <tgeeky> ACTION walks out slowly
+2011-12-09 03:21:24 UTC <luite> I use an ipad now, 1024x768 is just a bit too low
+2011-12-09 03:21:53 UTC <tgeeky> I don't own an ipad, but the one I use has started to get slow, and the browser just dumps out (crashes) several times a day
+2011-12-09 03:22:17 UTC <luite> reboot it
+2011-12-09 03:22:23 UTC <tgeeky> yeah, didn't help :(
+2011-12-09 03:22:38 UTC <luite> hmm, is it updated to 5.01?
+2011-12-09 03:22:55 UTC <luite> and is it an ipad 1?
+2011-12-09 03:22:57 UTC <tgeeky> i think so. I think that's when things started going wrong (three weeks ago)
+2011-12-09 03:22:59 UTC <tgeeky> yes, ipad1
+2011-12-09 03:23:13 UTC <luite> yeah those have limited memory, only 256MB is not really enough
+2011-12-09 03:23:25 UTC <luite> mine also quits apps sometimes
+2011-12-09 03:23:33 UTC <tgeeky> ah that's what it is.
+2011-12-09 03:23:52 UTC <luite> new tablets in 2012 should have at least 1GB
+2011-12-09 03:24:09 UTC <luite> the recent ones already do, for example the asus transformer prime
+2011-12-09 03:24:34 UTC <tgeeky> hehe. ok. I need to run, and you need to get ready for flight.
+2011-12-09 03:24:58 UTC <luite> tnx, I still have a few mor hours, and I've ollected most of the stuff I need
+2011-12-09 03:25:15 UTC <tgeeky> ok. i have some chores to do, and then some coding. and then some sleep!
+2011-12-09 03:25:22 UTC <tgeeky> ttyl. safe travels brother.
+2011-12-09 03:25:23 UTC <luite> except the boot drier, I need to find that thing
+2011-12-09 04:16:56 UTC <tgeeky> man who owns boot drier
+2011-12-09 04:16:59 UTC <tgeeky> is serious about skiing
+2011-12-09 04:17:08 UTC <luite> hehe it's a very small portable one
+2011-12-09 04:17:50 UTC <tgeeky> yeah? i have a small portable one too. it's a hair dryer :O
+2011-12-09 04:18:16 UTC <luite> hehe, nah this one has some sort of tubes that go down the boot
+2011-12-09 04:18:46 UTC <luite> and it blows only a little amount of air, only slightly warm, but the circulation really dries them quickly
+2011-12-09 04:18:59 UTC <tgeeky> cool
+2011-12-09 04:19:15 UTC <tgeeky> that reminds me of NASA astronaut suits (interiors) which i've worn
+2011-12-09 04:19:36 UTC <luite> oh have you been to the moon? ;p
+2011-12-09 04:19:39 UTC <tgeeky> the most bizzare thing.. they run cold water through it, you are instantly freezing, warm water, instantly warm again
+2011-12-09 04:19:46 UTC <tgeeky> only in my head
+2011-12-09 04:20:16 UTC <tgeeky> i've also been to 5g
+2011-12-09 04:20:18 UTC <tgeeky> which I do not recommend
+2011-12-09 04:23:30 UTC <luite> I want to try new liners there, made in vancouver I think, some guys at ski forums rave about them
+2011-12-09 04:24:35 UTC <luite> http://www.intuitionliners.com/hd_race_page.htm
+2011-12-09 04:26:08 UTC <tgeeky> wow that's expensive
+2011-12-09 04:26:52 UTC <luite> well the boots were 500 euro (~670 usd)
+2011-12-09 04:28:27 UTC <tgeeky> wow that's expensive.
+2011-12-09 04:29:41 UTC <luite> more expensive than my ski's :)
+2011-12-09 04:30:42 UTC <luite> I got those from ebay (new, from a german store)
+2011-12-09 04:34:24 UTC <luite> but boots are quite a bit more important than anything else probably
+2011-12-09 04:34:43 UTC <luite> as long as your clothes are warm enough and your ski's are somewhat appropriate for the conditions
+2011-12-09 04:47:34 UTC <luite> I hope my flight won't be delayed too much, storm is expected, flood barriers are already closing...
+2011-12-09 16:25:40 UTC <ClaudiusMaximus> is there any turing machine example for diagrams?  slowly started writing one..
+2011-12-09 16:26:47 UTC <fryguybob> ClaudiusMaximus: I thought about making one, but that is about it.
+2011-12-09 16:27:41 UTC <ClaudiusMaximus> ok, then i'll carry on - is there a turing machine package i could re-use for the machine definition?  happy to roll my own, as i want esoteric features (different tape topology, etc)
+2011-12-09 16:28:22 UTC <fryguybob> I have one that I used for some homework.  I'll paste it.
+2011-12-09 16:30:14 UTC <fryguybob> ClaudiusMaximus: http://hpaste.org/55051
+2011-12-09 16:32:06 UTC <ClaudiusMaximus> fryguybob: thanks
+2011-12-09 16:35:01 UTC <ClaudiusMaximus> i started on a more generic design, with a 'Tape' MTPC + FunDeps to associate possible tape shifts with the tape itself; and i have Ix constraints for type Transitions state symbol shift = Array (state, symbol) (state, symbol, shift)
+2011-12-09 16:35:48 UTC <ClaudiusMaximus> my Symbol class adds "symbolRange :: (symbol, symbol)" to the HasBlank stuff
+2011-12-09 16:37:00 UTC <ClaudiusMaximus> and Tape class has empty, shift, read, write operations
+2011-12-09 16:38:10 UTC <ClaudiusMaximus> possibly over-generic, but i'll see how it goes
+2011-12-09 16:40:17 UTC <fryguybob> I was just happy to get move for  Tape e  to work on  f (Tape e) :D
+2011-12-09 16:45:37 UTC <ClaudiusMaximus> hm, so you can't write blanks to the tape
+2011-12-09 16:47:01 UTC <ClaudiusMaximus> ah, i see why
+2011-12-09 16:48:32 UTC <ClaudiusMaximus> anyway, i think i'll carry on rolling my own - learning experience, plus the desire for bizarro tapes...
+2011-12-09 16:48:46 UTC <ClaudiusMaximus> thanks :)
+2011-12-09 16:48:56 UTC <fryguybob> ClaudiusMaximus: Excellent!  I look forward to TM diagrams :D.
+2011-12-09 16:49:12 UTC <ClaudiusMaximus> ACTION wanders off to the laptop in the warmer room to carry on working
+2011-12-09 19:14:33 UTC <byorgey> ClaudiusMaximus: fun, I've thought about making TM diagrams too, I'll look forward to seeing what you come up with =)
+2011-12-09 19:15:44 UTC <ClaudiusMaximus> early days - just needed i need turing machines that also support input and output, so, hacking on adding that at the moment - not made any diagrams yet! heh
+2011-12-09 19:16:02 UTC <ClaudiusMaximus> s/needed/realized/
+2011-12-09 19:16:16 UTC <byorgey> fair enough, no rush =)
