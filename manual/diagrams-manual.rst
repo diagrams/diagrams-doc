@@ -1746,8 +1746,11 @@ closed.
 >              <> cubicSpline closed pts # lw 0.05
 > example = mkPath False ||| strutX 2 ||| mkPath True
 
-For more control over the generation of curved paths, see the
-`diagrams-spiro`:pkg: package.
+For more control over the generation of curved paths, see
+`diagrams-spiro`_, which provides an FFI binding to the ``spiro``
+library (the cubic spline library used by Inkscape).
+
+.. _diagrams-spiro: http://patch-tag.com/r/fryguybob/diagrams-spiro
 
 Fill rules
 ~~~~~~~~~~
