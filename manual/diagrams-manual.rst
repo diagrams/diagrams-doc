@@ -460,14 +460,15 @@ possible to the diagrams without intersecting them at all.
 
 Of course, the *base point* from which the bounding function is
 measuring matters quite a lot!  If there were no base point, questions
-of the form "*how far do you have to go...*" would be meaningless --
-how far *from where*?  This base point (indicated by the red dots in
-the diagram above) is called the *local origin* of a diagram.  Every
-diagram has its own intrinsic *local vector space*; operations on
-diagrams are always with respect to their local origin, and you can
-affect the way diagrams are combined with one another by moving their
-local origins.  The `showOrigin` function is provided as a quick way
-of visualizing the local origin of a diagram (also illustrated above).
+of the form "*how far do you have to go...*" would be
+meaningless---how far *from where*?  This base point (indicated by the
+red dots in the diagram above) is called the *local origin* of a
+diagram.  Every diagram has its own intrinsic *local vector space*;
+operations on diagrams are always with respect to their local origin,
+and you can affect the way diagrams are combined with one another by
+moving their local origins.  The `showOrigin` function is provided as
+a quick way of visualizing the local origin of a diagram (also
+illustrated above).
 
 Postfix transformation
 ----------------------
@@ -1157,7 +1158,7 @@ comes in handy even more occasionally.
 
 Any diagram can be transformed by applying arbitrary affine
 transformations to it. *Affine* transformations include *linear*
-transformations (rotation, scaling, reflection, shears --- anything
+transformations (rotation, scaling, reflection, shears---anything
 which leaves the origin fixed and sends lines to lines) as well as
 translations.  `Diagrams.TwoD.Transform`:mod: defines a number of
 common affine transformations in two-dimensional space. (To construct
@@ -2467,9 +2468,6 @@ paths can be "compiled" into lists of `FixedSegment`\s with absolute
 locations using `fixTrail` and `fixPath`.  This is of interest to
 authors of rendering backends that do not support relative drawing
 commands.
-
-Tips and tricks
----------------
 
 Deciphering error messages
 --------------------------
