@@ -21,17 +21,25 @@ Getting the sources
 -------------------
 
 `diagrams` is an open-source project, and contributions are
-encouraged!  You can get the sources using either [darcs](http://darcs.net) or [git](http://git-scm.com):
+encouraged!  You can get the sources using [darcs](http://darcs.net):
 
     darcs get http://patch-tag.com/r/byorgey/diagrams-FOO
-    git clone git://github.com/byorgey/diagrams-FOO.git
 
 where `FOO` is one of
 
   * `core`: the core diagrams framework
   * `lib`: standard library of combinators and utilities
   * `cairo`: rendering backend using cairo
+  * `contrib`: collection of user contributions
   * `doc`: documentation, including website, manual, tutorials, etc.
+  
+In the past, experimental git mirrors were also offered; we hope to be able to
+offer them again in the future.
+
+<!--
+ or [git](http://git-scm.com):
+ 
+     git clone git://github.com/byorgey/diagrams-FOO.git
 
 Use whichever you feel more comfortable with. Thanks to
 [Owen Stephens's](http://www.owenstephens.co.uk/) great work on
@@ -40,5 +48,7 @@ requests are accepted via both!  See the
 [bug tracker](http://code.google.com/p/diagrams/issues/list) for a
 list of bugs and feature requests.
 
+-->
 
-
+If you're looking for ways to help, see the
+[bug tracker](http://code.google.com/p/diagrams/issues/list) or the [wiki](http://haskell.org/haskellwiki/Diagrams).
