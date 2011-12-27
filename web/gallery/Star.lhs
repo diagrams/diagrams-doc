@@ -28,7 +28,7 @@ To connect two named using index `i`, we request the points
 corresponding to those names, and superimpose a line between the points:
 
 > connect n i = withNames [("x",i), ("y", n - i)]
->               $ atop . fromVertices . map fst
+>               $ atop . fromVertices . map location
 
 Finish creating one quarter of the diagram by connecting corresponding
 points.
