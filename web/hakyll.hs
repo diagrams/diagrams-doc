@@ -29,6 +29,12 @@ main = hakyll $ do
         route idRoute
         compile copyFileCompiler
 
+    -- Static images ------------------------------
+
+    match "images/*" $ do
+        route idRoute
+        compile copyFileCompiler
+
     -- Normal .html pages, built from .markdown ---
     forM_ pages $ flip match $ do
         route   $ setExtension "html"
