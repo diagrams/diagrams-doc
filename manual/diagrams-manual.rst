@@ -370,13 +370,16 @@ must be an instance of `Foo`).
 
 Each vector space has a type of *vectors* `v` and an associated type
 of *scalars*, `Scalar v`.  A vector represents a direction and
-magnitude, whereas a scalar represents only a magnitude.  Important
+magnitude, whereas a scalar represents only a magnitude.  Useful
 operations on vectors and scalars include:
 
   * Adding and subtracting vectors with `(^+^)` and `(^-^)`
   * Multiplying a vector by a scalar with `(*^)`
+  * Linearly interpolating between two vectors with `lerp`
+  * Finding the `magnitude` (length) of a vector
+  * Projecting one vector onto another with `project`.
 
-See `Data.VectorSpace`:mod: for other functions and operators.
+See `Data.VectorSpace`:mod: for other useful functions and operators.
 
 One might think we could also identify *points* in a space with
 vectors having one end at the origin.  However, this turns out to be a
