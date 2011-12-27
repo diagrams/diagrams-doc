@@ -94,17 +94,18 @@ about ``diagrams``:
 
   * The ``diagrams`` website_ has a `gallery of examples`_ and links
     to tutorials, blog posts, and other documentation.
+  * The `diagrams wiki`_ is a good place to find tips and tricks,
+    examples, answers to frequently asked questions, and more.
   * The ``#diagrams`` IRC channel on Freenode is a friendly place
     where you can get help from other ``diagrams`` developers and users.
   * Consider joining the `diagrams mailing list`_ for discussions
     and announcements about ``diagrams``.
-  * See the `developer wiki`_ for more specialized documentation and
-    information on planned and ongoing development.
   * See the `bug tracker`_ for a list of open tickets.  If you find a
     bug or would like to request a feature, please file a ticket!
 
 .. _`report it as a bug`: http://code.google.com/p/diagrams/issues/list
 .. _website: http://projects.haskell.org/diagrams
+.. _`diagrams wiki`: http://haskell.org/haskellwiki/Diagrams
 .. _`gallery of examples`: http://projects.haskell.org/diagrams/gallery.html
 .. _`diagrams mailing list`: http://groups.google.com/group/diagrams-discuss?pli=1
 .. _`developer wiki`: http://code.google.com/p/diagrams/
@@ -220,12 +221,11 @@ Contributing
 ------------
 
 ``diagrams`` is an open-source project, and contributions are
-encouraged!  You can get the sources using either darcs_ or git_:
+encouraged!  You can get the sources using darcs_:
 
 ::
 
     darcs get http://patch-tag.com/r/byorgey/diagrams-FOO
-    git clone git://github.com/byorgey/diagrams-FOO.git
 
 where ``FOO`` is one of
 
@@ -234,10 +234,7 @@ where ``FOO`` is one of
   * ``cairo``: rendering backend using cairo
   * ``doc``: documentation, including website, manual, tutorials, etc.
 
-Use whichever you feel more comfortable with. Thanks to `Owen
-Stephens's`_ great work on `darcs-bridge`_, patches/pull requests are
-accepted via both!  See the `bug tracker`_ for a list of bugs
-and feature requests.
+See the `bug tracker`_ for a list of bugs and feature requests.
 
 .. _`darcs`: http://darcs.net/
 .. _`git`: http://git-scm.com/
