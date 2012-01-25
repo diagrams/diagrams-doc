@@ -14,8 +14,12 @@ Platform](http://hackage.haskell.org/platform/) as well as [cairo](http://www.ca
 installed `gtk2hs` or any of its components before -- if you are
 unsure, it can't hurt to include it.)
 
-Otherwise, see the [tutorial](/tutorial/DiagramsTutorial.html) for more detailed
-instructions.
+Otherwise, see the [tutorial](/tutorial/DiagramsTutorial.html) and
+[the wiki](http://www.haskell.org/haskellwiki/Diagrams/Install) for
+more detailed instructions.
+
+You may also want to install `diagrams-contrib`, a package of
+user-contributed tools and extensions.
 
 Getting the sources
 -------------------
@@ -35,6 +39,14 @@ where `FOO` is one of
   
 In the past, experimental git mirrors were also offered; we hope to be able to
 offer them again in the future.
+
+<center>
+![](/images/Diagrams.png)
+</center>
+
+The packages listed above are only the beginning of the diagrams
+world: there are many other related projects
+[listed on the wiki](http://www.haskell.org/haskellwiki/Diagrams/Projects).
 
 <!--
  or [git](http://git-scm.com):
