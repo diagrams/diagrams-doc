@@ -288,8 +288,7 @@ vertical directions, respectively.  For example:
 The two diagrams are arranged next to each other so that their local
 origins are on the same horizontal or vertical line.  As you can
 ascertain for yourself with `showOrigin`, the local origin of the new,
-combined diagram is at the point of tangency between the two
-subdiagrams.
+combined diagram coincides with the local origin of the first diagram.
 
 `(|||)` and `(===)` are actually just convenient specializations of
 the more general `beside` combinator. `beside` takes as arguments a
@@ -312,7 +311,7 @@ tractability.  The definition of "next to" adopted by diagrams is as follows:
 
 To place two diagrams next to each other in the direction
 of a vector *v*, place them as close as possible so that there is a
-*separating line* perpendicular to *v*, that is, a line perpendicular
+*separating line* perpendicular to *v*; that is, a line perpendicular
 to *v* such that the first diagram lies completely on one side of the
 line and the other diagram lies completely on the other side.
 
@@ -338,10 +337,10 @@ However:
 * It is also *tractable*.  Every diagram carries along with it a
 *bounding function* which takes as input a vector *v*, and returns the
 minimum distance to a separating line from the local origin in the
-direction of *v*.  When composing two diagrams with 'atop' we take the
+direction of *v*.  When composing two diagrams with `atop` we take the
 pointwise maximum of their bounding functions; to place two diagrams
 next to each other we use their bounding functions to decide how to
-reposition their local origins before composing them with 'atop'.
+reposition their local origins before composing them with `atop`.
 
 Transforming diagrams
 =====================
@@ -413,7 +412,7 @@ Translation
 Of course, there are also translation transformations like
 `translate`, `translateX`, and `translateY`.  These operations
 translate a diagram within its *local vector space* --- that is,
-relative to their local origin.
+relative to its local origin.
 
 > circleT = circle 1 # translate (0.5, 0.3) # showOrigin
 
