@@ -652,13 +652,19 @@ polygons and other path-based shapes.  For example:
   of sides.
 * `rect` constructs a rectangle of a given width and height.
 * `roundedRect` constructs a rectangle with circular rounded corners.
+* `roundedRect'` works like `roundedRect` but allowing a different radius to be set for each corner, using `RoundedRectOpts`.
 
 .. class:: dia-lhs
 
 ::
 
 > example = square 1 ||| rect 0.3 0.5
->       ||| eqTriangle 1 ||| roundedRect (0.7,0.4) 0.1
+>       ||| eqTriangle 1 
+>       ||| roundedRect (0.5, 0.4) 0.1
+>       ||| roundedRect (0.5, 0.4) (-0.1)
+>       ||| roundedRect' (0.7, 0.4) with { radiusTL = 0.2
+>                                        , radiusTR = -0.2
+>                                        , radiusBR = 0.1 }
 
 More special polygons will likely be added in future versions of the
 library.
