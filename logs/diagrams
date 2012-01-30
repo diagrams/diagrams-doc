@@ -7496,3 +7496,720 @@
 2011-12-09 19:15:44 UTC <ClaudiusMaximus> early days - just needed i need turing machines that also support input and output, so, hacking on adding that at the moment - not made any diagrams yet! heh
 2011-12-09 19:16:02 UTC <ClaudiusMaximus> s/needed/realized/
 2011-12-09 19:16:16 UTC <byorgey> fair enough, no rush =)
+2011-12-09 19:55:44 UTC <ClaudiusMaximus> my boof->turingmachinewithio compiler and turingmachinewithio interpreter works (at least, rot13 . rot13 outputs correctly),
+2011-12-09 19:57:06 UTC <ClaudiusMaximus> now to learn the graphviz bindings to layout the state transition diagram, and make it pretty with diagrams
+2011-12-09 20:29:11 UTC <byorgey> boof?
+2011-12-09 20:34:16 UTC <ClaudiusMaximus> boolfuck
+2011-12-09 20:43:35 UTC <byorgey> hahaha, nice  "The '-' command has been removed from the language, since it performs the same operation as '+'."
+2011-12-09 21:55:09 UTC <ClaudiusMaximus> graphviz is still installing after almost 2 hours (machine has only 512MB ram)
+2011-12-09 22:07:50 UTC <byorgey> yikes
+2011-12-09 22:58:58 UTC <ClaudiusMaximus> with --disable-optimization it installed in about 30 seconds..
+2011-12-09 23:04:10 UTC <byorgey> hahaha
+2011-12-09 23:34:37 UTC <ClaudiusMaximus> fun never stops... dot segfaults (stack overflow i guess..) rendering my 4MB graphviz file with 30k nodes and 60k edges;  neato currently using 3.5GB and seems to be taking its time
+2011-12-09 23:35:55 UTC <ClaudiusMaximus> maybe i should try something simpler...
+2011-12-10 00:14:27 UTC <tgeeky> hmm... simpler than 30k nodes and 60k edges...
+2011-12-10 00:14:29 UTC <tgeeky> may I suggest, smiley face?
+2011-12-10 00:17:27 UTC <ClaudiusMaximus> sfdp coped ok, http://claudiusmaximus.goto10.org/g/misc/rot13-boof-sfdp.png
+2011-12-10 00:17:59 UTC <tgeeky> ClaudiusMaximus: can you link me to the code for your apollonian gasket?
+2011-12-10 00:18:04 UTC <tgeeky> ClaudiusMaximus: that is rather cool looking.
+2011-12-10 00:18:10 UTC <tgeeky> it looks like a tree of centipedes
+2011-12-10 00:18:34 UTC <ClaudiusMaximus> tgeeky: view source in browser: http://claudiusmaximus.goto10.org/g/pack/circles.svg
+2011-12-10 00:18:59 UTC <ClaudiusMaximus> tgeeky: yeah, quite scarily organic
+2011-12-10 00:19:11 UTC <tgeeky> ClaudiusMaximus: yes, indeed. It's a little unsettling.
+2011-12-10 01:32:38 UTC <luite> greetings from vancouver
+2011-12-10 01:39:44 UTC <fryguybob> greetings!
+2011-12-10 01:39:48 UTC <luite> hmm this internet connection is glitchy
+2011-12-10 01:41:55 UTC <luite> doesn't help that i'm borrowing the internet connection from the neighbouring hotel since this one has a password
+2011-12-10 02:21:52 UTC <byorgey> greetings luite
+2011-12-10 02:24:56 UTC <luite> :)
+2011-12-10 02:25:02 UTC <luite> actually my first time in north america
+2011-12-10 02:25:24 UTC <luite> and my debit card doesn't seem to work in the atms here
+2011-12-10 02:26:19 UTC <luite> which is not ideal if I want to ead and stuff
+2011-12-10 02:26:22 UTC <luite> eat
+2011-12-10 02:26:30 UTC <byorgey> yes, eating is recommended
+2011-12-10 02:26:44 UTC <byorgey> even in north america
+2011-12-10 02:27:53 UTC <fryguybob> ACTION misses the north west.
+2011-12-10 02:29:05 UTC <luite> where did you live?
+2011-12-10 02:32:15 UTC <fryguybob> Missoula Montana
+2011-12-10 02:33:49 UTC <luite> ah I had to look that up :)
+2011-12-10 05:18:59 UTC <luite> back
+2011-12-10 05:57:07 UTC <diabot> [diagrams-lib:Brent Yorgey <byorgey] export new 'view' function for restricting the bounding function to a rectangular region (and 416 more)
+2011-12-10 15:02:58 UTC <byorgey> sigh
+2011-12-10 17:22:08 UTC <tgeeky> byorgey: hey, at least it makes you look busy
+2011-12-10 17:22:41 UTC <byorgey> hehe, true =)
+2011-12-10 17:22:57 UTC <byorgey> hey guys! I just pushed 416 patches to diagrams-lib!!
+2011-12-10 17:23:06 UTC <tgeeky> man that guy is productive.
+2011-12-10 17:23:10 UTC <byorgey> just a little hacking I was doing last night in my spare time, you know
+2011-12-10 17:23:25 UTC <tgeeky> tomorrow night, world hunger!
+2011-12-10 17:23:38 UTC <byorgey> oh, diagrams-lib already solves world hunger
+2011-12-10 17:23:43 UTC <byorgey> tomorrow is cancer
+2011-12-10 17:23:59 UTC <tgeeky> oh you're good. you're good.
+2011-12-10 17:24:25 UTC <byorgey> =)
+2011-12-10 19:41:24 UTC <tgeeky> great diagrams target: http://www-d0.fnal.gov/Run2Physics/top/top_public_web_pages/top_feynman_diagrams.html
+2011-12-10 20:25:51 UTC <byorgey> fun
+2011-12-10 20:26:06 UTC <byorgey> ACTION knows nothing about quantum physics, but if someone wants to make a diagrams module for producing Feynman diagrams that would be awesome
+2011-12-10 20:26:26 UTC <byorgey> the drop shadows are annoying
+2011-12-10 23:58:52 UTC <tgeeky> byorgey: indeed.
+2011-12-10 23:59:02 UTC <tgeeky> and yes, I hope I can take that to task
+2011-12-10 23:59:45 UTC <tgeeky> especially because, if my understanding of the design of diagrams is correct, one can describe the set of particles and interactions to get a diagram
+2011-12-10 23:59:59 UTC <tgeeky> instead of describing the QM behind it, and instead of describing how to draw the picture
+2011-12-11 00:00:18 UTC <tgeeky> someone is already doing feynman diagrams in Haskell
+2011-12-11 02:25:23 UTC <luite> bah fire alarm in library, just when I had found some interesting books (one with pretty pictures of circle packings!), everyone had to leave, when it opened again my books were gone
+2011-12-11 02:34:58 UTC <tgeeky> luite: what the !
+2011-12-11 02:35:04 UTC <tgeeky> luite: it's a trap
+2011-12-11 02:35:25 UTC <tgeeky> http://www.wolframalpha.com/input/?i=21+billion+*+mass+of+the+sun <-- hehe
+2011-12-11 02:35:56 UTC <tgeeky> I would say that the (recent) observation of a black hole of that mass, means we have a bad idea about black hole mass upper limits.
+2011-12-11 02:39:02 UTC <luite> hmm hmm
+2011-12-11 02:39:35 UTC <tgeeky> http://www.time.com/time/health/article/0,8599,2101916,00.html
+2011-12-11 03:33:12 UTC <luite> tgeeky: this  is a review of that circle packing book http://www.springerlink.com/content/9412664078511201/fulltext.pdf
+2011-12-11 03:35:32 UTC <tgeeky> luite: hmm. circle packing in general is very interesting, but for me, I had to choose to focus on fractal packing in order to have a chance at understanding the state of the art
+2011-12-11 03:36:16 UTC <tgeeky> luite: that said, for a given *integer* dimension, circle packing and lattice theory are almost the same thing, I think
+2011-12-11 03:36:27 UTC <tgeeky> I know Leech and friends all sit at 24
+2011-12-11 03:37:37 UTC <tgeeky> luite: I wish I had that book, though.
+2011-12-11 18:23:33 UTC <luite> tgeeky: please buy it and scan it for me ;p
+2011-12-11 21:23:42 UTC <diabot> [diagrams-contrib:Brent Yorgey <byorgey] add more comments to D.TwoD.Apollonian (and 7 more)
+2011-12-11 21:24:04 UTC <fryguybob> @botsnack
+2011-12-11 21:24:04 UTC <diabot> :)
+2011-12-24 03:30:05 UTC <diabot> [active:Brent Yorgey <byorgey] add activeEra and clamp functions
+2011-12-24 05:51:13 UTC <diabot> [active:Brent Yorgey <byorgey] new 'toTime' function
+2011-12-24 05:52:53 UTC <diabot> [diagrams-lib:Brent Yorgey <byorgey] a bit more documentation for animation-related stuff
+2011-12-24 05:53:26 UTC <diabot> [diagrams-cairo:Brent Yorgey <byorgey] improve animation handling
+2011-12-24 05:58:31 UTC <byorgey> I think it's time for an 0.5 release soon
+2011-12-24 20:12:37 UTC <tgeeky> join #haskell-blah
+2011-12-24 21:08:50 UTC <diabot> [active:Brent Yorgey <byorgey] a bunch of work: better implementations, more documentation, many new combinators (and 2 more)
+2011-12-25 00:02:10 UTC <luite> hmm
+2011-12-25 00:02:40 UTC <luite> back from great day, with new snow!
+2011-12-25 00:05:32 UTC <luite> but I noticed something, I ski alone, so I usually get in the singles line, where you're supposed to "fill up" chairs if there are groups of 2 or 3 ppl in the line (all chairs here are 4 seaters)
+2011-12-25 00:07:10 UTC <luite> now I usually ask if they are a group of 2 or 3, and if I can join them. now if there's a mother with a child then they nod, but on more than one occasion, at the last moment they decide not to take the chair, so I'm alone... (and there's a long line behind them waiting)
+2011-12-25 00:08:08 UTC <luite> are people here more afraid of strangers near their children? in europe I've often been asked to watch a small kid, make sure that they get off the lift ok, not here
+2011-12-25 00:08:30 UTC <luite> might just be a coincidence of course
+2011-12-25 03:56:28 UTC <byorgey> luite: maybe so
+2011-12-25 03:57:23 UTC <byorgey> luite: I think asking a stranger to watch a small kid on a ski lift would happen very rarely in the US, don't know about Canada but it might be similar
+2011-12-25 03:57:32 UTC <byorgey> luite: glad you had a good day skiing =)
+2011-12-25 04:56:26 UTC <tgeeky> luite: yes, people are afraid of strangers near children
+2011-12-25 04:56:30 UTC <tgeeky> and strangers (men) are afraid of it too
+2011-12-25 04:57:02 UTC <tgeeky> we have a lot of crime / sex crime/ etc shows on TV here
+2011-12-25 04:57:09 UTC <tgeeky> I get the impression byorgey isn't the TV type :o
+2011-12-25 05:00:06 UTC <byorgey> your impression is correct
+2011-12-25 05:03:22 UTC <tgeeky> I think that could be better stated that: byorgey (and family) are probably the anti-TV type
+2011-12-25 05:03:30 UTC <tgeeky> which is how one would want to raise a sensible child :o
+2011-12-25 05:04:06 UTC <tgeeky> (ie, I plan on doing that when/if I have children)
+2011-12-25 05:04:32 UTC <tgeeky> byorgey: happy christmas!
+2011-12-25 05:04:36 UTC <tgeeky> merry holidays!
+2011-12-25 05:04:44 UTC <byorgey> I wouldn't say I'm anti-TV.  I'm just pro-things-that-are-not-TV.
+2011-12-25 05:04:54 UTC <byorgey> merry christmas tgeeky =)
+2011-12-25 05:05:23 UTC <tgeeky> first one with your child
+2011-12-25 05:05:25 UTC <tgeeky> very special :)P
+2011-12-25 05:06:18 UTC <byorgey> yeah =)
+2011-12-25 05:43:45 UTC <tgeeky> i have birds eat out of my hand all of the time
+2011-12-25 05:44:03 UTC <tgeeky> but it might have something to do with the fact that my dad keeps like 50 birdfeeders around his property :o
+2011-12-25 05:45:07 UTC <luite> hehe yeah that helps
+2011-12-25 05:46:19 UTC <luite> these birds know that they can often find pieces of bread and other food near lift lines
+2011-12-25 05:52:31 UTC <mgsloan> `Merry christmas 'n all that!
+2011-12-25 05:53:55 UTC <mgsloan> byorgey - does it seem reasonable to move everything in Diagrams.Backends.Cairo except "OutputType" and all the instances into an "Internal" module?
+2011-12-25 05:54:09 UTC <byorgey> merry christmas mgsloan!
+2011-12-25 05:54:59 UTC <mgsloan> hope your festivities 'n such are swell! It's your baby's first Christmas! As I'm sure you're quite aware
+2011-12-25 05:55:16 UTC <fryguybob> Merry Christmas to the Yorgey family!
+2011-12-25 05:55:25 UTC <byorgey> indeed, although it's pretty much lost on him =)
+2011-12-25 05:55:34 UTC <byorgey> thanks! Merry Christmas to the Yates family too!
+2011-12-25 05:55:50 UTC <mgsloan> yup, but babies are absorbing soooo much information
+2011-12-25 05:56:04 UTC <byorgey> mgsloan: sure, sounds reasonable
+2011-12-25 05:56:21 UTC <byorgey> mgsloan: true!
+2011-12-25 05:56:25 UTC <mgsloan> the main reason is so that Unsafe can call cairoMiscStyle
+2011-12-25 05:56:40 UTC <fryguybob> Due to scheduling concerns we opened some presents "early" and I'm now the proud owner of TAPL.
+2011-12-25 05:56:44 UTC <byorgey> mgsloan: right, that's a good reasons
+2011-12-25 05:56:45 UTC <mgsloan> but it also makes the code real clean
+2011-12-25 05:56:50 UTC <byorgey> fryguybob: haha, nice!
+2011-12-25 05:57:02 UTC <byorgey> mgsloan: also a good reason.
+2011-12-25 05:57:07 UTC <fryguybob> Now I can return the copy in my office back to the library :D
+2011-12-25 05:57:11 UTC <byorgey> hehe
+2011-12-25 05:57:12 UTC <mgsloan> fryguybob: congrats! Pierce signed mine :)
+2011-12-25 05:57:21 UTC <fryguybob> mgsloan: Nice!
+2011-12-25 05:57:51 UTC <mgsloan> yeah, he's a really good guy
+2011-12-25 05:58:02 UTC <mgsloan> I asked for ATAPL this year
+2011-12-25 05:58:28 UTC <mgsloan> attapl I mean
+2011-12-25 05:58:32 UTC <luite> hmm
+2011-12-25 06:00:46 UTC <mgsloan> ACTION crosses fingers
+2011-12-25 06:00:52 UTC <tgeeky> luite: you know Garret Lisi, the surfer physicist behind the E8 theory?
+2011-12-25 06:01:58 UTC <tgeeky> i saw someone on the History channel wearing an E8 shirt... sure enough.. Lisi himself now has a TV show where he and some invester guy go around evaluating people's garage inventions
+2011-12-25 06:04:58 UTC <luite> oh right, I've seen some talk about that paper, haven't read it myself though
+2011-12-25 06:05:41 UTC <diabot> [active:Brent Yorgey <byorgey] new 'progression' combinator (and 1 more)
+2011-12-25 10:12:34 UTC <diabot> [diagrams-contrib:Brent Yorgey <byorgey] add Eq and Show constraints needed under ghc 7.4.1 (and 13 more)
+2011-12-25 17:46:22 UTC <diabot> [active:Brent Yorgey <byorgey] import diagram generation code
+2011-12-25 23:34:50 UTC <luite> hmm, back!
+2011-12-25 23:35:20 UTC <luite> that was quite a snowstormy day
+2011-12-25 23:40:39 UTC <luite> and I loved the ski's I had today :)
+2011-12-26 00:02:17 UTC <luite> interestingly the "skip chair at the last moment" trick for mothers with children didn't work today, since it wasn't allowed to ride the chair on your own, due to the high winds
+2011-12-26 00:03:24 UTC <luite> which made it even more annoying when they pulled it (one time only today), since I had to quickly step aside to let the chair pass and then take the next one
+2011-12-26 00:13:22 UTC <luite> hmm 650 euro with bindings, bah, that's a lot more expensive than my other ski's :)
+2011-12-26 00:30:17 UTC <luite> no jays today though :(
+2011-12-26 01:14:07 UTC <tgeeky> happy happy merry merry
+2011-12-26 01:41:21 UTC <luite> :)
+2011-12-26 01:45:46 UTC <luite> I want new ski's for christmas!
+2011-12-26 02:11:04 UTC <luite> though I'd also settle for a cute skier girl who doesn't want to spend christmas alone and doesn't think computer programming and math are extremely boring ;)
+2011-12-26 04:24:23 UTC <tgeeky> lol
+2011-12-26 04:26:02 UTC <tgeeky> ACTION calls an escort service with skype
+2011-12-26 04:32:48 UTC <luite> ugh the pepper steak from the supermarket here is great, but almost a pound is a bit much for one person :)
+2011-12-26 05:25:56 UTC <diabot> [diagrams-contrib:Brent Yorgey <byorgey] add Eq and Show constraints needed under ghc 7.4.1 (and 13 more)
+2011-12-26 06:36:13 UTC <diabot> [active:Brent Yorgey <byorgey] start creating test suite
+2011-12-26 06:48:16 UTC <diabot> [active:Brent Yorgey <byorgey] more tests, and fix a bug uncovered by one of them
+2011-12-26 06:53:30 UTC <diabot> [active:Brent Yorgey <byorgey] add isConstant and isDynamic functions
+2011-12-26 07:01:20 UTC <diabot> [active:Brent Yorgey <byorgey] add QC test re: stretchTo duration (currently failing) (and 1 more)
+2011-12-26 17:14:20 UTC <tgeeky> ok, shutdown time
+2011-12-26 17:14:30 UTC <tgeeky> gotta move to another hotel for this week :o
+2011-12-26 21:17:48 UTC <mgsloan> hello! what's the best way to get scale / move the origin of one diagram to correspond to another's origin and bounds?
+2011-12-26 21:18:18 UTC <mgsloan> I know how to do it with align, but that will mutate both origins
+2011-12-26 21:24:04 UTC <byorgey> mgsloan: well, simply composing two diagrams with <> will superimpose their origins, so there's no moving required
+2011-12-26 21:24:36 UTC <byorgey> mgsloan: wait, I am confused.  What exactly are you trying to do?
+2011-12-26 21:24:48 UTC <mgsloan> right!  I should indeed just say what I'm trying to do
+2011-12-26 21:25:04 UTC <mgsloan> I want to get a rect behind a chunk of text that I know the bounds of
+2011-12-26 21:25:32 UTC <mgsloan> so (uncurry rect) (size2D textChunk) <> textChunk
+2011-12-26 21:25:58 UTC <mgsloan> but rect's origin is in the center, whereas textChunk has a baseline origin that I want to maintain
+2011-12-26 21:26:04 UTC <byorgey> aha
+2011-12-26 21:26:06 UTC <byorgey> let me think
+2011-12-26 21:27:28 UTC <mgsloan> also, my feature request of a week ago regarding being able to mutate bounds in an easier fashion isn't necessary - I just hadn't seen strutX / strutY
+2011-12-26 21:27:35 UTC <byorgey> ah, ok =)
+2011-12-26 21:28:45 UTC <mgsloan> it /might/ be cleverer to do struts using (rect (20, 30) # invisible)
+2011-12-26 21:29:06 UTC <byorgey> you can do that too
+2011-12-26 21:29:19 UTC <byorgey> except it's called 'phantom' rather than 'invisible'
+2011-12-26 21:29:25 UTC <mgsloan> ooh! cool!
+2011-12-26 21:30:10 UTC <byorgey> to use it you need to give a type annotation like   ((rect (20,30) :: D R2) # phantom)
+2011-12-26 21:30:53 UTC <byorgey> mgsloan: well, re: aligning text + rectangles, instead of using size2D you want to use extentX and extentY
+2011-12-26 21:31:19 UTC <mgsloan> ahh
+2011-12-26 21:31:44 UTC <byorgey> shouldn't be too hard to wite a little utility to make a properly sized and translated rectangle in order to have the edges at particular coordinates
+2011-12-26 21:33:22 UTC <byorgey> mgsloan: of course, struts have zero width so they are different than phantom rectangles (scaling by zero is not allowed).
+2011-12-26 21:33:28 UTC <byorgey> but both have their uses.
+2011-12-26 21:36:35 UTC <mgsloan> certainly!  So, boundingBox is essentially equivalent to doing an "extents" query, which does both extentsX and extentsY.  So we'd want
+2011-12-26 21:36:36 UTC <mgsloan> adjustExtents :: (Boundable a) => BoundingBox -> a -> a
+2011-12-26 21:36:45 UTC <mgsloan> orso
+2011-12-26 21:36:52 UTC <mgsloan> I guess there'd be a Transformable a too
+2011-12-26 21:39:47 UTC <mgsloan> on that note, is there a reason that BoundingBox doesn't export its constructor?
+2011-12-26 22:11:08 UTC <mgsloan> Maybe I don't understand 'linear map', but why store the linear map, its inverse, the transpose of the map, and the transpose of the inverse?
+2011-12-26 22:11:35 UTC <mgsloan> seems to me like just the map and its inverse should be enough
+2011-12-26 22:12:26 UTC <byorgey> mgsloan: the inverse transpose is needed for transforming bounding functions
+2011-12-26 22:12:41 UTC <byorgey> I think BoundingBox is supposed to be abstract
+2011-12-26 22:13:55 UTC <mgsloan> hmm, in that case the only operations to extract information from it are containment queries
+2011-12-26 22:15:20 UTC <byorgey> mgsloan: well, if you need other operations on it I'm open to patches!  I'm also open to an argument that the constructor ought to be exported, I haven't thought about it in a while
+2011-12-26 22:16:34 UTC <mgsloan> One useful operation might be boundingExtents :: (AdditiveGroup v) => BoundingBox v -> v
+2011-12-26 22:17:11 UTC <mgsloan> also working on "fitBox" or "fitBoundingBox"
+2011-12-26 22:20:05 UTC <mgsloan> centeredBounds :: BoundingBox v -> LocatedBounds v
+2011-12-27 04:15:25 UTC <diabot> [diagrams-contrib:Brent Yorgey <byorgey] add Eq and Show constraints needed under ghc 7.4.1 (and 13 more)
+2011-12-27 04:32:54 UTC <mgsloan> this is probably a stupid question, but where does "C" come from in Diagrams.Backend.Cairo ?
+2011-12-27 04:33:09 UTC <mgsloan> the C that isn't the qualified namespace name - the RenderM constructor
+2011-12-27 04:34:11 UTC <mgsloan> well not the Render constructor.  The cairo specific data family type / constructor
+2011-12-27 04:34:46 UTC <mgsloan> ohhhh
+2011-12-27 04:34:49 UTC <mgsloan> yeah stupid question
+2011-12-27 04:34:51 UTC <mgsloan> its right there
+2011-12-27 05:32:20 UTC <byorgey> ACTION learns more than he ever wanted to know about embedding video in web pages
+2011-12-27 05:32:47 UTC <byorgey> but it's important for embedding autogenerated example animations in the diagrams user manual.
+2011-12-27 05:41:09 UTC <mgsloan> awesome :D
+2011-12-27 05:46:51 UTC <mgsloan> I definitely look forward to eventual interactive docs, ala ActiveHs
+2011-12-27 06:00:00 UTC <byorgey> mgsloan: well, that will come as soon as luite releases Wolfgang =)
+2011-12-27 06:00:20 UTC <mgsloan> aye!
+2011-12-27 06:01:15 UTC <mgsloan> my college education has seriously been getting in the way of the progress of haskell interactive development environments... hah
+2011-12-27 06:02:56 UTC <mgsloan> probably for the best, let the infrastructure improve a bit more
+2011-12-27 06:47:20 UTC <mgsloan> woohoo! finally ready to send out some more patches
+2011-12-27 13:15:51 UTC <luite> i tried to work on wolfgang in the airplane but it really drains the battery fast, I had to quit after two hours or so
+2011-12-27 13:18:49 UTC <luite> I had a great seat, more than a meter of legroom :p
+2011-12-27 13:21:15 UTC <luite> and the guy sitting next to me had a windows phone 7 phone, I was amazed, didn't know that people actually bought those things, but then I found out that he was a microsoft employee and got it for free
+2011-12-27 13:23:55 UTC <mgsloan> hahah. too / from seattle?  I've probably sat next to microsoft employees on half the flights I've been on
+2011-12-27 13:24:03 UTC <mgsloan> (also, I really should not be up still..)
+2011-12-27 13:25:08 UTC <luite> flew from vancouver to amsterdam
+2011-12-27 13:25:16 UTC <mgsloan> gotcha
+2011-12-27 13:25:52 UTC <luite> so yeah, probably lots of seattle guys who found a cheaper flight at yvr
+2011-12-27 13:28:34 UTC <mgsloan> yup, are you spending the new year in amsterdam?
+2011-12-27 13:28:53 UTC <luite> no :p but in holland, since I live there :p
+2011-12-27 13:29:05 UTC <luite> well maybe amsterdam, but I don't really have plans yet
+2011-12-27 13:32:43 UTC <luite> no more skiing though :'(
+2011-12-27 17:19:36 UTC <byorgey> @botsnack
+2011-12-27 17:19:36 UTC <diabot> :)
+2011-12-27 17:50:01 UTC <luite> :)
+2011-12-27 17:50:25 UTC <byorgey> luite: made it home safely?
+2011-12-27 19:31:53 UTC <luite> yes
+2011-12-27 19:33:18 UTC <tgeeky_> indeed
+2011-12-27 19:33:53 UTC <luite> i had an emergency exit seat so the flight wasn't even that bad
+2011-12-27 20:42:42 UTC <mgsloan> ACTION might go snowboarding today :)
+2011-12-27 21:40:39 UTC <mgsloan> byorgey - feel free to only partially apply those patches.  I'm not sure about the showOrigin changes and some of the bbox stuf
+2011-12-27 23:02:35 UTC <byorgey> mgsloan: OK.  I haven't had a chance to look at them yet but hope to get to them soon.
+2011-12-27 23:40:38 UTC <luite> mgsloan: cool, where? :)
+2011-12-28 00:20:25 UTC <mgsloan> luite - snoqualmie, looks like the conditions aren't so great, so more haskelling time :)
+2011-12-28 00:21:37 UTC <mgsloan> I snowboarded a lot in highschool, might get back into it once time is less constrained.  The folks that I know that go usually go to stevens
+2011-12-28 00:34:55 UTC <luite> ah cool, didn't know it, just checking the maps now :)
+2011-12-28 05:26:48 UTC <tgeeky> hm. that's unfortunate
+2011-12-28 05:27:36 UTC <tgeeky> byorgey: I assume that fc-kind-poly.pdf 3.4 first sentence "There is one other major restriction on promoted types: we do pro-
+2011-12-28 05:27:39 UTC <tgeeky> mote GADTs
+2011-12-28 05:28:01 UTC <tgeeky> should have a "no" in there?
+2011-12-28 05:28:08 UTC <tgeeky> or "not", even
+2011-12-28 06:34:54 UTC <diabot> [active:Brent Yorgey <byorgey] more tests, and better Arbitrary instances (and 3 more)
+2011-12-28 19:42:22 UTC <byorgey> tgeeky: you should grab a newer version of that paper
+2011-12-28 19:42:50 UTC <byorgey> you can get the latest version from http://www.cis.upenn.edu/~byorgey/publications.html
+2011-12-28 19:49:23 UTC <diabot> [active:Brent Yorgey <byorgey] a few more tests
+2011-12-28 20:36:26 UTC <tgeeky> byorgey: kk
+2011-12-29 05:32:40 UTC <tgeeky> byorgey: surely you're asleep?
+2011-12-29 05:48:59 UTC <byorgey> tgeeky: nope
+2011-12-29 05:58:32 UTC <tgeeky> byorgey: I asked in #haskell
+2011-12-29 05:58:53 UTC <tgeeky> can one of you conduct a thought experiment: what advantages or disadvantages by erasing and re-writing Prelude with the kinds (promotion, constraints) in 7.4?
+2011-12-30 15:53:31 UTC <diabot> [diagrams-contrib:Brent Yorgey <byorgey] add Eq and Show constraints needed under ghc 7.4.1 (and 13 more)
+2011-12-30 21:06:01 UTC <luite> of all the "computer people" I spoke to in whistler/vancouver (mostly software engineers, some db engineer, sap consultant, network engineer), only one had heard about haskell :(  (a network engineer at microsoft how mainly rememberd it for being so difficult to install on their distributed computing system)
+2011-12-30 21:06:31 UTC <byorgey> heh
+2011-12-30 21:06:36 UTC <byorgey> avoid success at all costs!
+2011-12-30 21:07:28 UTC <luite> yeah if you read reddit etc, apparently it's easy to fool yourself into thinking that everyone talks about, or at least heard about haskell
+2011-12-30 21:10:26 UTC <luite> but some were quite interested, though I still find it hard to answer the "where is it used" question
+2011-12-30 21:11:46 UTC <byorgey> that's because it's the wrong question
+2011-12-30 21:16:28 UTC <luite> is it? there are some general purpose languages that owe much of their success to being used in one specific niche, with lots of good libraries, documentation etc for this type of application. ruby maybe the best known example
+2011-12-30 21:17:44 UTC <byorgey> true, but I think that is the exception rather than the rule
+2011-12-30 21:18:51 UTC <luite> hehe Greg Weber made a blog post on yesodweb to argue the contrary, that libraries, or "frameworks" in particular, drive language adoption these days
+2011-12-30 21:19:49 UTC <byorgey> that may be true, but if I want to learn about a new language I haven't heard of before, I don't ask "where is it used", I ask "what is it like".
+2011-12-30 21:20:14 UTC <byorgey> but then again, I am a PhD student in programming languages ;)
+2011-12-30 21:21:20 UTC <luite> yeah, the "where is it used" question is more natural, I think, for people who have used language like Java, C, Python, JavaScript, and think that all language are "like that", with some minor type system variations etc
+2011-12-30 21:24:21 UTC <luite> the "what it's like" question might be equally hard to explain in such cases
+2011-12-30 21:24:34 UTC <luite> err, to answer
+2011-12-30 21:28:29 UTC <luite> next time I should prepare better :p
+2011-12-30 21:30:18 UTC <byorgey> yeah, I suppose that's true
+2011-12-30 21:33:10 UTC <luite> but there were lots of engineers there, probably many from the seattle/redmond area
+2011-12-30 21:37:15 UTC <luite> some boeing engineer who said that I should've chosen a different airline because mine was using Airbus A330 on my flight :)
+2011-12-30 21:40:53 UTC <byorgey> hahaha
+2011-12-30 21:42:06 UTC <luite> maybe she was right, this type of airplane did some unexpected nose dives, injuring a few dozen people, due to a software error a few years ago
+2011-12-30 21:46:10 UTC <byorgey> yikes
+2011-12-30 21:48:13 UTC <luite> (on the other hand, boeing 737 seem to have lots of problems with their radio altimeters, but I don't think those are used on long range flights)
+2011-12-30 21:54:11 UTC <luite> it's probably best not to read too much about airplane failures and problems ;)
+2011-12-30 21:54:30 UTC <byorgey> probably so.
+2011-12-31 00:29:31 UTC <ClaudiusMaximus> hm, Mandelbrot set escape count n computes in O(n) time - but computing escape count n seems to be O(m^n) for an iterated function system with m (invertible) functions - maybe i'm missing some obvious trick to speed it up?
+2011-12-31 00:31:37 UTC <ClaudiusMaximus> referring to http://scholar.google.co.uk/scholar?cluster=8311340961741668080&hl=en&as_sdt=0,5&as_vis=1 (horribly lo-fi scanned copy)
+2011-12-31 00:35:35 UTC <luite> hmm, OCR helps but it still doesn't look terribly good :)
+2011-12-31 00:40:37 UTC <luite> hmm, but I can't immediately think of optimizations, at least not without assuming more about the functions
+2011-12-31 00:50:06 UTC <luite> since in the paper all transformations are affine, you could probably work with bounding sets, at least if your attractor set is convex
+2011-12-31 00:55:59 UTC <ClaudiusMaximus> i should probably work the other way, start with a sufficiently large raster and iteratively shrink it through the transformations, combining them as layers with some cunning blending method (instead of this way that computes backwards per pixel)
+2011-12-31 06:15:48 UTC <mgsloan> some stuff I've been working on: https://github.com/mgsloan/gtk-toy/blob/master/src/Graphics/UI/Gtk/Toy.hs
+2011-12-31 06:16:23 UTC <mgsloan> https://github.com/mgsloan/gtk-toy-diagrams/blob/master/src/examples/Test.hs , based on https://github.com/mgsloan/gtk-toy-diagrams/blob/master/src/Graphics/UI/Gtk/Toy/Text.hs
+2011-12-31 06:16:54 UTC <mgsloan> err https://github.com/mgsloan/gtk-toy-diagrams/blob/master/examples/Test.hs
+2011-12-31 18:17:37 UTC <ClaudiusMaximus> so i did the O(m*n) large raster / shrinking thing with shaders, seemed to work ok though it's way less sharp as the O(m^n) per-pixel recursion - will do a blog post soon..
+2011-12-31 18:20:55 UTC <ClaudiusMaximus> http://img846.imageshack.us/img846/3107/spiral.png
+2011-12-31 18:38:50 UTC <luite> cool pic bro
+2011-12-31 18:40:04 UTC <luite> argh why does the web torture me with all those Whistler ads :'(
+2011-12-31 20:36:24 UTC <ClaudiusMaximus> luite: thanks :)  wrote it up a bit here http://claudiusmaximus.goto10.org/cm/2011-12-31_the_sky_cracked_open.html
+2011-12-31 20:42:13 UTC <luite> ah the video is evenb etter :)
+2011-12-31 20:42:28 UTC <ClaudiusMaximus> :)
+2011-12-31 20:43:13 UTC <ClaudiusMaximus> i didn't increase the dimension beyond 1.75 because my GPU was starting to get a bit toasty (80C with fan speed at 92%)
+2011-12-31 20:43:44 UTC <ClaudiusMaximus> plus it didn't look as nice as i'd hoped - not enough fine detail
+2011-12-31 20:43:48 UTC <luite> oh mine gets similarly hot, up to 95, doesn't appear to hurt it much
+2011-12-31 20:44:12 UTC <ClaudiusMaximus> yeah i don't know the safe limit, but i hope it would throttle itself :)
+2011-12-31 20:44:34 UTC <ClaudiusMaximus> it's more the noise actually, can't think with the fans on full
+2011-12-31 20:44:47 UTC <luite> hehe
+2011-12-31 20:47:04 UTC <byorgey> ClaudiusMaximus: very cool! =)
+2011-12-31 20:47:51 UTC <luite> are those void main() things GLSL?
+2011-12-31 20:47:58 UTC <ClaudiusMaximus> yep
+2011-12-31 20:48:02 UTC <ClaudiusMaximus> thanks byorgey !
+2011-12-31 20:48:14 UTC <ClaudiusMaximus> fragment shaders
+2011-12-31 20:49:08 UTC <ClaudiusMaximus> main gets called once for each output fragment (usually a fragment is a pixel, unless you do multi-sampling stuff)
+2011-12-31 20:49:41 UTC <luite> hmm, I've used fragment shaders for very simple effects a long time ago, is it easy to call them from a haskell program?
+2011-12-31 20:49:44 UTC <ClaudiusMaximus> all pixels in parallel (conceptually)
+2011-12-31 20:50:14 UTC <ClaudiusMaximus> yeah it's not too bad - except that I needed to use unsafeCoerce because the OpenGL high-level bindings don't expose enough...
+2011-12-31 20:50:50 UTC <ClaudiusMaximus> ...like no support for uniform matrix, and the UniformLocation newtype has hidden constructor
+2011-12-31 20:51:45 UTC <ClaudiusMaximus> i can put the full code for this thing online somewhere if you're curious (though unless you have a beefy GPU, probably decrease the texture size from 8192)
+2011-12-31 20:52:14 UTC <luite> hmm, would be interesting to play with. my gpu is fairly slow though, radeon 6490m
+2011-12-31 20:52:51 UTC <ClaudiusMaximus> ok, i'll get on it - but expecting a guest in about 10mins, so, might not be til tomorrow..
+2011-12-31 20:53:08 UTC <luite> oh no hurries :)
+2011-12-31 20:53:27 UTC <byorgey> hurry! You still have 10 minutes!!!
+2011-12-31 20:53:37 UTC <byorgey> kidding ;)
+2011-12-31 20:53:40 UTC <luite> oh yeah, that's what I meant ;p
+2011-12-31 20:56:23 UTC <ClaudiusMaximus> http://claudiusmaximus.goto10.org/code/the-sky-cracked-open.tgz
+2011-12-31 21:09:18 UTC <luite> aw it does not work
+2011-12-31 21:09:39 UTC <luite> GLUT: Warning in main: GL error: invalid framebuffer operation
+2011-12-31 21:11:05 UTC <luite> ah apparently the gpu is locked to intel integrated since vmware doesn't like gpu switching, do you use features that might not be supported by those?
+2011-12-31 22:14:27 UTC <ClaudiusMaximus> no clue - possibly texture too big?  try reducing 8192 to 2048 or other smaller power of two
+2012-01-01 00:05:33 UTC <luite> hmm 2048 doesn't work either
+2012-01-01 05:23:45 UTC <diabot> [diagrams-core:Brent Yorgey <byorgey] bump vector-space lower bound (and 339 more)
+2012-01-01 06:54:14 UTC <ClaudiusMaximus> brain hurts - got a parametric 2-plane (P(u,v) = U u + V v + W) in 4d space, want to find the u,v for the nearest point in that plane to another point not in that plane...
+2012-01-01 06:56:46 UTC <ClaudiusMaximus> luite: btw, i found a bad performance bug in that demo - i should be activating the shader and setting uniforms outside the multi-pass loop, as they are constant for all passes
+2012-01-01 06:57:08 UTC <byorgey> that sounds like one of those things that actually has a nice elegant formula, but you have to do horrendous amounts of algebra to re-derive yourself
+2012-01-01 06:57:43 UTC <ClaudiusMaximus> byorgey: i know - at the moment i even gave up on the algebra and used hmatrix/gsl minimize
+2012-01-01 06:58:18 UTC <ClaudiusMaximus> but it's very slow.. and i want a closed form that i can run on my GPU (doing this per pixel..)
+2012-01-01 07:23:11 UTC <ClaudiusMaximus> i think i got it (by a symmetry argument...):  given Q, nearest in P is  u = U `dot` (Q - W) / U `dot` U   (and similarly for v)
+2012-01-01 07:23:31 UTC <ClaudiusMaximus> better run some tests
+2012-01-01 07:29:55 UTC <byorgey> ah, essentially projecting (Q - W) onto U... yeah, I think that makes sense
+2012-01-01 07:30:36 UTC <byorgey> if you normalize U and V first then you can even skip the division
+2012-01-01 07:33:40 UTC <ClaudiusMaximus> true
+2012-01-01 07:33:58 UTC <ClaudiusMaximus> anyway, it's 10x faster than the gsl minimize function!
+2012-01-01 07:34:37 UTC <ClaudiusMaximus> well, just that change made my program 10x faster - didn't profile
+2012-01-01 09:00:38 UTC <ClaudiusMaximus> got it working http://claudiusmaximus.goto10.org/g/hyperspherics/0.png (also 1.png, 2.png, ..., 9.png)
+2012-01-02 03:31:59 UTC <diabot> [diagrams-lib:1 22:29:24 EST 2012  Brent Yorgey <byorgey] fix warnings in D.BoundingBox (and 6 more)
+2012-01-02 18:50:11 UTC <tgeeky> ClaudiusMaximus: what is the numeric paramter there?
+2012-01-02 18:50:25 UTC <tgeeky> just a number it seems
+2012-01-02 20:20:56 UTC <ClaudiusMaximus> tgeeky: i explained in a blog post http://claudiusmaximus.goto10.org/cm/2012-01-01_disco_balls.html
+2012-01-02 20:33:49 UTC <byorgey> ClaudiusMaximus: does your blog have an rss feed?
+2012-01-02 20:34:39 UTC <luite> funky video :)
+2012-01-02 20:34:57 UTC <byorgey> dancing 4d spheres, I like it =)
+2012-01-02 20:40:19 UTC <ClaudiusMaximus> byorgey: yep
+2012-01-02 20:40:43 UTC <ClaudiusMaximus> byorgey: http://claudiusmaximus.goto10.org/cm/index.rss
+2012-01-02 20:40:50 UTC <byorgey> ClaudiusMaximus: thanks!
+2012-01-02 20:41:15 UTC <ClaudiusMaximus> (maybe i should add a link on the pages, even though it's linked via metadata)
+2012-01-02 20:50:23 UTC <ClaudiusMaximus> another new thing: http://claudiusmaximus.goto10.org/v/ifsnobuts/2012-01-02_snowglobe_v1.ogv (20MB)  -- need to write another blog post to explain it, but dinner time now
+2012-01-02 21:07:31 UTC <luite> oh i like snow :p
+2012-01-02 21:08:10 UTC <fryguybob> We just got some.
+2012-01-02 21:08:23 UTC <fryguybob> I hope it stops snowing so I can drive to Boston tomorrow though.
+2012-01-02 21:08:48 UTC <luite> I'd have to drive 9 hours for some real snow, I think
+2012-01-02 21:13:54 UTC <byorgey> fryguybob: that's quite a drive.
+2012-01-02 21:20:02 UTC <fryguybob> Yeah around 8 hours.
+2012-01-02 21:23:43 UTC <byorgey> fryguybob: what's in Boston?
+2012-01-02 21:24:45 UTC <fryguybob> The largest annual mathematics meeting in the world!  http://jointmathematicsmeetings.org/jmm
+2012-01-02 21:26:23 UTC <byorgey> oh! right, of course =)
+2012-01-02 21:26:40 UTC <byorgey> sounds fun, I hope to go someday
+2012-01-02 21:27:33 UTC <fryguybob> It is fun.
+2012-01-02 21:28:08 UTC <fryguybob> We discovered over Christmas that one of Rebekah's cousin's is living in not far from you.
+2012-01-02 21:28:22 UTC <byorgey> oh, really? where?
+2012-01-02 21:29:16 UTC <fryguybob> 44th and locust I think.
+2012-01-02 21:29:27 UTC <byorgey> yep, that's pretty close
+2012-01-02 21:32:27 UTC <luite> oh that sounds fun
+2012-01-02 21:32:34 UTC <luite> the jmm
+2012-01-03 00:37:58 UTC <mgsloan> byorgey - the reason there's a "TODO: is this right?" for boxTransform is that I don't understand the linear transpose stuff
+2012-01-03 00:38:24 UTC <mgsloan> so, the ordinary part of the transformation is right, but I'm not sure if the transpose is
+2012-01-03 04:26:49 UTC <diabot> [diagrams-lib:2 23:12:16 EST 2012  Brent Yorgey <byorgey] after more careful review, boxTransform seems correct as is.
+2012-01-03 04:26:50 UTC <diabot> [diagrams-core:2 23:25:47 EST 2012  Brent Yorgey <byorgey] add more documentation explaining about linear map transposes
+2012-01-03 04:27:19 UTC <byorgey> hah, oh man, the darcs plugin for diabot has such a terrible parser
+2012-01-03 05:47:41 UTC <diabot> [diagrams-cairo:2 22:05:30 EST 2012  mgsloan] Haddock fixes (and 3 more)
+2012-01-03 13:32:39 UTC <diabot> [diagrams-cairo:2 22:05:30 EST 2012  mgsloan] Haddock fixes (and 238 more)
+2012-01-03 17:35:27 UTC <tgeeky> 44th and locust? sounds like armageddeon predictions
+2012-01-03 17:39:16 UTC <byorgey> tgeeky: I believe Locust St. is named for the *tree* rather than the apocalyptic insect scourge. ;)
+2012-01-03 17:41:02 UTC <tgeeky> awh.
+2012-01-03 17:41:18 UTC <tgeeky> http://i.imgur.com/8ihAm.jpg <-- Sam Harris
+2012-01-03 17:41:23 UTC <tgeeky> never thought of that :o
+2012-01-04 00:30:28 UTC <diabot> [diagrams-core:2 23:25:47 EST 2012  Brent Yorgey <byorgey] add more documentation explaining about linear map transposes (and 340 more)
+2012-01-04 02:20:16 UTC <luite> 340 more? impressive
+2012-01-04 02:37:24 UTC <tgeeky> hm
+2012-01-04 02:37:29 UTC <tgeeky> interesting article: http://www.npr.org/2012/01/01/144550920/physicists-seek-to-lose-the-lecture-as-teaching-tool
+2012-01-04 02:37:35 UTC <tgeeky> Hestenes is the geometric algebra guy
+2012-01-05 00:12:49 UTC <mekeor> so, diagrams is a library/module for haskell for making diagrams
+2012-01-05 00:13:13 UTC <byorgey> mekeor: yep
+2012-01-05 00:13:26 UTC <mekeor> byorgey: ? lol =) nice to meet you :)
+2012-01-05 00:14:02 UTC <byorgey> =)
+2012-01-05 00:14:08 UTC <mekeor> byorgey: can diagrams be used for plotting functions, too?
+2012-01-05 00:14:29 UTC <byorgey> mekeor: sure
+2012-01-05 00:14:55 UTC <byorgey> you can just generate as many points lying on a function curve as you want, and then draw a cubic spline through them
+2012-01-05 00:15:08 UTC <mekeor> does diagrams generate images? in which format?
+2012-01-05 00:15:20 UTC <mekeor> ic
+2012-01-05 00:15:39 UTC <byorgey> mekeor: in theory, any format for which you want to write a diagrams backend.
+2012-01-05 00:16:01 UTC <mekeor> so, which formats are currently supported?
+2012-01-05 00:16:02 UTC <byorgey> in practice the currently best supported backend uses cairo, which can generate .png, .svg, .ps, and .pdf
+2012-01-05 00:16:14 UTC <mekeor> ah, nice; WOW
+2012-01-05 00:16:28 UTC <byorgey> there are also separate (native) .ps and .svg backends being worked on
+2012-01-05 00:16:37 UTC <mekeor> cool
+2012-01-05 00:16:46 UTC <byorgey> someone is also working on an HTML5 canvas backend
+2012-01-05 00:16:49 UTC <mekeor> wow, that project is really cool! O_O
+2012-01-05 00:16:54 UTC <mekeor> O_O
+2012-01-05 00:17:07 UTC <mekeor> byorgey: are you a developer or a user (of diagrams)?
+2012-01-05 00:17:16 UTC <byorgey> I am the primary developer
+2012-01-05 00:18:02 UTC <mekeor> WOW. =)
+2012-01-05 00:18:06 UTC <byorgey> mekeor: got to run, but I will be back later to answer other questions if you have them
+2012-01-05 00:18:16 UTC <mekeor> ok
+2012-01-05 00:18:23 UTC <byorgey> other people hang around here who might be able to answer questions too
+2012-01-05 00:18:34 UTC <byorgey> mekeor: give diagrams a try, I think you will like it =)
+2012-01-05 00:18:35 UTC <mekeor> ok
+2012-01-05 00:18:37 UTC <mekeor> ok
+2012-01-05 00:18:40 UTC <mekeor> =)
+2012-01-05 00:18:41 UTC <byorgey> there is a tutorial and a user manual, etc.
+2012-01-05 00:18:46 UTC <mekeor> ok =)
+2012-01-05 00:18:55 UTC <byorgey> http://projects.haskell.org/diagrams/
+2012-01-05 00:18:58 UTC <mekeor> yea
+2012-01-05 00:19:03 UTC <mekeor> the homepage uses hakyll
+2012-01-05 00:19:14 UTC <mekeor> that's why i came across diagrams actually
+2012-01-05 00:56:11 UTC <byorgey> mekeor: ah, I see
+2012-01-05 00:58:17 UTC <mekeor> wow. diagrams seems to be structured very well.
+2012-01-05 00:58:25 UTC <mekeor> ACTION is reading the tutorialâ¦
+2012-01-05 01:00:44 UTC <mekeor> ACTION is fascinated. diagrams is ingenious!
+2012-01-05 01:01:22 UTC <mekeor> ACTION didn't see such an intuitive, simple but powerful library so far
+2012-01-05 01:02:03 UTC <mekeor> byorgey: may i ask you where you are actually from?
+2012-01-05 01:03:02 UTC <byorgey> mekeor: thanks, glad you like it!
+2012-01-05 01:03:11 UTC <byorgey> mekeor: Philadelphia, Pennsylvania, USA
+2012-01-05 01:03:32 UTC <mekeor> (Pennsylvania was a private colony, did you know this?)
+2012-01-05 01:05:38 UTC <byorgey> yes, I did =)
+2012-01-05 01:05:54 UTC <mekeor> i am from germany, btw.
+2012-01-05 01:06:01 UTC <byorgey> cool, where in Germany?
+2012-01-05 01:06:13 UTC <mekeor> south west
+2012-01-05 01:06:22 UTC <mekeor> "baden-wÃ¼rttemberg"
+2012-01-05 01:06:33 UTC <mekeor> near ulm, where einstein was born
+2012-01-05 01:06:57 UTC <mekeor> it's already 2:14 (night) hereâ¦
+2012-01-05 01:35:46 UTC <mekeor> ACTION considers donating byorgey for such a great lib :)
+2012-01-05 01:55:16 UTC <mekeor> how'd you draw a (right-angled) triangle ?  (byorgey)
+2012-01-05 02:11:52 UTC <luite> aw /me jealous, mekeor lives closer to the alps than me ;)
+2012-01-05 02:14:57 UTC <mekeor> luite: where are you from?
+2012-01-05 02:15:09 UTC <mekeor> :)
+2012-01-05 02:15:11 UTC <luite> netherlands, near utrecht
+2012-01-05 02:15:20 UTC <mekeor> :Ã
+2012-01-05 02:17:02 UTC <luite> I don't think i've ever been to ulm, only on the autobahn, when driving to st. anton, ischgl etc :)
+2012-01-05 02:17:13 UTC <mekeor> for a right-angled triangle, should i use PolySides or PolyPolar ?
+2012-01-05 02:17:37 UTC <mekeor> :)
+2012-01-05 02:29:17 UTC <byorgey> mekeor: for a right triangle I would just use 'fromOffsets' and 'close' to make a closed path
+2012-01-05 02:29:38 UTC <byorgey> close $ fromOffsets [(0,-3), (4,0)]
+2012-01-05 02:30:54 UTC <mekeor> i myself, was trying something like: polygon with { polyType=PolyPolar [ fromCircleFrac(CircleFrac(45::Double)) , fromCircleFrac(CircleFrac(90::Double)) ] [1,1,1]}
+2012-01-05 02:31:19 UTC <mekeor> but that didnt work.
+2012-01-05 02:31:21 UTC <mekeor> idk why...
+2012-01-05 02:31:28 UTC <luite> you can also use Deg 90
+2012-01-05 02:31:35 UTC <mekeor> a
+2012-01-05 02:33:18 UTC <mekeor> luite: nice, ty :)
+2012-01-05 02:35:38 UTC <luite> isn't it rather late in your time zone btw? ;)
+2012-01-05 02:35:56 UTC <mekeor> luite: what about your time zone?
+2012-01-05 02:35:59 UTC <mekeor> :D
+2012-01-05 02:36:02 UTC <luite> :p
+2012-01-05 02:46:41 UTC <byorgey> mekeor: CircleFrac 45 means "45 circles", i.e. 45*360 degrees
+2012-01-05 02:46:49 UTC <byorgey> probably not what you had in mind =)
+2012-01-05 02:47:12 UTC <byorgey> you can just write   90 :: Deg
+2012-01-05 02:47:38 UTC <luite> ah I didn't know that one, tnx :)
+2012-01-05 02:47:54 UTC <mekeor> should "Deg 90" work, too?
+2012-01-05 02:48:01 UTC <mekeor> (it seems so, at least)
+2012-01-05 02:48:45 UTC <byorgey> mekeor: yes, that works too
+2012-01-05 03:19:12 UTC <mekeor> i go to sleep, bye. see you tomorrow...
+2012-01-06 20:04:37 UTC <tgeeky> byorgey: if I see your email address on a GHC ticket, then you added it yourself, right?
+2012-01-06 20:04:50 UTC <byorgey> yes
+2012-01-06 20:04:59 UTC <byorgey> uh... probably
+2012-01-06 20:05:11 UTC <tgeeky> byorgey: presuming that means you're interested in the topic, do you know what's involved in getting TH to reify modules?
+2012-01-06 20:05:24 UTC <byorgey> I guess there is technically nothing preventing anyone from adding arbitrary email addresses to tickets
+2012-01-06 20:05:41 UTC <byorgey> tgeeky: can you paste a link to the ticket in question?
+2012-01-06 20:05:44 UTC <tgeeky> byorgey: yeah, I was just trying to rule out you being automatically added by some system
+2012-01-06 20:05:51 UTC <byorgey> that doesn't immediately ring a bell, I'll have to refresh my memory
+2012-01-06 20:06:09 UTC <tgeeky> http://hackage.haskell.org/trac/ghc/ticket/1480
+2012-01-06 20:06:58 UTC <tgeeky> I was wondering if this potential strategy would work:
+2012-01-06 20:07:03 UTC <byorgey> oh, if you read the description you'll see why I was interested in it
+2012-01-06 20:07:07 UTC <byorgey> but that was four years ago
+2012-01-06 20:07:11 UTC <byorgey> I have no idea what would be involved
+2012-01-06 20:07:22 UTC <tgeeky> ok
+2012-01-06 20:10:23 UTC <byorgey> presumably it is not theoretically difficult but there may be lots of practical implementation issues to be worked out, I don't know
+2012-01-07 20:59:11 UTC <peterjoel> hi I'm looking for a haskell project to get involved with. Are some areas in diagrams that would be suitable for a relative novice?
+2012-01-07 20:59:36 UTC <mekeor> peterjoel: byorgey is the maintainer/founder of diagrams.
+2012-01-07 21:00:13 UTC <mekeor> ACTION is just a nooby wanna-be-user of diagrams (yet).
+2012-01-07 21:00:49 UTC <peterjoel> ok thanks I'll message him directly
+2012-01-07 21:00:56 UTC <mekeor> nono.
+2012-01-07 21:01:02 UTC <mekeor> peterjoel: ask him inhere.
+2012-01-07 21:01:07 UTC <mekeor> i wanna read that, too.
+2012-01-07 21:01:14 UTC <peterjoel> oh, I thought I just did :)
+2012-01-07 21:01:37 UTC <mekeor> (because i'd also like to get involved in a haskell-project...)
+2012-01-07 21:01:43 UTC <byorgey> peterjoel: yes!
+2012-01-07 21:01:47 UTC <mekeor> =)
+2012-01-07 21:01:49 UTC <peterjoel> oh hi
+2012-01-07 21:01:49 UTC <byorgey> at least I hope so
+2012-01-07 21:02:01 UTC <byorgey> hi =)
+2012-01-07 21:02:10 UTC <peterjoel> yeah I followed links via the hac boston page
+2012-01-07 21:02:28 UTC <byorgey> ah, yeah, sadly I won't be at hac boston after all
+2012-01-07 21:02:57 UTC <byorgey> but you are still welcome to get involved with diagrams =)
+2012-01-07 21:03:16 UTC <peterjoel> ok
+2012-01-07 21:03:28 UTC <peterjoel> so can you suggest where I should start, to get a grip on it?
+2012-01-07 21:03:50 UTC <peterjoel> and what are the areas that are in need of work
+2012-01-07 21:04:43 UTC <byorgey> peterjoel: to start, I would suggest first working through the tutorial, and just playing around with it a bit
+2012-01-07 21:04:58 UTC <peterjoel> ok, yes I haven't done that yet
+2012-01-07 21:05:11 UTC <byorgey> peterjoel: during that process you may think of things that could be improved etc.
+2012-01-07 21:05:26 UTC <byorgey> peterjoel: there is also a list of open tickets here: http://code.google.com/p/diagrams/issues/list
+2012-01-07 21:05:48 UTC <byorgey> right now there aren't a whole lot marked 'Easy' but you could look through that for potential projects
+2012-01-07 21:06:02 UTC <mekeor> may i ask why diagrams is on google-code and not on github? (i prefer git...)
+2012-01-07 21:06:37 UTC <byorgey> peterjoel: in the meantime I will be on the lookout for easy improvements/projects I can add as tickets for you (or others) to tackle
+2012-01-07 21:06:53 UTC <peterjoel> ok that would be great
+2012-01-07 21:07:08 UTC <byorgey> mekeor: actually only the bug tracker is on google-code, not the source
+2012-01-07 21:07:23 UTC <mekeor> ah, cool.
+2012-01-07 21:07:42 UTC <byorgey> mekeor: the source is hosted on patch-tag.com, using darcs
+2012-01-07 21:08:05 UTC <peterjoel> I never used darcs
+2012-01-07 21:08:09 UTC <mekeor> me, too.
+2012-01-07 21:08:12 UTC <peterjoel> what is it most similar too?
+2012-01-07 21:08:25 UTC <byorgey> mekeor: we used to have it mirrored on github but there are some bugs being fixed in the darcs-git bridge
+2012-01-07 21:08:34 UTC <peterjoel> right ok
+2012-01-07 21:08:41 UTC <mekeor> i see.
+2012-01-07 21:10:24 UTC <byorgey> it's similar in some ways to git, but much more elegant (e.g. cherrypicking actually works) and with a much better command-line interface.
+2012-01-07 21:10:40 UTC <byorgey> from my point of view the only things git has going for it are (1) lots of people use it and (2) github is awesome.
+2012-01-07 21:10:59 UTC <byorgey> of course, those are pretty strong reasons to use a distributed version control system.
+2012-01-07 21:11:00 UTC <peterjoel> ah nice. I hate git cherrypicking
+2012-01-07 21:11:43 UTC <peterjoel> ok so I'll get that working as my first step then :)
+2012-01-07 21:12:12 UTC <byorgey> peterjoel: I wouldn't do that as the first step.
+2012-01-07 21:12:58 UTC <byorgey> peterjoel: you won't want to work through the tutorial while using the latest darcs version of the source, since there may be things that have changed
+2012-01-07 21:13:20 UTC <byorgey> I'd recommend working through the tutorial with the latest released version of diagrams (i.e. just install it with cabal-install)
+2012-01-07 21:14:36 UTC <peterjoel> ok
+2012-01-07 21:14:44 UTC <peterjoel> sounds vaguely sensible :)
+2012-01-07 21:15:11 UTC <byorgey> then later you can get the latest source
+2012-01-07 21:15:54 UTC <byorgey> anyway, I am just trying to steer you to the most interesting parts first
+2012-01-07 21:16:10 UTC <byorgey> but if getting a new version control system installed sounds interesting to you, then by all means =)
+2012-01-07 21:16:36 UTC <peterjoel> yeah, not exactly :)
+2012-01-08 01:01:05 UTC <peterjoel> I'm having trouble installing diagrams with cabal
+2012-01-08 01:01:09 UTC <peterjoel> setup: The pkg-config package pango version <1.26.0 || >1.26.2 is required but it could not be found.
+2012-01-08 01:01:18 UTC <peterjoel> any ideas how I should proceed from here?
+2012-01-08 02:06:46 UTC <byorgey> peterjoel: you need to install the external pango library via your OS's package manager
+2012-01-08 02:06:53 UTC <byorgey> peterjoel: what OS are you using?
+2012-01-08 02:07:39 UTC <byorgey> peterjoel: well, you probably just need to install cairo, which will pull in pango as a dependency
+2012-01-08 02:20:56 UTC <peterjoel> oh, I have cairo installed already
+2012-01-08 02:21:18 UTC <peterjoel> I'm using OS X
+2012-01-08 02:22:00 UTC <byorgey> peterjoel: ok, then I guess you need to install pango too
+2012-01-08 02:22:08 UTC <byorgey> peterjoel: I'm not very familiar with OS X
+2012-01-08 02:22:31 UTC <peterjoel> ok np, it doesn't look like it's going to be a huge problem
+2012-01-08 02:22:55 UTC <luite> easiest is to use macports or homebrew to install stuff like this
+2012-01-08 02:23:05 UTC <luite> sudo port install cairo
+2012-01-08 02:24:54 UTC <byorgey> peterjoel: yes, luite is our resident OS X expert
+2012-01-08 02:25:06 UTC <byorgey> where I define "expert" to mean "knows more than anyone else"
+2012-01-08 02:25:15 UTC <luite> hehe not expert, I've only been using it for a few months :)
+2012-01-08 02:25:23 UTC <luite> but that definition might do
+2012-01-08 02:26:40 UTC <peterjoel> you only have to know more about it than 7 other people ;)
+2012-01-08 03:05:53 UTC <peterjoel> ok I'm there! Just had to install a couple of things via macports instead
+2012-01-08 03:05:57 UTC <peterjoel> thanks for your help
+2012-01-08 03:07:36 UTC <byorgey> yay!
+2012-01-08 03:37:28 UTC <tgeeky> byorgey: when I'm changing a package to compile on 7.4, and the solution is (mostly) peppering Eq constraints around.. is there a faster way to do this other than adding them by hand (or, by regex or something)
+2012-01-08 04:54:00 UTC <tgeeky> > filter (liftA3 (&&) even (<3) (>5)) [1,2,3,4,5]
+2012-01-08 04:54:03 UTC <tgeeky> derp
+2012-01-08 04:54:05 UTC <diabot>   mueval: ExitFailure 1
+2012-01-08 04:54:05 UTC <diabot>  mueval: Prelude.undefined
+2012-01-08 14:05:55 UTC <peterjoel> Getting error running the tutorial
+2012-01-08 14:05:57 UTC <peterjoel> $ ghc --make src/DiagramsTutorial.lhs -o circle.pdf
+2012-01-08 14:06:05 UTC <peterjoel> Linking circle.pdf ...
+2012-01-08 14:06:06 UTC <peterjoel> ld: warning: in /opt/local/lib/libgtk-x11-2.0.dylib, file was built for unsupported file format which is not the architecture being linked (i386)
+2012-01-08 14:06:15 UTC <peterjoel> that's the first error
+2012-01-08 14:08:58 UTC <peterjoel> I expect this is more of an issue with macports and gtk?
+2012-01-08 14:27:47 UTC <byorgey> peterjoel: does it work if you make a .png or .ps or .svg ?
+2012-01-08 14:29:30 UTC <peterjoel> trying now
+2012-01-08 14:29:54 UTC <peterjoel> it's quite slow even to fail
+2012-01-08 14:31:15 UTC <byorgey> sigh
+2012-01-08 14:31:42 UTC <byorgey> it seems every single person who tries cairo + OS X runs into a different problem =(
+2012-01-08 14:34:27 UTC <peterjoel> ok, same error
+2012-01-08 14:34:54 UTC <peterjoel> I'm going to try and reinstall gtk again later on today
+2012-01-08 14:35:36 UTC <peterjoel> maybe try and build from source manually instead of using macports
+2012-01-08 17:03:51 UTC <byorgey> tgeeky: I don't know of a faster way to do it, sadly
+2012-01-08 17:30:56 UTC <luite> hmm, I
+2012-01-08 17:31:47 UTC <luite> 'm using a 64 bit ghc, I think you need to tell macports to build 32 bit libs if you need those. don't know if that's peterjoels problem
+2012-01-09 00:31:17 UTC <byorgey> peterjoel: any luck?
+2012-01-09 00:31:27 UTC <byorgey> (12:31) <     luite> 'm using a 64 bit ghc, I think you need to tell macports to build 32 bit libs if you need those. don't know if that's peterjoels problem
+2012-01-09 00:31:47 UTC <byorgey> peterjoel: note luite's comment above
+2012-01-09 00:36:15 UTC <peterjoel> could be the problem
+2012-01-09 00:36:29 UTC <peterjoel> I'd assume it would get it right though. should be able to detect
+2012-01-09 11:50:30 UTC <diabot> [active:Brent Yorgey <byorgey] a few more tests (and 38 more)
+2012-01-09 13:08:10 UTC <diabot> [active:Brent Yorgey <byorgey] a few more tests (and 38 more)
+2012-01-11 01:20:37 UTC <tgeeky> woohoo!
+2012-01-11 01:20:40 UTC <tgeeky> ACTION is back home, finally!
+2012-01-11 01:20:47 UTC <tgeeky> sleeping in his own bead
+2012-01-11 01:29:07 UTC <luite> :)
+2012-01-11 02:10:52 UTC <tgeeky> and hooray, you made it back too!
+2012-01-11 02:11:11 UTC <luite> I'm back already for a while :(
+2012-01-11 17:02:40 UTC <diabot> [diagrams-contrib:Brent Yorgey <byorgey] add Eq and Show constraints needed under ghc 7.4.1 (and 13 more)
+2012-01-11 19:22:01 UTC <diabot> [diagrams-contrib:Brent Yorgey <byorgey] add Eq and Show constraints needed under ghc 7.4.1 (and 13 more)
+2012-01-14 20:41:26 UTC <peterjoel> hi, I was having problems last week with installing diagrams. which was due to some libs not being compiled by macports for 64bit or 32bit resp. in the universal binaries.
+2012-01-14 20:41:43 UTC <peterjoel> I've solved that (!!) but I now have this problem, which I'm hoping will be easier
+2012-01-14 20:42:00 UTC <peterjoel> $ cabal install diagrams
+2012-01-14 20:42:00 UTC <peterjoel> Resolving dependencies...
+2012-01-14 20:42:00 UTC <peterjoel> cabal: cannot configure diagrams-cairo-0.4. It requires base >=4.2 && <4.5
+2012-01-14 20:42:00 UTC <peterjoel> For the dependency on base >=4.2 && <4.5 there are these packages:
+2012-01-14 20:42:00 UTC <peterjoel> base-4.2.0.0, base-4.2.0.1, base-4.2.0.2, base-4.3.0.0, base-4.3.1.0,
+2012-01-14 20:42:01 UTC <peterjoel> base-4.4.0.0 and base-4.4.1.0. However none of them are available.
+2012-01-14 20:42:01 UTC <peterjoel> base-4.2.0.0 was excludedâ¦. etcâ¦.
+2012-01-14 20:43:02 UTC <peterjoel> oh, I truncated the log too soon. There are 7 lines similar to this:
+2012-01-14 20:43:03 UTC <peterjoel> base-4.2.0.0 was excluded because of the top level dependency base -any
+2012-01-14 20:43:13 UTC <peterjoel> various versions between 4.2 and 4.5
+2012-01-14 20:55:13 UTC <byorgey> peterjoel: what version of GHC do you have?
+2012-01-14 20:57:46 UTC <peterjoel> from the latest HP
+2012-01-14 20:57:57 UTC <peterjoel> one sec
+2012-01-14 20:58:48 UTC <peterjoel> that's weird. According to cabal it's 6.10.4
+2012-01-14 20:59:01 UTC <peterjoel> or isn't that the same thing?
+2012-01-14 20:59:31 UTC <peterjoel> hmm I thought I previously had 7.0.4 or thereabouts
+2012-01-14 20:59:39 UTC <byorgey> 6.10.4 is very old
+2012-01-14 20:59:47 UTC <byorgey> I doubt diagrams builds on it.
+2012-01-14 20:59:57 UTC <byorgey> 7.0.4 should work fine.
+2012-01-14 21:00:30 UTC <byorgey> yes, and 7.0.4 is the version that comes with the platform.
+2012-01-14 21:00:50 UTC <peterjoel> I'm a bit confused how I'm in this position then!
+2012-01-14 21:00:55 UTC <byorgey> heh, me too!
+2012-01-14 21:00:59 UTC <peterjoel> ok thanks for the help
+2012-01-14 21:01:02 UTC <byorgey> peterjoel: what is the output of  ghc --version ?
+2012-01-14 21:01:08 UTC <peterjoel> 6.10.4
+2012-01-14 21:01:18 UTC <peterjoel> so obviously something has gone wrong!
+2012-01-14 21:01:20 UTC <byorgey> yeah, weird, I wonder how you got that
+2012-01-14 21:02:10 UTC <peterjoel> I only ever installed via the HP installer, and the first time I did that was August/September
+2012-01-14 21:02:19 UTC <peterjoel> well anyway, I can fix it :)
+2012-01-14 21:02:22 UTC <byorgey> ok =)
+2012-01-14 21:02:30 UTC <peterjoel> thanks
+2012-01-14 21:02:50 UTC <byorgey> sure
+2012-01-14 21:02:54 UTC <byorgey> hope you can get it to work!
+2012-01-14 21:03:48 UTC <byorgey> looks like GHC 6.10.4 came with the very first version of the platform, 2009.2
+2012-01-14 21:21:06 UTC <luite> what does which ghc say?
+2012-01-15 00:23:17 UTC <peterjoel1> I've now managed to get my ghc all reinstalled, and (I think) all the dependencies. Butâ¦ I still can't compile the tutorial
+2012-01-15 00:23:19 UTC <peterjoel1> $ ghc --make DiagramsTutorial.lhs
+2012-01-15 00:23:19 UTC <peterjoel1> [1 of 1] Compiling Main             ( DiagramsTutorial.lhs, DiagramsTutorial.o )
+2012-01-15 00:23:19 UTC <peterjoel1> Linking DiagramsTutorial ...
+2012-01-15 00:23:19 UTC <peterjoel1> Undefined symbols:
+2012-01-15 00:23:19 UTC <peterjoel1>   "_iconv_open", referenced from:
+2012-01-15 00:23:19 UTC <peterjoel1>       _hs_iconv_open in libHSbase-4.3.1.0.a(iconv.o)
+2012-01-15 00:23:19 UTC <peterjoel1>      (maybe you meant: _hs_iconv_open)
+2012-01-15 00:23:20 UTC <peterjoel1>   "_locale_charset", referenced from:
+2012-01-15 00:23:20 UTC <peterjoel1>       _localeEncoding in libHSbase-4.3.1.0.a(PrelIOUtils.o)
+2012-01-15 00:23:21 UTC <peterjoel1>   "_iconv", referenced from:
+2012-01-15 00:23:21 UTC <peterjoel1>       _hs_iconv in libHSbase-4.3.1.0.a(iconv.o)
+2012-01-15 00:23:22 UTC <peterjoel1>      (maybe you meant: _hs_iconv_open, _hs_iconv , _hs_iconv_close )
+2012-01-15 00:24:00 UTC <peterjoel1> $ ghc --make DiagramsTutorial.lhs
+2012-01-15 00:24:00 UTC <peterjoel1> [1 of 1] Compiling Main Â  Â  Â  Â  Â  Â  ( DiagramsTutorial.lhs, DiagramsTutorial.o )
+2012-01-15 00:24:00 UTC <peterjoel1> Linking DiagramsTutorial ...
+2012-01-15 00:24:00 UTC <peterjoel1> Undefined symbols:
+2012-01-15 00:24:14 UTC <peterjoel1> Â "_iconv_open", referenced from:
+2012-01-15 00:24:14 UTC <peterjoel1> Â  Â  Â _hs_iconv_open in libHSbase-4.3.1.0.a(iconv.o)
+2012-01-15 00:24:14 UTC <peterjoel1> Â  Â  (maybe you meant: _hs_iconv_open)
+2012-01-15 00:24:14 UTC <peterjoel1> Â "_locale_charset", referenced from:
+2012-01-15 00:24:14 UTC <peterjoel1> Â  Â  Â _localeEncoding in libHSbase-4.3.1.0.a(PrelIOUtils.o)
+2012-01-15 00:24:14 UTC <peterjoel1> Â "_iconv", referenced from:
+2012-01-15 00:24:25 UTC <peterjoel1> _hs_iconv in libHSbase-4.3.1.0.a(iconv.o)
+2012-01-15 00:24:25 UTC <peterjoel1> Â  Â  (maybe you meant: _hs_iconv_open, _hs_iconv , _hs_iconv_close )
+2012-01-15 00:24:25 UTC <peterjoel1> Â "_iconv_close", referenced from:
+2012-01-15 00:24:25 UTC <peterjoel1> Â  Â  Â _hs_iconv_close in libHSbase-4.3.1.0.a(iconv.o)
+2012-01-15 00:24:25 UTC <peterjoel1> Â  Â  (maybe you meant: _hs_iconv_close)
+2012-01-15 00:24:26 UTC <peterjoel1> ld: symbol(s) not found
+2012-01-15 00:24:26 UTC <peterjoel1> collect2: ld returned 1 exit status
+2012-01-15 00:24:56 UTC <peterjoel1> (sorry if I posted that all twice - I got a notice that it had been throttled, so I wasn't sure)
+2012-01-15 00:28:42 UTC <fryguybob> I don't know if any of the advice here applies or not:  http://comments.gmane.org/gmane.comp.lang.haskell.cafe/80521
+2012-01-15 00:43:00 UTC <peterjoel1> seems to. But it didn't work
+2012-01-15 00:43:26 UTC <peterjoel1> does this look correct to you?
+2012-01-15 00:43:30 UTC <peterjoel1> $ cabal install --reinstall --extra-include-dirs=/opt/local/include --extra-lib-dirs=/opt/local/lib diagrams
+2012-01-15 00:43:49 UTC <byorgey> peterjoel1: what do you mean by "it" when you say "it didn't work"?
+2012-01-15 00:44:24 UTC <byorgey> peterjoel1: that looks reasonable, I've no idea whether it is "correct"
+2012-01-15 00:44:29 UTC <peterjoel1> :) ok
+2012-01-15 00:44:50 UTC <peterjoel1> I mean I still get the same errors when trying to compile diagramsTutorial
+2012-01-15 00:45:17 UTC <byorgey> peterjoel1: yes, but after doing what?  That thread that fryguybob linked seems to suggest many possible solutions.
+2012-01-15 00:46:00 UTC <peterjoel1> oh I see. I've jumped into the first answer and missed the rest. I'll read on. Apologies
+2012-01-15 00:46:58 UTC <byorgey> no worries!
+2012-01-15 00:59:40 UTC <peterjoel1> in case you are interested, I got it working. I needed to add -L/usr/lib as a GHC arg
+2012-01-15 01:01:43 UTC <fryguybob> excellent!
+2012-01-15 01:03:15 UTC <byorgey> yay!
+2012-01-15 01:05:21 UTC <peterjoel1> it's the end of my day now.. but I should be back tomorrow with actual questions about diagrams :)
+2012-01-15 01:05:39 UTC <byorgey> peterjoel1: great =)
+2012-01-15 01:05:42 UTC <peterjoel1> thanks for your patience
+2012-01-15 01:05:49 UTC <byorgey> peterjoel1: I may not be on much tomorrow
+2012-01-15 01:06:22 UTC <byorgey> peterjoel1: thanks for *your* patience!  getting diagrams to work on non-linux OSes is currently way too difficult =(
+2012-01-15 01:06:29 UTC <peterjoel1> no worries. I'm hoping the hard part is over :)
+2012-01-15 01:07:03 UTC <peterjoel1> I wish I knew exactly what I did, so I could write it down somewhere
+2012-01-15 01:07:23 UTC <peterjoel1> backtracked so many times, I'm not really sure what were the steps that made the difference
+2012-01-15 01:18:21 UTC <peterjoel1> byorgey: nearly forgot to ask. Did you think of any suitable tasks that wouldn't be too challenging for a newbie?
+2012-01-15 01:18:53 UTC <byorgey> peterjoel1: ah, sorry, haven't gotten around to thinking about it yet
+2012-01-15 01:19:14 UTC <byorgey> peterjoel1: I'll try to think about it in the next couple days
+2012-01-15 01:19:55 UTC <peterjoel1> ok thanks. I can fill a couple of days just playing with it anyway.
+2012-01-15 03:39:41 UTC <tgeeky> byorgey: when you are working with affine spaces, vector spaces, etc ... things that are more complicated than types like monoid, applicative, stream, monoid, etc -- do you think of these things at the category theory level? at the traditional mathematics level? both?
+2012-01-15 03:40:19 UTC <byorgey> uh... I think of them at whatever level makes sense for whatever I am doing
+2012-01-15 03:40:26 UTC <tgeeky> I was going to add that third option
+2012-01-15 03:40:30 UTC <tgeeky> "just work with the code in front of you"
+2012-01-15 03:41:16 UTC <tgeeky> byorgey: are you uhh... proficient with *all* of the concepts in the Casters (or the vast majority?)
+2012-01-15 03:41:24 UTC <tgeeky> (this is a lot of things)
+2012-01-15 03:41:33 UTC <byorgey> no, I'm not
+2012-01-15 03:41:57 UTC <tgeeky> is your advisor?
+2012-01-15 03:42:07 UTC <byorgey> no! she hates category theory =)
+2012-01-15 03:42:08 UTC <tgeeky> ACTION forgets his name. Pierce?
+2012-01-15 03:42:17 UTC <tgeeky> oh. right. that's her.
+2012-01-15 03:43:02 UTC <byorgey> Stephanie Weirich
+2012-01-15 03:43:07 UTC <tgeeky> right.
+2012-01-15 03:43:15 UTC <tgeeky> I always associate you with Pierce. I think.
+2012-01-15 03:43:33 UTC <byorgey> I've worked with him on various things as well.
+2012-01-15 03:45:19 UTC <tgeeky> byorgey: Uh, as far as I know despite the ~ 30 or so papers about the circle fractal, only one of them is a dissertation. Elena Fuchs, under Peter Sarnak, from Princeton. She spent a year at Princeton IAS and now she's at Berkley.
+2012-01-15 03:46:35 UTC <tgeeky> Anyway, she has two short (20 min) lectures where she presents some interesting mathematics and a few open questions. I figure they might interest you, and might make interesting material for the species project
+2012-01-15 03:47:13 UTC <tgeeky> This one: http://video.ias.edu/math/stpm2010/fuchs STPM - Local to Global Phenomena in Deficient Groups
+2012-01-15 03:47:33 UTC <tgeeky> And this one: http://video.ias.edu/conversations/fuchs STPM - Local to Global Phenomena in Deficient Groups
+2012-01-15 03:47:36 UTC <tgeeky> err
+2012-01-15 03:47:54 UTC <tgeeky> This one: http://video.ias.edu/conversations/fuchs - Expander Graphs: Why Number Theorists Might Care About Network Optimization
+2012-01-15 03:48:13 UTC <tgeeky> byorgey: let me know if and when you watch and/or enjoy them
+2012-01-15 03:49:14 UTC <byorgey> tgeeky: thanks
+2012-01-15 03:50:03 UTC <tgeeky> byorgey: I am a little miffed. It looks like the term "deficient groups" is something she is introducing (in the context of the c.f. group)
+2012-01-15 03:50:26 UTC <tgeeky> i like that group, damn it! It's not difficient. Come here. There there. It's ok.
+2012-01-15 03:51:58 UTC <byorgey> hehe
+2012-01-15 04:54:14 UTC <tgeeky> byorgey: wow: http://flare.prefuse.org/demo
+2012-01-15 20:04:02 UTC <fryguybob> ACTION considers gluing together ajax.org's Ace, pdf.js, pdflatex, darcs, and diagrams.
+2012-01-15 20:12:43 UTC <byorgey> fryguybob: I don't know what those first two are, but it sounds awesome =)
+2012-01-15 20:13:51 UTC <fryguybob> Ace is a javascript text editor and pdf.js is a javascript pdf viewer.
+2012-01-15 20:14:14 UTC <byorgey> oh I see, nice
+2012-01-15 20:14:57 UTC <fryguybob> I'm considering options for a better setup for LaTeX for Rebekah.
+2012-01-16 06:58:33 UTC <mgsloan> 'lo! Byorgey - I've got a force layout gtk-toy
+2012-01-16 07:00:15 UTC <luite> cool :)
+2012-01-16 07:01:22 UTC <mgsloan> check out the code! https://github.com/mgsloan/gtk-toy-diagrams/blob/master/src/TestPhysics.hs
+2012-01-16 07:06:31 UTC <mgsloan> ACTION thinks it's pretty clean
