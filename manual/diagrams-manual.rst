@@ -749,7 +749,7 @@ free to construct the list of points using whatever method you like!
 As its first argument, `star` takes a value of type `StarOpts`, for
 which there are two possibilities:
 
-* `StarSkip` specifies that every math:`n` th vertex should be
+* `StarSkip` specifies that every :math:`n` th vertex should be
   connected by an edge.
 
   .. class:: dia-lhs
