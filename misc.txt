@@ -1,0 +1,17 @@
+=== Related non-Haskell projects ===
+
+* [http://asymptote.sourceforge.net/ Asymptote]
+* [http://had.co.nz/ggplot2/ ggplot2]
+* [http://inkscape.sourceforge.net/ Inkscape]
+* [http://lib2geom.sourceforge.net/ lib2geom]
+* [http://www.tug.org/metapost.html MetaPost]
+* [http://pyx.sourceforge.net/ Pyx]
+* [http://www.texample.net/tikz/examples/ TikZ]
+
+=== Food for thought ===
+
+* [http://www.adobe.com/devnet/pdf/pdf_reference.html PDF reference]
+* [http://local.wasp.uwa.edu.au/~pbourke/geometry/supershape/ supershape]
+* [http://www.jroller.com/aalmiray/entry/jsilhouette_0_3_released symbols]
+* [http://www.w3.org/TR/SVG11/ SVG reference]
+* [http://www.adobe.com/devnet/swf/pdf/swf_file_format_spec_v10.pdf SWF reference]
