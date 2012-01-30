@@ -929,7 +929,8 @@ local origin of the final result.
 > example = cat (2,-1) (map p [3..8]) # showOrigin
 >   where p n = regPoly n 1 # lw 0.03
 
-Semantically speaking, `cat v === foldr (beside v) mempty`.
+Semantically speaking, `cat v === foldr (beside v) mempty`, although
+the actual implementation of `cat` uses a more efficient balanced fold.
 
 For more control over the way in which the diagrams are laid out, use
 `cat'`, a variant of `cat` which also takes a `CatOpts` record.  See
