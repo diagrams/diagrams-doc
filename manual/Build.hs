@@ -25,6 +25,7 @@ setDiagramImports m = do
                , "Diagrams.Prelude"
                , "Graphics.Rendering.Diagrams.Core"
                , "Diagrams.Backend.Cairo"
+               , "Diagrams.Backend.Cairo.Internal"
                , "Data.Monoid"
                ]
 

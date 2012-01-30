@@ -18,6 +18,7 @@ import Data.ByteString.Base16
 
 import Diagrams.TwoD.Size (SizeSpec2D(Dims))
 import Diagrams.Backend.Cairo
+import Diagrams.Backend.Cairo.Internal
 import Build
 
 main :: IO ()
