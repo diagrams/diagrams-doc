@@ -2773,6 +2773,7 @@ Other backends
 
    * SVG
    * postscript
+   * HTML5 canvas
    * TikZ
    * povray
    * OpenGL?
