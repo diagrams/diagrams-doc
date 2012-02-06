@@ -126,7 +126,7 @@ Before installing ``diagrams``, you will need the following:
 
 .. _`cabal-install`: http://hackage.haskell.org/trac/hackage/wiki/CabalInstall
 
-If you are on a Mac or Windows, GHC itself comes with the Haskell
+If you are on OS X or Windows, GHC itself comes with the Haskell
 Platform; if you are on Linux, you will have to install GHC first.
 
 .. _`Glasgow Haskell Compiler`: http://www.haskell.org/ghc/
@@ -140,13 +140,13 @@ Once you have successfully installed the Haskell platform, installing
   cabal install gtk2hs-buildtools diagrams
 
 Unfortunately, on some platforms you may run into difficulties
-installing cairo.  Some `resources for installing cairo under Windows
-can be found here`_.  If you have trouble installing cairo on other
+installing cairo.  `See the wiki for the most up-to-date information`_
+regarding installation.  If you have trouble installing cairo on other
 platforms, feel free to send email to the `diagrams mailing list`_; we
 would like to collect reports of problems and solutions on various
 platforms.
 
-.. _`resources for installing cairo under Windows can be found here`: http://code.google.com/p/diagrams/wiki/CairoOnWindows
+.. _`See the wiki for the most up-to-date information`: http://www.haskell.org/haskellwiki/Diagrams/Install
 
 A native SVG backend is being worked on, and hopefully the next
 release of diagrams will include it by default instead of cairo.
@@ -212,11 +212,6 @@ manual.
 
 .. _`quick start tutorial`: http://projects.haskell.org/diagrams/tutorial/DiagramsTutorial.html
 
-.. container:: todo
-
-  * Change the above for whatever the recommended starter backend is,
-    if it changes
-
 Contributing
 ------------
 
@@ -232,6 +227,7 @@ where ``FOO`` is one of
   * ``core``: the core diagrams framework
   * ``lib``: standard library of combinators and utilities
   * ``cairo``: rendering backend using cairo
+  * ``contrib``: package of user-contributed extensions and tools
   * ``doc``: documentation, including website, manual, tutorials, etc.
 
 See the `bug tracker`_ for a list of bugs and feature requests.
@@ -892,7 +888,7 @@ diagrams in the `x`:math:\- and `y`:math:\-directions, respectively.
 >                                          d2  )
 
 See `Bounding functions and local vector spaces`_ for more information
-on what "next to" means, `Working with bounds`_ for information
+on what "next to" means, `Working with bounds`_ for information on
 functions available for manipulating bounds, or `Bounding
 functions`_ for precise details.
 
