@@ -12,7 +12,7 @@ build-icons :
 	make -C icons
 
 %.xml : %.rst
-	rst2xml.py $< $@
+	rst2xml.py --input-encoding=utf8 $< $@
 
 .SECONDARY : xml2html.exe diagrams-manual.xml
 
