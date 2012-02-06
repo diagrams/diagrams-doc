@@ -2579,6 +2579,139 @@ More ambiguity
       hcat'
         (with {sep = 0.5}) (zipWith (|>) [0 .. ] (replicate 5 squares))
 
+Animation
+=========
+
+As of version 0.5, diagrams has experimental support for the creation of
+*animations*.  It is by no means complete, so bug reports and feature
+requests are especially welcome.
+
+Animations are created with the help of a generic `Active`
+abstraction, defined in the `active`:pkg: package.
+
+Active
+------
+
+The `active`:pkg: package defines a simple abstraction for working
+with *time-varying values*. A value of type `Active a` is either a
+constant value of type `a`, or a time-varying value of type `a`
+(*i.e.* a function from time to `a`) with specific start and end
+times. Since active values have start and end times, they can be
+aligned, sequenced, stretched, or reversed. In a sense, this is sort
+of like a stripped-down version of functional reactive programming
+(FRP), without the reactivity.
+
+There are two basic ways to create an `Active` value. The first is to
+use `mkActive` to create one directly, by specifying a start and end
+time and a function of time. More indirectly, one can use the
+`Applicative` instance for `Active` together with the "unit interval"
+`ui`, which takes on values from the unit interval from time 0 to time
+1, or `interval`, which is like `ui` but over an arbitrary interval.
+
+For example, to create a value of type `Active Double` which represents
+one period of a sine wave starting at time 0 and ending at time 1, we
+could write
+
+.. class:: lhs
+
+::
+
+> mkActive 0 1 (\t -> sin (fromTime t * tau))
+
+or
+
+.. class:: lhs
+
+::
+
+> (sin . (*tau)) <$> ui
+
+`pure` can also be used to create `Active` values which are constant
+and have no start or end time. For example,
+
+.. class:: lhs
+
+::
+
+> mod <$> (floor <$> interval 0 100) <*> pure 7
+
+cycles repeatedly through the numbers 0-6.
+
+To take a "snapshot" of an active value at a particular point in time,
+the `runActive` function can be used to turn one into a function of
+time.  For example,
+
+::
+
+  > runActive ((sin . (*tau)) <$> ui) $ 0.2
+  0.9510565162951535
+
+.. container:: todo
+
+  Write more about using the active library.  For now, you can read
+  the `package documentation`_ for more information.
+
+  * Transforming active values
+  * Combining active values
+
+.. _`package documentation`: http://hackage.haskell.org/packages/archive/active/latest/doc/html/Data-Active.html
+
+
+Using `Active` with diagrams
+----------------------------
+
+An animation is defined, simply, as something of type 
+`Active (Diagram b v)` for an appropriate backend type `b` and vector
+space `v`.  Hence it is possible to make an animation by using the
+`mkActive` function and specifying a function from time to diagrams.
+
+However, most often, animations are constructed using the
+`Applicative` interface.  For example, to create a moving circle we
+can write
+
+.. class:: lhs
+
+::
+
+> translateX <$> ui <*> circle 2 
+
+But wait a minute, it isn't moving!
+
+Actually, it *is* moving, it's just that it gets centered in the
+output at each instant, so it's as if the window is panning along at
+the same rate as the circle, with the result that it appears
+stationary.  The way to fix this is by placing the moving circle on
+top of something larger and stationary in order to "fix" the
+viewpoint.  Let's use an invisible square:
+
+.. class:: lhs
+
+::
+
+> (translateX <$> ui <*> circle 2) <> (pure (square 6 # lw 0))
+
+Notice that we composed two animations using `(<>)`, which does
+exactly what you would think: superimposes them at every instant in time.
+
+Since this is such a common thing to want, the
+`Diagrams.Animation` XXX module provides a function `animBounds`
+for expanding the bounds of an animation to the union of all the
+bounds over time (determined by sampling at a number of points).  That
+is, the animation will now use a constant bound that encloses the
+entirety of the animation at all points in time.
+
+.. class:: lhs
+
+::
+
+> animBounds (translateX <$> ui <*> circle 2)
+
+Since `Active` is generic, it is also easy (and useful) to
+create active `Point`\s, `Path`\s, colors, or values of any other type.
+
+.. container:: todo
+
+  * Examples of animating things other than diagrams
 
 Core library
 ============
