@@ -18,6 +18,12 @@ d = (stroke $
     # fc red
     # lw 0
 
+ico_d = (stroke $
+        circlePath 2 # alignBR # translateX (-0.5) 
+        <> (vcat' with {sep = 0.3} $ replicate 5 (reversePath $ circlePath 0.5)) # alignBR)
+        # fc red
+        # lw 0
+
 {-
 dAngle :: Rad
 dAngle = tau / 6
@@ -140,3 +146,5 @@ logo = (hcat' with {sep = 0.5} . map alignB $ [ d, i, a1, g, r, a2, m, s ])
        # centerXY
 
 main = defaultMain (pad 1.1 logo)
+
+-- main = defaultMain (pad 1.05 ico_d)
