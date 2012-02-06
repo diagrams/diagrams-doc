@@ -91,6 +91,7 @@ gbkg = grid
     # rotateBy (-1/20)
     # clipBy p
     # withBounds (p :: Path R2)
+    # lw 0.05
   where p = square 5
 
 g = (text "G" # fontSize 4 # rotateBy (-1/20)) <> gbkg
@@ -120,11 +121,11 @@ r = runTurtle (setHeading 90 >> forward 5 >> right 90
 aTree = BNode () f f
   where f = BNode () (leaf ()) (leaf ())
 
-a2 = renderTree (\_ -> circle 0.5 # fc purple) (~~) t''
+a2 = renderTree (\_ -> circle 0.5 # fc purple) (~~) t'' # lw 0.1
   where Just t' = uniqueXLayout 1 2 aTree
         t''     = forceLayoutTree defaultForceLayoutTreeOpts t'
 
-m = square 5 <>
+m = square 5 # lw 0.05 <>
     text "m"
       # fontSize 6 # italic # font "freeserif" # fc green
 
