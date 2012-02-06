@@ -2,6 +2,7 @@
 
 import Diagrams.Prelude
 import Diagrams.Backend.Cairo
+import Diagrams.Backend.Cairo.Internal
 
 import Language.Haskell.Interpreter
 
@@ -26,6 +27,7 @@ setDiagramImports m = do
                , "Diagrams.Prelude"
                , "Graphics.Rendering.Diagrams.Core"
                , "Diagrams.Backend.Cairo"
+               , "Diagrams.Backend.Cairo.Internal"
                , "Data.Monoid"
                ]
 
