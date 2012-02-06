@@ -31,6 +31,10 @@ main = hakyll $ do
 
     -- Static images ------------------------------
 
+    match "*.ico" $ do
+        route idRoute
+        compile copyFileCompiler
+
     match "images/*" $ do
         route idRoute
         compile copyFileCompiler
