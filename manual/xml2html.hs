@@ -24,7 +24,7 @@ import Diagrams.Builder
 
 main :: IO ()
 main = do
-  (modMap, nameMap) <- buildPackageMaps 
+  (modMap, nameMap) <- buildPackageMaps
                        [ "diagrams-core"
                        , "diagrams-lib"
                        , "diagrams-cairo"
@@ -45,9 +45,9 @@ diagramsManual modMap nameMap =
   >>> doTransforms [ styleFile "css/default.css"
                    , styleFile "css/syntax.css"
                    ]
-  
+
 compileDiagrams :: XmlT (IOSLA (XIOState ()))
-compileDiagrams = onElemA "literal_block" [("classes", "dia")] $ 
+compileDiagrams = onElemA "literal_block" [("classes", "dia")] $
   eelem "div"
     += attr "class" (txt "exampleimg")
     += compileDiaArr
@@ -65,8 +65,8 @@ compileDiaArr =
   getChildren >>>
   getText >>>
   arrIO compileDiagram >>>
-  eelem "center" += 
-    (eelem "img" 
+  eelem "center" +=
+    (eelem "img"
        += attr "src" mkText
     )
 
