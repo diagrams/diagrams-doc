@@ -19,7 +19,8 @@ import Data.ByteString.Base16
 import Diagrams.TwoD.Size (SizeSpec2D(Dims))
 import Diagrams.Backend.Cairo
 import Diagrams.Backend.Cairo.Internal
-import Build
+
+import Diagrams.Builder
 
 main :: IO ()
 main = do
@@ -78,5 +79,16 @@ compileDiagram src = do
   ex <- doesFileExist imgFile
   when (not ex) $ do
     putStrLn $ "Generating " ++ imgFile ++ "..."
-    buildDiagram src (CairoOptions imgFile (Dims 500 200) PNG)
+    res <- buildDiagram
+             Cairo (0,0) (CairoOptions imgFile (Dims 500 200) PNG)
+             src
+             "pad 1.1 example"
+             ["DeriveDataTypeable"]
+             [ "Diagrams.Backend.Cairo"
+             , "Diagrams.Backend.Cairo.Internal"
+             , "Data.Typeable"
+             ]
+    case res of
+      Left err      -> ppError err
+      Right (act,_) -> act
   return imgFile
