@@ -2,7 +2,7 @@ WEB = ${HOME}/public_html/diagrams-manual
 
 default : diagrams-manual.html
 
-xml2html.exe : xml2html.hs Build.hs
+xml2html.exe : xml2html.hs
 	ghc --make -O2 $< -o $@
 
 %.html : %.xml xml2html.exe build-icons
