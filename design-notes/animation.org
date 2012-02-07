@@ -1,0 +1,308 @@
+
+Design for animation support.
+
+* Vector space
+
+  [This section kept here just for legacy]
+
+  Basic idea: if V is a vector space then so is (T -> V) where T
+  represents time.  However, this is not quite enough, because we want
+  to be able to place animations next to each other *temporally* as
+  well as spatially, so we need some information about when animations
+  start and stop.
+
+** Failed attempt: space of partial functions
+
+   The solution is to use (T |-> V), the space of *partial functions*
+   from T to V.  In practice we can actually keep track of a set of
+   intervals on which an animation function is defined.
+
+   Let's check that this is a vector space.  First, how do vector
+   addition and scalar multiplication work?
+
+   + scalar multiplication just applies scalar multiplication uniformly
+     to the output.
+   + the addition of f1 and f2 is a partial function defined only where
+     f1 and f2 are both defined, and in such places its output is the
+     sum of f1 and f2's outputs.
+
+   We must check that the vector space axioms hold:
+
+   + Associativity of addition: follows from the associativity of
+     addition on V and set intersection.
+
+   + Commutativity of addition: follows from commutativity of addition
+     on V and set intersection.
+
+   + Identity: the identity element is the everywhere-defined,
+     constantly zero function.
+
+   + Inverse: oh! This doesn't work.  Additive inverses can't exist,
+     because addition can only make the domain smaller.
+
+** Attempt #2
+
+   What about a total function (T -> V) together with a map (T ->
+   Bool)?  I.e. we don't destroy information we just "mask it out".
+   Ah, hmm, but in order to really not destroy information we can't
+   use AND or OR to combine masks.  We would have to use XOR, but what
+   does that mean?
+
+   + scalar multiplication just multiplies by the scalar everywhere.
+   + addition would have to use XOR, but I'm not sure what that would
+     mean.
+
+     |----|   |--------|
+       |----|   |--|     |---|
+     =========================
+     |-|  |-| |-|  |---| |---|
+
+** thoughts
+  The above stuff really wasn't working.  But is that really what I
+  wanted anyway?  Intuitively there are two potential meanings for an
+  animation:
+
+    + T -> Diagram V
+      
+      At each time there is a diagram.  Nice and simple.  But using
+      this as a literal implementation might result in duplicated
+      computation.
+
+    + Diagram (T -> V)
+
+      This is a diagram with primitives living in the (T -> V) vector
+      space.
+
+  I was thinking about the latter, although it's not 
+
+
+     
+
+
+* Active
+
+   newtype Max a = Max { getMax :: a }
+   instance Ord a => Semigroup (Max a) where
+     (Max a1) <> (Max a2) = Max (max a1 a2)
+
+   newtype Min a = Min { getMin :: a }
+   instance Ord a => Semigroup (Min a) where
+     (Min a1) <> (Min a2) = Min (min a1 a2)
+
+   
+   Now consider
+
+** Adjoining Pure to form Applicative from Apply
+
+   See Purify.hs.  Actually, this is already in the semigroupoids
+   package in Data.Functor.Apply.
+
+** Email to Andy
+
+Semantics for Active
+====================
+
+A dynamic (Active a) value is represented by a function from time
+to a, and a pair of times.  So I wanted to see whether the right
+semantics just falls out from thinking of it as the composition of the
+functors (pair with time), (pair with time), (function from time).
+
+Here was my thought process (it turns out to be not quite right, but
+bear with me for the moment): ((->) e) is an applicative functor with
+no extra constraints.  However, in order for ((,) e) to be an
+applicative functor we require e to be a monoid. (This instance is
+defined in Control.Applicative and I'm pretty sure it's also discussed
+in "Applicative Programming with Effects".)  So what are the monoids
+on Time that we want?  Well, when combining actives we take the
+minimum of the start time and the maximum of the end time, so that's
+clearly what we want the binary operations to be.  But in order to
+make these monoids we need to have identity elements: the identity for
+min would be some sort of positive infinity, and for max, negative
+infinity. Rational doesn't have such values so we have to use new
+types with extra infite values adjoined.
+
+So now the implementation of 'pure' just falls out as (pure . pure
+. pure), and this should give us a constant function with a start time
+at negative infinity and end time at positive infinity, right?
+
+Wrong!  It actully gives us a constant function with a start time at
+*positive* infinity and end time at *negative* infinity!  Since our
+combining operation corresponds to taking the *union* of intervals,
+the identity would be the *empty* interval rather than the complete
+time line.  This is clearly not what we want.
+
+Thinking about it a bit more carefully, I think what is really going
+on is that we want to insist that every dynamic Active value has a
+*finite* start and end time.  But that means that we only have
+*semigroup* structures on Time under min and max.  What can we say
+about ((,) e) if e is only a semigroup and not a monoid?
+
+I don't know if there's any accepted terminology for it, but ((,) e)
+turns out to be a functor which supports (<*>) but NOT pure.  Edward
+Kmett has defined the 'Apply' class for these in Data.Functor.Apply
+from the 'semigroupoids' package.  (Another interesting
+example of something which is an instance of Apply but not Applicative
+is finite maps, (Data.Map.Map k a) -- 'pure a' would have to be a
+structure mapping *every* key to a, but such an infinite map cannot be
+constructed.  I notice the distinction for dynamic Actives also comes
+down to finite vs. infinite; perhaps there's something interesting to
+say here in general.)  
+
+So we can think of the semantics of dynamic Actives as given by the
+composition of functors
+
+  ((,) (Min Time)) . ((,) (Max Time)) . ((->) Time)
+
+where Min and Max are taken from the 'semigroups' package and do
+exactly what you would expect.
+
+But we also want static Actives, not just dynamic.  Well, we can add
+them back by simply adjoining a separate constructor for Pure!  This
+is exactly how 'Active' is actually defined, of course, and is
+reflected in the 'semigroupoids' package by the declaration
+
+  newtype MaybeApply f a = MaybeApply { runMaybeApply :: Either (f a) a }
+
+It's not hard to check that if f satisfies the laws for Apply, then
+MaybeApply f satisfies the laws for Applicative.
+
+So we've recovered Active as a composition of more primitive thing,
+and now its existing semantics falls out for free, right?
+Well... almost.  In fact, the way you have the Applicative instance
+defined includes
+
+a0@(Active start0 stop0 f0) <*> a1@(Active start1 stop1 f1) =
+  Active start stop $ \ i -> f0 (boundBy a0 i) (f1 (boundBy a1 i))
+
+In the composed semantics I've just described, we would get 
+
+  \i -> f0 i (f1 i)
+
+without any calls to "boundBy".  Without boundBy, we think of an
+Active as a total function from time where we just happen to have marked off
+start and endpoints.  With "boundBy", it's as though we are requiring
+the functions to be constant outside the interval between start and
+end.  I think this still satisfies the relevant laws, but seems
+undesirable to me, for several reasons:
+
+  1. It's an extra invariant, not reflected in Active's type, which we
+     now have to be careful to maintain: we must be careful not to
+     provide any combinators which let the user observe the fact that
+     Actives can be represented by functions which are not actually
+     constant outside their interval.  For example, it is not safe to
+     let the user modify the interval directly (although this seems
+     like it could be a useful operation).
+
+  2. If the user really does want an Active which is constant outside
+     its domain, we can always provide a combinator for it:
+
+     clip (Active start stop f) 
+       = Active start stop (f . clipTime start stop)
+       where
+         clipTime start stop t 
+           | t < start = start
+           | t > stop  = stop                 
+           | otherwise = t
+
+     So bundling this with the fundamental semantics seems like doing
+     too much at once, making the abstraction less flexible/useful.
+
+  3. Last but not least, of course, it makes the semantics of Active
+     less compositional.
+
+
+Generalization: "bounded" things
+================================
+
+There is a striking similarity here to the situation with
+(non-animated) diagrams.  From the very beginning, a key design goal
+of the diagrams framework has been to allow putting things "next to"
+one another in a natural yet elegant way.  In order to do this, of
+course, we need some sort of way to remember the "boundaries" of
+diagrams.
+
+We can think of the basic semantics of a diagram as a function from
+some vector space (although this is not as explicit in diagrams as it
+is with Boards or with previous systems by Conal).  So then we need
+something like
+
+  (boundary, V -> a)
+
+Hmm, this looks familiar... with dynamic Actives we have
+
+  ((Time, Time), Time -> a)
+
+Since Time is one-dimensional we just need a pair of Times to
+determine a "boundary".  How to generalize this to arbitrary vector
+spaces?  It turns out there are (at least) two ways.  One way is to
+have a function
+
+  (V -> S)
+
+(where S is the type of scalars for the vector space V), which
+intuitively answers the question "starting from the origin, how far
+must one go in a particular direction to get to a perpendicular
+hyperplane H so that the diagram lies completely on the near side of
+H?"  This is useful for putting diagrams next to each other, since you
+can guarantee that they will not intersect.  Such functions form a
+semigroup under pointwise maximum. The (Time, Time) pair for dynamic
+Actives can be seen as a special case of this idea in 1D: it's a
+lookup table for a function with essentially only two distinct inputs
+(since we only really care about the *direction* of the input vectors
+and not their magnitude).
+
+Just like with dynamic Actives, such functions do not form a *monoid*
+because the returned scalars are always finite.  At this point I must
+confess something rather embarrassing.  Until writing this email
+(which has clarified my thinking tremendously), I was under the
+mistaken impression that these bounding functions *did* form a monoid!
+If you look in Graphics.Rendering.Diagrams.Bounds (in the
+diagrams-core package), you will find
+
+  instance (Ord (Scalar v), AdditiveGroup (Scalar v)) => Monoid (Bounds v) where
+    mempty = Bounds $ const zeroV
+    mappend (Bounds b1) (Bounds b2) = Bounds $ max <$> b1 <*> b2
+
+but this is an obviously bogus Monoid instance, as can be easily
+demonstrated:
+
+  ghci> let b = translateX 4 $ getBounds (circle 1 :: D R2)
+  ghci> appBounds b unit_X
+  -3.0
+  ghci> appBounds (mempty <> b) unit_X
+  0.0
+
+Whoops.  So, ahem, yes, I will fix that.  (I am not sure at the moment
+what the best way would be: to make bounding functions return scalars
+adjoined with infinity, OR to adjoin a special "empty bounding
+region". The former would have the benefit---if we adjoin not only
+negative but also positive infinity---of allowing for *infinite*
+bounding regions).
+
+The funny thing is that I thought the above bogus Monoid instance for
+Bounds would lead to bogus behavior when composing diagrams---but so
+far I haven't been able to demonstrate any.  I suppose I must have put
+in an incorrect hack somewhere to compensate for the incorrect Monoid
+Bounds instance, but I haven't figured it out yet.  [Insert your
+favorite joke/saying about two wrongs and a right here.]
+
+The other way is to have a function
+
+(V -> S)
+
+which answers the question "how far must one go in this direction to
+reach the furthest point *on the boundary* of the diagram"? This is
+useful for doing things like drawing arrows between two objects, or
+other sorts of things that require knowing a point actually located on
+an object's boundary (as opposed to an enclosing hyperplane).  In the
+case of 1D these two things coincide, but they certainly don't in
+higher dimensions.
+
+I am not sure exactly where I am going with this part, except to say
+that perhaps dynamic actives and diagrams both fall under some sort of
+theory of "bounded functions".
+
+
+OK, this is already way too long so I guess I will stop (for now). =)
+
+-Brent
