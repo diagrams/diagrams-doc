@@ -8213,3 +8213,422 @@
 2012-01-16 07:00:15 UTC <luite> cool :)
 2012-01-16 07:01:22 UTC <mgsloan> check out the code! https://github.com/mgsloan/gtk-toy-diagrams/blob/master/src/TestPhysics.hs
 2012-01-16 07:06:31 UTC <mgsloan> ACTION thinks it's pretty clean
+2012-01-31 20:24:18 UTC <fryguybob> We are being logged now, stop talking about snakes!
+2012-01-31 20:24:34 UTC <byorgey> ok, no more snakes
+2012-01-31 20:24:40 UTC <byorgey> I will not say anything about snakes.
+2012-01-31 20:31:31 UTC <tgeeky> Hey Brent! What's the name of that bar with all the weird stuff on the walls? (http://www.snakerivergrill.com/)
+2012-01-31 20:31:38 UTC <tgeeky> Snakes!
+2012-01-31 20:31:49 UTC <tgeeky> ACTION desperately hopes he's seen super troopers
+2012-01-31 20:42:11 UTC <byorgey> ACTION hasn't
+2012-01-31 20:42:41 UTC <tgeeky> byorgey: http://www.funnyordie.com/videos/0e65e16c1c/super-troopersshenanigans-from-dirttron
+2012-01-31 21:11:55 UTC <byorgey> so. shall we do a new diagrams release soon?
+2012-01-31 21:12:43 UTC <tgeeky> byorgey: indeed
+2012-01-31 21:13:00 UTC <tgeeky> i was going to mention it the other day, but since I've done nil to help you I figured that would be rude
+2012-01-31 21:13:06 UTC <byorgey> hehe
+2012-01-31 21:14:03 UTC <byorgey> I need to write documentation for animation stuff first
+2012-01-31 21:14:22 UTC <byorgey> I mean, I guess technically I don't, but I don't want to make a big announcement about the release until I do
+2012-01-31 21:27:34 UTC <fryguybob> byorgey: Do you have more animation examples?
+2012-01-31 21:45:15 UTC <fryguybob> The silence clearly means I should be making animation examples myself.  Animated snakes of course.
+2012-01-31 21:45:41 UTC <fryguybob> ACTION disappears in a cloud of matlab...
+2012-01-31 22:58:41 UTC <fryguybob> my kingdom for a MatLab let expression...
+2012-02-01 01:23:53 UTC <byorgey> fryguybob: I only have a couple examples, I will be making more as part of the documentation
+2012-02-01 01:24:12 UTC <fryguybob> :D
+2012-02-01 01:29:20 UTC <luite> what are the supported output formats for animations?
+2012-02-01 01:33:20 UTC <fryguybob> NTSC or PAL, 1.0 will have digital :P
+2012-02-01 01:38:15 UTC <byorgey> luite: right now, the only supported output formats are PNG, PS, PDF, or SVG
+2012-02-01 01:38:26 UTC <byorgey> a whole directory full of them ;)
+2012-02-01 01:49:03 UTC <tgeeky> no amiga image format, no care!
+2012-02-01 01:50:11 UTC <byorgey> eventually of course, I hope we'll have an OpenGL backend for animation
+2012-02-01 01:54:04 UTC <tgeeky> to have an OpenGL framework that's abstract to the same level as diagrams is seems both beautiful and difficult to make work
+2012-02-01 02:07:39 UTC <luite> hm why?
+2012-02-01 02:08:08 UTC <luite> shouldn't be extremely difficult if you just use it for output
+2012-02-01 02:23:07 UTC <tgeeky> luite: link to wolfgang ss?
+2012-02-01 02:23:30 UTC <tgeeky> ss=screenshot
+2012-02-01 02:24:11 UTC <luite> oh I thought you meant schutzstaffel ;p
+2012-02-01 02:24:40 UTC <tgeeky> I often like schutzstaffels, dipped in butter sauce, on the rocks, with a twist.
+2012-02-01 02:24:47 UTC <tgeeky> but *this* time, I meant screenshot.
+2012-02-01 02:24:59 UTC <luite> http://hdiff.luite.com/tmp/
+2012-02-01 02:25:00 UTC <tgeeky> god I really hope that isn't a terribly embarassing sentence.
+2012-02-01 02:25:59 UTC <tgeeky> oh. schutzstaffels aren't foodstuff at all.
+2012-02-01 02:26:06 UTC <luite> not exactly :)
+2012-02-01 02:26:06 UTC <fryguybob> luite: Your todo list is too long
+2012-02-01 02:26:14 UTC <luite> fryguybob: it's outdated
+2012-02-01 02:26:20 UTC <luite> some stuff has already been done
+2012-02-01 02:26:31 UTC <fryguybob> Woohoo!
+2012-02-01 02:28:09 UTC <fryguybob> Humm, when the form says "salary expectation" is $1,000,000 is too much?
+2012-02-01 02:28:20 UTC <luite> permissions, resources, older revisions, authentication and dialog improvements are already done
+2012-02-01 02:28:31 UTC <luite> fryguybob: depends on the position
+2012-02-01 02:29:12 UTC <luite> and some points from 2. are also done
+2012-02-01 02:29:30 UTC <tgeeky> fryguybob: does your job involve hamburger meat?
+2012-02-01 02:30:35 UTC <fryguybob> Summer grad student internship.  I guess only if I'm the meat.
+2012-02-01 02:31:07 UTC <luite> in particular, from 2, sarch engine with autocomplete, special pages, improved ws ui, discussions, lhs upload are done
+2012-02-01 02:31:30 UTC <tgeeky> fryguybob: yes, I think I can unequivocally say that $1e6 is too much.
+2012-02-01 02:31:44 UTC <fryguybob> drat
+2012-02-01 02:32:00 UTC <tgeeky> indeed, it might be $1e6 too much.
+2012-02-01 02:32:20 UTC <fryguybob> haha
+2012-02-01 02:46:45 UTC <tgeeky> luite: hmm. Pretty much all searches run over the whole 5fb^-1 dataset have been null or negative. :/
+2012-02-01 02:47:33 UTC <tgeeky> luite: going through the slides from this week has been very, very tedious
+2012-02-01 02:51:46 UTC <luite> hmm
+2012-02-01 02:52:00 UTC <luite> slides where>
+2012-02-01 02:52:01 UTC <luite> ?
+2012-02-01 02:53:24 UTC <tgeeky> luite: there are several sets
+2012-02-01 02:53:27 UTC <tgeeky> here's todays
+2012-02-01 02:53:29 UTC <tgeeky> https://indico.cern.ch/getFile.py/access?resId=0&materialId=slides&confId=174936
+2012-02-01 02:53:32 UTC <tgeeky> from CMS
+2012-02-03 01:08:42 UTC <luite> wooh new ghc!
+2012-02-03 01:25:31 UTC <tgeeky> woohoo where?
+2012-02-03 01:27:06 UTC <tgeeky> reddit, evidently
+2012-02-03 01:27:17 UTC <tgeeky> cool. i was about to install 7.4.1-rc2, but I suppose i'll not
+2012-02-03 01:42:35 UTC <luite> oh I saw it on the ghc mailing list
+2012-02-03 01:55:26 UTC <tgeeky> luite: it's probably almost identical to rc2, but there are release notes \o/
+2012-02-03 01:56:03 UTC <luite> I got some build failures :(
+2012-02-03 01:56:42 UTC <tgeeky> things that didn't fail on rc1 or 2?
+2012-02-03 01:57:53 UTC <luite> possibly
+2012-02-03 04:04:25 UTC <tgeeky> byorgey: Data.Monoid now exports <> as an infix synonym for mappend It associates to the right, and has precedence 6. <-- yay?
+2012-02-03 04:08:26 UTC <luite> yeah <> was only added in rc2
+2012-02-03 04:09:09 UTC <tgeeky> luite: how did you know that it was added in rc2?
+2012-02-03 04:09:13 UTC <tgeeky> luite: hdiff?
+2012-02-03 04:09:23 UTC <tgeeky> no.. hmm there aren't release notes for rcs, are there?
+2012-02-03 04:10:10 UTC <luite> no, because I reported that some package did not build with 7.4.1 (rc2), then the package author downloaded rc1, tested, built fine, and then thought my bug report was incorrect :'(
+2012-02-03 04:10:19 UTC <tgeeky> doh!
+2012-02-03 04:48:19 UTC <luite> tgeeky: bytestring probably came with ghc
+2012-02-03 04:49:11 UTC <tgeeky> luite: yeah, but what are the odds with that version being different than what's on hackage?
+2012-02-03 04:49:14 UTC <tgeeky> if they have the same version#
+2012-02-03 04:51:23 UTC <luite> hmm, dunno, more strange things happen
+2012-02-03 04:51:45 UTC <luite> it's a bit annoying that the version that comes with ghc is sometimes not uplaoded to haskell
+2012-02-03 14:35:43 UTC <byorgey> tgeeky: oh, nice!
+2012-02-03 14:37:32 UTC <byorgey> although right now diagrams uses the <> from semigroups
+2012-02-03 14:37:41 UTC <byorgey> we'll have to see what edwardk ends up doing with semigroups
+2012-02-03 21:19:44 UTC <fryguybob> ACTION is one background check away from internship.
+2012-02-03 21:20:55 UTC <tgeeky> fryguybob: ooh, tough going. I already told them you enjoy smoking lambdas, huffing on "essence of algebraic proof", and the occasional extramarital affair with Mrs. Lambdabot.
+2012-02-03 21:22:16 UTC <fryguybob> Drat.
+2012-02-03 21:22:18 UTC <fryguybob>  :D
+2012-02-03 21:22:47 UTC <tgeeky> then again, it's an internship, so they'll probably overlook those things as long as they can pay you in communion wafers
+2012-02-03 22:34:16 UTC <luite> hmm, looks like the ghc 7.4 upgrade is easier than expected :)
+2012-02-03 22:35:03 UTC <luite> hmm, ice skating tomorrow, skiing monday and tuesday :)
+2012-02-03 23:02:05 UTC <luite> hmm, combinatorics+haskell :)
+2012-02-03 23:38:04 UTC <luite> hm when is a ghc 7.4 compatible diagrams going to be released?
+2012-02-03 23:54:18 UTC <luite> hmm apparently cairo also doesn't work with 7.4.1 yet
+2012-02-04 00:37:31 UTC <byorgey> luite: the darcs version of diagrams-core, -lib, and -cairo are all already compatible with 7.4
+2012-02-04 00:37:41 UTC <byorgey> I plan to release a new version soon
+2012-02-04 00:37:55 UTC <byorgey> along with instructions on how to build gtk/cairo under 7.4
+2012-02-04 00:38:49 UTC <luite> yeah I've already installed it, needed some minor patches
+2012-02-04 00:38:58 UTC <luite> in dependencies
+2012-02-04 00:39:05 UTC <luite> semigroupoids didn't compile
+2012-02-04 00:39:45 UTC <byorgey> oh really?
+2012-02-04 00:40:33 UTC <luite> yeah <> conflict
+2012-02-04 00:40:40 UTC <byorgey> ahhhh
+2012-02-04 00:40:49 UTC <byorgey> apparently that only got added in rc2
+2012-02-04 00:40:52 UTC <luite> yep
+2012-02-04 00:41:01 UTC <byorgey> which is why I didn't notice it when testing with rc1
+2012-02-04 00:41:29 UTC <byorgey> I'm sure edwardk will fix that soon
+2012-02-04 00:41:55 UTC <luite> wolfgang: /home/wolfgang/.cabal/lib/cairo-0.12.2/ghc-7.4.1/HScairo-0.12.2.o: unknown symbol `cairo_get_target' <- is this the reason for the gtk/cairo instructions?
+2012-02-04 00:42:29 UTC <byorgey> eek, I don't know
+2012-02-04 00:43:32 UTC <luite> gtk2hs did install without errors (from darcs), but doesn't seem to work
+2012-02-04 00:43:39 UTC <byorgey> hrm
+2012-02-04 00:44:56 UTC <luite> is another backend already usable? (should generate output suitable for web, svg or png preferably)
+2012-02-04 00:45:27 UTC <byorgey> no
+2012-02-04 00:45:48 UTC <byorgey> there is a working postscript backend, and an HTML5 canvas backend is being worked on
+2012-02-04 00:46:27 UTC <byorgey> SVG backend is a bit stalled at the moment, but I saw Robin Morrisset (who wrote an SVG backend and then never released it) at POPL last week and begged him to send me the code
+2012-02-04 00:46:28 UTC <luite> hmok, I'll try to find out what;s wrong with cairo then :)
+2012-02-04 00:54:25 UTC <luite> hm the examples do run, so i must be doing something wrong
+2012-02-04 01:09:49 UTC <luite> byorgey: oh it was a permissions problem, apparently the new ghc's linker needs self:fifo_file { write getattr } permissions
+2012-02-04 01:18:31 UTC <byorgey> ah
+2012-02-04 01:18:48 UTC <byorgey> so it's just an SELinux problem?
+2012-02-04 01:22:02 UTC <luite> yeah, I ran the usual examples as an unrestricted user, then ran wolfgang, the daemon runs as root but has some SELinux restrictions, forgot about that :)
+2012-02-04 01:23:41 UTC <byorgey> ok =)
+2012-02-04 01:44:10 UTC <tgeeky> are we releasing wolfgang!? :O
+2012-02-04 01:44:12 UTC <tgeeky> closed beta?
+2012-02-04 01:44:36 UTC <byorgey> eventually!
+2012-02-04 01:44:50 UTC <byorgey> but not right this minute, I don't think
+2012-02-04 01:48:44 UTC <luite> tgeeky: I'm just trying to get it running on what will hopefully be more or less the same environment as the final one, ubuntu 11.10 and ghc 7.4.1
+2012-02-04 01:50:11 UTC <tgeeky> luite: me wonders, for in the far future, if there is anything like what you're using SELinux for in Windows
+2012-02-04 01:50:51 UTC <luite> dunno
+2012-02-04 01:51:28 UTC <luite> http://hdiff.luite.com/cgit/binary-generic/tree/src/Data/Binary/Generic.hs#n74 <- does anyone know what he's doing on line 74 and why?
+2012-02-04 01:52:55 UTC <byorgey> luite: I think so
+2012-02-04 01:53:04 UTC <byorgey> luite: I don't know what 'dataTypeOf' does
+2012-02-04 01:53:29 UTC <byorgey> luite: but presumably the idea is that you pass 'dataTypeOf' a value which is ignored, and the only important thing is its type
+2012-02-04 01:53:48 UTC <byorgey> luite: so you have a value of type  'Get a', and you want to call 'dataTypeOf' on the type 'a'
+2012-02-04 01:54:15 UTC <byorgey> so you need to construct a value of type 'a', but it's OK if that value is _|_
+2012-02-04 01:54:35 UTC <byorgey> so one way to do that is to apply a function of type  Get b -> b
+2012-02-04 01:54:55 UTC <byorgey> the other way to do it would be using -XScopedTypeVariables, and bring the 'a' into scope and then write  (undefined :: a)
+2012-02-04 01:55:11 UTC <luite> yes that's what I did to fix it, because I thought that was what he meant
+2012-02-04 01:55:20 UTC <byorgey> did that answer your question?
+2012-02-04 01:55:32 UTC <byorgey> 'fix it'? oh, was it broken?
+2012-02-04 01:55:48 UTC <luite> yes, ghc 7.4 thinks this is ambiguous
+2012-02-04 01:56:00 UTC <luite> while older ghc apparently thing it's fine
+2012-02-04 01:56:02 UTC <byorgey> hrm, interesting
+2012-02-04 01:56:26 UTC <byorgey> I don't see why it would be ambiguous
+2012-02-04 01:57:10 UTC <luite> oh right, I see now what he's doing, thanks
+2012-02-04 02:11:58 UTC <luite> did you switch to TypeFamilies for CairoOptions?
+2012-02-04 02:12:16 UTC <luite> or has that always been an associated data thingie
+2012-02-04 02:17:41 UTC <byorgey> it's always been one
+2012-02-04 02:17:56 UTC <byorgey> but recent versions of GHC have some weirdnesses with exporting it
+2012-02-04 02:18:26 UTC <luite> hm that's odd, with 7.2 it worked without importing .Internal
+2012-02-04 02:18:32 UTC <luite> but with 7.4 it doesn't
+2012-02-04 02:19:18 UTC <byorgey> indeed
+2012-02-04 02:19:21 UTC <byorgey> weird, isn't it?
+2012-02-04 02:23:52 UTC <tgeeky> byorgey: hm. this kind of thing has a new flavor to me: http://www.typesandotherdistractions.com/2012/02/fun-with-xpolykinds-polykinded-folds.html
+2012-02-04 02:24:07 UTC <byorgey> this "kind" of thing hehe ;)
+2012-02-04 02:24:25 UTC <tgeeky> I can't put my finger on it, but I think it's just awe at the generality of the code that's just in a blog post
+2012-02-04 02:24:34 UTC <byorgey> yeah, it's pretty sweet =)
+2012-02-04 02:24:53 UTC <tgeeky> I'd suspect to convert this into a paper would take a while, but I'd much prefer this, thank you.
+2012-02-04 02:25:40 UTC <luite> ah edwardk is a fast releaser :)
+2012-02-04 02:26:30 UTC <byorgey> see, I told you he would fix it soon =)
+2012-02-04 03:06:07 UTC <luite> whoaht it worky with 7.4 and diagrams 0.5 from darcs
+2012-02-04 03:06:57 UTC <luite> and yesod 0.10
+2012-02-04 03:20:26 UTC <tgeeky> woohoo!
+2012-02-04 03:28:33 UTC <byorgey> yaaaay! \o/
+2012-02-05 03:56:33 UTC <cheater_> :o
+2012-02-05 03:58:15 UTC <cheater_> ACTION likes the description on the page in the topic
+2012-02-05 14:06:11 UTC <byorgey> cheater: =)
+2012-02-05 14:06:20 UTC <cheater> :)
+2012-02-06 20:54:54 UTC <tgeeky> byorgey: did you get any news on funding of your proposal?
+2012-02-06 20:57:13 UTC <byorgey> tgeeky: which one? the species one?
+2012-02-06 20:57:21 UTC <tgeeky> byorgey: yessir
+2012-02-06 20:57:49 UTC <byorgey> tgeeky: remember, this is the United States Government we are talking about here
+2012-02-06 20:58:09 UTC <tgeeky> byorgey: oh. I forgot to add in 3 month delays
+2012-02-06 20:58:16 UTC <byorgey> tgeeky: try 6.
+2012-02-06 20:58:20 UTC <tgeeky> lolol
+2012-02-06 20:58:26 UTC <byorgey> tgeeky: seriously, we are supposed to hear back in June
+2012-02-06 20:58:32 UTC <tgeeky> lol?
+2012-02-06 20:58:35 UTC <tgeeky> that's absurd.
+2012-02-06 20:58:41 UTC <byorgey> yep
+2012-02-06 20:58:53 UTC <tgeeky> half a year for a 10 page grant proposal?
+2012-02-06 20:59:03 UTC <tgeeky> evidently the read those things more closely than the legislation Congress passes
+2012-02-06 20:59:16 UTC <byorgey> tgeeky: to be fair, they didn't just get ONE grant proposal.
+2012-02-06 20:59:39 UTC <tgeeky> byorgey: yeah, but 6 months is an awfully long time on the scale of a PhD student.
+2012-02-06 20:59:49 UTC <byorgey> I know. oh well.
+2012-02-06 20:59:58 UTC <tgeeky> I guess that means in order to cover bases, one must file several of these and just hope for the best
+2012-02-06 21:00:32 UTC <tgeeky> please tell me they allow multiple submissions by individuals?
+2012-02-06 21:00:57 UTC <byorgey> yes, I think so, although in practice putting together several of these would be way too much work
+2012-02-06 21:01:20 UTC <byorgey> I mean, putting together several at the same time
+2012-02-06 21:02:04 UTC <byorgey> one does, in practice, file multiple grant proposals and hope for the best, but not all at once
+2012-02-06 21:02:40 UTC <tgeeky> does your group have an overarching grant that funds you guys?
+2012-02-06 21:03:45 UTC <byorgey> no, generally speaking each faculty member has a few active grants at any given time
+2012-02-07 01:10:47 UTC <byorgey> ACTION works on a backend-agnostic builder service thingy
+2012-02-07 01:10:53 UTC <byorgey> dunno if it will actually work yet
+2012-02-07 01:14:12 UTC <fryguybob> Nice!
+2012-02-07 04:39:31 UTC <tgeeky> byorgey: what are the goals or key features or whatever?
+2012-02-07 04:49:27 UTC <byorgey> tgeeky: the goal is to be able to pass a piece of diagrams code in, and dynamically get a diagram out
+2012-02-07 04:49:45 UTC <byorgey> tgeeky: useful for e.g. embedding diagrams in other document formats
+2012-02-07 04:53:09 UTC <tgeeky> hm.
+2012-02-07 04:53:26 UTC <tgeeky> when I played with diagrams, I noticed some options like that which already appeared in the executables made by diagrams
+2012-02-07 04:53:36 UTC <tgeeky> but didn't get them to work (but didn't care, because pretty pictures)
+2012-02-07 04:55:12 UTC <byorgey> hmm, not sure what you're referring to
+2012-02-07 04:56:28 UTC <tgeeky>  ./apollo --help shows --loop and some related options
+2012-02-07 04:57:38 UTC <byorgey> yeah, that's not really the same thing
+2012-02-07 04:58:38 UTC <tgeeky> byorgey: I can understand that. Though I'm not sure how I would elaborate on the differences?
+2012-02-07 04:58:54 UTC <byorgey> --loop auto-re-compiles the diagram while you are editing it
+2012-02-07 04:59:26 UTC <tgeeky> you're working on something that does this for a set of files?
+2012-02-07 04:59:32 UTC <byorgey> the thing I'm making now is something where you can just pass it a snippet of diagrams code and get back an image, dynamically, in the middle of another program.
+2012-02-07 04:59:46 UTC <tgeeky> oh. that is cool. and different.
+2012-02-07 05:00:02 UTC <tgeeky> so it has type String -> SVG or something along those lines?
+2012-02-07 05:01:17 UTC <byorgey> more like  String -> lots of other arguments -> IO ()
+2012-02-07 05:01:35 UTC <byorgey> but yes, that's the basic idea =)
+2012-02-07 05:01:44 UTC <tgeeky> does it create the files on disk or something?
+2012-02-07 05:02:16 UTC <byorgey> well, OK, I lied, it's actually  String -> ... -> IO (Result b v)   -- so what you get out depends on the backend
+2012-02-07 05:02:46 UTC <byorgey> for an SVG backend you could just get out an SVG.  For the cairo backend you get out an IO () which creates the file on disk.
+2012-02-07 05:05:26 UTC <tgeeky> well, sounds cool for sure.
+2012-02-07 05:27:13 UTC <byorgey> https://patch-tag.com/r/byorgey/diagrams-builder/home   it works!!
+2012-02-07 14:26:22 UTC <fryguybob> byorgey: Let me know when things are working enough with your builder thing and you want me to write a little LaTeX style for it.
+2012-02-07 14:26:28 UTC <fryguybob> Oh, email...
+2012-02-07 16:08:11 UTC <byorgey> fryguybob: yeah, go right ahead, it should be ready
+2012-02-07 16:10:19 UTC <byorgey> installing pandoc under GHC 7.4.1, woo!
+2012-02-07 16:23:32 UTC <alpounet> byorgey, do all packages build fine with ghc 7.4.1 ?
+2012-02-07 16:23:41 UTC <alpounet> well i mean, common packages
+2012-02-07 16:23:53 UTC <alpounet> like, is it usable for day-to-day dev now?
+2012-02-07 16:24:13 UTC <tgeeky> alpounet: it should be. I'm about to upgrade to it.
+2012-02-07 16:24:36 UTC <tgeeky> alpounet: the most common problem will be the (Eq a, Ord a) => Num a that you'll need to repair
+2012-02-07 16:25:13 UTC <alpounet> oh god
+2012-02-07 16:25:22 UTC <alpounet> all those packages that just won't build
+2012-02-07 16:25:39 UTC <tgeeky> alpounet: you can probably use a regex to fix that problem
+2012-02-07 16:26:07 UTC <alpounet> yeah sure but fixing every single dependency that has this problem... wow :P
+2012-02-07 16:26:11 UTC <byorgey> alpounet: a bunch of packages are already upgraded.  but you'll probably still run into some issues now and then.
+2012-02-07 16:26:42 UTC <byorgey> a regex!? =P
+2012-02-07 16:27:25 UTC <tgeeky> byorgey: hehe. Mayyyyyyybee.
+2012-02-07 16:27:38 UTC <alpounet> however, i'm really glad GHC devs decided to make this move
+2012-02-07 16:29:41 UTC <tgeeky> alpounet: the best feature I've noticed in 7.4 (besides all of the kind stuff, which is much more than a 'feature'), is that all syntax works properly in ghci
+2012-02-07 16:29:54 UTC <alpounet> yeah
+2012-02-07 16:30:04 UTC <alpounet> that reaaaaaaaally handy
+2012-02-07 16:30:18 UTC <alpounet> like when you write some "generic" framework, e.g some typeclasses
+2012-02-07 16:30:31 UTC <tgeeky> and you can just copy/paste it from somewhere
+2012-02-07 16:30:35 UTC <alpounet> yeah
+2012-02-07 16:30:41 UTC <alpounet> and then write some data type and some instance
+2012-02-07 16:30:54 UTC <alpounet> bam, you're done.
+2012-02-07 16:31:10 UTC <tgeeky> well, for me, you get an error message, and you try again. and again. and then it works
+2012-02-07 16:32:07 UTC <alpounet> yeah
+2012-02-07 16:32:12 UTC <alpounet> much handier than editing a file and reloading it
+2012-02-07 20:41:42 UTC <fryguybob> Humm, I don't think hint builds with 7.4.1
+2012-02-07 20:42:52 UTC <luite> it's not really actively maintained i think
+2012-02-07 20:43:40 UTC <luite> hehe interesting logo for diagrams :)
+2012-02-07 20:44:33 UTC <byorgey> fryguybob: oh, phooey
+2012-02-07 20:45:02 UTC <fryguybob> I'm not sure why either... It wants old-time, but I'm not sure where that is coming from.
+2012-02-07 20:46:12 UTC <luite> good old-time
+2012-02-07 20:48:52 UTC <byorgey> fryguybob: I'm trying now...
+2012-02-07 20:49:03 UTC <byorgey> I don't see anything about old-time
+2012-02-07 20:49:41 UTC <byorgey> I just get compile errors
+2012-02-07 20:51:24 UTC <byorgey> let's see if it works on 7.2
+2012-02-07 20:51:45 UTC <fryguybob> Sorry, I dropped out there, did 7.4.1 work?
+2012-02-07 20:52:51 UTC <byorgey> no, I get compile errors for hint
+2012-02-07 20:53:05 UTC <byorgey> it didn't say anything about old-time though.
+2012-02-07 20:53:17 UTC <fryguybob> ah, ok
+2012-02-07 20:54:57 UTC <byorgey> ok, it works under 7.2
+2012-02-07 20:55:50 UTC <byorgey> awake hungry baby alert, back later
+2012-02-07 21:36:46 UTC <tgeeky> byorgey: i'm gonna be an uncle on Feb 22nd! :O
+2012-02-07 21:36:53 UTC <tgeeky> i'll have to get a quick parenting rundown from you :o
+2012-02-07 22:11:10 UTC <byorgey> tgeeky: congrats!
+2012-02-07 22:11:28 UTC <byorgey> tgeeky: incling is much easier than parenting
+2012-02-07 22:11:34 UTC <byorgey> *uncling
+2012-02-07 22:12:01 UTC <tgeeky> yes, I bet
+2012-02-07 22:12:12 UTC <tgeeky> how long have you been an uncle? :O
+2012-02-07 22:12:18 UTC <byorgey> (1) don't drop the kid  (2) get them awesome gifts  (3) when they start crying hand them back to parents
+2012-02-07 22:12:37 UTC <tgeeky> here you go, crying thing over here! out of the way!
+2012-02-07 22:12:46 UTC <byorgey> exactly =)
+2012-02-07 22:57:22 UTC <byorgey> ACTION starts writing a generic tool for managing multi-package/repo Haskell projects
+2012-02-07 22:57:45 UTC <byorgey> i.e. yak shaving, but I think many people will appreciate this particular naked yak
+2012-02-07 22:59:56 UTC <mgsloan> yes!!
+2012-02-07 23:00:26 UTC <byorgey> such as mgsloan =)
+2012-02-07 23:00:29 UTC <fryguybob> soon we will know what color yak skin really is.
+2012-02-07 23:00:51 UTC <mgsloan> ACTION has an "oss" directory with a bunch of repositories - tired of recompiling everything on ghc updates
+2012-02-07 23:01:00 UTC <mgsloan> not that that happens that often
+2012-02-07 23:01:04 UTC <mgsloan> it was kinda fun to rebuild the world
+2012-02-07 23:01:09 UTC <byorgey> hehe
+2012-02-07 23:01:39 UTC <fryguybob> fg
+2012-02-07 23:01:49 UTC <byorgey> I will put up a repo for it soon, in case anyone wants to help
+2012-02-07 23:01:51 UTC <mgsloan> but still, installing ghcdi is pretty terrifying: https://github.com/mgsloan/diagrams-ghci/blob/master/README
+2012-02-07 23:01:59 UTC <fryguybob> hehe, multiple monitors is throwing me off.
+2012-02-07 23:02:43 UTC <byorgey> mgsloan: yeah, exactly.
+2012-02-07 23:03:02 UTC <byorgey> mgsloan: oh, hey, I didn't know about that project, nice =)
+2012-02-07 23:04:00 UTC <byorgey> hmm, what's the proper platform-independent way to invoke (say) darcs?
+2012-02-07 23:04:59 UTC <byorgey> ah, the 'process' package
+2012-02-07 23:11:04 UTC <tgeeky> byorgey: max bolingbroke has a nice platform-independent way to get temporary files (which you'll surely need a facility for)
+2012-02-07 23:12:57 UTC <byorgey> tgeeky: oh? what's wrong with openTempFile from System.IO?
+2012-02-07 23:13:02 UTC <byorgey> I use that in diagrams-builder
+2012-02-07 23:13:29 UTC <byorgey> tgeeky: well, in any case, I'd love a link
+2012-02-07 23:13:35 UTC <tgeeky> https://github.com/batterseapower/temporary
+2012-02-07 23:14:02 UTC <tgeeky> byorgey: You get temp directories and files
+2012-02-07 23:14:06 UTC <tgeeky> that's the main thing that I wanted.
+2012-02-07 23:14:21 UTC <byorgey> there's a getTempDirectory in System.Directory I was using
+2012-02-07 23:14:47 UTC <byorgey> but yeah, looks like that package has much nicer, higher-level functions for that sort of thing
+2012-02-07 23:14:48 UTC <tgeeky> byorgey: and lastly, his version ignores errors? :O
+2012-02-07 23:17:24 UTC <luite> openTempFile use a rather bad algorithm to find available filenames
+2012-02-07 23:17:40 UTC <tgeeky> luite: doesn't matter
+2012-02-07 23:17:55 UTC <tgeeky> does it?
+2012-02-07 23:18:28 UTC <luite> if you open a lot of temp files it can get really slow
+2012-02-07 23:18:54 UTC <tgeeky> luite: if you open up a lot of temp files, you should be opening up directories
+2012-02-07 23:19:00 UTC <tgeeky> and temp files in them
+2012-02-07 23:19:01 UTC <tgeeky> 15:54 < byorgey> ok, it works under 7.2
+2012-02-07 23:19:05 UTC <tgeeky> whoops, spurrious paste
+2012-02-07 23:20:03 UTC <luite> if you ask for foo.ext, then it gets the pid of your program, and tries food[pid].ext, if it exists foo[pid+1].ext, foo[pid+2].ext, and for every new file it must check all of those
+2012-02-07 23:22:46 UTC <luite> byorgey: did you ever get an unprotected copy of that maa book shy the way?
+2012-02-07 23:23:07 UTC <byorgey> luite: no, I still haven't heard back from them
+2012-02-07 23:23:11 UTC <byorgey> I have now emailed them twice
+2012-02-07 23:23:36 UTC <byorgey> looks like I have a reminder scheduled to email them again on... Thursday
+2012-02-07 23:23:37 UTC <luite> oh :(
+2012-02-07 23:23:54 UTC <byorgey> maybe I need to find the home phone # of the president of the MAA or something
+2012-02-07 23:28:49 UTC <tgeeky> Paul Manthey Zorn, MAA President
+2012-02-07 23:29:10 UTC <tgeeky> Phone: 507-786-3414
+2012-02-07 23:29:14 UTC <tgeeky> Email: zorn@stolaf.edu
+2012-02-07 23:30:13 UTC <tgeeky> what book is it, anyway, that one is seeking an unprotected copy of?
+2012-02-07 23:30:34 UTC <luite> http://www.maa.org/ebooks/spectrum/BTM.html
+2012-02-07 23:30:48 UTC <mgsloan> www.mgsloan.com/panopti.png  <- gratuitously unfiltered / not yet well structured type information
+2012-02-07 23:31:09 UTC <tgeeky> mgsloan: that is wonderful!!
+2012-02-07 23:31:13 UTC <mgsloan> :)
+2012-02-07 23:31:17 UTC <tgeeky> seriously nice
+2012-02-07 23:31:27 UTC <mgsloan> thanks!!
+2012-02-07 23:31:44 UTC <mgsloan> it does this live :D
+2012-02-07 23:31:46 UTC <tgeeky> hopefully you hereby relinquish all copyright
+2012-02-07 23:31:51 UTC <tgeeky> because I want to see this thing :o
+2012-02-07 23:32:06 UTC <mgsloan> yup, the code is up, albeit a little messy and super WIP
+2012-02-07 23:32:32 UTC <mgsloan> hoping to get some collaborators once it's decent (maybe 3 months out still - sunk in 6 months or more sofar)
+2012-02-07 23:32:50 UTC <mgsloan> (of course, very very part time - school 'n all)
+2012-02-07 23:33:10 UTC <mgsloan> https://github.com/mgsloan/panopti
+2012-02-07 23:33:33 UTC <byorgey> mgsloan: woah, sweet
+2012-02-07 23:33:43 UTC <tgeeky> byorgey: i know, right?
+2012-02-07 23:33:49 UTC <tgeeky> it's like he's seen inside my head
+2012-02-07 23:33:56 UTC <tgeeky> better than I did
+2012-02-07 23:34:04 UTC <luite> hm
+2012-02-07 23:34:11 UTC <tgeeky> luite: I don't have that book.
+2012-02-07 23:34:27 UTC <tgeeky> luite: I do have "A Student's Guide to the study, practice, and tools of modern mathematics"
+2012-02-07 23:34:54 UTC <tgeeky> by Erickson
+2012-02-07 23:35:10 UTC <luite> byorgey already has it, although it's encrypted and not terribly usable if you don't run windows or os x
+2012-02-07 23:35:23 UTC <tgeeky> luite: can I convert it out of that format for you?
+2012-02-07 23:35:28 UTC <tgeeky> i have windows
+2012-02-07 23:36:23 UTC <luite> uh, well I'm not really looking for that book, although it looks interesting :)
+2012-02-07 23:36:39 UTC <mgsloan> byorgey - once I finish typing up the method used to get these types, mind checking that it's reasonable?
+2012-02-07 23:36:49 UTC <byorgey> mgsloan: sure
+2012-02-07 23:36:57 UTC <byorgey> I mean, I don't mind =)
+2012-02-07 23:37:19 UTC <luite> tgeeky: but if the only way to have it is an encrpyted pdf, then i definitely wouldn't buy it
+2012-02-07 23:37:49 UTC <mgsloan> yup, yup.  I have a feeling that something more involved with GHC's API could do a better job, but *might* be prohibitively complicated
+2012-02-07 23:37:57 UTC <byorgey> tgeeky: no, the point is, not only is it encrypted, it's DRM'ed, and you can only read it on the computer on which you first run it
+2012-02-07 23:38:31 UTC <mgsloan> the idea here is to waste gratuitous amounts of cycles, driving the typechecker like a search predicate
+2012-02-07 23:38:49 UTC <byorgey> sounds good
+2012-02-07 23:39:15 UTC <mgsloan> buut, I'll lay it out more formally / structured document, as I need to do that anyway
+2012-02-07 23:44:42 UTC <tgeeky> byorgey: wow. that's draconian even for Draco.
+2012-02-07 23:44:56 UTC <byorgey> tgeeky: I know, right?
+2012-02-07 23:45:17 UTC <luite> I thought you could activate 3 computers?
+2012-02-07 23:47:26 UTC <byorgey> nope, only one.
+2012-02-07 23:47:38 UTC <byorgey> oh, hmm, maybe you're right
+2012-02-07 23:47:43 UTC <tgeeky> that's not even fit to be called a book.
+2012-02-07 23:47:55 UTC <byorgey> but in any case it doesn't matter, because I can't activate it on MY computer.
+2012-02-07 23:48:00 UTC <mgsloan> though, if y'all are sparing a couple cycles, I'm verrry open to collaborators on panopti
+2012-02-07 23:48:04 UTC <tgeeky> byorgey: lol
+2012-02-07 23:48:18 UTC <mgsloan> even open to name suggestions, I just changed the name from "sinuhask"
+2012-02-07 23:48:33 UTC <byorgey> I like panopti better than sinuhask
+2012-02-07 23:48:40 UTC <mgsloan> definitely
+2012-02-07 23:48:45 UTC <byorgey> panopti sounds nice
+2012-02-07 23:48:48 UTC <tgeeky> mgsloan: I might be willing to part with my name that I had planned for this
+2012-02-07 23:48:50 UTC <mgsloan> sinuhask is clunky and nerdy. panopti is friendly
+2012-02-07 23:48:54 UTC <tgeeky> which is: d-rive
+2012-02-07 23:49:00 UTC <tgeeky> (I own www.d-rive.org and www.d-rive.info
+2012-02-07 23:49:01 UTC <tgeeky> )
+2012-02-07 23:49:16 UTC <mgsloan> haha, nice!
+2012-02-07 23:49:27 UTC <mgsloan> what was the main thrust of d-rive?
+2012-02-07 23:49:43 UTC <tgeeky> mgsloan: basically exactly what you showed me with this one picture
+2012-02-07 23:49:46 UTC <byorgey> mgsloan: I might be willing to donate some cycles toward panopti, but not in the immediate future
+2012-02-07 23:49:49 UTC <mgsloan> awesome
+2012-02-07 23:50:00 UTC <byorgey> basically not until we get a new release of diagrams out
+2012-02-07 23:50:15 UTC <mgsloan> sounds reasonable - work on diagrams helps panopti as well!
+2012-02-07 23:50:25 UTC <byorgey> yep
+2012-02-07 23:50:28 UTC <tgeeky> mgsloan: I viewed it as a haskell / mathematical object investigator which shows you what I called "visual isomorphisms" -- making the structure of code manifest through diagrams
+2012-02-07 23:50:40 UTC <mgsloan> yup!
+2012-02-07 23:50:46 UTC <mgsloan> I'm calling them projections
+2012-02-07 23:50:53 UTC <mgsloan> because they can be lossy
+2012-02-07 23:51:17 UTC <tgeeky> mgsloan: either way, I'll be devouring your code soon. It's as close as anything I've seen anywhere
+2012-02-07 23:52:07 UTC <mgsloan> So, the first step is being able to depict information about the code.  That's a big step! and doing that well would be very satisfying
+2012-02-07 23:52:25 UTC <mgsloan> but the next step is to use that information to inform code manipulation / refactoring 'n such
+2012-02-07 23:52:32 UTC <mgsloan> type directed autocomplete
+2012-02-07 23:53:07 UTC <tgeeky> mgsloan: yes. That bit is going to be hard as it will be useful (autocomplete)
+2012-02-07 23:54:03 UTC <mgsloan> tgeeky - some of the code is... quite messy.. but let me know when / if you have questions about portions, and that'll help cleaning / commenting.  More eyes is great!
+2012-02-07 23:54:11 UTC <tgeeky> mgsloan: ok.
+2012-02-07 23:54:55 UTC <mgsloan> I'm fairly proud of the conciseness, though, at least of everything apart from Utils.hs (which could probably use some reduction in size)
+2012-02-07 23:55:18 UTC <mgsloan> ACTION is planning on being free for the summer, so that'll be a good 3 months of Haskelling ontop of travelling
+2012-02-07 23:55:40 UTC <tgeeky> mgsloan: d-rive was supposed to be a "multiple meaning" phrase... like those things you did in elementary school, where you list a word's letters (D R I V E) downwards and then turn each of them into words
+2012-02-07 23:56:14 UTC <tgeeky> mgsloan: with the helpful rule that R expands into RIVE
+2012-02-07 23:56:56 UTC <tgeeky> mgsloan: but the original intent was *both* deriving (as in, getting something back from a mathematical object, or in the Haskell sense) but also "drive", as in, having the intuitive feel of operating a vehicle
+2012-02-07 23:57:16 UTC <tgeeky> where one can settle in and navigate the mathematical universe, etc, etc
+2012-02-07 23:57:30 UTC <tgeeky> but naming can be done later, I'm not going to get rid of the domains anytime soon
+2012-02-07 23:58:48 UTC <mgsloan> ahhh, very cool!  panopti comes from the prefix of panopticon / an old project I called panopticode.  pan-opti = universally optimizing of your coding experience, hah
+2012-02-07 23:59:21 UTC <tgeeky> ;)
+2012-02-07 23:59:27 UTC <tgeeky> i figured panopticon was related
+2012-02-07 23:59:38 UTC <tgeeky> that's a proper noun, though, no?
+2012-02-07 23:59:49 UTC <mgsloan> but yeah, that's definitely in line with my vision - reading / writing code, and working through type errors should definitely be much more intuitive / flow inducing
+2012-02-08 00:00:34 UTC <mgsloan> There's a part of my brain constantly doing type inference on Haskell.  It's good that I've trained that part well, but it would often be very beneficial for the computer to offload that task
+2012-02-08 00:00:35 UTC <tgeeky> mgsloan: well, I should admit, I'm actually in this for a purpose, even if it doesn't seem like it most days. I'm *really* interested in physics, and group theory, and the category theory of physics, and etc.
+2012-02-08 00:01:07 UTC <mgsloan> me too!  I definitely want to get this to string-diagrams-in-hask kind of level
+2012-02-08 00:01:29 UTC <mgsloan> my main purpose is making programming kick ass
+2012-02-08 00:02:34 UTC <mgsloan> but I also see this having very significant applications towards teaching / explaining Haskell
+2012-02-08 00:03:14 UTC <mgsloan> Ideally refined to the extent that you can eventually push this kind of tool into high school and earlier
+2012-02-08 00:03:22 UTC <tgeeky> well, I tacitly assumed that if the tool is good enough, it will become adopted as a standard for using Haskell
+2012-02-08 00:03:54 UTC <tgeeky> I think back then I didn't realize that one could just plant the seed (write the code) and let it do it's own evolution
+2012-02-08 00:03:58 UTC <mgsloan> right.  I think the "gateway usage", before it's a proper editor, will be as a code reader, and type resolver
+2012-02-08 00:04:16 UTC <mgsloan> so you have your main editor, but when you go into get-it-typechecking mode, you're in this thing
+2012-02-08 00:04:38 UTC <tgeeky> be back in a few
+2012-02-08 00:04:53 UTC <tgeeky> luite: Higgs updates: https://cdsweb.cern.ch/record/1421964/files/hcomb.pdf?version=2  .. https://cdsweb.cern.ch/record/1421964/files/hcomb.pdf?version=2 ..
+2012-02-08 00:05:05 UTC <tgeeky> Combined signal is ~ 4.3 sigma at ~ 126 GeV.
+2012-02-08 01:34:23 UTC <byorgey> https://patch-tag.com/r/byorgey/hproj/home
+2012-02-08 01:34:50 UTC <byorgey> so far it can download the repo for a given package, which is kinda useful
+2012-02-08 01:35:32 UTC <byorgey> like 'hproj fetch gtk-toy' figures out where the gtk-toy head repo is (based on the listing in the .cabal file) and clones it
+2012-02-08 01:40:19 UTC <fryguybob> nice
+2012-02-08 01:43:08 UTC <byorgey> the goal is so that in the instructions for people who want to contribute we can say something like "first  cabal install hproj; then   hproj fetch diagrams-core diagrams-lib diagrams-cairo ..."
