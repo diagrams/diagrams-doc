@@ -17,12 +17,27 @@ Introduction
 ------------
 
 ``diagrams`` is a flexible, powerful embedded domain-specific language
-(EDSL) for creating vector graphics.  It can be used for creating a
-wide range of graphics, such as ...
+(EDSL) for creating vector graphics.  The ``diagrams`` framework is:
 
-.. container:: todo
+  * **Declarative**: you specify *what* a diagram is, not *how* to
+    draw it.  ``diagrams`` takes care of the how.
 
-  * A cool example or two
+  * **Compositional**: diagrams can be easily *combined* in many ways to
+    produce more complex diagrams.
+
+  * **Embedded**: the full power of Haskell_, including every library
+    on Hackage_, is available to help construct and manipulate
+    graphics.
+
+.. _Haskell: http://haskell.org/
+.. _Hackage: http://hackage.haskell.org/
+
+  * **Extensible**: extending diagrams with additional or higher-level
+    functionality is as simple as writing a Haskell module.
+
+  * **Flexible**: diagrams is designed from the ground up to be as
+    generic and flexible as possible, with support for pluggable
+    rendering backends and multiple vector spaces (2D, 3D, ...).
 
 About this document
 -------------------
@@ -84,20 +99,25 @@ Here are some other resources that may be helpful to you as you learn
 about ``diagrams``:
 
   * The API reference documentation for all the ``diagrams`` packages
-    is intended to be high-quality and up-to-date.  If you find an
-    omission, error, or something confusing, please `report it as a
-    bug`_!
+    is intended to be high-quality and up-to-date, and is available
+    both from Hackage_ and from the diagrams website. XXX make it so!
+    If you find an omission, error, or something confusing, please
+    `report it as a bug`_!
 
         - `diagrams-core`:pkg:
         - `diagrams-lib`:pkg:
         - `diagrams-cairo`:pkg:
+        - `diagrams-contrib`:pkg:
+
+	XXX change these links to point to the website! cairo in
+	particular does not build on Hackage.
 
   * The ``diagrams`` website_ has a `gallery of examples`_ and links
     to tutorials, blog posts, and other documentation.
   * The `diagrams wiki`_ is a good place to find tips and tricks,
     examples, answers to frequently asked questions, and more.
   * The ``#diagrams`` IRC channel on Freenode is a friendly place
-    where you can get help from other ``diagrams`` developers and users.
+    where you can get help from other ``diagrams`` users and developers.
   * Consider joining the `diagrams mailing list`_ for discussions
     and announcements about ``diagrams``.
   * See the `bug tracker`_ for a list of open tickets.  If you find a
@@ -133,18 +153,18 @@ Platform; if you are on Linux, you will have to install GHC first.
 .. _`Haskell Platform`: http://hackage.haskell.org/platform/
 
 Once you have successfully installed the Haskell platform, installing
-``diagrams`` should be as easy as issuing the command:
+``diagrams`` *should* be as easy as issuing the command:
 
 ::
 
   cabal install gtk2hs-buildtools diagrams
 
-Unfortunately, on some platforms you may run into difficulties
-installing cairo.  `See the wiki for the most up-to-date information`_
-regarding installation.  If you have trouble installing cairo on other
-platforms, feel free to send email to the `diagrams mailing list`_; we
-would like to collect reports of problems and solutions on various
-platforms.
+Unfortunately, it often *isn't*.  On some platforms you may run into
+difficulties installing cairo.  `See the wiki for the most up-to-date
+information`_ regarding installation.  If you have trouble installing
+cairo on other platforms, feel free to send email to the `diagrams
+mailing list`_; we would like to collect reports of problems and
+solutions on various platforms.
 
 .. _`See the wiki for the most up-to-date information`: http://www.haskell.org/haskellwiki/Diagrams/Install
 
@@ -166,11 +186,11 @@ the following contents:
 
   main = defaultMain (circle 1)
 
-The first line turns off the evil `monomorphism restriction`_, which is
+The first line turns off the `dreaded monomorphism restriction`_, which is
 quite important when using ``diagrams``: otherwise you will quickly
 run into lots of crazy error messages.
 
-.. _`monomorphism restriction`: http://www.haskell.org/haskellwiki/Monomorphism_restriction
+.. _`dreaded monomorphism restriction`: http://www.haskell.org/haskellwiki/Monomorphism_restriction
 
 `Diagrams.Prelude`:mod: re-exports most everything from the standard
 library; `Diagrams.Backend.Cairo.CmdLine`:mod: provides a command-line
@@ -224,16 +244,29 @@ encouraged!  You can get the sources using darcs_:
 
 where ``FOO`` is one of
 
-  * ``core``: the core diagrams framework
-  * ``lib``: standard library of combinators and utilities
-  * ``cairo``: rendering backend using cairo
-  * ``contrib``: package of user-contributed extensions and tools
-  * ``doc``: documentation, including website, manual, tutorials, etc.
+  * ``core``: `the core diagrams framework`_
+  * ``lib``: `standard library of combinators and utilities`_
+  * ``cairo``: `rendering backend using cairo`_
+  * ``contrib``: `package of user-contributed extensions and tools`_
+  * ``doc``: `documentation, including website, manual, tutorials, etc.`_
+
+.. _`the core diagrams framework`: http://patch-tag.com/r/byorgey/diagrams-core
+.. _`standard library of combinators and utilities`: http://patch-tag.com/r/byorgey/diagrams-lib
+.. _`rendering backend using cairo`: http://patch-tag.com/r/byorgey/diagrams-cairo
+.. _`package of user-contributed extensions and tools`: http://patch-tag.com/r/byorgey/diagrams-contrib
+.. _`documentation, including website, manual, tutorials, etc.`: http://patch-tag.com/r/byorgey/diagrams-doc
 
 See the `bug tracker`_ for a list of bugs and feature requests.
 
-.. _`darcs`: http://darcs.net/
-.. _`git`: http://git-scm.com/
+In the past, git_ mirrors of the ``diagrams`` repositories have been
+offered on github_, thanks to `Owen Stephens's`_ work on
+`darcs-bridge`_.  However, some bugs were discovered in darcs-bridge
+and the mirrors are currently not being updated.  We hope that the bugs will be
+fixed and git mirrors can be again offered at some point in the future.
+
+.. _darcs: http://darcs.net/
+.. _git: http://git-scm.com/
+.. _github: http://github.com/
 .. _`Owen Stephens's`: http://www.owenstephens.co.uk/
 .. _`darcs-bridge`: http://wiki.darcs.net/DarcsBridgeUsage
 
@@ -297,6 +330,8 @@ part of ``Data.Monoid`` itself!)
 Monoids are used extensively in ``diagrams``: diagrams,
 transformations, bounding functions, trails, paths, styles, colors,
 and queries are all instances.
+
+XXX mention semigroups
 
 Faking optional named arguments
 -------------------------------
@@ -506,13 +541,9 @@ precedence of 6).
 Creating 2D diagrams
 ====================
 
-.. container:: todo
-
-  * add some fun diagrams here?
-
 The main purpose of ``diagrams`` is to construct two-dimensional
-vector graphics, although it can be used for more general purposes as
-well.  This section explains the building blocks provided by
+vector graphics (although it can be used for more general purposes as
+well).  This section explains the building blocks provided by
 `diagrams-core`:pkg: and `diagrams-lib`:pkg: for constructing
 two-dimensional diagrams.
 
@@ -1198,7 +1229,7 @@ synonym for `Transformation R2`.
 
 To invert a transformation, use `inv`.  For any transformation `t`,
 
-`t <> inv t == inv t <> t == mempty`.
+`t <> inv t === inv t <> t === mempty`.
 
 To apply a transformation to a diagram, use `transform`.
 
@@ -1207,7 +1238,7 @@ Rotation
 
 Use `rotate` to rotate a diagram couterclockwise by a given angle__
 about the origin.  Since `rotate` takes an angle, you must specify an
-angle type, as in `rotate (80 :: Deg)`.  In the common case that you
+angle type, such as `rotate (80 :: Deg)`.  In the common case that you
 wish to rotate by an angle specified as a certain fraction of a
 circle, like `rotate (1/8 :: CircleFrac)`, you can use `rotateBy`
 instead. `rotateBy` is specialized to only accept fractions of a
@@ -1901,10 +1932,8 @@ generally, `fontWeight`), `italic`, and `oblique` (or, more generally,
 >   === text' 5 "there"  # bold # font "freeserif"
 >   === text' 3 "world"  # fc green
 
-The current text support is certainly meagre: planned features for
-future versions of ``diagrams`` include better alignment between text
-objects placed side-by-side, and the ability to convert text objects
-to paths.
+XXX New text alignment functions
+XXX mention extra text support in Cairo backend
 
 Images
 ------
@@ -1943,6 +1972,13 @@ Currently, the cairo backend can only include images in ``.png``
 format, but hopefully this will be expanded in the future.  Other
 backends may be able to handle other types of external images.
 
+Advanced tools for diagram creation
+===================================
+
+This section covers some of the more advanced tools provided by the
+core and standard libraries for constructing diagrams.  Most of the
+content in this section is applicable to diagrams in any vector space,
+although 2D diagrams are used as illustrations.
 
 Working with bounds
 -------------------
@@ -2298,11 +2334,13 @@ differently; here we have used a numeric prefix.
 (As an aside, note how we had to use a type annotation on the integers
 that we used as names; numeric literals are polymorphic and `(|>)`
 needs to know what type of atomic name we are using. Without the type
-annotations, we would get an error about an "ambiguous type variable".
+annotations, we would get an `error about an "ambiguous type variable"`_.
 It's a bit annoying to insert all these annotations, of course;
 another option would be to use monomorphic constants like `String`\s
 or `Char`\s instead, or to create our own data type with a short
 constructor name that wraps an `Int`.)
+
+.. _`error about an "ambiguous type variable"`: `More ambiguity`_
 
 Note how we also made use of `applyAll`, which takes a list of
 functions as an argument and composes them into one; that is,
@@ -2458,22 +2496,118 @@ be created from sets of points or from any `Boundable` object, used
 for inclusion or exclusion testing, and combined via union or
 intersection.
 
-Tools for backends
-------------------
+Tips and tricks
+===============
+
+Delayed composition
+-------------------
+
+Suppose we have four diagrams that we want to lay out relative to one
+another.  For example:
+
+.. class:: dia-lhs
+
+::
+
+> t = eqTriangle 5   # fc orange
+> s = square     3   # fc red
+> o = ellipseXY  2 3 # fc blue
+> c = circle     2   # fc green
+>
+> d = centerX (t ||| s ||| o ||| c)
+>
+> example = d
+
+(Instead of `(|||)` we could equivalently have used `hcat`.)  Now
+`d` is the diagram consisting of these four shapes laid out in a
+centered row.
+
+But what if we want to do further processing on the individual shapes?
+At this point, we are out of luck.  There is no way to break apart a
+diagram into subdiagrams once it has been composed together (for good
+reasons).  We could use `juxtapose` (which positions one diagram
+relative to another without actually doing any composition) but that
+would get ugly and unintuitive.
+
+Here is where the nifty trick comes in: simply enclose each shape in a
+list, like so:
+
+.. class:: lhs
+
+::
+
+> ds = centerX ([t] ||| [s] ||| [o] ||| [c])
+
+Now `ds` is a *list* of four diagrams, which are the same as the
+original `t`, `s`, `o`, `c` except that they have been positioned as
+they would be in `d`!  We can now go on to do other things with them
+individually.  For example, we could alter their positions slightly
+before composing them (*e.g.* this makes for an easy way to apply some
+random "jitter" to a layout):
+
+.. class:: dia-lhs
+
+::
+
+> t = eqTriangle 5   # fc orange
+> s = square     3   # fc red
+> o = ellipseXY  2 3 # fc blue
+> c = circle     2   # fc green
+>
+> ds = centerX ([t] ||| [s] ||| [o] ||| [c])
+> d' = mconcat $ zipWith translateY [0.5, -0.6, 0, 0.4] ds
+>
+> example = d'
+
+In other words, enclosing diagrams in a list allows them to be
+positioned, aligned, *etc.* as they normally would, *except* that it
+delays actually composing them!
+
+This works because lists are instances of `Juxtaposable`, `Alignable`,
+`Boundable`, `HasOrigin`, `HasStyle`, `Transformable`, and, of course,
+`Monoid`.  All these instances work in the "obvious" way---for
+example, the bounds for a list is the combination of the bounds of the
+elements---so applying an operation to a list of diagrams has the
+same effect as applying the operation to the composition of those
+diagrams.  In other words, operations such as `centerX`, `scale`,
+`juxtapose`, *etc.* all commute with `mconcat`.
+
+Using absolute coordinates
+--------------------------
+
+Diagrams tries to make it easy to construct many types of graphics
+while thinking in only "relative" terms: put this to the right of
+that; lay these out in a row; draw this wherever that other thing
+ended up; and so on.  Sometimes, however, this is not enough, and one
+really wants to just think in absolute coordinates: draw this here,
+draw that there.  If you find yourself wanting this, here are some
+tips:
+
+  * The `position` function takes a list of diagrams associated with
+    positions and combines them while placing them at the indicated
+    absolute positions.
+  * `moveTo` can be used to position a single diagram absolutely.
 
 .. container:: todo
 
-  * lots more stuff goes in this section
-
-`Diagrams.Segment`:mod: exports a `FixedSegment` type, representing
-segments which *do* have an inherent starting location. Trails and
-paths can be "compiled" into lists of `FixedSegment`\s with absolute
-locations using `fixTrail` and `fixPath`.  This is of interest to
-authors of rendering backends that do not support relative drawing
-commands.
+  * More tips?
 
 Deciphering error messages
 --------------------------
+
+Although making ``diagrams`` an *embedded* domain specific language
+has many benefits, it also has (at least) one major downside:
+difficult-to-understand error messages.  Interpreting error messages
+often requires understanding particular details about the internals of
+the ``diagrams`` framework as well as the particular behavior of GHC.
+This section attempts to make the situation a bit more palatable by
+explaining a few common types of error message you might get while
+using ``diagrams``, along with some suggestions as to their likely
+causes and solutions.
+
+This section is certainly incomplete; please send examples of other
+error messages to the `diagrams mailing list`_ for help interpreting
+them and/or so they can be added to this section.
 
 No instances for Backend b0 R2 ...
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2488,14 +2622,15 @@ There will probably come a time when you get an error message such as
           arising from a use of `circle'
 
 The problem really has nothing to do with missing instances, but with
-the fact that a concrete backend type has not been filled in for `b0`.
-Such errors arise when you pass a diagram to a
-function which is polymorphic in its input but monomorphic in its
-output, such as 'width', 'height', 'phantom', or 'names'.  Such
-functions compute some property of the diagram, or use it to
-accomplish some other purpose, but do not result in the diagram
-being rendered.  If the diagram does not have a monomorphic type,
-GHC complains that it cannot determine the diagram's type.
+the fact that a concrete backend type has not been filled in for `b0`
+(or whatever type variable shows up in the error message).  Such
+errors arise when you pass a diagram to a function which is
+polymorphic in its input but monomorphic in its output, such as
+`width`, `height`, `phantom`, or `names`.  Such functions compute some
+property of the diagram, or use it to accomplish some other purpose,
+but do not result in the diagram being rendered.  If the diagram does
+not have a monomorphic type, GHC complains that it cannot determine
+the diagram's type.
 
 For example, here is the error we get if we try to compute the
 width of a radius-1 circle:
@@ -2522,7 +2657,7 @@ the type variable `b0`).  This is annoying because *we* know that
 the choice of backend cannot possibly affect the width of the
 circle; but there is no way for GHC to know that.
 
-The special type `D` is provided for exactly this purpose, defined as
+The special type `D` is provided for exactly this situation, defined as
 
 .. class:: lhs
 
@@ -2534,8 +2669,8 @@ The special type `D` is provided for exactly this purpose, defined as
 for use in cases where GHC insists on knowing what backend to use but
 the backend really does not matter.
 
-The solution to the problem with `width` is to annotate `circle 1`
-with the type `D R2`, like so:
+For exapmle, the solution to the problem with `width` is to annotate
+`circle 1` with the type `D R2`, like so:
 
 ::
 
@@ -2545,9 +2680,18 @@ with the type `D R2`, like so:
 More ambiguity
 ~~~~~~~~~~~~~~
 
-.. container:: todo
+You may also see error messages that directly complain about
+ambiguity. For example, the code below is taken from the example in
+the section on `Qualifying names`_:
 
-   Write about these errors
+.. class:: lhs
+
+::
+
+> hcat' with {sep = 0.5} (zipWith (|>) [0 .. ] (replicate 5 squares))
+
+It is an attempt to qualify the names in five copies of `squares` with
+the numbers `0`, `1`, `2`, ...  However, it generates the error shown below:
 
 ::
 
@@ -2565,19 +2709,13 @@ More ambiguity
       hcat'
         (with {sep = 0.5}) (zipWith (|>) [0 .. ] (replicate 5 squares))
 
-    Ambiguous type variable `a0' in the constraints:
-      (IsName a0) arising from a use of `|>'
-                  at /tmp/Diagram2499.lhs:13:39-42
-      (Num a0) arising from the literal `0' at /tmp/Diagram2499.lhs:13:45
-      (Enum a0) arising from the arithmetic sequence `0 .. '
-                at /tmp/Diagram2499.lhs:13:44-49
-    Probable fix: add a type signature that fixes these type variable(s)
-    In the first argument of `zipWith', namely `(|>)'
-    In the second argument of `hcat'', namely
-      `(zipWith (|>) [0 .. ] (replicate 5 squares))'
-    In the expression:
-      hcat'
-        (with {sep = 0.5}) (zipWith (|>) [0 .. ] (replicate 5 squares))
+The problem, again, is that GHC does not know what type to choose for
+some polymorphic value.  Here, the polymorphic values in question are
+the numbers `0`, `1`, ... Numeric literals are polymorphic in Haskell,
+so GHC does not know whether they should be `Int`\s or `Integer`\s or
+`Double`\s or... The solution is to annotate the `0` with the desired
+type.
+
 
 Animation
 =========
@@ -2694,7 +2832,7 @@ Notice that we composed two animations using `(<>)`, which does
 exactly what you would think: superimposes them at every instant in time.
 
 Since this is such a common thing to want, the
-`Diagrams.Animation` XXX module provides a function `animBounds`
+`Diagrams.Animation` module provides a function `animBounds`
 for expanding the bounds of an animation to the union of all the
 bounds over time (determined by sampling at a number of points).  That
 is, the animation will now use a constant bound that encloses the
@@ -2712,6 +2850,38 @@ create active `Point`\s, `Path`\s, colors, or values of any other type.
 .. container:: todo
 
   * Examples of animating things other than diagrams
+
+Rendering backends
+==================
+
+The cairo backend
+-----------------
+
+Other backends
+--------------
+
+.. container:: todo
+
+   * SVG
+   * postscript
+   * HTML5 canvas
+   * TikZ
+   * povray
+   * OpenGL?
+
+Tools for backends
+------------------
+
+.. container:: todo
+
+  * lots more stuff goes in this section
+
+`Diagrams.Segment`:mod: exports a `FixedSegment` type, representing
+segments which *do* have an inherent starting location. Trails and
+paths can be "compiled" into lists of `FixedSegment`\s with absolute
+locations using `fixTrail` and `fixPath`.  This is of interest to
+authors of rendering backends that do not support relative drawing
+commands.
 
 Core library
 ============
@@ -2762,21 +2932,6 @@ The ``Backend`` class
 
 The ``Renderable`` class
 ~~~~~~~~~~~~~~~~~~~~~~~~
-
-The cairo backend
-=================
-
-Other backends
-==============
-
-.. container:: todo
-
-   * SVG
-   * postscript
-   * HTML5 canvas
-   * TikZ
-   * povray
-   * OpenGL?
 
 Related projects
 ================
