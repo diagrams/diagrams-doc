@@ -17,12 +17,16 @@ import Hakyll
 
 main :: IO ()
 main = hakyll $ do
-    -- CSS, templates -----------------------------
+    -- CSS, templates, JavaScript -----------------
     match "css/*" $ do
         route   idRoute
         compile compressCssCompiler
 
     match "templates/*" $ compile templateCompiler
+    
+    match "js/*" $ do
+        route   idRoute
+        compile compressCssCompiler
 
     -- User manual --------------------------------
     match "manual/**" $ do
