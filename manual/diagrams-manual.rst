@@ -2049,9 +2049,24 @@ Bounds-related functions
   used to create a diagram which produces no output but takes up a
   certain amount of space, for use in positioning other diagrams.
 
-  .. container:: todo
+  .. class:: dia-lhs
 
-     example diagram
+  ::
+
+  > example = hcat [ square 2
+  >                , circle 1 # withBounds (square 3 :: D R2)
+  >                , square 2
+  >                , text "hi" <> phantom (circle 2 :: D R2)
+  >                ]
+
+  In the above example, `withBounds` is used to put more space
+  surrounding the circle, and `phantom` is used to put space around
+  `text "hi"` (which would otherwise take up no space).  Note that we
+  could equally well have written `text "hi" # withBounds (circle 2 ::
+  D R2)`.  Notice that the `D R2` annotations are necessary, since
+  otherwise GHC will not know what types to pick for `square 3` and
+  `circle 2`.  See `No instances for Backend b0 R2 ...`_ for more
+  information.
 
 * `Diagrams.TwoD.Size`:mod: provides functions for extracting
   information from the bounding functions of two-dimensional diagrams,
@@ -2071,10 +2086,8 @@ elements---that is, a bounding function that contains all of the list
 elements.  In conjunction with the `Transformable` instance for lists
 (see `The Transformable class`_), this can be used to do things such
 as apply an alignment to a list of diagrams *considered as a group*.
-
-.. container:: todo
-
-   Add examples!
+For some examples and an explanation of why this might be useful, see
+`Delayed composition`_.
 
 Named subdiagrams
 -----------------
@@ -2280,9 +2293,20 @@ The `boundaryFrom` function is used to compute boundary points:
 `boundaryFrom lb v` computes the boundary point in direction `v` for
 the located bounding function `lb`.
 
-.. container:: todo
+The `place` function is just a flipped version of `moveTo`, provided
+for convenience since it can be useful in conjunction with `withName`.
+For example, to draw a square at the location of a given name, one can
+write something like
 
-   Mention `place` function
+.. class:: lhs
+
+::
+
+> withName n $ atop . place (square 1) . location
+
+This computes the location of the name `n`, positions a square at that
+location, and then superimposes the positioned square atop the diagram
+containing `n`.
 
 Qualifying names
 ~~~~~~~~~~~~~~~~
@@ -2939,4 +2963,5 @@ Related projects
 .. container:: todo
 
    * diagrams-spiro
+   * diagrams-ghci
    * diagrams-hint
