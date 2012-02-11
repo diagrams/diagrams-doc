@@ -26,7 +26,7 @@ main = hakyll $ do
     
     match "js/*" $ do
         route   idRoute
-        compile compressCssCompiler
+        compile copyFileCompiler
 
     -- User manual --------------------------------
     match "manual/**" $ do
