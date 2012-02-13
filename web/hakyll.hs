@@ -23,13 +23,21 @@ main = hakyll $ do
         compile compressCssCompiler
 
     match "templates/*" $ compile templateCompiler
-    
+
     match "js/*" $ do
         route   idRoute
         compile copyFileCompiler
 
     -- User manual --------------------------------
-    match "manual/**" $ do
+    match "manual/diagrams-manual.html" $ do
+      route idRoute
+      compile (readPageCompiler >>>
+               addDefaultFields >>>
+               arr (setField "title" "User manual") >>>
+               mainCompiler)
+
+    match (predicate (\i -> matches "manual/**" i && not (matches "manual/*.html" i)))
+      $ do
         route idRoute
         compile copyFileCompiler
 
