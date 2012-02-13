@@ -331,8 +331,6 @@ Monoids are used extensively in ``diagrams``: diagrams,
 transformations, bounding functions, trails, paths, styles, colors,
 and queries are all instances.
 
-XXX mention semigroups
-
 Faking optional named arguments
 -------------------------------
 
