@@ -26,7 +26,6 @@ veryclean : clean imgclean
 
 preview : diagrams-manual.html
 	cp diagrams-manual.{html,rst} $(WEB)
-	cp *.css $(WEB)
 	cp images/* $(WEB)/images
 	cp icons/* $(WEB)/icons
 	chmod -R go+rX $(WEB)
@@ -36,4 +35,3 @@ deploy-web : diagrams-manual.html
 	cp static/* ../web/manual/static
 	cp images/* ../web/manual/images
 	cp icons/* ../web/manual/icons
-	cp css/* ../web/manual/css
