@@ -63,7 +63,7 @@ tool](http://hackage.haskell.org/trac/hackage/wiki/CabalInstall).
 Cairo
 -----
 
-Unlike its previous incarnation, diagrams has been designed from the
+`diagrams` has been designed from the
 ground up with modularity in mind, and makes plugging in new rendering
 backends extremely easy.  Eventually there will be many different
 rendering backends (indeed, there are several backend projects
@@ -80,16 +80,10 @@ Hopefully this should Just Work (tm). (Reports to the contrary gladly
 welcomed.)  If you have already installed gtk2hs-related packages
 before, you can probably omit `gtk2hs-buildtools`.
 
-If you are on Windows, [here are some
-instructions](http://code.google.com/p/diagrams/wiki/CairoOnWindows)
-for installing the Haskell cairo bindings; unfortunately it is
-something of a pain.
-
-If you are on MacOS, the Linux instructions above Ought To Work (tm)
-but there have been reports to the contrary.  Hopefully soon we will
-have more detailed instructions on how to get it to work, and/or a
-simpler native backend that doesn't require as many outside
-dependencies.
+If you are on Windows or OS X, installing cairo can be more
+difficult. [See the diagrams
+wiki](http://www.haskell.org/haskellwiki/Diagrams/Install) for the
+latest information, instructions, and workarounds.
 
 Installation
 ------------
@@ -109,6 +103,9 @@ three packages:
   attributes, and combinators built on top of the core library.
 
 * `diagrams-cairo` is a backend which renders diagrams using cairo.
+
+You may also wish to install `diagrams-contrib`, a collection of
+user-contributed tools and extensions.
 
 Philosophy
 ==========
@@ -132,8 +129,11 @@ this later).
 * The core library is as simple and elegant as possible -- almost
 everything is built up from a very small set of primitive types and
 operations.  One consequence is that diagrams is optimized for
-simplicity and flexibility rather than for speed: using it for
-real-time graphics generation is not recommended!
+simplicity and flexibility rather than for speed; if you are looking
+to do *real-time* graphics generation you will probably be best served
+by looking elsewhere! (With that said, however, we certainly are
+interested in making diagrams as fast as possible without sacrificing
+other features.)
 
 Your first diagram
 ==================
