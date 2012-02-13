@@ -72,3 +72,8 @@ div.warning {
     border-width: thin;
     background-color: #ffdddd;
 }
+
+div.contents ul {
+    list-style-type: none;
+    line-height: 50%;
+}
