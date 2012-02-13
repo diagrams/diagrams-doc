@@ -20,6 +20,9 @@ Documentation on Hackage:
 * [diagrams-core](http://hackage.haskell.org/package/diagrams-core)
 * [diagrams-lib](http://hackage.haskell.org/package/diagrams-lib)
 * [diagrams-cairo](http://hackage.haskell.org/package/diagrams-cairo)
+* [diagrams-contrib](http://hackage.haskell.org/package/diagrams-contrib)
+  
+  XXX link to versions on this web page instead!
 
 Blog posts/other
 ----------------
