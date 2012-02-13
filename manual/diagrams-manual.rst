@@ -1879,13 +1879,30 @@ Text
 ----
 
 Text objects, defined in `Diagrams.TwoD.Text`:mod:, can be created
-with the `text` function.
+most simply with the `text` function, which turns a `String` into a
+diagram with (centered) text:
 
 .. class:: dia-lhs
 
 ::
 
 > example = text "Hello world!" <> rect 8 1
+
+Text with different alignments can be created using `topLeftText`,
+`baselineText`, or, more generally, `alignedText`:
+
+.. class:: dia-lhs
+
+::
+
+> pt = circle 0.1 # fc red
+>
+> t1 = pt <> topLeftText            "top left"   <> rect 8 1
+> t2 = pt <> baselineText           "baseline"   <> rect 8 1
+> t3 = pt <> alignedText (0.7, 0.5) "(0.7, 0.5)" <> rect 8 1
+>
+> d1 =/= d2 = d1 === strutY 2 === d2
+> example = t1 =/= t2 =/= t3
 
 The most important thing to keep in mind when working with text
 objects is that they *take up no space*; that is, the bounding
@@ -1898,10 +1915,8 @@ rectangle from the above example, there would be no output.
 
 There are two reasons for this.  First, computing the size of some
 text in a given font is rather complicated, and ``diagrams`` cannot
-(yet) do it natively.  The only way it would be able to discover the
-size of a text object is to query some backend (such as cairo) which
-knows how to compute it, but this would result in the `text` function
-being no longer pure.
+(yet) do it natively.  The cairo backend can do it (see below) but we
+don't want to tie diagrams to a particular backend.
 
 The second reason is that font size is handled similarly to line
 width, so the size of a text object cannot be known at the time of its
@@ -1911,6 +1926,14 @@ situation, but don't hold your breath.)  Font size is treated
 similarly to line width for a similar reason: we often want disparate
 text elements to be the same size, but those text elements may be part
 of subdiagrams that have been transformed in various ways.
+
+Note, however, that the cairo backend includes a module
+`Diagrams.Backend.Cairo.Text`:mod: with functions for querying font
+and text extents, and creating text diagrams that take up an
+appropriate amount of space.  So it *is* possible to have
+automatically-sized text objects, at the cost of being tied to the
+cairo backend and bringing `IO` into the picture (or being at peace
+with some probably-justified uses of `unsafePerformIO`).
 
 To set the font size, use the `fontSize` function; the default font
 size is (arbitrarily) 1.  Remember, however, that the font size is
@@ -1931,9 +1954,6 @@ generally, `fontWeight`), `italic`, and `oblique` (or, more generally,
 >       text' 10 "Hello" # italic
 >   === text' 5 "there"  # bold # font "freeserif"
 >   === text' 3 "world"  # fc green
-
-XXX New text alignment functions
-XXX mention extra text support in Cairo backend
 
 Images
 ------
