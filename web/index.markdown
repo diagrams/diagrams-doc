@@ -23,12 +23,14 @@ the command:
 `cabal install gtk2hs-buildtools diagrams`
 </div>
 
-XXX installation instructions on the wiki
+More detailed installation instructions [can be found on the diagrams wiki](http://www.haskell.org/haskellwiki/Diagrams/Install).
 
-See the [tutorial](/tutorial/DiagramsTutorial.html) and the
-[user manual](http://projects.haskell.org/diagrams/manual/diagrams-manual.html)
-for more detailed instructions, or check out the
-[gallery](/gallery.html) for example images and code.
+Next, read the [tutorial](/tutorial/DiagramsTutorial.html) and the
+[user manual](http://projects.haskell.org/diagrams/manual/diagrams-manual.html),
+or check out the [gallery](/gallery.html) to see example images and
+code.  Drop by the [`#diagrams` IRC channel](http://webchat.freenode.net/)
+with questions or post them to the
+[mailing list](http://groups.google.com/group/diagrams-discuss).
 
 <div align="center">
 <img src="/images/Paradox-small.png" style="vertical-align: middle"; />
