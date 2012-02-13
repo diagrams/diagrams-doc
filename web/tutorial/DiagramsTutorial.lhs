@@ -468,8 +468,11 @@ monoids (transformations, trails, paths, styles, and colors).
 Next steps
 ==========
 
-This tutorial has really only scratched the surface of what is possible.
-Here are pointers to some resources for learning more:
+This tutorial has really only scratched the surface of what is
+possible! Included among the many things *not* covered by this
+tutorial are paths, splines, text, a wide array predefined shapes,
+named subdiagrams, animation...  Here are pointers to some resources
+for learning more:
 
 * The diagrams [user manual](/manual/diagrams-manual.html) goes into
   much more depth on all the topics covered in this tutorial, plus many

@@ -5,7 +5,7 @@ title: Documentation
 Tutorials
 ---------
 
-* [Quick start diagrams tutorial](/tutorial/DiagramsTutorial.html)
+* [Quick start tutorial](/tutorial/DiagramsTutorial.html)
 
 User manual
 -----------
