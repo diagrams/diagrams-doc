@@ -8632,3 +8632,482 @@
 2012-02-08 01:35:32 UTC <byorgey> like 'hproj fetch gtk-toy' figures out where the gtk-toy head repo is (based on the listing in the .cabal file) and clones it
 2012-02-08 01:40:19 UTC <fryguybob> nice
 2012-02-08 01:43:08 UTC <byorgey> the goal is so that in the instructions for people who want to contribute we can say something like "first  cabal install hproj; then   hproj fetch diagrams-core diagrams-lib diagrams-cairo ..."
+2012-02-08 18:39:17 UTC <tgeeky> cabal install hproj; hproj fetch --everything-by byorgey --everything-by edwardk
+2012-02-08 19:06:50 UTC <byorgey> tgeeky: hehe, good idea! =)
+2012-02-08 19:16:34 UTC <byorgey> hproj fetch --everything  would also be a fun way to spend a few days
+2012-02-08 19:17:04 UTC <tgeeky> byorgey: see, here's the thing
+2012-02-08 19:17:10 UTC <tgeeky> you're a dedicated darcs user and lover
+2012-02-08 19:17:22 UTC <byorgey> yes?
+2012-02-08 19:17:36 UTC <tgeeky> but the tools, packages (haskell packages too), and framework that GitHub (in particular) provides
+2012-02-08 19:17:48 UTC <tgeeky> for looking up users's info, their "gists", bugs, etc
+2012-02-08 19:17:59 UTC <byorgey> yep, github is awesome
+2012-02-08 19:18:35 UTC <tgeeky> would make a serious backend which says "f*** it, we're doing it with github" as a first attempt for... something like hproj or cabal
+2012-02-08 19:18:42 UTC <tgeeky> quite an attractive thing
+2012-02-08 19:19:18 UTC <byorgey> I really don't understand what you mean.  hproj and github have very different purposes.
+2012-02-08 19:20:01 UTC <tgeeky> indeed. I mean more as a competitor/upgrade to cabal
+2012-02-08 19:20:07 UTC <byorgey> tgeeky: you will at least be happy to note that hproj fetch can get git repos just as easily as darcs.
+2012-02-08 19:20:30 UTC <tgeeky> byorgey: yes, and I think that's "true" of cabal? at least, they can reference either just as easily
+2012-02-08 19:20:57 UTC <byorgey> tgeeky: yes, in fact that's why hproj can too.  It just reads the repo information encoded in the Hackage index
+2012-02-08 19:21:11 UTC <byorgey> so as long as people specify the repo in their .cabal file it will work
+2012-02-08 19:21:20 UTC <byorgey> (which most people do now)
+2012-02-08 19:21:46 UTC <tgeeky> byorgey: essentially, what I'm discussing is layering on features on top of cabal/hackage:  1) automatic handling of versioning, 2) automatic inclusion of changelog / docs, 3) automatic listing of collaborators, 4) automatic listing of bugs and issues, 5) automatic linking of gists that use a package...
+2012-02-08 19:22:50 UTC <byorgey> tgeeky: yeah, those kinds of features would be awesome.  Some of those definitely may make their way into hproj down the road, though not for the initial release.
+2012-02-08 19:23:09 UTC <tgeeky> byorgey: sounds like something I could even accomplish.
+2012-02-08 19:23:38 UTC <byorgey> sure, help hacking on hproj would be great
+2012-02-08 19:24:05 UTC <tgeeky> byorgey: so you view hproj as a way to short circuit hackage packages, by doing the legwork to get their sources built?
+2012-02-08 19:24:21 UTC <byorgey> no
+2012-02-08 19:24:44 UTC <byorgey> primarily, I view it as a tool for managing projects involving multiple packages/repositories
+2012-02-08 19:24:50 UTC <byorgey> such as diagrams
+2012-02-08 19:25:11 UTC <tgeeky> or yesod, or agda, or any one of those serious projects
+2012-02-08 19:25:32 UTC <byorgey> right
+2012-02-08 19:25:53 UTC <tgeeky> and long term, this kind of thing would "logically" be merged with cabal itself?
+2012-02-08 19:26:13 UTC <byorgey> good question.  I'm not really sure.  possible.
+2012-02-08 19:26:27 UTC <tgeeky> byorgey: stating it another way:
+2012-02-08 19:27:06 UTC <tgeeky> One reason I want something like hproj conceptually (not in terms of implementation) is very simple and stupid: I don't want people like Snoyberg or Kmett to wipe out the hackage recent updates list, just because they bumped all of their versions
+2012-02-08 19:27:38 UTC <byorgey> that seems like a completely orthogonal concern
+2012-02-08 19:27:56 UTC <byorgey> hproj is actually going to make it *easier* for that to happen =)
+2012-02-08 19:28:12 UTC <byorgey> because it will let you do things like "test everything and then upload all these packages at once"
+2012-02-08 19:28:42 UTC <byorgey> I guess you want something like meta-packages
+2012-02-08 19:28:45 UTC <tgeeky> byorgey: yeah, but if cabal (or hackage) had native support for understanding meta-packages, then it might make me superfically happier :O
+2012-02-08 19:28:50 UTC <byorgey> sure
+2012-02-08 19:28:51 UTC <tgeeky> hehe :)
+2012-02-08 19:29:24 UTC <byorgey> at any rate, I'm not really thinking that far ahead right now.  I'm just trying to make something useful for me, and hopefully others will find it useful too
+2012-02-08 19:30:23 UTC <byorgey> also, if you have any better name suggestions than 'hproj' I'd love to hear them =)
+2012-02-08 19:31:26 UTC <tgeeky> byorgey: yeah, something turns me off about that name, but I blanked on better ones
+2012-02-08 19:31:36 UTC <tgeeky> cabal-spider? :O
+2012-02-08 19:31:40 UTC <byorgey> I don't really like the name either =)
+2012-02-08 19:31:53 UTC <byorgey> cabal-spider is too long, this is something I'm going to be typing frequently
+2012-02-08 19:32:14 UTC <tgeeky> hackon? :O
+2012-02-08 19:32:34 UTC <tgeeky> that's what one wants to do, when one hproj get diagrams*
+2012-02-08 19:32:37 UTC <tgeeky> hackon diagrams :O
+2012-02-08 19:32:40 UTC <byorgey> hehe
+2012-02-08 19:33:30 UTC <tgeeky> plus I can picture Jeff Bridges saying "Hack on, dude!"
+2012-02-08 19:39:25 UTC <tgeeky> ACTION guesses byorgey hasn't seen The Big Lebowski
+2012-02-08 19:42:35 UTC <byorgey> no
+2012-02-08 19:43:46 UTC <tgeeky> byorgey: you ever play video games of any sort? when you were a little lad?
+2012-02-08 19:43:52 UTC <byorgey> yep
+2012-02-08 19:43:58 UTC <tgeeky> any favorites?
+2012-02-08 19:44:47 UTC <byorgey> the super mario and sonic series come to mind
+2012-02-08 19:45:03 UTC <tgeeky> ahh, the sega and snes classics :O
+2012-02-08 19:45:05 UTC <byorgey> Contra
+2012-02-08 19:45:10 UTC <byorgey> indeed =)
+2012-02-08 19:45:24 UTC <tgeeky> i got hooked on computer games early :O
+2012-02-08 19:45:27 UTC <tgeeky> quake, and UO
+2012-02-08 19:46:33 UTC <tgeeky> I've played some Skyrim over the last few weeks, and it's reminded me what sorts of amazing, visceral things one can do with computers these days
+2012-02-08 22:02:32 UTC <luite> what is UO?
+2012-02-08 22:02:51 UTC <tgeeky> luite: Ultima Online
+2012-02-08 22:02:58 UTC <tgeeky> the "first" MMO
+2012-02-08 22:03:22 UTC <luite> ah right
+2012-02-08 22:03:40 UTC <luite> that still exists, doesn't it?
+2012-02-08 22:03:44 UTC <tgeeky> yep
+2012-02-08 22:03:48 UTC <tgeeky> public and private servers
+2012-02-08 22:04:07 UTC <tgeeky> there once was a time when the game was more "simulator" and less MMO
+2012-02-08 22:04:34 UTC <tgeeky> the general idea was to have an open world, where danger existed (murders), and where PvP was the balance against this
+2012-02-08 22:04:44 UTC <luite> hmm
+2012-02-08 22:04:47 UTC <tgeeky> instead of arbitrary rules about who could attack who, where
+2012-02-08 22:04:52 UTC <luite> I've never played an MMO
+2012-02-08 22:05:25 UTC <luite> have played portal/portal 2 recently, but not much else
+2012-02-08 22:05:49 UTC <tgeeky> those are great (portal 1 was, at least)
+2012-02-08 22:05:54 UTC <tgeeky> never played p2
+2012-02-08 22:06:34 UTC <luite> 2 was fun too, they added a few new game elements and the story is much longer, but it's not quite as new and original as 1
+2012-02-08 22:06:49 UTC <tgeeky> that game was beautiful in its simplicity
+2012-02-08 22:07:00 UTC <tgeeky> how so much of a game can be derived from a "simple" game mechanic
+2012-02-08 22:08:17 UTC <luite> I think that's still the same, though with the new things ("gels", some kind of paint that make you jump higher, run faster etc, and transporter tubes) you can make things a lot more complex
+2012-02-08 22:09:14 UTC <luite> oh there are other new things that I forgot, laser beams and mirrors were not in 1, right?
+2012-02-08 22:09:32 UTC <luite> but I think they removed the energy balls
+2012-02-08 22:09:32 UTC <tgeeky> luite: I havne't played 2
+2012-02-08 22:10:52 UTC <tgeeky> luite: I actually had some conversations last year with a physicist about the conceptual idea of quantum mechanics being like little spheres that project out portals a little ahead and a little behind of them as propogators
+2012-02-08 22:10:54 UTC <luite> anyway, even though the levels can be potentially much more complex, they always seem to be solvable by mere humans, I think they do a lot of play testing, puzzles always contain lots of little hints, recurring elements, to point to the (or a) solution
+2012-02-08 22:12:02 UTC <luite> and 2 has a lot more background story on aperture science and cave johnson
+2012-02-08 22:12:25 UTC <tgeeky> cave johnson?
+2012-02-08 22:12:31 UTC <luite> I want an aperture science coffee mug now :p
+2012-02-08 22:13:16 UTC <luite> the founder of aperter science
+2012-02-08 22:13:19 UTC <luite> aperture
+2012-02-09 15:42:24 UTC <tgeeky> byorgey: rut roh. \family -> family + 1
+2012-02-09 15:42:25 UTC <tgeeky> time!
+2012-02-09 16:02:13 UTC <luite> hmm
+2012-02-09 16:02:24 UTC <luite> byorgey: I don't quite agree with your QotW :(
+2012-02-09 16:07:05 UTC <luite> inserting print statements isn't hard because they are bad, or because it has to be hard (Debug.Trace is pretty easy), but because it's really difficult to get packages working again if you just add one debug print somewhere deep.
+2012-02-09 16:08:27 UTC <luite> combine that with the total lack of debugging/breakpoints support and you (or at least I) have a much harder time pinpointing bugs in haskell programs than in similar imperative ones in say, C# or Java
+2012-02-09 18:06:00 UTC <byorgey> luite: you're right, the particular issue of inserting print statements isn't a very good example of my general statement.
+2012-02-09 18:06:08 UTC <byorgey> tgeeky: ?
+2012-02-09 18:08:24 UTC <luite> byorgey: yeah in general I do agree though, but this lack of debugging tool support has been bugging me for a while now... the usual response is something like "just test the pure parts separately" or something, really annoying in yesod
+2012-02-09 18:08:42 UTC <byorgey> yeah, it can be a pain, I agree
+2012-02-09 18:09:11 UTC <luite> i still need to check out the new stack trace support, maybe it will help a lot
+2012-02-09 18:24:57 UTC <byorgey> yeah, is that in 7.4?
+2012-02-09 18:27:27 UTC <luite> yeah there's traceStack in Debug.Trace, but it doesn't always work, and you need to compile your program with -prof
+2012-02-09 18:44:47 UTC <byorgey> fryguybob: I've written to the MAA twice over the past month re: my useless DRM'ed PDF and still haven't heard back at all.  Any ideas/thoughts on what I should do?
+2012-02-09 18:45:16 UTC <byorgey> fryguybob: I realize you may have no idea, you just have the most connection to the MAA of anyone I know so I thought it's worth asking
+2012-02-09 18:46:56 UTC <fryguybob_> Connection always dies at the worst time.
+2012-02-09 18:46:57 UTC <luite> post it on reddit and have 2000 angry redditors spam them!
+2012-02-09 18:47:09 UTC <byorgey> luite: hehe, that sounds a bit drastic =)
+2012-02-09 18:47:27 UTC <byorgey> fryguybob_: did you get my two messages just now or should I resend them?
+2012-02-09 18:48:08 UTC <fryguybob_> I got them
+2012-02-09 18:48:13 UTC <byorgey> fryguybob_: also, you should find a server somewhere on which you can run an IRC client in a 'screen' session =)
+2012-02-09 18:48:19 UTC <fryguybob_> Yeah
+2012-02-09 18:48:21 UTC <luite> I hope you get your undrmed pdf, the book looks interesting but I'd only want if if I could read it on my ipad
+2012-02-09 18:48:46 UTC <fryguybob_> luite: The book is interesting, I looked at the printed version and my reaction was "Hey it's all CS!"
+2012-02-09 18:49:01 UTC <fryguybob_> byorgey: There is a phone number you could try (800) 331-1622
+2012-02-09 18:49:11 UTC <byorgey> fryguybob_: ah, cool, thanks
+2012-02-09 18:49:23 UTC <fryguybob_> Personally I like to live under the illusion that the phone was never invented.
+2012-02-09 18:49:26 UTC <luite> fryguybob_: oh it's an on demand printed book isn't it?
+2012-02-09 18:49:31 UTC <fryguybob_> luite: Yeah
+2012-02-09 18:50:09 UTC <luite> lots of the material covered looks relatively well known though, from other recreational math books, gardners columns etc, but it still looks interesting
+2012-02-09 18:51:46 UTC <luite> btw I had lumps of ice freeze to the base of my skis earlier this week, what does this mean? should I buy lower temperature wax?
+2012-02-09 18:51:47 UTC <fryguybob> luite: Yeah, I don't think much of it would be new, but it is in a nice convenient (or inconvenient in byorgey's case) package.
+2012-02-09 18:52:17 UTC <fryguybob> luite: I call that "bad snow" :D.  That's about as technical as I get.
+2012-02-09 18:52:34 UTC <fryguybob> I've never waxed skis, though I know many who have.
+2012-02-09 18:52:38 UTC <byorgey> luite: you should buy warmer skis
+2012-02-09 18:53:13 UTC <luite> hehe, at any rate it was annoying, had to scrape them off before I could ski again, those lumps really increase drag :)
+2012-02-09 18:53:21 UTC <byorgey> I bet =)
+2012-02-09 18:53:25 UTC <fryguybob> luite: Yes they do!
+2012-02-09 18:54:06 UTC <fryguybob> I have noticed a difference in some cases between if the skis are in the car on the drive to ski, vs outside (at same temp as outside).
+2012-02-09 18:54:16 UTC <fryguybob> I don't remember which was better though :(
+2012-02-09 18:54:33 UTC <byorgey> next time put one ski in the car and one outside
+2012-02-09 18:54:38 UTC <byorgey> and then compare
+2012-02-09 18:54:42 UTC <fryguybob> Oh, good idea.
+2012-02-09 18:54:45 UTC <luite> hehe
+2012-02-09 18:54:55 UTC <fryguybob> Then I can ski in tight circles.
+2012-02-09 18:55:10 UTC <byorgey> yep, and which direction the circle goes will tell you which is better.
+2012-02-09 18:57:30 UTC <fryguybob> Humm, someone on the cafe want's a haskell STM expert... should I say, ask again in a year?  By then I should be expert in both STM and Haswell.
+2012-02-09 18:57:56 UTC <luite> oh cool, are you going to implement STM with the new instructions?
+2012-02-09 18:58:47 UTC <fryguybob> I'm working my way towards something like that.
+2012-02-09 19:25:06 UTC <byorgey> luite: did you see the message on -cafe asking about a 'fancy REPL' with something like  class Demonstratable a where  demo :: a -> IO ()  ?
+2012-02-09 19:25:32 UTC <byorgey> luite: I don't know if you want to mention anything about Wolfgang or keep it quiet for now
+2012-02-09 19:26:02 UTC <byorgey> but it sounds like Wolfgang will be exactly the kind of thing apfelmus is asking about
+2012-02-09 19:46:45 UTC <luite> oh haven't seen it
+2012-02-09 21:25:00 UTC <luite> but yeah, I guess he'd run into the same ambiguity problems as I had with Wolfgang
+2012-02-09 21:25:34 UTC <mgsloan> luite - ??
+2012-02-09 21:26:27 UTC <luite> 20:25 < byorgey> luite: did you see the message on -cafe asking about a 'fancy REPL' with  something like  class Demonstratable a where  demo :: a -> IO ()  ?
+2012-02-09 21:27:03 UTC <mgsloan> ACTION needs to get a persistent IRC thingy so he doesn't spam with disconnect/reconnect and have extensive logs
+2012-02-09 21:27:43 UTC <mgsloan> ah, sounds like what I was working on here: https://github.com/mgsloan/gtk-toy-diagrams/blob/master/src/Graphics/UI/Gtk/Toy/Demo.hs
+2012-02-09 21:27:50 UTC <mgsloan> (untested, WIP, etc, etc)
+2012-02-09 21:28:13 UTC <mgsloan> but intended to let you REPL-ize functions as things with manipulable, defaulting inputs
+2012-02-09 21:29:19 UTC <mgsloan> the real solution to the fancy REPL is to get the type first, and then modify the input to the interpreter to perform your specialization
+2012-02-09 21:29:52 UTC <luite> that's more or less what I do
+2012-02-09 21:30:06 UTC <mgsloan> https://github.com/divipp/ActiveHs/blob/master/Specialize.hs
+2012-02-09 21:30:06 UTC <mgsloan> https://github.com/divipp/ActiveHs/blob/master/Smart.hs
+2012-02-09 21:30:56 UTC <mgsloan> we should probably all get together and write a smart repl library
+2012-02-09 21:31:08 UTC <luite> for example my thing can specialize some Diagram backend R2 type to Diagram Cairo R2 if it knows how to Demonstrate a Cairo diagram
+2012-02-09 21:31:17 UTC <mgsloan> but separate sandboxes will do for now
+2012-02-09 21:31:23 UTC <mgsloan> gotcha
+2012-02-09 21:32:23 UTC <luite> (it does this by enumerating the instances that are in scope and typechecking them, then constructs a GHC AST with the correct type specializations)
+2012-02-09 21:34:26 UTC <luite> unfortunately this is rather low level, since you cannot always be sure that type names are in scope and how they are imported)
+2012-02-09 21:37:50 UTC <luite> but I wouldn't be surprised if your method is much smarter
+2012-02-09 21:50:51 UTC <mgsloan> my approach isn't yet very smart.  One thing that is pretty smart is parseing type errors, but I don't do that yet for specialization (and haven't really worked hard on specialization yet)
+2012-02-09 21:51:42 UTC <mgsloan> the way I handle the type names problem is by forcing a particular prelude to be loaded
+2012-02-09 21:51:51 UTC <mgsloan> not really the best general solution
+2012-02-09 22:46:58 UTC <tgeeky> it's a girl!
+2012-02-09 22:47:15 UTC <tgeeky> Addison Marie <3
+2012-02-09 22:48:19 UTC <luite> better than Addison Wesley ;p
+2012-02-09 22:48:39 UTC <tgeeky> luite: hehe ;)
+2012-02-09 22:48:50 UTC <tgeeky> she's rather beautiful for a baby
+2012-02-09 22:48:59 UTC <tgeeky> and everyone is healthy :o
+2012-02-09 22:49:20 UTC <luite> but kittens are much purrtier than babies
+2012-02-09 22:49:33 UTC <tgeeky> purrhaps
+2012-02-09 22:59:35 UTC <luite> mgsloan: oh I use the GHC api to import some extra required modules, but only for the tipes directly related to the showable stuff
+2012-02-09 22:59:38 UTC <luite> types
+2012-02-09 22:59:54 UTC <mgsloan> gotcha!
+2012-02-09 23:00:17 UTC <mgsloan> I think GHC allows importing things twice, so you could import things to a qualified namespace
+2012-02-09 23:01:42 UTC <luite> yeah, but still I don't know whether all types are in scope, I enumerate instances of my 'Eval' and 'EvalIO' typeclasses, something might typecheck without all types being in scope even though the instance is
+2012-02-09 23:04:10 UTC <mgsloan> ah, gotchaa
+2012-02-09 23:04:30 UTC <mgsloan> and it's tough to do the query "where did this type come from?"
+2012-02-09 23:04:41 UTC <mgsloan> if it's not in scope shouldn't it be fully qualified in its prettyPrint?
+2012-02-09 23:05:26 UTC <luite> dunno, but I never prettyprint them
+2012-02-09 23:09:09 UTC <mgsloan> hmm, you don't do something like "interpret (expr ++ " :: " ++ prettyPrint mySpecialType)" or similar?
+2012-02-09 23:09:39 UTC <mgsloan> (for cases where the type is too polymorphic to display)
+2012-02-09 23:11:59 UTC <luite> (GHC's AST lets you use types even though they might not be in scope with the HsCoreTy constructor
+2012-02-09 23:12:02 UTC <luite> )
+2012-02-09 23:12:14 UTC <luite> I only prettyprint the polymorphic type
+2012-02-09 23:13:57 UTC <mgsloan> gotcha
+2012-02-09 23:14:55 UTC <luite> but you're right, I do something like that, but I can't express the type annotation in haskell source since I don't know the types, but directly constructing the AST does work
+2012-02-09 23:16:29 UTC <mgsloan> I definitely think that some super-repl / hint library might be in order.  It might not even be too big, but it'd be cool to have a standard format for expressing these specializations, particularly having a convention for expressing them in library code
+2012-02-09 23:17:51 UTC <luite> yeah, that could be useful, my code is extremely ugly though, and needs lots of updates for each new ghc releae
+2012-02-09 23:18:05 UTC <mgsloan> yup.  I have my own copy of Hint in my source tree
+2012-02-09 23:18:23 UTC <luite> hehe I used to have hint, but it was giving me too many problems
+2012-02-09 23:18:46 UTC <mgsloan> I just see three or more people working on similar things :D
+2012-02-09 23:18:49 UTC <luite> hint uses an old-fashioned way to import extra modules qualified
+2012-02-09 23:18:53 UTC <luite> with temp files
+2012-02-09 23:19:05 UTC <mgsloan> I'm just using Hint for the promise of some hope of supporting multiple GHC versions
+2012-02-09 23:19:10 UTC <luite> and that goes wrong in my setup, since I chroot the interpreter after loading the files
+2012-02-09 23:19:15 UTC <mgsloan> gotcha
+2012-02-09 23:19:34 UTC <luite> and ghc 7 supports the same thing directly through the api, no temp files required
+2012-02-09 23:19:36 UTC <mgsloan> Yeah, that is pretty annoying
+2012-02-09 23:19:58 UTC <mgsloan> I might have to do the switch :D
+2012-02-09 23:20:17 UTC <luite> hehe, I went from hint -> hacked hint -> ghc
+2012-02-09 23:20:38 UTC <luite> where hacked hint just exposed the whole monad stack so that I could call ghc api functions directly
+2012-02-09 23:20:49 UTC <mgsloan> yeah, I did that too
+2012-02-09 23:21:15 UTC <mgsloan> I think actually based on talking to you about it back then
+2012-02-09 23:21:29 UTC <luite> oh :(
+2012-02-09 23:21:46 UTC <mgsloan> hah, no worries!
+2012-02-09 23:23:05 UTC <luite> I'm reasonably happy about the defaulting, but I'm still not sure how to nicely handle the 'interact' thing
+2012-02-09 23:23:26 UTC <luite> how to automatically choose gui stuffs to manipulate parameters
+2012-02-09 23:23:40 UTC <mgsloan> I think I'll start a super-repl project soon, after midterms tomorrow
+2012-02-09 23:25:30 UTC <mgsloan> Shouldn't type class tricks handle that?  One tricky part is building up a type representation of the manipulator state, but it seems doable
+2012-02-09 23:25:56 UTC <luite> maybe, I'll believe it when I see it ;p
+2012-02-09 23:26:47 UTC <luite> I'm hacking on yesod first, since 0.10 is out now, all api changes should be committed before 1.0 is released in a few months
+2012-02-09 23:28:01 UTC <mgsloan> instance Manipulable a => Manipulable (Double -> a) where { type ManipulatorState = (Slider Double, ManipulatorState a); type ManipulatorResult = ManipulatorResult a;
+2012-02-09 23:28:25 UTC <mgsloan> err (Double -> a) as a parameter to each of those type families
+2012-02-09 23:29:15 UTC <mgsloan> getResult :: ManipulatorState (Double -> a) -> ManipulatorResult (Double -> a)
+2012-02-09 23:29:27 UTC <luite> yeah something like that, but will that work with polymorphic stuff?
+2012-02-09 23:29:41 UTC <mgsloan> anyway, this is on my near-term todo lists, I'll give it a try soon!
+2012-02-09 23:29:47 UTC <mgsloan> hmm
+2012-02-09 23:30:19 UTC <mgsloan> no, it won't.  This would depend on some polymorphic --> monomorphic specialization necessarily
+2012-02-09 23:30:32 UTC <luite> fortunately those instances could in my project easily be user-editable (just wiki pages)
+2012-02-09 23:30:54 UTC <luite> but low level stuff like specialization can't, and I'm not sure how to handle that
+2012-02-10 00:21:42 UTC <mgsloan> I'm planning on panopti to kinda be like xmonad - in that it's kind of a Haskell repl / IDE construction kit, but maybe a bit more focus on plugin architecture
+2012-02-10 00:22:43 UTC <mgsloan> so that cabal projects can specify a module to be used as a plugin with specializations / refactorings / rendering schemes / etc for the exported types / functions
+2012-02-10 00:22:51 UTC <luite> hmm
+2012-02-10 00:24:43 UTC <mgsloan> dealing with this kind of meta-project code in a standard way, and better yet, handling some of these particular tasks in a non-tool specific fashion, would be one of the purposes of the super-repl library
+2012-02-10 00:26:51 UTC <mgsloan1> doh! if you said anything since "hmm", I missed it
+2012-02-10 00:30:49 UTC <tgeeky> mgsloan1: nope
+2012-02-10 00:30:52 UTC <tgeeky> mgsloan1: nothing was said
+2012-02-10 00:34:49 UTC <mgsloan1> hehe, koo
+2012-02-10 00:46:12 UTC <luite> yeah sorry I'm working one some yesod stuff so I may respond a bit slower :)
+2012-02-10 01:00:57 UTC <tgeeky> luite: FYI, the 4.3 sigma figure I gave you is overstated. The combined should be 3.8 sigma.
+2012-02-10 01:01:30 UTC <luite> what was that about again?
+2012-02-10 01:07:44 UTC <tgeeky> luite: higgs discovery
+2012-02-10 01:07:51 UTC <tgeeky> 5.0 sigma = discovery
+2012-02-10 01:07:56 UTC <tgeeky> 2.0 sigma = fluke
+2012-02-10 01:08:00 UTC <tgeeky> 3.0 sigma = ehhhhhhhh
+2012-02-10 01:12:00 UTC <fryguybob> -1.0 sigma = lab equipment run by program written in VB
+2012-02-11 15:57:02 UTC <luite> yay for ice skating, tomorrow 55km :) (depends on the weather, if there's no heavy snow)
+2012-02-11 16:10:00 UTC <byorgey> luite: nice =)
+2012-02-11 16:10:45 UTC <byorgey> luite: what's the latest news on the Elfstedentocht?
+2012-02-11 16:11:25 UTC <luite> it won't go on ('oan' in the local frysian language)
+2012-02-11 16:13:58 UTC <luite> since daytime temperatures will rise above freezing starting monday, they need to turn on the pumping stations again, which will quickly reduce the amount and quality of the ice
+2012-02-11 16:15:02 UTC <luite> after a few days of that, it would need to freeze again for a few weeks to get enough ice, unlikely that that will happen this season
+2012-02-11 16:19:26 UTC <luite> "it giet net oan" = "it goes not on"
+2012-02-11 16:20:17 UTC <luite> frysian is actually closer to english than dutch
+2012-02-11 16:20:50 UTC <luite> err
+2012-02-11 16:21:12 UTC <luite> frysian is closer than dutch, to english
+2012-02-11 16:21:19 UTC <luite> that's what I meant :)
+2012-02-11 17:13:27 UTC <byorgey> luite: ah, too bad
+2012-02-11 18:15:35 UTC <luite> you can still skate the whole route if you want, the ice just isn't thick enough for the official tour (which is a race first, and then 16000 recreational riders, lots of spectators)
+2012-02-11 20:10:16 UTC <byorgey> yay, I figured out how to get Haddock to generate working 'source' links!
+2012-02-11 20:10:37 UTC <byorgey> now to figure out the right incantations to run haddock on multiple packages at once so that they all link to one another properly...
+2012-02-11 20:10:58 UTC <fryguybob> Nice
+2012-02-11 20:11:06 UTC <byorgey> (the context is that I want to include the haddock output for all the diagrams packages on the diagrams website, so it doesn't matter if things don't build on Hackage for whatever reason)
+2012-02-11 20:13:18 UTC <byorgey> woah
+2012-02-11 20:13:49 UTC <byorgey> from the Haddock documentation: --comments-base, --comments-module, --comments-entity: Include links to pages where readers may comment on the documentation.
+2012-02-11 20:14:16 UTC <byorgey> ACTION gets an awesome idea
+2012-02-11 20:15:05 UTC <byorgey> we can have each thing link to a page on the diagrams wiki with an auto-generated name
+2012-02-11 20:15:23 UTC <fryguybob> Ooooh
+2012-02-11 20:15:55 UTC <byorgey> ACTION tries it
+2012-02-11 20:15:56 UTC <fryguybob> Do those fields work in the pre-hackage 2.0 world?
+2012-02-11 20:18:57 UTC <byorgey> I mean, obviously Hackage itself does not pass those flags to haddock when building documentation
+2012-02-11 20:19:14 UTC <byorgey> hmmm, 'unrecognized option'
+2012-02-11 20:19:26 UTC <byorgey> but I have haddock 2.10 and the documentation I was reading is for 2.8 !
+2012-02-11 20:19:56 UTC <byorgey> oh, wait, I'm dumb
+2012-02-11 20:20:14 UTC <byorgey> I did cabal haddock --comments-base  instead of  cabal haddock --haddock-option=--comments-base
+2012-02-11 20:21:25 UTC <byorgey> sweet, it works!
+2012-02-11 20:21:53 UTC <fryguybob> Nice!
+2012-02-11 20:21:55 UTC <byorgey> up in the corner of the page next to the usual 'Contents | Index | Frames' links there's a 'User Comments' link
+2012-02-11 21:59:21 UTC <fryguybob> Humm, this can't be good: -rw------- 1 ryates people 129773568 Feb 11 16:57 circuits.eps
+2012-02-11 22:00:00 UTC <byorgey> ACTION squints and counts digits by 3s
+2012-02-11 22:00:23 UTC <byorgey> ACTION wonders if fryguybob knows about the -h option to ls
+2012-02-11 22:00:25 UTC <luite> humm
+2012-02-11 22:00:27 UTC <luite> :)
+2012-02-11 22:01:21 UTC <fryguybob> byorgey: There are sooo many things wrong with the way they have these workstations set up and so little time...
+2012-02-11 22:01:28 UTC <byorgey> hehe
+2012-02-11 22:02:04 UTC <byorgey> well, anyway, yes, 129M seems rather large for an .eps file
+2012-02-11 22:02:46 UTC <byorgey> fryguybob: do you have any sense as to why it is so big?
+2012-02-11 22:03:01 UTC <fryguybob> byorgey: probably this:  circuits = hcat (zipWith number cs [1..])
+2012-02-11 22:03:22 UTC <byorgey> uh, and how long is cs?
+2012-02-11 22:04:00 UTC <fryguybob> I didn't think it was big, humm
+2012-02-11 22:04:26 UTC <fryguybob> ACTION was so excited that it compiled...
+2012-02-11 22:06:29 UTC <byorgey> so you're drawing circuit diagrams?
+2012-02-11 22:07:05 UTC <fryguybob> hahahaha
+2012-02-11 22:07:24 UTC <fryguybob> I looked at the file and found this:
+2012-02-11 22:07:26 UTC <fryguybob> (\("\(\"\(\\\"\(\\\\\\\"\(\\\\\\\\\\\\\\\"\(\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\"
+2012-02-11 22:07:35 UTC <byorgey> lol!
+2012-02-11 22:07:47 UTC <byorgey> that looks familiar
+2012-02-11 22:07:57 UTC <fryguybob>   where t = concat ["(", show t, ")"]
+2012-02-11 22:08:09 UTC <byorgey> yep
+2012-02-11 22:08:11 UTC <fryguybob> fixes the fix with an n instead of a t
+2012-02-11 22:08:30 UTC <byorgey> fixes the fix, hehe
+2012-02-11 22:08:32 UTC <fryguybob> ACTION waits for agda diagrams
+2012-02-11 22:08:50 UTC <byorgey> this bug requires taking a fix *out* instead of putting one in
+2012-02-11 22:11:09 UTC <byorgey> Agda diagrams: if it compiles, your diagram is proven correct, so there's no need to actually draw it!
+2012-02-11 22:11:44 UTC <fryguybob> I'm making some diagrams to illustrate Euler circuits for Rebekah's "Math for liberal arts" class.
+2012-02-11 22:11:52 UTC <byorgey> ah, cool
+2012-02-11 22:59:49 UTC <fryguybob> byorgey: Does your fancy map lists thing give a nice way to do grid layout?
+2012-02-11 23:00:29 UTC <byorgey> fryguybob: ah, excellent question, let me think
+2012-02-11 23:01:04 UTC <byorgey> hmm, not really
+2012-02-11 23:01:42 UTC <byorgey> you just have to find maximum 'width' and 'height' for stuff and then use that to decide how to position things
+2012-02-11 23:01:58 UTC <byorgey> we really should add some grid layout combinators to diagrams-lib
+2012-02-11 23:02:08 UTC <fryguybob> I just did   ds # chunck 3 # map hcat # vcat  but it is alittle disapppointing.
+2012-02-11 23:02:32 UTC <byorgey> yeah, that won't look nice if ds are all different sizes
+2012-02-11 23:02:47 UTC <byorgey> anyway, I'm off
+2012-02-11 23:02:54 UTC <fryguybob> later
+2012-02-11 23:19:42 UTC <fryguybob> This is what I ended up using:  http://hpaste.org/63504
+2012-02-11 23:36:05 UTC <fryguybob> And the finished product (i.e. good enough :D)  http://www.cs.rochester.edu/u/ryates/temp/circuits.pdf
+2012-02-11 23:47:12 UTC <fryguybob> code is here: https://patch-tag.com/r/fryguybob/diagrams-postscript/snapshot/current/content/pretty/example/circuits.hs
+2012-02-12 00:11:14 UTC <alpounet> nice
+2012-02-12 04:24:57 UTC <byorgey> fryguybob: ah, yeah, that's a nice way to do it
+2012-02-12 16:17:45 UTC <byorgey> I think I have finally figured out the correct magic incantations to haddock to build the diagrams documentation all together in order to stick it on the website.
+2012-02-12 16:17:55 UTC <byorgey> now to automate it.
+2012-02-12 16:19:17 UTC <byorgey> since it involves passing lots of options like --haddock-option='--read-interface=http://hackage.haskell.org/packages/archive/base/4.5.0.0/doc/html,/home/brent/local/stow/ghc-7.4.1/share/doc/ghc/html/libraries/base-4.5.0.0/base.haddock'
+2012-02-12 16:19:25 UTC <byorgey> ugh
+2012-02-12 16:50:47 UTC <luite> hmm, tnx, I think my own local haddock could use those as well
+2012-02-12 19:43:43 UTC <fryguybob> We finally had enought snow to ski on.
+2012-02-12 21:35:21 UTC <vyom> has the CairoOptions type changed in the latest code on github, from the one in Hackage?
+2012-02-12 21:35:42 UTC <vyom> I am getting a compile error when I try to call renderDia directly
+2012-02-12 21:37:11 UTC <fryguybob> vyom: Changed since when?
+2012-02-12 21:37:21 UTC <fryguybob> (the answer is probably yes)
+2012-02-12 21:39:02 UTC <vyom> i am looking at the source on Github, but the version installed is the latest on hackage (I think)
+2012-02-12 21:39:33 UTC <fryguybob> Ah, I think github is behind with respect to the darcs repo.
+2012-02-12 21:39:52 UTC <fryguybob> But I think it is newer then hackage.
+2012-02-12 21:40:25 UTC <vyom> ok.. i will look at the one in darcs and compare
+2012-02-12 21:41:54 UTC <vyom> I cannot click through the documentation here : http://hackage.haskell.org/package/diagrams-cairo but the version of Hackage seems to be from Oct 2011
+2012-02-12 21:43:36 UTC <fryguybob> vyom: Yeah we are working towards 0.5 release.
+2012-02-12 21:44:33 UTC <vyom> fryguybob: cool.. for now I am just using a hack in my code to call defaultMain with the 'withArgs' method to get to the cairo backend
+2012-02-12 21:44:37 UTC <vyom> https://github.com/deepakjois/hs-logo/blob/master/Logo.hs#L50
+2012-02-12 21:44:47 UTC <vyom> it should work for now
+2012-02-12 21:45:35 UTC <vyom> but if I add more complicated arg parsing for my app, it will get a bit messy. But that can wait.. I can always dive into the code if I really need it
+2012-02-12 21:45:48 UTC <vyom> thanks anyway
+2012-02-12 23:44:14 UTC <byorgey> vyom: yeah, I am currently figuring out how to put the Haddock documentation on the diagrams website for exactly this reason
+2012-02-12 23:44:23 UTC <byorgey> (since it doesn't build on Hackage)
+2012-02-12 23:47:21 UTC <fryguybob> I had another diagram to make for Rebekah.  I'm not completely happy with the code :(
+2012-02-12 23:47:32 UTC <fryguybob> http://www.cs.rochester.edu/u/ryates/temp/rooms.pdf
+2012-02-12 23:48:16 UTC <fryguybob> I didn't really take the sensable approach:  http://www.patch-tag.com/r/fryguybob/diagrams-postscript/snapshot/current/content/pretty/example/rooms.hs
+2012-02-12 23:49:12 UTC <byorgey> you can tell it is a sad program because of all the sad faces in the comments
+2012-02-12 23:49:47 UTC <fryguybob> yup
+2012-02-12 23:49:57 UTC <byorgey> vyom: if you look on Hackage you can click 'Source' to see the definition of CairoOptions
+2012-02-12 23:50:11 UTC <vyom> byorgey: thanks, will look
+2012-02-12 23:59:54 UTC <vyom> updated the README for my logo interpreter project. Couldnt have done it without diagrams : https://github.com/deepakjois/hs-logo
+2012-02-13 00:00:01 UTC <vyom> it is awesome
+2012-02-13 00:00:50 UTC <vyom> also borrowed some snippets for the turtle from the diagrams-contrib package
+2012-02-13 00:02:51 UTC <byorgey> vyom: very cool!!
+2012-02-13 00:03:08 UTC <byorgey> ACTION adds hs-logo to the list of projects on the diagrams wiki
+2012-02-13 00:04:25 UTC <fryguybob> vyom: Fun!
+2012-02-13 00:04:30 UTC <vyom> byorgey: one thing is a bit strange though.. if you look at the images in the README.. I have kept the same line width.. but the snowflake is much thinner than the other design
+2012-02-13 00:05:06 UTC <vyom> i am guessing that is because I am using "Absolute" for the image size spec
+2012-02-13 00:05:07 UTC <vyom> ?
+2012-02-13 00:05:09 UTC <byorgey> vyom: probably because the snowflake is bigger
+2012-02-13 00:05:42 UTC <byorgey> the line width is relative to the diagram's vector space, not to the output size
+2012-02-13 00:06:08 UTC <vyom> byorgey: is there a good way to ensure a consistent line width regardless of the size?
+2012-02-13 00:06:26 UTC <byorgey> that way you can make a 100x100 or 300x300 or 3000x3000 render of your diagram and they will all look the same
+2012-02-13 00:06:42 UTC <byorgey> I guess the problem is that there are multiple possible ideas of "consistency", and they all conflict =)
+2012-02-13 00:06:54 UTC <luite> at least they're consistent in that
+2012-02-13 00:07:17 UTC <byorgey> vyom: let me think about it and get back to you
+2012-02-13 00:07:19 UTC <fryguybob> luite: They aren't though, lw 0, same everywhere!
+2012-02-13 00:09:01 UTC <luite> hmm :(
+2012-02-13 00:12:29 UTC <byorgey> hehe
+2012-02-13 00:13:24 UTC <byorgey> vyom: I guess the thing to do is to compute the width and/or height of your diagram using the 'width' or 'height' functions, and then set the line width to some fixed fraction of that
+2012-02-13 00:13:55 UTC <byorgey> i.e.   d # lw (0.005 * width d)   or something like that
+2012-02-13 00:13:55 UTC <vyom> byorgey: yes.. will have to try that
+2012-02-13 00:14:30 UTC <byorgey> note you may have to do   d # lw (0.005 * width (d :: D R2))  if you get an error about an ambiguous type variable or something like that
+2012-02-13 00:24:38 UTC <vyom> byorgey: works for now : https://github.com/deepakjois/hs-logo/commit/e154fd250fafb8d92e7197dbbff43b99a4b4ce51
+2012-02-13 00:24:41 UTC <vyom> will cleanup later
+2012-02-13 00:24:52 UTC <vyom> thanks
+2012-02-13 00:39:24 UTC <byorgey> vyom: great!
+2012-02-13 01:06:37 UTC <luite> 5
+2012-02-13 01:08:38 UTC <fryguybob> 4
+2012-02-13 01:09:44 UTC <luite> hm typo, or something, dunno what i was trying to type
+2012-02-13 01:13:30 UTC <fryguybob> ACTION is relieved as he wasn't sure what he was counting down to.
+2012-02-13 02:02:13 UTC <mgsloan> vyom - cool! Have you seen my turtle code? the state is very similar! (for logical reasons)
+2012-02-13 02:09:00 UTC <mgsloan> https://patch-tag.com/r/byorgey/diagrams-contrib/snapshot/current/content/pretty/src/Diagrams/TwoD/Path/Turtle.hs
+2012-02-13 02:24:22 UTC <vyom> mgsloan: As I said earlier.. I borrowed snippets of code from diagrams-contrib so it is not a co-incidence :)
+2012-02-13 02:24:41 UTC <mgsloan> ahh, cool :) you did mention that!
+2012-02-13 02:24:48 UTC <mgsloan> glad my code was a good reference!
+2012-02-13 02:24:50 UTC <vyom> mgsloan: byorgey had pointed me to that a few days ago
+2012-02-13 02:25:47 UTC <mgsloan> I'm thinking about extending the turtle in the contrib to cover more types of state mutation
+2012-02-13 02:26:40 UTC <vyom> mgsloan: I had initially thought I would re-use your Turtle code.. but then the "State" that I am tracking contains more things
+2012-02-13 02:26:49 UTC <vyom> like the interpreter context
+2012-02-13 02:27:06 UTC <vyom> so I just decided to borrow your path manipulation operations and use my own state type
+2012-02-13 02:28:08 UTC <vyom> i will keep an eye on your changes.. Ideally I would love to reuse a turtle type that already exists in diagrams-contrib
+2012-02-13 02:29:04 UTC <mgsloan> so have the path turtle, but then have a diagrams turtle layered on top of that, for things like line width and color state.  So, the diagrams turtle would create a new path turtle each time those attributes change
+2012-02-13 02:30:23 UTC <vyom> mgsloan: thats cool.. because I realised that if I have to expose a greater subset of the Logo language and allow color manipulations, I would need something like that
+2012-02-13 02:33:34 UTC <vyom> mgsloan: another interesting idea I had was to some day have a mode where a Logo turtle program compiles to a Haskell DSL instead of generating an image output
+2012-02-13 02:34:27 UTC <vyom> not sure what you could do with that.. but maybe something like animation support if and when it comes into diagrams
+2012-02-13 02:34:32 UTC <mgsloan> yup!  And it can be pretty easy to convert the Logo interpreter implemented in terms of the DSL into a compiler outputting DSL code
+2012-02-13 02:48:43 UTC <mgsloan> doh, lost internet
+2012-02-13 02:57:22 UTC <mgsloan> but yeah, I also know someone who is interested in implementing http://www.contextfreeart.org/ on top of diagrams
+2012-02-13 02:57:32 UTC <mgsloan> possibly in terms of something similar to turtle state
+2012-02-13 02:58:22 UTC <mgsloan> it seems a little weird to layer state abstractions on top of the pure / compositional layer over stateful drawing APIs...
+2012-02-13 02:59:05 UTC <mgsloan> but definitely good to have a way to do those types of things :D
+2012-02-13 17:49:38 UTC <tgeeky> byorgey: by the way, being in the hospital for the last few days, I observed that newborns are like burritos... which by transitivity of bad analogy means that monads are like newborns.
+2012-02-13 17:49:56 UTC <tgeeky> the nurses certainly wrap them up like they are burritos.
+2012-02-13 17:51:09 UTC <fryguybob> tgeeky: My niece was born on easter and the had special chick hats for easter babies so she looked like a chicken burrito.
+2012-02-13 17:51:39 UTC <tgeeky> lolol
+2012-02-13 17:55:28 UTC <tgeeky> monads are like like newborns: they should be left wrapped as much as possible, they seem initially useless and high maintnence, but they grow on you fast!
+2012-02-13 18:38:37 UTC <luite> hm
+2012-02-13 19:07:42 UTC <byorgey> hehehe
+2012-02-13 19:08:19 UTC <byorgey> tgeeky: sorry to hear you have been in the hospital, are you OK?
+2012-02-13 19:08:31 UTC <tgeeky> byorgey: haha, I'm fine! I was visiting
+2012-02-13 19:08:42 UTC <byorgey> ah, is whoever you were visiting OK?
+2012-02-13 19:08:43 UTC <tgeeky> i became an uncle early - on Friday
+2012-02-13 19:08:49 UTC <tgeeky> yes, all is well
+2012-02-13 19:08:52 UTC <byorgey> oh! right, yay =)
+2012-02-13 19:09:06 UTC <byorgey> hence observing newborns
+2012-02-13 19:09:06 UTC <tgeeky> really pretty baby girl -- Addison Marie Day
+2012-02-13 19:09:12 UTC <byorgey> =D
+2012-02-13 19:09:44 UTC <byorgey> yeah, I guess if you were in the hospital for some non-newborn-related reason they probably would not let you observe any newborns
+2012-02-13 19:10:08 UTC <tgeeky> yeah man
+2012-02-13 19:10:11 UTC <luite> why not?
+2012-02-13 19:10:27 UTC <luite> doesn't have to be contagious :)
+2012-02-13 19:10:28 UTC <byorgey> security, hygiene, etc.
+2012-02-13 19:10:47 UTC <tgeeky> FYI, in the USA, babies come born with: - a barcode wristband, a gender-appropriate-colored hat, and a baby lojack!
+2012-02-13 19:11:00 UTC <byorgey> yep yep
+2012-02-13 19:11:04 UTC <tgeeky> (that's how they know if it's a boy or a girl, pink or red hat!)
+2012-02-13 19:11:11 UTC <tgeeky> err pink or blue
+2012-02-13 19:11:12 UTC <luite> or a chicken, apparently
+2012-02-13 19:11:25 UTC <byorgey> you have to have some way to tell the chicken babies apart too
+2012-02-13 19:11:44 UTC <luite> my grandpa did that for a while, chicken sexing
+2012-02-13 19:12:14 UTC <luite> the males wouldn't live long since their egg production tends to be lower
+2012-02-13 19:12:56 UTC <byorgey> hehehe
+2012-02-13 19:30:38 UTC <tgeeky> that's a very diplomatic way of putting it
+2012-02-13 19:52:09 UTC <luite> hmm, I think even for meat, female chickens are better. my father had to select the hens while working on a kibbutz in israel, that were to be sold on the market for meat, working in the dark to avoid waking them up, apparently you can feel the difference
+2012-02-13 19:52:45 UTC <luite> that means I'm the first in 3 generations that can't properly 'sex' chickens ;p
+2012-02-13 20:48:03 UTC <byorgey> luite: what! you have dishonored your heritage!
+2012-02-13 20:48:19 UTC <byorgey> young people these days grmbl grmbl
+2012-02-13 20:48:24 UTC <luite> hehe
+2012-02-13 23:08:21 UTC <mgsloan> http://www.mgsloan.com/panopti2.png
+2012-02-13 23:09:12 UTC <mgsloan> still some bugs / doesn't descend into the lambda
+2012-02-13 23:09:50 UTC <luite> hmm
+2012-02-13 23:10:16 UTC <mgsloan> and the "mkDummyInstance" info obviously needs to be prettified
+2012-02-13 23:10:57 UTC <mgsloan> the current reason it's confusing is that each function has a number of types associated with it
+2012-02-13 23:11:08 UTC <mgsloan> the type of the function
+2012-02-13 23:11:17 UTC <mgsloan> and the type of the function applied to its arguments
+2012-02-13 23:11:39 UTC <mgsloan> when you have infix ops involved, you currently end up with a bunch of "result" types stacked vertically
+2012-02-13 23:12:25 UTC <mgsloan> soon it'll have a representation that reflects the visual optimizations guaranteed by unification
+2012-02-13 23:13:03 UTC <mgsloan> (function types sharing the types of their arguments)
+2012-02-14 00:59:16 UTC <byorgey> mgsloan: nice =)
+2012-02-14 01:00:07 UTC <luite> hmm, I don't understand the circles
+2012-02-14 01:03:25 UTC <byorgey> circles are always misunderstood
+2012-02-14 01:05:19 UTC <byorgey> luite: I think the circles are just the actual value of the expression being shown
+2012-02-14 01:10:40 UTC <mgsloan> yup
+2012-02-14 01:10:55 UTC <mgsloan> and the colored circles are awful placeholders for polymorphic types
+2012-02-14 01:11:13 UTC <luite> ah ok
+2012-02-14 01:11:29 UTC <mgsloan> probably to be replaced with greek characters or something
+2012-02-14 03:33:59 UTC <tgeeky> byorgey: circles! nobody gets them! their parents don't understand, they were elippses
+2012-02-14 03:50:51 UTC <luite> https://github.com/yesodweb/yesod/issues/268 <- I've made a toy impl, do you think it's better dan one based on TypeRep?
+2012-02-14 05:42:44 UTC <vyom> mgsloan: I modified my code to use the Turtle type from diagrams-contrib. But I had to copy the file and make a small change to it (Line 31) https://github.com/deepakjois/hs-logo/blob/e22979219a4401f683bca92d9ed9199fe92f8e37/Diagrams/TwoD/Path/Turtle.hs
+2012-02-14 05:43:24 UTC <vyom> I could send a patch, but I dont want to setup a git to darcs bridge for a single character delete :)
+2012-02-14 05:44:19 UTC <mgsloan> awesome! Thanks!
+2012-02-14 05:44:47 UTC <vyom> make that a 2 character delete..
+2012-02-14 05:45:20 UTC <mgsloan> I'll update the diagrams-contrib version
+2012-02-14 05:45:21 UTC <vyom> would you to patch that code?
+2012-02-14 05:45:24 UTC <vyom> ok
+2012-02-14 05:45:43 UTC <vyom> let me know once you do, and I will just use diagrams-contrib directly
+2012-02-14 05:48:43 UTC <mgsloan> pushed! https://patch-tag.com/r/byorgey/diagrams-contrib/snapshot/current/content/pretty/src/Diagrams/TwoD/Path/Turtle.hs
+2012-02-14 05:53:56 UTC <vyom> mgsloan: is there a planned release for diagrams-contrib ?
+2012-02-14 05:57:16 UTC <mgsloan> I think it's planned to release synchronized with diagrams
+2012-02-14 05:57:43 UTC <mgsloan> which has been soon for a while :D
+2012-02-14 06:01:18 UTC <vyom> ya been hearing about the 0.5 release..
+2012-02-14 06:01:33 UTC <vyom> i can wait until then i guess
+2012-02-14 06:02:04 UTC <vyom> i have a few bits parts of the Logo language to implement to get some basic functionality out
+2012-02-14 06:02:17 UTC <vyom> after that I can think of fancy things like colors
+2012-02-14 06:02:33 UTC <vyom> which might involve making changes to the Turtle
+2012-02-14 18:34:55 UTC <luite> http://apfelmus.nfshost.com/blog/2012/02/14-summer-of-code-proposal.html <- hey interesting proposal
+2012-02-14 18:39:22 UTC <tgeeky> luite: can anyone do the proposals?
+2012-02-14 18:39:39 UTC <luite> apparently
+2012-02-14 18:40:14 UTC <tgeeky> can teams of people do these?
+2012-02-14 18:40:35 UTC <luite> hmm, I think it's for single student<->mentor pairs, not sure though
+2012-02-14 19:16:57 UTC <luite> wtf someone has been using my email for posting disqus comments like "Miley Cyrus is a totally outstanding performer. I adore all of her albums."
+2012-02-14 19:17:52 UTC <luite> and my name is "uggs outlet"
+2012-02-14 19:19:15 UTC <tgeeky> sure sure.
+2012-02-14 19:22:32 UTC <tgeeky> http://blogs.discovery.com/.a/6a00d8341bf67c53ef0168e7496d97970c-pi
+2012-02-14 19:22:35 UTC <tgeeky> wow what a beautiful picture
+2012-02-14 19:23:29 UTC <luite> hmm, batman?
