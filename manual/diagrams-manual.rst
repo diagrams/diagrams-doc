@@ -328,7 +328,7 @@ operator `(<>)` as a synonym. (Hopefully this synonym will soon become
 part of ``Data.Monoid`` itself!)
 
 Monoids are used extensively in ``diagrams``: diagrams,
-transformations, bounding functions, trails, paths, styles, colors,
+transformations, envelopes, trails, paths, styles, colors,
 and queries are all instances.
 
 Faking optional named arguments
@@ -428,18 +428,18 @@ the vector giving the direction and distance from `p1` to `p2`.
 Offsetting a point by a vector (resulting in a new point) is
 accomplished with `(.+^)`.
 
-Bounding functions and local vector spaces
-------------------------------------------
+Envelopes and local vector spaces
+---------------------------------
 
 In order to be able to position diagrams relative to one another, each
-diagram must keep track of some bounding information.  Rather than use
-a bounding *box* (which is neither general nor compositional) or even a
-more general bounding *path* (which is rather complicated to deal with),
-each diagram has an associated bounding *function*.  Given some
-direction (represented by a vector) as input, the bounding function
-answers the question: "how far in this direction must one go before
-reaching a perpendicular (hyper)plane that completely encloses the
-diagram on one side of it?"
+diagram must keep track of some bounds information.  Rather than use a
+bounding box (which is neither general nor compositional) or even a
+more general bounding *path* (which is rather complicated to deal
+with), each diagram has an associated bounding *function*, called the
+*envelope*.  Given some direction (represented by a vector) as input,
+the envelope answers the question: "how far in this direction must one
+go before reaching a perpendicular (hyper)plane that completely
+encloses the diagram on one side of it?"
 
 That's a bit of a mouthful, so hopefully the below illustration will
 help clarify things if you found the above description confusing.
@@ -451,7 +451,7 @@ if you are just reading this manual for the first time!)
 
 ::
 
-> illustrateBound v d
+> illustrateEnvelope v d
 >   = mconcat
 >     [ origin ~~ (origin .+^ v)
 >       # lc black # lw 0.03
@@ -477,17 +477,17 @@ if you are just reading this manual for the first time!)
 > d2 :: Path R2
 > d2 = (pentagon 1 === roundedRect (1.5,0.7) 0.3)
 >
-> example = (stroke d1 # showOrigin <> illustrateBound (-0.5,0.3) d1)
->       ||| (stroke d2 # showOrigin <> illustrateBound (0.5, 0.2) d2)
+> example = (stroke d1 # showOrigin <> illustrateEnvelope (-0.5,0.3) d1)
+>       ||| (stroke d2 # showOrigin <> illustrateEnvelope (0.5, 0.2) d2)
 
-The black arrows represent inputs to the bounding functions for the
-two diagrams; the bounding functions' outputs are the distances
+The black arrows represent inputs to the envelopes for the
+two diagrams; the envelopes' outputs are the distances
 represented by the thick green lines.  The red lines illustrate the
 enclosing (hyper)planes (which are really to be thought of as
 extending infinitely to either side): notice how they are as close as
 possible to the diagrams without intersecting them at all.
 
-Of course, the *base point* from which the bounding function is
+Of course, the *base point* from which the envelope is
 measuring matters quite a lot!  If there were no base point, questions
 of the form "*how far do you have to go...*" would be
 meaningless---how far *from where*?  This base point (indicated by the
@@ -916,10 +916,10 @@ diagrams in the `x`:math:\- and `y`:math:\-directions, respectively.
 >                                          ===
 >                                          d2  )
 
-See `Bounding functions and local vector spaces`_ for more information
-on what "next to" means, `Working with bounds`_ for information on
-functions available for manipulating bounds, or `Bounding
-functions`_ for precise details.
+See `envelopes and local vector spaces`_ for more information on what
+"next to" means, `Working with envelopes`_ for information on
+functions available for manipulating envelopes, or `Envelopes`_ for
+precise details.
 
 Concatenating diagrams
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -1115,7 +1115,7 @@ transformations will affect the line width.
 >       ||| square 1 # freeze # scale 2
 >       ||| circle 1 # freeze # scaleX 3)  # lw 0.03
 
-Note that line width does not affect the bounding function of diagrams
+Note that line width does not affect the envelope of diagrams
 at all.  Future versions of the standard library may provide a
 function to convert a stroked path into an actual region, which would
 allow line width to be taken into account.
@@ -1338,7 +1338,7 @@ The ``Transformable`` class
 Transformations can be applied not just to diagrams, but values of any
 type which is an instance of the `Transformable` type class.
 Instances of `Transformable` include vectors, points, trails, paths,
-bounding functions, and `Transformations` themselves.  In addition,
+envelopes, and `Transformations` themselves.  In addition,
 lists, maps, or sets of `Transformable` things are also
 `Transformable` in the obvious way.
 
@@ -1368,12 +1368,12 @@ whichever one corresponds to the most natural point of view in a given
 situation, without having to worry about inserting calls to `negateV`.
 
 Often, however, one wishes to move a diagram's origin with respect to
-its bounding function.  To this end, some general tools are provided
+its envelope.  To this end, some general tools are provided
 in `Diagrams.Align`:mod:, and specialized 2D-specific ones by
 `Diagrams.TwoD.Align`:mod:.
 
 Functions like `alignT` (align Top) and `alignBR` (align Bottom Right)
-move the local origin to the edge of the bounding region:
+move the local origin to the edge of the envelope:
 
 .. class:: dia-lhs
 
@@ -1861,8 +1861,8 @@ Clipping
 
 With backends that support clipping, paths can be used to *clip* other
 diagrams.  Only the portion of a clipped diagram falling inside the
-clipping path will be drawn.  Note that the diagram's bounding
-function is unaffected.
+clipping path will be drawn.  Note that the diagram's envelope is
+unaffected.
 
 .. class:: dia-lhs
 
@@ -1903,9 +1903,9 @@ Text with different alignments can be created using `topLeftText`,
 > example = t1 =/= t2 =/= t3
 
 The most important thing to keep in mind when working with text
-objects is that they *take up no space*; that is, the bounding
-function for a text object is constantly zero.  If we omitted the
-rectangle from the above example, there would be no output.
+objects is that they *take up no space*; that is, the envelope for a
+text object is constantly zero.  If we omitted the rectangle from the
+above example, there would be no output.
 
 .. container:: warning
 
@@ -1998,22 +1998,21 @@ core and standard libraries for constructing diagrams.  Most of the
 content in this section is applicable to diagrams in any vector space,
 although 2D diagrams are used as illustrations.
 
-Working with bounds
--------------------
+Working with envelopes
+----------------------
 
-The `Bounds` type, defined in
-`Graphics.Rendering.Diagrams.Bounds`:mod:, encapsulates *bounding
-functions* (see `Bounding functions and local vector spaces`_).
-Things which have an associated bounding function---including
-diagrams, segments, trails, and paths---are instances of the
-`Boundable` type class.
+The `Envelope` type, defined in
+`Graphics.Rendering.Diagrams.Envelope`:mod:, encapsulates *envelopes*
+(see `envelopes and local vector spaces`_).  Things which have an
+associated envelope---including diagrams, segments, trails, and
+paths---are instances of the `Enveloped` type class.
 
-Bounding functions are used implicitly when placing diagrams next to
+Envelopes are used implicitly when placing diagrams next to
 each other (see `Juxtaposing diagrams`_) or when aligning diagrams
 (see `Alignment`_).
 
-Bounds-related functions
-~~~~~~~~~~~~~~~~~~~~~~~~
+Envelope-related functions
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 * `strut` creates a diagram which produces no output but takes up the
   same space as a line segment.  There are also versions specialized
@@ -2026,7 +2025,7 @@ Bounds-related functions
 
   > example = circle 1 ||| strutX 2 ||| square 2
 
-* `pad` increases the bounding function of a diagram by a certain
+* `pad` increases the envelope of a diagram by a certain
   factor in all directions.
 
   .. class:: dia-lhs
@@ -2044,7 +2043,7 @@ Bounds-related functions
 
   .. container:: warning
 
-     `pad` expands the bounding function *relative to the local
+     `pad` expands the envelope *relative to the local
      origin*.  So if you want the padding to be equal on all sides, use
      `centerXY` first.
 
@@ -2062,8 +2061,8 @@ Bounds-related functions
   > example = surround (pad 1.2 $ p # showOrigin) ||| strutX 1
   >       ||| surround (pad 1.2 $ p # centerXY # showOrigin)
 
-* Manually setting the bounding function of a diagram can be
-  accomplished using `withBounds`.  Additionally, `phantom` can be
+* Manually setting the envelope of a diagram can be
+  accomplished using `withEnvelope`.  Additionally, `phantom` can be
   used to create a diagram which produces no output but takes up a
   certain amount of space, for use in positioning other diagrams.
 
@@ -2072,35 +2071,35 @@ Bounds-related functions
   ::
 
   > example = hcat [ square 2
-  >                , circle 1 # withBounds (square 3 :: D R2)
+  >                , circle 1 # withEnvelope (square 3 :: D R2)
   >                , square 2
   >                , text "hi" <> phantom (circle 2 :: D R2)
   >                ]
 
-  In the above example, `withBounds` is used to put more space
+  In the above example, `withEnvelope` is used to put more space
   surrounding the circle, and `phantom` is used to put space around
   `text "hi"` (which would otherwise take up no space).  Note that we
-  could equally well have written `text "hi" # withBounds (circle 2 ::
+  could equally well have written `text "hi" # withEnvelope (circle 2 ::
   D R2)`.  Notice that the `D R2` annotations are necessary, since
   otherwise GHC will not know what types to pick for `square 3` and
   `circle 2`.  See `No instances for Backend b0 R2 ...`_ for more
   information.
 
 * `Diagrams.TwoD.Size`:mod: provides functions for extracting
-  information from the bounding functions of two-dimensional diagrams,
+  information from the envelopes of two-dimensional diagrams,
   such as `width`, `height`, `extentX`, `extentY`, and `center2D`.
 
-The ``Boundable`` class
+The ``Enveloped`` class
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-All objects with an associated bounding function are instances of the
-`Boundable` type class.  This includes diagrams, segments, trails, and
+All objects with an associated envelope are instances of the
+`Enveloped` type class.  This includes diagrams, segments, trails, and
 paths.
 
-In addition, the list type `[b]` is an instance of `Boundable`
-whenever `b` is.  The bounding function for a list is simply the
-combination of all the individual bounding functions of the list's
-elements---that is, a bounding function that contains all of the list
+In addition, the list type `[b]` is an instance of `Enveloped`
+whenever `b` is.  The envelope for a list is simply the
+combination of all the individual envelopes of the list's
+elements---that is, an envelope that contains all of the list
 elements.  In conjunction with the `Transformable` instance for lists
 (see `The Transformable class`_), this can be used to do things such
 as apply an alignment to a list of diagrams *considered as a group*.
@@ -2125,7 +2124,7 @@ diagram end up?" in order to help us position other diagrams.
    design is greatly appreciated!
 
 Any diagram can be given a name with the `named` function.  The local
-origin and bounding function of the diagram will be associated with
+origin and envelope of the diagram will be associated with
 the name, and they will be tracked as the diagram is incorporated into
 other larger diagrams and transformed.
 
@@ -2166,7 +2165,7 @@ has the (admittedly scary-looking!) type
 
   withName :: ( IsName n, AdditiveGroup (Scalar v), Floating (Scalar v)
               , InnerSpace v, HasLinearMap v)
-           => n -> (LocatedBounds v -> QDiagram b v m -> QDiagram b v m)
+           => n -> (LocatedEnvelope v -> QDiagram b v m -> QDiagram b v m)
                 -> (QDiagram b v m -> QDiagram b v m)
 
 Let's pick this apart a bit.  First, we see that the type `n` must be
@@ -2180,11 +2179,11 @@ function of type
 
 ::
 
-  LocatedBounds v -> QDiagram b v m -> QDiagram b v m
+  LocatedEnvelope v -> QDiagram b v m -> QDiagram b v m
 
 We can see this function as a transformation on diagrams, except that
-it also gets to use some extra information---namely, a "`LocatedBounds
-v`", which records the local origin and bounding function associated
+it also gets to use some extra information---namely, a "`LocatedEnvelope
+v`", which records the local origin and envelope associated
 with the name we pass as the first argument to `withName`.
 
 Finally, the return type of `withName` is itself a transformation of
@@ -2192,7 +2191,7 @@ diagrams.
 
 So here's how `withName` works.  Suppose we call it with the arguments
 `withName n f d`.  If some subdiagram of `d` has the name `n`, then
-`f` is called with the located bounding function associated with `n`
+`f` is called with the located envelope associated with `n`
 as its first argument, and `d` itself as its second argument.  So we
 get to transform `d` based on information about where the subdiagram
 named `n` is located within it.  And what if there is no subdiagram
@@ -2225,7 +2224,7 @@ the two names.  Note how the two calls to `withName` are chained, and
 how we have written the second arguments to `withName` using lambda
 expressions (this is a common style).  Finally, we draw a line between
 the two points (using the `location` function to access the base
-points of the located bounding functions), give it a style, and
+points of the located envelopes), give it a style, and
 specify that it should be layered on top of the diagram given as the
 third argument to `connect`.
 
@@ -2238,13 +2237,13 @@ examples such manual calculation can be quite out of the question.
 `withName` also has two other useful variants:
 
 * `withNameAll` takes a single name and makes available a list of
-  *all* located bounding functions associated with that name.
+  *all* located envelopes associated with that name.
   (`withName`, by contrast, returns only the most recent.)  This is
   useful when you want to work with a collection of named subdiagrams all
   at once.
 
 * `withNames` takes a list of names, and makes available a list of the
-  most recent located bounding functions associated with each.
+  most recent located envelopes associated with each.
 
 Listing names
 ~~~~~~~~~~~~~
@@ -2253,7 +2252,7 @@ Sometimes you may not be sure what names exist within a diagram---for
 example, if you have obtained the diagram from some external module,
 or are debugging your own code.  The `names` function extracts a list
 of all the names recorded within a diagram and their associated
-located bounding functions.
+located envelopes.
 
 When using `names` you will often need to add a type annotation such
 as `D R2` to its argument, as shown below---for an explanation and
@@ -2262,28 +2261,28 @@ more information, see `No instances for Backend b0 R2 ...`_.
 ::
 
     ghci> names (circle 1 # named "joe" ||| circle 2 # named "bob" :: D R2)
-    NameMap (fromList [	("bob", [ LocatedBounds 
+    NameMap (fromList [	("bob", [ LocatedEnvelope 
                        	            (P (3.0,0.0)) 
-                       	            (TransInv {unTransInv = <bounds>})
+                       	            (TransInv {unTransInv = <envelope>})
                        	        ]
                        	)
                        	,
-                       	("joe", [ LocatedBounds 
+                       	("joe", [ LocatedEnvelope 
                        	            (P (0.0,0.0)) 
-                       	            (TransInv {unTransInv = <bounds>})
+                       	            (TransInv {unTransInv = <envelope>})
                        	        ]
                        	)
                       ]
             )
 
-Bounding functions, being functions, of course cannot be printed, but
+envelopes, being functions, of course cannot be printed, but
 the output of `names` can be manipulated in other ways than just printing.
 
-Using named bounding functions
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Using named envelopes
+~~~~~~~~~~~~~~~~~~~~~
 
 So far the examples we have seen have only made use of the local
-origin associated with each name.  However, the bounding function of
+origin associated with each name.  However, the envelope of
 every named subdiagram is also tracked, and can be used to identify
 points other than the local origin.  The below example uses this
 ability to connect the *bottom* edge of the parent circle to the *top*
@@ -2308,8 +2307,8 @@ edge of each child circle, instead of connecting their centers.
 > example = nodes # applyAll (map parentToChild "abcde")
 
 The `boundaryFrom` function is used to compute boundary points:
-`boundaryFrom lb v` computes the boundary point in direction `v` for
-the located bounding function `lb`.
+`boundaryFrom le v` computes the boundary point in direction `v` for
+the located envelope `le`.
 
 The `place` function is just a flipped version of `moveTo`, provided
 for convenience since it can be useful in conjunction with `withName`.
@@ -2408,8 +2407,8 @@ identity).  The default query simply indicates which points are
 
 .. container:: warning
 
-   The default `Any` query and the bounding function are quite
-   different, and may give unrelated results.  The bounding function
+   The default `Any` query and the envelope are quite
+   different, and may give unrelated results.  The envelope
    is an approximation used to be able to place diagrams next to one
    another; the `Any` query is a more accurate record of which points
    are enclosed by the diagram.  (Using the query in order to position
@@ -2526,7 +2525,7 @@ selected by the user after receiving the coordinates of a mouse click.
 Bounding boxes
 --------------
 
-Bounding functions (see `Working with bounds`_) are more flexible and
+Envelopes (see `Working with envelopes`_) are more flexible and
 compositional than bounding boxes for the purposes of combining
 diagrams.  However, occasionally it is useful for certain applications
 to be able to work with bounding boxes, which support fast tests for
@@ -2534,7 +2533,7 @@ inclusion as well as union and intersection operations.
 
 To this end, a generic implementation of arbitrary-dimension bounding
 boxes is provided in `Diagrams.BoundingBox`:mod:.  Bounding boxes can
-be created from sets of points or from any `Boundable` object, used
+be created from sets of points or from any `Enveloped` object, used
 for inclusion or exclusion testing, and combined via union or
 intersection.
 
@@ -2606,11 +2605,11 @@ positioned, aligned, *etc.* as they normally would, *except* that it
 delays actually composing them!
 
 This works because lists are instances of `Juxtaposable`, `Alignable`,
-`Boundable`, `HasOrigin`, `HasStyle`, `Transformable`, and, of course,
+`Enveloped`, `HasOrigin`, `HasStyle`, `Transformable`, and, of course,
 `Monoid`.  All these instances work in the "obvious" way---for
-example, the bounds for a list is the combination of the bounds of the
-elements---so applying an operation to a list of diagrams has the
-same effect as applying the operation to the composition of those
+example, the envelope for a list is the combination of the envelopes
+of the elements---so applying an operation to a list of diagrams has
+the same effect as applying the operation to the composition of those
 diagrams.  In other words, operations such as `centerX`, `scale`,
 `juxtapose`, *etc.* all commute with `mconcat`.
 
@@ -2874,17 +2873,17 @@ Notice that we composed two animations using `(<>)`, which does
 exactly what you would think: superimposes them at every instant in time.
 
 Since this is such a common thing to want, the
-`Diagrams.Animation` module provides a function `animBounds`
-for expanding the bounds of an animation to the union of all the
-bounds over time (determined by sampling at a number of points).  That
-is, the animation will now use a constant bound that encloses the
+`Diagrams.Animation` module provides a function `animEnvelope`
+for expanding the envelope of an animation to the union of all the
+envelopes over time (determined by sampling at a number of points).  That
+is, the animation will now use a constant envelope that encloses the
 entirety of the animation at all points in time.
 
 .. class:: lhs
 
 ::
 
-> animBounds (translateX <$> ui <*> circle 2)
+> animEnvelope (translateX <$> ui <*> circle 2)
 
 Since `Active` is generic, it is also easy (and useful) to
 create active `Point`\s, `Path`\s, colors, or values of any other type.
@@ -2951,8 +2950,8 @@ Points and vectors
 Transformations
 ---------------
 
-Bounding functions
-------------------
+Envelopes
+---------
 
 Queries
 -------

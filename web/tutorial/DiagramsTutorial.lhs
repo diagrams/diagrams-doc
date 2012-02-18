@@ -300,14 +300,15 @@ local origin of the first diagram to the local origin of the second.
 >
 > circleSqV2 = beside (1,-2) (circle 1) (square 2)
 
-Bounding functions
-------------------
+Envelopes
+---------
 
 How does the diagrams library figure out how to place two diagrams
 "next to" each other?  And what exactly does "next to" mean?  There
 are many possible definitions of "next to" that one could imagine
 choosing, with varying degrees of flexibility, simplicity, and
-tractability.  The definition of "next to" adopted by diagrams is as follows:
+tractability.  The definition of "next to" adopted by diagrams is as
+follows:
 
 To place two diagrams next to each other in the direction
 of a vector *v*, place them as close as possible so that there is a
@@ -334,13 +335,13 @@ However:
 * This rule is very *simple*, in that it is easy to predict what will
   happen when placing two diagrams next to each other.
 
-* It is also *tractable*.  Every diagram carries along with it a
-*bounding function* which takes as input a vector *v*, and returns the
-minimum distance to a separating line from the local origin in the
-direction of *v*.  When composing two diagrams with `atop` we take the
-pointwise maximum of their bounding functions; to place two diagrams
-next to each other we use their bounding functions to decide how to
-reposition their local origins before composing them with `atop`.
+* It is also *tractable*.  Every diagram carries along with it an
+  "envelope"---a function which takes as input a vector *v*, and returns
+  the minimum distance to a separating line from the local origin in the
+  direction of *v*.  When composing two diagrams with `atop` we take the
+  pointwise maximum of their envelopes; to place two diagrams
+  next to each other we use their envelopes to decide how to
+  reposition their local origins before composing them with `atop`.
 
 Transforming diagrams
 =====================
@@ -441,9 +442,9 @@ when placing them next to one another --- for example, we might want a
 horizontal row of diagrams aligned along their top edges.  The
 *alignment* of a diagram simply refers to its position relative to its
 local origin, and convenient alignment functions are provided for
-aligning a diagram with respect to its bounding region.  For example,
+aligning a diagram with respect to its envelope.  For example,
 `alignT` translates a diagram in a vertical direction so that its
-local origin ends up exactly on the edge of its bounding region.
+local origin ends up exactly on the edge of its envelope.
 
 > circlesTop = hrule (2 * sum sizes) # lw 0.1 === circles # centerX
 >   where circles = hcat . map alignT . zipWith scale sizes 
