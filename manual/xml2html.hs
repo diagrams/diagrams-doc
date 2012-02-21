@@ -22,13 +22,18 @@ import Diagrams.Backend.Cairo.Internal
 
 import Diagrams.Builder
 
+import Data.VectorSpace (zeroV)
+
 main :: IO ()
 main = do
   (modMap, nameMap) <- buildPackageMaps
                        [ "diagrams-core"
+                       , "active"
                        , "diagrams-lib"
                        , "diagrams-cairo"
+                       , "diagrams-contrib"
                        , "vector-space"
+                       , "vector-space-points"
                        ]
   docutilsCmdLine (diagramsManual modMap nameMap)
 
@@ -80,15 +85,18 @@ compileDiagram src = do
   when (not ex) $ do
     putStrLn $ "Generating " ++ imgFile ++ "..."
     res <- buildDiagram
-             Cairo (0,0) (CairoOptions imgFile (Dims 500 200) PNG)
+             Cairo zeroV (CairoOptions imgFile (Dims 500 200) PNG)
              src
              "pad 1.1 example"
              ["DeriveDataTypeable"]
-             [ "Diagrams.Backend.Cairo"
+             [ "Diagrams.TwoD.Types"      -- WHY IS THIS NECESSARY =(
+             , "Graphics.Rendering.Diagrams.Points" 
+                 -- GHC 7.2 bug?  need  V (Point R2) = R2  (see #65)
+             , "Diagrams.Backend.Cairo"
              , "Diagrams.Backend.Cairo.Internal"
              , "Data.Typeable"
              ]
     case res of
-      Left err      -> ppError err
+      Left err      -> putStrLn ("Error while compiling\n" ++ src) >> ppError err
       Right (act,_) -> act
   return imgFile
