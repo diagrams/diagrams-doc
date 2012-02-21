@@ -466,19 +466,19 @@ if you are just reading this manual for the first time!)
 >       # lc red # lw 0.02
 >     ]
 >     where
->       b  = boundary v d
+>       b  = envelopeP v d
 >       v' = normalized v
 >       p1 = b .+^ (rotateBy (1/4) v')
 >       p2 = b .+^ (rotateBy (-1/4) v')
 >
 > d1 :: Path R2
-> d1 = circlePath 1
+> d1 = circle 1
 >
 > d2 :: Path R2
-> d2 = (pentagon 1 === roundedRect (1.5,0.7) 0.3)
+> d2 = (pentagon 1 === roundedRect 1.5 0.7 0.3)
 >
-> example = (stroke d1 # showOrigin <> illustrateEnvelope (-0.5,0.3) d1)
->       ||| (stroke d2 # showOrigin <> illustrateEnvelope (0.5, 0.2) d2)
+> example = (stroke d1 # showOrigin <> illustrateEnvelope (r2 (-0.5,0.3)) d1)
+>       ||| (stroke d2 # showOrigin <> illustrateEnvelope (r2 (0.5, 0.2)) d2)
 
 The black arrows represent inputs to the envelopes for the
 two diagrams; the envelopes' outputs are the distances
@@ -684,12 +684,12 @@ polygons and other path-based shapes.  For example:
 ::
 
 > example = square 1 ||| rect 0.3 0.5
->       ||| eqTriangle 1 
->       ||| roundedRect (0.5, 0.4) 0.1
->       ||| roundedRect (0.5, 0.4) (-0.1)
->       ||| roundedRect' (0.7, 0.4) with { radiusTL = 0.2
->                                        , radiusTR = -0.2
->                                        , radiusBR = 0.1 }
+>       ||| eqTriangle 1
+>       ||| roundedRect  0.5 0.4 0.1
+>       ||| roundedRect  0.5 0.4 (-0.1)
+>       ||| roundedRect' 0.7 0.4 with { radiusTL = 0.2
+>                                     , radiusTR = -0.2
+>                                     , radiusBR = 0.1 }
 
 More special polygons will likely be added in future versions of the
 library.
@@ -876,7 +876,9 @@ other so that the vector points from the first diagram to the second.
 
 ::
 
-> example = beside (20,30) (circle 1 # fc orange) (circle 1.5 # fc purple)
+> example = beside (r2 (20,30))
+>                  (circle 1 # fc orange)
+>                  (circle 1.5 # fc purple)
 >           # showOrigin
 
 As can be seen from the above example, the *length* of the vector
@@ -897,8 +899,9 @@ the same direction before combining (see `Alignment`_):
 
 ::
 
-> example = beside (20,30) (circle 1   # fc orange # align (20,30)) 
->                          (circle 1.5 # fc purple)
+> example = beside (r2 (20,30))
+>                  (circle 1   # fc orange # align (r2 (20,30)))
+>                  (circle 1.5 # fc purple)
 >           # showOrigin
 
 Since placing diagrams next to one another horizontally and vertically
@@ -938,7 +941,7 @@ local origin of each diagram at the indicated point.
 
 > example = position (zip (map mkPoint [-3, -2.8 .. 3]) (repeat dot))
 >   where dot       = circle 0.2 # fc black
->         mkPoint x = P (x,x^2)
+>         mkPoint x = p2 (x,x^2)
 
 `cat` is an iterated version of `beside`, which takes a direction
 vector and a list of diagrams, laying out the diagrams beside one
@@ -951,7 +954,7 @@ local origin of the final result.
 
 ::
 
-> example = cat (2,-1) (map p [3..8]) # showOrigin
+> example = cat (r2 (2,-1)) (map p [3..8]) # showOrigin
 >   where p n = regPoly n 1 # lw 0.03
 
 Semantically speaking, `cat v === foldr (beside v) mempty`, although
@@ -966,7 +969,7 @@ possibilities.
 
 ::
 
-> example = cat' (2,-1) with { catMethod = Distrib, sep = 2 } (map p [3..8])
+> example = cat' (r2 (2,-1)) with { catMethod = Distrib, sep = 2 } (map p [3..8])
 >   where p n = regPoly n 1 # lw 0.03
 >                           # scale (1 + fromIntegral n/4)
 >                           # showOrigin
@@ -1136,7 +1139,7 @@ for three aspects of line drawing:
 
 ::
 
-> path = fromVertices (map P [(0,0), (1,0.3), (2,0), (2.2,0.3)]) # lw 0.1
+> path = fromVertices (map p2 [(0,0), (1,0.3), (2,0), (2.2,0.3)]) # lw 0.1
 > example = centerXY . vcat' with { sep = 0.1 }
 >           $ map (path #)
 >             [ lineCap LineCapButt   . lineJoin LineJoinMiter
@@ -1294,7 +1297,7 @@ To reflect in some line other than an axis, use `reflectAbout`.
 
 > eff = text "F" <> square 1 # lw 0
 > example = eff
->        <> reflectAbout (P (0.2,0.2)) (rotateBy (-1/10) unitX) eff
+>        <> reflectAbout (p2 (0.2,0.2)) (rotateBy (-1/10) unitX) eff
 
 Translation
 ^^^^^^^^^^^
@@ -1445,25 +1448,25 @@ __ http://en.wikipedia.org/wiki/Bézier_curve
 
 ::
 
-> illustrateBezier c1 c2 p2
+> illustrateBezier c1 c2 x2
 >     =  endpt
->     <> endpt  # translate p2
+>     <> endpt  # translate x2
 >     <> ctrlpt # translate c1
 >     <> ctrlpt # translate c2
 >     <> l1
 >     <> l2
->     <> fromSegments [bezier3 c1 c2 p2]
+>     <> fromSegments [bezier3 c1 c2 x2]
 >   where
 >     dashed  = dashing [0.1,0.1] 0
 >     endpt   = circle 0.05 # fc red  # lw 0
 >     ctrlpt  = circle 0.05 # fc blue # lw 0
 >     l1      = fromOffsets [c1] # dashed
->     l2      = fromOffsets [p2 ^-^ c2] # translate c2 # dashed
+>     l2      = fromOffsets [x2 ^-^ c2] # translate c2 # dashed
 >
-> p2      = (3,-1) :: R2     -- endpoint
-> [c1,c2] = [(1,2), (3,0)]   -- control points
+> x2      = r2 (3,-1) :: R2         -- endpoint
+> [c1,c2] = map r2 [(1,2), (3,0)]   -- control points
 >
-> example = illustrateBezier c1 c2 p2
+> example = illustrateBezier c1 c2 x2
 
 `Diagrams.Segment`:mod: also provides a few tools for working with
 segments:
@@ -1517,7 +1520,7 @@ the local origin.
 ::
 
 > spike :: Trail R2
-> spike = fromOffsets [(1,3), (1,-3)]
+> spike = fromOffsets . map r2 $ [(1,3), (1,-3)]
 >
 > burst = mconcat . take 13 . iterate (rotateBy (-1/13)) $ spike
 >
@@ -1536,7 +1539,7 @@ the edges individually:
 ::
 
 > spike :: Trail R2
-> spike = fromOffsets [(1,3), (1,-3)]
+> spike = fromOffsets . map r2 $ [(1,3), (1,-3)]
 >
 > burst = mconcat . take 13 . iterate (rotateBy (-1/13)) $ spike
 >
@@ -1571,7 +1574,7 @@ holes:
 ::
 
 > ring :: Path R2
-> ring = circlePath 3 <> circlePath 2
+> ring = circle 3 <> circle 2
 >
 > example = stroke ring # fc purple # fillRule EvenOdd
 
@@ -1773,7 +1776,7 @@ closed.
 
 ::
 
-> pts = map P [(0,0), (2,3), (5,-2), (-4,1), (0,3)]
+> pts = map p2 [(0,0), (2,3), (5,-2), (-4,1), (0,3)]
 > dot = circle 0.2 # fc blue # lw 0
 > mkPath closed = position (zip pts (repeat dot))
 >              <> cubicSpline closed pts # lw 0.05
@@ -1895,9 +1898,9 @@ Text with different alignments can be created using `topLeftText`,
 
 > pt = circle 0.1 # fc red
 >
-> t1 = pt <> topLeftText            "top left"   <> rect 8 1
-> t2 = pt <> baselineText           "baseline"   <> rect 8 1
-> t3 = pt <> alignedText (0.7, 0.5) "(0.7, 0.5)" <> rect 8 1
+> t1 = pt <> topLeftText         "top left"   <> rect 8 1
+> t2 = pt <> baselineText        "baseline"   <> rect 8 1
+> t3 = pt <> alignedText 0.7 0.5 "(0.7, 0.5)" <> rect 8 1
 >
 > d1 =/= d2 = d1 === strutY 2 === d2
 > example = t1 =/= t2 =/= t3
@@ -2001,8 +2004,10 @@ although 2D diagrams are used as illustrations.
 Working with envelopes
 ----------------------
 
+XXX module link
+
 The `Envelope` type, defined in
-`Graphics.Rendering.Diagrams.Envelope`:mod:, encapsulates *envelopes*
+`Graphics.Rendering.Diagrams.Envelope`, encapsulates *envelopes*
 (see `envelopes and local vector spaces`_).  Things which have an
 associated envelope---including diagrams, segments, trails, and
 paths---are instances of the `Enveloped` type class.
@@ -2261,14 +2266,14 @@ more information, see `No instances for Backend b0 R2 ...`_.
 ::
 
     ghci> names (circle 1 # named "joe" ||| circle 2 # named "bob" :: D R2)
-    NameMap (fromList [	("bob", [ LocatedEnvelope 
-                       	            (P (3.0,0.0)) 
+    NameMap (fromList [	("bob", [ LocatedEnvelope
+                       	            (P (3.0,0.0))
                        	            (TransInv {unTransInv = <envelope>})
                        	        ]
                        	)
                        	,
-                       	("joe", [ LocatedEnvelope 
-                       	            (P (0.0,0.0)) 
+                       	("joe", [ LocatedEnvelope
+                       	            (P (0.0,0.0))
                        	            (TransInv {unTransInv = <envelope>})
                        	        ]
                        	)
@@ -2427,7 +2432,7 @@ the ellipse red and points outside it blue.
 > c = circle 5 # scaleX 2 # rotateBy (1/14) # lw 0.03
 >
 > -- Generated by fair dice roll, guaranteed to be random
-> points = map P $
+> points = map p2 $
 >          [ (0.8936218079179525,6.501173563301563)
 >          , (0.33932828810065985,9.06458375044167)
 >          , (2.12546952534467,4.603130561299622)
@@ -2483,7 +2488,7 @@ and `Any False` with `mempty`.
 >     # lw 0.03
 >
 > -- Generated by fair dice roll, guaranteed to be random
-> points = map P $
+> points = map p2 $
 >          [ (0.8936218079179525,6.501173563301563)
 >          , (0.33932828810065985,9.06458375044167)
 >          , (2.12546952534467,4.603130561299622)
@@ -2653,7 +2658,7 @@ them and/or so they can be added to this section.
 No instances for Backend b0 R2 ...
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-There will probably come a time when you get an error message such as 
+There will probably come a time when you get an error message such as
 
 ::
 
@@ -2716,7 +2721,7 @@ For exapmle, the solution to the problem with `width` is to annotate
 ::
 
     ghci> width (circle 1 :: D R2)
-    2.0 
+    2.0
 
 More ambiguity
 ~~~~~~~~~~~~~~
@@ -2839,7 +2844,7 @@ time.  For example,
 Using `Active` with diagrams
 ----------------------------
 
-An animation is defined, simply, as something of type 
+An animation is defined, simply, as something of type
 `Active (Diagram b v)` for an appropriate backend type `b` and vector
 space `v`.  Hence it is possible to make an animation by using the
 `mkActive` function and specifying a function from time to diagrams.
@@ -2852,7 +2857,7 @@ can write
 
 ::
 
-> translateX <$> ui <*> circle 2 
+> translateX <$> ui <*> circle 2
 
 But wait a minute, it isn't moving!
 
@@ -2982,3 +2987,5 @@ Related projects
    * diagrams-spiro
    * diagrams-ghci
    * diagrams-hint
+
+   * see diagrams wiki
