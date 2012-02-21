@@ -9111,3 +9111,452 @@
 2012-02-14 19:22:32 UTC <tgeeky> http://blogs.discovery.com/.a/6a00d8341bf67c53ef0168e7496d97970c-pi
 2012-02-14 19:22:35 UTC <tgeeky> wow what a beautiful picture
 2012-02-14 19:23:29 UTC <luite> hmm, batman?
+2012-02-14 19:33:25 UTC <byorgey> hmmm the #diagrams log file is now up to 830K.  I wonder if I am stressing out darcs.
+2012-02-14 19:49:00 UTC <luite> tgeeky: hmm, apfelmus doesn't seem terribly enthusiastic about the stuff i've already done with wolfgang
+2012-02-14 19:50:50 UTC <byorgey> luite: so what?
+2012-02-14 19:51:18 UTC <byorgey> I think a few different projects in this space could be good anyway.  competition, cross-fertilization, etc. etc.
+2012-02-14 19:51:52 UTC <byorgey> luite: also, it seems clear to me that his complaints are specific to sagemath and don't have to apply to Wolfgang.
+2012-02-14 19:52:09 UTC <byorgey> (1) just because sagemath public wiki is unresponsive doesn't mean... etc.
+2012-02-14 19:52:31 UTC <luite> possibly, something working might finally get released if someone else does the work
+2012-02-14 19:52:41 UTC <byorgey> (2) Wolfgang could have a way to work with local files that isn't a pain
+2012-02-14 19:58:49 UTC <luite> byorgey: I think it's more the tone of his reaction in general, he only picks things of my approach that he doesn't like, and then that my defaulting stuff is wrong.
+2012-02-14 19:59:02 UTC <byorgey> yeah, I was surprised at his tone as well.
+2012-02-14 20:04:52 UTC <luite> tnx for the clarification :)
+2012-02-14 20:05:59 UTC <byorgey> sure =)
+2012-02-14 20:07:17 UTC <luite> I started typing a slightly less friendly comment, but decided not to post it :)
+2012-02-14 20:09:44 UTC <byorgey> hehe
+2012-02-14 20:09:46 UTC <byorgey> probably wise
+2012-02-14 20:10:35 UTC <luite> hehe nah it wasn't that bad
+2012-02-14 20:14:27 UTC <tgeeky> could have a way to work with local files that isn't a pain
+2012-02-14 20:14:30 UTC <tgeeky> oops :?
+2012-02-14 20:15:12 UTC <tgeeky> luite: the easiest solution is to publish the code (at some point), and say: if you don't like it, change it!
+2012-02-14 20:18:28 UTC <luite> even easier is not publishing and letting them build their own ;p
+2012-02-14 20:23:57 UTC <byorgey> hehe, but that would be sad
+2012-02-14 22:47:47 UTC <tgeeky> luite: that is not easier. You've allowed evidence of your toils to escape into the wild. Thus, (Human a) forall a. -- using your existing work would make it easier for them
+2012-02-14 22:48:03 UTC <tgeeky> with a => thrown in for good measure
+2012-02-15 02:19:26 UTC <vyom> mgsloan: I had this use case for the Turtle, where I needed to stack it up on top of the IO monad. This is for Logo language operations like printing to a screen etc
+2012-02-15 02:20:37 UTC <vyom> i am wondering if it is possible to do it using the existing Turtle type.. but i cant think of a good way
+2012-02-15 02:20:55 UTC <vyom> normally, what I would need is a monad transformer
+2012-02-15 02:23:40 UTC <vyom> i am wondering if it makes sense to make a TurtleT type
+2012-02-15 02:43:12 UTC <mgsloan> hmm, interesting problem, definitely seems like an occasion for monad transformers
+2012-02-15 02:44:14 UTC <vyom> actually it is not just printing.. but even things like generating random values require the IO Monad
+2012-02-15 02:45:11 UTC <mgsloan> "StateT TState IO" ? would need to export TState from the turtle, though
+2012-02-15 02:45:42 UTC <mgsloan> the other option is to have a function that yields "IO Turtle"
+2012-02-15 02:46:04 UTC <vyom> given the state monad is just StateT Identity.. I wonder if all that is required in the Turtle code is to just expose TurtleT (StateT TState) and Turtle as (TurtleT Identity)
+2012-02-15 02:46:26 UTC <vyom> kind of like how parsec3 does it
+2012-02-15 02:46:29 UTC <mgsloan> which performs all of the IO functions and yields a turtle, that when run using "runTurtle", yields the path
+2012-02-15 02:48:09 UTC <vyom> ya that sounds like an alternative.. let me think about it
+2012-02-15 02:48:34 UTC <mgsloan> I'd be open to changing the API, though
+2012-02-15 02:48:55 UTC <vyom> i can always prototype changes in my copy and then send a patch
+2012-02-15 02:49:13 UTC <vyom> hope to get to it after getting some other core features out of the way though
+2012-02-15 02:49:17 UTC <vyom> hopefully sometime next week
+2012-02-15 02:49:35 UTC <mgsloan> very cool!
+2012-02-15 02:50:14 UTC <mgsloan> I'd definitely be willing to help with writing Diagrams.TwoD.Turtle (notice not Path.Turtle)
+2012-02-15 02:51:28 UTC <vyom> cool!
+2012-02-15 12:05:38 UTC <mgsloan> http://vimeo.com/36579366 <-- this is one side of exactly what I've been working on
+2012-02-15 12:05:59 UTC <mgsloan> arrrgh, it kinda sucks to see it done right around when I'm working on the same thing
+2012-02-15 12:06:25 UTC <mgsloan> validating, but happens so frequently.  These are all obvious ideas, imho
+2012-02-15 12:15:39 UTC <mgsloan> this guy's site is awesome http://worrydream.com/#!/MagicInk
+2012-02-15 12:15:53 UTC <mgsloan> but wow what a presentation
+2012-02-15 12:16:09 UTC <mgsloan> glad someone made such a compelling demo for this
+2012-02-15 15:20:13 UTC <tgeeky> that's a very loooooooong page
+2012-02-16 13:23:13 UTC <fryguybob> ACTION adds a ticket for what av's question made me think of.
+2012-02-16 13:25:15 UTC <byorgey> fryguybob: oh, getting smoothness between segments, I think I get what you were saying now
+2012-02-16 13:25:42 UTC <byorgey> ACTION intends to implement the Metapost algorithms at some point
+2012-02-16 13:25:47 UTC <byorgey> which would let you do that
+2012-02-16 13:26:09 UTC <fryguybob> byorgey: indeed.
+2012-02-16 13:26:30 UTC <fryguybob> Nurbs also allow for that quite easily.
+2012-02-16 13:26:51 UTC <byorgey> nurbs
+2012-02-16 13:26:57 UTC <byorgey> nurbs
+2012-02-16 13:26:58 UTC <fryguybob> Expressing these conditions isn't always the easiest though.
+2012-02-16 13:27:10 UTC <byorgey> ACTION just likes how it sounds
+2012-02-16 13:27:14 UTC <fryguybob> :D
+2012-02-16 13:27:39 UTC <fryguybob> In my machine learning class this semester I'm constainly having flashbacks to learning about nurbs.
+2012-02-16 13:27:51 UTC <byorgey> hehe
+2012-02-16 14:04:18 UTC <luite> fryguybob: why?
+2012-02-16 14:06:32 UTC <fryguybob> luite: Regression and splines are closely related.  One is kind of about removing the noise and the other is about assuming there is no noise.
+2012-02-16 14:07:21 UTC <fryguybob> Nurbs work by building up distribution curves from simple declative data.
+2012-02-16 14:07:43 UTC <fryguybob> Regression works towards finding the distribution of noisy data.
+2012-02-16 14:12:05 UTC <fryguybob> luite: If you look at the basis function pictures here: http://en.wikipedia.org/wiki/Nurbs  you should get the idea.
+2012-02-16 14:46:33 UTC <luite> hm right
+2012-02-17 03:59:27 UTC <vyom> byorgey: what do you think of this change https://github.com/deepakjois/hs-logo/commit/69fd730a15ee16f40f511196e7ee1d418c320c59
+2012-02-17 03:59:55 UTC <vyom> i would have asked mgsloan but he does not seem to be around.
+2012-02-17 04:04:35 UTC <byorgey> vyom: looks good to me
+2012-02-17 04:42:59 UTC <vyom> byorgey: I am trying to draw the "Bullring" shown here : http://www.mathcats.com/gallery/15wordcontest.html#bullring and am running into some issues.
+2012-02-17 04:43:31 UTC <vyom> Would be able to tell me how the rotate function https://github.com/deepakjois/hs-logo/blob/master/Diagrams/TwoD/Path/Turtle.hs#L58 if i give it a value like..
+2012-02-17 04:43:57 UTC <vyom> 360 * (1002.0 ** 3) / 1002
+2012-02-17 04:45:32 UTC <vyom> which is a pretty high value 3.6144144e8
+2012-02-17 04:45:35 UTC <byorgey> that's a pretty big number
+2012-02-17 04:45:36 UTC <byorgey> yeah
+2012-02-17 04:45:46 UTC <byorgey> so what's the problem?
+2012-02-17 04:46:53 UTC <byorgey> The rotate function still ought to work I think.
+2012-02-17 04:47:16 UTC <byorgey> but I guess due to precision issues you might get slightly different results, I'm not sure
+2012-02-17 04:47:42 UTC <vyom> i get a really weird output.. it is like this one straight line
+2012-02-17 04:47:54 UTC <byorgey> hmm
+2012-02-17 04:48:00 UTC <vyom> still trying to troubleshoot
+2012-02-17 04:48:32 UTC <vyom> when i evaluate it on the ghci prompt.. i get a different value from when I evaluate it inside my logo interpreter.. so it is possible i am doing something wrong
+2012-02-17 04:49:06 UTC <byorgey> hmmm
+2012-02-17 04:50:21 UTC <vyom> it could be something to do with order of evaluation or something
+2012-02-17 04:51:05 UTC <byorgey> well, I'm going to bed, but if you still haven't figured it out by tomorrow send me some code, or a link to the code, and I could take a look
+2012-02-17 04:52:30 UTC <vyom> i might have figured it out. Thanks for the offer though
+2012-02-17 04:52:33 UTC <vyom> good night!
+2012-02-17 04:54:59 UTC <byorgey> night!
+2012-02-17 22:21:03 UTC <luite> hmm, apfelmus says he's warming up to the ideas of a notebook interface and remote eval :)
+2012-02-17 23:24:27 UTC <byorgey> luite: nice =)
+2012-02-18 00:43:20 UTC <fryguybob> ACTION really needs to make an illustrated version of this with diagrams: http://ebiquity.umbc.edu/blogger/2008/01/19/how-dr-suess-would-prove-the-halting-problem-undecidable/
+2012-02-18 00:49:43 UTC <byorgey> hah, that would be awesome =)
+2012-02-18 01:13:03 UTC <luite> hmm
+2012-02-18 04:50:37 UTC <vyom> mgsloan:  https://github.com/deepakjois/hs-logo/commit/69fd730a15ee16f40f511196e7ee1d418c320c59
+2012-02-18 18:28:57 UTC <vyom> my logo interpreter can generate all these images now https://github.com/deepakjois/hs-logo/tree/master/examples/images
+2012-02-18 18:29:14 UTC <vyom> https://github.com/deepakjois/hs-logo/blob/master/examples/images/jaggy_star.png
+2012-02-18 18:29:24 UTC <vyom> thats my favorite
+2012-02-18 21:47:37 UTC <vyom> here is a first cut at a hs-logo site as I prepare for release: http://deepakjois.github.com/hs-logo/
+2012-02-19 20:20:04 UTC <vyom> i am having problems trying to install diagrams-cairo in a cabal-dev sandbox: http://pastebin.com/AV5Cmes6
+2012-02-19 20:20:28 UTC <vyom> any hints on how i can get around this
+2012-02-19 20:54:34 UTC <byorgey> hi vyom, let me take a look
+2012-02-19 20:54:51 UTC <byorgey> vyom: by the way, the hs-logo examples look really awesome =)
+2012-02-19 20:55:18 UTC <byorgey> vyom: ah, looks like you have GHC 7.4.1, right?
+2012-02-19 20:56:07 UTC <byorgey> vyom: diagrams-cairo-0.4 doesn't work under 7.4.1
+2012-02-19 20:56:47 UTC <vyom> byorgey:  does that mean i shouldnt be using 7.4.1 for now?
+2012-02-19 20:57:07 UTC <byorgey> vyom: you have two options: (1) downgrade GHC; or (2) install the latest darcs version of diagrams, but note that you need the darcs version of gtk2hs under GHC 7.4.1
+2012-02-19 20:57:33 UTC <byorgey> but there will soon be a new release of gtk2hs and also of diagrams
+2012-02-19 20:58:23 UTC <vyom> byorgey: I was having problems with ghc 7.2, because cabal sdist wasnt working. So I decided to upgrade to 7.4 and try my luck instead
+2012-02-19 20:58:33 UTC <byorgey> cabal sdist wasn't working?
+2012-02-19 20:58:36 UTC <vyom> without cabal sdist I cannot make a release
+2012-02-19 20:58:44 UTC <byorgey> wasn't working in what sense?
+2012-02-19 20:59:15 UTC <byorgey> cabal sdist doesn't really depend on the version of GHC at all
+2012-02-19 20:59:22 UTC <byorgey> at least I wouldn't think it does.
+2012-02-19 20:59:54 UTC <byorgey> vyom: well, if you want to make a release now, then you ought to depend on diagrams 0.4, in which case you won't be able to support GHC 7.4 anyway
+2012-02-19 21:00:23 UTC <byorgey> the other option would be to wait for diagrams 0.5 to be released, but I can't tell you exactly when that will be, other than to say I'm working hard on it
+2012-02-19 21:00:55 UTC <vyom> byorgey: yes.. you are right.. I should have probably just focused on getting cabal sdist to work for me. I do have ghc 7.2 on my filesystem so i can downgrade
+2012-02-19 21:01:07 UTC <vyom> i cant remember what cabal sdist was complaining yesterday
+2012-02-19 21:03:03 UTC <vyom> byorgey: anyway.. let me see how far i can get with 7.4.. i will try option 2 above just for fun
+2012-02-19 21:03:12 UTC <byorgey> ok =)
+2012-02-19 21:03:42 UTC <vyom> i can always do a release sometime later.. maybe after 0.5 is released
+2012-02-19 21:03:55 UTC <byorgey> sure
+2012-02-19 21:04:11 UTC <byorgey> I hope it will be sometime in the next couple weeks
+2012-02-19 21:04:43 UTC <vyom> byorgey: cool.. thanks
+2012-02-20 02:19:35 UTC <vyom> i just spent a lot of time download the latest versions of gtkhs and diagrams-* and installing them inside a sandbox for hs-logo
+2012-02-20 02:19:54 UTC <byorgey> cool, did you get it to work?
+2012-02-20 02:19:55 UTC <vyom> looks like everything is configured correctly.. but my output has changed from the previous version
+2012-02-20 02:20:03 UTC <byorgey> oh =(
+2012-02-20 02:20:05 UTC <vyom> the default image size is 252 x 252
+2012-02-20 02:20:25 UTC <vyom> i believe the default in the previous version was 400 x 400
+2012-02-20 02:21:00 UTC <byorgey> ah, yes, previously 400x400 was the default, now if you do not specify a size it will default to whatever the actual size of the diagram is
+2012-02-20 02:21:06 UTC <byorgey> you can just specify an output size
+2012-02-20 02:21:11 UTC <vyom> ah.. ok
+2012-02-20 02:22:03 UTC <vyom> how do I specify size? https://github.com/deepakjois/hs-logo/blob/master/Logo.hs#L51
+2012-02-20 02:22:18 UTC <vyom> on that line -w 400 and -h 400 ?
+2012-02-20 02:22:57 UTC <byorgey> yep
+2012-02-20 02:24:04 UTC <byorgey> hey, neat, I didn't know about withArgs =)
+2012-02-20 02:24:27 UTC <vyom> i love cabal-dev.. took a bit of time setup the dependencies correctly.. but after that it went smoothly
+2012-02-20 02:24:56 UTC <byorgey> yeah, cabal-dev is nice
+2012-02-20 02:26:01 UTC <vyom> i realised that there is a package called active which you will probably release along with diagrams 0.5
+2012-02-20 02:26:18 UTC <byorgey> yes
+2012-02-20 02:26:38 UTC <byorgey> sorry, I should have mentioned that, glad you figured it out =)
+2012-02-20 02:27:18 UTC <vyom> i went hunting in your patch-tag repos, so glad I found it :)
+2012-02-20 02:27:59 UTC <byorgey> =)
+2012-02-20 02:28:30 UTC <vyom> so is there any other backend that is a serious contender for Cairo?
+2012-02-20 02:29:10 UTC <byorgey> vyom: diagrams-postscript works pretty well I think, but it's not released yet
+2012-02-20 02:29:19 UTC <vyom> i would like to help out on any backend that doesnt make me depend on gtk.. i dread writing the installation guide for it :)
+2012-02-20 02:29:24 UTC <byorgey> after the 0.5 release I plan to put some work into an SVG backend
+2012-02-20 02:29:41 UTC <byorgey> yeah, I would love to get away from cairo too
+2012-02-20 02:29:48 UTC <vyom> i will check out postscript
+2012-02-20 02:29:59 UTC <byorgey> patch-tag.com/r/fryguybob/diagrams-postscript
+2012-02-20 02:30:10 UTC <vyom> but SVG would be perfect.. i would love to help out there..
+2012-02-20 02:30:16 UTC <vyom> is there a repo somewhere?
+2012-02-20 02:30:47 UTC <vyom> i meant for SVG.. but ya thanks for the pointer to postscript
+2012-02-20 02:30:49 UTC <byorgey> patch-tag.com/r/felipe/diagrams-svg
+2012-02-20 02:31:09 UTC <byorgey> although someone else wrote an SVG backend a year ago and I am still trying to get him to send me his code
+2012-02-20 02:31:12 UTC <byorgey> =P
+2012-02-20 02:31:19 UTC <vyom> :)
+2012-02-20 02:31:36 UTC <byorgey> help on the SVG backend would be appreciated!
+2012-02-20 02:32:19 UTC <vyom> a tangential question.. I am getting warnings in my code that my import of Control.Applicative is redundant.. is that something to do with GHC 7.4 ?
+2012-02-20 02:32:51 UTC <vyom> i did change my dependency to "base  >= 4.2      && <  4.6"
+2012-02-20 02:33:07 UTC <byorgey> ah, no, I think diagrams now re-exports a few things from Applicative for convenience
+2012-02-20 02:33:16 UTC <fryguybob> What!!! why have I never noticed  withArgs  before!
+2012-02-20 02:33:18 UTC <vyom> earlier is had it as "base        >= 4.2      && <  4.5" and it wasnt playing well with diagrams so i just changed it to match that
+2012-02-20 02:33:34 UTC <vyom> oh ok
+2012-02-20 02:33:35 UTC <vyom> cool
+2012-02-20 02:33:35 UTC <byorgey> vyom: base-4.5 comes with GHC 7.4
+2012-02-20 02:33:50 UTC <byorgey> so in order to build under GHC 7.4,  < 4.5  would not work
+2012-02-20 02:34:03 UTC <byorgey> has nothing in particular to do with diagrams
+2012-02-20 02:34:13 UTC <byorgey> fryguybob: I know, right?
+2012-02-20 02:34:25 UTC <vyom> byorgey: i dont understand, doesnt it mean *less* than 4.5?
+2012-02-20 02:34:43 UTC <fryguybob> byorgey: I've considered inventing it many times... sigh.
+2012-02-20 02:34:47 UTC <byorgey> < 4.5  means the version of base must be less than 4.5, yes.
+2012-02-20 02:34:53 UTC <luite> I'd change it to base < 6.2832 or something to avoid problems with every next version of ghc
+2012-02-20 02:34:56 UTC <byorgey> but GHC 7.4 comes with base-4.5 .
+2012-02-20 02:34:58 UTC <vyom> u mean if i have ghc 7.4 i dont have anything else other than 4.5?
+2012-02-20 02:35:05 UTC <byorgey> correct.
+2012-02-20 02:35:24 UTC <byorgey> fryguybob: hehe
+2012-02-20 02:35:46 UTC <luite> ah I learned about that recently :)
+2012-02-20 02:35:52 UTC <fryguybob> ACTION goes to look at what sort of evil it has to resort to.
+2012-02-20 02:36:53 UTC <luite> hmm, c_setProgArgv
+2012-02-20 02:36:56 UTC <vyom> i love the combinators in the System.FilePath library.. i was writing code for my hs-logo Hakyll site.. and I wanted to automate the rendering of example code and images
+2012-02-20 02:37:10 UTC <vyom> every use case to modify pathnames and there is a function in there
+2012-02-20 02:37:29 UTC <byorgey> yes, System.FilePath is nice
+2012-02-20 02:37:43 UTC <vyom> https://github.com/deepakjois/hs-logo/blob/master/site/Site.hs#L63
+2012-02-20 02:56:25 UTC <Axman6> hmm, getting this when trying to install diagrams-contrib from darcs: http://hpaste.org/64017
+2012-02-20 03:00:57 UTC <byorgey> Axman6: ah, are you on GHC 7.4.1?
+2012-02-20 03:02:30 UTC <fryguybob> Axman6: Same here on 7.4.1
+2012-02-20 03:03:14 UTC <byorgey> ok, do a darcs pull and try again
+2012-02-20 03:03:49 UTC <byorgey> 7.4.1 added (<>) to Data.Monoid, I hadn't realized Data.Monoid gets re-exported through Control.Monad.Writer
+2012-02-20 03:04:39 UTC <Axman6> works now, thanks :)
+2012-02-20 03:05:14 UTC <byorgey> great =)
+2012-02-20 03:06:34 UTC <Axman6> bleh, now i can't install cairo >_<
+2012-02-20 03:06:47 UTC <Axman6> Graphics/Rendering/Cairo/Types.chs:364:12: Could not deduce (Eq a) arising from a use of `toBool' from the context (Num a)
+2012-02-20 03:07:43 UTC <byorgey> Axman6: oh, under GHC 7.4.1 you need darcs gtk2hs
+2012-02-20 03:07:52 UTC <Axman6> ah, ok
+2012-02-20 03:08:15 UTC <Axman6> i might get on that once i've gone and had some lunch
+2012-02-20 03:08:20 UTC <byorgey> ok =)
+2012-02-20 03:08:27 UTC <Axman6> will you be around in an hour or so?
+2012-02-20 03:08:27 UTC <byorgey> ACTION approves of lunch
+2012-02-20 03:08:46 UTC <luite> me too
+2012-02-20 03:08:46 UTC <byorgey> Axman6: I'll probably be in bed
+2012-02-20 03:09:09 UTC <Axman6> well, i'm sure i'll be able to find help somewhere anyway. thanks =)
+2012-02-20 03:09:15 UTC <Axman6> ACTION -> noms
+2012-02-20 03:11:09 UTC <byorgey> oh, drat, my fix re: Control.Monad.Writer for 7.4.1 just broke diagrams-contrib for all *earlier* versions =(
+2012-02-20 03:11:36 UTC <byorgey> it seems we will have to resort to CPP =(
+2012-02-20 03:11:52 UTC <vyom> Axman6: I wrote some bootstrap instructions if you want to be on the cutting edge https://github.com/deepakjois/hs-logo/blob/master/bootstrap_dev.sh
+2012-02-20 03:44:17 UTC <Axman6> vyom: giving it a go now, thanks for the link
+2012-02-20 14:13:31 UTC <av> hello chaps
+2012-02-20 14:13:48 UTC <av> here's a problem of mine, I'm sure you can help:
+2012-02-20 14:14:09 UTC <av> I do this -- withArgs [ "-o", "test.png", "-w", "800", "-h", "800" ] $ defaultMain $ ((text "ABCDEFGHabcdefgh" # fontSize 2 # translate (8,0) <> rect 10 1 # lw 0.1) # translate (-5,0)) <> rect 12 12 # lw 0.2
+2012-02-20 14:14:20 UTC <av> which gives me roughly what I want
+2012-02-20 14:14:51 UTC <av> now I do the same with a different output size -- withArgs [ "-o", "test.png", "-w", "400", "-h", "400" ] $ defaultMain $ ((text "ABCDEFGHabcdefgh" # fontSize 2 # translate (8,0) <> rect 10 1 # lw 0.1) # translate (-5,0)) <> rect 12 12 # lw 0.2
+2012-02-20 14:15:06 UTC <av> and the output is quite different -- the text is shifted
+2012-02-20 14:15:12 UTC <av> why is that?
+2012-02-20 14:41:46 UTC <byorgey> av: hmm, if so that's a bug
+2012-02-20 14:41:55 UTC <byorgey> av: are you using 0.4 (from Hackage) or darcs?
+2012-02-20 14:48:20 UTC <byorgey> av: I tried your example with the latest darcs version of diagrams and the outputs I get are slightly different but not by much, just a tiny shift
+2012-02-20 14:48:34 UTC <byorgey> av: how much of a difference are you talking about?
+2012-02-20 14:49:08 UTC <av> byorgey: I tried 0.4 via cabal
+2012-02-20 14:49:14 UTC <byorgey> av: OK.
+2012-02-20 14:49:20 UTC <av> byorgey: the shift isn't very much, but enough to be noticed
+2012-02-20 14:50:14 UTC <av> byorgey: in my example, you can clearly see the blank triangle between the 'A' and the rectangles change quite a bit
+2012-02-20 14:50:34 UTC <byorgey> yes, OK, I see that too.
+2012-02-20 14:51:17 UTC <mgsloan> uh-oh. this is probably a text thing.
+2012-02-20 14:51:19 UTC <byorgey> I think the problem is simply that we try to pretend that text is scale-invariant when in fact it is not.
+2012-02-20 14:51:32 UTC <byorgey> fonts render differently at different sizes.
+2012-02-20 14:51:49 UTC <byorgey> i.e. rendering something at font size X and then scaling by two is NOT the same as rendering at font size 2X.
+2012-02-20 14:52:13 UTC <byorgey> still, it's worth thinking about whether we can do better.
+2012-02-20 14:52:28 UTC <byorgey> av: could you please file a bug for this, with your example attached, on the bug tracker?
+2012-02-20 14:52:43 UTC <byorgey> http://code.google.com/p/diagrams/issues/list
+2012-02-20 14:53:49 UTC <av> byorgey: thanks -- will do
+2012-02-20 14:54:26 UTC <av> byorgey: I quite like TeX's font handling, maybe we can learn from that
+2012-02-20 14:54:40 UTC <byorgey> yes, I'm sure we have a lot to learn from TeX!
+2012-02-20 15:13:42 UTC <mgsloan> av - it's likely because now it uses the font's descent and ascent when computing the center of the text
+2012-02-20 15:14:25 UTC <mgsloan> https://patch-tag.com/r/byorgey/diagrams-cairo/snapshot/hash/20111224013227-57657-9b40845a3aaa990c46a1a4839201e7e29a0af121/patch
+2012-02-20 15:14:59 UTC <byorgey> mgsloan: no, av encountered this with the released 0.4 version, which doesn't include that patch
+2012-02-20 15:15:10 UTC <mgsloan> ah
+2012-02-20 15:15:58 UTC <mgsloan> ACTION joined too late to see that.  Are there realtime logs, btw?
+2012-02-20 15:16:50 UTC <byorgey> mgsloan: no, there aren't, but if someone wants to set some up it would be great
+2012-02-20 15:18:13 UTC <mgsloan> could be convenient on occasion
+2012-02-20 15:18:18 UTC <byorgey> agreed
+2012-02-20 15:19:54 UTC <av> byorgey: issue #67 it is
+2012-02-20 15:20:04 UTC <mgsloan> I just need to set up my desktop with a persistent irc client.  As-is I broadcast to the world every time I lose wireless or go to sleep
+2012-02-20 15:20:27 UTC <mgsloan> which can be interesting for future self-data-mining, sure
+2012-02-20 15:20:33 UTC <byorgey> hehe
+2012-02-20 15:20:50 UTC <byorgey> mgsloan: what OS is your desktop?
+2012-02-20 15:21:02 UTC <mgsloan> everything's linux
+2012-02-20 15:21:05 UTC <mgsloan> ubuntu
+2012-02-20 15:21:18 UTC <byorgey> in that case it's pretty easy, just run an IRC client inside 'screen'
+2012-02-20 15:21:22 UTC <mgsloan> yup
+2012-02-20 15:21:30 UTC <byorgey> that's what I do
+2012-02-20 15:22:15 UTC <mgsloan> I know what all ye 1337 irc haxxors do, I saw all your irssi at OPLSS
+2012-02-20 15:22:36 UTC <mgsloan> I might try to go to that again!
+2012-02-20 15:22:49 UTC <byorgey> yeah, I use irssi
+2012-02-20 15:23:34 UTC <byorgey> can be a bit annoying figuring out how to get it set up the way you like at first, but works pretty well once you do
+2012-02-20 15:25:04 UTC <mgsloan> looks like they're keeping on the really stand-out good lecturers, and adding Awodey (!) .  It'd be interesting to have all the best lecturers from last time, but taking 2x the time
+2012-02-20 15:25:24 UTC <mgsloan> I kinda want to make an irc client that does conversation-threading / folding
+2012-02-20 15:35:48 UTC <fryguybob> ACTION recently made the switch to irssi and screen.
+2012-02-20 15:37:52 UTC <tgeeky> i use irssi too
+2012-02-20 15:37:57 UTC <tgeeky> but I am not tooooo fond of it.
+2012-02-20 15:43:32 UTC <fryguybob> It appears that I didn't build it with perl support so I don't have any scripts for fancy things like nick coloring :(
+2012-02-20 15:43:50 UTC <mgsloan> I switched for a while, but ended up back on pidgin
+2012-02-20 15:44:02 UTC <mgsloan> for no real reason
+2012-02-20 15:47:48 UTC <luite> http://hdiff.luite.com/tmp/err1.png http://hdiff.luite.com/tmp/err2.png http://hdiff.luite.com/tmp/err3.png
+2012-02-20 15:49:30 UTC <mgsloan> :O That's beautiful!
+2012-02-20 15:50:01 UTC <fryguybob> defaul = id; tMain = defaultMain -- Fixed that for you
+2012-02-20 15:52:11 UTC <luite> fryguybob: thanks it worked: http://hdiff.luite.com/tmp/err4.png
+2012-02-20 15:53:36 UTC <luite> mgsloan: the green thing should turn red if there are errors
+2012-02-20 15:53:50 UTC <luite> going to fix that later :)
+2012-02-20 15:54:23 UTC <mgsloan> yup, all in good time
+2012-02-20 15:55:19 UTC <luite> I'm going to move around some UI elements first, probably everything to the left, and remove the sideways text, it's causing some problems
+2012-02-20 15:55:48 UTC <luite> for some reason if you rotate a 100x10 pixels thing 90 degrees, then it becomes a 100x100 thing
+2012-02-20 15:56:01 UTC <mgsloan> since I'm using diagrams for my type explanations stuff, once that's figured out (going to take a long while still!), by that time we'll have an SVG backend, and so could totally be a wolfgang plugin
+2012-02-20 15:56:17 UTC <luite> yeah that would be great
+2012-02-20 15:56:44 UTC <mgsloan> the rise of the rich haskell repls / workbenches!
+2012-02-20 15:56:58 UTC <fryguybob> ACTION wonders if you could get warnings: "Your diagram is not pretty enough."
+2012-02-20 15:57:03 UTC <mgsloan> lol
+2012-02-20 15:57:42 UTC <mgsloan> ACTION wants "here are 12 ways the computer thinks your diagram might look prettier.  try one?"
+2012-02-20 15:57:45 UTC <luite> I still get an occasional error `x is not in scope' sometimes, need to fix that, but have no idea where it comes from
+2012-02-20 15:58:32 UTC <mgsloan> does it have to do with how you're driving the interpreter?
+2012-02-20 15:58:50 UTC <fryguybob> luite: Always have x in scope.
+2012-02-20 15:58:55 UTC <luite> dunno, the interpreter says that it has loaded the module, but apparently it hasn't
+2012-02-20 15:59:20 UTC <luite> or my check is wrong, or something :)
+2012-02-20 16:02:59 UTC <luite> and the page menu (which contains save, upload resource, permissions, that kind of stuff) is going to move away from the top bar as well
+2012-02-20 16:03:56 UTC <tgeeky> "It looks like you're trying to make a diagram of a paperclip. I am Clippy, prepare to die!"
+2012-02-20 16:04:23 UTC <luite> oh and it needs a source code view, since merge markers don't really mix well with the notebook view
+2012-02-20 16:04:58 UTC <tgeeky> nooo, you just need to perfect the vertical-zipping of documents idea I came up with :)
+2012-02-20 16:05:09 UTC <luite> vertical whatting? :p
+2012-02-20 16:05:30 UTC <tgeeky> luite: you know those editors which use visual tabstops and such?
+2012-02-20 16:05:47 UTC <tgeeky> where the document ends up being a collection of empty and non-empty blocks
+2012-02-20 16:06:17 UTC <luite> hmm, dunno
+2012-02-20 16:06:24 UTC <tgeeky> http://visualstudiogallery.msdn.microsoft.com/site/view/file/56477/1/columnblocks_coloured.gif
+2012-02-20 16:06:27 UTC <tgeeky> something like that
+2012-02-20 16:07:05 UTC <luite> hm, ok, and what was your idea?
+2012-02-20 16:07:44 UTC <tgeeky> write a zipper that vertically zips together: source, comments, git/diff annotations, compile errors, user comments
+2012-02-20 16:08:25 UTC <tgeeky> and allow the user to enable/disable each
+2012-02-20 16:08:30 UTC <luite> uh how would you zip in the errors? visually?
+2012-02-20 16:09:02 UTC <tgeeky> yeah, my original idea (I don't know how to do this) is that errors would have the effect of "darkening" the relevant code block
+2012-02-20 16:09:13 UTC <luite> the problem with merge markers is if you edit a page and someone else saves a copy before you save yours, you get the choice to overwrite, discard your own changes and merge
+2012-02-20 16:09:31 UTC <tgeeky> luite: I would just save both in that case
+2012-02-20 16:09:43 UTC <tgeeky> and let explicit mergers take care of it later
+2012-02-20 16:09:44 UTC <luite> oh you can always cancel and save as...
+2012-02-20 16:10:17 UTC <tgeeky> either way, that is actually a seprate issue I think
+2012-02-20 16:10:24 UTC <luite> yeah I think it is
+2012-02-20 16:10:36 UTC <tgeeky> my idea doesn't handle multiple copies of the same document at all
+2012-02-20 16:10:43 UTC <tgeeky> which also makes me think it's useless
+2012-02-20 16:10:45 UTC <mgsloan> I don't have a zipper for it,  but for panopti, I plan on having something that sounds similar to that: Marks.  Intervals of the text that are annotated with some additional information.
+2012-02-20 16:10:54 UTC <luite> it's not really fully implemented yet, I just call diff or merge or something to get a merged output
+2012-02-20 16:11:40 UTC <luite> and give that back to the user, but it's not always a valid notebook of course, if it has merge markers, but a user could easily fix those with a plain text editor
+2012-02-20 16:12:12 UTC <tgeeky> which are the merge markers in your picture(s)?
+2012-02-20 16:12:18 UTC <luite> there aren't any
+2012-02-20 16:12:35 UTC <luite> it's another issue, this was just to test the ghc api error reporting stuff
+2012-02-20 16:12:57 UTC <tgeeky> looks nice
+2012-02-20 16:12:57 UTC <mgsloan> Currently I have ast, types, type-subset-contexts, compile error, user cursors, and parse resolutions stored as marks
+2012-02-20 16:13:03 UTC <luite> i had to fix some stuff to make it properly report source code spans where it finds the error
+2012-02-20 16:13:18 UTC <luite> had only line numbers first, this is a bit nicer
+2012-02-20 16:13:22 UTC <tgeeky> that said, the box is green and it has errors :O
+2012-02-20 16:13:33 UTC <luite> yes as I said, i still need to fix the box :)
+2012-02-20 16:14:05 UTC <luite> but since the rotated text is a bit problematic, I want to fix the gui first
+2012-02-20 16:14:32 UTC <tgeeky> luite: do you show any indicator if you have a module that is compiled (not interpreted) and with -O2?
+2012-02-20 16:14:40 UTC <luite> no
+2012-02-20 16:14:50 UTC <tgeeky> everything with this is interpreted?
+2012-02-20 16:15:29 UTC <luite> well, in the current version yes, but that's one of the things remaining on the todo list before launch
+2012-02-20 16:18:04 UTC <luite> I think it will basicaly be this: all saved pages will be compiled once in a while, so if you import, say, Wolfgang.User.Tgeegky.MyModule, you can assume that it will be compiled. Perhaps some import statement tooltip thing could give exact info on the imported module
+2012-02-20 16:18:30 UTC <luite> package if it's a non-wiki module, revision date/time, compilation time, for a wiki module
+2012-02-20 16:18:44 UTC <luite> good idea btw, tnx
+2012-02-20 16:38:52 UTC <tgeeky> I did this?
+2012-02-20 16:39:04 UTC <tgeeky> sweet
+2012-02-20 16:39:24 UTC <tgeeky> luite: that sounds like exactly what 'shake' would be useful for
+2012-02-20 16:41:33 UTC <tgeeky> anyway, i'm going to be configuring a router on here, so I'll probably get dropped a hundred times
+2012-02-20 16:41:35 UTC <tgeeky> bbiaf
+2012-02-20 17:42:55 UTC <luite> what's shake?
+2012-02-20 18:02:06 UTC <luite> tgeeky_: what's shake?
+2012-02-20 18:15:57 UTC <fryguybob> luite: http://community.haskell.org/~ndm/shake/ perhaps?
+2012-02-20 18:18:22 UTC <luite> ah right
+2012-02-20 18:18:29 UTC <luite> hm maybe
+2012-02-20 22:05:02 UTC <vyom> added an installation guide to hs-logo http://deepakjois.github.com/hs-logo/installation.html Now waiting for the day that section goes down to one line :)
+2012-02-20 22:13:47 UTC <byorgey> vyom: nice =)
+2012-02-20 22:14:01 UTC <byorgey> vyom: typo: "cabal instal hs-logo"
+2012-02-20 22:14:50 UTC <luite> vyom: does brew have ghc 7.4.1?
+2012-02-20 22:15:41 UTC <byorgey> vyom: nice website =)
+2012-02-20 22:18:36 UTC <luite> aw, thought that i had diagrams 0.5 installed :(
+2012-02-20 22:20:46 UTC <vyom> luite: let me check.. i dont know
+2012-02-20 22:22:59 UTC <vyom> luite: It looks like brew has GHC 7.4.1 can be installed using brew install --64bit --devel
+2012-02-20 22:24:20 UTC <luite> oh they're fast :) macports still has 6.10.4
+2012-02-20 22:26:31 UTC <vyom> I havent tried it myself. I installed GHC 7.4 and cabal by hand. I am updating the instructions now to use brew with --devel flags
+2012-02-20 22:26:36 UTC <vyom> byorgey: thanks!
+2012-02-20 22:26:45 UTC <vyom> will fix the typo
+2012-02-20 22:27:36 UTC <luite> vyom: yeah me too :) i already have gtk2hs installed because someone in #haskell asked me to test something, so if byorgey just uploads 0.5 to hackage i can test hs-logo easily ;)
+2012-02-20 22:28:53 UTC <byorgey> I'm working on it!
+2012-02-20 22:29:00 UTC <byorgey> I want to wait for the gtk2hs release though
+2012-02-20 22:30:06 UTC <luite> hehe no hurries, I'm busy relayouting wolfgang :)
+2012-02-20 22:33:59 UTC <luite> since the rotated text buttons caused some annoying problems (they stoled focus from other buttons)
+2012-02-20 23:05:51 UTC <vyom> now that this initial release is out of the way, i wanna start implementing more logo features..
+2012-02-20 23:06:11 UTC <vyom> i really want robust error handling
+2012-02-20 23:06:23 UTC <vyom> any good references or tips on that?
+2012-02-20 23:06:58 UTC <vyom> right now my code is littered with "error" all over
+2012-02-20 23:07:07 UTC <vyom> not sure if that is the right way to go about it
+2012-02-20 23:07:15 UTC <byorgey> probably not =)
+2012-02-20 23:07:27 UTC <vyom> :)
+2012-02-20 23:08:20 UTC <byorgey> "error" is OK for things where the only way that case could be reached is because of a bug/broken invariant etc.
+2012-02-20 23:08:32 UTC <byorgey> but not really appropriate for e.g. errors that could be caused by bad user input.
+2012-02-20 23:09:20 UTC <byorgey> so, e.g. if you "know" a particular list will not be empty you can write   foo [] = error "Empty list in foo, please report this as a bug!"; foo (x:xs) = ...
+2012-02-20 23:10:33 UTC <byorgey> vyom: for more robust error handling, it depends on the exact use case, but generally I would recommend the Error monad
+2012-02-20 23:11:14 UTC <byorgey> vyom: you create a custom type to represent all possible errors, then within code using the Error monad you can throw and catch your custom errors
+2012-02-20 23:12:08 UTC <byorgey> but they are not real exceptions, and cannot cause your program to crash
+2012-02-20 23:14:09 UTC <byorgey> so e.g.   data MyErrors = EmptyList String | ...;  instance Error MyErrors ...;  foo :: [Int] -> Error MyErrors  Int; foo [] = throw (EmptyList "foo"); foo (x:xs) = ...
+2012-02-20 23:22:42 UTC <byorgey> vyom: in the implementation of 'towards',  setHeading . uncurry atan2 $ pt ^-^ p   isn't this a bug (which is also present in the diagrams-contrib version)?
+2012-02-20 23:23:06 UTC <byorgey> setHeading takes an angle in degrees but atan2 computes an angle in radians
+2012-02-20 23:43:01 UTC <vyom> byorgey: I dont believe any primitive i have in the interpreter exercises it.. so it might very well be the case..
+2012-02-20 23:44:05 UTC <vyom> and thanks for the input on the errors.. I believe I saw that pattern in this Scheme interpreter in Haskell called Husk
+2012-02-20 23:44:14 UTC <vyom> i will investigate further
+2012-02-20 23:50:19 UTC <vyom> byorgey: and yes.. I intend to send a patch to diagrams-contrib with the changes I made to the turtle. If you dont get to it.. I will submit a fix to this bug you mentioned as well
+2012-02-21 00:24:43 UTC <luite> http://hdiff.luite.com/tmp/err5.png <- moved some stuff around, thoughts?
+2012-02-21 00:26:07 UTC <vyom> luite: what is wolfgang?
+2012-02-21 00:27:48 UTC <alpounet> luite, that looks great!
+2012-02-21 00:28:00 UTC <alpounet> haven't seen what wolfgang looks like in months
+2012-02-21 00:28:14 UTC <luite> volfgang is a top-secret prozject for to ze evaluation of ze haskell in ze browzer
+2012-02-21 00:28:37 UTC <vyom> luite: I assume there is no URL i can visit to learn more about it then :)
+2012-02-21 00:31:50 UTC <luite> not yet, working towards a release :)
+2012-02-21 00:35:02 UTC <luite> alpounet: there are more images, many are a bit outdated now
+2012-02-21 00:35:40 UTC <alpounet> luite, something along the lines of what apfelmus suggested?
+2012-02-21 00:35:57 UTC <luite> yes, but I was first! ;p
+2012-02-21 00:37:01 UTC <luite> I started with a wiki version, which probably is a bit more work, but I really like the idea of sharing code
+2012-02-21 00:37:20 UTC <luite> a local version will be made later, I already made some changes earlier to make that easier
+2012-02-21 00:40:25 UTC <luite> alpounet: the latest change made the content column variable width
+2012-02-21 00:40:42 UTC <luite> I hope that's agood choice
+2012-02-21 00:41:12 UTC <alpounet> hmm
+2012-02-21 00:41:20 UTC <alpounet> does it have a max-width thoughh?
+2012-02-21 00:41:58 UTC <luite> yeah for text
+2012-02-21 00:42:23 UTC <luite> but code lines can be longer, and images (and other interactive stuff) wider
+2012-02-21 00:45:56 UTC <luite> http://hdiff.luite.com/tmp/err6.png <- it still looks a bit odd with a wide window, since I don't yet properly centrate content that fits in the content column
+2012-02-21 00:50:58 UTC <alpounet> well
+2012-02-21 00:51:16 UTC <alpounet> as long as you don't have to scroll (horizontally) during ten seconds to read the end of a line
+2012-02-21 00:51:18 UTC <alpounet> it's fine :p
+2012-02-21 00:52:40 UTC <luite> hehe no even in the editor, long lines are properly line broken
+2012-02-21 00:53:06 UTC <luite> they don't get wider than the browser window, unless you type something like aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+2012-02-21 00:54:19 UTC <alpounet> so do not put wolfgang in the hands of a newborn, or a cat, and it should be fine
+2012-02-21 00:59:58 UTC <mgsloan> luite: Good change! It's red now!
+2012-02-21 01:01:23 UTC <luite> yeah, sometimes it's red when it shouldn't be :(
+2012-02-21 01:01:35 UTC <luite> the backend sometimes loses the file it's loaded
+2012-02-21 01:05:38 UTC <luite> http://hdiff.luite.com/tmp/pagemenu.png <- last screenshot :)
+2012-02-21 01:06:17 UTC <alpounet> cool
+2012-02-21 01:10:23 UTC <mgsloan> are you going to (only eventually - I think earlier release is better) support propagating changes between offline and online asynchronously?  I suppose normal version control would probably work, but I've recently been tinkering with implementing "commutative replicated data types" in Haskell
+2012-02-21 01:11:16 UTC <luite> online will be the first priority
+2012-02-21 01:12:27 UTC <luite> there is really not much elegance in the code, but since saving a page is relatively simple for a client (log in, get id of latest revision, POST new version and say that parent id is the latest one)
+2012-02-21 01:14:00 UTC <mgsloan> the concept of crdts is very simple - make the data you want to synchronize across hosts be stored in such a way that synchronization is commutative - which implies everyone will eventually end up in the same state
+2012-02-21 01:14:45 UTC <luite> hmm, that sounds like not really easy to do with this
+2012-02-21 01:16:07 UTC <mgsloan> if you make the online version centralized, then the javascript likely wouldn't need to know about it
+2012-02-21 01:17:04 UTC <luite> hmm, what about multiple users writing to a file?
+2012-02-21 01:17:10 UTC <luite> overlapping patches
+2012-02-21 01:17:47 UTC <luite> you could make them commutative somehow, but probably not preserve everything you want
+2012-02-21 03:40:11 UTC <Axman6> byorgey: you about? I'm wondering how one runs the fibCall example you gave me. it either complains bout not output file given, or tells me it didn't expect an argument...
+2012-02-21 03:41:03 UTC <Axman6> hmmm, ok -o foo.png makes it not complain, but it's not terminating either (even with ^C)
+2012-02-21 03:42:35 UTC <Axman6> ACTION must head to a lecture now
+2012-02-21 07:02:59 UTC <Axman6> hmm, this channel has really been dead since 2? :\
+2012-02-21 07:19:11 UTC <shachaf> There's a channel for diagrams?
+2012-02-21 07:19:30 UTC <Axman6> yes
+2012-02-21 10:47:28 UTC <byorgey> Axman6: yeah, you specify an output file with -o (you can see all the options with --help)
+2012-02-21 10:47:37 UTC <byorgey> Axman6: the nontermination is strange though
+2012-02-21 10:54:03 UTC <byorgey> Axman6: note you probably want to specify an output size too, e.g.  ./fibCall -o foo.png -w 400
+2012-02-21 10:54:28 UTC <byorgey> but leaving off the size shouldn't cause nontermination
+2012-02-21 12:48:34 UTC <luite> meh I had to unfix the wolfgang top bar because the cursor could get stuck under it :(
+2012-02-21 13:19:31 UTC <luite> (in better news, jump to error works now)
+2012-02-21 13:52:26 UTC <fryguybob> luite: You are going to make having errors so nice we will want to write them into our programs.
+2012-02-21 13:58:53 UTC <byorgey> "aw, dang, no errors!"
+2012-02-21 13:59:02 UTC <byorgey> ACTION inserts random space in the middle of a keyword
+2012-02-21 14:03:24 UTC <fryguybob> One more reason not to write Ruby
+2012-02-21 15:14:02 UTC <luite> http://hdiff.luite.com/tmp/err7.png <- without fixed top bar it looks like this now
+2012-02-21 15:19:11 UTC <fryguybob> luite: Looks nice.
+2012-02-21 15:20:06 UTC <luite> yeah I'm reasonably happy with it, the blue bar is still there if you load the page, it just scrolls out of view with the contents
+2012-02-21 15:21:44 UTC <fryguybob> luite: I was about to ask that :D
+2012-02-21 15:23:39 UTC <luite> oh and notice that I've now properly centrated the images!
+2012-02-21 15:24:25 UTC <luite> they can be bigger and will remain centrated until they are around 50 pixels wider than the text at both sides, after that they grow to the right
+2012-02-21 15:24:54 UTC <byorgey> luite: looks awesome!
+2012-02-21 15:33:12 UTC <luite> can you choose prettier examples for the next version of your diagrams tutorial by the way? ;)
+2012-02-21 15:33:25 UTC <byorgey> patches welcome ;)
+2012-02-21 15:34:20 UTC <luite> hehe nah it's not that important
+2012-02-21 15:40:25 UTC <byorgey> luite: although if there are any examples you think are *particularly* ugly I can improve a few =)
+2012-02-21 15:42:12 UTC <luite> no no, that's such an ad hoc solution, you should encode prettiness in their types so that each backend can choose which ones to render
+2012-02-21 15:44:45 UTC <byorgey> ah, good idea
+2012-02-21 15:45:33 UTC <byorgey> guess we'd better port diagrams to Agda
+2012-02-21 15:46:01 UTC <luite> hehe i'd better add an agda interpreter
+2012-02-21 15:46:54 UTC <byorgey> nah, there's no need to *run* Agda code
+2012-02-21 15:47:24 UTC <byorgey> if your diagram typechecks it will constitute a proof that it is sufficiently pretty and illustrates whatever you were trying to illustrate (we can put that in the type too)
+2012-02-21 15:47:35 UTC <byorgey> in which case there's no need to actually render it.
+2012-02-21 15:47:58 UTC <luite> ah good point
