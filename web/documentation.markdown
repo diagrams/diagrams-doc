@@ -24,6 +24,13 @@ Documentation on Hackage:
   
   XXX link to versions on this web page instead!
 
+Wiki
+----
+
+* [Diagrams wiki](http://www.haskell.org/haskellwiki/Diagrams) --
+  frequently asked questions, installation instructions, examples,
+  tips and tricks, links to related projects, *etc.*
+
 Blog posts/other
 ----------------
 
