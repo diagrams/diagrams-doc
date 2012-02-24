@@ -72,15 +72,10 @@ main = hakyll $ do
             >>> requireAllA ("gallery/*.lhs" `mappend` inGroup Nothing) buildGallery
             >>> mainCompiler
 
-      -- export .png files
---    match "gallery/*.png" $ do
---        route idRoute
---        compile copyFileCompiler
-
-      -- generate .png from .lhs
-    group "png" $ match "gallery/*.lhs" $ do
-        route $ setExtension "png"
-        compile $ unsafeCompiler compilePng
+      -- generate .svg from .lhs
+    group "svg" $ match "gallery/*.lhs" $ do
+        route $ setExtension "svg"
+        compile $ unsafeCompiler compileSvg
 
       -- build syntax-highlighted source code for examples
     group "gallery" $ match "gallery/*.lhs" $ do
@@ -96,18 +91,18 @@ main = hakyll $ do
         route idRoute
         compile (readPageCompiler >>^ pageBody)
 
-compilePng :: Resource -> IO LB.ByteString
-compilePng resource = do
+compileSvg :: Resource -> IO LB.ByteString
+compileSvg resource = do
     _ <- system $ "cd gallery && ./Build.exe " ++ moduleName ++ " " ++ tmpPath
     LB.readFile tmpPath
   where
     moduleName = takeBaseName $ unResource resource
-    tmpPath    = "/tmp/" ++ moduleName ++ ".png"
+    tmpPath    = "/tmp/" ++ moduleName ++ ".svg"
 
 mainCompiler = applyTemplateCompiler "templates/default.html"
            >>> relativizeUrlsCompiler
 
-setImgURL    = setURL "png"
+setImgURL    = setURL "svg"
 setHtmlURL   = setURL "html"
 setURL ext p = trySetField (ext ++ "url") (replaceExtension (getField "url" p) ext) p
 

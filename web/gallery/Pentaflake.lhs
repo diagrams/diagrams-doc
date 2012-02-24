@@ -9,10 +9,6 @@ height: 400
 width: 400
 ---
 
-> {-# LANGUAGE NoMonomorphismRestriction #-}
-> module Pentaflake where
->
-> import Diagrams.Prelude
 > import qualified Data.Colour as C
 
 We can use the [`colour`

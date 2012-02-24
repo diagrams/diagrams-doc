@@ -9,10 +9,6 @@ height: 400
 width: 400
 ---
 
-> {-# LANGUAGE NoMonomorphismRestriction #-}
-> module Sierpinski where
-> import Diagrams.Prelude
-> 
 > sierpinski 1 = t
 > sierpinski n =     s
 >                   ===

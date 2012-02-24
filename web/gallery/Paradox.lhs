@@ -9,10 +9,6 @@ height: 200
 width: 400
 ---
 
-> {-# LANGUAGE NoMonomorphismRestriction #-}
-> module Paradox where
-> import Diagrams.Prelude
-> 
 > fibs = 0 : 1 : zipWith (+) fibs (tail fibs)
 > 
 > thick = 0.15
@@ -29,9 +25,9 @@ The trapezoid and triangle shapes, with sides lengths based on two
 Fibonacci numbers.
 
 > trap s1 s2 = lw 0 . strokeT . close
->            $ fromOffsets [(0,-s2), (s2,0), (0,s1)]
+>            . fromOffsets . map r2 $ [(0,-s2), (s2,0), (0,s1)]
 > tri s1 s2  = lw 0 .  strokeT . close
->            $ fromOffsets [(s1,0), (0,s1+s2)]
+>            . fromOffsets . map r2 $ [(s1,0), (0,s1+s2)]
 
 Draw the paradox diagram based on the nth Fibonacci number.
 
@@ -53,9 +49,9 @@ The four shapes assembled into a square.
 >         sq = (if drawDiags then sqDiags else mempty)
 >              <> grid (f1+f2) (f1+f2)
 >              <> sqShapes
->         sqDiags = (fromVertices [P (0,s2), P (s2,s1)] <>
->                    fromVertices [P (s2,0), P (s2,s1+s2)] <>
->                    fromVertices [P (s2,0), P (s1+s2,s1+s2)])
+>         sqDiags = (fromVertices [p2 (0,s2), p2 (s2,s1)] <>
+>                    fromVertices [p2 (s2,0), p2 (s2,s1+s2)] <>
+>                    fromVertices [p2 (s2,0), p2 (s1+s2,s1+s2)])
 >                 # stroke
 >                 # lw thick
 >                 # freeze
@@ -80,9 +76,9 @@ The four shapes assembled into a rectangle.
 >         bot = trap1 # alignB ||| rotateBy (-1/4) tri1 # alignB
 >         top = rotateBy (1/4) tri2 # alignT ||| trap2 # alignT
 > 
->         rDiags = (fromVertices [P (0,s2), P (2*s2+s1, 0)] <>
->                   fromVertices [P (s2,0), P (s2,s1)] <>
->                   fromVertices [P (s1+s2,s2-s1), P (s1+s2,s2)]
+>         rDiags = (fromVertices [p2 (0,s2), p2 (2*s2+s1, 0)] <>
+>                   fromVertices [p2 (s2,0), p2 (s2,s1)] <>
+>                   fromVertices [p2 (s1+s2,s2-s1), p2 (s1+s2,s2)]
 >                   )
 >                  # stroke
 >                  # lw thick

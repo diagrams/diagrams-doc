@@ -2,64 +2,58 @@
 
 import Diagrams.Prelude
 import Diagrams.Backend.Cairo
-import Diagrams.Backend.Cairo.Internal
 
-import Language.Haskell.Interpreter
+import Diagrams.Builder
 
 import qualified System.FilePath as FP
 import System.Environment
 
-import Data.Typeable
-
 import Data.List (isPrefixOf)
-import Control.Arrow ((&&&))
+import Control.Arrow ((&&&), second)
 
-deriving instance Typeable Any
+import qualified Data.Map as M
+import Data.List.Split
+import Data.Maybe
 
-diagramWitness :: Diagram Cairo R2
-diagramWitness = error "Diagram Witness"
+compileExample :: String -> String -> IO ()
+compileExample lhs outFile = do
+  let fmt = case FP.takeExtension outFile of
+              ".png" -> PNG
+              ".svg" -> SVG
+              ".ps"  -> PS
+              ".pdf" -> PDF
+              _     -> PNG
 
-setDiagramImports :: MonadInterpreter m => String -> m ()
-setDiagramImports m = do
-    loadModules [m]
-    setTopLevelModules [m]
-    setImports [ "Prelude"
-               , "Diagrams.Prelude"
-               , "Graphics.Rendering.Diagrams.Core"
-               , "Diagrams.Backend.Cairo"
-               , "Diagrams.Backend.Cairo.Internal"
-               , "Data.Monoid"
-               ]
+  f   <- readFile lhs
+  let (fields, f') = parseFields f
 
-compileExample :: String -> String -> Int -> Int -> IO ()
-compileExample m outFile w h = do
-    x <- runInterpreter $ do
-      setDiagramImports m
-      d <- interpret "example" diagramWitness
-      let w' = fromIntegral w
-          h' = fromIntegral h
-      liftIO . fst $ renderDia Cairo (CairoOptions outFile (Dims w' h') PNG) d
-    case x of
-      Left e -> ppError e
-      Right _ -> return ()
+      w = fromMaybe 400 (read <$> M.lookup "width" fields)
+      h = fromMaybe 400 (read <$> M.lookup "height" fields)
 
+      exts = fromMaybe [] (splitOn "," <$> M.lookup "exts" fields)
 
-ppError :: InterpreterError -> IO ()
-ppError (UnknownError e) = putStrLn $ "UnknownError: " ++ e
-ppError (WontCompile es) = putStr . unlines . map errMsg $ es
-ppError (NotAllowed e)   = putStrLn $ "NotAllowed: " ++ e
-ppError (GhcException e) = putStrLn $ "GhcException: " ++ e  -- TODO: can we actually recover from this?
+  res <- buildDiagram
+           Cairo
+           zeroV
+           (CairoOptions outFile (Dims (fromIntegral w) (fromIntegral h)) fmt)
+           f'
+           "example"
+           exts
+           [ "Diagrams.Backend.Cairo"
+           ]
+  case res of
+    Left err      -> putStrLn ("Error while compiling " ++ lhs) >> ppError err
+    Right (act,_) -> act
 
-getDimens fileName = extractDimens `fmap` readFile fileName
-
-extractDimens = (getW &&& getH) . lines
-  where
-    getW = getField "width"
-    getH = getField "height"
-    getField f = read . drop (length f + 2) . head . filter ((f ++ ":") `isPrefixOf`)
+parseFields :: String -> (M.Map String String, String)
+parseFields s = (fieldMap, unlines $ tail rest)
+  where (fields, rest) = break (=="---") . tail . lines $ s
+        fieldMap       = M.unions
+                       . map ((uncurry M.singleton) . second (drop 2) . break (==':'))
+                       $ fields
 
 main = do
   [name, outFile] <- getArgs
-  let name' = FP.dropExtension name
-  (w,h) <- getDimens ((FP.<.>) name' "lhs")
-  compileExample name' outFile w h
+  let name'   = FP.dropExtension name
+      lhsName = (FP.<.>) name' "lhs"
+  compileExample lhsName outFile

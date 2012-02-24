@@ -9,11 +9,6 @@ height: 400
 width: 400
 ---
 
-> {-# LANGUAGE NoMonomorphismRestriction #-}
-> module Hilbert where
-> 
-> import Diagrams.Prelude
-> 
 > hilbert = iterate expand mempty where
 >   expand t = alignBL $ hcat [u, hrule 1, reflectX u] where
 >              u = vcat [t, vrule 1, rotateBy (3/4) t]

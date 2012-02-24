@@ -15,5 +15,5 @@ Build.exe : Build.hs
 #	rm -f *~
 #	rm -f *.hi
 
-# NOTE: all the above is commented out because we generate .pngs from
+# NOTE: all the above is commented out because we generate .svgs from
 # hakyll.hs now.
