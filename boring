@@ -118,6 +118,7 @@
 (^|/)web/manual($|/)
 \.xml$
 \.png$
+\.svg$
 \.exe$
 \.html$
 
