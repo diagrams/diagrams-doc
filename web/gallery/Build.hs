@@ -27,20 +27,17 @@ compileExample lhs outFile = do
   f   <- readFile lhs
   let (fields, f') = parseFields f
 
-      w = fromMaybe 400 (read <$> M.lookup "width" fields)
-      h = fromMaybe 400 (read <$> M.lookup "height" fields)
-
-      exts = fromMaybe [] (splitOn "," <$> M.lookup "exts" fields)
+      w = read <$> M.lookup "width" fields
+      h = read <$> M.lookup "height" fields
 
   res <- buildDiagram
            Cairo
            zeroV
-           (CairoOptions outFile (Dims (fromIntegral w) (fromIntegral h)) fmt)
+           (CairoOptions outFile (mkSizeSpec w h) fmt)
            f'
            "example"
-           exts
-           [ "Diagrams.Backend.Cairo"
-           ]
+           []
+           [ "Diagrams.Backend.Cairo" ]
   case res of
     Left err              -> putStrLn ("Parse error in " ++ lhs) >> putStrLn err
     Right (Left err)      -> putStrLn ("Error while compiling " ++ lhs) >> ppError err
