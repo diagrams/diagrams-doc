@@ -1956,6 +1956,18 @@ generally, `fontWeight`), `italic`, and `oblique` (or, more generally,
 >   === text' 5 "there"  # bold # font "freeserif"
 >   === text' 3 "world"  # fc green
 
+Native font support
+~~~~~~~~~~~~~~~~~~~
+
+The `SVGFonts package`_
+implements native SVG font support for diagrams.  Among other things,
+it provides its own `textSVG` function which can be used to convert
+text into a *path* tracing the outline of the text.  This may
+eventually be merged into the main diagrams codebase; for now, you can
+just import it if you need fancier font support.
+
+.. _`SVGFonts package`: http://hackage.haskell.org/package/SVGFonts
+
 Images
 ------
 
