@@ -133,6 +133,7 @@ md = map (fromString . (++".markdown"))
   , "download"
   , "documentation"
   , "community"
+  , "releases"
   ]
 
 lhs = [ "tutorial/DiagramsTutorial.lhs", "gallery/*.lhs" ]

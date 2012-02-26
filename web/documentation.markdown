@@ -2,14 +2,10 @@
 title: Documentation
 ---
 
-Tutorials
+Reference
 ---------
 
 * [Quick start tutorial](/tutorial/DiagramsTutorial.html)
-
-User manual
------------
-
 * [User manual](/manual/diagrams-manual.html)
 
 API documentation
@@ -27,7 +23,7 @@ Documentation on Hackage:
 Wiki
 ----
 
-* [Diagrams wiki](http://www.haskell.org/haskellwiki/Diagrams) --
+* [Diagrams wiki](http://www.haskell.org/haskellwiki/Diagrams) ---
   frequently asked questions, installation instructions, examples,
   tips and tricks, links to related projects, *etc.*
 
