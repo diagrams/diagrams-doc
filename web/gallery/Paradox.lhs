@@ -9,6 +9,11 @@ height: 200
 width: 400
 ---
 
+> {-# LANGUAGE NoMonomorphismRestriction #-}
+> import Diagrams.Prelude
+
+The standard infinite list of Fibonacci numbers.
+
 > fibs = 0 : 1 : zipWith (+) fibs (tail fibs)
 > 
 > thick = 0.15

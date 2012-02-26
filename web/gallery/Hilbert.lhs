@@ -5,10 +5,12 @@ authorurl: http://homepages.cwi.nl/~tromp/
 date: 2011-05-25
 description: An order-5 approximation to the space-filling Hilbert curve.
 tags: fractal, hilbert, curve
-height: 400
 width: 400
 ---
 
+> {-# LANGUAGE NoMonomorphismRestriction #-}
+> import Diagrams.Prelude
+>
 > hilbert = iterate expand mempty where
 >   expand t = alignBL $ hcat [u, hrule 1, reflectX u] where
 >              u = vcat [t, vrule 1, rotateBy (3/4) t]

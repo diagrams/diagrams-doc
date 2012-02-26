@@ -5,10 +5,11 @@ authorurl: http://www.cis.upenn.edu/~byorgey/
 date: 2011-06-19
 description: Star construction using straight lines.
 tags: star, names, connect
-height: 400
 width: 400
-exts: TupleSections
 ---
+
+> {-# LANGUAGE NoMonomorphismRestriction, TupleSections #-}
+> import Diagrams.Prelude
 
 To create one quarter of the diagram, we first create some "axes"
 which are just lines with evenly spaced named points along them which

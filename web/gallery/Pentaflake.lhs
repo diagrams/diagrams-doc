@@ -5,10 +5,11 @@ authorurl: http://www.cis.upenn.edu/~byorgey/
 date: 2011-05-22
 description: Fractal construction with pentagons.
 tags: fractal, pentagon
-height: 400
 width: 400
 ---
 
+> {-# LANGUAGE NoMonomorphismRestriction #-}
+> import Diagrams.Prelude
 > import qualified Data.Colour as C
 
 We can use the [`colour`
