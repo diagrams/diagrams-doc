@@ -82,6 +82,7 @@ main = hakyll $ do
         route $ setExtension "html"
         compile $ pageCompiler
             >>> arr setImgURL
+            >>> arr (pandocFields ["description"])
             >>> applyTemplateCompiler "templates/exampleHi.html"
             >>> mainCompiler
 
@@ -105,6 +106,14 @@ mainCompiler = applyTemplateCompiler "templates/default.html"
 setImgURL    = setURL "svg"
 setHtmlURL   = setURL "html"
 setURL ext p = trySetField (ext ++ "url") (replaceExtension (getField "url" p) ext) p
+
+pandocFields :: [String] -> Page String -> Page String
+pandocFields = foldr (.) id . map pandocField
+
+pandocField :: String -> Page String -> Page String
+pandocField f p = setField f newField p
+  where newField = writePandoc . readPandoc Markdown Nothing $ getField f p
+
 
 buildGallery :: Compiler (Page String, [Page String]) (Page String)
 buildGallery = second (mapCompiler compileExample >>> sortDate >>> arr (map pageBody))
