@@ -2853,8 +2853,8 @@ time.  For example,
 .. _`package documentation`: http://hackage.haskell.org/packages/archive/active/latest/doc/html/Data-Active.html
 
 
-Using `Active` with diagrams
-----------------------------
+Using Active with diagrams
+--------------------------
 
 An animation is defined, simply, as something of type
 `Active (Diagram b v)` for an appropriate backend type `b` and vector
