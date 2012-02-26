@@ -42,8 +42,9 @@ compileExample lhs outFile = do
            [ "Diagrams.Backend.Cairo"
            ]
   case res of
-    Left err      -> putStrLn ("Error while compiling " ++ lhs) >> ppError err
-    Right (act,_) -> act
+    Left err              -> putStrLn ("Parse error in " ++ lhs) >> putStrLn err
+    Right (Left err)      -> putStrLn ("Error while compiling " ++ lhs) >> ppError err
+    Right (Right (act,_)) -> act
 
 parseFields :: String -> (M.Map String String, String)
 parseFields s = (fieldMap, unlines $ tail rest)
