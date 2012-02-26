@@ -21,20 +21,47 @@
 	-->
     </head>
     <body>
-        <br />
+      <div id="wrap">
+        <div id="header">
+	  <img src="/images/Logo.png" height="50"> Haskell drawing framework
+	</div>
+
         <div id="navigation">
-            <a href="/">Home</a>
-	    <a href="/download.html">Download</a>
-            <a href="/documentation.html">Docs</a>
-	    <a href="/gallery.html">Gallery</a>
-	    <a href="/community.html">Community</a>
+	  <ul>
+            <li><a href="/">About</a></li>
+	    <li><a href="/download.html">Installation</a></li>
+            <li><a href="/documentation.html">Documentation</a>
+	      <ul>
+		<li><a href="/tutorial/DiagramsTutorial.html">Tutorial</a></li>
+		<li><a href="/manual/diagrams-manual.html">User
+		manual</a></li>
+		<li><a href="XXX">API reference</a></li>
+		<li><a href="http://haskell.org/haskellwiki/Diagrams">Wiki</a></li>
+		<li><a href="http://www.haskell.org/haskellwiki/Diagrams/FAQ">FAQ</a></li>
+              </ul>
+	    </li>
+	    <li><a href="/gallery.html">Gallery</a></li>
+	    <li><a href="/community.html">Community</a>
+	      <ul>
+		<li><a href="http://webchat.freenode.net?channels=diagrams">IRC channel</a></li>
+		<li><a href="http://groups.google.com/group/diagrams-discuss">Mailing
+		list</a></li>
+		<li><a href="http://code.google.com/p/diagrams/issues/list">Bug
+		tracker</a></li>
+	    </li>
+	  </ul>
         </div>
 
+	<div id="content">
+	<h3>$title$</h3>
+	<hr>
         $body$
+	</div>
 
 	<div id="footer">
 	  Site generated
 	  by <a href="http://jaspervdj.be/hakyll/">hakyll</a>.
 	</div>
+      </div>
     </body>
 </html>

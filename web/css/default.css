@@ -1,22 +1,51 @@
-body {
-    width: 600px;
-    margin: 0px auto 0px auto;
+body, html {
+    margin:0;
+    padding:0;
+    color:#000;
+    font-family: sans;
 }
 
-div#navigation {
-    text-align: center;
-    border-bottom: 4px solid black;
+#header {
+    padding-top: 30px;
 }
 
-div#navigation a {
-    color: white;
+#header.big {
+  text-size: +2;
+}
+
+#wrap {
+    width:800px;
+    margin:0 auto;
+}
+
+#navigation {
+    padding-top: 30px;
+    float: left;
+    width: 200px;
+    font-size: small;
+    line-height: 150%;
+}
+
+#navigation ul {
+    list-style: none;
+    margin-left: 0;
+    padding-left: 2em;
+    text-indent: -2em;
+}
+
+#navigation a {
     text-decoration: none;
-    background-color: black;
     padding: 3px 10px 3px 10px;
     margin: 0px 10px 0px 10px;
 }
 
-div#footer {
+#content {
+    float: right;
+    width: 600px;
+ }
+
+#footer {
+    clear: both;
     padding-top: 50px;
     text-align: center;
     font-size: small;
