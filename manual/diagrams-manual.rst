@@ -562,21 +562,28 @@ Euclidean 2-space
 There are three main type synonyms defined for referring to
 two-dimensional space:
 
-* `R2` is the type of the two-dimensional Euclidean vector space.  It
-  is a synonym for `(Double, Double)`.  The positive `x`:math:\-axis extends to
-  the right, and the positive `y`:math:\-axis extends *upwards*.  This is
-  consistent with standard mathematical practice, but upside-down with
-  respect to many common graphics systems.  This is intentional: the
-  goal is to provide an elegant interface which is abstracted as much
-  as possible from implementation details.
+* `R2` is the type of the two-dimensional Euclidean vector space. The
+  positive `x`:math:\-axis extends to the right, and the positive
+  `y`:math:\-axis extends *upwards*.  This is consistent with standard
+  mathematical practice, but upside-down with respect to many common
+  graphics systems.  This is intentional: the goal is to provide an
+  elegant interface which is abstracted as much as possible from
+  implementation details.
 
   `unitX` and `unitY` are unit vectors in the positive `x`:math:\- and
   `y`:math:\-directions, respectively.  Their negated counterparts are `unit_X`
   and `unit_Y`.
 
+  Vectors of type `R2` can be created by passing a pair of type
+  `(Double, Double)` to the function `r2`; vectors can likewise be
+  converted back into pairs using `unr2`.
+
 * `P2` is the type of points in two-dimensional space. It is a synonym
   for `Point R2`.  The distinction between points and vectors is
   important; see `Vectors and points`_.
+
+  Points can be created from pairs of coordinates using `p2` and
+  converted back using `unp2`.
 
 * `T2` is the type of two-dimensional affine transformations.  It is a
   synonym for `Transformation R2`.
