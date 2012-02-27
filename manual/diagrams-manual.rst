@@ -1243,8 +1243,8 @@ angle type, such as `rotate (80 :: Deg)`.  In the common case that you
 wish to rotate by an angle specified as a certain fraction of a
 circle, like `rotate (1/8 :: CircleFrac)`, you can use `rotateBy`
 instead. `rotateBy` is specialized to only accept fractions of a
-circle, so in this example you would only have to write `rotateBy
-(1/8)`.
+circle, so in this example you would only have to write
+`rotateBy (1/8)`.
 
 You can also use `rotateAbout` in the case that you want to rotate
 about some point other than the origin.
