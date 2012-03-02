@@ -5,7 +5,7 @@
   + [-] test build:
      - [X] ghc 6.12.3
      - [X] ghc 7.0.4
-     - [ ] ghc 7.2.1
+     - [X] ghc 7.2.1
      - [ ] ghc 7.4.1
   + [X] update LICENSE files
   + [ ] write announcement for blog + email
