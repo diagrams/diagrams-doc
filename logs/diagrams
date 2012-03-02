@@ -9560,3 +9560,1106 @@
 2012-02-21 15:47:24 UTC <byorgey> if your diagram typechecks it will constitute a proof that it is sufficiently pretty and illustrates whatever you were trying to illustrate (we can put that in the type too)
 2012-02-21 15:47:35 UTC <byorgey> in which case there's no need to actually render it.
 2012-02-21 15:47:58 UTC <luite> ah good point
+2012-02-22 15:19:14 UTC <luite> hmm, I've moved the "insert cell" + from within a cell to more inbetween cells: http://hdiff.luite.com/tmp/insert.png , is it better? ( compare: http://hdiff.luite.com/tmp/err4.png , larger + buttons here)
+2012-02-22 15:39:58 UTC <luite> http://hdiff.luite.com/tmp/insertmenu.png <- the menu (still) looks like this, but I want to add some gray placeholder to indicate the position where the cell would be inserted
+2012-02-22 16:18:36 UTC <fryguybob> luite: I like the new insert cell, it seems clear to me what it does.
+2012-02-22 16:22:52 UTC <luite> ok, I'm probably going to add some keyboard shortcut for it, but i'll keep the menu for new users
+2012-02-22 16:23:55 UTC <luite> I'm not very happy with the x and + icons so close to each other, but, meh, can change that later
+2012-02-22 16:35:10 UTC <fryguybob> How would the keyboard shortcuts work? Is there a focus on the section you are at?
+2012-02-22 17:06:57 UTC <luite> http://hdiff.luite.com/tmp/err4.png <- the active line, where the cursor is, is highlighted in yellow, a shortcut, say Command+e for inserting an expression, could make a new cell after the current
+2012-02-22 17:08:39 UTC <luite> text cells can't have focus if their editor is closed
+2012-02-22 17:12:49 UTC <luite> hmm, that "waveform" on google looks more like circle and elliptic sections than proper sine waves
+2012-02-22 17:43:03 UTC <luite> http://hdiff.luite.com/tmp/source.png <- anyone want to write a codemirror highlighter for this format? :)
+2012-02-22 18:46:12 UTC <luite> http://codemirror.net/demo/activeline.html <- does cursor movement with the arrow keys work for anyone with firefox here?
+2012-02-22 19:01:12 UTC <ClaudiusMaximus> luite: works for me (but no key-repeat is not very comfortable)
+2012-02-22 19:01:50 UTC <ClaudiusMaximus> luite: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.16) Gecko/20120131 Iceweasel/3.5.16 (like Firefox/3.5.16)
+2012-02-22 19:02:04 UTC <luite> linux, right?
+2012-02-22 19:02:08 UTC <ClaudiusMaximus> yeah
+2012-02-22 19:02:56 UTC <luite> k, at least that's better than on OS X where it doesn't move at all
+2012-02-22 19:22:40 UTC <luite> k opened a githib ticket
+2012-02-22 19:22:41 UTC <luite> github
+2012-02-22 20:55:28 UTC <byorgey> luite: works for me, even with key-repeat
+2012-02-22 20:56:00 UTC <byorgey> (also linux, )
+2012-02-22 20:56:06 UTC <byorgey> s/, //
+2012-02-22 21:03:47 UTC <luite> hmm, looks like an OS X only problem then
+2012-02-22 21:09:31 UTC <luite> hmm my university has an haskell-related phd student position available
+2012-02-23 04:44:01 UTC <tgeeky_> hmm
+2012-02-23 04:44:04 UTC <tgeeky_> who is awake
+2012-02-23 04:48:04 UTC <mgsloan> luite - oh?
+2012-02-23 04:54:24 UTC <tgeeky_> mgsloan: and byorgey: it occured to me tonight (in the shower, as it were) that a extremely concisely phrased goal for us is:  to enable practical inspection/exhaustion of visual proofs
+2012-02-23 04:55:20 UTC <mgsloan> yup! That's occurred to me as well before.  The beyond-Haskell goal would be to provide better interfaces for the application of proof tactics
+2012-02-23 04:56:30 UTC <tgeeky_> well, I think there is something distinct about visual proofs. You don't necessarily need to know how to attack the problem (and hence choose among proof tactics), but if you know how to visualize something in several ways, you could just -do- that and forget the tactics
+2012-02-23 04:56:54 UTC <tgeeky_> I do think they are used less often in general, and probably less often than they should be
+2012-02-23 05:00:37 UTC <mgsloan> (I'm thinking a more visual / speculative version of COQ.  Programming for proof assistants is probably one of the more paintstaking, meticulous programming things you can do.  A lot of trial-and-error and staring at transformed terms.  It's where the lack of informative IDEs / visualization really hurts, imho )
+2012-02-23 05:01:18 UTC <tgeeky_> sure, but it's not like there is anybody to blame. this is hard stuff, it's hard to be general
+2012-02-23 05:01:25 UTC <mgsloan> but that's also a really lofty goal, one I only really know a bit about.  For now it's all about making Haskell kickass
+2012-02-23 05:01:34 UTC <mgsloan> oh definitely
+2012-02-23 05:03:32 UTC <mgsloan> no one's to blame, though people are to blame for not encouraging ($$$) development of better solutions for these problems, and really address our most foundational technologies well
+2012-02-23 15:44:44 UTC <luite> byorgey: did you ever get a reply from MAA?
+2012-02-23 16:05:47 UTC <tgeeky> still going on huh
+2012-02-23 16:06:35 UTC <luite> hehe I think it's ethical to break DRM protection if they treat customers like this ;p
+2012-02-23 16:10:57 UTC <tgeeky> hopefully it's possible
+2012-02-23 16:11:02 UTC <tgeeky> I think it's ethical to break DRM all the time
+2012-02-23 16:11:27 UTC <tgeeky> You don't own my bits, man.
+2012-02-23 16:12:55 UTC <luite> I do tell my father to buy his ebooks in stores that use adobe drm, and not in the ibooks store with apple drm, since the latter is much more difficult (impossible?) to remove
+2012-02-23 17:11:19 UTC <byorgey> luite: nope, not yet
+2012-02-23 17:11:23 UTC <byorgey> I'm going to try calling them
+2012-02-23 20:31:46 UTC <luite> mgsloan: dunno if this is what you said 'oh' about, but: "The topic of the project is to further investigate the notion of higher-ranked polyvariance within the context of type based static analysis of higher-order (functional) languages."
+2012-02-23 20:33:13 UTC <luite> oh
+2012-02-23 23:41:34 UTC <fryguybob> byorgey: patch to postscript pushed with some changes.
+2012-02-24 01:09:18 UTC <byorgey> fryguybob: great!
+2012-02-24 01:33:23 UTC <luite> http://hdiff.luite.com/tmp/interactive.png <- now with ADT construction (for ex Either Int String would give you an Int input if Left is selected, a String input field for Right)
+2012-02-24 01:38:17 UTC <byorgey> oooOOOOoooo
+2012-02-24 01:42:07 UTC <fryguybob> testBottom = Interactive "test" (repeat $ intSlider "a" 0 10 5)
+2012-02-24 01:42:39 UTC <luite> hehe that will give you a timeout or a read error because of too much data produced
+2012-02-24 01:43:21 UTC <luite> this is just the low-level code of course, I'll let people come up with ideas to automatically generate gui's from types
+2012-02-24 01:43:53 UTC <luite> and I found some bugs with the wiki where I couldn't overwrite pages, so had to make new pages instead
+2012-02-24 01:44:04 UTC <luite> that's why this is itest10 :)
+2012-02-24 01:46:52 UTC <luite> kept getting 'merge required' even though I was editing the latest version
+2012-02-24 01:56:25 UTC <byorgey> luite: hmm, you might know the answer to this.  How can I make a list of HTML blocks that will be laid out L-R but "wrap" at the edge, just like text?
+2012-02-24 01:57:04 UTC <byorgey> i.e. I want to make a gallery of images with captions but not have them laid out just in a vertical column
+2012-02-24 01:58:13 UTC <luite> hmm, doesn't it work if you just use regular images? otherwise if you need to add a caption, you could wrapt them in a div and set display: inline-block for that div
+2012-02-24 01:58:32 UTC <luite> I believe inline-block doesn't work for old IE versions
+2012-02-24 01:58:37 UTC <byorgey> ah, inline-block, excellent
+2012-02-24 01:58:47 UTC <byorgey> ACTION really couldn't care less about old IE versions
+2012-02-24 01:59:05 UTC <byorgey> luite: thanks
+2012-02-24 02:00:16 UTC <luite> if something doesn't work, please give a sample, I'll hack on it till it does :)
+2012-02-24 02:00:29 UTC <byorgey> awesome, thanks =)
+2012-02-24 02:44:34 UTC <vyom> http://hpaste.org/64260
+2012-02-24 02:44:44 UTC <vyom> byorgey: getting a error in diagrams-lib
+2012-02-24 02:45:10 UTC <byorgey> vyom: did you do a darcs pull in all the repos?
+2012-02-24 02:45:17 UTC <vyom> yup
+2012-02-24 02:45:35 UTC <vyom> let me verify
+2012-02-24 02:46:36 UTC <byorgey> vyom: so you did a darcs pull in diagrams-core and rebuilt that first?
+2012-02-24 02:47:16 UTC <byorgey> you have to be careful to rebuild them in the right order: core, lib, cairo
+2012-02-24 02:47:40 UTC <vyom> byorgey: i think it was some sort of cabal-dev wonkiness.. i managed to build diagrams-lib now.. trying to build hs-logo now after unregistering packages using cabal-dev hs-logo
+2012-02-24 02:47:50 UTC <byorgey> ok
+2012-02-24 02:50:24 UTC <vyom> ok looks like i am getting a build failure as expected.. now merging change
+2012-02-24 02:51:54 UTC <vyom> cool..
+2012-02-24 02:52:02 UTC <vyom> merge successful
+2012-02-24 02:52:04 UTC <vyom> thanks
+2012-02-24 02:52:06 UTC <byorgey> yay!
+2012-02-24 02:52:09 UTC <byorgey> you're welcome
+2012-02-24 03:57:05 UTC <luite> http://hdiff.luite.com/tmp/interactive2.png <- it worky!
+2012-02-24 03:57:30 UTC <luite> (it also ugly)
+2012-02-24 03:58:41 UTC <byorgey> yay!
+2012-02-24 03:59:05 UTC <byorgey> http://www.cis.upenn.edu/~byorgey/hosted/diagrams-gallery.png  -- screenshot of redesigned diagrams gallery
+2012-02-24 03:59:30 UTC <luite> this means that i almost have most of the features from the preview implemented
+2012-02-24 03:59:55 UTC <byorgey> luite: nice!  so what's left before beta release?
+2012-02-24 04:00:43 UTC <luite> uh lots of bugs fixing, apparently you can save every page only twice for example
+2012-02-24 04:01:28 UTC <luite> and you get logged out after evaluating an expression
+2012-02-24 04:01:35 UTC <byorgey> haha
+2012-02-24 04:03:46 UTC <luite> but real new functionality? main thing is background compiler and making importing other wolfgang modules work
+2012-02-24 04:04:25 UTC <byorgey> cool
+2012-02-24 04:04:35 UTC <byorgey> ok, I'm off to bed
+2012-02-24 04:05:22 UTC <luite> oh and a diagrams native svg backend is absolutely required for the beta ;p
+2012-02-24 04:59:50 UTC <mgsloan> luite - no way, awesome!
+2012-02-24 05:11:06 UTC <vyom_> luite: are you saying you are working on an SVG backend :)
+2012-02-24 13:51:15 UTC <fryguybob> luite: diagrams-postscript then ps2svg :P
+2012-02-24 13:57:37 UTC <luite> fryguybob: nah the point is to get javascript in diagrams (which is necessary for things like the tic-tac-toe game in the demo)
+2012-02-24 14:41:41 UTC <fryguybob> luite: Yeah, I should play with that when I have time.
+2012-02-24 14:46:15 UTC <luite> yeah, if you could go ahead and make something that allows events to be handled for svg nodes, that would be great, yeah
+2012-02-25 01:37:31 UTC <luite> http://hdiff.luite.com/tmp/interactive7.png <- I need some way to indicate that some field belongs to another one, for example if in the last field, the Nothing constructor was selected, the text field would not be shown. any suggestions how to improve this?
+2012-02-25 01:44:11 UTC <fryguybob> 2011 was sooo last year
+2012-02-25 01:44:49 UTC <luite> i know, but the year is part of an image and i couldn't find the psd :(
+2012-02-25 01:45:39 UTC <luite> probably going to change that message anyway once i start accepting pull reqs and patches :)
+2012-02-25 01:48:14 UTC <fryguybob> I'm not sure there is anything bad about having the text box just disapear on Nothing.
+2012-02-25 01:48:43 UTC <luite> fryguybob: oh that's not the problem, the problem is how to indicate that the text box belongs to the Nothing/Just buttonset
+2012-02-25 01:52:01 UTC <fryguybob> Ah, so the arc on the left is not effective?
+2012-02-25 01:53:08 UTC <luite> hm, maybe it's good enough
+2012-02-25 01:53:23 UTC <luite> at least it's better than the older interactiveX.png :)
+2012-02-25 01:54:12 UTC <fryguybob> ACTION goes back to X = 3 and agrees.
+2012-02-25 01:57:00 UTC <luite> hmm, i'll keep this for now then
+2012-02-25 01:57:14 UTC <luite> probably need to adjust the spacing between the elements a bit later
+2012-02-25 01:59:35 UTC <byorgey> looks OK to me
+2012-02-25 02:00:42 UTC <byorgey> fryguybob: I'm about to push some major improvements to diagrams-builder
+2012-02-25 02:01:36 UTC <fryguybob> byorgey: Ok, I try to build again.
+2012-02-25 02:03:36 UTC <byorgey> it now uses haskell-src-exts to parse the code, so it can do things like stick in additional pragmas and imports in a robust way
+2012-02-25 02:03:46 UTC <byorgey> i.e. it doesn't add them if they're already there, etc.
+2012-02-25 02:04:38 UTC <byorgey> so you could just have  'foo = square 2' and it will work, but you could also have  '{-# LANGUAGE TupleSections #-} import Diagrams.Prelude hiding (frozz)  example = circle 3' and that will work too
+2012-02-25 02:07:08 UTC <byorgey> fryguybob: oh, I guess for the LaTeX package we are going to want diagrams-builder to come with an executable too, eh?
+2012-02-25 02:07:24 UTC <byorgey> (changes pushed)
+2012-02-25 02:15:11 UTC <fryguybob> byorgey: Yeah we need something to call out to.  The other interesting question is how the blocks of diagrams code interact with eachother.
+2012-02-25 02:17:45 UTC <byorgey> fryguybob: I thought about that a bit.  The easiest approach would be that it's up to clients of diagrams-builder to assemble together all the relevant snippets of code for each call
+2012-02-25 02:18:34 UTC <byorgey> i.e. a document format could define two types of blocks: one that lets you define diagrams code that gets collected up and is available to all future blocks, and one that actually generates an image
+2012-02-25 02:18:37 UTC <fryguybob> byorgey: Right, in my LaTeXGrapher thing each block was independent so I can generate all the images in one pass.
+2012-02-25 02:19:29 UTC <fryguybob> byorgey: Humm, ok.  And the supporting block is hidden.
+2012-02-25 02:19:35 UTC <byorgey> something like that
+2012-02-25 02:20:34 UTC <byorgey> ideally there would be an option to specify whether you want it hidden or typeset.  But that's a separate issue.
+2012-02-25 02:20:36 UTC <fryguybob> I think it will make sense but I guess the danger is it will "look" like literate haskell, but behave a bit differently.
+2012-02-25 02:20:50 UTC <byorgey> true.
+2012-02-25 02:21:01 UTC <byorgey> well, I'm certainly open to other ideas.
+2012-02-25 02:21:09 UTC <fryguybob> byorgey: Yeah, that could just be an optional flag and we could emit a diagram, have it be hidden or emit both code and diagram.
+2012-02-25 02:21:14 UTC <byorgey> right.
+2012-02-25 02:21:38 UTC <byorgey> but again that doesn't really affect diagrams-builder.
+2012-02-25 02:22:09 UTC <byorgey> e.g. I have the user manual doing that, it runs the code both through pandoc and diagrams-builder
+2012-02-25 02:22:18 UTC <fryguybob> byorgey: No not at all. With the TeX that I do know it will work out nicely for single pass if you do not expect definitions from future blocks to be usable in passed blocks.
+2012-02-25 02:22:53 UTC <byorgey> fryguybob: yeah, I think that's sensible (even though, as you note, that's not how literate Haskell would work)
+2012-02-25 02:23:39 UTC <fryguybob> It appears that hint is still a problem for 7.4.
+2012-02-25 02:28:11 UTC <luite> byorgey: do you prettyprint the haskell-src-exts parsed source back to text?
+2012-02-25 02:28:43 UTC <byorgey> luite: yes
+2012-02-25 02:28:49 UTC <byorgey> luite: is that bad?
+2012-02-25 02:29:15 UTC <byorgey> fryguybob: oh, really?
+2012-02-25 02:29:35 UTC <byorgey> I haven't been doing much with diagrams on 7.4 recently since I'm waiting for the new gtk2hs release
+2012-02-25 02:29:49 UTC <luite> byorgey: uh not necessarily, but I found it quite difficult to do properly with wolfgang
+2012-02-25 02:30:27 UTC <fryguybob> byorgey: It wants  ghc-mtl  which isn't in my ghc-pkg list.
+2012-02-25 02:30:38 UTC <byorgey> luite: note in this case I don't care whether it preserves space or comments or whatever, because all I'm going to do with the resulting code is interpret it in order to generate a diagram
+2012-02-25 02:30:58 UTC <byorgey> fryguybob: http://hackage.haskell.org/package/ghc%2Dmtl ?
+2012-02-25 02:30:59 UTC <luite> yeah that does help a lot, but how about reporting errors?
+2012-02-25 02:31:23 UTC <byorgey> luite: yeah, errors might be a problem I suppose.
+2012-02-25 02:31:44 UTC <byorgey> I haven't looked too hard at the quality of error output.
+2012-02-25 02:32:03 UTC <fryguybob> Ah, ok so that shouldn't be a problem
+2012-02-25 02:32:53 UTC <luite> the space-preserving prettyprinter prints {-#LANGUAGE TupleSections #-} back as {-# LANGUAGETupleSections #-} btw
+2012-02-25 02:33:32 UTC <byorgey> hehe, ugh
+2012-02-25 02:34:20 UTC <byorgey> I thought I wasn't going to be able to use haskell-src-exts because it used to choke on # used as an operator, but I was happily surprised to see that has appraently been fixed
+2012-02-25 02:35:49 UTC <luite> does ghc 7.4 still choke on # in .lhs files?
+2012-02-25 02:35:55 UTC <luite> as first character of a line
+2012-02-25 02:36:16 UTC <byorgey> not sure
+2012-02-25 02:37:05 UTC <byorgey> ok, I'm off, more hacking tomorrow =)
+2012-02-25 02:37:22 UTC <luite> good night, or something
+2012-02-25 02:37:25 UTC <fryguybob> byorgey: It did build!
+2012-02-25 02:37:31 UTC <byorgey> yay!
+2012-02-25 02:38:17 UTC <fryguybob> I'll get to some TeX hacking soon, I have some Java projects to grade tomorrow though :(
+2012-02-25 02:39:51 UTC <luite> cool! java projects!
+2012-02-25 02:40:11 UTC <byorgey> fryguybob: wheee
+2012-02-25 02:58:18 UTC <mgsloan> oooh, diagrams- builder!!  very nice.  not stuff my stuff doesn't already do, but very well documented / structured!
+2012-02-25 02:58:47 UTC <luite> hehe
+2012-02-25 03:00:45 UTC <mgsloan> luite - cool pic! my thought on the whole interactive-data thing would be to have those buttons instead be tabs on panes
+2012-02-25 03:01:18 UTC <mgsloan> so that field state isn't lost when you switch between different constructors
+2012-02-25 03:04:32 UTC <luite> it isn't kost
+2012-02-25 03:04:34 UTC <luite> lost
+2012-02-25 03:07:55 UTC <luite> and with tabs you have more or less the same problem, you need to indicate which fields belong to some pane
+2012-02-25 03:09:48 UTC <fryguybob> byorgey: It works :D.  This was from ghci: http://www.cs.rochester.edu/u/ryates/temp/test.pdf
+2012-02-25 03:10:10 UTC <mgsloan> fryguybob: have you seen my diagrams-ghci?
+2012-02-25 03:11:36 UTC <luite> fryguybob: impresive!
+2012-02-25 03:31:08 UTC <mgsloan> not that that's much of a solution - I look forward to a proper ghcid!
+2012-02-25 03:39:29 UTC <luite> ghcid?
+2012-02-25 04:23:10 UTC <luite> buh...
+2012-02-25 04:23:27 UTC <luite> boring boring boring boring
+2012-02-25 04:38:15 UTC <luite> http://hdiff.luite.com/tmp/fp2.png <- actual real data under 'Activity!'
+2012-02-25 04:55:43 UTC <luite> yay I have 10 followers again on github!
+2012-02-25 04:56:05 UTC <luite> someone unfollowed me last week, went from 10 to 9
+2012-02-25 04:56:16 UTC <luite> felt so sad for a few days :'(
+2012-02-25 05:03:42 UTC <mgsloan> ACTION follows
+2012-02-25 05:07:08 UTC <mgsloan> luite - ghcid is this https://github.com/mgsloan/diagrams-ghci
+2012-02-25 05:07:38 UTC <mgsloan> it looks like this except no confusing type diagrams http://www.mgsloan.com/panopti2.png
+2012-02-25 05:08:10 UTC <mgsloan> does surprisingly snappy live diagram updates (as I'm sure you've found with wolfgang)
+2012-02-25 05:22:50 UTC <luite> whoah 11 followers!
+2012-02-25 05:23:53 UTC <luite> ah interesting
+2012-02-25 05:24:05 UTC <luite> didn't know you had inline diagrams
+2012-02-25 05:25:17 UTC <mgsloan> yup.  It's not a big thing though
+2012-02-25 05:26:03 UTC <mgsloan> this is the entire source code https://github.com/mgsloan/diagrams-ghci/blob/master/src/Main.hs
+2012-02-25 05:26:15 UTC <mgsloan> (albeit relying heavily on gtk-toy-diagrams)
+2012-02-25 05:26:45 UTC <luite> meh I feel inadequate, needing so many lines for the same thing :(
+2012-02-25 05:27:02 UTC <mgsloan> hah, but yours is pretty!
+2012-02-25 05:27:10 UTC <mgsloan> whereas mine is only pretty code
+2012-02-25 05:27:19 UTC <mgsloan> which doesn't amount to much
+2012-02-25 05:28:14 UTC <luite> mine is ugly code
+2012-02-25 05:28:32 UTC <mgsloan> ahh the glories of web-dev
+2012-02-25 05:28:55 UTC <luite> I've been in "need to finish this, clean code comes later" mode for a while now :)
+2012-02-25 05:29:01 UTC <mgsloan> re: fp2.png - awesome!!
+2012-02-25 05:29:17 UTC <mgsloan> yeah, please do that until the first release!
+2012-02-25 05:29:30 UTC <mgsloan> community seriously needs this
+2012-02-25 05:29:40 UTC <mgsloan> even if they don't know it yet ;)
+2012-02-25 05:29:56 UTC <luite> hehe we'll see
+2012-02-25 05:30:28 UTC <mgsloan> fp2 is looking suuuuper clean
+2012-02-25 05:30:59 UTC <luite> oh you mean the design? that's been the same for a while now :)
+2012-02-25 05:31:00 UTC <mgsloan> screenshots from a couple days ago did some pretty heavy blur, is that still around? I kinda like the cripser edges
+2012-02-25 05:31:23 UTC <mgsloan> softness is nice, especially for hovering things
+2012-02-25 05:31:35 UTC <luite> blur what?
+2012-02-25 05:31:45 UTC <mgsloan> but the drop shadow next to the sidemenu was too much
+2012-02-25 05:31:52 UTC <mgsloan> I meant drop shadows
+2012-02-25 05:32:19 UTC <luite> http://hdiff.luite.com/tmp/interactive7.png <- this is how it looks atm
+2012-02-25 05:32:27 UTC <mgsloan> I'm no web/visual designer, though, you clearly have more talent there!
+2012-02-25 05:32:47 UTC <luite> i switched from a fixed width layout to variable width
+2012-02-25 05:32:54 UTC <luite> haven't adjusted the shadow yet
+2012-02-25 05:33:09 UTC <luite> nah it's not talent, it's countless hours of tinkering :(
+2012-02-25 05:33:30 UTC <mgsloan> looks fantastic! seriously, I'd barely change a thing, but I still get this desire to shift that drop shadow about 15-20px to the right
+2012-02-25 05:33:44 UTC <mgsloan> gotcha :)
+2012-02-25 05:34:04 UTC <luite> lemme see if i can do that
+2012-02-25 05:35:43 UTC <luite> of course I forgot which element has that shadow
+2012-02-25 05:40:35 UTC <luite> http://hdiff.luite.com/tmp/ws3.png <- slightly lessified shadow
+2012-02-25 05:41:23 UTC <luite> http://hdiff.luite.com/tmp/ws.png <- what the same page looked like last october :)
+2012-02-25 05:47:45 UTC <luite> oops i overwrote ws2.png with ws3 :(
+2012-02-25 05:50:24 UTC <luite> wanted to show the difference, lots of little tweaks, mainly to make it look more like an actual document, no more full with horizontal lines between cells, all ui elements moved to the left margin
+2012-02-25 05:50:36 UTC <luite> full width
+2012-02-25 05:59:31 UTC <tgeeky_> luite: now, just generalize over both designs, make a "templating" system with two examples, and you're done!
+2012-02-25 06:00:13 UTC <luite> nah i want a system that only accepts pages with a design i like
+2012-02-25 06:00:36 UTC <tgeeky_> hopefully this "liking" of which you speak won't require facebook!
+2012-02-25 06:01:08 UTC <tgeeky_> my god. truecrypt formatting a USB2.0 2TB drive is horrendous
+2012-02-25 06:01:34 UTC <luite> mgsloan: the smaller top bar was meant to be a fixed position element but I had to change that last week because of cursor positioning issues :( the black/white W logo at the top left is more or less an emergency measure to fill up the space there
+2012-02-25 06:02:07 UTC <luite> (clicking it still leads you to the frontpage, just like clicking on the full logo)
+2012-02-25 06:02:32 UTC <tgeeky_> 00:32 < luite> http://hdiff.luite.com/tmp/interactive7.png <- this is how it looks atm
+2012-02-25 06:02:38 UTC <tgeeky_> ^^ -- | bravo!
+2012-02-25 06:02:48 UTC <luite> http://hdiff.luite.com/tmp/interactive4.png <- here with top bar scrolled out of view
+2012-02-25 06:03:12 UTC <tgeeky_> luite: hum.
+2012-02-25 06:03:20 UTC <tgeeky_> be sure and take up as little space as necessary there, on the left
+2012-02-25 06:04:04 UTC <luite> tgeeky_: actually I wanted it to take more space there, not less
+2012-02-25 06:04:20 UTC <luite> so everything has been laid out pretty loosely
+2012-02-25 06:05:05 UTC <luite> dunno which left you mean, did you mean left of the page, or left of the inputs for the interact thingies?
+2012-02-25 06:05:44 UTC <tgeeky_> luite: the leftmost (gray) bar
+2012-02-25 06:06:17 UTC <luite> oh right, well the problem is that the whole user interface pretty much dictates that it's a one column document
+2012-02-25 06:06:34 UTC <luite> and most screens are much too wide for a single column, unless you have huge text
+2012-02-25 06:07:14 UTC <tgeeky_> luite: uhh, one column, sure, but metainformation on the left (line number, indent information, thread information)
+2012-02-25 06:07:23 UTC <tgeeky_> that's "in the document" (and not in the gray area)
+2012-02-25 06:08:08 UTC <luite> so i limited the text column width to something (I think is) sensible ( http://hdiff.luite.com/tmp/insertmenu.png for example )
+2012-02-25 06:09:16 UTC <luite> but I made both the "menu bar" and the left margin pretty wide, the latter to make it look a bit more like a paper document, the former to make sure that the text column isn't too far to the left on most screens
+2012-02-25 06:10:06 UTC <luite> (I actually decreased the margin size a bit when switching from fixed to variable width)
+2012-02-25 06:13:27 UTC <tgeeky_> i have not yet read what you typed
+2012-02-25 06:13:31 UTC <tgeeky_> here is the suggestion I'm making:
+2012-02-25 06:13:34 UTC <tgeeky_> http://i.imgur.com/v34w4.png
+2012-02-25 06:14:10 UTC <tgeeky_> make that thing thinner ... try finding some way to get rid of the gradient, and recover that space (on both sides, if possible)
+2012-02-25 06:14:25 UTC <tgeeky_> and then maybe you can add a right column as well as a left one
+2012-02-25 06:14:30 UTC <tgeeky_> with the space you get back
+2012-02-25 06:14:41 UTC <mgsloan> I like the lessened shadow! and tgeeky's suggestion as well
+2012-02-25 06:14:41 UTC <luite> what would you do with the right column?
+2012-02-25 06:14:51 UTC <tgeeky_> luite: I don't know. something sharp
+2012-02-25 06:15:04 UTC <tgeeky_> emphasize the outline that springs from "worksheet"
+2012-02-25 06:15:27 UTC <mgsloan> maybe no gradient, and pretend the light has flipped about the x-axis?
+2012-02-25 06:15:45 UTC <mgsloan> I like how the worksheet overlaps on the bottom
+2012-02-25 06:15:51 UTC <tgeeky_> luite: I don't know how to make it look good, but I think it would be awesome to consider the whitespace as having more than one column
+2012-02-25 06:16:10 UTC <luite> mgsloan: the gradient/shadow is there to increase the contrast with the lest column, while keeping it light in general
+2012-02-25 06:17:08 UTC <mgsloan> gotcha, it's certainly not a bad idea
+2012-02-25 06:17:37 UTC <tgeeky_> luite: that said, you've got the touch
+2012-02-25 06:17:38 UTC <luite> mgsloan: admittedly the left column used to be empty
+2012-02-25 06:17:40 UTC <tgeeky_> nice work
+2012-02-25 06:17:42 UTC <mgsloan> in interactive it definitely gives a "this is a piece of paper floating over less important UI" sort of feel
+2012-02-25 06:18:00 UTC <luite> had to change it to a menu becasue of the cursor issues
+2012-02-25 06:18:02 UTC <tgeeky_> mgsloan: maybe. I had typed out something that I wanted it to be the other way
+2012-02-25 06:18:15 UTC <mgsloan> yeah, agreed.  This is gorgeous, it's hard to find stuff to criticize :P
+2012-02-25 06:18:21 UTC <tgeeky_> that is, I would like for it to feel like you have a ruler sitting on the left hand side of the page, on top of a stack of documents
+2012-02-25 06:18:54 UTC <tgeeky_> luite: actually, that might even work visually
+2012-02-25 06:19:05 UTC <mgsloan> s/in interactive it/in interactive 7 it
+2012-02-25 06:19:06 UTC <tgeeky_> it would certalin be sharp :o
+2012-02-25 06:19:12 UTC <luite> tgeeky_: I'm kind of hesitant adding stuff to the right again (I've moved away everything from there in the last 6 months or so), because it tends to be a bit distracting when reading
+2012-02-25 06:19:36 UTC <tgeeky_> luite: yeah, you're going to need to adopt a richer color scheme at some point, and use it
+2012-02-25 06:19:48 UTC <tgeeky_> I would suggest solarize, only because it has *some* sort of forethought involved
+2012-02-25 06:19:54 UTC <tgeeky_> solarized*
+2012-02-25 06:20:23 UTC <tgeeky_> with the right color scheme, you can have a column layout like:  [dark]  [lighter]  [lightest]
+2012-02-25 06:20:33 UTC <tgeeky_> or  [inverted] [normal] [lighter]
+2012-02-25 06:20:44 UTC <tgeeky_> or, in your case, [popout box] [normal] [lighter]
+2012-02-25 06:21:00 UTC <tgeeky_> but that really can be done later
+2012-02-25 06:21:03 UTC <tgeeky_> right now it looks great
+2012-02-25 06:21:13 UTC <luite> hmm dunno, I don't really like it. haven't put much thought into the editor color scheme btw, just use the 'elegant' theme from codemirror
+2012-02-25 06:21:16 UTC <tgeeky_> what browsers are you testing
+2012-02-25 06:22:06 UTC <luite> as for the site itself, I want to use some color (for some reason haskellers tend to find grayscale or b/w sites really pretty, "whoah really clean, not distracting" etc)
+2012-02-25 06:22:08 UTC <mgsloan> bbl!
+2012-02-25 06:22:43 UTC <luite> but since users can make graphics and stuff, I didn't want my color to clash with whjat they choose to generate
+2012-02-25 06:23:06 UTC <luite> so I settled for a really neutral low saturation blue in various luminosities
+2012-02-25 06:23:13 UTC <tgeeky_> luite: perhaps. My "holy grail" app is more of an in-the-browser IDE than your is, I think
+2012-02-25 06:23:39 UTC <luite> right I still see it much more as a wiki, where the important thing is documents for users to read/play with
+2012-02-25 06:24:12 UTC <tgeeky_> luite: a wiki document is just a kind of document you'll be interesting in editing :o
+2012-02-25 06:24:13 UTC <luite> but that doesn't have to stand in the way of it being a good ide as well
+2012-02-25 06:24:40 UTC <luite> dunno, I don't think everyone should be interested in that
+2012-02-25 06:24:55 UTC <luite> after all, how often do you edit a wikipedia page?
+2012-02-25 06:27:28 UTC <luite> oh and I promised myself not to use gradients and shadows for this site :(
+2012-02-25 06:29:35 UTC <tgeeky_> luite: I want to mirror (to local) and then edit (or highlight) a wikipedia page ... all the time
+2012-02-25 06:30:25 UTC <luite> hmm
+2012-02-25 06:30:49 UTC <tgeeky_> of course, I want to (and do) these things to PDFs all the time
+2012-02-25 06:31:04 UTC <luite> wikipedia pdfs?
+2012-02-25 06:31:12 UTC <tgeeky_> ebook and arxiv PDFs
+2012-02-25 06:37:12 UTC <luite> hm right
+2012-02-25 06:37:30 UTC <luite> I don't annotate them very often since i don't really have good tools for that
+2012-02-25 06:37:47 UTC <tgeeky_> i use a windows tool, pdf x-change, works wonderfully
+2012-02-25 06:38:03 UTC <luite> hmm, i usually read ebooks on my tablet
+2012-02-25 06:38:38 UTC <tgeeky_> i haven't one. Anyway, with haskell documents (like pearls) it's *especially* useful
+2012-02-25 06:39:08 UTC <tgeeky_> highlight in diff colors: theorems, proof blocks, code blocks, type blocks, code I've entered and typechecked
+2012-02-25 06:39:23 UTC <tgeeky_> and since I'm on a computer (typing it in) I'm not on an ipad
+2012-02-25 06:39:37 UTC <luite> hehe
+2012-02-25 06:39:53 UTC <luite> well I like it for reading
+2012-02-25 06:39:55 UTC <tgeeky_> i suppose that I have several (4, until recenetly with 3)
+2012-02-25 06:40:08 UTC <tgeeky_> monitors changes things a lot
+2012-02-25 06:40:12 UTC <luite> especially in bed or similar
+2012-02-25 06:40:18 UTC <tgeeky_> I'm missing a lot of typing, so it must be bedtime for me.
+2012-02-25 06:40:26 UTC <tgeeky_> luite: yeah, there I'd love a tablet. alas, not now.
+2012-02-25 06:40:36 UTC <luite> but the ipad's screen is a bit too low res for many books with thin fonts
+2012-02-25 06:40:46 UTC <luite> err
+2012-02-25 06:41:03 UTC <luite> without the ' I guess :p
+2012-02-25 06:41:10 UTC <luite> or not?
+2012-02-25 06:41:11 UTC <luite> arhg
+2012-02-25 06:42:04 UTC <tgeeky_> iPad is a proper noun, so you can treat it like a person, like Luite's, so that's fine
+2012-02-25 06:42:15 UTC <tgeeky_> (that's how I remember the rule)
+2012-02-25 06:43:19 UTC <tgeeky_> hopefully I'm right, but then, what do those people who write books about such things know, anyway? Nothing -- I, say! . Nothing at-all!
+2012-02-25 06:44:21 UTC <luite> I'll just type my book's on my ipad and it will autocorrect all error's ;p
+2012-02-25 06:44:46 UTC <tgeeky_> lol
+2012-02-25 06:44:57 UTC <tgeeky_> that would have been perfect if you had typed "Ill"
+2012-02-25 06:45:33 UTC <luite> meh it's too late to be perfect
+2012-02-25 06:45:55 UTC <tgeeky_> I agree with that.
+2012-02-25 06:45:57 UTC <luite> hmm, 7:45am actually
+2012-02-25 06:45:59 UTC <tgeeky_> It's also friday.
+2012-02-25 06:46:06 UTC <tgeeky_> holy heck. You are a night owl.
+2012-02-25 06:47:52 UTC <luite> usually I'm not this late, was doing boring coding
+2012-02-25 06:48:03 UTC <luite> making an admin interface for wolfgang
+2012-02-25 06:48:07 UTC <tgeeky_> ok, really going to sleep now though
+2012-02-25 06:48:10 UTC <tgeeky_> night!
+2012-02-25 07:13:49 UTC <tgeeky> luite: still here
+2012-02-25 07:13:50 UTC <tgeeky> ?
+2012-02-25 07:15:16 UTC <tgeeky> luite: wolframalpha.com has the circle fractal in the bkg of the frontpage right now.
+2012-02-25 07:15:19 UTC <tgeeky> happysad.
+2012-02-25 14:30:26 UTC <fryguybob> mgsloan: diagrams-ghci looks fun, I haven't had a working Cairo for a while now so I haven't played with anything lately in that direction.
+2012-02-25 14:31:02 UTC <mgsloan> gotcha.  Due to the haskell package or the OS package?
+2012-02-25 14:32:43 UTC <fryguybob> Both :D.  There was an issue with rendering text on Windows and I built from source and tried to track down the problem.  Basically the API that gtk2hs uses gets little love and is quite broken.
+2012-02-25 14:33:38 UTC <fryguybob> On linux I have to work much harder then I should to get these things working due to missing dev packages and not being root.
+2012-02-25 14:34:15 UTC <fryguybob> Once 7.4 is supported I'll probably work on geting it up and running.
+2012-02-25 14:34:57 UTC <mgsloan> :/ strange, I was under the impression pango / cairo are used quite a lot, but I can see pango not working quite as well under windows
+2012-02-25 14:35:30 UTC <fryguybob> mgsloan: It is fine if you use the right API.
+2012-02-25 14:37:33 UTC <fryguybob> http://code.google.com/p/diagrams/issues/detail?id=36  is the bug report.
+2012-02-25 17:09:08 UTC <vyom> so i have a couple of tasks to finish for hs-logo https://github.com/deepakjois/hs-logo/issues?milestone=3&sort=created&direction=desc&state=open
+2012-02-25 17:09:26 UTC <vyom> after that i realy want to contribute to a native SVG backend
+2012-02-25 17:10:23 UTC <vyom> what is the best way to get started? Dive deeper into diagrams-{core,lib,cairo} I presume
+2012-02-25 17:10:57 UTC <vyom> how far along is the current diagrams-svg backend
+2012-02-25 17:11:23 UTC <vyom> and how complex is the task of writing a backend
+2012-02-25 17:17:02 UTC <luite> yes, write an svg backend!
+2012-02-25 18:10:13 UTC <byorgey> vyom: yeah, take a look at diagrams-cairo and then dig into the parts of diagrams-core you need in order to understand it
+2012-02-25 18:10:30 UTC <byorgey> vyom: the current diagrams-svg backend is not that far along.
+2012-02-25 18:11:10 UTC <byorgey> vyom: the nice thing about writing a backend though is that it is fairly incremental.  i.e. you can get things working bit by bit and be able to render more and more diagrams
+2012-02-25 18:11:26 UTC <byorgey> it's not just a monolothic thing that you have to write all upfront.
+2012-02-25 18:11:39 UTC <byorgey> in fact, it's not even a monolithic thing.
+2012-02-25 18:12:07 UTC <vyom> byorgey: when you say incremental.. what kind of units of work are you talking about?
+2012-02-25 18:13:02 UTC <byorgey> vyom: I mean things like "get path rendering working", "get text working badly", "get text working a bit better", etc.
+2012-02-25 18:13:43 UTC <byorgey> also with attributes. you can start off not supporting color or line width but still have diagrams render in B&W, color will just be ignored
+2012-02-25 18:13:52 UTC <byorgey> then you can add color handling, etc.
+2012-02-25 18:13:59 UTC <vyom> cool.. sounds good. I think i will use hs-logo to drive the things I need to implement ;)
+2012-02-25 18:14:13 UTC <byorgey> yes, sound like a great idea =)
+2012-02-25 18:14:38 UTC <byorgey> after I get diagrams-0.5 released I can work in the SVG backend too, we can work on it together
+2012-02-25 18:15:29 UTC <vyom> cool.. let me dive into it a bit.. and given the diagrams-svg will have wider applicability.. i would much appreciate code reviews and such from anybody who has the time
+2012-02-25 18:15:57 UTC <vyom> Github makes it pretty easy.. by providing the ability to comment on lines in a commit
+2012-02-25 18:16:37 UTC <byorgey> yeah, diagrams-svg is currently in a darcs repository, but if you want to stick it on github I'm fine with that
+2012-02-25 19:09:56 UTC <vyom> My first thought was whether it is possible to use an existing library that provides primitives to generate SVGs. Is there such a library? Based on some research I did.. there is no well know library for Haskell that provides a way to render SVGs
+2012-02-25 19:10:41 UTC <vyom> there is this thing called Wumpus : http://hackage.haskell.org/packages/archive/wumpus-core/0.52.0/doc/html/src/Wumpus-Core-OutputSVG.html#writeSVG
+2012-02-25 19:24:14 UTC <vyom> oh well.. nvm i am now looking at diagrams-discuss archives which has better context
+2012-02-25 19:35:13 UTC <luite> it's XML so anything that generates XML could be useful, perhaps something like blaze-buidler for xml? does that exist?
+2012-02-25 19:43:21 UTC <ClaudiusMaximus> it's XML with a load of embedded string languages like for paths etc
+2012-02-25 19:44:10 UTC <ClaudiusMaximus> <path d="M 10,10 L 15,15 Z" /> (and don't get me started about the trial and error involved in getting the flags right for elliptical arcs)
+2012-02-25 19:53:21 UTC <vyom> luite: diagrams-svg already uses blaze-builder so that is good
+2012-02-25 19:54:15 UTC <vyom> ideally.. a combinator library for generating SVG should be separate from a diagrams-svg backend
+2012-02-25 19:54:45 UTC <vyom> and diagrams-svg should consume such a library
+2012-02-25 19:54:52 UTC <luite> hmm, dunno, that would mean you need some non-diagrams path data type?
+2012-02-25 19:55:31 UTC <vyom> luite: hmm.. that is a good point an approach like that could lead to duplication
+2012-02-25 19:56:06 UTC <vyom> but a general SVG combinator library would still be useful outside of diagrams
+2012-02-25 19:56:26 UTC <luite> I'd probably start with some utilities to convert a diagrams path to an svg string one, and see if the code is significant enough
+2012-02-25 19:57:29 UTC <vyom> luite: diagrams-svg is doing that already.. i dunno how far along it is.. I still need to understand more of the diagrams-core internals  which i am doing right now
+2012-02-25 19:58:09 UTC <luite> vyom: what might be useful is somsething that outputs the XML Tree instead of some bytestring, so you can easily postprocess it. does diagrams-svg do that already?
+2012-02-25 19:59:18 UTC <vyom> nope.. diagrams-svg just takes the diagrams type and uses blaze-builder to generate XML https://patch-tag.com/r/felipe/diagrams-svg/snapshot/current/content/pretty/src/Graphics/Rendering/SVG.hs
+2012-02-25 20:00:59 UTC <luite> hm ok
+2012-02-25 20:01:38 UTC <vyom> there is http://hackage.haskell.org/package/xmlhtml which uses blaze-builder
+2012-02-25 20:01:44 UTC <luite> anyway can you please add stuff that lets you add javascript, id's, and onSomething attributes? :p
+2012-02-25 20:02:26 UTC <vyom> luite: i am not sure what you mean.. I really have no idea at the moment what the SVG format contains.. except that it is some XML :)
+2012-02-25 20:02:36 UTC <vyom> hopefully that will change soon once i start reading docs
+2012-02-25 20:03:04 UTC <luite> vyom: you can add script tags, or <g onclick='callsomejavascript()' id='blah'>
+2012-02-25 20:04:19 UTC <luite> I really really really really really really want that :p
+2012-02-25 20:04:32 UTC <vyom> so it looks like you would like a diagrams-svg that generates a an XML document tree
+2012-02-25 20:05:26 UTC <vyom> so that you can perform additional transformations like adding these onclick attributes
+2012-02-25 20:05:49 UTC <vyom> and then eventually use somethign like blaze-builder to output the actual XML text
+2012-02-25 20:08:01 UTC <fryguybob> luite: humm, I played with adding an id attribute to diagrams-svg.
+2012-02-25 20:09:01 UTC <luite> that would be very useful, especially in combination with script tags
+2012-02-25 20:09:06 UTC <vyom> again.. ideally.. i would build these in layers.. 1. An SVG combinator library that outputs an XML document 2. A backend that uses blaze-builder to output the XML as a bytestring, and 3. A diagrams-svg backend that consumes 1 and 2 and provides an API to get either the XML document or the bytestring representation
+2012-02-25 20:09:15 UTC <luite> the onclick stuff is actually old-fashioned event handling, so it's not really necessary
+2012-02-25 20:09:47 UTC <luite> as long as you can add unique id's and a script that can select those id's you can do everything
+2012-02-25 20:09:59 UTC <luite> the script can set up the new-fashioned event handling
+2012-02-25 20:10:55 UTC <luite> I'd like to re-add the tic-tac-toe exampel before relaunch, but now with diagrams instead of wumpus :)
+2012-02-25 20:10:56 UTC <vyom> luite: I dunno, bu does diagrams support associating metadata with documents
+2012-02-25 20:11:13 UTC <fryguybob> luite: The problem I encountered was not having an element at the where the attribute was applied.
+2012-02-25 20:11:35 UTC <vyom> we can use that as a mechanism to generate IDs
+2012-02-25 20:12:05 UTC <vyom> s/documents/diagrams/
+2012-02-25 20:13:02 UTC <luite> fryguybob: hmm, but in general you will eventually get an element, right? otherwise you might insert extra <g> elements if you need something to hang your id on
+2012-02-25 20:13:37 UTC <fryguybob> luite: Right, here is an example: http://www.cs.rochester.edu/u/ryates/temp/hslogo.hs
+2012-02-25 20:13:40 UTC <fryguybob> http://www.cs.rochester.edu/u/ryates/temp/hslogo.svg
+2012-02-25 20:14:16 UTC <fryguybob> rangle and lambda both get emitted once because they are one path, but equals gets emitted twice.
+2012-02-25 20:15:24 UTC <luite> right
+2012-02-25 20:16:55 UTC <fryguybob> Adding that was just a few lines of code:  http://hpaste.org/64330
+2012-02-25 20:17:32 UTC <luite> interesting highlighting
+2012-02-25 20:18:32 UTC <tgeeky_> hm.
+2012-02-25 20:18:32 UTC <fryguybob> So one solution would be to do two passes, once to gather up all the paths all tagged with id's, then at the end group things with the same id.  But that could change the layering order.
+2012-02-25 20:18:36 UTC <tgeeky_> ACTION wonders if I should read all of this
+2012-02-25 20:21:06 UTC <luite> hm, can't you limit the things that you can give an id to, and make it an error to have two things with the same id in a diagram?
+2012-02-25 20:22:38 UTC <luite> I'd rather have something generate errors than have attributes modify the meaning of diagrams
+2012-02-25 20:23:50 UTC <fryguybob> luite: Me too :D
+2012-02-25 20:25:35 UTC <fryguybob> ACTION wonders if we could get by with name monoid's...
+2012-02-25 20:26:33 UTC <vyom> fryguybob: from your code sample it looks like diagrams provides a way to attach metadata using AttributeClass typeclass
+2012-02-25 20:26:35 UTC <vyom> is that right?
+2012-02-25 20:26:40 UTC <fryguybob> You could in one pass ensure that all id's emitted are unique.
+2012-02-25 20:26:42 UTC <tgeeky_> luite: lol @ ^^
+2012-02-25 20:26:44 UTC <fryguybob> vyom: Yes
+2012-02-25 20:26:54 UTC <luite> tgeeky_: why lol?
+2012-02-25 20:27:02 UTC <tgeeky_> luite: monoid's
+2012-02-25 20:27:12 UTC <tgeeky_> and our goofing around last night
+2012-02-25 20:27:43 UTC <luite> haha right
+2012-02-25 20:28:19 UTC <luite> haven't had enough sleep last 'night' :(
+2012-02-25 20:29:07 UTC <fryguybob> luite: Would you be happy with "equals1" "equals2"?
+2012-02-25 20:32:31 UTC <luite> fryguybob: if you add them with svgID "equals", then no, since the point is to be able to use getElementById('equals') in a script
+2012-02-25 20:33:02 UTC <luite> otherwise you'd have to walk the whole tree to find your id's
+2012-02-25 20:33:04 UTC <fryguybob> luite: getElementByIdPrefix(...)
+2012-02-25 20:33:18 UTC <fryguybob> not that that is a thing.
+2012-02-25 20:33:31 UTC <luite> hehe it has 2530 hits on google :)
+2012-02-25 20:33:35 UTC <fryguybob> ha
+2012-02-25 20:33:50 UTC <luite> fewer than 100000 hits on google means that it doesn't exist ;p
+2012-02-25 20:35:21 UTC <luite> but the browsers internal representaiton is probanly optimized for fast getElementById lookups
+2012-02-25 20:35:31 UTC <luite> browser's now
+2012-02-25 20:35:36 UTC <luite> sorry tgeeky_
+2012-02-25 20:36:01 UTC <fryguybob> I can't think of any other ways to get around the problem that do not involve changing the way rendering happens, but the issue that is in the way for this is also the cause of some of the output size explosion in diagrams-postscript.
+2012-02-25 20:37:55 UTC <luite> hmm
+2012-02-25 20:38:35 UTC <fryguybob> What we want ideally to know is when an attribute appears and when it disappears to match the grouping.  Maybe that is just keeping state of when you saw the attribute.  Humm.
+2012-02-25 20:39:41 UTC <fryguybob> Well then we have the problem that we need to add the id after we have seen the node in question, but that can be dealt with in one pass.
+2012-02-25 20:40:53 UTC <fryguybob> ACTION goes back to grading java...
+2012-02-25 20:41:03 UTC <luite> that's surely more fun that this :p
+2012-02-25 20:41:55 UTC <fryguybob> it appears only four students out of 65 or so followed the directions :D.
+2012-02-25 20:42:05 UTC <luite> not pad
+2012-02-25 20:42:07 UTC <luite> err, bad
+2012-02-25 20:43:06 UTC <luite> is it a general java programming course or something like data structures?
+2012-02-25 20:43:15 UTC <fryguybob> Data structures
+2012-02-25 20:44:05 UTC <luite> oh I remember a red/black tree assignment there, where 90% of the solutions worked only for the test cases that were in the assignment :)
+2012-02-25 20:44:15 UTC <fryguybob> haha
+2012-02-25 20:44:44 UTC <fryguybob> Probably a good thing no explicit test cases were given here then.
+2012-02-25 20:45:21 UTC <luite> another university in the netherlands has a quickcheck-like system, that automatically tests solutions when you submit them
+2012-02-25 20:48:31 UTC <fryguybob> I'm kind of building that as I go.  But only four students wrote their code against an interface correctly (it appears).
+2012-02-25 20:49:15 UTC <luite> do they have to do it in java?
+2012-02-25 20:49:58 UTC <fryguybob> yeah
+2012-02-25 20:51:28 UTC <luite> hmm, do JVMs still have a sandbox, like they had for applets in browsers?
+2012-02-25 20:52:41 UTC <vyom> byorgey: do you have any recommendations for resources to learn more about the core math around the diagrams.. things like VectorSpace, AffineSpace and AdditiveGroup
+2012-02-25 20:53:04 UTC <vyom> at some point I would really like to grok them
+2012-02-25 20:53:29 UTC <luite> linear algebra textbooks probably
+2012-02-25 20:53:48 UTC <vyom> luite: got a recommendation :) ?
+2012-02-25 20:54:32 UTC <fryguybob> There are some good things about Strang's book.
+2012-02-25 20:54:55 UTC <fryguybob> Lectures on http://ocw.mit.edu/courses/mathematics/18-06-linear-algebra-spring-2010/video-lectures/
+2012-02-25 20:55:25 UTC <luite> oh that looks ok
+2012-02-25 20:55:40 UTC <luite> I learned it from handouts/notes, so don't have a proper textbook :)
+2012-02-25 20:56:37 UTC <fryguybob> My wife teaches out of Anton: http://www.wiley.com/WileyCDA/WileyTitle/productCd-EHEP000551.html
+2012-02-25 20:57:41 UTC <luite> vyom: other things like monoid an group are more abstract algebra, you won't need a textbook to understand them
+2012-02-25 20:58:26 UTC <byorgey> fryguybob: I am very interested in fixing the attributes issue the "right" way, i.e. changing how rendering happens
+2012-02-25 20:58:30 UTC <fryguybob> I learned from http://www.laylinalgebra.com/ which, I'm not sure I would recommend, but the author is really nice.
+2012-02-25 20:58:33 UTC <byorgey> so you don't just get a list of primitives with attributes
+2012-02-25 20:58:40 UTC <fryguybob> byorgey: Yeah
+2012-02-25 20:58:46 UTC <fryguybob> byorgey: Me too.
+2012-02-25 20:59:26 UTC <luite> hmm that name rings a bell
+2012-02-25 20:59:51 UTC <fryguybob> seems like his site has a lot of broken links.
+2012-02-25 21:00:24 UTC <byorgey> so I think after the 0.5 release I am going to dive into the internals of UDTree and the rendering interface again.
+2012-02-25 21:00:32 UTC <byorgey> can't say I'm excited about that but I want to get it right =)
+2012-02-25 21:00:37 UTC <luite> hehe
+2012-02-25 21:01:19 UTC <luite> great, just remember that I won't release wolfgang until there's an svg backend that gets it right ;p
+2012-02-25 21:01:31 UTC <byorgey> blackmail!!
+2012-02-25 21:02:02 UTC <fryguybob> luite: Give us a test case as a target and we will be ready by tonight ;P
+2012-02-25 21:02:11 UTC <luite> hehe
+2012-02-25 21:02:31 UTC <luite> it will take at least a day to install it on the server :(
+2012-02-25 21:03:35 UTC <luite> but I'm getting closer, the frontpage will hopefully be done later today
+2012-02-25 21:07:00 UTC <luite> hm I wonder why the full-text search engine doesn't update :(
+2012-02-25 21:14:54 UTC <vyom> the number of language extensions in diagrams-core is staggering :).. it is actually pretty daunting to understand everything in one go.. so for now i am just doing an initial pass glossing over a lot of stuff
+2012-02-25 21:16:04 UTC <byorgey> vyom: well, that's probably the best way to learn things in general =)
+2012-02-25 21:16:24 UTC <byorgey> vyom: of course, feel free to ask me questions
+2012-02-25 21:16:44 UTC <byorgey> vyom: you also probably don't need to understand everything in diagrams-core in order to write a backend
+2012-02-25 21:17:00 UTC <byorgey> at least, you can certainly get started without understanding everything
+2012-02-25 21:17:23 UTC <byorgey> so an initial skim just to get an idea of what is there is probably good
+2012-02-25 21:17:33 UTC <vyom> byorgey: yes, i get that.. it would be great to undestand all of it someday though
+2012-02-25 21:17:41 UTC <byorgey> sure =)
+2012-02-25 21:17:57 UTC <byorgey> I'd like to understand all of it someday too ;)
+2012-02-25 21:17:59 UTC <vyom> i am just noting that the number of esoteric stuff is still a lot more than going through some other codebases iave been through, like Pandoc, Hakyll or blaze-html
+2012-02-25 21:18:26 UTC <vyom> :)
+2012-02-25 21:18:34 UTC <fryguybob> ACTION usually learns by fixing bugs.
+2012-02-25 21:19:23 UTC <vyom> fryguybob: i usually learn by building on top of the stuff i am trying to learn.. like I am attempting to do now
+2012-02-25 21:21:49 UTC <fryguybob> vyom: That usually works well.  It can be a problem when GHC is so helpful though, follow the types and it writes itself :D
+2012-02-25 21:23:08 UTC <luite> ACTION usually learns by shouting blatantly wrong things on reddit and getting corrected ;)
+2012-02-25 21:24:17 UTC <vyom> lol
+2012-02-25 21:24:30 UTC <mekeor> hehe :D
+2012-02-25 21:29:22 UTC <luite> whoah 12 github followers! hmm, who is this 'byorgey' guy.....
+2012-02-25 21:29:36 UTC <byorgey> dunno, some weirdo probably
+2012-02-25 21:31:10 UTC <luite> hmm, should I report him for stalking me?
+2012-02-25 21:31:23 UTC <vyom> byorgey: I dont quite understand the purpose of the IsName typeclass
+2012-02-25 21:31:28 UTC <vyom> what do you use it for?
+2012-02-25 21:32:12 UTC <byorgey> vyom: you don't understand the purpose of names, or you don't understand the purpose of the type class?  (or both?)
+2012-02-25 21:32:36 UTC <tgeeky_> ^^^^: that's the purpose of names
+2012-02-25 21:32:38 UTC <vyom> i dont understand the purpose of names
+2012-02-25 21:33:46 UTC <vyom> or rather.. what are they used for in diagrams
+2012-02-25 21:34:38 UTC <vyom> let me put it differently..
+2012-02-25 21:34:52 UTC <byorgey> vyom: for the purpose of names see  http://projects.haskell.org/diagrams/manual/diagrams-manual.html#named-subdiagrams
+2012-02-25 21:34:54 UTC <vyom> i see that Bools and Ints are instances of IsName typeclass
+2012-02-25 21:35:06 UTC <vyom> how does that help?
+2012-02-25 21:35:18 UTC <vyom> ah ok
+2012-02-25 21:35:20 UTC <byorgey> vyom: it means you can use Bools or Ints to label subdiagrams.
+2012-02-25 21:36:12 UTC <byorgey> because of the IsName class you can use whatever type you want to label things.  Sometimes String makes the most sense but often something else makes more sense.
+2012-02-25 21:36:32 UTC <vyom> i now remember reading this in the manual long itme ago.. will read it again
+2012-02-25 21:36:48 UTC <byorgey> that's a bit out of date but the ideas are still the same.
+2012-02-25 21:36:59 UTC <byorgey> it's updated in darcs but getting the user manual to build is finicky.
+2012-02-25 21:38:15 UTC <tgeeky_> byorgey: did you see these rough benches: http://www.reddit.com/r/haskell/comments/q5ghi/adventures_in_parsec_making_it_go_faster_with/
+2012-02-25 21:38:40 UTC <tgeeky_> is that the kind of speedup you'd expect there?
+2012-02-25 21:39:08 UTC <luite> yeah
+2012-02-25 21:39:33 UTC <tgeeky_> but that's a strict bytestring, right?
+2012-02-25 21:39:54 UTC <byorgey> i.e. attoparsec gives you about an order of magnitude over parsec?  sure, sounds reasonable
+2012-02-25 21:39:57 UTC <luite> yes, attoparsec does its own chucking
+2012-02-25 21:40:04 UTC <luite> chunking
+2012-02-25 21:40:17 UTC <luite> you just keep feeding it strict bytestrings
+2012-02-25 21:40:35 UTC <tgeeky_> ACTION wonders how this would go with trifecta
+2012-02-25 21:47:57 UTC <vyom> http://ekmett.github.com/trifecta/ doesnt seem to exist
+2012-02-25 21:49:28 UTC <luite> https://github.com/ekmett/trifecta/ does
+2012-02-25 21:51:21 UTC <vyom> thats just the source.. is there a site i can read more about it :)
+2012-02-25 21:51:43 UTC <byorgey> vyom: nope =)
+2012-02-25 21:51:52 UTC <byorgey> ekmett's projects are notoriously undocumented
+2012-02-25 21:52:11 UTC <fryguybob> and notoriously interesting
+2012-02-25 21:52:13 UTC <byorgey> because he can barely keep up just turning the torrent of good ideas coming out of his brain into code
+2012-02-26 00:13:16 UTC <byorgey> fryguybob: oops, did I send you a patch with unv2 everywhere instead of unr2?
+2012-02-26 00:13:44 UTC <byorgey> I did, didn't I =P
+2012-02-26 00:15:34 UTC <byorgey> sorry. I had unv2 at first and then decided it was inconsistent to have  P2/p2/unp2  but R2/v2/unv2.  So I went back through and changed it but I guess I missed diagrams-postscript.
+2012-02-26 00:15:47 UTC <byorgey> anyway, glad to see you figured it out anyway =)
+2012-02-26 00:28:29 UTC <fryguybob> byorgey: No problem
+2012-02-26 00:56:32 UTC <vyom> byorgey: what is an elegant way to transform a function like `renderSeg (Linear (x,0)) = chr 'h' <> double x` to cope with the changes to the TwoD types
+2012-02-26 00:57:15 UTC <byorgey> vyom: renderSeg (Linear (unr2 -> (x,0))) = chr 'h' ...
+2012-02-26 00:57:25 UTC <byorgey> vyom: and you have to enable the  ViewPatterns extension
+2012-02-26 00:57:39 UTC <vyom> yet another extension ;)
+2012-02-26 00:57:43 UTC <byorgey> of course =)
+2012-02-26 00:57:47 UTC <vyom> sounds good!
+2012-02-26 00:57:50 UTC <vyom> let me try that
+2012-02-26 00:58:02 UTC <byorgey> ViewPatterns is fairly benign as extensions go.
+2012-02-26 00:58:33 UTC <byorgey> basically you can now have patterns of the form  (f -> p)  where f is a function and p is a pattern
+2012-02-26 00:59:01 UTC <byorgey> to match the pattern (f -> p) against a value v, you match the pattern p against the value (f v)
+2012-02-26 00:59:16 UTC <byorgey> i.e. (f -> p) means 'run function f and then match the output against p'
+2012-02-26 00:59:53 UTC <vyom> yup makes sense
+2012-02-26 01:05:54 UTC <vyom> how do I get something like (x,y) from a Point R2 ?
+2012-02-26 01:07:29 UTC <vyom> unpack?
+2012-02-26 01:09:17 UTC <fryguybob> Oh, vyom my wife reminded me of another book for linear algebra: http://linear.axler.net/
+2012-02-26 01:09:44 UTC <fryguybob> "Altogether, the text is a didactic masterpiece." is an accurate review.
+2012-02-26 01:09:49 UTC <vyom> fryguybob: thanks.. bookmarked :)
+2012-02-26 01:11:24 UTC <byorgey> vyom: unp2
+2012-02-26 01:11:31 UTC <vyom> byorgey: ya just saw that :)
+2012-02-26 01:11:35 UTC <byorgey> ok =)
+2012-02-26 01:12:24 UTC <luite> has something changed in the handling of forms recently? I'm getting type errors inserting the widget of a form (with runFormPost), using whamlet
+2012-02-26 01:13:03 UTC <byorgey> no idea
+2012-02-26 01:13:14 UTC <luite> yeah i meant to ask #yesod sorry :)
+2012-02-26 01:14:20 UTC <byorgey> hehe, was wondering why you asked in here =)
+2012-02-26 01:18:00 UTC <vyom> what module re-exports (<>) I think I might be running into some compile error. The compiler is complaining "No instance for (Semigroup Render) arising from a use of `<>'"
+2012-02-26 01:18:52 UTC <luite> there are different <>'s now
+2012-02-26 01:18:59 UTC <luite> minus the '
+2012-02-26 01:19:10 UTC <luite> Data.Monoid exports it in ghc 7.4
+2012-02-26 01:19:28 UTC <vyom> so i believe i need the Data.Monoid one
+2012-02-26 01:19:28 UTC <luite> but the 'old' one was for the semigroup package
+2012-02-26 01:19:41 UTC <vyom> and i need to hide the semigroup one
+2012-02-26 01:20:55 UTC <vyom> ok i hid the <> exported by Diagrams.Prelude
+2012-02-26 01:21:02 UTC <vyom> and it doesnt complain
+2012-02-26 01:21:45 UTC <byorgey> yeah, I haven't quite figured out what the 'right' thing to do about that is
+2012-02-26 01:22:02 UTC <byorgey> I should talk to edwardk and see what he is going to do with semigroups
+2012-02-26 01:33:53 UTC <vyom> byorgey: it looks like the adjustDia2D call has changed its signature since the time diagrams-svg was implemented..
+2012-02-26 01:34:04 UTC <byorgey> vyom: that's quite possible
+2012-02-26 01:34:50 UTC <vyom> not sure what an appropriate replacement could be : adjustDia c opts d = adjustDia2D size c opts d
+2012-02-26 01:36:21 UTC <vyom> i need something for the argument setSize
+2012-02-26 01:36:27 UTC <byorgey> vyom: I think after the 'size' argument you need to pass it a function that knows how to replace the size specification in opts
+2012-02-26 01:37:02 UTC <byorgey> vyom: the point is that the size may be incompletely specified (e.g. just a width) and adjustDia2D will not only do the adjustments but decide what the height should be
+2012-02-26 01:37:10 UTC <byorgey> and we want to remember that information
+2012-02-26 01:37:13 UTC <vyom> ok
+2012-02-26 01:37:32 UTC <byorgey> vyom: you could take a look at how diagrams-cairo or diagrams-postscript do it
+2012-02-26 01:37:44 UTC <vyom> byorgey: ok will do
+2012-02-26 01:37:55 UTC <fryguybob> vyom: then follow the types :D
+2012-02-26 01:37:56 UTC <byorgey> as I recall diagrams-cairo has a bit of extra complication due to the fact that some modes cause the sizing stuff to be bypassed
+2012-02-26 01:38:18 UTC <byorgey> yeah, if you just follow the types there's only so many things you can do =)
+2012-02-26 01:39:36 UTC <byorgey> like  setSize sz o = o { size = sz }  probably
+2012-02-26 01:39:44 UTC <vyom> ya i guess.. i need a function of type.. a -> b -> b which ignores a and returns b
+2012-02-26 01:39:58 UTC <vyom> as a placeholder for now that is
+2012-02-26 01:40:15 UTC <byorgey> no, use what I wrote above =)
+2012-02-26 01:40:35 UTC <vyom> ok
+2012-02-26 01:40:38 UTC <vyom> :)
+2012-02-26 01:44:50 UTC <byorgey> anyone have any fun example diagrams they want me to stick in the web gallery?
+2012-02-26 01:46:44 UTC <vyom> byorgey: i only have logo examples :)
+2012-02-26 01:47:23 UTC <byorgey> =)
+2012-02-26 01:48:56 UTC <fryguybob> ACTION checks his pockets.
+2012-02-26 01:49:18 UTC <vyom> another question.. I am trying to simplify the diagrams-svg backend to just render paths for now.. just so that I fully understand it..
+2012-02-26 01:49:37 UTC <vyom> do I need to provide an implementation of withStyle
+2012-02-26 01:50:00 UTC <vyom> or is there some magic happening by which it wont get called if I dont have an implementation for it :)
+2012-02-26 01:50:38 UTC <byorgey> vyom: yes, you have to provide an implementation, but the implementation can be  withStyle _ _ _ r = r
+2012-02-26 01:57:33 UTC <fryguybob> byorgey: I do not have any particularly fun diagrams at this time.
+2012-02-26 01:58:06 UTC <byorgey> awww
+2012-02-26 01:59:41 UTC <fryguybob> unless you want my sad diagram
+2012-02-26 02:00:01 UTC <fryguybob> There is also http://cs.rochester.edu/u/ryates/temp/circuits.pdf
+2012-02-26 02:00:09 UTC <byorgey> no sad diagrams in the happy example gallery!
+2012-02-26 02:00:14 UTC <fryguybob> Which is more functional then interesting
+2012-02-26 02:00:35 UTC <byorgey> yeah
+2012-02-26 02:01:14 UTC <fryguybob> And there is http://cs.rochester.edu/u/ryates/temp/man.pdf
+2012-02-26 02:01:58 UTC <byorgey> oh, that one's fun
+2012-02-26 02:03:12 UTC <fryguybob> Just don't look at the size of the eps file :D
+2012-02-26 02:03:23 UTC <luite> needs more color :)
+2012-02-26 02:03:45 UTC <fryguybob> http://cs.rochester.edu/u/ryates/temp/step2.pdf -- built with diagrams technology :D
+2012-02-26 02:04:06 UTC <fryguybob> Oh, I had that homework from last semester...
+2012-02-26 02:04:26 UTC <vyom> ok does anybody have any examples of using diagrams-svg ? I was able to compile... now need to try it out
+2012-02-26 02:05:08 UTC <vyom> basically i need to do something with the output of the renderDia function.. which I believe is a Builder type of some kind
+2012-02-26 02:05:22 UTC <vyom> i should be able to write to a file or something
+2012-02-26 02:05:34 UTC <fryguybob> vyom: yeah the one I posted earlier if you remove the id stuff.
+2012-02-26 02:05:57 UTC <fryguybob>  http://www.cs.rochester.edu/u/ryates/temp/hslogo.hs
+2012-02-26 02:06:18 UTC <byorgey> fryguybob: yeah, I already have that one
+2012-02-26 02:06:30 UTC <fryguybob> That was for vyom
+2012-02-26 02:06:35 UTC <byorgey> oh! ok =)
+2012-02-26 02:06:59 UTC <vyom> i dont see the Diagrams.Backend.SVG.CmdLine anywhere in the code i am looking at
+2012-02-26 02:07:08 UTC <vyom> https://patch-tag.com/r/felipe/diagrams-svg/
+2012-02-26 02:07:14 UTC <fryguybob> Humm
+2012-02-26 02:07:44 UTC <vyom> can you paste the code somewhere.. i can just adapt it for my purpose here
+2012-02-26 02:08:38 UTC <byorgey> hmm, we really ought to abstract out that CmdLine stuff into its own package that can be shared across backends somehow
+2012-02-26 02:08:53 UTC <fryguybob> byorgey: yeah
+2012-02-26 02:09:03 UTC <fryguybob> byorgey: they are all identical.
+2012-02-26 02:09:15 UTC <byorgey> indeed.
+2012-02-26 02:09:33 UTC <byorgey> "gee, we have six identical copies of this code, you think maybe we should abstract it out?"
+2012-02-26 02:11:06 UTC <fryguybob> strange, how do I have a newer version then what is on patch-tag?
+2012-02-26 02:11:06 UTC <luite> better write an emacs script to make it easier to insert that code in the future
+2012-02-26 02:11:30 UTC <vyom> :)
+2012-02-26 02:11:43 UTC <vyom> the code wrote itself! :)
+2012-02-26 02:12:38 UTC <fryguybob> Ah, it seems I wrote it.  Darcs was giving me mixed signals.
+2012-02-26 02:13:19 UTC <fryguybob> http://www.cs.rochester.edu/u/ryates/temp/CmdLine.hs
+2012-02-26 02:14:08 UTC <byorgey> fryguybob: if you send me a patch I can push it to patch-tag
+2012-02-26 02:15:11 UTC <vyom> thanks
+2012-02-26 02:15:32 UTC <fryguybob> byorgey: Should I make it build first?
+2012-02-26 02:16:01 UTC <byorgey> fryguybob: nah, don't bother
+2012-02-26 02:16:09 UTC <byorgey> I doubt the version on patch-tag builds right now either.
+2012-02-26 02:16:16 UTC <byorgey> I mean, unless you really want to.
+2012-02-26 02:16:41 UTC <byorgey> but getting it to compile is vyom's job ;)
+2012-02-26 02:17:06 UTC <fryguybob> ACTION builds a patch.
+2012-02-26 02:18:38 UTC <vyom> yes.. the version in patch-tag does not build..
+2012-02-26 02:18:54 UTC <vyom> i have changes in my workspace that make it build.. but i removed a lot of code.. just to move forward :)
+2012-02-26 02:19:39 UTC <vyom> should be able to bring those changes back easily.. once I have a handle on what is going on exactly
+2012-02-26 02:20:32 UTC <byorgey> yep, sounds like a good plan
+2012-02-26 02:23:21 UTC <fryguybob> oops
+2012-02-26 02:23:52 UTC <fryguybob> I didn't think darcs send was going to actually send an email.
+2012-02-26 02:25:32 UTC <byorgey> oh, it got sent to felipe?
+2012-02-26 02:25:36 UTC <fryguybob> yeah
+2012-02-26 02:25:48 UTC <byorgey> fryguybob: darcs send -O  sends to a file with an auto-generated name
+2012-02-26 02:25:52 UTC <fryguybob> I did it again --to you.
+2012-02-26 02:25:56 UTC <byorgey> ok.
+2012-02-26 02:26:15 UTC <byorgey> fryguybob: to my gmail or cis.upenn address?
+2012-02-26 02:26:19 UTC <fryguybob> I'm used to darcs on windows where it doesn't even try to email and defaults to -O
+2012-02-26 02:26:25 UTC <byorgey> hehe, I see
+2012-02-26 02:26:27 UTC <fryguybob> seas
+2012-02-26 02:26:30 UTC <byorgey> ok
+2012-02-26 02:27:56 UTC <byorgey> hmm, Mandelbrot takes quite a while to build!
+2012-02-26 02:28:04 UTC <vyom> http://dl.dropbox.com/u/953/logo/logo.svg
+2012-02-26 02:28:11 UTC <fryguybob> yeah, it is a stress test.
+2012-02-26 02:28:27 UTC <vyom> that snowflake was uilt using hs-logo with diagrams-svg :)
+2012-02-26 02:29:01 UTC <byorgey> vyom: nice =)
+2012-02-26 02:29:11 UTC <byorgey> \o/
+2012-02-26 02:29:29 UTC <vyom> well.. that was good.. now i have started to understand the pieces..
+2012-02-26 02:29:54 UTC <vyom> so what do you think of building an SVG combinator API like blaze-html
+2012-02-26 02:29:59 UTC <vyom> something like blaze-svg
+2012-02-26 02:30:16 UTC <vyom> which we can the use with diagrams-svg
+2012-02-26 02:30:41 UTC <byorgey> sounds like a good idea
+2012-02-26 02:30:48 UTC <vyom> i think that would make it a reusable library that anybody could use to build SVG documents
+2012-02-26 02:31:00 UTC <byorgey> although it means you are going to have to support all of SVG, not just the parts needed by diagrams-svg
+2012-02-26 02:31:19 UTC <byorgey> but it's probably the "right" thing to do!
+2012-02-26 02:31:28 UTC <vyom> erm.. well i dont really mind that.. ofcourse it will be incremental
+2012-02-26 02:31:39 UTC <byorgey> and of course you can just start with the parts... right =)
+2012-02-26 02:31:41 UTC <fryguybob> Another possibly interesting diagram: http://www.cs.rochester.edu/u/ryates/temp/at.pdf
+2012-02-26 02:31:55 UTC <ClaudiusMaximus> bonus points if it supports writing xhtml with inline embedded svg using xml namespaces :)
+2012-02-26 02:31:57 UTC <luite> cool, it has color
+2012-02-26 02:32:02 UTC <fryguybob> and http://www.cs.rochester.edu/u/ryates/temp/fullfalse.pdf http://www.cs.rochester.edu/u/ryates/temp/fulltrue.pdf
+2012-02-26 02:32:03 UTC <vyom> and if i create a separate blaze-svg package.. i am guessing people would be willing to contribute to it independent of their interest in diagrams
+2012-02-26 02:32:14 UTC <luite> fryguybob: that was some SAT reduction thing, right?
+2012-02-26 02:32:42 UTC <fryguybob> luite: yeah
+2012-02-26 02:33:03 UTC <byorgey> fryguybob: ah, yeah, those are fun, do you have a link to the source?
+2012-02-26 02:33:15 UTC <byorgey> vyom: yes, I think you're right
+2012-02-26 02:33:19 UTC <byorgey> sounds great
+2012-02-26 02:33:44 UTC <byorgey> < fryguybob> byorgey: I do not have any particularly fun diagrams at this time.   <--- liar
+2012-02-26 02:33:59 UTC <luite> hehe
+2012-02-26 02:33:59 UTC <fryguybob> All I could think of was my sad diagram
+2012-02-26 02:34:45 UTC <byorgey> in order to fly, you need to think of a happy diagram.
+2012-02-26 02:35:22 UTC <vyom> cool then.. now I am going to take a break by watching a documentary on Ayrton Senna documentary..
+2012-02-26 02:35:27 UTC <vyom> more hacking later :)
+2012-02-26 02:35:30 UTC <vyom> thanks all!
+2012-02-26 02:35:34 UTC <byorgey> cool, enjoy
+2012-02-26 02:36:21 UTC <fryguybob> http://www.cs.rochester.edu/u/ryates/temp/Homework9.hs
+2012-02-26 02:48:27 UTC <byorgey> vyom: I pushed fryguybob's changes to diagrams-svg
+2012-02-26 02:55:30 UTC <byorgey> latest diagrams gallery: http://www.cis.upenn.edu/~byorgey/hosted/diagrams-gallery.png
+2012-02-26 02:55:53 UTC <byorgey> (just a screenshot)
+2012-02-26 02:56:12 UTC <byorgey> done working on the gallery now, going to move on to other pre-release tasks =)
+2012-02-26 03:02:53 UTC <luite> wery cool
+2012-02-26 03:03:02 UTC <luite> hadn't seen the bottom center one yet
+2012-02-26 03:04:20 UTC <byorgey> luite: http://mathlesstraveled.com/2011/04/14/triangular-number-equations-via-pictures-solutions/
+2012-02-26 03:07:35 UTC <luite> ah very pretty :)
+2012-02-26 03:14:27 UTC <luite> haven't read your blog for some time :(
+2012-02-26 03:15:34 UTC <ClaudiusMaximus> i rediscovered a diagram i made and had forgotten about (in svg + js) http://claudiusmaximus.goto10.org/g/mandelbrot/exponential_strip.svg
+2012-02-26 03:16:00 UTC <byorgey> luite: oh, you should! I'm just getting to the good stuff!  ;)
+2012-02-26 03:16:11 UTC <luite> ClaudiusMaximus: ah i remember that one
+2012-02-26 03:16:15 UTC <byorgey> ClaudiusMaximus: ah, cool, I remember that one too
+2012-02-26 03:16:28 UTC <luite> byorgey: hehe looks like there's already a lot of good stuff there
+2012-02-26 03:16:32 UTC <ClaudiusMaximus> haha, my memory must suck
+2012-02-26 03:17:23 UTC <byorgey> luite: I'm just in the middle of a series of posts involving lots of pretty pictures (made with diagrams, of course =)
+2012-02-26 03:18:35 UTC <luite> yeah I saw that you already had almost lured some readers into learning haskell for diagrams :)
+2012-02-26 03:19:35 UTC <byorgey> luite: once I can just point them at an interactive tutorial they won't stand a chance!
+2012-02-26 03:21:21 UTC <luite> you need a native svg backend for that ;p
+2012-02-26 03:22:13 UTC <byorgey> hehehe
+2012-02-26 03:23:19 UTC <luite> you're teaching a haskell class, right? are you using (or going to use) some of those subjects as exercises or assignments?
+2012-02-26 03:24:25 UTC <byorgey> luite: what subjects?
+2012-02-26 03:24:34 UTC <byorgey> yes, I am teaching a haskell class
+2012-02-26 03:24:47 UTC <byorgey> luite: you mean subjects from my math blog?
+2012-02-26 03:25:15 UTC <luite> yeah, for example the decadic numbers
+2012-02-26 03:26:18 UTC <ClaudiusMaximus> byorgey: wow, i never seen your blog before - my reading list just exploded
+2012-02-26 03:26:24 UTC <byorgey> hehe
+2012-02-26 03:26:34 UTC <byorgey> enjoy! =)
+2012-02-26 03:27:17 UTC <byorgey> luite: well, I did just give them an assignment involving doing generating function arithmetic on streams of Integers, and using it to compute the Fibonacci numbers =)
+2012-02-26 03:27:39 UTC <byorgey> but that part was extra credit
+2012-02-26 03:28:01 UTC <luite> I'm only writing wolfgang because i wanted to start such a blog, but then had nothing to say, and needed an excuse for not (yet) writing blog posts
+2012-02-26 03:28:02 UTC <byorgey> in general I don't want to require any particular math background to do the assignments, since that just gets in the way of people learning Haskell
+2012-02-26 03:28:34 UTC <byorgey> wow, well, in that case I'm very glad you had nothing to say =)
+2012-02-26 03:29:09 UTC <luite> hehe it was meant as a joke, but it actually did start this way...
+2012-02-26 03:29:47 UTC <luite> i started modding wordpress to allow easy inclusion of haskell evaluation results
+2012-02-26 03:29:54 UTC <byorgey> ah, hehe, I see
+2012-02-26 03:30:12 UTC <luite> but modding wordpress makes you sad
+2012-02-26 03:30:15 UTC <ClaudiusMaximus> if i start a new blog the first post will be (
+2012-02-26 03:30:28 UTC <byorgey> luite: well, you may as well know that I started writing diagrams in order to generate pictures for my blog =)
+2012-02-26 03:30:53 UTC <luite> byorgey: yeah but at least you're blogging
+2012-02-26 03:30:54 UTC <ClaudiusMaximus> think my first blog i just dived straight in without preamble as it was sad seeing so many blogs with excited first post and petering out after 3
+2012-02-26 03:31:45 UTC <byorgey> luite: there was actually a certain post I had promised to write, and I delayed writing it for a year and a half because diagrams wasn't yet good enough to make the picture I wanted to make
+2012-02-26 03:31:53 UTC <byorgey> eventually I just wrote it without the picture =P
+2012-02-26 03:32:10 UTC <luite> aw :(
+2012-02-26 03:32:22 UTC <byorgey> I don't even remember what it was anymore, I bet diagrams could make it now though =)
+2012-02-26 03:32:32 UTC <luite> do you keep a list of subjects you're going to write about?
+2012-02-26 03:32:40 UTC <byorgey> yes
+2012-02-26 03:32:48 UTC <byorgey> it's quite long
+2012-02-26 03:34:14 UTC <luite> i started a list, i think i lost it
+2012-02-26 03:34:56 UTC <byorgey> heh, oops
+2012-02-26 03:57:11 UTC <ClaudiusMaximus> hmm, something annoying about your blog and the magic "new stuff appears when you scroll down" thing - if you click on something and click back then it seems to take an age reloading all the goodies
+2012-02-26 03:57:19 UTC <ClaudiusMaximus> byorgey: ^^
+2012-02-26 03:58:30 UTC <byorgey> oh, I didn't know it did the "new stuff appears when you scroll down" thing
+2012-02-26 03:58:33 UTC <byorgey> that must be new
+2012-02-26 03:58:55 UTC <byorgey> ClaudiusMaximus: it's just hosted on wordpress.com so I don't have a lot of control over it
+2012-02-26 04:00:56 UTC <luite> better spend two years writing better blog software ;)
+2012-02-26 04:01:54 UTC <byorgey> hah =)
+2012-02-26 04:03:07 UTC <luite> switching to mathjax would make it look a lot better though
+2012-02-26 04:04:10 UTC <byorgey> agreed
+2012-02-26 04:04:21 UTC <luite> but it's a bit slow for large pages, people used to complain about it on mathoverflow, dunno if they still do
+2012-02-26 04:05:32 UTC <byorgey> there is a mathjax plugin for wordpress, but it's not supported on wordpress.com
+2012-02-26 04:05:55 UTC <byorgey> essentially they don't want to allow any javascript for security
+2012-02-26 04:06:01 UTC <byorgey> or something like that
+2012-02-26 04:06:02 UTC <luite> hm, right
+2012-02-26 04:06:02 UTC <tgeeky_> it's way, way, too slow for even reasonably sized documents
+2012-02-26 04:06:58 UTC <ClaudiusMaximus> ah, yeah i had that "security" on my old old blogs (2002-2005), couldn't embed videos either
+2012-02-26 04:07:31 UTC <tgeeky_> is wordpress.com a hosting site?
+2012-02-26 04:08:05 UTC <byorgey> tgeeky_: yeah, free hosting for wordpress blogs
+2012-02-26 04:08:28 UTC <byorgey> at least wordpress.com does allow embedding videos
+2012-02-26 04:08:51 UTC <tgeeky_> yeah, they would get killed if they didn't
+2012-02-26 04:08:57 UTC <byorgey> it's pretty nice actually.  I just try not to think about the code it is all running on top of.
+2012-02-26 04:08:59 UTC <tgeeky_> but god forbid someone communicates a little mathematics on their watch
+2012-02-26 04:09:29 UTC <tgeeky_> as long as lady gaga videos can propogate unimpeded then everyone will be happy, amirite
+2012-02-26 04:09:41 UTC <byorgey> well, at least they have basic LaTeX support.
+2012-02-26 04:09:51 UTC <byorgey> not as pretty as it could be, but it works OK.
+2012-02-26 04:09:57 UTC <tgeeky_> i've never got around to learning latex
+2012-02-26 04:10:08 UTC <tgeeky_> I like to think that latex has just taken over the lambda namespace
+2012-02-26 04:10:20 UTC <tgeeky_> so that all the \thingslikethis are just function calls to the universe that Knuth occupies
+2012-02-26 04:10:47 UTC <tgeeky_> I did take a peek at Knuth's book on 'literate programming' and was shocked to learn that it's mostly written by other people!
+2012-02-26 04:13:01 UTC <byorgey> ugh, back to figuring out how to generate the right magic Haddock incantations to build integrated API docs for all the diagrams packages, so they can be included on the website
+2012-02-26 04:13:10 UTC <byorgey> this calls for some whisky
+2012-02-26 04:14:08 UTC <tgeeky_> http://i.imgur.com/cg489.jpg <-- bask in that picture for a few moments after your first
+2012-02-26 04:14:29 UTC <tgeeky_> This moment brought to you by NASA.
+2012-02-26 04:14:50 UTC <byorgey> nice.
+2012-02-26 04:14:56 UTC <byorgey> tgeeky_: did you take that photo? ;)
+2012-02-26 04:15:08 UTC <tgeeky_> byorgey: yes! Unfortunately, I didn't survive.
+2012-02-26 04:15:15 UTC <byorgey> oh. too bad.
+2012-02-26 04:15:29 UTC <tgeeky_> Indeed. It's a bit nippy up there.
+2012-02-26 04:15:49 UTC <tgeeky_> byorgey: some other fun facts.
+2012-02-26 04:16:19 UTC <tgeeky_> If I hurtled you toward the sun, despite the ~ 7000*C temperature, you'd freeze to death first.
+2012-02-26 04:17:22 UTC <byorgey> hurtled me from where?
+2012-02-26 04:17:45 UTC <tgeeky_> byorgey: I anticipated that question. It doesn't matter, really.
+2012-02-26 04:17:58 UTC <byorgey> I see!
+2012-02-26 04:18:03 UTC <byorgey> well, please don't
+2012-02-26 04:18:15 UTC <tgeeky_> certainly from Earth. But even if you were stationkeeping right outside the corona, and you went in... the scale is so large that you'd still freeze to death
+2012-02-26 04:18:29 UTC <byorgey> I am rather fond of my current temperature
+2012-02-26 04:18:31 UTC <tgeeky_> this is my favorite way to explain the size of the universe
+2012-02-26 04:18:34 UTC <tgeeky_> http://laughingsquid.com/amazingly-detailed-photo-of-the-surface-of-the-sun/
+2012-02-26 04:18:48 UTC <tgeeky_> http://www.avertedimagination.com/images/sun030311.jpg
+2012-02-26 04:18:50 UTC <tgeeky_> so that picture
+2012-02-26 04:19:03 UTC <tgeeky_> that is obviously on a part (probably a 1/10th) of the sun
+2012-02-26 04:19:51 UTC <tgeeky_> On the Earth, you can think of severe weather events that spawn (relatively large, powerful) things like tornados which will happily throw you and the house you occupy around like so many overly-ordered heaps of wooden scrap.
+2012-02-26 04:20:11 UTC <byorgey> sure
+2012-02-26 04:20:11 UTC <tgeeky_> so the earth has some rather large size, and our weather will throw around your house.
+2012-02-26 04:20:43 UTC <tgeeky_> On the scale of that picture, the entire Earth is smaller than the small wisps of clouds in the vortex on the left
+2012-02-26 04:21:00 UTC <byorgey> hehe, awesome =)
+2012-02-26 04:21:22 UTC <tgeeky_> so by analogy, the Sun is so large that its normal weather systems would hurtle our entire planet around
+2012-02-26 04:22:05 UTC <tgeeky_> you can even do this once (or twice) more, using supermassive stars or black holes, but that's much less approachable.
+2012-02-26 04:22:58 UTC <tgeeky_> http://en.wikipedia.org/wiki/File:Galactic_centre_orbits.svg
+2012-02-26 04:23:14 UTC <tgeeky_> there's a quick picture of the "black hole" at the center of our galaxy
+2012-02-26 04:23:35 UTC <tgeeky_> or, at least, of the objects it throws around
+2012-02-26 04:25:59 UTC <byorgey> tgeeky_: those scales don't quite match up, the Sun's diameter is only about 100 times that of Earth
+2012-02-26 04:26:24 UTC <byorgey> something 1/100th the diameter of earth would be 127km across, which Earth weather definitely can't toss around
+2012-02-26 04:27:30 UTC <tgeeky_> byorgey: I think you'll find the mass comparisons more accomidating
+2012-02-26 04:28:13 UTC <byorgey> but mass just goes as the cube of diameter.
+2012-02-26 04:28:16 UTC <tgeeky_> byorgey: you may very well be right. to be clear, the analogy I was making is, tornado tosses house, solar vortex tosses earth
+2012-02-26 04:28:25 UTC <byorgey> oh, but the sun is much denser than the earth
+2012-02-26 04:28:43 UTC <fryguybob> ACTION encounters for loops nested 10 deep...
+2012-02-26 04:28:49 UTC <byorgey> tgeeky_: yes, I know you were making that analogy, and it may be true, but it doesn't follow from the relative sizes =)
+2012-02-26 04:29:03 UTC <byorgey> wat
+2012-02-26 04:31:12 UTC <byorgey> fryguybob: I can't even comprehend how that could possibly happen.
+2012-02-26 04:31:36 UTC <tgeeky_> an iteration of fermionic string theory?
+2012-02-26 04:31:40 UTC <tgeeky_> 10 dimensions :o
+2012-02-26 04:31:45 UTC <byorgey> ACTION wonders what the highest value of k is for a "legitimate" algorithm which is O(n^k)
+2012-02-26 04:32:17 UTC <byorgey> pretty sure I've heard of k = 6
+2012-02-26 04:32:25 UTC <byorgey> though I don't remember what the algorithm was
+2012-02-26 04:32:39 UTC <fryguybob> byorgey: Well they stopped at the case of N = 10.  Before that they had 9 nested for loops.
+2012-02-26 04:33:10 UTC <byorgey> oh, I see, of course.
+2012-02-26 04:33:45 UTC <fryguybob> 200 lines of code should be less then 5, even in java.
+2012-02-26 04:34:46 UTC <byorgey> ouch.
+2012-02-26 04:36:23 UTC <tgeeky_> byorgey: here is a picture for scale: http://blogs.discovermagazine.com/badastronomy/2010/10/28/the-boiling-erupting-sun/
+2012-02-26 04:36:37 UTC <ClaudiusMaximus> reminds me of the time i did a computation competition in school in Acorn BBC Basic and had no clue what the while loop syntax was and couldn't find the manual and ended up using if/goto and got docked marks
+2012-02-26 04:37:08 UTC <tgeeky_> byorgey: I think the confusion stems from the fact that we're talking about weather on the "surfaces" of these bodies
+2012-02-26 04:37:48 UTC <tgeeky_> byorgey: but your original objection still seems correct, to me. (I mean, I know it's mathematically correct, but it also seems intuitively correct.. I don't see any weather system moving a large island around)
+2012-02-26 04:38:19 UTC <byorgey> tgeeky_: hah, awesome
+2012-02-26 04:38:48 UTC <tgeeky_> it really is on the verge of being totally unappreciable
+2012-02-26 04:38:57 UTC <byorgey> tgeeky_: from those pictures it also seems to me that the Sun's "weather" is on a much, much larger scale (relatively) than Earth's
+2012-02-26 04:39:36 UTC <byorgey> Earth does not have massive plumes of hot gas 100s of kilometers across erupting from it.
+2012-02-26 04:40:02 UTC <tgeeky_> byorgey: not anymore, at least :)
+2012-02-26 04:40:06 UTC <byorgey> hehe
+2012-02-26 04:40:14 UTC <byorgey> earth is all boring and stuff
+2012-02-26 04:40:31 UTC <tgeeky_> though the republican candidates might fit the bill.
+2012-02-26 04:40:38 UTC <tgeeky_> certainly filled with hot gas
+2012-02-26 04:40:43 UTC <ClaudiusMaximus> i like the moon being the same apparent size as the sun from the earth's surface
+2012-02-26 04:41:04 UTC <tgeeky_> ClaudiusMaximus: yeah. pretty handy observational tool.
+2012-02-26 04:41:19 UTC <tgeeky_> plus, supposedly a breathtakingly beautiful sight to see
+2012-02-26 04:42:05 UTC <ClaudiusMaximus> i saw an eclipse in france a few years ago, the main thing i remember was how cold it got so quickly
+2012-02-26 04:42:13 UTC <tgeeky_> really?
+2012-02-26 04:42:19 UTC <tgeeky_> i hadn't heard of that
+2012-02-26 04:43:28 UTC <tgeeky_> wow. a reduction comparable to 1/2 to 3/4ths of the diff between daily max and daily min
+2012-02-26 04:43:31 UTC <tgeeky_> that's nuts!
+2012-02-26 04:44:14 UTC <tgeeky_> ClaudiusMaximus: I saw a Space Shuttle launch. That's my favorite moment in my life so far :O
+2012-02-26 04:47:00 UTC <byorgey> ACTION is already planning to go see the total solar eclipse on August 21, 2017
+2012-02-26 04:47:37 UTC <byorgey> it's going to pass just a short drive north of my wife's parents' house in Kansas
+2012-02-26 04:48:10 UTC <tgeeky_> i might have to come out and join you.
+2012-02-26 04:48:16 UTC <tgeeky_> that's a pretty far way in the future though :o
+2012-02-26 04:48:54 UTC <byorgey> I know
+2012-02-26 04:49:54 UTC <luite> http://hdiff.luite.com/tmp/fp3.png  - now with 50% less artificial data!  ( http://hdiff.luite.com/tmp/admin1.png )
+2012-02-26 04:50:27 UTC <tgeeky_> byorgey: by then, we might both be zillionaires. We'll pay the Sun to eclipse when we want it to!
+2012-02-26 04:50:34 UTC <byorgey> http://en.wikipedia.org/wiki/Solar_eclipse_of_August_21,_2017
+2012-02-26 04:50:52 UTC <tgeeky_> wolfgang finally launched
+2012-02-26 04:50:54 UTC <byorgey> tgeeky_: nice!
+2012-02-26 04:51:14 UTC <fryguybob> tgeeky_: I was resisting that :D
+2012-02-26 04:51:41 UTC <luite> tgeeky_: yes, the news items are still fake, but at least it's loading them from the database now, instead of them being hardcoded in the template
+2012-02-26 04:51:48 UTC <byorgey> "Gray favorite puzzle/paradox of Gray based on Fibonacci numbers"?
+2012-02-26 04:51:52 UTC <luite> that's why it's only 50% less fake
+2012-02-26 04:51:55 UTC <tgeeky_> byorgey: man. to see that, *and* to finally see one of these stars go supernova (beatlejuice, eta carine)
+2012-02-26 04:52:01 UTC <tgeeky_> in our lifetime
+2012-02-26 04:52:58 UTC <luite> byorgey: oh I think I randomly changed some words from the previous item, to make it easier to see that that text had actually been updated
+2012-02-26 04:53:07 UTC <byorgey> hehe
+2012-02-26 04:53:30 UTC <luite> but the gallery data is still hardcoded
+2012-02-26 04:53:43 UTC <luite> that's the last thing that needs to be fixed for the frontpage
+2012-02-26 04:54:04 UTC <luite> I'll probably pull it from some wiki page in some special format
+2012-02-26 04:56:43 UTC <luite> still need to make the admin interface for deleting pages/revisions and users
+2012-02-26 04:57:57 UTC <tgeeky_> i'm a little peeved and embarassed that wolframalpha.com is using an apollonian fractal (with some congruences applied) as their background image :o
+2012-02-26 04:59:10 UTC <ClaudiusMaximus> looks like this to me http://www.wolframcdn.com/homepage/orange-gears-back-new2.jpg
+2012-02-26 04:59:11 UTC <luite> why embarassed
+2012-02-26 04:59:12 UTC <luite> ?
+2012-02-26 04:59:40 UTC <luite> oh I get a green background
+2012-02-26 04:59:58 UTC <tgeeky_> luite: because, it's "my thing" and I haven't had the skill/time/motivation to get much more done fast enough :o
+2012-02-26 05:00:02 UTC <byorgey> oh, I got the gears earlier but just now I got the Apollonian fractal
+2012-02-26 05:00:37 UTC <tgeeky_> http://www.wolframcdn.com/homepage/green-back2.jpg
+2012-02-26 05:01:00 UTC <ClaudiusMaximus> which is spooky because the last non-silly thing i did was http://claudiusmaximus.goto10.org/v/gears/2012-01-14_gear_chain_v1.ogv
+2012-02-26 05:01:12 UTC <byorgey> that's a pretty cool background image
+2012-02-26 05:01:17 UTC <ClaudiusMaximus> and i got quite obsessed by seeing gears everywhere
+2012-02-26 05:01:25 UTC <luite> oh that's a big file
+2012-02-26 05:01:37 UTC <tgeeky_> byorgey: I like it. It's not really in the fractal, though
+2012-02-26 05:01:50 UTC <luite> meh enough boring programming for today...
+2012-02-26 05:01:55 UTC <tgeeky_> I think it's probably reflected 4 times
+2012-02-26 05:01:56 UTC <ClaudiusMaximus> oops, mine is 36MB - shoulda warned
+2012-02-26 05:02:06 UTC <byorgey> tgeeky_: sure
+2012-02-26 05:02:37 UTC <tgeeky_> byorgey: and it's reduced, modulo something. I'd have to compare it to other people's renderings to figure it out :o
+2012-02-26 05:05:31 UTC <tgeeky_> weird. now I can't unsee the image of a demonic, howling mickey mouse in these inner parts
+2012-02-26 05:05:45 UTC <tgeeky_> or maybe mickey with bifocals on
+2012-02-26 05:24:56 UTC <byorgey> ACTION -> bed
+2012-02-26 05:24:58 UTC <byorgey> night all
+2012-02-26 17:42:14 UTC <luite> aw, removing tau from diagrams? :(
+2012-02-26 17:42:33 UTC <byorgey> luite: yeah, I know, sad =(
+2012-02-26 17:43:10 UTC <byorgey> Note, I'm not removing tau itself from diagrams, only the dependence on the tau package
+2012-02-26 17:45:29 UTC <luite> yes but you're still removing the one true authoritative tau
+2012-02-26 17:45:49 UTC <luite> i suspect this is all part of some evil piist plot
+2012-02-26 17:45:58 UTC <byorgey> hehe
+2012-02-26 18:26:08 UTC <vyom> byorgey: I have been having an email conversation with jaspervdj, who wrote blaze-html to see if could reuse his stuff. I also wrote up this initial note by way of "design" :)
+2012-02-26 18:26:10 UTC <vyom> any thoughts?
+2012-02-26 18:26:16 UTC <vyom> feel free to put it in a comment
+2012-02-26 18:26:25 UTC <vyom> so that it is documented
+2012-02-26 18:26:33 UTC <vyom> i am gonna send it out to jasper as well
+2012-02-26 18:27:38 UTC <byorgey> vyom: uh, any thoughts on what?
+2012-02-26 18:27:45 UTC <byorgey> what initial note?
+2012-02-26 18:27:57 UTC <vyom> https://gist.github.com/1918104
+2012-02-26 18:27:58 UTC <vyom> sorry :)
+2012-02-26 18:28:10 UTC <byorgey> ACTION cannot read minds quite yet =)
+2012-02-26 18:29:12 UTC <vyom> lol! my thoughts were racing faster than my typing abilities
+2012-02-26 18:31:45 UTC <byorgey> vyom: I added a comment
+2012-02-26 18:32:15 UTC <byorgey> vyom: anyway, in general it looks good to me
+2012-02-26 18:32:35 UTC <byorgey> I don't have very strong opinions about generating SVG, as long as diagrams-svg works I don't really care how you do it ;)
+2012-02-26 18:35:39 UTC <vyom> byorgey: ok.. sounds good. I believe the goal of blaze-html is to make valid HTML docs.. but that validation is not part of the core monad used to generate the documents. The core monad which I believe is called HtmlM can actually handle any XMLish tree structure
+2012-02-26 18:35:56 UTC <byorgey> ok, makes sense.
+2012-02-26 18:36:35 UTC <vyom> in my initial conversation, jasper was in favor of reusing those internal classes
+2012-02-26 18:38:08 UTC <vyom> s/reusing/letting me reuse/
+2012-02-26 18:39:28 UTC <vyom> this might take a bit of co-ordination.. but in the end it would be valuable
+2012-02-26 19:08:39 UTC <byorgey-test> testing
+2012-02-26 19:09:56 UTC <luite> hmm
+2012-02-26 19:11:46 UTC <byorgey> I'm embedding a chat client in the diagrams web page
+2012-02-26 19:13:45 UTC <vyom> interesting idea.. what for though? So people can post to #diagrams directly and share cool stuff?
+2012-02-26 19:13:47 UTC <vyom> :)
+2012-02-26 19:14:22 UTC <byorgey> vyom: mostly to lower the barriers to getting help.
+2012-02-26 19:14:39 UTC <byorgey> so if someone is interested in diagrams but has never used IRC before they don't have to figure out how to install an IRC client first.
+2012-02-26 19:15:09 UTC <luite> you should also add a diagrams facebook page, so people can 'like' it
+2012-02-26 19:15:37 UTC <byorgey> hah, I totally should, and a Google+ page while we're at it
+2012-02-26 19:15:50 UTC <luite> and promise them some special status in the irc channel if they like it
+2012-02-26 19:16:18 UTC <byorgey> "Just 'Like' diagrams to get your first three diagrams free!"
+2012-02-26 19:17:02 UTC <luite> that's almost as much as a premium domain name!
+2012-02-26 19:20:30 UTC <byorgey> http://www.cis.upenn.edu/~byorgey/hosted/diagrams-community.png   -- here's what it looks like
+2012-02-26 19:20:46 UTC <byorgey> feedback from actual wed designers welcome =P
+2012-02-26 19:20:49 UTC <byorgey> *web
+2012-02-26 19:23:31 UTC <luite> hmm I would've chosen a simpler logo, but it looks fun
+2012-02-26 19:23:50 UTC <byorgey> luite: oh, I agree, we do need a simpler logo
+2012-02-26 19:24:25 UTC <byorgey> unfortunately I am not much of a graphic designer either.
+2012-02-26 19:25:45 UTC <luite> me neither, although I sometimes like to think i am... and then spend a week tinkering with logo designs that i'm unhappy about, finally throwing away everything
+2012-02-26 19:26:32 UTC <byorgey> hehe
+2012-02-26 19:26:58 UTC <byorgey> I was just trying to spell the name "diagrams" in ways that showed off stuff you can do with it
+2012-02-26 19:27:09 UTC <byorgey> which is fun, but in retrospect does not actually make a very good logo.
+2012-02-26 19:27:44 UTC <luite> yesod also needs a new logo, and I don't like the designs that people have currently sent in, but must resist the temptation to make one myself
+2012-02-26 19:28:05 UTC <byorgey> hehe
+2012-02-26 19:28:14 UTC <byorgey> both of us have bigger fish to fry =)
+2012-02-26 19:28:47 UTC <luite> I still like Cale's haskell logo entry, but just replacin the word Haskell with Yesod there doesn't really work
+2012-02-26 19:29:22 UTC <luite> (plus it has a bit of an odd shape)
+2012-02-26 19:34:47 UTC <byorgey> luite: which one is that?
+2012-02-26 19:34:59 UTC <luite> the mountain
+2012-02-26 19:52:13 UTC <vyom> i am having trouble getting this line to compile under diagrams-0.5.. and not sure what to do to fix it
+2012-02-26 19:52:14 UTC <vyom> https://github.com/deepakjois/diagrams-svg/blob/master/src/Graphics/Rendering/SVG.hs#L217
+2012-02-26 19:53:38 UTC <byorgey> vyom: well, things like (1,0) are not vectors anymore
+2012-02-26 19:54:06 UTC <byorgey> so instead of  apply t (1,0) you can write  apply t (r2 (1,0)), or even better,  apply t unitX
+2012-02-26 19:54:27 UTC <byorgey> also the output of apply is not a pair, so you want  case (unr2 (apply t unitX), ... )
+2012-02-26 19:54:43 UTC <vyom> so (1,0) is unitX (0,1) is unitY and (0,0) is origin?
+2012-02-26 19:54:55 UTC <byorgey> yep
+2012-02-26 20:01:20 UTC <tgeeky__> byorgey: if the animated stuff is working, you could do something like this: http://activetuts.s3.amazonaws.com/tuts/121_countdown/Preview/Countdown.html (train-station ticker style, or something similar), start with old diagrams logo (permutations of diagrams for letters) and end up with your simpler logo at the end :o
+2012-02-26 20:01:53 UTC <tgeeky__> that's not quite the one I wanted
+2012-02-26 20:02:08 UTC <tgeeky_> but close enough
+2012-02-26 20:06:19 UTC <luite> hm, they removed all mechanical flap displays at train stations in the netherlands :(
+2012-02-26 20:07:20 UTC <tgeeky_> luite: :(
+2012-02-26 20:07:22 UTC <luite> the largest one, the large 'departures' board at the meeting point in utrecht central station was replaced recently
+2012-02-26 20:07:56 UTC <tgeeky_> probably with a Windows machine
+2012-02-26 20:07:59 UTC <luite> they did make an ipad version of the old one, for people that had grown attached to it :)
+2012-02-26 20:08:24 UTC <luite> hehe, yeah I think it's a LED display now
+2012-02-26 20:08:42 UTC <tgeeky_> :(
+2012-02-26 20:10:10 UTC <luite> it was a national news item
+2012-02-26 20:16:20 UTC <vyom> fryguybob: did you push all the changes for CmdLine.hs to the diagrams-svg repo
+2012-02-26 20:16:30 UTC <vyom> i had trouble building it and so had to remove a couple of things
+2012-02-26 20:16:50 UTC <vyom> anyway..diagrams-svg works under 0.5 now
+2012-02-26 20:16:53 UTC <vyom> https://github.com/deepakjois/diagrams-svg/commit/00bfd3397ac6ef5817b163de50bc8e6cfdb23b70
+2012-02-26 20:17:22 UTC <vyom> anybody have any thoughts on the old-time, process and directory dependencies, the way it is specified in the cabal file ?
+2012-02-26 20:18:04 UTC <vyom> i was having trouble building with the way the deps were specified originally
+2012-02-26 20:18:47 UTC <luite> those are all included with ghc, aren't they?
+2012-02-26 20:19:02 UTC <vyom> luite: i dont know.. i could not get it to build w/o specifying them
+2012-02-26 20:19:23 UTC <luite> yeah, having an upper bound for included libs is often a bad idea, since it can break your install
+2012-02-26 20:19:45 UTC <vyom> i suppose i should specify them like "old-time      >= 1.0   && < 1.2" instead?
+2012-02-26 20:19:59 UTC <vyom> but i am not sure what the best practise is
+2012-02-26 20:20:22 UTC <vyom> but those deps seem fairly stable
+2012-02-26 20:20:28 UTC <vyom> so may not be a big deal
+2012-02-26 20:21:30 UTC <fryguybob> vyom: I sent the patches to byorgey and Felipe and they both said they pushed them.
+2012-02-26 20:21:59 UTC <fryguybob> vyom: I would just match the bounds that are set in the cabal file for diagrams-cairo
+2012-02-26 20:22:32 UTC <vyom> fryguybob: until yesterday there wasnt even a CmdLine.hs file in the darcs repo
+2012-02-26 20:22:51 UTC <vyom> so this patch u sent got applied yesterday
+2012-02-26 20:23:01 UTC <fryguybob> Yes
+2012-02-26 20:23:31 UTC <vyom> check the diff above.. i believe the patch may be missing a couple of things you have exported.. it is strange
+2012-02-26 20:27:51 UTC <fryguybob> I did not include the svgID stuff in the patches that were pushed to patch-tag.  Is that what you are refering too?
+2012-02-26 20:28:51 UTC <vyom> fryguybob: yes looks like you did not.. but the module exports include them which causes the build to fail
+2012-02-26 20:28:57 UTC <vyom> so i had to delete them
+2012-02-26 20:29:23 UTC <fryguybob> vyom: Ah, yes.  I see that.
+2012-02-26 20:30:26 UTC <vyom> fryguybob: how do i export the patches now, in case anybody wants to apply them to the patch-tag darcs repo.. u know the command?
+2012-02-26 20:31:30 UTC <fryguybob> For git? No :D.
+2012-02-26 20:32:13 UTC <vyom> i have darcs-bridge setup
+2012-02-26 20:32:25 UTC <vyom> so i did push the changes in git to a darcs bridge repo
+2012-02-26 20:32:32 UTC <fryguybob> For darcs it is darcs send.  byorgey might know how to work the bridge.
+2012-02-26 20:32:50 UTC <vyom> what does darcs send do.. does it require email?
+2012-02-26 20:33:02 UTC <fryguybob> So darcs send -O will ask which patches to bundle into a file.
+2012-02-26 20:33:17 UTC <fryguybob> Then you just send that file to someone by email or whatever.
+2012-02-26 20:33:54 UTC <fryguybob> darcs send --to=blah@...  will send to that email address (if your system can send email like that).
+2012-02-26 20:34:01 UTC <fryguybob> bbl
+2012-02-26 20:39:36 UTC <vyom> http://wiki.darcs.net/DarcsBridgeUsage#i-want-to-create-a-bridge-that-allows-incremental-updates-and-use-both-git-and-darcs
+2012-02-26 20:39:50 UTC <vyom> that section needs to be re-written because i have no clue what it is saying :)
+2012-02-26 21:13:44 UTC <vyom> byorgey: http://db.tt/EyzaW75u These are the patches for the two changes that I made here  https://github.com/deepakjois/diagrams-svg/
+2012-02-26 22:30:25 UTC <tgeeky_> hm. This was amusing and interesting: http://color.method.ac/
+2012-02-26 22:51:04 UTC <luite> buh
+2012-02-26 22:51:12 UTC <luite> making admin interfaces is boring
+2012-02-27 00:02:27 UTC <byorgey> vyom: don't use darcs-bridge.  there are bugs in the git->darcs direction
+2012-02-27 00:03:17 UTC <byorgey> vyom: unfortunately until those bugs are fixed you just have to do  git format-patch  and then apply the patch to a darcs repo with the 'patch' utility
+2012-02-27 00:03:51 UTC <vyom> are you saying the patch above wont apply cleanly?
+2012-02-27 00:04:54 UTC <vyom> i was able to import the two patches in the git -> darcs direction.. although it did report a mysterious "user error"..
+2012-02-27 00:05:16 UTC <vyom> i am not sure if there will be some adverse impact the next time i try to do something
+2012-02-27 00:17:47 UTC <byorgey> vyom: they applied cleanly, I just pushed them
+2012-02-27 00:18:27 UTC <byorgey> vyom: my understanding is that the bugs show up when dealing with merges in the git repo
+2012-02-27 00:19:34 UTC <vyom> byorgey: ok.. will see when I have deal with that
+2012-02-27 00:55:42 UTC <vyom> oh well that went faster than expected.. I have a pretty comprehensive SVG combinator library ready to be used.. https://github.com/deepakjois/blaze-svg
+2012-02-27 00:56:16 UTC <vyom> most of the heavy lifting is done by blaze-html
+2012-02-27 00:59:24 UTC <fryguybob> vyom: Earlier you asked about dependencies upper-bounds.  My perspective is that they are useful because it signals to the consumer of the library that it is untested when they try to run with a newer dependency.
+2012-02-27 01:00:01 UTC <vyom> fryguybob: sure.. I updated the diagrams-svg deps to match diagrams-cairo like you suggested
+2012-02-27 01:00:15 UTC <fryguybob> Without it, if the newer dep is incompatible, but is not a compile error, then *your* library gets the bad reputation.
+2012-02-27 01:00:28 UTC <vyom> :)
+2012-02-27 01:01:15 UTC <fryguybob> In practice I  cabal unpack  and bump up the dependencies all the time, but I know that there may be consequences (i.e. I don't blame the library when it all goes wrong).
+2012-02-27 01:05:00 UTC <luite> yay admin done: http://hdiff.luite.com/tmp/admin2.png http://hdiff.luite.com/tmp/admin3.png http://hdiff.luite.com/tmp/admin4.png http://hdiff.luite.com/tmp/admin5.png http://hdiff.luite.com/tmp/admin6.png http://hdiff.luite.com/tmp/admin7.png
+2012-02-27 01:06:21 UTC <fryguybob> hehe 03:53:37.578839
+2012-02-27 01:07:12 UTC <luite> yeah I'm a bit lazy rendering UTCTime, it looks better in the public part of the site
+2012-02-27 01:09:36 UTC <luite> the interface looks a bit spartan, but you can quickly find users/pages that you might want to redact (matches list has realtime update as you type)
+2012-02-27 01:09:44 UTC <fryguybob> luite: They all look functional.
+2012-02-27 01:09:54 UTC <luite> and I think it has everything I promised te haskell.org committee :)
+2012-02-27 01:11:58 UTC <fryguybob> Having email addresses in url might be a potential problem.
+2012-02-27 01:13:16 UTC <luite> fryguybob: i encodeURIComponent that string with javascript
+2012-02-27 01:13:26 UTC <luite> looks like the @ doesn't need to be escaped
+2012-02-27 01:14:08 UTC <fryguybob> Well from an information leak side of things.
+2012-02-27 01:16:39 UTC <luite> oh, admins can see all email addresses anyway
+2012-02-27 01:33:05 UTC <byorgey> luite: nice
+2012-02-27 01:35:44 UTC <fryguybob> luite: I guess I was thinking of something like some page probing the history with email addresses, but that it not a very exciting attack :p.
+2012-02-27 01:36:53 UTC <luite> hmm, is it even possible? even if you know an email address?
+2012-02-27 01:38:13 UTC <fryguybob> Yeah, at least at some point with some browsers you could probing link color to find links in the browser history.
+2012-02-27 01:38:23 UTC <fryguybob> probe*
+2012-02-27 01:38:49 UTC <luite> hmm, yeah you're right, but that was patched
+2012-02-27 01:39:38 UTC <fryguybob> Right, I only react because urls are treated differently then page content when it comes to browsers.  Not that that always leads to anything interesting.
+2012-02-27 01:40:40 UTC <luite> yeah you have a point
+2012-02-27 01:40:53 UTC <fryguybob> Also might be treated differently when it comes other parts of the system that handle packets.
+2012-02-27 01:40:56 UTC <luite> I did make sure that GET requests never modify anything :)
+2012-02-27 01:41:22 UTC <fryguybob> Is that RESTful?
+2012-02-27 01:43:30 UTC <luite> something like that, but I sometimesused POST to delete,modify and create things
+2012-02-27 01:44:37 UTC <luite> at least clients can only do cross-domain GET requests unless you explicitly allow others
+2012-02-27 02:43:34 UTC <luite> hmm, annoying coffeescript [0..-1] is not an empty list
+2012-02-27 02:43:46 UTC <luite> I have 10000 bugs or so because of this
+2012-02-27 02:45:55 UTC <fryguybob> luite: What is it?
+2012-02-27 02:46:32 UTC <luite> [0,-1]
+2012-02-27 02:47:47 UTC <fryguybob> I see
+2012-02-27 02:48:05 UTC <luite> I have a lot of loops over item indices, for i = [0..numberOfCells()-1]  doSomething(i)
+2012-02-27 03:01:59 UTC <byorgey> doh
+2012-02-27 03:02:37 UTC <byorgey> oh man, there are so many changes from diagrams-lib 0.4 to 0.5
+2012-02-27 03:02:49 UTC <byorgey> editing the release notes is taking forever =P
+2012-02-27 03:27:15 UTC <luite> better revert most of the changes then
+2012-02-27 03:28:55 UTC <byorgey> I should.  It's so rude, all these people submitting 'changes' and 'patches' as if there were something wrong
+2012-02-27 03:31:03 UTC <luite> you're so right, it's downright insulting, you're giving away things for free, and people still want you to change things all the time
+2012-02-27 03:33:56 UTC <luite> are you also preparing a weblog post that shows off some of the new features?
+2012-02-27 03:38:11 UTC <byorgey> I plan to, yes
+2012-02-27 03:48:31 UTC <tgeeky> sounds like you two are discussing a right bunch of wankers!
+2012-02-27 03:54:57 UTC <vyom> so blaze-svg is *almost* ready for business: https://github.com/deepakjois/blaze-svg/blob/master/README.md
+2012-02-27 03:56:28 UTC <vyom> now i need to start the good stuff, i.e. using it in diagrams-svg
+2012-02-27 03:56:42 UTC <vyom> quite excited to use it
+2012-02-27 03:56:44 UTC <byorgey> vyom: wow, you are fast =)
+2012-02-27 03:58:45 UTC <vyom> after seeing the Ayrton Senna documentary yesterday, I was inspired to name this package senna, but then good sense prevailed and I decided to use blaze-svg for consistency
+2012-02-27 03:58:56 UTC <vyom> now i need a project which i can call "senna" :)
+2012-02-27 03:59:36 UTC <vyom> sigh.. senna : a blazing fast SVG combinator library had a nice ring to it :)
+2012-02-27 04:00:41 UTC <vyom> byorgey: most of the heavy lifting is being done by blaze-html.. I just had to write some autogeneration scripts
+2012-02-27 04:01:08 UTC <byorgey> cool
+2012-02-27 04:01:15 UTC <byorgey> I love code reuse =)
+2012-02-27 04:01:55 UTC <vyom> byorgey: yes.. I still have an open thread with jaspervdj to make things even cleaner.. but this should be enough to start hacking on diagrams-svg
+2012-02-27 04:02:18 UTC <byorgey> sounds good
+2012-02-27 04:18:04 UTC <luite> http://hdiff.luite.com/tmp/showcase1.png http://hdiff.luite.com/tmp/showcase2.png http://hdiff.luite.com/tmp/showcase3.png http://hdiff.luite.com/tmp/showcase4.png
+2012-02-27 04:22:39 UTC <byorgey> luite: cool =)
+2012-02-27 04:22:58 UTC <byorgey> ACTION needs to start sharing screenshots of his emacs buffer
+2012-02-27 04:24:25 UTC <luite> there must be scripts that can take one and automatically upload it to an image sharing site
+2012-02-27 04:32:28 UTC <vyom> my irc client lets me preview these pictures inline.. :)
+2012-02-27 04:35:10 UTC <byorgey> woah, nifty
+2012-02-27 05:19:26 UTC <luite> http://hdiff.luite.com/tmp/searchres.png <- hadn't shown this menu yet, right? ;p
+2012-02-27 05:20:52 UTC <byorgey> cool, pretty sure I hadn't seen that
+2012-02-27 05:21:32 UTC <luite> I guess I'll stop spamming then, because I'm out of screenshots now :(
+2012-02-27 05:31:02 UTC <byorgey> wrong. the correct answer is "make more screenshots"
+2012-03-01 03:48:09 UTC <vyom> Any feedback in this pattern I have used in blaze-svg to generate SVG paths?
+2012-03-01 03:48:12 UTC <vyom> https://github.com/deepakjois/blaze-svg/commit/e4312b5815d0b5ef3a5f1e0b60a18865a661d890#L3R18
+2012-03-01 03:48:19 UTC <vyom> See the whole commit for more context..
+2012-03-01 03:48:56 UTC <vyom> I wrote a few combinators for each kind of SVG path.. and then used a State Monad to accumulate it
+2012-03-01 03:50:47 UTC <vyom> Feel free to leave a comment on the commit itself if you feel so inclined
+2012-03-02 20:16:55 UTC <byorgey> whew! the week is finally over!
+2012-03-02 20:17:04 UTC <byorgey> now I can get back to working on the diagrams release.
+2012-03-02 20:17:11 UTC <byorgey> It is so close I can taste it.
+2012-03-02 20:17:38 UTC <byorgey> it tastes like those orange creamsicles.
+2012-03-02 20:57:50 UTC <byorgey> doing build testing now.  7.0.4: check.  6.12.3: in progress.
+2012-03-02 21:13:08 UTC <alpounet> ACTION feels urged to work on his buildbot project
+2012-03-02 21:14:51 UTC <byorgey> alpounet: what's that?
+2012-03-02 21:15:42 UTC <alpounet> byorgey, well, i'm actually not alone on that project
+2012-03-02 21:15:47 UTC <alpounet> anyway, it's there: http://patch-tag.com/r/alpmestan/scoutess/wiki/
+2012-03-02 21:16:08 UTC <byorgey> alpounet: ooh, neat
+2012-03-02 21:16:48 UTC <byorgey> alpounet: that would be super useful for me!
+2012-03-02 21:18:48 UTC <alpounet> heh
+2012-03-02 21:19:38 UTC <alpounet> we've already been talking to dcoutts who's interested in somehow making this and hackage-server v2 interact
+2012-03-02 21:19:56 UTC <byorgey> yeah, that sounds great
+2012-03-02 21:20:41 UTC <alpounet> but... the project is not even 2 weeks old
+2012-03-02 21:20:46 UTC <alpounet> it's not there yet, at all :p
+2012-03-02 21:21:25 UTC <byorgey> don't worry, I am patient =)
+2012-03-02 21:22:32 UTC <alpounet> haha
