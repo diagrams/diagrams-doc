@@ -1,3 +1,30 @@
+* Planning for release of version 0.5
+
+  + [ ] update diagrams package to depend on new versions of -core,
+        -lib, etc.
+  + [-] test build:
+     - [X] ghc 6.12.3
+     - [X] ghc 7.0.4
+     - [ ] ghc 7.2.1
+     - [ ] ghc 7.4.1
+  + [X] update LICENSE files
+  + [ ] write announcement for blog + email
+    + [ ] list major new features since 0.4
+    + [ ] link to gallery (email)/include some examples (blog)
+    + [ ] say where/how to get involved
+  + [ ] build documentation
+  + [ ] upload
+    + [ ] active
+    + [ ] diagrams-core
+    + [ ] diagrams-lib
+    + [ ] diagrams-cairo
+    + [ ] diagrams-contrib
+    + [ ] diagrams
+  + [ ] publish new website
+  + [ ] upload/send announcement
+    + [ ] blog
+    + [ ] email
+
 * Planning for release of version 0.4
 
   + [X] user manual
