@@ -41,6 +41,12 @@ main = hakyll $ do
         route idRoute
         compile copyFileCompiler
 
+    -- API documentation --------------------------
+        
+    match "doc/**" $ do
+      route idRoute
+      compile copyFileCompiler
+
     -- Static images ------------------------------
 
     match "*.ico" $ do

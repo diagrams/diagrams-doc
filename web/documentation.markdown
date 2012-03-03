@@ -5,24 +5,12 @@ title: Documentation
 Reference
 ---------
 
-* [Quick start tutorial](/tutorial/DiagramsTutorial.html)
-* [User manual](/manual/diagrams-manual.html)
-
-API documentation
------------------
-
-Documentation on Hackage:
-
-* [diagrams-core](http://hackage.haskell.org/package/diagrams-core)
-* [diagrams-lib](http://hackage.haskell.org/package/diagrams-lib)
-* [diagrams-cairo](http://hackage.haskell.org/package/diagrams-cairo)
-* [diagrams-contrib](http://hackage.haskell.org/package/diagrams-contrib)
-  
-  XXX link to versions on this web page instead!
-
-Wiki
-----
-
+* [Quick start tutorial](/tutorial/DiagramsTutorial.html) --- get
+  started making simple diagrams quickly.
+* [User manual](/manual/diagrams-manual.html) --- (almost) everything
+  you ever wanted to know about diagrams.
+* [API reference](/doc/index.html) --- Haddock-generated reference
+  documentation.
 * [Diagrams wiki](http://www.haskell.org/haskellwiki/Diagrams) ---
   frequently asked questions, installation instructions, examples,
   tips and tricks, links to related projects, *etc.*
