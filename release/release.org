@@ -14,6 +14,12 @@
     + [ ] link to gallery (email)/include some examples (blog)
     + [ ] say where/how to get involved
   + [X] build documentation
+  + [ ] add release date to all CHANGES files
+    + [ ] core
+    + [ ] active
+    + [ ] lib
+    + [ ] cairo
+    + [ ] contrib
   + [ ] upload
     + [ ] active
     + [ ] diagrams-core
@@ -25,6 +31,10 @@
   + [ ] upload/send announcement
     + [ ] blog
     + [ ] email
+       - [ ] diagrams-discuss
+       - [ ] haskell
+       - [ ] haskell-cafe
+       - [ ] haskell-art
 
 * Planning for release of version 0.4
 
@@ -61,20 +71,12 @@
     + [X] blog
     + [X] email
 
-* Put off to version 0.5
+* Put off to version 0.6
 
-  + [X] contact Robin re: SVG backend
   + [ ] release docutils package
-    - [ ] choose a different name for it??
-  + [ ] tickets to resolve
-    - [ ] [[http://code.google.com/p/diagrams/issues/detail%3Fid%3D1&colspec%3DID%20Type%20Status%20Priority%20Difficulty%20Milestone%20Component%20Owner%20Summary][#1: test suites]]
-    - [ ] [[http://code.google.com/p/diagrams/issues/detail%3Fid%3D6&colspec%3DID%20Type%20Status%20Priority%20Difficulty%20Milestone%20Component%20Owner%20Summary][#6: new logo]]
-    - [ ] [[http://code.google.com/p/diagrams/issues/detail%3Fid%3D26&colspec%3DID%20Type%20Status%20Priority%20Difficulty%20Milestone%20Component%20Owner%20Summary][#26: add support for path-oriented diagrams]]
-    - [ ] [[http://code.google.com/p/diagrams/issues/detail%3Fid%3D27&colspec%3DID%20Type%20Status%20Priority%20Difficulty%20Milestone%20Component%20Owner%20Summary][#27: cairo handling of command-line w/h]]
+    - [ ] choose a different name for it
   + [ ] release SVG backend
-  + [ ] create diagrams-contrib repository and create a module or two
-        for it?
-  + [ ] write a contributor tutorial?
+  + [ ] write a contributor tutorial
 
 * Tasks to complete before release of preview version
 
