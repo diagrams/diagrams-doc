@@ -44,6 +44,18 @@ body, html {
     width: 600px;
  }
 
+#content h1 {
+    font-size: 24px;
+}
+
+#content h2 {
+    font-size: 18px;
+}
+
+#content h3 {
+    font-size: 16px;
+}
+
 #footer {
     clear: both;
     padding-top: 50px;
