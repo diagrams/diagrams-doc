@@ -20,6 +20,8 @@ project at a wide range of difficulty levels.
 * Check out the [wiki](http://haskell.org/haskellwiki/Diagrams) for
   frequently asked questions, tips and tricks, and discussion.
 
+* Help improve or expand the [documentation](http://patch-tag.com/r/byorgey/diagrams-doc).
+
 * Contribute something to the
   [diagrams-contrib](http://patch-tag.com/r/byorgey/diagrams-contrib) package!
 
