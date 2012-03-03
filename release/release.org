@@ -1,18 +1,19 @@
 * Planning for release of version 0.5
 
-  + [ ] update diagrams package to depend on new versions of -core,
+  + [X] update diagrams package to depend on new versions of -core,
         -lib, etc.
   + [-] test build:
      - [X] ghc 6.12.3
      - [X] ghc 7.0.4
      - [X] ghc 7.2.1
-     - [ ] ghc 7.4.1
+     - [X] ghc 7.4.1 (with darcs gtk2hs)
+     - [ ] ghc 7.4.1 (after new gtk2hs release)
   + [X] update LICENSE files
   + [ ] write announcement for blog + email
     + [ ] list major new features since 0.4
     + [ ] link to gallery (email)/include some examples (blog)
     + [ ] say where/how to get involved
-  + [ ] build documentation
+  + [X] build documentation
   + [ ] upload
     + [ ] active
     + [ ] diagrams-core
