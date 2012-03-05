@@ -1,15 +1,23 @@
 I am pleased to announce the release of version 0.5 of
 [diagrams](http://projects.haskell.org/diagrams), a full-featured
 framework and embedded domain-specific language for declarative
-drawing.
+drawing.  Check out the
+[gallery](http://projects.haskell.org/diagrams) for examples of what
+it can do!
 
-Major improvements since the 0.4 release include
+Major improvements since the 0.4 release include:
 
-* animation
+  * A new
+    [diagrams-contrib](http://hackage.haskell.org/package/diagrams%2Dcontrib)
+    package of user-contributed modules, which so far contains code
+    for tree drawing, Apollonian gaskets, planar tilings, "wrapped"
+    layout, and turtle graphics.  If you have  XXX
 
-* diagrams-contrib
+  * Experimental support for animations, built on top of the new
+    [active](http://hackage.haskell.org/package/active) library.
 
-See the
+See the [release notes](http://projects.haskell.org/diagrams/releases.html) for
+complete details, and the
 [diagrams wiki](http://www.haskell.org/haskellwiki/Diagrams/Migrate0.5)
 for help migrating from 0.4 to 0.5.
 
@@ -24,7 +32,7 @@ For the truly impatient:
 Diagrams is fully supported under GHC 6.12, 7.0, 7.2, and 7.4.
 However, getting cairo to build can be tricky on some platforms; see
 the [diagrams wiki](http://www.haskell.org/haskellwiki/Diagrams) for
-more information and workarounds regarding specific platforms.  
+more information and workarounds regarding specific platforms.
 
 To get started with diagrams, read the
 [quick tutorial](http://projects.haskell.org/diagrams/tutorial/DiagramsTutorial.html),
