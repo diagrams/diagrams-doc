@@ -2674,6 +2674,15 @@ This section is certainly incomplete; please send examples of other
 error messages to the `diagrams mailing list`_ for help interpreting
 them and/or so they can be added to this section.
 
+Couldn't match type `V P2' with `R2'
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This error is due to what appears to be a bug in recent versions of
+GHC.  For some reason the definition of the `V` type family for points
+is not exported.  To solve this you can add an explicit import of the
+form `import Graphics.Rendering.Diagrams.Points` to the top of your
+file.
+
 No instances for Backend b0 R2 ...
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
