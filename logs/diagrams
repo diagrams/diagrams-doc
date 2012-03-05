@@ -10663,3 +10663,52 @@
 2012-03-02 21:20:46 UTC <alpounet> it's not there yet, at all :p
 2012-03-02 21:21:25 UTC <byorgey> don't worry, I am patient =)
 2012-03-02 21:22:32 UTC <alpounet> haha
+2012-03-02 21:26:26 UTC <alpounet> there really is a lot of work there
+2012-03-02 21:27:49 UTC <byorgey> there, tested on 6.12.3, 7.0.4, and 7.2.1.
+2012-03-02 21:28:16 UTC <byorgey> waiting for the new gtk2hs release so I can test it under 7.4.1 as well...
+2012-03-02 21:30:33 UTC <alpounet> i haven't installed 7.4.1 yet
+2012-03-02 21:31:20 UTC <byorgey> it has some nice features but there's no need to rush out and get it.
+2012-03-02 21:31:54 UTC <alpounet> yeah i've read quite a lot about a few of these features of course
+2012-03-02 21:32:09 UTC <alpounet> but i'm waiting for the ecosystem to be 7.4.1-proof
+2012-03-02 21:32:10 UTC <fryguybob> Mmmmm creamsicles.
+2012-03-02 22:33:00 UTC <tgeeky> ACTION loves reading GHC release notes
+2012-03-03 01:39:51 UTC <byorgey> check it out: http://www.cis.upenn.edu/~byorgey/diagrams-api/
+2012-03-03 01:40:34 UTC <vyom> nice
+2012-03-03 01:40:58 UTC <vyom> i am kinda out of touch.. is it released yet :) ?
+2012-03-03 01:41:35 UTC <vyom> probably not.. given diagrams-discuss doesnt have anything
+2012-03-03 01:42:43 UTC <fryguybob> ACTION finds the inline images.
+2012-03-03 01:43:05 UTC <vyom> where where
+2012-03-03 01:43:53 UTC <fryguybob> http://www.cis.upenn.edu/~byorgey/diagrams-api/Data-Active.html
+2012-03-03 01:45:28 UTC <vyom> neat!
+2012-03-03 01:47:22 UTC <byorgey> no, not released yet
+2012-03-03 01:48:02 UTC <byorgey> I'm just proud that I finally got all the documentation to build together, with highlighted source, and proper links to other things on Hackage
+2012-03-03 01:48:11 UTC <fryguybob> ACTION should do a diagram a day on the release week.
+2012-03-03 01:48:21 UTC <byorgey> that would be awesome =)
+2012-03-03 01:58:59 UTC <vyom> byorgey: indeed.. what kind of problems did u encounter?
+2012-03-03 01:59:20 UTC <byorgey> oh man, don't get me started
+2012-03-03 01:59:36 UTC <byorgey> I have been working on this on and off for two weeks
+2012-03-03 01:59:43 UTC <vyom> ok gtg :( but  will read the log later..
+2012-03-03 01:59:57 UTC <byorgey> I'll probably write a blog post about it or something.
+2012-03-03 02:34:48 UTC <tgeeky_> byorgey: be sure to complain a lot
+2012-03-03 02:35:01 UTC <byorgey> tgeeky_: you bet
+2012-03-03 02:35:21 UTC <tgeeky_> i am down here dodging tornados
+2012-03-03 02:35:21 UTC <byorgey> "why hasn't someone else already made this easy!? wah wah wah."
+2012-03-03 02:35:26 UTC <byorgey> yikes
+2012-03-03 02:35:43 UTC <tgeeky_> luckily I *just* moved my computer to the safest part of the basement, so I'm happy until we lose power
+2012-03-03 02:36:02 UTC <tgeeky_> i accidentially installed a new 8 port switch that I forgot to battery backup
+2012-03-03 02:36:23 UTC <tgeeky_> unluckily, this will be going on for the next ~ 5 hours
+2012-03-03 02:37:29 UTC <tgeeky_> http://www.wunderground.com/radar/radblast.asp?zoommode=zoom&num=10&delay=15&scale=0.750&noclutter=0&ID=ATL&type=TR0&lat=0&lon=0&label=you&showstorms=0&map.x=403&map.y=192&centerx=445&centery=317&lightning=0&smooth=0&showlabels=1&rainsnow=0
+2012-03-03 02:37:36 UTC <tgeeky_> we're just south of the R in Roswell
+2012-03-03 02:37:53 UTC <tgeeky_> and you can literally see the tornadic storm develop, spin, and then spin out (disappate rotationally)
+2012-03-03 02:55:38 UTC <byorgey> tgeeky_: well, I hope the storm has less of an effect on your house than solar weather would have on the earth, if you know what I'm saying
+2012-03-03 03:27:10 UTC <tgeeky_> byorgey: indeed :)
+2012-03-03 03:27:21 UTC <tgeeky_> 110 mile high tornados
+2012-03-03 03:29:24 UTC <tgeeky_> byorgey: actually, one of the ideas I've been floating around is somewhat related to the discussion about earth vs. solar weather
+2012-03-03 03:36:17 UTC <tgeeky_> the goal is to understand how to mathematically construct a (geometry|topology|whatever is appropriate) in which the (manifest) scale differences in the universe are counted when you're dimension counting (as in string theory, or others)...
+2012-03-03 03:39:33 UTC <tgeeky_> actually, let me make a calculation :o
+2012-03-03 03:42:18 UTC <tgeeky_> byorgey:
+2012-03-03 03:43:29 UTC <tgeeky_> http://tinyurl.com/6skt6er <--
+2012-03-03 03:45:53 UTC <tgeeky_> by homogeniety, isotropy, (and soon, actual data from Kepler et al), you might assume that the answer is =~ 1 forall. starsystems
+2012-03-03 03:47:04 UTC <tgeeky_> how could you argue that the above "fact" (if it's true, of course) constitutes a "dimension"
+2012-03-03 23:15:54 UTC <mgsloan> cool!
+2012-03-03 23:16:25 UTC <mgsloan> ACTION is responding to the scoutess project
