@@ -10,10 +10,11 @@
      - [ ] ghc 7.4.1 (after new gtk2hs release)
      - [X] update tested-with fields
   + [X] update LICENSE files
-  + [ ] write announcement for blog + email
-    + [ ] list major new features since 0.4
-    + [ ] link to gallery (email)/include some examples (blog)
-    + [ ] say where/how to get involved
+  + [-] write announcement for blog + email
+    + [X] list major new features since 0.4
+    + [X] link to gallery (email)
+    + [ ] include some examples (blog)
+    + [X] say where/how to get involved
   + [X] build documentation
   + [ ] add release date to all CHANGES files
     + [ ] core
