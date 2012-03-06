@@ -2,24 +2,33 @@ I am pleased to announce the release of version 0.5 of
 [diagrams](http://projects.haskell.org/diagrams), a full-featured
 framework and embedded domain-specific language for declarative
 drawing.  Check out the
-[gallery](http://projects.haskell.org/diagrams) for examples of what
-it can do!
+[gallery](http://projects.haskell.org/diagrams/gallery.html) for
+examples of what it can do!
 
-Major improvements since the 0.4 release include:
+Highlights of this release include:
 
   * A new
     [diagrams-contrib](http://hackage.haskell.org/package/diagrams%2Dcontrib)
     package of user-contributed modules, which so far contains code
     for tree drawing, Apollonian gaskets, planar tilings, "wrapped"
-    layout, and turtle graphics.  If you have  XXX
+    layout, and turtle graphics.
 
-  * Experimental support for animations, built on top of the new
+  * Experimental support for animation, built on top of the new
     [active](http://hackage.haskell.org/package/active) library.
+
+  * Numerous small additions and improvements, including more general
+    rounded rectangle shapes and better text support.
+
+  * Much better performance in some common situations, such as laying
+    out a very long list of diagrams using 'cat' and related
+    combinators.
+
+  * Tested with GHC 6.12, 7.0. 7.2, and 7.4.
 
 See the [release notes](http://projects.haskell.org/diagrams/releases.html) for
 complete details, and the
 [diagrams wiki](http://www.haskell.org/haskellwiki/Diagrams/Migrate0.5)
-for help migrating from 0.4 to 0.5.
+for help migrating from 0.4 to 0.5 (changes should be minimal).
 
 Try it out
 ----------
@@ -32,7 +41,8 @@ For the truly impatient:
 Diagrams is fully supported under GHC 6.12, 7.0, 7.2, and 7.4.
 However, getting cairo to build can be tricky on some platforms; see
 the [diagrams wiki](http://www.haskell.org/haskellwiki/Diagrams) for
-more information and workarounds regarding specific platforms.
+more information and workarounds regarding specific platforms.  (A new
+native SVG backend is in the works, targeted for the 0.6 release.)
 
 To get started with diagrams, read the
 [quick tutorial](http://projects.haskell.org/diagrams/tutorial/DiagramsTutorial.html),
@@ -48,46 +58,23 @@ Get involved
 Subscribe to the
 [project mailing list](http://groups.google.com/group/diagrams-discuss),
 and/or come hang out in the `#diagrams` IRC channel on freenode.org
-for help, discussion of new features, etc.
-
-XXXXX  what to put here?  don't put as much?
-
-* There are lots of easy bug fixes, improvements, and feature requests
-  just waiting for people wanting to get involved: see the
-  [bug tracker](http://code.google.com/p/diagrams/issues/list) for a
-  list of open tickets.
-
-  The source repositories are mirrored using both darcs (on
-  patch-tag.com) and git (on github.com), and patches are accepted in
-  either place, thanks to Owen Stephen's great work on
-  [darcs-bridge](http://wiki.darcs.net/DarcsBridgeUsage).
-
-* Create a higher-level module built on top of the diagrams framework
-  (e.g. tree or graph layout, generating Turing machine configuration
-  diagrams, Penrose tilings ... your imagination is the only limit!)
-  and submit it for inclusion in a special diagrams-contrib package
-  which will be created for such higher-level user-contributed modules.
-
-* Use diagrams to create some cool graphics and submit them for
-  inclusion in the [gallery](http://projects.haskell.org/diagrams/gallery.html).
-
-* Start your own project built on top of diagrams and let us know how
-  it goes!
-
-* Last but certainly not least, just try it out for your pet graphics
-  generation needs and contribute your bug reports and feature
-  requests.
-
+for help and discussion.  Make some diagrams.
+[Fix some bugs](http://code.google.com/p/diagrams/issues/list). Submit
+your cool examples for inclusion in the
+[gallery](http://projects.haskell.org/diagrams/gallery.html) or your
+cool code for inclusion in the
+[diagrams-contrib](http://hackage.haskell.org/package/diagrams%2Dcontrib)
+package!
 
 Happy diagramming!
 
-XXXX
-
-
 Brought to you by the diagrams team:
 
-* Brent Yorgey
+* Peter Hall
+* Ian Ross
+* Michael Sloan
 * Ryan Yates
+* Brent Yorgey
 
 with contributions from:
 
