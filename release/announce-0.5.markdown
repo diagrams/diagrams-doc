@@ -23,7 +23,7 @@ Highlights of this release include:
     out a very long list of diagrams using 'cat' and related
     combinators.
 
-  * Tested with GHC 6.12, 7.0. 7.2, and 7.4.
+  * Added support for GHC 7.4.
 
 See the [release notes](http://projects.haskell.org/diagrams/releases.html) for
 complete details, and the
@@ -38,7 +38,7 @@ For the truly impatient:
     cabal install gtk2hs-buildtools
     cabal install diagrams
 
-Diagrams is fully supported under GHC 6.12, 7.0, 7.2, and 7.4.
+Diagrams is supported under GHC 6.12, 7.0, 7.2, and 7.4.
 However, getting cairo to build can be tricky on some platforms; see
 the [diagrams wiki](http://www.haskell.org/haskellwiki/Diagrams) for
 more information and workarounds regarding specific platforms.  (A new
