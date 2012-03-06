@@ -86,17 +86,21 @@ compileDiagram src = do
     putStrLn $ "Generating " ++ imgFile ++ "..."
     res <- buildDiagram
              Cairo zeroV (CairoOptions imgFile (Dims 500 200) PNG)
-             src
+             [src]
              "pad 1.1 example"
              ["DeriveDataTypeable"]
              [ "Diagrams.TwoD.Types"      -- WHY IS THIS NECESSARY =(
-             , "Graphics.Rendering.Diagrams.Points" 
+             , "Graphics.Rendering.Diagrams.Points"
                  -- GHC 7.2 bug?  need  V (Point R2) = R2  (see #65)
              , "Diagrams.Backend.Cairo"
              , "Diagrams.Backend.Cairo.Internal"
              , "Data.Typeable"
              ]
     case res of
-      Left err      -> putStrLn ("Error while compiling\n" ++ src) >> ppError err
-      Right (act,_) -> act
+      Left err         -> putStrLn ("Error while compiling\n" ++ src) >>
+                          putStrLn err
+      Right (Left err) -> putStrLn ("Error while compiling\n" ++ src) >>
+                          putStrLn (ppInterpError err)
+      Right (Right (act,_))
+                       -> act
   return imgFile
