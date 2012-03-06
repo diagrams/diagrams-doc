@@ -2674,7 +2674,7 @@ This section is certainly incomplete; please send examples of other
 error messages to the `diagrams mailing list`_ for help interpreting
 them and/or so they can be added to this section.
 
-Couldn't match type `V P2' with `R2'
+Couldn't match type `V P2` with `R2`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This error is due to what appears to be a bug in recent versions of
