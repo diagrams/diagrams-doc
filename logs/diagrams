@@ -10712,3 +10712,45 @@
 2012-03-03 03:47:04 UTC <tgeeky_> how could you argue that the above "fact" (if it's true, of course) constitutes a "dimension"
 2012-03-03 23:15:54 UTC <mgsloan> cool!
 2012-03-03 23:16:25 UTC <mgsloan> ACTION is responding to the scoutess project
+2012-03-05 23:02:35 UTC <tgeeky> byorgey: ok, what does one do in the case that we're using cabal-dev, but need to modify a package ...
+2012-03-05 23:02:42 UTC <tgeeky> byorgey: do you specify a location with cabal-dev?
+2012-03-05 23:02:52 UTC <tgeeky> or do you use the default (which is=pwd)
+2012-03-05 23:04:18 UTC <tgeeky> I think I'm going to have to.
+2012-03-06 00:05:40 UTC <byorgey> tgeeky: in the dir of the package you are ultimately trying to build, do  cabal-dev add-source path/to/modified/package
+2012-03-06 00:06:01 UTC <byorgey> tgeeky: assuming I understood your question correctly
+2012-03-06 00:06:47 UTC <byorgey> tgeeky: see the README.md here: https://github.com/creswick/cabal-dev
+2012-03-06 00:09:16 UTC <tgeeky> byorgey: yep, that was roughly it. I just used a sandbox external to both, this time
+2012-03-06 00:10:01 UTC <byorgey> tgeeky: ah, that works too.  yeah, when building diagrams with cabal-dev I always do something like   cabal-dev install core/ active/ lib/ cairo/ blah/ blah/  in the parent directory of all the diagrams-related repos
+2012-03-06 00:49:31 UTC <tgeeky> byorgey: this is a little strange. using cabal-dev, I'm building git-annex. The cabal file has 'hslogger' in the build-depends list, but because git-annex uses Make to actually build some things (through Setup.hs), that ghc invocation doesn't know about these libraries :/
+2012-03-06 00:49:43 UTC <tgeeky> i guess there "should be" a cabal-dev ghc (there is a cabal-dev ghci)
+2012-03-06 00:49:56 UTC <byorgey> tgeeky: oh, I see, boo =(
+2012-03-06 00:50:07 UTC <tgeeky> maybe I'll write that patch and try it that way
+2012-03-06 00:50:26 UTC <byorgey> cabal package using make to build things --> bad dog!
+2012-03-06 02:37:22 UTC <byorgey> http://www.cis.upenn.edu/~byorgey/hosted/announce-0.5.html   feedback welcome
+2012-03-06 02:38:04 UTC <byorgey> we are pretty much poised for the 0.5 release now.  At this point I'm just waiting for the new gtk2hs release to happen first.
+2012-03-06 03:24:40 UTC <tgeeky> byorgey: how formal is your 'tested with 6.12, 7.0, 7.2, and 7.4'
+2012-03-06 03:24:51 UTC <tgeeky> are you doing this on one OS or on VMs?
+2012-03-06 03:25:13 UTC <byorgey> tgeeky: ah, good point.  I only tested it on Linux.
+2012-03-06 03:25:34 UTC <byorgey> maybe I should just put "support for GHC 7.4"
+2012-03-06 09:42:15 UTC <cheater__> byorgey: that's freaking amazing. there's one thing though. In your lhs pages you don't seem to describe enough.
+2012-03-06 09:42:35 UTC <cheater__> for example, take the first example (the star). You describe how all the parts fit together, but not how to arrive at the result.
+2012-03-06 09:43:02 UTC <cheater__> I understand how the star works is you have some geometrical shapes, and then you transform them and make multiple copies
+2012-03-06 09:43:33 UTC <cheater__> it would be nice to have code that i could copypaste to see each step.
+2012-03-06 09:46:27 UTC <cheater__> you know, kinda more like a tutorial.
+2012-03-06 18:00:48 UTC <byorgey> cheater: oh, note that's still the old version of the website.  I have a snazzy new version that will be pushed out along with the 0.5 release.
+2012-03-06 18:01:07 UTC <byorgey> cheater: however, your criticism still applies.  I agree we ought to have more tutorialish stuff.
+2012-03-06 18:42:00 UTC <cheater> byorgey: it's less about having more examples - it's more about making one or two examples that are really thorough.
+2012-03-06 18:42:34 UTC <cheater> byorgey: also, you start out with fairly complex things. try posting a few "hello world" things
+2012-03-06 18:42:47 UTC <cheater> like, "how to display a single circle" or a single line
+2012-03-06 19:58:51 UTC <byorgey> cheater: note there IS a tutorial which does start out with displaying a circle.
+2012-03-06 19:59:02 UTC <byorgey> just not in the gallery.
+2012-03-06 20:17:27 UTC <cheater> ahh, i thought that was all there is.
+2012-03-06 20:17:41 UTC <cheater> maybe have a link to the tutorials from the gallery or something.
+2012-03-06 20:18:43 UTC <byorgey> cheater: well, in the new website there will always be a menu on the left side which lists (among other things) the tutorial, under the documentation heading
+2012-03-06 20:19:27 UTC <byorgey> cheater: the tutorial is also linked from the release announcement, under "try it out"
+2012-03-06 20:21:24 UTC <tgeeky> byorgey: can you put that up for us to inspect somewhere?
+2012-03-06 20:21:34 UTC <tgeeky> byorgey: for testing pourposes
+2012-03-06 20:22:20 UTC <byorgey> tgeeky: put what up?
+2012-03-06 20:24:22 UTC <tgeeky> byorgey: the new website
+2012-03-06 20:25:12 UTC <byorgey> tgeeky: ah, sure, fair enough
+2012-03-06 20:33:21 UTC <cheater> oh ok nice
