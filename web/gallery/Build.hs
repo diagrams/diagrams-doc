@@ -34,7 +34,7 @@ compileExample lhs outFile = do
            Cairo
            zeroV
            (CairoOptions outFile (mkSizeSpec w h) fmt)
-           f'
+           [f']
            "example"
            []
            [ "Diagrams.Backend.Cairo" ]
