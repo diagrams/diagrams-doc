@@ -1,0 +1,86 @@
+I am pleased to announce the release of version 0.5 of diagrams [1], a
+full-featured framework and embedded domain-specific language for
+declarative drawing. Check out the gallery [2] for examples of what it
+can do!
+
+Highlights of this release include:
+
+-   A new diagrams-contrib [3] package of user-contributed modules,
+    which so far contains code for tree drawing, Apollonian gaskets,
+    planar tilings, "wrapped" layout, and turtle graphics.
+
+-   Experimental support for animation, built on top of the new active
+    [4] library.
+
+-   Numerous small additions and improvements, including more general
+    rounded rectangle shapes and better text support.
+
+-   Much better performance in some common situations, such as laying
+    out a very long list of diagrams using 'cat' and related
+    combinators.
+
+-   Tested with GHC 6.12, 7.0. 7.2, and 7.4.
+
+See the release notes [5] for complete details, and the diagrams wiki
+[6] for help migrating from 0.4 to 0.5 (changes should be minimal).
+
+Try it out
+----------
+
+For the truly impatient:
+
+    cabal install gtk2hs-buildtools
+    cabal install diagrams
+
+Diagrams is fully supported under GHC 6.12, 7.0, 7.2, and 7.4. However,
+getting cairo to build can be tricky on some platforms; see the diagrams
+wiki [7] for more information and workarounds regarding specific
+platforms. (A new native SVG backend is in the works, targeted for the
+0.6 release.)
+
+To get started with diagrams, read the quick tutorial [8], which will
+introduce you to the fundamentals of the framework.
+
+For those who are even less impatient but want to really dig in and use
+the power features, read the user manual [9].
+
+Get involved
+------------
+
+Subscribe to the project mailing list [10], and/or come hang out in the
+#diagrams IRC channel on freenode.org for help and discussion. Make some
+diagrams. Fix some bugs [11]. Submit your cool examples for inclusion in
+the gallery [2] or your cool code for inclusion in the diagrams-contrib
+[3] package!
+
+Happy diagramming!
+
+Brought to you by the diagrams team:
+
+-   Peter Hall
+-   Ian Ross
+-   Michael Sloan
+-   Ryan Yates
+-   Brent Yorgey
+
+with contributions from:
+
+-   Sam Griffin
+-   Claude Heiland-Allen
+-   John Lato
+-   Vilhelm Sjöberg
+-   Luite Stegeman
+-   Kanchalai Suveepattananont
+-   Scott Walck
+
+[1] http://projects.haskell.org/diagrams
+[2] http://projects.haskell.org/diagrams/gallery.html
+[3] http://hackage.haskell.org/package/diagrams%2Dcontrib
+[4] http://hackage.haskell.org/package/active
+[5] http://projects.haskell.org/diagrams/releases.html
+[6] http://www.haskell.org/haskellwiki/Diagrams/Migrate0.5
+[7] http://www.haskell.org/haskellwiki/Diagrams
+[8] http://projects.haskell.org/diagrams/tutorial/DiagramsTutorial.html
+[9] http://projects.haskell.org/manual/diagrams-manual.html
+[10] http://groups.google.com/group/diagrams-discuss
+[11] http://code.google.com/p/diagrams/issues/list
