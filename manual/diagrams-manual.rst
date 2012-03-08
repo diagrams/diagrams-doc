@@ -2887,10 +2887,17 @@ can write
 
 > translateX <$> ui <*> circle 2
 
-But wait a minute, it isn't moving!
+`diagrams-cairo`:pkg: includes a very primitive animation rendering
+function, `animMain`, which takes an animation and spits out a bunch
+of image files, one for each frame.  You can then assemble the
+generated frames into an animation using, *e.g.*, ``ffmpeg``. (More
+sophisticated animation rendering will be added in future releases.)
+If you use `animMain` to visualize the above animation, however, you
+will find that all the generated frames look the same---the circle is
+not moving!
 
 Actually, it *is* moving, it's just that it gets centered in the
-output at each instant, so it's as if the window is panning along at
+output at each instant. It's as if the viewport is panning along at
 the same rate as the circle, with the result that it appears
 stationary.  The way to fix this is by placing the moving circle on
 top of something larger and stationary in order to "fix" the
@@ -2906,7 +2913,7 @@ Notice that we composed two animations using `(<>)`, which does
 exactly what you would think: superimposes them at every instant in time.
 
 Since this is such a common thing to want, the
-`Diagrams.Animation` module provides a function `animEnvelope`
+`Diagrams.Animation`:mod: module provides a function `animEnvelope`
 for expanding the envelope of an animation to the union of all the
 envelopes over time (determined by sampling at a number of points).  That
 is, the animation will now use a constant envelope that encloses the
