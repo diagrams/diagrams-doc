@@ -3029,5 +3029,6 @@ Related projects
    * diagrams-spiro
    * diagrams-ghci
    * diagrams-hint
+   * hs-logo
 
    * see diagrams wiki
