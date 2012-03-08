@@ -10754,3 +10754,149 @@
 2012-03-06 20:24:22 UTC <tgeeky> byorgey: the new website
 2012-03-06 20:25:12 UTC <byorgey> tgeeky: ah, sure, fair enough
 2012-03-06 20:33:21 UTC <cheater> oh ok nice
+2012-03-06 21:07:14 UTC <byorgey> http://www.cis.upenn.edu/~byorgey/hosted/_site/
+2012-03-06 21:07:16 UTC <byorgey> tgeeky: ^^^
+2012-03-06 21:29:40 UTC <fryguybob> byorgey: Is that dependency graph up to date?
+2012-03-06 21:29:57 UTC <byorgey> fryguybob: heh, probably not
+2012-03-06 21:30:05 UTC <byorgey> fryguybob: Andy Gill made that and sent it to me
+2012-03-06 21:30:12 UTC <fryguybob> ah ok.
+2012-03-06 21:30:17 UTC <byorgey> but there's clearly lots of stuff it doesn't include
+2012-03-06 21:30:18 UTC <fryguybob> That's why canvas is on it.
+2012-03-06 21:30:38 UTC <fryguybob> Also, I don't think it was made in diagrams :D.
+2012-03-06 21:30:47 UTC <byorgey> heh, indeed =)
+2012-03-06 21:31:06 UTC <byorgey> do you think I should remove it?  is it more confusing than helpful?
+2012-03-06 21:32:29 UTC <fryguybob> Well, perhaps it is only confusing to me.
+2012-03-06 21:32:46 UTC <fryguybob> I like the site layout.  Looks nice :D
+2012-03-06 21:33:15 UTC <byorgey> thanks =)
+2012-03-06 21:37:21 UTC <tgeeky> SECOND!
+2012-03-06 21:37:29 UTC <tgeeky> oh. </roberts rules>
+2012-03-07 05:05:34 UTC <tgeeky> byorgey: here?
+2012-03-07 17:15:06 UTC <byorgey> tgeeky: I wasn't
+2012-03-07 17:15:10 UTC <byorgey> but now I am
+2012-03-07 17:15:19 UTC <tgeeky> ok. I forgot what I was going to ask anyway :O
+2012-03-07 17:15:24 UTC <byorgey> hehe
+2012-03-07 17:18:02 UTC <tgeeky> byorgey: it was probably related to my questions that I posed in #ghc
+2012-03-07 17:18:23 UTC <tgeeky> byorgey: starting at 00:07 last night, if you care to review
+2012-03-07 17:18:45 UTC <byorgey> tgeeky: what was the general topic?
+2012-03-07 17:19:56 UTC <tgeeky> byorgey: WWJD with big-Oh information for every function in the Haskelleverse
+2012-03-07 17:20:11 UTC <byorgey> ah, I see
+2012-03-07 17:20:43 UTC <tgeeky> (I secretly think Jesus already knows the Big-oh information for them)
+2012-03-07 17:20:59 UTC <tgeeky> well it's not so secret anymore
+2012-03-07 17:21:14 UTC <byorgey> hehe
+2012-03-07 17:21:40 UTC <fryguybob> In that case, he could know the constant factors too and not have any problem applying that information.
+2012-03-07 17:22:10 UTC <tgeeky> fryguybob: well, my main question was, could you detect liars automatically
+2012-03-07 17:22:33 UTC <tgeeky> if someone says their algorithim is (n/p + log p) where p = # processors
+2012-03-07 17:22:50 UTC <byorgey> from reading that discussion, I agree the answer is is no
+2012-03-07 17:23:26 UTC <tgeeky> byorgey: I think they convinced me in the case of distinguisng constant factors and whatnot
+2012-03-07 17:23:27 UTC <fryguybob> Well when you start talking processors it is no for whole other reasons.
+2012-03-07 17:24:02 UTC <tgeeky> byorgey: i'm still wondering about the parallel case :O
+2012-03-07 17:24:07 UTC <byorgey> tgeeky: tangentially, you may be interested to know there is work on type systems which guarantee polynomial time
+2012-03-07 17:25:13 UTC <byorgey> tgeeky: it's the same argument.  An algorithm which does some arbitrary thing for p < 10000 but after that is ~ n/p + log p  could still be O(n/p + log p)
+2012-03-07 17:25:55 UTC <tgeeky> byorgey: even if you could never build a computer large enough to confirm it :O
+2012-03-07 17:25:58 UTC <byorgey> and also the constant factor on the log p could be really really small so you can't even detect the difference between log p and p  for p < 10000, say
+2012-03-07 17:26:46 UTC <byorgey> basically big-Oh notation doesn't give you strong enough guarantees
+2012-03-07 18:51:33 UTC <fryguybob> *sigh*, I spent the last two hours of matlabbing to find a single type error.
+2012-03-07 19:05:01 UTC <byorgey> oh no =(
+2012-03-07 19:49:49 UTC <fryguybob> At least it is working now :D  http://www.cs.rochester.edu/u/ryates/temp/final4-crop.pdf
+2012-03-07 20:06:48 UTC <byorgey> ooh, nice =)
+2012-03-07 20:07:01 UTC <byorgey> you made that with diagrams, right? ;)
+2012-03-07 20:08:16 UTC <fryguybob> byorgey: I wish.
+2012-03-07 20:47:02 UTC <tgeeky> fryguybob: k-means clustering?
+2012-03-07 20:48:54 UTC <alpounet> i had to use an awful gnuplot script + some hand-crafted export function to visualize the result of my kmeans library... :(
+2012-03-07 20:50:06 UTC <alpounet> http://alpmestan.files.wordpress.com/2011/10/example.png ...
+2012-03-07 20:52:06 UTC <tgeeky> eww
+2012-03-07 20:52:44 UTC <alpounet> i know...
+2012-03-07 20:52:51 UTC <alpounet> was the easiest solution though
+2012-03-07 20:52:59 UTC <tgeeky> looks like a far-infrared shot of a strangely heated and zoomed in chessboard
+2012-03-07 20:53:34 UTC <alpounet> that's not what comes to my mind immediately, but that could be it, yes!
+2012-03-07 20:53:41 UTC <tgeeky> alpounet: a parallel solution in haskell is explained in the tutorial http://community.haskell.org/~simonmar/par-tutorial.pdf
+2012-03-07 20:53:58 UTC <alpounet> yup i read about that a bit after i published my lib
+2012-03-07 20:57:04 UTC <fryguybob> tgeeky: EM on Gaussian mixture model.
+2012-03-07 20:57:57 UTC <tgeeky> fryguybob: by EM you mean electrostatics?
+2012-03-07 21:00:18 UTC <fryguybob> tgeeky: No Expectation Maximization algorithm.
+2012-03-07 21:00:37 UTC <byorgey> ACTION used to know what that meant when I took machine learning
+2012-03-07 21:00:46 UTC <byorgey> then I promptly forgot.
+2012-03-07 21:00:57 UTC <tgeeky> fryguybob: oh.
+2012-03-07 21:01:38 UTC <tgeeky> EM would be electromagentism for me (because my *real* interest is physics), but I guessed that the picture could only be representing a static system somehow
+2012-03-07 21:01:47 UTC <tgeeky> I would never have guessed that
+2012-03-07 21:02:13 UTC <byorgey> EM = electron microscopy
+2012-03-07 21:02:22 UTC <alpounet> tgeeky, you're a physicist?
+2012-03-07 21:02:39 UTC <tgeeky> alpounet: yes, that's what I tell myself.
+2012-03-07 21:02:43 UTC <byorgey> EM = elephant mimicry
+2012-03-07 21:02:54 UTC <alpounet> tgeeky, then, what do you tell others?
+2012-03-07 21:02:54 UTC <alpounet> :p
+2012-03-07 21:03:41 UTC <tgeeky> alpounet: 1-physics/2-mathematics/3-computer science -est, which happens to be in ascending skill :(
+2012-03-07 21:04:18 UTC <tgeeky> s/est/ist/
+2012-03-07 21:04:41 UTC <alpounet> hah ok
+2012-03-07 21:16:42 UTC <byorgey> mathematicsist?
+2012-03-07 21:17:05 UTC <tgeeky> yes, why not. I like the sound if it.
+2012-03-07 21:18:13 UTC <tgeeky> alpounet: Let's put it this way. I'm good enough to do some of the mathematics for #1 (quantum physics, string theory, etc), but bad enough that I don't trust myself to innovate beyond using other people's tools.
+2012-03-07 21:18:49 UTC <tgeeky> I realize that (3), in which I have reasonably good formal training, is the best means by which I can be sure I'm not fooling myself.
+2012-03-07 21:20:23 UTC <tgeeky> I'd guess that we're all of a similar mind, but it surprises the hell out of laypeople when you say to them, that the three (physics<->mathematics<->computer science) are much more deeply related than we think
+2012-03-07 21:21:44 UTC <alpounet> yeah
+2012-03-07 21:21:50 UTC <alpounet> i've been talking about that with many people
+2012-03-07 21:23:20 UTC <alpounet> and i'm actually studying maths (algebraic topology, algebra, geometry, that kind of stuffs) but am also trying to develop strong skills in C-S
+2012-03-07 21:23:35 UTC <tgeeky> I'm trying to get some really smart CS people (like byorgey, edwardk, etc, etc) to have more domain specific interest in physics in the near future
+2012-03-07 21:24:17 UTC <tgeeky> byorgey: do you track your work hours like you do your infant hours?
+2012-03-07 21:24:24 UTC <byorgey> tgeeky: hehe, no
+2012-03-07 21:24:33 UTC <byorgey> I don't track infant hours anymore either
+2012-03-07 21:25:02 UTC <alpounet> you've got some sort of project? i know someone who is trying to teach / make work some young minds in order to lead them to the understanding of modern physics theories together with strong maths and C-S skills
+2012-03-07 21:25:19 UTC <tgeeky> alpounet: I have a project for a project.
+2012-03-07 21:25:33 UTC <byorgey> ACTION is sorry to break it to tgeeky that he is unlikely to have much interest in physics anytime soon, beyond a vague general interest
+2012-03-07 21:25:56 UTC <byorgey> ugh, this hold music is terrible.
+2012-03-07 21:26:16 UTC <tgeeky> yeah, I know. But you do have an interest in diagrams, and I can *very* subtly manipulate you through future shared development.
+2012-03-07 21:26:23 UTC <byorgey> haha, good point
+2012-03-07 21:26:24 UTC <alpounet> tgeeky, uh? that is?
+2012-03-07 21:26:39 UTC <alpounet> diagrams is the basis for the next best physical model of the universe, man!
+2012-03-07 21:26:47 UTC <alpounet> how awesome is that
+2012-03-07 21:26:55 UTC <tgeeky> alpounet: :)
+2012-03-07 21:27:23 UTC <alpounet> tgeeky, so, what kind of stuffs do you have in mind? (if you're willing to talk about it)
+2012-03-07 21:27:53 UTC <tgeeky> alpounet: I am certain that I'm more willing to talk about it than you are to listen. :)
+2012-03-07 21:28:16 UTC <alpounet> i *highly* doubt it
+2012-03-07 21:28:25 UTC <tgeeky> hehehe.
+2012-03-07 21:29:25 UTC <tgeeky> The idea is to be able to publish documents (scientific papers, notes, e-books, etc) which, in addition to the information and lessons contained within, carry evidence or even proof of the veracity of the material.
+2012-03-07 21:30:58 UTC <tgeeky> The obvious way to do this is to be able to construct sensory (visual, mostly) evidence of the concepts you're discussing, and evidence (or proof) of its correctness.
+2012-03-07 21:32:28 UTC <tgeeky> So, in a nutshell, I want a physics book with interactive, animated, pretty pictures -- and editable source code so you can inspect it and see that you're not being fooled
+2012-03-07 21:33:26 UTC <alpounet> hah that would be pretty awesome
+2012-03-07 21:33:34 UTC <tgeeky> alpounet: do you know what a Feynman diagram is?
+2012-03-07 21:33:36 UTC <byorgey> along with machine-checked proofs?
+2012-03-07 21:33:45 UTC <alpounet> but what kind of "visual proof" would you stick there for e.g QFT?
+2012-03-07 21:33:53 UTC <alpounet> tgeeky, yes
+2012-03-07 21:33:54 UTC <tgeeky> byorgey: that part I don't know about, but Haskell is almost certainly the best place to start... I doubt it.
+2012-03-07 21:33:56 UTC <byorgey> ACTION does not trust his ability to verify that he is not being fooled just by reading some source code
+2012-03-07 21:34:33 UTC <tgeeky> byorgey: I don't either, so it's partially a mis-statement.
+2012-03-07 21:35:52 UTC <tgeeky> alpounet: re: feynman diagrams.
+2012-03-07 21:39:17 UTC <tgeeky> an acquitence of mine (http://visualphysics.org/) convinced me after several long arguments and discussions, that it's very easy to demonstrate a case where animated diagrams (not necessarily interactive) are *necessary* to see some kind of structure
+2012-03-07 21:39:50 UTC <tgeeky> even in a simple case (like the doing physics with quaternions)
+2012-03-07 21:40:43 UTC <alpounet> i agree with that
+2012-03-07 21:40:51 UTC <alpounet> have kind of the same issue in maths
+2012-03-07 21:41:28 UTC <tgeeky> alpounet: so the hope (or bet) is, that there's a shift of similar importance by going from (no visual intuition of QM mathematics) to (feynman diagrams), by going from (physics presented in journals -- necessarily static formats) to animated formats
+2012-03-07 21:42:38 UTC <alpounet> i'd tend to agree yes
+2012-03-07 21:44:13 UTC <tgeeky> byorgey: re: your objection earlier... The point is, I would expect a college educated person to be able to figure out the veracity of a chapter's worth of pictures (figures) if they are all coded in diagrams, versus all coded in... tex? python? mathematica? ... etc.
+2012-03-07 21:44:42 UTC <tgeeky> more easily, that is
+2012-03-07 21:46:14 UTC <alpounet> tgeeky, one day, when i'll have some free time in my life again, i might ping you to get good references to learn and actually understand modern physics theories
+2012-03-07 21:46:37 UTC <alpounet> instead of just grasping some bits here and there by reading some stuffs on the internet
+2012-03-07 21:46:37 UTC <tgeeky> alpounet: the best resource for a layperson I know, handsdown, is the Susskind lectures.
+2012-03-07 21:47:04 UTC <tgeeky> alpounet: http://en.wikipedia.org/wiki/Leonard_Susskind#Lectures
+2012-03-07 21:47:23 UTC <alpounet> video?!
+2012-03-07 21:47:25 UTC <alpounet> awesome
+2012-03-07 21:47:52 UTC <tgeeky> alpounet: taken in order, though, be prepared to spend ~ 10 days on it.
+2012-03-07 21:48:02 UTC <tgeeky> (i mean days in hours)
+2012-03-07 21:48:31 UTC <tgeeky> (13 lecture series) * (avg of 10 lectures each) * (avg of 1 hour 45 minutes each) = ~ 10 days in hours
+2012-03-07 21:49:02 UTC <alpounet> i'm not in a hurry at all
+2012-03-07 21:49:25 UTC <tgeeky> byorgey: speaking of electron microscopy: http://www.shef.ac.uk/mediacentre/2012/electron-microscope-ptychography-revolution.html
+2012-03-07 21:50:29 UTC <tgeeky> what a silly tease that site is, with the tiny pretty little pictures.
+2012-03-07 21:53:20 UTC <alpounet> tgeeky, guessing from the lectures title, i guess Susskind starts back from the beginning of mechanics
+2012-03-07 21:53:41 UTC <alpounet> 'cause i forgot a bit about relativity since i studied it a bit a few years ago, for example
+2012-03-07 21:55:31 UTC <tgeeky> alpounet: yeah. The lectures are supposed to form, from start to finish, the "theoretical minimum" needed to understand the modern subject (string, m-, brane, loop, AdS/CFT)
+2012-03-07 21:56:12 UTC <alpounet> awesome
+2012-03-07 21:56:55 UTC <alpounet> hm, so which of the 3 fields did you actually study?
+2012-03-07 21:57:19 UTC <tgeeky> my undergrad is in CS, and I got a minor in physics.
+2012-03-07 21:57:39 UTC <tgeeky> I took a dozen or so graduate classes in physics and CS too
+2012-03-07 21:58:02 UTC <tgeeky> and learned a lot of the modern physics from lectures (incl. susskind), papers, journals
+2012-03-07 21:58:41 UTC <alpounet> ok
+2012-03-07 21:58:49 UTC <alpounet> and you're now working in which of these? :P
+2012-03-07 21:58:56 UTC <tgeeky> none of the above
+2012-03-07 21:59:16 UTC <tgeeky> last job was IT/CS support for a College
+2012-03-07 21:59:26 UTC <alpounet> yeah, makes sense hah
+2012-03-07 22:06:45 UTC <tgeeky> byorgey: woo, got an e-mail from github. some good action!
