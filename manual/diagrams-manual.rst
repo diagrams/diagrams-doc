@@ -2941,7 +2941,14 @@ The cairo backend
 Other backends
 --------------
 
+For a list of other backends and their status, see `the diagrams
+wiki`_.
+
+.. _`the diagrams wiki`: http://www.haskell.org/haskellwiki/Diagrams/Projects#Backends
+
 .. container:: todo
+
+   Write a bit about each of these backends.
 
    * SVG
    * postscript
