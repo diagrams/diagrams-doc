@@ -571,8 +571,8 @@ two-dimensional space:
   implementation details.
 
   `unitX` and `unitY` are unit vectors in the positive `x`:math:\- and
-  `y`:math:\-directions, respectively.  Their negated counterparts are `unit_X`
-  and `unit_Y`.
+  `y`:math:\-directions, respectively.  Their negated counterparts are
+  `unit_X` and `unit_Y`.
 
   Vectors of type `R2` can be created by passing a pair of type
   `(Double, Double)` to the function `r2`; vectors can likewise be
@@ -2023,10 +2023,8 @@ although 2D diagrams are used as illustrations.
 Working with envelopes
 ----------------------
 
-XXX module link
-
 The `Envelope` type, defined in
-`Graphics.Rendering.Diagrams.Envelope`, encapsulates *envelopes*
+`Graphics.Rendering.Diagrams.Envelope`:mod:, encapsulates *envelopes*
 (see `envelopes and local vector spaces`_).  Things which have an
 associated envelope---including diagrams, segments, trails, and
 paths---are instances of the `Enveloped` type class.
@@ -2103,11 +2101,11 @@ Envelope-related functions
   In the above example, `withEnvelope` is used to put more space
   surrounding the circle, and `phantom` is used to put space around
   `text "hi"` (which would otherwise take up no space).  Note that we
-  could equally well have written `text "hi" # withEnvelope (circle 2 ::
-  D R2)`.  Notice that the `D R2` annotations are necessary, since
-  otherwise GHC will not know what types to pick for `square 3` and
-  `circle 2`.  See `No instances for Backend b0 R2 ...`_ for more
-  information.
+  could equally well have written
+  `text "hi" # withEnvelope (circle 2 :: D R2)`.  Notice that the
+  `D R2` annotations are necessary, since otherwise GHC will not know
+  what types to pick for `square 3` and `circle 2`.  See `No instances
+  for Backend b0 R2 ...`_ for more information.
 
 * `Diagrams.TwoD.Size`:mod: provides functions for extracting
   information from the envelopes of two-dimensional diagrams,
@@ -2118,7 +2116,15 @@ The ``Enveloped`` class
 
 All objects with an associated envelope are instances of the
 `Enveloped` type class.  This includes diagrams, segments, trails, and
-paths.
+paths.  `Enveloped` provides a single method,
+
+.. class:: lhs
+
+::
+
+> getEnvelope :: Enveloped b => b -> Envelope (V b)
+
+which returns the envelope of an object.
 
 In addition, the list type `[b]` is an instance of `Enveloped`
 whenever `b` is.  The envelope for a list is simply the
@@ -2206,9 +2212,9 @@ function of type
   LocatedEnvelope v -> QDiagram b v m -> QDiagram b v m
 
 We can see this function as a transformation on diagrams, except that
-it also gets to use some extra information---namely, a "`LocatedEnvelope
-v`", which records the local origin and envelope associated
-with the name we pass as the first argument to `withName`.
+it also gets to use some extra information---namely, a
+"`LocatedEnvelope v`", which records the local origin and envelope
+associated with the name we pass as the first argument to `withName`.
 
 Finally, the return type of `withName` is itself a transformation of
 diagrams.
@@ -2242,13 +2248,13 @@ the centers of two subdiagrams.
 > example = (square 3 # named Baz ||| circle 2.3 # named Bar)
 >         # connect Baz Bar
 
-The `connect` function takes two names and returns a *transformation*
-on diagrams, which adds a red line connecting the locations denoted by
-the two names.  Note how the two calls to `withName` are chained, and
-how we have written the second arguments to `withName` using lambda
-expressions (this is a common style).  Finally, we draw a line between
-the two points (using the `location` function to access the base
-points of the located envelopes), give it a style, and
+The `connect` function takes two names and returns a *function* from
+diagrams to diagrams, which adds a red line connecting the locations
+denoted by the two names.  Note how the two calls to `withName` are
+chained, and how we have written the second arguments to `withName`
+using lambda expressions (this is a common style).  Finally, we draw a
+line between the two points (using the `location` function to access
+the base points of the located envelopes), give it a style, and
 specify that it should be layered on top of the diagram given as the
 third argument to `connect`.
 
@@ -2267,7 +2273,32 @@ examples such manual calculation can be quite out of the question.
   at once.
 
 * `withNames` takes a list of names, and makes available a list of the
-  most recent located envelopes associated with each.
+  most recent located envelopes associated with each.  Instead of the
+  two calls to `withName` in the example above, we could have written
+
+  .. class:: lhs
+
+  ::
+
+  > connect n1 n2
+  >   = withNames [n1,n2] $ \[b1,b2] ->
+  >       ...
+
+There is also a function `place`, which is simply a flipped version of
+`moveTo`, provided for convenience since it can be useful in
+conjunction with `withName`.  For example, to draw a square at the
+location of a given name, one can write something like
+
+.. class:: lhs
+
+::
+
+> withName n $ atop . place (square 1) . location
+
+This computes the location of the name `n`, positions a square at that
+location, and then superimposes the positioned square atop the diagram
+containing `n`.
+
 
 Listing names
 ~~~~~~~~~~~~~
@@ -2299,8 +2330,8 @@ more information, see `No instances for Backend b0 R2 ...`_.
                       ]
             )
 
-envelopes, being functions, of course cannot be printed, but
-the output of `names` can be manipulated in other ways than just printing.
+Envelopes, being functions, of course cannot be printed, but the
+output of `names` can be manipulated in other ways than just printing.
 
 Using named envelopes
 ~~~~~~~~~~~~~~~~~~~~~
@@ -2333,21 +2364,6 @@ edge of each child circle, instead of connecting their centers.
 The `boundaryFrom` function is used to compute boundary points:
 `boundaryFrom le v` computes the boundary point in direction `v` for
 the located envelope `le`.
-
-The `place` function is just a flipped version of `moveTo`, provided
-for convenience since it can be useful in conjunction with `withName`.
-For example, to draw a square at the location of a given name, one can
-write something like
-
-.. class:: lhs
-
-::
-
-> withName n $ atop . place (square 1) . location
-
-This computes the location of the name `n`, positions a square at that
-location, and then superimposes the positioned square atop the diagram
-containing `n`.
 
 Qualifying names
 ~~~~~~~~~~~~~~~~
