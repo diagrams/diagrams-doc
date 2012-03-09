@@ -2,12 +2,12 @@
 
   + [X] update diagrams package to depend on new versions of -core,
         -lib, etc.
-  + [-] test build:
+  + [X] test build:
      - [X] ghc 6.12.3
      - [X] ghc 7.0.4
      - [X] ghc 7.2.1
      - [X] ghc 7.4.1 (with darcs gtk2hs)
-     - [ ] ghc 7.4.1 (after new gtk2hs release)
+     - [X] ghc 7.4.1 (after new gtk2hs release)
      - [X] update tested-with fields
   + [X] update LICENSE files
   + [X] write announcement for blog + email
@@ -16,30 +16,29 @@
     + [X] include some examples (blog)
     + [X] say where/how to get involved
   + [X] build documentation
-  + [ ] documentation for animMain, and mention it in user manual
-  + [ ] note re: gtk2hs in 'diagrams' package header
-  + [ ] add release date to all CHANGES files
-    + [ ] core
-    + [ ] active
-    + [ ] lib
-    + [ ] cairo
-    + [ ] contrib
-  + [ ] add release date to releases.markdown
-  + [ ] upload
-    + [ ] active
-    + [ ] diagrams-core
-    + [ ] diagrams-lib
-    + [ ] diagrams-cairo
-    + [ ] diagrams-contrib
-    + [ ] diagrams
-  + [ ] publish new website
-  + [ ] upload/send announcement
-    + [ ] blog
-    + [ ] email
-       - [ ] diagrams-discuss
-       - [ ] haskell
-       - [ ] haskell-cafe
-       - [ ] haskell-art
+  + [X] documentation for animMain, and mention it in user manual
+  + [X] add release date to all CHANGES files
+    + [X] core
+    + [X] active
+    + [X] lib
+    + [X] cairo
+    + [X] contrib
+  + [X] add release date to releases.markdown
+  + [X] publish new website
+  + [X] upload
+    + [X] active
+    + [X] diagrams-core
+    + [X] diagrams-lib
+    + [X] diagrams-cairo
+    + [X] diagrams-contrib
+    + [X] diagrams
+  + [X] upload/send announcement
+    + [X] blog
+    + [X] email
+       - [X] diagrams-discuss
+       - [X] haskell
+       - [X] haskell-cafe
+       - [X] haskell-art
 
 * Planning for release of version 0.4
 

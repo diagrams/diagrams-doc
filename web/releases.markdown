@@ -2,8 +2,8 @@
 title: Releases
 ---
 
-diagrams 0.5: XXX
-=================
+diagrams 0.5: 9 March 2012
+==========================
 
 [diagrams-core](http://hackage.haskell.org/package/diagrams%2Dcore) 0.5
 -----------------
