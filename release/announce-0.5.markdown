@@ -33,15 +33,10 @@ for help migrating from 0.4 to 0.5 (changes should be minimal).
 Try it out
 ----------
 
-For the truly impatient, under GHC 6.12, 7.0, or 7.2:
+For the truly impatient:
 
     cabal install gtk2hs-buildtools
     cabal install diagrams
-
-To build under GHC 7.4 you will first need to install the
-[latest development version of `gtk2hs`](http://projects.haskell.org/gtk2hs/development/#development),
-since the most recent release does not build under GHC 7.4.  Hopefully
-there will be a new release of `gtk2hs` soon.
 
 Diagrams is supported under GHC 6.12, 7.0, 7.2, and 7.4.
 However, getting cairo to build can be tricky on some platforms; see
