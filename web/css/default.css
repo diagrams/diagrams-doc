@@ -90,7 +90,7 @@ code a {
 }
 
 div.todo:before {
-    content: url(/manual/icons/towrite.png);
+    content: url(../manual/icons/towrite.png);
     float: right;
 }
 
@@ -102,7 +102,7 @@ div.todo {
 }
 
 div.warning:before {
-    content: url(/manual/icons/warning.png);
+    content: url(../manual/icons/warning.png);
     float: right;
 }
 

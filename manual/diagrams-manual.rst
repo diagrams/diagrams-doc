@@ -100,18 +100,8 @@ about ``diagrams``:
 
   * The API reference documentation for all the ``diagrams`` packages
     is intended to be high-quality and up-to-date, and is available
-    both from Hackage_ and from the diagrams website. XXX make it so!
-    If you find an omission, error, or something confusing, please
-    `report it as a bug`_!
-
-        - `diagrams-core`:pkg:
-        - `diagrams-lib`:pkg:
-        - `diagrams-cairo`:pkg:
-        - `diagrams-contrib`:pkg:
-
-	XXX change these links to point to the website! cairo in
-	particular does not build on Hackage.
-
+    `from the diagrams website`_.  If you find an omission, error, or
+    something confusing, please `report it as a bug`_!
   * The ``diagrams`` website_ has a `gallery of examples`_ and links
     to tutorials, blog posts, and other documentation.
   * The `diagrams wiki`_ is a good place to find tips and tricks,
@@ -123,6 +113,7 @@ about ``diagrams``:
   * See the `bug tracker`_ for a list of open tickets.  If you find a
     bug or would like to request a feature, please file a ticket!
 
+.. _`from the diagrams website`: http://projects.haskell.org/diagrams/doc/index.html
 .. _`report it as a bug`: http://code.google.com/p/diagrams/issues/list
 .. _website: http://projects.haskell.org/diagrams
 .. _`diagrams wiki`: http://haskell.org/haskellwiki/Diagrams
@@ -141,7 +132,7 @@ Before installing ``diagrams``, you will need the following:
     ``diagrams`` hard to use).
 
   * It is recommended (but not required) to have the latest release of
-    the `Haskell Platform`_ (currently 2011.2.0.1).  At the very least
+    the `Haskell Platform`_ (currently 2011.4.0.0).  At the very least
     you will want the `cabal-install`_ tool.
 
 .. _`cabal-install`: http://hackage.haskell.org/trac/hackage/wiki/CabalInstall
@@ -168,8 +159,13 @@ solutions on various platforms.
 
 .. _`See the wiki for the most up-to-date information`: http://www.haskell.org/haskellwiki/Diagrams/Install
 
-A native SVG backend is being worked on, and hopefully the next
-release of diagrams will include it by default instead of cairo.
+If you can't get the cairo backend to work you can also try the
+(currently unreleased) `postscript backend`_.  A `native SVG backend`_
+is also being worked on, and hopefully the next release of diagrams will
+include it by default instead of cairo.
+
+.. _`postscript backend`: http://www.patch-tag.com/r/fryguybob/diagrams-postscript/
+.. _`native SVG backend`: http://www.patch-tag.com/r/felipe/diagrams-svg/
 
 Getting started
 ---------------
@@ -1729,7 +1725,7 @@ depending on which type is chosen.  The example uses `ts` at each of
 the four `PathLike` types:
 
 * Since `example` is a diagram, the first `ts`, used by itself, is
-  also a `diagram`; hence it is interpreted as three equilateral
+  also a diagram; hence it is interpreted as three equilateral
   triangle diagrams superimposed on one another with `atop`.
 
 * `stroke` turns `Path`\s into diagrams, so the second `ts` has type

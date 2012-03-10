@@ -34,4 +34,4 @@ deploy-web : diagrams-manual.html
 	cp diagrams-manual.{html,rst} ../web/manual
 	cp static/* ../web/manual/static
 	cp images/* ../web/manual/images
-	cp icons/* ../web/manual/icons
+	cp icons/*.png ../web/manual/icons
