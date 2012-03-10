@@ -26,8 +26,8 @@ code.  Drop by the [`#diagrams` IRC channel](http://webchat.freenode.net/)
 with questions or post them to the
 [mailing list](http://groups.google.com/group/diagrams-discuss).
 
-<div align="center">
-<img src="/images/Paradox-small.png" style="vertical-align: middle"; />
+<div style="text-align:center">
+<a href="/gallery/Paradox.html"><img src="/images/Paradox-small.png" style="vertical-align: middle" title="Fibonacci paradox" /></a>
 </div>
 
 What's so great about it?
@@ -49,8 +49,8 @@ Diagrams is:
 * *Flexible*: diagrams is designed from the ground up to be as generic
    and flexible as possible.
 
-<div align="center" >
-<img src="/images/Pentaflake-small.png"  style="vertical-align: middle"; />
+<div style="text-align:center" >
+<a href="/gallery/Pentaflake.html"><img src="/images/Pentaflake-small.png" style="vertical-align: middle" title="Pentaflake" /></a>
 </div>
 
 
