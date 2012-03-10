@@ -70,10 +70,11 @@ compileDiaArr =
   getChildren >>>
   getText >>>
   arrIO compileDiagram >>>
-  eelem "center" +=
-    (eelem "img"
-       += attr "src" mkText
-    )
+  eelem "div" 
+    += attr "style" (txt "text-align: center")
+    += (eelem "img"
+         += attr "src" mkText
+       )
 
 -- | Compile the literate source code of a diagram to a .png file with
 --   a file name given by a hash of the source code contents

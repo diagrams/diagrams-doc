@@ -13,7 +13,7 @@ First, get the
 [Haskell Platform](http://hackage.haskell.org/platform/).  Then, issue
 the command:
 
-<div align="center">
+<div style="text-align: center">
 `cabal install gtk2hs-buildtools diagrams`
 </div>
 
