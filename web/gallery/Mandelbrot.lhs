@@ -1,6 +1,7 @@
 ---
 title: The Mandelbrot set
 author: Ryan Yates
+authorurl: http://www.cs.rochester.edu/u/ryates/
 date: 2011-11-18
 description: A discretized version of the familiar Mandelbrot set.  Adapted from [code written by MathematicalOrchid](http://warp.povusers.org/MandScripts/haskell.html).
 tags: fractal, Mandelbrot
