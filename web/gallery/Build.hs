@@ -2,6 +2,7 @@
 
 import Diagrams.Prelude
 import Diagrams.Backend.Cairo
+import Diagrams.Backend.Cairo.Internal -- due to GHC export bug in 7.4
 
 import Diagrams.Builder
 
