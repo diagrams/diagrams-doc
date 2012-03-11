@@ -5,6 +5,7 @@ import Control.Arrow ((>>>), (>>^), (^>>), arr, second)
 import Control.Monad (forM_)
 import Data.List (sortBy)
 import Data.Ord (comparing)
+import Data.Char (isAlphaNum)
 import Data.Monoid
 
 import Data.String
@@ -78,10 +79,14 @@ main = hakyll $ do
             >>> requireAllA ("gallery/*.lhs" `mappend` inGroup Nothing) buildGallery
             >>> mainCompiler
 
-      -- generate .svg from .lhs
-    group "svg" $ match "gallery/*.lhs" $ do
-        route $ setExtension "svg"
-        compile $ unsafeCompiler compileSvg
+      -- generate .png from .lhs
+    group "png" $ match "gallery/*.lhs" $ do
+        route $ setExtension "png"
+        compile $ unsafeCompiler (compilePng False)
+        
+    group "png-thumb" $ match "gallery/*.lhs" $ do
+        route $ gsubRoute ".lhs" (const "-thumb.png")
+        compile $ unsafeCompiler (compilePng True)
 
       -- build syntax-highlighted source code for examples
     group "gallery" $ match "gallery/*.lhs" $ do
@@ -98,20 +103,31 @@ main = hakyll $ do
         route idRoute
         compile (readPageCompiler >>^ pageBody)
 
-compileSvg :: Resource -> IO LB.ByteString
-compileSvg resource = do
-    _ <- system $ "cd gallery && ./Build.exe " ++ moduleName ++ " " ++ tmpPath
+compilePng :: Bool -> Resource -> IO LB.ByteString
+compilePng isThumb resource = do
+    let thumbFlag | isThumb   = "--thumb 175 "
+                  | otherwise = ""
+    _ <- system $ "cd gallery && ./Build.exe " ++ thumbFlag ++ moduleName ++ " " ++ tmpPath
     LB.readFile tmpPath
   where
     moduleName = takeBaseName $ unResource resource
-    tmpPath    = "/tmp/" ++ moduleName ++ ".svg"
+    tmpPath    = "/tmp/" ++ moduleName ++ (if isThumb then "-thumb" else "") ++ ".png"
 
+mainCompiler :: Compiler (Page String) (Page String)
 mainCompiler = applyTemplateCompiler "templates/default.html"
            >>> relativizeUrlsCompiler
 
-setImgURL    = setURL "svg"
+setThumbURL, setImgURL, setHtmlURL :: Page a -> Page a
+setThumbURL  = setURL "-thumb.png"
+setImgURL    = setURL "png"
 setHtmlURL   = setURL "html"
-setURL ext p = trySetField (ext ++ "url") (replaceExtension (getField "url" p) ext) p
+
+setURL :: String -> Page a -> Page a
+setURL ext p = trySetField (extNm ++ "url") fieldVal p
+  where extNm = filter isAlphaNum ext
+        fieldVal = dropExtension (getField "url" p) ++ ext'
+        ext' | '.' `elem` ext = ext
+             | otherwise      = '.' : ext
 
 pandocFields :: [String] -> Page String -> Page String
 pandocFields = foldr (.) id . map pandocField
@@ -123,14 +139,16 @@ pandocField f p = setField f newField p
 
 buildGallery :: Compiler (Page String, [Page String]) (Page String)
 buildGallery = second (mapCompiler compileExample >>> sortDate >>> arr (map pageBody))
-               >>> arr (\(main, exs) -> modBody (++ (concat exs)) main)
+               >>> arr (\(bod, exs) -> modBody (++ (concat exs)) bod)
   where sortDate = arr (sortBy $ flip (comparing (getField "date")))
 
 compileExample :: Compiler (Page String) (Page String)
-compileExample = (setHtmlURL . setImgURL) ^>> applyTemplateCompiler "templates/example.html"
+compileExample = (setHtmlURL . setThumbURL) ^>> applyTemplateCompiler "templates/example.html"
 
 modBody :: (a -> b) -> Page a -> Page b
 modBody f p = p { pageBody = f (pageBody p) }
+
+pages, md, lhs :: IsString s => [s]
 
 pages = md ++ lhs
 
