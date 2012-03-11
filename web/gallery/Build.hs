@@ -7,18 +7,19 @@ import Diagrams.Backend.Cairo.Internal -- due to GHC export bug in 7.4
 import Diagrams.Builder
 
 import qualified System.FilePath as FP
-import System.Environment
 
-import Data.List (isPrefixOf)
-import Control.Arrow ((&&&), second)
+import Control.Arrow (second)
+import Control.Monad (mplus)
 
 import qualified Data.Map as M
-import Data.List.Split
-import Data.Maybe
 
-compileExample :: String -> String -> IO ()
-compileExample lhs outFile = do
-  let fmt = case FP.takeExtension outFile of
+import System.Console.CmdArgs hiding (name)
+
+-- If the first argument is 'Just', use that as the width and height.
+-- Otherwise, use the width and height specified in the .lhs file.
+compileExample :: Maybe Double -> String -> String -> IO ()
+compileExample mThumb lhs out = do
+  let fmt = case FP.takeExtension out of
               ".png" -> PNG
               ".svg" -> SVG
               ".ps"  -> PS
@@ -27,14 +28,14 @@ compileExample lhs outFile = do
 
   f   <- readFile lhs
   let (fields, f') = parseFields f
-
-      w = read <$> M.lookup "width" fields
-      h = read <$> M.lookup "height" fields
+      
+      w = mThumb `mplus` (read <$> M.lookup "width" fields)
+      h = mThumb `mplus` (read <$> M.lookup "height" fields)
 
   res <- buildDiagram
            Cairo
            zeroV
-           (CairoOptions outFile (mkSizeSpec w h) fmt)
+           (CairoOptions out (mkSizeSpec w h) fmt)
            [f']
            "example"
            []
@@ -52,8 +53,15 @@ parseFields s = (fieldMap, unlines $ tail rest)
                        . map ((uncurry M.singleton) . second (drop 2) . break (==':'))
                        $ fields
 
+data Build = Build { thumb :: Maybe Double, name :: String, outFile :: String }
+  deriving (Typeable, Data)
+
+build :: Build
+build = Build { thumb = def, name = def &= argPos 0, outFile = def &= argPos 1 }
+
+main :: IO ()
 main = do
-  [name, outFile] <- getArgs
-  let name'   = FP.dropExtension name
+  opts <- cmdArgs build
+  let name'   = FP.dropExtension (name opts)
       lhsName = (FP.<.>) name' "lhs"
-  compileExample lhsName outFile
+  compileExample (thumb opts) lhsName (outFile opts)
