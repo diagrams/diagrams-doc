@@ -164,17 +164,27 @@ Let's compile and run it:
     $ ghc --make DiagramsTutorial.lhs
     [1 of 1] Compiling Main             ( DiagramsTutorial.lhs, DiagramsTutorial.o )
     Linking DiagramsTutorial ...
-    $ ./DiagramsTutorial -o circle.pdf
+    $ ./DiagramsTutorial -o circle.pdf -w 400
 
 If you now view `circle.pdf` in your favorite PDF viewer, you should
 see an unfilled black circle on a white background (actually, it's on
 a transparent background, but most PDF viewers I know of use white).
 
-A few things to note: in addition to PDF, the cairo backend can
+Be careful not to omit the `-w 400` argument!  This specifies that the
+width of the output file should be 400 pixels, and the height should
+be determined automatically.  You can also specify just a height
+(using `-h`), or both a width and a height if you know the exact
+dimensions of the output image you want (note that the diagram will
+not be stretched; extra padding will be added if the aspect ratios do
+not match).  If you do not specify a width or a height, the absolute
+scale of the diagram itself will be used, which in this case would be
+rather tiny---only 2x2.
+
+A few more things to note: in addition to PDF, the cairo backend can
 generate `.png`, `.ps`, and `.svg` formats; the format to use is
 determined automatically by the extension of the output file name.
-There are several more options besides `-o`; you can see what they are
-by typing `./DiagramsTutorial --help`.
+There are several more options besides `-o`, `-w`, and `-h`; you can
+see what they are by typing `./DiagramsTutorial --help`.
 
 Attributes
 ==========
