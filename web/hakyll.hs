@@ -14,6 +14,9 @@ import System.FilePath
 import System.Process (system)
 import qualified Data.ByteString.Lazy as LB
 
+import Text.Pandoc.Definition
+import Text.Pandoc.Generic
+
 import Hakyll
 
 main :: IO ()
@@ -43,7 +46,7 @@ main = hakyll $ do
         compile copyFileCompiler
 
     -- API documentation --------------------------
-        
+
     match "doc/**" $ do
       route idRoute
       compile copyFileCompiler
@@ -83,7 +86,7 @@ main = hakyll $ do
     group "png" $ match "gallery/*.lhs" $ do
         route $ setExtension "png"
         compile $ unsafeCompiler (compilePng False)
-        
+
     group "png-thumb" $ match "gallery/*.lhs" $ do
         route $ gsubRoute ".lhs" (const "-thumb.png")
         compile $ unsafeCompiler (compilePng True)
@@ -91,7 +94,7 @@ main = hakyll $ do
       -- build syntax-highlighted source code for examples
     group "gallery" $ match "gallery/*.lhs" $ do
         route $ setExtension "html"
-        compile $ pageCompiler
+        compile $ pageCompilerWithMathJax
             >>> arr setImgURL
             >>> arr (pandocFields ["description"])
             >>> applyTemplateCompiler "templates/exampleHi.html"
@@ -102,6 +105,16 @@ main = hakyll $ do
     group "raw" $ forM_ lhs $ flip match $ do
         route idRoute
         compile (readPageCompiler >>^ pageBody)
+
+pageCompilerWithMathJax :: Compiler Resource (Page String)
+pageCompilerWithMathJax =
+  pageCompilerWithPandoc defaultHakyllParserState defaultHakyllWriterOptions
+    (bottomUp latexToMathJax)
+  where latexToMathJax (Math InlineMath str)
+          = RawInline "html" ("\\(" ++ str ++ "\\)")
+        latexToMathJax (Math DisplayMath str)
+          = RawInline "html" ("\\[" ++ str ++ "\\]")
+        latexToMathJax x = x
 
 compilePng :: Bool -> Resource -> IO LB.ByteString
 compilePng isThumb resource = do
