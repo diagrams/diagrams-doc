@@ -10,34 +10,29 @@ width: 400
 
 > {-# LANGUAGE NoMonomorphismRestriction #-}
 > import Diagrams.Prelude
-> import qualified Data.Colour as C
 
-We can use the [`colour`
-library](http://hackage.haskell.org/package/colour) to generate
-successively lighter shades of blue:
+A $0$-pentaflake is just a regular pentagon:
 
-> colors = iterate (C.blend 0.1 white) blue
+> pentaflake' 0 = regPoly 5 1 # lw 0
 
-An order-0 pentaflake is just a pentagon:
+An [$n$-pentaflake](http://mathworld.wolfram.com/Pentaflake.html)
+is an $(n-1)$-pentaflake surrounded by five more.  The `appends`
+function is useful here for positioning the five pentaflakes around
+the central one.
 
-> p = regPoly 5 1 # lw 0
-> 
-> pentaflake 0 = p
+> pentaflake' n = appends
+>                   pCenter
+>                   (zip vs (repeat (rotateBy (1/2) pOutside)))
+>   where vs = iterateN 5 (rotateBy (1/5))
+>            . (if odd n then negateV else id)
+>            $ unitY
+>         pCenter  = pentaflake' (n-1)
+>         pOutside = pCenter # opacity 0.8
+>
+> pentaflake n = pentaflake' n # fc blue # bg white
 
-An [order-n pentaflake](http://mathworld.wolfram.com/Pentaflake.html) is an order-(n-1) pentaflake surrounded by five
-more.  The `appends` function is useful here for positioning the five
-pentaflakes around the central one.
-
-> pentaflake n = appends (p' # fc (colors !! (n-1)))
->                        (zip vs (repeat (rotateBy (1/2) p')))
->   where vs = take 5 . iterate (rotateBy (1/5))
->                     . (if odd n then negateV else id) $ unitY
->         p' = pentaflake (n-1)
-> 
-> pentaflake' n = pentaflake n # fc (colors !! n)
-
-An order-4 pentaflake looks nice.  Of course there's an exponential
+A $4$-pentaflake looks nice.  Of course there's an exponential
 blowup in the number of primitives, so generating higher-order
 pentaflakes can take a long time!
 
-> example = pad 1.1 $ pentaflake' 4
+> example = pad 1.1 $ pentaflake 4
