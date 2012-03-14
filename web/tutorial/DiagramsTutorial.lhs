@@ -30,9 +30,7 @@ Resources
 Some resources that may be helpful to you as you learn about diagrams:
 
 * The [user manual](/manual/diagrams-manual.html)
-* The API documentation:
-    * [diagrams-core](http://hackage.haskell.org/package/diagrams-core)
-    * [diagrams-lib](http://hackage.haskell.org/package/diagrams-lib)
+* The [API documentation](/reference/index.html)
 * The [diagrams-discuss mailing list](http://groups.google.com/group/diagrams-discuss)
 * The `#diagrams` IRC channel on freenode.org
 
