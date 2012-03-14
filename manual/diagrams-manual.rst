@@ -1077,6 +1077,19 @@ results in a diagram `p` times as opaque.
 > reds    = (s darkred ||| s red) === (s pink ||| s indianred)
 > example = hcat' with { sep = 1 } . take 4 . iterate (opacity 0.7) $ reds
 
+To "set the background color" of a diagram, use the `bg`
+function---which does not actually set any attributes, but simply
+superimposes the diagram on top of a bounding rectangle of the given
+color.
+
+.. class:: dia-lhs
+
+::
+
+> t = regPoly 3 1
+>
+> example = t ||| t # bg orange
+
 Line width
 ^^^^^^^^^^
 
@@ -1879,6 +1892,29 @@ unaffected.
 >         # lw 0.05
 >         # clipBy (square 3.2 # rotateBy (1/10))
 
+Altering a diagram's envelope can be accomplished using `withEnvelope`
+(see `Envelope-related functions`_).  The `view` function is also
+provided for the special case of setting a diagram's envelope to some
+rectangle, often used for the purpose of selecting only a part of a
+diagram to be "viewed" in the final output.  It takes a point---the
+lower-left corner of the viewing rectangle---and the vector from the
+lower-left to upper-right corner.
+
+.. class:: dia-lhs
+
+::
+
+> circles = (c ||| c) === (c ||| c) where c = circle 1 # fc fuchsia
+> example = circles # centerXY # view (p2 (-1,-1)) (r2 (1.3, 0.7))
+
+Note in the above example how the actual portion of the diagram that
+ends up being visible is larger than the specification given to
+`view`---this is because the aspect ratio of the requested output
+image does not match the aspect ratio of the rectangle given to
+`view` (and also because of the use of `pad` by the framework which
+renders the user manual examples).  If the aspect ratios matched the
+viewed portion would be exactly that specified in the call to `view`.
+
 Text
 ----
 
@@ -2572,6 +2608,9 @@ boxes is provided in `Diagrams.BoundingBox`:mod:.  Bounding boxes can
 be created from sets of points or from any `Enveloped` object, used
 for inclusion or exclusion testing, and combined via union or
 intersection.
+
+To obtain a rectangle corresponding to a diagram's bounding box, use
+`boundingRect`.
 
 Tips and tricks
 ===============
