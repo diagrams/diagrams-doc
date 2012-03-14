@@ -10900,3 +10900,696 @@
 2012-03-07 21:59:16 UTC <tgeeky> last job was IT/CS support for a College
 2012-03-07 21:59:26 UTC <alpounet> yeah, makes sense hah
 2012-03-07 22:06:45 UTC <tgeeky> byorgey: woo, got an e-mail from github. some good action!
+2012-03-09 04:46:56 UTC <tgeeky> byorgey: I presume that dmwit's updating and fixing of GTK-related libs is a highly welcomed step along to 0.5 release
+2012-03-09 12:11:01 UTC <alpounet> yeah, byorgey was saying he was waiting for that to release diagrams 0.5
+2012-03-09 18:09:07 UTC <byorgey> tgeeky, alpounet: yep, going to do the release right now!
+2012-03-09 18:10:37 UTC <alpounet> yay!
+2012-03-09 18:10:41 UTC <alpounet> ACTION holds his breath
+2012-03-09 18:21:08 UTC <fryguybob> ACTION hits refresh...
+2012-03-09 18:35:50 UTC <byorgey> new website is up now
+2012-03-09 18:36:16 UTC <byorgey> doing final checks on packages before upload
+2012-03-09 18:44:18 UTC <byorgey> uploaded!
+2012-03-09 18:44:28 UTC <byorgey> now to send out the announcement
+2012-03-09 18:47:36 UTC <fryguybob> byorgey: I'm on "break" this next week so I should be able to find some time to work on some stuff.  One thing I will be sure to do is get gtk2hs on Windows going again.
+2012-03-09 18:48:07 UTC <byorgey> fryguybob: awesome!
+2012-03-09 18:53:38 UTC <byorgey> diagrams 0.5 is now officially released!  let the party begin!
+2012-03-09 19:53:26 UTC <tgeeky> ACTION lites the bender-shaped cigars
+2012-03-09 19:54:16 UTC <tgeeky> --> is this still right? NOTE: the most recent release of gtk2hs does not build under GHC 7.4.1. To get diagrams-cairo to work under GHC 7.4.1 you'll have to install the latest development version of gtk2hs
+2012-03-09 19:54:54 UTC <ClaudiusMaximus> gallery does seem not to show images here (thumbnails seem to appear for a fraction of a second then vanish)
+2012-03-09 19:55:23 UTC <ClaudiusMaximus> Iceweasel/3.5.16 (like Firefox/3.5.16) on debian stable
+2012-03-09 19:57:12 UTC <ClaudiusMaximus> works fine in Iceweasel 10.0.2 on debian testing
+2012-03-09 20:53:44 UTC <ClaudiusMaximus> ACTION starts working on a ridiculously overengineered Mandelbrot2.lhs
+2012-03-09 20:54:53 UTC <tgeeky> boooo
+2012-03-09 20:55:29 UTC <ClaudiusMaximus> hm?
+2012-03-09 20:56:17 UTC <tgeeky> ClaudiusMaximus: The mandlebrot fractal makes me unhappy :o
+2012-03-09 20:57:51 UTC <ClaudiusMaximus> tgeeky: why?
+2012-03-09 20:58:30 UTC <ClaudiusMaximus> (my latest version, using fixed point, 4MB animgif: http://claudiusmaximus.goto10.org/g/mandelbrot/ansibrot.gif )
+2012-03-09 20:59:42 UTC <tgeeky> ClaudiusMaximus: because it's the posterchild for all fractals these days, and I like my fractals with more structure and less reliance on Real/Complex magic :O
+2012-03-09 21:00:21 UTC <tgeeky> that animgif is pretty trippy
+2012-03-09 21:01:09 UTC <ClaudiusMaximus> more structure?
+2012-03-09 21:01:41 UTC <tgeeky> ClaudiusMaximus: yeah, like the circle fractal has a discrete symmetry group behind it, and can be coded in the Integers :o
+2012-03-09 21:02:53 UTC <tgeeky> ClaudiusMaximus: just stumbled across this: http://blog.hvidtfeldts.net/
+2012-03-09 21:02:56 UTC <tgeeky> that's quite beautiful
+2012-03-09 21:04:09 UTC <ClaudiusMaximus> ah yeah, seen that blog before - really nice
+2012-03-09 21:51:13 UTC <byorgey> tgeeky: oops, where is that?
+2012-03-09 22:07:14 UTC <byorgey> ClaudiusMaximus: very strange (re: gallery images). they are just SVG images inside <a> and <div> tags
+2012-03-09 22:07:44 UTC <byorgey> seems pretty straightforward for a browser.  but then again browsers are never straightforward, are they
+2012-03-09 22:09:03 UTC <byorgey> tgeeky: thanks, fixed (the diagrams-cairo package description)
+2012-03-09 22:12:08 UTC <ClaudiusMaximus> wild guess might be multple nodes with the same id ? or a browser bug...
+2012-03-09 22:12:33 UTC <ClaudiusMaximus> but it seems to work with non-ancient browser, so i wouldn't worry
+2012-03-09 22:16:43 UTC <byorgey> oh, there are multiple nodes with the same id
+2012-03-09 22:17:00 UTC <byorgey> I guess I am supposed to use "class" instead of "id"
+2012-03-09 23:00:25 UTC <mgsloan> awesome to see the release go out!
+2012-03-09 23:02:02 UTC <byorgey> =D
+2012-03-09 23:02:38 UTC <byorgey> now I can finally stop thinking about infrastructure and get back to adding awesome features =)
+2012-03-09 23:02:55 UTC <alpounet> like?
+2012-03-09 23:03:04 UTC <alpounet> ACTION is curious
+2012-03-09 23:04:30 UTC <byorgey> off the top of my head: SVG backend; better tools for manipulating paths; grid layout; more tree layout algorithms
+2012-03-09 23:04:48 UTC <byorgey> Andy Gill and I are hopefully also going to think more carefully about how to support animation + interactivity well
+2012-03-09 23:06:04 UTC <mgsloan> cool!  I hope my toy framework is a good first step
+2012-03-09 23:06:44 UTC <mgsloan> I realized when writing gtk-toy-diagrams that once you had composable interactivity to diagrams, it becomes a GUI framework
+2012-03-09 23:07:00 UTC <byorgey> sure, why not? =)
+2012-03-09 23:07:28 UTC <byorgey> though I don't think I really want to support everything that comes with an actual GUI framework.
+2012-03-09 23:07:35 UTC <mgsloan> oh totally
+2012-03-09 23:08:27 UTC <mgsloan> but stuff like sliders and buttons are really short after you extract all of the stuff related to managing some 2D thing
+2012-03-09 23:09:08 UTC <alpounet> haha that's awesome
+2012-03-09 23:09:45 UTC <mgsloan> other stuff to work on would be maths on splines.  Lots of cool diagrams will be possible then
+2012-03-09 23:10:01 UTC <fryguybob> mgsloan: What's missing?
+2012-03-09 23:10:04 UTC <mgsloan> and more spline representations (with approximate conversions to bezier)
+2012-03-09 23:10:13 UTC <alpounet> byorgey, hopefully you'll be able to use scoutess as a buildbot for, at most, diagrams 1.0 :P
+2012-03-09 23:10:15 UTC <byorgey> you mean like e.g. curve offset?
+2012-03-09 23:10:21 UTC <mgsloan> byorgey - bingo
+2012-03-09 23:10:27 UTC <byorgey> alpounet: sounds great
+2012-03-09 23:10:27 UTC <mgsloan> boolean operations too
+2012-03-09 23:10:56 UTC <byorgey> mgsloan: yeah, I definitely want to support all of that eventually
+2012-03-09 23:11:05 UTC <mgsloan> I have a lot of stuff to work on, but I'm hoping to take a swing at some of these things in a year orso
+2012-03-09 23:11:10 UTC <mgsloan> (within a year)
+2012-03-09 23:11:23 UTC <byorgey> mgsloan: great, I'll quote you on that ;)
+2012-03-09 23:11:29 UTC <mgsloan> haha, cool!
+2012-03-09 23:13:15 UTC <mgsloan> It's definitely not an easy problem, but something that I've worked on before.  Might be able to convince some of my old lib2geom collaborators to help out, too.  They know a decent amount of Haskell.
+2012-03-09 23:14:28 UTC <mgsloan> also, functions from R2 -> Double, and R2 -> R2 are useful for 2d diagrams.  These are things like NURB patches, for example.
+2012-03-09 23:15:02 UTC <mgsloan> if you can get a control-point representation of deformations, then you can compose them with a Double -> R2 curve, and get out a deformed Double -> R2 curve
+2012-03-09 23:15:07 UTC <byorgey> what's R2 -> R@ ?
+2012-03-09 23:15:16 UTC <byorgey> R2
+2012-03-09 23:15:38 UTC <byorgey> sounds neat!
+2012-03-09 23:16:07 UTC <mgsloan> lemme take a screenshot of some of the lib2geom toys..
+2012-03-09 23:18:44 UTC <fryguybob> mgsloan: So a projection of a path on a NURBS patch?
+2012-03-09 23:18:51 UTC <mgsloan> yup
+2012-03-09 23:27:36 UTC <mgsloan> www.mgsloan.com/lib2geom.png
+2012-03-09 23:29:07 UTC <mgsloan> brb!
+2012-03-09 23:38:03 UTC <fryguybob> mgsloan: For offsets what uses are you interested in?
+2012-03-09 23:59:33 UTC <mgsloan> well, byorgey's mentioned using that for bounding stroked paths properly
+2012-03-09 23:59:46 UTC <mgsloan> of course, computing the full offset path would be overkill for that
+2012-03-10 00:00:11 UTC <mgsloan> one toy I didn't show is that something like offset-path can be used for path-repeated-along-path
+2012-03-10 00:00:14 UTC <byorgey> mgsloan: really? what would you do instead?
+2012-03-10 00:00:54 UTC <byorgey> path-repeated-along-path, you mean, e.g. I could have a wibbly square?
+2012-03-10 00:01:50 UTC <mgsloan> instead I'd look for all of the points of discontinuous derivative / turning points.  Then take the most extreme of these, and add the offset, with the sign / direction of the extremeness of the point.
+2012-03-10 00:01:56 UTC <mgsloan> byorgey - bingo
+2012-03-10 00:02:17 UTC <mgsloan> or if you have a path that looks like a chunk of rope, instant rope.
+2012-03-10 00:02:49 UTC <byorgey> awesome =)
+2012-03-10 00:03:04 UTC <byorgey> mgsloan: oh, for just doing bounding, I agree
+2012-03-10 00:03:21 UTC <mgsloan> http://inkscape.org/screenshots/gallery/inkscape-0.45-patternalongpath.png
+2012-03-10 00:03:25 UTC <byorgey> mgsloan: but what about actually taking a path and turning it into a path which traces the outline of its stroked version?
+2012-03-10 00:03:28 UTC <mgsloan> (lib2geom is the library inside inkscape)
+2012-03-10 00:03:39 UTC <ClaudiusMaximus> ACTION waits for his mandelbrot set to render...
+2012-03-10 00:03:47 UTC <alpounet> that would be so awesome mgsloan !
+2012-03-10 00:04:24 UTC <byorgey> mgsloan: yeah, looks awesome
+2012-03-10 00:04:24 UTC <fryguybob> sorry, I'm back reading.
+2012-03-10 00:04:38 UTC <byorgey> can we make lib2geom bindings?
+2012-03-10 00:04:55 UTC <byorgey> although ultimately of course it would be nicer to have some of this stuff in pure Haskell.
+2012-03-10 00:04:57 UTC <mgsloan> we could, it's heavily C++ though
+2012-03-10 00:05:02 UTC <mgsloan> there are swig python bindings
+2012-03-10 00:05:34 UTC <mgsloan> yeah, the core lib2geom team got kinda fed up with C++ and haven't worked on it in a while.  and we all like haskell
+2012-03-10 00:05:40 UTC <alpounet> hmm
+2012-03-10 00:05:49 UTC <alpounet> there's a project for binding to C++
+2012-03-10 00:05:51 UTC <alpounet> libraries
+2012-03-10 00:06:05 UTC <alpounet> a guy mentionned it on #haskell a week or two ago
+2012-03-10 00:06:07 UTC <byorgey> mgsloan: I see =)
+2012-03-10 00:06:24 UTC <mgsloan> but bindings could be a good stopgap!
+2012-03-10 00:27:28 UTC <fryguybob> Interesting. So many design decisions to make :D.
+2012-03-10 00:30:16 UTC <ClaudiusMaximus> http://claudiusmaximus.goto10.org/g/mandelbrot/diagrams_Mandelbrot2_2e-3.png (3m15s, the one with 1e-3 size threshold is still calculating after 27m...)
+2012-03-10 00:31:12 UTC <byorgey> ClaudiusMaximus: nice =)
+2012-03-10 00:33:06 UTC <fryguybob> Excellent.
+2012-03-10 00:54:01 UTC <mgsloan> byorgey - mind skimming an exceptionally pointless blog post?
+2012-03-10 00:54:15 UTC <mgsloan> (pre-postage)
+2012-03-10 00:57:38 UTC <mgsloan> http://www.mgsloan.com/Pointless_Plumbers_WIP.html
+2012-03-10 00:58:08 UTC <mgsloan> (anyone curious about making pointfree style ^ 2, check this out)
+2012-03-10 00:58:33 UTC <mgsloan> mostly I'm looking for any criticisms of the blog post style itself rather than the library
+2012-03-10 00:58:44 UTC <mgsloan> although criticisms of the symbol choices would be good too
+2012-03-10 01:10:19 UTC <ClaudiusMaximus> http://claudiusmaximus.goto10.org/g/mandelbrot/diagrams_Mandelbrot2_1e-3.png (took just over an hour in the end..)
+2012-03-10 01:15:51 UTC <byorgey> mgsloan: "The function definitions are exactly the same as in the pair plumber, except with ($) instead of (,)"  -- you mean "instead of (*)" ?
+2012-03-10 01:20:21 UTC <byorgey> mgsloan: nice, I like it
+2012-03-10 02:25:28 UTC <tgeeky> lol. Rock _|_. lol!
+2012-03-10 03:33:33 UTC <mgsloan> byorgey - cool! good to hear.  No, I mean (,), because the composition plumbers combine the results with ($) whereas product plumbers combine their results with (,)
+2012-03-10 03:33:52 UTC <mgsloan> did anyone else have comments (I got disconnected about 3 min after byorgey's comments)
+2012-03-10 03:36:05 UTC <byorgey> mgsloan: oh, I see, but the operator symbol for composition plumbers is also $ wheras for products it's *
+2012-03-10 03:36:22 UTC <byorgey> mgsloan: no, no one else had any comments
+2012-03-10 03:36:24 UTC <mgsloan> yup
+2012-03-10 03:36:32 UTC <byorgey> none that they shared in #diagrams at least =)
+2012-03-10 03:36:40 UTC <mgsloan> I'll make that bit clearer, thanks!
+2012-03-10 03:36:53 UTC <byorgey> hiya vyom
+2012-03-10 03:37:02 UTC <vyom> byorgey: hi
+2012-03-10 03:37:22 UTC <vyom> thanks for the investigation on the stack overflow issue
+2012-03-10 03:37:34 UTC <byorgey> vyom: sure
+2012-03-10 03:37:48 UTC <mgsloan> I'm not too sure about plumbers - either people won't use them, or people will eventually overuse them and everyone will be like "If only mgsloan didn't invent plumbers!  We wouldn't have these symbol soups!"
+2012-03-10 03:38:01 UTC <byorgey> hehehe
+2012-03-10 03:38:17 UTC <byorgey> I could see myself using them sparingly
+2012-03-10 03:38:21 UTC <mgsloan> me too
+2012-03-10 03:38:34 UTC <byorgey> but not to do things quite as dense as the examples you give in the blog post
+2012-03-10 03:38:36 UTC <vyom> been slow on the hacking lately.. my sister is in town :).. but i have today evening and tomorrow to  work on diagrams-svg
+2012-03-10 03:38:50 UTC <mgsloan> yeah, only one plumber at a time
+2012-03-10 03:38:51 UTC <byorgey> vyom: oh, excellent!
+2012-03-10 03:39:12 UTC <byorgey> vyom: let me know how I can help
+2012-03-10 03:39:17 UTC <byorgey> now that the 0.5 release is done
+2012-03-10 03:39:50 UTC <byorgey> oh, in particular I will take a look at a way to expose more of the tree structure to the rendering interface, so you don't have to replicate transformations at each leaf etc.
+2012-03-10 03:39:58 UTC <vyom> i had a question about the way you go about writing a backend..
+2012-03-10 03:40:00 UTC <vyom> https://github.com/deepakjois/diagrams-svg/blob/master/src/Diagrams/Backend/SVG.hs#L62
+2012-03-10 03:40:15 UTC <vyom> i am not too sure what is going in those 4 lines..
+2012-03-10 03:40:41 UTC <vyom> esp the first two..
+2012-03-10 03:41:06 UTC <vyom> what does "data Render  SVG R2 = R (R.Render)" really do
+2012-03-10 03:41:53 UTC <byorgey> vyom: sorry, I need to go, and I think if I tried to give a quick answer I would just confuse you =)
+2012-03-10 03:41:59 UTC <vyom> np
+2012-03-10 03:42:03 UTC <byorgey> I will write up an explanation tomorrow
+2012-03-10 03:42:05 UTC <vyom> ok
+2012-03-10 03:42:07 UTC <vyom> thanks
+2012-03-10 03:42:11 UTC <byorgey> sure
+2012-03-10 03:42:16 UTC <vyom> i will dig in anyway..
+2012-03-10 03:43:12 UTC <byorgey> vyom: google "associated types", and read the source of Graphics.Rendering.Diagrams.Core from diagrams-core
+2012-03-10 03:43:26 UTC <vyom> byorgey: will do thanks
+2012-03-10 04:15:45 UTC <fryguybob> vyom: Is it making sense?
+2012-03-10 04:16:52 UTC <vyom> fryguybob: yes.. kinda. At least I have an intuitive grasp of it. I read some code for the Show backend in diagrams-lib
+2012-03-10 04:18:31 UTC <vyom> i am still a bit puzzled about the need for a "render" type and a "result" type
+2012-03-10 04:19:22 UTC <vyom> trying to figure out for an SVG backend.. what would be the corresponding equivalents
+2012-03-10 04:21:05 UTC <vyom> it seems possible that the "render" type and "result" *could* be the same
+2012-03-10 04:22:25 UTC <fryguybob> Well the Render is a data type.
+2012-03-10 04:23:50 UTC <fryguybob> I suppose you could say   type Result SVG R2 = Render SVG R2
+2012-03-10 04:25:28 UTC <vyom> ya.. in the way i am thnking about it.. it could work that way since the "Svg" data type i am using to represent an SVG document can work for both
+2012-03-10 04:26:24 UTC <vyom> i could also say Render SVG R2 = Svg Result SVG R2 = Svg
+2012-03-10 04:26:40 UTC <vyom> i mean "Render SVG R2 = Svg" and
+2012-03-10 04:26:55 UTC <vyom> "Result SVG R2 = Svg"
+2012-03-10 04:28:19 UTC <vyom> or maybe not.. would it be a syntax error to say "data Render SVG R2 = Svg" ?
+2012-03-10 04:28:22 UTC <fryguybob> vyom: You would need a constructor name for the data type
+2012-03-10 04:28:40 UTC <vyom> fryguybob: ya ok.. got it..
+2012-03-10 04:28:41 UTC <fryguybob> data Render SVG R2 = R Svg
+2012-03-10 04:30:04 UTC <fryguybob> doRender takes options and the Rendered data spits out a result.
+2012-03-10 04:30:41 UTC <vyom> yup makes sense..
+2012-03-10 04:32:10 UTC <vyom> fryguybob: i guess i was just a bit confused by the way the Render data type in Graphics.Rendering.SVG module was modeled
+2012-03-10 04:33:05 UTC <fryguybob> newtype Render = R { unR :: T2 -> B.Builder } -- That one?
+2012-03-10 04:33:10 UTC <vyom> yes
+2012-03-10 04:33:48 UTC <vyom> i dont quite understand why it need to be modelled as a function that takes a T2 and then spits out a Builder.. is that indirection necessary
+2012-03-10 04:34:26 UTC <fryguybob> Humm what is T2 there again?
+2012-03-10 04:34:58 UTC <vyom> i am guessing it is a diagrams data type
+2012-03-10 04:35:17 UTC <vyom> not sure exactly what
+2012-03-10 04:35:52 UTC <fryguybob> http://projects.haskell.org/diagrams/doc/Diagrams-TwoD-Types.html#t:T2
+2012-03-10 04:36:56 UTC <vyom> ok..
+2012-03-10 04:39:24 UTC <fryguybob> So I think that is the first argument to the render in the Renderable class.
+2012-03-10 04:41:05 UTC <mgsloan> T2 is a transformation
+2012-03-10 04:41:36 UTC <vyom> hmm interesting.. so I guess the doRender "ShowBackend" doesnt care about the transformation
+2012-03-10 04:41:46 UTC <vyom> doRender in "ShowBackend"
+2012-03-10 04:43:10 UTC <vyom> but the SVG backend needs to take that into account.. and the Cairo backend uses a State monad to track it
+2012-03-10 04:43:18 UTC <vyom> so it kinda makes sense
+2012-03-10 04:44:54 UTC <fryguybob> right in the Cairo backend that happens in withStyle
+2012-03-10 04:47:31 UTC <vyom> fryguybob: ya.. i guess it is not the state monad.. but there is a transformation happening on the C.Render class that is being used
+2012-03-10 04:47:48 UTC <vyom> cool.. makes sense now
+2012-03-10 04:49:14 UTC <fryguybob> vyom: Well it is the state of calling out to Cairo :D.  In diagrams-postscript I follow how Cairo does it and write out the postscript transformations at that point.
+2012-03-10 04:50:20 UTC <vyom> hmm.. i havent looked at that code.. will look it.. i might end up using that approach
+2012-03-10 04:50:53 UTC <fryguybob> This is also why there is a lot of redundency in the output.  Which is what byorgey was refering to with "exposing tree structure"
+2012-03-10 04:52:02 UTC <fryguybob> I started to address this by using a State monad, but that isn't quite enough without building up an AST as you go.
+2012-03-10 04:52:26 UTC <fryguybob> So we need some middle ground.
+2012-03-10 04:52:52 UTC <fryguybob> ACTION turns in for the night.
+2012-03-10 04:52:58 UTC <vyom> hmm.. on a tangential note.. diagrams-postscript query in Google does not return me the darcs repo on the first page :)
+2012-03-10 04:53:53 UTC <fryguybob> :D
+2012-03-10 04:54:13 UTC <fryguybob> http://patch-tag.com/r/fryguybob/diagrams-postscript/
+2012-03-10 04:55:28 UTC <vyom> ya found it .. just thought it was strange :)
+2012-03-10 19:26:41 UTC <byorgey> ClaudiusMaximus: does the gallery work now in Iceweasel/3.5.16 ?
+2012-03-10 19:34:54 UTC <byorgey> vyom: Render is for building up compositional rendering operations; it has to be a monoid, and by default you just need to be able to map primitives into the Render type and then they get combined by mappend.
+2012-03-10 19:35:12 UTC <byorgey> Result is for the final output of the rendering.  It might not be compositional at all.
+2012-03-10 19:35:32 UTC <byorgey> vyom: it's perfectly legitimate for Render and Result to be the same type.
+2012-03-10 19:36:18 UTC <byorgey> however, Render annoyingly needs to come with its own constructor, which is just for technical reasons to help type inference (it makes Render injective).
+2012-03-10 19:36:32 UTC <byorgey> ACTION should write about all this in the user manual
+2012-03-10 19:37:24 UTC <vyom> byorgey: yes.. i figured that one out
+2012-03-10 19:38:32 UTC <vyom> i am converting diagrams-svg to use blaze-svg now.. before i move on to making it more complete
+2012-03-10 19:38:41 UTC <byorgey> great, sounds good
+2012-03-10 19:39:35 UTC <vyom> it does not help that this arrived yesterday https://plus.google.com/111205473717837061873/posts
+2012-03-10 19:40:18 UTC <vyom> coding and improving my muscle memory at the same time is not a good idea.. :)
+2012-03-10 19:41:55 UTC <byorgey> vyom: wait, what arrived yesterday?
+2012-03-10 19:42:16 UTC <vyom> the keyboard with no inscriptions on it :)
+2012-03-10 19:42:32 UTC <byorgey> haha, awesome =)
+2012-03-10 19:42:43 UTC <byorgey> I don't see that when I follow that link though
+2012-03-10 19:43:02 UTC <vyom> https://lh3.googleusercontent.com/-SOtIfnCGfmw/T1ut3-rYXVI/AAAAAAAAD8I/lMSQ_vtTW_c/s903/20120310_095447.jpg
+2012-03-10 19:43:35 UTC <byorgey> ahh, nice
+2012-03-10 19:43:41 UTC <byorgey> that is very... zen
+2012-03-10 19:49:11 UTC <ClaudiusMaximus> byorgey: sadly not :(
+2012-03-10 19:49:56 UTC <ClaudiusMaximus> byorgey: still the same behaviour - thumbnail broken image icons appear at the right size, but vanish down to tiny nothingness when the images load (or at least that's what it feels like)
+2012-03-10 19:50:08 UTC <byorgey> ClaudiusMaximus: hmm, well, I fixed it so the images etc. all use class=... instead of id=...
+2012-03-10 19:50:15 UTC <byorgey> so I guess there is something else wrong
+2012-03-10 19:51:44 UTC <ClaudiusMaximus> i'm guessing a browser bug
+2012-03-10 19:53:40 UTC <ClaudiusMaximus> seeing as it worked fine in iceweasel 10
+2012-03-10 19:53:53 UTC <ClaudiusMaximus> but, in case you're feeling adventurous... http://validator.w3.org/check?verbose=1&uri=http%3A%2F%2Fprojects.haskell.org%2Fdiagrams%2Fgallery.html
+2012-03-10 19:55:03 UTC <ClaudiusMaximus> i can try some tests after dinner perhaps, a simple test page locally...  time to cook now
+2012-03-10 20:07:40 UTC <byorgey> ClaudiusMaximus: thanks, I'll take a look
+2012-03-10 20:19:19 UTC <tgeeky> byorgey: hehe. empty your mind. empty your keyboard.
+2012-03-10 20:20:51 UTC <luite> oh looks like I missed the diagrams 0.5 release
+2012-03-10 20:21:15 UTC <byorgey> luite: you didn't miss it, it's still there =)
+2012-03-10 20:21:26 UTC <luite> hehe
+2012-03-10 20:22:17 UTC <luite> I didn't have a working internet connection in switzerland :(
+2012-03-10 20:25:21 UTC <byorgey> well that wasn't very nice of it
+2012-03-10 20:26:37 UTC <luite> at least they still had snow and cheese
+2012-03-10 20:27:30 UTC <byorgey> hmm, that ALMOST makes up for it
+2012-03-10 20:30:48 UTC <byorgey> ACTION goes on an HTML validating rampage
+2012-03-10 20:32:04 UTC <luite> don't add meaningless alt tags to all images, unless you want to annoy people with screenreaders :)
+2012-03-10 20:32:46 UTC <tgeeky> Hello, ALT ALT ALT ALT ALT Brent ALT ALT ALT ALT ALT.
+2012-03-10 20:34:58 UTC <byorgey> oh, ok =)
+2012-03-10 20:44:01 UTC <fryguybob> ACTION visits the gallery with links.
+2012-03-10 22:20:57 UTC <byorgey> ACTION is realizing that all the HTML he knows is actually from like 1995 and totally invalid now
+2012-03-10 22:21:25 UTC <byorgey> there's no <center> tag anymore! or <font>! or border attributes on <img> tags!
+2012-03-10 22:33:53 UTC <byorgey> ClaudiusMaximus: I just pushed out a bunch of updates, as far as I know the only validation errors now are missing alt tags
+2012-03-10 22:56:48 UTC <fryguybob> ACTION checks links again and sees the alt tags.
+2012-03-10 22:58:22 UTC <fryguybob> byorgey: BTW the svg file for Mandelbrot is rather ... large.
+2012-03-10 23:00:09 UTC <byorgey> oh! so it is.
+2012-03-10 23:00:14 UTC <byorgey> I wonder why.
+2012-03-10 23:00:26 UTC <fryguybob> Was it from cairo?
+2012-03-10 23:00:30 UTC <byorgey> yeah
+2012-03-10 23:01:14 UTC <fryguybob> ACTION looks at the svg source
+2012-03-10 23:01:23 UTC <byorgey> all the other gallery examples are between 30k-300k
+2012-03-10 23:01:29 UTC <byorgey> mandelbrot is 3M.
+2012-03-10 23:02:44 UTC <byorgey> hmm. it looks like it's just full of paths.
+2012-03-10 23:02:49 UTC <fryguybob> byorgey: each circle is four beziers and a transform.
+2012-03-10 23:02:56 UTC <byorgey> which I presume are segments of Bezier approximations to... right.
+2012-03-10 23:03:21 UTC <fryguybob> and a style
+2012-03-10 23:03:36 UTC <byorgey> so how do we make the output smaller?
+2012-03-10 23:04:16 UTC <fryguybob> Share all the styles.  Name basic shapes and reference those names?
+2012-03-10 23:04:24 UTC <byorgey> another question is whether the gallery should use SVG or PNG.
+2012-03-10 23:04:29 UTC <fryguybob> Not sure what SVG allows.
+2012-03-10 23:04:56 UTC <byorgey> fryguybob: right, sharing the styles would help, which is what I intend to work on next
+2012-03-10 23:05:14 UTC <fryguybob> I know postscript is just as bad right now, but if I pass it through eps2eps I think it gets much smaller. (I'll check)
+2012-03-10 23:06:51 UTC <fryguybob> Yeah eps2eps goes from 4.8M to 601k
+2012-03-10 23:07:26 UTC <fryguybob> epstopdf goes to 181k.
+2012-03-10 23:09:12 UTC <fryguybob> eps2eps is just applying all the transformations so it still has N*4 segments, the pdf is a compressed version of that.
+2012-03-10 23:12:41 UTC <byorgey> I also wonder if there is a way we could "remember" that a certain shape is actually a (transformed) circle and allow backends to make use of that information if they have a better native way to draw circles.
+2012-03-10 23:13:10 UTC <byorgey> we used to have circles as primitives but replaced them with paths for consistency.
+2012-03-10 23:13:33 UTC <byorgey> so basically I want to have our cake and eat it too.
+2012-03-10 23:13:44 UTC <fryguybob> byorgey: Yeah, I'm not sure with SVG how you reference id'ed elements (can you do it without JS?)
+2012-03-10 23:13:45 UTC <ClaudiusMaximus> byorgey: now i get tiny things i can click on (but no images)
+2012-03-10 23:14:06 UTC <byorgey> ClaudiusMaximus: bizarre
+2012-03-10 23:14:16 UTC <ClaudiusMaximus> byorgey: no images visible on the pages i get to when clicking (with iceweasel 3.5 - i guess it doesn't do svg)
+2012-03-10 23:14:21 UTC <byorgey> ClaudiusMaximus: how about the logo at the top of the page? can you see an image there?
+2012-03-10 23:14:29 UTC <byorgey> yeah, I was just going to ask if it supports SVG
+2012-03-10 23:14:30 UTC <ClaudiusMaximus> yep, the funky letters
+2012-03-10 23:14:36 UTC <byorgey> ok, that one is PNG
+2012-03-10 23:14:56 UTC <byorgey> fryguybob: I know approximately zero about SVG
+2012-03-10 23:15:29 UTC <fryguybob> In postscript it should be pretty easy.
+2012-03-10 23:15:41 UTC <ClaudiusMaximus> fryguybob: there's <defs> and xlink:href and <use> stuff, it's fiddly
+2012-03-10 23:15:48 UTC <fryguybob> ok
+2012-03-10 23:16:19 UTC <fryguybob> For postscript you just wrap what you want to save in a proc and call it later.
+2012-03-10 23:17:43 UTC <ClaudiusMaximus> there's also xml entities (like macros) that you can define for repeated elements
+2012-03-10 23:19:38 UTC <ClaudiusMaximus> byorgey: it does support SVG (eg: http://claudiusmaximus.goto10.org/games/hearteroids.svg works here in the same iceweasel version), so i guess it seems there's something off about embedded in pages...
+2012-03-10 23:20:03 UTC <fryguybob> I saw something about wrapping in <object> tags.
+2012-03-10 23:20:51 UTC <ClaudiusMaximus> gotta sleep, been awake almost 30 hours... - zzz
+2012-03-10 23:21:39 UTC <fryguybob> http://e.metaclarity.org/52/cross-browser-svg-issues/
+2012-03-10 23:21:55 UTC <byorgey> ClaudiusMaximus: hmm, strange.  goodnight!
+2012-03-10 23:23:20 UTC <byorgey> fryguybob: yikes
+2012-03-10 23:23:54 UTC <fryguybob> I was hoping ClaudiusMaximus could view that and say which ones showed up for him.
+2012-03-10 23:23:56 UTC <byorgey> oh, now I remember why I used SVG, because they look better when scaled down on the main gallery page
+2012-03-10 23:24:33 UTC <byorgey> I suspect to get the same nice-looking thumbnails as PNGs I would have to actually generate the images at two different scales in the first place
+2012-03-10 23:25:12 UTC <byorgey> anyway, I guess I'll take down the Mandelbrot one for the moment
+2012-03-10 23:25:25 UTC <fryguybob> byorgey: So if we can know that we are at a subdiagram for the first time we could emit a proc and when we get to the same subdiagram (with some different transform or style) we would call the proc.
+2012-03-10 23:25:59 UTC <byorgey> fryguybob: oh, now you are getting really fancy!
+2012-03-10 23:26:20 UTC <fryguybob> :D
+2012-03-10 23:26:21 UTC <byorgey> that would require observable sharing
+2012-03-10 23:26:34 UTC <byorgey> but I guess we could just try using Andy Gill's package for that
+2012-03-10 23:27:02 UTC <ClaudiusMaximus> fryguybob: <img src="test.svg" alt="sum_{i=1}^{100}i^3" /> failes; <object type="image/svg+xml" data="test.svg"></object> workes
+2012-03-10 23:27:19 UTC <ClaudiusMaximus> (and the object + img version workes too)
+2012-03-10 23:27:23 UTC <ClaudiusMaximus> ACTION goes bed
+2012-03-10 23:27:36 UTC <fryguybob> ClaudiusMaximus: Thanks!
+2012-03-10 23:28:04 UTC <fryguybob> byorgey: We could compare postscript values.  So if something renders as  0 0 1 1 C  every time we know it is the same.
+2012-03-10 23:28:39 UTC <byorgey> fryguybob: true
+2012-03-10 23:28:46 UTC <byorgey> seems a bit roundabout
+2012-03-10 23:29:02 UTC <byorgey> but that way you can even recover sharing that was never there in the first place =D
+2012-03-10 23:29:08 UTC <fryguybob> byorgey: indeed
+2012-03-10 23:30:11 UTC <byorgey> so while generating postscript, maintain a hash set of postscript snippets... ?
+2012-03-10 23:30:13 UTC <fryguybob> Another way would be to leverage attributes like id tags and share at that level (assume id's are unique)
+2012-03-10 23:30:20 UTC <fryguybob> byorgey: yeah
+2012-03-10 23:31:02 UTC <byorgey> fryguybob: I don't think relying on id tags is a good idea. it puts too much burden on the user, and it would be too easy to accidentally have the same id tags on things that are not the same
+2012-03-10 23:31:48 UTC <fryguybob> Yeah, agda-diagrams and prove id's unique.
+2012-03-10 23:32:06 UTC <byorgey> hehe
+2012-03-10 23:32:35 UTC <byorgey> but in agda-diagrams you never actually generate graphics so it doesn't matter. ;)
+2012-03-10 23:35:21 UTC <fryguybob> I think I can play around and see if I can get value level sharing to work.  But for now I have to continue working on my homework (doing SSA in a C compiler written in Ruby D:)
+2012-03-10 23:35:51 UTC <byorgey> OK, good luck
+2012-03-10 23:36:18 UTC <fryguybob> Right now my variables are named "val_SSA__SSA__SSA_" I think something is wrong.
+2012-03-10 23:36:36 UTC <fryguybob> Oh right, Ruby is wrong.
+2012-03-10 23:38:30 UTC <byorgey> wat
+2012-03-10 23:40:44 UTC <fryguybob> One too many monkey patch.
+2012-03-10 23:41:11 UTC <byorgey> ACTION forks diagrams-core
+2012-03-10 23:44:37 UTC <byorgey> ugh all this stuff about transformations affecting attributes, freeze, etc. hurts my brain
+2012-03-11 00:16:07 UTC <byorgey> if this actually works I am going to eat my hat
+2012-03-11 00:22:59 UTC <byorgey> well, so far it seems to produce correct output but it made Mandelbrot.svg *bigger*
+2012-03-11 00:37:21 UTC <fryguybob> hehe
+2012-03-11 01:03:35 UTC <byorgey> whoops, I take back the part about correct output
+2012-03-11 01:07:35 UTC <fryguybob> Your hat is safe for now.
+2012-03-11 01:32:46 UTC <vyom> I managed to translate the old diagrams-svg code (https://github.com/deepakjois/diagrams-svg/blob/master/src/Graphics/Rendering/SVG.hs ) to use blaze-svg (https://github.com/deepakjois/diagrams-svg/blob/blaze-svg/src/Graphics/Rendering/SVG.hs )
+2012-03-11 01:33:11 UTC <vyom> it is not a full translation.. some code is stubbed out for now..
+2012-03-11 01:33:45 UTC <vyom> i am trying to understand some logic related to transforms in the older code..
+2012-03-11 01:35:23 UTC <vyom> in the older diagrams-svg code.. there is this to render a path "renderPath p = R $ \t -> unR (renderPath' $ transform (inv t) p) t"
+2012-03-11 01:36:04 UTC <vyom> why is there an inverse (which is what inv is, presumably) tranfrom on the path before rendering it
+2012-03-11 01:37:06 UTC <vyom> i guess i need to better understand the way the diagrams internals code calls out to the backend.. which will help me understand the SVG i should be outputting
+2012-03-11 01:41:53 UTC <vyom> i am a bit confused by why the  "render" function takes one argument in some cases and 2 in others.. https://github.com/deepakjois/diagrams-svg/blob/master/src/Diagrams/Backend/SVG.hs#L102
+2012-03-11 01:50:02 UTC <fryguybob> vyom: The ones with one argment are functions on the rhs.
+2012-03-11 01:53:57 UTC <vyom> yes.. i saw that afterwards..
+2012-03-11 01:54:45 UTC <vyom> i just drew a simple square using the current diagrams-svg backend and the one that i am using..
+2012-03-11 01:55:25 UTC <fryguybob> woohoo!
+2012-03-11 01:55:46 UTC <vyom> comparing the output.. it looks like the current backend is doing transformation that I am not doing..
+2012-03-11 01:56:32 UTC <vyom> so the values in the Svg path are different..
+2012-03-11 01:59:19 UTC <vyom> https://github.com/deepakjois/diagrams-svg/blob/master/src/Diagrams/Backend/SVG.hs#L71
+2012-03-11 02:00:20 UTC <vyom> the third argument to the withStyle method .. what is that exactly?
+2012-03-11 02:00:46 UTC <vyom> is it a transformation on the style.. or a transformation on the diagram
+2012-03-11 02:00:48 UTC <vyom> ?
+2012-03-11 02:03:37 UTC <fryguybob> vyom: Humm, looking.
+2012-03-11 02:09:13 UTC <fryguybob> vyom: I believe it is the transform that should be applied to the style, so the actual linewidth value should be transformed by that.
+2012-03-11 02:10:43 UTC <vyom> ok.. thanks
+2012-03-11 02:34:29 UTC <byorgey> ugh, the whole style transformation thing is super confusing
+2012-03-11 02:34:38 UTC <byorgey> it's all so we can implement "freeze"
+2012-03-11 02:34:45 UTC <byorgey> I hate it
+2012-03-11 02:35:23 UTC <mgsloan> It'll pay off once we can use "freeze" to also be a rendering cache
+2012-03-11 02:35:41 UTC <byorgey> hmm, maybe
+2012-03-11 02:36:03 UTC <mgsloan> (something to think about when doing animation / interactivity "properly"
+2012-03-11 02:36:16 UTC <byorgey> yeah
+2012-03-11 02:37:48 UTC <mgsloan> tricky, too, of course.  I think it'd be sweet to be able to handle editors that mutate a chunk of spline, and only re-render effected regions, but being this advanced could really hurt general usability
+2012-03-11 02:38:15 UTC <mgsloan> (editors in the semantic editor combinator type sense)
+2012-03-11 02:39:16 UTC <mgsloan> course, in the case of diagrams, localized edits to a spline shift stuff
+2012-03-11 02:39:32 UTC <mgsloan> so, not the best idea :D
+2012-03-11 02:40:41 UTC <byorgey> vyom: I'm not sure exactly how the old diagrams-svg worked, but the inv apparently has something to do with the fact that the Render type is a *function* from transformations.
+2012-03-11 02:40:52 UTC <byorgey> vyom: but I don't know why that would be.  It seems unnecessary.
+2012-03-11 02:41:04 UTC <byorgey> i.e. maybe there are changes we can make to the core which would make it unnecessary.
+2012-03-11 02:43:52 UTC <fryguybob> ACTION tries to remember how we came to the style transforms the way they are.
+2012-03-11 02:45:44 UTC <fryguybob> Something like freeze a circle with a thick linewidth, then scale to an ellipse.  I'm not sure how easy it is to express what happens with that in SVG.
+2012-03-11 02:46:18 UTC <byorgey> yes, that's it
+2012-03-11 02:46:29 UTC <byorgey> it mya be impossible to express in SVG.
+2012-03-11 02:46:32 UTC <byorgey> *may
+2012-03-11 02:46:37 UTC <fryguybob> Ah, yes it is in the manual
+2012-03-11 02:46:40 UTC <mgsloan> Inkscape does that, but I think it's also an approximation
+2012-03-11 02:47:01 UTC <mgsloan> so, it'll take the distance of the amount you scale something, and use that as a factor on the stroke width
+2012-03-11 02:47:18 UTC <mgsloan> (so, (2, 1) scaling is sqrt (5)
+2012-03-11 02:47:20 UTC <byorgey> mgsloan: no, that's not what it does
+2012-03-11 02:47:46 UTC <byorgey> at least that's not what the cairo backend does.
+2012-03-11 02:47:53 UTC <byorgey> though you could imagine it working that way.
+2012-03-11 02:47:53 UTC <mgsloan> there are 4 toggles in the top right of the inkscape UI
+2012-03-11 02:48:06 UTC <byorgey> oh, or were you describing what inkscape does?
+2012-03-11 02:48:35 UTC <mgsloan> scale stroke width / scale rounding / move gradient with obj / move pattern with object
+2012-03-11 02:48:44 UTC <byorgey> the problem with the current semantics of 'freeze' is that it is very cairo-specific
+2012-03-11 02:48:49 UTC <mgsloan> yeah, describing inkscape
+2012-03-11 02:48:52 UTC <byorgey> ok.
+2012-03-11 02:49:04 UTC <mgsloan> I agree that SVG doesn't have a way to handle this
+2012-03-11 02:49:06 UTC <byorgey> I'm of a mind to rip it out and replace it with something more sane.
+2012-03-11 02:49:14 UTC <fryguybob> byorgey: :D
+2012-03-11 02:50:00 UTC <byorgey> we'll need to think carefully about what that more sane thing is.
+2012-03-11 02:51:08 UTC <byorgey> anyway, the good news is that modulo freezing insanity, I think a few tweaks to diagrams-core will trivially result in shared transformations+attributes, i.e. not having to apply them separately to each primitive
+2012-03-11 02:51:24 UTC <fryguybob> Excellent
+2012-03-11 02:51:37 UTC <byorgey> we already have a tree and do a fold over it to flatten it... so instead we can just do the rendering while folding.
+2012-03-11 02:51:59 UTC <byorgey> anyway, I'm off for tonight, talk to you all later
+2012-03-11 02:52:47 UTC <mgsloan> ahhh, it actually is in SVG
+2012-03-11 02:52:48 UTC <fryguybob> byorgey: I don't know if we really explored what freeze could be used for in practice much, but I remember the idea being that we get image transformation semantics.
+2012-03-11 02:52:56 UTC <mgsloan> just none of the implementations do it :/
+2012-03-11 02:53:07 UTC <mgsloan> ACTION just asked his SVG expert friend
+2012-03-11 02:54:34 UTC <fryguybob> Which you can do if you convert stroke to filled outline.
+2012-03-11 02:54:49 UTC <mgsloan> that'd be the appropriate workaround
+2012-03-11 02:55:38 UTC <fryguybob> I don't remember if we thought though thaw or what it would even mean.
+2012-03-11 02:56:42 UTC <mgsloan> the question is, do we target SVG spec or implemented SVG
+2012-03-11 02:56:49 UTC <mgsloan> my vote would be implemented SVG
+2012-03-11 02:57:01 UTC <mgsloan> so that would require doing our own stroking
+2012-03-11 02:57:39 UTC <mgsloan> So, my vote would also be to keep it around.  They're useful ops, even if it takes a little while to support them right
+2012-03-11 02:57:56 UTC <mgsloan> and for now punt on them with approximations for some backends
+2012-03-11 03:01:31 UTC <fryguybob> It seems postscript handles it: http://www.cs.rochester.edu/u/ryates/temp/freeze.pdf
+2012-03-11 03:02:58 UTC <fryguybob> ACTION wonders if they just apply the transform to the stroke "brush" at render time.
+2012-03-11 03:04:24 UTC <vyom> byorgey: thanks.. I think I have enough of the backend implemented that I dont need to care about the way things are done in the old diagrams-svg.. just gonna forge ahead
+2012-03-11 04:15:43 UTC <vyom> does anybody mind if I do a release of diagrams-svg sometime next week. I dont have all the functionality yet, but it is enough for the use cases that hs-logo has.. and it would be nice to drop the diagrams-cairo dependency
+2012-03-11 04:16:05 UTC <vyom> i intend to keep hacking on it, since i need support for colors and other attributes as well
+2012-03-11 04:16:45 UTC <vyom> but i feel like getting a release out
+2012-03-11 04:24:00 UTC <mgsloan> vyom: seems reasonable!  How are you handling parsing path data?
+2012-03-11 04:24:16 UTC <mgsloan> err, nvm, backend, not parser!
+2012-03-11 04:26:38 UTC <vyom> mgsloan: https://github.com/deepakjois/diagrams-svg/blob/blaze-svg/src/Graphics/Rendering/SVG.hs this is how the SVG generation code looks like now
+2012-03-11 04:27:04 UTC <vyom> it uses blaze-svg for SVG rendering
+2012-03-11 04:27:17 UTC <vyom> which provides some helpers to generate paths
+2012-03-11 04:28:12 UTC <mgsloan> very pretty!
+2012-03-11 04:38:17 UTC <byorgey> vyom: by all means, make a release!
+2012-03-11 04:48:42 UTC <byorgey> hmm, anyone with Lion and GHC 7.0.4 that can try to reproduce rpglover's bug report? http://code.google.com/p/diagrams/issues/detail?id=71
+2012-03-11 04:48:55 UTC <byorgey> or anyone with ideas why it might be happening
+2012-03-11 04:51:04 UTC <tgeeky> ouch. it does look like a showstopper.
+2012-03-11 04:54:39 UTC <tgeeky> I also can't imagine how it's your fault :o
+2012-03-11 04:55:06 UTC <byorgey> I can't either.  But that's not how these things work =)
+2012-03-11 04:55:23 UTC <tgeeky> byorgey: hehe :)
+2012-03-11 04:55:45 UTC <tgeeky> byorgey: I *can* imagine using a Mac, but unfortunately that doesn't put one in front of me. :o
+2012-03-11 04:58:47 UTC <byorgey> why is OS X such a pain in the butt?
+2012-03-11 05:01:28 UTC <tgeeky> I use Windows. I am disqualified from answering.
+2012-03-11 05:02:10 UTC <byorgey> why are operating systems such a pain in the butt?
+2012-03-11 05:05:33 UTC <tgeeky> byorgey: I wish I knew the answer to that.
+2012-03-11 05:05:56 UTC <tgeeky> byorgey: you use arch, right?
+2012-03-11 05:06:12 UTC <byorgey> tgeeky: yes
+2012-03-11 05:06:37 UTC <byorgey> sometimes it's a pain in the butt too.
+2012-03-11 05:07:56 UTC <tgeeky> yeah, I'm guessing in a predictable kind of way, though :o
+2012-03-11 05:09:05 UTC <byorgey> it does tend to be a bit more predictable.  e.g. when I upgrade my packages.
+2012-03-11 05:09:46 UTC <tgeeky> byorgey: well, the fatal flaw with Windows (and OSX, for that matter, I guess) is that they never bought into packaging systems
+2012-03-11 05:10:04 UTC <byorgey> yeah, that is a big problem.
+2012-03-11 05:10:07 UTC <tgeeky> and the fatal flaw with everything else, is their packaging systems suck.
+2012-03-11 05:10:11 UTC <byorgey> hehe
+2012-03-11 05:10:22 UTC <mgsloan> Î»> (print <<& putStrLn) "hello"  -- yields { hello; "hello" }
+2012-03-11 05:10:22 UTC <mgsloan> Î»> (print >>& putStrLn) "hello"  -- yields { "hello"; hello }
+2012-03-11 05:10:53 UTC <byorgey> mgsloan: nice, monadic plumbers?
+2012-03-11 05:10:58 UTC <mgsloan> yup
+2012-03-11 05:11:08 UTC <byorgey> are there >>= variants?
+2012-03-11 05:11:18 UTC <mgsloan> yeah, they use >= and <= prefixes
+2012-03-11 05:11:18 UTC <byorgey> not sure how useful that would be
+2012-03-11 05:11:21 UTC <byorgey> ok
+2012-03-11 05:11:41 UTC <byorgey> I think I would just get confused with the extra argument
+2012-03-11 05:11:49 UTC <mgsloan> me neither, but it's an excuse to have some rediculous yet reasonably understandable operators
+2012-03-11 05:11:58 UTC <byorgey> sure =)
+2012-03-11 05:12:07 UTC <tgeeky> hm. I think I'm going to make a proposal to remove (||, &&, >=, <=, /=) from the prelude :O
+2012-03-11 05:12:17 UTC <tgeeky> I know nobody will go with it, but to hell with them
+2012-03-11 05:12:18 UTC <byorgey> haha what
+2012-03-11 05:12:30 UTC <byorgey> tgeeky: why those?
+2012-03-11 05:12:54 UTC <tgeeky> byorgey: well, realistically, all non-word functions, but the main one I 'want back' is ||
+2012-03-11 05:13:10 UTC <tgeeky> beacuse of letting you think about code with things like >> and <<
+2012-03-11 05:13:16 UTC <tgeeky> and 'straigtening out' them to become ||
+2012-03-11 05:13:46 UTC <byorgey> tgeeky: no one's stopping you from doing   import Prelude hiding ((||))
+2012-03-11 05:14:01 UTC <byorgey> and then defining it yourself
+2012-03-11 05:14:23 UTC <tgeeky> yeah. I have a few toy Preludes where I've done things like that.
+2012-03-11 05:14:57 UTC <byorgey> actually removing them from the Prelude is just a tiny bit drastic.
+2012-03-11 05:14:59 UTC <mgsloan> IMHO there should be an extension to support adopting a new prelude.  The point of the extension would be to provide a compatibility layer between code targetting the two preludes (ideally there'd be a rewriting equivalence between code using the two)
+2012-03-11 05:15:13 UTC <byorgey> mgsloan: that would be nifty.
+2012-03-11 05:15:18 UTC <tgeeky> byorgey: the main idea, I think, is actually that a very general and abstract symbol (two vertical lines) shouldn't be wasted on something so specific (and in haskell more than other places, less often required) as boolean OR
+2012-03-11 05:15:40 UTC <tgeeky> mgsloan: yeah. I call that package d-Prelude (for differential Prelude)
+2012-03-11 05:16:56 UTC <tgeeky> byorgey: and I would get rid of && because it's so ugly and asymmetric
+2012-03-11 05:17:01 UTC <byorgey> tgeeky: I have some sympathy with that point of view, but practically speaking such a proposal will never fly
+2012-03-11 05:17:10 UTC <tgeeky> byorgey: yeah. that's why I said it, and not did it :)
+2012-03-11 05:17:18 UTC <byorgey> hehe, fair enough =)
+2012-03-11 05:19:08 UTC <tgeeky> the wonderful power of Haskell, is that I can (easily) do these things for myself.
+2012-03-11 05:19:54 UTC <mgsloan> Actually, don't constraint synonyms give the capability to write a standards-compliant Prelude in terms of some more complicated underlying Prelude (like the numeric one / other one) ?
+2012-03-11 05:20:06 UTC <tgeeky> mgsloan: don't know
+2012-03-11 05:20:12 UTC <tgeeky> mgsloan: btw, are you a student?
+2012-03-11 05:20:41 UTC <mgsloan> would you frequently get very qualified types in errors? That'd be a downside.  It'd be good to prefer the synonyms
+2012-03-11 05:20:54 UTC <mgsloan> tgeeky - yup, undergrad at UW for another quarter orso
+2012-03-11 05:20:56 UTC <byorgey> mgsloan: why would constraint synonyms help? (not disagreeing, just wondering what you mean)
+2012-03-11 05:21:25 UTC <tgeeky> mgsloan: you have some clever and imaganitive code. keep it up :)
+2012-03-11 05:22:12 UTC <mgsloan> tgeeky: Thanks! I try :D
+2012-03-11 05:28:03 UTC <tgeeky> which W? Washington? Wisconsin? Waterloo?
+2012-03-11 05:28:10 UTC <byorgey> mgsloan: oh, didn't realize you were graduating so soon.  what are you thinking of doing afterwards?
+2012-03-11 05:28:24 UTC <byorgey> mgsloan: (no need to answer that if it is a stressful question =)
+2012-03-11 05:29:01 UTC <vyom> byorgey: regarding the bug report.. i had the exact problem on Snow Leopard when I first started using diagrams
+2012-03-11 05:29:23 UTC <tgeeky> ACTION grabs the dentist-grade superlight in the room (for some reason) and shines it at mgsloan.
+2012-03-11 05:29:35 UTC <byorgey> vyom: ah, good to know.  did you ever figure out what the problem was? and/or how did you solve it?
+2012-03-11 05:30:10 UTC <vyom> turns out that it was related to ghc being 32-bit and the GTK related stuff being 64-bit
+2012-03-11 05:30:17 UTC <mgsloan> byorgey - I just realized why it doesn't work - you can't introduce instances of type synonyms!  There's no real issue otherwise.  The idea is to define synonyms that refer to all of the appropriate typeclasses.  So Monad would point to Applicative / Functor / Monad / etc in the new prelude
+2012-03-11 05:30:53 UTC <mgsloan> vyom - Washington!  hell, I was born adjacent to a microsoft building practically
+2012-03-11 05:31:09 UTC <mgsloan> byorgey - I do know what I'm up to! http://intentsoft.com/
+2012-03-11 05:31:56 UTC <mgsloan> I considered for a bit going the grad-school route, but this is really closer to my research interests than any professors specialties that I see
+2012-03-11 05:32:19 UTC <byorgey> vyom: ah, I see.  can you add a comment to the bug tracker?
+2012-03-11 05:32:53 UTC <byorgey> mgsloan: cool!
+2012-03-11 05:33:05 UTC <byorgey> mgsloan: and they are based in Philadelphia, right? ;)
+2012-03-11 05:33:41 UTC <vyom> byorgey: sure
+2012-03-11 05:33:48 UTC <byorgey> thanks
+2012-03-11 05:34:23 UTC <byorgey> oh, Bellevue
+2012-03-11 05:35:00 UTC <mgsloan> byorgey - hehe, Bellevue, actually!  Means I won't be able to bike to work from seattle, but bussing is decent too
+2012-03-11 05:35:09 UTC <mgsloan> yeah
+2012-03-11 05:38:13 UTC <vyom> mgsloan: did not realise you were in Seattle.. me too :)
+2012-03-11 05:39:12 UTC <mgsloan> no way! awesome!
+2012-03-11 05:39:22 UTC <mgsloan> we'll have to do some diagrams hacking soon
+2012-03-11 05:39:37 UTC <vyom> ya that is a great idea! :)
+2012-03-11 05:39:55 UTC <byorgey> =D
+2012-03-11 05:40:23 UTC <byorgey> ACTION recommends hanging out with mgsloan
+2012-03-11 05:41:48 UTC <vyom> cool.. :).. i live up in Capitol Hill..
+2012-03-11 05:43:18 UTC <mgsloan> :D cool! I'm in the u-district of course.  Currently finishing off the quarter, but after that's over with we should definitely hack on logo / svg
+2012-03-11 06:39:24 UTC <alpounet> haha that's a pretty funny coincidence
+2012-03-11 06:39:38 UTC <alpounet> nobody from Marseille or even France here I guess though? :P
+2012-03-11 09:15:49 UTC <fury_> I want  to render to SVG output to stdout
+2012-03-11 09:16:45 UTC <fury_> can I use renderDia, and with way parameters to achieve this ?
+2012-03-11 09:23:16 UTC <mgsloan> I think you can only output to an SVG file with Cairo for now
+2012-03-11 09:23:28 UTC <mgsloan> read the file back in, and output to stdout
+2012-03-11 09:33:40 UTC <fury_> than you, that will do my job!
+2012-03-11 09:33:46 UTC <fury_> thank you
+2012-03-11 15:38:28 UTC <byorgey> gah OS X, seriously, what is UP.  http://code.google.com/p/diagrams/issues/detail?id=72
+2012-03-11 15:39:01 UTC <byorgey> hmm, I think I remember someone else having the same issue...
+2012-03-11 15:39:23 UTC <byorgey> maybe it was carter
+2012-03-11 15:39:48 UTC <luite> hmm, the OS X preview thing is kind of limited, but I guess the Cairo pdfs should be fairly simple
+2012-03-11 15:40:39 UTC <ClaudiusMaximus> i vaguely recall some 'reserved/pad/etc' byte in .mov format changing value at some point causing chaos for Free mov creation software and Apple ecosystem interoperability
+2012-03-11 15:40:50 UTC <ClaudiusMaximus> but i doubt that's related...
+2012-03-11 15:41:38 UTC <byorgey> ClaudiusMaximus: heh, probably not.
+2012-03-11 15:50:58 UTC <luite> hehe at least the pdf format isn't owned by apple
+2012-03-11 16:00:54 UTC <byorgey> vyom: was it you who had trouble with cairo-generated PDFs (see http://code.google.com/p/diagrams/issues/detail?id=72)? or was it carter?
+2012-03-11 16:09:38 UTC <luite> can't reproduce the problem here btw, the pdf shows up fine in Preview
+2012-03-11 16:09:59 UTC <luite> although the scale seems off, I have to zoom in a lot before it gets bigger than a few pixels
+2012-03-11 16:10:34 UTC <byorgey> luite: did you pass -w or -h options?
+2012-03-11 16:10:48 UTC <luite> nope, just -o test.pdf
+2012-03-11 16:11:48 UTC <byorgey> luite: well that would explain why it is tiny
+2012-03-11 16:12:15 UTC <luite> ok :)
+2012-03-11 16:12:31 UTC <byorgey> if you don't specify a width or height it will default to just using the absolute scale of the diagram... which in this case would be 2x2 px since it is just a radius-1 circle
+2012-03-11 16:12:59 UTC <alpounet> fwiw, i can't open the pdf file linked in the bug report neither
+2012-03-11 16:13:05 UTC <byorgey> neither can I
+2012-03-11 16:13:31 UTC <luite> mine is bigger
+2012-03-11 16:13:54 UTC <luite> 973 bytes
+2012-03-11 16:14:10 UTC <ClaudiusMaximus> evince tells me "the document contains no pages"
+2012-03-11 16:15:03 UTC <ClaudiusMaximus> xpdf reports no errors but also displays nothing
+2012-03-11 16:15:10 UTC <byorgey> ClaudiusMaximus: yeah, that's the same thing I get
+2012-03-11 16:15:14 UTC <luite> I'm using GHC 7.4.1, 64bit, with macports cairo
+2012-03-11 16:26:11 UTC <vyom> byorgey: never tried generating PDFs with Cairo.. so probably not me
+2012-03-11 16:49:36 UTC <byorgey> vyom: ok
+2012-03-11 18:05:41 UTC <tgeeky> not me either, and I am pretty sure I have generated PDFs with diagrams in linux and windows, both successfully
+2012-03-11 22:18:45 UTC <fryguybob> In case any more data is needed the pdf file does not have any graphic data in it and it is cairo 1.10.2.
+2012-03-12 14:21:05 UTC <fryguybob> Humm this could make an interesting diagram: http://www.maltekoeditz.com/index.php/2011/07/22/golden-section-in-the-apple/
+2012-03-12 14:41:17 UTC <luite> hmm, there should be a golden ratio finder diagrams module to find golden ratio's in everything ;)
+2012-03-12 14:41:34 UTC <luite> (and if it doesn't find one, just distort the input slightly until it does)
+2012-03-12 14:52:18 UTC <fryguybob> Or a golden ratio diagram types where it is a type error if you diagram is not pleasing.
+2012-03-12 20:51:29 UTC <luite> grmblz stupid ghc
+2012-03-12 20:54:37 UTC <fryguybob> :(
+2012-03-12 20:57:29 UTC <luite> it won't load my .hi/.o because it says that the flags have changed... but it only gives me a hash of the flags...
+2012-03-12 20:57:38 UTC <luite> it's like cracking passwords from a shadow file
+2012-03-12 20:58:33 UTC <byorgey> sounds like fun =(
+2012-03-12 22:58:46 UTC <tgeeky> luite: I hope not. that's pretty difficult.
+2012-03-12 23:11:35 UTC <luite> I'm recompiling ghc now to print some debug output when compiling
+2012-03-12 23:11:51 UTC <luite> about the data used to calculate the hash
+2012-03-13 00:29:24 UTC <luite> yay
+2012-03-13 00:29:34 UTC <luite> wolfgang loads binaries now
+2012-03-13 00:29:51 UTC <byorgey> yay!
+2012-03-13 00:30:14 UTC <luite> it was a missing ExplicitForall flag...
+2012-03-13 00:30:32 UTC <byorgey> ah, that one gets me every time
+2012-03-13 00:31:30 UTC <luite> apparently if you -XScopedTypeVariables it's implifed, but not if you just enable dynflags
+2012-03-13 00:31:33 UTC <luite> implied
+2012-03-13 00:40:58 UTC <byorgey> oh, tgeeky will like the gallery example apfelmus just sent me
+2012-03-13 00:41:43 UTC <luite> circle fractals? :)
+2012-03-13 00:41:54 UTC <byorgey> it does seem to relate, yes =)
+2012-03-13 01:30:59 UTC <byorgey> tgeeky: http://projects.haskell.org/diagrams/gallery.html
+2012-03-13 01:40:38 UTC <luite> hm, I get a not in scope r2
+2012-03-13 01:41:54 UTC <luite> has that been added recently?
+2012-03-13 01:46:22 UTC <byorgey> luite: yes
+2012-03-13 01:46:32 UTC <byorgey> it's in 0.5
+2012-03-13 01:48:45 UTC <luite> yeah I'm running 0.5, but some not-quite-released version
+2012-03-13 01:49:17 UTC <byorgey> yeah, that was added fairly close to the release
+2012-03-13 01:49:46 UTC <byorgey> I had a few breaking changes I wanted to make and decided to shove them in before the release since it was already going to include some breaking changes anyway.
+2012-03-13 01:50:54 UTC <luite> ok, upgrading :)
+2012-03-13 01:58:22 UTC <luite> http://hdiff.luite.com/tmp/q1.png <- of course I'm doing this :)
+2012-03-13 02:04:07 UTC <byorgey> luite: ah, nice =)
+2012-03-13 02:05:09 UTC <mgsloan> :D yeah, awesome!! Considering the presence of imports, does that mean the rest of the file is in the same module?  If so, would it be good to have the line numbers reflect that?  I guess local numbering is pretty nice too
+2012-03-13 02:05:33 UTC <mgsloan> (and it's just the clash of my expectations derived from using inferior tools :P)
+2012-03-13 02:05:45 UTC <mgsloan> s/of/with
+2012-03-13 02:19:10 UTC <luite> http://hdiff.luite.com/tmp/q2.png
+2012-03-13 02:19:59 UTC <luite> I'm not sure how to do line numbering yet, line numbers are less important since lines with errors are highlighted directly
+2012-03-13 02:20:16 UTC <luite> and the module sent to the server has different line numbers anyway (all text is stripped)
+2012-03-13 02:21:27 UTC <byorgey> luite: oh, sweet!
+2012-03-13 02:21:42 UTC <byorgey> luite: you should show that screenshot to apfelmus =)
+2012-03-13 02:23:00 UTC <byorgey> luite: I guess the line numbers are mostly useful for being able to refer to them in the text.  in which case local numbering is probably fine.
+2012-03-13 02:23:59 UTC <byorgey> luite: how fast does it update when you drag the sliders?
+2012-03-13 02:25:06 UTC <luite> uh it often says "time limit exceeded" because it uses too much memory :(
+2012-03-13 02:25:24 UTC <luite> otherwise half a second or so
+2012-03-13 02:27:20 UTC <byorgey> heh
+2012-03-13 02:27:47 UTC <byorgey> there may be things we can do to improve the memory usage, I'm not sure
+2012-03-13 02:29:21 UTC <luite> the current page is not optimized, just interpreted, but imported pages (here Wolfgang.Diagrams and Wolfgang.Interactive) are
+2012-03-13 02:29:31 UTC <byorgey> ah, ok
+2012-03-13 02:31:49 UTC <luite> but it looks like there's also some bugs on my side, once the interpreter is killed, it isn't always restarted properly
+2012-03-13 02:37:40 UTC <luite>  [11883,65001] 2012-03-05 13:41:56.169651000000 - done evaluating expression (diagram 0.00991 2.5 2.5) service time: 0.182036s
+2012-03-13 02:37:58 UTC <luite> it's a bit faster tan half a second, the only problem is memory
+2012-03-13 02:44:23 UTC <luite> is there a standard way in markdown or latex to refer to source code line numbers?
+2012-03-13 02:46:37 UTC <luite> http://hdiff.luite.com/tmp/disclaimer.txt <- I've also uploaded a disclaimer :p
+2012-03-13 03:37:38 UTC <tgeeky> byorgey: yes, he is very much interested
+2012-03-13 03:42:04 UTC <tgeeky> luite: sexyyyyyyy
+2012-03-13 03:44:12 UTC <tgeeky> luite: Creative Commons Netherlands (CC-NL)
+2012-03-13 06:58:32 UTC <ClaudiusMaximus> minor feature request:  clipTo a b = a # clipBy b # withEnvelope b
+2012-03-13 06:59:57 UTC <ClaudiusMaximus> (avoids some ambiguity that require type annotations)
+2012-03-13 09:02:00 UTC <luite> tgeeky: hehe, I used a disclamer generator and google translate :p
+2012-03-13 09:23:29 UTC <ClaudiusMaximus> http://claudiusmaximus.goto10.org/g/misc/period-7-real-quadratic-spiders.png
+2012-03-13 09:24:28 UTC <ClaudiusMaximus> ref: http://www.maths.liv.ac.uk/~mathsclub/Topics/Iteration/iteration.html
+2012-03-13 16:44:50 UTC <byorgey> ClaudiusMaximus: clipTo a b = a # clipBy b # withEnvelope b  seems to me like it would have unexpected behavior
+2012-03-13 16:45:40 UTC <byorgey> ClaudiusMaximus: e.g. consider  square 1 # clipBy (square 1 # rotateBy (1/8))
+2012-03-13 16:46:01 UTC <byorgey> oops, I mean  square 1 # clipTo (square 1 # rotateBy (1/8))
+2012-03-13 16:46:20 UTC <byorgey> with your definition the envelope of that would now be the same as a rotated square.  But I would expect it to be an octagon.
+2012-03-13 17:33:41 UTC <ClaudiusMaximus> ah, ok
+2012-03-13 17:34:02 UTC <ClaudiusMaximus> didn't consider that
+2012-03-13 17:36:43 UTC <byorgey> ClaudiusMaximus: in Diagrams.TwoD.Path there is a 'todo' note saying we ought to add clipTo, but it requires a bit more thought about how to implement it.
+2012-03-13 17:36:53 UTC <byorgey> it might not actually be too hard, I haven't really thought it through
+2012-03-13 17:37:51 UTC <byorgey> I'll add it as a ticket on the bug tracker
+2012-03-13 17:57:01 UTC <ClaudiusMaximus> is there a nice easy way to lay out subdiagrams with labels attaching them to fixed points in space?
+2012-03-13 17:57:23 UTC <ClaudiusMaximus> (avoiding overlap)
+2012-03-13 17:57:43 UTC <byorgey> ClaudiusMaximus: I don't understand the question
+2012-03-13 17:59:49 UTC <ClaudiusMaximus> http://claudiusmaximus.goto10.org/g/misc/period-7-real-quadratic-spiders.png i want to have arrows from each graph pointing to the exact location on the real line
+2012-03-13 18:06:28 UTC <byorgey> ClaudiusMaximus: hmm, well, it's not too hard to leave those graphs laid out the way they are, and add arrows pointing from each graph to a corresponding location on a representation of the real line
+2012-03-13 18:07:11 UTC <byorgey> ClaudiusMaximus: if you mean you want the layout of the graphs to be somehow automatically determined by which points on the real line they correspond to, there's not really a good way to do that
+2012-03-13 18:07:26 UTC <ClaudiusMaximus> yeah that later part...
+2012-03-13 18:07:39 UTC <byorgey> you'd have to write some higher-level modules to do heuristic layout, i.e. give 'target locations' and then have it figure out where to put them so they are close to the target location but don't overlap
+2012-03-13 18:08:01 UTC <byorgey> it should certainly be possible to implement that but there's nothing like it in diagrams currently.
+2012-03-13 18:08:02 UTC <ClaudiusMaximus> ok, was just wondering if someone had already done that work for me
+2012-03-13 18:08:07 UTC <ClaudiusMaximus> :)
+2012-03-13 18:08:10 UTC <byorgey> right, sadly no =)
+2012-03-13 18:08:33 UTC <byorgey> that would be a cool module though
+2012-03-13 18:09:04 UTC <ClaudiusMaximus> currently trying to debug a stack overflow crash :(  (the heap profile showed a solid rectangle of ARR_WORDS and nothing else)
+2012-03-13 18:10:06 UTC <ClaudiusMaximus> feeling like i might be doing something stupid like rendering a bitmap with a zillion squares
+2012-03-13 18:14:20 UTC <byorgey> boo =(
+2012-03-13 18:15:37 UTC <ClaudiusMaximus> is there a way to embed bitmaps in diagrams?
+2012-03-13 18:15:51 UTC <ClaudiusMaximus> might make more sense to do it that way...
+2012-03-13 18:16:09 UTC <byorgey> ClaudiusMaximus: well, there is a way to embed images (which are stored in a file on disk)
+2012-03-13 18:16:20 UTC <byorgey> ClaudiusMaximus: but we certainly ought to have a way to directly construct a bitmap and embed it
+2012-03-13 18:16:38 UTC <ClaudiusMaximus> that'd be good enough for me at this point i think
+2012-03-13 18:16:44 UTC <byorgey> I've wondered about making some sort of interface with http://hackage.haskell.org/package/JuicyPixels
+2012-03-13 18:16:58 UTC <byorgey> ClaudiusMaximus: right now the cairo backend only supports .PNG files
+2012-03-13 18:17:02 UTC <ClaudiusMaximus> just realized i'm trying to render 1024x65536 squares
+2012-03-13 18:17:08 UTC <byorgey> hehe, that's a lot =)
+2012-03-13 18:17:11 UTC <ClaudiusMaximus> no wonder it's taking long time
+2012-03-13 18:17:16 UTC <byorgey> it should be possible to add support for more image types
+2012-03-13 18:17:33 UTC <byorgey> anyway, feel free to add feature requests on the bug tracker =)
+2012-03-13 18:17:38 UTC <ClaudiusMaximus> :)
+2012-03-13 18:17:58 UTC <ClaudiusMaximus> ACTION goes read manual about embedding image files
+2012-03-13 19:20:54 UTC <ClaudiusMaximus> more work in progress on this idea http://claudiusmaximus.goto10.org/g/misc/bifurcation-spiders.png (1.8MB)
+2012-03-13 19:21:37 UTC <ClaudiusMaximus> (writing a temporary pgm and calling rawSystem "convert" to get a png to load seems to work ok for now)
+2012-03-13 19:22:31 UTC <byorgey> ClaudiusMaximus: woah, nice
+2012-03-13 19:23:13 UTC <byorgey> ClaudiusMaximus: how did you generate the bifurcation map at the top?  was that using diagrams too?
+2012-03-13 19:23:57 UTC <ClaudiusMaximus> byorgey: no - STUArray calculations
+2012-03-13 19:24:19 UTC <byorgey> oh, I see, that's the part you were generating a bitmap for
+2012-03-13 19:24:22 UTC <ClaudiusMaximus> yep
+2012-03-13 19:24:53 UTC <byorgey> I was just talking with my officemate about a nice way to speed up diagrams' handling of big arrays of diagrams
+2012-03-13 19:25:01 UTC <byorgey> but I think yours would still be much too large =)
+2012-03-13 19:25:16 UTC <ClaudiusMaximus> i downscaled it horizontally, so the bitmap is 4096x1024 instead of 65536x1024 (the high resolution was to find the islands of stability)
+2012-03-13 19:25:54 UTC <byorgey> I see
+2012-03-13 19:26:16 UTC <ClaudiusMaximus> want to have each graph pointing at the corresponding stable place :)
+2012-03-13 19:26:28 UTC <byorgey> I see, cool =)
+2012-03-13 19:26:32 UTC <ClaudiusMaximus> but i think i'd need to have fewer or make them smaller
+2012-03-13 19:27:11 UTC <byorgey> hmm, you know, back to your original question about layout, you might be able to use the force-layout package to do it
+2012-03-13 19:27:45 UTC <byorgey> oh, hmm, but that only works currently with point charges, you wouldn't be able to guarantee that the diagrams didn't overlap
+2012-03-13 19:27:50 UTC <byorgey> still, it could be a good place to start
+2012-03-13 19:28:06 UTC <ClaudiusMaximus> i shall investigate later in the week
+2012-03-13 19:28:13 UTC <byorgey> i.e. assign each graph a repulsive charge and attach them by springs to the places you want them to point
+2012-03-13 19:28:27 UTC <byorgey> and then run it a few thousand steps
+2012-03-13 19:28:30 UTC <luite> bah i think I lost my cellphone in switzerland :(
+2012-03-13 19:28:32 UTC <ClaudiusMaximus> yep, vaguely familar with mass-spring-damper things
+2012-03-13 19:28:56 UTC <byorgey> luite: boo =(
+2012-03-13 19:28:58 UTC <ClaudiusMaximus> woe
+2012-03-13 19:29:23 UTC <byorgey> luite: call it, and if someone answers ask them if they are in switzerland
+2012-03-13 19:29:37 UTC <ClaudiusMaximus> charging in the hotel? -- had a friend misplace their phone like that, but it was recovered
+2012-03-13 19:29:45 UTC <luite> hehe nah the battery is certainly empty now, since I haven't charged it for at least a week
+2012-03-13 19:29:53 UTC <byorgey> aww
+2012-03-13 19:30:19 UTC <luite> but it was a really cheap one, 50 euro or so, and already a few years old
+2012-03-13 19:33:57 UTC <fryguybob> byorgey: Do we have diagram sampling implemented?  As in ask a point what color it is?
+2012-03-13 19:35:07 UTC <byorgey> fryguybob: no, and I don't think there's a good way to do it in general.
+2012-03-13 19:35:39 UTC <byorgey> but you could certainly already do it in limited cases.
+2012-03-13 19:37:10 UTC <byorgey> e.g. make a function  setColor :: Color -> QDiagram b v Any -> QDiagram b v (First Color)  implemented like   setColor c d = d # fc c # value c
+2012-03-13 19:37:35 UTC <byorgey> but that doesn't take into account the color of stroked paths on the edges of diagrams, etc.
+2012-03-13 19:38:10 UTC <fryguybob> Ok, I was thinking about that the other day when I played with juicy pixel.
+2012-03-13 19:38:19 UTC <byorgey> hmm, that might be a nice example to add to the user manual.
+2012-03-13 19:41:50 UTC <fryguybob> byorgey: Interesting example, so you could fill a space with some diagrams then set colors taken from an image.
+2012-03-13 19:43:16 UTC <byorgey> fryguybob: I'm not sure what you mean... I don't see what that has to do with my example?
+2012-03-13 19:44:29 UTC <fryguybob> byorgey: Oh, I read that backwards.
+2012-03-13 19:44:59 UTC <fryguybob> setColor is a replacement for fc.
+2012-03-13 19:45:20 UTC <byorgey> right
+2012-03-13 19:47:09 UTC <fryguybob> I was thinking of it as a lens selecting on a point and allowing the setting of the color of the diagram found at that point.
+2012-03-13 19:47:37 UTC <byorgey> ah. that would be neat.  off the top of my head I'm not sure how to do that.
+2012-03-13 19:48:53 UTC <byorgey> I think if you wanted to do that you'd have to pull the trick with delayed composition using lists or maps of diagrams
+2012-03-13 19:49:13 UTC <byorgey> i.e. lay them out without composing them, then decide on their colors based on their positions, then compose them
+2012-03-13 19:51:13 UTC <fryguybob> Humm  QDiagram b v (QDiagram b v a) -> (QDiagram b v a, QDiagram b v a -> QDiagram b v (QDiagram b v a))
+2012-03-13 19:51:35 UTC <fryguybob> ACTION has an occurs check in his head.
+2012-03-13 19:52:09 UTC <byorgey> ACTION mind -> blown
+2012-03-13 19:55:16 UTC <byorgey> the idea of annotating each point in a diagram with *another diagram* had never occurred to me
+2012-03-13 19:55:51 UTC <byorgey> note, however, that transformations don't have any action on the query monoid
+2012-03-13 19:56:03 UTC <byorgey> I don't know whether that matters
+2012-03-13 20:09:39 UTC <fryguybob> ACTION takes it a step too far and considers diagrams that are their own vector space.
+2012-03-13 20:10:13 UTC <byorgey> woaahhh
+2012-03-13 20:10:47 UTC <byorgey> pretty sure diagrams don't form a vector space =)
+2012-03-13 20:10:56 UTC <ClaudiusMaximus> Diagram (Diagram ...) (Diagram ...) (Diagram ...) ?
+2012-03-13 20:11:10 UTC <fryguybob> Clearly diagrams are their own backend though.
+2012-03-13 20:11:17 UTC <byorgey> right, right
+2012-03-13 20:11:31 UTC <fryguybob> Just don't expect it to finish rendering.
