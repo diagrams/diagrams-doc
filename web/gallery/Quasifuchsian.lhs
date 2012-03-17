@@ -29,7 +29,7 @@ We are dealing with complex numbers.
 > type C = Complex Double
 > i = 0 :+ 1
 
-A *Moebius transformation* is a mapping of the (projective) complex plane `C` onto itself, given by a linear fractional transformation $z \to \frac{az+b}{bz+d}$.
+A *Moebius transformation* is a mapping of the (projective) complex plane `C` onto itself, given by a linear fractional transformation $z \to \frac{az+b}{cz+d}$.
 
 > data Moebius = M !C !C !C !C deriving (Eq,Show)
 >
