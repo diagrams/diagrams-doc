@@ -304,9 +304,9 @@ the more general `beside` combinator. `beside` takes as arguments a
 the vector" --- that is, in such a way that the vector points from the
 local origin of the first diagram to the local origin of the second.
 
-> circleSqV1 = beside (1,1) (circle 1) (square 2)
+> circleSqV1 = beside (r2 (1,1)) (circle 1) (square 2)
 >
-> circleSqV2 = beside (1,-2) (circle 1) (square 2)
+> circleSqV2 = beside (r2 (1,-2)) (circle 1) (square 2)
 
 Envelopes
 ---------
