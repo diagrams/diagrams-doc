@@ -4,14 +4,14 @@ hakyll.exe : hakyll.hs
 manual-cp :
 	make -C ../manual deploy-web
 
-images :
+gallery/Build.exe : gallery/Build.hs
 	make -C gallery
 
-preview : hakyll.exe images manual-cp
+preview : hakyll.exe gallery/Build.exe manual-cp
 	./hakyll.exe rebuild
 	./hakyll.exe preview
 
-deploy : hakyll.exe images manual-cp
+deploy : hakyll.exe gallery/Build.exe manual-cp
 	./hakyll.exe rebuild
 	rsync -r _site/* byorgey@projects.haskell.org:/srv/projects/diagrams/
 	ssh byorgey@projects.haskell.org chmod -R o+rX /srv/projects/diagrams/*
