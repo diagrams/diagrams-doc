@@ -308,6 +308,9 @@ local origin of the first diagram to the local origin of the second.
 >
 > circleSqV2 = beside (r2 (1,-2)) (circle 1) (square 2)
 
+Notice how we use the `r2` function to create a 2D vector from a pair
+of coordinates.
+
 Envelopes
 ---------
 
@@ -423,7 +426,7 @@ Of course, there are also translation transformations like
 translate a diagram within its *local vector space* --- that is,
 relative to its local origin.
 
-> circleT = circle 1 # translate (0.5, 0.3) # showOrigin
+> circleT = circle 1 # translate (r2 (0.5, 0.3)) # showOrigin
 
 As `circleT` shows, translating a diagram by `(0.5, 0.3)` is the same
 as moving its local origin by `(-0.5, -0.3)`.
@@ -431,9 +434,9 @@ as moving its local origin by `(-0.5, -0.3)`.
 Since diagrams are always composed with respect to their local
 origins, translation can affect the way diagrams are composed.
 
-> circleSqT   = square 1 `atop` circle 1 # translate (0.5, 0.3)
-> circleSqHT  = square 1 ||| circle 1 # translate (0.5, 0.3)
-> circleSqHT2 = square 1 ||| circle 1 # translate (19.5, 0.3)
+> circleSqT   = square 1 `atop` circle 1 # translate (r2 (0.5, 0.3))
+> circleSqHT  = square 1 ||| circle 1 # translate (r2 (0.5, 0.3))
+> circleSqHT2 = square 1 ||| circle 1 # translate (r2 (19.5, 0.3))
 
 As `circleSqHT` and `circleSqHT2` demonstrate, when we place a
 translated circle next to a square, it doesn't matter how much the
