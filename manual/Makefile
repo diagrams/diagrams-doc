@@ -26,12 +26,18 @@ veryclean : clean imgclean
 
 preview : diagrams-manual.html
 	cp diagrams-manual.{html,rst} $(WEB)
+	mkdir -p $(WEB)/images
 	cp images/* $(WEB)/images
+	mkdir -p $(WEB)/icons
 	cp icons/*.png $(WEB)/icons
 	chmod -R go+rX $(WEB)
 
 deploy-web : diagrams-manual.html
+	mkdir -p ../web/manual
 	cp diagrams-manual.{html,rst} ../web/manual
+	mkdir -p ../web/manual/static
 	cp static/* ../web/manual/static
+	mkdir -p ../web/manual/images
 	cp images/* ../web/manual/images
+	mkdir -p ../web/manual/icons
 	cp icons/*.png ../web/manual/icons
