@@ -11593,3 +11593,1895 @@
 2012-03-13 20:11:10 UTC <fryguybob> Clearly diagrams are their own backend though.
 2012-03-13 20:11:17 UTC <byorgey> right, right
 2012-03-13 20:11:31 UTC <fryguybob> Just don't expect it to finish rendering.
+2012-03-14 03:26:44 UTC <byorgey> woah, the one-year anniversary of this channel is in about two weeks!
+2012-03-14 03:29:01 UTC <byorgey> more than 10k lines/1M characters of awesome chat, according to the logs
+2012-03-14 03:38:51 UTC <tgeeky> hehe. do an s/tgeeky(.*)//; and re-measure awesomeness, let me know the results
+2012-03-14 03:41:10 UTC <byorgey> hmm, let me see
+2012-03-14 03:42:08 UTC <byorgey> it appears to be 1728 lines less awesome
+2012-03-14 03:43:18 UTC <tgeeky> that's a serious awesome deficit. We might need to form a commitee.
+2012-03-14 03:44:52 UTC <byorgey> committees are never awesome though.
+2012-03-14 03:44:59 UTC <byorgey> excepting the Haskell committee of course.
+2012-03-14 03:45:38 UTC <tgeeky> that is true
+2012-03-14 10:29:35 UTC <luite> http://hdiff.luite.com/tmp/q3.png
+2012-03-14 10:37:07 UTC <mgsloan1> wow! that's amazing.
+2012-03-14 10:38:00 UTC <mgsloan1> we're gonna have to make our "Interactive" stuff have the same API :D
+2012-03-14 10:38:37 UTC <mgsloan1> (probably canonicalizing on yours, it's looking much further along)
+2012-03-14 10:41:38 UTC <luite> this is just a low level thing that's basically a haskell presentation of the JSON data that describes the interface
+2012-03-14 10:42:00 UTC <luite> if you have suggestions I'd like to hear them :)
+2012-03-14 10:45:07 UTC <luite> http://hdiff.luite.com/tmp/interactive.png <- part of the implementation
+2012-03-14 10:48:04 UTC <luite> http://hdiff.luite.com/tmp/interactive2.png and perhaps a more interesting part
+2012-03-14 10:50:21 UTC <luite> http://hdiff.luite.com/tmp/share.png had I already shown this? :)
+2012-03-14 11:31:04 UTC <mgsloan1> wow!!
+2012-03-14 11:31:13 UTC <mgsloan1> I didn't see that
+2012-03-14 11:32:30 UTC <mgsloan1> for the interactive stuff, I've been thinking that having instances to give default widget-ization to types could be interesting
+2012-03-14 11:33:20 UTC <mgsloan1> and then, there'd be a set of instances of another class, to do variable number-argument overloading of the ability to turn a function into a manipulable object
+2012-03-14 11:34:03 UTC <mgsloan1> I started work on that, but got distracted implementing slider / text / etc etc and never got around to getting that done
+2012-03-14 11:34:33 UTC <mgsloan1> the share stuff is rad.  You had better be publishing this soon!  So many good features already!!
+2012-03-14 11:35:06 UTC <mgsloan1> ACTION hopes for code so he can use this as the platform for his schemes
+2012-03-14 11:37:01 UTC <mgsloan1> anyway, gnight!
+2012-03-14 11:37:21 UTC <mgsloan1> keep up the good work!
+2012-03-14 11:38:16 UTC <luite> yeah I'm planing to fix mostly bugs in the coming weeks and then release :)
+2012-03-14 11:38:27 UTC <mgsloan1> wooot!
+2012-03-14 11:38:50 UTC <luite> if you come up with some cool way to do the instances, variabel number thing, please let me know!
+2012-03-14 11:39:21 UTC <luite> the only thing the implementation would have to do is spitting out some Interactive value :)
+2012-03-14 11:39:23 UTC <mgsloan1> willdo!  it'd be cool to have a diagrams thing that ships with it that worked in both gtk and web
+2012-03-14 11:39:42 UTC <mgsloan1> err that sentence is pretty malformed
+2012-03-14 11:40:02 UTC <mgsloan1> only somewhat
+2012-03-14 11:40:10 UTC <luite> hehe
+2012-03-14 11:40:51 UTC <luite> one limitation of my Interactive is btw that every "callback" must be a String value
+2012-03-14 11:40:54 UTC <luite> expression
+2012-03-14 11:41:24 UTC <mgsloan1> makes sense.  Do you package up all the sliders?
+2012-03-14 11:41:39 UTC <luite> hm, what do you mean?
+2012-03-14 11:42:30 UTC <mgsloan1> (it's 4:40 am here) all of the slider position values
+2012-03-14 11:42:48 UTC <mgsloan1> in other words, you are sending back the expression to invoke, with all of the slider values as arguments
+2012-03-14 11:43:01 UTC <luite> oh right, well it just constructs an expression (String) with the function name and all slider values
+2012-03-14 11:43:03 UTC <mgsloan1> rather than sending delta values and having some serverside state representation
+2012-03-14 11:43:08 UTC <mgsloan1> yeah
+2012-03-14 11:43:14 UTC <mgsloan1> serverside state would be complex
+2012-03-14 11:43:18 UTC <luite> rather primitive... the server is stateless, to make it "webscale"
+2012-03-14 11:43:37 UTC <luite> (so you can stop/restart interpreters, loadbalance evaluation between servers etc)
+2012-03-14 11:44:07 UTC <luite> that's a rather big limitation and might need to be rethought for the future locally installable version of this
+2012-03-14 11:44:10 UTC <mgsloan1> well, the function that's named can be compiled, right?
+2012-03-14 11:44:32 UTC <luite> yes
+2012-03-14 11:44:36 UTC <mgsloan1> awesome
+2012-03-14 11:44:49 UTC <mgsloan1> so, I imagine the diagrams are rather snappy
+2012-03-14 11:44:53 UTC <luite> but I'm not sure how that would help :)
+2012-03-14 11:44:55 UTC <luite> oh
+2012-03-14 11:45:15 UTC <mgsloan1> well, if you had to recompile all the code in the workbook every slider change orso
+2012-03-14 11:45:20 UTC <luite> well, the current page is never compiled, to speeden up reloads and code checking
+2012-03-14 11:45:38 UTC <luite> but if you need something really fast, write it on another page and import it
+2012-03-14 11:45:50 UTC <mgsloan1> ah, interesting!
+2012-03-14 11:45:53 UTC <luite> will be compiled with -O2 within 5 minutes
+2012-03-14 11:46:00 UTC <luite> oh reloading is never done unless really required
+2012-03-14 11:47:00 UTC <luite> when you change the code on the page, it reloads it in the interpreter on the server (which has pakages like gtk and diagrams preloaded to speed up linking), and keeps the interpreter alive
+2012-03-14 11:47:55 UTC <luite> but that's only operationally stateful, semantically it's just stateless: every request is a module name + expression
+2012-03-14 11:48:56 UTC <mgsloan1> cool!  Definitely seems like a good strategy, at least for the time being!
+2012-03-14 11:48:57 UTC <luite> idle interpreters are killed after 2 minutes, every client (IP address) can get at most two interpeters, if an idle interpreter is available with the correct module already loaded it prefers that to loading the code in another one
+2012-03-14 11:50:11 UTC <luite> yeah real interactivity is tricky with server side eval, so far I think this is the best i can do
+2012-03-14 11:50:23 UTC <luite> but I'd be happy to hear suggestions :)
+2012-03-14 11:51:11 UTC <luite> for a local version, I think real interactivity could be done through websockets, with a "stop eval" button for all pending expressions
+2012-03-14 11:52:10 UTC <luite> would be nice to have that, diagrams+interactivity with no tricky dependencies at all :)
+2012-03-14 11:53:49 UTC <mgsloan1> Somewhat off the topic of server side eval, I've got a somewhat unconventional idea:  be able to reference a version id / diff, and build a worksheet around that diff, explaining the parts, and justifying the changes, potentially with examples.  These examples of course would need to be run against the modified version of the package - an interesting problem
+2012-03-14 11:54:24 UTC <luite> hmm
+2012-03-14 11:54:33 UTC <mgsloan1> kindofa messy idea, granted
+2012-03-14 11:55:22 UTC <mgsloan1> but the reason behind it is that haskell is a great language to write libraries in.  If there's going to be a good place to construct a set of really well done, consistent libraries, it's here
+2012-03-14 11:55:28 UTC <luite> in my current impl, you can only import the most recent version of other Wolfgang.* modules
+2012-03-14 11:55:37 UTC <luite> but the current page can be any revision
+2012-03-14 11:56:04 UTC <luite> you can load older versions from the history and diff them, but I'm not sure how to integrate comments on diffs
+2012-03-14 11:56:06 UTC <mgsloan1> but first we need to have a good way to propose alternatives, and demonstrate how those decisions play out
+2012-03-14 11:57:03 UTC <luite> but atm I'm trying to implement the remaining features (pastebin, lots of bug fixes) and then trying it out on the server :)
+2012-03-14 11:57:07 UTC <mgsloan1> ah, very cool!  So in a way it's very close.  You just need to have meta-pages for hackage modules :P  I guess that's not very "safe"
+2012-03-14 11:57:46 UTC <luite> atm I have an 8GB RAM server, I hope that's enough otherwise I'll need to replace it with a 32GB RAM one
+2012-03-14 11:59:18 UTC <mgsloan1> schweet, I'm afraid by the looks of it, you may indeed be in for quite the deluge
+2012-03-14 11:59:43 UTC <luite> ghc is quite the memory hog, and all those preloaded packages also take a lot of ram
+2012-03-14 12:00:01 UTC <luite> fortunately most ram is shared between processes, but still...
+2012-03-14 12:00:21 UTC <luite> 32GB is going to increase the monthly costs by 10 euro though, so I'd like to try it with 8GB first :)
+2012-03-14 12:00:51 UTC <mgsloan1> definitely!
+2012-03-14 12:03:04 UTC <luite> btw do you know a package similar to stringsearch that can quickly find strings in files, but supports case insensitive matching?
+2012-03-14 12:03:35 UTC <luite> (I'm using it to highlight search engine matches)
+2012-03-14 12:05:53 UTC <luite> http://hdiff.luite.com/tmp/search.png <- you can see that the word "Interactive" is not highlighted here
+2012-03-14 12:07:09 UTC <mgsloan1> hmm, couldn't you just lower case before indexing + lower case query?
+2012-03-14 12:08:25 UTC <luite> oh it already case folds when querying (sphinx does that automatically), only problem is highlighting the matches (sphinx gives a list of document id's), the matches should be highlighted in the original case
+2012-03-14 12:09:34 UTC <mgsloan1> oh, I see
+2012-03-14 12:17:48 UTC <mgsloan1> *yawn* well I really should be going to bed, good luck!
+2012-03-14 15:49:37 UTC <luite> http://hdiff.luite.com/tmp/plot.png
+2012-03-14 15:52:53 UTC <luite> the plot is rendered with WebGL, you can rotate it by dragging (and zoom with shift+drag)
+2012-03-14 16:07:07 UTC <fryguybob> ooooOOOOooo
+2012-03-14 16:08:59 UTC <luite> unfortunately the result is much uglier in non-webgl browsers
+2012-03-14 16:43:34 UTC <byorgey> luite: sexy!
+2012-03-14 18:36:44 UTC <luite> http://hdiff.luite.com/tmp/plot2.png <- still needs some styling to match the rest of the design
+2012-03-14 18:39:20 UTC <byorgey> luite: awesome =D
+2012-03-14 18:51:02 UTC <luite> trying to add google viz api stuff later today... it's fun that it's so easy to add these things now :)
+2012-03-14 19:09:47 UTC <byorgey> luite: yeah, I love that stage in a project where all the pieces are in place and adding new features is almost embarrassingly easy
+2012-03-14 19:16:57 UTC <luite> it also gives me a chance to really test how it works, I'm doing most of this in the wolfgang interface, just editing wiki pages (with some page reloads for the javascript support code)
+2012-03-14 19:17:18 UTC <byorgey> hah, nice =)
+2012-03-14 19:17:37 UTC <luite> the realtime error highlighting helps a lot :)
+2012-03-14 19:18:16 UTC <byorgey> yeah, I'll bet it does
+2012-03-14 19:58:45 UTC <luite> http://hdiff.luite.com/tmp/plot3.png <- better
+2012-03-14 19:59:04 UTC <luite> (zoomed in btw, select/drag to zoom in, dblclick to reset zoom)
+2012-03-14 20:16:39 UTC <byorgey> luite: cool =)
+2012-03-14 22:46:15 UTC <luite> http://hdiff.luite.com/tmp/plot4.png
+2012-03-14 23:01:35 UTC <luite> does anyone here know other javascript libs that would be interesting/cool for haskell data visualization?
+2012-03-14 23:43:29 UTC <byorgey> luite: why doesn't Brussels show up on that map?
+2012-03-15 01:34:36 UTC <tgeeky> byorgey: must be a radial nuclear casualty map
+2012-03-15 10:11:17 UTC <astor> is there an example of getting a diagram in a gtk window.  similar to Graphics.Rendering.Chart.Gtk.renderableToWindow?
+2012-03-15 10:14:11 UTC <ClaudiusMaximus> http://hackage.haskell.org/packages/archive/diagrams-cairo/0.5.0.1/doc/html/Diagrams-Backend-Cairo-Gtk.html
+2012-03-15 10:14:39 UTC <ClaudiusMaximus> don't know if there is a full runnable example though
+2012-03-15 10:15:03 UTC <astor> yes I've seen that.  I wanted to avoid nitty-gritty gtk internals.
+2012-03-15 10:16:04 UTC <alpounet> astor, maybe in the examples dir or something
+2012-03-15 14:45:55 UTC <fryguybob> astor: Is this what you are looking for?  http://groups.google.com/group/diagrams-discuss/browse_thread/thread/216486c8dfbe0253
+2012-03-15 16:28:24 UTC <luite_> http://hdiff.luite.com/tmp/html.png <- not terribly sexy, but yay it works
+2012-03-15 16:30:45 UTC <Claudius1aximus> seems... risky ...to allow arbitrary javascript without sandboxing (thinking of some page that replicates itself on viewing...)
+2012-03-15 16:32:02 UTC <byorgey> luite_: hah, neat
+2012-03-15 16:35:30 UTC <byorgey> luite_: stop adding features and release already ;)
+2012-03-15 16:36:07 UTC <luite_> hehe this is the last result type that I wasnted to add
+2012-03-15 16:36:31 UTC <luite_> also the trickiest, since it runs user generated html code
+2012-03-15 16:36:52 UTC <luite_> so we'll see if it's a keeper
+2012-03-15 16:37:15 UTC <luite_> it should be more or less safe, running the code in an iframe from a different domain
+2012-03-15 18:33:58 UTC <luite_> is there already some native SVG code ready, that supports javascript annotations?
+2012-03-15 18:40:17 UTC <tgeeky__> if he doesn't release soon, we're going to have to create an organiation to deal with Violence Against Open Source Programmers
+2012-03-15 18:46:42 UTC <luite_> Claudius1aximus: yeah it's one of the things that I'm not sure about... it loads html from a different domain in an iframe
+2012-03-15 18:46:55 UTC <luite_> Claudius1aximus: so it's subject to cross-domain restrictions
+2012-03-15 18:47:30 UTC <luite_> but it's the only way I know to have real interactive diagrams (= svg with embedded javascript) without severe restrictions
+2012-03-15 18:47:34 UTC <Claudius1aximus> should be ok i guess..
+2012-03-15 18:48:35 UTC <luite_> if you upload malicious content, you can only make it visible to other users through the wiki, which means you have to be logged in, and your ip address is logged when saving the page
+2012-03-15 18:48:46 UTC <luite_> hopefully that's enough
+2012-03-15 18:49:22 UTC <Claudius1aximus> :)
+2012-03-15 18:49:42 UTC <luite_> but is there already some svg backend to play with?
+2012-03-15 20:18:08 UTC <byorgey> luite_: no, not yet
+2012-03-15 20:18:45 UTC <byorgey> we're getting there.  One of the things I'm currently looking into is some changes to diagrams-core which are a prerequisite
+2012-03-15 20:20:32 UTC <luite_> good, I still have enough other things to to on the site atm, but it would be great if I could recreate the tic-tac-toe example with the new svg backend, for launch :)
+2012-03-15 20:21:02 UTC <luite_> the html result type works now, so it should be easy to build
+2012-03-15 20:27:49 UTC <byorgey> luite_: well, I really can't give any promises about how soon the SVG backend will support javascript annotations.  It may not be for a while.
+2012-03-15 20:28:16 UTC <luite_> I really can't give any promises when I'm going to release Wolfgang then ;p
+2012-03-15 20:28:32 UTC <byorgey> hehe, fair enough!
+2012-03-15 20:28:39 UTC <luite_> although I kind of just promised to Greg Weber that I'd release it when the Yesod website looks better than the Snap website
+2012-03-15 20:38:56 UTC <byorgey> well, does it?
+2012-03-15 20:39:23 UTC <byorgey> hmm, nope
+2012-03-15 20:43:11 UTC <luite_> hehe now, and the recent developments haven't been an improvement
+2012-03-15 20:43:16 UTC <luite_> no
+2012-03-15 20:49:10 UTC <tgeeky__> plus, who names their web frameworks after Kabbalistic sephirots!
+2012-03-15 20:49:54 UTC <tgeeky__> http://en.wikipedia.org/wiki/Yesod_(Kabbalah)
+2012-03-15 20:50:17 UTC <tgeeky__> I wonder if Judaism is the most productive religion for graph theory.
+2012-03-15 21:23:13 UTC <alpounet> that's... an interesting question.
+2012-03-15 21:24:27 UTC <luite_> ErdÅs was jewish, who else? :p
+2012-03-15 23:49:57 UTC <tgeeky__> alpounet: I hope, for good values of interesting.
+2012-03-15 23:50:21 UTC <tgeeky__> alpounet: I meant, I have never seen anything in other religions which is so structured as an n-connected graph :o
+2012-03-15 23:52:11 UTC <alpounet> hah
+2012-03-15 23:53:02 UTC <tgeeky__> byorgey: most important is the first error
+2012-03-15 23:53:07 UTC <tgeeky__> http://validator.w3.org/checklink?uri=http%3A%2F%2Fhackage.haskell.org%2Fpackages%2Farchive%2Funbound%2F0.3.1%2Fdoc%2Fhtml%2FUnbound-LocallyNameless.html&summary=on&hide_type=all&depth=&check=Check
+2012-03-16 02:47:26 UTC <byorgey> tgeeky__: ah, thanks, I'll fix that
+2012-03-16 05:14:09 UTC <vyom> feels good to reduce the installation instructions to one line http://deepakjois.github.com/hs-logo/installation.html after moving to diagrams-svg
+2012-03-16 13:56:43 UTC <luite_> yay diagrams-svg on hackage
+2012-03-16 18:19:26 UTC <byorgey> vyom: oh, nice!
+2012-03-16 19:07:29 UTC <byorgey> vyom: perhaps you should add yourself to the 'author' and 'maintainer' fields in diagrams-svg.cabal
+2012-03-16 19:08:15 UTC <luite_> does felipe not work on it anymore?
+2012-03-16 19:08:54 UTC <byorgey> well, he hasn't in a while
+2012-03-16 19:08:59 UTC <byorgey> but notice I said "add" not "replace"
+2012-03-16 19:11:27 UTC <luite_> yeah I know, I hadn't heard him talk about it for some time, that's why i asked :)
+2012-03-16 21:27:48 UTC <vyom> luite_: i had mailed felipe and he said it was not a priority for him at the moment
+2012-03-16 21:28:59 UTC <vyom> byorgey: i will probably add myself to the authors
+2012-03-16 21:29:20 UTC <byorgey> OK
+2012-03-16 21:29:37 UTC <byorgey> vyom: so what is diagrams-svg like at the moment in terms of features supported?
+2012-03-16 21:29:47 UTC <byorgey> haven't had a chance to try out the release yet
+2012-03-16 21:31:02 UTC <vyom> only paths and trails at the moment... no style attributes, text or images
+2012-03-16 21:31:27 UTC <vyom> basically the bare minimum needed to render diagrams on this page http://deepakjois.github.com/hs-logo/examples.html
+2012-03-16 21:31:43 UTC <byorgey> ah, ok, cool
+2012-03-16 21:32:14 UTC <vyom> working on text and some style attributes like colors
+2012-03-16 21:32:32 UTC <vyom> since i will need that next in hs-logo
+2012-03-16 21:33:13 UTC <byorgey> ok, sounds great
+2012-03-16 21:34:28 UTC <vyom> i am still wondering about the canonical place to host it..
+2012-03-16 21:35:07 UTC <vyom> i have yet to take commits in git and submit them to the darcs
+2012-03-16 21:35:17 UTC <luite_> vyom: please add something to annotate stuffs with javascript
+2012-03-16 21:35:24 UTC <luite_> oh and move your stuff to github please ;p
+2012-03-16 21:35:35 UTC <vyom> the latest stuff is on github
+2012-03-16 21:35:39 UTC <luite_> oh great
+2012-03-16 21:35:50 UTC <luite_> since I'm too stupid to darcs
+2012-03-16 21:35:55 UTC <vyom> https://github.com/deepakjois/diagrams-svg
+2012-03-16 21:36:21 UTC <byorgey> luite_: javascript annotations is not really possible until I finish working out some changes to diagrams-core
+2012-03-16 21:36:49 UTC <byorgey> ACTION finds darcs much easier to use than git.
+2012-03-16 21:38:12 UTC <luite_> element id's would be fine too
+2012-03-16 21:38:23 UTC <luite_> but I guess that's just as difficult :)
+2012-03-16 21:45:39 UTC <byorgey> yes, that's exactly the problem =)
+2012-03-16 21:45:47 UTC <vyom> ok i tried to import some git commits through the darcs bridge.. and it did not work
+2012-03-16 21:46:09 UTC <byorgey> vyom: sorry, I thought I told you that before
+2012-03-16 21:46:13 UTC <vyom> so for now the canonical repo is github
+2012-03-16 21:46:25 UTC <vyom> byorgey: yes you did
+2012-03-16 21:46:41 UTC <byorgey> vyom: OK, that's fine
+2012-03-16 21:46:42 UTC <vyom> it kinda worked last time
+2012-03-16 21:47:01 UTC <byorgey> hehe, yeah, when I was using it for the other diagrams packages it kinda worked for a while too
+2012-03-16 21:47:15 UTC <byorgey> and then it didn't.
+2012-03-16 21:48:01 UTC <vyom> ya :)
+2012-03-16 21:50:26 UTC <vyom> i really dont mind darcs being the canonical repo as long as i can work in git :)
+2012-03-16 21:51:07 UTC <vyom> hopefully sometime in the future
+2012-03-16 21:51:22 UTC <byorgey> yeah
+2012-03-16 21:51:28 UTC <byorgey> likewise, except vice versa ;)
+2012-03-16 21:52:01 UTC <byorgey> I will poke owst again to see how darcs-bridge is coming
+2012-03-16 21:52:31 UTC <vyom> made a double point release to update the cabal metadata http://hackage.haskell.org/package/diagrams-svg-0.3.1
+2012-03-16 21:53:07 UTC <byorgey> great
+2012-03-16 21:53:09 UTC <vyom> now off for a bit.. hopefully can get some hacking done this weekend... fingers crossed! :)
+2012-03-16 21:53:13 UTC <vyom> later
+2012-03-16 21:53:26 UTC <byorgey> vyom: oh, also, the 'home page' says code.haskell.org/diagrams which is old, it should be  projects.haskell.org/diagrams
+2012-03-16 21:53:29 UTC <byorgey> ok, later
+2012-03-16 21:53:50 UTC <vyom> ah missed it!
+2012-03-16 21:53:57 UTC <vyom> will fix later
+2012-03-16 21:54:13 UTC <byorgey> yeah, no worries, it's not urgent
+2012-03-16 21:55:08 UTC <luite_> buh I have a huge security hole in wolfgang
+2012-03-16 22:00:25 UTC <byorgey> exploit it, quick!
+2012-03-16 22:00:31 UTC <byorgey> if you don't someone else will!
+2012-03-16 22:01:14 UTC <luite_> hehe it's rather easy, I forgot that you can do POST requests to other domains by just having some form and submitting it with javascript
+2012-03-16 22:02:08 UTC <luite_> so you can just try to get people to visit your page, and if they're logged into wolfgang, you can have them modify pages (or delete stuff if they're admin)
+2012-03-16 22:02:16 UTC <luite_> oh wait, the admin interface isn't vulnerable
+2012-03-16 22:02:51 UTC <luite_> anyway, time to fix this
+2012-03-16 22:03:47 UTC <luite_> hmm, interesting projects for haskell beginners
+2012-03-16 22:17:33 UTC <luite_> has anyone here already compared the new and old ipads for textbooks and papers btw?
+2012-03-16 22:53:50 UTC <byorgey> vyom: one other thing is that diagrams-svg specifies cmdargs < 0.9, but the latest version of cmdargs is 0.9.3 and I'm sure diagrams-svg would work with it too
+2012-03-17 01:16:38 UTC <luite_> k security problem fixed :)
+2012-03-17 01:20:23 UTC <byorgey> yay =)
+2012-03-17 01:21:17 UTC <luite_> hmm, I wonder if I should implement "realtime cells", that automatically re-eval after each code update before launch
+2012-03-17 01:23:03 UTC <luite_> it's tempting because it's kinda cool to type and get immediate feedback (you could for ex set up a quickcheck realtime cell and a few with manual test data when you work on a function)
+2012-03-17 01:23:18 UTC <byorgey> that is pretty cool
+2012-03-17 01:23:32 UTC <luite_> and it would be pretty simple to implement
+2012-03-17 01:25:50 UTC <luite_> there are a few other niceties that I'd like to have soon, like parsing large 'deriving Show' output, making a nice hierarchical tree output with collapsible nodes
+2012-03-17 01:26:27 UTC <luite_> but that's not terribly important
+2012-03-17 01:26:52 UTC <byorgey> there will always be more features to add
+2012-03-17 01:26:59 UTC <luite_> yeah, lots :)
+2012-03-17 01:27:29 UTC <byorgey> I say just release =)
+2012-03-17 01:27:30 UTC <luite_> another one is to automatically :browse symbols after code reload
+2012-03-17 01:27:43 UTC <luite_> and to setup autocomplete in the editor
+2012-03-17 01:28:25 UTC <luite_> hehe yeah that might not be a bad idea
+2012-03-17 01:29:19 UTC <byorgey> btw, where did stuff with the haskell.org committee end up? do I need to poke them again on your behalf?
+2012-03-17 01:30:42 UTC <luite_> uh I thought that it's basically accepted on the condition that code is available for review and that I agree with possible future changes in the policy, haven't really asked for confirmation though
+2012-03-17 01:31:54 UTC <luite_> but I just wanted to set up a demo and ask them agein then
+2012-03-17 01:32:01 UTC <byorgey> OK.  yeah, sounds good.
+2012-03-17 01:36:51 UTC <luite_> I've written most of the static pages now, about/contact/feedback/poweredby
+2012-03-17 01:37:18 UTC <luite_> the things still missing are showcase/pastebin/what'snew/categories
+2012-03-17 01:39:31 UTC <luite_> all not terribly important to have
+2012-03-17 18:04:22 UTC <luite_> http://hdiff.luite.com/tmp/realtime.png
+2012-03-17 18:16:56 UTC <fryguybob> So the realtime expressions get updated when you change other parts of the page?
+2012-03-17 18:17:24 UTC <luite_> yeah, so you can for example have some test data of quickcheck properties active while you work on an algorithm
+2012-03-17 18:17:35 UTC <luite_> every time the code is reloaded, it reevals all realtimes
+2012-03-17 18:17:58 UTC <fryguybob> Nice.
+2012-03-17 18:19:00 UTC <luite_> was a really simple addition :)
+2012-03-17 18:22:24 UTC <fryguybob> So now you can build a spreadsheet :D
+2012-03-17 18:27:27 UTC <luite_> hmm, and now you can also save documents with realtime cells :) (had a bug in the cell options parsing thing)
+2012-03-17 18:31:29 UTC <luite_> drawing the icon actually took most of the time :)
+2012-03-17 18:53:15 UTC <byorgey> luite_: awesome =)
+2012-03-17 19:00:05 UTC <luite_> yeah it's really an old idea, last summer we discussed in this channel or #haskell-blah what to do when code changes, reeval all expressions or not. I think this is a good compromise
+2012-03-17 19:02:10 UTC <luite_> gweber in #yesod posted a link to this video yesterday, http://vimeo.com/36579366 , which reminded me of that :)
+2012-03-18 02:12:12 UTC <niteria> Hello, I'm following http://projects.haskell.org/diagrams/tutorial/DiagramsTutorial.html and beside now works differently
+2012-03-18 02:55:41 UTC <tgeeky__> byorgey: challenge accepted?
+2012-03-18 03:01:41 UTC <fryguybob> ACTION was just crafting a response :(
+2012-03-18 03:04:57 UTC <tgeeky__> hehe
+2012-03-18 03:17:13 UTC <byorgey> niteria just sent me a patch fixing it =)
+2012-03-18 16:28:34 UTC <luite_> http://hdiff.luite.com/tmp/browser.png <- hah that wil teach them old IE version users
+2012-03-18 17:40:05 UTC <byorgey> luite_: hah, nice =)
+2012-03-18 21:10:48 UTC <cheater_> you guys seen this? http://www.youtube.com/watch?feature=player_embedded&v=nHh00VPT7L4#!
+2012-03-18 22:23:10 UTC <tgeeky__> cheater_: pretty nice, in principle
+2012-03-19 00:43:33 UTC <vyom> This line is failing in ghc 0.7.3 https://github.com/deepakjois/diagrams-svg/blob/master/src/Diagrams/Backend/SVG.hs#L37
+2012-03-19 00:43:41 UTC <vyom> any idea why
+2012-03-19 00:46:28 UTC <vyom> this is the error http://travis-ci.org/#!/deepakjois/hs-logo/builds/896547/L417
+2012-03-19 00:47:36 UTC <vyom> is there something different about ghc 7.0.3 regarding "<>" operator
+2012-03-19 00:56:20 UTC <luite_> it can't find <> ?
+2012-03-19 00:57:19 UTC <vyom> luite_: so does that mean "<>" is not exposed in an older version of Data.Monad ?
+2012-03-19 00:57:40 UTC <luite_> yeah, it was added as (<>) = mappend in a later Data.Monoid
+2012-03-19 00:57:54 UTC <vyom> that means diagrams-svg is broken on older ghc :(
+2012-03-19 00:58:00 UTC <luite_> yup
+2012-03-19 00:59:27 UTC <vyom> any better fixes other than replacing "<>" with "mappend"
+2012-03-19 00:59:28 UTC <vyom> ?
+2012-03-19 01:15:34 UTC <luite_> I think that you can remove the hiding ((<>)) from the diagrams import
+2012-03-19 01:16:06 UTC <luite_> since I think it just exports the Data.Monoid one now, but byorgey would have to confirm that :)
+2012-03-19 01:19:51 UTC <vyom> luite_: in that case wont I have to hide the "<>" coming from the regular prelude
+2012-03-19 01:20:26 UTC <vyom> will that break on older ghc
+2012-03-19 01:26:17 UTC <luite_> vyom: I think diagrams defines its own for older GHC, and uses the Data.Monoid one for new
+2012-03-19 01:29:00 UTC <fryguybob> I think it comes from semigroups perhaps?
+2012-03-19 01:33:57 UTC <luite_> oh I thought it wuld just do its own (<>) = mappend now
+2012-03-19 01:43:25 UTC <vyom> decided to keep it simple and just use mappend. Builds now http://travis-ci.org/#!/deepakjois/diagrams-svg
+2012-03-19 01:45:00 UTC <byorgey> hmmm
+2012-03-19 01:45:09 UTC <byorgey> ACTION is actually confused about where <> is coming from, I forget
+2012-03-19 01:45:57 UTC <byorgey> vyom: in some of the diagrams packages we have to resort to CPP macros to include import statements conditionally on the version of base
+2012-03-19 01:46:42 UTC <fryguybob> Diagrams.Prelude> :i (<>)
+2012-03-19 01:46:46 UTC <fryguybob> -- Defined in `Data.Semigroup'
+2012-03-19 01:46:57 UTC <byorgey> ah, yes, I had just figured that out too =)
+2012-03-19 01:47:03 UTC <byorgey> Diagrams.Prelude re-exports Data.Semigroup
+2012-03-19 01:47:11 UTC <vyom> byorgey: any example source file i can look at?
+2012-03-19 01:48:17 UTC <byorgey> oh, hmm, actually it looks like we don't do that in diagrams, I was thinking of some other projects we have
+2012-03-19 01:48:41 UTC <byorgey> vyom: one solution is to import Data.Semigroup instead of Data.Monoid
+2012-03-19 01:48:56 UTC <byorgey> it re-exports most of the stuff from Data.Monoid but makes (<>) part of the Semigroup class
+2012-03-19 01:49:22 UTC <vyom> ok will look
+2012-03-19 01:49:27 UTC <byorgey> it's a bit annoying though because Semigroup is not a superclass of Monoid
+2012-03-19 01:49:38 UTC <byorgey> (Semigroup being Monoid without mempty)
+2012-03-19 01:49:39 UTC <vyom> Travis CI with Haskell support is pretty cool.. continuous build ftw!
+2012-03-19 01:49:45 UTC <byorgey> nice =)
+2012-03-19 01:50:40 UTC <vyom> set it up for both hs-logo and diagrams-svg
+2012-03-19 01:53:12 UTC <byorgey> that looks pretty cool
+2012-03-19 01:54:05 UTC <byorgey> which also reminds me, I should reestablish mirrors of the diagrams repos on github, even if darcs-bridge doesn't work for importing git->darcs we can still have read-only mirrors
+2012-03-19 01:54:17 UTC <byorgey> then we could also set up Travis CI for the main diagrams repos
+2012-03-19 01:55:47 UTC <fryguybob> So, house projects and grading got in the way of geting any diagrams done this week.
+2012-03-19 01:56:43 UTC <byorgey> fryguybob: no worries. it was my fault for releasing at such a bad time for you. ;)
+2012-03-19 01:56:53 UTC <fryguybob> I know break and all :D
+2012-03-19 01:57:18 UTC <fryguybob> But at least I'm getting a bike shed out of it.
+2012-03-19 01:57:32 UTC <fryguybob> (no we have not had a discussion about the color yet)
+2012-03-19 01:57:37 UTC <byorgey> hehehe
+2012-03-19 01:58:09 UTC <byorgey> oh, Travis CI only has the Haskell Platform, that's not as useful since we need to test on GHC 7.2 and 7.4 as well
+2012-03-19 01:58:17 UTC <luite_> oh for what kinf of bikes?
+2012-03-19 01:58:59 UTC <fryguybob> Touring bikes (that we ride whenever possible) and two mountain bikes that we never ride.
+2012-03-19 01:59:22 UTC <fryguybob> And a bike trailer for when the child is big enough.
+2012-03-19 02:00:27 UTC <vyom> byorgey: true.. fwiw i use 7.4 for development so it helps to have 7.2 building some place else :)
+2012-03-19 02:00:28 UTC <luite_> I'm still waiting for some o-rings that I need for my brakes :(
+2012-03-19 02:01:05 UTC <byorgey> vyom: well, the latest Haskell Platform still has GHC 7.0.4
+2012-03-19 02:02:27 UTC <vyom> byorgey: sorry i meant 7.0.4 only
+2012-03-19 02:03:12 UTC <vyom> wasnt 7.2 an "unofficial" release? :)
+2012-03-19 02:15:56 UTC <luite_> meh still no viewers on my wolfgang repository ;)
+2012-03-19 02:36:27 UTC <byorgey> luite_: oh, you put it up somewhere?
+2012-03-19 02:38:44 UTC <luite_> hehe nah I just created the repository :)
+2012-03-19 02:38:57 UTC <vyom> added some transform helpers to blaze-svg https://github.com/deepakjois/blaze-svg/commit/936a4469d8ff9a6891ab9016d3db74fa3f0bf84b
+2012-03-19 02:39:22 UTC <luite_> I'm writing an introduction page, fixing bugs along the way
+2012-03-19 02:39:25 UTC <byorgey> luite_: oh, hehe, I see.  You have a wiki!
+2012-03-19 02:39:39 UTC <vyom> thats all i could get done this weekend.. apart from some hs-logo tweaks
+2012-03-19 02:39:46 UTC <byorgey> luite_: I clicked the creepy little "eye" icon in the top right, I hope you're happy now
+2012-03-19 02:40:43 UTC <byorgey> vyom: cool
+2012-03-19 02:40:49 UTC <luite_> hehe, I'm hoping to get more viewers for this one than for my others, before committing a file ;p
+2012-03-19 02:42:01 UTC <byorgey> I'M WATCHING YOU
+2012-03-19 02:42:13 UTC <byorgey> I know where you(r git repo) live(s)
+2012-03-19 02:43:23 UTC <luite_> but I'm probably going to try and install it on the server next weekend
+2012-03-19 02:43:41 UTC <byorgey> sweet
+2012-03-19 03:23:04 UTC <vyom> All builds are passing
+2012-03-19 03:23:09 UTC <vyom> http://gyazo.com/44e3352170ae3abcb7a11827b2e5fa31
+2012-03-19 03:23:19 UTC <vyom> :)
+2012-03-19 05:02:33 UTC <tgeeky__> vyom: I don't know how to view whatever is behind that link
+2012-03-19 05:19:11 UTC <vyom> tgeeky__: doesnt an image show up for you.. it should be webpage with an image on it
+2012-03-19 05:19:58 UTC <vyom> try this http://cache.gyazo.com/44e3352170ae3abcb7a11827b2e5fa31.png
+2012-03-19 05:30:11 UTC <tgeeky__> vyom: yes, I this [T]ravis thing
+2012-03-19 05:30:53 UTC <tgeeky__> dunno what I was expecting.
+2012-03-19 05:31:42 UTC <vyom> tgeeky__: Travis recently announced support for haskell : http://about.travis-ci.org/blog/announcing_support_for_haskell_on_travis_ci/
+2012-03-19 05:32:15 UTC <vyom> so i just turned it all for my haskell projects on github
+2012-03-19 05:32:33 UTC <vyom> s/all/on/
+2012-03-19 05:32:53 UTC <mgsloan> wow!!! that's amazing
+2012-03-19 05:33:04 UTC <mgsloan> does it only recompile when you submit patches?
+2012-03-19 05:34:27 UTC <vyom> mgsloan: or in github terminology whenever you push to a repo
+2012-03-19 05:34:39 UTC <mgsloan> right
+2012-03-19 05:35:02 UTC <tgeeky__> vyom: does it recompile when you push non-code updates (like README)?
+2012-03-19 05:36:34 UTC <vyom> it probably does.. unless it has special logic for that built in..
+2012-03-19 05:37:27 UTC <vyom> now that you ask, it does indeed : http://travis-ci.org/#!/deepakjois/blaze-svg/builds
+2012-03-19 05:39:54 UTC <tgeeky__> this site is kind of wonderful
+2012-03-19 19:07:14 UTC <tgeeky__> byorgey: do you think you could relate the utility of the "binders, unbound" stuff to me?
+2012-03-19 20:00:47 UTC <byorgey> tgeeky__: have you ever implemented any sort of compiler, interpreter, refactoring tool, ...?
+2012-03-19 20:09:32 UTC <tgeeky__> byorgey: not that I remember the signifiance of :O (not recently)
+2012-03-19 20:09:44 UTC <tgeeky__> i read your blog post (after I asked)
+2012-03-19 20:09:47 UTC <tgeeky__> it was more approachable
+2012-03-19 20:10:01 UTC <byorgey> ah, ok
+2012-03-19 20:12:49 UTC <byorgey> tgeeky__: so do you still have questions about it or is your curiosity sated for the moment?
+2012-03-19 20:13:23 UTC <tgeeky__> byorgey: i'm fine for the moment, thanky
+2012-03-19 20:13:27 UTC <byorgey> ok =)
+2012-03-20 00:18:58 UTC <luite_> hehe 3 watchers already, tnx fryguybob :)
+2012-03-20 00:22:44 UTC <luite_> I feel like a rockstar programmer now ;)
+2012-03-20 00:40:46 UTC <vyom> luite_: is that a github repo we are talking about
+2012-03-20 00:40:47 UTC <vyom> ?
+2012-03-20 00:40:59 UTC <luite_> yes
+2012-03-20 00:41:04 UTC <luite_> but an empty one
+2012-03-20 00:41:59 UTC <luite_> they are lining up, eager to see the first commit arrive
+2012-03-20 00:42:07 UTC <luite_> the crows are going wild!
+2012-03-20 00:42:12 UTC <vyom> lol
+2012-03-20 01:07:03 UTC <byorgey> CAW CAW CAW
+2012-03-20 01:27:46 UTC <luite_> they're very intelligent birds!
+2012-03-20 02:30:45 UTC <fryguybob> ACTION wonders if luite_ has just been showing screen shots and now is waiting for pull requests from all of us to match the screen shots :P
+2012-03-20 02:36:29 UTC <luite_> yes!
+2012-03-20 02:36:39 UTC <luite_> the screen shots were photoshops of course
+2012-03-20 02:37:26 UTC <byorgey> a bold plot
+2012-03-20 02:37:36 UTC <byorgey> luite_ definitely has mad photoshop skillz
+2012-03-20 02:38:52 UTC <luite_> hehe yeah I guess it would've been almost as much work to photoshop them all :)
+2012-03-20 14:06:05 UTC <luite_> wolfgang now sends a list of all names in scope, with types, and where they were imported, back to the client every refresh :)
+2012-03-20 15:06:18 UTC <luite_> the names for the diagrams tutorial are 380kB, fortunately this is compressed to 20kB
+2012-03-20 15:51:46 UTC <luite_> any ideas what the best way to show type hints would be? they'd show the possible names that the thing your typing, or the thing your cursor is on, can refer to, with their type, how they were imported and where they're defined
+2012-03-20 20:24:52 UTC <tgeeky_> luite_: don't worry about it yet
+2012-03-20 20:25:19 UTC <tgeeky_> I'm annoyed with 'gregwebber' on this ticket: http://hackage.haskell.org/trac/summer-of-code/ticket/1609
+2012-03-20 20:52:44 UTC <luite_> yeah I'm not sure what he's trying to accomplish
+2012-03-20 20:58:24 UTC <tgeeky_> luite_: I don't like when people tell us what will / won't be useful or interesting in the future :o
+2012-03-20 20:59:03 UTC <luite_> he knows what I'm doing, maybe he's just trying to discourage Apfelmus a bit or something...
+2012-03-20 21:11:31 UTC <tgeeky_> luite_: I also don't think "ghci" -> web is necessarily the right target, but you already know that
+2012-03-20 21:21:52 UTC <luite_> hm, I know that you have some other ideas, but I have to admit that that I don't know exactly what they are
+2012-03-20 21:22:55 UTC <tgeeky_> luite_: the main difference between what you're doing and what I want, is that you view it as a service/wiki, and I view it as a (local)web-IDE/wiki
+2012-03-20 21:23:31 UTC <tgeeky_> and also I want diagrams, everywhere
+2012-03-20 21:23:39 UTC <luite_> everywhere?
+2012-03-20 21:23:45 UTC <tgeeky_> EVERYWHERE
+2012-03-20 21:23:46 UTC <tgeeky_> hehe
+2012-03-20 21:23:49 UTC <luite_> oh right, local is the next thing :)
+2012-03-20 21:24:51 UTC <tgeeky_> luite_: while watching an episode of "Dirk Gently" (http://en.wikipedia.org/wiki/Dirk_Gently) last night, I realized what I want could best be explained
+2012-03-20 21:24:53 UTC <luite_> but I'm not sure I'd call it an IDE, then it would have to be as good as people's own tuned emacs setups etc
+2012-03-20 21:25:02 UTC <tgeeky_> luite_: not as good, better!
+2012-03-20 21:25:35 UTC <tgeeky_> luite_: have you seen the movie "Iron Man"?
+2012-03-20 21:25:42 UTC <luite_> only the first one
+2012-03-20 21:25:54 UTC <tgeeky_> yeah. you know the computer system that he has at his home
+2012-03-20 21:26:01 UTC <tgeeky_> that caters to his every whim, etc :O
+2012-03-20 21:26:54 UTC <luite_> hmm, vaguely at best :p
+2012-03-20 21:27:33 UTC <tgeeky_> luite_: it helps him model things (in 3d), invent things, plan his schedule, do searches for him, etc
+2012-03-20 21:28:01 UTC <tgeeky_> but, in a sense, all of that is useless if you're not a genius already (like the character Tony Stark)
+2012-03-20 21:28:14 UTC <tgeeky_> I want software that will let Dirk Gently, become Tony Stark :o
+2012-03-20 21:28:23 UTC <tgeeky_> (you'd have to read the wiki)
+2012-03-20 21:29:15 UTC <tgeeky_> hehe, it's a good one-line thing, but you have to have read/watched the movies to get it :O
+2012-03-20 21:30:08 UTC <luite_> hehe
+2012-03-20 21:30:21 UTC <luite_> I don't watch movies that often
+2012-03-20 21:30:42 UTC <tgeeky_> me neither. I see it as a good thing, because great movies don't often appear
+2012-03-20 21:31:02 UTC <tgeeky_> my brother loves watching movies, but he just had a kid, so I think he's soon going to hate kids movies
+2012-03-20 21:31:49 UTC <luite_> but I have seen Amadeus of course ;p
+2012-03-20 21:33:08 UTC <tgeeky_> haha.
+2012-03-20 21:33:40 UTC <tgeeky_> hopefully you don't make a design decision that would make Mozart turn over in his grave.
+2012-03-20 21:33:53 UTC <tgeeky_> "I only use structural recursion, you insensitive clod!"
+2012-03-20 21:34:42 UTC <luite_> hehe I'm already trying to scare people by saying that it only generates empty html pages and that it loads 850kB javascript to load all content
+2012-03-20 21:35:09 UTC <tgeeky_> that's nothing!
+2012-03-20 21:35:14 UTC <tgeeky_> if you cache 849kB of it
+2012-03-20 21:35:34 UTC <luite_> it's a single large minified script that contains all static scripts
+2012-03-20 21:35:55 UTC <tgeeky_> horrible
+2012-03-20 21:36:07 UTC <luite_> the other scripts are mathjax, and some social sharing stuff
+2012-03-20 21:36:16 UTC <luite_> and a few small snippets generated by the server
+2012-03-20 21:37:51 UTC <luite_> tgeeky_: a single big script does generate more traffic if you change it because everyone has to redownload it, but it saves some time when loading a page, one http request instead of 90 separate scripts
+2012-03-20 21:39:17 UTC <luite_> the server gzips everything, that also helps
+2012-03-20 21:40:30 UTC <fryguybob> luite_: Just never update.  Better write it all in agda and compile to JS.
+2012-03-20 21:41:07 UTC <luite_> I'm writing a javascript to agda compiler that automatically removes all bugs
+2012-03-20 21:41:16 UTC <fryguybob> even better!
+2012-03-20 23:19:02 UTC <tgeeky_> luite_: yeah, I suspect a protocol/design which just does that behavior is a good idea
+2012-03-21 23:05:18 UTC <edgar> Hi!
+2012-03-21 23:06:55 UTC <fryguybob> Hi edgar
+2012-03-21 23:06:57 UTC <edgar> Is it possible to crop a draw or limit the view area in diagrams?
+2012-03-21 23:07:25 UTC <edgar> I'm using the SVG backend.
+2012-03-21 23:07:42 UTC <edgar> diagrams-SVG
+2012-03-21 23:08:05 UTC <fryguybob> I don't think so, I'll check though.
+2012-03-21 23:09:43 UTC <fryguybob> I think the best you can do right now is pad with a value between 0 and 1
+2012-03-21 23:10:08 UTC <luite_> does anyone want to write a haskell parser in javascript for me? :)
+2012-03-21 23:10:35 UTC <fryguybob> luite_: PEG.js?
+2012-03-21 23:12:53 UTC <fryguybob> I thought we had some limited cropping but I guess not. byorgey did we every have cropping?
+2012-03-21 23:13:31 UTC <luite_> fryguybob: yeah I started with that, but ugh...
+2012-03-21 23:13:39 UTC <luite_> too much work :p
+2012-03-21 23:13:49 UTC <fryguybob> luite_: You mean you can't just paste the report in there :P
+2012-03-21 23:13:56 UTC <luite_> yeah
+2012-03-21 23:14:05 UTC <luite_> and of course the report is really incomplete
+2012-03-21 23:15:23 UTC <edgar> In SVG there is the viewport tag should work in that case, shouldn't ?
+2012-03-21 23:17:52 UTC <fryguybob> edgar: I don't know how well implemented the features are with SVG implementations but I think there are clipping paths and viewports that would handle anthing we would want to do.
+2012-03-21 23:20:09 UTC <fryguybob> luite_: What are you wanting to do with this Haskell parser?
+2012-03-21 23:22:27 UTC <luite_> context-sensitive help in wolfgang
+2012-03-21 23:24:33 UTC <edgar> fryguybob: As far as I know they are not implemented yet but I'll solve that :)
+2012-03-21 23:24:57 UTC <fryguybob> edgar: excellent
+2012-03-21 23:25:00 UTC <edgar> Thanks for helping
+2012-03-21 23:25:13 UTC <fryguybob> luite_: So would the parse for syntax highlighting be enough?
+2012-03-21 23:29:05 UTC <luite_> fryguybob: well, I think it would be a bit too limited. the actual problem at hand is that I get a list of type sigs from GHC, those are haskell syntax, all types in those are qualified
+2012-03-21 23:29:32 UTC <luite_> and I want to rewrite them to unqualify them, or requalify
+2012-03-21 23:29:58 UTC <luite_> for example if Data.Text is imported as T, then Data.Text.pack would be rewritten as T.pack because it's simpler
+2012-03-21 23:30:49 UTC <fryguybob> Yeah. Javascript would not be my choice for that.
+2012-03-21 23:31:25 UTC <fryguybob> (\forall that. ...)
+2012-03-21 23:32:05 UTC <luite_> yeah, probably better to write it in haskell and use uhc to compile it to js :)
+2012-03-21 23:32:38 UTC <luite_> it looks like buildwrapper already has some json ast things going oin
+2012-03-21 23:32:54 UTC <luite_> if I just get the AST in JS, that would save me one tricky step
+2012-03-21 23:33:04 UTC <luite_> prettyprinting in JS would still be somewhat annoying
+2012-03-21 23:44:47 UTC <luite_> hm ok buildwrapper does it rather uglily
+2012-03-21 23:57:45 UTC <edgar> fryguybob: Back on the topic, a deeper search on diagrams revealed the function "view", see http://projects.haskell.org/diagrams/doc/Diagrams-TwoD-Combinators.html#v:view
+2012-03-21 23:58:14 UTC <edgar> I'll try that first...
+2012-03-22 00:27:47 UTC <edgar> Bingo!!! The function "view" works perfectly.
+2012-03-22 00:29:40 UTC <tgeeky_> byorgey: have you looked at the work done by Nicolas Frisby?
+2012-03-22 00:31:37 UTC <edgar> I'done for today. Night-night guys...
+2012-03-22 00:52:09 UTC <byorgey> tgeeky_: which work?
+2012-03-22 01:52:41 UTC <tgeeky_> byorgey: yoko and/or the type-spine work
+2012-03-22 01:54:14 UTC <byorgey> tgeeky_: I'm vaguely familiar with the type-spine work but have never heard of yoko
+2012-03-22 01:56:14 UTC <byorgey> hmm, yoko looks pretty cool
+2012-03-22 01:56:51 UTC <tgeeky_> byorgey: since the intro says "before kind-poly" hits the mainline, is that all not necessary with 7.4?
+2012-03-22 01:57:08 UTC <tgeeky_> byorgey: or is there something to be gained by using the kind-level stuff with his faked stuff?
+2012-03-22 01:57:43 UTC <byorgey> tgeeky_: I'm guessing the latter
+2012-03-22 01:57:58 UTC <byorgey> kind polymorphism certainly doesn't directly help with generic programming
+2012-03-22 01:58:17 UTC <tgeeky_> byorgey: yeah, he says it in the top of the type-spine package
+2012-03-22 02:07:46 UTC <byorgey> tgeeky_: I *think* it's just referring to the fact that you currently have to explicitly enumerate all the kinds you want to use it with, and new code has to be generated for each, or something like that
+2012-03-22 02:07:59 UTC <byorgey> once we have kind polymorphism one might hope to be able to write the code once and have it work for all kinds
+2012-03-23 13:08:36 UTC <alpounet> byorgey, i answered your -cafe thread
+2012-03-23 13:49:43 UTC <luite_> ah then I know who you are!
+2012-03-23 13:55:34 UTC <tgeeky_> luite_: muhaha!
+2012-03-23 13:56:12 UTC <alpounet> luite_, well, you also can /whois me to know who I am
+2012-03-23 13:56:17 UTC <alpounet> :p
+2012-03-23 13:56:29 UTC <tgeeky_> it's a trick!
+2012-03-23 18:23:41 UTC <tgeeky_> luite_: I think you might be falling into the use case of multiplate
+2012-03-23 18:24:20 UTC <luite_> tgeeky_: oh doing the AST manipulation already works
+2012-03-23 18:25:05 UTC <tgeeky_> yeah but you want to pretty print it
+2012-03-23 18:25:40 UTC <tgeeky_> actually, what am I saying. This is partial-iso, not multiplate :O
+2012-03-23 18:25:52 UTC <luite_> with SYB, and some custom traverse functions to carefully thread through the minefield that is the GHC AST
+2012-03-23 18:27:08 UTC <luite_> trying to remove some of the problematic haskell-src-exts things atm
+2012-03-23 18:27:20 UTC <tgeeky_> luite_: replacing them with your own code?
+2012-03-23 18:27:38 UTC <luite_> no letting GHC do the work instead of modifying haskell source
+2012-03-23 18:30:18 UTC <luite_> I did get a reply from niklas broberg, but at least the {-# LANGUAGEScopedTypeVariables #-} prettyprinting bug won't be fixed any time soon
+2012-03-23 18:30:54 UTC <luite_> and I have some bugs in my own code that tries to renumber the lines after modifying the haskell source, causing javascript errors when errors are reported for nonexistent lines
+2012-03-23 18:31:05 UTC <ClaudiusMaximus> ACTION approaches the generic all you can eat buffet with a multiplate
+2012-03-23 18:31:38 UTC <tgeeky_> ClaudiusMaximus: lol. I had to read that several times to get it, but funny.
+2012-03-23 18:31:45 UTC <luite_> so I hope to do the haskell-src-exts pass now just to do a first check, and if the parser accepts it, send the original code to the backend, and letGHC do the rest
+2012-03-23 18:32:18 UTC <luite_> that is just a better design :) and it allows easier access to the ASTs for furder processing
+2012-03-23 18:32:18 UTC <tgeeky_> luite_: have you worked with haskell-src-meta?
+2012-03-23 18:32:46 UTC <luite_> nope
+2012-03-23 19:03:58 UTC <byorgey> alpounet: I think it's too late, they have all already chosen their projects
+2012-03-23 19:04:04 UTC <alpounet> oh. :(
+2012-03-23 19:04:34 UTC <alpounet> i'll just hope a GSoC student will pick scoutess :p
+2012-03-23 19:05:05 UTC <byorgey> yes, I hope so too!
+2012-03-23 19:05:34 UTC <byorgey> alpounet: btw, how did you choose the name?
+2012-03-23 19:05:49 UTC <alpounet> it took us like 3 days
+2012-03-23 19:06:01 UTC <alpounet> jeremy's girlfriend and mine were also involved, giving ideas etc
+2012-03-23 19:06:21 UTC <tgeeky_> ACTION might work on scoutess.
+2012-03-23 19:06:36 UTC <tgeeky_> ACTION is trying to sign up for GSoC 2012, but it's taking a metric forever to send me a verification e-mail
+2012-03-23 19:07:07 UTC <alpounet> byorgey, but well, we wanted a name that kind of has a "go fetch informations and present them to us" conotation
+2012-03-23 19:07:19 UTC <alpounet> so scout came up
+2012-03-23 19:07:22 UTC <byorgey> alpounet: ah, I see
+2012-03-23 19:07:22 UTC <alpounet> (like in the army)
+2012-03-23 19:07:28 UTC <byorgey> right
+2012-03-23 19:07:29 UTC <alpounet> the -ess is just for geeks
+2012-03-23 19:07:38 UTC <tgeeky_> alpounet: like TF2 characters? So... GHC is Heavy?
+2012-03-23 19:07:56 UTC <alpounet> they feel more comfortable with feminine stuffs, see lambdabot :p
+2012-03-23 19:08:00 UTC <alpounet> hah
+2012-03-23 19:08:03 UTC <byorgey> hehe
+2012-03-23 19:08:07 UTC <alpounet> tgeeky_, you aren't a student, are you? :P
+2012-03-23 19:08:16 UTC <tgeeky_> alpounet: of many things, I am.
+2012-03-23 19:08:24 UTC <alpounet> really?
+2012-03-23 19:08:31 UTC <tgeeky_> alpounet: I'm not otherwise employed, so why not?
+2012-03-23 19:08:53 UTC <ClaudiusMaximus> ACTION remembers a program called 'scout' - it let me browse through OS internal structures on my Amiga
+2012-03-23 19:09:08 UTC <tgeeky_> OLD person alert!
+2012-03-23 19:09:20 UTC <tgeeky_> I used Amigas to do video editing in high school.
+2012-03-23 19:09:38 UTC <alpounet> ClaudiusMaximus, hah, this one will let you browse... dependency hells, breaking changes in your dependencies' repos, etc
+2012-03-23 19:09:41 UTC <alpounet> isn't that nice too?!
+2012-03-23 19:09:56 UTC <ClaudiusMaximus> :)
+2012-03-23 19:11:41 UTC <alpounet> tgeeky_, no seriously, are you officially a student?
+2012-03-23 19:11:58 UTC <tgeeky_> alpounet: nope. But I don't know if that will stop me
+2012-03-23 19:12:13 UTC <tgeeky_> a few people have indicated it won't
+2012-03-23 19:12:16 UTC <alpounet> it most likely will
+2012-03-23 19:12:40 UTC <alpounet> IIRC, i had to send a paper by my uni saying i was studying there
+2012-03-23 19:12:53 UTC <alpounet> like, an official statement
+2012-03-23 19:14:43 UTC <alpounet> you'd have to check the GSoC FAQ I think
+2012-03-23 19:17:14 UTC <alpounet> tgeeky_, http://www.google-melange.com/gsoc/document/show/gsoc_program/google/gsoc2012/faqs#student_eligibility
+2012-03-23 19:18:19 UTC <tgeeky_> alpounet: yeah. I could enroll at my university (GT), but $5000 might not offset the cost :o
+2012-03-23 19:19:01 UTC <alpounet> GT?
+2012-03-23 19:19:39 UTC <tgeeky_> alpounet: Georgia Institute of Technology
+2012-03-23 19:20:44 UTC <alpounet> oh ok
+2012-03-23 19:27:34 UTC <luite_> will there be a diagrams GSoC? :)
+2012-03-23 19:27:52 UTC <byorgey> luite_: heh, well, not this year at least =)
+2012-03-23 19:28:15 UTC <luite_> it isn't too late to submit a proposal, is it?
+2012-03-23 19:29:48 UTC <alpounet> student applications haven't started yet
+2012-03-23 19:29:51 UTC <alpounet> so it definitely isn't
+2012-03-23 19:36:06 UTC <byorgey> hmm
+2012-03-23 19:36:54 UTC <alpounet> they start on March, 26th
+2012-03-23 19:37:29 UTC <byorgey> you just mean to submit a proposal under the aegis of the Haskell GSoC?
+2012-03-23 19:39:00 UTC <byorgey> I'd want to have a well-defined project/task, not just "work on diagrams"
+2012-03-23 19:39:17 UTC <byorgey> I'm not really sure what would work for a whole summer
+2012-03-23 19:39:31 UTC <alpounet> one of the long term goals might
+2012-03-23 19:41:50 UTC <luite_> text support with "everything" could be a project, lots of subtasks, and it would also be useful if it's not finished completely
+2012-03-23 19:42:29 UTC <byorgey> luite_: ah, that's true
+2012-03-23 19:43:43 UTC <luite_> there's probably much more work than a GSoC in it if you want to go all the way with font support, LaTeX integration, text layout solver, text alongh paths
+2012-03-23 19:43:54 UTC <alpounet> LaTeX integration?
+2012-03-23 19:43:58 UTC <alpounet> that'd be soooo awesome!
+2012-03-23 19:46:37 UTC <luite_> I think it could be a fairly attractive project, would make diagrams much more usable as a tikz replacement
+2012-03-23 19:47:40 UTC <luite_> alpounet: yeah dunno how exactly that would work, so maybe it's unrealistic
+2012-03-23 19:48:20 UTC <Mathnerd314> Asymptote has LaTeX integration, you could look at how it does that
+2012-03-23 19:48:21 UTC <alpounet> yeah, unrealistic but awesome! :p
+2012-03-23 19:48:47 UTC <Mathnerd314> (http://asymptote.sourceforge.net/)
+2012-03-23 19:49:37 UTC <fryguybob> luite_: We know how to do diagrams code inline with LaTeX.  I've used some packages to overlay LaTeX over a figure.  It would be interesting to use those two in conjunction.
+2012-03-23 19:50:38 UTC <luite_> yeah just overlaying would be a good start already
+2012-03-23 19:51:17 UTC <luite_> maybe there's some good way to let LaTeX give some metrics about typeset text to diagrams, so that it can build its layouts around that?
+2012-03-23 19:52:15 UTC <fryguybob> Yeah.  I think there is some way to do that.
+2012-03-23 19:52:29 UTC <byorgey> although that would require constraint-solving stuff, i.e. collect constraints when building a diagram and only resolve everything later
+2012-03-23 19:52:51 UTC <byorgey> well, no, I guess you could have a function  latexText :: String -> IO Diagram
+2012-03-23 19:53:23 UTC <fryguybob> There is \settowidth and \settodepth
+2012-03-23 19:53:53 UTC <luite_> ah
+2012-03-23 19:54:07 UTC <luite_> that looks interesting
+2012-03-23 19:54:45 UTC <fryguybob> So you could have an environment that you write a map of id's to labels in TeX then dump that with sizes to be used as input to a diagram function.
+2012-03-23 19:55:24 UTC <byorgey> sounds cool
+2012-03-23 19:56:58 UTC <fryguybob> bbl
+2012-03-23 19:59:25 UTC <luite_> fryguybob: could be a bit tricky with rotation, scaling and perhaps other transformations?
+2012-03-23 19:59:50 UTC <luite_> can you restrict transformations for some diagram elements?
+2012-03-23 20:01:28 UTC <byorgey> luite_: you can always make a newtype wrapper with a different Transformable instance
+2012-03-23 20:02:07 UTC <byorgey> luite_: but you can't really sometimes transform certain things and other times not
+2012-03-23 20:02:25 UTC <byorgey> not sure what would be needed though.
+2012-03-23 20:02:39 UTC <luite_> yeah actually, that's what I meant: is it possible to make some type for nontransformable labels
+2012-03-23 20:12:28 UTC <byorgey> luite_: sure.  Just make   newtype Nontransformable t = Nontransformable t;  instance Transformable (Nontransformable t) where transform _ n = n
+2012-03-23 20:15:46 UTC <tgeeky_> don't type that, your head will exploooodeee!
+2012-03-23 20:16:52 UTC <byorgey> I guess Nontransformable is probably not a good name =)
+2012-03-23 20:17:06 UTC <alpounet> "instance Transformable (Nontransformable t"
+2012-03-23 20:17:15 UTC <byorgey> yeah, hehe =)
+2012-03-23 20:17:16 UTC <alpounet> yeah, this will make soooooo much sense to new users
+2012-03-23 20:17:20 UTC <alpounet> :D
+2012-03-23 20:17:39 UTC <tgeeky_> and it will crush the souls of Decipticons and Other-robot-icons all over the universe.
+2012-03-23 20:17:40 UTC <byorgey> a better name might be Invariant
+2012-03-24 03:40:26 UTC <luite> tgeeky_: ok, I got everything working now, with some strange GHC hacks required unfortunately, but at least no haskell source code processing/prettyprinting anymore
+2012-03-24 03:40:44 UTC <tgeeky_> luite: you just hardcoded the module name?
+2012-03-24 03:42:40 UTC <tgeeky_> luite: or, roughly, hand-wrapping the ModuleName
+2012-03-24 03:42:48 UTC <luite> no
+2012-03-24 03:43:26 UTC <luite> by directly loading the .hs file and some annoying things to prevent GHC from doing the special processing it does with unnamed modules and Main modules
+2012-03-24 03:43:47 UTC <luite> no manual haskell source code modification required anymore, and that was the goal
+2012-03-24 03:45:51 UTC <tgeeky_> luite: sounds good
+2012-03-24 03:45:59 UTC <luite> going to make a few new screenshots now
+2012-03-24 03:46:13 UTC <tgeeky_> luite: what percentage are we at these days?
+2012-03-24 03:46:27 UTC <luite> of what?
+2012-03-24 03:46:41 UTC <tgeeky_> beta release
+2012-03-24 03:46:59 UTC <luite> hm, dunno, depends on how many features I'm willing to drop ;p
+2012-03-24 03:47:51 UTC <tgeeky_> luite: do you intend to monetize this tool, and/or are you counting on your initial expertise with the codebase to do so?
+2012-03-24 03:48:02 UTC <tgeeky_> (I assume no, but just asking anyway)
+2012-03-24 03:48:37 UTC <luite> uh I don't think there's much money to be made with it
+2012-03-24 03:48:57 UTC <tgeeky_> luite: yeah. WolframAlpha annoyingly thinks there is :O
+2012-03-24 03:49:04 UTC <tgeeky_> though at a pretty reasonable price
+2012-03-24 03:49:16 UTC <luite> yeah they charge money now, but their service is petty different
+2012-03-24 03:49:27 UTC <luite> I mean, this is just a wiki with code, no search engine or big database
+2012-03-24 03:50:17 UTC <tgeeky_> ;)
+2012-03-24 03:50:22 UTC <luite> it could be useful if you want to make some nice interactive course material, other than that, dunno
+2012-03-24 03:51:57 UTC <luite> hang on, making screenshots
+2012-03-24 03:53:21 UTC <luite> need to photoshop them this time
+2012-03-24 03:55:39 UTC <mgsloan> You might consider adverts to offset server costs
+2012-03-24 03:56:10 UTC <mgsloan> we'll be able to use our own personal wolfram lambda servers, too, right?
+2012-03-24 03:56:13 UTC <luite> mgsloan: yeah I don't really like that, since it's an IDE/wiki, not really ideal
+2012-03-24 03:56:16 UTC <luite> yeah
+2012-03-24 03:56:53 UTC <mgsloan> true, wikipedia has established the no adverts tradition of wikis, but they are also backed by a large non-profit
+2012-03-24 03:57:23 UTC <tgeeky_> luite: the *real* trick (and one which would be impressive to accomplish on many levels)
+2012-03-24 03:57:27 UTC <luite> yeah I thought I'd ask Jimmy Wales to ask for donations every year to cover the server costs
+2012-03-24 03:57:29 UTC <mgsloan> you'd be quite justified in doing adverts for a while, or even making money off of the site, considering how much work you've put in!
+2012-03-24 03:58:00 UTC <luite> hehe it costs 49 euro or 59 euro at least to run
+2012-03-24 03:58:02 UTC <luite> monthly
+2012-03-24 03:58:10 UTC <tgeeky_> is to ask developers to "pay the price" by offering a few CPU cores back (when idle, or developing) back to the wolfgang cloud
+2012-03-24 03:58:15 UTC <luite> depending on wheter I keep the 8GB server or upgrade to a 32GB one
+2012-03-24 03:58:15 UTC <mgsloan> nah, just ask to be able to use his best puppy-dog face in the donation request
+2012-03-24 03:59:00 UTC <mgsloan> well, we'll see how the loads pan out - hopefully it takes off, but then you've gotta get more servers / move to a "cloud" platform
+2012-03-24 03:59:42 UTC <tgeeky_> luite's a better captain for this than I am
+2012-03-24 04:00:05 UTC <mgsloan> ACTION can't wait :D
+2012-03-24 04:02:19 UTC <luite> yeah there's one issue that's not really scalable yet
+2012-03-24 04:02:57 UTC <luite> when a client sends his source code, it's only sent to one backend... the source code files are write-only, write-once, so it should be easy to distribute between all backends
+2012-03-24 04:03:44 UTC <mgsloan> ah, but currently which backend the client is connected to is static?
+2012-03-24 04:04:19 UTC <tgeeky_> mgsloan: shh!
+2012-03-24 04:04:34 UTC <luite> hmm, convert messed up the colors a bit, but: http://hdiff.luite.com/tmp/types.gif
+2012-03-24 04:04:39 UTC <luite> just an early preview
+2012-03-24 04:04:44 UTC <tgeeky_> don't accidentally suggest features
+2012-03-24 04:04:50 UTC <luite> I'm abusing the error reporting tooltips for it
+2012-03-24 04:05:30 UTC <tgeeky_> luite: ah, those are the "made up" source numbers?
+2012-03-24 04:05:45 UTC <luite> made up? no everything is real data
+2012-03-24 04:05:50 UTC <luite> the numbers are column numbers
+2012-03-24 04:05:59 UTC <mgsloan> luite: great! how did you implement that?
+2012-03-24 04:06:01 UTC <luite> for the source span that has this type
+2012-03-24 04:06:05 UTC <tgeeky_> luite: yeah, but they aren't the same row?
+2012-03-24 04:06:19 UTC <tgeeky_> oh, yes they are
+2012-03-24 04:06:30 UTC <luite> tgeeky_: oh right, it's a bit messy in how it displays typed spans
+2012-03-24 04:06:46 UTC <luite> but of course in reality, typed things are nested
+2012-03-24 04:07:00 UTC <tgeeky_> luite: yeah. still. the information is clearly in the document at the right place.
+2012-03-24 04:07:03 UTC <tgeeky_> so that's a fantastic start.
+2012-03-24 04:07:08 UTC <luite> x -> (x,y) -> origin .+^ (x,y)  etc
+2012-03-24 04:07:36 UTC <luite> that is what you'd get in a better version, when you hover x, a list of hierarchical spans containing x, with their types
+2012-03-24 04:07:41 UTC <luite> mgsloan: hehe, magic ;p
+2012-03-24 04:07:54 UTC <mgsloan> ghc API?
+2012-03-24 04:08:16 UTC <luite> tgeeky_: this info isn't available with GHCi and scion etc btw
+2012-03-24 04:08:39 UTC <luite> mgsloan: yep, walking the AST of a TypecheckedModule
+2012-03-24 04:08:40 UTC <mgsloan> I kinda gave up trying to extract intermediate type info from the GHC API, and so have my own nuts method that currently is only implemented on expressions
+2012-03-24 04:08:48 UTC <tgeeky_> luite: yeah, I presume you're really generating line numbers by really having a .hs file somewhere :o
+2012-03-24 04:08:54 UTC <mgsloan> luite: woooooooohooooooo! I can't wait for your code
+2012-03-24 04:09:06 UTC <mgsloan> this is seriously going to really blow things open for my projcet
+2012-03-24 04:09:23 UTC <mgsloan> I'll focus on doing the graphical side of the project, then, rather than the type info part
+2012-03-24 04:09:29 UTC <luite> mgsloan: it prints type constraints rather funnily, since I don't have a proper prettyprinter for that yet
+2012-03-24 04:10:53 UTC <luite> mgsloan: I'm not sure if EclipseFP or Leksah can do this
+2012-03-24 04:11:09 UTC <luite> but it's probably much better than what people have in their vim or emacs setup :)
+2012-03-24 04:11:38 UTC <mgsloan> Hmm, this means that my type illustrations will be a transformation on information that you are already calculating, which means serving up SVG or PNG type explanation diagrams will be pretty cheap
+2012-03-24 04:12:12 UTC <luite> well, I'm still looking for the user interface
+2012-03-24 04:12:27 UTC <mgsloan> wish I'd been working on that this break instead of relaxing / visiting portland, hah
+2012-03-24 04:12:51 UTC <mgsloan> well, type-info for whatever the cursor is on seems reasonable
+2012-03-24 04:12:55 UTC <luite> actually I was just annoyed that Apfelmus said that in-browser editing was useless, so I tried making it more useful ;p
+2012-03-24 04:13:02 UTC <mgsloan> haha
+2012-03-24 04:13:22 UTC <mgsloan> I think it needs to be understood that the browser is just a particular GUI API
+2012-03-24 04:13:42 UTC <tgeeky_> mgsloan: well, it's the first one with a good chance of being "universal" in any meaningful sense
+2012-03-24 04:16:23 UTC <mgsloan> yup
+2012-03-24 04:17:33 UTC <tgeeky_> mgsloan: heck, I'm pretty sure Starfleet UI is backed by HTML 11
+2012-03-24 04:18:28 UTC <luite> mgsloan: the key is btw the HsWrapper things that the typechecker inserts
+2012-03-24 04:19:09 UTC <mgsloan> does it unify the local polymorphic variables?
+2012-03-24 04:19:24 UTC <luite> it shows the final type decided by the type checker
+2012-03-24 04:19:29 UTC <mgsloan> e.g. if there is an "a" in the top level sig, is that same "a" appropriately used throughout the local types
+2012-03-24 04:19:36 UTC <luite> oh, yes
+2012-03-24 04:19:53 UTC <mgsloan> my method of getting type info is sooo messed up
+2012-03-24 04:20:00 UTC <mgsloan> in comparison. Sigh. ohwell!
+2012-03-24 04:20:04 UTC <luite> hehe lol
+2012-03-24 04:20:09 UTC <luite> you haven't seen my code
+2012-03-24 04:20:12 UTC <luite> it's horrible
+2012-03-24 04:20:28 UTC <luite> a few days of hacking, trying to improve the loading of code
+2012-03-24 04:20:47 UTC <mgsloan> I turn every polymorphic variable into a monomorphic variable, and then process all the type errors to figure out which ones need to be the same / what constraints they need
+2012-03-24 04:20:54 UTC <tgeeky_> luite: all of our code is horrible, that's why we share it
+2012-03-24 04:21:00 UTC <tgeeky_> 1) so other people can judge us mercilessly
+2012-03-24 04:21:11 UTC <tgeeky_> 2) so after judgement, they make it better
+2012-03-24 04:21:12 UTC <luite> do manual parseModule/typecheckModule/loadModule, but with that I can prevent the haskell-src-exts step that was giving me trouble, and access the AST :)
+2012-03-24 04:22:02 UTC <tgeeky_> luite: btw, from watching the LHC, and the state they're in now
+2012-03-24 04:22:05 UTC <luite> tgeeky_: yeah, I promised mysefl that this would be the last major thing I'd add before starting the beta
+2012-03-24 04:22:32 UTC <tgeeky_> one of the cool things about having so much of their organization online (and them being really pedantic about measurables) at CERN
+2012-03-24 04:22:35 UTC <luite> that means probably fixing up some of the source span reporting things, and a prettyprinter for the ghc ast types
+2012-03-24 04:23:17 UTC <tgeeky_> you can pretty easily observe some things
+2012-03-24 04:23:21 UTC <luite> mgsloan: oh lol, I guess that is a slightly worse method ;p
+2012-03-24 04:23:30 UTC <mgsloan> prettyprinter == diagrams prettyprinter? or text?
+2012-03-24 04:23:36 UTC <luite> text first
+2012-03-24 04:23:51 UTC <mgsloan> cool
+2012-03-24 04:23:51 UTC <luite> just the type constraints as they'd appear in haskell source
+2012-03-24 04:24:01 UTC <tgeeky_> their "set up" time (from cool down to automatic stable beams mode) was ~ 4.5 months the first year
+2012-03-24 04:24:05 UTC <mgsloan> I hope you won't have to do the diagrams one, as that's something I'm quite intent on making :)
+2012-03-24 04:24:08 UTC <luite> from the HsTcType and HsWrapper things that I steal from the AST
+2012-03-24 04:24:13 UTC <luite> hehe
+2012-03-24 04:24:15 UTC <tgeeky_> ~ 3 months last year
+2012-03-24 04:24:19 UTC <tgeeky_> and ~ 1 month this year
+2012-03-24 04:24:35 UTC <luite> oh sounds pretty good ;)
+2012-03-24 04:24:37 UTC <luite> err, :)
+2012-03-24 04:24:53 UTC <tgeeky_> that's really amazing progress
+2012-03-24 04:25:19 UTC <mgsloan> My thing processes haskell-src-exts Types.  Temporarily that would mean prettyprinting + reparsing, but I suppose it probably wouldn't be too hard to switch to the GHC type rep
+2012-03-24 04:29:08 UTC <mgsloan> gtg home, I'm gonna get this type explanation stuff fixed up!
+2012-03-24 04:29:14 UTC <mgsloan> (upon arriving)
+2012-03-25 00:48:16 UTC <luite> mgsloan1: getting the right type constraint still is kind of difficult, I have all annotations that introduce the constraints, not sure what to do with them. the easiest is probably to highlight all points in the source that introduce them
+2012-03-25 00:48:32 UTC <mgsloan1> yup
+2012-03-25 00:48:54 UTC <luite> for ex: map (+1) when you hover `map', would give you type a -> a, and also highlight (+1), which introduces Num a => a
+2012-03-25 00:49:17 UTC <luite> err
+2012-03-25 00:49:19 UTC <luite> not a -> a
+2012-03-25 00:49:24 UTC <luite> [a] -> [a]
+2012-03-25 00:50:19 UTC <luite> does that sound like a usable user interface?
+2012-03-25 00:50:37 UTC <mgsloan> My plan is to give annotations for every type in the expression, but unify the diagrams, and have a "contents" that actually specifies the constraints on the type variables
+2012-03-25 00:50:57 UTC <mgsloan> Then, you hover over parts of the constraints to find out where they came from
+2012-03-25 00:51:09 UTC <mgsloan> that definitely sounds like a usable interface to me, though
+2012-03-25 00:51:21 UTC <luite> oh that's also interesting
+2012-03-25 00:52:10 UTC <luite> but if you have something that introduces Integral, and another part just Num, then the final constraint wouldn't show Num at all if it' unified?
+2012-03-25 00:52:40 UTC <mgsloan> I was going to do the full expression diagram first, even if it's somewhat complicated, such that the contextual diagram (only the bit your cursor is on / what you're hovering over) is just calling the diagram-showing algorithm with something that prunes its traversal
+2012-03-25 00:52:58 UTC <mgsloan> hmm, that's a good point
+2012-03-25 00:53:27 UTC <luite> the problem for me is that making unified constraints is more difficult than all the intermediate ones :)
+2012-03-25 00:54:07 UTC <mgsloan> well, part of drawing the diagram appropriately unified, is indeed something like a half-assed type unification, which could inform the system of what superclass instances were being hidden
+2012-03-25 00:54:21 UTC <luite> hmmm
+2012-03-25 00:54:29 UTC <mgsloan> then again, it should be possible to use the ghc info regarding classes to get what the superclasses are
+2012-03-25 00:54:49 UTC <luite> yeah, I just don't really feel like writing a constraint unifier :)
+2012-03-25 00:55:00 UTC <mgsloan> haha, yeah, leave it out for now is my vote!
+2012-03-25 00:55:15 UTC <mgsloan> it's a small problem
+2012-03-25 00:55:51 UTC <luite> I'm still not that familiar with the GHC source, but it looks like what it does in the TC is run the typecheker monad, which collects constraints, everytime it sees one, it annotates it in the AST
+2012-03-25 00:56:50 UTC <mgsloan> so maybe catching it after the constraint introduction phase would be the right soln?
+2012-03-25 00:57:03 UTC <luite> problem is that the output is after all constraints have already been "zonked" (I think that means frozen), so I just get types for a few things and the annotated AST
+2012-03-25 00:57:36 UTC <mgsloan> do you get one for most of the different parts of an expression? or is it pretty sparse?
+2012-03-25 00:58:01 UTC <luite> pretty sparse, but I can fix that by preprocessing the parsed AST
+2012-03-25 00:58:15 UTC <mgsloan> ahhh
+2012-03-25 00:58:21 UTC <mgsloan> probably similar to my whereify transform
+2012-03-25 00:58:33 UTC <mgsloan> you seriously gotta opensource this soon so I can try to lend a hand :D
+2012-03-25 00:58:33 UTC <luite> hehe
+2012-03-25 00:58:47 UTC <mgsloan> (it chunks out the expression into a bunch of named pieces)
+2012-03-25 01:00:07 UTC <luite> yeah it's more or less a 'lettify' transform that I used, but I think that's probably just laziness on my part, the types are available as well in the original AST, you just have to do more work to get them all
+2012-03-25 01:00:40 UTC <luite> problem is, the more work, the harder it will be to update to ghc 7.6 etc :)
+2012-03-25 01:01:15 UTC <mgsloan> gotcha, yeah
+2012-03-25 01:01:40 UTC <mgsloan> best to do the simple thing first till the APIs settle
+2012-03-25 01:01:42 UTC <luite> I'm pretty sure that it will be some work, the type defaulting code was also a bit annoying to update to ghc 7.4 :)
+2012-03-25 03:21:23 UTC <luite> meh still not quite right http://hdiff.luite.com/tmp/types2.gif
+2012-03-25 03:29:26 UTC <tgeeky_> luite: out of sheer curiosity, why is there overall color cycling in the image?
+2012-03-25 03:29:41 UTC <tgeeky_> are you using one of those softwares that changes the color later at night? :o
+2012-03-25 03:30:02 UTC <luite> no, that is some strange conversion artefact from imagemagic
+2012-03-25 03:31:06 UTC <tgeeky_> luite: in my IDE/editor, I was imagining injecting type information (like :: Double) on the right hand side of the code, in a sort of gray tone or something
+2012-03-25 03:31:26 UTC <tgeeky_> obviously, your example shows that's nowhere near going to work
+2012-03-25 03:31:32 UTC <luite> oh I haven't decided anything about the user interface btw
+2012-03-25 03:31:42 UTC <luite> just abusing the error reporting code atm
+2012-03-25 03:31:47 UTC <tgeeky_> yeah, i gotcha
+2012-03-25 03:32:17 UTC <luite> and it's clear that it needs to be updated a bit
+2012-03-25 03:32:38 UTC <luite> since chrome cannot handle the large number of messages that the type info generates
+2012-03-25 03:39:19 UTC <luite> atm it shows the wrong type vars in the constraints
+2012-03-25 04:06:08 UTC <tgeeky_> luite: http://www.anandtech.com/show/5689/the-new-ipad-retina-display-analysis
+2012-03-25 04:06:22 UTC <tgeeky_> I think the bottom-of-the-page picture answers your question
+2012-03-25 04:08:31 UTC <luite> what was my question again?
+2012-03-25 04:11:54 UTC <luite> the backlight power has more than doubled btw
+2012-03-25 04:12:16 UTC <tgeeky_> luite: is there a display which is readble for e-books and textbooks and etc
+2012-03-25 04:12:25 UTC <luite> so the running time at max brightness is an hour shorter
+2012-03-25 04:12:35 UTC <luite> it's equal at mid brightness, longer at low
+2012-03-25 04:12:50 UTC <tgeeky_> luite: yeah, the brightness (in nits) is compared on page3
+2012-03-25 04:12:58 UTC <tgeeky_> the color coverage is more impressive to me
+2012-03-25 04:13:03 UTC <tgeeky_> it pretty much covers sRGB
+2012-03-25 04:13:06 UTC <luite> it's said to use 7 watt now, at max
+2012-03-25 04:13:14 UTC <tgeeky_> and the density
+2012-03-25 04:13:37 UTC <luite> that must be 90% of the total power during typical use
+2012-03-25 04:14:04 UTC <luite> and charging time is longer now too
+2012-03-25 04:15:11 UTC <luite> pretty sure that if I buy one now, the next gen will get an OLED screen with 2W power and 20hr battery life, even wider gamut ;p
+2012-03-25 04:16:23 UTC <luite> I personally don't think that the color gamut is that big of a deal
+2012-03-25 04:17:09 UTC <luite> although I expected mobile screens to have much wider gamuts already
+2012-03-25 04:17:18 UTC <luite> since many desktop screens are approaching ARGB1998 now
+2012-03-25 04:17:59 UTC <luite> btw it's a bit strange to just compare single units, since both generations have multiple display suppliers
+2012-03-25 04:18:26 UTC <luite> my ipad's screen is bluer than my father's, both 32GB wifi 1st gen, and it's also brighter
+2012-03-25 04:18:38 UTC <luite> I think mine has an LG screen, he has a Samsung
+2012-03-25 04:35:11 UTC <luite> tgeeky_: I don't really might the shorter battery life, but I think they should've shipped it with a 15W charger
+2012-03-25 04:36:52 UTC <tgeeky_> luite: let me guess, there is a 15W charger upgrade?
+2012-03-25 04:37:24 UTC <luite> no
+2012-03-25 04:38:04 UTC <luite> but with the screen at high brightness using ~7W, the cpu and other hw also a little, the 10W charger is really underpowered
+2012-03-25 04:38:25 UTC <luite> it also means that using it with USB power from a computer will drain the battery
+2012-03-25 04:39:08 UTC <tgeeky_> luite: a shame they didn't do "mid" brightness in the anandtech review
+2012-03-25 04:39:24 UTC <luite> the old ipad could be used, wouldn't charge, but at least stay at more or less the same charge level
+2012-03-25 04:39:36 UTC <luite> with a regular usb port
+2012-03-25 04:39:42 UTC <tgeeky_> yeah
+2012-03-25 04:40:43 UTC <luite> I think it's a great idea, the high res display, but it still feels a bit like a stop-gap solution...
+2012-03-25 04:41:21 UTC <tgeeky_> luite: well, it will open up a range of uses that might not have been doable before (like medical imaging)
+2012-03-25 04:42:10 UTC <luite> (although once they fix that, and add stylus support, I really don't see much left to improve, how will they sell everyone an upgrade every year then?)
+2012-03-25 04:42:47 UTC <luite> I wonder if they'd add 3D support
+2012-03-25 04:43:16 UTC <luite> Jobs was probably against 3D support if it required glasses
+2012-03-25 04:43:43 UTC <tgeeky_> luite: he'd wait for holographs
+2012-03-25 04:45:25 UTC <luite> something like the glasses-free 3d support from the 3ds
+2012-03-25 04:46:55 UTC <tgeeky_> i'll take a button, that when pressed, unfolds the iPad into a Death Star.
+2012-03-25 04:49:08 UTC <tgeeky_> probably don't want it to happen too often, or by accident, so I'll bury it in the Settings dialogs.
+2012-03-25 04:50:28 UTC <luite> yeah that might have bigger implications than the iPhone 4 antenna issues
+2012-03-25 04:51:20 UTC <tgeeky_> Damn it. I can't get any reception. I can't get a App Store update to inflate my Death Star!!!
+2012-03-25 05:09:19 UTC <luite> tgeeky_: different ipad, different brightness: http://www.notebookcheck.net/Review-Apple-iPad-3rd-Gen-2012-4G-Tablet.71925.0.html
+2012-03-25 05:10:19 UTC <luite> and they had a 25cdm^-2 variation between two samples
+2012-03-25 05:10:33 UTC <tgeeky_> ugh
+2012-03-25 05:10:37 UTC <tgeeky_> that screen bleeding is bad
+2012-03-25 05:13:28 UTC <luite> dunno, it's always really difficult to tell from pictures
+2012-03-25 05:13:38 UTC <luite> expose it longer and it looks twice as bad
+2012-03-25 05:41:30 UTC <mgsloan> re: types, awesome!
+2012-03-25 07:46:07 UTC <luite> yeah not quite as awesome as they should be, but I'm working on it, trying to get all type stuff from the typechecked AST now
+2012-03-25 08:03:23 UTC <luite> ok I think I have regular type extraction working now, without properly propagating contexts yet
+2012-03-25 08:10:54 UTC <mgsloan> byorgey: why not export the "R2" constructor?
+2012-03-25 08:11:59 UTC <mgsloan> can't use most of the Newtype combinators without it :/
+2012-03-25 08:12:05 UTC <mgsloan> well not prettily anyay
+2012-03-25 08:14:58 UTC <mgsloan> luite: awesome!!
+2012-03-25 08:15:20 UTC <mgsloan> so there's both sources of types?
+2012-03-25 08:15:48 UTC <mgsloan> btw, I hope wolfram lambda becomes the new hackage
+2012-03-25 08:16:17 UTC <mgsloan> wolfgang
+2012-03-25 08:17:17 UTC <luite> the new hackage?
+2012-03-25 08:18:04 UTC <mgsloan> Yeah - logically if there's something that does a really good job of displaying haskell code, that should be how we do docs
+2012-03-25 08:18:50 UTC <mgsloan> I'm imagining something like an ActiveHs style import of literate haskell into workbook form
+2012-03-25 08:19:00 UTC <mgsloan> plus function folding on the definitions
+2012-03-25 08:19:24 UTC <mgsloan> so there's a per-declaration "view source" folding button
+2012-03-25 08:19:30 UTC <luite> hmm
+2012-03-25 08:19:50 UTC <mgsloan> (don't worry about this with your current architecture, though)
+2012-03-25 08:19:55 UTC <luite> that would be some work to build, please send me a pull req ;p
+2012-03-25 08:19:59 UTC <mgsloan> hehe
+2012-03-25 08:20:14 UTC <mgsloan> yes, it would, as we can see from the Hackage 2.0 efforts
+2012-03-25 08:20:29 UTC <luite> atm, I'm trying to figure out how to convert HsWrapper stuff back to Types
+2012-03-25 08:21:10 UTC <mgsloan> ppr roundtrip?
+2012-03-25 08:21:50 UTC <mgsloan> parse . pprHsWrapper sdoc
+2012-03-25 08:21:52 UTC <luite> nah it ppr's really not-typelike :p
+2012-03-25 08:22:03 UTC <mgsloan> ah
+2012-03-25 08:22:27 UTC <luite> it can also do stuff that's not a type
+2012-03-25 08:22:30 UTC <mgsloan> so, write a typelike ppr?
+2012-03-25 08:22:46 UTC <mgsloan> ah, yeah holes and casts and things
+2012-03-25 08:23:07 UTC <mgsloan> invent type representation of those things?
+2012-03-25 08:26:13 UTC <mgsloan> Seems like it might be valuable to carry the distinctions found in the coercions ADT into the UI
+2012-03-25 08:28:42 UTC <luite> but things that are normal contexts or ~ should just be carried back into type constraints
+2012-03-25 08:30:11 UTC <mgsloan> ah
+2012-03-25 08:41:02 UTC <mgsloan> ACTION still kinda prefers (Double, Double) to R2
+2012-03-25 08:43:50 UTC <mgsloan> there's something quite beautiful about the cartesian product of two numbers being the coordinate type
+2012-03-25 08:44:13 UTC <mgsloan> but I guess I shoulda raised that argument earlier :P
+2012-03-25 08:49:57 UTC <luite> hm, meh will do the type constraint propagation later
+2012-03-25 08:50:20 UTC <luite> SPJ said somewhere on a mailing list that implementation of this would be simple
+2012-03-25 08:55:12 UTC <mgsloan> cool!
+2012-03-25 08:58:10 UTC <mgsloan> I really want to be able to have a per-package extension system for the type visualization / other potential code-related utilities..  I.E. a special modulename which indicates that it should be interpreted as a plugin to the workbook system / docu / IDE
+2012-03-25 08:58:24 UTC <mgsloan> I think I've mentioned this before
+2012-03-25 08:59:06 UTC <mgsloan> but now that you've totally dominated the type problem, working on this seems like a task I can try to take on much sooner
+2012-03-25 09:01:26 UTC <mgsloan> (package specific refactorings will be really interesting)
+2012-03-25 09:13:47 UTC <alpounet> mgsloan, that would be neat indeed!
+2012-03-25 09:23:14 UTC <mgsloan> it would!  One thing I'd also really like to see would be a way to express the interface changes across interface-changing versions.  This'd let you hit the "upgrade library version" button, and have it get you most of the way towards updating your code
+2012-03-25 09:24:36 UTC <mgsloan> the best thing about this is that it would allow for library developers to exercise a little more freedom in fixing their interfaces / naming
+2012-03-25 09:25:41 UTC <mgsloan> it'd also be interesting to have partial rewrites between similar libraries - expressing the connection between the two
+2012-03-25 15:41:51 UTC <luite> hehe I'm not quite sure that I've dominated the type problem... easy for SPJ isn't the same as easy for me :p
+2012-03-25 20:03:40 UTC <tgeeky_> luite: http://www.youtube.com/watch?v=hG3ELslkHDY&feature=youtu.be <--!
+2012-03-25 20:10:47 UTC <luite> hmm, still manual switching required
+2012-03-25 20:11:29 UTC <tgeeky_> luite: yes. but it's a much nicer transition
+2012-03-25 20:11:37 UTC <tgeeky_> luite: and their technique is somewhat general
+2012-03-25 20:12:19 UTC <luite> right
+2012-03-25 20:13:18 UTC <luite> actually I was thinkink of a realtime preview hovering window while you edit
+2012-03-25 20:13:50 UTC <luite> but their approach is more suitable for larger docs
+2012-03-25 20:14:12 UTC <luite> a bit more difficult to implement though, I guess
+2012-03-25 20:14:41 UTC <tgeeky_> luite: maybe not with diagrams/active
+2012-03-25 20:14:58 UTC <tgeeky_> ... or something else. nice touch, anyway.
+2012-03-25 20:15:11 UTC <tgeeky_> bbl, chores
+2012-03-25 20:15:35 UTC <luite> hm, right
+2012-03-26 02:54:13 UTC <vyom> ok so I added some code to support style attributes in a separate git branch because I am waiting on some changes to go to the upstream blaze-html code
+2012-03-26 02:54:18 UTC <vyom> https://github.com/deepakjois/diagrams-svg/commit/3aeef54fbe2032a7d7f10df5d998d5d049255df4
+2012-03-26 02:54:50 UTC <vyom> very little code but took a bit of thinking and reading
+2012-03-26 02:55:18 UTC <vyom> at least now i have the framework to add more styles pretty easily once the upstream code is merged
+2012-03-26 02:56:05 UTC <vyom> leave any comments on the code if you feel like
+2012-03-26 03:14:06 UTC <luite> great :)
+2012-03-26 03:21:31 UTC <vyom> is there a good idiom to represent a  Maybe value? I chose to suffix an 'M' for e.g. lineWidthM
+2012-03-26 03:21:43 UTC <vyom> not sure I like it very much
+2012-03-26 03:41:24 UTC <mgsloan> that's confusing because usually an M suffix indicates something monad related
+2012-03-26 03:41:47 UTC <mgsloan> I actually kinda like the lisp convention for this - postifixing with ?
+2012-03-26 04:15:05 UTC <vyom> does that even work in haskell
+2012-03-26 04:17:48 UTC <luite> just don't add a suffix and wait for editors to give you realtime type annotations as you type
+2012-03-26 13:40:17 UTC <tgeeky_> heh
+2012-03-26 13:40:24 UTC <tgeeky_> vyom: it should, ? isn't otherwise reserved
+2012-03-26 16:05:35 UTC <byorgey> no, Haskell identifiers may only contain letters, digits, and underscores
+2012-03-26 16:05:47 UTC <byorgey> no postfixing with ?
+2012-03-26 16:37:59 UTC <luite> @tell
+2012-03-26 16:38:15 UTC <luite> hm, no bot here?
+2012-03-26 16:39:07 UTC <ClaudiusMaximus> there's MemoServ, but the last memo i sent with it only got read 4 months later...
+2012-03-26 16:39:25 UTC <luite> hehe
+2012-03-26 16:40:16 UTC <fryguybob> @tell luite you can get messages without a bot too.
+2012-03-26 16:40:46 UTC <luite> I just wanted to tell mgsloan that desugaring the expression and then using exprType on the CoreType still loses the context because I haven't found a way yet to restore it
+2012-03-26 16:40:52 UTC <luite> so tell hiim if you see him ;p
+2012-03-26 17:28:57 UTC <tgeeky_> byorgey: damn. how about lineWidthQuestionMark :o
+2012-03-26 17:29:58 UTC <ClaudiusMaximus> i use foo , foo' and foo_ for different variations in one project..
+2012-03-26 17:30:15 UTC <ClaudiusMaximus> ..but i can never remember which is which
+2012-03-26 17:31:28 UTC <tgeeky_> the default idiom, I think, is to use _ to ignore the result, and blah' is just and extra name for blah
+2012-03-26 17:32:01 UTC <ClaudiusMaximus> seems to be foo :: T -> [Progress], foo' :: [Progress] -> Maybe Success, foo_ :: T -> Maybe Success
+2012-03-26 17:33:15 UTC <ClaudiusMaximus> (mainly because these algorithms can take a long time to run, and i want to have a cancel button in the GUI front end for when i get bored of waiting)
+2012-03-26 17:33:19 UTC <tgeeky_> ClaudiusMaximus: so ' i used for reduction on lists, and _ is used for reduction on items? :o
+2012-03-26 17:33:35 UTC <ClaudiusMaximus> foo_ = foo' . foo
+2012-03-26 17:33:37 UTC <tgeeky_> i guess 'value extraction'
+2012-03-26 17:34:17 UTC <ClaudiusMaximus> this is my personal convention for one project
+2012-03-26 17:34:23 UTC <tgeeky_> ClaudiusMaximus: yeah, I gathered
+2012-03-26 17:34:43 UTC <ClaudiusMaximus> vaguely taking the _ to mean "don't care about ..." from the Control.Monad stuff
+2012-03-26 17:35:13 UTC <ClaudiusMaximus> ' is often "this is a stricter thing" like foldl foldl'
+2012-03-26 17:35:17 UTC <tgeeky_> ClaudiusMaximus: I never liked that one, but I've learned to live with it
+2012-03-26 17:35:29 UTC <tgeeky_> ClaudiusMaximus: yeap. That's what it means. I forgot that one.
+2012-03-26 17:35:46 UTC <tgeeky_> sometimes it just means "other version" or "helper function version"
+2012-03-26 17:36:17 UTC <ClaudiusMaximus> indeed
+2012-03-26 17:36:49 UTC <tgeeky_> the postfix '?' is used heavily in idiomatic Ruby
+2012-03-26 17:37:03 UTC <tgeeky_> I assume you could write a simple compiler plugin that allows it
+2012-03-26 17:37:11 UTC <ClaudiusMaximus> some scheme variants too i think?
+2012-03-26 17:38:01 UTC <ClaudiusMaximus> anyway, i think the 'safe' package has things like "atMay" for a safe !!
+2012-03-26 17:51:20 UTC <byorgey> ACTION often writes  mfoo :: Maybe Foo  when  foo :: Foo
+2012-03-26 17:51:56 UTC <tgeeky_> sadly maybe is the shorest word (that's not an abbreviation)
+2012-03-26 17:52:10 UTC <tgeeky_> perhapsFoo
+2012-03-26 17:52:25 UTC <tgeeky_> quitepossiblyFoo
+2012-03-26 17:52:56 UTC <fryguybob> justFooOrNothing
+2012-03-26 17:53:36 UTC <byorgey> ifThereIsAFooWhichIDoubtItWouldBeStoredInHere
+2012-03-26 17:53:43 UTC <tgeeky_> lol
+2012-03-26 17:53:43 UTC <fryguybob> foo :: Maybe Foo   unsafeFoo :: Foo
+2012-03-26 17:53:51 UTC <byorgey> hehe
+2012-03-26 17:54:20 UTC <tgeeky_> MayB :o
+2012-03-26 17:54:29 UTC <luite> byorgey: yeah me too, like mfix :: MonadFix m => (a -> m a) -> Maybe (m a), and map :: Monad m => m (a -> b) -> m a -> Maybe (m b), many :: (a -> Bool) -> a -> Maybe Bool   ;)
+2012-03-26 17:54:52 UTC <byorgey> hahahaha!!
+2012-03-26 17:55:16 UTC <luite> oops the first one is a bit wrong, it should be the typs for fix, not mfix...
+2012-03-26 17:55:17 UTC <fryguybob> nice!
+2012-03-26 17:55:32 UTC <byorgey> luite: yeah, what you wrote is mmfix
+2012-03-26 17:56:02 UTC <byorgey> mmmmfix :: ((a -> a) -> a) -> Nom
+2012-03-26 17:56:40 UTC <tgeeky_> side effects many include: dinner. Computational side effects: None. Enjoy!
+2012-03-26 17:56:47 UTC <tgeeky_> s/many/may/
+2012-03-26 17:57:51 UTC <luite> meh also a typo in the many type sig, should be [a] instead of a
+2012-03-26 17:58:25 UTC <tgeeky_> luite: if you're communicating with Wolfgang, this won't happen!
+2012-03-26 17:58:33 UTC <luite> yes
+2012-03-26 17:59:11 UTC <fryguybob> Names are hard, lets use De Bruijn indexes.
+2012-03-26 17:59:11 UTC <tgeeky_> that seems like it should somehow be obligatory in Haskell, because (evidently) we can.
+2012-03-26 17:59:17 UTC <luite> mmfix will be used in the new edition of the art of haskell programming
+2012-03-26 18:01:18 UTC <byorgey> 2: good idea
+2012-03-26 18:01:31 UTC <luite> hehe
+2012-03-26 18:06:15 UTC <luite> scumbag SPJ said that it would be straightforward to implement this.... still don't know how to do it :(
+2012-03-26 18:07:06 UTC <byorgey> =(
+2012-03-26 18:07:08 UTC <tgeeky_> you're trying to get back information that GHC discards?
+2012-03-26 18:07:26 UTC <luite> hehe no I guess it's still there
+2012-03-26 18:07:31 UTC <luite> but in bits and pieces
+2012-03-26 18:07:55 UTC <tgeeky_> luite: so you want to split and/or reorder it?
+2012-03-26 18:09:47 UTC <luite> dunno what I want, I just want to get types out :p
+2012-03-26 18:13:22 UTC <byorgey> well no wonder it isn't straightforward =)
+2012-03-26 18:15:28 UTC <byorgey> justGetTheTypesOut :: ASTThingy -> [Type]   -- just GET THE TYPES OUT, without any dumb extra cruft
+2012-03-26 18:15:50 UTC <luite> well the function that would be straightforward to implement would be exprType :: HsExpr Id -> Type
+2012-03-26 18:16:37 UTC <luite> where HsExpr Id is the type for a typechecked expression
+2012-03-26 18:17:36 UTC <luite> (there is already exprType :: GhcMonad m => String -> m Type   and exprType :: CoreExpr -> Type
+2012-03-26 18:18:08 UTC <luite> isit's not that far-fetched :)
+2012-03-26 18:18:52 UTC <tgeeky_> byorgey: http://hackage.haskell.org/package/integration-0.1 !!
+2012-03-26 18:20:19 UTC <tgeeky_> ugh. virtualbox install. will lose net :(
+2012-03-26 18:20:21 UTC <tgeeky_> bbiaf
+2012-03-26 18:24:21 UTC <luite> hehe I first thought that tanh-sinh was an Indian name....
+2012-03-26 18:24:42 UTC <byorgey> hehe
+2012-03-26 19:12:25 UTC <fryguybob> luite: Me too!
+2012-03-26 19:13:24 UTC <fryguybob> mzero = Just 0
+2012-03-26 19:40:24 UTC <ClaudiusMaximus> mgsloan: 17:41 < luite> I just wanted to tell mgsloan that desugaring the expression and then using exprType on the CoreType still loses the context because I haven't found a way yet to restore it
+2012-03-26 20:00:23 UTC <mgsloan> thanks!
+2012-03-26 23:23:22 UTC <luite> http://hdiff.luite.com/tmp/typeinfo-mockup.png <- hmm, first stab at a user interface for type info. user has pointed at "scaleX", popup appears, if you then hover one of the "superexpressions" it highlights that as well, in a lighter color. data is fake etc, thoughts?
+2012-03-26 23:25:05 UTC <luite> and I had the idea to display the constraints separately, so that if you hover one, it shows the expressions that introduce the constraint. dunno if that's going to be feasible
+2012-03-26 23:25:17 UTC <luite> shows means highlights :)
+2012-03-26 23:39:03 UTC <mgsloan> cooooool!
+2012-03-26 23:39:32 UTC <luite> I had to limit it a bit, but this is more or less possible with the existing popupmenu code and codemirror highlightSpan things
+2012-03-26 23:40:34 UTC <luite> I experimented with highlighting all levels of an expression differently, but it gets messy quickly
+2012-03-26 23:40:58 UTC <mgsloan> yeah
+2012-03-26 23:41:08 UTC <luite> http://lemonodor.com/archives/001207.html  <- things like this, with the color in the types menu
+2012-03-26 23:41:27 UTC <luite> but it's often not easy to see the difference between the colors
+2012-03-26 23:41:38 UTC <mgsloan> associating a type with a multiline term is not something I've figured out yet
+2012-03-26 23:41:54 UTC <mgsloan> maybe I'll mockup type diagrams on your mockup
+2012-03-26 23:42:07 UTC <luite> yeah I was thinking of start/end markers, with arrows or something, but multiline makes that really messy
+2012-03-26 23:42:31 UTC <luite> and it's much more difficult to do than this
+2012-03-26 23:43:44 UTC <luite> this = keep track of two markers + popupmenu with some extra code (to avoid having to attach a popup menu to each element in the editor, which is really slow, so a custom mouse handler that adds the menu on demand)
+2012-03-26 23:43:48 UTC <luite> relatively simple
+2012-03-26 23:43:54 UTC <mgsloan> this looks perfect for now.  It might be hard to get unambiguous start / end, but as long as it's always in nesting order should be fine
+2012-03-26 23:44:31 UTC <luite> I'm still not sure about if separating the context will work
+2012-03-26 23:44:50 UTC <luite> it makes the individual type sigs much more readable
+2012-03-26 23:44:57 UTC <luite> since they're usually pretty short
+2012-03-26 23:45:53 UTC <luite> although I guess you'd still get really long ones occasionally, for data types with 20 fields for example
+2012-03-26 23:50:19 UTC <mgsloan> yup
+2012-03-26 23:50:37 UTC <mgsloan> one issue can be if there are multiple polymorphic variables that have the same context
+2012-03-26 23:50:52 UTC <mgsloan> leads to a lot of repetition
+2012-03-26 23:51:38 UTC <luite> hmm, does that happen often?
+2012-03-26 23:53:21 UTC <luite> usually when I have Context a, MoreContext a, Context b, MoreContext b, then also a ~ b
+2012-03-26 23:53:38 UTC <mgsloan> yeah, probably not something to worry about
+2012-03-26 23:53:45 UTC <luite> maybe I'm forgetting some use gases
+2012-03-26 23:53:47 UTC <luite> cases
+2012-03-27 01:06:07 UTC <vyom> can somebody help me understand the "color" implementation in the old diagrams-svg code https://github.com/deepakjois/diagrams-svg/blob/19a0b4d7228d0c042676d3b2a4b0afee032268fc/src/Graphics/Rendering/SVG.hs#L193
+2012-03-27 01:06:35 UTC <vyom> what is the purpose of the "defAlpha" param there?
+2012-03-27 01:07:56 UTC <vyom> i see that defAlpha is passed in as 0 when it is a fill color and 1 when it is a line color.. whats the rationale behind that?
+2012-03-27 01:07:59 UTC <vyom> any ideas?
+2012-03-27 01:09:56 UTC <fryguybob> vyom: It looks to me like "defAlpha" is the default alpha that SVG would assign to that kind of path.
+2012-03-27 01:10:27 UTC <vyom> ah ok.. so it is the "default" alpha
+2012-03-27 01:10:39 UTC <fryguybob> Instead of always outputing an "opacity" attribute, it avoids it when it matches the default.
+2012-03-27 01:10:46 UTC <vyom> ok makes sense
+2012-03-27 01:11:02 UTC <vyom> thank
+2012-03-27 01:11:04 UTC <vyom> thanks
+2012-03-27 01:12:46 UTC <luite> isn't that wrong?
+2012-03-27 01:15:05 UTC <vyom> it could be wrong.. I am not sure why there are different default values for fill color and line color
+2012-03-27 01:16:30 UTC <luite> opacity is relative to parent elements, I'm not sure if there's a situation where a non-unit opacity attribute would give the same result as somehow making a default one
+2012-03-27 01:24:51 UTC <vyom> http://stackoverflow.com/questions/6042550/svg-fill-color-transparency-alpha
+2012-03-27 01:26:23 UTC <luite> hmm, I'm not convinced, I thought that if you have opacity=a, and fill-opacity=a, then the final opacity will be a^2
+2012-03-27 01:33:50 UTC <vyom> i have no idea
+2012-03-27 01:33:51 UTC <vyom> :)
+2012-03-27 01:44:02 UTC <byorgey> ACTION has no idea either
+2012-03-27 01:48:18 UTC <byorgey> luite: lockup looks really cool =)
+2012-03-27 01:48:21 UTC <byorgey> *mockup
+2012-03-27 01:49:25 UTC <luite> byorgey: can you think of situations where separating the context wouldn't work?
+2012-03-27 01:50:33 UTC <byorgey> luite: you mean because you separate out only one context for all of the subexpression types?
+2012-03-27 01:50:38 UTC <luite> yeah
+2012-03-27 01:50:56 UTC <byorgey> I think it's quite clever, I hope it works... let me think for a second...
+2012-03-27 01:50:57 UTC <luite> otherwise there would be a lot of repeatals
+2012-03-27 01:51:01 UTC <byorgey> indeed
+2012-03-27 01:51:39 UTC <byorgey> this type info is coming from the decorated GHC AST?
+2012-03-27 01:51:52 UTC <luite> yes
+2012-03-27 01:52:00 UTC <byorgey> so I assume all the type variables have been unified etc.?
+2012-03-27 01:52:23 UTC <byorgey> i.e. you wouldn't have the same type variable have one name in a subexpression and a different name in a superexpression
+2012-03-27 01:52:25 UTC <luite> yes, and all type vars have a unique identifier
+2012-03-27 01:52:33 UTC <byorgey> right, cool
+2012-03-27 01:53:02 UTC <byorgey> then yeah, I'm 99% sure this always works
+2012-03-27 01:53:49 UTC <byorgey> the only situations I could think of where you could possibly end up with something weird would give you ambiguous type errors anyway
+2012-03-27 01:53:54 UTC <byorgey> but even then it might still be fine
+2012-03-27 01:55:46 UTC <luite> hmm, I'll just try to implement it then, getting the usual types works fine now, but the contexts aren't always correct, it's some strange data type that I think is used to generate dictionary passing code when translating to core
+2012-03-27 01:56:41 UTC <luite> it's nice to see that when you for example add Diagram Cairo R2 to the top level name, almost all variables in the sub-expressions disappear
+2012-03-27 01:57:12 UTC <byorgey> yeah, I would expect that
+2012-03-27 01:58:45 UTC <luite> I asked in #haskell-blah whether people would want to see, say, (#) :: Diagram Cairo R2 -> (Diagram Cairo R2 -> Diagram Cairo R2) -> Diagram Cairo R2  there, or the general a -> (a -> b) -> b type, I think the first one is better
+2012-03-27 01:58:59 UTC <luite> when pointing at something that is defined outside the expr, with a more general type
+2012-03-27 01:59:07 UTC <byorgey> ah, right
+2012-03-27 01:59:08 UTC <byorgey> hmm
+2012-03-27 01:59:22 UTC <byorgey> I'm not even sure myself
+2012-03-27 01:59:23 UTC <luite> but I like being able to see the specialized/unified type as it appears in the expr
+2012-03-27 01:59:58 UTC <luite> but I'll probably add something to show the type of any name (local/global) later
+2012-03-27 02:00:21 UTC <luite> so you could get both... you only point at a single name at a time, so that could be a single line in a different color somehwere in the popup menu
+2012-03-27 02:24:40 UTC <tgeeky_> luite: when presented with an option A or B, choose A + B
+2012-03-27 02:25:12 UTC <tgeeky_> and them sum over the probabilities
+2012-03-27 02:32:00 UTC <luite> that's more or less emacs' philosophy. apples philosphy would be to choose neither since there is a possibility for confusion
+2012-03-27 02:40:19 UTC <mgsloan1> http://www.mgsloan.com/mockup3.png
+2012-03-27 02:40:21 UTC <mgsloan1> http://www.mgsloan.com/mockup2.png
+2012-03-27 02:40:23 UTC <mgsloan1> http://www.mgsloan.com/mockup1.png
+2012-03-27 02:45:22 UTC <luite> what does the D mean?
+2012-03-27 02:45:45 UTC <mgsloan1> Double
+2012-03-27 02:45:50 UTC <vyom> looks pretty
+2012-03-27 02:46:03 UTC <luite> mgsloan1: ah they're actually often not Double at all
+2012-03-27 02:46:20 UTC <vyom> now my turn.. I just hooked up color support in diagrams-svg : http://dl.dropbox.com/u/953/logo/explode.svg
+2012-03-27 02:46:35 UTC <mgsloan1> ahh, so shoudl have introduced a Î³ then
+2012-03-27 02:46:35 UTC <luite> but Scalar of some vector space
+2012-03-27 02:46:45 UTC <luite> some are actually Double, but some are not :)
+2012-03-27 02:46:50 UTC <mgsloan1> vyom: cool!
+2012-03-27 02:47:37 UTC <luite> vyom forgot the Sale, 50% off text!
+2012-03-27 02:47:47 UTC <mgsloan1> seems like most would be Scalar v?
+2012-03-27 02:47:59 UTC <mgsloan1> Scalar R2 = Double, though
+2012-03-27 02:48:00 UTC <luite> mgsloan1: yeah I think they are
+2012-03-27 02:48:20 UTC <vyom> mgsloan1: now if we can hack on the Turtle in diagrams-contrib.. i can add some logo procedures to support color
+2012-03-27 02:49:00 UTC <vyom> luite: text is actually not that hard.. i should have that done soon
+2012-03-27 02:49:08 UTC <mgsloan1> which is something to think about.. To present (on request) the fact that those things are D because Scalar R2 ~ Double
+2012-03-27 02:49:13 UTC <luite> vyom: great
+2012-03-27 02:49:44 UTC <mgsloan1> vyom: yeah, that'll be fun!
+2012-03-27 02:50:04 UTC <luite> mgsloan1: yeah I still have that problem, atm my type info is a bit inconsistent in whether it expands type synonyms
+2012-03-27 02:50:11 UTC <byorgey> vyom: yay!
+2012-03-27 02:50:30 UTC <luite> mgsloan1: I'm not 100% sure I understand the arrows btw :)
+2012-03-27 02:50:54 UTC <mgsloan1> they have consistent meaning in mockup1/2
+2012-03-27 02:51:08 UTC <mgsloan1> in mockup3, they are special when under "#"
+2012-03-27 02:51:28 UTC <mgsloan1> and expand out according to the replacement rule in the upper right corner
+2012-03-27 02:52:29 UTC <mgsloan1> and there are a few visual inconsistencies that have no semantic bearing
+2012-03-27 02:53:40 UTC <mgsloan1> notably under "c # scaleX 0.2", the line under "c" should be raised
+2012-03-27 02:55:00 UTC <luite> hmm, I still don't really see how to read them
+2012-03-27 02:55:37 UTC <mgsloan1> darn, I was hoping it'd be straightforward-ish.  Lemme draw one more pic
+2012-03-27 02:55:53 UTC <mgsloan1> I could explain, but I'm interested in making these intuitive..
+2012-03-27 02:56:30 UTC <luite> hehe maybe you should pick smarter test persons ;p
+2012-03-27 02:57:25 UTC <mgsloan1> as far as I know there isn't a canonical type diagram style, so this has risk of canonicalization into type theory / proof system culture, which means some degree of care should be taken.  Not that any notational decisions are really set in stone
+2012-03-27 02:57:52 UTC <mgsloan1> byorgey: What do you think of the mockups? :D
+2012-03-27 02:58:25 UTC <mgsloan1> (haha, jk luite, though byorgey is clearly very smart!)
+2012-03-27 02:59:39 UTC <mgsloan1> byorgey: also, at some point I was going to email you my technique for driving GHCI to get types from inside expressions.  Not necessary anymore, now that it's been revealed that getting the types out of GHC API isn't /that/ awful
+2012-03-27 03:00:27 UTC <byorgey> mgsloan1: it looks cool though I must admit I don't find it intuitive to read either.  I am still not quite sure how to interpret them.
+2012-03-27 03:00:40 UTC <mgsloan1> cool, good feedback!
+2012-03-27 03:01:04 UTC <mgsloan1> a parameter below a line means that it's being provided as a parameter.
+2012-03-27 03:01:37 UTC <mgsloan1> the arrows downwards represent the results of application
+2012-03-27 03:01:43 UTC <byorgey> aha, and next to a down-pointing arrow means... right
+2012-03-27 03:01:55 UTC <mgsloan1> if there's one type next to the arrow, then that's the result.
+2012-03-27 03:02:05 UTC <mgsloan1> if there are multiple stacked, then it's a function result, read top down
+2012-03-27 03:02:33 UTC <mgsloan1> in mockup1/2 I make the lines cross more than they need to...
+2012-03-27 03:02:49 UTC <mgsloan1> ACTION fixes things
+2012-03-27 03:02:51 UTC <luite> yeah I understand 2
+2012-03-27 03:03:06 UTC <luite> but crossing is confusing
+2012-03-27 03:03:25 UTC <byorgey> oh, ok, I see now
+2012-03-27 03:03:58 UTC <byorgey> mgsloan1: by the way, I don't think you necessarily need to have as a goal that people should just be able to intuit the meaning without any explanation whatsoever.
+2012-03-27 03:04:02 UTC <byorgey> I doubt that is really possible.
+2012-03-27 03:04:33 UTC <byorgey> More like they should be able to understand it after reading one page of explanation/examples.
+2012-03-27 03:04:34 UTC <mgsloan1> true, but I think that people that already know the meaning of the haskell should be able to pick up on the diagram intuitively
+2012-03-27 03:04:50 UTC <mgsloan1> or deductively, perhaps
+2012-03-27 03:05:30 UTC <byorgey> yeah, deductively, maybe, but that requires a big cognitive investment
+2012-03-27 03:05:37 UTC <luite> I had some problems because of the crossing arrows not really pointing at things they seem to be pointing at
+2012-03-27 03:05:45 UTC <byorgey> many people who *would* be able to deduce the meaning are not going to put in the effort required to do so
+2012-03-27 03:06:17 UTC <byorgey> of course I'm all for making it as easy to understand as possible. =)
+2012-03-27 03:06:41 UTC <byorgey> and I think this design is getting pretty close.
+2012-03-27 03:06:42 UTC <mgsloan1> true, there will be a manual :D
+2012-03-27 03:06:53 UTC <luite> I think the main problem will be clutter, you'll want to reduce the number of lines as much as possible
+2012-03-27 03:07:12 UTC <byorgey> just making the lines grey instead of black would already help a ton I think
+2012-03-27 03:07:29 UTC <mgsloan1> good point.  I should know these things, having read Tufte
+2012-03-27 03:07:35 UTC <mgsloan1> need to re-read Tufte, lol
+2012-03-27 03:07:41 UTC <byorgey> hehe
+2012-03-27 03:08:16 UTC <luite> hm, I haven't read it, but maybe I should
+2012-03-27 03:08:33 UTC <mgsloan1> they're very pretty books
+2012-03-27 03:08:59 UTC <vyom> here is the code for colors support : https://github.com/deepakjois/diagrams-svg/commit/0fb5c05da13d02f919cb4de068394ce536abc56e
+2012-03-27 03:09:03 UTC <vyom> feedback welcome
+2012-03-27 03:09:21 UTC <vyom> monoids all the way!
+2012-03-27 03:09:30 UTC <byorgey> tufte books are a lot of fun
+2012-03-27 03:11:01 UTC <mgsloan1> you too can crusade against chartjunk!
+2012-03-27 03:11:28 UTC <luite> haven't read a lot lately, can't seem to concentrate on it :( but maybe books with pretty pictures help
+2012-03-27 03:11:45 UTC <byorgey> vyom: hurrah for monoids!  =)  code looks good as far as I can see.
+2012-03-27 03:12:29 UTC <byorgey> luite: it is acceptable to just look at all the pretty pictures in a tufte book and ignore the text
+2012-03-27 03:12:36 UTC <byorgey> (though the text is interesting too.)
+2012-03-27 03:13:29 UTC <luite> did you ever get an unprotected pdf btw, from MAA?
+2012-03-27 03:14:05 UTC <byorgey> NO
+2012-03-27 03:14:13 UTC <byorgey> I need to call them
+2012-03-27 03:14:32 UTC <byorgey> not only did I not get a PDF, I didn't even get a response.
+2012-03-27 03:14:51 UTC <byorgey> maybe I should send them an automated email every day until I hear back.
+2012-03-27 03:14:56 UTC <luite> k, guess I won't be buying ebooks from them :)
+2012-03-27 03:15:43 UTC <byorgey> sensible.
+2012-03-27 03:33:52 UTC <mgsloan> you should show them q3 :)
+2012-03-27 03:39:59 UTC <mgsloan> hmm, everyone in #haskell must not be paying any attention right now :P
+2012-03-27 03:50:37 UTC <rasfar> (hi!)
+2012-03-27 03:50:50 UTC <luite> hello
+2012-03-27 03:51:28 UTC <rasfar> heehee.  i'll keep a #diagrams tab open now, thanks for the pointer luite
+2012-03-27 03:52:55 UTC <luite> yeah sorry I forgot to tell you that I'm also here... but even so it's still a pretty cool channel :p
+2012-03-27 03:54:55 UTC <luite> but I'm mainly here to annoy people with my screenshots so you can safely ignore me
+2012-03-27 03:55:57 UTC <mgsloan> soo close to a waaay better diagram
+2012-03-27 03:56:11 UTC <rasfar> right ... and this is a good place to take cover from categorical differential graphs discussions and the like in #haskell?
+2012-03-27 03:56:19 UTC <rasfar> speaking for myself anyway
+2012-03-27 03:56:44 UTC <rasfar> (in small doses it's okay)
+2012-03-27 03:57:06 UTC <rasfar> nm i don't even believe what i'm saying
+2012-03-27 03:57:18 UTC <luite> dunno, I'm not terribly interested in the formal grammar/language things that augur usually talks about :)
+2012-03-27 03:57:43 UTC <rasfar> arrg!!  i'm so stir crazy, i just wish i knew what to work on (that i was capable of without reading for a month)
+2012-03-27 03:58:48 UTC <rasfar> my own projects have reached some sort of wierd apex of diversity and dispersion, it's very fatiguing trying to even gather the ideas into a summary, i just want to DO something concrete.
+2012-03-27 03:59:11 UTC <rasfar> maybe i should get a job :)
+2012-03-27 03:59:52 UTC <luite> a GSoC project?
+2012-03-27 04:00:08 UTC <rasfar> i'd probably be reasonably interested in what augur's talking about but, insufficient background i think
+2012-03-27 04:00:16 UTC <rasfar> don't i have to be a student?
+2012-03-27 04:00:25 UTC <luite> yes
+2012-03-27 04:00:37 UTC <rasfar> no longer a student, ah well
+2012-03-27 04:02:08 UTC <rasfar> it's okay, i'll find something.  my little freesect project really got me fired up, if i don't find something soon i'll..... <POOF!!>
+2012-03-27 04:09:41 UTC <mgsloan> http://www.mgsloan.com/mockup4.png
+2012-03-27 04:13:43 UTC <rasfar> those squiggles almost look like dance instructions for mouse gestures...
+2012-03-27 04:32:37 UTC <luite> mgsloan: it would be difficult to get this working with the CodeMirror editor btw, since you can't adjust individual line height with that thing
+2012-03-27 04:32:57 UTC <luite> dunno if you were planning to overlay output over a live editor, or use it more as a documentation generator
+2012-03-27 04:32:58 UTC <mgsloan> yupyup
+2012-03-27 04:33:09 UTC <mgsloan> my plan was that there'd be an "explain types" button
+2012-03-27 04:33:19 UTC <mgsloan> and a svg diagram including the code would pop up
+2012-03-27 04:33:36 UTC <luite> right, that sounds doable
+2012-03-27 04:45:54 UTC <luite> wowh apparently I was missing 90% of the type context information by not unsafePerformIOing to print part of the AST
+2012-03-27 04:48:52 UTC <luite> mgsloan: if you're playing with that code, modify it to have special cases for TcEvBinds and EvBindsVar, and unsafePerformIO a readIORef on the EvBindMap
+2012-03-27 04:51:35 UTC <luite> I  hope I can filter out the relevant things, otherwise people will have to buy a bigger screen to see the whole popup
+2012-03-27 04:55:12 UTC <luite> 400 lines after prettyprinting
+2012-03-27 04:55:20 UTC <mgsloan> whoah!!! good news everyone!
+2012-03-27 04:55:24 UTC <mgsloan> type contexts :)
+2012-03-27 04:56:32 UTC <luite> oh wait, I copied a bit of the rest of the AST :p
+2012-03-27 04:57:28 UTC <mgsloan> ACTION has been considering creating an interactive folding diagram of the AST info, arrayed along the text
+2012-03-27 08:57:59 UTC <mgsloan> http://www.mgsloan.com/mockup5.png
+2012-03-27 08:58:01 UTC <mgsloan> goodnight!
+2012-03-27 16:57:58 UTC <Rc43> Hi, guys.
+2012-03-27 16:58:43 UTC <Rc43> Is there fast way to combine diagrams with lines connecting? I has a graph and want to group some vertices into trees.
+2012-03-27 16:59:34 UTC <Rc43> So I need something like `root -> [child] -> diagram`.
+2012-03-27 16:59:56 UTC <Rc43> It isn't hard to implement such thing< but may be there is something convenient.
+2012-03-27 17:01:02 UTC <Rc43> (I mean type of function above is `d -> [d] -> d`, where d is `Diagram Cairo R2`.)
+2012-03-27 17:02:10 UTC <ClaudiusMaximus> 8http://hackage.haskell.org/packages/archive/diagrams-contrib/0.1.1.0/doc/html/Diagrams-TwoD-Layout-Tree.html perhaps
+2012-03-27 17:02:13 UTC <ClaudiusMaximus> oops
+2012-03-27 17:02:15 UTC <ClaudiusMaximus> http://hackage.haskell.org/packages/archive/diagrams-contrib/0.1.1.0/doc/html/Diagrams-TwoD-Layout-Tree.html perhaps
+2012-03-27 17:06:16 UTC <Rc43> Oh, I didn't search, thank you. Will watch now.
+2012-03-27 17:08:57 UTC <Rc43> Hm, I need to manually convert my diagrams into trees.
+2012-03-27 17:36:34 UTC <byorgey> Rc43: so  d -> [d] -> d  would not be enough, because there's no information about their relative locations.
+2012-03-27 17:36:48 UTC <byorgey> Rc43: maybe something like  Diagram -> [(P2, Diagram)] -> Diagram  ?
+2012-03-27 17:41:02 UTC <Rc43> byorgey, in this case I want to chain children with (|||), and root with them with (===), and then draw lines from center of root diagram to centers of chidren' diagrams.
+2012-03-27 17:59:03 UTC <byorgey> Rc43: oh, I see.
+2012-03-27 18:00:36 UTC <byorgey> Rc43: yeah, there's no function already made to do that.  But you can turn a diagram and a list of diagrams into a tree pretty easily, then use a tree layout algorithm
+2012-03-27 18:00:53 UTC <Rc43> byorgey, btw, can I insert one diagram into a center of another?
+2012-03-27 18:01:00 UTC <byorgey> Rc43: if you get the latest version of diagrams-contrib (0.1.1.0) you probably want to use symmLayout
+2012-03-27 18:01:27 UTC <byorgey> Rc43: I'm not sure exactly what you mean.
+2012-03-27 18:01:47 UTC <Rc43> byorgey, suppose I have a circle and I want to place it into a square
+2012-03-27 18:02:02 UTC <byorgey> Rc43: Does `atop` do what you want?
+2012-03-27 18:02:16 UTC <byorgey> aka mappend aka (<>)
+2012-03-27 18:02:30 UTC <Rc43> Where it is?
+2012-03-27 18:02:56 UTC <Rc43> Oh,
+2012-03-27 18:03:01 UTC <Rc43> it is sos simple?
+2012-03-27 18:03:11 UTC <Rc43> Will try now.
+2012-03-27 18:06:16 UTC <Rc43> Yeah, <> works fine.
+2012-03-27 18:06:24 UTC <byorgey> great
+2012-03-27 18:08:41 UTC <Rc43> Am I right that if I have graph it is trivial to draw it and, what is more important, to interact with it?
+2012-03-27 18:08:52 UTC <Rc43> I am trying to implement a simple diagrams editor.
+2012-03-27 18:09:00 UTC <Rc43> (as part of bigger project)
+2012-03-27 18:09:45 UTC <Rc43> So, I mean I need to remember which part of picture belongs to which node.
+2012-03-27 18:10:26 UTC <byorgey> Rc43: you can accomplish that using "queries".  See http://projects.haskell.org/diagrams/manual/diagrams-manual.html#using-queries
+2012-03-27 18:10:45 UTC <Rc43> Yeah, seen it but didnt read yet.
+2012-03-27 18:10:52 UTC <byorgey> Rc43: so instead of the default  Diagram b v = QDiagram b v Any,  you could use  QDiagram b v (Set NodeID)
+2012-03-27 18:10:56 UTC <Rc43> Just for sure.
+2012-03-27 18:11:28 UTC <byorgey> then when you draw a node of the graph you would do something like   drawNode blah blah # value (S.singleton nodeID)
+2012-03-27 18:11:29 UTC <Rc43> Cool, thanks.
+2012-03-27 18:12:16 UTC <Rc43> And how hard to implement different edge stretching, node movement, etc?
+2012-03-27 18:13:01 UTC <byorgey> you mean to make an interactive graph diagram where you can drag nodes around etc.?
+2012-03-27 18:14:08 UTC <Rc43> Yes.
+2012-03-27 18:15:40 UTC <byorgey> At the moment, there's no better way than to just redraw the entire updated diagram every time a node is moved.  But that might be good enough.
+2012-03-27 18:16:22 UTC <byorgey> Note you would have to keep not just the final diagram but a map from NodeID's to diagrams, so you can update the one(s) that change and then recompose them
+2012-03-27 18:16:51 UTC <byorgey> We are also very interested in improving support for interactivity, e.g. maybe have a backend that compiles directly to interactive Javascript
+2012-03-27 18:16:59 UTC <byorgey> but nothing like that exists yet.
+2012-03-27 18:18:28 UTC <Rc43> about recomposing: isn't it too long for often updates?
+2012-03-27 18:18:51 UTC <byorgey> it depends how big your diagram is and how often you update.
+2012-03-27 18:19:04 UTC <byorgey> but yes, it might be.
+2012-03-27 18:19:23 UTC <byorgey> there is not good built-in support for interactivity at the moment, but we are moving in that direction.
+2012-03-27 18:19:31 UTC <Rc43> Hm, in perspective it could be more than 200 nodes.
+2012-03-27 18:19:44 UTC <byorgey> that doesn't sound too bad.
+2012-03-27 18:20:02 UTC <Rc43> Ok.
+2012-03-27 18:20:11 UTC <Rc43> What do you want to do with interactive javascript?
+2012-03-27 18:20:24 UTC <byorgey> make interactive diagrams!
+2012-03-27 18:21:00 UTC <byorgey> I don't know, it's not very specific.  The idea is to build it and then see what cool things other people do with it. =)
+2012-03-27 18:21:33 UTC <Rc43> Eeem, what is interactive js? Google talks too vague.
+2012-03-27 18:22:09 UTC <byorgey> I just mean something like output an SVG which includes javascript that says how to update itself based on user input.
+2012-03-27 18:22:33 UTC <byorgey> so when you click, drag, etc. it just gets updated immediately in your browser, it doesn't have to recompile the whole diagram
+2012-03-27 18:23:06 UTC <byorgey> so we would make the interactivity part of the description of a diagram itself, rather than something you impose externally
+2012-03-27 18:23:52 UTC <Rc43> Ok, it's clear. Is it possible to implement such thing with two "backends" : js (e.g. for browser) and haskell code?
+2012-03-27 18:24:28 UTC <Rc43> The last will be very pretty with Gtk, I think. Because of event-driven model of both.
+2012-03-27 18:24:32 UTC <Rc43> *would
+2012-03-27 18:25:00 UTC <byorgey> yes, I think it's possible.
+2012-03-27 18:25:35 UTC <byorgey> but I haven't thought through many of the details yet.
+2012-03-27 18:32:26 UTC <Rc43> May be, I will try to contribute something in some weeks/months. It can be related with my current course work.
+2012-03-27 18:44:23 UTC <byorgey> Rc43: sounds great! =)
+2012-03-27 18:57:14 UTC <luite> ugh I sprayed brake fluid all over my bike
+2012-03-27 19:00:32 UTC <luite> i also got some in my eyes, how bad is that stuff? it's standard DOT4 fluid
+2012-03-27 19:05:51 UTC <byorgey> luite: looks like it's not too bad, at least based on the list of usual ingredients on Wikipedia
+2012-03-27 19:11:58 UTC <luite> it does work great as a paint stripper
+2012-03-27 19:12:21 UTC <byorgey> uhhh
+2012-03-27 19:12:54 UTC <byorgey> maybe Wikipedia is lying then.
+2012-03-27 19:13:58 UTC <luite> seriously, I'm a bit worried about my bike's paint now, even though I cleaned the DOT4 off... last time I spilled some on painted wood, and it removed all the paint :)
+2012-03-27 19:17:18 UTC <byorgey> well, your bike isn't made of wood, is it?
+2012-03-27 19:17:23 UTC <byorgey> ;)
+2012-03-27 19:19:46 UTC <luite> hmm, looks like you shouldn't drink this stuff, although it tastes sweet
+2012-03-27 19:23:07 UTC <byorgey> hehe, as a general rule I try not to drink anything which can remove paint
+2012-03-27 19:25:08 UTC <luite> hmm, sounds like a good rule, I should make that my life's motto
+2012-03-27 19:26:00 UTC <byorgey> (yes, that includes Coke)
+2012-03-27 19:26:29 UTC <byorgey> as mottos go it's not bad.  I mean, I can think of a lot of worse ones.
+2012-03-27 19:28:31 UTC <luite> hehe that would rule out a lot of drink, some other drinks are worse than Coke actually, iced tea is worse for your teeth because it has a larger buffer capacity
+2012-03-27 19:35:32 UTC <fryguybob> What about water soluble paint?
+2012-03-27 19:37:16 UTC <byorgey> right. I don't drink water either.
+2012-03-27 19:37:18 UTC <fryguybob> luite: http://championbrands.com/MSDS/4059K.pdf
+2012-03-27 19:37:40 UTC <fryguybob> if you can still see there is a section on eye care.
+2012-03-27 19:37:53 UTC <luite> yeah there is, I had already googled
+2012-03-27 19:38:33 UTC <byorgey> there is still a section on eye care even if you can't see.
+2012-03-27 19:38:41 UTC <byorgey> but in that case it's probably too late anyway.
+2012-03-27 19:39:05 UTC <luite> I have only slight discomfort and already  rinsed it out, so I guess it's ok, but otherwise i'll do a feature request for braille support in diagrams
+2012-03-27 19:39:41 UTC <byorgey> hey, that's a nice way to have good text support
+2012-03-27 19:39:46 UTC <byorgey> just convert all the text to Braille first
+2012-03-27 19:40:00 UTC <luite> anyway I hate bleeding brakes now more than before, and it was alreay my least favourite part of bike maintenance :p
+2012-03-27 19:41:12 UTC <byorgey> 'Avoid contact with eyes.  Keep container closed.  Use with adequate ventilation. Wash thoroughly after handling.'
+2012-03-27 19:41:36 UTC <byorgey> seriously, are there any chemicals that say 'keep closed, use with adequate ventilation, oh, but putting it in your eyes is totally cool'?
+2012-03-27 19:42:10 UTC <luite> dunno, contact lens fluid possibly
+2012-03-27 19:43:02 UTC <byorgey> hehehe
+2012-03-27 19:43:45 UTC <luite> I don't have contacts, so can't check
+2012-03-27 19:45:50 UTC <fryguybob> If ingested... You are doing it right!
+2012-03-27 19:47:17 UTC <luite> hm looks like contact lens solution usually isn't flammable
+2012-03-27 19:47:49 UTC <byorgey> I should hope not.
+2012-03-27 19:48:19 UTC <luite> yeah it could make burning eyes quite a bit worse
+2012-03-27 19:50:50 UTC <luite> "Eye contact with flammable liquids can cause burning, irritation, and eye damage." <- hehe first hit on google when searching for eye contact flammable
+2012-03-27 19:57:06 UTC <tgeeky_> d.  I mean, I can think of a lot of worse ones.
+2012-03-27 19:57:11 UTC <tgeeky_> whoops
+2012-03-27 20:02:24 UTC <byorgey> "Eye contact with flammable liquids can cause burning, irritation, and eye damage.  No really, ACTUAL BURNING."
+2012-03-27 20:03:35 UTC <byorgey> mgsloan: your type diagrams are looking nice!  I like the mini-tutorial.
+2012-03-27 20:03:53 UTC <mgsloan> thanks! :)
+2012-03-27 20:04:16 UTC <mgsloan> now for just the slight matter of implementation..
+2012-03-27 20:04:32 UTC <byorgey> bah, details!
+2012-03-27 20:05:02 UTC <byorgey> In general I am quite excited by mgsloan and luite's work on displaying types in a nice way.  Up until now I had basically just punted on the whole types thing in diagrams.
+2012-03-27 20:05:30 UTC <byorgey> i.e. the user manual doesn't really ever mention the types of anything, because the types are too ugly and typeclass-polymorphic to look at
+2012-03-27 20:05:45 UTC <byorgey> even though thinking about types is indispensable, especially when you run into an error.
+2012-03-27 20:05:53 UTC <mgsloan> yup!
+2012-03-27 20:06:14 UTC <mgsloan> These diagrams will essentially replace type errors when mixed with type slicing.
+2012-03-27 20:06:33 UTC <byorgey> But now it's looking like I can have my cake (nice, general type-class-polymorphic types) and eat it (visualize/explain them in a nice way) too.
+2012-03-27 20:06:46 UTC <luite> hmm, cake
+2012-03-27 20:07:06 UTC <byorgey> mmmm, slices of type cake
+2012-03-27 20:07:17 UTC <luite> with a glass of paint-stripping liquid
+2012-03-27 20:07:30 UTC <byorgey> yum
+2012-03-27 20:08:44 UTC <mgsloan> omnom, it's definitely what I most missed as a haskell nub
+2012-03-27 20:09:07 UTC <byorgey> mgsloan: man, that would be so sweet, to have a diagrams IDE which itself uses diagrams to show you documentation & type errors!
+2012-03-27 20:09:27 UTC <byorgey> (of course this will be sweet for things beyond just diagrams)
+2012-03-27 20:09:41 UTC <mgsloan> it'll be pretty shwank to be like "and all of these type diagrams were created with diagrams" in the diagrams docu
+2012-03-27 20:09:52 UTC <mgsloan> byorgey - that's been my plan for a while now! :)
+2012-03-27 20:09:54 UTC <byorgey> yes, absolutely
+2012-03-27 20:11:44 UTC <fryguybob> Could also lead to interesting bugs "I can't tell what the bug is because of the bug."
+2012-03-27 20:13:04 UTC <mgsloan> yeah, there is a bit more risk of that, when you are adding more transformations on compiler information - but that's a problem endemic to compilers
+2012-03-27 20:14:27 UTC <mgsloan> oh, and btw, I finally fixed up gtk-toy-diagrams to v 0.5 !  thanks for the email about that last month 'n such!  Got all busy and distracted till recently
+2012-03-27 20:14:58 UTC <byorgey> mgsloan: oh, nice!  I had been wondering about that, glad you got it fixed up.  Hope it wasn't too much of a pain.
+2012-03-27 20:15:18 UTC <byorgey> fryguybob: a bootstrapping bug?
+2012-03-27 20:15:25 UTC <mgsloan> nah, not too bad.  I like the uniformity of r2 / p2
+2012-03-27 20:16:02 UTC <mgsloan> I don't exactly like that Point R2 is a double existential wrapper, but it does make sense
+2012-03-27 20:16:50 UTC <fryguybob> I was just joking about if types were visible elements and they obscured the screen.
+2012-03-28 02:12:31 UTC <mgsloan> there's also the matter of redrawing only the invalidated region
+2012-03-28 02:38:42 UTC <vyom> anyone know how styles are inherited in a diagram? Is there a concept of a "container" which exists only to specify styles and all diagrams in that "container" inherit the styles?
+2012-03-28 02:39:56 UTC <vyom> and also.. when something like that happens, does the withStyle function get called for every diagram?
+2012-03-28 02:40:58 UTC <byorgey> vyom: heh, this is exactly the issue that I'm working on right now.
+2012-03-28 02:41:40 UTC <byorgey> vyom: diagrams are stored in a tree format, where styles can be at internal nodes and are inherited by all primitives underneath it in the tree.
+2012-03-28 02:42:20 UTC <byorgey> vyom: however with the current setup it is not possible for backends to observe the tree structure; withStyle basically gets called once for every *primitive* (with the accumulated style).
+2012-03-28 02:42:33 UTC <byorgey> but clearly this is suboptimal for many reasons.
+2012-03-28 02:43:19 UTC <byorgey> so I'm working on figuring out the best way to change it so that backends can just deal with a style once for an entire subtree.
+2012-03-28 02:44:20 UTC <vyom> hmm.. ok
+2012-03-28 02:44:37 UTC <byorgey> did that make any sense?
+2012-03-28 02:44:44 UTC <vyom> yes..
+2012-03-28 02:45:04 UTC <vyom> so if i understand correctly.. there is no nesting among "primitives"
+2012-03-28 02:45:09 UTC <byorgey> right
+2012-03-28 02:45:52 UTC <byorgey> think of a diagram as a tree with primitives at the leaves, and annotations like style, transformations, etc. at internal nodes
+2012-03-28 02:45:55 UTC <vyom> so if withStyle is called on each primitive.. as long as i can isolate the styles for each of those primitives.. i dont have to bother about inheritance rules that SVG itself might have
+2012-03-28 02:46:06 UTC <byorgey> right
+2012-03-28 02:46:11 UTC <vyom> makes sense
+2012-03-28 02:46:48 UTC <vyom> another interesting issue i ran into in Chrome https://github.com/deepakjois/diagrams-svg/issues/3
+2012-03-28 02:47:31 UTC <byorgey> vyom: oh, funny.
+2012-03-28 02:48:05 UTC <vyom> which brings in the question of dependencies among attributes.. for example.. in order to workaround that bug above.. i need to check if the line width is 0 and only render the stroke related attributes if it is not
+2012-03-28 02:48:28 UTC <byorgey> right
+2012-03-28 02:48:58 UTC <vyom> anyway most of the core framework is now in place
+2012-03-28 02:49:03 UTC <byorgey> excellent
+2012-03-28 02:49:05 UTC <luite> :)
+2012-03-28 02:49:08 UTC <luite> ACTION <- happy
+2012-03-28 02:49:16 UTC <byorgey> ACTION <- happy
+2012-03-28 02:49:18 UTC <luite> hehe
+2012-03-28 02:49:31 UTC <vyom> i created issues for what is missing https://github.com/deepakjois/diagrams-svg/issues
+2012-03-28 02:49:50 UTC <vyom> anyone who wants to contribute can send me pull requests ;)
+2012-03-28 02:50:00 UTC <vyom> a lot of it is fairly mechanical
+2012-03-28 02:50:11 UTC <byorgey> ok, cool, I might
+2012-03-28 02:50:26 UTC <vyom> i want to spend a little time with hs-logo before I get back to this
+2012-03-28 02:50:51 UTC <vyom> so please point folks interested in an SVG backend to the github repo..
+2012-03-28 02:50:56 UTC <byorgey> will do!
+2012-03-28 02:51:00 UTC <vyom> and ask them to send patches ;)
+2012-03-28 02:51:03 UTC <byorgey> I might have some time to hack on it this weekend
+2012-03-28 02:51:41 UTC <vyom> i will be hacking on diagrams-contrib and hs-logo this weekend w/ mgsloan if things go according to plan :)
+2012-03-28 02:52:03 UTC <byorgey> great =)
+2012-03-28 02:52:08 UTC <mgsloan> vyom: yup! that'll be fun!
+2012-03-28 02:52:51 UTC <byorgey> ACTION -> bed, talk to you all later
+2012-03-28 03:22:41 UTC <luite> lol I had a bug in a regexp that should replace tabs with spaces, guess the error :p      x :: In eger -> In eger -> In eger
+2012-03-28 03:34:41 UTC <tgeeky_> \t or t when the other was needed
+2012-03-28 03:35:35 UTC <luite> yeah :)
+2012-03-28 03:35:55 UTC <luite> but the types had me puzzled for a while :)
+2012-03-28 14:20:29 UTC <luite> hmm, I think I have a fully working exprType :: HsExpr Id -> Type now :)
+2012-03-28 14:37:01 UTC <tgeeky_> luite: awesome!
+2012-03-28 14:46:41 UTC <luite> a bit too much low-level type manipulation though, I'll ask for input later when the code is on github
+2012-03-28 14:46:58 UTC <luite> a lot of manually splitting function arguments from types
+2012-03-28 14:47:48 UTC <luite> and splitting off contexts (apparently in GHC types, typeclass predicates are just function arguments)
+2012-03-28 17:16:39 UTC <byorgey> they are in GHC core.
+2012-03-28 17:17:58 UTC <byorgey> luite: did you see Niklas Broberg's proposal on haskell-cafe?
+2012-03-28 17:18:25 UTC <byorgey> luite: he's proposing (as a GSoC project) a haskell-type-exts package to annotate haskell-src-exts ASTs with types =)
+2012-03-28 17:28:59 UTC <fryguybob> Seems like a large project for GSoC (how many pages is the OutsideIn(X) paper? 72?)
+2012-03-28 17:29:17 UTC <fryguybob> I hope it happens though.
+2012-03-28 17:32:19 UTC <byorgey> Yeah, it does seem too large for GSoC.
+2012-03-28 17:32:57 UTC <byorgey> it would indeed be cool.
+2012-03-28 17:33:24 UTC <byorgey> also, implementing the OutsideIn(X) algorithm just by reading the paper is no simple feat.  In fact, it's probably impossible.
+2012-03-28 17:33:28 UTC <ClaudiusMaximus> SoC is a bad idea.  should be WoC.  summer is for lazing around in the sunshine drinking beers and bbqing, if you're a student
+2012-03-28 17:33:40 UTC <byorgey> haha, quite
+2012-03-28 17:35:23 UTC <ClaudiusMaximus> just need to find a big technology company whose name starts with an E to stump up some $Â£â¬
+2012-03-28 17:45:39 UTC <luite> byorgey: yes, I think it's an interesting idea, but I don't think it's realistic
+2012-03-28 17:45:56 UTC <luite> people are going to expect that it will typecheck everything that GHC does
+2012-03-28 17:46:15 UTC <byorgey> yeah, and duplicating GHC's type checker sounds neither feasible or advisable
+2012-03-28 17:46:21 UTC <luite> it will probably be a bit easier to implement a typechecker from scratch with modern libraries, but not by a huge margin
+2012-03-28 17:46:35 UTC <byorgey> right.
+2012-03-28 17:47:06 UTC <byorgey> I'd rather see a library which runs code through both the GHC API and haskell-src-exts, then extracts type annotations from the GHC AST and uses them to decorate the HSE AST
+2012-03-28 17:47:22 UTC <luite> plus a typechecker means that you'll want to load dependencies, possibly from packages, which means implementing almost half of GHC's compiler pipeline?
+2012-03-28 17:47:48 UTC <ClaudiusMaximus> ah good point
+2012-03-28 17:49:08 UTC <byorgey> but I guess at this point, rather than being a party pooper, I'll just sit back and watch.
+2012-03-28 17:49:44 UTC <byorgey> maybe I will be surprised and some awesome GSoC student will do a kick-ass job and come up with something totally sweet, because no one bothered to tell them it was impossible
+2012-03-28 17:49:56 UTC <luite> yeah same here... perhaps with a really good student who'll continue to work after the project, and if Niklas wants to do a good deal of work himself
+2012-03-28 17:50:08 UTC <luite> hehe
+2012-03-28 17:50:08 UTC <byorgey> yeah, it sounds like Niklas has already done a bunch of work
+2012-03-28 17:51:04 UTC <luite> sounds like telling PhD student to solve some millennium prize problem in disguise :p
+2012-03-28 17:51:32 UTC <ClaudiusMaximus> i think it'd be unfair to not tell a student it's very very hard, as a failed project will be all over the internet forever associated with their real name (as far as i can tell, not sure if google is quite as evil as facebook in this regard)
+2012-03-28 17:52:53 UTC <luite> ClaudiusMaximus: I think you should set some intermediate goals, starting with checking a single module, just regular type classes
+2012-03-28 17:53:11 UTC <luite> at least you can tell google it was a success then
+2012-03-28 17:54:24 UTC <luite> perhaps Niklas is already planning to build the whole thing and he's trying to get a free intern this way :)
+2012-03-28 22:44:23 UTC <mgsloan> http://www.mgsloan.com/mockup6.png
+2012-03-28 22:44:41 UTC <mgsloan> (sans contexts)
+2012-03-28 22:46:49 UTC <luite> hehe there's usually lots of types, what are you going to do when you run out of latin and greek letters? ;)
+2012-03-28 22:47:02 UTC <mgsloan> subscripts! :)
+2012-03-28 22:47:21 UTC <luite> btw I got my exprType :: HsExpr Id -> Type working
+2012-03-28 22:48:42 UTC <mgsloan> or, I've also considered that there's a potential optimization problem of selecting expression subsets, and giving each a separate var context
+2012-03-28 22:48:55 UTC <mgsloan> and then relating the contexts
+2012-03-28 22:53:04 UTC <luite> hmm, what do you mean?
+2012-03-28 22:53:55 UTC <luite> I have the complete type-with-constraints for all subexprs now btw
+2012-03-28 22:54:49 UTC <mgsloan> awesome!! can you send me some code perchance?
+2012-03-28 22:55:19 UTC <mgsloan> you know the whole "highlight blocks of code" thing?
+2012-03-28 22:55:35 UTC <mgsloan> you were considering it for assigning different types to things
+2012-03-28 22:56:05 UTC <mgsloan> my thought was that you could divide the expression into zones whenever type vars don't escape that zone
+2012-03-28 22:56:22 UTC <mgsloan> so you can give constraints local to their usage, and keep the number of vars at a minimum
+2012-03-28 22:56:46 UTC <luite> oh right, actually what I was planning to do is this: select expr, collect all super-expressions
+2012-03-28 22:57:01 UTC <rasfar> (looks real nice mgsloan)
+2012-03-28 22:57:12 UTC <luite> then for all those exprs, collect their type variables
+2012-03-28 22:57:20 UTC <luite> and show all contests for those varibles
+2012-03-28 22:57:24 UTC <luite> context
+2012-03-28 22:57:26 UTC <mgsloan> thanks!  I've been spending all my time choosing colors instead of writing code :D
+2012-03-28 22:58:01 UTC <rasfar> hey, presentation is important!
+2012-03-28 22:58:15 UTC <luite> since type vars have a unique id in GHC, it's easy to collect the relevant ones
+2012-03-28 22:58:50 UTC <luite> only "issue" is eq constraints, a ~ Scalar b or something, can introduce b
+2012-03-28 22:59:07 UTC <luite> oh and I guess mptc's have the same
+2012-03-28 22:59:27 UTC <mgsloan> introduce in the forall sense?
+2012-03-28 23:00:54 UTC <luite> nah I mean that say you select a subexpr with only typevar a, then some   a ~ Scalar b  will mention a 'b' in the context
+2012-03-28 23:01:19 UTC <mgsloan> ahh, gotcha
+2012-03-28 23:01:24 UTC <luite> but it wouldn't show other constraints for b
+2012-03-28 23:01:35 UTC <luite> unless you choose to also display those
+2012-03-28 23:02:16 UTC <mgsloan> so, if you care about that, then gotta do the transitive closure of typing relations (that's probably not 100% current terminology, but hey, sounds fancy)
+2012-03-28 23:02:35 UTC <luite> yes
+2012-03-28 23:02:48 UTC <luite> fancy enough for me :)
+2012-03-28 23:07:47 UTC <luite> I'm not sure that my exprType really works though, and the code is extremely messy because I've tried half the GHC API to make this work
+2012-03-28 23:08:01 UTC <luite> it looks like it gives the right results
+2012-03-28 23:08:16 UTC <luite> but I'll need a bit of time to clean it up :)
+2012-03-28 23:08:45 UTC <luite> but there's a lot of manual type splitting involved
+2012-03-28 23:09:10 UTC <luite> while I feel that GHC must somehow already have these thigns built in
+2012-03-28 23:09:32 UTC <luite> a type  Num a => a -> a  is more or less represented the same way as a -> a -> a
+2012-03-28 23:09:40 UTC <luite> only the type of the first argument is different
+2012-03-28 23:10:31 UTC <mgsloan> ah, so you're splitting off all of the => ?
+2012-03-28 23:11:10 UTC <luite> yes, and then reattaching them in the end, with some nubbing to prevent (Num a, Num a) => a -> a
+2012-03-28 23:11:22 UTC <mgsloan> ah
+2012-03-28 23:12:03 UTC <luite> but SPJ might ahve been right, other than those annoying type splitting functions the implementation was straightforward
+2012-03-28 23:13:16 UTC <mgsloan> cool!  Well I'm not even 100% if I need this, but I'm just trying to get good types to build the diagrams from, as you know
+2012-03-28 23:13:40 UTC <luite> yeah, do you have something that workingly extracts types already?
+2012-03-28 23:15:12 UTC <mgsloan> nope, but I haven't put much time into it
+2012-03-28 23:16:53 UTC <mgsloan> https://github.com/mgsloan/panopti/commit/8c54e4fc3613093e12f7fc7a25c4bc3737e3b615
+2012-03-28 23:17:16 UTC <mgsloan> err https://github.com/mgsloan/panopti/commit/c94d34673d14fb5c8be72959d3d4fa2d21949276
+2012-03-28 23:17:33 UTC <luite> ah
+2012-03-28 23:17:43 UTC <luite> oh you don't need those EvBinds after all
+2012-03-28 23:18:45 UTC <luite> but I'm not sure if I'm already converting all required things in the wrapper properly
+2012-03-28 23:20:11 UTC <luite> exprType' :: HscEnv -> Module -> HsExpr Id -> IO (Maybe Type)
+2012-03-28 23:20:13 UTC <luite> exprType' env mod expr = do (_,cexpr) <- initDs env mod emptyGlobalRdrEnv emptyTypeEnv (dsExpr expr) return (CoreUtils.exprType <$> cexpr)
+2012-03-28 23:20:19 UTC <luite> whoops newlines missing
+2012-03-28 23:20:22 UTC <luite> uh
+2012-03-28 23:20:52 UTC <luite> you can use that for now, it's in IO, since it uses desugaring to get the expr type
+2012-03-28 23:21:05 UTC <luite> but it will give you the correct type :)
+2012-03-28 23:21:05 UTC <mgsloan> cool!
+2012-03-28 23:21:19 UTC <mgsloan> thanks!
+2012-03-28 23:22:14 UTC <luite> you get the hscEnv with getSession, and Module from one of your TypecheckedModule or something like that :)
+2012-03-28 23:24:32 UTC <mgsloan> This API isn't as bad as I'd thought it'd be, but wow is it daunting.
+2012-03-28 23:25:39 UTC <luite> I'll make a separate package for my non-IO impl later, it will probably be faster (but might be less correct)
+2012-03-28 23:26:07 UTC <luite> if this one is too slow I'll speed up my packaging effors :)
+2012-03-28 23:28:08 UTC <luite> oh if you need to find the type context, remember that the whole type is built from FunTy
+2012-03-28 23:28:16 UTC <mgsloan> thankfully, speed's not my concern for now.  Just need to get some type-associated code, and it might as well be editable
+2012-03-28 23:28:24 UTC <mgsloan> yup
+2012-03-28 23:28:45 UTC <luite> to see which part is the context: split off the first argument from the Type (splitFunTy_maybe), and then use isPredTy on that argument
+2012-03-28 23:29:17 UTC <luite> if it's a predTy then it's still part of the context, stop splitting when you hit a non-predTy
+2012-03-28 23:30:17 UTC <mgsloan> cool.  So good way to do that would be "splitFun :: Ty -> [Ty]", with "partition isPredTy"
+2012-03-28 23:30:50 UTC <luite> hmm, not sure, because I think there might be some forall in themiddle of a type
+2012-03-28 23:31:05 UTC <luite> so I just stop when I get the first non-predTy
+2012-03-28 23:31:26 UTC <luite> hmm, I might be wrong
+2012-03-28 23:32:47 UTC <tgeeky> you guys are talking about transitive closure of typing relations? count me in!
+2012-03-28 23:33:18 UTC <luite> there's already splitFunTys :: Type -> ([Type], Type) btw
+2012-03-28 23:33:38 UTC <luite> it just keeps the last "argument" separately
+2012-03-28 23:34:02 UTC <tgeeky> luite: so you have to scan over that function and extract all the 2nd arguments
+2012-03-28 23:34:05 UTC <tgeeky> ?
+2012-03-28 23:34:24 UTC <luite> tgeeky: what function?
+2012-03-28 23:34:45 UTC <tgeeky> luite: splitFunTys?
+2012-03-28 23:34:53 UTC <tgeeky> i haven't caught up yet
+2012-03-28 23:35:03 UTC <tgeeky> i'm still at "closure of typing relations"
+2012-03-28 23:35:15 UTC <luite> tgeeky: oh, that was quite an informal term
+2012-03-28 23:35:40 UTC <tgeeky> luite: yeah, I guessed
+2012-03-28 23:36:19 UTC <luite> mgsloan: does it work for you?
+2012-03-28 23:37:25 UTC <mgsloan> currently in "History of Buddhism" class :) so my efficiency is low
+2012-03-28 23:38:57 UTC <luite> oh ok :)
+2012-03-28 23:47:35 UTC <luite> tgeeky: oh no, you split arguments that are a pred type
+2012-03-28 23:47:54 UTC <luite> tgeeky: (which usually means that the type constructor is for a typeclass)
+2012-03-29 01:23:21 UTC <byorgey> PredTys are either type class constraints, equality constraints, or implicit parameters (but no one uses those)
+2012-03-29 01:31:08 UTC <tgeeky> byorgey: what about constraint kinds?
+2012-03-29 01:32:58 UTC <byorgey> tgeeky: no, those are just kinds which *classify* PredTys
+2012-03-29 01:33:04 UTC <byorgey> they are not themselves PredTys
+2012-03-29 01:33:27 UTC <tgeeky> byorgey: I guess I meant, where are they represented in the GHC API
+2012-03-29 01:34:14 UTC <byorgey> tgeeky: presumably there is some special constructor representing the special Constraint kind
+2012-03-29 01:34:52 UTC <byorgey> I haven't actually looked at it recently
+2012-03-29 01:35:15 UTC <byorgey> note there is only one Constraint kind, there are not "constraint kinds" plural
+2012-03-29 01:35:50 UTC <byorgey> though I suppose you could maybe call any kind involving Constraint a "contraint kind"
+2012-03-29 01:38:29 UTC <tgeeky> byorgey: the other day, you mentioned that you think there is some connection between species, ____, and ______
+2012-03-29 01:39:01 UTC <tgeeky> let me check my logs.
+2012-03-29 01:39:04 UTC <byorgey> linear logic, and ... um... I forget the third thing
+2012-03-29 01:40:04 UTC <tgeeky> wow. #haskell log is 75mb.
+2012-03-29 01:41:59 UTC <byorgey> is that all?
+2012-03-29 01:42:12 UTC <tgeeky> well (relatively) new here
+2012-03-29 01:43:32 UTC <byorgey> No, I just meant I expected it to be bigger =)
+2012-03-29 01:43:50 UTC <tgeeky> byorgey: by the way, I found "Species : A History of the Idea" which presumably (checking ... yes, means animal species), which might be a good outside read
+2012-03-29 01:43:59 UTC <byorgey> hahaha
+2012-03-29 01:44:44 UTC <tgeeky> if you'd like, can send
+2012-03-29 01:44:59 UTC <tgeeky> but i also found "Combinatorial Species and Tree-like structures, which I assumed you'd have"
+2012-03-29 01:45:40 UTC <tgeeky> and, now that I'm at the bottom of the log (there were some interesting ones above)
+2012-03-29 01:45:51 UTC <tgeeky> it was SDG, linear types, and species
+2012-03-29 01:46:04 UTC <byorgey> yeah, "Tree-Like Structures" is where I've gotten most of my info
+2012-03-29 01:46:24 UTC <byorgey> SDG?  I don't even remember what that stands for
+2012-03-29 01:47:18 UTC <tgeeky> From: http://blog.sigfpe.com/2006/09/infinitesimal-types.html "Synthetic Differential Geometry"
+2012-03-29 01:47:30 UTC <byorgey> aha
+2012-03-29 01:47:34 UTC <byorgey> oh, right, now I remember
+2012-03-29 01:48:39 UTC <tgeeky> byorgey: this actually sounds a bit like what I tried to convey interest in a long time ago
+2012-03-29 01:48:50 UTC <tgeeky> "I'm hoping you can just play along here. Clearly we're talking about a weird kind of product when the product of a non-trivial object with itself is the zero object."
+2012-03-29 01:50:24 UTC <byorgey> what is it that you tried to convey interest in?
+2012-03-29 01:51:35 UTC <tgeeky> byorgey: uhh, somehow representing an object that you call either (0,empty,null,void) and/or (1,unit,mempty,etc) which is actually something nontrivial
+2012-03-29 01:52:00 UTC <tgeeky> where I don't know what I mean by nontrivial :O
+2012-03-29 01:52:07 UTC <byorgey> hehe
+2012-03-29 01:52:34 UTC <tgeeky> byorgey: another suggestion
+2012-03-29 01:52:39 UTC <byorgey> nontrivial unit objects makes sense to me.  For example one could imagine having many nonequal but isomorphic unit objects.
+2012-03-29 01:52:48 UTC <tgeeky> "Expander Families and Cayley Graphs"
+2012-03-29 01:52:51 UTC <byorgey> in fact this is a good way to model data constructors.
+2012-03-29 01:53:29 UTC <byorgey> I tried to watch a video you sent me about that but couldn't really sustain interest.
+2012-03-29 01:53:40 UTC <byorgey> are you saying it has some relation to species?  because if so I wasn't seeing it
+2012-03-29 01:54:20 UTC <tgeeky> byorgey: oh, nope, not in this case. I just read the first thirty or so pages, and it's an interesting approach
+2012-03-29 01:57:57 UTC <tgeeky> byorgey: also, with this infinitesimal types blogpost...
+2012-03-29 01:59:45 UTC <tgeeky> is it sensible to talk about a container which has multiple holes?
+2012-03-29 02:00:17 UTC <byorgey> sure
+2012-03-29 02:00:35 UTC <tgeeky> he uses the example X X X, and looks at the case where each of those are replaced with a hole
+2012-03-29 02:00:42 UTC <tgeeky> but not the situation where two (or three) of them are replaced with holes
+2012-03-29 02:01:15 UTC <byorgey> tgeeky: well, the notion of differentiation corresponds exactly to having exactly one hole
+2012-03-29 02:01:34 UTC <tgeeky> byorgey: in the context of "derivatives of containers", or in a very general context?
+2012-03-29 02:02:19 UTC <byorgey> in the context of derivatives of containers, or derivatives of species
+2012-03-29 02:02:25 UTC <tgeeky> this was a point I was confused about reading your paper (which I don't have with my notes in front of me at the moment)
+2012-03-29 02:02:45 UTC <byorgey> tgeeky: I'm not surprised, because it was a point I was confused about when writing my paper
+2012-03-29 02:03:06 UTC <tgeeky> byorgey: so is a second derivative what we're talking about?
+2012-03-29 02:03:09 UTC <byorgey> tgeeky: I do a very poor job of explaining it.  In particular the type  F (Maybe a)  is NOT AT ALL the same thing as the derivative of F
+2012-03-29 02:03:46 UTC <byorgey> tgeeky: the second derivative of a container type would give you two holes, but with the holes labeled so you can tell them apart
+2012-03-29 02:04:18 UTC <tgeeky> byorgey: so a in a 3rd derivative, every hole would have two labels?
+2012-03-29 02:05:10 UTC <tgeeky> ACTION wonders if partial deriviatives actually make sense here
+2012-03-29 02:14:47 UTC <byorgey> tgeeky: no with a third derivative, there would be three holes, labeled so you can tell which is the first, the second, and the third
+2012-03-29 02:15:13 UTC <byorgey> tgeeky: partial derivatives make sense for multi-sort species/higher-kinded containers
+2012-03-29 02:15:21 UTC <byorgey> e.g.  data T a b = ...
+2012-03-29 02:15:35 UTC <byorgey> you can partially differentiate T with respect to either a or b
+2012-03-29 02:20:11 UTC <tgeeky> byorgey: an interesting list of articles whose titles I barely understand: http://home.imf.au.dk/kock/
+2012-03-29 02:22:00 UTC <byorgey> crazy
+2012-03-29 02:22:07 UTC <byorgey> looks interesting indeed.
+2012-03-29 02:28:02 UTC <tgeeky> byorgey: by the way, how awesome is this: http://www.theuniverseandmore.com/
+2012-03-29 02:28:16 UTC <tgeeky> it was made by a (presumably high school) physics teacher on whose girlfriend posted it on reddit
+2012-03-29 02:40:14 UTC <byorgey> hah, fun!
+2012-03-29 03:08:57 UTC <mgsloan> what's the best way to package a bunch of demos with a library?  Maybe just rely on runhaskell Demo1.hs ?
+2012-03-29 03:11:33 UTC <byorgey> that's certainly the simplest.
+2012-03-29 03:12:07 UTC <byorgey> I could also imagine creating a little wrapper program called 'demo' that imports all the others and shows you a list of available demos, lets you pick which one you want to run, etc.
+2012-03-29 03:12:45 UTC <mgsloan> oooh yeah, that's a great idea
+2012-03-29 03:13:00 UTC <mgsloan> import each qualified, have a bunch of "Demo1.main" etc
+2012-03-29 10:16:45 UTC <ClaudiusMaximus> please call the executable libraryname-demo instead of just demo, if using cabal to create an executable
+2012-03-29 10:17:23 UTC <ClaudiusMaximus> but generally for demos i want to see how they work, so cabal unpack + runhaskell would be fine too
+2012-03-29 20:25:12 UTC <luite> are path bounds calculated correctly?
+2012-03-29 20:25:19 UTC <luite> uh Trail actually
+2012-03-29 20:25:42 UTC <luite> I have a trail with # pad 1.1, but it's still being cut off at the top
+2012-03-29 20:27:43 UTC <luite> having instant feedback with diagrams is really fun :)
+2012-03-29 20:28:47 UTC <byorgey> luite: they are as far as I know.
+2012-03-29 20:28:56 UTC <byorgey> yes, instant feedback is a lot of fun =)
+2012-03-29 20:29:07 UTC <luite> I already discovered a linker bug...
+2012-03-29 20:29:13 UTC <luite> uh
+2012-03-29 20:29:22 UTC <luite> not in the linker itself probably :)
+2012-03-29 20:29:46 UTC <byorgey> luite: paste the code if you're still having trouble with the Trail bounds...
+2012-03-29 20:33:33 UTC <luite> t = Trail [Linear $ r2 (1,0), Linear $ r2 (-1,-1), Linear $ r2 (0,1)] True
+2012-03-29 20:33:33 UTC <luite> d :: Diagram Cairo R2
+2012-03-29 20:33:34 UTC <luite> d = strokeT t # lw 0.2 # pad 1.2
+2012-03-29 20:33:37 UTC <luite> this is the code
+2012-03-29 20:33:49 UTC <luite> the top, horizontal, line is only half as wide
+2012-03-29 20:33:57 UTC <luite> even if you increase padding
+2012-03-29 20:36:33 UTC <byorgey> luite: yeah, that's because padding is computed relative to the local origin, which in this case is in the very top left corner
+2012-03-29 20:36:49 UTC <byorgey> luite: try changing it to  strokeT t # centerXY # lw 0.2 # pad 1.2
+2012-03-29 20:37:16 UTC <luite> ah tnx!
+2012-03-29 20:37:29 UTC <byorgey> luite: see http://projects.haskell.org/diagrams/manual/diagrams-manual.html#envelope-related-functions
+2012-03-29 20:37:53 UTC <byorgey> it is even in a red box with a warning sign! ;)
+2012-03-29 20:38:48 UTC <luite> oh stupid me :p
+2012-03-29 20:39:17 UTC <byorgey> 'pad' is tricky, it would be nice to have a version of pad that behaves more "intuitively" but it's hard to see how to do that given the functional/extensional representation used for envelopes
+2012-03-30 03:12:43 UTC <TSC> Hello! Has anyone looked at diagrams-tikz lately? It doesn't work with diagrams 0.5, and I was planning to try to get it going, but I don't want to duplicate anyone else's work...
+2012-03-30 03:18:07 UTC <byorgey> hi TSC!
+2012-03-30 03:18:38 UTC <byorgey> I don't think anyone's been working on it recently.  If you wanted to fork and revive it that would be most welcome.
+2012-03-31 00:11:15 UTC <luite> mgsloan: got any new type diagrams? :)
+2012-03-31 00:11:54 UTC <mgsloan> hehe, not yet!  I got kinda distracted working on gtk-toy-diagrams and automatic differentiation for optimizing layouts.. lol
+2012-03-31 00:12:15 UTC <mgsloan> probably going to put that stuff on the backburner - turned out to be trickier than I'd hoped
+2012-03-31 00:12:26 UTC <luite> ah
+2012-03-31 00:13:12 UTC <mgsloan> school's starting to throw tasks my way, too :/
+2012-03-31 00:13:21 UTC <luite> I got slightly distracted by the upcoming yesod 1.0 release, some testing/bugfixing :) but I'm working on the javascript part of the type info now
+2012-03-31 00:13:36 UTC <mgsloan> awesome!  for the highlighting?
+2012-03-31 00:14:29 UTC <luite> yeah, tooltips/popups require some hacking, since it's way too slow to add separate event handlers and tooltips to every word in the code
+2012-03-31 00:14:41 UTC <luite> code = code in the editor
+2012-03-31 00:15:15 UTC <luite> so I have a single event handler now, and the tooltip is added on demand
+2012-03-31 00:16:23 UTC <luite> and that can also be used for error tooltips later, those were also too slow and had some issues
+2012-03-31 00:16:23 UTC <mgsloan> sweet!
+2012-03-31 00:17:10 UTC <luite> I kind of missed the pipes vs conduits discussion because of this
+2012-03-31 00:18:23 UTC <mgsloan> hehe, gotcha
+2012-03-31 00:19:15 UTC <mgsloan> I've actually known MenTaLguY for many years.  We worked on Inkscape.  Hoping to persuade him to hack on some diagrams stuff sometime :)
+2012-03-31 00:19:34 UTC <mgsloan> (though you're probably talking about the larger scale pipes vs conduits)
+2012-03-31 00:19:36 UTC <luite> oh not just on IRC, but also the reddit discussions
+2012-03-31 00:19:38 UTC <luite> yeah
+2012-03-31 00:20:41 UTC <luite> the first one by twanvl proposing combinding the types, with michael still being rather sceptical, the next thay about the updated library with combined types :)
+2012-03-31 00:20:55 UTC <luite> day
+2012-03-31 00:21:47 UTC <luite> and the later proposal to add early termination to pipes (but no exception handling yet)
+2012-03-31 00:21:52 UTC <luite> forgot who did that
+2012-03-31 00:23:01 UTC <mgsloan> haha, yeah, it's certainly been a very interesting discussion
+2012-03-31 00:34:40 UTC <luite> I think I'll convert wolfgang to 1.0 this weekend
+2012-03-31 00:37:23 UTC <mgsloan> great!!
+2012-03-31 00:37:40 UTC <mgsloan> I've been telling people about it for a while, can't wait to have something to link them to
+2012-03-31 00:38:19 UTC <luite> oh I meant convert it to yesod 1.0
+2012-03-31 00:38:42 UTC <luite> sorry :(
+2012-03-31 00:39:15 UTC <luite> but after the type info is done, I'm going to work towards a release too :)
+2012-03-31 00:39:36 UTC <luite> oh, one problem... google has better 3d plots than me :(
+2012-03-31 00:39:49 UTC <luite> someone has to write some javascript to make a better 3d surface plotter
+2012-03-31 00:40:29 UTC <alpounet> mgsloan, ON Inkscape?
+2012-03-31 00:40:38 UTC <alpounet> nice!
+2012-03-31 00:41:09 UTC <mgsloan> Yup :D  MenTaLguY is one of the 4-5 people who were involved in forking it from Sodipodi
+2012-03-31 00:41:28 UTC <alpounet> hah ok
+2012-03-31 00:41:42 UTC <mgsloan> we worked on lib2geom, which is how inkscape stores and operates on curves
+2012-03-31 00:42:09 UTC <mgsloan> but got kinda fed up with C++.. We had many "if only we were writing Haskell" discussions
+2012-03-31 00:42:24 UTC <alpounet> and you have already written a binding to it in Haskell right?
+2012-03-31 00:42:25 UTC <alpounet> :P
+2012-03-31 00:42:37 UTC <mgsloan> haha, naah.  It's a heavily templated library
+2012-03-31 00:42:45 UTC <mgsloan> there are python bindings, though
+2012-03-31 00:43:08 UTC <alpounet> there was a project for generating bindings to C++ libraries
+2012-03-31 00:43:19 UTC <alpounet> some guy was talking about it like a month ago on #haskell
+2012-03-31 00:44:54 UTC <alpounet> he told me he was about to release it
+2012-03-31 00:44:57 UTC <alpounet> and no news since then
+2012-03-31 00:45:04 UTC <alpounet> and i can't remember his nickname
+2012-03-31 12:33:41 UTC <Rc43> Hi!
+2012-03-31 12:33:48 UTC <Rc43> Anybody used HInt?
+2012-03-31 12:34:15 UTC <Rc43> Yes, it isn't related, but on #haskell nobody knows / tells.
+2012-03-31 12:34:30 UTC <Rc43> http://hpaste.org/66281
+2012-03-31 12:34:58 UTC <Rc43> Strange imports problem with interpreter and "union" module.
+2012-03-31 13:14:12 UTC <ClaudiusMaximus> i annotated your paste - i think loadModules is needed, but i'm hint n00b
+2012-03-31 13:23:22 UTC <Rc43> ClaudiusMaximus, thanks, but I have tried it. Interpreter gives strange message `WontCompile [GhcError {errMsg = "module `HReal.Core.Prelude' is a package module"}]`
+2012-03-31 13:23:52 UTC <Rc43> And it gives such message with any other module name.
+2012-03-31 13:26:04 UTC <Rc43> Oh, I forgot, that loadModules takes list of paths to sources.
+2012-03-31 13:26:41 UTC <Rc43> My module isn't from source. It is in other package and I have installed it with cabal.
+2012-03-31 13:27:07 UTC <ClaudiusMaximus> ah, i'm out of ideas - installed hint for the first time about 20mins ago..
+2012-03-31 13:27:37 UTC <Rc43> ok, thanks anyway
+2012-03-31 19:13:43 UTC <Rc43> ClaudiusMaximus, what meaning has such Typeable instance in your new annotation?
+2012-03-31 19:14:34 UTC <Rc43> ClaudiusMaximus, I have found too, that problem really only in casting; types are visible inside interpreted code.
+2012-03-31 19:15:20 UTC <Rc43> ClaudiusMaximus, and why not use default derived Typeable?
+2012-03-31 19:15:38 UTC <ClaudiusMaximus> Rc43: that was a dirty hack to try to get it to work - very fragile - see more explanation here http://article.gmane.org/gmane.comp.lang.haskell.cafe/97551
+2012-03-31 19:16:08 UTC <Rc43> ClaudiusMaximus, ok, thanks.
+2012-03-31 19:17:20 UTC <ClaudiusMaximus> basically hint uses something like  expr ++ " :: " ++ show (typeOf wit)
+2012-03-31 19:18:07 UTC <ClaudiusMaximus> so my hack was to get    show (typeOf wit)  to be "Rational"  instead of the true  "Ratio Integer"
+2012-03-31 19:53:42 UTC <Rc43> Ð«Ð³Ð²Ð²ÑÑÐ´Ð½Ñ
+2012-03-31 19:53:45 UTC <Rc43> Suddenly.
+2012-03-31 19:56:03 UTC <Rc43> But `show` returns string representation of value, but not type.
+2012-03-31 19:56:14 UTC <Rc43> How it makes sense?
+2012-03-31 22:31:20 UTC <mgsloan> byorgey - what do you think of the idea of moving this from Diagrams.Cairo to Diagrams.Core ?
+2012-03-31 22:31:22 UTC <mgsloan> -- | Existential type for mutations on objects that \"have style\". This is
+2012-03-31 22:31:23 UTC <mgsloan> --   used as a parameter to @getTextExtents@ and @getFontExtents@ in order to
+2012-03-31 22:31:23 UTC <mgsloan> --   set font-size and font-face.
+2012-03-31 22:31:23 UTC <mgsloan> type StyleParam = forall a. HasStyle a => a -> a
+2012-03-31 22:32:17 UTC <byorgey> mgsloan: sounds good
+2012-03-31 22:32:46 UTC <mgsloan> cool! vyom and I are coffee-shop hacking on the logo stuff :D
+2012-03-31 22:37:51 UTC <vyom> byorgey: is there a way to use the HasStyle type to capture styles outside of diagrams, like for a turtle
+2012-03-31 22:41:53 UTC <mgsloan> ahh, actually, we've decided StyleParam may be a bad idea
+2012-03-31 22:46:22 UTC <byorgey> vyom: sure, styles are just heterogeneous collections of attributes
+2012-03-31 22:47:10 UTC <byorgey> vyom: it should work very well to collect attributes for things other than diagrams
+2012-03-31 22:47:17 UTC <vyom> actually.. yes. we saw that.. the Style type is a heterogenous collection
+2012-03-31 22:49:40 UTC <byorgey> mgsloan, vyom: hah, awesome, glad you guys met up =)
+2012-03-31 22:49:46 UTC <vyom> :)
+2012-03-31 22:50:37 UTC <vyom> how do you modify specify attribute in a style , without effecting other styles?
+2012-03-31 22:50:51 UTC <vyom> are there functions defined in the diagrams libraru for that?
+2012-03-31 22:51:01 UTC <vyom> s/specify/specific/
+2012-03-31 22:51:07 UTC <byorgey> yeah
+2012-03-31 22:51:41 UTC <vyom> where do i look
+2012-03-31 22:51:50 UTC <byorgey> see Graphics.Rendering.Diagrams.Style  in diagrams-core
+2012-03-31 22:52:00 UTC <mgsloan> applyStyle / mappend should work
+2012-03-31 22:52:20 UTC <byorgey> applyAttr, applyTAttr, setAttr, addAttr, combineAttr
+2012-03-31 22:57:09 UTC <mgsloan> byorgey - dealing with this style stuff makes me question the goodness of StyleParam
+2012-03-31 22:57:20 UTC <byorgey> mgsloan: why is that?
+2012-03-31 22:57:26 UTC <byorgey> (I haven't thought about it much)
+2012-03-31 22:58:05 UTC <byorgey> mgsloan: actually, it occurs to me that StyleParam is isomorphic to Style
+2012-03-31 22:58:16 UTC <byorgey> so I guess there's not much point
+2012-03-31 22:58:18 UTC <mgsloan> it's nice because it means I can do (textLineBounded (fontSize 12) "foo")
+2012-03-31 22:58:21 UTC <mgsloan> but yeah, it is.
+2012-03-31 22:58:33 UTC <mgsloan> the StyleParam is mostly just applied to mempty..
+2012-03-31 22:58:39 UTC <byorgey> yeah, as opposed to  (textLineBounded (mempty # fontSize 12) "foo")
+2012-03-31 22:58:40 UTC <byorgey> right.
+2012-03-31 22:58:57 UTC <mgsloan> well, it's applied to diagrams too, but applying it to mempty, and applying the resulting style, would be the same
+2012-03-31 22:58:58 UTC <mgsloan> yeah
+2012-03-31 22:59:51 UTC <byorgey> I guess we could make a function  style = (mempty #)  (but with a more restrictive type)  so one could write   (textLinebounded (style $ fontSize 12) "foo")
+2012-03-31 23:00:00 UTC <byorgey> just as a convenience
+2012-03-31 23:00:09 UTC <byorgey> for constructing Styles
+2012-03-31 23:00:33 UTC <byorgey> meh, it's probably not worth it =)
+2012-03-31 23:00:56 UTC <mgsloan> so, could remove a potentially confusing existential synonym, but making usage more complicated.. hrmm
+2012-03-31 23:01:03 UTC <mgsloan> I actually kinda like that idea
+2012-04-01 01:28:03 UTC <byorgey> vyom: it seems like diagrams-svg is outputting SVGs upside-down
+2012-04-01 01:34:40 UTC <vyom> hmm.. weird.. hadnt noticed that at all.. got any examples
+2012-04-01 01:35:08 UTC <vyom> i tried some examples.. but they were kinds symmetrical so i cant say
+2012-04-01 01:35:18 UTC <byorgey> vyom: both examples/Pentaflake and examples/Explode
+2012-04-01 01:35:35 UTC <byorgey> Explode you can compare to the one in the user manual -- it's a little hard to tell though since you have to compare the colors
+2012-04-01 01:35:46 UTC <vyom> hmm.. ok :S
+2012-04-01 01:36:09 UTC <byorgey> oh, well, Pentaflake is in the example gallery on the diagrams website too
+2012-04-01 01:36:31 UTC <byorgey> that's easier to tell, since it's supposed to be an upwards-pointing pentagon
+2012-04-01 01:36:43 UTC <byorgey> anyway, probably just a 'reflectY' needed somewhere =)
+2012-04-01 01:36:55 UTC <byorgey> I'm working on adding lineCap and lineJoin and such
+2012-04-01 01:37:12 UTC <vyom> let me check.. cant think of what might be causing it..
+2012-04-01 01:37:27 UTC <vyom> byorgey: cool
+2012-04-01 01:39:34 UTC <vyom> ok i see the problem with Explode..
+2012-04-01 01:40:08 UTC <vyom> the older diagrams -svg code did have a reflectY somewhere.. i can dig it up and put it back
+2012-04-01 01:40:21 UTC <vyom> but i do wanna understand what is going wrong in the translation..
+2012-04-01 01:40:29 UTC <vyom> maybe it is the axis systems?
+2012-04-01 01:41:33 UTC <vyom> I also think this change https://github.com/deepakjois/diagrams-svg/commit/f6e0c4077478e83b53221988a566cf4a961cced7 caused a few regressions..
+2012-04-01 01:41:48 UTC <vyom> svg seems to pick black as the default fill color
+2012-04-01 01:42:04 UTC <vyom> anyway.. let me check out where reflectY must go
+2012-04-01 01:42:23 UTC <byorgey> vyom: does SVG use a coordinate system with the positive Y axis pointing down?
+2012-04-01 01:43:39 UTC <vyom> byorgey: no idea .. i will verify
+2012-04-01 01:44:01 UTC <byorgey> vyom: also, I'm getting an error No instance for (S.ToValue LineCap)  -- where are the other ToValue instances declared?
+2012-04-01 01:44:02 UTC <vyom> found the reflectY https://github.com/deepakjois/diagrams-svg/blob/19a0b4d7228d0c042676d3b2a4b0afee032268fc/src/Diagrams/Backend/SVG.hs#L97
+2012-04-01 01:44:09 UTC <byorgey> I can't even figure out where ToValue is defined
+2012-04-01 01:45:02 UTC <vyom> ToValue is defined in the blaze-html package..
+2012-04-01 01:45:24 UTC <vyom> it is a way to convert values to a bytestring i think
+2012-04-01 01:45:50 UTC <vyom> can you give me more context on why you need to convert LineCap to an attribute
+2012-04-01 01:46:10 UTC <vyom> you probbably need a string
+2012-04-01 01:46:25 UTC <byorgey> I just basically copied renderLineWidth
+2012-04-01 01:46:30 UTC <byorgey> I don't really know =P
+2012-04-01 01:48:23 UTC <byorgey> ohhh, I get it now
+2012-04-01 01:48:32 UTC <byorgey> it works for line width because it's a Double
+2012-04-01 01:48:49 UTC <byorgey> ok, yeah, I see, I just nede to convert LineCap to an appropriate string
+2012-04-01 01:50:09 UTC <vyom> yes.. toValue is defined for ToValue typeclass in blaze-html.. or hopefully blaze-markup soon if my code changes are accepted
+2012-04-01 01:50:41 UTC <vyom> most common types already have an instance
+2012-04-01 01:52:43 UTC <vyom> ok so the origin is at the top left by default..
+2012-04-01 01:53:03 UTC <vyom> so I must do a reflectY i suppose?
+2012-04-01 01:53:44 UTC <byorgey> yeah, so you need a reflectY
+2012-04-01 01:53:57 UTC <vyom> cool.. i will just restore the adjustDia function
+2012-04-01 01:54:28 UTC <byorgey> OK
+2012-04-01 02:10:02 UTC <vyom> fixed diagrams http://db.tt/ZghgGsA5 http://db.tt/BWzVv3gd
+2012-04-01 02:10:43 UTC <tgeeky> nice pentaflake
+2012-04-01 02:11:21 UTC <byorgey> vyom: http://www.w3.org/TR/SVG/painting.html#FillProperty
+2012-04-01 02:11:47 UTC <byorgey> the SVG standard specifies that the default fill is black
+2012-04-01 02:12:32 UTC <vyom> ok.. which makes sense because after my latest commit.. everything started rendering in black
+2012-04-01 02:13:25 UTC <vyom> but the adjustDia that I copied from the previous implementation of diagrams-svg will set the default to be transparent
+2012-04-01 02:13:32 UTC <byorgey> vyom: I think the thing to do is when handling the fill color attribute, if we don't find one then we just emit  fill=none
+2012-04-01 02:13:40 UTC <byorgey> oh, ok, that works too
+2012-04-01 02:14:12 UTC <byorgey> not sure if there's a difference between transparent fill and no fill
+2012-04-01 02:17:58 UTC <vyom> the adjustment leads to this in the svg markup: fill="rgb(0,0,0)" fill-opacity="0.0"
+2012-04-01 02:20:11 UTC <vyom> so effectively it is none.. at least for now where styles are not inheriting
+2012-04-01 02:28:04 UTC <byorgey> ok, I see
+2012-04-01 02:33:14 UTC <byorgey> vyom: OK, I've added line cap and line join, but I can't test them until paths aren't filled with black =)
+2012-04-01 02:37:41 UTC <vyom> can you submit a pull request
+2012-04-01 02:37:44 UTC <vyom> i can help test
+2012-04-01 02:37:50 UTC <vyom> i hvae the change in my workspace..
+2012-04-01 02:37:58 UTC <vyom> but there are some other unrelated commits on top..
+2012-04-01 02:38:25 UTC <vyom> i am about to go into a skype call.. after which i will rebase the commits and push them to repo
+2012-04-01 02:51:11 UTC <vyom> byorgey: or you could just make that change I linked to earlier line 97
+2012-04-01 02:51:39 UTC <vyom> it is a single line change
+2012-04-01 02:57:50 UTC <byorgey> vyom: OK, I just opened a pull request.
+2012-04-01 02:58:09 UTC <byorgey> I may try making the change myself locally to test, but I'll let you sort it out
+2012-04-01 03:30:19 UTC <vyom> byorgey: http://db.tt/G2CxD6Ae renders fine.. but I had to bump up the stroke-width in order to really see the change at 400x400
+2012-04-01 03:34:47 UTC <mgsloan> ACTION thinks the removal of StyleParam is good.  Should I go ahead with a patch to diagrams-cairo ?
+2012-04-01 03:34:55 UTC <mgsloan> it'll be an API breaking change of course..
+2012-04-01 03:35:21 UTC <mgsloan> not too hard of a change, though - just append "mempty" to the old StyleParams
+2012-04-01 03:50:46 UTC <mgsloan> http://www.patch-tag.com/r/byorgey/diagrams-cairo/snapshot/hash/20120401002051-3850c-2b2160dfceffeae4f083e07b6966dc9a38ae541f/patch
+2012-04-01 03:50:57 UTC <mgsloan> http://www.patch-tag.com/r/byorgey/diagrams-cairo/snapshot/hash/20120401034903-3850c-5dcc8b3384033432ae1afdaebd266a7ba699be0c/patch
+2012-04-01 21:00:11 UTC <tgeeky> lol. I love haskell
+2012-04-01 21:00:26 UTC <tgeeky> I am having trouble understanding what's going on in a paper I read (relating third list homomorphism and unfolding)
+2012-04-01 21:00:48 UTC <tgeeky> and sjoerd v. comes along and makes it for me" http://hackage.haskell.org/package/unfoldable-0.1.0
+2012-04-01 23:14:24 UTC <byorgey> heh, awesome =)
+2012-04-02 00:12:10 UTC <ClaudiusMaximus> wheee, code works http://hpaste.org/66341#line64 - now time to $ sleep `xor` make diagrams out of it
+2012-04-02 00:14:09 UTC <byorgey> ClaudiusMaximus: cool, I look forward to seeing pictures =)
+2012-04-02 00:18:16 UTC <ClaudiusMaximus> byorgey: will look a bit like http://www.mostlymaths.net/2009/08/lavaurs-algorithm.html (which my code is a special case of) but with semicircles centered on a straight line instead of arcs orthogonal to a circle
+2012-04-02 00:28:50 UTC <byorgey> ah, cool
+2012-04-02 02:03:47 UTC <ClaudiusMaximus> mm, need to rethink my strategy - need to comprees the huge dynamic range - 1/8191 is invisible in a diagram of size 1/7
+2012-04-02 02:09:09 UTC <byorgey> take logs or something?
+2012-04-02 02:17:04 UTC <ClaudiusMaximus> hmm, not sure how that would work - this is a collection of points spaced along the x axis more than anything else - unless you mean take logs of the spacing between the points?
+2012-04-02 02:18:05 UTC <ClaudiusMaximus> my next attempt would have been to make the spacing between each neighbouring point a constant
+2012-04-02 02:20:08 UTC <ClaudiusMaximus> (i also found an off-by-one bug in my code, annotated with a fix)
+2012-04-02 04:14:45 UTC <ClaudiusMaximus> i suck at text alignment... http://img710.imageshack.us/img710/7213/test18edit.png
+2012-04-02 04:15:36 UTC <luite> what kind of data is that?
+2012-04-02 04:18:13 UTC <ClaudiusMaximus> see the code link i pasted earlier - the left-hand axis is external angles in the Mandelbrot Set, the bottom axis is the period of the hyperbolic components whose arcs are vertical at that xcoord
+2012-04-02 04:21:34 UTC <ClaudiusMaximus> it's based on this algorithm (but adapted to search only at the top (so if something is "blocked off" by an arc, no calculating of anything underneath it)  http://en.wikibooks.org/wiki/Fractals/Iterations_in_the_complex_plane/Mandelbrot_set/lavaurs
+2012-04-02 04:21:46 UTC <ClaudiusMaximus> )
+2012-04-02 04:24:29 UTC <luite> hmm, i don't really understand what blocked off means though :)
+2012-04-02 04:26:52 UTC <ClaudiusMaximus> lavaurs' algorithm recursively finds every arc up to a given period, but some of those arcs will be inside other arcs of lower period - i don't care about those, i only want "visible" arcs (those not inside any other arc of lower period) of my target period
+2012-04-02 04:31:50 UTC <ClaudiusMaximus> eg: compare http://commons.wikimedia.org/wiki/File:Lavaurs-t-4.svg  with  http://img189.imageshack.us/img189/9056/test19edit.png
+2012-04-02 04:32:23 UTC <luite> ah i see
+2012-04-02 04:42:09 UTC <tgeeky> cool
+2012-04-02 04:44:29 UTC <tgeeky> ClaudiusMaximus: I find yours infinitely more readable
+2012-04-02 04:48:09 UTC <ClaudiusMaximus> tgeeky: :)
+2012-04-02 04:48:48 UTC <ClaudiusMaximus> wow, someone sent me a link to a paper, saying it was "pretty long" - it's 126 pages, which imo is exceedingly huge
+2012-04-02 04:49:00 UTC <tgeeky> that's pretty long
+2012-04-02 04:49:04 UTC <tgeeky> that's LONGCAT long
+2012-04-02 04:50:17 UTC <ClaudiusMaximus> "symbolic dynamics of quadratic polynomials" Bruin and Schleicher
+2012-04-02 04:50:27 UTC <tgeeky> sounds interesting. link?
+2012-04-02 04:50:46 UTC <ClaudiusMaximus> http://www.ml.kva.se/preprints/archive/2001-2002/2001-2002-07.pdf
+2012-04-02 04:52:15 UTC <tgeeky> wow. I'll never read this.
+2012-04-02 04:52:18 UTC <tgeeky> *saved*
+2012-04-02 04:55:00 UTC <ClaudiusMaximus> it has footnotes that span page breaks :o
+2012-04-02 04:55:06 UTC <luite> urgh bitmap fonts
+2012-04-02 04:58:42 UTC <tgeeky> bitmap fonts: for the man who knows exactly what his fonts should look like on his monitor, damn it!
+2012-04-02 05:06:15 UTC <luite> with some luck, we won't need bitmap fonts at all anymore in a few years
+2012-04-02 05:45:34 UTC <ClaudiusMaximus> ouch, unless I'm doing something stupid, it seems like  alignedText 0.5 0.5 " X" == alignedText 0.5 0.5 "X"  but  alignedText 0.5 0.5 "X  Y" /= alignedText 0.5 0.5 "X Y"
+2012-04-02 05:48:37 UTC <tgeeky_> ClaudiusMaximus: sounds like s/^ // is in effect
+2012-04-02 05:48:56 UTC <tgeeky_> ClaudiusMaximus: try " X" and "   X"
+2012-04-02 05:49:34 UTC <ClaudiusMaximus> i did in my real code
+2012-04-02 05:50:00 UTC <ClaudiusMaximus> all leading spaces disappear throwing the alignment all wonky :(
+2012-04-02 05:51:24 UTC <tgeeky_> ClaudiusMaximus: same with trailing spaces?
+2012-04-02 05:52:44 UTC <ClaudiusMaximus> no
+2012-04-02 05:54:54 UTC <ClaudiusMaximus> short version: i'm trying to align "1 / 1" "1 / 10" "1 / 100" at the '/', so i tried "1 / 1" " 1 / 10" "  1 / 100"  and it did nothing, but "(1 / 1)" "( 1 / 10)" "(  1 / 100)" did align
+2012-04-02 05:55:36 UTC <ClaudiusMaximus> i also tried '\160'  (which i believe is &nbsp;) to no avail
+2012-04-02 06:13:22 UTC <tgeeky_> ClaudiusMaximus: oh. how about just "justifying" the spaces
+2012-04-02 06:13:52 UTC <ClaudiusMaximus> hm?
+2012-04-02 06:13:57 UTC <tgeeky_> if 1000 is the largest denominator, then the smaller ones will be: " 100", "  10", and "   1"
+2012-04-02 06:14:40 UTC <ClaudiusMaximus> ahh, using  alignedText 1 0.5
+2012-04-02 06:15:08 UTC <ClaudiusMaximus> that's much more complicated :P  but i may do it, it'll probably look nicer too
+2012-04-02 06:16:19 UTC <tgeeky_> ClaudiusMaximus: hehe. Naively, I think about just making all results N digits long (in this case, 4) and padding the string with leading 0s, and then replacing those 0s with spaces
+2012-04-02 06:21:32 UTC <ClaudiusMaximus> tgeeky_: well, i already need the maximum length of the whole strings to avoid the text being off the edge of the diagram..
+2012-04-02 06:22:08 UTC <ClaudiusMaximus> making the rest of it prettier right now though
+2012-04-02 06:47:35 UTC <ClaudiusMaximus> tgeeky_: turned out to be less complicated than padding the numerator to the length of the denominator, and looks better too - thanks!
+2012-04-02 06:47:51 UTC <tgeeky_> ClaudiusMaximus: cool!
+2012-04-02 06:47:56 UTC <tgeeky_> you're welcome
+2012-04-02 06:48:06 UTC <mgsloan> you are probably using "textLineBounded" rather than "textVisualBounded"
+2012-04-02 06:48:06 UTC <tgeeky_> ACTION -> bed
+2012-04-02 06:49:40 UTC <ClaudiusMaximus> mgsloan: i'm using textAligned, so whatever that is using
+2012-04-02 06:50:21 UTC <ClaudiusMaximus> mgsloan: anyway, tgeeky_'s suggestion is better, so i don't need to worry about that anymore :)
+2012-04-02 06:50:40 UTC <mgsloan> visual bounded is the bounds of the glyphs, whereas line bounded is the logical bounds, with the origin set to the baseline / left-hand start
+2012-04-02 06:51:06 UTC <mgsloan> cool!
+2012-04-02 07:46:03 UTC <ClaudiusMaximus> getting there slowly... http://img545.imageshack.us/img545/5666/test60edit.png
+2012-04-02 07:51:25 UTC <ClaudiusMaximus> ...still haven't figured out the padding/border properly - i guess it's impossible what with the text at the edges..
+2012-04-02 11:50:54 UTC <ClaudiusMaximus> progressing, still not perfect... http://img205.imageshack.us/img205/5075/t91.png (note: kinda huge)
+2012-04-02 12:40:56 UTC <ClaudiusMaximus> am i alone in defining versions of === and ||| that take the local origin of the other side?
+2012-04-02 12:40:59 UTC <ClaudiusMaximus>       (===>) = flip (beside unitY)
+2012-04-02 12:41:02 UTC <ClaudiusMaximus>       (|||>) = flip (beside (negateV unitX))
+2012-04-02 15:07:52 UTC <tgeeky_> ClaudiusMaximus: ooh, my suggestion did turn out nicely
+2012-04-02 16:02:56 UTC <byorgey> ClaudiusMaximus: oh, good idea, those are certainly useful, maybe we should add them to the std library?
+2012-04-02 16:05:41 UTC <byorgey> ClaudiusMaximus: note, if you want padding for text to work properly you can use stuff from Diagrams.Backend.Cairo.Text instead of the default text support in diagrams-lib
+2012-04-02 17:05:56 UTC <luite> hmm, so it looks like niklas broberg already has a working typechecker, with code borrowed from ghc :)
+2012-04-02 18:08:11 UTC <byorgey> nice =)
+2012-04-02 19:40:01 UTC <tgeeky_> luite: as in, in addition to the GHC and core typecheckers?
+2012-04-02 19:42:51 UTC <luite> uh I guess the difference is that it typechecks a haskell-src-exts AST instead of a GHC one
+2012-04-02 19:43:23 UTC <luite> does GHC actually typecheck core btw?
+2012-04-02 19:44:04 UTC <tgeeky_> luite: I am pretty sure yes, but let me look it up again.
+2012-04-02 19:44:10 UTC <tgeeky_> I learned that from a recent simon marlow PDF
+2012-04-02 19:45:33 UTC <tgeeky_> luite: document is: http://community.haskell.org/~simonmar/papers/aos.pdf
+2012-04-02 19:46:37 UTC <tgeeky_> luite: page 11
+2012-04-02 19:46:47 UTC <tgeeky_> Running the Core type checker (we call it CoreLint) is a very powerful
+2012-04-02 19:46:47 UTC <tgeeky_> consistency check on the compiler itself. Imagine that you write an \op-
+2012-04-02 19:46:47 UTC <tgeeky_> timisation" that accidentally generates code that treats an integer value
+2012-04-02 19:46:47 UTC <tgeeky_> as a function, and tries to call it. The chances are that the program will
+2012-04-02 19:46:47 UTC <tgeeky_> segmentation fault, or fail at runtime in a bizarre way. Tracing a seg-fault
+2012-04-02 19:46:49 UTC <tgeeky_> back to the particular optimisation pass that broke the program is a long
+2012-04-02 19:46:56 UTC <tgeeky_> ugh. sorry. i didn't know it would paste like that.
+2012-04-02 19:47:32 UTC <luite> ah right
+2012-04-02 19:48:00 UTC <luite> just a checker, no inference :)
+2012-04-02 19:48:18 UTC <tgeeky_> luite: I think it's all explicitly typed
+2012-04-02 19:48:21 UTC <tgeeky_> if i recall correctly
+2012-04-02 19:48:27 UTC <tgeeky_> ie, dictionaries are passed around everywhere
+2012-04-02 19:48:33 UTC <luite> yeah that's what page 11 says
+2012-04-02 19:48:57 UTC <luite> yep typeclass constraints are converted to dictionaries in the desugrarer
+2012-04-02 19:48:59 UTC <tgeeky_> luite: page 7 has a helpful flowchart
+2012-04-02 19:49:35 UTC <luite> yeah I know it up to the Desugar/CoreExpr pass :)
+2012-04-02 21:42:21 UTC <byorgey> yeah, ghc core has explicit type annotations, coercions, etc. everywhere
+2012-04-02 21:42:35 UTC <byorgey> it's designed so that it can be very efficiently typechecked without doing any inference, solving, etc.
+2012-04-02 21:43:06 UTC <byorgey> dictionaries are passed explicitly, type arguments are passed explicitly to polymorphic functions, etc.
+2012-04-03 03:08:21 UTC <vyom> i am making some changes to the turtle to support line widths and colors.. and along the way decided to write some tests for it
+2012-04-03 03:09:12 UTC <vyom> so I decided to copy the Turtle class over to hs-logo temporarily.. since I need to make the corresponding language changes as well
+2012-04-03 03:09:32 UTC <vyom> will send out a code review after it is done..
+2012-04-03 03:10:03 UTC <vyom> or more like a darcs patch for review :)
+2012-04-03 03:12:43 UTC <byorgey> vyom: cool
+2012-04-03 03:14:58 UTC <vyom> has cabal test stopped working on ghc 7.4 or something
+2012-04-03 03:15:50 UTC <tgeeky_> vyom: it was developed last summer, so perhaps it requires 7.2.1
+2012-04-03 03:16:06 UTC <tgeeky_> "cabal test" was a GSoC project, methinks
+2012-04-03 03:16:10 UTC <vyom> ok
+2012-04-03 03:16:17 UTC <tgeeky_> i can test something if you'd like
+2012-04-03 03:16:22 UTC <tgeeky_> i have 7.2.1 here (in windows)
+2012-04-03 03:16:31 UTC <vyom> you mean it may not work on 7.4?
+2012-04-03 03:16:40 UTC <tgeeky_> vyom: I expect it will work on 7.4
+2012-04-03 03:16:41 UTC <vyom> i ran the suite using ghc directly..
+2012-04-03 03:17:04 UTC <vyom> and it works.. and i am having the same problem with more than one package now
+2012-04-03 03:17:12 UTC <vyom> so something wonky in my toolchain
+2012-04-03 03:17:24 UTC <tgeeky_> vyom: what's the problem? is cabal acting like 'test' isn't a valid command?
+2012-04-03 03:18:28 UTC <vyom> pasting message from #haskell : I tried doing cabal configure --enable-tests and cabal test
+2012-04-03 03:18:42 UTC <vyom> cabal: No test suites enabled. Did you remember to configure with  --enable-tests
+2012-04-03 03:18:58 UTC <vyom> which seems weird.. because i just did that :)
+2012-04-03 03:19:07 UTC <tgeeky_> vyom: yes. that is weird.
+2012-04-03 03:19:10 UTC <tgeeky_> I get no such error
+2012-04-03 03:19:13 UTC <tgeeky_> with 7.2.1
+2012-04-03 03:19:16 UTC <vyom> ok
+2012-04-03 03:19:18 UTC <byorgey> vyom: when I tried cabal test I remember running into strange issues like that too
+2012-04-03 03:19:33 UTC <tgeeky_> can someone name a package that has a "cabal test" test suite?
+2012-04-03 03:19:33 UTC <vyom> yes.. it works in Travis CI which uses 7.2 i believe
+2012-04-03 03:19:41 UTC <byorgey> you have to do some unintuitive magic sequence of incantations, but I don't remember what they are
+2012-04-03 03:19:55 UTC <byorgey> vyom: did you try 'cabal clean' and then 'cabal configure --enable-tests' again?
+2012-04-03 03:20:05 UTC <byorgey> worth a try at least
+2012-04-03 03:20:10 UTC <tgeeky_> byorgey: I am pretty sure this one doesn't involve salt and/or throwing salt, and/or throwing granulated substances over one's shoulder
+2012-04-03 03:20:26 UTC <byorgey> tgeeky_: OK, good, that's one thing we can rule out =)
+2012-04-03 03:20:36 UTC <tgeeky_> vyom: FYI, i'm using cabal-install 0.10.2, and cabal 1.10.2.0
+2012-04-03 03:20:56 UTC <byorgey> good point, the version of cabal-install probably matters more than the version of GHC
+2012-04-03 03:22:46 UTC <vyom> byorgey: yes i did.. and i believe i have that version of cabal-install as well
+2012-04-03 03:23:06 UTC <vyom> oh well.. at least it works in travis.. i am just gonna use ghc directly for now
+2012-04-03 04:42:27 UTC <vyom> looking at the turtle code.. it feels like a lot of the functions can be made "purer" rather than threading it through the state monad
+2012-04-03 04:42:50 UTC <vyom> that makes testing easier too
+2012-04-03 04:42:54 UTC <vyom> does that make sense?
+2012-04-03 05:05:54 UTC <tgeeky_> vyom: i've heard things like that said before
+2012-04-03 05:06:41 UTC <luite> does that make them true, or even make them make sense? ;p
+2012-04-03 05:07:25 UTC <tgeeky_> no, but in this case, I think smart people espouse the goals of purity, and dislike monads when not necessary
+2012-04-03 05:08:04 UTC <tgeeky_> vyom: and, with pure functions, you have the entire suite of testing and generation available to you (quickcheck for starters)
+2012-04-03 05:11:27 UTC <vyom> tgeeky_: :).. that was the point i was trying to make, about testability
+2012-04-03 05:11:33 UTC <tgeeky_> vyom: I figured
+2012-04-03 05:11:54 UTC <tgeeky_> vyom: I don't understand why we shouldn't have such tools for (some) monads, but maybe we're getting there
+2012-04-03 05:12:10 UTC <tgeeky_> ACTION bets byorgey will have a hand in it too :o
+2012-04-03 05:19:41 UTC <tgeeky_> of course, I'm almost broke, so we'll have to bet someone else's money
+2012-04-03 11:01:05 UTC <ClaudiusMaximus> byorgey: i'll check out the cairo backend text stuff shortly, thanks
+2012-04-03 11:04:05 UTC <ClaudiusMaximus> i have a sequence of diagrams with local origins in the right place such that vcat aligns them nicely.  now i want to have each diagram in a separate svg file so i can embed them in an xhtml document with narrative text - how might i maintain the nice alignment that i get from vcat?
+2012-04-03 11:06:29 UTC <ClaudiusMaximus> i'm thinking something like (where [ and ] are the edges, and X is the local origin)  [  X  ]  -> [  X  ] (unchanged),  [ X    ] -> [    X    ] (pad on left to center local origin), [  X] -> [  X  ] (pad on right to center local origin); and use xhtml/css centering
+2012-04-03 11:06:41 UTC <ClaudiusMaximus> but i'm not sure where to start to implement this
+2012-04-03 16:05:16 UTC <byorgey> ClaudiusMaximus: I guess you want to do something like take the 'extentX' of the vcat, and then compose each diagram with a horizontal strut constructed from the extent?
+2012-04-03 16:05:33 UTC <byorgey> I'm not sure I completely understand what you are trying to do.
+2012-04-03 16:18:37 UTC <ClaudiusMaximus> byorgey: i've got diagrams with off-center local origins, i want to end up with a diagram with a centered local origin but without changing the location of the local origin w.r.t the stuff in the diagram
+2012-04-03 16:19:09 UTC <ClaudiusMaximus> byorgey: hm, that could work, but that would make each diagram as wide as the widest one
+2012-04-03 16:20:55 UTC <ClaudiusMaximus> i didn't yet check out the cairo text btw, got distracted having found a bug in something else...
+2012-04-03 17:52:15 UTC <byorgey> ClaudiusMaximus: ohhh, I get it now.
+2012-04-03 17:53:43 UTC <byorgey> ClaudiusMaximus: centerize d = strutX ((*2) . uncurry max . fromMaybe (0,0) . extentX $ d) <> d
+2012-04-03 17:53:46 UTC <byorgey> does that work?
+2012-04-03 17:53:52 UTC <byorgey> just apply that to each diagram
+2012-04-03 18:24:51 UTC <ClaudiusMaximus> byorgey: looks like it should be perfect - but i'm still debugging other code, those diagrams are on hold :/
+2012-04-03 18:34:08 UTC <byorgey> ClaudiusMaximus: ok =)
+2012-04-03 18:40:14 UTC <tgeeky_> byorgey: beautiful :o
+2012-04-03 18:43:44 UTC <byorgey> compositional declarative framework FTW!
