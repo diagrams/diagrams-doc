@@ -13485,3 +13485,490 @@
 2012-04-03 18:34:08 UTC <byorgey> ClaudiusMaximus: ok =)
 2012-04-03 18:40:14 UTC <tgeeky_> byorgey: beautiful :o
 2012-04-03 18:43:44 UTC <byorgey> compositional declarative framework FTW!
+2012-04-03 20:11:09 UTC <luite> grrrrrrrrrrr
+2012-04-03 20:11:49 UTC <tgeeky_> you won't like him when he's angry
+2012-04-03 20:13:49 UTC <luite> it's not easy being green
+2012-04-03 20:14:55 UTC <tgeeky_> byorgey: is this a good paper to read today? http://research.microsoft.com/en-us/um/people/emeijer/Papers/fpca91.pdf
+2012-04-03 20:16:56 UTC <luite> is this a good day to read paper?
+2012-04-03 20:17:25 UTC <tgeeky_> i'm a bit behind the times, I know. :( No ipad here.
+2012-04-03 20:17:31 UTC <tgeeky_> But I need something to accomany me with my chores
+2012-04-03 20:38:46 UTC <luite> Page ins: 302.24GB, Page outs: 41.83GB, Swap used: 5.55GB
+2012-04-03 20:44:52 UTC <byorgey> tgeeky_: that is a classic paper.  still a good read, though some of the notation is a bit non-standard
+2012-04-03 20:45:08 UTC <byorgey> tgeeky_: it is also woefully devoid of diagrams.
+2012-04-03 20:46:29 UTC <byorgey> I think I could comprehend the whole thing if I read it now, but the first couple times I tried to read it I only made it about halfway through.
+2012-04-03 22:06:48 UTC <tgeeky_> byorgey: the brackets and lenses and other sorts of things?
+2012-04-03 22:07:21 UTC <tgeeky_> isn't some (or all?) of that implemented in SHE or whatever? the strathclyde ___ ___
+2012-04-03 22:08:23 UTC <tgeeky_> ah. just idiom brackets
+2012-04-04 01:55:21 UTC <byorgey> tgeeky_: yeah, only idiom brackets are in SHE, and those are not in that paper
+2012-04-04 01:55:28 UTC <byorgey> those are from "Applicative Programming with Effects"
+2012-04-04 01:56:44 UTC <byorgey> tgeeky_: nah, the brackets and lenses are pretty standard.  I mean some of the related categorical notation, like the notations for products, coproducts, etc.
+2012-04-04 02:04:38 UTC <luite> buh why did I volunteer to test the yesod release candidate on fringeware operating systems like os x and windows :(
+2012-04-04 02:05:23 UTC <tgeeky_> luite: because your secret hobby is self-flagellation and you wanted to step it up a notch?
+2012-04-04 02:05:34 UTC <luite> hehe something like that
+2012-04-04 02:05:45 UTC <luite> I think it builds now though
+2012-04-04 02:05:58 UTC <tgeeky_> i've never gotten it to build on windows, but I haven't tried in some time
+2012-04-04 02:06:27 UTC <luite> it should work out of the box with the most recent haskell platform
+2012-04-04 21:05:57 UTC <ClaudiusMaximus> woop! found the bug! and fixed it! (i think - at least the previously failing test case now passes, more tests always needed)
+2012-04-04 21:06:28 UTC <ClaudiusMaximus> now i can get back to the diagramming
+2012-04-04 21:06:44 UTC <byorgey> yay!
+2012-04-04 21:06:48 UTC <byorgey> (on both counts)
+2012-04-04 21:08:23 UTC <ClaudiusMaximus> 2nd april 12:51 < ClaudiusMaximus> progressing, still not perfect... http://img205.imageshack.us/img205/5075/t91.png (note: kinda huge)   <<<< btw, that describes this location in the mandelbrot set: http://img402.imageshack.us/img402/2326/m91.png
+2012-04-04 21:09:09 UTC <ClaudiusMaximus> the bug i found was in the "reverse ray tracing" algorithm that goes from location to external angles (cause: numerical precision suckage)
+2012-04-04 21:09:36 UTC <ClaudiusMaximus> which i used to "verify" that the forward ray tracing algorithm did what it was supposed to
+2012-04-04 21:09:47 UTC <byorgey> hmm, difficult to see that first image on the gray background
+2012-04-04 21:09:56 UTC <ClaudiusMaximus> inappropriate transparency
+2012-04-04 21:10:01 UTC <byorgey> heh, yeah
+2012-04-04 21:10:25 UTC <ClaudiusMaximus> (still not figured out the magic combinator for "make this be atop solid white")
+2012-04-04 21:10:32 UTC <byorgey> I like that place in the Mandelbrot set, I've never seen one like that before =D
+2012-04-04 21:10:54 UTC <byorgey> ClaudiusMaximus: oh, there is one, I forget what it is, just a sec...
+2012-04-04 21:11:25 UTC <ClaudiusMaximus> should be in the faq!
+2012-04-04 21:11:56 UTC <byorgey> yes, there should be a lot more stuf in the FAQ, feel free to add things =)
+2012-04-04 21:12:11 UTC <byorgey> in fact, feel free to just add questions and force me to fill in answers =)
+2012-04-04 21:12:17 UTC <ClaudiusMaximus> are the logs for this channel searchable?
+2012-04-04 21:12:31 UTC <byorgey> oh, I think it got added after the 0.5 release
+2012-04-04 21:12:36 UTC <ClaudiusMaximus> ahh
+2012-04-04 21:12:37 UTC <byorgey> I can paste the code for you though
+2012-04-04 21:12:42 UTC <ClaudiusMaximus> :)
+2012-04-04 21:13:32 UTC <byorgey> ClaudiusMaximus: the logs are at http://patch-tag.com/r/byorgey/diagrams-doc/snapshot/current/content/pretty/logs
+2012-04-04 21:13:46 UTC <byorgey> though it would be nice to come up with a better way of doing things re: logs
+2012-04-04 21:14:13 UTC <ClaudiusMaximus> yep, i see in the topic, was too lazy to click to see if there was a search interface
+2012-04-04 21:15:03 UTC <byorgey> yeah, no search interface
+2012-04-04 21:15:10 UTC <byorgey> ClaudiusMaximus: http://hpaste.org/66446
+2012-04-04 21:17:45 UTC <ClaudiusMaximus> thanks!  c&p'd into my code, will see if it compiles
+2012-04-04 21:18:43 UTC <ClaudiusMaximus> another combinator i made, could be generalized?  same intent as 'pad' but using a fixed size instead of relative size:  border s d = strutY s ===> (strutX s |||> d ||| strutX s) === strutY s
+2012-04-04 21:35:07 UTC <byorgey> ClaudiusMaximus: ah, cool
+2012-04-04 21:35:14 UTC <tgeeky_> i'm somewhat confused by what the diagrams actually are
+2012-04-04 21:38:16 UTC <tgeeky_> on second thought, I think I get part of it
+2012-04-04 21:39:21 UTC <luite> they're just monoids in the category of mandelbromorphisms
+2012-04-04 21:39:40 UTC <luite> euh the other way around
+2012-04-04 21:39:42 UTC <luite> or something
+2012-04-04 21:40:36 UTC <tgeeky_> curiously
+2012-04-04 21:41:13 UTC <tgeeky_> it seems to be *very* close to defining some rules about what can happen on a QED lattice lagrangian
+2012-04-04 21:41:35 UTC <tgeeky_> but with some weird extra concepts thrown in that I don't understand
+2012-04-04 21:41:40 UTC <luite> hehe do all fractal things have some physical interpretations? :p
+2012-04-04 21:41:51 UTC <tgeeky_> luite: pretty much none of them do
+2012-04-04 21:42:16 UTC <tgeeky_> luite: but serious people do build lattice models to model QCD (quarks and gluons)
+2012-04-04 21:42:25 UTC <tgeeky_> because it's not perturbative (like QED, which makes it "easy")
+2012-04-04 21:42:36 UTC <tgeeky_> but then, when they got bored, they did it on QED anyway
+2012-04-04 21:43:30 UTC <ClaudiusMaximus> tgeeky_: http://arxiv.org/abs/math/9411238 (angled internal addresses) http://www.iec.csic.es/~gerardo/publica/Pastor02.pdf (tuning on external angles)
+2012-04-04 21:43:32 UTC <tgeeky_> these would correspond to maximal loop diagrams
+2012-04-04 21:44:29 UTC <tgeeky_> the situation where a particle is created (left edge), goes out on a lattice, but turns around, and comes back without touching the other edge (and being annihilated)
+2012-04-04 21:46:48 UTC <tgeeky_> luite: admittedly, this has much more to do with particle physics than anything I've discovered on "my" fractal of choice
+2012-04-04 21:47:22 UTC <tgeeky_> ClaudiusMaximus: thanks for the links
+2012-04-04 21:48:59 UTC <ClaudiusMaximus> tgeeky_: the t91 diagram is to show how the angled internal address gets converted to external angles - but it's almost dinner time! /afk
+2012-04-05 00:31:08 UTC <ClaudiusMaximus> tgeeky_: oops, this is the one with figures included: http://iec.csic.es/~fausto/publica/Pastor02_pre.pdf
+2012-04-05 10:26:06 UTC <Rc43> Hi, guys.
+2012-04-05 10:26:48 UTC <Rc43> Diagrams.Prelude exports Last, but without monoid instance. Or I do something wrong.
+2012-04-05 10:26:56 UTC <Rc43> It is not a problem, just want to say.
+2012-04-05 10:33:58 UTC <Rc43> Hmm...
+2012-04-05 10:34:01 UTC <ClaudiusMaximus> it's Data..Semigroup.Last, not Data.Monoid.Last - not sure what the difference is
+2012-04-05 10:34:05 UTC <Rc43> Or I really do something wrong.
+2012-04-05 10:34:25 UTC <ClaudiusMaximus> Rc43: ghci :info Last
+2012-04-05 10:35:25 UTC <Rc43> I am trying to use `value $ Last 1`.
+2012-04-05 10:36:10 UTC <Rc43> With Data.Monoid.Last ghc somehow want to (Maybe Int) being a Num instance.
+2012-04-05 10:36:32 UTC <Rc43> And with Diagrams.Prelude.Last ghc says that Last isn't Monoid.
+2012-04-05 10:37:28 UTC <Rc43> (`value` requires Monoid)
+2012-04-05 10:38:07 UTC <ClaudiusMaximus> Data.Monoid.Last {Data.Monoid.getLast :: Maybe a}  but  Data.Semigroups.Last{ Data.Semigroups.getLast :: a }
+2012-04-05 10:39:05 UTC <Rc43> Oh, suddenly.
+2012-04-05 10:39:21 UTC <ClaudiusMaximus> instance Semigroup a => Monoid (Option a)
+2012-04-05 10:40:41 UTC <ClaudiusMaximus> so i guess you want something like   value (Option (Just (Last 1)))
+2012-04-05 10:43:29 UTC <Rc43> Which difference between Option and Maybe?
+2012-04-05 10:43:50 UTC <ClaudiusMaximus> ghci :info should help
+2012-04-05 10:44:43 UTC <ClaudiusMaximus> i think the idea is that option lifts a semigroup into a monoid via maybe
+2012-04-05 10:45:20 UTC <ClaudiusMaximus> and i think a semigroup is like a monoid without mempty
+2012-04-05 10:46:00 UTC <Rc43> Its true. I just can't understand, when I should use Option instead Maybe.
+2012-04-05 10:46:40 UTC <ClaudiusMaximus> when you have a semigroup and need a monoid, afaict
+2012-04-05 10:48:10 UTC <Rc43> Ah, think I got it. Just "bridge" not for manual using.
+2012-04-05 10:50:40 UTC <Rc43> Now it compiles.
+2012-04-05 11:14:19 UTC <Rc43> I forgot, can `diagrams` (with cairo-gtk backend) redraw only part of diagram?
+2012-04-05 11:14:33 UTC <Rc43> Or use layers?
+2012-04-05 21:51:25 UTC <fryguybob> ACTION is working on something with diagrams.
+2012-04-05 21:57:41 UTC <luite> ACTION is working on something with haskell.
+2012-04-05 22:07:43 UTC <byorgey> =D
+2012-04-06 01:00:47 UTC <fryguybob> ACTION loves type driven programming.
+2012-04-06 01:01:46 UTC <luite> hehe if i push my left earbud, I can hear that in my right one
+2012-04-06 01:18:59 UTC <fryguybob> It compiles.  So I'm done right?
+2012-04-06 01:34:20 UTC <fryguybob> progress: http://www.cs.rochester.edu/u/ryates/temp/test.pdf
+2012-04-06 01:41:00 UTC <luite> hmm, interesting art
+2012-04-06 02:12:47 UTC <fryguybob> luite: Now look at it.
+2012-04-06 02:13:55 UTC <luite> cool!
+2012-04-06 02:14:09 UTC <luite> I kind of like the old version better though :p
+2012-04-06 02:23:08 UTC <fryguybob> Now it is more square.
+2012-04-06 02:32:30 UTC <fryguybob> Now available: http://patch-tag.com/r/fryguybob/diagrams-osm/  and  http://patch-tag.com/r/fryguybob/diagrams-osm-postscript/
+2012-04-06 02:33:55 UTC <fryguybob> I had to use the latest of the OSM with one slight change: https://github.com/fryguybob/geo-osm
+2012-04-06 02:34:16 UTC <fryguybob> ACTION goes to bed.
+2012-04-06 03:20:28 UTC <byorgey> fryguybob: cool!
+2012-04-07 02:41:33 UTC <vyom> byorgey: how do i use a SomeColor data type with lc function
+2012-04-07 02:42:28 UTC <vyom> is the only way converting to RGBA and back?
+2012-04-07 02:51:06 UTC <vyom> never mind.. i was trying to avoid specifying an explicit dependency on the colour package because diagrams does not seem to export it.. but I might just have to do that
+2012-04-07 02:53:11 UTC <tgeeky_> vyom: diagrams does depend on it, though
+2012-04-07 02:53:51 UTC <vyom> yes.. but if I need to use the colour types.. i will have to import them explicitly in my cabal file
+2012-04-07 02:54:39 UTC <vyom> i dont believe diagrams exports the colour types like Colour etc...
+2012-04-07 02:54:53 UTC <vyom> only functions like black. white etc
+2012-04-07 02:55:16 UTC <tgeeky_> vyom: maybe I don't know how it works
+2012-04-07 02:55:44 UTC <tgeeky_> but I would have tought that if you depend on diagrams in your cabal file, and then import the types, then you can assume others will have it installed
+2012-04-07 02:57:12 UTC <vyom> it will be installed, yes
+2012-04-07 02:57:36 UTC <vyom> but cabal build complains i think
+2012-04-07 02:57:56 UTC <vyom> because it is a hidden package or something..
+2012-04-07 03:00:34 UTC <vyom> unless I explicitly specify the colour package as a dependency in my .cabal file.. cabal build will not allow me to compile against that package even if it is installed
+2012-04-07 03:00:58 UTC <tgeeky_> *adds another thing that "cabal 2.0" should have fixed
+2012-04-07 06:26:59 UTC <vyom> mgsloan: i was looking into making the turtle recognise things like line width and color..
+2012-04-07 06:27:19 UTC <mgsloan> vyom: oh yeah?  I got distracted with other things for a bit..
+2012-04-07 06:27:41 UTC <vyom> and for various reasons which I will put down in a mail or something, I ended up doing some major surgery :)
+2012-04-07 06:27:58 UTC <vyom> https://github.com/deepakjois/hs-logo/commit/5890be78431451b798a13085203396113b527587
+2012-04-07 06:28:21 UTC <vyom> for now I just pulled in the turtle into my repo
+2012-04-07 06:28:23 UTC <mgsloan> writing a blog post about a way to avoid cabal dependency hell :) and provide re-factorings to rewrite your code to target newer versions
+2012-04-07 06:28:57 UTC <mgsloan> Cool, that works!
+2012-04-07 06:29:38 UTC <vyom> and then built a from-scratch pure implementation.. and adapted the diagrams-contrib turtle to work with the pure implementation
+2012-04-07 06:30:09 UTC <vyom> i also wrote a few quickcheck tests.. which were convenient to write.. because the turtle internals are now pure
+2012-04-07 06:30:46 UTC <mgsloan> cool!  So no more monad transformers?  You know the identity monad makes things parameterized on a monad pure?
+2012-04-07 06:30:55 UTC <vyom> hmm.. i wanna read that blog post..
+2012-04-07 06:32:16 UTC <vyom> mgsloan: I adapted the pure turtle to work with the existing State Monad infrastructure .. because i would have had to change a lot of hs-logo code otherwise
+2012-04-07 06:32:31 UTC <vyom> saving that refactor for another day
+2012-04-07 06:32:47 UTC <mgsloan> (I haven't actually done the refactorings stuff, but it'd be very cool - hoping someone else will make it after I suggest it, hah)
+2012-04-07 06:33:05 UTC <mgsloan> ah, cool!
+2012-04-07 06:33:46 UTC <vyom> but it is easy to get rid of the State monad and write a pure turtle, diagrams style https://github.com/deepakjois/hs-logo/commit/5890be78431451b798a13085203396113b527587#diff-3
+2012-04-07 06:33:55 UTC <vyom> like the example above
+2012-04-07 06:34:58 UTC <vyom> apart from easier testing.. it *may* also allows for easier optimisation in really long paths.. by forcing strict evalualtion
+2012-04-07 06:35:30 UTC <vyom> anyway.. like I said I will probably put that down in a mail.. and send across..
+2012-04-07 06:35:45 UTC <vyom> and then we can see if we want to fold it into diagrams-contrib
+2012-04-07 06:36:23 UTC <vyom> open to any suggestions/feedback
+2012-04-07 06:36:48 UTC <vyom> i just wrote it from scratch because i wanted to try quickcheck :)
+2012-04-07 06:37:20 UTC <vyom> and get more hands on with Haskell testing infrastructure
+2012-04-07 06:40:02 UTC <mgsloan> we should consult a more expert Haskeller than myself for such design issues
+2012-04-07 06:40:18 UTC <mgsloan> I really like having the pure one, and the code in that module looks awesome
+2012-04-07 06:40:32 UTC <mgsloan> buut, you could achieve the same by using "TurtleT Identity"
+2012-04-07 06:40:42 UTC <mgsloan> well I guess that's just Turtle
+2012-04-07 06:43:30 UTC <vyom> mgsloan: hmm... ya... it is still tied to the state monad
+2012-04-07 06:44:14 UTC <vyom> we could convert a pure turtle to a monad by using Identity i guess
+2012-04-07 06:44:17 UTC <mgsloan> things in the state monad should still be quickcheck testable
+2012-04-07 06:44:29 UTC <vyom> mgsloan: yes.. they should be
+2012-04-07 06:45:14 UTC <vyom> i just thought it was a little bit inconvenient..
+2012-04-07 06:45:36 UTC <mgsloan> but, I'm not sure if it's better design to do a state monad wrapper over a pure implementation, or provide Identity.  I agree that it's a bit inconvenient - it'd be nice if Turtle was convenient
+2012-04-07 06:46:07 UTC <mgsloan> (for novices particularly)
+2012-04-07 06:46:25 UTC <mgsloan> as that's half of the entire point of a turtles library (I intend to actually use it in code, though)
+2012-04-07 06:47:31 UTC <vyom> so.. the state monad
+2012-04-07 06:47:37 UTC <vyom> sorry..
+2012-04-07 06:47:52 UTC <vyom> the "state monad wrapper" was just to aid refactoring..
+2012-04-07 06:48:21 UTC <vyom> in hs-logo at least i intend to get rid of it..
+2012-04-07 06:48:44 UTC <vyom> the think that i liked about the state monad was that it gave the turtle an imperative feel
+2012-04-07 06:48:48 UTC <vyom> which is what it is
+2012-04-07 06:48:57 UTC <vyom> a turtle has state
+2012-04-07 06:49:22 UTC <vyom> and i dont like using the "#" to thread movements together.. like i am doing in the pure version
+2012-04-07 06:49:42 UTC <vyom> i want that to happen inside of a do block
+2012-04-07 06:53:45 UTC <mgsloan> No worries!  I don't think that anyone uses this API yet, so changing it really doesn't matter.
+2012-04-07 06:53:58 UTC <mgsloan> I really do find the turtle form more intuitive than expressing the same thing without angle-state
+2012-04-07 06:54:31 UTC <vyom> "angle=state"?
+2012-04-07 06:54:42 UTC <vyom> what you mean?
+2012-04-07 06:55:13 UTC <mgsloan> well, Trails already use Segments that are relative offsets
+2012-04-07 06:55:28 UTC <mgsloan> so, that's in some sense positional state - at least you aren't expressing absolute coordinates
+2012-04-07 06:55:44 UTC <mgsloan> turtle adds pen state and positions
+2012-04-07 06:56:14 UTC <vyom> ah ok
+2012-04-07 06:56:45 UTC <mgsloan> the new version looks really good!  Glad to see style attributes in there
+2012-04-07 06:57:30 UTC <vyom> thanks.. i was wondering what you would think of it :).. because i went on my own tangent..
+2012-04-07 06:57:55 UTC <vyom> i had my own agenda of using quickcheck :)
+2012-04-07 06:59:38 UTC <vyom> anyway.. I have been coding for 5 hours straight.. need some dinner now
+2012-04-07 07:00:07 UTC <vyom> let me think about this a bit and try out a few things..
+2012-04-07 07:00:24 UTC <vyom> later
+2012-04-07 07:00:34 UTC <mgsloan> haha, yeah, I know the feeling, quite a shifted cycle!
+2012-04-07 07:00:37 UTC <mgsloan> later!
+2012-04-07 19:34:03 UTC <byorgey> fryguybob: you around?
+2012-04-07 19:34:19 UTC <fryguybob> yeah
+2012-04-07 19:34:42 UTC <byorgey> fryguybob: wondering if you have an example .tex file that works with LaTeXGrapher
+2012-04-07 19:34:45 UTC <fryguybob> byorgey: I've got an aweful cold though, so I may not have loopy any reason skills
+2012-04-07 19:34:55 UTC <fryguybob> That I can do :D
+2012-04-07 19:34:57 UTC <byorgey> ok, no reason skills needed =)
+2012-04-07 19:35:21 UTC <byorgey> I'm giving a talk about diagrams and trying to hack up something based on LaTeXgrapher.sty to let me build diagrams embedded in my slide source
+2012-04-07 19:35:21 UTC <fryguybob> Wow my sentence didn't even make sense.
+2012-04-07 19:35:36 UTC <byorgey> nope, I noticed but wasn't going to say anything ;)
+2012-04-07 19:36:12 UTC <fryguybob> test.tex here https://patch-tag.com/r/fryguybob/LaTeXGrapher/snapshot/current/content/pretty/tex
+2012-04-07 19:36:24 UTC <byorgey> ah, missed that
+2012-04-07 19:36:26 UTC <byorgey> thanks!
+2012-04-07 19:36:28 UTC <fryguybob> np
+2012-04-07 19:42:20 UTC <byorgey> fryguybob: \define@key{dtt}{height}[]{%
+2012-04-07 19:42:34 UTC <byorgey>     \def\dtt@height{-w #1}
+2012-04-07 19:42:41 UTC <byorgey> should that be -h ?
+2012-04-07 19:43:43 UTC <fryguybob> Humm, that might be beyond me right now.
+2012-04-07 19:45:12 UTC <byorgey> ok, no worries, I'll figure it out =)
+2012-04-07 19:45:28 UTC <byorgey> hope you feel better soon
+2012-04-07 19:45:47 UTC <fryguybob> Looking at it I would say yes that should be -h
+2012-04-07 19:46:08 UTC <fryguybob> Thanks.
+2012-04-07 19:53:16 UTC <byorgey> woot! It works!!
+2012-04-07 19:53:42 UTC <byorgey> there is now a BLUE CIRCLE in my slides which I conjured into being merely by stating that it should exist
+2012-04-07 19:55:59 UTC <byorgey> oh, whoops, not quite, it was using the PDF I made manually while testing it =P
+2012-04-07 19:58:52 UTC <byorgey> fryguybob: hmm, is there some option I need to pass to latex to enable ShellEscape?
+2012-04-07 20:01:34 UTC <fryguybob> byorgey: -e I think?
+2012-04-07 20:02:46 UTC <byorgey> ah, for pdflatex at least I need --enable-write18
+2012-04-07 20:03:01 UTC <byorgey> works now!
+2012-04-07 20:03:21 UTC <fryguybob> ah, ok
+2012-04-07 20:03:25 UTC <fryguybob> Woohoo!
+2012-04-07 20:03:34 UTC <byorgey> =D
+2012-04-07 20:03:47 UTC <fryguybob> Now combine it with OSM and get free maps in your tex
+2012-04-07 20:03:56 UTC <byorgey> oooh, shiny
+2012-04-07 20:04:39 UTC <byorgey> yeah, I might use your OSM thing as a fun example of why you really want an *embedded* DSL for creating graphics
+2012-04-07 20:05:10 UTC <byorgey> once I'm done with this talk I'll think about how to turn all this into a proper set of tools for embedding diagrams in LaTeX
+2012-04-07 20:05:26 UTC <fryguybob> Yeah, I'm going to add shortest path too it as soon as I can think and have time.
+2012-04-07 20:05:28 UTC <byorgey> right now I've only hacked it just far enough so it suits my purpose for the moment
+2012-04-07 20:06:05 UTC <byorgey> one major thing it needs is the ability to avoid re-generating diagrams whose source hasn't changed
+2012-04-07 20:06:11 UTC <byorgey> but I think we can build that into diagrams-builder
+2012-04-07 20:06:34 UTC <fryguybob> I wonder if Shake could help with that.
+2012-04-07 20:07:02 UTC <byorgey> hmm, maybe, but we don't want to require people to use Shake just to get that feature
+2012-04-07 20:07:55 UTC <fryguybob> Make diagrams-builder depend on shake?
+2012-04-07 20:08:30 UTC <byorgey> hmm, maybe
+2012-04-07 20:08:40 UTC <byorgey> seems heavyweight
+2012-04-07 20:09:22 UTC <byorgey> fryguybob: hmm, aren't you having a baby soon?  I forget the exact timing.
+2012-04-07 20:09:44 UTC <fryguybob> Yeah, due date is the 19th, but it could happen at any time.
+2012-04-07 20:10:20 UTC <fryguybob> Hopefully I'll get better beforehand.
+2012-04-07 20:10:56 UTC <byorgey> yeah, that would be ideal...
+2012-04-07 20:11:17 UTC <byorgey> well, exciting, let us know =)
+2012-04-07 20:11:23 UTC <fryguybob> Thanks, we well.
+2012-04-07 20:11:30 UTC <fryguybob> (will)
+2012-04-07 20:11:58 UTC <fryguybob> Hope your talk goes well!
+2012-04-07 20:16:59 UTC <byorgey> thanks!
+2012-04-07 20:25:50 UTC <mgsloan> coooool!
+2012-04-07 20:27:39 UTC <byorgey> mgsloan: what?
+2012-04-07 20:28:29 UTC <mgsloan> the idea of doing automatic diagrams -> latex
+2012-04-07 20:28:41 UTC <mgsloan> I think ActiveHs might do that too, come to think of it
+2012-04-07 20:28:46 UTC <byorgey> ah, yeah
+2012-04-07 20:28:55 UTC <byorgey> it's pretty sweet =)
+2012-04-07 20:29:15 UTC <mgsloan> ah, nah, ActiveHs is html only
+2012-04-08 05:00:05 UTC <vyom> rendered this using hs-logo with the turtle color support https://dl-web.dropbox.com/get/Public/logo/sun.svg?w=4c66d22c
+2012-04-08 05:00:44 UTC <vyom> code: "repeat 2000 [pu home seth random 361 setpencolor random 15 fd 40 pd fd random 200]"
+2012-04-08 05:12:15 UTC <vyom> oops.. bad link http://dl.dropbox.com/u/953/logo/sun.svg
+2012-04-08 15:11:36 UTC <ClaudiusMaximus> my latest diagrammy thing - sadly not using 'diagrams' but generating xhtml with dirty String concatenation... http://claudiusmaximus.goto10.org/g/mandelbrot/farey-search-internal-angles-external-angles-example-1.xhtml (visualizing an algorithm related to the ideas in <http://math.bu.edu/people/bob/papers/farey.ps>)
+2012-04-08 16:14:55 UTC <vyom> Is it worth making  Diagrams export the Colour type and the Data.Colour.Names module.. cabal refuses to build unless depend on the colours package.. because it is hidden
+2012-04-08 18:16:08 UTC <byorgey> vyom: yeah, we probably should
+2012-04-08 18:16:25 UTC <byorgey> vyom: can you add a ticket for it on the bug tracker?  Or just send me a patch yourself, either way
+2012-04-08 18:16:53 UTC <byorgey> I mean, there shouldn't be anything wrong with depending on the colours package yourself, but independently I think reexporting it would be nice
+2012-04-08 18:16:54 UTC <vyom> i can send a patch.. so I just export in Diagrams.Prelude?
+2012-04-08 18:17:18 UTC <byorgey> yeah, you'll notice that in Diagrams.Prelude we already re-export some modules
+2012-04-08 18:17:39 UTC <byorgey> vyom: just do a quick check to make sure it doesn't export anything that conflicts with other stuff already exported by Diagrams.Prelude
+2012-04-08 18:18:08 UTC <byorgey> if it does we'll have to explicitly hide some things or only export a selection of stuff
+2012-04-08 18:18:21 UTC <vyom> ok cool.. will send a patch sometime today after making that change and doing a build
+2012-04-08 18:20:21 UTC <vyom> i wrote a pure turtle implementation because i wanted to make it easily testable.. https://github.com/deepakjois/hs-logo/blob/master/src/Diagrams/TwoD/Path/Turtle/Internal.hs
+2012-04-08 18:21:06 UTC <vyom> and then because i did not want to refactor my hs-logo code just yet.. i just adapted the current turtle to delegate to it
+2012-04-08 18:21:07 UTC <byorgey> yeah, I saw that
+2012-04-08 18:21:27 UTC <byorgey> I think I prefer the monadic interface, personally
+2012-04-08 18:22:03 UTC <vyom> i do too.. which is why I wrote the code in an internal module..
+2012-04-08 18:22:16 UTC <byorgey> heh, ok =)
+2012-04-08 18:22:26 UTC <byorgey> I don't see why the monadic version wouldn't be easily testable though.
+2012-04-08 18:22:43 UTC <byorgey> I've got to run now but I can take a look at it later
+2012-04-08 18:22:49 UTC <vyom> maybe that's just because i am not sure of the right idioms
+2012-04-08 18:22:54 UTC <vyom> sure
+2012-04-08 18:22:55 UTC <vyom> later
+2012-04-08 18:31:35 UTC <vyom> byorgey: this is for when you are back... basically I wanted to write functions that operated on a pure turtle data type because i thought punctuating each of my code with "modify" (from the State monad) seemed kinda ugly
+2012-04-08 18:31:57 UTC <vyom> however.. i do want to expose a monadic *interface*..
+2012-04-08 18:32:34 UTC <vyom> the way i do that is that the original Turtle class now delegates to the pure functions..
+2012-04-08 18:33:04 UTC <vyom> i can now test the pure functions using quickcheck and assert correctness of turtle behavior
+2012-04-08 18:33:53 UTC <vyom> howeever now the problem is that we have one extra layer of indirection
+2012-04-08 18:34:55 UTC <vyom> i also thought (based on no hard facts, just intuition) that having pure functions might make it easier to specify things like strict evaluation and INLINE pragmas
+2012-04-08 18:35:14 UTC <vyom> which will aid in performance optimisations..
+2012-04-08 18:35:31 UTC <vyom> but then you know what they say about premature optimisation ;)
+2012-04-08 20:43:17 UTC <Rc43> Hi, guys.
+2012-04-08 20:43:29 UTC <Rc43> http://hackage.haskell.org/packages/archive/diagrams-contrib/0.1.1.0/doc/html/Diagrams-TwoD-Layout-Tree.html
+2012-04-08 20:43:39 UTC <Rc43> Why it works with Diagram only?
+2012-04-08 20:43:46 UTC <Rc43> I mean `Any` monoid.
+2012-04-08 21:13:10 UTC <vyom> so I just made an hs-logo release with colors! check out http://bit.ly/Hr3961 http://bit.ly/Hr3lCi http://bit.ly/Hr3pSz and http://bit.ly/Htxe10
+2012-04-08 22:50:14 UTC <byorgey> vyom: sweet!
+2012-04-08 22:52:18 UTC <byorgey> vyom: re: Turtle stuff, my intuition says that it should be possible to test the monadic-interface code with QuickCheck almost as easily as the pure code.
+2012-04-08 22:52:25 UTC <byorgey> vyom: but I'll have to look at it more carefully.
+2012-04-08 22:52:34 UTC <byorgey> vyom: I don't have any intuition about the optimization stuff.
+2012-04-08 22:52:54 UTC <byorgey> so you may be right there, I don't know.
+2012-04-08 22:53:19 UTC <byorgey> But intuitively the state monad is doing exactly what your functional version is doing -- it just happens to be wrapped up in a newtype.
+2012-04-08 23:11:26 UTC <vyom> yes.. the monad is doing the same thing..
+2012-04-08 23:11:30 UTC <vyom> let me a bit more specific
+2012-04-08 23:15:08 UTC <vyom> https://github.com/deepakjois/hs-logo/blob/master/src/Diagrams/TwoD/Path/Turtle/Internal.hs#L163 this penDown method
+2012-04-08 23:15:41 UTC <vyom> if this were in a State monad.. i would have to first query the isPenDown state using gets
+2012-04-08 23:16:12 UTC <vyom> and then use modify to make the changes
+2012-04-08 23:16:48 UTC <vyom> i will probably have to try replicating this in a state monad and see how the code looks like..
+2012-04-08 23:17:05 UTC <vyom> but it just seemed a little inconvenient to do it everytime
+2012-04-08 23:17:23 UTC <vyom> i need to find an unobtrusive way to do it
+2012-04-08 23:18:04 UTC <vyom> like i said.. i like the monadic interface, but maybe not so much the implementation ;)
+2012-04-09 00:03:25 UTC <byorgey> vyom: fair enough.  you're right, it looks nice this way.  I certainly don't have a problem with having a monadic interface on top of a non-monadic implementation.
+2012-04-09 00:31:01 UTC <vyom> byorgey: cool.. now if I can convince mgsloan, then i can clean up the implementation i have and contribute a patch to diagrams-contrib.. along with tests and everything :)
+2012-04-09 00:31:36 UTC <vyom> i removed a couple of methods because i wasnt using them in hs-logo.. but they can be easily put back...
+2012-04-09 00:31:55 UTC <mgsloan> ACTION is convinced :)
+2012-04-09 00:32:57 UTC <vyom> i was also doing some research into strict evaluation inside a state monad and related stuff.. investigating this bug https://github.com/deepakjois/hs-logo/issues/29
+2012-04-09 00:33:19 UTC <vyom> ran into this blog posts which might have a solution http://blog.johantibell.com/2012/02/forcing-values-returned-from-monadic.html
+2012-04-09 00:37:18 UTC <vyom> byorgey: you commented on that bug and said you did some profiling.. what kind of profiling was that... hpc?
+2012-04-09 00:37:36 UTC <vyom> mgsloan: cool!
+2012-04-09 00:42:06 UTC <vyom> and this http://stackoverflow.com/questions/7998458/why-does-this-simple-use-of-the-state-monad-cause-a-stack-overflow
+2012-04-09 00:42:22 UTC <byorgey> vyom: not hpc, just (1) compile with -rtsopts (cabal install --ghc-options="-rtsopts") (2) run with +RTS -hT -RTS  (3) visualize output with hp2pretty.
+2012-04-09 00:43:02 UTC <byorgey> vyom: the results looked characteristic of a large thunk being built up.  So I looked at the code and realized where such a thunk would be built.
+2012-04-09 00:44:42 UTC <vyom> cool.. added more details to the bug
+2012-04-09 00:45:22 UTC <vyom> havent done any profiling in Haskell.. so I am thinking  I wanna dive into that to get some hands on experience with it.. :)
+2012-04-09 00:45:47 UTC <vyom> this is now the most comprehensive haskell project i worked on :)
+2012-04-09 00:46:03 UTC <vyom> i even get to learn a bit of linear algebra :)
+2012-04-09 00:47:13 UTC <vyom> i spent a bit of time re-reading the docs which resulted in this neat refactoring :).. https://github.com/deepakjois/hs-logo/commit/5b1c8a86aa0bcc4548d20ca7c87d6f79531386aa
+2012-04-09 00:47:23 UTC <vyom> minor.. but still pretty satisfying ;)
+2012-04-09 00:47:38 UTC <byorgey> excellent =)
+2012-04-09 00:48:43 UTC <vyom> i always wanted to get back into some math i had studied back in college.. and the choice was between statistics and linear algebra..
+2012-04-09 00:48:55 UTC <vyom> it just so happens that I stumbled upon diagrams..
+2012-04-09 00:49:10 UTC <vyom> so looks like now my choice is made for me.. :)
+2012-04-09 00:49:15 UTC <byorgey> vyom: I'm glad you're having so much fun.  and I'm really glad to have you working on diagrams =)
+2012-04-09 00:50:17 UTC <vyom> :).. and thank you for building diagrams..
+2012-04-09 00:53:13 UTC <byorgey> it's been one of the most fun and satisfying projects I've ever worked on.  I've been working on it for... four years now?
+2012-04-09 00:53:21 UTC <byorgey> wow, that's hard to believe
+2012-04-09 00:53:45 UTC <byorgey> though that includes the initial version which I ended up completely throwing away.
+2012-04-09 01:03:19 UTC <tgeeky> byorgey: isn't it weird to look back at something you feel you started yesterday, and to realize it's yearz? :o
+2012-04-09 01:03:23 UTC <tgeeky> s/z//
+2012-04-09 01:03:45 UTC <byorgey> yep, sure is
+2012-04-09 01:06:30 UTC <vyom> well...I really hope that it continues much longer than that .. because I am just getting started!
+2012-04-09 01:06:50 UTC <luite> I still havent taken the time to properly play with diagrams :(
+2012-04-09 01:07:08 UTC <tgeeky> and god willing, you won't
+2012-04-09 01:07:15 UTC <tgeeky> until we get to play with wolfgang :o
+2012-04-09 01:07:34 UTC <vyom> most of diagrams-core is still kinda opaque to me... either due to the math or due to the advanced haskell stuff :)
+2012-04-09 01:08:09 UTC <luite> I got a bit stuck with that a few days ago, some annoying function i had to write, couldn't concentrate. so i'm working on some yesod stuff now
+2012-04-09 01:08:46 UTC <byorgey> vyom: cleaning up and documenting diagrams-core is definitely on my long-term list of projects
+2012-04-09 01:09:08 UTC <vyom> it seems to have a lot of haddock comments already :)
+2012-04-09 01:09:41 UTC <vyom> anything more is either an intermediate haskell book.. or a linear algebra textbook ;)
+2012-04-09 01:09:52 UTC <vyom> or a tutorial.. if not a book
+2012-04-09 01:10:17 UTC <tgeeky> my linear algebra told me that you can never learn too much linear algebra
+2012-04-09 01:16:44 UTC <byorgey> vyom: yeah, I mean like writing a section in the user manual about it, something that will give more of an overview to help explain the organization etc.
+2012-04-09 01:17:11 UTC <byorgey> I mean, the user manual may well turn into something book-length =)
+2012-04-09 01:17:37 UTC <tgeeky> well, it is one of the more difficult things to do in any programming language
+2012-04-09 01:18:07 UTC <tgeeky> declarative, compisitional drawing
+2012-04-09 01:21:02 UTC <tgeeky> come to think of it...
+2012-04-09 01:21:15 UTC <tgeeky> byorgey: surely you did some prior art research before you started?
+2012-04-09 01:26:34 UTC <tgeeky> or was there simply none?
+2012-04-09 01:35:26 UTC <byorgey> tgeeky: there are various related things.  Though I haven't done as much prior art research as I probably should.
+2012-04-09 01:36:11 UTC <byorgey> there are quite a few languages for drawing which are either not embedded, not declarative, or both
+2012-04-09 01:36:41 UTC <tgeeky> well embedded seems like it could be a plus or a minus, depending on the perspective and the language
+2012-04-09 01:36:53 UTC <tgeeky> but declarative I think *we'll* agree is better than any alternative
+2012-04-09 01:37:46 UTC <byorgey> I think embedded is solidly a plus.  (Though I am biased of course.)
+2012-04-09 01:38:13 UTC <byorgey> You get (1) a well-designed language and (2) lots of other tools + libraries  for free.
+2012-04-09 01:38:16 UTC <tgeeky> byorgey: embedded = EDSL, in this case?
+2012-04-09 01:38:20 UTC <byorgey> yeah.
+2012-04-09 01:38:26 UTC <tgeeky> byorgey: yeah, I guess so. That's a reversal of the embedding :O
+2012-04-09 01:38:33 UTC <tgeeky> i never think about it like that.
+2012-04-09 01:38:50 UTC <byorgey> You can't really do all that much in e.g. Metapost or Asymptote, because you'd have to write it all from scratch yourself.
+2012-04-09 01:39:04 UTC <byorgey> and they're pretty horrible for doing general-purpose computation.
+2012-04-09 01:39:17 UTC <byorgey> even though they are in principle Turing-complete.
+2012-04-09 01:39:53 UTC <byorgey> Postscript is at least a solidly designed language, but it was never really intended for *humans* to write code directly in it.
+2012-04-09 01:40:02 UTC <tgeeky> yeah for sure
+2012-04-09 01:40:13 UTC <tgeeky> that's omnomnom for printers
+2012-04-09 01:40:19 UTC <byorgey> indeed.
+2012-04-09 13:06:47 UTC <luite> mgsloan: the force is strong with your feature requests
+2012-04-09 13:07:43 UTC <mgsloan> hehehe :D
+2012-04-09 13:08:04 UTC <byorgey> hehe
+2012-04-09 13:08:51 UTC <mgsloan> sorry for the lack of much description, but I figured it was reasonably self explanatory
+2012-04-09 13:10:14 UTC <byorgey> mgsloan: well, the ticket itself is quite self explanatory, but I'd like to know more about WHY we want to make this change, and what the implications will be =)
+2012-04-09 13:10:37 UTC <byorgey> just making that single change by itself doesn't seem like it would accomplish much.
+2012-04-09 13:12:17 UTC <mgsloan> true!  Good point.  One reason is the punniness.  The other reason is that it does indeed crop up here and there, and I suspect it would be nice for the AD stuff
+2012-04-09 13:12:31 UTC <byorgey> the punniness?
+2012-04-09 13:12:54 UTC <mgsloan> the acronym pun that is R2 D2
+2012-04-09 13:13:05 UTC <byorgey> oh, hahahaha
+2012-04-09 13:13:32 UTC <mgsloan> however, I mostly filed it because I remembered that I hadn't done so, and had intended for at some point
+2012-04-09 13:13:50 UTC <byorgey> fair enough, that's a very good reason =)
+2012-04-09 13:14:45 UTC <mgsloan> last monday / tuesday I went to Lang.Next.  It was great!  Saw Andy Moran give a talk about galois's use of Portland, and HalVM.
+2012-04-09 13:15:33 UTC <byorgey> cool!
+2012-04-09 13:15:40 UTC <mgsloan> Also met Luke Palmer!  We got into some conversations that brought up some things I'd been thinking about regarding Haskell versioning conventions for modules / packages.
+2012-04-09 13:15:40 UTC <fryguybob> mgsloan: I watched that.  It was good until the question.
+2012-04-09 13:16:37 UTC <byorgey> mgsloan: oh, sweet!
+2012-04-09 13:16:41 UTC <mgsloan> so, unfortunately I've been deviated off type explanations / AD layout til this blog post is done being written
+2012-04-09 13:17:17 UTC <mgsloan> fryguybob: I got the idea that the question guy is a notorious, if knowledgeable, troll within Microsoft
+2012-04-09 13:17:28 UTC <fryguybob> mgsloan: Sounded like it.
+2012-04-09 13:17:53 UTC <mgsloan> that was not the only dubious and vitriolic question he posed
+2012-04-09 13:17:53 UTC <fryguybob> I was sad that other questions were not allowed so that he could get a friendlier one.
+2012-04-09 13:59:42 UTC <alpounet> wow, indeed that question was pretty dumb
+2012-04-09 14:07:50 UTC <luite> is there a video?
+2012-04-09 15:07:01 UTC <fryguybob> luite: http://channel9.msdn.com/Events/Lang-NEXT/Lang-NEXT-2012/A-Means-to-Many-Ends-10-Years-of-Haskell-at-Galois
+2012-04-09 15:07:11 UTC <fryguybob> non-silverlight versions are linked on that page.
+2012-04-09 17:32:17 UTC <alpounet> tgeeky, i hate it when Susskind says "But... it's more general than that"
+2012-04-09 17:32:26 UTC <alpounet> you're then just forced to watch yet another lecture
+2012-04-09 17:32:38 UTC <alpounet> in the hope that you'll see that generalization there
+2012-04-09 17:40:55 UTC <tgeeky> alpounet: hehe. yes :)
+2012-04-09 17:41:13 UTC <tgeeky> alpounet: which lecture / generalization?
+2012-04-09 17:42:14 UTC <alpounet> i'm still in the classical mechanics lecture. despite having studied it for quite a few years, i decided to start from the beginning so that i know his vocabulary/point of view
+2012-04-09 17:42:23 UTC <alpounet> and it's about energy conservation
+2012-04-09 17:42:37 UTC <alpounet> being more general than in Newton mechanics, in QM, in relativity
+2012-04-09 17:42:49 UTC <tgeeky> alpounet: yeah. I see.
+2012-04-09 17:42:51 UTC <alpounet> which obviously won't be studied before... quite a long time :p
+2012-04-09 17:43:12 UTC <tgeeky> Yeah, in all cases, energy conservation is a symmetry produced by some kind of time invariance
+2012-04-09 17:43:17 UTC <tgeeky> or time translation symmetry
+2012-04-09 17:44:00 UTC <alpounet> and i guess there's a group involved there
+2012-04-09 18:04:32 UTC <luite> fryguybob: tnx
+2012-04-09 18:05:45 UTC <luite> alpounet: yeah great lectures, I'd buy a 64GB iPad just to be able to carry the whole collection with me at all times :)
+2012-04-09 18:06:36 UTC <alpounet> you watched them all?
+2012-04-09 18:07:24 UTC <luite> hehe no not yet
+2012-04-09 18:07:29 UTC <luite> the first 3 series or so
+2012-04-09 18:07:38 UTC <luite> but I still want to watch the rest, just not enough time lately
+2012-04-09 18:09:16 UTC <alpounet> yeah
+2012-04-09 18:10:03 UTC <alpounet> i'll try to take the time to watch one video a week
+2012-04-09 22:15:56 UTC <tgeeky> hmm
+2012-04-09 22:16:08 UTC <tgeeky> GHC head type level Nats (and Strings!?!)
+2012-04-09 22:16:15 UTC <tgeeky> opine for me!
+2012-04-10 00:26:43 UTC <byorgey> tgeeky: this is Totally Sweet
+2012-04-10 01:00:09 UTC <tgeeky> byorgey: opinion noted and logged, 21:00
+2012-04-10 01:02:05 UTC <tgeeky> i'm not sure if I understand how these are more fundamental or better than existing type-level nats
+2012-04-10 01:24:16 UTC <tgeeky> though type-level strings "came out of nowhere"
+2012-04-10 03:20:00 UTC <vyom> byorgey: here is a patch for Data.Colours re-export from diagrams.. http://dl.dropbox.com/u/953/logo/data-colors-export.patch
+2012-04-10 03:21:13 UTC <vyom> assuming that is okay.. is it something worth making a minor release for?
+2012-04-10 03:21:25 UTC <vyom> i mean a minor point release
+2012-04-10 13:25:21 UTC <byorgey> tgeeky: they are better than existing type-level nats because it includes a domain-specific solver for constraints involving nats, addition, and inequality
+2012-04-10 13:26:04 UTC <byorgey> e.g. if you write   foo :: (n < 5) => Vec n -> ...    it will try to automatically solve that constraint every time you call foo
+2012-04-10 13:26:12 UTC <byorgey> (that's probably not the right syntax but you get the idea)
+2012-04-10 13:49:33 UTC <byorgey> vyom: thanks, pushed
+2012-04-10 13:50:00 UTC <byorgey> vyom: sure, it could be worth doing a minor point release, but I probably won't really have time to think about that until next week
+2012-04-10 14:24:20 UTC <vyom> byorgey: thanks.. sure.. whenever you find time.. i am in no hurry whatsoever...
+2012-04-11 00:32:34 UTC <luite> bah I'm getting really pissed now... haven't been able to do anything haskell for 3 days now because of ghc problems
+2012-04-11 00:53:28 UTC <mgsloan> :/
+2012-04-11 01:25:00 UTC <mgsloan> http://www.mgsloan.com/wordpress/?p=219 password: foo
+2012-04-11 01:25:09 UTC <mgsloan> err password: pass
+2012-04-11 01:25:41 UTC <mgsloan> don't pay attention to the "Adopt the Orphans!" and "Down with class constraints!" sections yet - they're the most WIP
+2012-04-11 01:28:14 UTC <luite> ew wordpress ;p
+2012-04-11 01:30:08 UTC <mgsloan> yeaaah, I used to use lightweight blog systems written in neat languages
+2012-04-11 01:30:12 UTC <mgsloan> but then I never wrote blog posts...
+2012-04-11 01:32:48 UTC <luite> ok apparently I can't compile ghc 7.4.1 with haddock because I get a divsion by zero error :(
+2012-04-11 01:33:00 UTC <mgsloan> whaaa
+2012-04-11 01:33:23 UTC <luite> it's fixed in the snapshot versions
+2012-04-11 01:33:56 UTC <luite> anyway, 10th ghc recompile today or so
+2012-04-11 01:35:29 UTC <luite> it's not password protected btw
+2012-04-11 01:35:42 UTC <mgsloan> no password? really? argh!
+2012-04-11 01:35:53 UTC <mgsloan> it's totally half done currently
+2012-04-11 01:36:29 UTC <luite> hm, but I have a feeling that this solution is far too complex
+2012-04-11 01:36:58 UTC <mgsloan> perhaps, but it does a lot more than solve cabal dependency problems
+2012-04-11 01:37:31 UTC <luite> but do people want to have those problems solved? :p
+2012-04-11 01:37:34 UTC <mgsloan> A) frees library designers to change their API at will
+2012-04-11 01:37:34 UTC <mgsloan> B) gives a way of expressing refactorings to be applied to client code
+2012-04-11 01:37:58 UTC <mgsloan> I think these are problems that people don't realize they have
+2012-04-11 01:38:49 UTC <mgsloan> Template haskell can make these delta modules simpler, too
+2012-04-11 01:41:25 UTC <mgsloan> C) managing the delta modules can be automated
+2012-04-11 01:42:16 UTC <mgsloan> the reason it seems too complicated is that it seems foreign - it's deviating from the standard conception of "what goes in a library"
+2012-04-11 01:50:16 UTC <luite> module A (Thing, Thing) where  -- should one be mkThing?
+2012-04-11 01:50:33 UTC <mgsloan> yup. Thanks!
+2012-04-11 01:51:00 UTC <mgsloan> also needs to export ThingADT
+2012-04-11 01:55:21 UTC <mgsloan> the ideas for the sections I haven't written are:
+2012-04-11 01:55:21 UTC <mgsloan>  1) Orphans should be solved by including an "adoption" file in packages.  It specifies which packages have the cannonical right to create a particular orphan instance.
+2012-04-11 01:55:21 UTC <mgsloan>  2)
+2012-04-11 01:56:38 UTC <mgsloan> There shouldn't be superclass constraints.  These are mostly used for default definitions.  Now that we have constraint synonyms, we can wrap up a bunch of classes under one name - something that superclass constraints traditionally solved.
+2012-04-11 01:57:53 UTC <luite> 1 sounds unmanageable
+2012-04-11 01:57:54 UTC <mgsloan> 3) Classes should not have default definitions.  Instead we write derivers that implement all of or portions of a class.  Initially this would be done in TH
+2012-04-11 01:58:13 UTC <mgsloan> the thing with 1 is that it's purely a social / documentation thing
+2012-04-11 01:58:46 UTC <mgsloan> it'd need to be hooked in to GHC's warnings, though
+2012-04-11 01:59:53 UTC <luite> wait where would the adoption file live, the package that defines the class, or that defines the data type?
+2012-04-11 01:59:55 UTC <mgsloan> the important thing is that in order to express that there's a cannonical instance, we don't actually need to be able to import the class(s) involved, just store the head of the instance declaration
+2012-04-11 02:00:11 UTC <mgsloan> luite: Either :)
+2012-04-11 02:00:44 UTC <mgsloan> the user would then annotate their orphan with a pragma indicating that it's been adopted
+2012-04-11 02:01:24 UTC <mgsloan> which then *could* be checked / would yield glaring warnings when untrue
+2012-04-11 02:03:27 UTC <luite> @#$@#%!
+2012-04-11 02:03:46 UTC <mgsloan> ?
+2012-04-11 02:03:47 UTC <luite> ghc 7.4.1.lateststable also fails with division by zero
+2012-04-11 02:04:48 UTC <mgsloan> What a strange error to fail on
+2012-04-11 02:04:55 UTC <mgsloan> maybe it's from a modulus
+2012-04-11 02:05:05 UTC <luite> it's an known error
+2012-04-11 02:37:23 UTC <luite> steps to use haskell on a mac: 1) format hard drive, 2) install linux, 3) install haskel platform
+2012-04-11 02:53:44 UTC <tgeeky> ok mgs, I like the sentiment here
+2012-04-11 02:53:51 UTC <tgeeky> oh he's not here
+2012-04-11 03:45:24 UTC <TSC> Hi everyone!
+2012-04-11 03:46:04 UTC <TSC> I've got diagrams-tikz to sort of work a bit with diagrams-0.5; I'll tidy it up a bit and publish it somewhere
+2012-04-11 03:46:54 UTC <luite> verycool :)
+2012-04-11 03:51:59 UTC <TSC> Is there anywhere a big pool of examples I can use for testing?
+2012-04-11 04:06:04 UTC <luite> diagrams-cairo has a few, and the diagrams homepage also has some
+2012-04-11 04:06:16 UTC <luite> dunno if there's an official collection :)
+2012-04-11 04:09:46 UTC <TSC> Ok, thanks (:
+2012-04-11 04:51:49 UTC <vyom> TSC: there are some examples that I used to test the SVG backend https://github.com/deepakjois/diagrams-svg/tree/master/examples
+2012-04-11 04:52:40 UTC <vyom> they were derived from some other pre-existing diagrams examples too..
+2012-04-11 04:54:43 UTC <TSC> Thanks!
+2012-04-11 11:58:56 UTC <byorgey> TSC: cool!  Yeah, take a look at the gallery on the website
+2012-04-11 11:59:13 UTC <byorgey> TSC: you can find it in source form in the diagrams-doc repo under web/gallery
