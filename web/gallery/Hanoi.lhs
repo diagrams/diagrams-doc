@@ -6,6 +6,7 @@ date: 2012-02-23
 description: Visual solution to the classic Towers of Hanoi puzzle.
 tags: hanoi, puzzle, solution
 height: 600
+view: -10,1.5,20,20
 ---
 
 > {-# LANGUAGE NoMonomorphismRestriction #-}

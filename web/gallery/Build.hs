@@ -6,6 +6,8 @@ import Diagrams.Backend.Cairo.Internal -- due to GHC export bug in 7.4
 
 import Diagrams.Builder
 
+import Data.List.Split
+
 import qualified System.FilePath as FP
 
 import Control.Arrow (second)
@@ -15,8 +17,11 @@ import qualified Data.Map as M
 
 import System.Console.CmdArgs hiding (name)
 
--- If the first argument is 'Just', use that as the width and height.
--- Otherwise, use the width and height specified in the .lhs file.
+-- If the first argument is 'Just', we're making a thumbnail, so use
+-- that as the width and height, and use the 'view' parameters from
+-- the LHS file to pick out just a sub-view of the entire diagram.
+-- Otherwise, use the width and height specified in the .lhs file and
+-- build the entire diagram.
 compileExample :: Maybe Double -> String -> String -> IO ()
 compileExample mThumb lhs out = do
   let fmt = case FP.takeExtension out of
@@ -32,12 +37,22 @@ compileExample mThumb lhs out = do
       w = mThumb `mplus` (read <$> M.lookup "width" fields)
       h = mThumb `mplus` (read <$> M.lookup "height" fields)
 
+      mvs :: Maybe [Double]
+      mvs = (map read . splitOn ",") <$> M.lookup "view" fields
+
+      toBuild =
+          case (mThumb, mvs) of
+            (Just _, Just [vx, vy, vxOff, vyOff]) ->
+                "view (p2 " ++ show (vx,vy) ++ ") "
+                ++ "(r2 " ++ show (vxOff, vyOff) ++ ") example"
+            _ -> "example"
+
   res <- buildDiagram
            Cairo
            zeroV
            (CairoOptions out (mkSizeSpec w h) fmt)
            [f']
-           "example"
+           toBuild
            []
            [ "Diagrams.Backend.Cairo" ]
            alwaysRegenerate  -- XXX use hashedRegenerate?
