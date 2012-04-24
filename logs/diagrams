@@ -13972,3 +13972,1747 @@
 2012-04-11 04:54:43 UTC <TSC> Thanks!
 2012-04-11 11:58:56 UTC <byorgey> TSC: cool!  Yeah, take a look at the gallery on the website
 2012-04-11 11:59:13 UTC <byorgey> TSC: you can find it in source form in the diagrams-doc repo under web/gallery
+2012-04-11 21:56:37 UTC <byorgey> fryguybob: I downloaded an .osm file from osm.org and it fails to parse, giving me some error about xpCheckEmptyAttributes: unprocessed XML attribute(s) detected
+2012-04-11 21:56:43 UTC <byorgey> fryguybob: have you ever encountered that?
+2012-04-11 22:19:10 UTC <fryguybob> byorgey: Yeah, use the latest osm parser from here: https://github.com/tonymorris/geo-osm
+2012-04-11 22:20:43 UTC <fryguybob> bbl
+2012-04-11 22:22:55 UTC <luite> does anyone here have a recent ghc, newer than 7.4.1, installed?
+2012-04-11 22:23:59 UTC <tgeeky_> nope
+2012-04-11 22:24:05 UTC <tgeeky_> 7.4.1 is my latest everywhere
+2012-04-11 22:24:08 UTC <tgeeky_> still dividing by zero?
+2012-04-11 22:43:37 UTC <luite> trying to minimize the test case
+2012-04-11 22:43:44 UTC <luite> it gets stuck in an infinite loop
+2012-04-11 22:44:25 UTC <luite> breaking with gdb shows that it's doing some gcd calculation
+2012-04-11 22:44:44 UTC <luite> probably because it's building Rationals
+2012-04-11 23:12:11 UTC <luite> tgeeky_: http://hackage.haskell.org/trac/ghc/ticket/5999
+2012-04-11 23:12:27 UTC <luite> missed the 6000 mark by 1 :(
+2012-04-11 23:25:04 UTC <luite> tgeeky_: kind of odd that a 2.54 literal makes ghci crash
+2012-04-12 00:42:32 UTC <byorgey> fryguybob: ah, thanks, got it to work now!
+2012-04-12 00:42:46 UTC <byorgey> fryguybob: BTW, what's your use case for diagrams-osm?
+2012-04-12 00:42:57 UTC <byorgey> I'm curious
+2012-04-12 00:57:04 UTC <fryguybob> byorgey: I'm the grad TA for the data structures class and so I have office hours and grade the projects.  The last project is exploring graphs and the professor was going to do an OSM based project.
+2012-04-12 00:57:38 UTC <fryguybob> But it is now based on some more refined OSM data so they do not have to deal with the format directly.
+2012-04-12 00:58:07 UTC <fryguybob> I did diagrams-osm to explore what would be required / make tools for grading.
+2012-04-12 01:02:51 UTC <fryguybob> Maps are of course fun, so it wasn't hard to do :D.
+2012-04-12 01:18:11 UTC <byorgey> fryguybob: I see, fun =)
+2012-04-12 01:24:10 UTC <fryguybob> byorgey: Note that the aspect ratio is just tuned to a random value that "looked" right to me rather then figuring out the approximate ratio from the lat/lon.
+2012-04-12 01:24:42 UTC <byorgey> fryguybob: fair enough
+2012-04-12 01:25:03 UTC <byorgey> fryguybob: I don't really care that much, I generated a map that looks nice and makes for a nice example slide in my talk =)
+2012-04-12 01:25:22 UTC <fryguybob> Excellent
+2012-04-12 01:25:22 UTC <byorgey> (I made a map of the place where the talk will be)
+2012-04-12 01:25:33 UTC <byorgey> i.e. Williamstown, MA
+2012-04-12 01:25:55 UTC <fryguybob> I was supprised at how detailed the data is.
+2012-04-12 01:26:04 UTC <fryguybob> (for around hear at least)
+2012-04-12 01:26:14 UTC <fryguybob> (here)
+2012-04-12 01:26:48 UTC <fryguybob> It has bike/walking paths, buildings, and water ways.
+2012-04-12 01:28:25 UTC <byorgey> yeah, it's neat
+2012-04-12 01:48:31 UTC <tgeeky_> byorgey: talk!
+2012-04-12 01:49:03 UTC <tgeeky_> luite: that is a rediculious and awful bug
+2012-04-12 01:49:16 UTC <byorgey> tgeeky_: yep!
+2012-04-12 01:49:28 UTC <tgeeky_> to GHC: [your handling of literals is bad]   [and you should feel bad]
+2012-04-12 01:49:33 UTC <tgeeky_> byorgey: cool! soon? recorded?
+2012-04-12 01:49:52 UTC <byorgey> tgeeky_: Friday, and I doubt it
+2012-04-12 01:50:03 UTC <tgeeky_> awh.
+2012-04-12 01:50:12 UTC <byorgey> I'm giving the weekly CS colloquium at Williams College (my alma mater)
+2012-04-12 01:50:25 UTC <byorgey> I can show you the slides afterwards though
+2012-04-12 01:50:36 UTC <tgeeky_> byorgey: i assumed as much. :)
+2012-04-12 01:50:44 UTC <tgeeky_> ask someone with you to write down the questions asked, if they are good :o
+2012-04-12 01:52:05 UTC <tgeeky_> i gotta run a few errands. bbiaf.
+2012-04-12 01:52:24 UTC <tgeeky_> hopefully for the rest of the week I can get back to hacking instead of housework (powerwashing, window washing, painting)
+2012-04-12 01:53:26 UTC <tgeeky_> luite: hmm. /me wonders if this has to do with integer-gmp linking
+2012-04-12 01:53:31 UTC <tgeeky_> luite: can you try building with integer-simple?
+2012-04-12 01:55:07 UTC <fryguybob> ACTION has a bikeshed ready to be delivered.
+2012-04-12 01:56:06 UTC <byorgey> fryguybob: a real, honest-to-goodness bikeshed?
+2012-04-12 01:56:29 UTC <byorgey> ACTION was under the impression those were purely metaphorical
+2012-04-12 01:59:04 UTC <fryguybob> byorgey: Amish built.
+2012-04-12 01:59:30 UTC <fryguybob> It is only the painting of the bikeshed that is metaphorical.  We have not picked a color yet.
+2012-04-12 02:00:52 UTC <byorgey> hehe, I see =)
+2012-04-12 02:21:09 UTC <tgeeky_> mark this momentus day in the annals of history. today is the day that quantum [algorithims, not computers] have... factored 143.
+2012-04-12 02:35:43 UTC <luite> tgeeky_: yeah I guess it either has something to do with gmp issues, or otherwise with my computer being screwed up....
+2012-04-12 22:26:05 UTC <peterjoel> does diagrams have a concept of containers?
+2012-04-12 22:26:57 UTC <peterjoel> ie a diagram that has some paths of it's own and a reserved area for child diagrams
+2012-04-12 22:27:28 UTC <peterjoel> for example, a picture frame, which could adjust its aspect ratio according to it's contents
+2012-04-12 22:28:25 UTC <peterjoel> or a re-usable TV object, which would contain a diagram as it's picture, within the screen, but wouldn't adjust it's own aspect ratio
+2012-04-13 04:30:03 UTC <byorgey> oh man, I really really need to extend diagrams-builder to use hashes to only rebuild diagrams that need to be rebuilt.
+2012-04-13 04:30:20 UTC <byorgey> right now my talk slides take several minutes to compile because it regenerates all the diagrams every time =(
+2012-04-13 04:40:08 UTC <tgeeky__> byorgey: yes. you do.
+2012-04-13 04:40:27 UTC <tgeeky__> On the other hand, you're one of a handful of people on earth who "compile their slides" in such an awesome way as you :o
+2012-04-13 04:40:32 UTC <TSC> Could you use the last modified time?
+2012-04-13 04:40:36 UTC <tgeeky__> and your computer should be honored to do it
+2012-04-13 04:41:01 UTC <TSC> (B.T.W. I got opacity to work with diagrams-tikz and most of the web gallery diagrams look right in TikZ)
+2012-04-13 11:19:43 UTC <fryguybob> Humm, I should make a nice example of what peterjoel wanted.
+2012-04-13 13:39:55 UTC <byorgey> TSC: awesome!
+2012-04-13 13:40:16 UTC <byorgey> fryguybob: please do.  I'm not even sure I understand what it is he wanted.
+2012-04-13 19:43:12 UTC <tgeeky__> byorgey: http://hackage.haskell.org/package/hobbits-1.1 !
+2012-04-13 20:13:56 UTC <tgeeky__> byorgey: also, do you have "Analytic Combinatorics" by Flajolet and Segdewick?
+2012-04-13 20:47:35 UTC <luite> hmm, i think i have that
+2012-04-13 20:48:10 UTC <luite> yep
+2012-04-13 20:49:14 UTC <luite> i forgot what i used it for, haven't read it completel
+2012-04-13 20:49:16 UTC <luite> y
+2012-04-14 01:45:19 UTC <TSC2> Anyone who wants a look at diagrams-tikz (with diagrams v0.5) can get it with darcs at http://www.cmears.id.au/repos/diagrams-tikz
+2012-04-14 01:48:58 UTC <fryguybob> ACTION trys building...
+2012-04-14 01:49:27 UTC <TSC2> Thanks, I hope it works
+2012-04-14 02:10:05 UTC <fryguybob> TSC2: It works!
+2012-04-14 02:10:33 UTC <TSC2> Hooray!
+2012-04-14 02:11:10 UTC <fryguybob> I did comment out the cairo and gtk dependencies in the .cabal file, but other then that it was ok.
+2012-04-14 02:11:33 UTC <fryguybob> My tex also complained about units for some reason, but I'm not sure what that is about.
+2012-04-14 02:11:45 UTC <TSC2> Ah, cairo and gtk probably don't need to be there
+2012-04-14 02:12:01 UTC <TSC2> I only changed the version numbers in the dependencies, I should have had a closer look
+2012-04-14 02:12:26 UTC <TSC2> I haven't looked at TeX's warnings either
+2012-04-14 02:12:41 UTC <fryguybob> I'll have to take a closer look at it all later.  Thanks for your hard work!
+2012-04-14 02:12:53 UTC <TSC2> Except one of the gallery examples breaks its memory limit or something (:
+2012-04-14 02:12:59 UTC <TSC2> No worries
+2012-04-14 02:13:18 UTC <fryguybob> TSC2: Yeah that's probably mine :D.
+2012-04-14 02:18:25 UTC <fryguybob> peterjoel: I saw your question from before after you had disconnected.  I think you can just model what you want with a function that takes a diagram and produces a new diagram.
+2012-04-14 06:37:49 UTC <luite_> yay my rectangle packer works and i have diagrams to prove it ;)
+2012-04-14 15:41:26 UTC <fryguybob> luite_: Nice!
+2012-04-14 15:41:54 UTC <fryguybob> Now do arbitrary polygons.
+2012-04-14 15:44:22 UTC <luite_> hehe, it's quite bad actually, a tetris-like heuristic, tries to place the new rectangle as "deep" as possible, if that isn't possible without gameover (max height reached) it widens the field
+2012-04-14 15:44:56 UTC <luite_> i only needed rectangles (already NP hard) because it's for packing images for websites
+2012-04-14 15:45:40 UTC <luite_> building a yesod widget thingie around it now so that i don't have to manually pack together user interface elements for wolfgang
+2012-04-14 15:46:14 UTC <fryguybob> luite_: At my old job we used several packages to do arbitrary nesting even handling some strange constraints.  I'm not sure how it worked but it was magical.
+2012-04-14 15:47:24 UTC <luite_> I'll probably add this as a package in the yesod github tomorrow or so, so if you want to make it more magical you can send a pull request ;)
+2012-04-14 15:48:10 UTC <fryguybob> ha, in addition to being magical it was quite expensive.
+2012-04-14 15:49:19 UTC <luite_> was this for some production thing? optimizing sheet material for cutting or something?
+2012-04-14 15:50:13 UTC <luite_> now I need some images of kittens to really test the packer
+2012-04-14 15:50:15 UTC <fryguybob> Optimizing material cutting, the most interesting was with leather where the material had several grades and the patterns had graded zones.
+2012-04-14 15:50:51 UTC <fryguybob> http://www.scai.fraunhofer.de/en/business-research-areas/optimization/products/autonester-l.html
+2012-04-14 15:51:08 UTC <luite_> ah right, I know a bit about that, but not too much. the problem i know best is the classic cutting stock problem and delayed column generation for solving it
+2012-04-14 15:51:14 UTC <luite_> but that's a simpler, 1D, variant
+2012-04-14 21:09:27 UTC <luite_> http://hdiff.luite.com/tmp/sprite2.png <- my sprite packer in action :)
+2012-04-14 21:18:19 UTC <byorgey> luite_: cool =)
+2012-04-14 21:20:36 UTC <luite_> hehe it'http://hdiff.luite.com/tmp/sprite4.png <- hm looks like this one isn't quite optimal
+2012-04-14 21:20:39 UTC <luite_> oops
+2012-04-14 21:25:35 UTC <luite_> it keeps a "skyline" on the right and tries to move blocks as far as possible to te left each time (like tetris with blocks coming from the right), without increasing the height of the image if possible
+2012-04-14 21:25:56 UTC <luite_> and starts with the highest block
+2012-04-16 14:07:44 UTC <luite_> +1 for transparency groups :)
+2012-04-16 14:16:59 UTC <tgeeky-> hmm?
+2012-04-16 14:48:49 UTC <tgeeky-> luite_: http://bl.ocks.org/1703449
+2012-04-16 14:51:26 UTC <tgeeky-> luite_: better yet: http://gabrielflor.it/water
+2012-04-16 15:13:01 UTC <luite_> cool
+2012-04-16 15:13:24 UTC <luite_> i had already seen the second one though
+2012-04-16 15:14:18 UTC <byorgey> tgeeky-: cool!
+2012-04-16 15:14:58 UTC <tgeeky-> and from slashdot today: http://www.chris-granger.com/2012/04/12/light-table---a-new-ide-concept/
+2012-04-16 15:38:12 UTC <luite_> bah gmail has been having problems again for a week now...
+2012-04-16 17:17:13 UTC <tgeeky-> byorgey: hmmmmmmm. What do you think will go wrong with trying to write a d3.js backend to diagrams?
+2012-04-16 17:38:31 UTC <luite_> hm is that useful? what kind of interactivity would you think can be supported? or do you mean with a JS backend for GHC or UHC?
+2012-04-16 17:45:00 UTC <tgeeky-> luite_: I'm not sure. I don't think I mean that
+2012-04-16 17:45:35 UTC <tgeeky-> I think you'd be making a "js backend" just big enough to support everything d3.js needs
+2012-04-16 17:46:06 UTC <luite_> no but I mean that for a d3.js backend to make sense over svg, you'd want basic interactivity and stuff
+2012-04-16 17:46:24 UTC <tgeeky-> luite_: you'd have no choice but to do it the way d3.js does it -- discretely
+2012-04-16 17:46:41 UTC <luite_> i have no idea what that means :p
+2012-04-16 17:48:05 UTC <tgeeky-> luite_: d3.js has an internal model of interactivity, based on discrete time scales https://github.com/mbostock/d3/wiki/Time-Scales#wiki-scale
+2012-04-16 17:48:28 UTC <tgeeky-> https://github.com/mbostock/d3/wiki/Time
+2012-04-16 17:51:28 UTC <tgeeky-> does that make sense?
+2012-04-16 17:54:25 UTC <luite_> hmm well, I can imagine that would work for basic animation, but I'm worried about specifying user interactivity
+2012-04-16 17:54:50 UTC <tgeeky-> luite_: you mean, in a general way?
+2012-04-16 17:54:54 UTC <tgeeky-> what do you do now?
+2012-04-16 17:55:31 UTC <luite_> in d3.js?
+2012-04-16 17:56:11 UTC <tgeeky-> luite_: nono, for wolfgang
+2012-04-16 17:56:16 UTC <tgeeky-> luite_: also, check this one out: http://enjalot.com/tributary/2165875/sinwaves.js
+2012-04-16 17:56:44 UTC <luite_> yeah I know that one
+2012-04-16 17:57:22 UTC <luite_> it's fun, but the sliders are annoying to use
+2012-04-16 17:58:07 UTC <tgeeky-> luite_: so
+2012-04-16 17:58:17 UTC <tgeeky-> if you have a minute, let's just talk about this: http://gabrielflor.it/water
+2012-04-16 17:59:01 UTC <luite_> I'll listen, but i might nto respond immediately
+2012-04-16 17:59:39 UTC <tgeeky-> luite_: ok, so let's imagine all the code on the right (currently d3.js), we re-write it however we'd like in diagrams
+2012-04-16 18:00:25 UTC <tgeeky-> and then you (very fancifully, I know) create a boilerplate converter (using multiplate, or lenses if I'm not smart enough) to setup an invertable map between the diagrams code and the d3.js code
+2012-04-16 18:01:41 UTC <luite_> well, the .attr things can be converted, but the problem is the function(d) { ... }
+2012-04-16 18:02:34 UTC <luite_> you can either make some dsl to specify javascript code, just use a String of JS code (or jmacro or similar), or use a haskell compiler
+2012-04-16 18:02:51 UTC <tgeeky-> (that last option you mean haskell -> js compiler)
+2012-04-16 18:03:01 UTC <luite_> but you cannot turn a haskell function into a javascript one without the full haskell compiler
+2012-04-16 18:03:04 UTC <luite_> yes
+2012-04-16 18:03:41 UTC <tgeeky-> all three kind of suck
+2012-04-16 18:04:01 UTC <luite_> but if you have that, I wonder why you'd need d3 at all: make a nice diagrams backend, and hack up a reactive gui framework so that it works with that compiler
+2012-04-16 18:04:27 UTC <luite_> the only reason that'd be inferior is speed
+2012-04-16 18:04:44 UTC <luite_> which can probably be (at least partly) solved by doing a bit more in FFI
+2012-04-16 18:05:45 UTC <luite_> I think that's the only thing that has real potential to properly work, but the other methdos will get you to some nice basic d3 diagrams faster
+2012-04-16 18:05:56 UTC <tgeeky-> luite_: so, what you're saying is -- why not use some FRP or conal's TypeCompose / TangibleValues, get the safety of haskell's type system and the composability of them as wel
+2012-04-16 18:06:45 UTC <tgeeky-> luite_: well, I did say invertible map (using multiple) -- in theory, if I understand the code right, I should be able to invert "my-d3.js-DSL" code back into haskell code
+2012-04-16 18:07:10 UTC <luite_> but what would you do with functions?
+2012-04-16 18:07:38 UTC <luite_> normal haskell code can't see the implementation of a function, it's a black box
+2012-04-16 18:08:54 UTC <tgeeky-> well I'm pretty sure I'm not smart enough to generically invert javascript functions to haskell functions
+2012-04-16 18:08:57 UTC <tgeeky-> so that's out
+2012-04-16 18:08:59 UTC <luite_> you could [| quasiquote them |] and then you could do something with the AST, but that's basically what a haskell->js compiler does. except if you refer to other functions in that quasiquoter, then you'd be screwed again
+2012-04-16 18:10:10 UTC <tgeeky-> luite_: have you gotten comfortable with quasiquoting yet?
+2012-04-16 18:10:53 UTC <luite_> I've used it a few times, probably don't know everything yet
+2012-04-16 18:11:09 UTC <luite_> but I wouldn't consider quasiquoting an acceptable solution here
+2012-04-16 18:11:15 UTC <tgeeky-> me neither
+2012-04-16 18:11:23 UTC <tgeeky-> I do think that someone should make QQ and TH interaction much better than it is
+2012-04-16 18:11:26 UTC <tgeeky-> with some sugar
+2012-04-16 18:11:48 UTC <luite_> since once you allow haskell code, people want to use map, fold and all, and you end up implementing fallbacks half of the base package in js
+2012-04-16 18:11:59 UTC <luite_> +for
+2012-04-16 18:16:48 UTC <tgeeky-> luite_: so how did you decide where/when to put slider bars into the wolfgang screenshots I've seen with em?
+2012-04-16 18:19:07 UTC <luite_> I don't have anything to put them in automatically
+2012-04-16 18:19:22 UTC <luite_> although you could write some instances to do that
+2012-04-16 20:02:51 UTC <byorgey> I also don't really see the point of a d3.js backend
+2012-04-16 20:03:16 UTC <byorgey> why not just write a backend that can directly output (potentially interactive, with embedded JS) SVG?
+2012-04-16 20:14:22 UTC <tgeeky-> byorgey: I don't know! damn it! :o
+2012-04-16 20:15:03 UTC <tgeeky-> I thought that is what d3.js is .. a framework to generate SVGs and such
+2012-04-16 20:16:29 UTC <tgeeky-> i have to bridge some network connections...
+2012-04-16 20:16:30 UTC <tgeeky-> brb
+2012-04-16 20:32:51 UTC <tgeeky_> ok, back.
+2012-04-16 20:36:19 UTC <tgeeky_> byorgey: I'm not sure where the lines are drawn between d3.js, which claims to use "HTML, CSS, and SVG", and "just using SVG" with (as you said, embedded javascript)
+2012-04-16 21:37:42 UTC <tgeeky___> ugh
+2012-04-16 21:37:46 UTC <tgeeky___> killing myself please
+2012-04-16 23:27:34 UTC <tgeeky> so.. byorgey: luite_:
+2012-04-16 23:29:25 UTC <tgeeky> http://hpaste.org/67124
+2012-04-16 23:29:48 UTC <tgeeky> that is a list of things I'd like to find in my haskell-platform, along with the things that I find anyway (like it or not) in my haskell-platform.
+2012-04-16 23:30:08 UTC <tgeeky> please add!
+2012-04-16 23:34:19 UTC <luite_> dunno, I have never really seen the need for a haskell platform
+2012-04-16 23:46:26 UTC <tgeeky> luite_: the reasoning was thusly. Imagine that cabal-dev were the "standard" process. Then, imagine a way to splice in and out already-compiled packages with new cabal-dev working directories.
+2012-04-16 23:46:57 UTC <tgeeky> logically, the first thing you'd want to do is to compile as many of the packages with the highest number of reverse deps
+2012-04-16 23:47:27 UTC <tgeeky> so that when little timmy needs to build his ___, there's a good shot that you'll just splice in many of the general, community used deps
+2012-04-16 23:47:33 UTC <tgeeky> and the rest you can build
+2012-04-16 23:48:45 UTC <tgeeky> in lieu of that huristic, I just decided to start with haskell-platform as a minimum, and add that on later
+2012-04-16 23:49:08 UTC <tgeeky> bbl dinner
+2012-04-16 23:49:12 UTC <luite_> I think there should be a different approach: let cabal-dev cache completely built packages on your system, if it wants to build one with exactly the same dependencies, just copy the existing one over
+2012-04-17 00:19:47 UTC <luite_> :R
+2012-04-17 00:20:06 UTC <luite_> hm wrong window and a typo
+2012-04-17 00:30:18 UTC <luite_> Congratulations!!! Your E-mail ID has won US$2,000,000.00 (Two Million United State Dollars Only) in the GMAIL Lottery Promotions" held in Canada to promote 2012 Olympics Game.
+2012-04-17 00:30:23 UTC <luite_> cool :p
+2012-04-17 00:30:56 UTC <luite_> gmail is so slow that it took me 10 minutes to delete that mail...
+2012-04-17 00:31:27 UTC <byorgey> two million US DOLLARS for something held in CANADA to promote the olympics in LONDON? bwahahahaha
+2012-04-17 00:32:01 UTC <byorgey> they should have found a way to shove Australia in there too
+2012-04-17 00:32:04 UTC <luite_> oh there's more, apparently it's organized by GMAIL-Network office South Africa and sponsored by some tobacco companies
+2012-04-17 00:32:11 UTC <byorgey> hehehehe
+2012-04-17 00:33:01 UTC <byorgey> ACTION writes a "state of diagrams" email
+2012-04-17 00:33:39 UTC <luite_> ah the phone numbers are actually in south africa
+2012-04-17 00:34:21 UTC <byorgey> ACTION recommends not calling them
+2012-04-17 01:17:06 UTC <tgeeky> luite_: that is what I meant by 'splicing'
+2012-04-17 01:17:23 UTC <luite_> what?
+2012-04-17 01:17:26 UTC <tgeeky> luite_: the other thing that I want to do (correctly) is handle all of the *huge* list of options that need to be the same between one compile and another
+2012-04-17 01:17:31 UTC <tgeeky> luite_: caching cabal-dev installed stuff
+2012-04-17 01:17:53 UTC <tgeeky> you say cache and copy, I say cache->splice->link
+2012-04-17 01:19:12 UTC <tgeeky> byorgey: do you think that Haskell is the place that has the most category-theory inspired work (and packages) of all programming languages? Or would it still be something more formal, like Coq?
+2012-04-17 01:27:36 UTC <byorgey> tgeeky: if you want *breadth* of category-theory-inspired work, Haskell probably takes the cake.
+2012-04-17 01:28:59 UTC <byorgey> tgeeky: certainly deeper category theory has been encoded in languages like Agda (see e.g. https://github.com/copumpkin/categories)
+2012-04-17 02:09:34 UTC <luite_> bah POV-Ray, you should use edwardk's PBRT things ;)
+2012-04-17 02:16:49 UTC <tgeeky> byorgey: that's exactly what I was thinking.
+2012-04-17 03:48:56 UTC <luite_> tgeeky: found interesting things in that book? anything in particular you want to use it for?
+2012-04-17 03:49:48 UTC <tgeeky> luite_: it's very interesting. I have a lot to learn, and this guy uses a graph I don't understand completely to explain shapes of group properties
+2012-04-17 03:50:16 UTC <luite_> which page?
+2012-04-17 03:50:20 UTC <tgeeky> luite_: I'm interested in the Rudvalis group the most
+2012-04-17 03:52:18 UTC <tgeeky> luite_: I'm scanning now for the *first* such one, in case it has details
+2012-04-17 03:52:56 UTC <luite_> dynkin diagrams?
+2012-04-17 03:53:19 UTC <tgeeky> luite_: no, I get all of those (and the extended ones)
+2012-04-17 03:53:24 UTC <tgeeky> at least, I've taken notes of all of them
+2012-04-17 03:53:34 UTC <tgeeky> and their order functions
+2012-04-17 03:53:39 UTC <tgeeky> page 193 is the first
+2012-04-17 03:53:42 UTC <tgeeky> at the bottom
+2012-04-17 03:53:54 UTC <tgeeky> (5.14) is the kind I meant above
+2012-04-17 03:53:59 UTC <luite_> not that I'd be able to help :p
+2012-04-17 03:54:00 UTC <tgeeky> (5.13) looks much harder to understand
+2012-04-17 03:54:50 UTC <luite_> ah i've never seen those
+2012-04-17 03:57:26 UTC <tgeeky> luite_: one reason for interest in [Ru], is that last year someone discovered a 28 (35) dimensional "vertex operator algebra" generated by the Ru.
+2012-04-17 03:57:49 UTC <tgeeky> ie, it's a geometry that a string theory has a chance at working at
+2012-04-17 04:00:17 UTC <tgeeky> luite_: actually, have I ever explained (how Susskind explains) why string theory has 26 dimensions?
+2012-04-17 04:00:46 UTC <luite_> no, but please no spoilers for Susskind lectures that i haven't seen yet ;")
+2012-04-17 04:01:06 UTC <tgeeky> hehe. awh. I was going to share it with #-blah
+2012-04-17 04:01:53 UTC <luite_> oh that's better, other people might like it, i'm too stupid for this anyway
+2012-04-17 04:02:22 UTC <TSC> Hello everyone -- is there anything in diagrams for drawing arrows (lines with a pointy head) ?
+2012-04-17 04:03:28 UTC <tgeeky> TSC: absolutely
+2012-04-17 04:04:31 UTC <TSC> I must have missed it -- how do you make one?
+2012-04-17 04:08:22 UTC <tgeeky> TSC: I don't actually know, I didn't mean to imply that. I just meant it's been done in examples, so it must be there.
+2012-04-17 04:09:54 UTC <TSC> Ah, ok (:
+2012-04-17 17:04:33 UTC <byorgey> tgeeky: unfortunately, you're wrong, there isn't anything in diagrams for drawing arrows.
+2012-04-17 17:04:40 UTC <byorgey> tgeeky: but I'd like to add some.
+2012-04-17 17:44:00 UTC <tgeeky> byorgey: hmm! I thought you'd do someting like placing a line diagram at the tail of a triangle diagram
+2012-04-17 17:44:21 UTC <tgeeky> byorgey: and that is unfortunate, because I look like an ass :(
+2012-04-17 17:45:13 UTC <luite> ass typing: if it looks like an ass, sounds like an ass, it probably is an ass ;)
+2012-04-17 17:55:51 UTC <tgeeky> byorgey: this is very interesting... here's something that's also probably wrong: as far as I can tell, reading work of this Robert A. Wilson guy
+2012-04-17 17:56:04 UTC <tgeeky> (group theoritician)
+2012-04-17 17:56:37 UTC <byorgey> tgeeky: in theory it's no harder than placing a line diagram and a triangle diagram... but in practice you want a lot more than that
+2012-04-17 17:57:55 UTC <tgeeky> *all* of the finite, simple groups (all families, all sporadics) can be construted using weird versions and copies of the complexes,quaternions,octionions.
+2012-04-17 17:58:54 UTC <tgeeky> save possibly E8 and M
+2012-04-17 18:02:23 UTC <luite> byorgey: would it be possible to support something like tikz shorten with diagrams?
+2012-04-17 18:02:53 UTC <byorgey> luite: remind me exactly what shorten does?
+2012-04-17 18:03:21 UTC <byorgey> (the answer is probably "yes")
+2012-04-17 18:03:39 UTC <byorgey> in fact, a long time ago I started working on code to adjust segment lengths
+2012-04-17 18:03:47 UTC <byorgey> for exactly the purpose of arrow-drawing
+2012-04-17 18:04:11 UTC <byorgey> but I haven't yet gotten around to writing similar code that works on paths/trails instead of just segments
+2012-04-17 18:04:28 UTC <luite> byorgey: when it places the arrow on some path, it makes the path a bit shorter
+2012-04-17 18:04:42 UTC <luite> so that the arrow can stay just outside the thing it points to
+2012-04-17 18:04:42 UTC <byorgey> luite: ok, yeah, that's exactly what I'm planning to implement
+2012-04-17 18:04:52 UTC <luite> ah great :)
+2012-04-17 19:20:40 UTC <cheater__> so can we do UML yet
+2012-04-17 19:23:30 UTC <luite> haha uml ;)
+2012-04-17 19:30:03 UTC <byorgey> sure, of course you can do UML
+2012-04-17 19:30:12 UTC <byorgey> or do you mean you want special support for UML? ;)
+2012-04-17 19:30:34 UTC <byorgey> rectangle, rectangle, line segment, arrowhead, text ...
+2012-04-17 19:33:44 UTC <luite> yes, add something to automatically generate UML class diagrams from cabal packags ;)
+2012-04-17 19:33:59 UTC <byorgey> hehe =)
+2012-04-17 19:35:17 UTC <byorgey> well, UML aside, generating such diagrams isn't too far off -- you need arrows (coming soon), ability to find points on the edge of diagrams (also coming soon), and graph layout (just use the graphviz bindings)
+2012-04-17 19:35:57 UTC <luite> in other words: you have rectangles and lines, the rest is not yet implemented ;)
+2012-04-17 19:38:36 UTC <byorgey> hahahaha
+2012-04-17 19:39:07 UTC <byorgey> the glass is 1/6 full!!
+2012-04-17 19:40:28 UTC <byorgey> it's always a temptation when people ask "so, can you do X with diagrams?" to say something like "well no but in this imagined future awesome version you can do five different generalizations of X!!"
+2012-04-17 19:56:45 UTC <byorgey> oh, nice, http://ittc.ku.edu/csdl/fpg/Tools/BlankCanvas  http://hackage.haskell.org/package/blank-canvas-0.2.0
+2012-04-17 20:00:39 UTC <luite> ah, kool
+2012-04-17 20:01:03 UTC <byorgey> should be fairly easy to make a diagrams backend for blank-canvas
+2012-04-17 20:01:41 UTC <byorgey> ah, looks like it supports interactivity
+2012-04-17 20:04:50 UTC <byorgey> I'm guessing Andy Gill is already thinking in terms of hooking this up to diagrams.  He was talking a while ago about working on an HTML5 backend for diagrams, supporting interactivity, etc.
+2012-04-17 20:04:58 UTC <byorgey> so this is quite exciting. =)
+2012-04-17 20:08:48 UTC <tgeeky> ;)
+2012-04-17 20:09:18 UTC <byorgey> ACTION continues working on a release of diagrams-builder
+2012-04-17 20:11:16 UTC <luite> yay http://hdiff.luite.com/tmp/sprites.png
+2012-04-17 20:21:17 UTC <byorgey> luite: nice!
+2012-04-17 20:21:20 UTC <byorgey> what's this for?
+2012-04-17 20:23:04 UTC <luite> oh it's a general use yesod thingie, that bundles serveral images into one. often when you have a site, you have dozens of small icons and logos etc
+2012-04-17 20:23:16 UTC <luite> if you serve them from one file, it's more efficient
+2012-04-17 20:24:19 UTC <luite> and you remove the loading delay, for example if you have a button with images for button-state-normal, button-state-hover, button-state-clicked, they will all be already loaded from the single sprite images
+2012-04-17 20:25:34 UTC <luite> even if no button is initially in the mouseover state
+2012-04-17 20:26:13 UTC <byorgey> ah, cool, I didn't even know that was possible
+2012-04-17 20:27:59 UTC <luite> it's kind of a hack: the image is set as a background of a div element
+2012-04-17 20:28:15 UTC <luite> and you make the right part of the image visible by adjusting the background position
+2012-04-17 20:28:34 UTC <luite> but most ui frameworks do it, and large sites that want to optimize their loading times
+2012-04-17 20:28:57 UTC <luite> maintaining the sprite image is a pain though, but this automatically generates it at compile time, with TH
+2012-04-17 20:31:00 UTC <byorgey> oh, I see
+2012-04-17 20:31:10 UTC <byorgey> and now I understand why you were writing code to pack images
+2012-04-17 20:36:02 UTC <luite> yeah, unfortunately embedding the resulting image doesn't really work well, since ghc doesn't have bytestring literals
+2012-04-17 22:01:24 UTC <tgeeky> luite: that's clever
+2012-04-17 23:10:34 UTC <tgeeky> byorgey: it occurs to me, that drawing the diagrams in this paper: http://www.cs.indiana.edu/~sabry/papers/rational.pdf in diagrams would be a useful benchmark?
+2012-04-17 23:10:41 UTC <tgeeky> in light of today's conversation
+2012-04-17 23:18:33 UTC <mgsloan> ACTION just implemented this idea ( http://www.mgsloan.com/wordpress/?p=335 ) here: https://github.com/mgsloan/lenq
+2012-04-17 23:25:56 UTC <byorgey> tgeeky: yes, that would make a good benchmark
+2012-04-17 23:26:04 UTC <byorgey> we need to collect such things on a wiki page
+2012-04-17 23:27:32 UTC <byorgey> mgsloan: cool!
+2012-04-17 23:28:06 UTC <mgsloan> byorgey: thanks!  I guess #diagrams has become my pre-publishing announcement
+2012-04-17 23:28:26 UTC <mgsloan> also, thanks for taking a look at that blog post!  I think I will try splitting it up
+2012-04-17 23:28:38 UTC <mgsloan> or maybe blog isn't the right venue, hmmm
+2012-04-17 23:29:16 UTC <tgeeky> mgsloan: ok, now you're marching into the territory that I'm deeply interested but haven't been able to advance further than others...
+2012-04-17 23:29:47 UTC <mgsloan> tgeeky: Haskell based DSLs?
+2012-04-17 23:29:59 UTC <mgsloan> yeah, I think it's about time :)
+2012-04-17 23:31:13 UTC <mgsloan> check out the code here: https://github.com/mgsloan/lenq/blob/master/src/Data/Lenq/Internal.hs
+2012-04-17 23:31:51 UTC <mgsloan> all you really need is conversions from Exp to Pat and back
+2012-04-17 23:33:25 UTC <tgeeky> mgsloan: sorry, had to answer a telephone call. I mean lenses, template haskell, partial (and invertible) functions. You mention boomerang -- I believe that is the same thing conceptually as multiplate (which I'm more familar with)
+2012-04-17 23:35:02 UTC <tgeeky> mgsloan: have you read roconnor's paper "functor : lens :: applicative : multiplate" http://arxiv.org/abs/1103.2841 ?
+2012-04-17 23:35:06 UTC <mgsloan> I want to do conversions from exp to type functions as well - put the PolyKinds extension to work :)
+2012-04-17 23:35:26 UTC <mgsloan> so, after this there will be partial conversions between exp, type, and pat
+2012-04-17 23:35:39 UTC <mgsloan> tgeeky: I haven't!
+2012-04-17 23:36:03 UTC <tgeeky> mgsloan: and the hackage package 'multiplate' and 'multiplate-simplified'
+2012-04-17 23:39:14 UTC <mgsloan> I've taken a look at them, but didn't realize they were targeted at subsuming lenses!  I mean it makes sense given the terminology they're using
+2012-04-17 23:39:59 UTC <tgeeky> oh, you're the guy behind rex?
+2012-04-17 23:40:39 UTC <mgsloan> yup!
+2012-04-17 23:41:16 UTC <mgsloan> rex is a little bit embarrassing - the compile time generation of PCRE tables is currently turned off
+2012-04-17 23:41:32 UTC <mgsloan> I probably don't understand the safe usage of "unsafePerformIO" well enough
+2012-04-17 23:44:26 UTC <mgsloan> so that's to-fix
+2012-04-17 23:44:36 UTC <mgsloan> but yeah, I'm surprised how little is done with template haskell
+2012-04-17 23:45:05 UTC <mgsloan> I think it has become anathema because it doesn't have a beautifully mathematical design
+2012-04-17 23:45:07 UTC <mgsloan> or something
+2012-04-17 23:45:17 UTC <mgsloan> but it's very powerful
+2012-04-17 23:45:25 UTC <luite> yes, it's a popular reason for hating yesod :p
+2012-04-17 23:45:32 UTC <luite> excuse perhaps
+2012-04-17 23:45:38 UTC <mgsloan> it's silly
+2012-04-17 23:45:44 UTC <mgsloan> I do think the quasiquote syntax sucks
+2012-04-17 23:45:57 UTC <mgsloan> [| |] brackets look like messed up comprehensions
+2012-04-17 23:46:02 UTC <mgsloan> kinda too late to change that though :(
+2012-04-17 23:46:11 UTC <tgeeky> mgsloan: let's just invent a new syntax, and write a parser-pretty printer pair for the syntax into QQ syntax
+2012-04-17 23:46:22 UTC <mgsloan> :) totally possible!
+2012-04-17 23:46:31 UTC <mgsloan> have you seen zero-th?
+2012-04-17 23:46:56 UTC <luite> no but real haskellers use flexible combinators while only ugly pigdogs use TH and QQ because they don't have to think about the design then
+2012-04-17 23:47:32 UTC <mgsloan> I think that one issue is that the usage of TH is an affront to the belief that Haskell is all you need
+2012-04-17 23:47:35 UTC <tgeeky> [mkLens| ... |]   <-->   -- || <O> ...
+2012-04-17 23:47:37 UTC <tgeeky> or something strange
+2012-04-17 23:47:41 UTC <tgeeky> *less
+2012-04-17 23:47:41 UTC <mgsloan> "no macros here! our abstractions are powerful enough!"
+2012-04-17 23:48:05 UTC <mgsloan> I was thinking <mkLens% blah blah blah %>
+2012-04-17 23:48:10 UTC <mgsloan> it doesn't look very Haskelly
+2012-04-17 23:48:13 UTC <mgsloan> but that's the whole point
+2012-04-17 23:48:18 UTC <tgeeky> mgsloan: psah! the ability for a language to be meta-programmed in is pretty important to its evolution, if it will have one
+2012-04-17 23:48:26 UTC <mgsloan> [| |] is too haskelly - you don't see that it's breaking out of the language
+2012-04-17 23:49:01 UTC <mgsloan> tgeeky - I agree
+2012-04-17 23:49:14 UTC <tgeeky> mgsloan: yeah. My goal was to actually "take back" the stolen syntax of || and &&, because 'or' and 'and' are perfectly good.
+2012-04-17 23:49:27 UTC <luite> but i have to admit that th is often a bit clumsy, you tend to get bitten by stage restriction problems if you try to do more
+2012-04-17 23:49:39 UTC <mgsloan> so, question is, how do we make the Haskell community love TH?  A beautifully elegant wrapper over it?  Better AST quasiquotes?
+2012-04-17 23:49:54 UTC <tgeeky> mgsloan: not wrapper. you have to have a complete inversion
+2012-04-17 23:50:31 UTC <tgeeky> mgsloan: I was playing with elements from the dirac bra-ket notation, but I think that would really piss people off.
+2012-04-17 23:51:01 UTC <mgsloan> luite: really?  I don't see stage restriction as too huge of a problem.  It is a little inelegant that previously haskell was process-module-at-a-time-as-if-everything-can-see-everything-else, and now it's process-everything-upto-splice
+2012-04-17 23:51:27 UTC <mgsloan> tgeeky: complete inversion as in zero-th type thing?
+2012-04-17 23:51:57 UTC <luite> mgsloan: well, I mean that if you have a program with code that you want to use both in th and "normal" haskell code, then you need to move around stuff
+2012-04-17 23:52:16 UTC <luite> especially if more of your top-level decls get generated
+2012-04-17 23:52:37 UTC <mgsloan> yeah, that is unfortunate
+2012-04-17 23:52:57 UTC <mgsloan> maybe I should have tried to do a PHD with the portland dude behind TH
+2012-04-17 23:53:05 UTC <mgsloan> ohwells!
+2012-04-17 23:53:28 UTC <luite> hmm
+2012-04-17 23:53:30 UTC <tgeeky> mgsloan: my understanding of reading zero-th was that it basically laid out the TH splices into a file for you
+2012-04-17 23:53:39 UTC <mgsloan> tgeeky: yup
+2012-04-17 23:53:45 UTC <mgsloan> which would solve the staging thing
+2012-04-17 23:54:00 UTC <mgsloan> and could be a place to shim in better quasiquote syntax
+2012-04-17 23:54:28 UTC <tgeeky> mgsloan: gah! ok. hold on a second. I've conflated two things.
+2012-04-17 23:54:32 UTC <mgsloan> could increase compile time, though
+2012-04-17 23:54:46 UTC <tgeeky> boomerang is a partial isomorphism thing.
+2012-04-17 23:54:52 UTC <mgsloan> yup
+2012-04-17 23:55:04 UTC <mgsloan> I think it does lenses too, but I haven't looked hard
+2012-04-17 23:55:27 UTC <tgeeky> I don't think so? Maybe. Its sister package is the pair [partial-isomorphism, invertible-syntax]
+2012-04-17 23:56:18 UTC <tgeeky> invertible-syntax has an example demo in it, where you get a single <parser|printer> pair
+2012-04-17 23:57:19 UTC <mgsloan> I want to integrate something like rex into bijq / lenq
+2012-04-17 23:57:51 UTC <tgeeky> mgsloan: ok, i'll look at bijq later. I need to work more often and closely with you.
+2012-04-17 23:57:58 UTC <tgeeky> Your creativity is inspiring :O
+2012-04-17 23:58:05 UTC <tgeeky> dinner time, for now!
+2012-04-17 23:58:37 UTC <mgsloan> thanks! sounds good :D
+2012-04-18 01:46:41 UTC <tgeeky> mgsloan: so, back.
+2012-04-18 01:48:39 UTC <tgeeky> mgsloan: oh. I see. With your package, you can generate lenses from every package
+2012-04-18 01:48:48 UTC <mgsloan> yup!
+2012-04-18 01:48:57 UTC <mgsloan> without even depending on them
+2012-04-18 01:49:11 UTC <tgeeky> that's both dirty, and true
+2012-04-18 01:49:41 UTC <mgsloan> the inspiration for this package was the "Yall" author mentioning that he didn't have time for a few days to write a THer for Yall
+2012-04-18 01:49:52 UTC <mgsloan> that got me thinking "why do we even have multiple lens THers?"
+2012-04-18 01:49:56 UTC <mgsloan> they all do the same thing
+2012-04-18 01:50:16 UTC <mgsloan> and they all suck at creating compound lenses
+2012-04-18 01:50:37 UTC <tgeeky> by compound you mean? composing them together?
+2012-04-18 01:51:26 UTC <mgsloan> well, composing them together in parallel - having stuff that does lenses that involve multiple values out of a data structure
+2012-04-18 01:51:35 UTC <tgeeky> mgsloan: you even have the same ("weird") spacing habits that I do.
+2012-04-18 01:51:49 UTC <mgsloan> ah, lining things up?
+2012-04-18 01:51:53 UTC <mgsloan> it helps a lot
+2012-04-18 01:51:58 UTC <tgeeky> i know, but I get shunned
+2012-04-18 01:52:04 UTC <mgsloan> I want to have an editor that auto does that
+2012-04-18 01:52:08 UTC <tgeeky> lol
+2012-04-18 01:52:11 UTC <mgsloan> suggests alignments
+2012-04-18 01:52:22 UTC <mgsloan> could be a pretty bad thing, though, in the hands of noobs :P
+2012-04-18 01:52:25 UTC <tgeeky> mgsloan: my pet name for that project is "document tensor"
+2012-04-18 01:52:30 UTC <mgsloan> ooooh
+2012-04-18 01:52:57 UTC <luite> hm
+2012-04-18 01:53:15 UTC <mgsloan> you really get shunned for that? I thought it was good style, I've seen such things in plenty of expert haskeller's code
+2012-04-18 01:53:21 UTC <tgeeky> mgsloan: you have to give up on the idea that source *being edited* should be seen, character by charater, by the user
+2012-04-18 01:53:33 UTC <mgsloan> (well not shunned, just insulted :P)
+2012-04-18 01:53:51 UTC <tgeeky> mgsloan: well, I would take it a bit further. but yeah.
+2012-04-18 01:53:58 UTC <tgeeky> things like your alignment in "expToPat"
+2012-04-18 01:54:17 UTC <mgsloan> what's nice about that is that the alignments in expToPat resemble those in patToExp
+2012-04-18 01:54:23 UTC <tgeeky> mgsloan:
+2012-04-18 01:54:36 UTC <tgeeky> yes, I also have the habit of lining up my type signatures in blocks
+2012-04-18 01:55:12 UTC <tgeeky> mgsloan: so, can we chat in another chatroom as to not spam up here?
+2012-04-18 01:55:35 UTC <tgeeky> try #d-rive, I guess
+2012-04-18 01:55:35 UTC <mgsloan> tgeeky: we could, but I don't think anyone here minds
+2012-04-18 01:55:44 UTC <tgeeky> mgsloan: ok then. :)
+2012-04-18 01:55:48 UTC <luite> it would get awfully quiet here :(
+2012-04-18 01:55:51 UTC <tgeeky> hehe
+2012-04-18 01:56:14 UTC <mgsloan> yeah, I kinda like the idea that #diagrams could be a smaller cabal of people interested in similar things
+2012-04-18 01:56:35 UTC <mgsloan> not all of those things having to do with sticking graphics together :D
+2012-04-18 01:56:58 UTC <tgeeky> mgsloan: ok, so on the table earlier, there were two (seemingly seperate) ideas
+2012-04-18 01:57:13 UTC <tgeeky> there were the ideas of partial isomorphisms [boomeraing, p-i, invert-syntax]
+2012-04-18 01:57:21 UTC <tgeeky> and those of multiplate
+2012-04-18 01:58:46 UTC <tgeeky> if I understand it correctly, the idea of invertible-syntax is, for example, to string together a single bijection out of lots of smaller partial isomorphism functors?
+2012-04-18 02:00:03 UTC <tgeeky> the relevant caveats are in here: http://hackage.haskell.org/packages/archive/invertible-syntax/0.2.1/doc/html/src/Text-Syntax-Combinators.html
+2012-04-18 02:00:42 UTC <mgsloan> hmm, interesting.  would that be a bijection with failure?  (if the components are partial)
+2012-04-18 02:01:53 UTC <tgeeky> mgsloan: not sure if I know the answer. http://hackage.haskell.org/packages/archive/partial-isomorphisms/0.1/doc/html/src/Control-Isomorphism-Partial-Prim.html
+2012-04-18 02:02:32 UTC <mgsloan> also, something interesting - one of the reasons that using haskell-src-meta was discouraged in the past is that template haskell couldn't do operators unless you a-priori knew their fixity.  template-haskell-2.7.0.0 fixed that by introducing unresolved fixity infix operations
+2012-04-18 02:02:47 UTC <mgsloan> course, doing anything interesting on infix ops needs knowing the fixity..
+2012-04-18 02:03:02 UTC <tgeeky> mgsloan: oh. so back to me wanting to get rid of (||) and (&&)
+2012-04-18 02:03:36 UTC <tgeeky> mgsloan: if you look at the Prelude, there are very, very few infix operators that are symbolic (not words) .. maybe a dozen or so.
+2012-04-18 02:03:50 UTC <tgeeky> mgsloan: perahps you could get rid of them, and reintroduce them in a way which carries fixity information around?
+2012-04-18 02:04:31 UTC <tgeeky> mgsloan: I must admit I find it kind of puzzling why this is a hard problem.
+2012-04-18 02:04:56 UTC <mgsloan> well, that was the old solution, actually - include a set table of fixities, and if your op isn't in the prelude, better parenthesize!
+2012-04-18 02:05:08 UTC <mgsloan> it is puzzling - mostly an omission in the design of TH
+2012-04-18 02:05:28 UTC <mgsloan> they did not anticipate people making DSLs that reused haskell's syntax
+2012-04-18 02:05:36 UTC <tgeeky> mgsloan: the other concept that I have *no* idea how to formalize is to introduced "centered" fixity operators to haskell syntax
+2012-04-18 02:05:45 UTC <tgeeky> which I think is things who are infixl and infixr?
+2012-04-18 02:06:07 UTC <mgsloan> mixfix?
+2012-04-18 02:06:23 UTC <tgeeky> not sure what it would be called
+2012-04-18 02:06:34 UTC <mgsloan> I've got an unpublished blogpost on ideas for revamping the operator precedence system
+2012-04-18 02:06:36 UTC <tgeeky> those are too big of changes though
+2012-04-18 02:06:51 UTC <mgsloan> were you the guy who also wanted to do partial orders on operator groups?
+2012-04-18 02:07:24 UTC <tgeeky> nope
+2012-04-18 02:08:25 UTC <tgeeky> mgsloan: it should be possible, looking through this, to rewrite your Lenq in terms of a (single) multiplate
+2012-04-18 02:08:38 UTC <tgeeky> which should cut down on the "boilerplate"
+2012-04-18 02:09:40 UTC <tgeeky> mgsloan: and re: failure with partial isomorphisms ... I don't think he handles failure in any way.
+2012-04-18 02:10:55 UTC <mgsloan> so, for compound lenses, I mean that I could write [lenq| \(x, y) -> [fooLens x, barLens y] |]
+2012-04-18 02:11:19 UTC <mgsloan> instead of mucking around with fc-labels' applicative
+2012-04-18 02:11:58 UTC <mgsloan> the lack of handling of failure properly in a lot of these libraries is troubling
+2012-04-18 02:12:13 UTC <tgeeky> mgsloan: well, it's a bijection! there's no failure.
+2012-04-18 02:12:19 UTC <tgeeky> you can't not get mapped by a bijection :O
+2012-04-18 02:12:20 UTC <mgsloan> yeah, that's fair
+2012-04-18 02:12:46 UTC <tgeeky> so with this compound lens, is one of the lenses necessarily related to the other?
+2012-04-18 02:12:53 UTC <mgsloan> it's still useful to know when you've got a (a -> Maybe b, b -> Maybe a)
+2012-04-18 02:12:56 UTC <tgeeky> is one "forward" with regard to the other?
+2012-04-18 02:13:21 UTC <mgsloan> nah
+2012-04-18 02:13:37 UTC <mgsloan> the rules are that the variables from the left need to be used only once on the right
+2012-04-18 02:13:53 UTC <mgsloan> and can be mapped using lenses and anything with a pattern-equivalent
+2012-04-18 02:14:19 UTC <mgsloan> I haven't actually implemented the lens-application thing yet
+2012-04-18 02:16:02 UTC <tgeeky> so someone else might say "(,)" is suppose to be a product or something like that... what is the structure of that lenq thing?
+2012-04-18 02:16:13 UTC <tgeeky> it's a sum, right?
+2012-04-18 02:16:19 UTC <tgeeky> or a list of lenses?
+2012-04-18 02:16:42 UTC <tgeeky> i never actually looked at yall
+2012-04-18 02:17:06 UTC <mgsloan> yall is pretty new, and pretty cool looking
+2012-04-18 02:17:14 UTC <mgsloan> it uses ekmett's menagerie of classes
+2012-04-18 02:18:03 UTC <tgeeky> mgsloan: I also saw this today, which blows my mind and probably supplants all of my impressions about bijection and inversion in haskell: http://www.cs.indiana.edu/~sabry/papers/rational.pdf
+2012-04-18 02:18:04 UTC <mgsloan> so, yes, it's a list of lenses, paired with a pattern for extracting for get, and a constructor for setting with set
+2012-04-18 02:18:21 UTC <mgsloan> yeah, I saw that too, but haven't had time to read it yet
+2012-04-18 02:18:31 UTC <mgsloan> now I've gotta read this and multiplate
+2012-04-18 02:18:34 UTC <tgeeky> hehe.
+2012-04-18 02:18:37 UTC <tgeeky> read multiplate first
+2012-04-18 02:18:50 UTC <mgsloan> ACTION wishes he was already graduated
+2012-04-18 02:18:51 UTC <tgeeky> I think you'll find it very enlightening
+2012-04-18 02:19:01 UTC <mgsloan> I'm working on a super menial statistics class
+2012-04-18 02:19:31 UTC <mgsloan> instead of making lenses kick ass, and learning about the state of the bijection / invertible art
+2012-04-18 02:19:33 UTC <tgeeky> mgsloan: for reference, this guy: https://gist.github.com/sjoerdvisscher has done some things with multiplate
+2012-04-18 02:19:48 UTC <tgeeky> "multiplate with polymorphic data types"
+2012-04-18 02:19:58 UTC <mgsloan> yeah, he also wrote one of the lens libraries this targets
+2012-04-18 02:19:59 UTC <tgeeky> "the free variables plate with the GADT variant of multiplate"
+2012-04-18 02:20:08 UTC <mgsloan> ah, fc-labels!
+2012-04-18 02:20:26 UTC <tgeeky> mgsloan: if we can get together to figure out how to actually use multiplate effectively
+2012-04-18 02:21:15 UTC <tgeeky> we might be able to impress some of these regulars
+2012-04-18 02:21:20 UTC <mgsloan> yeah, could be interesting! haha
+2012-04-18 02:21:33 UTC <mgsloan> I'm a little wary of multiplate due to its complexity
+2012-04-18 02:21:41 UTC <mgsloan> but could be necessary complexity
+2012-04-18 02:21:43 UTC <tgeeky> roconnor (the author) sort of gave me the impression that he had invented/discovered/(proved, really, the hard work) multiplate but didn't know what to do with it
+2012-04-18 02:22:28 UTC <tgeeky> mgsloan: I always found this thing to be the simplest multiplate variant to understand: https://gist.github.com/1256281
+2012-04-18 02:22:34 UTC <tgeeky> not variant, example
+2012-04-18 02:23:16 UTC <tgeeky> mgsloan: this one might interest you as well: https://gist.github.com/984512
+2012-04-18 02:23:33 UTC <tgeeky> and this one: https://gist.github.com/984487
+2012-04-18 02:23:47 UTC <tgeeky> i geuss some of these are in his fc-labels package
+2012-04-18 02:24:31 UTC <mgsloan> seems like a generalization of MaybeLens
+2012-04-18 02:24:41 UTC <tgeeky> mgsloan: multiplate?
+2012-04-18 02:24:55 UTC <mgsloan> the most recent gist
+2012-04-18 02:24:56 UTC <mgsloan> monadlens
+2012-04-18 02:25:16 UTC <mgsloan> fc-labels does not lenses for arbitrary monads
+2012-04-18 02:25:18 UTC <tgeeky> mgsloan: here's the multiplate one, that is: https://gist.github.com/707890
+2012-04-18 02:26:10 UTC <tgeeky> mgsloan: and, to round out the night... he uses zwaluw
+2012-04-18 02:26:16 UTC <tgeeky> which is another partial-iso
+2012-04-18 02:26:43 UTC <mgsloan> ?
+2012-04-18 02:27:03 UTC <tgeeky> mgsloan: http://hackage.haskell.org/package/Zwaluw
+2012-04-18 02:27:47 UTC <mgsloan> interesting!
+2012-04-18 02:28:15 UTC <mgsloan> both multiplate and fc-labels do compound lenses via Control.Applicative
+2012-04-18 02:28:34 UTC <mgsloan> maybe idiom brackets are a somewhat more generic way of achieving these?
+2012-04-18 02:30:24 UTC <mgsloan> as far as I know they don't really have patterns 'n such, though, so probably not.
+2012-04-18 02:35:15 UTC <mgsloan> so, next steps for lenq:
+2012-04-18 02:35:15 UTC <mgsloan> 1) add support for application syntax
+2012-04-18 02:35:15 UTC <mgsloan> 2) check partiality of constructors being used, and potentially use a different representation, so that the types represent this
+2012-04-18 02:35:15 UTC <mgsloan> 3) check for usage that leads to proper lenses (no literals in the get-result, etc)
+2012-04-18 02:35:41 UTC <mgsloan> I'm thinking of only warning for #3, because constructing improper lenses is useful..
+2012-04-18 02:35:50 UTC <mgsloan> but might be more haskelly to error
+2012-04-18 03:00:06 UTC <tgeeky> mgsloan: still here?
+2012-04-18 03:00:13 UTC <mgsloan> yuup
+2012-04-18 03:00:29 UTC <tgeeky> k. I went upstairs to get my notebooks for some of these papers, and got suckered into watching a bit of a movie
+2012-04-18 03:00:46 UTC <mgsloan> unfortunately I won't be haskelling until much later tonight, if at all of today (hw)
+2012-04-18 03:01:01 UTC <mgsloan> but I'm fine with getting a bit distracted :D
+2012-04-18 03:01:04 UTC <tgeeky> yeah, but you seem to be able to talk and do hw, unless you haven't been doing hw :O
+2012-04-18 03:01:29 UTC <mgsloan> well, I don't really want to do hw
+2012-04-18 03:02:43 UTC <mgsloan> I'm a pretty awful student, actually.  I get by on smarts rather than diligence.  College turned a lean mean programming machine into someone who hates doing anything assigned..
+2012-04-18 03:04:18 UTC <mgsloan> every spike in my github is associated with some number of half-assed assignments.  Every valley is associated with doing the things that I'm supposed to
+2012-04-18 03:05:24 UTC <mgsloan> but eh, 'nough complaining, it's almost over :), feel free to interrupt my homeworking with insights / links
+2012-04-18 03:09:19 UTC <tgeeky> mgsloan: seriously, we're twins.
+2012-04-18 03:09:19 UTC <tgeeky> mgsloan: btw, this "d-rive" thing I keep mentioning
+2012-04-18 03:09:19 UTC <tgeeky> is a multiple meaning phrase in several senses.
+2012-04-18 03:09:19 UTC <mgsloan> oh, I'm sure most haskellers and lispers are alike in this respect - http://www.lambdassociates.org/blog/bipolar.htm
+2012-04-18 03:09:19 UTC <mgsloan> tgeeky: Yeah, this is the idea to speculatively put together expressions that are well-typed, right?
+2012-04-18 03:09:19 UTC <tgeeky> the first was that it should be an IDE which supported coding "flow" -- in the sense of driving a car.
+2012-04-18 03:09:19 UTC <mgsloan> right
+2012-04-18 03:09:36 UTC <tgeeky> the second was deriving, like newtype deriving, but more generally the idea of getting out more than you expected
+2012-04-18 03:10:02 UTC <tgeeky> mgsloan: the third was on an acronym level: I named it a "macronym" in my notes (macro + acronym).
+2012-04-18 03:10:12 UTC <tgeeky> rive is a cool word (which I didn't know, nobody knows, few people use)
+2012-04-18 03:10:56 UTC <tgeeky> but the letters themselves are supposed to be a type (or type family, or something -- a reserved capital word in haskell -- RIVE)
+2012-04-18 03:11:30 UTC <tgeeky> the long and short was to get a play-on-letters thing going on
+2012-04-18 03:13:02 UTC <tgeeky> (for example, what's his name's conduit)
+2012-04-18 03:13:30 UTC <tgeeky> R -> RIVE -> R i v e R
+2012-04-18 03:13:44 UTC <tgeeky> where i is an injector, e is an extractor, v is a conduit
+2012-04-18 03:14:31 UTC <tgeeky> this is supposed to be an example of what you could do, if you "took over" some of the allowed namespace in Haskell (say, all caps types) or something.
+2012-04-18 03:14:49 UTC <tgeeky> mostly nonsense. anyway, to notes.
+2012-04-18 03:15:48 UTC <tgeeky> mgsloan: actually, it's hard to describe what I want for a few reasons -- I am pretty sure it's not legal haskell syntax, even if I imagine I want to take over namespaces.
+2012-04-18 03:16:07 UTC <tgeeky> but also because I never had a template for how to generate what I want to see in TH. But thanks to you, now I do :O
+2012-04-18 03:16:31 UTC <mgsloan> interesting!  I like using plays on words / letters for names! (as you can probably tell by "rex", "plumbers", "lenq")
+2012-04-18 03:16:57 UTC <mgsloan> by taking over namespaces do you mean like local imports?
+2012-04-18 03:17:03 UTC <mgsloan> this is something I've wanted for haskell for a while
+2012-04-18 03:17:26 UTC <mgsloan> the idea is that you'd do this at the top:
+2012-04-18 03:17:27 UTC <mgsloan> import MyFunkyDSL as Funk
+2012-04-18 03:17:31 UTC <mgsloan> (qualified)
+2012-04-18 03:17:43 UTC <tgeeky> mgsloan: no, I mean specifically forbidding any hackage namespace like [A, AA, AAA, AAAA, AAAAA] for all letters
+2012-04-18 03:18:08 UTC <tgeeky> and then "returning" that capability to the computer to automatically do things for you
+2012-04-18 03:18:39 UTC <mgsloan> then, later, you do "foobar = f . g $ z where import Funk"
+2012-04-18 03:18:55 UTC <mgsloan> and Funk has some different, funky definitions for . and $
+2012-04-18 03:18:56 UTC <tgeeky> mgsloan: oh, that is really local.
+2012-04-18 03:19:09 UTC <tgeeky> mgsloan: that seems really hard to do...
+2012-04-18 03:19:16 UTC <mgsloan> really? I don't think so.
+2012-04-18 03:19:27 UTC <mgsloan> I started writing an extension to GHC to do so
+2012-04-18 03:19:27 UTC <tgeeky> mgsloan: I don't mean technically to pull it off, I mean, to use it often
+2012-04-18 03:19:32 UTC <mgsloan> ah gotcha
+2012-04-18 03:19:51 UTC <tgeeky> mgsloan: my guess on how to approach this is to imagine "derivative Preludes"
+2012-04-18 03:20:20 UTC <mgsloan> tgeeky: if you haven't seen it already, you might be interested in this post http://www.mgsloan.com/wordpress/?p=219
+2012-04-18 03:20:24 UTC <mgsloan> password = pass
+2012-04-18 03:21:20 UTC <mgsloan> On topic of diagrams, we need to do a diagrams backend for this, STAT http://ittc.ku.edu/csdl/fpg/Tools/BlankCanvas
+2012-04-18 03:21:35 UTC <tgeeky> mgsloan: byorgey already mentioned it, that Andy has diagrams backend in mind
+2012-04-18 03:21:43 UTC <mgsloan> cool, great
+2012-04-18 03:21:47 UTC <mgsloan> I've thought about this idea too
+2012-04-18 03:21:49 UTC <tgeeky> (he was guessing)
+2012-04-18 03:22:09 UTC <mgsloan> particularly interesting is if we can do cacheing in diagrams trees
+2012-04-18 03:22:37 UTC <tgeeky> mgsloan: so, first of all, let me hazard a guess. For any approach to what we're discussing (delta modules, derivative Preludes)
+2012-04-18 03:22:49 UTC <mgsloan> then, we could do super-imposed canvases, and do partial updates / move things without redrawing contents etc
+2012-04-18 03:22:50 UTC <tgeeky> to be successful, we're probably going to have a transform that does something like:
+2012-04-18 03:23:37 UTC <tgeeky> Module :: ([Imports],[Functions],[Pragmas],...)
+2012-04-18 03:24:41 UTC <mgsloan> well TH represents this as something like Module = Module Name [Imports] [Dec] orso
+2012-04-18 03:24:55 UTC <tgeeky> mgsloan: well, let me think outside of haskell
+2012-04-18 03:25:03 UTC <mgsloan> alright
+2012-04-18 03:25:19 UTC <tgeeky> you have a file, and you can get a hash of its contents as a whole, but what you really want (for derivative parsing) is the file's "partial derivative"
+2012-04-18 03:26:08 UTC <tgeeky> which means you want to break out all of the "blocks" (say, top-level decls seperated by \n\n\n or something)
+2012-04-18 03:26:17 UTC <tgeeky> so that you can get hashes of every single function
+2012-04-18 03:26:39 UTC <tgeeky> but keep all of the things that need to be local (instance declerations) and ordered (like pattern matching) inside these things
+2012-04-18 03:26:59 UTC <tgeeky> when you're done, you'll have a set of things that you *can* reorder, to the extent that the module will still compile
+2012-04-18 03:27:13 UTC <tgeeky> that is, you have the imports and module decl first, and then functions later
+2012-04-18 03:27:38 UTC <tgeeky> you don't need to inspect the code at all, we're just doing transforms that take whitespace to whitespace
+2012-04-18 03:28:02 UTC <tgeeky> mgsloan: ok so far?
+2012-04-18 03:29:27 UTC <mgsloan> mostly ok!  the transforms also take top level orderings to top level orderings, right? why do instances need to be 'local'?
+2012-04-18 03:29:50 UTC <tgeeky> mgsloan: well, deriving (...) is local, but standalone deriving isn't
+2012-04-18 03:30:11 UTC <mgsloan> ahhhh
+2012-04-18 03:30:14 UTC <tgeeky> so I was imagining "picking" the choice to make standalone deriving a seperate block from a regular function block
+2012-04-18 03:30:19 UTC <tgeeky> instead of "going the other way"
+2012-04-18 03:30:23 UTC <mgsloan> so you're saying that these are the things that we can extract into a new module
+2012-04-18 03:30:39 UTC <tgeeky> mgsloan: well, even better
+2012-04-18 03:30:49 UTC <tgeeky> if we have a DCVS behind us, then we have a trick up our sleeves
+2012-04-18 03:30:56 UTC <tgeeky> we know for a fact that we can store the small bit of text
+2012-04-18 03:30:59 UTC <tgeeky> in a file by tiself
+2012-04-18 03:31:04 UTC <tgeeky> itself, without a module decleration
+2012-04-18 03:31:11 UTC <tgeeky> and we'll get the same hash, if we choose to use the same hash
+2012-04-18 03:31:42 UTC <mgsloan> even though it's not the same hash?
+2012-04-18 03:31:51 UTC <mgsloan> (wouldn't have the same hash)
+2012-04-18 03:31:54 UTC <tgeeky> so you give me a git repo with 3 haskell files in it
+2012-04-18 03:32:02 UTC <tgeeky> i will have 3 SHA1 or whatever hashse associated with them
+2012-04-18 03:33:16 UTC <tgeeky> but we could scan the three haskell files, dump out every block into a (new, for cleanliness) git repository, and have all the internal hashes of the functions
+2012-04-18 03:33:57 UTC <tgeeky> that is, you have 4 lines for foo, 8 lines for bar, 6 lines for blah functions in a single file, -> 3 new files, 3 new hashes
+2012-04-18 03:34:23 UTC <mgsloan> right.   So what does this buy us?  Somewhat more semantic diffs I suppose
+2012-04-18 03:34:35 UTC <tgeeky> mgsloan: we can always know when we need to recompile
+2012-04-18 03:34:39 UTC <tgeeky> if git status says we have something to add
+2012-04-18 03:36:04 UTC <tgeeky> mgsloan: I think the main thing you get is a seperation of the (module, import, pragma) cruft from the functions
+2012-04-18 03:37:23 UTC <tgeeky> mgsloan: but, the real final point is that this process is recursive
+2012-04-18 03:37:32 UTC <mgsloan> Cool!!  you can do faster queries for things like "did any of the dependencies of this function change between version X and Y?"
+2012-04-18 03:37:59 UTC <mgsloan> and have this actually be fine grained query
+2012-04-18 03:38:10 UTC <tgeeky> mgsloan: if you were really smart, you could even have diffs which recognized/ignored functions with different labels when they are the same function
+2012-04-18 03:38:14 UTC <mgsloan> especially if you cache dependency representations
+2012-04-18 03:38:29 UTC <tgeeky> mgsloan: but this "should be" recursive
+2012-04-18 03:38:53 UTC <mgsloan> such smartness is what's necessary for automating generation of delta modules
+2012-04-18 03:39:22 UTC <mgsloan> so, we've got two repositories now: the fine grained build / query repo, and the public repo
+2012-04-18 03:39:23 UTC <tgeeky> mgsloan: another interesting idea, recently acquired, from the book "Code Simplicity"
+2012-04-18 03:40:09 UTC <tgeeky> is that there might be a natural "observable" (forgive my physics word) here -- namely, the number of permutations of functions in a module
+2012-04-18 03:41:17 UTC <tgeeky> mgsloan: when I last talked about this stuff (with luite), I was arguing that there should be some "canonical whitespacing form"
+2012-04-18 03:41:22 UTC <tgeeky> for this whole process
+2012-04-18 03:41:57 UTC <mgsloan> seems reasonable - just parse with haskell-src-exts non-annotated and prettyprint
+2012-04-18 03:42:00 UTC <tgeeky> so imagine you get a random peice of (supposedly good) haskell code off the net
+2012-04-18 03:42:17 UTC <tgeeky> and you want to do what we are talking about, *and* you want to automatically do the "document tensor" idea
+2012-04-18 03:42:30 UTC <mgsloan> yup
+2012-04-18 03:42:43 UTC <tgeeky> so, some transforms you might want to do (watch out, these have to be in order!)
+2012-04-18 03:42:50 UTC <mgsloan> and type explanations, and structure editing
+2012-04-18 03:42:50 UTC <tgeeky> s/\n/\n\n/ -- double space
+2012-04-18 03:42:59 UTC <mgsloan> (really got my work cut out for me! lol..)
+2012-04-18 03:43:32 UTC <tgeeky> s/\n\n\n/< something complicated here> -- if we already had double spacing, then we were at a block
+2012-04-18 03:43:48 UTC <tgeeky> then, map over the blocks with something like
+2012-04-18 03:44:31 UTC <tgeeky> s/(/ ( /
+2012-04-18 03:44:40 UTC <tgeeky> err, that's wrong
+2012-04-18 03:44:56 UTC <mgsloan> I think you've gotta somewhat parse the comments / indentation to isolate blocks
+2012-04-18 03:45:31 UTC <tgeeky> mgsloan: yep, that is crucial.
+2012-04-18 03:45:42 UTC <tgeeky> mgsloan: it's blasphemeous in most languages, but we have to parse the comments.
+2012-04-18 03:46:04 UTC <mgsloan> yeah.. Haskell's got hierarchical {-, right?
+2012-04-18 03:46:16 UTC <tgeeky> I don't know. I hate those kinds of comments anyway :O
+2012-04-18 03:46:37 UTC <tgeeky> mgsloan: but here you go
+2012-04-18 03:46:40 UTC <tgeeky> here's an obvious thing
+2012-04-18 03:47:11 UTC <tgeeky> nm that
+2012-04-18 03:47:13 UTC <tgeeky> enough pie in the sky stuff
+2012-04-18 03:47:15 UTC <tgeeky> hehe
+2012-04-18 03:47:20 UTC <tgeeky> NOTES, technogeeky
+2012-04-18 03:47:32 UTC <tgeeky> mgsloan: btw, did you see Tron: Legacy? and what do you think of the ambience of it, if so?
+2012-04-18 03:49:34 UTC <mgsloan> I did!  I thought it had a pretty awesome visual style
+2012-04-18 03:49:50 UTC <mgsloan> retro simplicity
+2012-04-18 03:50:14 UTC <tgeeky> mgsloan: oh, back to pie-in-the sky
+2012-04-18 03:50:20 UTC <tgeeky> mgsloan: here's another transform I want to do:
+2012-04-18 03:50:34 UTC <tgeeky> assume, for a moment that every toplevel annotation has a type signature
+2012-04-18 03:50:42 UTC <tgeeky> and that they are always appropriately above the functions
+2012-04-18 03:51:09 UTC <tgeeky> split them off into a single block, at the top of the file
+2012-04-18 03:52:59 UTC <tgeeky> allow the user to reorder these freely (and we may do so automatically for the user)
+2012-04-18 03:53:11 UTC <tgeeky> so that things with similar types are groupd
+2012-04-18 03:53:28 UTC <tgeeky> but! press a single button, and presto, they all go back to above their proper function
+2012-04-18 03:53:40 UTC <tgeeky> and we can be totally sure, 100%
+2012-04-18 03:54:15 UTC <tgeeky> that this didn't affect how ghc will compile the file exactly the same way, because we're re-ordering things whose order doesn't matter at all (toplevel ones only)
+2012-04-18 03:54:33 UTC <tgeeky> (if everything I said makes sense and is correct, etc etc)
+2012-04-18 03:55:44 UTC <tgeeky> (we're only re-ordering the top-level type signatures, and we can order them anywhere in the file after the module/import, and we can re-order them among themselves.
+2012-04-18 03:55:57 UTC <tgeeky> let me find my horrible example, then i'll go take my dog out
+2012-04-18 03:57:08 UTC <mgsloan> that's a cool idea!  I do find the type-annotations-next-to-declarations a little annoying
+2012-04-18 03:57:40 UTC <mgsloan> I think my type-vis stuff will do this task well (if I or someone gets around to it..)
+2012-04-18 03:57:40 UTC <tgeeky> mgsloan: but it's also a chance to... actually store, in memory and on disk, lots of combinatorical variations of your source
+2012-04-18 03:57:57 UTC <tgeeky> - a c, there
+2012-04-18 03:58:12 UTC <mgsloan> it'll hopefully be able to show you all of the functions that could potentially provide an argument for a particular function, etc
+2012-04-18 03:58:14 UTC <tgeeky> mgsloan: for instance, the process of indexing for Hoogle or Hayoo (or both) could be dramatically reduced
+2012-04-18 03:58:22 UTC <mgsloan> and so, depict the graph of types within a module
+2012-04-18 03:58:38 UTC <mgsloan> where edges are "this parameter is compatible with this result"
+2012-04-18 03:58:40 UTC <tgeeky> if you can have these typesig blocks sitting around
+2012-04-18 03:59:15 UTC <mgsloan> yup!
+2012-04-18 03:59:26 UTC <mgsloan> so for each block, three files:  sig, code, and dependencies
+2012-04-18 03:59:45 UTC <tgeeky> mgsloan: yeah, so we're paying a bit of a price of a combinatorial expansion here.
+2012-04-18 03:59:56 UTC <tgeeky> On the other hand, we know these files will be small, and we'll have SHA hashes (which are a little costly)
+2012-04-18 04:00:00 UTC <mgsloan> where does the combinatorial explosion come from?
+2012-04-18 04:00:03 UTC <tgeeky> but in a very general way
+2012-04-18 04:00:10 UTC <mgsloan> we aren't actually serializing the different orderings, right?
+2012-04-18 04:00:13 UTC <tgeeky> well, the number of files is going to grow a lot
+2012-04-18 04:00:41 UTC <tgeeky> mgsloan: you can serialize it to memory and keep the hash, or serialze it to disk
+2012-04-18 04:01:00 UTC <tgeeky> mgsloan: <aside> the "whole point" as I understood the partial isomorphisms / invertible syntax
+2012-04-18 04:01:03 UTC <mgsloan> ah, gotcha
+2012-04-18 04:01:08 UTC <tgeeky> mgsloan: is that serializers are the wrong thing
+2012-04-18 04:01:22 UTC <tgeeky> mgsloan: you're using a serializer, because you don't have a <parser|printer>
+2012-04-18 04:01:47 UTC <tgeeky> if you just had a <parser|printer>, you could totally ignore the details of representation
+2012-04-18 04:01:48 UTC <mgsloan> sure, that's something I've believed for a long time
+2012-04-18 04:02:05 UTC <tgeeky> ok, no time to find the pic for the moment, must walk dog.
+2012-04-18 04:02:06 UTC <tgeeky> bbiaf
+2012-04-18 04:02:08 UTC <mgsloan> well, the details of representation are very wrapped up in the parser part
+2012-04-18 04:02:11 UTC <tgeeky> don't go nowhere :o
+2012-04-18 04:02:21 UTC <mgsloan> haha, I actually probably will disappear soon
+2012-04-18 04:02:27 UTC <mgsloan> but I'll be back in an hour or two
+2012-04-18 04:02:34 UTC <tgeeky> mgsloan: nope! the parser will always be getting the most compressed version possible (least amount of whitespace)
+2012-04-18 04:02:37 UTC <mgsloan> (heading home)
+2012-04-18 04:02:45 UTC <tgeeky> mgsloan: ok. two hours to go home? Yikes!
+2012-04-18 04:03:13 UTC <mgsloan> haha, actually 10 minutes, but I'm getting some dinner and such too
+2012-04-18 04:32:01 UTC <tgeeky> mgsloan: by the way
+2012-04-18 04:32:11 UTC <tgeeky> mgsloan: the biggest reason that you want those hashes?
+2012-04-18 04:32:43 UTC <tgeeky> module Data.Maybe.V0_1_0  ==> Data.Maybe.<SHA1>
+2012-04-18 04:33:20 UTC <tgeeky> why? If we are explicitly versioning, we don't really want our user thinking about versions (the same goes with cabal, in which this is impossible)
+2012-04-18 04:33:29 UTC <tgeeky> that is, the downloader of code.
+2012-04-18 04:33:39 UTC <tgeeky> but secondly, versioning implies ordering.
+2012-04-18 04:33:53 UTC <tgeeky> or at least, the way we use it does...
+2012-04-18 04:33:53 UTC <mgsloan> ah, interesting!  the problem with that is that it somewhat implies that all of the past variants are being compiled with the current
+2012-04-18 04:34:14 UTC <tgeeky> mgsloan: what if the purpose of a module
+2012-04-18 04:34:17 UTC <mgsloan> the delta modules encode the refactorings needed to target the new version, and not the old code
+2012-04-18 04:34:30 UTC <tgeeky> is to demonstrate how some algorithim can be done in several different ways
+2012-04-18 04:34:51 UTC <tgeeky> (my example here is Enumarats Pearl)
+2012-04-18 04:34:59 UTC <tgeeky> http://www.cs.ox.ac.uk/jeremy.gibbons/publications/rationals.pdf
+2012-04-18 04:35:12 UTC <tgeeky> there are literally 15 different versions of the rational numbers in there
+2012-04-18 04:38:56 UTC <tgeeky> I might be doubling or so.
+2012-04-18 04:38:56 UTC <mgsloan> interesting!
+2012-04-18 04:38:56 UTC <tgeeky> and we want this kind of module more often than one would think
+2012-04-18 04:38:56 UTC <tgeeky> (and!!!)
+2012-04-18 04:38:56 UTC <tgeeky> such things don't add to the measure I listed above
+2012-04-18 04:38:56 UTC <tgeeky> (at least, they add in a different way)
+2012-04-18 04:38:56 UTC <tgeeky> see what I mean?
+2012-04-18 04:38:56 UTC <tgeeky> 10 copies of "the same function" contribute "1" to a measure which is counting the reorderings of the blocks of functions.
+2012-04-18 04:39:09 UTC <tgeeky> mgsloan: no, I am usually scared of TH stuff for some reason.
+2012-04-18 04:39:31 UTC <tgeeky> I think it's the idea that TH and haskell-src(-meta)? didn't seem to be keeping up with the times
+2012-04-18 04:39:38 UTC <tgeeky> in terms of papers / tutorials
+2012-04-18 04:39:42 UTC <mgsloan> yeah, I don't get how that happened
+2012-04-18 04:39:56 UTC <tgeeky> well I don't even know if it's a correct feeling or not, and I'm guessing it's not.
+2012-04-18 04:40:00 UTC <mgsloan> I think it's because its docs are very monolithic
+2012-04-18 04:43:07 UTC <mgsloan> from my perspective, it's not that awful of a system
+2012-04-18 04:43:07 UTC <tgeeky> mgsloan: and don't even get me started what this scheme has to offer the way documentation of code is done
+2012-04-18 04:43:07 UTC <tgeeky> it's not even funny
+2012-04-18 04:43:07 UTC <mgsloan> AST manipulation is tricky, yeah, we can't expect to abstract that problem
+2012-04-18 04:43:07 UTC <tgeeky> byorgey: luite: mgsloan: what do people mean when they say TH is untyped?
+2012-04-18 04:43:07 UTC <tgeeky> It's surely *type checked*, right?
+2012-04-18 04:43:07 UTC <mgsloan> sure, people complain that you can't write TH such that you're sure that the outputted AST is code that typechecks
+2012-04-18 04:43:07 UTC <tgeeky> i mean, if you're generating haskell code (and extracting it with zero-th), then you can run ghc --make on it, and have your answer, right?
+2012-04-18 04:43:07 UTC <mgsloan> it's certainly possible in theory - I think ?Ometa? does this
+2012-04-18 04:43:07 UTC <tgeeky> screw theory :o
+2012-04-18 04:46:56 UTC <tgeeky> mgsloan: by the way, I did not actually read through this blog post yet, I had only gleaned from the code snippets things...
+2012-04-18 04:46:56 UTC <tgeeky> let me read it more carefully
+2012-04-18 04:55:33 UTC <mgsloan> that flexible-defaults stuff is interesting because it has a concept of the "cost" of different implementations
+2012-04-18 04:57:02 UTC <mgsloan> it'd be cool to have that interact with ghc's optimizations - in some cases REWRITE rules might justify the usage of a more naive implementation
+2012-04-18 04:57:02 UTC <mgsloan> tgeeky: I'd appreciate any feedback!  I think I will be splitting it into multiple posts
+2012-04-18 04:57:02 UTC <mgsloan> the question is how to convince people that it's a good idea without explaining every single last ramification that I can see
+2012-04-18 04:57:12 UTC <tgeeky> yikes. one of us is lagging
+2012-04-18 04:57:21 UTC <tgeeky> hmm
+2012-04-18 04:57:46 UTC <mgsloan> well, my response time is due to distractions
+2012-04-18 04:57:59 UTC <tgeeky> mgsloan: nono, it was the fact that it 3 messages at once
+2012-04-18 04:58:06 UTC <tgeeky> in very fast sequence
+2012-04-18 04:58:12 UTC <tgeeky> unless your client is splitting up things in a smart way
+2012-04-18 04:58:14 UTC <mgsloan> ah, gotcha
+2012-04-18 04:58:18 UTC <mgsloan> doubtful
+2012-04-18 04:59:26 UTC <tgeeky> mgsloan: this is really, truly bizarre how closely aligned the trajectory of our thought is... you have the courage to poke around more than I do
+2012-04-18 04:59:43 UTC <mgsloan> So, the question is how to make this idea actually happen.  I could turn it into a call-to-arms, and try to start the projects for generating / applying delta modules
+2012-04-18 04:59:54 UTC <tgeeky> (I hadn't really read any of this until now.. you already thought of and solved several of the things I had tried to work on :o)
+2012-04-18 04:59:59 UTC <tgeeky> no
+2012-04-18 05:00:02 UTC <tgeeky> you and I can take it on
+2012-04-18 05:00:06 UTC <mgsloan> tgeeky: :D thanks!
+2012-04-18 05:00:19 UTC <tgeeky> mgsloan: I mean, though... seriously. It is spooky.
+2012-04-18 05:01:18 UTC <mgsloan> hehe, good to hear that you agree!  It really is the infrastructure we need
+2012-04-18 05:01:43 UTC <tgeeky> mgsloan: there's also this pattern of "write and erase"
+2012-04-18 05:01:47 UTC <tgeeky> that's going on here, in my mind
+2012-04-18 05:01:56 UTC <tgeeky> sitting down, imaging your perfect IDE environment in your head
+2012-04-18 05:02:17 UTC <tgeeky> one the one hand, you need versioning like you describe, so you do it -- as you describe.
+2012-04-18 05:02:36 UTC <tgeeky> On the other hand, you don't want the user to think about the versions in order to get code to compile, so you need to keep the versioning, but hide it effectively.
+2012-04-18 05:03:16 UTC <tgeeky> And then, you really want to require totally explicit exports (for each V_._._)
+2012-04-18 05:03:42 UTC <mgsloan> yup!
+2012-04-18 05:03:51 UTC <tgeeky> but then again, you really want to present the user with the just the differences between them
+2012-04-18 05:03:56 UTC <tgeeky> so you want to hide it
+2012-04-18 05:04:07 UTC <tgeeky> there's this back and forth kind of process going on here
+2012-04-18 05:05:03 UTC <tgeeky> mgsloan: I think you have to "take over" versioning from the user, somehow.
+2012-04-18 05:05:50 UTC <mgsloan> yeah, the thought process of "this sucks and is annoying, there must be a better thing..." into daydreaming about that better thing is most of what makes me do this stuff
+2012-04-18 05:06:13 UTC <tgeeky> argument pro: there is an abundancy of versioning schemes on hackage, but it's really hard to trust people's judgements of "1.0", so the most useful ones are the date-versioning ones (2009.mm.dd.blahablah) because at least they tell you immediately when this line of questioning was started.
+2012-04-18 05:06:15 UTC <mgsloan> I don't think Haskellers will like having their versioning taken over :)
+2012-04-18 05:06:34 UTC <tgeeky> mgsloan: well, I think I have a trick of sorts.
+2012-04-18 05:06:49 UTC <tgeeky> well, maybe a few.
+2012-04-18 05:07:03 UTC <mgsloan> what I like about this scheme is that it forces you to think about API differences
+2012-04-18 05:07:10 UTC <mgsloan> and express them
+2012-04-18 05:07:24 UTC <tgeeky> 1: add <p|p> for numbers of the form ([\d].)^n
+2012-04-18 05:07:31 UTC <mgsloan> rather than leaving them as un-defined package meta-information
+2012-04-18 05:07:37 UTC <tgeeky> and then codify the known versioning schemes that are out there
+2012-04-18 05:07:47 UTC <tgeeky> mgsloan: yes, that is a plus.
+2012-04-18 05:08:05 UTC <tgeeky> mgsloan: afer you codify the schemes that are out there, when a person creates a new package: list the versioning scheme options
+2012-04-18 05:08:27 UTC <tgeeky> things that don't adhere any scheme, will have to reversion into it
+2012-04-18 05:08:51 UTC <mgsloan> hmm, so more rigorous adherence to particular numbering schemes?
+2012-04-18 05:09:04 UTC <tgeeky> mgsloan: sure. people have gone out of their way to codify it
+2012-04-18 05:09:17 UTC <tgeeky> http://semver.org/
+2012-04-18 05:09:56 UTC <tgeeky> mgsloan: but here's a really nasty trick, you ready?
+2012-04-18 05:10:43 UTC <tgeeky> mgsloan: increment the version numbers with a modulo (2? 3? not sure which), make the act of compilation a +0.0.1 to the versioning
+2012-04-18 05:10:57 UTC <mgsloan> semver seems very close to PVP
+2012-04-18 05:11:14 UTC <mgsloan> except the PVP leaves the A in A.B.C.D to the user
+2012-04-18 05:11:18 UTC <tgeeky> I don't know if this idea is useless, or brilliant.
+2012-04-18 05:12:02 UTC <tgeeky> mgsloan: this is even worse/more dogmatic than it was before."
+2012-04-18 05:12:08 UTC <tgeeky> s/"//
+2012-04-18 05:12:31 UTC <mgsloan> hmm, not sure I understand the point!
+2012-04-18 05:13:02 UTC <mgsloan> ohhh I get it
+2012-04-18 05:13:06 UTC <tgeeky> mgsloan: if you totally take over the versioning (or part of it)
+2012-04-18 05:13:21 UTC <tgeeky> you can make the version into a little cyclic "state machine" or however you'd want to think about it
+2012-04-18 05:13:23 UTC <mgsloan> so you end up with a lot of unique version ids
+2012-04-18 05:13:37 UTC <mgsloan> that aren't tied to versioning
+2012-04-18 05:13:40 UTC <tgeeky> mgsloan: yes, but the simplest modulus you could do is 2 (even/odd)
+2012-04-18 05:13:44 UTC <tgeeky> agreed?
+2012-04-18 05:13:47 UTC <tgeeky> if you're going to modulo something
+2012-04-18 05:13:58 UTC <tgeeky> Z/2Z.
+2012-04-18 05:14:01 UTC <mgsloan> sure
+2012-04-18 05:14:17 UTC <tgeeky> people can write even version numbers, but only things that have succesfully compiled can get incremented
+2012-04-18 05:14:51 UTC <tgeeky> so you have a filter to get (successfully compilable) code from unsuccesfully compilable code
+2012-04-18 05:15:06 UTC <tgeeky> does that make sense?
+2012-04-18 05:15:34 UTC <tgeeky> it actually makes more sense if you're more general...
+2012-04-18 05:15:45 UTC <tgeeky> imagine that there are 7 stages of GHC compilation or something... that we have to go through
+2012-04-18 05:16:31 UTC <mgsloan> hmm, makes some sense.  It seems weird to me to conflate code status and version numbers, though
+2012-04-18 05:16:51 UTC <tgeeky> mgsloan: ok, so let's back up
+2012-04-18 05:16:58 UTC <tgeeky> if you're sitting there and you're mr. shiny GHC pro
+2012-04-18 05:17:05 UTC <tgeeky> you might be interestred in tracking what happens to a function
+2012-04-18 05:18:05 UTC <tgeeky> in: template haskell form, haskell code form, intermediate GHC form, core form, .o, asm, etc
+2012-04-18 05:18:45 UTC <tgeeky> so the file in question is currently 0.1.4
+2012-04-18 05:19:43 UTC <tgeeky> we can think of identifying each of those with 0.1.4.[2,4,..]
+2012-04-18 05:20:03 UTC <mgsloan> ahh, I see.
+2012-04-18 05:20:07 UTC <tgeeky> if GHC succeeds in taking them from one step to another, we will get out
+2012-04-18 05:20:14 UTC <tgeeky> 0.1.4.[1,3,..]
+2012-04-18 05:21:07 UTC <mgsloan> so these are module / block versions, not package versions?
+2012-04-18 05:21:48 UTC <tgeeky> mgsloan: I'm not sure. I am switching back and forth, so I am not being rigorious enough.
+2012-04-18 05:21:55 UTC <tgeeky> but one solution
+2012-04-18 05:22:05 UTC <tgeeky> is to take more version "octets"
+2012-04-18 05:22:18 UTC <tgeeky> 0.1.4.[SHA of block].[2,4,..]
+2012-04-18 05:22:37 UTC <tgeeky> though once you put an SHA block in there, the 0.1.4 part doesn't matter too much :o
+2012-04-18 05:23:03 UTC <tgeeky> mgsloan: that said, this plan falls apart because GHC is going to do work over its own module structure, ultiamtely
+2012-04-18 05:24:48 UTC <tgeeky> god you write well and a lot
+2012-04-18 05:24:51 UTC <mgsloan> my confusion came from having versions for them usually implies that they're on disk.  It does make sense to treat the compiler as if its a programmer, doing manual ports from representation to representation
+2012-04-18 05:25:39 UTC <tgeeky> mgsloan: i'm speaking in a fantasy world where having an SHA hash means the magic of DCVS imples you don't need to care where the file comes from
+2012-04-18 05:25:59 UTC <tgeeky> for right now
+2012-04-18 05:25:59 UTC <mgsloan> tgeeky: thanks!  I'm new to the blog format
+2012-04-18 05:26:15 UTC <mgsloan> so they end up more like essays interspersed with code
+2012-04-18 05:27:28 UTC <tgeeky> mgsloan: have you read type classopedia?
+2012-04-18 05:28:22 UTC <tgeeky> mgsloan: what is the internal format here? markdown?
+2012-04-18 05:28:38 UTC <tgeeky> (for your blog, that is)
+2012-04-18 05:29:01 UTC <mgsloan> I think I have. may have skimmed it  Haskell's been my favorite language for ~5 yrs. :) Yeah, I can't wait til there's a "show core" tool that gives
+2012-04-18 05:29:28 UTC <mgsloan> a view of the core representation for a particular definition
+2012-04-18 05:29:57 UTC <mgsloan> while still giving the kinds of code annotations that I want - profiling / type info / etc
+2012-04-18 05:30:28 UTC <mgsloan> tools that help you read haskell would help almost doubly for understanding ghc core
+2012-04-18 05:30:41 UTC <tgeeky> mgsloan: this is where the combinatorial explosion comes in
+2012-04-18 05:30:42 UTC <tgeeky> by the way
+2012-04-18 05:31:11 UTC <mgsloan> tgeeky: HTML, unfortunately :(
+2012-04-18 05:31:21 UTC <mgsloan> very light usage of HTML, which is why the formatting is a bit wierd
+2012-04-18 05:31:45 UTC <mgsloan> I might consider making it a github post
+2012-04-18 05:31:51 UTC <mgsloan> that might actually make a lot of sense
+2012-04-18 05:32:25 UTC <mgsloan> have a blogpost that links to the more detailed github'd proposal / start of project
+2012-04-18 05:32:28 UTC <tgeeky> mgsloan: what we're talking about is a little pool of ghcs, while handling the appropaite flags, in the appropriate order (in the sense of not wasting work -- not in the sense of order on the command line)
+2012-04-18 05:33:05 UTC <tgeeky> mgsloan: if you will permit me to blatantly plagarize, I will copy it all into markdown, edit it, merge your notes and my notes and whatnot, split it, and make a project out of it
+2012-04-18 05:34:13 UTC <tgeeky> or I can just counter-propose. that would be easier for me, but perhaps less useful for the project.
+2012-04-18 05:34:43 UTC <mgsloan> tgeeky: sounds great!
+2012-04-18 05:35:42 UTC <mgsloan> on the topic of a pool of multiple ghcs, imagine making this a distributed build system
+2012-04-18 05:36:27 UTC <tgeeky> mgsloan: I have a 3rd party github, and two domain names (and will probably get another) -- www.d-rive.org and www.d-rive.info (and www.d-river.org)
+2012-04-18 05:36:29 UTC <tgeeky> mgsloan: hehe, like I said, if you use SHA1, it already is
+2012-04-18 05:36:43 UTC <mgsloan> I guess that's exactly what you're proposing.  So, if someone has built a particular block before, we also have the versioned object file.
+2012-04-18 05:36:54 UTC <mgsloan> or versioned "representation of GHC intermediate state"
+2012-04-18 05:37:46 UTC <tgeeky> mgsloan: the trick is getting code into that "canonical form" where (as you and I suggsted), you control the naming of things (which works well for types, but not so much for code) -- I am also up for *horribly* controlling the *spacing* of things
+2012-04-18 05:40:30 UTC <mgsloan> I think it would be best to not touch user code too much.
+2012-04-18 05:40:39 UTC <tgeeky> mgsloan: hehe! remember!
+2012-04-18 05:40:52 UTC <mgsloan> yeah, these are in the post-process blocks
+2012-04-18 05:40:53 UTC <tgeeky> spacing is supposed to be, by GHC rules, an idempodent
+2012-04-18 05:41:02 UTC <tgeeky> mgsloan: oh, no, just spacing if the initial code
+2012-04-18 05:41:14 UTC <tgeeky> anything you can pretty print
+2012-04-18 05:42:24 UTC <tgeeky> mgsloan: did you answer re: typeclassopedia?
+2012-04-18 05:42:25 UTC <mgsloan> yup!  I also came to this idea too when working on the program that wanted to be able to be able to get as efficient of recompilation of edited code
+2012-04-18 05:43:15 UTC <tgeeky> mgsloan: my physics background might come in handy here when modelling this
+2012-04-18 05:43:22 UTC <tgeeky> I think I might have a pretty wicked solution
+2012-04-18 05:43:43 UTC <mgsloan> tgeeky: yup, I have read it!
+2012-04-18 05:44:50 UTC <mgsloan> have you been following ekmett's set of typeclasses?
+2012-04-18 05:45:09 UTC <tgeeky> no, I always feel it's too above my head. :o
+2012-04-18 05:45:14 UTC <tgeeky> i read it, and admire some parts of it
+2012-04-18 05:45:22 UTC <tgeeky> but I don't get most of it
+2012-04-18 05:47:36 UTC <mgsloan> yeah, I don't get a lot of em, but a lot of them are pretty well designed, apart from perhaps the obtuseness of naming
+2012-04-18 05:47:48 UTC <tgeeky> mgsloan: reading the last of your post... pretty pleasing.
+2012-04-18 05:49:27 UTC <mgsloan> Haha, yeah the first two paragraphs are right on topic!
+2012-04-18 05:49:33 UTC <tgeeky> I think there is a good argument that these are exactly the kind of "over-arching" problems that stand in front of Haskell adoption. The fact that you can get started already with a GHC extension (recent feature?) is just a handle which can grab to proceed far enough to offer a red pill, to swallow.
+2012-04-18 05:52:07 UTC <tgeeky> mgsloan: perhaps surprising, but I think a key aspect of these kind of ambitious projets is to get far enough along (beyond concepts, into code) is to have so many positives as to overwhelm the few issues that you're going to stick them with (playing with their versioning, playing with their whitespace)
+2012-04-18 05:52:12 UTC <tgeeky> or whatever.
+2012-04-18 05:52:41 UTC <tgeeky> mgsloan: hopefully we can get someone to employ us, or we can do something to get paid to do this :O
+2012-04-18 05:53:20 UTC <mgsloan> hmm, so each feature is additional cognitive overhead?
+2012-04-18 05:53:41 UTC <tgeeky> mgsloan: no, no, I wasn't trying to lay it out like that
+2012-04-18 05:54:25 UTC <mgsloan> I do agree, though, that removing all of the little sticking points will help haskell's community velocity a lot
+2012-04-18 05:55:03 UTC <tgeeky> for instance... everyone feels like they know what's best for versioning.
+2012-04-18 06:01:00 UTC <tgeeky> umm.. see multiplate docs, page 7, section 2.5
+2012-04-18 06:01:34 UTC <tgeeky> nope
+2012-04-18 06:01:35 UTC <tgeeky> wrong paper lol
+2012-04-18 06:02:02 UTC <tgeeky> nevermind, you're already using type families.
+2012-04-18 06:02:36 UTC <mgsloan> I have some ideas for doing micro-scale versioning, not wholly my own.  http://hal.inria.fr/inria-00445975/PDF/icdcs09-treedoc.pdf
+2012-04-18 06:03:49 UTC <mgsloan> The idea is to store enough meta-data about your document that merge is asymptotically cheap
+2012-04-18 06:03:51 UTC <tgeeky> mgsloan: interesting. I think I commented (I know I thought...) above... what I'm discussing is almost certainly non-commutative
+2012-04-18 06:04:19 UTC <mgsloan> certainly
+2012-04-18 06:04:35 UTC <tgeeky> actually, it maybe as simple as:
+2012-04-18 06:05:05 UTC <tgeeky> if you use matching regexes, or s/<..>//, then you have a chance at keeping commutivity
+2012-04-18 06:06:05 UTC <tgeeky> but if you use substitution regexes s/(<..>)/.../, then the order in which you apply them will matter
+2012-04-18 06:06:24 UTC <tgeeky> the overall result might be commutative, but the process won't be
+2012-04-18 06:06:31 UTC <tgeeky> but hey, no biggie.
+2012-04-18 06:06:38 UTC <tgeeky> group theory to the rescue, maybe
+2012-04-18 06:07:32 UTC <mgsloan> this paper is saying that users editing a document can be made perfectly commutative
+2012-04-18 06:07:42 UTC <tgeeky> mgsloan: here's a picture of something (slightly) gone wrong at the LHC: http://www.cern-watcher.org/archive.php?cmd=image&sfpg=TEhDMS8yMDEyXzA0XzE4LypMSENCRFNfNDoyOjEyLnBuZyo1ZmQ2ZTM5ZDY2NzE1ZDI5YjQzMjA3ZmYwMjY1M2QxZA
+2012-04-18 06:08:03 UTC <tgeeky> mgsloan: good! then I'll learn something (one way or the other) by reading it
+2012-04-18 06:08:06 UTC <mgsloan> the caveat being that you can't properly represent moves... but I think it should be possible to do moves pretty efficiently
+2012-04-18 06:08:09 UTC <tgeeky> since I currently have an educated guess otherwise :)
+2012-04-18 06:08:22 UTC <tgeeky> mgsloan: moves? maybe not. n-transpositions, though :O
+2012-04-18 06:09:39 UTC <tgeeky> mgsloan: to understand this picture, you need to know: the beam in the machine looks like box #3.
+2012-04-18 06:10:12 UTC <tgeeky> when it's *dumped* out of the machine, the particles are "diluted" by expanding them out in a helical pattern
+2012-04-18 06:10:17 UTC <tgeeky> (this is box #4)
+2012-04-18 06:10:34 UTC <tgeeky> this process clearly didn't go right for beam 1 :o
+2012-04-18 06:11:47 UTC <mgsloan> well, moves such that asynchronous modifications in the middle also get moved.
+2012-04-18 06:12:07 UTC <mgsloan> whoah! does that mean they have to decellerate the whole lot?
+2012-04-18 06:12:21 UTC <tgeeky> mgsloan: that would be physically impossible
+2012-04-18 06:12:34 UTC <tgeeky> they need a ring 27 km in circurmference to accelerate it, after all
+2012-04-18 06:12:43 UTC <tgeeky> (and about 30 minutes to do so)
+2012-04-18 06:13:05 UTC <tgeeky> + newton's ... 1st? law?
+2012-04-18 06:13:26 UTC <tgeeky> no, they shash it into a giant, 40 foot thick block of graphite and iron
+2012-04-18 06:13:29 UTC <tgeeky> and then into a few hundred feet of concrete
+2012-04-18 06:13:35 UTC <tgeeky> and then into a neutron moderator
+2012-04-18 06:13:46 UTC <mgsloan> 0_0
+2012-04-18 06:13:50 UTC <tgeeky> but before they could dump
+2012-04-18 06:13:53 UTC <tgeeky> that mess on the right had happened
+2012-04-18 06:14:03 UTC <tgeeky> this is the result up close:
+2012-04-18 06:14:04 UTC <tgeeky> http://i.imgur.com/l9RWN.png
+2012-04-18 06:14:20 UTC <tgeeky> Octant 8 houses a very delicate experiment
+2012-04-18 06:14:37 UTC <tgeeky> which this graph shows is being absolutely hammered with radiation (~ 25 Gray / s ]
+2012-04-18 06:15:32 UTC <tgeeky> that is about 5 times higher than the dose needed to kill a human a week after exposure
+2012-04-18 06:15:42 UTC <tgeeky> and the entire detector just got bathed in it
+2012-04-18 06:15:48 UTC <tgeeky> (not supposed to happen!)
+2012-04-18 06:16:38 UTC <mgsloan> wow, that's pretty ridiculous!
+2012-04-18 06:17:52 UTC <mgsloan> so, CERN is really the european laser cannon?
+2012-04-18 06:18:00 UTC <tgeeky> yes
+2012-04-18 06:18:11 UTC <tgeeky> in fact, the protons in there (which are *certainly* fermions)
+2012-04-18 06:18:21 UTC <tgeeky> behave rather like a laser (which is photons, a boson)
+2012-04-18 06:18:27 UTC <tgeeky> that is, they have a photon laser
+2012-04-18 06:18:28 UTC <tgeeky> of sorts
+2012-04-18 06:18:30 UTC <tgeeky> errr
+2012-04-18 06:18:34 UTC <tgeeky> *proton* laser, of sorts
+2012-04-18 06:18:49 UTC <tgeeky> only it's pointed at itself, so...
+2012-04-18 06:18:54 UTC <tgeeky> here are a few more pics:
+2012-04-18 06:18:54 UTC <tgeeky> http://imgur.com/a/HJRvs
+2012-04-18 06:19:05 UTC <tgeeky> in this diagram ("loss map")
+2012-04-18 06:19:13 UTC <tgeeky> the red structures represent protection mechanisms
+2012-04-18 06:19:44 UTC <tgeeky> 1st two pictures are rather normal-ish losses (generally doesn't penetrate or get close to any red structure)
+2012-04-18 06:20:33 UTC <tgeeky> ugh, i uploaded the wrong ones
+2012-04-18 06:20:49 UTC <mgsloan> you work there?
+2012-04-18 06:20:49 UTC <tgeeky> those three are normal (and one is a duplicate, cause evidently I can't count)
+2012-04-18 06:20:51 UTC <tgeeky> http://imgur.com/a/oTfHe
+2012-04-18 06:21:09 UTC <tgeeky> mgsloan: nope, but I have worked with them in the past and have access to internal records
+2012-04-18 06:21:30 UTC <tgeeky> so the bottom one you can see
+2012-04-18 06:21:38 UTC <tgeeky> is a zoomed out version of the top one
+2012-04-18 06:21:46 UTC <tgeeky> and the "normal" ones are zoomed out further still
+2012-04-18 06:22:27 UTC <tgeeky> one neat thing that you can't see, is that the little red pixels (which are protection equipment) actually move in this picture (up or down, left or right) in realtime
+2012-04-18 06:23:19 UTC <tgeeky> mgsloan: the sold block of red at the top of Octant 7 and the one above Octant 6
+2012-04-18 06:23:32 UTC <tgeeky> both represent beam dumps (huge blocks of carbon)
+2012-04-18 06:23:51 UTC <tgeeky> *solid
+2012-04-18 06:23:58 UTC <mgsloan> sweet! cool stuff to be working with
+2012-04-18 06:24:01 UTC <tgeeky> notice, Octant 8 does not have such a protection (because there's an experiment there, instead)
+2012-04-18 06:24:40 UTC <tgeeky> mgsloan: also, uhh.. re: my point about peaceful means of R&D
+2012-04-18 06:25:10 UTC <mgsloan> true true
+2012-04-18 06:25:13 UTC <tgeeky> as we discuss a CERN $20 billion particle smasher over the CERN-invented WWW
+2012-04-18 06:25:20 UTC <tgeeky> not that I work for them, or anything. :)
+2012-04-18 06:25:46 UTC <tgeeky> mgsloan: (in a country which gets ~ 85% of their power from Nuclear)
+2012-04-18 06:25:58 UTC <mgsloan> If we managed to drop $20 billion on PL/SE research, that would be _amazing_
+2012-04-18 06:27:25 UTC <mgsloan> (I'm actually pretty morally conflicted as to whether it would be better to spend all of that money on PL/SE and leave physics temporarily less explored)
+2012-04-18 06:27:47 UTC <mgsloan> (SE = Software Engineering, in order to capture version control / IDE)
+2012-04-18 06:28:46 UTC <tgeeky> PL & SE = programing lang & software eng?
+2012-04-18 06:37:35 UTC <mgsloan> yup
+2012-04-18 07:03:38 UTC <mgsloan> tgeeky: so I will probably still cleanup & post this, but feel free to also import / use the text!
+2012-04-18 07:05:47 UTC <tgeeky> ok. just ping me in here when you make a change, and I'll see what's up
+2012-04-18 07:11:00 UTC <mgsloan> alright, I think I'll probably end up putting it up on friday
+2012-04-18 07:12:07 UTC <tgeeky> mgsloan: in that case, I'll write a counter to this post and then actually merge after friday
+2012-04-18 07:31:05 UTC <alpounet> very interesting discussion guys. thanks
+2012-04-18 11:11:09 UTC <TSC> Hello diagrammers!
+2012-04-18 11:11:25 UTC <TSC> Can any of the backends calculate the size of a text item?
+2012-04-18 11:36:08 UTC <mgsloan1> TSC: Yes! However, it uses unsafePerformIO
+2012-04-18 11:37:01 UTC <mgsloan1> http://hackage.haskell.org/packages/archive/diagrams-cairo/0.5.0.1/doc/html/Diagrams-Backend-Cairo-Text.html
+2012-04-18 11:37:03 UTC <mgsloan1> well, can
+2012-04-18 11:40:42 UTC <TSC> Ah, very nice
+2012-04-18 11:41:00 UTC <TSC> I just got it going with LaTeX too so I can use it with the TikZ backend:
+2012-04-18 11:41:23 UTC <TSC> calculateDimensions "$\\frac{x^y}{2}$"
+2012-04-18 11:41:23 UTC <TSC> (11.26692,9.10788,3.44841)
+2012-04-18 11:52:31 UTC <mgsloan1> cool!!
+2012-04-18 11:55:06 UTC <TSC> Yes, I hope I can get it working neatly with the rest of the diagrams stuff
+2012-04-18 13:51:15 UTC <byorgey> TSC: also, sadly there isn't (yet) a nice way to draw arrows
+2012-04-18 13:51:23 UTC <byorgey> TSC: but it's definitely on the list of planned features
+2012-04-18 13:52:29 UTC <TSC> That's a shame, because TikZ has lots of arrow support, so it is easy to do on the backend
+2012-04-18 13:54:11 UTC <byorgey> TSC: well, you are welcome to add some TikZ-backend-specific arrow primitives!
+2012-04-18 13:54:28 UTC <byorgey> just export them from the diagrams-tikz package itself
+2012-04-18 13:54:47 UTC <TSC> Yeah, I thought I might do that, at least for my own use at first
+2012-04-18 13:55:31 UTC <byorgey> the arrow support that I intend to add would be in terms of existing stuff anyway, so it wouldn't be able to take advantage of backends with specific arrow support
+2012-04-18 13:55:58 UTC <byorgey> so special TikZ arrow support could still be nice even once diagrams has more general support for arrows.
+2012-04-18 13:56:10 UTC <TSC> You mean something general like gluing a couple of paths together to make something that looks like an arrow?
+2012-04-18 13:56:39 UTC <byorgey> right
+2012-04-18 17:18:58 UTC <luite> and flies like an arrow
+2012-04-18 17:19:53 UTC <tgeeky> to the knee?
+2012-04-18 17:29:46 UTC <byorgey> if it looks like an arrow and flies like an arrow, it must be a banana!
+2012-04-18 17:34:42 UTC <tgeeky> ACTION imagines the famous splitting the arrow with an arrow trick, with bananas.
+2012-04-18 17:38:24 UTC <tgeeky> byorgey: speaking of bananas, how is your little bundle of joy doing? on to solid foods yet?
+2012-04-18 17:38:39 UTC <byorgey> tgeeky: yes, including bananas
+2012-04-18 17:38:51 UTC <byorgey> he's doing well, though with a bit of a cold at the moment
+2012-04-18 17:39:02 UTC <tgeeky> byorgey: a little dose of antimatter makes all things better!
+2012-04-18 17:42:14 UTC <tgeeky> byorgey: Eating 600 bananas is about the equivalent of having one chest X-ray.
+2012-04-18 17:42:18 UTC <tgeeky> The More You Know (tm)
+2012-04-18 17:43:11 UTC <tgeeky> ACTION imagines stuffing oneself with bananas in a room lined with x-ray paper
+2012-04-18 17:43:15 UTC <luite> does it mattere where the banana's are from?
+2012-04-18 17:43:43 UTC <luite> it's due to the potassium, isn't it?
+2012-04-18 17:43:58 UTC <tgeeky> luite: yes it matters, and yes it's potassium
+2012-04-18 17:44:07 UTC <tgeeky> but no, it doesn't matter, because all bananas are clones of one another
+2012-04-18 17:44:36 UTC <tgeeky> because of 19th century fruit growing experiments
+2012-04-18 17:45:23 UTC <luite> hmm, that's why they're rather vulnerable for diseases i guess
+2012-04-18 17:45:40 UTC <tgeeky> yep. and navel oranges.
+2012-04-18 17:45:43 UTC <tgeeky> and a few other fruits
+2012-04-18 18:08:42 UTC <byorgey> however, there are still a wide variety of naval oranges.
+2012-04-18 18:08:49 UTC <byorgey> very important for preventing scurvy.
+2012-04-18 18:13:02 UTC <luite> door-hinge?
+2012-04-18 22:03:10 UTC <tgeeky> mgsloan: what environment do you run?
+2012-04-18 22:03:21 UTC <tgeeky> os, distro, editor?
+2012-04-18 22:03:31 UTC <mgsloan> ubuntu / xmonad / Sublime Text vim mode
+2012-04-18 22:04:11 UTC <tgeeky> where.. what... where the hell did this come from?
+2012-04-18 22:04:15 UTC <tgeeky> how have I not heard of this?
+2012-04-18 22:04:17 UTC <tgeeky> oh it costs money
+2012-04-18 22:05:06 UTC <mgsloan> Yeah, it's the only piece of software I've bought in a few years, actually
+2012-04-18 22:05:18 UTC <mgsloan> It's easy to try it free
+2012-04-18 22:05:26 UTC <mgsloan> just bugs you every N saves
+2012-04-18 22:05:30 UTC <luite> commercial vim modes?
+2012-04-18 22:05:41 UTC <mgsloan> which isn't so great when you're a compulsive saver
+2012-04-18 22:05:42 UTC <mgsloan> nah
+2012-04-18 22:05:49 UTC <luite> or is sublime text a whole editor?
+2012-04-18 22:06:03 UTC <mgsloan> Sublime Text - a beautiful editor with an ok vim emulation
+2012-04-18 22:06:13 UTC <luite> ah right
+2012-04-18 22:06:22 UTC <luite> looks prettier than my emacs setup :)
+2012-04-18 22:06:35 UTC <mgsloan> it emulates as much of vim as I intuitively use, though, and a lot of what's too complicated in vim is straightforward
+2012-04-18 22:06:35 UTC <tgeeky> mgsloan: ok, well in my head, where we're going with this, we "have to" be doing the editing in browser
+2012-04-18 22:06:46 UTC <mgsloan> (fuzzy string search, multiple editing cursors, etc)
+2012-04-18 22:06:55 UTC <luite> mgsloan: how about haskell integration?
+2012-04-18 22:06:56 UTC <mgsloan> tgeeky: well, luite's got our solution for that :)
+2012-04-18 22:07:43 UTC <tgeeky> mgsloan: yeah, part of it. we need to make the <p|p> part, and offer it to him
+2012-04-18 22:07:46 UTC <mgsloan> luite: the highlighting is good, and it knows how to run haskell
+2012-04-18 22:07:53 UTC <mgsloan> out of the box
+2012-04-18 22:07:56 UTC <mgsloan> but otherwise, nothing
+2012-04-18 22:08:37 UTC <mgsloan> luite: I should probably start using ghc-mod orso, but I dunno if I want to use viper mode / give up my pretty editor
+2012-04-18 22:09:26 UTC <tgeeky> mgsloan: do you use Solarized colors?
+2012-04-18 22:09:33 UTC <tgeeky> i happen to like that scheme (somewhat)
+2012-04-18 22:09:42 UTC <tgeeky> and it has the neat feature of... being invertible :O
+2012-04-18 22:10:08 UTC <tgeeky> mgsloan: I still need to dig up some screenshots for you
+2012-04-18 22:10:38 UTC <mgsloan> I use monokai - I think it might be the sublime text default
+2012-04-18 22:11:13 UTC <mgsloan> and that's why I like it.  The only customization I've felt like it needed was turning on vim mode
+2012-04-18 22:44:24 UTC <tgeeky> mgsloan: I offer for your honor exhibit 1) the usefulness of careful indentation: http://i.imgur.com/TuRfQ.png
+2012-04-18 22:44:33 UTC <tgeeky> instead of: http://hackage.haskell.org/packages/archive/multiplate/0.0.1.1/doc/html/Data-Generics-Multiplate.html
+2012-04-18 22:45:01 UTC <luite> that does look very indenty
+2012-04-18 22:45:22 UTC <tgeeky> just like at the types before you look at the function names
+2012-04-18 22:45:49 UTC <luite> you did cheat a bit with the contexts and foralls though
+2012-04-18 22:46:03 UTC <tgeeky> howso?
+2012-04-18 22:46:29 UTC <luite> unequal indents
+2012-04-18 22:47:10 UTC <mgsloan> tgeeky: cool!!
+2012-04-18 22:47:23 UTC <tgeeky> mgsloan: the thing is, if you know what you're doing
+2012-04-18 22:47:34 UTC <tgeeky> in the block in the bottom (all the ...For ones)
+2012-04-18 22:47:45 UTC <tgeeky> you can guess the function name from the types really easily, after seeing a few
+2012-04-18 22:47:56 UTC <mgsloan> yeah, I'd remove some of the spaces in the *For functions
+2012-04-18 22:48:10 UTC <mgsloan> but this does make the connections between them much clearer
+2012-04-18 22:48:23 UTC <tgeeky> mgsloan: and if we're right, we can sort of do this for free :o
+2012-04-18 22:49:22 UTC <mgsloan> howso?  Via the whitespace agnosticism / reordering?
+2012-04-18 22:51:02 UTC <mgsloan> I was thinking about recompilation, btw.  Cabal must know about imports, right?  You need to recompile modules when the modules they depend on change.  This means that storing the dependencies of blocks is very necessary
+2012-04-18 22:51:23 UTC <mgsloan> at least all of the internal ones
+2012-04-18 22:52:34 UTC <mgsloan> better yet, store a list of dependent blocks
+2012-04-18 22:53:22 UTC <tgeeky> mgsloan: so
+2012-04-18 22:53:57 UTC <tgeeky> mgsloan: I mean, we can do this for free because the type annotations have no line ordering requirement compared to function definitions.
+2012-04-18 22:54:01 UTC <tgeeky> Isn't that correct?
+2012-04-18 22:54:10 UTC <tgeeky> *toplevel
+2012-04-18 22:54:20 UTC <mgsloan> right, that's what I meant by the "reordering" part
+2012-04-18 22:55:04 UTC <mgsloan> I'd like to be able to stick these declarations on the module export
+2012-04-18 22:55:10 UTC <mgsloan> that makes a lot of sense to me
+2012-04-18 22:55:22 UTC <tgeeky> mgsloan: just have two copies?
+2012-04-18 22:55:30 UTC <mgsloan> nah, one copy
+2012-04-18 22:55:46 UTC <mgsloan> or maybe not, it's kinda nice that the export lets you stick a bunch of related things on one line
+2012-04-18 22:57:44 UTC <mgsloan> back on compilation, you could also cache GHC's intermediate representation for a given block (probably just AST..), prior to any other modules being involved in the compilation process.  Then, when something this block depends on changes, we only need to parse the serialized AST (or use the cached one in memory), and continue the compilation from there
+2012-04-18 23:01:51 UTC <tgeeky> sounds about right. luite and I discussed before the potential advantages of storing the AST directly, or the "canonical form" code, or what
+2012-04-18 23:05:03 UTC <mgsloan> yup
+2012-04-18 23:05:24 UTC <mgsloan> building GHC-as-a-service into GHC would be really cool
+2012-04-18 23:05:59 UTC <tgeeky> mgsloan: I like to think about having two seperate lines of interrogating the code (simultaneously) -- ghc will always be interested in parsing the file-module, and we won't be able to change that -- but our IDE needs to have progressively better "blinders" to ignore the fine structure and focus on the coarse structure
+2012-04-18 23:07:48 UTC <tgeeky> mgsloan: we might already have some of the tools to do our combinatorial generation
+2012-04-18 23:07:59 UTC <tgeeky> you wrote rex, which you must know. There's this: https://github.com/audreyt/regex-genex
+2012-04-18 23:08:01 UTC <mgsloan> Sure, that's a good way to start.   Eventually I'd like to be able to have as small as possible recompilation / reinterpretation delay
+2012-04-18 23:08:26 UTC <mgsloan> yup
+2012-04-18 23:08:43 UTC <tgeeky> the pure version is boatloads faster than the impure version (which relies on some SAT solver)
+2012-04-18 23:08:59 UTC <mgsloan> still a bit confused about why combinatorial generation is necessary?
+2012-04-18 23:10:03 UTC <tgeeky> mgsloan: oh... I thought that was clear, but I guess in hindsight, it's not. The automatic spacing.
+2012-04-18 23:10:55 UTC <mgsloan> ah.  The reason it's not clear there is because direct enumeration would be very inefficient
+2012-04-18 23:11:05 UTC <mgsloan> there must be better methods
+2012-04-18 23:11:28 UTC <mgsloan> it's a good way to express the problem / a naive solution
+2012-04-18 23:12:03 UTC <tgeeky> right. right now, I know I want this thing which manages whitespace and order of reordable things.
+2012-04-18 23:12:11 UTC <tgeeky> but I have no idea what kind of patterns would be useful. I can only do them by hand.
+2012-04-18 23:13:33 UTC <tgeeky> i mean, I know that I'd like to have: strip toplevel type annotations, replace comment markers, telling you where they came from
+2012-04-18 23:13:36 UTC <mgsloan> luite: I got kinda derailed from the type vis stuff by this lens-DSL / delta-modules stuff.  How goes the secret project? still delayed by GHC?
+2012-04-18 23:14:24 UTC <mgsloan> tgeeky: a temporary stopgap would be to introduce one type synonym per function
+2012-04-18 23:21:58 UTC <mgsloan> here's what would make sense to me:
+2012-04-18 23:21:58 UTC <mgsloan> 1) Use a heuristic clone duplication algorithm to find similar subtrees.  We'd also want related partitionings (e.g. two expressions are equivalent, but one has an additional application in the middle).
+2012-04-18 23:21:58 UTC <mgsloan> 2) Have a fitness metric for the layout of "these two top level things next to eachother"  - the number of spaces that need to be added in order to align
+2012-04-18 23:21:58 UTC <mgsloan> 3) Also be able to weight alphabetization, such that when a set of things end up with related layout, alphabetization overules minor gains in layout
+2012-04-18 23:22:42 UTC <mgsloan> what's cool about doing #1 is that it's the same process as "find new abstractions for me!"  - something I've wanted to do in haskell for a while
+2012-04-18 23:24:14 UTC <tgeeky> I rather staunchy disagree with #3, in general. Weighting by some metric would be good, but by alphabetization always seems weird to me.
+2012-04-18 23:25:07 UTC <mgsloan> everything else is derived from your particular haskell layout preferences.  I think I've standardized my preferences far enough that it could be mostly automated
+2012-04-18 23:25:15 UTC <tgeeky> mgsloan: put another way: I would rather that a file (like multiplate in question) *randomly* showed me the ordering of functions that we are free to reorder than to alphabetize them
+2012-04-18 23:25:43 UTC <mgsloan> I think #3 makes sense because it leads to more consistent ordering across different types of declarations
+2012-04-18 23:26:24 UTC <tgeeky> mgsloan: ok. what about alphabetizing the 2000 or so infix operators that you generated? :o
+2012-04-18 23:27:03 UTC <tgeeky> either way, what we seek is the system to express these things hueristically,, and not the preferences themselves
+2012-04-18 23:27:13 UTC <mgsloan> yeah - it'd all be configurable
+2012-04-18 23:31:29 UTC <mgsloan> what'd be really awesome would be to try to apply machine learning to the problem, and learn layout styles
+2012-04-18 23:32:01 UTC <tgeeky> that is an area I'm very weak at
+2012-04-18 23:32:05 UTC <tgeeky> unfortunately
+2012-04-18 23:34:04 UTC <mgsloan> I'm a novice at it too, but I know something or other about a few different techniques.
+2012-04-19 01:34:14 UTC <vyom> how do I connect two points to form a segment?
+2012-04-19 01:52:26 UTC <byorgey> vyom: (~~)
+2012-04-19 01:52:38 UTC <byorgey> vyom: or did you actually mean Segment ?
+2012-04-19 01:53:25 UTC <vyom> yes.. i mean Segment.. looks like it will have to segmentsFromVertices
+2012-04-19 01:53:37 UTC <vyom> s/to/to be/
+2012-04-19 01:53:51 UTC <byorgey> vyom: you can also just do   Linear (p2 .-. p1)
+2012-04-19 01:57:33 UTC <vyom> oh ok.. cool
+2012-04-19 02:05:34 UTC <tgeeky> byorgey: did you read this uhh ... http://www.cs.indiana.edu/~sabry/papers/rational.pdf ?
+2012-04-19 02:05:50 UTC <byorgey> tgeeky: not yet
+2012-04-19 02:06:32 UTC <tgeeky> byorgey: you may have noticed edwardk's ambivolence, but it seemd pretty interesting to me
+2012-04-19 02:23:08 UTC <tgeeky> byorgey: a few places in this paper make me think that Haskell-verse has been missing out on an important point re: bidirecetional programming
+2012-04-19 02:23:20 UTC <tgeeky> maybe I should pester dmwit, that's his expertise right?
+2012-04-19 02:23:29 UTC <byorgey> yes
+2012-04-19 02:34:34 UTC <luite> mgsloan: nah i think i have it basically figured out, just haven't made any progress on it in the last two weeks or so
+2012-04-19 02:35:36 UTC <mgsloan> luite: well, still looking forward to it! :)
+2012-04-19 02:36:19 UTC <mgsloan> tgeeky: yeah, I hope that making the overhead of introducing  lens be the same as writing a getter will encourage their usage
+2012-04-19 02:37:10 UTC <mgsloan> then again the general dislike of TH might dampen the effects of that
+2012-04-19 02:37:26 UTC <mgsloan> (not that lens is the only thing in bidirectional programming..)
+2012-04-19 02:39:26 UTC <tgeeky> mgsloan: I have read much more than I have coded in haskell, and of course byorgey is right that lenses (and bidirectional programming) have been connected
+2012-04-19 02:40:01 UTC <tgeeky> but as far as I can tell, multiplate is an incredibly powerful generalization of lenses, and there is hardly any research that I'm aware of other than roconnor and 2 others
+2012-04-19 02:40:12 UTC <mgsloan> gotcha
+2012-04-19 02:41:31 UTC <tgeeky> you should be able to extract lenses out of multiplate
+2012-04-19 03:10:30 UTC <vyom> mgsloan: check out last two commits
+2012-04-19 03:10:31 UTC <vyom> https://github.com/deepakjois/hs-logo/commits/master
+2012-04-19 03:10:38 UTC <vyom> i added penHop
+2012-04-19 03:10:43 UTC <vyom> and closeCurrent to turtle
+2012-04-19 03:11:08 UTC <vyom> the closeCurrent behaves differently i think.. it resets the position to the start of latest (or current) trail
+2012-04-19 03:11:13 UTC <mgsloan> cool!
+2012-04-19 03:11:18 UTC <mgsloan> hmm
+2012-04-19 03:11:32 UTC <vyom> i thought that was the right behavior.. i noticed the comment you had in the older code
+2012-04-19 03:11:45 UTC <vyom> in which you were wondering what was the right thing to do
+2012-04-19 03:11:47 UTC <mgsloan> so, the reason for closeCurrent is that the rendering of closed paths is different than paths that merely return to their startpoint
+2012-04-19 03:12:05 UTC <mgsloan> it's a bit of a pedantic issue, but for huge stroke thicknesses it can make a real difference
+2012-04-19 03:12:08 UTC <vyom> and how is that/
+2012-04-19 03:12:16 UTC <vyom> ah
+2012-04-19 03:12:36 UTC <mgsloan> well, there's a rendering for corners, and then there's a rendering for line-caps
+2012-04-19 03:12:49 UTC <vyom> ok
+2012-04-19 03:13:28 UTC <mgsloan> (the rendering for overlayed line-caps isn't the same)
+2012-04-19 03:13:31 UTC <vyom> hmm.. ok
+2012-04-19 03:13:42 UTC <mgsloan> not that this means your code is at all wrong!
+2012-04-19 03:13:45 UTC <mgsloan> ACTION takes a look
+2012-04-19 03:14:07 UTC <mgsloan> it's a bit of a weird case, and maybe it's wrong to think about filling / closing turtle paths
+2012-04-19 03:16:24 UTC <mgsloan> yeah, looks like the code does this! great!
+2012-04-19 03:16:31 UTC <mgsloan> it's looking very clean :D
+2012-04-19 03:19:43 UTC <vyom> heh.. I am very close to making a patch for diagrams-contrib
+2012-04-19 04:09:03 UTC <vyom> ok so here is a pure turtle patch http://dl.dropbox.com/u/953/logo/pure_turtle.patch
+2012-04-19 04:39:01 UTC <tgeeky> holy shit I've discovered a new fractal!
+2012-04-19 04:40:20 UTC <tgeeky> nope
+2012-04-19 04:41:05 UTC <tgeeky> http://www2.wolframalpha.com/input/?i=%28-1%29%5E%281%2F3%29+%28-1-x%5E6-y%5E6%29%5E%281%2F6%29&lk=1&a=ClashPrefs_*Math-
+2012-04-19 04:41:08 UTC <tgeeky> still pretty interesting
+2012-04-19 12:10:11 UTC <byorgey> tgeeky_: did you pester dmwit about that fractional types paper?
+2012-04-19 12:11:24 UTC <byorgey> tgeeky_: because I just got an email saying he is going to present it at our weekly PL group meeting tomorrow =)
+2012-04-19 13:22:47 UTC <fryguybob> byorgey: It's a boy!
+2012-04-19 13:36:11 UTC <byorgey> =D !!!!
+2012-04-19 13:36:20 UTC <byorgey> fryguybob: congratulations!!
+2012-04-19 13:37:49 UTC <byorgey> fryguybob: does he have a name yet?
+2012-04-19 13:47:54 UTC <fryguybob> byorgey: Judah Elwood
+2012-04-19 13:48:02 UTC <byorgey> =D
+2012-04-19 13:49:16 UTC <luite> ah congrats :)
+2012-04-19 13:49:30 UTC <fryguybob> Everything went well, we started heading in at 3am and the baby was out at 7:56pm (yesterday).
+2012-04-19 13:49:33 UTC <luite> everything ok with him and the mother?
+2012-04-19 13:50:02 UTC <fryguybob> Yeah, Rebekah is a champion mother.
+2012-04-19 13:50:18 UTC <luite> it's your first, right?
+2012-04-19 13:50:27 UTC <fryguybob> Yes
+2012-04-19 13:55:58 UTC <fryguybob> http://www.cs.rochester.edu/u/ryates/files/judah.jpeg
+2012-04-19 13:57:45 UTC <luite> ah, I'd say cute, but I think kids are a lot cuter once they can walk to the toilet themselves ;)
+2012-04-19 13:57:58 UTC <fryguybob> hehe
+2012-04-19 14:04:57 UTC <byorgey> what, no beard yet?
+2012-04-19 14:16:35 UTC <byorgey> vyom: thanks for the patch, pushed
+2012-04-19 17:35:54 UTC <alpounet> ok so apparently #diagrams will become restricted to parents only?
+2012-04-19 17:35:58 UTC <alpounet> :P
+2012-04-19 17:37:27 UTC <byorgey> alpounet: no, of course not!
+2012-04-19 17:37:36 UTC <byorgey> but we may have to restrict it to only five non-parents at a time
+2012-04-19 17:43:04 UTC <alpounet> hah
+2012-04-19 17:43:27 UTC <alpounet> no because if you were to restrict it to parents only, i could have talked my gf into having a baby
+2012-04-19 17:43:33 UTC <alpounet> or just stealing one in the street
+2012-04-19 17:43:40 UTC <byorgey> hahaha
+2012-04-19 17:44:04 UTC <byorgey> #diagrams does not condone stealing babies off the street
+2012-04-19 17:45:17 UTC <byorgey> ACTION kind of doubts alpounet's gf would really be willing to have a baby just so alpounet can spend more time on IRC
+2012-04-19 17:46:46 UTC <alpounet> on the other hand, diagrams can provide the baby with nice pictures to watch, and most likely at some point animations too! whee!
+2012-04-19 17:47:03 UTC <byorgey> indeed!
+2012-04-19 17:47:16 UTC <byorgey> alpounet: wait, diagrams can already do animations
+2012-04-19 17:47:28 UTC <alpounet> "you too, raise your children with diagrams, cabal-install it now!"
+2012-04-19 17:48:28 UTC <byorgey> cue impossibly cute child model: "Daddy, can we make pictures with DIAGRAMS again today?!?"
+2012-04-19 17:48:58 UTC <byorgey> "diagrams: making children happy since 2011"
+2012-04-19 17:49:05 UTC <alpounet> oh riiiiiight, that's from 0.5
+2012-04-19 17:49:08 UTC <alpounet> haven't played with it yet :(
+2012-04-19 17:49:16 UTC <byorgey> heh, no worries
+2012-04-19 17:49:22 UTC <alpounet> haha
+2012-04-19 17:49:33 UTC <byorgey> still a bit rough around the edges.  I need to make more examples and improve the documentation.
+2012-04-19 17:49:51 UTC <byorgey> also we need a better backend.  But I think the new blank-canvas package may do nicely.
+2012-04-19 17:52:46 UTC <byorgey> tgeeky_: I'm reading the negative + fractional types paper now, it is super-cool
+2012-04-19 17:54:24 UTC <alpounet> byorgey, yeah blank-canvas looks cool
+2012-04-19 17:55:03 UTC <alpounet> i definitely have to play with these animations
+2012-04-19 18:18:11 UTC <luite> buh now I have to compete with shapr :p
+2012-04-19 18:19:52 UTC <byorgey> luite: no you don't.
+2012-04-19 18:20:28 UTC <byorgey> luite: they will be two separate things, with some overlap but probably different approaches and different strengths + weaknesses.
+2012-04-19 18:21:01 UTC <byorgey> it doesn't have to be a competition.  There is plenty of room in the Haskell world for both.
+2012-04-19 18:21:06 UTC <luite> right, but shaprs one will probably be better and he'll get paid for it
+2012-04-19 18:22:14 UTC <byorgey> I doubt it will be unequivocally better.
+2012-04-19 18:22:20 UTC <alpounet> isn't there a way for you to join forces and have "common" code out of it?
+2012-04-19 18:22:31 UTC <byorgey> for example, his will almost certainly not have a wiki.
+2012-04-19 18:23:51 UTC <luite> alpounet: yeah some part should be possible to share
+2012-04-19 18:30:42 UTC <luite> i probably sound more bitter or unhappy about this than i really am, I'm just really unhappy with myself, not being able to concentrate enough to make any significant progress over the past few weeks, even though I've spent countless hours in front of the screen
+2012-04-19 18:31:22 UTC <luite> and of course apfelmus is a much better haskeller than i am
+2012-04-19 18:33:43 UTC <byorgey> luite: fair enough.  I understand that frustration.
+2012-04-19 18:33:55 UTC <byorgey> luite: anything we can do to help?
+2012-04-19 18:36:46 UTC <luite> not really, I kind of made it a goal for myself to make the first version myself, which may be a bit stupid
+2012-04-19 18:37:36 UTC <luite> i don't really have major features that i want to add
+2012-04-19 18:37:48 UTC <luite> at least not becaur launch :)
+2012-04-19 18:37:51 UTC <luite> before
+2012-04-19 18:38:05 UTC <mgsloan> sounds like a good time to launch!
+2012-04-19 18:38:17 UTC <luite> yes except that teh whole project currently doesn't even build
+2012-04-19 18:38:27 UTC <luite> and there are lots of small things that just need some minor front-end work
+2012-04-19 18:39:21 UTC <mgsloan> I suppose there isn't time for shapr to rephrase his proposal as "Enhance Wolfgang Lambda X" where X is "increase hackage integration", or "provide machine learning-derived refactorings recommendations"
+2012-04-19 18:40:18 UTC <luite> i like shapr a lot, so I'm happy to chat with him about this... dunno about apfelmus, haven't really had a friendly conversation with him yet, and he's a lot more opinionated, but at the very least we can professionally exchange ideas, friedlyness can grow :)
+2012-04-19 18:41:34 UTC <luite> mgsloan: well in that case you can basically call it a success once the basic parts are cabal-installable, since the base goal was to have a rich result type that supports images, sounds etc
+2012-04-19 18:41:54 UTC <luite> i have that, but only for non-streaming responses
+2012-04-19 18:42:11 UTC <luite> apfelmus has some synth work, so he might like streaming infinite responses better
+2012-04-19 18:42:40 UTC <mgsloan> Seems like stuff that should be readily plugin-izable
+2012-04-19 18:44:11 UTC <luite> yeah, the code is messy though
+2012-04-19 18:45:07 UTC <mgsloan> most code is!
+2012-04-19 18:45:13 UTC <luite> hehe mine really is :p
+2012-04-19 18:46:58 UTC <luite> I had hoped to be able to launch the first verison of the site already, and then factor out these things
+2012-04-19 19:09:12 UTC <luite> bah it's annoying, i sometimes have really productive days or weeks, and often weeks of putting in the same amount of effort and getting nothing done at all. same for university courses somehow, many best in class (is that the right term in english?) grades, lots of complete failures. with enough of the latter lately that i won't have a chance to do a phd in something that interests me
+2012-04-19 21:03:17 UTC <byorgey> ACTION cabal install blank-canvas
+2012-04-19 21:03:25 UTC <byorgey> working on a diagrams backend for it
+2012-04-19 21:07:05 UTC <luite> hm sounds good
+2012-04-19 21:08:02 UTC <byorgey> should give us a nice way to do animations and eventually interactive stuff
+2012-04-19 21:08:26 UTC <byorgey> though for interactive stuff embedded in Wolfgang we'll want to extend the SVG backend as well
+2012-04-19 21:24:42 UTC <luite> hm
+2012-04-19 22:09:08 UTC <tgeeky_> byorgey: yay! reading the paper!
+2012-04-19 22:09:24 UTC <tgeeky_> byorgey: it's amazing that we missed out on this observation, to me?
+2012-04-19 22:11:51 UTC <tgeeky_> http://www.cs.rochester.edu/u/ryates/files/judah.jpeg
+2012-04-19 22:11:57 UTC <tgeeky_> he doesn't LOOK like he's having a happy birthday
+2012-04-19 22:12:15 UTC <tgeeky_> byorgey: did you finish diagrams-builder?
+2012-04-19 22:12:42 UTC <mgsloan> tgeeky_: what paper?
+2012-04-19 22:12:56 UTC <tgeeky_> mgsloan: negative and fractional types
+2012-04-19 22:13:00 UTC <mgsloan> ahh gotcha
+2012-04-19 22:14:18 UTC <mgsloan> ACTION can't wait to do a canvas-toy backend for the toy framework
+2012-04-19 22:14:49 UTC <tgeeky_> what is so amazing about this canvas thing?
+2012-04-19 22:15:59 UTC <mgsloan> oh, it's just nice that we'll be able to use the web browser as a frontend
+2012-04-19 22:16:24 UTC <tgeeky_> mgsloan: i suppose. I thought that we were already doing that with SVG. I guess I don't really understand these things.
+2012-04-19 22:16:52 UTC <mgsloan> right, SVG and canvas are probably related, browser implementation-wise
+2012-04-19 22:17:17 UTC <mgsloan> I think it might be slightly more efficient to invoke client-side canvas calls / we can start to think about incremental updates
+2012-04-19 22:17:35 UTC <mgsloan> SVG incremental updates could be interesting too though - they can be expressed as DOM manipulations
+2012-04-19 22:19:51 UTC <mgsloan> Anyway, I've been working occasionally on a very lightweight GUI system in diagrams (gtk-toy-diagrams), and it'll be cool to see that running on a different interaction backend than cairo / gtk
+2012-04-19 22:39:59 UTC <zhulikas> quick question: how can I output generated SVG to a ghci?
+2012-04-19 22:40:56 UTC <zhulikas> I want to mess around with it without generating stuff to output files every time
+2012-04-19 22:43:51 UTC <tgeeky_> zhulikas: you want raw SVG data in ghci console?
+2012-04-19 22:43:57 UTC <zhulikas> yes
+2012-04-19 22:45:32 UTC <tgeeky_> i would doubt that it's possible, but I don't know. let me look at the svg code
+2012-04-19 22:46:37 UTC <zhulikas> hm
+2012-04-19 22:49:06 UTC <tgeeky_> zhulikas: hmm. I doubt it's possible.
+2012-04-19 22:49:28 UTC <zhulikas> ok, thanks anyway
+2012-04-19 22:49:38 UTC <tgeeky_> zhulikas: there might be some useful workarounds, though.
+2012-04-19 22:50:32 UTC <zhulikas> there may be a way to leverage the output
+2012-04-19 22:50:57 UTC <zhulikas> but it lies somewhere deep in the diagrams internals probably :)
+2012-04-19 22:51:01 UTC <tgeeky_> you could make a .html page that loads the image with a fast (1s) refresh
+2012-04-19 22:52:21 UTC <zhulikas> I was more looking for something to output actual SVG to .html page, not as an image
+2012-04-19 22:53:09 UTC <zhulikas> maybe I should look into something different
+2012-04-19 22:53:14 UTC <tgeeky_> zhulikas: ok, you could use your favorite editor to edit the file
+2012-04-19 22:53:19 UTC <tgeeky_> and refresh it?
+2012-04-19 22:54:39 UTC <zhulikas> :)
+2012-04-19 22:55:48 UTC <tgeeky_> mgsloan: we gotta sort out this new cabal, make sure we understand the features
+2012-04-19 22:56:03 UTC <tgeeky_> cabal-install, that is.
+2012-04-19 22:58:09 UTC <mgsloan> tgeeky: yup!  I
+2012-04-19 22:58:32 UTC <tgeeky_> mgsloan: i've been gathering and organizing notes
+2012-04-19 22:58:35 UTC <mgsloan> 'm most interested in focusing on tools that will work in concert with cabal (delta modules stuff)
+2012-04-19 22:58:46 UTC <tgeeky_> yeah
+2012-04-19 22:59:10 UTC <mgsloan> but making recompilation / analysis efficient is definitely awesome to work / plan towards
+2012-04-19 22:59:31 UTC <tgeeky_> the clear strategy seems to be to introduce the delta feature, and then come all-out-at-once with deltas for the needed packages (haddock, cabal, cabal-install, ...)
+2012-04-19 23:00:44 UTC <mgsloan> yup!
+2012-04-19 23:01:03 UTC <mgsloan> and a separate tool for managing / applying deltas
+2012-04-19 23:01:18 UTC <tgeeky_> yeah. i was typing ... the deltas needs to happen the fastest
+2012-04-19 23:01:30 UTC <tgeeky_> and then the tools to manage / change our implementation until we like it
+2012-04-19 23:01:37 UTC <tgeeky_> and then .. you know.. dog food. use it.
+2012-04-19 23:02:25 UTC <tgeeky_> once we feel prepared that we know how to use it properly, then we focus on getting dx's for the distribution and base packages
+2012-04-19 23:02:47 UTC <mgsloan> An interesting property of these deltas is that they could also be used as a way to express the refactorings as you're performing them
+2012-04-19 23:03:42 UTC <tgeeky_> mgsloan: yep. I think I see that. I've always "glossed over" the difficulty of deciding when to compile / when to provide UI assistance (autocomplete) / when to just sit and wait
+2012-04-19 23:03:47 UTC <mgsloan> in other words, you tell the tool that you've changed an API in your library, and in what way, and it rewrites your library to target that new internal API, and appends to the delta module
+2012-04-19 23:03:57 UTC <tgeeky_> mgsloan: yeah. absolutely
+2012-04-19 23:04:09 UTC <tgeeky_> mgsloan: that right there, that concept, is why I "invented" the modular automatic versioning
+2012-04-19 23:04:36 UTC <mgsloan> :D  It'll be really amazing
+2012-04-19 23:05:24 UTC <tgeeky_> mgsloan: I don't know how to think about it, conceptually, but remember that all of our code objects are *second* derivatives
+2012-04-19 23:05:38 UTC <tgeeky_> dxFile . dxFunction
+2012-04-19 23:05:48 UTC <tgeeky_> (at least)
+2012-04-19 23:05:58 UTC <tgeeky_> some people talk about multiple modules per file
+2012-04-19 23:06:02 UTC <tgeeky_> in which case it would be 3rd
+2012-04-19 23:06:12 UTC <mgsloan> I think Haskell already lets you do some things faster / most things better.  Being able to have a refactoring solution that helps you write code, and helps your users fix theirs accordingly will make the gap rediculous
+2012-04-19 23:06:38 UTC <mgsloan> combined with type explanations, and I'd say that I may be nudging haskell towards success :D oh no!
+2012-04-19 23:06:52 UTC <mgsloan> but only if I pull of such rediculously ambitious goals
+2012-04-19 23:07:12 UTC <tgeeky_> mgsloan: btw, wasn't the name of that guy Eric Andersonn or something similar?
+2012-04-19 23:07:14 UTC <mgsloan> in the case of deltas / etc, we, and whoever else wants to pitch in to the good fight
+2012-04-19 23:07:19 UTC <mgsloan> tgeeky_: yup
+2012-04-19 23:07:27 UTC <tgeeky_> was he just in the news today about mining asteroids?
+2012-04-19 23:07:35 UTC <mgsloan> sounds about right
+2012-04-19 23:08:58 UTC <tgeeky_> mgsloan: heh. That's ambitious. We're just trying to work hard :)
+2012-04-19 23:09:59 UTC <tgeeky_> mgsloan: byorgey liked the paper, so maybe he can help me understand things
+2012-04-19 23:12:39 UTC <luite> are there closure serialization implementations that still work with recent ghc versions?
+2012-04-19 23:14:41 UTC <mgsloan> tgeeky_: also, as my post mentions, we can start trying to use delta modules now, in order to anticipate the potential problems
+2012-04-20 02:24:23 UTC <rasfar> oh darn! patch-tag is down, they're not on, and i can't seem to find the remarks ("gnat dance steps" ought to have been enough) that were on #haskell.  who was it, prototyping a system for visual type annotations -- there were squiggly lines that looked like dance step instructions?....
+2012-04-20 02:26:16 UTC <rasfar> aha! it was mgsloan, nm
+2012-04-20 02:33:27 UTC <tgeeky_> rasfar: 'panopticon'
+2012-04-20 03:07:18 UTC <byorgey> rasfar, mgsloan. mgsloan, rasfar.
+2012-04-20 03:07:46 UTC <mgsloan> byorgey!
+2012-04-20 03:08:01 UTC <byorgey> hi mgsloan!
+2012-04-20 03:08:34 UTC <mgsloan> hey! how's it going?
+2012-04-20 03:09:05 UTC <byorgey> pretty good! and you?
+2012-04-20 03:10:16 UTC <tgeeky_> byorgey: how'd you like the paper? finish it? Whew new that the most boring, trivial algebraic equations could be so interesting.
+2012-04-20 03:10:34 UTC <byorgey> tgeeky_: yep, I finished it, very cool
+2012-04-20 03:12:14 UTC <byorgey> I mean, isn't it completely obvious that 1 = a * (1/a) corresponds to generating a fresh unification variable?
+2012-04-20 03:12:17 UTC <byorgey> ;)
+2012-04-20 03:12:42 UTC <byorgey> I'm trying to figure out the connections to virtual species... not sure yet
+2012-04-20 03:12:46 UTC <luite> hm so shae's proposal was much closer to wolfgang than to apfelmus' proposal
+2012-04-20 03:13:02 UTC <tgeeky_> byorgey: I had a strong hint of that
+2012-04-20 03:13:19 UTC <tgeeky_> byorgey: you said in your paper that virtual species corresponds to completing the ring of something?
+2012-04-20 03:13:29 UTC <tgeeky_> byorgey: certainly 'completing to a field' would be pretty big
+2012-04-20 03:14:34 UTC <byorgey> tgeeky_: yes, normal species form a semiring, virtual species complete it to a ring.  It is almost a field but not quite because there are things other than 0 that do not have multiplicative inverses.
+2012-04-20 03:14:55 UTC <byorgey> luite: ah, I see
+2012-04-20 03:15:10 UTC <byorgey> luite: so maybe he can actually just work on wolfgang?  does it work that way?
+2012-04-20 03:15:17 UTC <luite> byorgey: going to try
+2012-04-20 03:15:35 UTC <luite> in a few hours, mentors have to be assigned
+2012-04-20 03:15:41 UTC <luite> I just requested to be mentor for haskell.org
+2012-04-20 03:16:02 UTC <luite> I hope edwardk or some other admin can accept me in time
+2012-04-20 03:16:28 UTC <luite> don't want to steal apfelmus' projects, but if shaes project is unmentored by then i'll accept it
+2012-04-20 03:17:06 UTC <tgeeky_> luite: aren't only 1 or 2 of these going to get sponsored?
+2012-04-20 03:17:26 UTC <luite> no I think this is the list that should be the final list onces all mentors have been assigned
+2012-04-20 03:17:33 UTC <luite> which will be published on monday
+2012-04-20 03:17:46 UTC <luite> so i think haskell.org will have around 6 projects
+2012-04-20 03:18:22 UTC <luite> does anyone have edwardk's phone number?
+2012-04-20 03:19:25 UTC <tgeeky_> luite: uhh. I don't think so. I had a reciept from him that had his phone number on it, but I mailed it back to him
+2012-04-20 03:20:50 UTC <mgsloan> byorgey: sorry, had to answer the phone.  I'm good!  Been very inspired by haskell-related pursuits lately
+2012-04-20 03:21:02 UTC <byorgey> ah, np
+2012-04-20 03:21:09 UTC <byorgey> cool, I think I could tell =)
+2012-04-20 03:23:28 UTC <tgeeky_> "ring "^5 + "bananaphone!"
+2012-04-20 03:24:36 UTC <mgsloan> yeah, wish I could spend all my time on this stuff!  Type viz is going to get ignored for a little while
+2012-04-20 03:24:44 UTC <byorgey> hehe
+2012-04-20 03:24:57 UTC <byorgey> well as long as you occasionally finish *something* =)
+2012-04-20 03:25:50 UTC <luite> tgeeky_: hmm, wel we'll see
+2012-04-20 03:26:25 UTC <mgsloan> indeed!  Well that's the nice thing about TH libraries.  It's not too hard to "finish" them
+2012-04-20 03:27:02 UTC <luite> mgsloan: oh you need to write a thunk serialization lib for me ;p
+2012-04-20 03:27:32 UTC <mgsloan> hahaha..  I think I remember seeing something along those lines, though?  Maybe not in Haskell
+2012-04-20 03:28:03 UTC <luite> buh this is annoying, why didn't i sign up earlier for gsoc
+2012-04-20 03:28:22 UTC <mgsloan> It really isn't that unimaginable of a thing, I'm not sure why GHC wouldn't directly support it
+2012-04-20 03:30:09 UTC <luite> mgsloan: right... though if you google for it you see opinions ranging from "it's easy, you just need to chase some pointers" to "that's undesirable since you could see the difference between x :: Integer -> Integer, \x -> x+x  and \x -> 2*x"
+2012-04-20 03:30:21 UTC <rasfar> oops, not used to having multiple irc windows open, totally missed my introduction (well, we've spoken before) -- hi mgsloan.  quite a dramatic moment with this gsoc deadline...
+2012-04-20 03:30:25 UTC <mgsloan> pshaaah
+2012-04-20 03:31:27 UTC <mgsloan> I really dislike it when the Haskell puritanism gets in the way of software engineering
+2012-04-20 03:31:50 UTC <mgsloan> I mean, I love theoretical purity and all, and think theory is a fantastic guiding force in design
+2012-04-20 03:31:54 UTC <luite> mgsloan: still, I think haskell would be pretty nice for that kidn of thing, immutable heap pays off here
+2012-04-20 03:31:58 UTC <mgsloan> yeah
+2012-04-20 03:32:29 UTC <mgsloan> this is the same kind of thing as people telling me that it's an awful idea to be able to change a Haskell program as it runs
+2012-04-20 03:32:35 UTC <luite> if only I could get shapr to implement this over this summer :p
+2012-04-20 03:32:41 UTC <mgsloan> (this was pre-Bret Victor if that matters at all)
+2012-04-20 03:32:51 UTC <mgsloan> and the reason that was bad is that it smacks of mutability
+2012-04-20 03:33:32 UTC <luite> mgsloan: this would give wolfgang resumable computations, and allow much more distributed cloudy stuff than cloud haskell
+2012-04-20 03:34:03 UTC <mgsloan> I agree that it's bad, but Haskell gives us the type tools to catch and deal with most of the problematic aspects of a live-modifiable program.  If anything, Haskell is a far more ideal platform for this kind of thing than most languages
+2012-04-20 03:34:33 UTC <luite> but there are a lot of distributed haskell projects already
+2012-04-20 03:34:43 UTC <luite> it must be hard to get it right
+2012-04-20 03:34:46 UTC <mgsloan> that's why I feel like thunk serialization has to have been done
+2012-04-20 03:35:00 UTC <luite> yeah me too, but I can't find anything that works
+2012-04-20 03:36:07 UTC <luite> http://www.mathematik.uni-marburg.de/~eden/ <- this is the closest i could find
+2012-04-20 03:36:36 UTC <luite> tbh, all the automatic transparent network stuff don't interest me
+2012-04-20 03:36:58 UTC <luite> since the only really tricky part is the thunk serialization, anyone can add a network layer to his own taste
+2012-04-20 03:42:02 UTC <mgsloan> rasfar - 'lo!  I've been template haskelling lately: http://github.com/mgsloan/lenq  www.mgsloan.com/
+2012-04-20 03:46:52 UTC <rasfar> template haskell seems like a gaping yaw of a rabbit-hole, hope you tied a rope to a tree (um... to climb out with of course, not to hang by :)
+2012-04-20 03:47:18 UTC <mgsloan> hahaa :)
+2012-04-20 03:47:35 UTC <mgsloan> yeah, right now I'm resisting porting GHC's desugarings to TH
+2012-04-20 03:47:57 UTC <mgsloan> for some things it would really be nice to work on desugared trees
+2012-04-20 03:48:49 UTC <rasfar> there's a lot of sugar maples in my area *shrug* -- sorry, me noa kno much about thees 'tuff
+2012-04-20 03:49:28 UTC <rasfar> i thought by the time something was an AST it was fully desugared?
+2012-04-20 03:50:50 UTC <mgsloan> but it seems error-prone to reimplement GHC's parsing (haskell-src-exts), desugaring, typing, fixity resolution, etc, anew in TH land - we need TH to be able to be a little bit more involved in GHC, as a plugin that can ask about things with the GHC api
+2012-04-20 03:50:56 UTC <rasfar> never even tried TH yet :( -- looked into it briefly, along with various generics libs, but in the end focused on syb (already seems like ages ago, and that was last month -- wow)
+2012-04-20 03:51:56 UTC <rasfar> actually, i think GHC doesn't use HSE at all?  which i for one find unfortunate; wish they'd worked together...
+2012-04-20 03:52:49 UTC <mgsloan> oh, gotcha, I thought that's what byorgey's introductions were about :P  I searched your name and saw the "freesect" stuff
+2012-04-20 03:53:11 UTC <rasfar> yeah, i'm not sure whether to regret that or not.
+2012-04-20 03:53:32 UTC <mgsloan> naaah, I think it's a cool idea
+2012-04-20 03:54:18 UTC <mgsloan> it just doesn't correspond to the typical Haskell design aesthetic
+2012-04-20 03:54:28 UTC <rasfar> but, ultimately, i can't pretend to be in the major league, have to get involved to really learn, have to put it on the line.  it's awkward, i'm a perfectionist, but you have to act.
+2012-04-20 03:55:00 UTC <rasfar> well, thank you.  byorgey also gave me some encouraging words.
+2012-04-20 03:55:04 UTC <byorgey> my introduction was just because rasfar came in here earlier asking who had been working on the type visualization stuff
+2012-04-20 03:55:47 UTC <luite> mgsloan: i forgot what you were trying to do btw :)
+2012-04-20 03:55:52 UTC <rasfar> the gnat dances you mean? ;)
+2012-04-20 03:55:54 UTC <luite> something with TH
+2012-04-20 03:56:17 UTC <mgsloan> rasfar:  yup! A few half-assed git repos later, and I'm less shy of just publishing my ideas, good or no
+2012-04-20 03:56:22 UTC <mgsloan> like pointless plumbres :)
+2012-04-20 03:56:45 UTC <rasfar> haha, yeah -- that's lib's how i finally remembered your name.
+2012-04-20 03:56:46 UTC <mgsloan> rasfar - yup!  Those gnats are dancing the typechecking dance.  Or evaluation dance, either way you look at it
+2012-04-20 03:56:57 UTC <mgsloan> the mating ritual of thunks
+2012-04-20 03:57:04 UTC <rasfar> hahaHAA!
+2012-04-20 03:58:38 UTC <rasfar> i thought i had my next mini-contribution figured out yesterday (sorry, this is way OT for the channel) -- dmwit said go for it -- but it's been done, and abandoned by the author.  namely explore-hackage
+2012-04-20 03:59:20 UTC <rasfar> which is a navigable summary of all the modules on hackage, similar to what haddock gives you for your locally-installed packages.
+2012-04-20 03:59:56 UTC <rasfar> so i'm still looking for things to do... (*whistles*)
+2012-04-20 04:01:20 UTC <rasfar> http://folk.ntnu.no/hammar/explore-hackage/
+2012-04-20 04:01:48 UTC <rasfar> but it doesn't link directly to the API pages, which is definitely a shortcoming
+2012-04-20 04:01:48 UTC <mgsloan> rasfar: not OT - we've been pretty OT overall lately
+2012-04-20 04:02:09 UTC <tgeeky_> ACTION imagines a commercial where little Timmy complains to his mommy that he's not getting enough thunks in his breakfast!
+2012-04-20 04:02:32 UTC <mgsloan> rasfar: cooool!  I was just wanting this today
+2012-04-20 04:02:44 UTC <rasfar> thunk is such a funny word.  SPJ coined that, no?
+2012-04-20 04:02:53 UTC <tgeeky_> rasfar: I thunk so.
+2012-04-20 04:03:07 UTC <rasfar> heh.
+2012-04-20 04:03:16 UTC <tgeeky_> rasfar: take that website (and the code behind it)
+2012-04-20 04:03:22 UTC <tgeeky_> and add a "expand all tabs" button
+2012-04-20 04:03:30 UTC <tgeeky_> and re-publish, and ye shall be a god among men
+2012-04-20 04:03:38 UTC <rasfar> well, i emailed Andreas (explore-hackage author) yesterday.  if he never gets back to me, i suppose it would be worth doing it anew.
+2012-04-20 04:03:51 UTC <rasfar> (the project is not in his github or on hackage (ironically))
+2012-04-20 04:04:04 UTC <mgsloan> if you want to be truly godly, it'd be cool to filter on other criteria
+2012-04-20 04:04:08 UTC <rasfar> by gad, i'll do it!!
+2012-04-20 04:04:23 UTC <rasfar> taking feature requests...:
+2012-04-20 04:04:59 UTC <rasfar> i guess, if i collected all the cabal files for the projects, there'd be a fair number of criteria to go on there?
+2012-04-20 04:06:04 UTC <rasfar> besides the names of the modules, the API links, the deps ... well, the problem is, each cabal file seems to offer it's own unique cross-section of possible fields.
+2012-04-20 04:06:23 UTC <byorgey> SPJ did not coin "thunk", it's been around much longer
+2012-04-20 04:06:40 UTC <rasfar> ah, okay
+2012-04-20 04:07:04 UTC <byorgey> Thunks were invented by Peter Zilahy Ingerman[1] in 1961.  -- according to the Wikipedia page
+2012-04-20 04:07:18 UTC <mgsloan> rasfar: my web dev friend says it would probably be more reasonable for that site to generate the HTML rather than dynamically constructing DOM elements with javascript (which seems to be what it's doing)
+2012-04-20 04:07:20 UTC <rasfar> wow, that does go back
+2012-04-20 04:07:27 UTC <byorgey> hah, he was at U Penn =)
+2012-04-20 04:08:12 UTC <byorgey> "Thunks: a way of compiling procedure statements with some comments on procedure declarations", Communications of the ACM vol. 4 issue 1, Jan. 1961
+2012-04-20 04:08:21 UTC <rasfar> mgsloan, okay good to know.  i've little experience with such things.  it would be nice if the generating code itself could be Haskell...
+2012-04-20 04:09:35 UTC <rasfar> anyone know what would be the best way to get that info from hackage, without treading too heavily on it?
+2012-04-20 04:09:59 UTC <rasfar> i know i read recently (on a cafe thread i think) that hackage encourages mirroring
+2012-04-20 04:10:33 UTC <rasfar> ideally, it seems this should be integrated into hackage itself
+2012-04-20 04:12:13 UTC <luite> mgsloan: the eden project seems to be a ~13000 line patch against ghc 6.12
+2012-04-20 04:14:04 UTC <tgeeky_> rasfar: expose the author information so we can search for that (which is not availabe in hoogle or hayoo, at least not easily)
+2012-04-20 04:14:17 UTC <rasfar> will do; thanks
+2012-04-20 04:14:35 UTC <tgeeky_> rasfar: get the index.00 file to get most of the info, then extract the .darcs file from each of the .tar files inside the "full copy of hackage"
+2012-04-20 04:14:40 UTC <tgeeky_> err
+2012-04-20 04:14:45 UTC <tgeeky_> .cabal file, not .darcs
+2012-04-20 04:15:10 UTC <rasfar> alright; i think i downloaded that file last night (does ~250 MB sound right?)
+2012-04-20 04:15:16 UTC <tgeeky_> yep
+2012-04-20 04:15:32 UTC <tgeeky_> there should be a command to just extract files with a certain extension
+2012-04-20 04:15:33 UTC <mgsloan> rasfar: yeah, you could probably use hackage / cabal code as a way to get the data
+2012-04-20 04:15:35 UTC <tgeeky_> in tar
+2012-04-20 04:15:37 UTC <rasfar> if my netbook survives this project i'll be impressed
+2012-04-20 04:16:30 UTC <rasfar> i haven't opened it yet, but if i understand correctly it's a zipped tarball of zipped tarballs...
+2012-04-20 04:17:55 UTC <rasfar> must say, i /do/ like Andreas's styling, hope he doesn't mind if i imitate it :D ... seriously, i'll be surprised if i don't hear from him at all.
+2012-04-20 04:19:09 UTC <rasfar> i wonder if it's possible to extract a file from a tarball-within-a-tarball (compressed, yet)
+2012-04-20 04:19:33 UTC <rasfar> excuse my flooding, but i'll need to go offline in a moment anyway if that's any consolation byorgey
+2012-04-20 04:21:14 UTC <mgsloan> luite: ah, interesting!  does it say somewhere that they do thunk-migration?  From what I can see it's mostly language extensions and a pile of libraries
+2012-04-20 04:21:48 UTC <mgsloan> I haven't really followed the parallel haskell stuff
+2012-04-20 04:21:57 UTC <luite> yes a lot of the patch is in the rts, they pack thunks to some "packbuffer" and send them over the network
+2012-04-20 04:23:50 UTC <mgsloan> awesome!!!
+2012-04-20 04:24:57 UTC <luite> but, I'm not sure how much is already in GHC itself
+2012-04-20 04:25:09 UTC <luite> the patch changes a lot in the files
+2012-04-20 04:25:26 UTC <luite> but look in /rts/parallel/Pack.c in a recent GHC
+2012-04-20 04:25:29 UTC <rasfar> until next time folks; i'm entering the realm of offlineness (which i call home)
+2012-04-20 05:32:38 UTC <tgeeky_> byorgey: 01:31 < tgeeky_> TSC: i incorrectly told you that arrows are "absolutely" somewhere in diagrams. I was talking shit. They aren't anywhere builtin. I
+2012-04-20 05:32:41 UTC <tgeeky_>                  apologize to you and your family. May god have mercy on my soul. Ramen.
+2012-04-20 05:32:44 UTC <tgeeky_> done!
+2012-04-20 17:20:31 UTC <tgeeky_> byorgey: can you make ~15 minutes to discuss the negative/fractional types paper
+2012-04-20 17:23:16 UTC <tgeeky_> sometime this weekend
+2012-04-20 17:23:35 UTC <tgeeky_> I'm going to e-mail the authors with some corrections, and ask a question or two
+2012-04-20 17:57:03 UTC <byorgey> tgeeky_: sure, I have time this afternoon and probably some time tomorrow (though I can't predict exactly when tomorrow)
+2012-04-20 18:00:22 UTC <tgeeky_> if now's a good time: first of all, if I wanted to implement the ideas in this paper today, is there anything in the way?
+2012-04-20 18:00:32 UTC <tgeeky_> they claim they have code, but I couldn't find it easily
+2012-04-20 18:01:09 UTC <byorgey> tgeeky_: nope, implementing their operational semantics should be straightforward, with the one caveat that they don't really talk at all about unification/constraint solving
+2012-04-20 18:01:18 UTC <byorgey> yeah, I don't think their code is published yet
+2012-04-20 18:02:19 UTC <tgeeky_> ok. second. My intuition says that this can be thought of as a "more complicated identity function" (or two of these things, maybe)?
+2012-04-20 18:03:05 UTC <tgeeky_> that's not right. It's a more complicated identity function. But since we're going to use a step machine, we explicitly need the associators
+2012-04-20 18:03:55 UTC <tgeeky_> not a question.
+2012-04-20 18:03:57 UTC <tgeeky_> next
+2012-04-20 18:05:20 UTC <tgeeky_> the 'computation backtracked' part -- the origin for this is, as far as I can tell page1, "at line (4)" where "we're finding ourselves needing to produce a value of type 0, which is impossible; this signals reverse execution
+2012-04-20 18:05:44 UTC <tgeeky_> the claim is that it takes l (l 20) -> l (r 20)
+2012-04-20 18:07:00 UTC <tgeeky_> you can't produce a value of type 0? is 0 the "void" constructor?
+2012-04-20 18:08:31 UTC <tgeeky_> they use this again in 2.3 (since there are no values of type 0)
+2012-04-20 18:09:21 UTC <tgeeky_> yep just searched through conal's personal results on google. he says it too
+2012-04-20 18:09:36 UTC <byorgey> 0 is the void type
+2012-04-20 18:10:14 UTC <byorgey> tgeeky_: I suggest ignoring the introduction since I find it confusing and overly vague.
+2012-04-20 18:10:55 UTC <byorgey> if you want to actually implement it you should go straight to the more technical definitions.
+2012-04-20 18:19:55 UTC <tgeeky_> from page 6 I get:   (-b1 + b2)  <->  0  <-> b1 + (-b2)   and  ((1 / b1) * b2 <-> 1 <-> (b1 * (1 / b2)). \
+2012-04-20 18:20:39 UTC <tgeeky_> and then they list something about "intuitively". Is your intuition the same?
+2012-04-20 18:21:38 UTC <byorgey> the same as what?
+2012-04-20 18:22:00 UTC <tgeeky_> byorgey: the intuitive meanings they list
+2012-04-20 18:22:17 UTC <tgeeky_> that this means you can construct each morphism "from nothing"
+2012-04-20 18:23:32 UTC <tgeeky_> page 6, top right.
+2012-04-20 18:23:35 UTC <byorgey> the "nothing" is in quotes because they mean 0 for + and 1 for x
+2012-04-20 18:23:47 UTC <byorgey> 0 and 1 both represent different sorts of "nothing"
+2012-04-20 18:24:18 UTC <byorgey> it is intuitive to me.  If it is not intuitive to you then I'm happy to try to help explain it.
+2012-04-20 18:31:31 UTC <tgeeky_> byorgey: that they are different sorts of nothing is intuitive. there are just two seperate monoidal structures
+2012-04-20 18:31:37 UTC <byorgey> right.
+2012-04-20 18:32:39 UTC <tgeeky_> normally, the basic introduction would just be that there are the monoidal structures (0,+,Z) and (1,*,Z), say.
+2012-04-20 18:32:55 UTC <tgeeky_> (i'm using tuples as in "model theory" but I think it should be clear)
+2012-04-20 18:33:02 UTC <byorgey> right
+2012-04-20 18:33:24 UTC <tgeeky_> in the above case, that 0 isn't void, and that 1 isn't ()?
+2012-04-20 18:33:36 UTC <byorgey> hmm?
+2012-04-20 18:33:41 UTC <byorgey> which above case?
+2012-04-20 18:33:42 UTC <tgeeky_> for (0,+,Z)
+2012-04-20 18:33:46 UTC <tgeeky_> that zero is.. the number zero
+2012-04-20 18:33:55 UTC <byorgey> OK, right
+2012-04-20 18:34:02 UTC <tgeeky_> and 1 is the number one.
+2012-04-20 18:34:09 UTC <byorgey> sure
+2012-04-20 18:34:10 UTC <tgeeky_> Here, 0 is "Void" and 1 is "()"?
+2012-04-20 18:34:14 UTC <byorgey> right
+2012-04-20 18:34:24 UTC <byorgey> and + is tagged union, and x is pairing
+2012-04-20 18:35:04 UTC <tgeeky_> byorgey: that last statement "x is pairing" is the first bullet, bottom right, page 6
+2012-04-20 18:35:17 UTC <tgeeky_> "Using the fact that 1 is the multiplicative unit, generate the input () from the value ((),())
+2012-04-20 18:35:22 UTC <tgeeky_> of type 1 x 1
+2012-04-20 18:35:50 UTC <byorgey> well, that bullet follows from the statement "x is pairing"
+2012-04-20 18:35:57 UTC <byorgey> the fact that x is pairing is from the beginning of section 2.1
+2012-04-20 18:37:27 UTC <tgeeky_> ok, so that leads me to believe there is a whole seperate construction when you're considering (b1 x b2 x b3)
+2012-04-20 18:37:33 UTC <tgeeky_> and so on for everity arity of product?
+2012-04-20 18:38:44 UTC <tgeeky_> byorgey: hehe. You'll fogive me for driving this direction, but I am a physicist also. The introduct of color = R | G | B on page 6 seems really unmotivated, and really disconnected from the bullets listed after
+2012-04-20 18:40:33 UTC <tgeeky_> byorgey: and furthermore, the introduction made it seem like the there was either: one value, going in two directions OR three values, existing simultaneously
+2012-04-20 18:40:42 UTC <tgeeky_> so how did we get to ( (), () )?
+2012-04-20 18:41:32 UTC <tgeeky_> i think my 15 minutes are long gone
+2012-04-20 18:41:35 UTC <tgeeky_> oh sure
+2012-04-20 18:41:44 UTC <tgeeky_> no more questions
+2012-04-20 18:42:08 UTC <tgeeky_> these are questions to ask the author, anyway. a better strategy is to ask for help when my implementation goes awry
+2012-04-20 19:15:41 UTC <byorgey> tgeeky_: sorry, I was off doing something else
+2012-04-20 19:15:51 UTC <byorgey> tgeeky_: I'm still happy to answer your questions
+2012-04-20 19:16:19 UTC <byorgey> tgeeky_: b1 x b2 x b3 is ambiguous.  You need to specify (b1 x b2) x b3  or  b1 x (b2 x b3)
+2012-04-20 19:16:34 UTC <byorgey> and there are bijections assocl/assocr for translating between them
+2012-04-20 19:17:02 UTC <byorgey> tgeeky_: the introduction of color = R | G | B is completely pointless and unmotivated, I agree
+2012-04-20 23:06:09 UTC <tgeeky_> byorgey: estas aqui?
+2012-04-20 23:34:57 UTC <byorgey> tgeeky_: si
+2012-04-21 00:14:50 UTC <byorgey> hi peterjoel
+2012-04-21 00:15:22 UTC <peterjoel> hi byorgey
+2012-04-21 02:32:34 UTC <tgeeky_> "cabal install Cabal cabal-install" is one of the funniest commands ever
+2012-04-21 03:26:38 UTC <tgeeky_> byorgey: here now?
+2012-04-21 03:26:49 UTC <tgeeky_> byorgey: if not, in a few I'm going to reboot and try and get linux going on my desktop again
+2012-04-21 16:52:08 UTC <tgeeky> man! my darn irssi won't remember to ignore joins/parts/quits in most windows :(
+2012-04-21 19:32:07 UTC <byorgey> tgeeky: oh, but those are so much fun!
+2012-04-21 20:01:57 UTC <luite> tgeeky: you need to specify the version manually if you want to get the latest one btqw
+2012-04-21 20:02:00 UTC <luite> btw
+2012-04-21 21:18:50 UTC <tgeeky> luite: specify the version of... irssi?
+2012-04-21 21:23:04 UTC <luite> cabal-install
+2012-04-21 21:23:45 UTC <tgeeky> luite: oh, you mean with cabal install Cabal cabal-install?
+2012-04-21 21:23:56 UTC <tgeeky> how do I specify that? cabal-install-x.x.x?
+2012-04-21 21:25:43 UTC <byorgey> yep
+2012-04-21 21:26:11 UTC <byorgey> also, if you have ghc 7.4 it already comes with the latest version of Cabal so there's no need to reinstall it
+2012-04-21 21:26:23 UTC <byorgey> so:  cabal install cabal-install-0.14.0
+2012-04-21 21:26:34 UTC <tgeeky> byorgey: ah. that does make sense. However, the problems I was having were also related to GHC's default paths in windows
+2012-04-21 21:26:44 UTC <byorgey> fair enough.
+2012-04-21 21:26:58 UTC <tgeeky> and the fact that setting an option to make a logfile in cabal's config, causes the pertinent information *not* to be dipsplayed to the console
+2012-04-21 21:27:14 UTC <byorgey> just be glad you don't have OS X.  It seems to me OS X has recently replaced Windows as the worst/most difficult platform for Haskell development.
+2012-04-21 21:27:16 UTC <tgeeky> so it looked like cabal was spending 8 minutes compiling *only* the setup.hs files
+2012-04-21 21:27:26 UTC <tgeeky> byorgey: true.
+2012-04-21 21:27:29 UTC <byorgey> oh, hehe, whoops
+2012-04-21 21:45:14 UTC <mgsloan> tgeeky: have you already markdown-converted my post?
+2012-04-21 21:45:20 UTC <mgsloan> I'm thinking of just githubbing it
+2012-04-21 21:45:44 UTC <tgeeky> mgsloan: nope! go ahead. I have been writing my own notes, as promised
+2012-04-21 21:46:38 UTC <mgsloan> Cool!  I didn't post friday, as you can tell..  It's been like 2 weeks since I started this post, argh!
+2012-04-21 21:46:59 UTC <tgeeky> hehe.
+2012-04-21 21:47:04 UTC <tgeeky> just rive it
+2012-04-22 00:06:16 UTC <byorgey> tgeeky: yeah, a module for drawing string diagram-type-things is definitely on my list of todos
+2012-04-22 00:13:45 UTC <tgeeky> i've got a small list of things to do: (categorical) string diagrams, feynman diagrams, penrose diagrams, fancy periodic tables (a good exercise in using identical data to produce many vis); apollonian gasketry;
+2012-04-22 00:14:03 UTC <byorgey> tgeeky: sweet
+2012-04-22 00:15:43 UTC <tgeeky> i was in the process of putting these up on the wiki; but I have several hundred of images to put somewhere; the wiki seemed a bad choice. imgur wouldn't cooperate (i submitted ~ 30 images of periodic tables; it duplicated 1 of them 28 times and showed one other)
+2012-04-22 00:15:57 UTC <tgeeky> so I'll probably end up putting it up on github somewhere
+2012-04-22 00:15:58 UTC <byorgey> heh, doh
+2012-04-22 00:16:17 UTC <tgeeky> i like the mix of people we have in here though
+2012-04-22 00:16:29 UTC <tgeeky> nerds, geeks, physicists, artsy people, haskell experts
+2012-04-22 00:16:38 UTC <tgeeky> and luite the magnificient
+2012-04-22 00:16:50 UTC <tgeeky> byorgey: https://www.google.com/search?q=alternative+periodic+table&hl=en&safe=off&prmd=imvns&tbm=isch&tbo=u&source=univ&sa=X&ei=yU2TT8b9H6KK2wWCobT7BA&ved=0CDoQsAQ&biw=1226&bih=939&sei=6k2TT4egCYbq2AXs4YiXCA
+2012-04-22 00:16:57 UTC <byorgey> tgeeky: I like it too =)
+2012-04-22 00:17:16 UTC <byorgey> woah, those are cool =)
+2012-04-22 00:18:26 UTC <byorgey> hey, I've got diagrams-canvas working now!
+2012-04-22 00:18:36 UTC <tgeeky> that was fast
+2012-04-22 00:18:55 UTC <luite> tgeeky: luite the unproductive is what you mean
+2012-04-22 00:19:30 UTC <byorgey> well, fryguybob and Andy Gill already did most of the hard work =)
+2012-04-22 00:19:53 UTC <tgeeky> luite: nope. I'm the most unproductive person here, so far.
+2012-04-22 00:20:10 UTC <luite> you have more packages on hackage
+2012-04-22 00:20:11 UTC <tgeeky> and let's admit
+2012-04-22 00:20:16 UTC <byorgey> I love the feeling of taking several things that other people made, gluing them together easily, and producing something awesome
+2012-04-22 00:20:17 UTC <tgeeky> you're pretty magnificnet
+2012-04-22 00:20:30 UTC <tgeeky> byorgey: that is the epitome of modern programming
+2012-04-22 00:20:35 UTC <luite> cnet?
+2012-04-22 00:20:37 UTC <tgeeky> byorgey: DIY is so last decade
+2012-04-22 00:20:52 UTC <byorgey> tgeeky has now misspelled magnificent in two different ways =)
+2012-04-22 00:20:57 UTC <tgeeky> luite: so magnificent, that you can even discern mispelling
+2012-04-22 00:21:06 UTC <tgeeky> did I get three?
+2012-04-22 00:21:12 UTC <byorgey> not yet
+2012-04-22 00:21:27 UTC <byorgey> mangificent would be a good one
+2012-04-22 00:21:28 UTC <tgeeky> magnifico. magnificant. magnificent. magnificant.
+2012-04-22 00:21:49 UTC <tgeeky> http://www.magnificat.com/
+2012-04-22 00:21:53 UTC <luite> no, but at least you got one in 'misspelling'
+2012-04-22 00:21:53 UTC <tgeeky> whatever the heck that is
+2012-04-22 00:21:59 UTC <tgeeky> luite: hehehe
+2012-04-22 00:22:04 UTC <tgeeky> both of you bite me
+2012-04-22 00:22:09 UTC <luite> i think it was on purpose though
+2012-04-22 00:24:13 UTC <tgeeky> maybe it was on porpoise
+2012-04-22 00:24:22 UTC <tgeeky> http://2.bp.blogspot.com/_2nHSx89FR3o/TN8RdAvV9UI/AAAAAAAAACA/N-gHSnToK1c/s400/Porpoise-7.jpg
+2012-04-22 00:24:30 UTC <tgeeky> you can't get mad at that face
+2012-04-22 00:25:19 UTC <luite> oh didn't know the english name for those
+2012-04-22 00:25:30 UTC <tgeeky> dolphin
+2012-04-22 00:25:34 UTC <tgeeky> or porpoise
+2012-04-22 00:25:35 UTC <luite> a literal translation from dutch would be "brownfish"
+2012-04-22 00:27:17 UTC <byorgey> porpoises and dolphins are actually different things
+2012-04-22 00:27:28 UTC <byorgey> so says the Source of All Knowledge
+2012-04-22 00:27:30 UTC <luite> lots of dolphins and whales are called fish in dutch :(
+2012-04-22 00:32:05 UTC <tgeeky> hm. it never occured to me until now that 'unfoldable' might mean impossible to fold, not possible to unfold.
+2012-04-22 00:32:11 UTC <tgeeky> rest assured it doesn't!
+2012-04-22 00:33:53 UTC <byorgey> http://www.cis.upenn.edu/~byorgey/hosted/diagrams-canvas.png
+2012-04-22 00:34:13 UTC <byorgey> still some missing features, and the default fill color shouldn't be black
+2012-04-22 00:34:16 UTC <byorgey> but progress! =)
+2012-04-22 00:35:05 UTC <tgeeky> byorgey: almost looks like a cell phone pic
+2012-04-22 00:35:11 UTC <tgeeky> s/pic/screencap/
+2012-04-22 00:35:13 UTC <tgeeky> but quite nice
+2012-04-22 00:37:31 UTC <byorgey> that's because I edited it in gimp to move the bottom bar showing the URL up
+2012-04-22 00:37:36 UTC <byorgey> =)
+2012-04-22 00:37:40 UTC <tgeeky> hehe
+2012-04-22 00:38:05 UTC <byorgey> just to show off that it was actually coming from a local web server
+2012-04-22 00:38:23 UTC <byorgey> huh, HTML5 canvas doesn't support dashed lines!
+2012-04-22 00:38:30 UTC <byorgey> poop
+2012-04-22 00:38:39 UTC <tgeeky> lol
+2012-04-22 00:38:50 UTC <tgeeky> that's sad
+2012-04-22 00:40:19 UTC <tgeeky> mgsloan: http://hackage.haskell.org/package/bumper-0.5.0.1
+2012-04-22 00:40:42 UTC <vyom> byorgey: is that a diagrams-canvas backend?
+2012-04-22 00:41:11 UTC <mgsloan> tgeeky: cool!
+2012-04-22 00:41:27 UTC <mgsloan> tubad this makes delta-modules / etc a little less necessary
+2012-04-22 00:41:46 UTC <vyom> i mean.. i guess it is.. but what is the actual output.. some sort of HTML page?
+2012-04-22 00:41:47 UTC <mgsloan> though provides some of the necessary code to start automating such things
+2012-04-22 00:41:53 UTC <tgeeky> yeah I'll just shamelessly steal his code
+2012-04-22 00:42:31 UTC <tgeeky> bbl dinner
+2012-04-22 00:42:57 UTC <byorgey> vyom: yes, the output is an HTML page containing a canvas
+2012-04-22 00:43:34 UTC <vyom> cool
+2012-04-22 00:43:42 UTC <byorgey> vyom: in particular, the output is actually an HTML page containing a canvas, with a server listening to events from the page that can send more canvas commands!
+2012-04-22 00:44:00 UTC <byorgey> so we can easily make not just static diagrams but animations and interactive things
+2012-04-22 00:44:37 UTC <byorgey> I should emphasize that all I have done is port fryguybob's existing diagrams-canvas backend to Andy Gill's new blank-canvas package
+2012-04-22 00:45:44 UTC <vyom> oh.. so what takes care of the server client interaction.. blank-canvas?
+2012-04-22 00:47:17 UTC <byorgey> vyom: yes
+2012-04-22 00:48:12 UTC <vyom> ah ok.. I see it uses scotty
+2012-04-22 00:48:17 UTC <vyom> cool stuff
+2012-04-22 00:48:43 UTC <vyom> i was playing around with the idea of a WebGL backend actually, since I wanted to learn it..
+2012-04-22 00:48:58 UTC <vyom> if i get around to it.. this would be a good reference
+2012-04-22 00:50:14 UTC <vyom> any idea if it is planned? since you seem to have contributed code to that project :)
+2012-04-22 00:51:38 UTC <byorgey> to which project?
+2012-04-22 00:51:52 UTC <vyom> blank-canvas
+2012-04-22 00:52:04 UTC <byorgey> oh, I only contributed a tiny bit to support diagrams-canvas
+2012-04-22 00:52:09 UTC <byorgey> I don't really know what they have planned
+2012-04-22 00:52:34 UTC <byorgey> WebGL would be super cool
+2012-04-22 00:52:36 UTC <vyom> webgl uses a canvas underneath afaik.. so it would be nice to extend this..
+2012-04-22 00:52:55 UTC <byorgey> it would give us a good excuse to add 3D stuff in diagrams-lib =)
+2012-04-22 00:53:00 UTC <fryguybob> byorgey: fun!
+2012-04-22 00:53:15 UTC <byorgey> very!
+2012-04-22 00:53:43 UTC <vyom> i will ping the project owner and ask him
+2012-04-22 00:53:44 UTC <fryguybob> You say you contributed a tiny bit, but I stole most at the beginning :P
+2012-04-22 00:55:10 UTC <byorgey> hehe, fair enough, everyone just steals code and adds a tiny bit of value
+2012-04-22 00:55:17 UTC <byorgey> and somehow we still end up with awesome things
+2012-04-22 00:56:26 UTC <byorgey> fryguybob: how's Judah?
+2012-04-22 00:57:36 UTC <fryguybob> byorgey: Awesome. Getting spoiled by grandparents at the moment :D.
+2012-04-22 00:58:19 UTC <byorgey> excellent =)
+2012-04-22 00:58:37 UTC <fryguybob> We were able to aline our sleep with his sleep some this morning (for me) and afternoon (for Rebekah) so we are feeling a little more human.
+2012-04-22 00:58:58 UTC <byorgey> good!
+2012-04-22 01:00:31 UTC <vyom> the only problem with the model that blank-canvas uses is that it is not as scalable as something that is completely client-side..
+2012-04-22 01:00:52 UTC <vyom> it looks like blank-canvas maintains context for every canvas it is rendering
+2012-04-22 01:01:37 UTC <vyom> i wonder if there is a solution where the interaction between the client and server is stateless..
+2012-04-22 01:01:42 UTC <byorgey> vyom: true.
+2012-04-22 01:02:05 UTC <byorgey> vyom: I think Andy Gill has said that he's interested in eventually coming up with something that runs completely client-side.
+2012-04-22 01:02:11 UTC <vyom> cool
+2012-04-22 01:02:31 UTC <vyom> wonder if that will involve some Haskell to Javascript compilation ;)
+2012-04-22 01:02:32 UTC <byorgey> but this was basically just a one-day hack he put together to show off some stuff to his functional programming class
+2012-04-22 01:02:37 UTC <byorgey> maybe so =)
+2012-04-22 01:03:26 UTC <vyom> kinda makes me sad though.. everything needs to be compiled to JS nowadays in order to be a viable web based alternative..
+2012-04-22 01:03:34 UTC <vyom> its like the assembly language of the web
+2012-04-22 01:04:56 UTC <luite> fortunately js can be run pretty efficiently
+2012-04-22 01:05:20 UTC <luite> relatively that is
+2012-04-22 01:06:12 UTC <vyom> i guess.. when I initially thought about a WebGL backend I was thinking about the problem of avoiding client-server interaction..
+2012-04-22 01:06:52 UTC <vyom> and the only viable alternative was to somehow generate Javascript
+2012-04-22 01:07:14 UTC <vyom> or alternatively.. port diagrams to javascript ;)
+2012-04-22 01:08:20 UTC <vyom> there does appear to be a Haskell -> Javascript backend.. I dont know how far along it is http://utrechthaskellcompiler.wordpress.com/2010/10/18/haskell-to-javascript-backend/
+2012-04-22 01:09:04 UTC <luite> yes there's also one for ghc
+2012-04-22 01:10:05 UTC <vyom> these projects dont seem to have much activity though
+2012-04-22 01:11:40 UTC <byorgey> fryguybob: hmm, do I recall you saying something about some problem with lines of width 0?
+2012-04-22 01:12:43 UTC <luite> vyom: no they don't, i think there should be at least two big projects in it, one is the code generator itself, and the other is a beter cabal thingie to build javascript packages
+2012-04-22 01:13:22 UTC <byorgey> aha, "On setting, zero, negative, infinite, and NaN values must be ignored, leaving the value unchanged; other values must change the current value to the new value."
+2012-04-22 01:13:26 UTC <byorgey> hrm
+2012-04-22 02:02:44 UTC <fryguybob> byorgey: Yeah something like zero width was interpreted as "smallest visible" instead of "no line".  But I don't really remember at the moment.
+2012-04-22 02:10:08 UTC <byorgey> fryguybob: I figured it out, setting the line width to zero is simply ignored.
+2012-04-22 02:10:40 UTC <byorgey> fryguybob: it's easy to get around by changing the stroke function to check the current line width and only issue an actual stroke command if it is positive.
+2012-04-22 02:28:13 UTC <byorgey> https://github.com/byorgey/blank-canvas  https://github.com/byorgey/diagrams-canvas
+2012-04-22 02:28:22 UTC <byorgey> if anyone wants to play around with it
+2012-04-22 02:28:59 UTC <byorgey> it now works on all the examples I've tried except it doesn't (yet) support (1) text or (2) dashed lines
+2012-04-22 02:29:44 UTC <byorgey> ACTION -> bed
+2012-04-22 02:32:44 UTC <mgsloan> ACTION sets to work on canvas-toy-diagrams
+2012-04-22 04:59:10 UTC <tgeeky> mgsloan: hello goo sir
+2012-04-22 04:59:15 UTC <tgeeky> goo.... sigh. good sir.
+2012-04-22 04:59:35 UTC <mgsloan> tgeeky: hello!  I just recently realized that I need to put most of my time into school the next few days... argh!
+2012-04-22 05:01:41 UTC <tgeeky> mgsloan: good :)
+2012-04-22 05:01:51 UTC <tgeeky> school is important-er
+2012-04-22 05:01:56 UTC <mgsloan> good that I realized it, I guess
+2012-04-22 05:02:21 UTC <mgsloan> but I really want to get some of these more recent projects out the door
+2012-04-22 05:02:42 UTC <tgeeky> mgsloan: all is well. I will have time to work and catch up some.
+2012-04-22 05:03:00 UTC <mgsloan> hehe, indeed!
+2012-04-22 05:03:02 UTC <tgeeky> mgsloan: I've been on a long term plan to 'out' my blog, and I started with a goal of 7 posts
+2012-04-22 05:03:21 UTC <tgeeky> I've written 3 so far
+2012-04-22 05:03:30 UTC <tgeeky> over the past few months :/
+2012-04-22 05:03:53 UTC <mgsloan> well, it's either quality or quantity, and quality is better!
+2012-04-22 05:06:17 UTC <tgeeky> http://hpaste.org/67406
+2012-04-22 05:06:22 UTC <tgeeky> that was my recentest note.
+2012-04-22 05:14:23 UTC <tgeeky> mgsloan: did you take linear algebra and remember it?
+2012-04-22 05:14:31 UTC <mgsloan> oh yeah
+2012-04-22 05:15:26 UTC <tgeeky> mgsloan: are you aware of what 'canonical forms' are? http://en.wikipedia.org/wiki/Canonical_form#Linear_algebra
+2012-04-22 05:16:45 UTC <tgeeky> anyway, I'm leading to... I found this recently: http://books.google.com/books/about/Advanced_Topics_in_Linear_Algebra.html?id=HLiWsnzJe6MC and am surprised to learn there is a serious competitor to jordan form matrices
+2012-04-22 05:16:53 UTC <tgeeky> (called the Weyr Form)
+2012-04-22 05:26:26 UTC <tgeeky> (I didn't remember many of these things). However, this book has a pretty interesting introduction (and very carefully worded too). I was surprised to learn that for some (n x n) matrix, there are a different number of nilpotent decompositions
+2012-04-22 05:26:31 UTC <tgeeky> in one form or another
+2012-04-22 05:30:04 UTC <mgsloan> yup, we went over a bit of those in my applied linear algebra class
+2012-04-22 05:30:11 UTC <mgsloan> not /that/ in depth
+2012-04-22 05:30:51 UTC <tgeeky> mgsloan: evidently these were discarded at a time when non-commutative spaces weren't of any interest
+2012-04-22 05:32:26 UTC <tgeeky> and the potential advatages of this technique apply mostly when you're in such a situation (vs jordan)
+2012-04-22 05:32:35 UTC <tgeeky> i'll bet someone has jordan decomposition in haskell
+2012-04-22 05:35:51 UTC <mgsloan> oh yeah
+2012-04-22 05:37:15 UTC <tgeeky> perhaps not
+2012-04-22 05:37:30 UTC <tgeeky> someone has done schur decomposition and stated in docs "anything jordan can do, schur can do better!" lol
+2012-04-22 08:44:04 UTC <TSC> Any idea why I would get linker errors with diagrams-builder?
+2012-04-22 08:44:20 UTC <TSC> HSdiagrams-builder-0.2.o: unknown symbol `diagramszmbuilderzm0zi2_DiagramsziBuilderziModules_unLit_closure'
+2012-04-22 08:44:21 UTC <TSC> BuildTikZ.hs: BuildTikZ.hs: unable to load package `diagrams-builder-0.2'
+2012-04-22 08:54:24 UTC <TSC> Ah, diagrams-builder's cabal file needs to have "Diagrams.Builder.Modules" listed as an exposed module
+2012-04-22 08:54:28 UTC <TSC> byorgey: ^^^
+2012-04-22 12:20:40 UTC <byorgey> TSC: ah, thanks, fixed now
+2012-04-22 21:00:05 UTC <luite> cool the cabal repo moved to github!
+2012-04-22 21:17:31 UTC <luite> hm, stupid question maybe, but when do you call something in haskell a combinator, or when is some library a combinator library?
+2012-04-22 21:28:31 UTC <rasfar> I don't know, but this page might help if you haven't seen it, for distinctions between "combinator" etc. http://www.haskell.org/haskellwiki/Super_combinator
+2012-04-22 21:29:20 UTC <rasfar> at a higher level, there's http://www.haskell.org/haskellwiki/Combinator_pattern
+2012-04-22 21:29:42 UTC <rasfar> not sure how authoritative these pages are however
+2012-04-22 21:30:09 UTC <luite> yeah the latter seems to be rather informal, but i have the impression that this is also how it's used in practice
+2012-04-22 21:30:44 UTC <luite> it doesn't seem to have too much to do with the combinator in combinatory logic
+2012-04-22 21:32:51 UTC <rasfar> whatever the case, one thing i'm certain of:  this project qualifies!  https://github.com/mgsloan/plumbers
+2012-04-22 22:02:53 UTC <tgeeky> wow
+2012-04-22 22:03:13 UTC <tgeeky> that's the first time I've ever seen google be "surprisingly smart"
+2012-04-22 22:03:49 UTC <tgeeky> I typed in "stu variables" meaning S = ..  T = ..  U = .. -- a physics notion
+2012-04-22 22:04:30 UTC <tgeeky> result (1) doesn't have stu in the text, but the filename (STU.pdf) and the second is the real name
+2012-04-22 22:04:35 UTC <tgeeky> (which I already knew)
+2012-04-22 22:05:31 UTC <tgeeky> smart!
+2012-04-22 22:05:59 UTC <tgeeky> luite: I thought byorgey said something about that issue today
+2012-04-22 22:06:01 UTC <tgeeky> in #haskell
+2012-04-22 22:11:34 UTC <tgeeky> luite: I would state it like this: A combinator library is one in which many (or a majority?) of functions are intended to be used for constructing still more functions, instead of to be used for a domain specific purpose
+2012-04-22 23:40:42 UTC <byorgey> luite: I think it's more about the design philosophy -- a library built around some primitive objects along with principled ways for combining and transforming those to make more complex objects.
+2012-04-22 23:41:44 UTC <byorgey> where by "principled" I mean "compositional", i.e. the meaning of combined things is determined in a simple way from the meaning of the things being combined
+2012-04-22 23:42:09 UTC <byorgey> it has little to do with the definition of "combinator" in combinatory logic.
+2012-04-23 01:44:20 UTC <luite> right, that's what i thought, was just wondering if there was some theoretical background for calling them combinators :)
+2012-04-23 01:58:41 UTC <byorgey> luite: yeah, not really =)
+2012-04-23 02:46:00 UTC <tgeeky> luite: it's "combinate" in the same way as the dragon from homestar runner "burninates"
+2012-04-23 02:48:21 UTC <byorgey> COMBINATING THE COUNTRYSIDE, COMBINATING THE PEASANTS
+2012-04-23 02:48:51 UTC <byorgey> THATCHED ROOF COTTAGES!!!!
+2012-04-23 02:49:42 UTC <Claudius1aximus> i've got a brand new combinator?
+2012-04-23 02:50:08 UTC <luite> tgeeky: the imperative version would be subroutinators?
+2012-04-23 02:51:25 UTC <tgeeky> luite: that somehow doesn't sound scary enough
+2012-04-23 02:51:42 UTC <tgeeky> byorgey: somehow I knew you'd like that reference.
+2012-04-23 02:51:45 UTC <tgeeky> :)
+2012-04-23 02:52:32 UTC <luite> hehe I knew the video, but it's been too long ago :p
+2012-04-23 02:53:23 UTC <byorgey> =)
+2012-04-23 04:06:06 UTC <TSC> Hello all; I'm trying to "cabal install virthualenv", but I get "global constraint requires installed instance" for base -- I don't see where this global constraint comes from
+2012-04-23 04:07:02 UTC <TSC> Gah, wrong channel (:
+2012-04-24 07:50:19 UTC <donatell0> Hi all! I want to use diagrams to create a diagram of a pebble with light reflection effect. I don't think there is support for lighting effects. Any pointers/tips are appreciated.
+2012-04-24 10:01:20 UTC <byorgey> donatell0: yeah, right now there isn't any support for lighting effects, gradients, etc.
+2012-04-24 10:01:38 UTC <byorgey> adding support for gradients would not be too hard in theory, someone just needs to do it
+2012-04-24 11:27:54 UTC <donatell0> byorgey: ok thanks!
