@@ -15716,3 +15716,456 @@
 2012-04-24 10:01:20 UTC <byorgey> donatell0: yeah, right now there isn't any support for lighting effects, gradients, etc.
 2012-04-24 10:01:38 UTC <byorgey> adding support for gradients would not be too hard in theory, someone just needs to do it
 2012-04-24 11:27:54 UTC <donatell0> byorgey: ok thanks!
+2012-04-24 17:56:58 UTC <luite> byorgey: have you made a decision about switching to git/github yet?
+2012-04-24 17:58:31 UTC <byorgey> luite: not officially, but I haven't seen anything yet to dissuade me
+2012-04-24 17:58:51 UTC <byorgey> except that darcs 2.8 just came out and it's shiny, which makes me even more sad to do it
+2012-04-24 17:59:04 UTC <luite> i haven't replied to the question, but i guess you know what i think ;p
+2012-04-24 17:59:22 UTC <byorgey> I don't actually
+2012-04-24 17:59:27 UTC <byorgey> though I know you use github
+2012-04-24 17:59:45 UTC <luite> oh right, in that case, for me it would be easier to contribute with git
+2012-04-24 17:59:57 UTC <luite> but i don't really have problems with darcs
+2012-04-24 18:00:33 UTC <byorgey> ok
+2012-04-24 18:00:42 UTC <luite> i fear that darcs will die eventually do to a lack of infrastructure
+2012-04-24 18:00:48 UTC <luite> due to
+2012-04-24 18:01:00 UTC <byorgey> if it does die that will certainly be what kills it
+2012-04-24 18:05:51 UTC <luite> hm
+2012-04-24 18:06:24 UTC <luite> apfelmus is from leipzig apparently
+2012-04-24 18:08:15 UTC <luite> anyway need to get back to coding, shapr wants to use wolfgang as a starting point for his gsoc :)
+2012-04-24 18:18:23 UTC <byorgey> excellent =)
+2012-04-24 18:18:37 UTC <byorgey> luite: good to have some external motivation, eh?
+2012-04-24 18:29:24 UTC <luite> hehe so far it hasn't brought productivity, only stress and headaches, but i hope that changes soon
+2012-04-24 18:30:26 UTC <luite> but having some help for the summer would be really great, and it should be possible to implement the things apfelmus wants without much problems
+2012-04-24 18:32:54 UTC <byorgey> luite: by the way, I will be teaching a class in the fall and it would be super-awesome to be able to have the students use Wolfgang.
+2012-04-24 18:33:06 UTC <luite> it would!
+2012-04-24 18:33:06 UTC <byorgey> if that causes you more stress then forget I said it, causing stress is not my intention =)
+2012-04-24 18:33:10 UTC <luite> haha
+2012-04-24 18:33:18 UTC <byorgey> just that you will have many happy users =)
+2012-04-24 18:34:13 UTC <luite> nah i really want to work on it and make some progress, many happy users probably means server upgrade though
+2012-04-24 18:34:14 UTC <byorgey> because I can teach them a bit of Haskell without having to go through the trouble of getting them to install it, they can collaborate easily, I can easily develop stuff in class and share it with them...
+2012-04-24 18:34:26 UTC <byorgey> the class isn't about Haskell but I will be using it a bit
+2012-04-24 18:35:16 UTC <luite> but i think we'll see this summer how much the current one can handle, maybe some of the $500 that haskell.org gets for this gsoc project can go towards the hosting costs
+2012-04-24 18:36:08 UTC <byorgey> yeah, that would be cool
+2012-04-24 18:37:09 UTC <luite> shapr wants to add realtime synchronization between clients
+2012-04-24 18:37:20 UTC <luite> so that people can really collaborate on different screens
+2012-04-24 18:39:34 UTC <luite> i think that's the most difficult feature planned for the gsoc
+2012-04-24 18:40:12 UTC <luite> others are pastebin functionality and an easy way install a local version with cabal-install
+2012-04-24 18:40:41 UTC <luite> the last one is apfelmus' primary interest, the website part is more shaprs interest
+2012-04-24 18:41:22 UTC <luite> bah i really want serializable thunks :p
+2012-04-24 18:45:11 UTC <luite> (and it seems to be so close, see rts/parallel/Pack.c)
+2012-04-24 18:48:17 UTC <byorgey> luite: well, it all sounds cool
+2012-04-24 18:48:35 UTC <byorgey> but I hope you won't wait until the end of the summer to release something =)
+2012-04-24 18:49:23 UTC <luite> no, the point is to release something next week or so so that shapr and apfelmus can make plans before the coding starts in may
+2012-04-24 19:02:41 UTC <byorgey> oh, sweet
+2012-04-24 19:02:52 UTC <byorgey> luite: let me know if you want any help testing =)
+2012-04-24 19:03:12 UTC <luite> :)
+2012-04-24 19:03:24 UTC <luite> not yet anyway, it's easy to bring down the server with the current version
+2012-04-24 19:03:44 UTC <byorgey> hehe, ok
+2012-04-24 19:03:46 UTC <luite> need to add a few things to the process manager
+2012-04-24 19:03:51 UTC <byorgey> yep
+2012-04-24 19:04:05 UTC <luite> namely sending STOP and CONT signals when a worker is done, or requested :)
+2012-04-24 19:04:13 UTC <luite> otherwise you can forkIO a thread that uses 100% in the background
+2012-04-24 19:07:37 UTC <luite> (if you leave other system threads or processes running, they're already automatically shot down when the request finishes)
+2012-04-25 04:07:52 UTC <vyom> Fill rule support in SVG http://dl.dropbox.com/u/953/logo/fill.svg
+2012-04-25 04:47:00 UTC <mgsloan> vyom: cool!
+2012-04-25 04:47:33 UTC <vyom> i am implementing dashing now.. should be done tonight i think
+2012-04-25 04:47:48 UTC <vyom> that will leave text and images
+2012-04-25 04:47:54 UTC <vyom> which are kinda tricky
+2012-04-25 04:48:03 UTC <vyom> so hopefully sometime next week
+2012-04-25 04:57:00 UTC <mgsloan> saweet!  There're so many nearly-feature-complete backends now!
+2012-04-25 05:29:26 UTC <tgeeky> *whew*
+2012-04-25 05:31:23 UTC <tgeeky> 36 hours, 1114 miles, one funeral :(, and a tired tgeeky
+2012-04-25 06:17:24 UTC <vyom> And dashing is done too.. https://github.com/deepakjois/diagrams-svg/commit/f9046e6180e1de1d27c8fe832b399c19ba008d47
+2012-04-25 17:15:34 UTC <vyom> and we have opacity support
+2012-04-25 17:15:36 UTC <vyom> https://dl-web.dropbox.com/get/Public/logo/opactity.svg?w=bf7239d0
+2012-04-25 18:04:41 UTC <byorgey> vyom: awesome!!
+2012-04-25 18:07:13 UTC <byorgey> ACTION needs to buy vyom several beverages of his choice someday
+2012-04-25 18:07:47 UTC <vyom> hehe :)
+2012-04-25 18:08:41 UTC <byorgey> vyom: long shot, I know, but any chance you can come to Philly aug. 3-5 for hac phi? =)
+2012-04-25 18:08:50 UTC <byorgey> we're about to oficially announce it
+2012-04-25 18:08:59 UTC <vyom> actually it is not that much of a long shot..
+2012-04-25 18:09:05 UTC <byorgey> ok =)
+2012-04-25 18:09:05 UTC <vyom> I recently quit my job to move to the bay area.. and at the same decided to take time off
+2012-04-25 18:09:15 UTC <byorgey> oh, nice
+2012-04-25 18:09:30 UTC <vyom> planning to spend the next few months..just.. hacking
+2012-04-25 18:09:35 UTC <byorgey> =D
+2012-04-25 18:09:38 UTC <luite> :)
+2012-04-25 18:10:24 UTC <luite> hmm, hac phi would be fun, but probably too expensive for me
+2012-04-25 18:10:43 UTC <byorgey> yeah, I wish crossing the atlantic was cheaper =(
+2012-04-25 18:11:09 UTC <byorgey> we did actually have two attendees from NL come for the first hac phi
+2012-04-25 18:11:21 UTC <byorgey> but they combined it with a two-week vacation in the US afterwards
+2012-04-25 18:11:30 UTC <luite> they must've been from the richer part of the netherlands ;p
+2012-04-25 18:11:37 UTC <byorgey> perhaps =)
+2012-04-25 18:12:31 UTC <vyom> i met mgsloan the other day and he told me about the Oregon Summer School
+2012-04-25 18:12:49 UTC <byorgey> yeah, OPLSS is awesome
+2012-04-25 18:13:11 UTC <byorgey> we specifically scheduled hac phi not to overlap with it =)
+2012-04-25 18:13:16 UTC <luite> it's not the ideal eason, summer and all, looks like a return flight is around 1100 euro, 1450 usd
+2012-04-25 18:13:25 UTC <byorgey> yikes
+2012-04-25 18:13:29 UTC <vyom> what do you think of the lectures
+2012-04-25 18:13:40 UTC <byorgey> vyom: mind-blowing
+2012-04-25 18:13:42 UTC <vyom> do we need some sort of a background already
+2012-04-25 18:14:02 UTC <vyom> if i am attending.. i would like to prepared to get maximum value out of it
+2012-04-25 18:14:24 UTC <byorgey> some background does help for some of them
+2012-04-25 18:14:25 UTC <fryguybob> byorgey: I can't remember are you going to be at OPLSS this year?
+2012-04-25 18:14:34 UTC <byorgey> nope
+2012-04-25 18:14:43 UTC <fryguybob> darn
+2012-04-25 18:14:54 UTC <byorgey> vyom: to prepare, read as far as you can through TaPL
+2012-04-25 18:15:11 UTC <vyom> hmm.. now that i look at the page.. they request for the "materials" to arrive by Apr 16
+2012-04-25 18:15:20 UTC <vyom> i wonder if the deadline has passed :(
+2012-04-25 18:16:28 UTC <byorgey> vyom: I don't think so
+2012-04-25 18:16:36 UTC <byorgey> vyom: which page?
+2012-04-25 18:17:33 UTC <vyom> http://www.cs.uoregon.edu/Research/summerschool/summer12/registration.html
+2012-04-25 18:17:37 UTC <byorgey> oh, I see
+2012-04-25 18:18:01 UTC <byorgey> I bet you could still register if you ask nicely, as long as it is not completely full
+2012-04-25 18:18:50 UTC <byorgey> anyway, I've got to go play w/ my son =)
+2012-04-25 18:18:53 UTC <byorgey> back later
+2012-04-25 18:20:59 UTC <vyom> let me email them rightaway
+2012-04-25 18:30:38 UTC <tgeeky> byorgey: during the aforementioned funeral trip, I got to play with and watch my nieec. It was ... magical.
+2012-04-25 18:30:42 UTC <tgeeky> niece*
+2012-04-25 18:31:30 UTC <byorgey> tgeeky: sorry about the long trip and funeral, but playing with your niece sounds fun =)
+2012-04-25 18:32:16 UTC <tgeeky> the trip was somewhat fun, since I've always loved driving. Thank you. yes.
+2012-04-25 18:33:01 UTC <tgeeky> lots of eye contact, lots of funny faces, a few smiles, and one time she (suddenly) surprised herself awake which was hillarious
+2012-04-25 18:42:46 UTC <vyom> ok sent a mail to the OPLSS folks
+2012-04-25 18:43:24 UTC <vyom> even put in a cheeky request for the $175 graduate student price.. given that i am not longer an "industry professional".. i am more like "unemployed"
+2012-04-25 18:45:52 UTC <vyom> if anybody is interested.. here is why I decided to take time off http://www.facebook.com/deepak.jois/posts/10150686205526099
+2012-04-25 18:46:03 UTC <vyom> now to do something worthwhile with all this time i have
+2012-04-25 18:46:11 UTC <vyom> anyway.. lunch gtg
+2012-04-25 18:46:12 UTC <vyom> later
+2012-04-25 20:01:26 UTC <rasfar> i've got something preliminary at fremissant.net/haddockage/haddockage.php if anyone has comments
+2012-04-25 20:01:46 UTC <rasfar> fremissant.net/haddockage/haddockage-small.php for "just the f's"
+2012-04-25 20:02:06 UTC <rasfar> no module names yet (working on it...) but, is the UI going to be adequate?
+2012-04-25 20:02:31 UTC <rasfar> (you can sort the columns by clicking on the headers, but there may be some seconds of delay.  it's client-side sorting.)
+2012-04-25 20:03:26 UTC <rasfar> i'm asking here b/c you are nice :)  and we talked about it here a few days ago
+2012-04-25 20:03:42 UTC <rasfar> brb
+2012-04-25 20:09:35 UTC <luite> hm, what do you want to use it for?
+2012-04-25 20:10:21 UTC <rasfar> well, this was to address the lack of any comprehensive list of modules
+2012-04-25 20:10:45 UTC <rasfar> then mgsloan (or maybe it was tgeeky) suggested including the authors names would also be handy
+2012-04-25 20:10:58 UTC <luite> hm, but these are pacakges, not modules, right?
+2012-04-25 20:11:15 UTC <rasfar> this would be a contribution towards clarifying the hackage namespace (plus extra features...)
+2012-04-25 20:11:46 UTC <rasfar> the backend is Haskell, it parses the 00-index.tar, so the results should be fairly complete
+2012-04-25 20:12:12 UTC <rasfar> there were 13 packages which causes nontermination for some reason, so that's about 0.3% missing at the moment
+2012-04-25 20:12:42 UTC <rasfar> these are packages still, yes.  i'm working on the modules now, just have to think about how to efficiently juggle all that, as it's a lot of data!
+2012-04-25 20:13:29 UTC <rasfar> the first thing i did after parsing the .cabal files is to generate a histogram showing the most common fields, which is also quite interesting; i should post that as well...
+2012-04-25 20:14:51 UTC <rasfar> i'm not a DB/web guy really, so i'm not sure how to design it to include the modules.  I could simply duplicate the other fields for every module, but it would be a at least 10x longer list of records if did that!
+2012-04-25 20:15:43 UTC <rasfar> luite, does it look right on your user agent?  does the sorting work?  (you can also sort multiple columns by holding Shift when you click)
+2012-04-25 20:16:11 UTC <rasfar> my next priorities:  the modules, and then some kind of filtering UI
+2012-04-25 20:17:34 UTC <rasfar> (scrolling back, it was tgeeky who requested author info)
+2012-04-25 20:23:00 UTC <rasfar> well, that's encouraging, thanks! ... back to work then. ;)
+2012-04-25 20:37:44 UTC <rasfar> actually it seems all packages work now, so it's 100% complete as far as I know.
+2012-04-25 20:38:00 UTC <rasfar> also need to work on RSS-based updates...
+2012-04-25 21:06:55 UTC <luite> sorry i was away
+2012-04-25 21:07:09 UTC <luite> i think you probably should use some standard grid thing with built-in filters
+2012-04-25 21:07:33 UTC <luite> yui probably has one, jquery-ui an experimental one
+2012-04-25 21:30:12 UTC <rasfar> okay, thanks for the tips
+2012-04-25 23:05:03 UTC <vyom> byorgey: I namedropped you in my email to the OPLSS folks. Told them that if they allowed me to attend, I will follow Brent Yorgey's advice and get through as much of TaPL as I possibly can :)
+2012-04-25 23:22:50 UTC <byorgey> vyom: great, I approve =)
+2012-04-25 23:45:51 UTC <mgsloan> vyom: awesome! see you there!
+2012-04-25 23:46:25 UTC <mgsloan> ACTION will try to get through as much of ATAPL as possible before haha
+2012-04-25 23:50:23 UTC <mgsloan> ACTION wonders how many of the students will be repeat students
+2012-04-25 23:51:13 UTC <mgsloan> I had no idea, at the time, who David Terei was, but when river-rafting, he pushed me off the boat :D
+2012-04-25 23:51:26 UTC <mgsloan> (hence my G+ photo)
+2012-04-26 00:12:15 UTC <vyom> mgsloan: I hope they allow me to register in the first place.. :)
+2012-04-26 00:12:29 UTC <mgsloan> vyom: pretty sure they will!
+2012-04-26 00:12:47 UTC <vyom> how big was it last year
+2012-04-26 00:12:48 UTC <mgsloan> there were people from a more industry background before
+2012-04-26 00:13:02 UTC <mgsloan> good question.. Maybe 80 - 100?
+2012-04-26 00:13:11 UTC <mgsloan> gtg, bb in a few
+2012-04-26 00:41:44 UTC <cmears> Is there any way to get a 2D bounding box from an Envelope?
+2012-04-26 00:46:44 UTC <byorgey> cmears: yes, use the 'boundingBox' function from  Diagrams.BoundingBox
+2012-04-26 00:58:41 UTC <cmears> Thanks
+2012-04-26 00:58:59 UTC <cmears> (And I will at least glance at the documentation next time (:  )
+2012-04-26 01:18:03 UTC <byorgey> cmears: hehe, no worries =)
+2012-04-26 01:19:38 UTC <byorgey> it's certainly not always obvious even when looking at the docs, what with all the type class polymorphism =)
+2012-04-26 01:33:06 UTC <cmears> I looked in the Envelope module looking for "toBoundingBox", but didn't look for the other way around
+2012-04-26 01:58:13 UTC <byorgey> cmears: yeah, Envelopes are fundamental and bounding boxes are sort of an add-on, so it makes more sense to have the bounding box module depend on envelopes rather than vice versa
+2012-04-26 20:36:09 UTC <vyom> I am *this* close to adding clipping support for diagrams-svg http://dl.dropbox.com/u/953/logo/clipping.svg
+2012-04-26 20:36:30 UTC <vyom> i need  a way to generate a unique XML id for each clipping path
+2012-04-26 20:36:34 UTC <vyom> any ideas?
+2012-04-26 20:36:59 UTC <vyom> does diagrams expose a unique ID of some kind for the style maps it generates?
+2012-04-26 20:37:23 UTC <vyom> i need a unique id for every call to withStyles
+2012-04-26 20:37:34 UTC <vyom> err.. i mean withStyle
+2012-04-26 21:19:11 UTC <fryguybob> vyom: Could keep a counter state and increment it?
+2012-04-26 21:19:29 UTC <vyom> fryguybob: i guess.. but for that i might need some sort of a monad
+2012-04-26 21:20:01 UTC <vyom> the diagrams-svg implementation does not really have a monad.. like the cairo one does I think..
+2012-04-26 21:20:07 UTC <vyom> operations are mostly stateless
+2012-04-26 21:20:26 UTC <vyom> so it would be best if I could derive a unique ID out of the inputs I am getting into withStyle
+2012-04-26 21:32:50 UTC <byorgey> vyom: oh, you mean you need a unique ID for clipping paths so you can tell when you are passed the same one as before?
+2012-04-26 21:34:26 UTC <vyom> well.. i did not think that far ahead.. but if you open up the source of the svg i linked
+2012-04-26 21:34:52 UTC <vyom> u need to construct a clipping path inside a clipPath element
+2012-04-26 21:35:00 UTC <vyom> and give it an ID
+2012-04-26 21:35:29 UTC <vyom> and then use that ID for the container that contains the diagram that needs to be clipped
+2012-04-26 21:35:50 UTC <byorgey> oh, I see
+2012-04-26 21:35:57 UTC <byorgey> so you really did just mean literally what you said =)
+2012-04-26 21:36:22 UTC <vyom> so right now i am using a single ID.. "myClip"
+2012-04-26 21:36:39 UTC <vyom> but in a diagram with multiple multiple clip paths
+2012-04-26 21:36:44 UTC <vyom> oops.. :)
+2012-04-26 21:36:48 UTC <byorgey> right, I get it
+2012-04-26 21:36:50 UTC <vyom> multiple clip paths
+2012-04-26 21:37:05 UTC <vyom> i need to make sure the IDs are unique
+2012-04-26 21:37:06 UTC <vyom> ya
+2012-04-26 21:38:30 UTC <byorgey> vyom: Well, diagrams doesn't really do that currently, and I'm not sure that it even should
+2012-04-26 21:38:52 UTC <byorgey> vyom: I think your best bet will be to change your Render type  to  StateT Int S.Svg  or something
+2012-04-26 21:39:16 UTC <byorgey> so you keep track of a counter with the next id to use
+2012-04-26 21:39:31 UTC <byorgey> then doRender will actually run it starting at 0 or whatever and return the Svg
+2012-04-26 21:39:37 UTC <vyom> ya.. i guess :S
+2012-04-26 21:40:24 UTC <vyom> it would work..
+2012-04-26 21:40:32 UTC <byorgey> vyom: or if you want to be crazy you can run a hash function over the vertices of the clipping path to generate the id ;)
+2012-04-26 21:40:50 UTC <vyom> hehe
+2012-04-26 21:41:06 UTC <vyom> just for discussion sake, if diagrams exposed the entire tree at some point..
+2012-04-26 21:41:13 UTC <vyom> i could use something like adjustDia
+2012-04-26 21:41:34 UTC <byorgey> vyom: oh, to go through and add unique id's to the tree?
+2012-04-26 21:41:37 UTC <vyom> and do some of this id assignment stuff before i reach the rendering stuff
+2012-04-26 21:41:43 UTC <vyom> in this use case..
+2012-04-26 21:41:46 UTC <byorgey> yeah, that makes sense actually
+2012-04-26 21:42:05 UTC <vyom> i dont need an unique id unless there is clipping
+2012-04-26 21:43:00 UTC <byorgey> well, I'm currently working on a redesign of the core data structures which will make this kind of thing easier
+2012-04-26 21:43:11 UTC <byorgey> but don't hold your breath =)
+2012-04-26 21:43:14 UTC <vyom> haha
+2012-04-26 21:43:47 UTC <vyom> sure.. i guess it is not hard to make a stateful renderer.. it makes sense for this scenario
+2012-04-26 21:44:39 UTC <byorgey> yeah, it shouldn't be too bad, and yes, it seems to me like this is exactly the kind of thing you want it for
+2012-04-26 21:45:25 UTC <vyom> another way that places more of a burden on the user..
+2012-04-26 21:45:40 UTC <vyom> is to name the diagram whenever user is clipping
+2012-04-26 21:46:01 UTC <byorgey> vyom: yeah, but the backend doesn't get access to those names
+2012-04-26 21:46:03 UTC <vyom> the render logic can then check if there is a named attribute.. and use that.. otherwise fallback to default
+2012-04-26 21:46:18 UTC <byorgey> they are used only to help construct the diagram
+2012-04-26 21:46:20 UTC <vyom> hmm.. ok
+2012-04-26 21:46:26 UTC <byorgey> but maybe it should
+2012-04-26 21:46:54 UTC <vyom> well.. I guess i was thinking of custom attributes then
+2012-04-26 21:47:08 UTC <byorgey> actually, I think we should have two kinds of names: one which is for giving names to subdiagrams to help refer to them later, and one which is intended for backends to use
+2012-04-26 21:47:12 UTC <byorgey> yeah, a custom "name" attribute
+2012-04-26 21:47:22 UTC <vyom> diagrams-svg could define a custom attribute called clipPathId
+2012-04-26 21:47:28 UTC <byorgey> yes, it could
+2012-04-26 21:47:51 UTC <byorgey> right, but then anyone wanting to use clipping with the diagrams-svg backend would be required to give a clipPathId?
+2012-04-26 21:48:00 UTC <byorgey> that would be strange
+2012-04-26 21:48:04 UTC <vyom> yes.. thats what I dont like about it
+2012-04-26 21:48:07 UTC <byorgey> especially since other backends do not require it
+2012-04-26 21:48:43 UTC <byorgey> definitely not worth doing that just to avoid usign the State monad =)
+2012-04-26 21:48:56 UTC <vyom> ah well.. StateT SvgState Svg it is then
+2012-04-26 21:49:00 UTC <vyom> yes that's right
+2012-04-26 21:49:35 UTC <vyom> actually.. now that I think about it.. it is possible to thread state without using a state monad
+2012-04-26 21:49:57 UTC <vyom> start with adjustDia and assign a custom attribute
+2012-04-26 21:50:05 UTC <vyom> and keep reading and incrementing it
+2012-04-26 21:50:11 UTC <vyom> does that make sense?
+2012-04-26 21:52:26 UTC <byorgey> no, I don't think that's possible
+2012-04-26 21:52:33 UTC <byorgey> how would you increment it?
+2012-04-26 21:52:42 UTC <byorgey> you can't change the diagram you are in the midst of rendering
+2012-04-26 21:53:31 UTC <byorgey> ACTION -> home
+2012-04-26 21:54:01 UTC <vyom> yes.. you are right.. more precisely.. you can change it before calling the appropriate render methods
+2012-04-26 21:54:05 UTC <vyom> but it wont be persisted
+2012-04-26 22:22:26 UTC <vyom> committed this for now : https://github.com/deepakjois/diagrams-svg/commit/3ac65d45ab0b101dee79e35affe879206f57b6b2
+2012-04-26 22:22:58 UTC <vyom> will circle back (hopefully soon) to fix the unique id problem
+2012-04-26 23:18:05 UTC <vyom> ok i am looking at text now.. and can use some help..
+2012-04-26 23:18:07 UTC <vyom> http://www.w3.org/TR/SVG/text.html#TextElement
+2012-04-26 23:18:20 UTC <vyom> SVG requires an X and Y co-ordinate on the text
+2012-04-26 23:18:24 UTC <vyom> to position..
+2012-04-26 23:19:00 UTC <vyom> given that in diagrams, text doesnt occupy any size.. it does not have an envelope..
+2012-04-26 23:19:11 UTC <vyom> so how do i come up with an appropriate X/Y value?
+2012-04-26 23:19:18 UTC <vyom> i guess i can't right?
+2012-04-26 23:22:16 UTC <luite> using text-anchor to center it on the given coordinate?
+2012-04-26 23:23:18 UTC <vyom> luite: what do you mean by 'given' co-ordinate
+2012-04-26 23:24:01 UTC <vyom> when we render text in diagrams.. we just call.. a funciton like 'text "write me"'
+2012-04-26 23:24:34 UTC <vyom> there is no bounding box or a position of any kind
+2012-04-26 23:25:02 UTC <luite> hmm ok, i thought it had a zero dimension box
+2012-04-26 23:25:15 UTC <vyom> i guess i need to look at what cairo does
+2012-04-26 23:25:18 UTC <vyom> to get a better idea
+2012-04-26 23:25:27 UTC <vyom> because it must have the same problem
+2012-04-26 23:26:25 UTC <vyom> ah never mind.. the text object does have a transform
+2012-04-26 23:26:30 UTC <vyom> so i can use that i guesss
+2012-04-26 23:26:39 UTC <vyom> http://projects.haskell.org/diagrams/doc/Diagrams-TwoD-Text.html
+2012-04-26 23:28:52 UTC <cmears> Yes, you should be able to transform it
+2012-04-26 23:29:12 UTC <cmears> Translate, to be specific
+2012-04-26 23:58:57 UTC <vyom> cmears: yes.. now trying to figure out what incantation i need to convert the transformation into an X/Y co-ordinate in the final vector space
+2012-04-27 00:08:24 UTC <vyom> the way I am thinking about it.. I will translate 'origin' by the given transformation, extract the x and y co-ordinates and use them in my SVG output
+2012-04-27 00:08:36 UTC <vyom> anyone know off hand how to do that?
+2012-04-27 00:08:48 UTC <vyom> translate t origin ?
+2012-04-27 00:22:33 UTC <vyom> apply t r2 (0,0)
+2012-04-27 00:22:37 UTC <vyom> seems like the right incantation
+2012-04-27 00:23:13 UTC <vyom> am i right?
+2012-04-27 00:24:12 UTC <fryguybob> ACTION practices guess and check in these situations with enough points that it constitutes a proof.
+2012-04-27 00:42:47 UTC <vyom> :)
+2012-04-27 00:43:23 UTC <cmears> I think that is what the TikZ backend does
+2012-04-27 00:43:54 UTC <cmears> render _ (Text tr al str) = [...] (unr2 . transl $ tr)
+2012-04-27 00:44:06 UTC <vyom> so.. this isnt working http://hpaste.org/67686
+2012-04-27 00:44:30 UTC <vyom> hmm.. ok.. lets see
+2012-04-27 00:46:05 UTC <vyom> okk.. it kinda works
+2012-04-27 00:46:46 UTC <vyom> thanks cmears
+2012-04-27 00:47:52 UTC <cmears> No worries
+2012-04-27 00:48:43 UTC <vyom> http://dl.dropbox.com/u/953/logo/text.svg that is my crude text output
+2012-04-27 00:50:28 UTC <vyom> its gonna be a pain trying to reconcile text outputs on different backends
+2012-04-27 00:52:08 UTC <fryguybob> That text looks stroked.  Ah, source says that it is.
+2012-04-27 00:53:01 UTC <luite> vyom: i don't think it needs to be a goal to make them look identical
+2012-04-27 00:53:20 UTC <luite> similar differences as with html in different browsers could be allowed
+2012-04-27 00:53:28 UTC <vyom> fryguybob: not by design.. maybe the default are wonky
+2012-04-27 00:54:22 UTC <vyom> luite: i guess so.. but it would be ideal to have no surprises if somebody is moving from one backend to another
+2012-04-27 00:55:05 UTC <luite> great work on the svg backend btw
+2012-04-27 00:55:08 UTC <vyom> at the least there is should be a documented list of expected divergence from a "default" backend
+2012-04-27 00:55:13 UTC <vyom> luite: thanks
+2012-04-27 00:55:30 UTC <vyom> at this point the de-facto "default" backend is Cairo
+2012-04-27 00:56:25 UTC <fryguybob> vyom: If I remove the stroke stuff in the <g> around the <text> and set the fill-opacity to 1.0 it looks right.
+2012-04-27 00:57:37 UTC <vyom> fryguybob: hmm... so thats quite tricky.. it is using some previous value for all those things
+2012-04-27 00:58:21 UTC <vyom> the only way out might be to use an additiona <g> node to turn off the values
+2012-04-27 00:59:40 UTC <vyom> fryguybob: i just emptied out the attributes <g> and that seems fine too
+2012-04-27 00:59:49 UTC <vyom> :(
+2012-04-27 01:00:24 UTC <fryguybob> Yeah, I would guess that text would default to filled with black.
+2012-04-27 01:01:22 UTC <fryguybob> is <g> group?
+2012-04-27 01:02:58 UTC <vyom> yes.. it is a grouping node
+2012-04-27 01:03:17 UTC <vyom> so the <text> gets grouped inside a <g> node which is good
+2012-04-27 01:03:35 UTC <vyom> but it is picking up some values for stroke and fill
+2012-04-27 01:03:44 UTC <vyom> which are being set by diagrams
+2012-04-27 01:04:09 UTC <vyom> i guess Cairo does text rendering differently.. in that it ignores those values likely
+2012-04-27 01:04:50 UTC <luite> so the svg backend is already better!
+2012-04-27 01:04:52 UTC <vyom> in this case.. the code rendering the <g> element outside each "primitive" in the diagram is generic..
+2012-04-27 01:05:26 UTC <vyom> luite: hehe.. not really. Text rendering in Cairo is much more sophisticated
+2012-04-27 01:05:31 UTC <luite> how about font support btw, are there haskell libs that support loading fonts and converting them to svg?
+2012-04-27 01:05:56 UTC <vyom> luite : there is a library called SVGFonts which somebody wrote for diagrams
+2012-04-27 01:06:23 UTC <luite> oh cool
+2012-04-27 01:06:24 UTC <vyom> http://hackage.haskell.org/package/SVGFonts-1.1
+2012-04-27 01:06:43 UTC <vyom> but it requires you to have an existing SVG font description handy
+2012-04-27 01:07:43 UTC <fryguybob> I can't remember what you have to do in Postscript to get the outline of a font.
+2012-04-27 01:07:52 UTC <luite> ah converting could be done by an external program, i guess you can run a font forge script
+2012-04-27 01:08:34 UTC <luite> hmm, didn't know that was possible
+2012-04-27 01:08:54 UTC <fryguybob> But I'm using the "show" operator (and I think the Cairo backend is still doing that too) which means there is no stroke operation happening.
+2012-04-27 01:10:08 UTC <luite> hm don't svg's support web fonts like html5?
+2012-04-27 01:10:31 UTC <luite> (dunno if it's html5 or css3 or whatever, but browsers support it :) )
+2012-04-27 01:12:17 UTC <vyom> there are different kinds of fonts supported by web fonts
+2012-04-27 01:12:22 UTC <vyom> svg fonts is one of them
+2012-04-27 01:12:56 UTC <vyom> SVG does have a "font-family" attribute to specify a font for text
+2012-04-27 01:13:15 UTC <vyom> so you dont *have* to use an SVG font to render text in SVG
+2012-04-27 01:13:44 UTC <fryguybob> vyom: One thing you could do is wrap all <text> in <g stroke-opacity="0.0" fill-opacity="1.0">...</g>
+2012-04-27 01:14:16 UTC <vyom> as for "web fonts", all that means I guess is if SVG can support a font specified by the creator even if it is not installed on the user's machine.. using some web font mechanism
+2012-04-27 01:16:19 UTC <fryguybob> Humm, does the Cairo backend result in text with your example?  If it does, then it seems like the opacity part of the color does not get applied to text (Postscript does not support alpha blending at this point).
+2012-04-27 01:16:40 UTC <luite> vyom: yeah that's what i meant, can you specify some external font file like in html style tags?
+2012-04-27 01:17:35 UTC <vyom> luite: will check with the resident expert, my wife :)
+2012-04-27 01:17:37 UTC <vyom> i have no idea
+2012-04-27 01:21:53 UTC <vyom> fryguybob: i am not sure.. But there may be multiple things going on. I am trying to strip out each of the default one by one and its leading to unpredictable results
+2012-04-27 01:22:01 UTC <vyom> i need to understand defaults in SVG better
+2012-04-27 01:23:02 UTC <vyom> it seems that regardless of the values, sometimes even the presence of an attribute makes a difference to the output, even if the value is set to a value that *should* have not effect
+2012-04-27 01:23:25 UTC <vyom> s/value is set to a value/attribute is set to a value/
+2012-04-27 01:26:26 UTC <fryguybob> vyom: Strange indeed.
+2012-04-27 01:29:31 UTC <vyom> http://www.w3.org/TR/SVG/text.html oh well.. this is the amount of verbiage i have to get through if I have to implement text correctly ;)
+2012-04-27 01:29:57 UTC <vyom> i think it is a good time to leave this coffee shop and head home..
+2012-04-27 01:29:59 UTC <vyom> later
+2012-04-27 02:31:41 UTC <byorgey> fryguybob: yeah, opacity is not really handled correctly in cairo right now
+2012-04-27 02:31:51 UTC <byorgey> I think I filed a bug on the bug tracker
+2012-04-27 05:43:56 UTC <mgsloan> tgeeky: This is a pretty interesting paper about the value of "speculation" as applied to IDE plugin systems:  http://abstract.cs.washington.edu/~blucia0a/pubs/pluginpaper.pdf
+2012-04-27 23:33:31 UTC <vyom> Ok so I added a State monad around the SVG rendering, just to keep track of clipping IDs
+2012-04-27 23:33:32 UTC <vyom> https://github.com/deepakjois/diagrams-svg/commit/c610a436b710b90cb08d68ed9342daf94e2c2603
+2012-04-27 23:34:27 UTC <luite> ew monads
+2012-04-27 23:43:11 UTC <vyom> heh
+2012-04-28 00:41:57 UTC <vyom> can anyone explain how text is rendered in Cairo? I see that the first thing that happens in the text rendering code is `cairoTransf (tr <> reflectionY)`
+2012-04-28 00:42:03 UTC <vyom> what does that do exactly?
+2012-04-28 00:42:32 UTC <luite> i think that's because the cairo coordinate system is upside down
+2012-04-28 00:44:49 UTC <vyom> ok.. I guess the question i am trying to ask if.. what does Cairo consider as the "starting point" of the text..
+2012-04-28 00:44:59 UTC <vyom> lets say the text is just a single alphabet "a"
+2012-04-28 00:45:52 UTC <vyom> when there is no transform on the text "a", what is the local origin of the text..
+2012-04-28 00:46:07 UTC <vyom> is it top left? or bottom left?
+2012-04-28 00:46:20 UTC <luite> that i don't know
+2012-04-28 00:47:21 UTC <vyom> in SVG.. when i say <text x="0" y="0">a</text> it renders the glyph "a" with the bottom left of the glyph positioned at 0,0
+2012-04-28 00:47:36 UTC <vyom> so effectively it is not visible
+2012-04-28 00:48:26 UTC <vyom> however if it is a character like "g".. because there is a descender.. i can see that in the display
+2012-04-28 00:49:02 UTC <vyom> which suggests that 0,0 is referring to the bottom left of the baseline of the font being used
+2012-04-28 00:49:12 UTC <vyom> i am curious how Cairo does these calculations
+2012-04-28 00:49:48 UTC <vyom> i guess the `cairoTransf (tr <> reflectionY)` may be a red herring..
+2012-04-28 00:50:43 UTC <vyom> there is some stuff after that statement which is relevant.. but it kinda looks dense to me right now
+2012-04-28 00:53:12 UTC <vyom> the other thing is that text attributes like font size are not available when you are rendering text.. so I wonder how Cairo does the bounds calculation
+2012-04-28 01:03:46 UTC <vyom> looks like i am talking to myself.. but hoping byorgey will read this at some point and replu
+2012-04-28 01:03:53 UTC <vyom> s/replu/reply/
+2012-04-28 01:05:12 UTC <vyom> I am wondering if I need to capture additional state inside the monad I am using to render SVG.. when I am about to render Text.. I need to query the state monad for font information etc.. so that I can then use that to tweak the transforms appropriately
+2012-04-28 01:36:52 UTC <vyom> i need to store the Style attributes somewhere.. but looks like Style is parameterizsed by another type.. like Style v
+2012-04-28 01:37:16 UTC <vyom> does that mean any data type that needs to store styles needs to be parameterized
+2012-04-28 01:37:26 UTC <vyom> ?
+2012-04-28 01:55:12 UTC <fryguybob> vyom: The Cairo backend uses http://www.cairographics.org/manual/cairo-text.html#cairo-show-text
+2012-04-28 01:55:26 UTC <fryguybob> Which is not a good way to go about it.
+2012-04-28 01:55:30 UTC <vyom> ok
+2012-04-28 01:57:27 UTC <fryguybob> This API doesn't even work correctly on Windows.
+2012-04-28 02:16:19 UTC <vyom> https://dl-web.dropbox.com/get/Public/logo/text.svg?w=cf1bbb76
+2012-04-28 02:16:35 UTC <vyom> so i can tell that in SVG the local origin is at the bottom left of the text
+2012-04-28 20:13:26 UTC <vyom> is there a way to take a T2 and remove the translation component from it?
+2012-04-28 22:51:52 UTC <vyom> byorgey: I sent  a mail to diagrams-discuss as well https://gist.github.com/2522452
+2012-04-28 22:52:09 UTC <vyom> made that gist after doing a bit of research and prototyping..
+2012-04-28 22:52:25 UTC <vyom> i got a quite further along implementing text support
+2012-04-28 22:52:29 UTC <vyom> before getting stuck
+2012-04-28 22:52:35 UTC <vyom> any help is appreciated
+2012-04-28 23:00:00 UTC <vyom> here is the ideal text output : http://dl.dropbox.com/u/953/logo/text_ideal.svg
+2012-04-28 23:19:01 UTC <byorgey> vyom: I'll respond more carefully on Monday
+2012-04-28 23:19:19 UTC <vyom> sure
+2012-04-28 23:19:21 UTC <vyom> thanks
+2012-04-28 23:19:27 UTC <byorgey> vyom: currently traveling (@ my cousin's wedding) so I don't have much time
+2012-04-28 23:19:47 UTC <vyom> np.. i will keep digging in the meanwhile
+2012-04-28 23:20:08 UTC <byorgey> vyom: note there are also some things I'm not happy about with the way text is handled in the cairo backend
+2012-04-28 23:20:31 UTC <byorgey> so this is also a good opportunity to decide on something better and implement it in both, rather than just trying to get the SVG backend to exactly match ciaro
+2012-04-28 23:20:34 UTC <byorgey> *cairo
+2012-04-28 23:20:48 UTC <byorgey> anyway, I'll write more about that on Monday too
+2012-04-28 23:21:28 UTC <byorgey> vyom: I'll just say quickly that I don't think you want to pick apart the transformation quite so much... just apply the entire transformation and then render the text
+2012-04-28 23:21:39 UTC <byorgey> for example it should be possible to apply shears to text etc.
+2012-04-28 23:22:20 UTC <byorgey> as for font size, don't worry about it too much for now, that's one of the things where I don't like the current way it's done
+2012-04-28 23:26:32 UTC <vyom> I like the fact that the default font size in the local vector space is 1 and we store transformation mappings from local -> final vector spaces..
+2012-04-28 23:26:50 UTC <vyom> it seems to provide flexibility
+2012-04-28 23:27:02 UTC <vyom> esp for SVG.. as long as we can get the eventual value
+2012-04-28 23:27:16 UTC <vyom> just that I dont know how to :)
+2012-04-28 23:33:07 UTC <byorgey> vyom: yeah, what I don't like is that the font size actually determines the shape of glyphs, kerning, etc.
+2012-04-28 23:33:14 UTC <byorgey> so setting the font size to 1 makes it look weird
+2012-04-28 23:33:49 UTC <byorgey> there needs to be a way to set the "font size" separately from the actual height (wrt the local vector space) of the text
+2012-04-28 23:33:58 UTC <byorgey> so you can say "use 12 pt text that is 3 units hight"
+2012-04-28 23:34:54 UTC <byorgey> vyom: one problem is that in the cairo rendering monad one can extract information about fonts such as info about the height etc.
+2012-04-28 23:35:15 UTC <byorgey> but the SVG backend doesn't give you access to that
+2012-04-28 23:35:39 UTC <byorgey> not sure off the top of my head what the solution is.  I'll think about it.
+2012-04-28 23:36:27 UTC <vyom> SVG does allow "em" based font specification.. which is basically a relative unit
+2012-04-28 23:37:16 UTC <byorgey> ah, interesting
+2012-04-28 23:37:50 UTC <vyom> in fact "em" in web based specs like CSS etc has always been relative
+2012-04-28 23:38:24 UTC <vyom> so when I look at font size 1 in diagrams, i could interpret it as 1em
+2012-04-28 23:38:37 UTC <vyom> which means it is 1x the current default size
+2012-04-28 23:39:00 UTC <vyom> i just set the default to "1" because i did not want to mess up my calculations
+2012-04-28 23:39:10 UTC <vyom> i could as well have set it to "15pt"
+2012-04-28 23:39:32 UTC <vyom> and 1em would have been equal to "15pt" , 2em to "30pt" and so on
+2012-04-28 23:40:40 UTC <vyom> but then that would mess up the other values.. like the rects you would draw around
+2012-04-28 23:40:49 UTC <vyom> but then there is no real way to get around it
+2012-04-28 23:43:13 UTC <vyom> More about SVG units: http://www.w3.org/TR/SVG/coords.html#Units
+2012-04-29 00:41:46 UTC <vyom> how do i find the angle between two vectors
+2012-04-29 00:42:11 UTC <fryguybob> dot product or cross product can get you there.
+2012-04-29 00:45:08 UTC <vyom> looks like there is a function called direction
+2012-04-29 00:45:13 UTC <vyom> which i could use
+2012-04-29 00:52:00 UTC <fryguybob> vyom: Depending on what you are doing you can usually avoid using angles directly.
+2012-04-29 00:52:47 UTC <vyom> fryguybob: you are probably right.. i could directly calculate a affine transformation
+2012-04-29 00:52:57 UTC <vyom> rather than messing with angles
+2012-04-29 01:06:42 UTC <vyom> Finally.. after hours of toiling... I have this to present http://dl.dropbox.com/u/953/logo/text.svg .. compare with http://projects.haskell.org/diagrams/manual/diagrams-manual.html#rotation
+2012-04-29 01:09:25 UTC <vyom> i wasted to lot of time trying to make it as close to Cairo as possible.. not that, that should be a goal.. but I still learnt a lot about SVG text in the bargain..
+2012-04-29 01:22:57 UTC <fryguybob> vyom: Looks nice :D
+2012-04-29 01:23:35 UTC <vyom> thanks
+2012-04-29 01:24:13 UTC <vyom> the last piece  of the puzzle is getting other transformations right.. shear transformations arent being handled right now..
+2012-04-29 01:24:23 UTC <vyom> just translates and rotates
+2012-04-29 02:12:35 UTC <byorgey> vyom: doesn't SVG have any generic "transform" node where you just give it the parameters of an arbitrary affine transformation?
+2012-04-29 02:12:50 UTC <vyom> yes it does..
+2012-04-29 02:12:57 UTC <vyom> it has a transform attribute
+2012-04-29 02:13:14 UTC <vyom> what i need is to provide it an appropriate matrix
+2012-04-29 02:13:36 UTC <byorgey> vyom: right, so look at the cairo backend to see how to extract the matrix coefficients from a T2
+2012-04-29 02:13:36 UTC <vyom> in form "matrix(a b c d e f g)"
+2012-04-29 02:13:47 UTC <byorgey> it's pretty easy
+2012-04-29 02:14:03 UTC <vyom> i did look.. maybe not carefully enough
+2012-04-29 02:14:08 UTC <byorgey> I think the function is called cairoTransform or something like that
+2012-04-29 02:14:51 UTC <vyom> ah ok.. there it is!
+2012-04-29 02:14:58 UTC <byorgey> vyom: http://hackage.haskell.org/packages/archive/diagrams-cairo/0.5.0.1/doc/html/src/Diagrams-Backend-Cairo-Internal.html#cairoTransf
+2012-04-29 02:14:58 UTC <vyom> should have looked carefully
+2012-04-29 02:15:19 UTC <vyom> however.. there is one complication which is why i need to decompose the transformation matrix
+2012-04-29 02:15:57 UTC <vyom> I tried a few examples.. where I tried to apply Y-scaling and it doesnt work correctly
+2012-04-29 02:16:24 UTC <vyom> there seem to be something about the way SVG renders stuff
+2012-04-29 02:16:31 UTC <byorgey> OK, I believe you =)
+2012-04-29 02:16:43 UTC <vyom> it uses the intial font size.. renders something and then scales it up
+2012-04-29 02:16:49 UTC <byorgey> I'll look at it more carefully in a few days
+2012-04-29 02:17:04 UTC <vyom> instead of using a higher point font size
+2012-04-29 02:17:36 UTC <vyom> and so.. in order to get what I want.. i am decomposing the transformation.. applying the y scale as a font size
+2012-04-29 02:17:44 UTC <vyom> and the others as a normal transform..
+2012-04-29 02:18:26 UTC <vyom> i am not sure how it would work.. but the basic idea is to "silence" the Y scaling in the transformation mapping because it is already accounted for in the font size increase
+2012-04-29 02:19:05 UTC <vyom> it might mess up shearing.. as you were alluding to earlier.. but i dunno exactly how it would work.. so i am trying stuff out
+2012-04-29 02:19:42 UTC <vyom> and i ended up with some code similar to that code in cairoTransf.. so i am glad i am on the right track
+2012-04-29 02:20:22 UTC <byorgey> OK.  I think this may also be addressed by what I was talking about earlier, separating out the notion of font size from the actual size
+2012-04-29 02:20:32 UTC <byorgey> but I'm not exactly sure
+2012-04-29 02:20:46 UTC <vyom> byorgey: yes.. that is another way to address by changing diagrams design
+2012-04-29 02:21:00 UTC <vyom> but for now.. i am trying to work with the current system
+2012-04-29 02:22:14 UTC <vyom> i wish i knew co-ordinate geometry better.. it would be a lot easier to reason about this stuff :).. right now I am just using intuition, and trial and error
+2012-04-29 02:22:23 UTC <vyom> math can be such a force multiplier :)
+2012-04-29 02:22:33 UTC <byorgey> hehe =)
+2012-04-29 02:22:43 UTC <byorgey> if you have any particular questions about coordinate geometry, just ask
+2012-04-29 02:23:01 UTC <byorgey> anyway, thanks for the great work =)
+2012-04-29 02:23:04 UTC <byorgey> I'm off to bed
+2012-04-29 02:23:24 UTC <vyom> well.. not really.. i did study it once upon a time.. and bits of knowledge remain.. i hope to get on with that linear algebra textbook that is lying around
+2012-04-29 02:23:34 UTC <vyom> later
