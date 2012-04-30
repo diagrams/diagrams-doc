@@ -2,15 +2,20 @@
 \begin{hcarentry}[updated]{diagrams}
 \report{Brent Yorgey}%11/11
 \status{active development}
-\participants{Ryan Yates}
+\participants{Peter Hall, Andy Gill, Deepak Jois, Ian Ross, Michael Sloan, Ryan Yates}
 \makeheader
 
-The diagrams library provides an embedded domain-specific language for
-declarative drawing.  The overall vision is for diagrams to become a
-viable alternative to DSLs like MetaPost or Asymptote, but with the
+The diagrams framework provides an embedded domain-specific language
+for declarative drawing.  The overall vision is for diagrams to become
+a viable alternative to DSLs like MetaPost or Asymptote, but with the
 advantages of being \emph{declarative}---describing what to draw, not
 how to draw it---and \emph{embedded}---putting the entire power of
-Haskell (and Hackage) at the service of diagram creation.
+Haskell (and Hackage) at the service of diagram creation.  There is
+still much more to be done, but diagrams is already quite
+fully-featured, with a comprehensive user manual, a large collection of
+primitive shapes and attributes, many different modes of composition,
+paths, cubic splines, images, text, arbitrary monoidal annotations,
+named subdiagrams, and more.
 
 %**<img width=500 src="./paradox.jpg">
 %*ignore
@@ -19,14 +24,19 @@ Haskell (and Hackage) at the service of diagram creation.
 \end{center}
 %*endignore
 
-Development on the library has proceeded apace since the last HCAR,
-and the 0.4 release now features a comprehensive user manual as well
-as support for a large collection of primitive shapes, many different
-modes of composition, paths, cubic splines, images, text, arbitrary
-monoidal annotations, named subdiagrams, and more.
+Since the previous HCAR, a new version of the framework has been
+released, featuring experimental support for animations; a new package
+of user-contributed modules, so far including tree drawing, Apollonian
+gaskets, planar tilings, ``wrapped'' layout, and turtle graphics;
+better performance; many other small additions and
+improvements; and a redesigned website.
 
-There is plenty more work to be done; new contributors are
-particularly welcome!
+There is also a growing diagrams ``ecosystem''; related projects under
+development include TikZ and HTML5 canvas backends, a Logo
+interpreter, a graphing application, and a framework for creating
+interactive GTK/cairo applications.
+
+There is plenty more work to be done; new contributors are welcome!
 
 %**<img width=500 src="./triangular-numbers.jpg">
 %*ignore
@@ -37,15 +47,20 @@ particularly welcome!
 
 \FuturePlans
 
-Plans for the near future include a native SVG backend, improved font
-support, arrowheads, and improvements to the handling of named
-subdiagrams.  Longer-term plans include support for animations, a
-custom Gtk application for editing diagrams, and any other awesome
-stuff we think of.
+A native SVG backend is under active development and targeted for the
+next release of the framework.  The cairo backend will still be
+supported, but SVG will replace cairo as the default
+``out-of-the-box'' backend, vastly simplifying installation for new
+useres. Other plans for the near future include support for drawing
+arrows and improvements to the handling of named subdiagrams.
+Longer-term plans include support for interactive diagrams, a custom
+Gtk application for editing diagrams, and any other awesome stuff we
+think of.
 
 \FurtherReading
 \begin{compactitem}
 \item \url{http://projects.haskell.org/diagrams}
+\item \url{http://projects.haskell.org/diagrams/gallery.html}
 \item \url{http://code.google.com/p/diagrams/issues/list}
 \end{compactitem}
 \end{hcarentry}
