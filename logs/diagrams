@@ -16169,3 +16169,186 @@
 2012-04-29 02:23:04 UTC <byorgey> I'm off to bed
 2012-04-29 02:23:24 UTC <vyom> well.. not really.. i did study it once upon a time.. and bits of knowledge remain.. i hope to get on with that linear algebra textbook that is lying around
 2012-04-29 02:23:34 UTC <vyom> later
+2012-04-30 20:15:27 UTC <vyom> I updated the gist I posted on diagrams-discuss with some more comments https://gist.github.com/2522452#gistcomment-291797
+2012-04-30 20:16:21 UTC <vyom> the transformation matrix for the text changes with the requested size of the resulting image..
+2012-04-30 20:17:30 UTC <vyom> i figured out a way to use the "original" matrix (i.e the one that is generated when the size params are left empty) to achieve proper text rendering
+2012-04-30 20:18:09 UTC <vyom> could somebody help we with figuring out how to get the "original" matrix.. if I have the height, width and the final transformation matrix
+2012-05-01 00:28:02 UTC <tgeeky> vyom: is not here.
+2012-05-01 00:29:20 UTC <tgeeky> byorgey: is it easy to describe what the default behavior of diagrams is when you don't supply -w and -h?
+2012-05-01 00:50:22 UTC <byorgey> tgeeky: yes, it simply uses the absolute size of the diagram
+2012-05-01 15:51:41 UTC <vyom> byorgey: replied to your gist https://gist.github.com/2522452#gistcomment-293581 thanks for the pointer to adjustDia2D
+2012-05-01 15:59:13 UTC <byorgey> vyom: I just replied to your reply.
+2012-05-01 16:00:15 UTC <vyom> and i just posted a screenshot
+2012-05-01 16:00:22 UTC <vyom> this is getting really bizarre :)
+2012-05-01 16:00:46 UTC <byorgey> indeed =)
+2012-05-01 16:00:50 UTC <byorgey> let me post a screenshot too
+2012-05-01 16:08:26 UTC <vyom> hmm.. it looks like the fill and stroke params are interfering with the output
+2012-05-01 16:08:49 UTC <vyom> i removed all the fill and stroke params from the <g> parent element of <text>
+2012-05-01 16:09:13 UTC <vyom> and both of them look the same on chrome, safari and firefox 11
+2012-05-01 16:10:15 UTC <byorgey> aha
+2012-05-01 16:10:45 UTC <byorgey> I'm not sure why they would give different outputs but at least I'm glad you found a way to make them the same =)
+2012-05-01 16:11:06 UTC <vyom> ha ha
+2012-05-01 16:11:33 UTC <byorgey> (I posted a screenshot, though maybe it doesn't matter anymore)
+2012-05-01 16:12:12 UTC <vyom> ya.. u shud try refreshing the two images in firefox http://dl.dropbox.com/u/953/logo/text_100x100_1.svg
+2012-05-01 16:12:17 UTC <vyom> and http://dl.dropbox.com/u/953/logo/text_100x100_2.svg
+2012-05-01 16:13:14 UTC <byorgey> yep, they look identical for me now
+2012-05-01 16:15:10 UTC <vyom> hmm.. and to think I wasted all those hours chasing all kinds of other lines of investigation :)
+2012-05-01 16:15:34 UTC <vyom> oh well.. i learned a fair bit about SVG text .. so its not too bad :)
+2012-05-01 16:16:52 UTC <byorgey> yeah, I don't think it was a waste
+2012-05-01 16:16:58 UTC <byorgey> roundabout, perhaps =)
+2012-05-01 16:19:52 UTC <vyom> i should stop using Chrome for testing.. just way too many subtle bugs in SVG rendering :)
+2012-05-01 16:21:15 UTC <vyom> anyway.. thanks for your help.. I am glad I got as far as i did over the past few days.. in between packing, and moving cities and what not..
+2012-05-01 16:21:30 UTC <vyom> I am reporting from San Francisco now.. got here yesterday
+2012-05-01 16:22:34 UTC <byorgey> woah, really?
+2012-05-01 16:23:03 UTC <byorgey> you mean you were traveling, or you mean really Moving moving?
+2012-05-01 16:23:18 UTC <vyom> i thought i posted earlier on the list..
+2012-05-01 16:23:26 UTC <vyom> but yes.. i moved to San Francisco
+2012-05-01 16:23:53 UTC <vyom> last week.. i was living out of a suitcase in an empty apartment..
+2012-05-01 16:24:12 UTC <byorgey> I don't remember seeing anything about you moving (though I can be forgetful =)
+2012-05-01 16:24:18 UTC <vyom> s/list/channel/
+2012-05-01 16:24:26 UTC <byorgey> anyway, cool
+2012-05-01 16:24:29 UTC <byorgey> how's SF so far?
+2012-05-01 16:24:53 UTC <vyom>  this is what i posted http://www.facebook.com/deepak.jois/posts/10150686205526099 which more than explains it :)
+2012-05-01 16:24:55 UTC <vyom> its nice
+2012-05-01 16:25:14 UTC <vyom> excited to be here
+2012-05-01 16:26:27 UTC <byorgey> oh, now I remember, I saw your link but I have blocked myself from checking facebook during the day so I couldn't read it =)
+2012-05-01 16:26:40 UTC <vyom> oh.. too bad
+2012-05-01 16:27:21 UTC <vyom> well.. in short my wife moved here.. so i decided to follow suit.. and at the same time decided to take some time off
+2012-05-01 16:28:04 UTC <byorgey> sounds excellent
+2012-05-01 16:28:16 UTC <vyom> now i get to experience the city as an unemployed bum.. :)
+2012-05-01 16:28:25 UTC <byorgey> hehe
+2012-05-01 16:28:40 UTC <byorgey> but not homeless which I assume makes a big difference =)
+2012-05-01 16:29:15 UTC <vyom> ha ha.. yes.. i do have a home.. which does make a difference
+2012-05-01 16:29:33 UTC <vyom> and internet for that matter
+2012-05-01 16:30:06 UTC <byorgey> indeed
+2012-05-01 16:32:34 UTC <vyom> in fact.. last week made me realise.. that i could totally live with a laptop and a suitcase full of possessions for a long period of time..
+2012-05-01 16:32:46 UTC <vyom> be a nomadic hacker of sorts
+2012-05-01 16:34:48 UTC <byorgey> heh, yeah, that sounds fun
+2012-05-01 16:35:05 UTC <byorgey> you could be like Paul Erdos... just show up on people's doorsteps and spend a week hacking together
+2012-05-01 16:39:53 UTC <ClaudiusMaximus> hi! i started porting graphgrow <http://claudiusmaximus.goto10.org/GG/> to haskell, got a renderer sorta working <http://claudiusmaximus.goto10.org/g/haskell/gg2/spiral_1.618_0.png> - would it be sane to try and use diagrams/cairo/gtk for the graph (as in nodes and edges) editor?
+2012-05-01 16:41:54 UTC <vyom> ClaudiusMaximus: what is graphgrow? I could not quite tell from a glance at the website
+2012-05-01 16:42:09 UTC <byorgey> vyom: look in videos/
+2012-05-01 16:43:08 UTC <byorgey> ClaudiusMaximus: sure, it sounds sane to me.  we don't have a lot of specific support for making interactive gtk/cairo widgets at the moment, but it's certainly possible
+2012-05-01 16:44:02 UTC <byorgey> ClaudiusMaximus: e.g. take a look at mgsloan's https://github.com/mgsloan/gtk-toy  and  https://github.com/mgsloan/gtk-toy-diagrams
+2012-05-01 16:44:21 UTC <ClaudiusMaximus> ok - can't hack any more today (other things need doing), tomorrow might be busy, so thursday is probably when i'll start the gui side
+2012-05-01 16:44:38 UTC <ClaudiusMaximus> byorgey: thanks for the links, bookmarking..
+2012-05-01 16:45:12 UTC <vyom> it is funny.. i was about to paste the exact same links.. i saw a demo from mgsloan using gtk-toy-diagrams
+2012-05-01 16:46:03 UTC <ClaudiusMaximus> :)
+2012-05-01 16:46:08 UTC <byorgey> yeah, I don't know if ClaudiusMaximus can directly use gtk-toy-diagrams but certainly some of the techniques/code should be stealable
+2012-05-01 17:01:14 UTC <tgeeky> lol
+2012-05-01 17:01:51 UTC <tgeeky> vyom: in my browser, my screenshot looks nothing like either of your screenshots in either case
+2012-05-01 17:02:11 UTC <vyom> tgeeky: which browser is that..
+2012-05-01 17:02:19 UTC <tgeeky> vyom: chrome latest, I think
+2012-05-01 17:02:55 UTC <vyom> actually.. i changed the files.. while i was having the conversation
+2012-05-01 17:03:00 UTC <tgeeky> vyom: I figured
+2012-05-01 17:03:01 UTC <tgeeky> http://i.imgur.com/NZ1fw.png
+2012-05-01 17:03:35 UTC <vyom> hmm.. interesting.. so its not really the same..
+2012-05-01 17:03:41 UTC <vyom> the baselines are off
+2012-05-01 17:04:23 UTC <vyom> i guess i need to create a bunch of test cases and then gather results across browsers..
+2012-05-01 17:04:54 UTC <tgeeky> vyom: you might be able to use the recent haskell - selenium work to automate it for chrome and firefox
+2012-05-01 17:05:02 UTC <tgeeky> vyom: i'm on Windows, too, if it makes a difference.
+2012-05-01 17:05:22 UTC <vyom> tgeeky: yes.. that is another factor that comes into play
+2012-05-01 17:05:49 UTC <vyom> SVG rendering might differ across different OSes for the same browser too
+2012-05-01 17:05:59 UTC <vyom> thanks for the screenshot
+2012-05-01 17:06:59 UTC <tgeeky> vyom: note that the original picture has a "hollow" letter (white on the inside)
+2012-05-01 17:07:03 UTC <tgeeky> on my screen
+2012-05-01 17:08:13 UTC <vyom> hmm.. by original you mean the one right on top?
+2012-05-01 17:08:36 UTC <tgeeky> vyom: i mean the one in "notes.md"
+2012-05-01 17:08:49 UTC <tgeeky> https://a248.e.akamai.net/camo.github.com/76bad5df64e05c510f415c15cf1c843f823068c7/687474703a2f2f646c2e64726f70626f782e636f6d2f752f3935332f6c6f676f2f746578745f696465616c2e737667
+2012-05-01 17:09:29 UTC <vyom> ok.. yes that is expected. I might have changed the code as well or something.. i was trying out a lot of stuff
+2012-05-01 17:10:57 UTC <vyom> at least now i have narrowed down the investigation from mucking around with matrix transformations to setting the fill/stroke params correctly on text nodes
+2012-05-01 18:39:51 UTC <tgeeky> ugh. Having SSD trouble, did a sector scan... while scanning it reports 2 bad sectors, and then after it's done scanning, it just changes the 2 to 0.
+2012-05-01 18:45:53 UTC <luite> it has remapped those to the spare area
+2012-05-01 18:46:36 UTC <luite> should still show up there
+2012-05-01 19:18:01 UTC <Athas> When putting one diagram atop another (currently via `atop`), how do I make it top-justified, rather than centered?
+2012-05-01 19:19:10 UTC <ClaudiusMaximus> Athas: atop puts the local origins in the same place, so, simply move each local origin to the top of each diagram - let me find an example...
+2012-05-01 19:19:54 UTC <Athas> Oh, as in 'foo # alignT `atop` bar # alignT'?
+2012-05-01 19:20:55 UTC <ClaudiusMaximus> yep that's it
+2012-05-01 19:21:46 UTC <ClaudiusMaximus> (though i'd write it as   alignT foo `atop` alignT bar  if foo and bar aren't more complex, as i y about precedence
+2012-05-01 19:22:00 UTC <ClaudiusMaximus> *i worry about
+2012-05-02 00:06:52 UTC <vyom_> in Cairo.. does text have the concept of a stroke, or just a fill?
+2012-05-02 00:08:24 UTC <byorgey> vyom_: I'm not 100% sure, but I think just a fill
+2012-05-02 00:08:39 UTC <byorgey> i.e. if you want to stroke some text you have to convert it to a path first.
+2012-05-02 00:09:35 UTC <vyom_> byorgey: what is the default fill color for cairo backend.. if i dont set anything
+2012-05-02 00:09:36 UTC <vyom_> ?
+2012-05-02 00:10:57 UTC <vyom_> what i am getting at is.. whether we need to set the fill color explicitly to get the text to show up?
+2012-05-02 00:14:01 UTC <fryguybob> vyom_: Are you trying to use Cairo on Windows for text?
+2012-05-02 00:14:49 UTC <vyom_> fryguybob: no.. i am actually doing some investigation in SVG.. where I realised that the default fill color is "transparent"..
+2012-05-02 00:15:05 UTC <vyom_> so if i render text without specifying any fill color explicilty
+2012-05-02 00:15:24 UTC <fryguybob> ok, just making sure :D.  Text with Cairo doesn't work well on Windows.
+2012-05-02 00:15:28 UTC <vyom_> and set the stroke to "none".. the text does not show up
+2012-05-02 00:15:39 UTC <vyom_> i am curious what is the behavior in Cairo
+2012-05-02 00:15:49 UTC <vyom_> i dont have cairo setup.. so i cant verify that off hand
+2012-05-02 00:15:59 UTC <fryguybob> me neither :(
+2012-05-02 00:16:45 UTC <ClaudiusMaximus> http://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-source-rgba
+2012-05-02 00:16:53 UTC <ClaudiusMaximus> default is black
+2012-05-02 00:17:42 UTC <ClaudiusMaximus> from memory, i think cairo works by setting sources and running stroke and/or fill commands separately
+2012-05-02 00:18:35 UTC <vyom_> ClaudiusMaximus: interesting.. thanks.. so cairo might be rendering text in black when there is no fill color specified expllicitly
+2012-05-02 00:19:20 UTC <ClaudiusMaximus> right
+2012-05-02 00:19:46 UTC <fryguybob> vyom_: That would be my impression from what I remember from poking around a while ago.
+2012-05-02 00:20:39 UTC <vyom_> its kinda inconsistent.. because the default full color for for non-text diagrams primitives is transparent..
+2012-05-02 00:21:02 UTC <vyom_> but it seems to work well in this instance.. since text only has the concept of fill and not stroke
+2012-05-02 00:21:22 UTC <vyom_> in SVG... the <text> node can take both a fill and a stroke
+2012-05-02 00:21:58 UTC <ClaudiusMaximus> cairo has (at least) 2 text APIs, i've only used the "toy" one, i don't know which diagrams-cairo uses
+2012-05-02 00:22:12 UTC <vyom_> but the "stroke" attribute screws up quite badly under transforms..
+2012-05-02 00:22:13 UTC <ClaudiusMaximus> http://www.cairographics.org/manual/cairo-text.html#cairo-show-text is what i used once
+2012-05-02 00:22:15 UTC <fryguybob> diagrams-cairo uses they toy one righ tnow.
+2012-05-02 00:57:43 UTC <vyom_> http://dl.dropbox.com/u/953/logo/textscaling.svg
+2012-05-02 00:57:49 UTC <vyom_> finally this renders correctly
+2012-05-02 01:01:30 UTC <mgsloan> awesome!!
+2012-05-02 01:03:17 UTC <mgsloan> ACTION is finally getting closer to some brief freedom from school
+2012-05-02 01:03:42 UTC <byorgey> vyom_: yay!
+2012-05-02 01:05:04 UTC <vyom_> mgsloan: hi there.. I finally heard after days of waiting from somebody on OPLSS.. so I will be going there after all
+2012-05-02 01:05:33 UTC <byorgey> vyom_: oh, excellent =)
+2012-05-02 01:06:20 UTC <mgsloan> vyom_: Cool!!  It'll be a blast
+2012-05-02 01:07:00 UTC <vyom_> byorgey mgsloan :  i am still waiting on final confirmation on registration.. i had requested for the discounted rate because i am technically "unemployed" :) and they asked me to get a letter of recommendation
+2012-05-02 01:07:26 UTC <vyom_> so i was thinking i will just go in as an "industry professional" instead..
+2012-05-02 01:08:22 UTC <vyom_> dont quite know what to ask my previous employer to put on my letter of recommendation :)
+2012-05-02 01:08:42 UTC <vyom_> its not like i did any Haskell or CS research based stuff there
+2012-05-02 01:08:50 UTC <vyom_> :)
+2012-05-02 01:11:59 UTC <fryguybob> vyom_: I can't get two svg renderers to agree on that file.  It seems like a lot of people are confused about how to handle SVG text.
+2012-05-02 01:12:52 UTC <vyom_> fryguybob: ha ha which ones are those?
+2012-05-02 01:13:28 UTC <vyom_> is there a rectanglular border on the diagram?
+2012-05-02 01:13:38 UTC <fryguybob> Chrome, IE and inkscape
+2012-05-02 01:13:41 UTC <vyom_> in one of them that is..
+2012-05-02 01:13:50 UTC <vyom_> fryguybob: screenshots would be great
+2012-05-02 01:13:58 UTC <fryguybob> Only chrome has borders.
+2012-05-02 01:14:19 UTC <mgsloan> yeah, SVG renderers are unfortunately terribly non-standards-compliant
+2012-05-02 01:15:02 UTC <vyom_> fryguybob: the borders issues is tracked here https://github.com/deepakjois/diagrams-svg/issues/3
+2012-05-02 01:15:06 UTC <vyom_> it is a chrome bug
+2012-05-02 01:15:13 UTC <vyom_> any other inconsistency?
+2012-05-02 01:18:40 UTC <vyom_> This is the commit.. for whoever is intereseted https://github.com/deepakjois/diagrams-svg/commit/7f98ad48ff7c154ad6da9948fc2056268dc53263
+2012-05-02 01:19:24 UTC <vyom_> ah.. i make too many typos :) s/intereseted/interested/
+2012-05-02 01:19:34 UTC <fryguybob> Between inkscape and IE the font is different (not too surprising).  The chrome positioning is different.
+2012-05-02 01:19:55 UTC <vyom_> the font difference is fine i suppose
+2012-05-02 02:28:09 UTC <tgeeky_> byorgey: was that short introductory PDF interesting to you at all?
+2012-05-02 02:41:53 UTC <byorgey> tgeeky_: I'll tell you once I've actually looked at it =)
+2012-05-02 02:42:08 UTC <byorgey> I plan to print it out on Thursday
+2012-05-02 03:00:50 UTC <tgeeky_> k. random question: at your job, do you have regular, conversational access to mathematics grad students -- or are they all in a totally seperate department?
+2012-05-02 17:44:16 UTC <Salash> hello
+2012-05-02 17:45:00 UTC <Salash> Do you know of a channel that is called learn yall a haskell
+2012-05-02 17:48:16 UTC <byorgey> Salash: I'm not sure what you mean.  You're looking for a channel where you can ask questions about Haskell?
+2012-05-02 17:50:54 UTC <Salash> My friend michael directed me hear
+2012-05-02 17:51:05 UTC <Salash> but he also told me about a channel #lyah
+2012-05-02 17:51:23 UTC <Salash> but it doesn't exist so I am still searching
+2012-05-02 17:51:33 UTC <byorgey> Salash: There is a book called "Learn you a Haskell"
+2012-05-02 17:51:56 UTC <byorgey> http://learnyouahaskell.com/
+2012-05-02 17:52:01 UTC <byorgey> Salash: and you can ask questions in #haskell
+2012-05-02 17:52:01 UTC <Salash> ! I guess I should check that out ty
+2012-05-02 17:54:42 UTC <byorgey> Salash: this channel here is for discussion of http://projects.haskell.org/diagrams/
+2012-05-02 17:56:29 UTC <Salash> yeah super cool!
+2012-05-02 22:19:54 UTC <luite> hmm
+2012-05-02 22:20:20 UTC <luite> i'm not good with buzzwords either
+2012-05-02 23:41:44 UTC <vyom> so looks like Hac-Phi 2012 is official
+2012-05-03 01:06:10 UTC <tgeeky> yep
+2012-05-03 01:06:18 UTC <tgeeky> I think I might try to attend. It'll be a long road trip.
+2012-05-03 01:38:39 UTC <byorgey> everyone should attend!
+2012-05-03 01:39:50 UTC <fryguybob> ACTION sadly will be unable to be there this year.
+2012-05-03 01:43:29 UTC <tgeeky> byorgey: do people bring their desktops? I don't think my laptop would be up to it.
+2012-05-03 01:43:40 UTC <tgeeky> s/people/*some* people/
+2012-05-03 01:44:02 UTC <byorgey> tgeeky: no one has ever brought a desktop.
+2012-05-03 01:44:07 UTC <tgeeky> lol
+2012-05-03 01:44:10 UTC <byorgey> I suppose you *could*
+2012-05-03 01:44:47 UTC <tgeeky> and 4 monitorsw
+2012-05-03 01:44:49 UTC <tgeeky> /ssw//
+2012-05-03 01:44:54 UTC <tgeeky> le sigh
