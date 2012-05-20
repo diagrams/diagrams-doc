@@ -28,7 +28,7 @@ compileExample mThumb lhs out = do
 
   f   <- readFile lhs
   let (fields, f') = parseFields f
-      
+
       w = mThumb `mplus` (read <$> M.lookup "width" fields)
       h = mThumb `mplus` (read <$> M.lookup "height" fields)
 
@@ -40,11 +40,13 @@ compileExample mThumb lhs out = do
            "example"
            []
            [ "Diagrams.Backend.Cairo" ]
+           alwaysRegenerate  -- XXX use hashedRegenerate?
   case res of
-    Left err              -> putStrLn ("Parse error in " ++ lhs) >> putStrLn err
-    Right (Left err)      -> putStrLn ("Error while compiling " ++ lhs) >>
-                             putStrLn (ppInterpError err)
-    Right (Right (act,_)) -> act
+    ParseErr err    -> putStrLn ("Parse error in " ++ lhs) >> putStrLn err
+    InterpErr err   -> putStrLn ("Error while compiling " ++ lhs) >>
+                       putStrLn (ppInterpError err)
+    Skipped _       -> return ()
+    OK _ (act,_)    -> act
 
 parseFields :: String -> (M.Map String String, String)
 parseFields s = (fieldMap, unlines $ tail rest)
