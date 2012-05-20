@@ -1,28 +1,17 @@
-import Text.Docutils.CmdLine
 
-import System.Directory
-import System.FilePath
+import System.FilePath ( (<.>), (</>) )
+import System.IO
 
-import Control.Arrow
-import Control.Monad (when)
-
-import Text.Docutils.Util
-import Text.Docutils.Writers.HTML
-import Text.Docutils.Transformers.Haskell
-
-import Text.XML.HXT.Core hiding (when)
-
-import Crypto.Hash.MD5
-import qualified Data.ByteString.Char8 as B
-import Data.ByteString.Base16
-
-import Diagrams.TwoD.Size (SizeSpec2D(Dims))
+import Data.VectorSpace ( zeroV )
 import Diagrams.Backend.Cairo
 import Diagrams.Backend.Cairo.Internal
-
-import Diagrams.Builder
-
-import Data.VectorSpace (zeroV)
+import Diagrams.Builder ( buildDiagram, BuildResult(..), ppInterpError, hashedRegenerate )
+import Diagrams.TwoD.Size ( SizeSpec2D(Dims) )
+import Text.Docutils.CmdLine
+import Text.Docutils.Transformers.Haskell
+import Text.Docutils.Util
+import Text.Docutils.Writers.HTML
+import Text.XML.HXT.Core hiding (when)
 
 main :: IO ()
 main = do
@@ -70,7 +59,7 @@ compileDiaArr =
   getChildren >>>
   getText >>>
   arrIO compileDiagram >>>
-  eelem "div" 
+  eelem "div"
     += attr "style" (txt "text-align: center")
     += (eelem "img"
          += attr "src" mkText
@@ -80,28 +69,32 @@ compileDiaArr =
 --   a file name given by a hash of the source code contents
 compileDiagram :: String -> IO String
 compileDiagram src = do
-  let fileBase = B.unpack . encode . hash . B.pack $ src
-      imgFile = "images" </> fileBase <.> "png"
-  ex <- doesFileExist imgFile
-  when (not ex) $ do
-    putStrLn $ "Generating " ++ imgFile ++ "..."
-    res <- buildDiagram
-             Cairo zeroV (CairoOptions imgFile (Dims 500 200) PNG)
-             [src]
-             "pad 1.1 example"
-             ["DeriveDataTypeable"]
-             [ "Diagrams.TwoD.Types"      -- WHY IS THIS NECESSARY =(
-             , "Graphics.Rendering.Diagrams.Points"
-                 -- GHC 7.2 bug?  need  V (Point R2) = R2  (see #65)
-             , "Diagrams.Backend.Cairo"
-             , "Diagrams.Backend.Cairo.Internal"
-             , "Data.Typeable"
-             ]
-    case res of
-      Left err         -> putStrLn ("Error while compiling\n" ++ src) >>
-                          putStrLn err
-      Right (Left err) -> putStrLn ("Error while compiling\n" ++ src) >>
-                          putStrLn (ppInterpError err)
-      Right (Right (act,_))
-                       -> act
-  return imgFile
+  res <- buildDiagram
+           Cairo
+           zeroV
+           (CairoOptions "default.png" (Dims 500 200) PNG)
+           [src]
+           "pad 1.1 example"
+           ["DeriveDataTypeable"]
+           [ "Diagrams.TwoD.Types"      -- WHY IS THIS NECESSARY =(
+           , "Graphics.Rendering.Diagrams.Points"
+               -- GHC 7.2 bug?  need  V (Point R2) = R2  (see #65)
+           , "Diagrams.Backend.Cairo"
+           , "Diagrams.Backend.Cairo.Internal"
+           , "Data.Typeable"
+           ]
+           (hashedRegenerate
+             (\hash opts -> opts { cairoFileName = mkFile hash })
+             "images"
+           )
+  case res of
+    ParseErr err    -> putStrLn ("\nError while parsing\n" ++ src) >>
+                       putStrLn err >>
+                       return "default.png"
+    InterpErr ierr  -> putStrLn ("\nError while interpreting\n" ++ src) >>
+                       putStrLn (ppInterpError ierr) >>
+                       return "default.png"
+    Skipped hash    -> putStr "." >> hFlush stdout >> return (mkFile hash)
+    OK hash (act,_) -> putStr "O" >> hFlush stdout >> act >> return (mkFile hash)
+ where
+  mkFile base = "images" </> base <.> "png"
