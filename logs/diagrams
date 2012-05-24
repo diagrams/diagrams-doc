@@ -16352,3 +16352,564 @@
 2012-05-03 01:44:47 UTC <tgeeky> and 4 monitorsw
 2012-05-03 01:44:49 UTC <tgeeky> /ssw//
 2012-05-03 01:44:54 UTC <tgeeky> le sigh
+2012-05-17 19:16:29 UTC <byorgey> haha, fun: http://recursivedrawing.com/
+2012-05-17 19:17:14 UTC <tgeeky> pretty neat
+2012-05-17 19:17:26 UTC <tgeeky> i think I saw that last week sometime... from #haskell-blah
+2012-05-17 19:22:48 UTC <tgeeky> byorgey: do you know if people who are on the committees of things like ICFP or Haskell Symposium get paid for their reviewing of papers and organizational work?
+2012-05-17 19:23:02 UTC <tgeeky> or is that considered part of their normal jobs?
+2012-05-17 19:23:18 UTC <byorgey> they do not get paid.
+2012-05-17 19:23:53 UTC <tgeeky> are they barred from discussing the papers they are reviewing pubically, usually?
+2012-05-17 19:24:54 UTC <byorgey> I am not exactly sure.  Probably they are not supposed to mention the fact that they are reviewing a particular paper.
+2012-05-17 19:25:11 UTC <byorgey> But I don't think there's a complete ban on discussing the papers.
+2012-05-17 19:25:25 UTC <byorgey> I don't know, I'm about to find out since I am on the Haskell Symposium committe.
+2012-05-17 19:25:34 UTC <byorgey> *ee
+2012-05-17 19:35:06 UTC <byorgey> http://www.cis.upenn.edu/~byorgey/hosted/recursive-spiral.png
+2012-05-17 19:35:34 UTC <byorgey> oh man, this is going to be so much fun in the "Art of Recursion" course I'm teaching in the fall =)
+2012-05-17 19:43:33 UTC <tgeeky> from ana to zygohisto in one semester!
+2012-05-17 19:44:33 UTC <tgeeky> hehe. you use a timer too?
+2012-05-17 19:44:42 UTC <byorgey> oh, hehe, yes =)
+2012-05-17 19:45:02 UTC <byorgey> it doesn't always help =P
+2012-05-17 19:45:03 UTC <tgeeky> i use one of these with me most days: http://www.sears.com/shc/s/p_10153_12605_SPM242852975P?sid=IDx20101019x00001a&ci_src=14110944&ci_sku=SPM242852975
+2012-05-17 19:45:27 UTC <tgeeky> it's amazing to me how varying 25 minutes can be, depending on what you are doing
+2012-05-17 19:45:45 UTC <byorgey> indeed
+2012-05-17 19:45:50 UTC <byorgey> hmm, maybe I should get a physical one too
+2012-05-17 19:46:22 UTC <tgeeky> i got it as a kitchen timer originally, but picked up on the idea of block timing and just repurposed it
+2012-05-17 19:46:44 UTC <byorgey> fair enough
+2012-05-17 19:46:46 UTC <tgeeky> having 3 timers is nice, and it by default resets to the original amount of time
+2012-05-17 19:47:47 UTC <tgeeky> if you want to get really detailed, there's this software for windows: http://www.manictime.com/
+2012-05-17 19:48:02 UTC <tgeeky> and I think someone has a similar watch-all-the-processes kind of thing in haskell.
+2012-05-17 19:48:48 UTC <byorgey> well, there's http://hackage.haskell.org/package/arbtt
+2012-05-17 19:48:59 UTC <tgeeky> yep that's the one
+2012-05-17 19:49:11 UTC <byorgey> but it's only useful for analyzing your behavior after the fact
+2012-05-17 19:49:19 UTC <byorgey> which I didn't find all that useful
+2012-05-17 19:49:27 UTC <tgeeky> yep
+2012-05-17 19:50:15 UTC <tgeeky> there is another issue (a "first world problem") that it's not possible to provide a realistic picture of a person using multiple monitors with this method
+2012-05-17 19:50:33 UTC <tgeeky> as having focus of the pointer is not the same thing as having focus of the eyes
+2012-05-17 19:50:38 UTC <tgeeky> but I don't see what that couldn't be included
+2012-05-17 19:51:33 UTC <tgeeky> byorgey: but I think you're exactly right. What both solutions completely lack is the ability to make projections about your behavior based on past or current behavior
+2012-05-17 19:51:52 UTC <tgeeky> so, egg timer for now
+2012-05-17 19:52:20 UTC <luite> hm what are you using the timer for?
+2012-05-17 19:53:05 UTC <tgeeky> to enforce a [25 min work, 5 min break] regimen
+2012-05-17 19:53:23 UTC <tgeeky> and, on days when I'm lazy, to make sure I don't waste time playing TF2 or reading reddit
+2012-05-17 19:53:44 UTC <byorgey> for the second I use LeechBlock
+2012-05-17 19:53:58 UTC <luite> oh do the breaks help?
+2012-05-17 19:54:10 UTC <byorgey> though I guess that wouldn't help with TF2, but that's not an issue for me
+2012-05-17 19:54:19 UTC <byorgey> the breaks help a lot.
+2012-05-17 19:54:21 UTC <tgeeky> luite: Uhh. I am quite sure it's different for each person. For me, yes.
+2012-05-17 19:56:13 UTC <luite> hmm, i just find it more difficult to get started again after a break, or get frustrated that i haven't really accomplished anything in a half-an-hour block
+2012-05-17 19:56:38 UTC <tgeeky> uh. you have to stop caring about the last block
+2012-05-17 19:56:51 UTC <tgeeky> you are allowed to care about the last n > 30 blocks, or something
+2012-05-17 19:56:58 UTC <byorgey> well, those can be issues for me too.  But I don't think the solution is to not take breaks.
+2012-05-17 19:57:27 UTC <tgeeky> choose longer intervals than 25 minutes is another option
+2012-05-17 19:57:34 UTC <luite> hmm
+2012-05-17 19:58:21 UTC <luite> byorgey: right, i didn't think of anything as a solution :)
+2012-05-17 19:59:51 UTC <tgeeky> luite: I will use a totally inappropriate (for you) analogy: It's like playing the position "cornerback" in American Football. They are often responsible, man vs man, for a single (usually the best) wide reciever on the other team. Every single play can realistically be as good as an dropped pass (which is good, but probably means the cornerback relied on luck) to a 60-yard touchdown.
+2012-05-17 20:00:07 UTC <tgeeky> If you *ever* worry about the last play (that you blew)
+2012-05-17 20:00:14 UTC <tgeeky> then you're going to blow the current play.
+2012-05-17 20:00:37 UTC <tgeeky> And as soon as you've done this twice (worry about the last two plays), you're as good as useless in the game -- because you're now thinking about your mistakes
+2012-05-17 20:00:42 UTC <tgeeky> instead of playing the position.
+2012-05-17 20:01:23 UTC <luite> i have no idea what a cornerback does :)
+2012-05-17 20:01:40 UTC <tgeeky> luite: he makes sure the people catching the ball, don't
+2012-05-17 20:01:51 UTC <luite> what is the equivalent in cricket? ;p
+2012-05-17 20:01:59 UTC <tgeeky> a ground squirrel in the way
+2012-05-17 20:02:23 UTC <tgeeky> anyway, the principle is universal, and playing a game 1v1 is a universal concept.
+2012-05-17 20:02:33 UTC <tgeeky> if you are thinking about what happened in the last 25 minute session
+2012-05-17 20:02:43 UTC <tgeeky> then you're no longer working, you're "studying" your own behavior
+2012-05-17 20:02:52 UTC <tgeeky> so don't
+2012-05-17 20:02:57 UTC <tgeeky> play the game (8 hour workday, or whatever)
+2012-05-17 20:03:09 UTC <tgeeky> and review and adjust later
+2012-05-17 20:15:05 UTC <luite> hmm right, i have to find something that's better than what i have now
+2012-05-17 20:27:49 UTC <tgeeky> byorgey: http://www.mscs.dal.ca/~selinger/papers/graphical.pdf <-- check out the lovely diagram at the end :O
+2012-05-17 20:27:53 UTC <tgeeky> p.60
+2012-05-17 20:30:21 UTC <mgsloan> oooh, cool paper!
+2012-05-17 20:30:53 UTC <mgsloan> I really liked the rosetta stone paper
+2012-05-17 20:31:16 UTC <mgsloan> (well, survey)
+2012-05-17 20:43:35 UTC <tgeeky> what? rosetta stone survey?
+2012-05-17 20:43:49 UTC <tgeeky> oh baez
+2012-05-17 21:10:25 UTC <mgsloan> yeah, that's the first place I saw string diagrams
+2012-05-17 21:37:19 UTC <byorgey> tgeeky: I have a printout of that paper sitting on my desk =)
+2012-05-17 21:39:31 UTC <tgeeky> me too :o
+2012-05-17 21:41:19 UTC <tgeeky> i have a ikea table with a glass top, which I raised using 6 hard disk platters, so I can put pictures like this under the glass and draw on the top of the glass to trace things
+2012-05-17 22:57:25 UTC <luite> hm paper looks interesting
+2012-05-17 22:59:12 UTC <mgsloan> It'd be really fun to implement these in diagrams :) with the ability to perform the operations, of course
+2012-05-17 23:00:38 UTC <mgsloan> I wonder what the most useful text encoding would be?  E.g. what's the most popular library for expressing categorical things?  Maybe find out if there's a dominant Coq or Agda library
+2012-05-17 23:04:16 UTC <mgsloan> (afterall, what's the use of pretty pictures if it's inconvenient to make them for things you care about)
+2012-05-17 23:12:40 UTC <luite> hmm, dunno
+2012-05-18 00:49:29 UTC <byorgey> http://www.cis.upenn.edu/~byorgey/hosted/Trace-wrong.png  --- not supposed to look like that =(
+2012-05-18 01:03:03 UTC <mgsloan> byorgey: taking the parametric max instead of min?
+2012-05-18 01:03:27 UTC <mgsloan> and / or not bounding the parameter of the line its intersecting to (0, 1) ?
+2012-05-18 01:05:31 UTC <byorgey> hmm, no, it's definitely doing min and bounding the parameter
+2012-05-18 01:08:15 UTC <mgsloan> hrmm, strange!
+2012-05-18 01:08:34 UTC <byorgey> very
+2012-05-18 01:09:05 UTC <mgsloan> maybe the bounding predicate is negated? E.g. it only intersects if it's outside the segment
+2012-05-18 01:09:25 UTC <byorgey> and every time I think I have found a simple test case that exhibits a bug, it turns out I just entered the data wrong, forgot to multiply by tau, stupid things like that =P
+2012-05-18 01:10:20 UTC <byorgey> as far as I can tell, it does intersections with individual segments correctly, the problem seems to be when composing those into a whole path
+2012-05-18 01:10:28 UTC <byorgey> but I'm not even sure about that.
+2012-05-18 01:10:42 UTC <byorgey> ACTION should write some QuickCheck tests
+2012-05-18 01:18:48 UTC <byorgey> ah, there's something wrong with translation
+2012-05-18 01:18:51 UTC <byorgey> a sign is getting flipped somewhere
+2012-05-18 01:25:45 UTC <byorgey> hah, found it!
+2012-05-18 01:25:48 UTC <byorgey> http://www.cis.upenn.edu/~byorgey/hosted/Trace-right.png
+2012-05-18 01:25:51 UTC <byorgey> much better =)
+2012-05-18 01:46:52 UTC <luite> yay
+2012-05-18 01:47:21 UTC <byorgey> now I just have to write the code for ray/bezier intersection testing
+2012-05-18 01:47:33 UTC <byorgey> then traces should be all done
+2012-05-18 01:47:41 UTC <byorgey> well, except for writing some documentation =P
+2012-05-18 01:53:00 UTC <byorgey> http://www.cis.upenn.edu/~byorgey/hosted/Trace-squares.png
+2012-05-18 01:53:37 UTC <luite> :)
+2012-05-18 02:34:27 UTC <tgeeky> byorgey: run a trace for the apollonian gasket :o
+2012-05-18 02:37:04 UTC <byorgey> tgeeky: I will, once I implement bezier intersection testing =)
+2012-05-18 02:37:26 UTC <byorgey> I think I understand how to do it now, but bedtime for me so I'll code it tomorrow
+2012-05-18 02:40:39 UTC <cheater_> hey can the diagrams packages do subpixel rendering?
+2012-05-18 02:40:46 UTC <cheater_> and/or noise shaping?
+2012-05-18 02:44:11 UTC <tgeeky> hmm.
+2012-05-18 02:44:25 UTC <tgeeky> I'm surprised I've not heard of this (found it review hackage log to find a specific package): http://www.haskell.org/haskellwiki/Ministg
+2012-05-18 03:15:12 UTC <mgsloan> cheater_: I dunno if someone already answered, but I think that would be a function of the backend
+2012-05-18 12:09:12 UTC <byorgey> what the heck, my ray-bezier intersection code seems to work on the first try
+2012-05-18 12:09:18 UTC <byorgey> something must be wrong
+2012-05-18 12:09:28 UTC <ClaudiusMaximus> hehe
+2012-05-18 12:09:47 UTC <ClaudiusMaximus> i'm always surprised when code compiles first time, let alone works
+2012-05-18 12:09:58 UTC <ClaudiusMaximus> usually i've made lots of typos / silly mistakes
+2012-05-18 13:20:32 UTC <byorgey> http://www.cis.upenn.edu/~byorgey/hosted/Trace-bezier.mp4    w00t!
+2012-05-18 13:23:36 UTC <luite> cool
+2012-05-18 13:23:58 UTC <luite> i wonder why my pc becomes unrespnsive for a minute when i open a movie in my browser :(
+2012-05-18 13:24:16 UTC <byorgey> ouch, I don't know =(
+2012-05-18 13:24:38 UTC <ClaudiusMaximus> nice!
+2012-05-18 13:25:34 UTC <byorgey> it may look a bit odd when the bezier rotates past the point the rays are emanating from, but I assure you that's what it's supposed to do given how I set up the animation
+2012-05-18 13:27:51 UTC <ClaudiusMaximus> can you use this to do something clever like diagrams of planetary eclipses?
+2012-05-18 13:28:05 UTC <byorgey> yeah, probably
+2012-05-18 13:28:27 UTC <byorgey> you can find intersection points of arbitrary lines with arbitrary diagrams
+2012-05-18 13:28:43 UTC <ClaudiusMaximus> i'm thinking something like "find furthest point"
+2012-05-18 13:28:51 UTC <ClaudiusMaximus> or widest angle, or whatever
+2012-05-18 13:28:53 UTC <luite> ClaudiusMaximus: yeah with 3d diagrams, and ten add edwardk's physically correct rayracer to simulate the atmospheric effects!
+2012-05-18 13:29:02 UTC <byorgey> haha, awesome =)
+2012-05-18 13:29:55 UTC <byorgey> ClaudiusMaximus: well, the only way to find the widest angle right now would be to just try a bunch of angles and see what you get.  You could use binary search if you happen to know approximately where it will switch from intersection to no intersection.
+2012-05-18 13:29:59 UTC <ClaudiusMaximus> http://en.wikipedia.org/wiki/File:Umbra01.svg but without the junky gradients
+2012-05-18 13:30:40 UTC <ClaudiusMaximus> byorgey: yeah, binary search would be fine, assuming a connected / non-pathological diagram
+2012-05-18 13:33:22 UTC <byorgey> it may be possible to do use some sort of automatic differentiation but that's "future work" ;)
+2012-05-18 13:34:06 UTC <luite> hm that was a major part of edwardk's raytracer
+2012-05-18 13:34:36 UTC <byorgey> <--- not surprised
+2012-05-18 14:31:34 UTC <cheater__> yeah he did do some automatic diff
+2012-05-18 19:24:13 UTC <byorgey> challenge: draw the Borromean Rings using diagrams.
+2012-05-18 19:25:09 UTC <byorgey> as a solution to the challenge I will accept either (1) some (reasonably nice) code which actually draws them, OR (2) a feasible proposal for an elegant extension to diagrams which would make (1) possible =)
+2012-05-18 19:32:40 UTC <alpounet> edward's ad stuff is pretty cool, used it for a prototype of a new HNN
+2012-05-18 19:40:51 UTC <byorgey> I'm sure it is!  mgsloan was talking a while back about trying to integrate some of it with diagrams, not sure where that might go but it could be very cool =)
+2012-05-18 19:43:26 UTC <luite> what's an hnn?
+2012-05-18 19:43:40 UTC <alpounet> it's my shitty neural net library
+2012-05-18 19:43:41 UTC <alpounet> :]
+2012-05-18 19:44:00 UTC <alpounet> i should deprecate it some day in favor of HaskellNN
+2012-05-18 19:48:22 UTC <luite> oh ok, i googled and only found hnn extensions in combinatorial group theory, was wondering how you used ad there :)
+2012-05-18 19:49:38 UTC <alpounet> hah
+2012-05-18 21:09:11 UTC <byorgey> mgsloan: did you see this?   http://www.cis.upenn.edu/~byorgey/hosted/Trace-bezier.mp4  =D
+2012-05-18 21:09:58 UTC <mgsloan> whoah, cool!! I didn't :D
+2012-05-18 21:10:51 UTC <mgsloan> this would be one way to get a start on bezier <-> bezier intersection
+2012-05-18 21:11:06 UTC <mgsloan> (pick one of them to linearize)
+2012-05-18 21:12:32 UTC <byorgey> I guess that works OK in most cases, but in the corner cases you may have to break it into very tiny pieces before you end up finding the intersections...
+2012-05-18 21:12:42 UTC <mgsloan> yup
+2012-05-18 21:13:14 UTC <mgsloan> it turns out that it's hard to do much better
+2012-05-18 21:13:20 UTC <mgsloan> but I could be wrong
+2012-05-18 21:13:21 UTC <byorgey> really? interesting
+2012-05-18 21:15:22 UTC <mgsloan> one way we tried doing it was to split the bezier at monotonic slices, reparametrize it by one of the axis, and do the intersection by subtraction
+2012-05-18 21:15:48 UTC <mgsloan> (using a sweepline algorithm to figure out which ones need to be intersected)
+2012-05-18 21:16:15 UTC <mgsloan> this works pretty well if you know you're going to be intersecting something over and over and over
+2012-05-18 21:16:20 UTC <byorgey> ah, interesting
+2012-05-18 21:16:26 UTC <mgsloan> but for one-off intersections, it's pretty slow
+2012-05-18 21:17:11 UTC <byorgey> I also wonder about using http://www.angusj.com/delphi/clipper.php  which has some Haskell bindings here: http://hackage.haskell.org/package/clipper
+2012-05-18 21:17:25 UTC <byorgey> though I wouldn't want to have it as a dep of the core diagrams libraries of course
+2012-05-18 21:17:37 UTC <mgsloan> (this also required conversion to a different curve representation, to support the reparameterizatio)
+2012-05-18 21:18:12 UTC <byorgey> oh, wait, that only does polygons anyway
+2012-05-18 21:18:18 UTC <mgsloan> cool!  yeah..
+2012-05-18 21:18:46 UTC <mgsloan> I haven't seen an opensource project for doing boolean operations on more sophisticated curves..
+2012-05-18 21:19:10 UTC <mgsloan> other than my (partially successful) GSoC back in the day of course
+2012-05-18 21:19:24 UTC <byorgey> which one was that?
+2012-05-18 21:20:22 UTC <mgsloan> http://www.mgsloan.com/boolops/
+2012-05-18 21:20:54 UTC <byorgey> ah right, I remember now
+2012-05-18 21:21:53 UTC <byorgey> so can we make Haskell bindings to boolops?
+2012-05-18 21:22:54 UTC <mgsloan> we could!  I'd prefer to try re-implementing it, but it could be a decent stopgap
+2012-05-18 21:23:42 UTC <byorgey> sure, either way.  I am patient. =)
+2012-05-18 21:23:50 UTC <mgsloan> (of course, I won't get around to re-implementing it till maybe 6 mo from now - depends on how much time work will take)
+2012-05-18 21:24:18 UTC <byorgey> right, I realize that
+2012-05-18 21:24:44 UTC <byorgey> and maybe you'll have more interesting things to work on anyway.  I'm just trying to think long-term about possibilities =)
+2012-05-18 21:25:00 UTC <mgsloan> true!  Way too much stuff to work on
+2012-05-18 21:25:30 UTC <mgsloan> I've been considering hosting a "Sloan month of code" in which I put up $2k bounties on various features and things
+2012-05-18 21:26:40 UTC <mgsloan> mostly for Haskell stuff that I want to see happen
+2012-05-18 21:26:46 UTC <mgsloan> \me ---> class
+2012-05-18 21:49:05 UTC <tgeeky> $2k bounties?
+2012-05-18 21:50:25 UTC <luite> hm i'll do a few :p
+2012-05-18 21:52:19 UTC <luite> i hope he wants some ghc in the browser
+2012-05-18 22:15:53 UTC <tgeeky> that's pretty nice cheese for a guy who is in college. Maybe he's indepedently wealthy.
+2012-05-18 22:19:40 UTC <byorgey> well, he's about to go from student to employee
+2012-05-18 23:07:45 UTC <tgeeky> he is also smart, so maybe he's paid very well.
+2012-05-19 03:07:09 UTC <alpounet> #diagrams is really some kind of cool place fir haskellers go to
+2012-05-19 03:07:10 UTC <alpounet> for
+2012-05-19 04:36:37 UTC <fryguybob> ACTION has moved to Portland area (Hillsboro) for the summer.
+2012-05-19 04:37:43 UTC <tgeeky> fryguybob: congradulations! You have moved to the totally opposite side of the continental (and non-dangly) US!
+2012-05-19 04:37:49 UTC <tgeeky> I'm in Atlanta! :o
+2012-05-19 04:40:28 UTC <fryguybob> I lived in Atlanta for about 6 months.
+2012-05-19 04:43:06 UTC <tgeeky> me too
+2012-05-19 04:43:14 UTC <tgeeky> and them some time after that
+2012-05-19 04:43:27 UTC <tgeeky> hehe. now I'm just being silly. bedtime!
+2012-05-19 09:30:42 UTC <byorgey> fryguybob: oh, congrats, how did the move go?
+2012-05-19 13:54:06 UTC <fryguybob> byorgey: It went well.  Judah was fine flying.  We had a good seat-mate who loves babies.
+2012-05-19 13:55:42 UTC <luite> i don't hate babies, but why must they always cry for 10 hours during a flight? :p
+2012-05-19 14:00:25 UTC <fryguybob> luite: hehe
+2012-05-19 14:22:55 UTC <byorgey> fryguybob: excellent =)
+2012-05-19 14:23:14 UTC <byorgey> luite: you only notice the ones who cry.
+2012-05-19 14:57:52 UTC <tgeeky> byorgey: as long as the parents feel a little bad about it, I'm fine with crying babies on an airplane
+2012-05-19 14:59:47 UTC <byorgey> tgeeky: believe me, they want to crawl in a hole and die
+2012-05-19 15:00:57 UTC <tgeeky> it is a bit of a shame that babies don't come with a mute button
+2012-05-19 15:01:38 UTC <luite> it's a bit of a shame that planes don't come with closed rooms for noisy babies :)
+2012-05-19 15:04:52 UTC <byorgey> hehe, I agree with both =)
+2012-05-19 15:07:09 UTC <byorgey> dang, compiling hakyll + all dependencies from scratch takes forever
+2012-05-19 15:07:18 UTC <luite> hehe it's the highlighting lib right?
+2012-05-19 15:07:50 UTC <byorgey> that is a significant part of it, but by far not all of it
+2012-05-19 15:08:13 UTC <luite> i almost have ghcjs working with cabal now :)
+2012-05-19 15:08:18 UTC <byorgey> yay! =D
+2012-05-19 15:09:09 UTC <luite> all package registration works, installing rts, ghc-prim, integer-gmp and base from a configured ghc tree works, cabal install works
+2012-05-19 15:09:31 UTC <byorgey> wow, cool
+2012-05-19 15:09:32 UTC <luite> only problem is that it doesn't copy generated .js files to the package directory, that requires a patch to the Cabal lib
+2012-05-19 15:09:50 UTC <tgeeky> the SpaceX rocket today aborted its own launch at 0.3 seconds before liftoff because of an engine sensor problem. that's amazing :O
+2012-05-19 15:09:57 UTC <luite> but i'm fixing it temporarily with a cabal-install wrapper
+2012-05-19 15:10:42 UTC <luite> tgeeky: oh it was only the sensor, not actual overpressure?
+2012-05-19 15:12:06 UTC <fryguybob> byorgey: Yes, there is a distinct shortage holes to crawl into while in flight.
+2012-05-19 15:12:21 UTC <byorgey> fryguybob: indeed.
+2012-05-19 15:12:50 UTC <byorgey> ACTION --> farmers' market
+2012-05-19 15:12:52 UTC <luite> http://hpaste.org/68712
+2012-05-19 15:14:09 UTC <tgeeky> luite: oh, we don't know that yet. But it's amazing to see how fast they can start / test / shutdown the engines.
+2012-05-19 15:16:56 UTC <luite> i'm trying to get ghcjs installable before apfelmus' question on reddit disappears from the first page :)
+2012-05-19 15:39:12 UTC <fryguybob> byorgey: Hope you are enjoying the farmers' market.  Which method did you use for bezier tracing?
+2012-05-19 16:12:50 UTC <byorgey> fryguybob: rotate + scale everything so the ray is (0,0) + (1,0)t, then project the bezier onto the y-axis + solve the cubic to find where it crosses the x-axis
+2012-05-19 16:13:59 UTC <cheater__> luite: what is his question?
+2012-05-19 16:14:01 UTC <byorgey> substituting the solutions back into the transformed bezier then gives x-coordinates which are exactly the t-values where the ray intersects the bezier
+2012-05-19 16:15:35 UTC <byorgey> one thing I could explore is whether it speeds things up to do a quick check to see whether the projection of the bezier control points onto the y-axis all lie to one side of the origin (in which case there can't possibly be any intersections)
+2012-05-19 16:16:01 UTC <byorgey> but I'm not sure how slow solving the cubic really is
+2012-05-19 16:22:35 UTC <fryguybob> byorgey: Ah, ok.  What cubic method do we have again?
+2012-05-19 16:23:24 UTC <byorgey> fryguybob: it's just a solver I coded up that uses the cubic formula to solve them "exactly"
+2012-05-19 16:23:32 UTC <fryguybob> In the passed I have solved directly with the cubic equation (in the form that is at least somewhat numerically stable) but its accuracy varies greatly.
+2012-05-19 16:23:44 UTC <byorgey> though I don't know squat about numerics, so it's probably horribly unstable etc.
+2012-05-19 16:23:49 UTC <fryguybob> *past
+2012-05-19 16:24:19 UTC <byorgey> I'd be happy to replace the version we have with something better, or to farm out root-finding to an external package
+2012-05-19 16:24:23 UTC <byorgey> but I don't know of any good ones
+2012-05-19 16:25:13 UTC <fryguybob> The nice thing about the subdivide option with Beziers is only linear operations are needed so you stay in the rationals if wanted.
+2012-05-19 16:25:41 UTC <fryguybob> I can code that up and compare at some point.
+2012-05-19 16:25:47 UTC <byorgey> sure, if you like
+2012-05-19 16:26:25 UTC <byorgey> I guess if you do something like that the quick test to see whether the control polygon lies to one side of the axis becomes more important.
+2012-05-19 16:26:31 UTC <luite> cheater__: http://www.reddit.com/r/haskell/comments/tt0p9/gsoc_2012_a_multiuser_browserbased_ghci_what/
+2012-05-19 16:26:49 UTC <byorgey> but perhaps overall you still get something comparable (and more accurate).
+2012-05-19 16:27:19 UTC <cheater__> luite: ok i see people say ghcjs..
+2012-05-19 16:27:22 UTC <cheater__> i don't understand..
+2012-05-19 16:27:26 UTC <cheater__> how the hell is it multiuser
+2012-05-19 16:27:34 UTC <cheater__> if it only shows up on one computer at a time??
+2012-05-19 16:27:47 UTC <cheater__> X_X
+2012-05-19 16:27:47 UTC <byorgey> the only other place we use the cubic solver is to determine which points lie inside/outside paths with bezier segments, and I don't think that code really gets exercised all that much
+2012-05-19 16:28:43 UTC <fryguybob> byorgey: yeah.  I suppose the appropriate tests for that are to try things at large and small scales.
+2012-05-19 16:28:44 UTC <luite> cheater__: they want to host teaching sessions, having a live session synchronized on multiple clients
+2012-05-19 16:28:57 UTC <cheater__> luite: yah
+2012-05-19 16:29:02 UTC <cheater__> luite: you want wolfgang to do that?
+2012-05-19 16:29:09 UTC <cheater__> because that would be pretty cool i think.
+2012-05-19 16:29:37 UTC <byorgey> yeah, that would be sweet
+2012-05-19 16:30:03 UTC <luite> cheater__: it would be interesting to have, but i think that it isn't the most important bit
+2012-05-19 16:30:34 UTC <luite> i find the persistent pages more important than a live session, since a live session loses value when its done
+2012-05-19 16:30:48 UTC <cheater__> except not
+2012-05-19 16:30:52 UTC <cheater__> because you can play it back
+2012-05-19 16:30:55 UTC <cheater__> think about it
+2012-05-19 16:31:16 UTC <cheater__> if you could synchronize a video with a recorded "live session" in wolfgang
+2012-05-19 16:31:23 UTC <cheater__> that would be absolutely amazing
+2012-05-19 16:31:23 UTC <luite> is that better than a regular workbook document?
+2012-05-19 16:31:26 UTC <cheater__> yes
+2012-05-19 16:31:31 UTC <luite> why?
+2012-05-19 16:31:36 UTC <cheater__> because it's just sitting back and watching it move
+2012-05-19 16:31:42 UTC <cheater__> completely effortless
+2012-05-19 16:31:50 UTC <luite> hm i'm not sure
+2012-05-19 16:31:54 UTC <cheater__> i am
+2012-05-19 16:31:56 UTC <cheater__> 100%
+2012-05-19 16:31:59 UTC <cheater__> so i can eg give a talk about some lib in haskell
+2012-05-19 16:32:02 UTC <luite> if scrolling is too much effort :p
+2012-05-19 16:32:06 UTC <cheater__> show some slides on the video, talk about it
+2012-05-19 16:32:22 UTC <cheater__> and while this is happening, real code is being typed into the worksheet
+2012-05-19 16:32:38 UTC <cheater__> and at any point you can stop and play around
+2012-05-19 16:32:42 UTC <cheater__> luite it's not about scrolling
+2012-05-19 16:32:51 UTC <cheater__> it's about voice + 2d text + video
+2012-05-19 16:33:14 UTC <cheater__> there are things like that already, for example some german unis have a slides + video solution for online lectures
+2012-05-19 16:33:18 UTC <cheater__> but this would totally beat them
+2012-05-19 16:33:22 UTC <cheater__> because it's not only dead slides
+2012-05-19 16:33:29 UTC <cheater__> it's workbook sections!
+2012-05-19 16:33:33 UTC <cheater__> you can play around and do stuff
+2012-05-19 16:33:42 UTC <cheater__> you could pause the video and move sliders around and stuff
+2012-05-19 16:33:43 UTC <luite> oh i should sell it to some german university and they should offer me a phd position in return :p
+2012-05-19 16:33:51 UTC <cheater__> i'm sure you could
+2012-05-19 16:34:06 UTC <cheater__> if you did that, i am sure it would get a lot of use from OCW-like stuff
+2012-05-19 16:35:14 UTC <ClaudiusMaximus> cheater__: you mean something like http://etherpad.org/ ?
+2012-05-19 16:35:40 UTC <luite> etherpad is exactly what apfelmus/shapr are going to use in the first version
+2012-05-19 16:35:54 UTC <cheater__> no ClaudiusMaximus, something different
+2012-05-19 16:35:58 UTC <cheater__> etherpad allows collaboration
+2012-05-19 16:36:18 UTC <cheater__> whereas with what i am describing you could record a collab session and play it back
+2012-05-19 16:36:21 UTC <cheater__> and sync it to video
+2012-05-19 16:37:04 UTC <ClaudiusMaximus> etherpad has history playback, is what i was thinking of
+2012-05-19 16:37:09 UTC <cheater__> oh i didn't know that
+2012-05-19 16:37:12 UTC <ClaudiusMaximus> but not video syncing
+2012-05-19 16:37:14 UTC <cheater__> got a link to something like that?
+2012-05-19 16:37:18 UTC <ClaudiusMaximus> afaik
+2012-05-19 16:38:07 UTC <cheater__> not to go overboard, but another thing is being able to edit multiple sections of the workbook at the same time
+2012-05-19 16:38:24 UTC <cheater__> so the cursor isn't shared across browsers, instead every browser has its own cursor
+2012-05-19 16:40:06 UTC <luite> hmm, right
+2012-05-19 16:40:07 UTC <cheater__> example application: pair programming
+2012-05-19 16:40:10 UTC <cheater__> it could work like this
+2012-05-19 16:40:27 UTC <cheater__> one guy writes a literate style comment above a function
+2012-05-19 16:40:31 UTC <cheater__> the other guy writes the function body
+2012-05-19 16:40:49 UTC <cheater__> so you write "foo - a recursive function"
+2012-05-19 16:40:54 UTC <cheater__> and then i write
+2012-05-19 16:41:06 UTC <cheater__> foo x = ...
+2012-05-19 16:41:12 UTC <cheater__>    in foo x
+2012-05-19 16:41:32 UTC <cheater__> and then when i'm done writing the function body in the first version, you continue writing the comment
+2012-05-19 16:41:59 UTC <cheater__> "foo - a recursive function which sums integers from 0 to its argument"
+2012-05-19 16:42:09 UTC <cheater__> and then i write something like
+2012-05-19 16:42:22 UTC <cheater__> foo 0 = 0
+2012-05-19 16:42:30 UTC <cheater__> foo x = x + foo (x - 1)
+2012-05-19 16:43:05 UTC <cheater__> and then you continue writing the comment and add:
+2012-05-19 16:43:06 UTC <luite> that's a lot more work than just recording some session :)
+2012-05-19 16:43:19 UTC <cheater__> "foo - a recursive function which sums integers from 0 to its argument. Returns 0 for non-positive numbers."
+2012-05-19 16:43:32 UTC <cheater__> and then i add some guards to the definition of foo
+2012-05-19 16:43:49 UTC <cheater__> this could also work with unit tests: one guy writes unit tests, another documentation, third guy writes the definition
+2012-05-19 16:43:57 UTC <cheater__> luite: yeah, it is. it's a completely separate idea.
+2012-05-19 16:46:04 UTC <luite> it's a good idea though, perhaps for next year's GSoC when the main site (and perhaps recording/live sessions) are running
+2012-05-19 16:46:34 UTC <luite> anyway, time to get a ghcjs demo up and running
+2012-05-19 16:47:15 UTC <luite> i'm thinging to do everything on the client with ghcjs, and for high performance computations on the server(s) cloud haskell
+2012-05-19 16:47:17 UTC <cheater__> i want a link
+2012-05-19 16:47:32 UTC <cheater__> no you're not thinking that
+2012-05-19 16:47:38 UTC <cheater__> i thought that and told you ;p;p;p
+2012-05-19 16:47:47 UTC <luite> oh i'm still thinking that
+2012-05-19 16:47:47 UTC <cheater__> (credit where credit due :p)
+2012-05-19 16:47:48 UTC <luite> :p
+2012-05-19 16:47:59 UTC <cheater__> :))))
+2012-05-19 16:48:16 UTC <ClaudiusMaximus> i think etherpad does what you describe, cheater__, but i can't find a link to an example..
+2012-05-19 16:48:19 UTC <luite> i was looking into cloud haskell earlier, but since you cannot migrate thunks it's less useful than i had hoped
+2012-05-19 16:48:49 UTC <cheater__> ClaudiusMaximus: yeah but the point is really to have haskell, plus all the cool diagrams stuff
+2012-05-19 16:48:56 UTC <ClaudiusMaximus> cheater__: definitely!
+2012-05-19 16:49:02 UTC <cheater__> without it, i'm not biting
+2012-05-19 16:49:03 UTC <cheater__> :)
+2012-05-19 16:49:06 UTC <luite> i really hope diagrams is going to be fast enough in js :)
+2012-05-19 16:49:43 UTC <cheater__> there are always faster CPU's
+2012-05-19 16:49:45 UTC <cheater__> lol;
+2012-05-19 16:50:01 UTC <cheater__> btw, long time no see claudius
+2012-05-19 17:18:46 UTC <byorgey> bleh, trying to get the whole diagrams documentation toolchain building again is a slog =P
+2012-05-19 17:19:03 UTC <byorgey> seems like the API of everything ever has changed since the last release
+2012-05-19 17:42:45 UTC <cheater__> haha
+2012-05-19 17:42:48 UTC <cheater__> that sort of sucks.
+2012-05-19 21:00:41 UTC <luite> how do you sort a directory tree by size?
+2012-05-19 21:02:30 UTC <tgeeky> as in, in the console? or abstractly?
+2012-05-19 21:02:48 UTC <tgeeky> i find the best tools to do this are GUI tools
+2012-05-19 21:03:10 UTC <luite> console
+2012-05-19 21:03:22 UTC <luite> just want to see which are the largest javascript file
+2012-05-19 21:03:23 UTC <luite> s
+2012-05-19 21:03:28 UTC <tgeeky> du is disk usage
+2012-05-19 21:03:28 UTC <luite> in a diagrams-svg installation
+2012-05-19 21:03:43 UTC <luite> yeah but not recursive
+2012-05-19 21:03:52 UTC <tgeeky> Summarize disk usage of each FILE, recursively for directories.
+2012-05-19 21:04:12 UTC <tgeeky> of corse, I'm on MSYS in Windows, but ...
+2012-05-19 21:04:36 UTC <luite> oh ok, you're right!
+2012-05-19 21:05:14 UTC <luite> hm it only displays usage per dir
+2012-05-19 21:05:14 UTC <tgeeky> so, that, and then possibly sort
+2012-05-19 21:05:36 UTC <tgeeky> du -a
+2012-05-19 21:05:43 UTC <tgeeky> du -a gets the files
+2012-05-19 21:06:27 UTC <luite> hm, but then the directories are always bigger
+2012-05-19 21:07:03 UTC <tgeeky> one directory per file?
+2012-05-19 21:07:07 UTC <tgeeky> :/
+2012-05-19 21:07:49 UTC <luite> oh at least the files end with .js, so i can just grep them out
+2012-05-19 21:08:44 UTC <tgeeky> luite: also checkout --files0-from
+2012-05-19 21:09:04 UTC <tgeeky> just produce a list of js files that you have (should be done already) and put them in a file, then du those files only
+2012-05-19 21:09:53 UTC <luite> diagrams results in a 160kb file after gzipping
+2012-05-19 21:10:06 UTC <tgeeky> that's pretty incredible!
+2012-05-19 21:10:29 UTC <tgeeky> great job!
+2012-05-19 21:10:47 UTC <luite> uh i hope it's correct...
+2012-05-19 21:10:53 UTC <luite> that's just diagrams btw
+2012-05-19 21:11:05 UTC <luite> without its dependencies and the base lib
+2012-05-19 21:11:07 UTC <tgeeky> wasn't just diagrams on the order of megabytes?
+2012-05-19 21:11:09 UTC <tgeeky> before?
+2012-05-19 21:11:22 UTC <luite> including everything yes
+2012-05-19 21:11:38 UTC <tgeeky> well then. huzzah retracted
+2012-05-19 21:11:40 UTC <luite> all js files combined probably are still a few mb
+2012-05-19 21:11:44 UTC <tgeeky> hehe :)
+2012-05-19 21:11:57 UTC <luite> but i don't think 160kB for diagrams is that bad actually
+2012-05-19 21:12:09 UTC <luite> the base libs would usually already be cached
+2012-05-19 21:12:30 UTC <luite> and a lot of the generated code wouldn't need to be loaded at all
+2012-05-19 21:13:19 UTC <tgeeky> do browsers provide a way to answer those questions?
+2012-05-19 21:13:54 UTC <luite> don't need to ask the browser
+2012-05-19 21:14:08 UTC <luite> the module dependencies are known per function
+2012-05-19 21:14:32 UTC <luite> but it makes caching much more difficult if you load separate functions
+2012-05-19 21:15:06 UTC <tgeeky> i mean how much of this is in memory in the browser when using diagrams, I suppose?
+2012-05-19 21:15:10 UTC <tgeeky> versus well, not
+2012-05-19 21:16:12 UTC <luite> http://hpaste.org/68723 <- code size per module
+2012-05-19 21:16:57 UTC <luite> looks like somethign went wrong publishing the ghc-prim and integer-gmp modules to that dir
+2012-05-19 21:17:17 UTC <luite> but those aren't too big
+2012-05-19 21:17:33 UTC <luite> Data.Text.Lazy is crazy, over 1.2MB
+2012-05-19 21:17:52 UTC <tgeeky> yeah
+2012-05-19 21:18:01 UTC <luite> it's because of -O2
+2012-05-19 21:18:02 UTC <tgeeky> pretty rediculious that text is the top 3 by quite a large margin
+2012-05-19 21:18:18 UTC <luite> it does lots of inlining
+2012-05-19 21:18:53 UTC <luite> i even had to increase the stack size of ghcjs
+2012-05-19 21:19:07 UTC <byorgey> interesting, makes sense.  Text trades off code size for speed.  Usually one doesn't even really think much about code size.
+2012-05-19 21:19:08 UTC <tgeeky> which GHC level are you starting with? Core or STM or haskell or what?
+2012-05-19 21:19:21 UTC <luite> (but that's probably because the code generator writer monad isn't strict enough)
+2012-05-19 21:19:42 UTC <tgeeky> byorgey: well, it makes that trade in Haskell, not JavaScript. You'd have to demonstrate how it behaves in JS, no?
+2012-05-19 21:19:43 UTC <luite> tgeeky: stg
+2012-05-19 21:19:54 UTC <byorgey> tgeeky: right, I just mean in Haskell.
+2012-05-19 21:21:24 UTC <luite> tgeeky: a gzip of diagrams and all deps is 1.77MB
+2012-05-19 21:21:42 UTC <tgeeky> that was the thing which was 8MB or so before I think
+2012-05-19 21:21:45 UTC <tgeeky> so that's a nice improvment
+2012-05-19 21:21:52 UTC <tgeeky> with an e somwhere
+2012-05-19 21:21:54 UTC <tgeeky> and again.
+2012-05-19 21:22:04 UTC <luite> that still includes line number information for exceptions i think
+2012-05-19 21:22:17 UTC <tgeeky> luite: are you using conduits in this, btw?
+2012-05-19 21:22:23 UTC <tgeeky> not *this*, but wolfgang?
+2012-05-19 21:22:44 UTC <luite> uh yeah, also in ghcjs
+2012-05-19 21:24:56 UTC <luite> not really a lot, but for example to work around the Cabal limitation (cannot install javascript files for a package) i calculate the skein512 hash of the .hi file, and then write the generated js file to a global cache
+2012-05-19 21:25:04 UTC <luite> later the js file is installed from this cache
+2012-05-19 21:25:24 UTC <luite> so i use some hashFile from crypto-conduit
+2012-05-19 21:25:31 UTC <luite> which hashes in constant space
+2012-05-19 21:25:53 UTC <luite> in wolfgang for example to export all documents to the search engine in more or less constant space
+2012-05-19 21:26:06 UTC <luite> streaming xml document (it's an example in the yesod book)
+2012-05-19 21:28:01 UTC <luite> and i think somewhere to transfer files from front end to backend
+2012-05-19 21:31:01 UTC <tgeeky> luite: that sounds like approval to me
+2012-05-19 21:33:43 UTC <luite> well a lot of enumerator things moved to conduit, and there isn't really that much available for pipes
+2012-05-20 00:07:13 UTC <tgeeky> luite: hm. that's weird. hdiff got updated faster than hackagebot :o
+2012-05-20 01:01:23 UTC <luite> i guess that'd happen more often if i'd let it poll more frequently
+2012-05-20 13:14:22 UTC <luite> grr i broke ghcjs, type classes don't work
+2012-05-20 13:22:09 UTC <cheater__> rawr
+2012-05-20 18:09:27 UTC <cheater__> <applicative> i wish a version of ghci could do something like the plots Julia and suchlike languages have
+2012-05-20 18:09:27 UTC <cheater__>  who wants a repl that just displays a string
+2012-05-20 18:31:59 UTC <tgeeky> luite: haste just got posted to reddit
+2012-05-20 18:32:10 UTC <tgeeky> (4 minutes ago, aparently)
+2012-05-20 18:33:45 UTC <luite> haste made the install process simpler by distributing precompiled base libs :(
+2012-05-20 18:37:19 UTC <cheater__> what's haste?
+2012-05-20 18:47:30 UTC <luite> another haskell to js compiler that translates ghc's stg code to js
+2012-05-20 18:47:39 UTC <luite> approach is 90% teh same as ghcjs
+2012-05-20 18:49:04 UTC <luite> i tihnk ghcjs has a better rts, haste has better client libs (some reactive library that works with it)
+2012-05-20 18:53:08 UTC <luite> (i'm not sure why the haste guy started from scratch actually)
+2012-05-20 19:04:02 UTC <tgeeky> understand it yourself, do it yourself kind of thing probably
+2012-05-20 19:05:00 UTC <luite> yeah i wanted to mail him about this, he does have a few things that are better than ghcjs, but it would be more productive to work together
+2012-05-20 19:05:23 UTC <tgeeky> now you can just work with him on github :o
+2012-05-20 19:05:47 UTC <luite> uh that's not so easy with completely different code bases
+2012-05-20 19:05:48 UTC <tgeeky> actually i don't even know if he's the guy who posted it to reddit; i didn't check; but if it is, I assume this means he's ready to try to support it somewhat
+2012-05-20 19:09:24 UTC <luite> i don't think it is the same guy
+2012-05-21 07:07:15 UTC <cmears> Is there any special function to get the endpoints of a line that would connect two subdiagrams, where the points are on the boundary of the two subdiagrams?
+2012-05-21 07:07:32 UTC <cmears> Or do I glue it together myself using boundaryFrom with some vector arithmetic?
+2012-05-21 16:12:05 UTC <byorgey> if cmears comes back, tell him there isn't, but there will be soon =)
+2012-05-21 16:13:49 UTC <luite> ok :)
+2012-05-23 13:18:41 UTC <byorgey> yo yo
+2012-05-23 13:19:06 UTC <byorgey> ACTION refactors the tree data structure underlying diagrams-core yet again
+2012-05-23 13:29:23 UTC <luite> yo yo
+2012-05-23 13:29:38 UTC <luite> ACTION found out that fib is 10 times slower in javascript than in ghci
+2012-05-23 13:32:14 UTC <byorgey> haha
+2012-05-23 13:32:33 UTC <byorgey> fib is not a ver ygood benchmark though, is it?
+2012-05-23 14:09:31 UTC <fryguybob> ACTION waves hello from Hillsboro.
+2012-05-23 14:16:02 UTC <byorgey> hi fryguybob!
+2012-05-23 14:21:17 UTC <cheater> yo yo yo
+2012-05-23 14:48:24 UTC <byorgey> hey cheater
+2012-05-23 14:50:10 UTC <cheater> hi byorgey
+2012-05-23 14:50:48 UTC <cheater> byorgey, why are you not in #codez yet?
+2012-05-23 14:51:19 UTC <byorgey> I've never even heard of it.  What is #codez?
+2012-05-23 14:52:35 UTC <cheater> it's a place that brings together programmers and tech people from various backgrounds
+2012-05-23 14:52:54 UTC <cheater> there are lots of haskell folks there already
+2012-05-23 14:54:19 UTC <byorgey> what sorts of things do people talk about?
+2012-05-23 14:54:39 UTC <cheater> we've just finished talking about how to implement permutations efficiently on an fpga
+2012-05-23 14:54:49 UTC <cheater> then someone started talking about bicycles i think.
+2012-05-23 14:54:56 UTC <byorgey> hehe
+2012-05-23 14:55:18 UTC <byorgey> well, sounds interesting, but honestly I doubt it would be a good use of my time.
+2012-05-23 14:55:19 UTC <cheater> previous to that it might've been linux exploits based on a forged LANG variable.
+2012-05-23 14:55:24 UTC <cheater> :)
+2012-05-23 14:55:35 UTC <cheater> gotcha :)
+2012-05-23 14:55:59 UTC <byorgey> I waste enough time in #haskell already ;)
+2012-05-23 14:56:20 UTC <cheater> mmm, #haskell scared off some people :\
+2012-05-23 14:58:25 UTC <cheater> on the one hand some people are annoyed at too many newbie topics, on the other hand some fairly abusive ops and we end up with a place that isn't for everyone
+2012-05-23 14:58:40 UTC <cheater> but luckily it's holding on
+2012-05-23 15:27:49 UTC <luite> cheater: i don't think i'll stick around for much longer in #codez btw, same reason as byorgey :)
+2012-05-23 15:28:26 UTC <cheater> luite: lies, you're addicted already
+2012-05-23 15:28:37 UTC <luite> oh cool, my isp offers free spotify
+2012-05-23 15:28:44 UTC <cheater> offtopic
+2012-05-23 15:28:47 UTC <cheater> take that to #codez
+2012-05-23 15:28:49 UTC <luite> haha
+2012-05-23 15:28:54 UTC <cheater> mwahahah
+2012-05-23 15:29:00 UTC <cheater> see, you can't live without it.
+2012-05-23 15:29:47 UTC <luite> hehe nah this channel also allows for off topic dicussion :p
+2012-05-23 15:30:07 UTC <cheater> not true it is only for diagrams
+2012-05-23 15:30:07 UTC <cheater> i will be the offtopic police from today on
+2012-05-23 15:30:18 UTC <luite> but at least it's mostly haskell related here
+2012-05-23 15:30:18 UTC <cheater> you shall not be offtopic in #diagrams at any time
+2012-05-23 15:30:42 UTC <cheater> well then start talking about haskell in #codez too
+2012-05-23 15:30:42 UTC <cheater> :)
+2012-05-23 15:32:21 UTC <cheater> it's receptive :)
+2012-05-24 14:34:55 UTC <byorgey> I'm going to be submitting a "system demonstration proposal" for diagrams to the Haskell Symposium.
+2012-05-24 14:35:40 UTC <byorgey> Anyone who wants to help me write it (~ 2 pages) and/or come to Copenhagen in September to help me present it if it's accepted, let me know =)
+2012-05-24 14:38:22 UTC <luite> hehe
+2012-05-24 14:38:38 UTC <luite> hmm
+2012-05-24 14:38:51 UTC <fryguybob> Sounds like fun
+2012-05-24 14:46:17 UTC <byorgey> luite: you should submit a demonstration proposal for Wolfgang, if you think it will be ready to show off by then
+2012-05-24 14:48:45 UTC <luite> hm, i can drive there if i can borrow my parents' car so the trip wouldn't be that expensive, but i don't think i have enough money for registration/hotel (and am not a student anymore by that time, so i probably can't get any compensation)
+2012-05-24 14:50:21 UTC <byorgey> yeah, I forget how stupidly prohibitive the costs can be for someone who does not have some sort of institution/grants paying for them =P
+2012-05-24 14:51:35 UTC <byorgey> luite: I think you could probably get the registration fee waived/reduced if you had a Wolfgang demonstration accepted, and explained that you are poor and don't belong to an instutition
+2012-05-24 14:52:08 UTC <byorgey> there's still the hotel cost of course, though we could share a room
+2012-05-24 14:52:24 UTC <luite> i guess a hostel wouldn't be that bad
+2012-05-24 14:52:46 UTC <byorgey> true, you don't have to actually stay in the conference hotel itself
+2012-05-24 14:52:47 UTC <luite> but they (at least icfp) don't have any registration information online yet
+2012-05-24 14:52:59 UTC <byorgey> yeah, it's still a bit early
+2012-05-24 14:53:31 UTC <byorgey> but if you want to submit a demonstration proposal they are due a week from Saturday (June 2)
+2012-05-24 14:53:43 UTC <luite> hmm, that is quite soon
+2012-05-24 14:54:04 UTC <byorgey> I know, sorry, I should have mentioned it before
+2012-05-24 14:54:09 UTC <byorgey> but I only just now thought of it =)
+2012-05-24 14:55:23 UTC <luite> nah i could've known myself of course
+2012-05-24 14:55:37 UTC <luite> i knew that it was in copenhagen this year
+2012-05-24 14:56:24 UTC <byorgey> well, anyway, it doesn't really matter whose fault it is =)
+2012-05-24 20:07:33 UTC <tgeeky> ROAD TRIP
+2012-05-24 20:11:42 UTC <byorgey> quick poll: without actually running it, what would you expect the output of (mempty ||| circle 1) <> square 1  to be
+2012-05-24 20:12:28 UTC <byorgey> (what I expect it to be and what it actually is are different)
+2012-05-24 20:12:48 UTC <byorgey> perhaps we should also add a third category, "what you think it should be"
+2012-05-24 20:13:37 UTC <tgeeky> hm
+2012-05-24 20:13:42 UTC <tgeeky> O|| <-- that
+2012-05-24 20:13:47 UTC <ClaudiusMaximus> i'd expect a circle with its left edge at the origin of the square
+2012-05-24 20:13:59 UTC <ClaudiusMaximus> but i had to think about it too hard
+2012-05-24 20:14:58 UTC <byorgey> see, that's what it actually is, but I don't think it should
+2012-05-24 20:15:17 UTC <byorgey> mempty ought to be an identity element for |||
+2012-05-24 20:16:10 UTC <byorgey> if you want to use the "point diagram" at the origin, and you put that beside the circle it would push the circle over
+2012-05-24 20:16:15 UTC <byorgey> but that's different
+2012-05-24 20:16:31 UTC <ClaudiusMaximus> mm, and the fact that mempty has a defined local origin is problematic for that - but if you can't rely on having a local origin always, that makes things hairy elsewhere i suspect
+2012-05-24 20:16:52 UTC <byorgey> yeah, mempty is just special
+2012-05-24 20:17:10 UTC <byorgey> it actually is literally special -- essentially it corresponds to Nothing and all other diagrams are  Just (a bunch of stuff)
+2012-05-24 20:17:59 UTC <tgeeky> (Nothing ||| Just (circle 1)) <*> Just (square 1)
+2012-05-24 20:18:30 UTC <ClaudiusMaximus> so, if mempty should be an identity for <>, |||, === - does that make some kind of spherical structure (trying to visualize it, brain hurty)
+2012-05-24 20:18:42 UTC <byorgey> spherical?
+2012-05-24 20:19:03 UTC <byorgey> you mean in terms of the envelope?
+2012-05-24 20:19:44 UTC <ClaudiusMaximus> no, in terms of algebra things - i'm going through nicotine withdrawal, so probably am not making sense :)
+2012-05-24 20:19:52 UTC <byorgey> oh hehe =)
+2012-05-24 20:20:58 UTC <tgeeky> oh, ||| does what I thought <> did.
+2012-05-24 20:21:42 UTC <byorgey> tgeeky: oh, hehe, yeah.  <> as in the semigroup operation, not <> as in various pretty-printing libraries
+2012-05-24 20:21:59 UTC <byorgey> and also (confusingly) not <> as in the original diagrams.
+2012-05-24 20:26:46 UTC <tgeeky> http://i.imgur.com/MGaU7.jpg
+2012-05-24 20:30:27 UTC <byorgey> tgeeky: whoah
+2012-05-24 20:30:53 UTC <byorgey> is that made of paper?  how does it stay up?
+2012-05-24 20:31:04 UTC <tgeeky> I think it's made of magic
+2012-05-24 20:31:06 UTC <tgeeky> and, of course, magic
+2012-05-24 20:31:11 UTC <byorgey> oh, well that explains it
+2012-05-24 20:31:25 UTC <tgeeky> i bet there are metal rods in the internal angles of the largest void
+2012-05-24 20:31:43 UTC <tgeeky> but I think it stays up because of the meticulious patience of maths students
+2012-05-24 20:33:00 UTC <byorgey> so... magic
+2012-05-24 20:33:17 UTC <tgeeky> it's alllll around youuuuuu
+2012-05-24 20:34:03 UTC <tgeeky> that's what i expect if you do: fix (triangle 1) in diagrams
+2012-05-24 21:05:33 UTC <byorgey> tgeeky: actually, I was just thinking about how to support recursive diagrams
+2012-05-24 21:05:45 UTC <byorgey> because of http://recursivedrawing.com/
+2012-05-24 21:13:15 UTC <luite> that would be cool, but would you have some fixed depth limit?
+2012-05-24 21:19:07 UTC <byorgey> luite: one way to do it would be with a fixed depth limit.  The other way that I could think of is that if you limit the sorts of recursion to patterns amenable to analysis (e.g. iteratively apply some affine transformation) then you could decide how deep to recurse up front, e.g. by computing when things will be too small to draw or outside a specified 'viewing window'
+2012-05-24 21:19:43 UTC <luite> yeah that was exactly what i was going to think about
+2012-05-24 21:19:44 UTC <byorgey> actual, unrestricted recursion seems hopeless.
+2012-05-24 21:19:55 UTC <luite> euh, to suggest :)
+2012-05-24 21:20:02 UTC <byorgey> =)
+2012-05-24 21:20:34 UTC <byorgey> well, I'll add it to the list of things to think about in July
+2012-05-24 21:21:04 UTC <luite> but affine transforms are perhaps a bit too limited? for example you could have some nice dynamical systems as a recursively defined diagram
+2012-05-24 21:22:17 UTC <byorgey> oh, quite.  iterated affine was just an example of something I think you could do the required analysis for.
+2012-05-24 21:22:53 UTC <byorgey> with, like, eigenvectors or something
+2012-05-24 21:23:01 UTC <luite> yeah but general dynamical systems is just an example of something you can't do it for :p so i think some fixed limit support would be nice
+2012-05-24 21:23:17 UTC <byorgey> oh, fair enough
+2012-05-24 21:23:47 UTC <byorgey> they aren't mutually exclusive.
+2012-05-24 21:26:10 UTC <ClaudiusMaximus> was thinking of doing something vaguely like that with graphgrow2 - mainly thinking about some kind of "renormalisation" so that zooming in on non-origin points is less likely to reach precision limits of Double so quickly...
+2012-05-24 21:28:08 UTC <ClaudiusMaximus> (didn't figure out the maths yet - i got sidetracked into more mandelbrot set things instead.. http://claudiusmaximus.goto10.org/g/mandelbrot/period-domain/period-domain-colouring-test-i.jpg )
+2012-05-24 21:41:44 UTC <byorgey> pretty =)
