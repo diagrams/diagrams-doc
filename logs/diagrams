@@ -19005,3 +19005,483 @@
 2012-06-28 21:08:47 UTC <luite> meh not sure, your project is probably going to be a better basis anyway, and lots of other people are doing more interesting stuff with the editors
 2012-06-28 21:08:51 UTC <shapr> Throw the whole thing onto github and get a job writing Xbox360 games in C# ? :-)
 2012-06-28 21:09:09 UTC <luite> meh
+2012-06-28 21:10:08 UTC <shapr> Hm, I have another meeting with apfelmus tomorrow... and the editing component isn't on the mid-term goals at all...
+2012-06-28 21:10:11 UTC <shapr> but
+2012-06-28 21:10:14 UTC <luite> tbh any programming isn't going great so i'm more likely to look for some (relatively) unskilled labor
+2012-06-28 21:10:16 UTC <shapr> I think I want to do it anyway :-)
+2012-06-28 21:10:33 UTC <shapr> luite: Fair enough. What about playing music?
+2012-06-28 21:11:01 UTC <luite> i can only play the piano, a bit
+2012-06-28 21:11:24 UTC <luite> but not good enough to get money, or girls
+2012-06-28 21:12:19 UTC <shapr> haha
+2012-06-28 21:12:25 UTC <shapr> Do you enjoy it?
+2012-06-28 21:12:46 UTC <shapr> My brain gets unbalanced if I don't do a certain amount of things not for money/girls/others each day.
+2012-06-28 21:13:13 UTC <alpounet> shapr, hey great job! :)
+2012-06-28 21:13:26 UTC <shapr> yay!
+2012-06-28 21:14:04 UTC <luite> shapr: hmm, not greatly
+2012-06-28 21:14:25 UTC <shapr> alpounet: Thanks! The ghci part is working with rich return types, now I want to add the shared editing component so people will be able to *use* it!
+2012-06-28 21:14:32 UTC <luite> i kind of don't really have a goal
+2012-06-28 21:14:45 UTC <shapr> luite: fair enough
+2012-06-28 21:15:05 UTC <luite> perhaps just enjoying playing should be the goal by itself, but dunno
+2012-06-28 21:15:29 UTC <alpounet> shapr, yeah that'd be awesome
+2012-06-28 21:15:36 UTC <shapr> That's been my goal for most of my life, to find what things I can do that are the mos fun, and then try to get paid to do that :-)
+2012-06-28 21:15:49 UTC <alpounet> you're quite on schedule i think to complete what you proposed
+2012-06-28 21:16:01 UTC <shapr> But the fun things change for me, first it was art, then Magic The Gathering, then programming Java, then Python, then Haskell
+2012-06-28 21:16:09 UTC <shapr> alpounet: I certainly hope so!
+2012-06-28 21:16:15 UTC <luite> hmm
+2012-06-28 21:16:38 UTC <shapr> I don't want one of the GSoC haskell.org student slots to have been wasted on me.
+2012-06-28 21:17:01 UTC <shapr> I would be much happier if at the end of GSoC people are able to say "It's a good thing we chose shapr, his project worked out!"
+2012-06-28 21:17:10 UTC <alpounet> yeah
+2012-06-28 21:17:31 UTC <alpounet> im a bit disappointed that only two of the GSoC students communicate about their project
+2012-06-28 21:17:35 UTC <shapr> Oh?
+2012-06-28 21:17:45 UTC <alpounet> (as far as i know at least)
+2012-06-28 21:17:48 UTC <luite> i liked taking pictures, and now know most of the technical stuff pretty well, but i don't feel i'm creative enough
+2012-06-28 21:17:52 UTC <shapr> I've been focussed on my own project, I haven't looked at any others.
+2012-06-28 21:18:14 UTC <shapr> alpounet: Er, I assume I'm one of the communicative ones? :-)
+2012-06-28 21:18:18 UTC <shapr> If yes, who's the other?
+2012-06-28 21:18:27 UTC <alpounet> the one who works on "my" project
+2012-06-28 21:18:40 UTC <alpounet> (scoutess)
+2012-06-28 21:18:52 UTC <alpounet> well, the one i'm the mentor of, to be precise
+2012-06-28 21:18:56 UTC <shapr> ACTION looks on alpounet's blog
+2012-06-28 21:18:57 UTC <luite> i only know a bit about mark dittmers project, who announced the file watching lib last week or so
+2012-06-28 21:19:13 UTC <alpounet> yeah
+2012-06-28 21:19:20 UTC <alpounet> and then there's the sandboxed cabal one
+2012-06-28 21:19:25 UTC <alpounet> which i haven't heard of at all
+2012-06-28 21:19:46 UTC <alpounet> despite following the haskell reddit, planet haskell, -cafe,  ...
+2012-06-28 21:20:02 UTC <shapr> Where's your student's communications?
+2012-06-28 21:20:14 UTC <luite> the next step in mark's project is to get some autoreload bot, but i haven't heard about it, i'm suposed to help with this though :)
+2012-06-28 21:20:25 UTC <byorgey> luite: nonsense.  in my experience, creativity mostly comes with intentional practice.  if you like taking pictures, then take lots of pictures, and be intentional about trying to improve, giving yourself various constraints and challenges, etc.
+2012-06-28 21:20:26 UTC <alpounet> shapr, http://projectscoutess.blogspot.com/
+2012-06-28 21:20:44 UTC <alpounet> shapr, it's lightweight, but still
+2012-06-28 21:20:52 UTC <alpounet> i'm pushing him to write about his work
+2012-06-28 21:20:57 UTC <alpounet> :p
+2012-06-28 21:21:01 UTC <shapr> Awesome!
+2012-06-28 21:21:03 UTC <byorgey> everyone is creative in a basic sense. and that's really all you need.
+2012-06-28 21:21:14 UTC <shapr> Whoa, this guy wrote a dissertation using Haskell?
+2012-06-28 21:21:31 UTC <alpounet> he studied Haskell at uni
+2012-06-28 21:21:35 UTC <shapr> Wow, nifty!
+2012-06-28 21:21:37 UTC <alpounet> with Graham Hutton i think
+2012-06-28 21:21:39 UTC <alpounet> iirc
+2012-06-28 21:21:40 UTC <shapr> WOW
+2012-06-28 21:21:44 UTC <shapr> Even more impressive!
+2012-06-28 21:21:51 UTC <shapr> I'd love to study with gmh
+2012-06-28 21:21:56 UTC <alpounet> that's one of the things that caught my attention when he came to be to postulate for a scoutess GSoC :p
+2012-06-28 21:22:01 UTC <shapr> I've had two C++ classes, that's the extent of my education.
+2012-06-28 21:22:51 UTC <shapr> Not that I let that stop me.
+2012-06-28 21:22:54 UTC <alpounet> i haven't had any programming class, and i prefer keeping it that way until i'm over with my studies :p
+2012-06-28 21:22:59 UTC <shapr> haha!
+2012-06-28 21:23:05 UTC <shapr> alpounet: What are you studying?
+2012-06-28 21:23:26 UTC <alpounet> math
+2012-06-28 21:23:34 UTC <shapr> Oh, neat!
+2012-06-28 21:23:47 UTC <shapr> Oh hey, does scoutess output graphviz files?
+2012-06-28 21:23:48 UTC <alpounet> specializing in cryptography next year, but have been focusing a lot on the abstract and funny maths so far :p
+2012-06-28 21:24:01 UTC <alpounet> scoutess doesn't output much right now :-Â°
+2012-06-28 21:24:01 UTC <shapr> Merkle is the man :-)
+2012-06-28 21:24:36 UTC <luite> byorgey: hmm, i think what i really meant is that i didn't really get the results or satisfaction i hoped from trying to improve creatively
+2012-06-28 21:26:06 UTC <byorgey> luite: ah, OK.
+2012-06-28 21:26:08 UTC <shapr> luite: Did you get closer?
+2012-06-28 21:26:35 UTC <byorgey> alpounet: what kind of abstract and funny maths?
+2012-06-28 21:26:47 UTC <byorgey> ACTION likes abstract and funny maths
+2012-06-28 21:26:54 UTC <alpounet> byorgey, my all-time favorite has been my algebraic topology course
+2012-06-28 21:27:12 UTC <byorgey> ah, yeah, algebraic topology is cool
+2012-06-28 21:27:16 UTC <byorgey> at least the little I know
+2012-06-28 21:27:19 UTC <luite> shapr: dunno, it's kind of difficult to define closer, unless you have some metric space of course
+2012-06-28 21:27:53 UTC <mgsloan> ACTION still needs to pitch in on the feature / design discussions regarding both Haskell-Type-Exts, and HyperHaskell...  The original requests for input were back when school was getting intense
+2012-06-28 21:28:09 UTC <shapr> One of my new in-laws does topology: http://sofia.nmsu.edu/~ramras/
+2012-06-28 21:28:12 UTC <alpounet> byorgey, actually, i had a "basic" topology & differential geometry course during the first semester, taking about manifolds, the fundamental group, etc, until we classified the surfaces
+2012-06-28 21:28:34 UTC <alpounet> then during the second semester, we covered covering spaces, a few homologies and some cohomology
+2012-06-28 21:29:01 UTC <alpounet> but the latter, we actually did the course ourselves, in turn, studying before the class for a few days, and then presenting the course to the others
+2012-06-28 21:31:06 UTC <alpounet> for me it's been the kind of math that just breaks your brain in pieces when you first encounter it, but then, when you have the "aha!" moments, you really feel you've come a long way, you understood something quite important and quite ""hard""
+2012-06-28 21:31:32 UTC <luite> i guess i should've taken more of those type of courses...
+2012-06-28 21:31:43 UTC <shapr> luite: You still can, right?
+2012-06-28 21:31:47 UTC <luite> no
+2012-06-28 21:32:00 UTC <alpounet> luite, i suggest you buy "The Princeton Companion"
+2012-06-28 21:32:04 UTC <luite> well, i can re-enroll, but i can't afford it
+2012-06-28 21:32:08 UTC <luite> alpounet: oh already have it
+2012-06-28 21:32:24 UTC <alpounet> it's what got me in this
+2012-06-28 21:32:37 UTC <alpounet> :p
+2012-06-28 21:32:38 UTC <luite> have read some of it, but the level of the individual sections varies greatly
+2012-06-28 21:32:50 UTC <luite> some are really difficult to follow, while others are almost too easy
+2012-06-28 21:32:51 UTC <alpounet> luite, well, i don't read it linearly
+2012-06-28 21:32:56 UTC <alpounet> when i want to read some of it
+2012-06-28 21:33:01 UTC <alpounet> i just look at the table of contents
+2012-06-28 21:33:03 UTC <alpounet> and pick one section
+2012-06-28 21:33:37 UTC <alpounet> luite, also
+2012-06-28 21:33:47 UTC <alpounet> i can recommend some online and free texts, depending on the topics
+2012-06-28 21:33:50 UTC <luite> i kinda didn't pick those courses because i was a bit afraid to fail
+2012-06-28 21:34:00 UTC <luite> oh i already have lots of texts available, more than i could read
+2012-06-28 21:34:27 UTC <alpounet> hm
+2012-06-28 21:34:34 UTC <luite> and free lecture notes from utrecht and other universities
+2012-06-28 21:34:40 UTC <mgsloan> shapr -  for collaborative editing, I've always thought it's best to avoid anything looking like complicated merge logic, because that can lead to some unexpected behaviors from the user perspective.  Instead, I think it'd be good to synchronize cursor information, and have a special style for changes that haven't been committed.  Then, a request to commit gets sent out, and the server / clients grant permission
+2012-06-28 21:35:05 UTC <mgsloan> then, the style changes from being "uncommitted" change to being actually in the code
+2012-06-28 21:35:30 UTC <alpounet> luite, what i told you a few weeks ago still holds
+2012-06-28 21:35:35 UTC <mgsloan> it'd also be good to be able to see others' changes / fold them, while not having it effect your working copy
+2012-06-28 21:35:46 UTC <shapr> mgsloan: I was just going to use CodeMirror or something.
+2012-06-28 21:35:59 UTC <luite> alpounet: oh i probably have forgotten
+2012-06-28 21:36:00 UTC <shapr> mgsloan: or perhaps http://sharejs.org/
+2012-06-28 21:36:13 UTC <luite> sharejs uses codemirror!
+2012-06-28 21:36:26 UTC <luite> at least i think in one oft he examples?
+2012-06-28 21:36:36 UTC <shapr> oh, ok then!
+2012-06-28 21:37:02 UTC <alpounet> i really think you should take a break from the pressure you're putting on yourself (like forcing yourself to know the most you can, learn again and again and again, also the pressure relative to your projects), really just call some friends, organize some cool stuffs that you like to do, get drunk every once in a while, just try to relax and give yourself a break
+2012-06-28 21:37:16 UTC <shapr> Yah
+2012-06-28 21:37:31 UTC <luite> oh i thought you meant something about math
+2012-06-28 21:37:47 UTC <mgsloan> shapr: Ah, that's probably a good call!  It makes sense that someone would have solved this properly elsewhere
+2012-06-28 21:37:57 UTC <alpounet> last year i've spent 3 months not writing a single line of code, not doing math at all, just went out during 3 months and had a summer job too
+2012-06-28 21:38:53 UTC <luite> i don't really have friends i could call to organize some stuff, guess you don't really need them to get drunk though...
+2012-06-28 21:38:56 UTC <shapr> mgsloan: Yah, most of my project is "stitch together libraries", but I don't know of any other webapps like mine.
+2012-06-28 21:39:13 UTC <alpounet> i picked up girls (was after a hard break up), drank quite much, organized some cool weekends with friends camping etc, really that helped me a lot
+2012-06-28 21:39:42 UTC <alpounet> luite, then meet such people and become friends with them
+2012-06-28 21:39:44 UTC <alpounet> :p
+2012-06-28 21:39:54 UTC <luite> hehe, hmm...
+2012-06-28 21:40:04 UTC <shapr> Graduating from college is like a hard break up, I think :-)
+2012-06-28 21:40:33 UTC <alpounet> ACTION thinks we are going to need a #diagrams-blah soon
+2012-06-28 21:40:37 UTC <shapr> haha
+2012-06-28 21:40:38 UTC <luite> hehe
+2012-06-28 21:41:31 UTC <alpounet> otherwise luite telling about his smoking hot babes encounters will interfere with the serious discussions
+2012-06-28 21:41:41 UTC <mgsloan> shapr: struth!
+2012-06-28 21:41:50 UTC <shapr> haha!
+2012-06-28 21:42:12 UTC <luite> bah
+2012-06-28 21:43:12 UTC <shapr> Ugh, do I work on the shared editing component that's fun, or do I work on the stuff I said I would have done by the mid-term?
+2012-06-28 21:43:14 UTC <shapr> ACTION thinks
+2012-06-28 21:43:44 UTC <alpounet> ACTION clones shapr 
+2012-06-28 21:43:53 UTC <alpounet> there you go buddy, err buddies
+2012-06-28 21:43:59 UTC <shapr> Then there would be TWO shaprs who wouldn't want to do the boring parts :-)
+2012-06-28 21:44:34 UTC <alpounet> yeah
+2012-06-28 21:44:40 UTC <alpounet> but the shared editing would be done in half the time !
+2012-06-28 21:44:59 UTC <shapr> that's true
+2012-06-28 21:45:41 UTC <alpounet> mapM_ forkShapr tasks
+2012-06-28 21:46:27 UTC <shapr> ha
+2012-06-28 21:46:44 UTC <mgsloan> ACTION wishes he could fork a process off
+2012-06-28 21:46:59 UTC <mgsloan> hella have type-diagrams by now
+2012-06-28 21:47:14 UTC <luite> perhaps my fork would be more productive :p
+2012-06-28 21:47:23 UTC <shapr> Bah, I think I'll go to the coffee shop, buy some coffee and attempt to integrate sharejs.org
+2012-06-28 21:48:37 UTC <luite> shapr: oh you should know that you should probably need to bring some proof that you live in NL if you want to buy weed in a coffee shop here
+2012-06-28 21:48:49 UTC <luite> if you want to move ;p
+2012-06-28 21:49:00 UTC <alpounet> yeah that's new
+2012-06-28 21:49:02 UTC <alpounet> heard about it
+2012-06-28 21:49:15 UTC <luite> the coffee shops don't like it, perhaps there will be some changes
+2012-06-28 21:49:32 UTC <alpounet> luite, i might call you if i come over in the NL again :p
+2012-06-28 21:59:08 UTC <luite> alpounet: hehe i have to admit that i've never bought weed in a coffee shop though... only coffee. last time i've been to something like that was years ago with a guy who bought some stuff for space cake
+2012-06-28 22:00:20 UTC <alpounet> hah
+2012-06-28 22:00:23 UTC <alpounet> never tried weed?
+2012-06-28 22:00:37 UTC <alpounet> (yes, we're open minded here, right?))
+2012-06-28 22:00:47 UTC <tgeeky> open minded, but un-encrypted
+2012-06-28 22:01:02 UTC <luite> alpounet: oh i tried, never bought
+2012-06-28 22:02:08 UTC <mgsloan> #diaGRAMS
+2012-06-28 22:03:48 UTC <luite> i don't know much of the jargon :p some time ago some kid who looked maybe 14 or 15 asked me to buy some for him (i think you need to be 18), but it took me a while before i understood what he meant...
+2012-06-28 22:04:21 UTC <alpounet> hah
+2012-06-28 22:05:22 UTC <luite> anyway i didn't feel it was right to buy it for a 14 year old stranger...
+2012-06-28 22:06:34 UTC <alpounet> it was the right move i think
+2012-06-28 22:09:20 UTC <shapr> luite: I'm a weirdo, I don't do weed, alcohol, nicotine, etc
+2012-06-28 22:11:24 UTC <shapr> Just exercise and music.
+2012-06-28 22:11:52 UTC <luite> i don't think i've tried properly actually, i've smoked a joint two or three times, had a slice of the aforementioned space cake, but never really noticed effects.
+2012-06-28 22:12:10 UTC <shapr> I tried weed a few times about twenty years ago, wasn't impressed.
+2012-06-28 22:12:45 UTC <luite> i do drink alcohol, not much, one or two bottles of beer a month or so
+2012-06-28 22:13:03 UTC <alpounet> shapr, i do what you do and what you don't.
+2012-06-28 22:13:22 UTC <alpounet> don't know what that reveals about me hah
+2012-06-28 22:13:49 UTC <luite> shapr: what instrument do you play?
+2012-06-29 04:31:02 UTC <shapr> luite: Guitar, but I want to buy a cajon: http://en.wikipedia.org/wiki/Cajon
+2012-06-29 04:33:57 UTC <edwardk> heya shapr
+2012-06-29 05:01:43 UTC <shapr> edwardk: y0 y0
+2012-06-29 21:42:46 UTC <mgsloan> tgeeky / all else interested, I've got a mostly re-written version of my superclass-instances brainstorming doc: https://github.com/mgsloan/Haskell-Re-Syntaxed/blob/master/instanceTemplates.md
+2012-06-29 22:13:08 UTC <luite> hmm
+2012-06-29 22:16:15 UTC <mgsloan> yeah, I still really need to explain how this differs, and why it's better than prior superclass defaults proposals
+2012-06-29 22:16:32 UTC <mgsloan> but I'm pleased with the new syntax - no new reserved names!
+2012-06-29 22:19:56 UTC <luite> the new doc is certainly far more readable :)
+2012-06-29 22:24:50 UTC <mgsloan> thanks :)  yeah, the old one was pretty much stream-of-consciousness
+2012-06-29 22:29:57 UTC <tgeeky> mgsloan: I haven't read the document in order, but you need to find a more compelling example than breaking up Num
+2012-06-29 22:30:10 UTC <tgeeky> mgsloan: especially when you don't actually propose a change in Num
+2012-06-29 22:30:19 UTC <mgsloan> probably so
+2012-06-29 22:30:43 UTC <mgsloan> I guess I figure that Haskellers are the sort that will be like "well, if I can do that, I can do _anything_ of that sort"
+2012-06-29 22:30:46 UTC <tgeeky> perhaps include an example for breaking up (->) into a difunctor
+2012-06-29 22:31:01 UTC <luite> oh i thought the num example was ok
+2012-06-29 22:31:08 UTC <tgeeky> it's fine, it's just not compelling
+2012-06-29 22:31:15 UTC <luite> perhaps a bit long with the Absable stuff
+2012-06-29 22:31:27 UTC <tgeeky> mgsloan: also, check out:
+2012-06-29 22:31:54 UTC <tgeeky> http://www.andres-loeh.de/ASGDSL/ASGDSL.pdf
+2012-06-29 22:32:02 UTC <mgsloan> my issue with the other ways of breaking up Num is that I don't think the prelude should build in terminology from algebra
+2012-06-29 22:32:33 UTC <tgeeky> mgsloan: check out section 6.2, 6.3, 6.4, 6.5
+2012-06-29 22:32:34 UTC <tgeeky> of that paper
+2012-06-29 22:33:04 UTC <luite> does anyone here have experience with protocols for realtime collaborative text editing?
+2012-06-29 22:33:22 UTC <tgeeky> luite: like google Wave or whatever? No, but I've always been interested
+2012-06-29 22:33:30 UTC <tgeeky> luite: and I saw your discussion about it
+2012-06-29 22:33:40 UTC <luite> oh where did i discuss it?
+2012-06-29 22:33:44 UTC <mgsloan> luite: not real experience, but it's one of my favorite conceptual problems
+2012-06-29 22:33:56 UTC <tgeeky> luite: in #haskell-blah?
+2012-06-29 22:34:23 UTC <luite> tgeeky: oh i must've forgotten...
+2012-06-29 22:34:25 UTC <tgeeky> luite: which part of the problem are you focused on?
+2012-06-29 22:37:55 UTC <luite> well, the end goal is kinda practical, get a working collaborative haskell code editor for shaprs gsoc project, with a haskell websocket server. the problems are also fairly general now: how to represent changes and versions to make it as robust as possible: signal unresolvable conflicts early and guarantee eventual consistency
+2012-06-29 22:38:51 UTC <tgeeky> ok, so I'm to envision you and I working on a single haskell block of code
+2012-06-29 22:38:54 UTC <tgeeky> both in the browser
+2012-06-29 22:39:05 UTC <luite> are delete/insert/replace + position commands enough?
+2012-06-29 22:39:12 UTC <luite> oh, you may assume that the server keeps a master copy
+2012-06-29 22:39:25 UTC <fryguybob> luite: for n-collaborators or only for two?
+2012-06-29 22:39:27 UTC <luite> so no fully distributed version needed
+2012-06-29 22:39:30 UTC <luite> fryguybob: n
+2012-06-29 22:39:48 UTC <tgeeky> by realtime, you mean that; when I type in something, you see it in your document
+2012-06-29 22:39:52 UTC <tgeeky> as I type it
+2012-06-29 22:39:54 UTC <fryguybob> oh, not fully distributed.
+2012-06-29 22:40:25 UTC <tgeeky> or, weaker, you see blocks of changes which my session say will compile
+2012-06-29 22:40:26 UTC <luite> fryguybob: clocks can be unique for each client, they don't need to know the other's
+2012-06-29 22:40:36 UTC <luite> tgeeky: realtime as you type
+2012-06-29 22:40:55 UTC <tgeeky> and does merge ever happen automatically?
+2012-06-29 22:41:01 UTC <tgeeky> or only when someone hits a button?
+2012-06-29 22:41:08 UTC <luite> tgeeky: while typing
+2012-06-29 22:41:35 UTC <luite> automatically, although i think there could be a setting to delay changes until someone has finished typing a complete function
+2012-06-29 22:41:46 UTC <tgeeky> yeah, that's what I was getting at
+2012-06-29 22:42:00 UTC <tgeeky> if you imagine each of them sitting at an REPL session on top of an edited document
+2012-06-29 22:42:06 UTC <tgeeky> then we only allow saves when the document compiles
+2012-06-29 22:42:09 UTC <tgeeky> but either way
+2012-06-29 22:42:43 UTC <tgeeky> luite: ok, let's assume that all typed in text is sitting in a structure we call a "cursor"
+2012-06-29 22:42:48 UTC <tgeeky> we'll represent in the file as:
+2012-06-29 22:43:00 UTC <luite> tgeeky: yeah this is for shaprs thing first, i hope to get a more low level changes-over-websockets-pushing library for this, that will not only work with texts but also with lists, arrays, of cells in a wolfgang doc
+2012-06-29 22:43:04 UTC <tgeeky> {- >>> -}
+2012-06-29 22:43:25 UTC <tgeeky> {- uuid >>> -} perhaps
+2012-06-29 22:44:26 UTC <tgeeky> mgsloan: anything interesting in that paper for you?
+2012-06-29 22:44:38 UTC <tgeeky> mgsloan: byorgey reccomended it to me, and I liked it quite a lot.
+2012-06-29 22:45:58 UTC <tgeeky> luite: is there any shared-notepad kind of basic session that we can play with for this?
+2012-06-29 22:46:52 UTC <luite> tgeeky: the only implementations i know of are not haskell, but you could look at sharejs
+2012-06-29 22:47:30 UTC <fryguybob> luite: Group user actions into transactions and then have the server publish a final commit order.  Locally speculate on commits in order and commit the speculation when you see a matching commit order from the server.
+2012-06-29 22:50:24 UTC <luite> fryguybob: hm, sounds good, client needs to keep an older version and a list of received commits to replay i guess
+2012-06-29 22:50:45 UTC <luite> but some of its own commits might get destroyed when there's a merge problem
+2012-06-29 22:51:11 UTC <fryguybob> Right.  Doesn't prevent weird things from happening, but you get consistency.
+2012-06-29 22:51:12 UTC <luite> i guess they can be silently ignored, or with a user warning
+2012-06-29 22:52:17 UTC <luite> but this is more inefficient than necessary if commits commute
+2012-06-29 22:52:22 UTC <fryguybob> clever definitions of your actions can make most of the weird things go away, but not everything.
+2012-06-29 22:53:19 UTC <luite> perhaps the server can compute which commits commute and then send each client an individual order
+2012-06-29 22:54:00 UTC <fryguybob> For instance, instead of 'Append "blah" to line 23' have 'Append "blah" to the line that was "hello" in version X'
+2012-06-29 22:54:49 UTC <fryguybob> Well if the server can figure out what commutes the client could too, so the client could do that optimization.
+2012-06-29 22:55:17 UTC <luite> insert blah at position x at commit y, new commit is z
+2012-06-29 22:55:47 UTC <luite> don't think you need diff-like things if you just modify based on known commits
+2012-06-29 22:56:35 UTC <luite> commit ids may be client-server pair local
+2012-06-29 22:57:07 UTC <fryguybob> You do want to be able to avoid huge memory leaks by limiting how far back in history you can reference.
+2012-06-29 22:57:49 UTC <luite> not sure, it could be a feature to have history in shaprs application, so you can replay a session
+2012-06-29 22:58:05 UTC <luite> but yeah it should be possible to limit history in general :)
+2012-06-29 22:59:25 UTC <luite> hmm
+2012-06-29 23:00:51 UTC <luite> the commits themselves will change if the order received from the server changes
+2012-06-29 23:01:45 UTC <luite> so the client probably needs some way to match his own changes against the ones from the server
+2012-06-29 23:03:39 UTC <luite> perhaps it's not necessary and it can be done with just a clock
+2012-06-29 23:04:31 UTC <luite> a vector clock with a server version and client version?
+2012-06-29 23:05:37 UTC <fryguybob> If you have a server then you have a definitive version.  You do not need to solve the consensus problem.  So the question is just how you will speculate on what consensus will be.
+2012-06-29 23:06:54 UTC <luite> right, but the client still needs to know which changes by him are incororated in the latest version from the server
+2012-06-29 23:07:21 UTC <luite> otherwise he might assue that his changes have been lost due to conflicts if the server hasn't processed them yet
+2012-06-29 23:08:08 UTC <luite> the changes would eventually show up again, but it would probably be not pretty
+2012-06-29 23:08:09 UTC <fryguybob> Right, the client sees that in the commited changes list.
+2012-06-29 23:08:26 UTC <luite> yes, but the committed changes may differ from his own commits
+2012-06-29 23:08:40 UTC <luite> insert x at line n may be changed into insert x at line n+1
+2012-06-29 23:08:46 UTC <fryguybob> So you want to handle dropped submissions?
+2012-06-29 23:09:49 UTC <fryguybob> Oh, you are saying that the final outcome depends on the commit order.  Yes, you have to rollback speculation.
+2012-06-29 23:11:00 UTC <fryguybob> That's where the wierd things happen.  That gets mitagated by making your actions more sematically oriented.
+2012-06-29 23:11:41 UTC <fryguybob> But that shouldn't change the overall protocol.
+2012-06-29 23:12:09 UTC <edwardk> have you guys seen the without operational transform paper?
+2012-06-29 23:12:23 UTC <edwardk> if you're talking about distributed edits and are working interactively then that pretty much solves it
+2012-06-29 23:13:23 UTC <edwardk> http://hal.inria.fr/docs/00/07/12/40/PDF/RR-5580.pdf
+2012-06-29 23:13:29 UTC <luite> oh i'd seen another one, perhaps this one is better
+2012-06-29 23:13:52 UTC <edwardk> global eventual consistency, no vector clock nonsense, easy for use in collaborative editing
+2012-06-29 23:14:10 UTC <edwardk> people can take a copy of the page with them, edit it, and connect later, etc.
+2012-06-29 23:14:15 UTC <edwardk> and you get a canonical result
+2012-06-29 23:14:36 UTC <edwardk> no client has to be considered the master, you can give copies to others, etc.
+2012-06-29 23:14:48 UTC <shapr> ok then
+2012-06-29 23:15:20 UTC <edwardk> (and it is easy)
+2012-06-29 23:15:31 UTC <shapr> ACTION reads the earlier conversation
+2012-06-29 23:15:52 UTC <fryguybob> So is Intention preservation specific to the sematics of the text being worked on?
+2012-06-29 23:16:04 UTC <fryguybob> ACTION reads further :D
+2012-06-29 23:16:56 UTC <edwardk> woot gives you collaborative editing, if you start trompling on each others text you'll see the same result after you merge no matter what order the merges happen, and since you're working interactively you can edit to fix it ;)
+2012-06-29 23:18:03 UTC <edwardk> this was a precursor to the ideas that made up google wave. they ultimately decided they needed to add operational transform for efficiency and to support other goals
+2012-06-29 23:18:13 UTC <edwardk> but in and of itself its pretty nice
+2012-06-29 23:21:21 UTC <shapr> That was unusual.
+2012-06-29 23:21:29 UTC <shapr> edwardk's computer has narcolepsy.
+2012-06-29 23:21:47 UTC <luite> i'm only at section 3 atm, but it looks like it would not be very efficient to send transacitons this way
+2012-06-29 23:22:18 UTC <fryguybob> Well they are also solving consensus.
+2012-06-29 23:22:29 UTC <luite> yeah, it's doing more than needed
+2012-06-29 23:22:50 UTC <fryguybob> It isn't that different from what I was saying about describing your actions with some semantic information.
+2012-06-29 23:24:24 UTC <luite> i'm still not sure that context is needed at all :)
+2012-06-29 23:24:31 UTC <luite> since this is a simpler situation
+2012-06-29 23:24:34 UTC <fryguybob> Their semantic is insert between 'a' and 'b' (I assume where a and b are unique for that specific checkpoint.
+2012-06-29 23:24:47 UTC <luite> yeah
+2012-06-29 23:25:56 UTC <luite> all chars in the document are unique somehow, i think?
+2012-06-29 23:29:55 UTC <fryguybob> In their case they only add new characters
+2012-06-29 23:30:00 UTC <luite> ah yes, defn 1
+2012-06-29 23:30:04 UTC <fryguybob> And mark existing ones invisiable
+2012-06-29 23:30:28 UTC <luite> they only refer to character ids, not the values
+2012-06-29 23:31:16 UTC <fryguybob> I think so.
+2012-06-29 23:32:31 UTC <mgsloan> Sorry, got diverted by a call from my parents!
+2012-06-29 23:32:35 UTC <luite> hah they've not proven converce :p
+2012-06-29 23:32:36 UTC <fryguybob> Humm, if you do have an agreed on version, you can find the minimal unique prefix before an insert.
+2012-06-29 23:32:38 UTC <luite> convergence
+2012-06-29 23:33:26 UTC <mgsloan> tgeeky: wow, that's cool!!  Oleg used a similar trick in his class to have different interpretations for the lambda calculus.  I /really/ want to write a quasi-quoter that invokes these sorts of functions, so that you can build your own interpretation of different Haskell constructs
+2012-06-29 23:33:35 UTC <tgeeky> oh, there you are
+2012-06-29 23:33:42 UTC <tgeeky> i just got back too
+2012-06-29 23:34:00 UTC <fryguybob> ACTION bbl
+2012-06-29 23:34:51 UTC <mgsloan> edwardk: yeah, I like the CRDT approach to this stuff
+2012-06-29 23:34:59 UTC <tgeeky> mgsloan: he's not here anymores
+2012-06-29 23:35:05 UTC <mgsloan> doh :/
+2012-06-29 23:35:07 UTC <shapr> What's CRDT?
+2012-06-29 23:35:15 UTC <mgsloan> I wish I'd been here to divert the conversation earlier towards CRDTs
+2012-06-29 23:35:17 UTC <tgeeky> commutative something something something
+2012-06-29 23:35:19 UTC <shapr> oh
+2012-06-29 23:35:26 UTC <shapr> @google commutative crdt
+2012-06-29 23:35:30 UTC <mgsloan> pretty much, you make merge into a monoid
+2012-06-29 23:35:37 UTC <mgsloan> err even better
+2012-06-29 23:35:37 UTC <shapr> preflex: seen lambdabot
+2012-06-29 23:35:40 UTC <shapr> ACTION grumbles
+2012-06-29 23:35:42 UTC <mgsloan> commutative operation
+2012-06-29 23:35:47 UTC <tgeeky> mgsloan: ok
+2012-06-29 23:35:48 UTC <shapr> @google commutative crdt
+2012-06-29 23:35:51 UTC <tgeeky> mgsloan: we need to work tonight
+2012-06-29 23:35:51 UTC <lambdabot> http://hal.inria.fr/inria-00445975/PDF/icdcs09-treedoc.pdf
+2012-06-29 23:36:52 UTC <mgsloan> tgeeky: definitely!  That's the plan
+2012-06-29 23:37:11 UTC <mgsloan> I've been visiting my friend in NY, but I've pretty much got the weekend to myself
+2012-06-29 23:37:21 UTC <tgeeky> mgsloan: ok
+2012-06-29 23:37:26 UTC <mgsloan> so yeah, next 8hrs is coding time :P
+2012-06-29 23:37:33 UTC <tgeeky> mgsloan: so, here's what I want to do right now:
+2012-06-29 23:37:56 UTC <tgeeky> let's re-implement your code in the framework of BindAlg, LamAlg, ArithAlg, etc
+2012-06-29 23:38:30 UTC <mgsloan> shapr: the idea can be abstracted from its actual efficient implementation to say that "we associate a unique real position to each character in the document"
+2012-06-29 23:39:03 UTC <tgeeky> that's so silly
+2012-06-29 23:39:05 UTC <mgsloan> shapr: this lets us always stably insert between two characters, without intermixing
+2012-06-29 23:39:18 UTC <tgeeky> you should do that, but on a words or blocks of text
+2012-06-29 23:39:40 UTC <mgsloan> yeah, that's what treedoc suggests.
+2012-06-29 23:40:10 UTC <mgsloan> tgeeky: which code?  The AST splicers?
+2012-06-29 23:40:44 UTC <mgsloan> another option would be to post-process TH or HSE trees into invocations of those classes
+2012-06-29 23:40:53 UTC <tgeeky> the instance templates idea
+2012-06-29 23:41:10 UTC <mgsloan> ahh gotcha
+2012-06-29 23:41:20 UTC <mgsloan> well, my TH code for that is getting there
+2012-06-29 23:41:34 UTC <mgsloan> it's theoretically done, but the code that it generates doesn't yet compile
+2012-06-29 23:41:51 UTC <mgsloan> what would targetting those classes buy us?
+2012-06-29 23:42:48 UTC <tgeeky> I'm not sure. For one, it would let us do all of the tricks listed (inlining, sharing, mutual recursion <-- (this is what's needed to make multiplate useful))
+2012-06-29 23:43:28 UTC <mgsloan> luite: as far as the efficiency of transactions using this method, I think most CRDTs can be viewed from an operational (sending deltas) perspective, or a more pure data view
+2012-06-29 23:43:56 UTC <mgsloan> the more pure perspective is nice for thinking about the eventual consistency properties, but deltas are of course better
+2012-06-29 23:43:58 UTC <tgeeky> mgsloan: I'll work on that, you do you.
+2012-06-29 23:44:13 UTC <mgsloan> www.github.com/mgsloan/crdts
+2012-06-29 23:44:41 UTC <tgeeky> s/s//
+2012-06-29 23:44:46 UTC <tgeeky> https://github.com/mgsloan/crdt
+2012-06-29 23:44:50 UTC <mgsloan> ahh yeah
+2012-06-29 23:45:09 UTC <mgsloan>  I didn't actually get around to implementing the more interesting text crdts
+2012-06-29 23:45:18 UTC <tgeeky> mgsloan: so your class Function in crdt is "just" a difunctor?
+2012-06-29 23:45:19 UTC <mgsloan> but this does some naive impls of the fundamental ones
+2012-06-29 23:45:23 UTC <mgsloan> yeah
+2012-06-29 23:45:37 UTC <mgsloan> I kinda ended up writing a new Prelude while writing that stuff :)
+2012-06-29 23:45:53 UTC <mgsloan> because I was heavily leveraging newtype deriving
+2012-06-29 23:47:28 UTC <mgsloan> tgeeky: so, not sure I understand the benefits of applying the concepts in the paper to instance templates
+2012-06-29 23:47:47 UTC <mgsloan> I mean, I'm definitely relying on GHC to optimize the generated code
+2012-06-29 23:47:57 UTC <tgeeky> mgsloan: so if you had a set of inequalities like this, what kind of "partial order" or whatever would you have?:
+2012-06-29 23:48:01 UTC <luite> tnx i'll read that tomorrow
+2012-06-29 23:48:15 UTC <mgsloan> (and even if it doesn't, all that's needed is a prototype)
+2012-06-29 23:48:27 UTC <tgeeky> 0 <= e <= V `div` sqrt(3)    ;   2e <=  i  <=  r         where r = (v^2 + e^2) / i
+2012-06-29 23:48:47 UTC <tgeeky> how many partial orders do you have there?
+2012-06-29 23:49:17 UTC <mgsloan> luite: This is my favorite crdt's paper - the github repo above was my effort towards implementing it http://hal.inria.fr/docs/00/55/55/88/PDF/techreport.pdf
+2012-06-29 23:49:18 UTC <tgeeky> all variables are Naturals
+2012-06-29 23:50:23 UTC <luite> mgsloan: oh i was already reading that, did you link that earlier?
+2012-06-29 23:50:32 UTC <mgsloan> oh, maybe edwardk did
+2012-06-29 23:50:40 UTC <luite> oh i think your github thing
+2012-06-29 23:50:54 UTC <mgsloan> ahh
+2012-06-29 23:51:14 UTC <luite> it has french so it's good
+2012-06-29 23:51:29 UTC <mgsloan> yeah, it's the same people as treedoc / the edwardk link, but it's nicely systematic
+2012-06-29 23:51:45 UTC <mgsloan> tgeeky: hmm, not sure!
+2012-06-29 23:52:07 UTC <tgeeky> mgsloan: maximum/minimum?
+2012-06-29 23:52:07 UTC <luite> yes tnx, it's much more recent than edwardks, and looks interesting
+2012-06-29 23:52:12 UTC <tgeeky> can you just count the <=
+2012-06-29 23:52:16 UTC <luite> more pictures too
+2012-06-29 23:55:07 UTC <mgsloan> tgeeky: well, I guess I'm not sure what you mean by "how many partial orders", because the instance templates stuff of course just gives you one per datatype
+2012-06-29 23:56:00 UTC <tgeeky> mgsloan: yes, I had jumped topic becuase I was reading your partial order code in crdt
+2012-06-29 23:56:33 UTC <mgsloan> ah, well, the partial ord stuff is always defined to have nice properties with whatever lattice we're talking about
+2012-06-29 23:56:58 UTC <mgsloan> and in the case of CRDTs, that lattice is defined by the commutative merge operation
+2012-06-29 23:57:30 UTC <mgsloan> so, the partial order is like "this thing has had more stuff done to it, and could have come from this other thing"
+2012-06-29 23:58:34 UTC <mgsloan> so, it's not really very numerical at all (though could be used for numerical stuff)
+2012-06-30 00:04:07 UTC <luite> oh i thought that tgeekys partial order example was just for the instances deriving proposal?
+2012-06-30 00:04:19 UTC <luite> dunno if i'm missing some connection
+2012-06-30 00:05:05 UTC <tgeeky> i was asking about the relationship of expressions of the form ... <= ... <= ...
+2012-06-30 00:05:10 UTC <tgeeky> and partial orders
+2012-06-30 00:05:24 UTC <tgeeky> I would like to implement such an example in a generic format (ala the abstract syntax graphs paper)
+2012-06-30 00:06:33 UTC <luite> oh that's another paper i haven't read
+2012-06-30 00:08:28 UTC <tgeeky> mgsloan: the equation I mentioned comes from a recent paper about my favorite thing, the circle fractal
+2012-06-30 00:08:39 UTC <tgeeky> mgsloan: http://opensiuc.lib.siu.edu/cgi/viewcontent.cgi?article=1117&context=math_articles <--
+2012-06-30 00:08:56 UTC <mgsloan> tgeeky: well, that'd explain why I couldn't make heads nor tails of it
+2012-06-30 00:09:01 UTC <tgeeky> hehe
+2012-06-30 00:09:05 UTC <tgeeky> it's also a renaming of it
+2012-06-30 00:09:31 UTC <tgeeky> but the point remains, if I want to write this, and I'm going to have a (tupled) function of posets, how many do I have? :o
+2012-06-30 00:20:47 UTC <mgsloan> hmm, not sure!  "function of posets" throws my mind for a loop :)
+2012-06-30 00:20:54 UTC <mgsloan> clearly I'm no categoritician
+2012-06-30 00:21:22 UTC <shapr> Hm, I need to actually read the Diagrams tutorial.
+2012-06-30 00:21:23 UTC <tgeeky> I think another way to think about those equations is to just think about the middle term having a range
+2012-06-30 00:21:57 UTC <mgsloan> I'm going to take a stroll before it gets much darker out! Probably be good for my productivity later
+2012-06-30 00:22:05 UTC <tgeeky> true
+2012-06-30 00:23:17 UTC <luite> i'm going to take a sleep since it cannot get much darker out
+2012-06-30 00:23:19 UTC <luite> :)
+2012-06-30 00:23:22 UTC <tgeeky> hehe
+2012-06-30 00:26:31 UTC <shapr> ACTION waves to luite
+2012-06-30 00:40:41 UTC <shapr> Wow, the graycode example produces 141697 characters of SVG output
+2012-06-30 00:40:54 UTC <shapr> and looks terrible in my jquery-console widget :-(
+2012-06-30 00:46:25 UTC <shapr> ACTION cackles cheerfully
+2012-06-30 00:46:49 UTC <shapr> ACTION installs diagrams-contrib
+2012-06-30 00:51:11 UTC <shapr> ACTION grumbles
+2012-06-30 04:09:51 UTC <fryguybob> @botsnack
+2012-06-30 04:09:52 UTC <lambdabot> :)
+2012-06-30 04:16:00 UTC <fryguybob> shapr: You were asking for other interesting Display instances, I was thinking the other day that support for nice tables would be cool.
+2012-06-30 04:19:09 UTC <mgsloan> yeah, that'd be pretty awesome.  Especially if they can be infinite, and it requests up to the bounds of the space available for the table
+2012-06-30 04:19:29 UTC <mgsloan> and if you suddenly scroll somewhere, it'd evaluate just those indices
+2012-06-30 04:20:18 UTC <mgsloan> (I dunno if there's already a datastructure for that..)
+2012-06-30 04:20:42 UTC <mgsloan> (but these are more wowee-isn't-that-nifty features, than essential to the problem)
+2012-06-30 04:20:57 UTC <fryguybob> ACTION secretly just wants to replace his day to day excel use.
+2012-06-30 04:21:30 UTC <mgsloan> tgeeky: I'm starting the list of people who helped give feedback for the proposal and such, shall I put you on the list?
+2012-06-30 04:23:37 UTC <mgsloan> fryguybob: here's a joke web spreadsheet implementation my IRL friend made: https://github.com/wcauchois/headsheet/blob/master/Main.hs
+2012-06-30 04:24:25 UTC <mgsloan> the whole thing was an exercise in using loeb in anger
+2012-06-30 04:28:07 UTC <fryguybob> hehe
+2012-06-30 16:35:30 UTC <shapr> ACTION bops cheerfully
+2012-06-30 17:11:40 UTC <fryguybob> shapr: I don't know if you saw my message about the Display tables..
+2012-06-30 17:19:48 UTC <shapr> fryguybob: I did not, what was it?
+2012-06-30 17:22:00 UTC <fryguybob> Nothing fancy, just display of tables where on the client side it is some level of fancy html table
+2012-06-30 17:27:03 UTC <shapr> fryguybob: That makes sense, did you have something specific in mind?
+2012-06-30 17:27:16 UTC <shapr> ACTION digs through Text.Blaze.Html5
+2012-06-30 17:27:33 UTC <shapr> One nice thing about working in a Books-A-Million is that HTML5 books are always handy.
+2012-06-30 17:28:25 UTC <fryguybob> shapr: So like  > table $ [[x,x^2] | x <- [1..10]]  and you get  http://www.datatables.net/
+2012-06-30 17:29:10 UTC <fryguybob> (html table option chosen arbitrarally, not an endorsement)
+2012-06-30 17:30:40 UTC <shapr> Oh I like it!
+2012-06-30 17:32:43 UTC <fryguybob> It would probably be nice to be able to do tuples of things in the display class too.
+2012-06-30 17:34:03 UTC <shapr> Like the standard Show classes, right?
+2012-06-30 17:34:26 UTC <fryguybob> [(x, circle x) | x <- [10,12..100]]
+2012-06-30 17:35:10 UTC <fryguybob> (Display a, Display b) => [(a,b)]  and friends.
+2012-06-30 17:36:08 UTC <shapr> ?
+2012-06-30 17:36:14 UTC <shapr> What's the circle x for?
+2012-06-30 17:36:22 UTC <shapr> graphical display of Int values by size?
+2012-06-30 17:36:28 UTC <shapr> ACTION thinks about that
+2012-06-30 17:36:42 UTC <fryguybob> So the first column is a number and the second column is a diagram.
+2012-06-30 17:37:04 UTC <shapr> that sounds awesome!
+2012-06-30 17:37:22 UTC <shapr> The size of the circle would reflect the relative size of the number?
+2012-06-30 17:37:40 UTC <shapr> https://developers.google.com/chart/interactive/docs/gallery/bubblechart ?
+2012-06-30 17:37:41 UTC <fryguybob> Right
+2012-06-30 17:38:13 UTC <shapr> Does diagrams support basic charting functionality, or have add-ons that do?
+2012-06-30 17:38:18 UTC <shapr> fryguybob: I like that idea!
+2012-06-30 17:38:59 UTC <fryguybob> You could write something to do bubblecharts, but nothing is directly supported.
+2012-06-30 17:40:51 UTC <shapr> ACTION thinks
+2012-06-30 17:44:32 UTC <shapr> So the simplest instances would be for ... Data.Map?
+2012-06-30 17:44:38 UTC <shapr> ACTION digs through common datatypes.
+2012-06-30 17:46:04 UTC <fryguybob> shapr: Where is your code again?  I haven't really been following the Display stuff.
+2012-06-30 17:46:50 UTC <shapr> https://github.com/shapr/ghclive/blob/master/src/Network/Web/GHCLive/Display.hs
+2012-06-30 17:47:02 UTC <shapr> It's not complicated :-)
+2012-06-30 17:48:22 UTC <fryguybob> instance (Display a) => Display [[a]] where ... could be one.
+2012-06-30 17:49:11 UTC <fryguybob> I don't know if it would make more sense to newtype wrap it though:  instance Display a => Display (TheTablz [[a]]) where ...
+2012-06-30 17:49:30 UTC <shapr> Hm, sounds good to me.
+2012-06-30 17:49:55 UTC <shapr> ACTION tries
+2012-06-30 17:50:25 UTC <shapr> First I figure out how to make tables with Blaze.Html5
+2012-06-30 17:50:45 UTC <fryguybob> Sounds like a good plan.
+2012-06-30 17:50:56 UTC <shapr> :-)
+2012-06-30 17:51:42 UTC <shapr> ACTION reads http://jaspervdj.be/blaze/tutorial.html
+2012-06-30 17:58:37 UTC <fryguybob> > let tag t x=join["<",t,">",x,"</",t,">"];tr=tag"tr";td=tag"td";t=tag"table";f=t.join.map (tr.join.map (td.show))in f [[x,x^2]|x<-[1..10]]
+2012-06-30 17:58:39 UTC <lambdabot>   "<table><tr><td>1</td><td>1</td></tr><tr><td>2</td><td>4</td></tr><tr><td>3...
+2012-06-30 18:00:18 UTC <shapr> looks good
+2012-06-30 18:03:17 UTC <shapr> ACTION fights with haskell-mode updates
+2012-06-30 18:16:10 UTC <fryguybob> ACTION -> coffee...
+2012-06-30 18:44:26 UTC <byorgey> ugh, haxr's Base64 constructor takes a String but then performs the base-64 encoding itself before sending.  So you have to read in the contents of a binary file into a bytestring, immediately unpack it into a String (!), and pass that to haxr which then does base64 encoding.
+2012-06-30 18:44:49 UTC <byorgey> (trying to extend BlogLiterately to support image upload)
+2012-06-30 18:45:30 UTC <shapr> is it easily fixed?
+2012-06-30 18:45:57 UTC <shapr> Ok, I'm back from a detour into the land of student loan administrivia.
+2012-06-30 18:46:05 UTC <byorgey> it would probably be better if the Base64 constructor took a bytestring instead of a String
+2012-06-30 18:46:10 UTC <byorgey> and its behavior better documented.
+2012-06-30 18:47:07 UTC <byorgey> bah, it works now for pngs but when I try with a jpg I get the very helpful "user error (ErrorClosed)"
+2012-06-30 18:48:50 UTC <byorgey> oh, boo, it looks like it has to do with the *size* of the image
+2012-06-30 18:48:53 UTC <byorgey> which is even worse.
+2012-06-30 19:56:26 UTC <shapr> bah humbug, was going to read the #diagram logs to go over fryguybob's suggestion again, but patch-tag is down!
+2012-06-30 19:57:11 UTC <byorgey> shapr: oh, boo
+2012-06-30 19:57:29 UTC <byorgey> shapr: the IRC logs aren't automatically uploaded to patch-tag anyway, I have to manually record and update them every once in a while
+2012-06-30 19:57:38 UTC <shapr> oh, ok
+2012-06-30 19:58:06 UTC <byorgey> shapr: but I can do that right now and send you a patch for the diagrams-doc repo
