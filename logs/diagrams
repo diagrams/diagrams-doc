@@ -19485,3 +19485,913 @@
 2012-06-30 19:57:29 UTC <byorgey> shapr: the IRC logs aren't automatically uploaded to patch-tag anyway, I have to manually record and update them every once in a while
 2012-06-30 19:57:38 UTC <shapr> oh, ok
 2012-06-30 19:58:06 UTC <byorgey> shapr: but I can do that right now and send you a patch for the diagrams-doc repo
+2012-06-30 19:58:32 UTC <shapr> Nah, it's okay, but thanks for the offer!
+2012-06-30 19:58:43 UTC <byorgey> hmm, patch-tag isn't down for me
+2012-06-30 19:58:44 UTC <shapr> I'll work on a Display instance for Data.Map
+2012-06-30 19:59:06 UTC <shapr> ACTION checks
+2012-06-30 19:59:12 UTC <byorgey> I just pushed the latest logs
+2012-06-30 19:59:18 UTC <shapr> yay! thanks!
+2012-06-30 20:00:40 UTC <shapr> byorgey: Does the topic url work for you? http://patch-tag.com/r/byorgey/diagrams-doc/snapshot/current/content/pretty/logs/diagrams
+2012-06-30 20:03:00 UTC <byorgey> shapr: hmm, no, it's just sitting there "loading"
+2012-06-30 20:03:07 UTC <byorgey> shapr: but everything else seems to work
+2012-06-30 20:03:16 UTC <shapr> ok, cool
+2012-06-30 20:03:21 UTC <byorgey> shapr: you could also try  darcs get http://patch-tag.com/r/byorgey/diagrams-doc
+2012-06-30 20:03:26 UTC <shapr> Yup, doing that now :-)
+2012-06-30 20:03:29 UTC <byorgey> ok =)
+2012-06-30 20:03:44 UTC <luite> shapr: how do you want to display a map/
+2012-06-30 20:03:45 UTC <luite> ?
+2012-06-30 20:04:08 UTC <shapr> I figured it would be a table of two columns with keys on the left and values on the right.
+2012-06-30 20:04:08 UTC <byorgey> I mean, it is a 1MB text file after all!
+2012-06-30 20:04:18 UTC <shapr> luite: Any other ideas?
+2012-06-30 20:04:36 UTC <luite> nah sounds ok
+2012-06-30 20:05:06 UTC <byorgey> oh, sorry, it's 1.8MB
+2012-06-30 20:07:23 UTC <luite> oh it's too big for a 3.5" floppy then :(
+2012-06-30 20:08:49 UTC <shapr> Unless it's an IBM 2.88MB floppy.
+2012-06-30 20:09:07 UTC <luite> or you use one of the funky nonstandard formats
+2012-06-30 20:42:02 UTC <shapr> ACTION thinks
+2012-06-30 20:44:51 UTC <fryguybob> ACTION is back from getting coffee.
+2012-06-30 20:45:41 UTC <byorgey> fryguybob: 1.5 hours to get coffee?
+2012-06-30 20:46:16 UTC <fryguybob> Well, REI is having a sale...
+2012-06-30 20:46:37 UTC <shapr> ACTION grins
+2012-06-30 20:46:53 UTC <shapr> First you buy 50 pounds of coffee beans, then you lug them home...
+2012-06-30 20:50:16 UTC <byorgey> if you give a fryguybob a coffee...
+2012-06-30 20:57:20 UTC <shapr> haha
+2012-06-30 20:57:23 UTC <shapr> I love those books.
+2012-06-30 20:57:40 UTC <shapr> http://en.wikipedia.org/wiki/If_You_Give_a_Mouse_a_Cookie
+2012-06-30 20:59:58 UTC <byorgey> =)
+2012-06-30 21:05:36 UTC <mgsloan> ACTION heads to the guggenheim
+2012-06-30 21:05:47 UTC <mgsloan> guggenheim++ for being open later on saturdays!
+2012-07-01 02:00:42 UTC <tgeeky> mgsloan: back frm the guggenheim
+2012-07-01 02:00:52 UTC <mgsloan> yuup!
+2012-07-01 02:01:33 UTC <mgsloan> it was pretty good, a really awesome kandinsky exhibit
+2012-07-01 02:01:38 UTC <mgsloan> among other things
+2012-07-01 03:05:07 UTC <tgeeky> mgsloan: https://github.com/mgsloan/Haskell-Re-Syntaxed/blob/master/builtinReflection.md <--
+2012-07-01 03:05:28 UTC <mgsloan> yeah, that's a very rough idea
+2012-07-01 03:05:28 UTC <tgeeky> is there a way to do that, without requiring DatatypeContexts?
+2012-07-01 03:05:53 UTC <mgsloan> there is!  EdwardKmett's reflection stuff does it
+2012-07-01 03:06:06 UTC <edwardk> =)
+2012-07-01 03:06:07 UTC <tgeeky> oh, so if I use his it will go away. interesting.
+2012-07-01 03:06:45 UTC <edwardk> fyi- there is no runtime overhead at all any more
+2012-07-01 03:06:48 UTC <tgeeky> mgsloan: that said, in practice, what you want as implicit paramters are the functions that you use in homomorphism
+2012-07-01 03:06:51 UTC <mgsloan> but note that to get an actual value to your instance, you still need it to be stored in the type (if I understand correctly)
+2012-07-01 03:06:57 UTC <mgsloan> edwardk: wow, awesome!
+2012-07-01 03:07:06 UTC <edwardk> it literally casts the function into a dictionary now
+2012-07-01 03:07:11 UTC <mgsloan> what do you think of the idea of building it into the language?
+2012-07-01 03:07:27 UTC <edwardk> https://github.com/ekmett/reflection/blob/master/fast/Data/Reflection.hs runs on black magic
+2012-07-01 03:07:31 UTC <edwardk> its 5 lines
+2012-07-01 03:07:37 UTC <edwardk> doesn't really need to live in the language
+2012-07-01 03:07:55 UTC <mgsloan> hmm, perhaps, but usage of the library confuses me a bit
+2012-07-01 03:08:07 UTC <edwardk> i would be happy if the simons wanted to own it, but to be honest, they have enough on their plate
+2012-07-01 03:08:20 UTC <tgeeky> I'm not sure if it's more or less confusing than Oleg's original paper on reflection
+2012-07-01 03:08:56 UTC <edwardk> the way it is implemented is about 3 orders of magnitude faster than oleg's approach
+2012-07-01 03:09:08 UTC <edwardk> even the 'slow' path is about 10x faster than oleg's
+2012-07-01 03:09:57 UTC <tgeeky> edwardk: yes, I didn't associate any performance gradient with a performance one. I'm not that good with the Haskell
+2012-07-01 03:10:37 UTC <edwardk> mgsloan: i definitely prefer the reflection approach with the phantom type to the implicit parameter like sketch you have.
+2012-07-01 03:10:52 UTC <edwardk> the phantom type is actually important because it enforces a stack discipline to their use
+2012-07-01 03:11:04 UTC <edwardk> that isn't encoded in the ?foo syntax you have there
+2012-07-01 03:11:18 UTC <edwardk> the stack discipline is actually necessary for correctness
+2012-07-01 03:12:25 UTC <mgsloan> ahh, interesting, yeah, the issue is that I don't fully understand the reflection stuff (haven't needed it yet), so this was more of a thought in the direction of "Hmm, if we provide values at declaration time to instances, how about at runtime?"
+2012-07-01 03:12:59 UTC <tgeeky> mgsloan: I think you could even change the monoid at runtime, with that code
+2012-07-01 03:13:01 UTC <edwardk> oleg's paper is quite a solid introduction to reflection.
+2012-07-01 03:13:25 UTC <mgsloan> cool!  I've actually met him and Chung-shieh recently, awesome guys to talk to
+2012-07-01 03:13:30 UTC <tgeeky> mgsloan: if you used the ?monoid at two different levels in a recursive mdo or whatever
+2012-07-01 03:14:34 UTC <edwardk> mgsloan: also the ?foo syntax doesn't deal with multiple outstanding reified values of the same 'type'
+2012-07-01 03:14:49 UTC <mgsloan> tgeeky: good point!  Yeah, the implicit would need to mean something very different for this to make any sense
+2012-07-01 03:15:20 UTC <mgsloan> edwardk: or determining which reified values come from where, yeah
+2012-07-01 03:15:22 UTC <tgeeky> mgsloan: I only looked it because I had been messing about with implicit paramters to write funtions that were very similar (list and tree homomorphisms)
+2012-07-01 03:15:54 UTC <tgeeky> edwardk: is this a comprehensible question:  Would it be possible to tag a single fucntion with multiple tags?
+2012-07-01 03:16:20 UTC <edwardk> mgsloan: reify :: a -> (forall s. Reifies s a => Proxy s -> r) -> r; reflect :: Reifies s a => p s -> a
+2012-07-01 03:16:27 UTC <edwardk> mgsloan: that is the whole API ;)
+2012-07-01 03:16:34 UTC <edwardk> afk a bit
+2012-07-01 03:16:44 UTC <mgsloan> fair 'nough ;)
+2012-07-01 03:16:58 UTC <mgsloan> might be fun to do some TH + reflection magic
+2012-07-01 03:17:09 UTC <mgsloan> generate the dictionary ADTs and such like that
+2012-07-01 03:17:17 UTC <tgeeky> mgsloan: so how about a directional typed 3 vector:
+2012-07-01 03:17:53 UTC <tgeeky> [up || down] [left || right]  [in || out]  V x y z
+2012-07-01 03:18:42 UTC <tgeeky> Data.Tagged looks deciptively simple
+2012-07-01 03:19:44 UTC <tgeeky> anyway, until more, popd
+2012-07-01 03:20:19 UTC <mgsloan> btw, I updated my doc
+2012-07-01 03:20:21 UTC <mgsloan> https://github.com/mgsloan/Haskell-Re-Syntaxed/blob/master/instanceTemplates.md
+2012-07-01 03:20:36 UTC <tgeeky> hehe
+2012-07-01 03:20:39 UTC <tgeeky> Drew Day
+2012-07-01 03:20:41 UTC <tgeeky> <tgeeky>
+2012-07-01 03:20:41 UTC <mgsloan> new sections are "Resolving Overlap" and "API deltas"
+2012-07-01 03:20:50 UTC <mgsloan> ahh, will substitute :)
+2012-07-01 03:21:24 UTC <mgsloan> Here I thought your parents were particularly foretelling
+2012-07-01 03:21:51 UTC <tgeeky> heh
+2012-07-01 03:22:35 UTC <tgeeky> mgsloan: editorial advice: delete the stuff at the toplevel in Haskell-Re-Syntaxed
+2012-07-01 03:22:50 UTC <tgeeky> in particular, just get rid of the "coffescript for haskell"
+2012-07-01 03:23:23 UTC <mgsloan> yeaaah... this isn't actually how I'll be submitting it to the workshop
+2012-07-01 03:23:35 UTC <tgeeky> people who are familar with either won't agree that you've done enough || done too much
+2012-07-01 03:23:37 UTC <mgsloan> I wonder if there's a good way to preserve the git history of one file and obliterate the rest
+2012-07-01 03:24:02 UTC <mgsloan> oh yeah, the coffeescript stuff isn't even me talking.  That's "colah", who I forked this from
+2012-07-01 03:24:04 UTC <tgeeky> git destroy-evidence-of hehe
+2012-07-01 03:24:08 UTC <mgsloan> the brainstorm.hs file is his
+2012-07-01 03:24:09 UTC <tgeeky> mgsloan: I figured
+2012-07-01 03:24:22 UTC <mgsloan> I do like the ideas he's talking about
+2012-07-01 03:24:24 UTC <mgsloan> somewhat
+2012-07-01 03:24:52 UTC <mgsloan> the instance stuff is kinda bonkers, but it inspired me to think again about the whole instances-as-results-of-applying-to-values thing
+2012-07-01 03:25:40 UTC <mgsloan> but yeah, good advice
+2012-07-01 03:26:03 UTC <mgsloan> I ought to make my TH implementation be standalone from quasi-extras (soon to be renamed quasi-meta :D )
+2012-07-01 03:26:32 UTC <mgsloan> that way I can be like "200 line TH implementation right here next to the big doc"
+2012-07-01 03:27:22 UTC <mgsloan> So yeah, probably ignore preserving history, and just move it over to a new repo
+2012-07-01 04:14:16 UTC <tgeeky> mgsloan: https://github.com/technogeeky/pearl-sorting-with-bialgebras/blob/02-preliminaries/src/preliminaries.hs <-- here's an example of doctest catching things for me :O
+2012-07-01 04:14:38 UTC <tgeeky> basically, I renamed the "f" in the Lf (lowest fix) and Gf (greatest fix)
+2012-07-01 04:14:46 UTC <tgeeky> to be v and x, which stand (informally) for 5 and 10
+2012-07-01 04:15:02 UTC <mgsloan> wow, Shin-Cheng Mu has a very appropriate last name
+2012-07-01 04:15:03 UTC <tgeeky> and then tried to track which functions used which, by seeing which (x or v) was being used
+2012-07-01 04:15:10 UTC <tgeeky> mgsloan: true that :o
+2012-07-01 04:15:35 UTC <mgsloan> that's sweet!
+2012-07-01 04:15:49 UTC <tgeeky> notice, that code isn't ... code
+2012-07-01 04:16:03 UTC <tgeeky> it's doctest properly handling ghci :t
+2012-07-01 04:16:23 UTC <mgsloan> gotcha
+2012-07-01 04:16:48 UTC <tgeeky> mgsloan: actually, it's both properly and inproperly
+2012-07-01 04:17:38 UTC <mgsloan> I definitely think that there's power in the idea that little examples, for use as unit and regression tests, can be used very powerfully at all stages of development
+2012-07-01 04:18:01 UTC <tgeeky> well, what I *really* want (and it's a dead simple idea)
+2012-07-01 04:18:02 UTC <mgsloan> they could be used for code generation, and they're definitely nice for docs and test
+2012-07-01 04:18:11 UTC <tgeeky> is to, in haddock, just change the doctest-style REPL
+2012-07-01 04:18:18 UTC <tgeeky> so that you get a code box like normal
+2012-07-01 04:18:23 UTC <tgeeky> with code in it, like normal
+2012-07-01 04:18:42 UTC <tgeeky> but on the bottom right, you get a little green dot if the doctest passed (that is, evaluating this code gives the result listed)
+2012-07-01 04:18:45 UTC <mgsloan> that would be ideal.  Seems like an issue with doctest syntax, then?
+2012-07-01 04:18:47 UTC <tgeeky> or a red dot if it does not
+2012-07-01 04:18:50 UTC <mgsloan> ah right
+2012-07-01 04:18:56 UTC <tgeeky> it's a haddock change
+2012-07-01 04:19:03 UTC <tgeeky> to make a special style for REPL
+2012-07-01 04:19:15 UTC <mgsloan> I hope the title "Deriving Class with Instance Templates" is punny enough for th symposium
+2012-07-01 04:19:55 UTC <tgeeky> sounds just punny enough
+2012-07-01 04:20:34 UTC <mgsloan> s/symposium/workshop
+2012-07-01 04:21:00 UTC <tgeeky> yep :)
+2012-07-01 05:55:37 UTC <tgeeky> hmmm
+2012-07-01 05:55:38 UTC <tgeeky> edwardk: here?
+2012-07-01 05:56:06 UTC <edwardk>  watching a movie
+2012-07-01 05:56:14 UTC <tgeeky> edwardk: ok
+2012-07-01 05:57:33 UTC <tgeeky> mgsloan: or anyone else:  do you understand the greatest/least-fixpoint coincide in Hask argument?
+2012-07-01 06:12:45 UTC <mgsloan> noidea, but sounds like it might have to do with usual PL concepts of preservation?
+2012-07-01 16:13:17 UTC <byorgey> tgeeky: hmm, good question.  I *should* understand it so let me see if I can remember how to explain it.
+2012-07-01 16:18:39 UTC <byorgey> tgeeky: huh, actually, it seems I have never known how to explain it.  And a google search is turning up lots of people mentioning it but not proving it.
+2012-07-01 16:24:30 UTC <byorgey> tgeeky: I found http://homepages.inf.ed.ac.uk/als/Teaching/MSfS/l2.ps  which looks like it walks you through the proof, though it leaves out a lot of details.
+2012-07-01 16:25:00 UTC <byorgey> in any case it seems to involve some nontrivial CT.
+2012-07-01 16:27:05 UTC <byorgey> apparently some papers of Freyd, and Fiore's thesis, are the ultimate references for this.
+2012-07-01 23:32:45 UTC <tgeeky> byorgey: yow. that paper represents many hours of category theory :o
+2012-07-01 23:35:42 UTC <tgeeky> whoops. gsview just crashed
+2012-07-01 23:47:41 UTC <byorgey> tgeeky: yeah, it does, isn't it exciting? =)
+2012-07-01 23:47:51 UTC <byorgey> I printed it out, and hope to try working through it
+2012-07-02 01:06:21 UTC <cheater> hey guys
+2012-07-02 01:06:33 UTC <cheater> has anyone here been following conal's composable guis idea?
+2012-07-02 01:51:50 UTC <edwardk> i think a lot of us have seen it, not sure how many consider it a good idea ;)
+2012-07-02 01:59:11 UTC <tgeeky_> I think we all love composition (and compsability, and denotational semantics)
+2012-07-02 02:01:34 UTC <tgeeky_> byorgey: it is somewhat exciting. What I was wondering is if all of the same rules come out when you consider T (X,Y) = ... (or equivalently, I think:  Cppo_|_ (*) Cppo_|_ (*) Cppo_|_ -> ( Cppo_|_, Cppo_|_ ) )
+2012-07-02 09:59:37 UTC <luite> cheater: hm, i haven't, is there something new?
+2012-07-02 20:32:43 UTC <tgeeky__> https://github.com/technogeeky/pearl-sorting-with-bialgebras <-- that's up if anyone wants to look at it
+2012-07-02 21:00:33 UTC <edwardk> preflex: xseen luite
+2012-07-02 21:00:40 UTC <edwardk> er
+2012-07-02 21:02:49 UTC <tgeeky_> NO
+2012-07-02 21:02:52 UTC <tgeeky_> he hasn't
+2012-07-02 21:02:58 UTC <tgeeky_> luite: seen luite
+2012-07-02 21:25:12 UTC <luite> here
+2012-07-02 21:28:52 UTC <shapr> howdy luite!
+2012-07-02 21:30:06 UTC <luite> hi shapr
+2012-07-02 21:30:30 UTC <shapr> How's life treating you?
+2012-07-02 21:31:23 UTC <edwardk> =)
+2012-07-02 21:38:01 UTC <shapr> luite: At the moment I'm working on the collaborative editing component
+2012-07-02 21:38:22 UTC <shapr> luite: I installed sharejs and got the examples running, they use the ACE editor.
+2012-07-02 21:39:06 UTC <shapr> Next step is to find out how to pull the text source out of the editor by URL, so I'm diving through the source to see if that's a normal editor command.
+2012-07-02 21:39:53 UTC <luite> shapr: they have an example with codemirror, look in the cm directory in examples
+2012-07-02 21:39:58 UTC <shapr> ACTION looks
+2012-07-02 21:41:13 UTC <shapr> Yay, works!
+2012-07-02 21:45:25 UTC <shapr> ACTION switches the cm example to haskell mode
+2012-07-02 21:45:48 UTC <alpounet> <shapr> luite: At the moment I'm working on the collaborative editing component <<< hah, so you went down that road finally :p
+2012-07-02 21:45:49 UTC <lambdabot> alpounet: You have 1 new message. '/msg lambdabot @messages' to read it.
+2012-07-02 21:46:04 UTC <luite> shapr: but you'd need to synchronize the node.js server (which can use some external storage i think) with the ghclive daemon to reload code
+2012-07-02 21:46:14 UTC <shapr> luite: What do you mean?
+2012-07-02 21:46:22 UTC <shapr> alpounet: Yes I did :-)
+2012-07-02 21:46:55 UTC <luite> shapr: well the sharejs server keeps a master copy of the edited document
+2012-07-02 21:48:51 UTC <shapr> If I can access that master document by URL, then I just grab that and load it, the way I'm doing things now, right?
+2012-07-02 21:50:29 UTC <alpounet> can't have the sharejs server sitting right next to ghclive?
+2012-07-02 21:50:36 UTC <luite> wait, when you're editing the document you have a websocket connection to the sharejs server, so the sharejs server knows about the edits. you want to add a button "load in ghc" so the client (browser) submits the version to ghclive?
+2012-07-02 21:50:37 UTC <alpounet> or integrated into
+2012-07-02 21:50:49 UTC <shapr> luite: Pretty much
+2012-07-02 21:51:35 UTC <luite> shapr: ok, that's going to be tricky, because of the same origin policy, you can only open http connections to the same host/post
+2012-07-02 21:51:49 UTC <luite> port
+2012-07-02 21:52:23 UTC <shapr> alpounet: Yah, it would be preferable to have a single hackage to install that does everything.
+2012-07-02 21:52:27 UTC <luite> you pretty much need to have direct access to the node.js server
+2012-07-02 21:52:42 UTC <shapr> alpounet: But first, something that works :-)
+2012-07-02 21:53:03 UTC <shapr> Since the same server will be running both ghclive and node.js, it should be fine.
+2012-07-02 21:53:24 UTC <shapr> Though it's not necessary, ghclive can make any http call to get the file.
+2012-07-02 21:53:55 UTC <luite> shapr: no there's a problem, the browser needs the websocket connection to sharejs, but also the xmlhttprequest stuff for commands to the interpreter
+2012-07-02 21:54:51 UTC <shapr> ohh
+2012-07-02 21:55:55 UTC <alpounet> shapr, yeah, you're kind of applying the dons method i guess :p
+2012-07-02 21:56:12 UTC <alpounet> and i think that's good, particularly in the context of a gsoc
+2012-07-02 21:56:16 UTC <shapr> I think so too.
+2012-07-02 21:56:18 UTC <shapr> :-)
+2012-07-02 21:59:15 UTC <luite> ok, sharejs has a workaround for this, the browserchannel transport
+2012-07-02 21:59:16 UTC <shapr> luite: So the quick hack is to multiplex them through scotty or something?
+2012-07-02 21:59:22 UTC <shapr> oh goody!
+2012-07-02 22:00:06 UTC <luite> no, it looks like it has some headers to allow the requests
+2012-07-02 22:00:42 UTC <luite> the problem is not as bad as a thought, at least if most browsers support this ehader
+2012-07-02 22:02:40 UTC <luite> http://caniuse.com/cors
+2012-07-02 22:03:04 UTC <shapr> So, pretty much everything.
+2012-07-02 22:04:54 UTC <luite> can you run sharejs without external persistent storage? there are some postgresql, redis and couchdb backends, but i'm not sure if they're required
+2012-07-02 22:05:35 UTC <shapr> I'm pretty sure apt-get installed postgresql when I installed node.js, so not sure.
+2012-07-02 22:06:22 UTC <luite> well if your sharejs install uses postgresql you probably had to configure the authentication :p
+2012-07-02 22:06:36 UTC <shapr> I didn't configure anything.
+2012-07-02 22:06:43 UTC <shapr> so maybe not!
+2012-07-02 22:06:54 UTC <luite> it just works, the example?
+2012-07-02 22:07:08 UTC <shapr> yup
+2012-07-02 22:08:16 UTC <shapr> Without redis installed
+2012-07-02 22:08:18 UTC <luite> will the file upload be removed if you have a live editor?
+2012-07-02 22:08:45 UTC <shapr> Huh?
+2012-07-02 22:09:01 UTC <luite> you have a "load file from url" right, at the moment?
+2012-07-02 22:09:08 UTC <shapr> yup
+2012-07-02 22:09:41 UTC <luite> is that still required with the editor?
+2012-07-02 22:10:41 UTC <shapr> oh!
+2012-07-02 22:10:47 UTC <shapr> Yes
+2012-07-02 22:10:47 UTC <shapr> The URL box would be replaced with the editor component.
+2012-07-02 22:10:47 UTC <shapr> Though that feature might be handy if you want to import files that aren't in packages?
+2012-07-02 22:10:48 UTC <shapr> No, I don't think the file upload would be required once the shared editor is there.
+2012-07-02 22:13:19 UTC <luite> ok, if you just run sharejs alongside the ghclive server it should be pretty straightforward to add.
+2012-07-02 22:14:29 UTC <shapr> yay!
+2012-07-02 22:14:54 UTC <luite> getting the haskell file loaded in ghclive would probably just be doing a POST request, and the haskell site is easier than downloading files since you just get the data in a parameter
+2012-07-02 22:17:48 UTC <shapr> sounds good
+2012-07-02 22:18:22 UTC <luite> but this will probably be done in a few days, any plans what to do after?
+2012-07-02 22:21:12 UTC <shapr> How to do the shared ghci session via hint?
+2012-07-02 22:21:58 UTC <shapr> I don't think this is a large problem, but it's not something I know how to solve immediately.
+2012-07-02 22:22:08 UTC <shapr> ACTION thinks
+2012-07-02 22:22:24 UTC <shapr> hm, might be easier than I thought
+2012-07-02 22:23:02 UTC <luite> is it readonly for the viewers?
+2012-07-02 22:23:17 UTC <shapr> Nah, I think they should be able to edit.
+2012-07-02 22:23:32 UTC <luite> both the haskell file and run expressions in the interpreter?
+2012-07-02 22:23:40 UTC <shapr> I think so, yes.
+2012-07-02 22:26:53 UTC <luite> could be another sharejs document
+2012-07-02 22:27:01 UTC <shapr> ACTION blinks
+2012-07-02 22:27:09 UTC <shapr> That could simplify things.
+2012-07-02 22:28:12 UTC <luite> if you have a separate input field, what clients would to is: enter input, send eval request to server, append expression and result to sharejs doc
+2012-07-02 22:28:42 UTC <luite> individual clients could abuse it by manipulating results
+2012-07-02 22:28:50 UTC <shapr> huh?
+2012-07-02 22:28:53 UTC <luite> but if you trust clients it would be ok
+2012-07-02 22:29:01 UTC <shapr> Yah, this model is based on complete trust :-)
+2012-07-02 22:29:25 UTC <luite> shapr: since the client contacts ghclive and appends the result to the sharejs document
+2012-07-02 22:29:35 UTC <shapr> Ah
+2012-07-02 22:29:38 UTC <luite> a malicious client could append anything
+2012-07-02 22:30:08 UTC <shapr> That makes sense.
+2012-07-02 22:30:46 UTC <shapr> So, the simplest hack is to have THREE sharejs documents, one for the source code module(s), one for the GHCi output, and one for the shared GHCi input, right?
+2012-07-02 22:31:13 UTC <luite> is having realtime shared GHCi input necessary? an irc-like model could work
+2012-07-02 22:31:28 UTC <shapr> No, it's not necessary.
+2012-07-02 22:31:42 UTC <shapr> Especially not for getting the simplest thing working as soon as possible.
+2012-07-03 00:23:19 UTC <shapr> Well, at least the haskell-mode is working.
+2012-07-03 15:05:29 UTC <tgeeky> byorgey: here?
+2012-07-03 15:46:07 UTC <byorgey> hi tgeeky
+2012-07-03 16:20:25 UTC <tgeeky> byorgey: ok, back. I had to write down all the notes from #haskell-blah
+2012-07-03 16:20:36 UTC <byorgey> hehe, ok
+2012-07-03 16:20:52 UTC <tgeeky> byorgey: can we discuss page 4 of the recent apollonian paper
+2012-07-03 16:21:59 UTC <tgeeky> here's the gist of my notes from yesterday about this algorithim:
+2012-07-03 16:24:00 UTC <tgeeky> well, there are two ways to state it:
+2012-07-03 16:24:19 UTC <tgeeky> you have the internal iterated variables (so, in my mind, they behave somewhat like indexes in tensor notation)
+2012-07-03 16:24:25 UTC <tgeeky> u, k, and n
+2012-07-03 16:24:47 UTC <tgeeky> of the three, it's obvious that n starts at a maximum, and shrinks
+2012-07-03 16:24:52 UTC <tgeeky> and that k and u start at a minimum, and grow
+2012-07-03 16:25:24 UTC <tgeeky> and that both k and n, are cyclic (their shrinkining/growth) happens twice
+2012-07-03 16:26:42 UTC <byorgey> "their shrinking/growth happens twice" -- are you looking at Figure 3?
+2012-07-03 16:26:46 UTC <tgeeky> yes
+2012-07-03 16:26:51 UTC <tgeeky> it could happen more times
+2012-07-03 16:26:53 UTC <tgeeky> and I suspect it does
+2012-07-03 16:26:56 UTC <tgeeky> but it happens at least twice
+2012-07-03 16:27:00 UTC <tgeeky> in this case
+2012-07-03 16:27:04 UTC <byorgey> yeah, I think that's just an artifact of the particular numbers chosen
+2012-07-03 16:27:27 UTC <tgeeky> well, whatever the numbers, you can say this:
+2012-07-03 16:27:31 UTC <tgeeky> in terms of rate of change
+2012-07-03 16:27:32 UTC <byorgey> and the fact that they are only listing k which divide B^2 + u^2
+2012-07-03 16:27:48 UTC <byorgey> there are lots of other "discarded" k which are not listed in the table
+2012-07-03 16:28:16 UTC <tgeeky> yep, I know both of those facts. I'm not sure about mu
+2012-07-03 16:28:22 UTC <tgeeky> u
+2012-07-03 16:28:46 UTC <tgeeky> Anyway, the point is:  n changes at a "fast" rate, k changes at  "medium" rate, and u changes at  "slow" rate
+2012-07-03 16:29:44 UTC <tgeeky> that's not the point, that's an observation. You have various kinds of orderings and bounds for all of these terms
+2012-07-03 16:29:46 UTC <byorgey> right, but that's just because the loop for k is an inner loop inside the loop for u
+2012-07-03 16:29:57 UTC <byorgey> also, n and k are dual.
+2012-07-03 16:33:27 UTC <byorgey> sorry, continue
+2012-07-03 16:33:32 UTC <byorgey> I am not sure where you are going with this
+2012-07-03 16:33:37 UTC <tgeeky> no, don't apologize, I'm thinking.
+2012-07-03 16:33:48 UTC <tgeeky> i want to understand what the "fixed point" of this equation is / would mean
+2012-07-03 16:34:00 UTC <tgeeky> and how it involves the types in boxes on the bottom of figure 3
+2012-07-03 16:35:20 UTC <tgeeky> it seems to me, that since you can do this process using a few random numbers and a triplet of internal interators
+2012-07-03 16:35:30 UTC <tgeeky> that you should be able to write an Unfoldable instance which just... unfolds gaskets
+2012-07-03 16:35:35 UTC <tgeeky> given the starting integer
+2012-07-03 16:37:11 UTC <byorgey> doing it in terms of Unfoldable doesn't seem very interesting to me
+2012-07-03 16:37:15 UTC <byorgey> it's just a list
+2012-07-03 16:37:39 UTC <tgeeky> byorgey: it's a list... of streams
+2012-07-03 16:37:53 UTC <byorgey> you mean one stream for each value of B?
+2012-07-03 16:37:57 UTC <tgeeky> no
+2012-07-03 16:38:13 UTC <tgeeky> some number of streams, for each b
+2012-07-03 16:38:20 UTC <tgeeky> in this paper: Table 1
+2012-07-03 16:38:33 UTC <tgeeky> every single B0 B1 B2 B3 B4 ... goes on forever B5 .. B6 ..
+2012-07-03 16:38:48 UTC <tgeeky> and every term you get forever, is an integer
+2012-07-03 16:39:14 UTC <byorgey> oh, right
+2012-07-03 16:39:21 UTC <tgeeky> in fact, it's even better
+2012-07-03 16:39:25 UTC <tgeeky> each stream, like:
+2012-07-03 16:39:30 UTC <tgeeky> (-1,2,2,3)
+2012-07-03 16:39:37 UTC <tgeeky> ban be inverted
+2012-07-03 16:39:44 UTC <tgeeky> *can
+2012-07-03 16:39:50 UTC <tgeeky> inverted is the wrong word, I think
+2012-07-03 16:39:59 UTC <tgeeky> it's better to say:
+2012-07-03 16:40:32 UTC <tgeeky> you can splice two copies of (-2, 3, 6, 7)  -- the second one
+2012-07-03 16:40:36 UTC <tgeeky> into (-1, 2, 2, 3)
+2012-07-03 16:41:29 UTC <tgeeky> byorgey: so what you'd be getting when you unfold is a family of streams
+2012-07-03 16:41:45 UTC <tgeeky> or something, I don't know what the word 'family' should mean
+2012-07-03 16:43:46 UTC <tgeeky> byorgey: oh, and the point of the Fuchs thesis about these gaskets (or at least, one of the primary point) was that the (-1,2,2,3) gasket is special, and that once you extend it far enough to the right (-1, 2, 2, 3, ...) -> such that you have pulled 28 primes (excluding 2 and 3!), then... something (some sort of algebraic / geometric thing) is "Zariski dense in the cone"
+2012-07-03 16:44:42 UTC <tgeeky> byorgey: anyway, one specific plan I thought of was this:
+2012-07-03 16:45:53 UTC <tgeeky> from the abstract syntax graphs thing, write a cousion to his 'ArithAlg' for each of the initial equations (-B, B + k, B + n, (B + k + n) +/- 2u)
+2012-07-03 16:47:12 UTC <tgeeky> and then write a fixed point for all 5 at once.
+2012-07-03 16:48:05 UTC <byorgey> which initial equations, exactly?
+2012-07-03 16:48:16 UTC <byorgey> (-B, B + k, ...   is not an equation
+2012-07-03 16:48:28 UTC <byorgey> I am trying to understand what you mean by fixed point here.
+2012-07-03 16:50:10 UTC <tgeeky> if it's true that each of the lines in table 1 is a Stream (off to the right), then the minimum number of numbers (integers or naturals, take your pick), is the first four (or five).
+2012-07-03 16:50:20 UTC <tgeeky> Which is to say, to uniquely describe the entire stream
+2012-07-03 16:50:29 UTC <tgeeky> you need: (B0,B1,B2,B3)
+2012-07-03 16:50:31 UTC <byorgey> right
+2012-07-03 16:51:02 UTC <tgeeky> that is a fixed point in some sense, I assume (I hope) .. in the same way that the fixed point of the "one-at-a-time" naturals is a *single* natural, and a successor
+2012-07-03 16:51:18 UTC <tgeeky> of the *entire* system of apollonian streams and gaskets and windows and whatnot
+2012-07-03 16:51:36 UTC <tgeeky> that each B0 can be associated with more than one of these is not important
+2012-07-03 16:51:44 UTC <byorgey> that is not a use of the term "fixed point" that I have ever heard
+2012-07-03 16:52:21 UTC <byorgey> "the fixed point of the 'one-at-a-time' naturals is a single natural, and a successor" -- this does not make sense
+2012-07-03 16:52:26 UTC <byorgey> only equations have fixed points.
+2012-07-03 16:52:53 UTC <byorgey> er, sorry, only functions have fixed points.
+2012-07-03 16:52:57 UTC <byorgey> expressed by an equation.
+2012-07-03 16:53:36 UTC <byorgey> it sounds to me more like you are thinking about the "seed" which generates some sort of infinite structure by an unfolding process
+2012-07-03 16:53:38 UTC <tgeeky> is a zero vector a fixed point of something?
+2012-07-03 16:53:59 UTC <byorgey> sure, consider the vector function  f(v) = 5v
+2012-07-03 16:54:08 UTC <byorgey> the zero vector is (the only) fixed point of f
+2012-07-03 16:54:48 UTC <tgeeky> and that's true for the 0,1,2,3,4,...-vector (0), (0,0) ..
+2012-07-03 16:54:57 UTC <tgeeky> yes?
+2012-07-03 16:55:16 UTC <byorgey> sure
+2012-07-03 16:56:41 UTC <tgeeky> hehe, looking up fixed point, I see that [0,1] has "the fixed-point property"
+2012-07-03 16:56:51 UTC <tgeeky> and "shift", in the table, hs defined on that interval
+2012-07-03 16:57:13 UTC <tgeeky> (but that's not what I'm after, yet)
+2012-07-03 16:58:26 UTC <tgeeky> i should know better here, I've read all kinds of stuff about this
+2012-07-03 17:07:15 UTC <tgeeky> byorgey: this was e-mailed to me: scan for interestingness; report back when available?  http://www.doc.ic.ac.uk/~wlj05/files/Deconstraining.pdf
+2012-07-03 17:09:16 UTC <tgeeky> Our implementation makes use of many of the latest Haskell
+2012-07-03 17:09:16 UTC <tgeeky> extensions, including kind polymorphism (Section 6), constraint
+2012-07-03 17:09:16 UTC <tgeeky> kinds (Section 3) and promotion (Section 2) and thus serves
+2012-07-03 17:09:16 UTC <tgeeky> to document the application of these extensions in a practical
+2012-07-03 17:09:27 UTC <tgeeky> sometimes I want to kill mycomputer and/or myself.
+2012-07-03 17:09:30 UTC <tgeeky> setting*
+2012-07-03 17:10:01 UTC <byorgey> looks interesting
+2012-07-03 17:10:07 UTC <byorgey> I don't have time to read it in detail now.
+2012-07-03 17:10:58 UTC <edwardk> looks a lot like my little 'grid' dsl
+2012-07-03 17:11:50 UTC <edwardk> the difference is they use a GADT and i went finally tagless
+2012-07-03 17:12:49 UTC <tgeeky> edwardk: i don't know if the word 'finally' changes it
+2012-07-03 17:13:33 UTC <tgeeky> they say it can be applied to "tagless" representations
+2012-07-03 17:13:38 UTC <tgeeky> and rank-2 types
+2012-07-03 17:14:11 UTC <tgeeky> does 'finally' tagless mean you have a finalization/normilization step that makes _____ tagless?
+2012-07-03 17:16:13 UTC <byorgey> no, it means using an encoding based on a final coalgebra instead of an initial algebra
+2012-07-03 17:16:49 UTC <tgeeky> oh
+2012-07-03 17:16:57 UTC <tgeeky> sneaky
+2012-07-03 18:07:40 UTC <shapr> ACTION chortles happily
+2012-07-03 18:11:03 UTC <edwardk> how goes?
+2012-07-03 18:36:36 UTC <shapr> edwardk: Life is good! How are you?
+2012-07-03 18:37:11 UTC <shapr> @quote
+2012-07-03 18:37:11 UTC <lambdabot> Aaron_Denney says: "Don't anthropomorphize computers.  They hate it when you do that."
+2012-07-03 18:37:15 UTC <shapr> ACTION snickers
+2012-07-03 18:37:42 UTC <edwardk> doing well. going through and swapping code from data-lens to lens-family
+2012-07-03 18:37:54 UTC <shapr> Oh neat.
+2012-07-03 18:38:03 UTC <shapr> What's the relationship between a lens and a zipper?
+2012-07-03 18:38:04 UTC <edwardk> the nice thing is that the resulting code for the most part doesn't need to import anything
+2012-07-03 18:38:09 UTC <shapr> Feels like there should be something.
+2012-07-03 18:38:39 UTC <shapr> ACTION boings cheerfully
+2012-07-03 18:38:41 UTC <shapr> Yay code!
+2012-07-03 18:38:53 UTC <edwardk> one you should see through, the other, if you can see through it, you probably should be embarassed.
+2012-07-03 18:39:11 UTC <edwardk> you can make a telescope of lenses that acts like a zipper
+2012-07-03 18:39:12 UTC <shapr> Ok, so yesterday I got the basic sharejs+codemirror collaborative editing widget working, and the haskell-mode enabled.
+2012-07-03 18:39:14 UTC <shapr> edwardk: haha!
+2012-07-03 18:39:48 UTC <edwardk> you can also make a zipper into a traversable into a comonad which is fun
+2012-07-03 18:40:04 UTC <shapr> So today I could either attempt to integrate that in place of the url to load, or I could work on the shared ghci session as a sharejs+codemirror widget.
+2012-07-03 18:40:18 UTC <edwardk> http://hackage.haskell.org/packages/archive/comonad-extras/2.1.2/doc/html/Control-Comonad-Store-Zipper.html
+2012-07-03 18:40:35 UTC <shapr> oh cool!
+2012-07-03 18:41:06 UTC <edwardk> that gives you a comonad that can step through the positions of a traversable, and where you can use comonadic actions to redecorate
+2012-07-03 18:41:26 UTC <shapr> So my GSoC project is also the deliverable for my CS490 Senior Seminar course, I talked to my faculty sponsor about that today.
+2012-07-03 18:41:34 UTC <edwardk> peeks (+1) will get your neightbor to the right, etc.
+2012-07-03 18:41:36 UTC <shapr> edwardk: Oh that's nifty!
+2012-07-03 18:42:04 UTC <edwardk> how close are you to actually graduating?
+2012-07-03 18:42:19 UTC <shapr> I think I'm three terms away, not including this summer.
+2012-07-03 18:43:14 UTC <shapr> So I get to give a talk about GSoC, Haskell, and my project to a combined ACM/AIS meeting when the Fall term starts.
+2012-07-03 18:44:17 UTC <shapr> Ok, so a codemirror 'instance' has a getValue() method that returns the current text of the editor...
+2012-07-03 19:05:02 UTC <byorgey> > 2 + 2
+2012-07-03 19:05:04 UTC <lambdabot>   4
+2012-07-03 19:05:08 UTC <byorgey> huh, since when has lambdabot been in here? =)
+2012-07-03 19:05:24 UTC <shapr> I asked politely :-)
+2012-07-03 19:05:30 UTC <shapr> @listchans
+2012-07-03 19:05:30 UTC <lambdabot> ##freebsd ##logic ##proggit ##villagegreen #agda #arch-haskell #codez #darcs #diagrams #esoteric #fedora-haskell #friendly-coders #functionaljava #gentoo-haskell #gentoo-uy #ghc #happs #haskell #
+2012-07-03 19:05:31 UTC <lambdabot> haskell-blah #haskell-books #haskell-br #haskell-fr #haskell-freebsd #haskell-in-depth #haskell-overflow #haskell-pl #haskell.au #haskell.cz #haskell.de #haskell.dut #haskell.es #haskell.se #haskell.
+2012-07-03 19:05:31 UTC <lambdabot> tw #learnanycomputerlanguage #macosx #macosxdev #rosettacode #scala #scalaz #scannedinavian #snapframework #stackoverflow #tanuki #teamunix #unicycling #uscs2010 #xmonad #yesod #yi weird#
+2012-07-03 19:05:32 UTC <shapr> yow
+2012-07-03 19:05:38 UTC <byorgey> nice =)
+2012-07-03 19:05:58 UTC <shapr> I didn't even know #haskell.tw existed!
+2012-07-03 19:06:07 UTC <shapr> Or that there was a #stackoverflow
+2012-07-03 19:06:07 UTC <shapr> huh
+2012-07-03 19:06:26 UTC <shapr> ACTION shrugs
+2012-07-03 20:14:13 UTC <alpounet> tw is taiwan i guess?
+2012-07-03 20:21:57 UTC <byorgey> yep
+2012-07-03 20:22:24 UTC <byorgey> I ran the topic through Google translate =)
+2012-07-05 20:27:11 UTC <shapr> luite: I discovered that tryhaskell.org is using jsonp, which is another way to do cors: http://en.wikipedia.org/wiki/JSONP
+2012-07-05 20:27:33 UTC <shapr> That also explains why I was confused about tryhaskell's approach to loading results.
+2012-07-05 20:32:55 UTC <luite> yeah but jsonp doesn't work for websockets
+2012-07-05 20:33:24 UTC <shapr> Does this require websockets?
+2012-07-05 20:33:42 UTC <luite> either that or some workaround like long polling
+2012-07-05 20:34:16 UTC <shapr> ACTION checks his notes
+2012-07-05 20:34:57 UTC <luite> you (probably?) want realtime updates, those don't really fit well in the usual http request/response model
+2012-07-05 20:35:45 UTC <luite> long polling keeps connections open to the server, with a request. the server only sends the reply when it has something to tell
+2012-07-05 20:35:45 UTC <shapr> Hm, the way I understand the basics of ajax, javascript asks the server for a result... the connection waits around until the server has something to send, or until a set timeout is passed.
+2012-07-05 20:35:49 UTC <shapr> Right
+2012-07-05 20:36:24 UTC <shapr> At the end of either branch, the request is re-opened.
+2012-07-05 20:36:41 UTC <luite> yeah, but that requires more work to set up than websockets, since you need to maek sure that no events are missed
+2012-07-05 20:37:21 UTC <luite> and more overhead of course, since there's a new request every time, but it will work better with http proxies
+2012-07-05 20:37:47 UTC <shapr> So, how do websockets work? Do they wrap a 'real' tcp connection inside long polling?
+2012-07-05 20:38:23 UTC <luite> no, they upgrade the http socket to a websocket, so you just use that tcp connection
+2012-07-05 20:38:52 UTC <luite> basically you just do a http request with a connection: upgrade header and some handshake headers
+2012-07-05 20:39:01 UTC <shapr> Wow, nifty. I didn't know about that.
+2012-07-05 20:39:18 UTC <shapr> I know about SPDY, but I don't think that's the same thing.
+2012-07-05 20:39:20 UTC <luite> but http proxies need ot handle upgraded connections of course
+2012-07-05 20:39:58 UTC <luite> websockets are probably the best thing, and for non-proxied stuff they should work well
+2012-07-05 20:40:19 UTC <luite> the host shouldn't need to forward more ports than the usual port 80 since the existing port 80 connections just get upgraded
+2012-07-05 20:40:42 UTC <shapr> ACTION reads http://en.wikipedia.org/wiki/WebSocket
+2012-07-05 20:44:07 UTC <luite> shapr: i'd personally use websocket and perhaps implement a fallback over long polling later if required for older browsers
+2012-07-05 20:47:19 UTC <luite> but what are you doing atm? making a haskell implementation of what you have with sharejs?
+2012-07-05 20:48:01 UTC <shapr> Not yet, how hard would that be?
+2012-07-05 20:48:43 UTC <luite> not terribly easy, but it would be really cool if we had something like that
+2012-07-05 20:49:47 UTC <luite> especially if it could synchronize "richer" data than just text. would make it possible to have easy shared calendars, shopping carts that are synchronized between browser sessions etc
+2012-07-05 20:49:54 UTC <shapr> And that would cut it down to a single hackage, instead of a single hackage and a node.js install.
+2012-07-05 20:50:00 UTC <luite> yes
+2012-07-05 20:50:27 UTC <shapr> That's a good point, how will sharejs handle svg data?
+2012-07-05 20:50:54 UTC <luite> i think it's a good enough thing to spend the rest of the project on, but i'm not sure if it's doable. i've been trying to design a haskell api for this today, but don't have much yet
+2012-07-05 20:51:25 UTC <luite> i don't think results need to be shared through this
+2012-07-05 20:51:30 UTC <luite> since they're not editable
+2012-07-05 20:51:38 UTC <shapr> hm, point
+2012-07-05 20:51:57 UTC <shapr> Will newly joined users want to see the history?
+2012-07-05 20:52:00 UTC <shapr> Or should it be irc-like?
+2012-07-05 20:52:14 UTC <shapr> irc-like is easiest, and would be usable.
+2012-07-05 20:52:59 UTC <luite> but what i wanted to propose was to try to make a separate haskell packge for a shared collaborative data lib, and if there's not enough time to finish integrating everything in ghclive i'll help with that, borrowing wolfgang code
+2012-07-05 20:54:39 UTC <shapr> So, get ghclive working with share.js, and then work on replacing the node.js part with Haskell?
+2012-07-05 20:56:20 UTC <luite> yeah, the second part will probably involve working on a separate package first, integrating it later. if there's not enough time to completely finish it, i'll fix that. edwardk is ok with it if ghclive is not 100% finished at the end if there's some other thing to show for it
+2012-07-05 20:57:14 UTC <shapr> That sounds good.
+2012-07-05 20:58:17 UTC <shapr> On the good side, if we stick with an irc-like output where you only get what has been sent since you joined...
+2012-07-05 20:58:28 UTC <shapr> Then the SVG functionality can stay, and a sharejs output isn't needed at all.
+2012-07-05 20:59:11 UTC <luite> oh, right. uh, wait
+2012-07-05 20:59:30 UTC <luite> i think you can do it with history if the shared object isn't just a text
+2012-07-05 20:59:39 UTC <shapr> Oh
+2012-07-05 20:59:41 UTC <shapr> Oh!!
+2012-07-05 20:59:45 UTC <shapr> I like that!
+2012-07-05 20:59:52 UTC <luite> but a json array of objects with something like { expr: "aaa", result: { .... } }
+2012-07-05 20:59:57 UTC <shapr> So basically, just have a dynamically generated web page on the server.
+2012-07-05 21:00:09 UTC <shapr> Append to the data when a new result is generated.
+2012-07-05 21:00:14 UTC <luite> yeah
+2012-07-05 21:00:25 UTC <luite> and perhaps remove old lines after a while
+2012-07-05 21:00:31 UTC <shapr> super-ugly fast solution would be to reload that page every few seconds on every client.
+2012-07-05 21:00:44 UTC <shapr> Since, as you say, it's pure output, unlike wolfgang.
+2012-07-05 21:00:57 UTC <luite> oh that's even easier, but with the library, you can just stream updates to clients over websockets
+2012-07-05 21:01:59 UTC <luite> (anyway that's the plan, don't have anythign concrete yet)
+2012-07-05 21:04:01 UTC <shapr> Ok, so ugly hack the server output, sharejs for the source code editing, and some sort of input field for ghci input.
+2012-07-05 21:05:26 UTC <luite> yeah sounds like a good plan. don't spend too long on sharejs if it doesn't work properly :)
+2012-07-05 21:05:31 UTC <shapr> right
+2012-07-05 21:05:44 UTC <shapr> I tried synchronizing between two browsers, and some events get dropped.
+2012-07-05 21:05:53 UTC <shapr> Specifically, drag select and backspace doesn't go to the other browser.
+2012-07-05 21:06:09 UTC <shapr> So I wonder if that's a problem with sharejs or something else is going on.
+2012-07-05 21:06:13 UTC <shapr> ACTION shrugs
+2012-07-05 21:08:04 UTC <shapr> ACTION ugly hacks the output
+2012-07-05 21:08:15 UTC <luite> i'll try to make a bit more concrete api proposal and we can discuss that soon hopefully, the basic idea is to combine a few crtds from this paper: http://hal.inria.fr/docs/00/55/55/88/PDF/techreport.pdf , to implement sequences (arrays, strings), maps (json objs), sets, counters and some basic things like tuples
+2012-07-05 21:09:09 UTC <shapr> So, you're talking about synchronized state that's native Haskell values?
+2012-07-05 21:10:12 UTC <luite> not sure yet, but yeah the idea is to have some wrapper around a haskell thing to make it synchronized, perhaps by generating some code with TH if necessary
+2012-07-05 21:12:11 UTC <luite> not all haskell data can be synchronized, and a Synchronized String does look different from a regular String, since it must have unique identifiers for each character
+2012-07-05 21:12:21 UTC <luite> (see the paper for more info)
+2012-07-05 21:12:25 UTC <shapr> ACTION downloads
+2012-07-05 21:13:08 UTC <luite> but the idea is that you can convert a Synchronized String to a String to get the current version, and to apply modifications (operation or merge) to the synchronized ones
+2012-07-05 21:15:17 UTC <luite> i haven't looked into mgsloans implementation in detail yet, but i think we can make a less general one
+2012-07-05 21:16:36 UTC <shapr> optimistic replication sounds like STM
+2012-07-05 21:17:57 UTC <luite> optimistic means that there can be temporary inconsistencies
+2012-07-05 21:18:45 UTC <luite> clients could edit their source code while they're disconnected
+2012-07-05 21:18:58 UTC <luite> and when they reconnect, everything will always merge fine
+2012-07-05 21:19:01 UTC <shapr> neat
+2012-07-05 21:19:17 UTC <luite> (although the merged result might be invalid of course)
+2012-07-06 07:57:45 UTC <cheater__> luite: why not use world revisions?
+2012-07-06 10:43:53 UTC <luite> cheater_: can you elaborate?
+2012-07-06 19:59:46 UTC <cheater_> luite: like in datomic, where every transaction number describes a "world revision", i.e. the whole database at that point, and every transaction can be rolled back to at any time afterwards
+2012-07-06 20:02:48 UTC <luite> cheater_: how does that work if two clients modify revision x simultaneously?
+2012-07-06 20:41:13 UTC <tgeeky> luite: you have a few options: 1. ban simultaniety, or 2. use dWorld/dt instead of World
+2012-07-06 21:01:25 UTC <cheater_> 3. let them diverge
+2012-07-06 21:01:49 UTC <cheater_> hoping that they'll converge at some point (and quite often they will)
+2012-07-06 21:02:48 UTC <cheater_> for example, if you have a list of messages, and store the latest time it was read (or null)
+2012-07-06 21:03:17 UTC <cheater_> then if you want a list of all messages that have been read it doesn't matter if the time-message-was-read column diverges
+2012-07-06 21:10:19 UTC <luite> cheater_: that's basically the idea of crdts, a "last read" integer is already a crdt, since it's just the max operation, so updates to the state commute
+2012-07-06 21:11:07 UTC <luite> but for sequences, like text, you need a bit more metadata do do that, so that was the plan
+2012-07-06 21:43:14 UTC <tgeeky> hm.
+2012-07-06 21:43:19 UTC <tgeeky> that max operation thing sounds like a heap?
+2012-07-06 21:48:15 UTC <cheater_> no idea what you mean luite
+2012-07-07 06:46:28 UTC <cheater_> luite: can you explain in some other way?
+2012-07-07 11:17:06 UTC <luite> cheater__: the idea is that instead of storing just the characters as text, you store text as a sequence of (char,visible,uniqueid)
+2012-07-07 11:18:04 UTC <luite> cheater__: now every insertion is an insertAfter(uniqueid, (char,True,newUniqueId)), and every deletion simply sets visible to False
+2012-07-07 11:20:03 UTC <luite> cheater__: if you now have a consistent way to handle simultaneous inserts after the same id, every client will eventually end up with the same document
+2012-07-07 15:33:30 UTC <cheater__> luite: aha
+2012-07-07 15:33:35 UTC <cheater__> luite: interesting
+2012-07-07 15:35:49 UTC <cheater__> luite: so what is a crdt?
+2012-07-07 15:36:57 UTC <cheater__> Commutative Replicated Data Type
+2012-07-07 15:36:59 UTC <cheater__> found the paper
+2012-07-07 15:37:01 UTC <cheater__> reading now
+2012-07-07 15:41:57 UTC <cheater__> luite: so they need the updates to commute?
+2012-07-07 15:42:23 UTC <cheater__> luite: that's an unusual requirement, i can't imagine a whole lot of practical applications for that, can you give some examples?
+2012-07-07 15:57:00 UTC <luite> cheater__: it removes the need for synchronization, collaborative text editing can be a good example, where clients can be offline for some time, and there's no central authority or synchronization required but consistency is still guaranteed
+2012-07-07 16:01:14 UTC <cheater__> yea but give me an example of data where updates actually are commutable
+2012-07-07 16:19:00 UTC <luite> cheater__: the sequence data type described there works for text
+2012-07-07 16:19:20 UTC <shapr> luite: Good morning!
+2012-07-07 16:19:23 UTC <shapr> @localtime luite
+2012-07-07 16:19:24 UTC <lambdabot> Local time for luite is Sat Jul  7 18:19:23 2012
+2012-07-07 16:19:29 UTC <shapr> Or is that good evening?
+2012-07-07 16:20:00 UTC <luite> something like that
+2012-07-07 16:32:39 UTC <luite> shapr: how's the shared editor going?
+2012-07-07 16:32:50 UTC <shapr> Slowly :-|
+2012-07-07 16:33:18 UTC <shapr> luite: I'm still working on the big chunk of output.
+2012-07-07 16:33:33 UTC <shapr> At this point, I think I can keep it as Html, and mappend new outputs.
+2012-07-07 16:34:12 UTC <shapr> But, what sort of state is best to use?
+2012-07-07 16:34:26 UTC <shapr> For my program, I think an MVar maybe?
+2012-07-07 16:35:03 UTC <luite> IORef is probably easiest if you just want a mutable thing, no synchronization
+2012-07-07 16:35:28 UTC <shapr> I figured IORef would be good, but then I started reading about the many flavors of 'variables'...
+2012-07-07 16:37:22 UTC <luite> MVar would also work, it also does synchronization if you need that, it's some kind of box that can be empty, readers block, or can be full (writers block)
+2012-07-07 16:37:35 UTC <shapr> Right.
+2012-07-07 16:38:20 UTC <luite> you have IO and stuff, so a pure State monad probably wouldn't work, but you could use a StateT transformer.
+2012-07-07 16:38:36 UTC <luite> same for ST (but there's no ST transformer)
+2012-07-07 16:39:00 UTC <shapr> So the only downside for using MVar is that 'reading' it requires you to replace the value?
+2012-07-07 16:39:33 UTC <luite> yeah, readMVar takes it and then puts it back
+2012-07-07 17:40:57 UTC <cheater__> luite: i know that you can *store* text in that sequence type
+2012-07-07 17:41:11 UTC <cheater__> luite: but it's not about whether the type is compatible, it's about the *updates* to the data are compatible
+2012-07-07 17:41:30 UTC <cheater__> now describe please an application in which you make updates to text such that those updates are commutable
+2012-07-07 17:42:05 UTC <cheater__> correction: it's about the *updates* to the data *being compatible
+2012-07-07 18:55:52 UTC <tgeeky> hm
+2012-07-07 18:56:23 UTC <tgeeky> cheater__: permission to speak loosely about this subject?
+2012-07-07 18:57:15 UTC <cheater__> make it so
+2012-07-07 18:58:04 UTC <tgeeky> let's imagine we're in luite's or shapr's environment on the web somewhere, and they have graciously provided the top 500 packages on hackage
+2012-07-07 18:58:16 UTC <tgeeky> (by reverse deps, I suppose)
+2012-07-07 18:58:22 UTC <tgeeky> which are well formed and compile
+2012-07-07 18:58:45 UTC <tgeeky> then, they provide the ability for any user to edit any of that code (that is, suggest a change)
+2012-07-07 18:58:54 UTC <tgeeky> as well as introduce new packages
+2012-07-07 18:59:02 UTC <cheater__> where are you going with that
+2012-07-07 18:59:39 UTC <tgeeky> cheater__: you and I are both attracted to the lens packages, and we start editing all three of these new polymorphic lens packages (just released) and we edit them both at the same time
+2012-07-07 18:59:50 UTC <tgeeky> what kind of incompatabilities
+2012-07-07 18:59:54 UTC <tgeeky> do you picture arising?
+2012-07-07 19:01:10 UTC <cheater__> you can make patches commute in many cases if your patching program understand the programming language it's working on
+2012-07-07 19:01:49 UTC <tgeeky> yep, but in a general hand-wavy sense, how sophisticated could you assume such a patching program could be
+2012-07-07 19:01:57 UTC <tgeeky> do you suppose you and I could edit the same function at the same time
+2012-07-07 19:02:00 UTC <tgeeky> and merge the results?
+2012-07-07 19:02:15 UTC <cheater__> in the best possible world, probably yes
+2012-07-07 19:03:03 UTC <tgeeky> my point is, that's a difficult thing to do (though not impossible)
+2012-07-07 19:03:33 UTC <tgeeky> but just go a little bit lighter, and you still have a great system: if you can be sure that all patches will commute modulo the toplevel function definition (name, and type)
+2012-07-07 19:03:38 UTC <cheater__> so why does luite want to use crdt's?
+2012-07-07 19:04:15 UTC <tgeeky> I'm not even sure I think crdts are a correct idea, but I don't know
+2012-07-07 19:04:22 UTC <tgeeky> and I don't know why he want to use them
+2012-07-07 19:04:49 UTC <tgeeky> cheater__: oh!
+2012-07-07 19:04:57 UTC <tgeeky> cheater__: you asked for an example where the updates are commutable
+2012-07-07 19:05:14 UTC <tgeeky> cheater__: haskell files, modulo the toplevel function names (and types)
+2012-07-07 19:05:28 UTC <tgeeky> cheater__: that is, you can freely reorder the functions in a Haskell module, and thus they commute
+2012-07-07 19:05:51 UTC <tgeeky> and they all commute with introducing a new function (with a new name)
+2012-07-07 19:06:28 UTC <tgeeky> top-level type signatures commute with everything within the module
+2012-07-07 19:06:51 UTC <cheater__> not sure what you mean by that
+2012-07-07 19:07:00 UTC <cheater__> wait i missed a line
+2012-07-07 19:07:41 UTC <tgeeky> cheater__: so a function definition is closed:  it is well defined iff all cases are contiguious
+2012-07-07 19:07:49 UTC <cheater__> right i see how you'd think patching is commutable, but it's not
+2012-07-07 19:07:50 UTC <tgeeky> but its type signature neednt be
+2012-07-07 19:07:59 UTC <tgeeky> cheater__: I never said patching was this way
+2012-07-07 19:08:13 UTC <tgeeky> I'm just saying, theoretically, if you were "ideally smart" about the contents of haskell files
+2012-07-07 19:08:46 UTC <cheater__> well the action of "add a complete function definition under a new name to a haskell file and never change it again" is not an actual situation
+2012-07-07 19:08:52 UTC <cheater__> that's my issue here
+2012-07-07 19:09:10 UTC <tgeeky> why are you assuming that time is involved?
+2012-07-07 19:09:13 UTC <cheater__> i can make up things like that all day long, but where's an actual application people use?
+2012-07-07 19:09:30 UTC <cheater__> no one ever works with code like this
+2012-07-07 19:09:49 UTC <tgeeky> cheater__: no one ever flew an airplane, until they did
+2012-07-07 19:10:41 UTC <cheater__> i'm not going to go on a diatribe about how talking about imaginary situations in place of actual applications arising from need ends up fruitless
+2012-07-07 19:10:56 UTC <cheater__> but i think you can imagine twenty screens of arguing
+2012-07-07 19:10:59 UTC <cheater__> :)
+2012-07-07 19:11:01 UTC <tgeeky> hehe
+2012-07-07 19:11:10 UTC <tgeeky> well, how about a specific scenario that I currently find myself in
+2012-07-07 19:11:32 UTC <tgeeky> say I want to write a functional pearl Hackage module, in the spirit of Functional Pearl papers.
+2012-07-07 19:11:48 UTC <tgeeky> (I have three of these in varying states of completeness, translated from real Pearls)
+2012-07-07 19:11:58 UTC <tgeeky> but one in particular is challenging: Enumerating the Rationals
+2012-07-07 19:12:09 UTC <tgeeky> http://www.cs.ox.ac.uk/jeremy.gibbons/publications/rationals.pdf
+2012-07-07 19:12:23 UTC <tgeeky> it essentially consists of the same function, defined 10 times
+2012-07-07 19:13:08 UTC <tgeeky> cheater__: Should I really need to make 11 different modules if I don't want to use the silly "ratsNN" naming scheme?
+2012-07-07 19:15:18 UTC <cheater__> i don't see the connection
+2012-07-07 19:15:46 UTC <tgeeky> the process of going from rats01 .. rats02 .. rats03 ..
+2012-07-07 19:16:18 UTC <tgeeky> nevermind, it's not important enough
+2012-07-07 19:16:21 UTC <tgeeky> carry on!
+2012-07-07 19:22:01 UTC <cheater__> important or not
+2012-07-07 19:22:10 UTC <cheater__> i'm not sure how it relates
+2012-07-07 19:22:17 UTC <cheater__> can you try to clarify?
+2012-07-07 19:24:51 UTC <tgeeky> cheater__: I see it as something which fails to commute (at the module level) because of naming
+2012-07-07 19:25:06 UTC <cheater__> right
+2012-07-07 19:25:21 UTC <cheater__> so after several attempts we still don't have a practical application involving text
+2012-07-07 19:25:38 UTC <cheater__> i wonder what else we can try to come up with something worthwhile
+2012-07-07 19:27:00 UTC <tgeeky> cheater__: what if it's impractical, but helps performance... if you have a structure that is fully commutative then you can often automatically divide and conquer
+2012-07-07 19:28:24 UTC <cheater__> i don't know any fully commutative structures involving text
+2012-07-07 19:28:32 UTC <tgeeky> I don't know if Google Wave was a CRDT (I doubt it), but does the failure of that as a program indicate that such techniques for collaborative IMing and document editing don't work?
+2012-07-07 19:54:56 UTC <luite> hm
+2012-07-07 19:57:07 UTC <tgeeky> hmm indeed
+2012-07-07 19:58:03 UTC <cheater__> i never understood what google wave was about
+2012-07-07 19:58:06 UTC <cheater__> what was it about?
+2012-07-08 01:04:23 UTC <tgeeky> :r
+2012-07-08 01:04:27 UTC <tgeeky> damn.
+2012-07-08 01:04:43 UTC <tgeeky> anyone here have some of the links to source code doing typed-list using kinds? or typed strings?
+2012-07-08 01:27:33 UTC <tgeeky> as always, the original is best
+2012-07-10 04:27:00 UTC <tgeeky> woohoo! another hacakge package of someone else's code :o
+2012-07-10 04:30:11 UTC <shapr> tgeeky: oh?
+2012-07-10 04:34:45 UTC <tgeeky> yep. I've released: rivers, metamorphic, and relation
+2012-07-10 04:34:56 UTC <tgeeky> all of which are largely other people's work
+2012-07-10 04:35:23 UTC <tgeeky> and I have three more such packages in the pipeline! :O
+2012-07-10 04:37:07 UTC <tgeeky> metamorphic is really neat though. There's a block in the code with about 20 data structures defined in a row, all 1 -liners
+2012-07-10 04:37:25 UTC <tgeeky> list,tree,queue,pqueue,dlist,rosetree,graph,heap,pheap
+2012-07-11 03:24:56 UTC <tgeeky> byorgey: I found some slides by the same author that I asked to "BS" check. These are much more useful looking: http://www.cs.le.ac.uk/people/pt95/leicester2009.pdf
+2012-07-11 03:37:27 UTC <tgeeky> now if only I understood "the (linear) CoSpan (bi-)category [holding for any cocomplete category]"
+2012-07-11 22:12:10 UTC <tgeeky_> guys guys guys guys guys
+2012-07-11 22:12:17 UTC <tgeeky_> I have devestating news
+2012-07-11 22:12:33 UTC <mgsloan> :/
+2012-07-11 22:12:38 UTC <tgeeky_> The surafce S (0,3) is homeomorphic to the interior of a "pair of pants"
+2012-07-11 22:12:45 UTC <mgsloan> :)
+2012-07-11 22:13:00 UTC <tgeeky_> all this time, I thought I was just putting on some trousers
+2012-07-11 22:13:24 UTC <tgeeky_> If P = "pair of pants", then Mod(P) = Z^3
+2012-07-11 22:13:46 UTC <tgeeky_> annnway
+2012-07-11 22:13:57 UTC <tgeeky_> mgsloan: how goes the symposium stuff?
+2012-07-11 22:14:07 UTC <mgsloan> Good! Submitted the abstract yesterday
+2012-07-11 22:14:20 UTC <mgsloan> the prototype didn't really make it to functioning in time
+2012-07-11 22:14:25 UTC <mgsloan> so still working on it
+2012-07-11 22:14:54 UTC <mgsloan> getting distracted for a bit laying down the skeleton for a code layout inference + re-formatter
+2012-07-11 22:15:19 UTC <mgsloan> you know, the stuff that would try to auto-align when it makes sense, etc
+2012-07-11 22:15:29 UTC <mgsloan> stick to 80 col, etc
+2012-07-11 22:15:32 UTC <tgeeky_> the "where import ..." thing?
+2012-07-11 22:15:37 UTC <mgsloan> naah
+2012-07-11 22:15:37 UTC <tgeeky_> no, something more general
+2012-07-11 22:15:43 UTC <tgeeky_> don't pick 80!
+2012-07-11 22:15:48 UTC <mgsloan> I should probably do "where import"
+2012-07-11 22:16:04 UTC <tgeeky_> mgsloan: I think I have been plaing with similar-ish ideas the last few days
+2012-07-11 22:16:07 UTC <mgsloan> well, that's the point!  It would infer what column stop you're using
+2012-07-11 22:16:17 UTC <tgeeky_> mgsloan: ah, i see
+2012-07-11 22:16:34 UTC <mgsloan> might make it partially a GUI app
+2012-07-11 22:16:44 UTC <mgsloan> it'd show you the frequency of different styling decisions
+2012-07-11 22:16:53 UTC <tgeeky_> ie, over all haskell packages?
+2012-07-11 22:16:57 UTC <mgsloan> and let you look at the exceptions quickly
+2012-07-11 22:17:06 UTC <mgsloan> well, whatever set of directories you want to
+2012-07-11 22:17:09 UTC <tgeeky_> yeah
+2012-07-11 22:17:18 UTC <mgsloan> maybe special-casing the current diff
+2012-07-11 22:17:42 UTC <mgsloan> so, if you're writing a patch to GHC, you can see if you're sticking to the style
+2012-07-11 22:18:42 UTC <mgsloan> I'd like to write it in a Haskell agnostic way, but it'll probably be tied to it for the near future (if it happens at all)
+2012-07-11 22:18:57 UTC <tgeeky_> have you published the code yet?
+2012-07-11 22:19:14 UTC <mgsloan> naah, just started it 30 minutes ago :)
+2012-07-11 22:19:25 UTC <tgeeky_> are you working for most of the night?
+2012-07-11 22:19:54 UTC <mgsloan> hopefully!  Someone wanted to hang out, so I might be persuaded away from the comp, but probably not
+2012-07-11 22:20:03 UTC <tgeeky_> hehe :)
+2012-07-11 22:20:18 UTC <tgeeky_> hm. what's the visual-editor channel?
+2012-07-11 22:20:32 UTC <tgeeky_> you're not in it :O
+2012-07-11 22:20:35 UTC <mgsloan> #haskell-visual-programming
+2012-07-11 22:20:53 UTC <tgeeky_> mgsloan: ok, let's discuss this stuff somewhere
+2012-07-11 22:21:05 UTC <tgeeky_> too many people in these channels
+2012-07-11 22:21:06 UTC <tgeeky_> how about #pee
+2012-07-11 22:26:37 UTC <mgsloan> ACTION likes 80 col :)
+2012-07-11 22:26:48 UTC <mgsloan> back when I started Haskell I loved writing 200 col lines
+2012-07-11 22:27:15 UTC <mgsloan> then I interned at Google and it totally changed my Haskell style (despite being C++)
+2012-07-11 22:28:44 UTC <tgeeky> back
+2012-07-11 22:28:46 UTC <mgsloan> it makes even more sense with Haskell where your lines can be so terse
+2012-07-11 22:29:06 UTC <tgeeky> yes, but on the other hand, there are circumstances where something is apparent when two lines are sitting next to each other, but not (when they aren't)
+2012-07-11 22:29:08 UTC <mgsloan> the 80 col limit really reminds you to space things out and maybe comment them
+2012-07-11 22:29:15 UTC <mgsloan> true
+2012-07-11 22:29:21 UTC <tgeeky> let me find examples of my spacing
+2012-07-11 22:29:26 UTC <mgsloan> I've seen it :)
+2012-07-11 22:29:31 UTC <tgeeky> did you see metamorphic?
+2012-07-11 22:29:55 UTC <mgsloan> The stuff about placing semantics on the characters used?
+2012-07-11 22:30:02 UTC <tgeeky> oh, nope
+2012-07-11 22:30:05 UTC <tgeeky> http://hackage.haskell.org/packages/archive/metamorphic/0.1.2.3/doc/html/src/Graph.html
+2012-07-11 22:30:16 UTC <tgeeky> it's a rip/pull of code from Martin Erwig from 1999
+2012-07-11 22:30:38 UTC <tgeeky> so, for instance, "addSucc, addPred, clearSucc, clearPred" both stand out
+2012-07-11 22:30:45 UTC <tgeeky> when you explicitly space your 3-tuple
+2012-07-11 22:31:22 UTC <mgsloan> so, yeah, those don't go too far beyond 80
+2012-07-11 22:31:28 UTC <tgeeky> here's some bad ones:
+2012-07-11 22:31:30 UTC <tgeeky> http://hackage.haskell.org/packages/archive/metamorphic/0.1.2.3/doc/html/src/Aprog.html
+2012-07-11 22:31:33 UTC <tgeeky> "nodes .. grev"
+2012-07-11 22:31:58 UTC <mgsloan> Interesting type sigs!  How long has Haskell had them out-of-line?
+2012-07-11 22:32:12 UTC <mgsloan> I almost never do type sigs apart from their definitions
+2012-07-11 22:32:12 UTC <tgeeky> mgsloan: hm? out of line?
+2012-07-11 22:32:20 UTC <tgeeky> mgsloan: yeah, I find myself doing that a lot
+2012-07-11 22:32:32 UTC <tgeeky> so, here's the observation I had the other day
+2012-07-11 22:32:43 UTC <tgeeky> basically, if your library consists of writing a bunch of one-liners to define things
+2012-07-11 22:32:45 UTC <mgsloan> I like it a lot, but I want a tool that does it for me, in a somewhat more graphical way
+2012-07-11 22:33:26 UTC <tgeeky> then putting type signatures near the function definitions just adds visual noise that diminishes your ability to pick out the similarities
+2012-07-11 22:33:29 UTC <tgeeky> of the code
+2012-07-11 22:33:36 UTC <tgeeky> the problem is, so do comments
+2012-07-11 22:33:43 UTC <mgsloan> yup
+2012-07-11 22:34:01 UTC <mgsloan> Yeah, I never liked full inline docs
+2012-07-11 22:34:16 UTC <mgsloan> I felt like it really distinctivenesses good docs
+2012-07-11 22:34:18 UTC <tgeeky> furthermore, becuase of the way haddock parses things, it fails on cases where it shouldn't
+2012-07-11 22:34:28 UTC <tgeeky> which is to say, you should be able to replace every -- | with a -- ^, but you can't
+2012-07-11 22:34:34 UTC <mgsloan> what you really need is separate code and docs, with a utility that checks consistency
+2012-07-11 22:34:54 UTC <tgeeky> mgsloan: or, something which links the code and docs, but which doesn't require the *basic textual description* of the code has them in the same place explicitly
+2012-07-11 22:35:10 UTC <mgsloan> right
+2012-07-11 22:36:57 UTC <tgeeky> mgsloan: I thought that this was the most impressive part of this library: http://hackage.haskell.org/packages/archive/metamorphic/0.1.2.3/doc/html/src/Alib.html
+2012-07-11 22:37:15 UTC <tgeeky> mgsloan: the "familiar data structures"
+2012-07-11 22:37:19 UTC <tgeeky> and the implementations thereof
+2012-07-11 22:38:08 UTC <tgeeky> anyway
+2012-07-11 22:38:56 UTC <tgeeky> my latest notes at a strategy for this process is to consider the target language (and the langauge's "reserved words") to be explicitly whitespaced
+2012-07-11 22:40:04 UTC <mgsloan> interesting stuff!
+2012-07-11 22:40:07 UTC <tgeeky> mgsloan: the tools i have been messing with are bnfc-meta. What it basically does, is takes a specification of a context-free language in BNF form
+2012-07-11 22:40:36 UTC <mgsloan> yeah, I've got that package on my list of "interesting TH stuff"
+2012-07-11 22:41:08 UTC <tgeeky> so it does a few "special" things. One, it selects a anti-quotation syntax that is supposed to be universal among all quasiquoters
+2012-07-11 22:41:23 UTC <mgsloan> did you see the "sugar haskell" paper?  I haven't looked at it in detail, but it seemed fantastic
+2012-07-11 22:41:35 UTC <tgeeky> yes, I looked at it. I need to read it in detail
+2012-07-11 22:41:50 UTC <mgsloan> I'm just gonna wait for the finished version
+2012-07-11 22:42:30 UTC <mgsloan> and focus my efforts elsewhere than creating "meta-haskell" just yet, in case I want to build on top of their implementation
+2012-07-11 22:42:33 UTC <tgeeky> mgsloan: the other thing that bnfc-meta does, is starts with a minimum BNF language that includes regular expressions
+2012-07-11 22:43:40 UTC <mgsloan> I'm starting to prefer {{ }} for anti-quotation
+2012-07-11 22:43:44 UTC <tgeeky> nooo!
+2012-07-11 22:43:53 UTC <tgeeky> you have to save that for nested contexts
+2012-07-11 22:43:55 UTC <mgsloan> haven't come up with a preferred syntax for quotation
+2012-07-11 22:44:01 UTC <mgsloan> hmm
+2012-07-11 22:44:10 UTC <tgeeky> and all those hastasche peopel :O
+2012-07-11 22:44:39 UTC <tgeeky> mgsloan: first of all, I think it's important to notice that you may want to have a set of antiquotation operators
+2012-07-11 22:44:57 UTC <mgsloan> well, they put those in strings, so that's fine
+2012-07-11 22:45:35 UTC <mgsloan> I figured {{ is fine because you can't currently do it in Haskell, but I guess there's likely counter-examples
+2012-07-11 22:45:37 UTC <tgeeky> so bnfc-meta proposed antiqutation has two forms:
+2012-07-11 22:46:07 UTC <tgeeky> [C : h :], where h is a Haskell expression of type C
+2012-07-11 22:46:21 UTC <tgeeky> and [:h:]
+2012-07-11 22:46:45 UTC <tgeeky> where h is an expression in the original BNF category (whatever is the lowest category available, in this case, regular expressions + BNF)
+2012-07-11 22:46:57 UTC <tgeeky> mgsloan: http://www.cse.chalmers.se/~patrikj/papers/MetaDSL_preprint_20110325.pdf
+2012-07-11 22:47:02 UTC <tgeeky> so on the topleft of page 10
+2012-07-11 22:48:04 UTC <tgeeky> mgsloan: regardless, the really powerful thing of this technique I think is that of figure 3
+2012-07-11 22:48:37 UTC <mgsloan> interesting!
+2012-07-11 22:49:20 UTC <mgsloan> oh yeah, doing that is known to be very hard
+2012-07-11 22:49:39 UTC <tgeeky> they are almost partway to genuine nested template haskell
+2012-07-11 22:49:41 UTC <mgsloan> even after getting your grammars combined, how do you proceed in transforming?
+2012-07-11 22:49:52 UTC <mgsloan> yeah, that's definitely on my list of needs-to-be-done
+2012-07-11 22:50:23 UTC <mgsloan> While I've been defending TH as a good tool for a while (still need to write a blog-post summarizing my thoughts there..)
+2012-07-11 22:50:23 UTC <tgeeky> mgsloan: so let me finish my example of explicitly spaced things
+2012-07-11 22:50:47 UTC <mgsloan> I think moving to an external preprocessor could be a good idea
+2012-07-11 22:51:21 UTC <tgeeky> mgsloan: so, for example, I think with this general bnfc-meta technique, you could tell the grammar that you have a set of external preprocessors (in fact, they do exactly this, but they only do it for TH and CPP)
+2012-07-11 22:51:46 UTC <mgsloan> especially if you can take changes to code, and generalize them to procedures for modifying the generated output (and putting these transforms on the front of the compile time stuff in the source code)
+2012-07-11 22:51:51 UTC <tgeeky> yeah!
+2012-07-11 22:51:52 UTC <tgeeky> exactly!
+2012-07-11 22:52:03 UTC <tgeeky> it's almost as if you're dealing with a langauge diff(haskell) instead of Haskell
+2012-07-11 22:52:24 UTC <mgsloan> yeah, we discussed this in the context of using git for maintaining hashes of chunks, before
+2012-07-11 22:53:16 UTC <mgsloan> could be really awesome, and there'd be no more "but only GHC has TH!"
+2012-07-11 22:53:18 UTC <tgeeky> mgsloan: the cool thing about this process, is your resulting parser is exactly the same kind of parser Haskell uses anyway (happy and alex based)
+2012-07-11 22:55:33 UTC <mgsloan> yup!
+2012-07-11 22:55:59 UTC <mgsloan> now, one tricky thing is how to cleanup errors that happen post-pre-process
+2012-07-11 22:56:00 UTC <tgeeky> mgsloan: in fact, I think there's potential for a *huge* performance gain
+2012-07-11 22:56:12 UTC <tgeeky> because they include regexps in the BNF language, but don't actually implement them in a way which is fast
+2012-07-11 22:56:58 UTC <mgsloan> so break out of the CFG into regex land when possible?
+2012-07-11 22:57:28 UTC <tgeeky> no, they boostrap all BNFs with the BNF representation of regexes
+2012-07-11 22:58:34 UTC <mgsloan> right.  I'm not too knowledgeable about parsing, but it seems like the BNF parsers would also be pretty darn fast
+2012-07-11 22:58:47 UTC <mgsloan> using similar tricks as optimal regex parsing
+2012-07-11 22:59:16 UTC <tgeeky> yep. That's why I have been trying to understand/merge this code with regex-applicative
+2012-07-11 23:00:08 UTC <tgeeky> mgsloan: unfortauntely you can't see the soruce of bnfc-meta on hacakage without getting it (no docs at all)
+2012-07-11 23:00:24 UTC <tgeeky> if you look at it, in CFtoPrinter (should be CFtoPretty), they have a function rules
+2012-07-11 23:00:30 UTC <tgeeky> which strips out haskell reserved words
+2012-07-11 23:00:59 UTC <tgeeky> these things exist all over the place (and the list of haskell reserved words technically depends on what extensions are enabled)
+2012-07-11 23:01:08 UTC <mgsloan> awesome!  Have you seen trifecta?  It's a bit complex, but pretty cool stuff.  Something like that might be ideal - due to online parsing - but currently I don't think it's ready
+2012-07-11 23:01:29 UTC <tgeeky> yeah. trifecta is probably the single best organized (abstracted) module I've seen
+2012-07-11 23:02:06 UTC <mgsloan> It's pretty great.  I'm not sure if I 100% agree with that level of breaking code into files
+2012-07-11 23:02:17 UTC <mgsloan> but a better editor would fix that being any bother :P
+2012-07-11 23:02:24 UTC <tgeeky> hehe
+2012-07-11 23:02:40 UTC <tgeeky> so, the general pattern I mean by explicit spaceing is this:
+2012-07-11 23:03:05 UTC <tgeeky> actually, I know *just* the thing
+2012-07-11 23:03:45 UTC <tgeeky> http://www.andres-loeh.de/ASGDSL/ASGDSL.pdf <-- page 10
+2012-07-11 23:03:51 UTC <tgeeky> 6.7 printing terms
+2012-07-11 23:04:05 UTC <tgeeky> the last part (in ...)
+2012-07-11 23:05:28 UTC <tgeeky> if you imagine factoring out all of the concats
+2012-07-11 23:05:44 UTC <mgsloan> ah, each ++ is a degree of freedom
+2012-07-11 23:06:02 UTC <mgsloan> at least when used when whitespace is insignificant
+2012-07-11 23:06:21 UTC <tgeeky> you'll have:  (  "let { "  , intercalate "; ", x , " } in " , text' (es vs c') , ")" )
+2012-07-11 23:06:24 UTC <tgeeky> that's it!
+2012-07-11 23:06:27 UTC <mgsloan> I /really/ want to make a quasi-quoter that targets ASGs
+2012-07-11 23:06:28 UTC <tgeeky> explicitly make whitespace significant
+2012-07-11 23:06:47 UTC <mgsloan> I've already got a good deal of TH de-sugaring, so fairly compact ASGs could be targeted
+2012-07-11 23:07:03 UTC <tgeeky> so redfine your langauge such that the keywords that you had in strings necessarily have spaces on either side of them:
+2012-07-11 23:07:12 UTC <tgeeky> "let" -> " let "
+2012-07-11 23:07:17 UTC <tgeeky> "{" -> " { "
+2012-07-11 23:07:26 UTC <tgeeky> ";" -> " ; "
+2012-07-11 23:07:30 UTC <tgeeky> etc
+2012-07-11 23:07:56 UTC <tgeeky> you may need to add more than one space to either side, and you may even need to sysematically bias the spaces
+2012-07-11 23:08:12 UTC <tgeeky> but, you know that later, when you want to make valid haskell, that you have freedom to do whatever you want with the spaces
+2012-07-11 23:08:33 UTC <tgeeky> in particular, you can always preform regex-like substitutions that reduce spaces: s/  / /
+2012-07-11 23:09:16 UTC <tgeeky> the key compoent of this approach is that you can consider the resulting strings to be "cenered"
+2012-07-11 23:09:31 UTC <tgeeky> meaning, you know that you can gobble up excess spacing on either side until you're left with the original keyword
+2012-07-11 23:10:14 UTC <tgeeky> in this way, you write parsers and pretty printers who know to line up things in columns, such as the " :: " of type signatures, or " = " of definitions
+2012-07-11 23:10:44 UTC <mgsloan> hmm, not sure I see the advantage of adding whitespace to the tokens!
+2012-07-11 23:11:02 UTC <tgeeky> mgsloan: because it lets you bar 1 character tokens
+2012-07-11 23:11:14 UTC <tgeeky> the smallest thing you can sensibly write is: " a "
+2012-07-11 23:11:35 UTC <mgsloan> ahh, gotcha. so this gives more wiggle room for DSLs
+2012-07-11 23:12:10 UTC <mgsloan> so, double spaced function application
+2012-07-11 23:12:17 UTC <mgsloan> could lead to some interesting results
+2012-07-11 23:12:28 UTC <mgsloan> (obfuscated, naturally)
+2012-07-11 23:12:28 UTC <tgeeky> yes.. down this path fully leads to 2D haskell
+2012-07-11 23:12:48 UTC <tgeeky> but that's way beyond this, and I don't even understand that yet (though I have written part of a 2D pretty printer)
+2012-07-11 23:13:10 UTC <mgsloan> take while  ( < 20 )  [  1  ..  ]
+2012-07-11 23:13:39 UTC <mgsloan> (single space between take and while means it's one token)
+2012-07-11 23:17:12 UTC <tgeeky> so, as an example: http://hackage.haskell.org/packages/archive/metamorphic/0.1.2.3/doc/html/src/A.html
+2012-07-11 23:17:17 UTC <tgeeky> the typesigs for fold, unfold, and via
+2012-07-11 23:17:30 UTC <tgeeky> if you approach this problem normally, I find it hard to understand how you'd get such a result as I have typed out here
+2012-07-11 23:17:43 UTC <tgeeky> but a few things seem clear
+2012-07-11 23:18:20 UTC <tgeeky> first, the way I've spaced it, it's clear that *both* " :: " and " => " are column-centered tokens
+2012-07-11 23:19:28 UTC <tgeeky> and second, it's clear how to get from the most compressed version of those signatures, say:
+2012-07-11 23:19:49 UTC <tgeeky> fold :: (Functor g) => (g u ->   u) -> A    s  g   t -> (t -> u)
+2012-07-11 23:20:27 UTC <tgeeky> to the expanded version, by ignoring everything except [" :: "," => "," -> "]
+2012-07-11 23:21:27 UTC <tgeeky> and, for the paragraph of typesigs: by doing operations which are "ghc-will-accept-this-signature" idempodent
+2012-07-11 23:22:14 UTC <tgeeky> because you have every one of: s/ (tok) /... (tok) .../
+2012-07-11 23:22:30 UTC <tgeeky> where ... are any number of space or tab or newline characters
+2012-07-11 23:23:22 UTC <tgeeky> (it's also clear that you can always reverse this regex substitution)
+2012-07-11 23:23:48 UTC <tgeeky> ok, enough of that for now ;)
+2012-07-11 23:25:33 UTC <tgeeky> there are actually cases where you have to be careful... I think they involve kinds
+2012-07-11 23:25:51 UTC <tgeeky> things like (a::(*->*)->*)
+2012-07-11 23:27:19 UTC <mgsloan> gotcha!  why's "column-centered" special?  I mean, it seems like you'd always have it set to the longest thing on the left + 1
+2012-07-11 23:27:57 UTC <mgsloan> I suppose it might have something to do with the "jagged-ness" of the things to the left and right, but that's an emergent property of the alignmnet
+2012-07-12 00:08:15 UTC <mgsloan> So, an interesting observation I had from instance-templates
+2012-07-12 00:08:43 UTC <mgsloan> if you want to add an additional top-level declaration / new type of namespace, you can do that by creating a new typeclass
+2012-07-12 00:09:05 UTC <mgsloan> especially in GHC 7.6 where there's type-level strings
+2012-07-12 00:10:23 UTC <mgsloan> although using type-level strings makes it so that you can't hide them...  Empty datatypes (which is what I currently use) might be better
+2012-07-12 02:14:28 UTC <tgeeky> ACTION is back for the moment
+2012-07-12 02:15:05 UTC <tgeeky> it's my birthday I can't shrug off birthday dinner for code :O
+2012-07-12 02:16:14 UTC <tgeeky> mgsloan: I thought it might be useful to typeclass-all-the-things (as in the ASG approach using PHOAS classes)
+2012-07-12 02:16:30 UTC <tgeeky> but I read a post by Tekmo on reddit today that talks about how haskell is better at value-level programming
+2012-07-12 02:25:15 UTC <fryguybob> tgeeky: Happy birthday!
+2012-07-12 02:27:05 UTC <mgsloan> happy birthday!!
+2012-07-12 02:27:22 UTC <mgsloan> tgeeky: Was it "Scrap your type classes"?
+2012-07-12 02:28:20 UTC <mgsloan> I do think that typeclasses should de-sugar to implicit params + data dicts with type-specific defaults
+2012-07-12 02:28:25 UTC <mgsloan> maybe :)
+2012-07-12 02:36:01 UTC <tgeeky> perhaps. implicit params are another thing that is useful but nasty looking in code
+2012-07-12 02:37:37 UTC <tgeeky> thanks for the birthday wishes :O
+2012-07-12 02:38:00 UTC <tgeeky> mgsloan: yep, scrap your type classes
+2012-07-12 02:41:08 UTC <mgsloan> I'm going to use that as another reference for "this is the kind of reasoning that falls out of not having instance templates" :)
+2012-07-12 02:42:47 UTC <tgeeky> hehe
+2012-07-12 02:43:08 UTC <tgeeky> how useful is the reducing-the-scope-of-imports aspect of instance templates?
+2012-07-12 02:43:26 UTC <mgsloan> pretty sure instance templates resolves almost everything he points out
+2012-07-12 02:43:57 UTC <mgsloan> hmm, what do you mean? I'm not including local imports in the instance template proposal
+2012-07-12 02:44:47 UTC <mgsloan> though, with this extension and some of the recent extensions (constraint kinds, type families), and there are now some very interesting parallels between ADTs, classes, and modules.
+2012-07-12 02:45:14 UTC <tgeeky> yeah, I keep getting intuitions of that sort, but I don't know what to do with them
+2012-07-12 02:45:54 UTC <mgsloan> http://research.microsoft.com/en-us/um/people/simonpj/Papers/first-class-modules/first_class_modules.pdf
+2012-07-12 02:46:21 UTC <mgsloan> here's an interesting take on unifying at least ADTs and modules.  Not sure what they do about typeclasses, though
+2012-07-12 02:47:12 UTC <tgeeky> is this paper recent?
+2012-07-12 02:47:27 UTC <mgsloan> what's interesting is that now typeclasses have type families and data families - we've got all other top-level decls except instances!  This means that we can transform many modules into an instance of the abstract schema for the module
+2012-07-12 02:47:28 UTC <mgsloan> nope, 2001
+2012-07-12 02:49:26 UTC <mgsloan> with instance templates, if all instantiations of a module schema have the same instance definitions (in terms of the stuff declared in the module), then we can abstract those too.
+2012-07-12 02:50:03 UTC <tgeeky> can you be more specific about "module schema"?
+2012-07-12 02:50:14 UTC <mgsloan> since we can make hidden identifiers, we can easily just proxy all of the instance methods
+2012-07-12 02:50:24 UTC <mgsloan> module schema == lifting typeclasses to the module level
+2012-07-12 02:50:39 UTC <mgsloan> it's just a typeclass that encompasses all of the contents of a module
+2012-07-12 02:50:53 UTC <mgsloan> (I just made up this term)
+2012-07-12 02:51:04 UTC <tgeeky> that's fine, I just need to understand what kind of thing we're talking about
+2012-07-12 02:51:07 UTC <mgsloan> yup :)
+2012-07-12 02:51:54 UTC <mgsloan> (everything after the link doesn't have too much to do with it)
+2012-07-12 02:52:03 UTC <tgeeky> ugh. hackage is down?
+2012-07-12 02:52:06 UTC <mgsloan> I think so
+2012-07-12 02:52:11 UTC <tgeeky> that's so embarassing
+2012-07-12 03:13:20 UTC <tgeeky> mgsloan: hmm!
+2012-07-12 03:13:37 UTC <tgeeky> this sugar papar might actually have the same requirements as this bnfc-meta thing
+2012-07-12 03:13:52 UTC <tgeeky> yeah, context-free, layout-sensitive
+2012-07-12 03:14:35 UTC <tgeeky> and they say they require compisition (where as bnfc-meta has... I don't know? extension?
+2012-07-12 03:14:38 UTC <tgeeky> )
+2012-07-12 03:15:41 UTC <tgeeky> I bet I get knocked offline. There's lightning striking every 30 seconds or so
+2012-07-12 03:27:22 UTC <mgsloan> wow, he called it!
+2012-07-12 03:46:47 UTC <tgeeky> see
+2012-07-12 03:46:53 UTC <tgeeky> prediction is easy, when you have evidence
+2012-07-12 13:17:52 UTC <tgeeky__> byorgey: ping?
+2012-07-12 13:20:02 UTC <tgeeky__> oops, nevermind, foudn it
+2012-07-12 13:53:46 UTC <byorgey> tgeeky__: found what?
+2012-07-12 14:05:19 UTC <tgeeky__> a link to your blog
+2012-07-12 14:05:37 UTC <tgeeky__> byorgey: do you have an account for wolframalpha?
+2012-07-12 14:10:50 UTC <byorgey> tgeeky__: an account?  isn't it free?
+2012-07-12 14:11:27 UTC <tgeeky__> somewhat. They have made ads more frequent, and some computation (stuff that requires actual hard work, like differential geometry or mapping riemann spheres or whatever) it may not show you
+2012-07-12 14:11:42 UTC <tgeeky__> either way, it's worth checking out (there's a trial, and it's cheap)
+2012-07-12 14:14:54 UTC <tgeeky__> byorgey: oh, if you look in the backlog in #haskell-blah, I made a (pretty cool, I think) observation about egyptian fractions and the so-called "eye of horus" numbers
+2012-07-12 14:15:44 UTC <byorgey> tgeeky__: nah, I don't care enough about Wolfram Alpha to sign up for anything even the slightest bit non-free
+2012-07-12 14:15:47 UTC <byorgey> the interface sucks
+2012-07-12 14:15:53 UTC <tgeeky__> yes, that is very true
+2012-07-12 14:16:22 UTC <tgeeky__> however, it's nice for quickly trying to evaluate hairy polynomials
+2012-07-12 14:16:26 UTC <byorgey> all this "natural language" BS seems to cycle back into vogue every 10 years or so before everyone realizes it's a bad idea
+2012-07-12 14:16:40 UTC <byorgey> tgeeky__: that's true, I do use it for things like that
+2012-07-12 14:16:44 UTC <byorgey> and for doing date arithmetic
+2012-07-12 14:17:25 UTC <tgeeky__> you can also do things like: automorphism group of dual of 2-apollonian graph
+2012-07-12 14:17:31 UTC <tgeeky__> and you get a nice matrix
+2012-07-12 14:18:51 UTC <tgeeky__> byorgey: I was playing with the tools on the site, with a polynomial that in some sense represents the (integer) partition function
+2012-07-12 14:19:22 UTC <tgeeky__> i noticed that the function looked like it was smooth through the entire paramter space, so I turned on circle inversions
+2012-07-12 14:19:25 UTC <tgeeky__> http://i.imgur.com/2IPr9.png
+2012-07-12 14:19:28 UTC <tgeeky__> and found that
+2012-07-12 14:20:06 UTC <tgeeky__> you can drag the slider, and watch it swap sets of circles from left to right and so on, as you play through the paramter space of the function
+2012-07-12 14:20:09 UTC <tgeeky__> I was impressed :)
+2012-07-12 14:20:23 UTC <tgeeky__> it's choppy as *hell* though, totally not usable to produce anything but screenshots
+2012-07-12 14:20:35 UTC <luite> NEW!!
+2012-07-12 14:20:41 UTC <tgeeky__> luite: what's new!!
+2012-07-12 14:20:59 UTC <luite> half your bookmark toolbar
+2012-07-12 14:21:25 UTC <tgeeky__> oh yes, those are the recent updates in haskell, so I can be sure to understand the new features
+2012-07-12 14:21:39 UTC <tgeeky__> mis-numbered, though
+2012-07-12 14:21:41 UTC <luite> 7.4.1 twice?
+2012-07-12 14:21:46 UTC <tgeeky__> 7.4.2 is the second
+2012-07-12 14:21:48 UTC <luite> ah
+2012-07-12 14:21:59 UTC <tgeeky__> i'm currently using HEAD, but it doesn't have any notes yet
+2012-07-12 14:22:04 UTC <tgeeky__> I do know that they removed catch from the prelude
+2012-07-12 14:22:30 UTC <luite> oh they did? which version?
+2012-07-12 14:22:45 UTC <tgeeky__> well, it's missing now, so I presume it will be missing in 7.6
+2012-07-12 14:22:52 UTC <tgeeky__> 7.5.20120703 I tink
+2012-07-12 14:23:11 UTC <luite> ah cool
+2012-07-12 14:23:14 UTC <tgeeky__> this breaks cabal-install, because it breaks text and network
+2012-07-12 14:23:48 UTC <luite> oh i guess they'll be updated in time
+2012-07-12 14:24:05 UTC <tgeeky__> text has a patch already, network doesn't (and the bugged code is inside a MINGW ifdef, so it may not get noticed if I don't speak up)
