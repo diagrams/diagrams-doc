@@ -20395,3 +20395,219 @@
 2012-07-12 14:23:14 UTC <tgeeky__> this breaks cabal-install, because it breaks text and network
 2012-07-12 14:23:48 UTC <luite> oh i guess they'll be updated in time
 2012-07-12 14:24:05 UTC <tgeeky__> text has a patch already, network doesn't (and the bugged code is inside a MINGW ifdef, so it may not get noticed if I don't speak up)
+2012-07-12 16:29:30 UTC <fryguybob> byorgey: Does anyone have exciting diagrams things to do for hac-phi?
+2012-07-12 16:29:56 UTC <byorgey> fryguybob: no one has specifically talked about exciting diagrams things to do.
+2012-07-12 16:30:25 UTC <byorgey> But one of my tasks for the next month is to figure out what exciting things there are to do, and make sure things are in a state where others can usefully contribute
+2012-07-12 16:30:58 UTC <byorgey> I have a few branches I need to finish up and merge back in; I hope to finally switch over to github; etc.
+2012-07-12 16:31:29 UTC <fryguybob> Cool.  Which I could come.
+2012-07-12 16:31:34 UTC <fryguybob> (wish)
+2012-07-12 16:34:49 UTC <fryguybob> I need to work up some more higher level examples that I've been thinking about and see if that inspires some more general tools.
+2012-07-12 16:46:11 UTC <byorgey> fryguybob: I wish you could come too!
+2012-07-12 16:46:46 UTC <byorgey> fryguybob: yeah, higher-level examples are great for inspiring general tools.  more examples would be excellent.
+2012-07-12 16:49:29 UTC <fryguybob> byorgey: Rebekah will be going back home for a week in two weeks, so I should do at least a diagram a day then :D.
+2012-07-12 16:51:58 UTC <byorgey> ah, sounds good =)
+2012-07-12 18:58:20 UTC <edwardk> alpounet: ping
+2012-07-12 18:58:21 UTC <lambdabot> edwardk: You have 1 new message. '/msg lambdabot @messages' to read it.
+2012-07-13 02:06:13 UTC <mgsloan> https://github.com/mgsloan/instance-templates/blob/master/Test.hs
+2012-07-13 02:06:17 UTC <mgsloan> https://github.com/mgsloan/instance-templates/blob/master/TestUse.hs
+2012-07-13 02:06:27 UTC <mgsloan> This ended up taking way more code than I'd anticipated:
+2012-07-13 02:06:36 UTC <mgsloan> https://github.com/mgsloan/instance-templates/blob/master/src/Language/Haskell/InstanceTemplates.hs
+2012-07-13 02:27:44 UTC <tgeeky_> ACTION always forgets what Typable does
+2012-07-13 02:57:41 UTC <mgsloan> here I'm using it as a trick to let me use the type parameters over again in the generated instance
+2012-07-13 02:58:01 UTC <mgsloan> so, we've got TH code in the definition of the "invokeTemplate" method
+2012-07-13 02:58:50 UTC <mgsloan> (and deriving' produces instances of the Template class)
+2012-07-13 02:59:35 UTC <mgsloan> so, when you're instantiating templates, you specify which template to invoke by passing a dummy value that determines which instance of Template to call
+2012-07-13 02:59:48 UTC <tgeeky_> ok
+2012-07-13 02:59:54 UTC <mgsloan> but then I need to actually build the same types that you passed in that dummy value
+2012-07-13 03:00:54 UTC <tgeeky_> so in this file
+2012-07-13 03:01:02 UTC <tgeeky_> it looks like foo is a sort of implicit paramter
+2012-07-13 03:01:20 UTC <mgsloan> yup
+2012-07-13 03:01:25 UTC <tgeeky_> where I don't think it would normally be allowed
+2012-07-13 03:01:45 UTC <tgeeky_> ok, so I have some cool (non-trivial) things expressed using implicit params -- list homomorphisms
+2012-07-13 03:02:13 UTC <tgeeky_> let me dig
+2012-07-13 03:02:20 UTC <mgsloan> yupyup
+2012-07-13 03:02:34 UTC <mgsloan> so, these aren't really implicit parameters - they're declaration time parameters
+2012-07-13 03:02:54 UTC <tgeeky_> yeah, but you could have as many of them as you want
+2012-07-13 03:03:17 UTC <tgeeky_> you could have a dozen things in place of foo, as longa s they all have type a
+2012-07-13 03:03:47 UTC <mgsloan> Invocation is currently ugly:
+2012-07-13 03:03:47 UTC <mgsloan> $(instantiate [instance' [t| () |] (classHead :: Foo_Template (Int, TV_a) TV_b) [d|
+2012-07-13 03:03:47 UTC <mgsloan>      foo = (5, undefined)
+2012-07-13 03:03:47 UTC <mgsloan>    |] ])
+2012-07-13 03:03:58 UTC <tgeeky_> that's fine
+2012-07-13 03:04:05 UTC <tgeeky_> my bnfc-meta work will help you kill that
+2012-07-13 03:04:09 UTC <mgsloan> but this just means:
+2012-07-13 03:04:09 UTC <mgsloan> instance Foo (Int, a) b where
+2012-07-13 03:04:09 UTC <mgsloan>   foo = (5, undefined)
+2012-07-13 03:04:11 UTC <mgsloan> yup
+2012-07-13 03:04:19 UTC <tgeeky_> i have figured out a lot of things
+2012-07-13 03:04:34 UTC <tgeeky_> the BNFC-meta guys took quite a lot out of the original BNFC
+2012-07-13 03:04:40 UTC <tgeeky_> but it's still there for the picking
+2012-07-13 03:04:47 UTC <mgsloan> well, I'd prefer that this was just a language feature.  If it's not built into the compiler, error messages can suck even more than they currently do
+2012-07-13 03:05:16 UTC <tgeeky_> remember, with bnfc-meta we can provide a diff against haskell's current happy and alex configurations
+2012-07-13 03:05:31 UTC <tgeeky_> how better to convince GHC to adopt something, then using their own tools?
+2012-07-13 03:05:49 UTC <tgeeky_> mgsloan: I think this approach will ultimately be much better than that SugarSyntax approach, for exactly this reason
+2012-07-13 03:06:10 UTC <tgeeky_> BNFC-meta has location tagging built into the language
+2012-07-13 03:06:13 UTC <tgeeky_> nicely
+2012-07-13 03:06:19 UTC <mgsloan> sweet!
+2012-07-13 03:06:49 UTC <mgsloan> Well, I'd ideally like to see parts of the language start moving out of the compiler, but that's a pretty far-out dream at this point, unfortunately
+2012-07-13 03:07:06 UTC <tgeeky_> the goal is to drive adoption of techniques
+2012-07-13 03:07:10 UTC <tgeeky_> for me, at least
+2012-07-13 03:07:19 UTC <tgeeky_> GHC are a very conservative bunch
+2012-07-13 03:07:22 UTC <mgsloan> yup.  My goal is to make programming kick ass
+2012-07-13 03:07:30 UTC <mgsloan> which I guess is another way of saying the same thing
+2012-07-13 03:07:51 UTC <tgeeky_> so
+2012-07-13 03:08:04 UTC <tgeeky_> ClassLaws on Hackage
+2012-07-13 03:08:26 UTC <tgeeky_> http://hackage.haskell.org/packages/archive/ClassLaws/0.3.0.1/doc/html/src/Data-Monoid-Laws.html
+2012-07-13 03:08:48 UTC <mgsloan> good to see it up and running again!  The world was so empty without hackage :O
+2012-07-13 03:08:49 UTC <tgeeky_> *surely* you could always provide Laws instances, if laws are defined
+2012-07-13 03:09:23 UTC <mgsloan> Yeah, that would be cool!
+2012-07-13 03:09:52 UTC <tgeeky_> mgsloan: then, you can provide template haskell code that's value-level checked
+2012-07-13 03:09:55 UTC <tgeeky_> !
+2012-07-13 03:09:57 UTC <mgsloan> You could actually have a different namespace that re-exported the classes, but with instance templates that bundled them with the laws
+2012-07-13 03:10:00 UTC <tgeeky_> yep
+2012-07-13 03:10:14 UTC <tgeeky_> well, just assume it's the same name, with Laws appended or prepended
+2012-07-13 03:10:19 UTC <mgsloan> so, change a namespace, and your instances come with laws
+2012-07-13 03:10:31 UTC <mgsloan> sure
+2012-07-13 03:10:44 UTC <tgeeky_> the classLaws utility will automatically generate quickcheck
+2012-07-13 03:10:57 UTC <tgeeky_> if it can do that, than I'm pretty certain it could automatically generate Unfoldable instances
+2012-07-13 03:11:05 UTC <mgsloan> what do you mean by value-level checked TH?
+2012-07-13 03:11:28 UTC <tgeeky_> mgsloan: the purpose of class laws is to test the laws under both assumption of totality and partiality
+2012-07-13 03:11:42 UTC <tgeeky_> and build (and run) quickcheck code to test both
+2012-07-13 03:12:13 UTC <tgeeky_> (it uses ChasingBottoms, by the same people, to test for bottom everywhere in all kinds of ways)
+2012-07-13 03:13:03 UTC <tgeeky_> so you can use template haskell to generate haskell classes and instances, which can always be checked to have satisfied the associated laws
+2012-07-13 03:13:10 UTC <mgsloan> Hmm.  With unsafe global flags, you could use this to engage a mode in which tests are run on the values actually flowing through your program
+2012-07-13 03:13:14 UTC <mgsloan> "uber-debug" mode
+2012-07-13 03:13:25 UTC <mgsloan> catch things early, at the first invariant invalidation
+2012-07-13 03:13:26 UTC <tgeeky_> which is to say, you should be able to derive an instance, and have haskell tell you if it will follow the class laws or not
+2012-07-13 03:14:16 UTC <tgeeky_> mgsloan: one other thing -- from a pointfree-haskell perspective, if you have a class instance which has a collection of things like associativity and distributivity shifting operators
+2012-07-13 03:14:22 UTC <mgsloan> (or once again use the namespace trick, but I'm not sure if modules-for-differently-configured-instance-templates is a good thing)
+2012-07-13 03:14:23 UTC <tgeeky_> you can automatically use them to unfold more complex nestings
+2012-07-13 03:14:59 UTC <mgsloan> ahh, interesting!
+2012-07-13 03:15:31 UTC <mgsloan> Have I shown you this? https://github.com/mgsloan/instance-templates/blob/master/Extras.md#scope-restricted-weak-typing
+2012-07-13 03:16:11 UTC <tgeeky_> essentially, I think what I'm suggesting is that you can try to compose/apply/fold/unfold/etc all of the methods inside of the deriving TH fragment and none outside
+2012-07-13 03:16:20 UTC <tgeeky_> but who knows about that yet
+2012-07-13 03:16:40 UTC <tgeeky_> yes, this is exactly the kind of thing I'm thinking of
+2012-07-13 03:17:34 UTC <mgsloan> Well, I'm gonna go on a bike ride, but now instance-templates ought to actually do something!  It'll probably break for anything but trivial examples, though
+2012-07-13 03:17:56 UTC <mgsloan> when I'm back I'm gonna launch into converting Examples.md into working code samples
+2012-07-13 03:17:56 UTC <tgeeky_> hey, a seed is a seed
+2012-07-13 03:18:22 UTC <mgsloan> yup :) and I built this one while thinking about most of the things that could go wrong
+2012-07-13 03:18:45 UTC <mgsloan> though strange things did come up.  I did not anticipate the "TV_a" "TV_b", etc hack
+2012-07-13 03:20:44 UTC <mgsloan> but yeah, after getting a few basic examples going, I might move on to hammering down a notation for the type --> expr structure rewriting rules
+2012-07-13 03:20:59 UTC <tgeeky_> i think I might be able to help
+2012-07-13 03:21:03 UTC <mgsloan> so, lemme know if you've got some thoughts there! (when I get back, etc)
+2012-07-13 03:21:05 UTC <tgeeky_> all of that stuff is wrapped up in a few concepts
+2012-07-13 03:21:30 UTC <tgeeky_> ok, ttyl
+2012-07-13 03:21:46 UTC <mgsloan> Maybe send me an email orso?  Thanks for your help!  I've gotta get outside before there's no more daylight!
+2012-07-13 03:21:52 UTC <mgsloan> been coding too late.. :D
+2012-07-13 03:21:53 UTC <tgeeky_> hehe. I should be here
+2012-07-13 05:12:21 UTC <mgsloan> Back.  Tekmo likes my proposal!
+2012-07-13 07:08:52 UTC <mgsloan> arggggh!  I knew that Template Haskell can't reify constraint kinds yet
+2012-07-13 07:08:57 UTC <mgsloan> but didn't realize that it couldn't generate them
+2012-07-13 07:09:03 UTC <mgsloan> I thought I'd tested this...
+2012-07-13 07:09:26 UTC <mgsloan> so ridiculous, because it's giving my the sort of error you'd expect if -XConstraintKinds wasn't enabled.
+2012-07-13 07:11:25 UTC <mgsloan> the absurd thing is that non-tupled constraint synonyms work
+2012-07-13 07:12:22 UTC <mgsloan> oh well, I'll pretend like the type synonyms are like type sigs for the instance templates
+2012-07-13 18:28:16 UTC <tgeeky_> hm
+2012-07-13 18:28:41 UTC <tgeeky_> i was assuming that it would be easy for me to fix TH to include constraint kinds, poly kinds, and promotion
+2012-07-13 19:10:28 UTC <edwardk> tgeeky: hahaha
+2012-07-13 19:10:40 UTC <edwardk> tgeeky: parts are easy
+2012-07-13 19:10:47 UTC <edwardk> tgeeky: but its a fair bit of work
+2012-07-13 19:11:00 UTC <edwardk> i haven't even thought about TH for turbohaskell =/
+2012-07-14 01:29:39 UTC <tgeeky_> byorgey: you've been quiet for the past week or so. everything OK?
+2012-07-14 01:51:32 UTC <tgeeky_> mgsloan: just ran across this in google: http://arxiv.org/pdf/1202.6593v1.pdf
+2012-07-14 02:09:45 UTC <mgsloan> wow, cool stuff!  Very diagrams-ey
+2012-07-14 02:11:11 UTC <tgeeky_> hehe
+2012-07-14 02:11:13 UTC <tgeeky_> a little
+2012-07-14 02:18:51 UTC <tgeeky_> mgsloan: for the record: I read this paper sometime last year, and didn't quite understand every part of it (and still don't for a few parts)
+2012-07-14 02:18:58 UTC <tgeeky_> but I think it's worth reading nontheless
+2012-07-14 02:18:59 UTC <tgeeky_> http://www.metu.edu.tr/~dpierce/Mathematics/Numbers/ordinals-2.2.pdf
+2012-07-14 02:19:32 UTC <tgeeky_> it's interesting in many ways; one it highlights the difference between set (or class) thinking and categorical thinking.
+2012-07-14 02:20:58 UTC <mgsloan> yeah, looks pretty interesting!
+2012-07-14 02:21:04 UTC <tgeeky_> i re-read parts of it today, and found a nice little gem (on the bottom of page 14 and the top of 15)
+2012-07-14 02:21:25 UTC <mgsloan> (that difference mainly being concern for the relationship between objects, rather than the objects themselves / their cardinality)
+2012-07-14 02:21:30 UTC <tgeeky_> "Skolem makes the notion of a class precise..."
+2012-07-14 02:21:45 UTC <mgsloan> at least that's what I've been lead to believe
+2012-07-14 02:22:15 UTC <tgeeky_> I think he would agree. This guy is really a "model theorirst" which seems to mean: write down the kind of operators/operations you can use in a tuple, and them use them
+2012-07-14 02:22:56 UTC <tgeeky_> but I think the point of this paper, is that there's more to it
+2012-07-14 02:23:21 UTC <tgeeky_> at least, if you want to deal with categories which use some notion of indexing or numbering
+2012-07-14 02:23:47 UTC <tgeeky_> he defines "simply infinite system" which I bet would be handy to introduce into the Haskell world
+2012-07-14 02:24:51 UTC <tgeeky_> but the thin I was mentioning is: a formula in one free variable defines a class, while a formula in *two* defines a binary relation (which may still be a function, but no longer must be)
+2012-07-14 02:25:17 UTC <tgeeky_> but to bring a binary relation up to a class, you identify ordered pairs as: (x,y) = { {x}, {x,y} }
+2012-07-14 02:25:47 UTC <tgeeky_> (which it seems to me like we're already doing it that way anyway... :O
+2012-07-14 02:26:40 UTC <tgeeky_> anyhoo, how is your work going?
+2012-07-14 02:26:57 UTC <mgsloan> hmmm, interesting.  the other projection could work too
+2012-07-14 02:27:07 UTC <mgsloan> (of course)
+2012-07-14 02:27:08 UTC <tgeeky_> mgsloan: yes!
+2012-07-14 02:27:09 UTC <mgsloan> it's going pretty good
+2012-07-14 02:27:38 UTC <mgsloan> $(instantiate [instance' Foo_Template [t| forall b. Foo Int b |]
+2012-07-14 02:27:38 UTC <mgsloan>    [d|
+2012-07-14 02:27:38 UTC <mgsloan>      foo = 5
+2012-07-14 02:27:38 UTC <mgsloan>    |] ])
+2012-07-14 02:27:44 UTC <mgsloan> new syntax!
+2012-07-14 02:28:14 UTC <tgeeky_> mgsloan: actually, btw, it does matter after binary relation
+2012-07-14 02:28:30 UTC <tgeeky_> (x,y,z) = { {x}, {x,y}, {x,y,z} }
+2012-07-14 02:28:57 UTC <tgeeky_> oh, no it doesn't
+2012-07-14 02:29:05 UTC <tgeeky_> as long as the most-nested things are in the same order always
+2012-07-14 02:29:11 UTC <mgsloan> working on making it so that you don't have to import the symbols associated with the classes that are being instantiated
+2012-07-14 02:29:21 UTC <mgsloan> TH lets you build global names that work regardless of import
+2012-07-14 02:29:36 UTC <mgsloan> which is _very_ convenient for my use case :)
+2012-07-14 02:32:26 UTC <mgsloan> tgeeky_ that stuff kinda reminds me of the "residuals" of lenses
+2012-07-14 02:32:48 UTC <mgsloan> the set is of the residual and the result of one of the projection lenses
+2012-07-14 02:33:13 UTC <mgsloan> well, not quite. hmm
+2012-07-14 02:33:16 UTC <tgeeky_> hehe
+2012-07-14 02:33:23 UTC <tgeeky_> i was trying to parse that, but I don't know much about them
+2012-07-14 02:33:25 UTC <mgsloan> it's actually not the residual - that's the thing that's left out of the set!
+2012-07-14 02:33:28 UTC <tgeeky_> I assume this is Twan's words
+2012-07-14 02:33:50 UTC <mgsloan> well, residual is around in the other lens literature, but probably
+2012-07-14 02:34:08 UTC <mgsloan> it's the idea that you could represent, using a type, the stuff that's "left-over" from a projection
+2012-07-14 02:34:25 UTC <mgsloan> e.g. everything that got left behind, that would be necessary to rebuild the original
+2012-07-14 02:34:26 UTC <tgeeky_> I started my foray into lenses with multiplate, which was probably not a great idea
+2012-07-14 02:34:49 UTC <mgsloan> the new lens families stuff looks pretty cool
+2012-07-14 02:35:01 UTC <tgeeky_> yep, gotta inspect them soon too
+2012-07-14 02:37:26 UTC <mgsloan> my favorite is still fclabels
+2012-07-14 02:37:34 UTC <mgsloan> could just be familiarity though
+2012-07-14 03:12:25 UTC <tgeeky_> woohoo! I got my segfault wittled down to a GHC error
+2012-07-14 04:50:04 UTC <mgsloan> WooHoo!!
+2012-07-14 04:50:16 UTC <mgsloan> I just instantiated an Applicative, and got a Functor for free :0
+2012-07-14 04:52:32 UTC <mgsloan> https://github.com/mgsloan/instance-templates/tree/master/tests/monads
+2012-07-14 04:53:04 UTC <mgsloan> even better is that now there's no QQ or haskell-src-exts
+2012-07-14 04:53:25 UTC <mgsloan> though I do have plans to bring back the QQ
+2012-07-14 04:53:33 UTC <mgsloan> in a separate package
+2012-07-14 05:09:44 UTC <tgeeky> sweet!
+2012-07-14 05:19:28 UTC <tgeeky> mgsloan: so I'm a little confused though
+2012-07-14 05:20:10 UTC <mgsloan> oh?
+2012-07-14 05:20:24 UTC <mgsloan> well, it'd be best if I made this stuff as clear as possible
+2012-07-14 05:20:42 UTC <tgeeky> so you've got what I'll call "new Prelude" (but is really just the heiarchy you have in Classes
+2012-07-14 05:20:45 UTC <tgeeky> )
+2012-07-14 05:21:11 UTC <tgeeky> then you've got mkInstances for Functor and Applicative
+2012-07-14 05:22:00 UTC <tgeeky> and then you have the instantiation  in the third file
+2012-07-14 05:22:59 UTC <tgeeky> I guess I'm unclear on what is gained so far?
+2012-07-14 05:23:02 UTC <mgsloan> yup.  Those are templates that allow you to use the old functor-applicative-monad hierarchy, but target the new
+2012-07-14 05:23:13 UTC <tgeeky> use the old, target the new
+2012-07-14 05:23:19 UTC <mgsloan> so, "Test.hs" has code that looks like it targets the old hierarchy
+2012-07-14 05:23:24 UTC <mgsloan> but you get out instances of the new one
+2012-07-14 05:24:02 UTC <mgsloan> The difference is quite a bit more profound with Monad, because then you get out (Functor, Applicative, Monad, and MonadFail)
+2012-07-14 05:24:55 UTC <tgeeky> i almost typed that (but applicative isn't really any different, because it was pulled down from monad anyway
+2012-07-14 05:25:45 UTC <tgeeky> in what way does the code in Test.hs look like it targets the old heiarchy?
+2012-07-14 05:28:44 UTC <mgsloan> good point
+2012-07-14 05:28:47 UTC <mgsloan> it doesn't
+2012-07-14 05:29:01 UTC <mgsloan> it would more if I stuck in a Functor instance template
+2012-07-14 05:29:18 UTC <mgsloan> but that would be suppressed (with warning) due to the overlap resolution
+2012-07-14 05:29:34 UTC <mgsloan> * functor template invocation
+2012-07-14 05:30:17 UTC <mgsloan> So, there's a syntactic re-writing from normal declarations to this form
+2012-07-14 05:30:37 UTC <tgeeky> and, a suggestion: changed C. to D.
+2012-07-14 05:31:03 UTC <tgeeky> D is versatile, and you can always say it means "Different" like, in another class heiarchy than "Prelude" :)
+2012-07-14 05:31:13 UTC <tgeeky> but in thise case, you can remind them that these instances are Derived
+2012-07-14 05:31:39 UTC <mgsloan> or "N" for new
+2012-07-14 05:31:59 UTC <tgeeky> new is a bad one because it will be true some amount of time after
+2012-07-14 05:32:02 UTC <tgeeky> s/true/false/
+2012-07-14 05:32:58 UTC <tgeeky> but other than that, so far you've nicely done what was before a builtin haskell syntax/semantics but in TH?
+2012-07-14 05:34:21 UTC <mgsloan> that's the idea.  Well, something that's not yet builtin
+2012-07-14 05:34:38 UTC <mgsloan> but yeah :)  It's not perfect yet, lots of TODOs remain
+2012-07-14 06:37:47 UTC <mgsloan> tgeeky_: https://github.com/mgsloan/instance-templates/blob/master/tests/monads/Test.hs
+2012-07-14 06:37:59 UTC <mgsloan> Monad all the way to applicative :)
+2012-07-14 06:38:44 UTC <mgsloan> that one declaration is creating all 4 instances for maybe
+2012-07-14 08:26:00 UTC <mgsloan> whoah.  Instance templates could do family instances too - and not just associated ones
+2012-07-14 15:59:21 UTC <byorgey> tgeeky: "you've been quiet for the past week or so. everything OK?"  -- have I? yeah, I'm totally fine.
+2012-07-14 20:47:27 UTC <tgeeky_> byorgey: excellent
+2012-07-14 20:48:02 UTC <tgeeky_> mgsloan is an impressive talent :)
