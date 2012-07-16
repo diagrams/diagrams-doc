@@ -1,0 +1,13 @@
+* Currently working on:
+
+  + subdiagrams
+    - printed out Core.hs.  Should look over it and figure out where I
+      am/what needs to be done.  Unrecord working patch + proceed from
+      there.
+  + finish DUBLTree refactor based on thinking from Monoids paper
+    - see dubl-tree-free repo.
+  + envelope/trace memoization
+  + make sure SVG backend is ready to go
+  + port to github
+  + release version 0.6
+  + anything else that needs doing to get ready for hac phi
