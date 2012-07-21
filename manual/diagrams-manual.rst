@@ -2379,6 +2379,8 @@ edge of each child circle, instead of connecting their centers.
 
 ::
 
+> import Data.Maybe (fromMaybe)
+>
 > root   = circle 1 # named "root"
 > leaves = centerXY
 >        . hcat' with {sep = 0.5}
@@ -2387,7 +2389,8 @@ edge of each child circle, instead of connecting their centers.
 > parentToChild child
 >   = withName "root" $ \rb ->
 >     withName child  $ \cb ->
->       atop (boundaryFrom rb unit_Y ~~ boundaryFrom cb unitY)
+>       atop (   fromMaybe origin (traceP (location rb) unitY rb)
+>             ~~ fromMaybe origin (traceP (location cb) unit_Y cb))
 >
 > nodes  = root === strutY 2 === leaves
 >

@@ -13,6 +13,7 @@ width: 400
 > import Data.List
 > import Data.Ord (comparing)
 > import Data.Function (on)
+> import Data.Maybe (fromMaybe)
 > 
 > colors = [black, blue, red, yellow, green, orange, purple, brown]
 
@@ -87,6 +88,6 @@ lower boundary of the other.
 
 >         connect (Subset _ elts1) (Subset _ elts2) =
 >           withNames [elts1, elts2] $ \[b1, b2] ->
->             (<> (boundaryFrom b1 unitY ~~ boundaryFrom b2 unit_Y) # lw 0.03)
+>             (<> (fromMaybe origin (traceP (location b1) unit_Y b1) ~~ fromMaybe origin (traceP (location b2) unitY b2)) # lw 0.03)
 > 
 > example = pad 1.1 $ hasseDiagram 4
