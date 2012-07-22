@@ -20611,3 +20611,468 @@
 2012-07-14 15:59:21 UTC <byorgey> tgeeky: "you've been quiet for the past week or so. everything OK?"  -- have I? yeah, I'm totally fine.
 2012-07-14 20:47:27 UTC <tgeeky_> byorgey: excellent
 2012-07-14 20:48:02 UTC <tgeeky_> mgsloan is an impressive talent :)
+2012-07-15 01:10:23 UTC <peterjoel> Any mac users can help me get cairo and gtk+ working?
+2012-07-15 01:11:21 UTC <peterjoel> I got it all working a few months ago, now I have a new machine and against a brick wall
+2012-07-15 01:33:46 UTC <tgeeky_> mgsloan: hey!
+2012-07-15 01:34:00 UTC <tgeeky_> cool stuff. I forked earlier, but haven't installed. doing that now
+2012-07-15 02:11:47 UTC <mgsloan> enjoy :D  I haven't tested the overlap stuff, but it shouldn't really be necessary
+2012-07-15 02:12:58 UTC <peterjoel> anyone got some suggestions for where I can get help with installing cairo on a Mac?
+2012-07-15 02:19:22 UTC <tgeeky_> mgsloan: derr.. packedstring doesn't compile because of..
+2012-07-15 02:19:24 UTC <tgeeky_> but why use packedstrng?
+2012-07-15 02:19:48 UTC <tgeeky_> oh, haskell-src-meta
+2012-07-15 02:23:08 UTC <tgeeky_> wait, not it does't.
+2012-07-15 02:23:14 UTC <tgeeky_> doesn't. what the heck is going on
+2012-07-15 02:23:40 UTC <tgeeky_> mgsloan: you have to specify version ranges in cabal files!
+2012-07-15 02:23:54 UTC <tgeeky_> cabal decided that haskell-src-meta v. 0.0.3 was appropriate
+2012-07-15 02:24:53 UTC <mgsloan> oh, that's not good
+2012-07-15 02:25:00 UTC <mgsloan> yeah, I'm lazy abou tit
+2012-07-15 02:25:14 UTC <mgsloan> Why in the world would it default to the oldest
+2012-07-15 02:25:20 UTC <mgsloan> that's a stupid default
+2012-07-15 02:25:31 UTC <tgeeky_> it's not even the oldest
+2012-07-15 02:25:34 UTC <tgeeky_> there are two or three odler
+2012-07-15 02:25:35 UTC <tgeeky_> older*
+2012-07-15 02:26:00 UTC <tgeeky_> i thought the version looked weird
+2012-07-15 02:28:42 UTC <mgsloan> ACTION wishes that git was more like darcs
+2012-07-15 02:28:59 UTC <tgeeky_> uhhhhh
+2012-07-15 02:29:01 UTC <tgeeky_> A 31412921-tuple is too large for GHC
+2012-07-15 02:29:41 UTC <tgeeky_> from trying to compile haskell-src-meta :o
+2012-07-15 02:30:53 UTC <tgeeky_> there is some sort of serious bug in GHC HEAD or template haskell
+2012-07-15 02:34:17 UTC <byorgey> peterjoel: have you read the stuff linked from http://www.haskell.org/haskellwiki/Diagrams/Install ?
+2012-07-15 02:35:49 UTC <peterjoel> yes, but I didn't do exactly as it said. I see the instructions use brew, while I tried macports and fink
+2012-07-15 02:35:58 UTC <peterjoel> so I'll remove all and try with homebrew
+2012-07-15 02:37:38 UTC <peterjoel> although the google groups discussion is suggesting to use macports instead of homebrew :0
+2012-07-15 02:39:10 UTC <peterjoel> could also be that I (followed installation advice and) installed 32bit HP instead of 64bit.
+2012-07-15 02:39:13 UTC <byorgey> well, sorry, I don't really know anything about it =(
+2012-07-15 02:39:46 UTC <byorgey> peterjoel: you could also try using some backend other than cairo
+2012-07-15 02:39:58 UTC <byorgey> the SVG backend is pretty much complete
+2012-07-15 02:40:23 UTC <peterjoel> ok I might do that
+2012-07-15 02:40:34 UTC <peterjoel> but I think I'd like to get cairo working anyway
+2012-07-15 02:40:58 UTC <byorgey> fair enough
+2012-07-15 02:41:02 UTC <peterjoel> is it possible to install diagrams without installing cairo?
+2012-07-15 02:41:08 UTC <peterjoel> how would I go about that?
+2012-07-15 02:41:11 UTC <byorgey> yes
+2012-07-15 02:41:27 UTC <byorgey> the 'diagrams' package actually has no content, it just depends on diagrams-core, diagrams-lib, and diagrams-cairo
+2012-07-15 02:41:40 UTC <peterjoel> Oh, that should be easy then
+2012-07-15 02:41:43 UTC <byorgey> so just install diagrams-lib directly (which will pull in diagrams-core as well)
+2012-07-15 02:41:49 UTC <byorgey> and then install diagrams-svg or whatever you want
+2012-07-15 02:41:55 UTC <peterjoel> gotcha
+2012-07-15 02:42:31 UTC <peterjoel> also, did I make a mistake by installing 32bit HP? Should I uninstall and get 64bit instead?
+2012-07-15 04:19:12 UTC <mgsloan> tgeeky_: success yet? do I need to update the deps (I'll do that either way, soon-ish, but I could do it sooner than later)
+2012-07-15 17:45:15 UTC <byorgey> peterjoel: saw your Q on the haskell reddit, hope you get some good help with figuring it out
+2012-07-15 17:47:35 UTC <peterjoel> about 5am last night I was about to throw my mac out of the window
+2012-07-15 17:53:57 UTC <luite> hmm
+2012-07-15 18:33:06 UTC <byorgey> peterjoel: I don't know much about macs, but I'm guessing that wouldn't help with getting gtk installed
+2012-07-15 18:36:24 UTC <peterjoel> :D
+2012-07-15 18:43:00 UTC <luite> yeah macs don't really like windows
+2012-07-15 18:44:32 UTC <byorgey> haha
+2012-07-15 21:01:22 UTC <cheater_> luite: text mode only? :)
+2012-07-16 01:51:49 UTC <tgeeky_> mgsloan: yes, I got it working. I had to abandon GHC HEAD, which I was resisting to do.
+2012-07-16 01:52:13 UTC <mgsloan> ah, really?  what was the problem? template-haskell dependencies?
+2012-07-16 01:52:49 UTC <mgsloan> Maybe I should start using HEAD - I think there's some bug fixes that would allow me to do some stuff that I want to do with constraint kinds
+2012-07-16 01:53:01 UTC <tgeeky_> I'm not sure. There seems to be something special with GHC (nightly?) builds and template-haskell (more special than base, integer-gmp, etc)
+2012-07-16 01:53:11 UTC <mgsloan> ah
+2012-07-16 01:53:16 UTC <tgeeky_> in that, you can't hide the version that comes with it, from anything
+2012-07-16 01:53:39 UTC <tgeeky_> when I run ghci, I always see template-haskell...  without a version number, and you I can't seem to change that
+2012-07-16 01:53:46 UTC <mgsloan> well, it wouldn't be surprising if ghc-src-meta broke on GHC head
+2012-07-16 01:53:48 UTC <tgeeky_> reinstalling template-haskell breaks the package ghc
+2012-07-16 01:53:56 UTC <tgeeky_> mgsloan: oh, no, it's template-haskell itself
+2012-07-16 01:53:59 UTC <mgsloan> ah
+2012-07-16 01:54:09 UTC <tgeeky_> (I think). I'm not dedicated enough to fix it
+2012-07-16 01:54:19 UTC <mgsloan> maybe you need to install template-haskell-2.8.0.0 (not sure if this exists)
+2012-07-16 01:54:27 UTC <mgsloan> well, thanks for going through all that!
+2012-07-16 01:54:38 UTC <tgeeky_> well, GHC HEAD is compiled agains 2.6.0.0, and it should be 2.7.0.0
+2012-07-16 01:54:48 UTC <tgeeky_> well, I wanted some new stuff too
+2012-07-16 01:54:48 UTC <mgsloan> whaaaa, that's wack
+2012-07-16 01:55:13 UTC <tgeeky_> that said, I may be able to get zeroth working again...
+2012-07-16 01:55:20 UTC <mgsloan> right
+2012-07-16 01:55:47 UTC <tgeeky_> yeah looks like it should build
+2012-07-16 01:55:52 UTC <mgsloan> there's definitely a pressing need for a haskell-src-exts / haskell interpreter using clone of TH
+2012-07-16 01:56:07 UTC <mgsloan> ideally the interpreter part would be pluggable
+2012-07-16 01:56:28 UTC <tgeeky_> I think many of these packages should be merged
+2012-07-16 01:56:51 UTC <mgsloan> which would dodge the whole "TH is GHC-only" business
+2012-07-16 01:57:02 UTC <tgeeky_> the bottom line, imho, is this: GHC *requires* alex and happy, if you want to work with source.
+2012-07-16 01:57:25 UTC <tgeeky_> bnfc-meta gives you: (alex-meta, happy-meta, bnfc-meta ) -> (unfinished) haskell-meta
+2012-07-16 01:57:59 UTC <tgeeky_> I am pretty sure haskell is *specified* in a BNF grammar, isn't it?
+2012-07-16 01:58:04 UTC <mgsloan> yup
+2012-07-16 01:58:08 UTC <tgeeky_> isn't that the kind of thing that's in the Report?
+2012-07-16 01:58:22 UTC <mgsloan> which I think is the reason for the ugly decision of having 10 tiers of operator fixities
+2012-07-16 01:58:25 UTC <mgsloan> yup
+2012-07-16 01:58:37 UTC <tgeeky_> well, 10 is just a number
+2012-07-16 01:58:42 UTC <tgeeky_> and we need to remember
+2012-07-16 01:58:55 UTC <tgeeky_> that we have negative numbers (and types) at our disposal, should we understand them
+2012-07-16 01:59:14 UTC <tgeeky_> so there's no reason we can't genuinely shift: [0..10] to [-5..5]
+2012-07-16 01:59:25 UTC <tgeeky_> I think you'll find there's already such a symmetry in the fixity table
+2012-07-16 01:59:33 UTC <mgsloan> yeah
+2012-07-16 01:59:46 UTC <tgeeky_> mgsloan: speaking of exactly which. Some guy told who is writing a paper about something parsing sent me a link
+2012-07-16 01:59:57 UTC <tgeeky_> "Indentation Sensitive Parsing"
+2012-07-16 02:00:05 UTC <tgeeky_> http://web.cecs.pdx.edu/~adamsmic/projects/layout/LayoutParsing-popl2013-submission.pdf
+2012-07-16 02:00:07 UTC <mgsloan> the problem is what's important is the relationships between the ops not their absolute level
+2012-07-16 02:00:25 UTC <mgsloan> ah, was that leading up to / part of the sugar stuff?
+2012-07-16 02:00:29 UTC <mgsloan> think I've seen the link before
+2012-07-16 02:00:36 UTC <tgeeky_> I doubt it?
+2012-07-16 02:00:40 UTC <tgeeky_> I think he just uploaded it
+2012-07-16 02:01:06 UTC <tgeeky_> mgsloan: this may be exactly the rules that we need to follow
+2012-07-16 02:01:28 UTC <tgeeky_> I scanned through it, but it's a little hard for me to read. I need a table of terminology
+2012-07-16 02:02:02 UTC <mgsloan> I met the author before, smart dude
+2012-07-16 02:02:13 UTC <mgsloan> he was at the last oregon PL summer school
+2012-07-16 02:02:24 UTC <mgsloan> which I'm actually on the train to get to right now
+2012-07-16 02:02:37 UTC <mgsloan> OPLSS #2 here we come! time to get some learnins from Benjamin Pierce! :D
+2012-07-16 02:03:17 UTC <luite> busy summer
+2012-07-16 02:03:19 UTC <luite> :)
+2012-07-16 02:03:38 UTC <mgsloan> yup :D  I graduated from college just to go right back to school
+2012-07-16 02:04:23 UTC <mgsloan> finally I can start really learning! heh
+2012-07-16 02:04:45 UTC <luite> i also graduated but no learnings for me
+2012-07-16 02:06:30 UTC <mgsloan> whenever there's coding, there's learnings!
+2012-07-16 02:09:06 UTC <tgeeky_> mgsloan: do you know if you can specify a tycon middle-fix, like (\l r -> l C r) ?
+2012-07-16 02:09:15 UTC <tgeeky_> I assume not
+2012-07-16 02:09:28 UTC <luite> not really doing much learnful coding... wolfgnag is still stalled, being 'promoted' to emergency mentor for shaprs gsoc (after apfelmus bailed) doesn't help either
+2012-07-16 02:09:35 UTC <mgsloan> if it's prefixed with : I think you might be able to
+2012-07-16 02:09:55 UTC <tgeeky_> infix operators. right.
+2012-07-16 02:10:29 UTC <tgeeky_> mgsloan: so, it's a rather strenous test of haskell and TH to compile plumbers for arities [1..5].
+2012-07-16 02:10:53 UTC <tgeeky_> mgsloan: in some cases, I think what you'd really want is the arities surrounding some number, say -- if it were 10, you might want [9,10,11].
+2012-07-16 02:11:15 UTC <tgeeky_> but until we can automatically generate the infixl/r declerations
+2012-07-16 02:12:00 UTC <mgsloan> luite: Is wolfgang going to use hyperhaskell stuff (yeah, I realize that's a joke name)?
+2012-07-16 02:12:47 UTC <mgsloan> is there anything I can do to help with them (that seems like it might be related to my knowledge / interests)?
+2012-07-16 02:13:40 UTC <luite> mgsloan: perhaps
+2012-07-16 02:14:24 UTC <tgeeky_> mgsloan: one thing that I observed about plumbers (which actually stems from haskell/Prelude), is that it's not clear to me that for a long chains of functions, if it's appropriate or not to divide the thing up into 2-tuples
+2012-07-16 02:15:31 UTC <tgeeky_> like: (sorry it's long)
+2012-07-16 02:15:37 UTC <tgeeky_> ($*****) :: forall a b c d e f g h i j lF rF. (a -> c -> e -> g -> i -> rF -> lF) -> (b -> d -> f -> h -> j -> rF) -> (a, b) -> (c, d) -> (e, f) -> (g, h) -> (i, j) -> lF
+2012-07-16 02:17:18 UTC <mgsloan> tgeeky_: There is a function for yielding certain arities of plumbers
+2012-07-16 02:17:31 UTC <mgsloan> you can even build an individual op
+2012-07-16 02:21:42 UTC <tgeeky_> mgsloan: will it do something like: ... -> (g,(a,c,e),h) -> (i,(b,d,f),j) -> lF
+2012-07-16 02:22:27 UTC <tgeeky_> hehe.
+2012-07-16 02:22:44 UTC <mgsloan> naaaa
+2012-07-16 02:23:12 UTC <mgsloan> but you could pretty easily use the plumbers code as a template for extending it with that capability
+2012-07-16 02:23:22 UTC <tgeeky_> yep
+2012-07-16 02:23:30 UTC <tgeeky_> but first, I have to figure out what a trifunctor is
+2012-07-16 17:11:55 UTC <byorgey> luite: oh, apfelmus bailed? why?
+2012-07-16 18:51:44 UTC <tgeeky> byorgey: "apfelmus bailed? why?"  <-- my inquiring organ wants to know!
+2012-07-16 21:40:14 UTC <peterjoel> Is diagrams still potentially moving to git, or has it been decided to stick with darcs? I remember a conversation about this a few months ago, but I didn't see the end result..
+2012-07-16 21:42:57 UTC <mgsloan> currently still darcs, but I'm in favor of git
+2012-07-16 21:44:07 UTC <byorgey> it is moving to git.
+2012-07-16 21:44:23 UTC <byorgey> I hope to move it sometime in the next few weeks, before hac phi
+2012-07-16 21:44:27 UTC <mgsloan> cool!
+2012-07-16 21:44:39 UTC <mgsloan> I do like darcs's interactivity and patch model
+2012-07-16 21:44:43 UTC <byorgey> I want to move the issue tracker to github as well
+2012-07-16 21:44:49 UTC <mgsloan> but github is more pragmatic
+2012-07-16 21:45:29 UTC <byorgey> yes, I still prefer darcs to git, but for diagrams in particular I've come to realize that encouraging contribution is more important, and github is the way to do that
+2012-07-16 21:46:57 UTC <mgsloan> and git is really quite good
+2012-07-16 21:47:06 UTC <mgsloan> at least we aren't back in the days of SVN
+2012-07-16 21:48:40 UTC <byorgey> true.
+2012-07-16 21:48:59 UTC <byorgey> I am impressed with the sheer amount of work and engineering that has gone into git.
+2012-07-16 21:49:14 UTC <byorgey> I am just not as impressed with the fundamental theory behind it.
+2012-07-16 21:49:43 UTC <byorgey> anyway, I'm off homeward
+2012-07-16 23:49:38 UTC <peterjoel> I don't know enough about darcs, but I'm in favour of git because of the quality of the tooling
+2012-07-16 23:55:38 UTC <fryguybob> byorgey: When you do get ready to move repos let me know I'll move mine over too.
+2012-07-17 01:57:03 UTC <tgeeky_> I'm in favor of git because of the raw speed
+2012-07-17 01:57:24 UTC <tgeeky_> and because, its adoption rate and style of use mandates stability
+2012-07-17 02:09:34 UTC <tgeeky_> wow. How have I never seen this before: http://www.cs.uu.nl/wiki/pub/FP/CourseLiterature/haskellsyntax-main.pdf
+2012-07-17 02:15:50 UTC <luite> hm that language looks familiar
+2012-07-17 13:20:16 UTC <byorgey> luite: yep, it's Haskell ;)
+2012-07-17 13:25:23 UTC <tgeeky_> haha.
+2012-07-17 13:25:37 UTC <luite> i've never taken that course though
+2012-07-17 13:25:43 UTC <tgeeky_> hehe
+2012-07-17 13:25:55 UTC <tgeeky_> I wanted to make the "Yeah, it's haskell!" joke but I was afraid I'd have to explain it
+2012-07-17 13:26:06 UTC <tgeeky_> because I don't know exactly which languages luite speaks :O
+2012-07-17 13:26:26 UTC <tgeeky_> It's tought for Americans to make jokes about multilingualism, in general, as we do not usually participate
+2012-07-17 13:26:38 UTC <luite> hehe, well Dutch is one of them
+2012-07-17 13:27:02 UTC <luite> but there are grad students that don't speak Dutch at UU
+2012-07-17 13:28:07 UTC <luite> for undergrad, speaking Dutch is pretty much required (but i didn't do undergrad at UU)
+2012-07-17 13:30:47 UTC <byorgey> luite: right, but I mean, you actually grew up in the NL, right?
+2012-07-17 13:32:14 UTC <luite> yeah :)
+2012-07-17 13:33:37 UTC <byorgey> UU is one place I will probably apply for a postdoc, so good to know speaking Dutch is not required (though I would try to learn some =)
+2012-07-17 13:40:05 UTC <tgeeky_> byorgey: hm. It occurs to me that "literate haskell" is really not a first class citizen, as documentation in .lhs is totally ignored by haddock :(
+2012-07-17 13:41:12 UTC <byorgey> tgeeky_: as it should be, I think.  You wouldn't want several paragraphs of text showing up above every function in the Haddock documentation
+2012-07-17 13:41:45 UTC <byorgey> tgeeky_: you can still write Haddock documentation in .lhs files by putting comments *in the code*
+2012-07-17 13:42:04 UTC <byorgey> i.e.   > -- | this is a haddock comment
+2012-07-17 13:42:14 UTC <tgeeky_> true enough.
+2012-07-17 13:42:28 UTC <tgeeky_> the real shame, I guess, is that some GHC code is in literate (non-haddock-embedded) style
+2012-07-17 13:42:39 UTC <tgeeky_> or maybe this is all haddock's fault, so to speak
+2012-07-17 13:50:24 UTC <tgeeky_> hm. how about that.
+2012-07-17 13:50:34 UTC <tgeeky_> data NT f g = NT { getNT :: forall a. f a -> g a }
+2012-07-17 13:50:44 UTC <tgeeky_> that's the same definition as an idiom homomorphism
+2012-07-17 14:04:07 UTC <byorgey> well, that is just the definition of a natural transformation from f to g.
+2012-07-17 14:04:19 UTC <byorgey> every idiom homomorphism is a natural transformation
+2012-07-17 14:04:31 UTC <byorgey> but which also preserves the idiom structure.
+2012-07-17 15:46:53 UTC <tbelaire> Is there an easy way to make spirographs?
+2012-07-17 15:47:39 UTC <tgeeky_> tbelaire: http://demonstrations.wolfram.com/search.html?query=spirographs
+2012-07-17 15:47:52 UTC <tgeeky_> tbelaire: the topleft-thing?
+2012-07-17 15:48:43 UTC <tbelaire> things like that, yes
+2012-07-17 15:51:06 UTC <tgeeky_> hm. I don't know about easy. I know you can actually get these kinds of things using tuned orbits (using a solar system simulator, or whatever)
+2012-07-17 15:51:12 UTC <tgeeky_> but I'm sure that's a very inefficient and complicated way
+2012-07-17 15:52:04 UTC <tbelaire> Well, isn't it able to be reduced to a closed form?
+2012-07-17 15:52:18 UTC <tgeeky_> I think so, but I'm not sure if that helps you draw it
+2012-07-17 15:53:14 UTC <ClaudiusMaximus> http://claudiusmaximus.goto10.org/spjro/?a=7&b=4 has some closed form in its javascript
+2012-07-17 15:53:36 UTC <tgeeky_> ClaudiusMaximus: very pretty
+2012-07-17 15:54:35 UTC <tbelaire> if I just wanted to make pictures from Haskell, with something like that
+2012-07-17 15:54:42 UTC <tbelaire> how would I do that
+2012-07-17 15:56:08 UTC <tbelaire> ClaudiusMaximus: That site has some pretty cool stuff
+2012-07-17 15:58:03 UTC <byorgey> a spirograph module for diagrams would be fun =)
+2012-07-17 15:58:03 UTC <tgeeky_> tbelaire: yeah, that CladiusMaximus guy is quite talented
+2012-07-17 15:59:16 UTC <byorgey> if you can generate a set of discrete points lying on a spirograph curve, you can just hand the points to fryguybob's spline generator
+2012-07-17 16:00:14 UTC <byorgey> I guess simulating the actual working of a spirograph set wouldn't be too hard, with a bit of trig
+2012-07-17 16:01:25 UTC <ClaudiusMaximus> thanks :)
+2012-07-17 16:03:12 UTC <byorgey> ACTION adds it to the issue tracker =)
+2012-07-17 16:04:37 UTC <tbelaire> alright, thanks
+2012-07-17 16:10:16 UTC <fryguybob> I think you can represent each step of a spirograph with a couple transformations on homogenious coordinates.
+2012-07-17 16:10:48 UTC <byorgey> ooooh nifty
+2012-07-17 16:10:50 UTC <tbelaire> I don't quite understand what that means.
+2012-07-17 16:11:03 UTC <byorgey> fryguybob: add a comment to the ticket: http://code.google.com/p/diagrams/issues/detail?id=85
+2012-07-17 16:11:33 UTC <fryguybob> So it should all go down to a single matrix multiply.  The continuous version could be in terms of some derivative of that...
+2012-07-17 16:11:53 UTC <byorgey> tbelaire: don't worry, I don't quite understand what it means either.  fryguybob is our resident expert in computational geometry =)
+2012-07-17 16:12:11 UTC <tbelaire> Well, I want to understand
+2012-07-17 16:12:39 UTC <byorgey> excellent!
+2012-07-17 16:13:34 UTC <tbelaire> ah, well now that I've looked at the wikipedia page, I think I understard how that might work
+2012-07-17 16:13:50 UTC <fryguybob> tbelaire: First consider an outer circle with a smaller wheel on the inside and the pen at the center of the inner wheel
+2012-07-17 16:14:30 UTC <fryguybob> The point of contact of the inner wheel rotates around, that's the first rotation.
+2012-07-17 16:14:52 UTC <tbelaire> ok
+2012-07-17 16:15:03 UTC <fryguybob> The second rotation is the inner wheel, but since our pin is in the center the point doesn't move.
+2012-07-17 16:15:51 UTC <fryguybob> If you moved the pen out from the center of that inner wheel you have a second rotation relative to the point of contact.
+2012-07-17 16:15:57 UTC <byorgey> oh, I see, you're just composing transformations
+2012-07-17 16:16:33 UTC <fryguybob> Homogenous coordinates let you frame that inner rotation with a rotation and translation that get you to that "Relative" frame of reference.
+2012-07-17 16:16:48 UTC <tbelaire> so, it would be simple to has another circle on the inner circle and have a three layer spirograph?
+2012-07-17 16:16:57 UTC <fryguybob> Yes
+2012-07-17 16:17:04 UTC <tbelaire> cool
+2012-07-17 16:17:04 UTC <byorgey> though it seems like that breaks down if you want to start using the funny non-circular things, like the football or triangly thing...
+2012-07-17 16:17:38 UTC <fryguybob> Well other shapes shouldn't be too bad, you just have to add a non-uniform scaling to get to an ellipse from a circle.
+2012-07-17 16:18:02 UTC <byorgey> oh, that works for the football shape.  But not for the triangly thing.
+2012-07-17 16:18:35 UTC <fryguybob> ACTION never actually had a spirograph, only saw friends playing with them and had to imagine how they worked.
+2012-07-17 16:20:40 UTC <byorgey> http://www.ebay.com/itm/VINTAGE-1973-KENNER-SPIROGRAPH-WHEEL-GEAR-PART-TRIANGLE-/310414807213?pt=LH_DefaultDomain_0&hash=item48462a10ad
+2012-07-17 16:20:50 UTC <byorgey> http://www.ebay.com/itm/VINTAGE-SPIROGRAPH-GEAR-FOOTBALL-PART-PIECE-BLUE-KENNER-REPLACEMENT-SHAPE-HTF-/200776381154?pt=LH_DefaultDomain_0&hash=item2ebf3472e2
+2012-07-17 16:21:39 UTC <byorgey> man, I wonder if my parents still have mine
+2012-07-17 16:21:50 UTC <byorgey> I should tell them to bring it on vacation in August =D
+2012-07-17 16:22:31 UTC <byorgey> ACTION imagines a ten-year-old fryguybob thinking about homogeneous coordinate transformations
+2012-07-17 16:25:35 UTC <fryguybob> Humm for the triangle thing you can do it piecewise alternating between the round part and the corner.
+2012-07-17 16:26:28 UTC <fryguybob> ACTION goes back to real work...
+2012-07-17 16:27:43 UTC <byorgey> ah, true
+2012-07-17 16:27:45 UTC <byorgey> well, enjoy =)
+2012-07-17 16:36:36 UTC <fryguybob> We could do a whole diagrams-kids-toys package :D.
+2012-07-17 16:37:04 UTC <byorgey> haha, sounds great =D
+2012-07-17 16:37:16 UTC <byorgey> what other toys do you have in mind? etch-a-sketch?
+2012-07-17 16:42:50 UTC <fryguybob> Lego like diagram building.
+2012-07-17 17:54:18 UTC <tbelaire> Does Diagrams have support for Homogeneous coodinate stuff?
+2012-07-17 17:54:31 UTC <tbelaire> I've been reading about it
+2012-07-17 18:02:56 UTC <byorgey> tbelaire: well, it has support for affine transformations
+2012-07-17 18:03:10 UTC <byorgey> I think that should be sufficient
+2012-07-17 18:03:20 UTC <tbelaire> ok
+2012-07-18 17:39:44 UTC <byorgey> woohoo, doing some diagrams hacking again finally!
+2012-07-18 17:40:03 UTC <luite> yay
+2012-07-18 17:49:16 UTC <mgsloan> :D
+2012-07-18 18:19:26 UTC <fryguybob> byorgey: Super!
+2012-07-18 18:19:59 UTC <fryguybob> Have there been any attepts at gradient support for svg?
+2012-07-18 18:46:47 UTC <byorgey> fryguybob: not that I know of
+2012-07-19 12:10:04 UTC <av> hi guys, I have a question, is anyone here (and awake) to help me?
+2012-07-19 16:25:58 UTC <byorgey> heya edwardk, are you actually using diagrams for something, or just hanging out here for fun?
+2012-07-19 16:26:04 UTC <byorgey> either is fine of course, I'm just curious =)
+2012-07-19 16:26:20 UTC <edwardk> i mostly wandered in because luite and shapr were here
+2012-07-19 16:26:21 UTC <edwardk> ;)
+2012-07-19 16:26:28 UTC <byorgey> ah, fair enough =)
+2012-07-19 16:26:36 UTC <edwardk> there was also a paper you wrote on monoids...
+2012-07-19 16:26:45 UTC <byorgey> ah, right
+2012-07-19 21:43:30 UTC <av> hi everyone
+2012-07-19 21:44:23 UTC <av> anyone here that I can ask a question, by chance?
+2012-07-19 21:45:05 UTC <byorgey> av: sure, ask away
+2012-07-19 21:45:17 UTC <byorgey> is it the same question you asked in #haskell this morning?
+2012-07-19 21:45:38 UTC <byorgey> (I saw it after you had already left)
+2012-07-19 21:51:25 UTC <av> byorgey: yes, it is
+2012-07-19 21:52:26 UTC <byorgey> the answer is yes, you can use Diagrams.TwoD.Arc.arc (or arcT) to create a Trail representing an arc, which you can combine with linear segments using the Monoid instance for Trail.
+2012-07-19 21:53:38 UTC <byorgey> for example something like   strokeT $ arcT (10 :: Deg) (40 :: Deg) <> (origin ~~ p2 (2,3))
+2012-07-19 21:53:40 UTC <av> byorgey: brilliant -- thanks, I'm wondering why I haven't come across this one yet
+2012-07-19 21:54:02 UTC <byorgey> would create a trail with two segments, a circular arc and a straight segment
+2012-07-19 21:54:30 UTC <byorgey> now, there isn't a nice way to automatically create circular segments which are tangent to straight segments at the ends
+2012-07-19 21:54:37 UTC <byorgey> right now you just have to compute the angles yourself
+2012-07-19 21:54:52 UTC <av> byorgey: never mind, I don't need tangents at the moment
+2012-07-19 21:54:58 UTC <byorgey> ok.
+2012-07-19 21:55:08 UTC <av> byorgey: thanks so much
+2012-07-19 21:55:31 UTC <byorgey> av: out of curiosity, what are you using diagrams for?
+2012-07-19 21:56:25 UTC <av> byorgey: for creating nice diagrams, preferably lots of them, for my boss to look at :)
+2012-07-19 21:56:32 UTC <byorgey> hehe
+2012-07-19 21:56:34 UTC <byorgey> sounds good =)
+2012-07-19 21:57:15 UTC <byorgey> ok, I'm headed home
+2012-07-19 21:57:28 UTC <av> byorgey: bye, thanks again
+2012-07-19 21:57:30 UTC <byorgey> av: if you have any more questions, just ask them in here
+2012-07-19 21:57:36 UTC <byorgey> I will see them eventually
+2012-07-19 21:57:39 UTC <av> sure :)
+2012-07-20 03:05:27 UTC <tgeeky> edwardk: secretly of course you are in #diagrams because you just *love* to field my infelicitous questions!
+2012-07-20 03:05:46 UTC <edwardk> of coure
+2012-07-20 03:05:49 UTC <edwardk> er course
+2012-07-20 03:06:23 UTC <tgeeky> edwardk: also, I *may* be seeing you at Hac-Phi! I have registered, but am still not sure if I have the money and car to come. My mom recently totaled her car and she still hasn't bought one, and she *has* a day job, so ...
+2012-07-20 03:06:27 UTC <tgeeky> hopefully I can work something out
+2012-07-20 03:06:37 UTC <edwardk> ah nice
+2012-07-20 03:06:47 UTC <edwardk> i've booked the flight but not the hotel so far
+2012-07-20 03:07:04 UTC <tgeeky> i assume it's cheap, just a hop-skip-and-a-jump awaya?
+2012-07-20 03:07:15 UTC <tgeeky> or maybe they just rail you because you're in the NE
+2012-07-20 03:07:22 UTC <edwardk> surprisingly rather more expensive this year than last
+2012-07-20 03:07:51 UTC <edwardk> i think last year was ~$70 to fly in/out and this year it was ~$300.
+2012-07-20 03:07:56 UTC <tgeeky> yikes!
+2012-07-20 03:08:03 UTC <tgeeky> that's almost as expensive as it is from here
+2012-07-20 03:08:12 UTC <edwardk> i should have taken the copumpkin express -- he's coming in overnight on friday night for like $59
+2012-07-20 03:08:21 UTC <tgeeky> hehe
+2012-07-20 03:08:47 UTC <tgeeky> I also will be using my tired old laptop, since I don't want to be the only idiot there with a desktop :o
+2012-07-20 03:09:09 UTC <edwardk> i'm a bit taller than he is though, so the prospect of shoehorning myself into a coach seat for several hours overnightâ¦ didn't really appeal
+2012-07-20 03:09:15 UTC <edwardk> hahha
+2012-07-20 03:09:40 UTC <tgeeky> hehe. I haven't flown in several years. I'm 6'5, so I don't fit well in planes
+2012-07-20 03:09:54 UTC <edwardk> ah
+2012-07-20 03:10:01 UTC <edwardk> 6'3 here
+2012-07-20 03:10:45 UTC <edwardk> afk a bit
+2012-07-20 03:10:47 UTC <tgeeky> k
+2012-07-20 20:40:27 UTC <peterjoel> kind of stupid questionâ¦ is there a built-in skewX, skewY transformation, or do I have to use scale `under` rotation ?
+2012-07-20 20:40:55 UTC <peterjoel> also, is there a generic matrix transformation?  I was expecting to find that, but didn't..
+2012-07-20 20:46:35 UTC <fryguybob> peterjoel: Good questions :D.  I don't think there is a skew transformation, but I think that would be straight forward to make (without having to express it as a scale and rotation).
+2012-07-20 20:47:41 UTC <fryguybob> peterjoel: I think the issue with a general matrix is that it is not necessarally affine and we can only do some of the diagrams computations under affine transformations.
+2012-07-20 20:48:52 UTC <fryguybob> peterjoel: Barring scale 0 we should be affine by construction with the transformations in the library.  But I would have to look through the code to confirm all of this.
+2012-07-20 20:49:43 UTC <byorgey> yes, that's right (re: affine-by-construction)
+2012-07-20 20:50:48 UTC <fryguybob> Non-affine transformations can of course be fun too, but make things tricky :(.
+2012-07-20 20:50:48 UTC <byorgey> peterjoel: is skew the same as shear?
+2012-07-20 20:51:03 UTC <byorgey> peterjoel: there is shearX, shearY in Diagrams.TwoD.Transform
+2012-07-20 20:51:29 UTC <fryguybob> Oh, I was assuming shear, and didn't know they were in there :D.
+2012-07-20 20:52:17 UTC <byorgey> the problem with non-affine transformations is that they make it impossible to support envelopes.
+2012-07-20 20:52:53 UTC <byorgey> peterjoel: the other reason there's no generic matrix transformation is that we need to maintain inverse and transpose transformations alongside the usual ones (for transforming envelopes)
+2012-07-20 20:53:40 UTC <byorgey> and I'd rather not have to implement generic matrix inversion
+2012-07-20 20:53:57 UTC <byorgey> (or introduce a dependency on some external linear algebra lib)
+2012-07-20 20:57:21 UTC <fryguybob> byorgey: Just use this: ftp://download.intel.com/design/PentiumIII/sml/24504301.pdf :P
+2012-07-20 20:58:04 UTC <byorgey> hahaha what
+2012-07-20 20:58:24 UTC <byorgey> but then I'll need a separate pdf like that for every n
+2012-07-20 21:00:35 UTC <fryguybob> byorgey: This is life on the bleeding edge of performance.
+2012-07-20 21:02:52 UTC <fryguybob> Once everyone has upgraded to new cpu's we can use this: http://software.intel.com/en-us/articles/benefits-of-intel-avx-for-small-matrices/
+2012-07-20 21:05:27 UTC <byorgey> ACTION can hardly contain his excitement
+2012-07-21 15:25:26 UTC <realitygrill> i keep getting errors installing diagrams on OSX
+2012-07-21 15:25:33 UTC <realitygrill> they look like this guy's: https://groups.google.com/group/diagrams-discuss/tree/browse_frm/thread/3d395c53761bd2c0/f9a44e751b1de7a7?rnum=1&_done=/group/diagrams-discuss/browse_frm/thread/3d395c53761bd2c0/f9a44e751b1de7a7?tvc%3D1%26&pli=1
+2012-07-21 15:25:51 UTC <realitygrill> essentially some config error and then ExitFailure
+2012-07-21 15:25:54 UTC <realitygrill> anyone familiar with this?
+2012-07-21 15:26:58 UTC <luite> which package fails? if it's cairo, then try cabal install cairo and try the find the real reason
+2012-07-21 15:27:53 UTC <realitygrill> glib, then cairo.. (tried multiple individual installs of packages)
+2012-07-21 15:27:59 UTC <realitygrill> Cannot find gtk2hsC2hs is a constant
+2012-07-21 15:29:31 UTC <fryguybob> sigh cairo...
+2012-07-21 15:30:09 UTC <realitygrill> I'll try cairo again and see what the errors were, since I was trying this yesterday
+2012-07-21 15:30:21 UTC <luite> realitygrill: cabal install gtk2hs-buildtols
+2012-07-21 15:30:27 UTC <luite> gtk2hs-buildtools
+2012-07-21 15:30:48 UTC <luite> you need to do that before installing any gtk2hs packag
+2012-07-21 15:31:15 UTC <luite> and you'll probably want an installation guide for this on OS X
+2012-07-21 15:31:23 UTC <realitygrill> pretty sure i tried that too
+2012-07-21 15:31:32 UTC <realitygrill> oh
+2012-07-21 15:32:04 UTC <ClaudiusMaximus> and iirc gtk2hs-buildtools also requires alex and happy
+2012-07-21 15:33:11 UTC <luite> hm, could be, but at least those come with haskell platform
+2012-07-21 15:33:11 UTC <realitygrill> well, cabal install gtk2hs-buildtools seems to have worked
+2012-07-21 15:36:28 UTC <realitygrill> hm, still can't install glib though..
+2012-07-21 15:36:47 UTC <realitygrill> nor cairo. damn.
+2012-07-21 15:46:43 UTC <luite> can you paste the error on hpaste? and how did you install glib, is it for the same architecture as your ghc (i386 or x86_64)?
+2012-07-21 15:50:22 UTC <realitygrill> i don't know. hold on..
+2012-07-21 15:51:26 UTC <realitygrill> http://hpaste.org/71893
+2012-07-21 15:53:11 UTC <realitygrill> gtk i installed with ports
+2012-07-21 15:54:33 UTC <luite> ok that's just gtk2hs-buildtools missing again, check ~/.cabal/bin for gtk2hsC2hs and if it's there, make sure that it's in your PATH, otherwise find its location
+2012-07-21 15:54:44 UTC <luite> could be in ~/Library somewhere but i'm not sure where exactly
+2012-07-21 15:56:02 UTC <realitygrill> ~/Library/Haskell/bin, yeah
+2012-07-21 16:02:45 UTC <realitygrill> added to path, trying again
+2012-07-21 16:03:00 UTC <realitygrill> same error :/
+2012-07-21 16:16:52 UTC <luite> realitygrill: you need to start a new shell
+2012-07-21 16:17:44 UTC <realitygrill> oh
+2012-07-21 16:23:55 UTC <realitygrill> STILL. :(
+2012-07-21 16:40:53 UTC <luite> realitygrill: if it's the same error, then 'which gtk2hsC2hs' should give you the directory where it's installed, fix your PATH first if it doesn't
+2012-07-21 16:41:50 UTC <realitygrill> yeah, nothing shows up. so it's still PATH
+2012-07-21 16:41:56 UTC <realitygrill> yet, what? I added it..
+2012-07-21 16:42:45 UTC <luite> check with echo $PATH
+2012-07-21 16:48:13 UTC <realitygrill> got PATH right, now. testing cabal install glib
+2012-07-21 16:49:13 UTC <realitygrill> yay! now trying cairo
+2012-07-21 17:00:20 UTC <realitygrill> hm, diagrams install giving a lot of architecture (i386) warnings
+2012-07-21 17:00:40 UTC <realitygrill> gonna try reinstalling gtk with cabal instead of ports
+2012-07-21 17:01:58 UTC <luite> uh, that's probably wrong. ports only instals the (C) library, cabal installs just the haskell bindings
+2012-07-21 17:12:30 UTC <realitygrill> hm...
+2012-07-21 17:12:38 UTC <realitygrill> (but it worked?)
+2012-07-21 17:12:40 UTC <realitygrill> or at least seemingly
+2012-07-21 17:44:24 UTC <peterjoel> fryguybob, thanks for the response - I had to disappear almost immediately after asking the question.
+2012-07-21 17:46:38 UTC <peterjoel> re: external matrix libs, byorgey, do you think it would be simple to integrate some external matrix library or would it need some deep concrete dependencies in diagrams?
+2012-07-21 17:49:03 UTC <byorgey> peterjoel: adding a dependency on hmatrix (which calls out to BLAS/LAPACK via the FFI) wouldn't be hard, but it just makes it that much harder for people to get diagrams installed.
+2012-07-21 17:49:25 UTC <byorgey> I would consider it if there is a really really good argument for it -- some sort of killer feature that we really can't do any other way.
+2012-07-21 17:52:01 UTC <peterjoel> I meant, would it be possible to use diagrams + hmatrix, without any of the diagrams modules depending on it?
+2012-07-21 17:52:36 UTC <byorgey> peterjoel: oh, I see
+2012-07-21 17:52:38 UTC <byorgey> hmm
+2012-07-21 17:53:07 UTC <byorgey> peterjoel: I guess it depends what you want hmatrix for
+2012-07-21 17:53:12 UTC <peterjoel> or is there a small-ish change that could be made in diagrams to support that
+2012-07-21 17:53:50 UTC <peterjoel> I think pretty much for applying a matrix transform to any diagram. Sometimes it's just easier to express that way
+2012-07-21 17:54:19 UTC <peterjoel> also, if doing code generation from an existing vector graphics format, I think it would be necessary
+2012-07-21 17:54:30 UTC <byorgey> that's true
+2012-07-21 17:54:43 UTC <byorgey> yeah, I think I can see how that would work
+2012-07-21 17:55:35 UTC <byorgey> it wouldn't be too hard to make an external package -- without making any changes to diagrams -- that takes a matrix as input and produces a diagrams Transformation as output (using hmatrix to do the required computation)
+2012-07-21 17:55:55 UTC <peterjoel> ok that would be cool
+2012-07-21 17:56:07 UTC <byorgey> could make a nice little project for someone
+2012-07-21 17:57:11 UTC <peterjoel> I was thinking it could just be a Matrix type class, with no instances actually defined in diagrams packages
+2012-07-21 17:57:51 UTC <peterjoel> but that would be more changes within diagrams. But your suggestion sounds like fewer change points
+2012-07-21 17:58:32 UTC <byorgey> yeah, I could see how that would work, but I'm not even sure what benefit there would be to adding a Matrix type class to diagrams
+2012-07-21 17:58:55 UTC <byorgey> as long as you can produce a Transformation you can use that in any way you like
+2012-07-21 17:59:04 UTC <peterjoel> yep, it sounds better
+2012-07-21 17:59:28 UTC <byorgey> if you're interested in working on this I could send you an email with more details about how Transformation are stored and what would be required
+2012-07-21 17:59:36 UTC <byorgey> or maybe put it on the wiki
+2012-07-21 18:00:19 UTC <peterjoel> yes that would be great. I fully expect to try and fail, but I wouldn't mind trying anyway :)
+2012-07-21 18:01:15 UTC <byorgey> hehe, ok =)
+2012-07-21 18:02:12 UTC <byorgey> I'll send that to you soon
+2012-07-21 18:06:28 UTC <peterjoel> cool thanksa
+2012-07-21 18:18:23 UTC <peterjoel> you have my email address?
+2012-07-21 19:05:11 UTC <realitygrill> aw, crap: http://hpaste.org/71909
+2012-07-21 19:50:53 UTC <byorgey> peterjoel: the one at memorphic.com?
+2012-07-21 19:51:24 UTC <byorgey> realitygrill: oh, boo =(
+2012-07-21 19:51:44 UTC <byorgey> realitygrill: have you tried the SVG backend?
+2012-07-21 20:03:08 UTC <peterjoel> byorgey, yes that on is ok
+2012-07-21 20:03:23 UTC <byorgey> is there a better one?
+2012-07-21 20:20:28 UTC <realitygrill> byorgey: the svg backened?
+2012-07-21 20:31:25 UTC <peterjoel> byorgey, no that one is fine
+2012-07-21 20:31:35 UTC <byorgey> realitygrill: http://hackage.haskell.org/package/diagrams%2Dsvg
+2012-07-21 20:32:05 UTC <byorgey> I think it is almost feature-complete except for being able to embed images
+2012-07-21 20:32:27 UTC <byorgey> the goal is to replace the cairo backend with SVG as the "out-of-the-box" backend
+2012-07-21 20:32:37 UTC <byorgey> because people have so much trouble installing cairo
+2012-07-21 20:33:10 UTC <realitygrill> oh, it's a common stumbling block, huh?
+2012-07-21 20:33:57 UTC <peterjoel> HTML canvas backend might also be nice. Any work being done on that?
+2012-07-21 20:34:29 UTC <realitygrill> https://github.com/byorgey/diagrams-canvas/
+2012-07-21 20:34:32 UTC <realitygrill> lol, I guess so
+2012-07-21 20:35:11 UTC <byorgey> yes, I recently ported it to use the blank-canvas library
+2012-07-21 20:35:25 UTC <byorgey> but I hear there are some big cool changes afoot for that library
+2012-07-21 20:35:41 UTC <peterjoel> nice
+2012-07-21 20:35:41 UTC <byorgey> eventually I'd like to have nice support for animation + interactivity via some sort of HTML canvas backend
+2012-07-21 20:53:12 UTC <luite> yes
+2012-07-21 20:53:42 UTC <byorgey> luite: yes what?
+2012-07-21 20:54:14 UTC <luite> yes sir
+2012-07-21 20:54:19 UTC <byorgey> hehehe
+2012-07-21 20:54:57 UTC <byorgey> not exactly what I meant =)
+2012-07-21 20:55:40 UTC <luite> hehe nah interactive animation would be nice to have :)
+2012-07-21 21:02:35 UTC <byorgey> indeed =)
+2012-07-21 21:02:57 UTC <byorgey> huzzah!  I just pushed some patches.  We now have *real* support for named subdiagrams.
+2012-07-21 21:03:17 UTC <byorgey> You can give a certain diagram a name, and later extract it from a diagram in which it is embedded.
+2012-07-21 21:03:35 UTC <byorgey> before, you could only extract its origin and envelope.  Now you get a real honest-to-goodness Diagram.
+2012-07-21 21:07:18 UTC <luite> \o/
+2012-07-21 22:05:03 UTC <tgeeky> byorgey: whoa... begin the recursive diagram madness!
+2012-07-21 22:37:39 UTC <luite> is that possible with the current implementation?
+2012-07-21 23:00:08 UTC <byorgey> luite: recursive diagrams? no
+2012-07-21 23:00:29 UTC <byorgey> I mean, you can certainly *construct* a recursive diagram.  But if you try to render it you will get infinite recursion =)
+2012-07-21 23:15:19 UTC <fryguybob> Humm can a lazy backend choose not to render based on some scale?
+2012-07-21 23:16:00 UTC <luite> yeah the envelope can help with clipping
+2012-07-21 23:16:08 UTC <luite> oh
+2012-07-21 23:16:18 UTC <luite> i guess it might become impossible to calculate the envelope....
+2012-07-21 23:17:33 UTC <fryguybob> Yeah, so only infinite text :P
+2012-07-22 00:16:57 UTC <mgsloan> Check this out!
+2012-07-22 00:16:57 UTC <mgsloan> https://github.com/mgsloan/api-compat/blob/master/examples/diagrams-core.api.diff
+2012-07-22 00:17:20 UTC <mgsloan> the idea is simple: print out module exports in a way that supports slightly more semantic diffs
+2012-07-22 00:17:34 UTC <mgsloan> bbl - gotta go play some ultimate at OPLSS :D
+2012-07-22 00:17:43 UTC <mgsloan> well, actually, bb tomorrow
+2012-07-22 00:17:50 UTC <mgsloan> don't have wireless password...
+2012-07-22 00:18:07 UTC <mgsloan> actually, not even tomorrow - we're going to the beach
+2012-07-22 00:18:35 UTC <luite> naisu
+2012-07-22 00:18:41 UTC <luite> i should add that to hdiff
+2012-07-22 00:19:23 UTC <mgsloan> that'd be awesome!
+2012-07-22 00:19:38 UTC <mgsloan> I'm working towards an interactive utility that lets you tell it about the diffs
+2012-07-22 00:19:54 UTC <mgsloan> so, you tell it that a name changed
+2012-07-22 00:20:49 UTC <mgsloan> and it'll output a delta module
+2012-07-22 00:20:56 UTC <mgsloan> (using instance templates of course)
+2012-07-22 00:21:09 UTC <luite> it does this by reading the hi files?
+2012-07-22 00:21:16 UTC <mgsloan> nope
+2012-07-22 00:21:23 UTC <mgsloan> currently it is kinda hacky
+2012-07-22 00:21:27 UTC <mgsloan> I could use the GHC API
+2012-07-22 00:21:38 UTC <mgsloan> but instead I use HINT, enumerate the names of the declarations
+2012-07-22 00:21:54 UTC <byorgey> mgsloan: cool!
+2012-07-22 00:21:54 UTC <mgsloan> then I take those names, stick them in a TH splice
+2012-07-22 00:21:59 UTC <mgsloan> run that file
+2012-07-22 00:22:05 UTC <mgsloan> and the file generates the API summary
+2012-07-22 00:22:12 UTC <mgsloan> canonically sorted
+2012-07-22 00:22:36 UTC <mgsloan> byorgey: thanks!
+2012-07-22 00:23:27 UTC <luite> mgsloan: ah that's less ideal for hdiff, it'd have to build and install everything, and i still don't have the scripts for that
+2012-07-22 00:24:04 UTC <luite> same for reading .hi files i guess
+2012-07-22 12:45:32 UTC <byorgey> test (making sure the logging bot is still working)
