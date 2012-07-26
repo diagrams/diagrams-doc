@@ -21076,3 +21076,733 @@
 2012-07-22 00:23:27 UTC <luite> mgsloan: ah that's less ideal for hdiff, it'd have to build and install everything, and i still don't have the scripts for that
 2012-07-22 00:24:04 UTC <luite> same for reading .hi files i guess
 2012-07-22 12:45:32 UTC <byorgey> test (making sure the logging bot is still working)
+2012-07-22 12:45:54 UTC <luite> hi bot!
+2012-07-22 12:46:25 UTC <byorgey> it works =)
+2012-07-22 12:50:59 UTC <luite> my code too
+2012-07-22 13:13:39 UTC <byorgey> yay!
+2012-07-22 13:34:40 UTC <luite> byorgey: http://hdiff.luite.com:3000/edit
+2012-07-22 13:41:34 UTC <luite> it could be a bit buggy, i've only tested in chrome so far
+2012-07-22 13:42:27 UTC <byorgey> fair enough, still pretty cool =)
+2012-07-22 13:42:43 UTC <byorgey> is this something for integrating with shapr's project?
+2012-07-22 13:42:59 UTC <luite> yes
+2012-07-22 13:43:02 UTC <byorgey> cool
+2012-07-22 13:43:10 UTC <luite> also with other stuff later hopefully
+2012-07-22 13:43:25 UTC <luite> atm it only synchronizes text, but i'm goign to add a few more types and a better api
+2012-07-22 13:43:44 UTC <luite> so you're using firefox?
+2012-07-22 13:43:51 UTC <byorgey> sounds awesome
+2012-07-22 13:44:01 UTC <byorgey> yes, I'm using firefox
+2012-07-22 13:44:16 UTC <luite> ok, i'll test that next then
+2012-07-22 13:44:28 UTC <luite> IE won't work because of no websocket support yet
+2012-07-22 13:44:42 UTC <byorgey> no one uses IE though
+2012-07-22 13:44:46 UTC <luite> hehe
+2012-07-22 13:44:52 UTC <byorgey> at least no one *important* ;)
+2012-07-22 13:45:02 UTC <luite> well there's a compatibility thing that uses other transports if websockets aren't available
+2012-07-22 13:45:13 UTC <byorgey> but it doesn't work very well or something?
+2012-07-22 13:45:19 UTC <luite> but the bindings for wai aren't ready yet
+2012-07-22 13:45:35 UTC <luite> shaprs project uses a javascript server atm
+2012-07-22 13:46:02 UTC <luite> this is a yesod server
+2012-07-22 13:47:02 UTC <byorgey> I see
+2012-07-22 13:48:06 UTC <luite> hm interesting, firefox doesn't work at all here
+2012-07-22 13:48:46 UTC <byorgey> hmm, strange
+2012-07-22 13:48:54 UTC <byorgey> what version of firefox?
+2012-07-22 13:51:55 UTC <luite> i think i've found the problem, some race condition loading the scripts
+2012-07-22 13:54:17 UTC <luite> hmm
+2012-07-22 13:54:25 UTC <luite> strange, it works fine now, no double returns
+2012-07-22 13:55:09 UTC <luite> ah but there still is a bug removing blank lines
+2012-07-22 13:59:41 UTC <byorgey> I still get the double return thing
+2012-07-22 13:59:51 UTC <byorgey> (assuming you updated the code running at that URL you linked)
+2012-07-22 14:02:51 UTC <luite> no no updates yet
+2012-07-22 14:04:00 UTC <luite> looks like your client des actually send two insert actions for '\n'
+2012-07-22 14:04:02 UTC <luite> does
+2012-07-22 14:04:23 UTC <byorgey> oh, really?
+2012-07-22 14:04:27 UTC <byorgey> I wonder why it would do that
+2012-07-22 14:04:50 UTC <byorgey> oh, interesting, if I do Shift-Return it only creates one new line
+2012-07-22 14:04:57 UTC <byorgey> but Return by itself creates two
+2012-07-22 14:05:08 UTC <luite> oh, strange keymap?
+2012-07-22 14:05:17 UTC <byorgey> backspace always deletes one line
+2012-07-22 14:05:36 UTC <byorgey> I haven't done anything out of the ordinary with my keymap
+2012-07-22 14:05:45 UTC <byorgey> unless xmonad is messing it up somehow
+2012-07-22 14:06:40 UTC <luite> http://codemirror.net/demo/activeline.html <- what happens here if you hit return?
+2012-07-22 14:07:40 UTC <byorgey> same thing, Return -> two lines, Shift+Return -> one line
+2012-07-22 14:07:55 UTC <luite> ok good, then at least it's not a problem with my code :)
+2012-07-22 14:08:14 UTC <byorgey> hehe, good =)
+2012-07-22 14:09:04 UTC <byorgey> to be more specific, it looks like Return creates one indented line (i.e. with leading spaces) followed by one unindented line; Shift+Return just creates a new line with no indentation
+2012-07-22 14:09:15 UTC <byorgey> so maybe it's a problem with codemirror's auto-indent code
+2012-07-22 14:09:23 UTC <byorgey> dunno
+2012-07-22 14:11:01 UTC <luite> hmm, i can't reproduce it here, so i don't know.
+2012-07-22 14:12:08 UTC <luite> i've stopped the server now, going to try to fix the line removal bug first
+2012-07-22 14:13:13 UTC <luite> i still need to come up with some API, atm it only supports sequences, but things like sets/maps, mutable registers and counters should also be added
+2012-07-22 14:13:39 UTC <luite> for it to be truly useful for synchronizing work on wolfgang pages etc
+2012-07-22 14:14:51 UTC <luite> perhaps shapr can help out
+2012-07-22 14:20:04 UTC <luite> if i just add deletion timestamps (already used on the server, just not sent to clients), the whole history will be stored in the document, so a client could download and replay a session
+2012-07-22 14:27:42 UTC <luite> not sure about how well this would work for a wiki, i think realtime collaborative editing could be done by joining a session, and when the users are happy with the result, and then save the current snapshot as a wiki revision
+2012-07-22 14:40:51 UTC <luite> yay fixed line removal bug
+2012-07-22 14:50:46 UTC <byorgey> yay =)
+2012-07-22 14:51:02 UTC <byorgey> yeah, collaboratively editing a wiki page then saving it when happy sounds good
+2012-07-22 15:16:00 UTC <byorgey> greetings sleepyMonad
+2012-07-22 15:18:53 UTC <luite> goedemiddag sleepyMonad
+2012-07-22 15:35:35 UTC <sleepyMonad> greetings / goedemiddag
+2012-07-22 16:10:43 UTC <sleepyMonad> Manual says: mappend is composition of transformations; yet rect 5 1 # (rotate (Rad tau/8) <> translateX 10 ) does not give me the same result as rect 5 1 # translateX 10 # rotate (Rad tau/8)
+2012-07-22 16:10:43 UTC <sleepyMonad> I end up with 2 rectangles instead of one in the former case
+2012-07-22 16:23:50 UTC <sleepyMonad> cf. http://www.ipaste.org/ytj for an example
+2012-07-22 16:52:30 UTC <byorgey> sleepyMonad: hmm, let me take a look
+2012-07-22 16:54:43 UTC <byorgey> sleepyMonad: oh! heh, I see what's going on.  Note that  rotate (Rad tau/8)  and  translateX 10  are *functions*, so  rotate (Rad tau/8) <> translateX 10 is using the  Monoid m => Monoid (a -> m)  instance
+2012-07-22 16:54:57 UTC <byorgey> in particular  (f <> g) x = f x <> g x
+2012-07-22 16:55:37 UTC <byorgey> so  rect 5 1 # (rotate (Rad tau/8) <> translateX 10)  =  (rect 5 1 # rotate (Rad tau/8)) <> (rect 5 1 # translateX 10)
+2012-07-22 16:56:08 UTC <byorgey> it's doing exactly what it should, but it is certainly true that it can be tricky keeping track of all the different Monoid instances.
+2012-07-22 16:56:27 UTC <byorgey> if you wanted to actually use the monoid instance for transformations you would have to do something like
+2012-07-22 16:56:44 UTC <byorgey> rect 5 1 # transform (rotation (Rad tau/8) <> translationX 10)
+2012-07-22 16:56:58 UTC <byorgey> which should give the result you wanted.
+2012-07-22 16:59:21 UTC <sleepyMonad> thanks, that is most enlightening.
+2012-07-22 17:00:18 UTC <byorgey> I added a ticket to the bug tracker to improve the documentation since it seems like this might be a common confusion (which I had not considered before)
+2012-07-22 17:00:52 UTC <byorgey> sleepyMonad: is there a particular place in the documentation it would have helped you to see a discussion of this?
+2012-07-22 17:04:14 UTC <sleepyMonad> byorgey: user manual: section: 2D transformations > transformations in general
+2012-07-22 17:04:35 UTC <byorgey> ok, thanks.
+2012-07-22 17:04:48 UTC <sleepyMonad> no thank you very much
+2012-07-22 17:05:25 UTC <byorgey> ok, thanks all round =)
+2012-07-22 17:05:37 UTC <byorgey> out of curiosity, what are you using diagrams for?  or just playing around?
+2012-07-22 17:06:42 UTC <sleepyMonad> just playing around for now, to become familiar with the toolset
+2012-07-22 23:57:33 UTC <mgsloan> https://github.com/mgsloan/api-compat/blob/master/examples/diagrams-core.api.diff
+2012-07-22 23:58:27 UTC <luite> mgsloan: crdts http://hdiff.luite.com:3000/edit
+2012-07-23 00:02:35 UTC <mgsloan> luite: can you put that on port 80 somewhere?
+2012-07-23 00:02:40 UTC <mgsloan> I'm in a library
+2012-07-23 00:02:55 UTC <mgsloan> and actually using webchat irc client
+2012-07-23 00:07:18 UTC <luite> oh port 80 of this server is already in use :(
+2012-07-23 00:08:30 UTC <luite> anyway it's fairly boring to see, and still a bit flaky :)
+2012-07-23 00:09:04 UTC <mgsloan> yeah, that stuff is tricky!  Cool that you got it going, though :D
+2012-07-23 00:09:08 UTC <luite> hopefully shapr can iron out the kinks
+2012-07-23 00:09:32 UTC <luite> mgsloan: oh it doesn't use your lib btw
+2012-07-23 00:09:47 UTC <mgsloan> oh yeah, I wouldn't expect it to
+2012-07-23 00:10:09 UTC <luite> it's rather hacky at this point, i need to think a bit about the api
+2012-07-23 00:10:31 UTC <mgsloan> that lib was very much so an exercise in "look!  I can take each section of a paper and have a straightforward expression of it in haskell
+2012-07-23 00:10:59 UTC <mgsloan> I was actually planning to do a post where the code is directly juxtaposed with the relevant sections
+2012-07-23 00:11:03 UTC <luite> yeah i went for a more concrete thing, just fixed atom ids and timestamps to integers etc
+2012-07-23 00:11:12 UTC <luite> instead of wacky semilattices :)
+2012-07-23 00:11:19 UTC <mgsloan> :D
+2012-07-23 00:11:38 UTC <mgsloan> so, I'd love to see this tool on hdiff
+2012-07-23 00:12:02 UTC <mgsloan> the problem is that you need to have the package installed to get its API
+2012-07-23 00:12:09 UTC <luite> your api diff tool right? do you know a safe way to run it?
+2012-07-23 00:12:47 UTC <mgsloan> if you disable TemplateHaskell it should work
+2012-07-23 00:13:15 UTC <luite> but you still need to cabal install everything
+2012-07-23 00:13:17 UTC <mgsloan> (what I mean is, don't install any packages that use TH)
+2012-07-23 00:13:19 UTC <mgsloan> yup
+2012-07-23 00:13:43 UTC <mgsloan> I could definitely add a mode that parses code (but not .lhs)
+2012-07-23 00:14:28 UTC <mgsloan> and it wouldn't report APIs for things that don't have signatures
+2012-07-23 00:14:56 UTC <mgsloan> and interaction with TH and CPP would be funky
+2012-07-23 00:15:53 UTC <mgsloan> maybe I can get it added to hackage 2 :)
+2012-07-23 00:16:16 UTC <mgsloan> probably a better spot - because they compile code anyway
+2012-07-23 00:18:04 UTC <luite> is hackage2 close to release no? last i heard is that they were having memory usage problems with acid-state
+2012-07-23 00:18:08 UTC <luite> now
+2012-07-23 00:20:42 UTC <mgsloan> hmm, who knows, we'll see!
+2012-07-23 00:20:54 UTC <mgsloan> I think it was stalled for a long while, but I think someone got back to it recently
+2012-07-23 00:21:02 UTC <mgsloan> after the recent hackage outages
+2012-07-23 00:21:51 UTC <mgsloan> I'm not sure why they don't just use the filesystem as a database
+2012-07-23 00:22:23 UTC <mgsloan> and have a lot of ram for virtual memory / keep the whole thing mounted in ram
+2012-07-23 00:22:36 UTC <luite> dunno i'd just use postgresql i think
+2012-07-23 00:32:46 UTC <mgsloan> yeah, I suppose
+2012-07-23 00:32:56 UTC <mgsloan> I guess I'm just thinking about simplicity
+2012-07-23 00:33:11 UTC <mgsloan> I could never really imagine using a database
+2012-07-23 00:33:28 UTC <mgsloan> well, I can imagine it, but for whatever reason I prefer flat files
+2012-07-23 00:33:40 UTC <mgsloan> gtg!
+2012-07-24 01:59:05 UTC <luite> byorgey: can you release a diagrams-lib that accepts data-default 0.4 ?
+2012-07-24 02:43:43 UTC <luite> if possible before shapr comes back online :p
+2012-07-24 03:00:48 UTC <fryguybob> luite: like hackage release or just push a patch?
+2012-07-24 03:06:34 UTC <luite> hackage, it's just a dependency bump
+2012-07-24 03:09:44 UTC <fryguybob> luite: I figured.
+2012-07-24 13:11:11 UTC <byorgey> luite: done
+2012-07-24 13:27:02 UTC <luite> tnx!
+2012-07-24 13:34:16 UTC <byorgey> make sure it works =P
+2012-07-24 13:36:34 UTC <luite> the only thing 0.4 and 0.5 did was adding some instances, ghc should've caught it if there's a conflict :)
+2012-07-24 13:37:41 UTC <byorgey> no, I meant, make sure I didn't screw up the updating+uploading process =)
+2012-07-24 13:38:48 UTC <luite> hdiff says it's ok :)
+2012-07-24 13:39:02 UTC <byorgey> excellent =)
+2012-07-24 13:57:49 UTC <mietek> Has anyone thought about a native Quartz backend?
+2012-07-24 13:58:09 UTC <mietek> cairo on OS X is a bit painful
+2012-07-24 14:05:56 UTC <byorgey> mietek: Yeah, we are sadly well aware that cairo on OS X is painful.  I've not heard anyone talk about a Quartz backend.
+2012-07-24 14:06:11 UTC <byorgey> mietek: note there is an SVG backend (diagrams-svg).
+2012-07-24 14:06:33 UTC <byorgey> so using the cairo backend is not required.
+2012-07-24 14:06:51 UTC <byorgey> the next release of diagrams (hopefully soon) will have diagrams-svg as the "out-of-the-box" backend
+2012-07-24 14:06:59 UTC <mietek> OK, I thought the SVG one wasn't quite as supported
+2012-07-24 14:08:16 UTC <byorgey> It is still missing one or two features
+2012-07-24 14:08:20 UTC <mietek> I did manage to get cairo working through MacPorts, barring the libiconv problem
+2012-07-24 14:08:27 UTC <byorgey> oh, good
+2012-07-24 14:08:33 UTC <mietek> But I'm thinking I'd like to try doing the Quartz backend
+2012-07-24 14:08:45 UTC <byorgey> sure, have at it!
+2012-07-24 14:09:00 UTC <byorgey> I'm always happy to support efforts towards new backends
+2012-07-24 14:11:59 UTC <mietek> BTW, just wanted to say I'm really grateful for diagrams
+2012-07-24 14:12:14 UTC <byorgey> thanks, glad you like it =D
+2012-07-24 14:12:17 UTC <byorgey> what are you using it for?
+2012-07-24 14:12:21 UTC <mietek> It's exactly what I needed to replace the horror that is ContextFree
+2012-07-24 14:12:28 UTC <byorgey> haha
+2012-07-24 14:12:35 UTC <byorgey> I remember ContextFree
+2012-07-24 14:12:37 UTC <mietek> Just doing some generative graphics
+2012-07-24 14:12:43 UTC <byorgey> I even contributed some code to it once upone a time
+2012-07-24 14:12:49 UTC <byorgey> cool
+2012-07-24 14:12:54 UTC <mietek> Yeah, I added a TextMate mode for it... totally ad-hoc language
+2012-07-24 14:13:11 UTC <byorgey> man, that was before I even knew Haskell
+2012-07-24 14:13:25 UTC <mietek> https://dl.dropbox.com/u/95029/uwr-wmii.png
+2012-07-24 14:13:28 UTC <mietek> One thing I did with CF
+2012-07-24 14:13:45 UTC <byorgey> very neat =)
+2012-07-24 14:13:51 UTC <mietek> Thanks
+2012-07-24 14:14:10 UTC <byorgey> if you have any cool examples of stuff you've done with diagrams, send them to me and I'll add them to the website gallery
+2012-07-24 14:14:24 UTC <mietek> Cool, I'll let you know
+2012-07-24 14:15:29 UTC <byorgey> mietek: hmm, you probably don't live anywhere near Philadelphia, do you
+2012-07-24 14:15:51 UTC <mietek> Currently Cambridge, UK
+2012-07-24 14:16:25 UTC <byorgey> too bad, we're going to be hacking on diagrams at Hac Phi in a couple weeks =)
+2012-07-24 14:16:37 UTC <mietek> Ahh, sadly it's a bit far
+2012-07-24 14:16:44 UTC <byorgey> Cambridge is nice, I lived there a couple summers ago
+2012-07-24 14:16:53 UTC <mietek> I'll do my best to get to Copenhagen for the ICFP and associated stuff, though
+2012-07-24 14:17:03 UTC <byorgey> ah, sounds good, I will be there
+2012-07-24 14:36:52 UTC <mietek> byorgey: one thing which is confusing me a bit is why "rotate" takes a circle fraction, while "arc" seems to want radians
+2012-07-24 14:38:00 UTC <byorgey> mietek: rotate and arc both take any angle measure
+2012-07-24 14:38:05 UTC <byorgey> rotateBy takes a CircleFrac
+2012-07-24 14:38:53 UTC <byorgey> mietek: I'm not sure what is causing the confusion, but if you paste some code I could take a look
+2012-07-24 14:39:34 UTC <mietek> Thanks, I just didn't notice rotate
+2012-07-24 14:39:41 UTC <byorgey> ah, ok
+2012-07-24 14:39:42 UTC <mietek> This is better
+2012-07-24 14:40:08 UTC <byorgey> rotateBy is just rotate with a less polymorphic type, for convenience
+2012-07-24 14:40:16 UTC <byorgey> since using a CircleFrac with rotate is common
+2012-07-24 14:53:57 UTC <mietek> byorgey: oh! And thanks for including tau :)
+2012-07-24 14:54:19 UTC <byorgey> hehe, you're welcome =)
+2012-07-24 21:17:16 UTC <tgeeky__> byorgey: these are pretty neat, and fun to play with: http://hackage.haskell.org/package/cyclotomic-0.2
+2012-07-24 21:17:31 UTC <tgeeky__> also rather fast
+2012-07-24 21:22:00 UTC <tgeeky__> i've already got a version that has much nicer output, and I'm going to try and hook in Bird's fast inversion algorithim
+2012-07-24 22:25:50 UTC <fryguybob> oooOOOooo diagrams organization.
+2012-07-24 23:37:07 UTC <byorgey> fryguybob: yep.  Thus begins the Great Diagrams Migration of 2012.
+2012-07-24 23:37:35 UTC <byorgey> tgeeky__: oh, neat
+2012-07-24 23:37:46 UTC <byorgey> tgeeky__: the author of that package will be at hac phi =)
+2012-07-24 23:38:54 UTC <byorgey> tgeeky__: do these have something to do with cyclotomic polynomials?
+2012-07-24 23:46:21 UTC <fryguybob> byorgey: Are you going to use a tool to import the repos from darcs?
+2012-07-24 23:46:32 UTC <byorgey> fryguybob: I already did
+2012-07-24 23:47:07 UTC <byorgey> http://wiki.darcs.net/DarcsBridgeUsage , to be precise
+2012-07-24 23:48:57 UTC <fryguybob> ok, I'll try that out on my repos tonight.
+2012-07-24 23:51:10 UTC <byorgey> I'm not sure what the procedure is for including them in the diagrams organization
+2012-07-24 23:52:10 UTC <fryguybob> I think that can happen later without much effort if I have them under my user for now.
+2012-07-24 23:52:41 UTC <byorgey> sure, I think so
+2012-07-24 23:55:48 UTC <fryguybob> I should start the ball rolling for a hackage account for myself too.
+2012-07-24 23:56:38 UTC <byorgey> ah, yes
+2012-07-24 23:56:51 UTC <byorgey> those can take a while to be processed =(
+2012-07-24 23:58:18 UTC <fryguybob> Well, the "I know, I'll wait for Hackage 2" option hasn't beet the slowness of the processing yet =P.
+2012-07-24 23:59:15 UTC <byorgey> true =)
+2012-07-25 01:09:47 UTC <tgeeky__> byorgey: uh, yes, I think they are one and the same, at least for the fields ajoined with sqrt(-1)
+2012-07-25 01:12:07 UTC <tgeeky__> byorgey: I know that you can express some invariants on the classical finite groups (G2,F4,E6,E7,E8) using cyclotomic polynomials
+2012-07-25 01:56:21 UTC <luite> bah can't sleep
+2012-07-25 01:57:22 UTC <edwardk> then stay up and solve my arcade auth problem ;)
+2012-07-25 01:57:42 UTC <edwardk> you know you want to
+2012-07-25 01:57:53 UTC <luite> hehe
+2012-07-25 01:58:52 UTC <edwardk> right now the best solution i have involves an actual extra server (but at least it is one that can be replicated by third parties)
+2012-07-25 01:59:37 UTC <luite> i was thinking before that if you can openid or oauth sign user-supplied fields, you can have them sign a public key, but at least browserid doesn't support that
+2012-07-25 01:59:46 UTC <edwardk> yeah
+2012-07-25 01:59:54 UTC <edwardk> the public key had crossed my mind
+2012-07-25 02:00:07 UTC <edwardk> with browserid it could _be_ the audience
+2012-07-25 02:00:10 UTC <edwardk> if it'd fit ;)
+2012-07-25 02:00:59 UTC <luite> but i really don't know anything about the more complex multilevel oauth stuff, for wolfgang i was using browserid because it's nice and simple and always gives you a verified email
+2012-07-25 02:01:12 UTC <edwardk> yeah
+2012-07-25 02:01:16 UTC <edwardk> thats exactly what i want
+2012-07-25 02:01:29 UTC <edwardk> a verified email address and the lack of impersonation when i pass credentials from site to site
+2012-07-25 02:02:18 UTC <edwardk> also the browser id auth has limited duration
+2012-07-25 02:02:33 UTC <edwardk> i could possibly sign a hash of the private key
+2012-07-25 02:02:36 UTC <edwardk> er public key
+2012-07-25 02:03:11 UTC <edwardk> i mean send the hash of the public key as the audience
+2012-07-25 02:03:26 UTC <edwardk> then when i present the public key, validating the hash is enough
+2012-07-25 02:03:43 UTC <edwardk> and ssh can take care of the rest
+2012-07-25 02:06:55 UTC <luite> hmm, i hope that works
+2012-07-25 02:09:24 UTC <edwardk> still pretty heavy and then there is the need for keygen
+2012-07-25 02:09:36 UTC <edwardk> and browserid would timeout
+2012-07-25 02:09:52 UTC <edwardk> so i'm hunting through openid or oauth for a place to stuff an identifier =)
+2012-07-25 02:10:44 UTC <luite> right, browserid seems a bit limited. you could verify the assertion on the client and ignore the timeout, but then it would be even heavier on the client...
+2012-07-25 02:11:09 UTC <luite> also feels wrong :)
+2012-07-25 02:11:27 UTC <edwardk> trying to see if i can just oauth for the user's email address from google and include a hash of a key in the request as part of the audience ;)
+2012-07-25 02:12:10 UTC <edwardk> then i'd get back a signed thing from google (without even requiring the user to enter their password most likely) just click a button, that can be used to proceed at client startup
+2012-07-25 02:12:21 UTC <edwardk> that would be pretty much the gold standard
+2012-07-25 02:12:28 UTC <luite> are there oauth providers that can use any email, not just their own?
+2012-07-25 02:12:55 UTC <edwardk> not sure what oauth substandards there are for user data
+2012-07-25 02:13:24 UTC <edwardk> i'm currently just trying to get the https://www.googleapis.com/auth/userinfo.email oauth protocol to work
+2012-07-25 02:13:32 UTC <edwardk> and see what i can stuff in the request
+2012-07-25 02:14:37 UTC <edwardk> oh, google is out i think
+2012-07-25 02:14:53 UTC <edwardk> the api console requires me to specify an exact url, and i doubt they'd like 'localhost' as the url ;)
+2012-07-25 02:15:38 UTC <edwardk> i can probably follow the 'application' registration process with them, but that only gets one provider
+2012-07-25 02:18:29 UTC <edwardk> sweet. i was able to build a client id for google's apis that can redirect to localhost
+2012-07-25 02:18:50 UTC <edwardk> now to figure out how to smash the info i want into the oauth token
+2012-07-25 02:20:58 UTC <luite> will it actually accept requests if you try to login from localhost?
+2012-07-25 02:25:23 UTC <edwardk> got it
+2012-07-25 02:25:24 UTC <edwardk> yeah
+2012-07-25 02:25:26 UTC <edwardk> https://accounts.google.com/o/oauth2/auth?scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&state=publickeyhash&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Foauth-callback&response_type=token&client_id=866865470933.apps.googleusercontent.com
+2012-07-25 02:25:37 UTC <edwardk> where i pass an appropriate publickeyhash
+2012-07-25 02:26:03 UTC <luite> hm does this mean that you'll have to distribute google application ids with your server? or should every server op just request one?
+2012-07-25 02:26:08 UTC <edwardk> will callback to the localhost on port 8000/oauth-callback with the token including the nonce
+2012-07-25 02:26:32 UTC <edwardk> it distributes a google installed application client id, the secrets for those are not assumed to be secure
+2012-07-25 02:27:35 UTC <luite> hm cool :) it does redirect to #error=unsupported_response_type for me
+2012-07-25 02:27:54 UTC <edwardk> i probably put in the wrong code there
+2012-07-25 02:29:27 UTC <edwardk> oh i need to ask for a code not a token
+2012-07-25 02:29:50 UTC <edwardk> https://accounts.google.com/o/oauth2/auth?scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&state=publickeyhash&redirect_uri=http%3A%2F%2Flocalhost%2Foauth-callback&response_type=code&client_id=866865470933.apps.googleusercontent.com
+2012-07-25 02:30:46 UTC <luite> ah
+2012-07-25 02:32:21 UTC <edwardk> so once i have that code i can exchange it with google for an access token and refresh token
+2012-07-25 02:32:54 UTC <luite> and those contain the key hash?
+2012-07-25 02:34:45 UTC <edwardk> yeah
+2012-07-25 02:34:47 UTC <edwardk> =)
+2012-07-25 02:35:05 UTC <edwardk> feel like banging out a snaplet to actually do this? =)
+2012-07-25 02:35:47 UTC <luite> hehe i haven't made any snaplets yet :(
+2012-07-25 02:36:13 UTC <luite> actually snaplets were the reason that i switched to yesod
+2012-07-25 02:36:18 UTC <edwardk> doh
+2012-07-25 02:36:48 UTC <edwardk> they are the reason i like snap ;)
+2012-07-25 02:37:41 UTC <luite> :) i wanted easy authentication for my site, and last year there were no snaplets yet, but mightybyte kept telling that everythign would be different once we had snaplets
+2012-07-25 02:38:32 UTC <luite> unfortunately the code wasn't in a public repository, and i didn't feel like waiting anymore, yesod had yesod-auth for this.
+2012-07-25 02:39:05 UTC <luite> but i really should try them :)
+2012-07-25 02:46:10 UTC <edwardk> gah
+2012-07-25 02:46:13 UTC <edwardk> there may be a problem
+2012-07-25 02:46:23 UTC <edwardk> the state parameter comes back separate from the code
+2012-07-25 02:46:29 UTC <edwardk> and doesn't appear to be contained in the access_token
+2012-07-25 02:46:31 UTC <edwardk> =(
+2012-07-25 02:47:42 UTC <edwardk> oh wait, maybe i can do it as part of the redirect-uri
+2012-07-25 02:47:53 UTC <edwardk> this is getting progressively more subversive
+2012-07-25 02:48:10 UTC <edwardk> the redirect-uri has to be specified the same when obtaining the access token
+2012-07-25 02:49:52 UTC <edwardk> apparently not =/
+2012-07-25 02:49:54 UTC <edwardk> hrmm
+2012-07-25 02:50:01 UTC <edwardk> so close to a perfect solution
+2012-07-25 02:51:21 UTC <luite> if you have a haskellarcade.org domain and you resolve *.user.haskellarcade.org to 127.0.0.1 you can have the key in the browserid audience by just letting them open keyhash.user.haskellarcade.org ;)
+2012-07-25 02:53:51 UTC <luite> oh but it still expires :(
+2012-07-25 02:57:07 UTC <edwardk> i have chiptoons.com i can use for that purpose
+2012-07-25 02:57:22 UTC <edwardk> (for now)
+2012-07-25 02:57:29 UTC <edwardk> but yeah browserid is too short lived
+2012-07-25 03:06:36 UTC <edwardk> ok, i get two tokens back from the server
+2012-07-25 03:06:42 UTC <edwardk> i get an access token and a refresh token
+2012-07-25 03:06:56 UTC <edwardk> i can pass along the access token to the game server
+2012-07-25 03:07:09 UTC <edwardk> and the refresh token lets me get new access tokens
+2012-07-25 03:07:37 UTC <edwardk> the question is can i use that to build a protocol where the access tokens aren't reusable
+2012-07-25 03:07:51 UTC <edwardk> e.g. use the access token once, and then publish that its used
+2012-07-25 03:07:56 UTC <edwardk> and refresh to get a new one
+2012-07-25 03:08:16 UTC <edwardk> the trick is how to publish the fact that the token has been consumed
+2012-07-25 03:08:57 UTC <edwardk> that seems to need a central registry of used tokens
+2012-07-25 03:09:12 UTC <edwardk> maybe after blinding/hashing them?
+2012-07-25 03:09:42 UTC <edwardk> hash the access id and dump it on the main arcade website in a restful bin somewhere?
+2012-07-25 03:09:55 UTC <edwardk> you only have to hold onto them for their timeout anyways
+2012-07-25 03:10:29 UTC <luite> why can't it be reused?
+2012-07-25 03:10:50 UTC <edwardk> well, the problem is if i can hand the access token to someone they can hand it to someone else
+2012-07-25 03:11:23 UTC <edwardk> unless i block that by saying something like 'this access token is for this one use on this one server'
+2012-07-25 03:11:42 UTC <luite> yeah but what can they do with it? they can just get an email address and a pubkey hash?
+2012-07-25 03:11:57 UTC <edwardk> they can pretend to be you to another server
+2012-07-25 03:12:20 UTC <luite> why? they need the private key for that
+2012-07-25 03:12:24 UTC <edwardk> i don't want to face the situation where logging into a server is trusting the server not to run off with your credentials
+2012-07-25 03:12:30 UTC <edwardk> no, the public key/private key thing didn't work
+2012-07-25 03:12:37 UTC <luite> oh i missed that
+2012-07-25 03:12:42 UTC <edwardk> the state is only included in the initial response
+2012-07-25 03:12:55 UTC <edwardk> so i get it back, but its not tied to the access/refresh token i get
+2012-07-25 03:13:11 UTC <edwardk> so now i just have a naked pair of access and refresh tokens
+2012-07-25 03:13:24 UTC <edwardk> and am trying to come up with a way to keep the servers from recycling the access token
+2012-07-25 03:15:22 UTC <edwardk> checking other oauth providers to see if i can get something more useful out of them, twitter is the next on my list
+2012-07-25 03:17:04 UTC <luite> urgh, forcing users to have a twitter account?
+2012-07-25 03:26:12 UTC <edwardk> twitter fails
+2012-07-25 03:26:17 UTC <edwardk> next, facebook ;)
+2012-07-25 03:26:24 UTC <edwardk> facebook looks like its failing too
+2012-07-25 03:27:27 UTC <edwardk> so so far the best answer has been to provide some kind of access token replay avoidance service on chiptoons that can be used to keep the servers from impersonating you
+2012-07-25 03:27:33 UTC <luite> that's a relief, since i don't have accounts for either :p
+2012-07-25 03:27:37 UTC <edwardk> hah
+2012-07-25 03:27:50 UTC <edwardk> i'm kind of willing to do the google oauth thing, thats pretty uninvasive
+2012-07-25 03:28:07 UTC <edwardk> and at least for me it reduces the game startup to clicking a couple of buttons ;)
+2012-07-25 03:30:06 UTC <luite> it still sounds like a horrible hack though...
+2012-07-25 03:30:16 UTC <edwardk> so it'd be something like hit google, get the access/refresh token to start, when you want to connect to a server, talk to the server get some identifier it has for itself, access google for a refreshed access token, register a hash of that access token as tied to the server identifier on chiptoons, then send the access token to the server
+2012-07-25 03:30:30 UTC <edwardk> who can check to make sure the hash of the token isn't already taken by someone else
+2012-07-25 03:30:40 UTC <edwardk> ooh
+2012-07-25 03:30:42 UTC <edwardk> even better
+2012-07-25 03:30:46 UTC <edwardk> i can avoid constantly refreshing
+2012-07-25 03:31:03 UTC <edwardk> by just letting the user rebind the hash
+2012-07-25 03:31:26 UTC <edwardk> so the workflow becomes
+2012-07-25 03:31:35 UTC <edwardk> connect to google, get an access and refresh token
+2012-07-25 03:33:01 UTC <edwardk> send the hash of the access token to chiptoons and get back a key that can be used to associate servers with that access token up until it expires
+2012-07-25 03:34:15 UTC <edwardk> then when you talk to a server, it sends an identifier with a diffie-hellman-style exchange to avoid MITM, you add it to the approved list, and it connects to see that its there
+2012-07-25 03:35:18 UTC <edwardk> its a bodge admittedly
+2012-07-25 03:35:25 UTC <luite> hehe
+2012-07-25 03:36:11 UTC <edwardk> i don't like that its using another server
+2012-07-25 03:36:22 UTC <edwardk> i was happier when i thought i could get google to do it all
+2012-07-25 05:16:04 UTC <tgeeky__> hm. that might be a good find. "Combinatory Logic - Pure, Applied, and Typed"
+2012-07-25 07:25:34 UTC <mietek> How do I draw a simple line between two points?
+2012-07-25 07:29:08 UTC <fryguybob> mietek: The ~~ operator can build a path between two points.
+2012-07-25 07:32:11 UTC <mietek> Unfortunately I can't figure out how to combine whatever ~~ returns with another drawing
+2012-07-25 07:32:21 UTC <mietek> Say,  arc u v <> straight (0, 1)
+2012-07-25 07:32:31 UTC <mietek> While  arc u v <> circle 1  works
+2012-07-25 07:34:12 UTC <fryguybob> Are you wanting the line on top or as part of a path that includes the arc?
+2012-07-25 07:34:57 UTC <mietek> It would be nice to know both ways
+2012-07-25 07:35:12 UTC <mietek> But separate paths would be fine for now
+2012-07-25 07:36:53 UTC <fryguybob> If you treat something like  a ~~ b  as a diagram (a ~~ b # lw 0.01) for instances, then <> will be combining diagrams (same as `atop`).
+2012-07-25 07:40:36 UTC <mietek> I see, thanks
+2012-07-25 07:40:39 UTC <fryguybob> It can also be a Trail or a Path or a list of points.  All of these have monoid instances (where <> gets its meaning).
+2012-07-25 07:42:12 UTC <mietek> So how do you actually construct a point?
+2012-07-25 07:42:36 UTC <mietek>     Couldn't match expected type `Point (V a0)' with actual type `(t0, t1)'
+2012-07-25 07:42:37 UTC <mietek>     In the first argument of `(~~)', namely `(0, 0)'
+2012-07-25 07:45:26 UTC <mietek> Using p2 fails...
+2012-07-25 07:45:39 UTC <mietek> http://projects.haskell.org/diagrams/manual/diagrams-manual.html#couldn-t-match-type-v-p2-with-r2
+2012-07-25 07:45:49 UTC <mietek> And this workaround doesn't seem to help
+2012-07-25 07:47:58 UTC <fryguybob> mietek: Humm, try the P constructor?
+2012-07-25 07:49:09 UTC <fryguybob> ACTION has to go to bed.
+2012-07-25 11:00:04 UTC <byorgey> mietek: hmm, what do you mean 'using p2 fails'?
+2012-07-25 11:05:52 UTC <luite> http://hackage.haskell.org/packages/archive/hoopl/3.8.7.4/doc/html/Compiler-Hoopl.html <- how can i pattern match on BCat, BHead, BTail and BClosed? f (BFirst n) works, but if i try something like that for BCat it says "Not in scope: data constructor `BCat'"
+2012-07-25 11:12:32 UTC <mietek> byorgey: could you tell me how to make a straight line diagram?
+2012-07-25 11:27:11 UTC <byorgey> mietek: using ~~
+2012-07-25 11:27:45 UTC <byorgey> mietek: if you're having trouble using that I'd have to take a look at your code
+2012-07-25 11:28:25 UTC <byorgey> mietek: you can also use  fromVertices  or  fromOffsets
+2012-07-25 11:28:42 UTC <byorgey> in fact (~~) is implemented as   p1 ~~ p2 = fromVertices [p1,p2]
+2012-07-25 11:30:08 UTC <byorgey> luite: maybe you need to explicitly import Compiler.Hoopl.Graph ?
+2012-07-25 11:30:14 UTC <byorgey> maybe Compiler.Hoopl doesn't re-export all the constructors
+2012-07-25 11:30:19 UTC <byorgey> ACTION really has no idea
+2012-07-25 11:30:49 UTC <luite> byorgey: that's a hidden module, and Compiler.Hoopl does export Block(..)
+2012-07-25 11:31:32 UTC <luite> ooh
+2012-07-25 11:31:33 UTC <luite> wait
+2012-07-25 11:31:35 UTC <luite> i'm wrong
+2012-07-25 11:32:03 UTC <luite> the Block(..) export is from .Graph
+2012-07-25 11:32:27 UTC <luite> Compiler.Hoopl doesn't reexport all
+2012-07-25 11:33:29 UTC <byorgey> boo, I wonder why
+2012-07-25 11:37:51 UTC <luite> I think you're supposed to use the supplied foldBlockNodes or blockToNodeList things
+2012-07-25 11:38:42 UTC <luite> the latter comes in 4 variants of which 3 have the same type
+2012-07-25 11:43:01 UTC <byorgey> ah, probably
+2012-07-25 14:04:19 UTC <mietek> byorgey: let myarc3 = arc 0 (tau/4 :: Rad) <> (p2 (0, 0) ~~ p2 (0, 1))
+2012-07-25 14:04:23 UTC <mietek> byorgey: so this works
+2012-07-25 14:04:33 UTC <mietek> byorgey: I had to use -XNoMonomorphismRestriction for ghci
+2012-07-25 14:04:47 UTC <mietek> byorgey: when I said using p2 fails, I meant the result you get without the extension
+2012-07-25 14:05:22 UTC <mietek> byorgey: how do I use `straight` instead of (~~)?
+2012-07-25 14:19:49 UTC <byorgey> mietek: `straight` is specifically for constructing Segments, so you don't want that (it's too low-level)
+2012-07-25 14:19:54 UTC <byorgey> mietek: instead, use  fromOffsets [v]
+2012-07-25 14:20:29 UTC <byorgey> arc 0 (tau/4 :: Rad) <> fromOffsets [unitX]   -- this should work
+2012-07-25 14:21:14 UTC <fryguybob> byorgey: I put my repos on github.
+2012-07-25 14:21:18 UTC <mietek> byorgey: thanks
+2012-07-25 14:21:25 UTC <byorgey> fryguybob: I saw that, excellent
+2012-07-25 14:21:54 UTC <byorgey> I was trying to figure out how to import issues from google code into github
+2012-07-25 14:22:18 UTC <byorgey> but it's going to be a bit annoying since there's no such thing as an organization-wide issue tracker
+2012-07-25 14:22:25 UTC <fryguybob> Yeah, I was wondering if there was a wayto make that happen nicely.
+2012-07-25 14:22:34 UTC <fryguybob> I see.
+2012-07-25 14:22:43 UTC <byorgey> but no tools that I found can import just a subset of google code tickets (by tag) into a github tracker
+2012-07-25 14:23:15 UTC <byorgey> so for now I am going to solve the problem by ignoring it.
+2012-07-25 14:23:20 UTC <fryguybob> Humm, I bet it could be as simple as adding a search term to some url.
+2012-07-25 14:23:30 UTC <byorgey> it probably is =)
+2012-07-25 14:26:09 UTC <fryguybob> I didn't check that what I put up compiles at this point as core wouldn't build for me.
+2012-07-25 14:27:10 UTC <fryguybob> "Not in scope: `unsplit'"  Is this from a newer version of monoid-extras?
+2012-07-25 14:28:19 UTC <byorgey> fryguybob: humm, not sure, I'll look into it
+2012-07-25 14:29:46 UTC <mietek> byorgey: https://dl.dropbox.com/u/95029/circle5.png yay
+2012-07-25 14:30:35 UTC <byorgey> fryguybob: unsplit is exported in the latest commit to monoid-extras: https://github.com/diagrams/monoid-extras/commit/44c220482a07665e7bf2dd56f00dda1c1a5ee392
+2012-07-25 14:30:43 UTC <byorgey> maybe you just hacen't pulled recently?
+2012-07-25 14:30:45 UTC <byorgey> *haven't
+2012-07-25 14:30:51 UTC <mietek> Needs to be more labyrinthine, though
+2012-07-25 14:31:00 UTC <byorgey> mietek: oooh, very nice!
+2012-07-25 14:31:35 UTC <mietek> The symmetry is parametric
+2012-07-25 14:31:46 UTC <byorgey> neat
+2012-07-25 14:31:52 UTC <mietek> I need to write a maze solver
+2012-07-25 14:32:13 UTC <mietek> So that I can randomize the layout and still keep it solvable
+2012-07-25 14:32:50 UTC <byorgey> you mean generate a random layout and throw it away if it isn't solvable, then repeat?
+2012-07-25 14:33:06 UTC <byorgey> seems easier to generate only solvable layouts in the first place
+2012-07-25 14:33:31 UTC <mietek> I was thinking to generate a labyrinth framework, and add blockages at random while checking it's still solvable
+2012-07-25 14:33:46 UTC <mietek> The framework being just the circles
+2012-07-25 14:33:50 UTC <mietek> In this case
+2012-07-25 14:34:16 UTC <mietek> Is this what you have in mind?
+2012-07-25 14:36:55 UTC <byorgey> see http://code.haskell.org/~byorgey/code/mazegen/  for one approach I've used in the past, which is based on http://www.ccs.neu.edu/home/shivers/mazes.html
+2012-07-25 14:37:27 UTC <byorgey> i.e. start with all blockages and a big set of disjoint regions, then randomly delete blockages and keep track of the regions using a union-find data structure
+2012-07-25 14:37:36 UTC <byorgey> until you have only one region
+2012-07-25 14:38:16 UTC <byorgey> with small mazes it probably isn't a big deal, checking solvability at each step will not be that bad
+2012-07-25 14:38:17 UTC <mietek> Cool, thanks
+2012-07-25 14:38:33 UTC <byorgey> but if you want to scale up to large mazes you need something like this
+2012-07-25 14:38:40 UTC <byorgey> see also the Wikipedia page on maze generation algorithms
+2012-07-25 14:40:27 UTC <mietek> BTW, I really like the Gray code diagram
+2012-07-25 14:40:34 UTC <mietek> It looks strikingly like an eyeball
+2012-07-25 14:40:39 UTC <byorgey> hehe, thanks
+2012-07-25 14:41:11 UTC <byorgey> The Eye of Diagron is watching you!!
+2012-07-25 14:41:19 UTC <mietek> :)
+2012-07-25 14:43:04 UTC <byorgey> ooh, I should make an animation with the gray code circle and a red line traveling around it, with a "readout" of what's under the red line off to the side
+2012-07-25 14:48:31 UTC <fryguybob> byorgey: Oh! when I looked before I didn't see monoid-extras on github
+2012-07-25 14:49:01 UTC <byorgey> oh, that's because I hadn't uploaded it yet, I only remembered this morning =)
+2012-07-25 14:50:08 UTC <byorgey> I don't think there have been any major changes recently which would break diagrams-postscript
+2012-07-25 14:51:57 UTC <fryguybob> ok, should be building in a minute.
+2012-07-25 14:52:28 UTC <fryguybob> ACTION navigates the unfamiliar messages of cabal 1.14 for the first time.
+2012-07-25 14:56:37 UTC <fryguybob> Woohoo it works (as usual).  http://www.cs.rochester.edu/u/ryates/temp/test.pdf
+2012-07-25 14:57:48 UTC <fryguybob> ACTION goes to work...
+2012-07-25 15:04:49 UTC <byorgey> yay!
+2012-07-25 15:38:11 UTC <fryguybob> byorgey: It took a whole hour for me to get a response with my Hackage info.  I must have time things right.
+2012-07-25 15:38:39 UTC <luite> \o/
+2012-07-25 15:38:45 UTC <luite> took a few days for me
+2012-07-25 15:39:44 UTC <fryguybob> Also, I may have been converted against my will to vi.
+2012-07-25 15:53:07 UTC <luite> :(
+2012-07-25 15:53:45 UTC <fryguybob> byorgey: I can't test it right now, but I think that modifying the query in this line should let us limit the scope of importing: https://github.com/arthur-debert/google-code-issues-migrator/blob/master/migrateissues.py#L100
+2012-07-25 17:36:57 UTC <byorgey> fryguybob: cool, thanks, I added that link to the wiki: http://www.haskell.org/haskellwiki/Diagrams/Dev#Darcs.2Fpatch-tag_-.3E_git.2Fgithub_migration
+2012-07-25 19:40:59 UTC <abernstein> hi
+2012-07-25 19:41:21 UTC <abernstein> when i call boundingBox (unitSquare :: D R2)
+2012-07-25 19:41:31 UTC <abernstein> the size of the bounding box is 1 times 1 as expected
+2012-07-25 19:41:52 UTC <abernstein> but when i call boundingBox (translate (r2 (10,10)) unitSquare :: D R2)
+2012-07-25 19:42:01 UTC <abernstein> the size is suddenly 10.5 times 10.5
+2012-07-25 19:42:15 UTC <abernstein> why is that ?
+2012-07-25 19:42:53 UTC <fryguybob> abernstein: It is including the origin.  Why, I'm not sure exactly.
+2012-07-25 19:43:08 UTC <abernstein> ok
+2012-07-25 19:43:28 UTC <abernstein> fryguybob: so, do i have to move the origin ?
+2012-07-25 19:44:26 UTC <fryguybob> abernstein: What is the bigger picture of what you are trying to do?
+2012-07-25 19:45:24 UTC <abernstein> fryguybob: i need the bounding box of a translated diagram
+2012-07-25 19:45:45 UTC <fryguybob> Translate the bounding box instead?
+2012-07-25 19:47:32 UTC <abernstein> mmh, "No instance for (Transformable (BoundingBox R2))
+2012-07-25 19:49:18 UTC <fryguybob> Humm, that's too bad.  I'll add that to the list of things to fix later.
+2012-07-25 19:49:43 UTC <fryguybob> What version of diagrams are you running?
+2012-07-25 19:50:22 UTC <abernstein> version 0.5.0.1 of diagrams-lib
+2012-07-25 19:53:11 UTC <abernstein> that would be really useful
+2012-07-25 19:53:26 UTC <abernstein> i am programming a small breakout clone using diagrams
+2012-07-25 19:55:14 UTC <fryguybob> abernstein: I understand.  byorgey might be able to give you a "why" or "that's a bug" off the top of his head.  When I have time later, I can look into it.
+2012-07-25 19:55:59 UTC <fryguybob> At the least I think there should be a transformable instance for BoundingBox (or some other form that is transformable).
+2012-07-25 20:05:28 UTC <abernstein> fryguybob: thanks
+2012-07-25 20:08:40 UTC <fryguybob> abernstein: I just looked at  boundingBox  a little and I think I'm leaning "that's a bug" at the moment.
+2012-07-25 20:09:21 UTC <abernstein> :)
+2012-07-25 20:09:37 UTC <abernstein> fryguybob: ok
+2012-07-25 20:32:14 UTC <mgsloan> oops
+2012-07-25 20:32:23 UTC <mgsloan> what's wrong with it? I think I may have written it
+2012-07-25 20:33:59 UTC <fryguybob> mgsloan: fromPoints doesn't seem appropriate there.  That will only work when the origin is inside the diagram.
+2012-07-25 20:35:10 UTC <fryguybob> mgsloan: For each unit vector and +/- only one value should be used, not all values.
+2012-07-25 20:36:42 UTC <mgsloan> ahh
+2012-07-25 20:37:03 UTC <mgsloan> but envelope returns negative numbers, right?
+2012-07-25 20:37:09 UTC <mgsloan> so it should work anyway
+2012-07-25 20:37:24 UTC <mgsloan> but you're right, that this is probably less efficient than possible
+2012-07-25 20:38:38 UTC <fryguybob> envelopeP gives a point, nothing negative going on there.
+2012-07-25 20:44:59 UTC <mgsloan> right, but it'll still work if the envelope does not contain the origin
+2012-07-25 20:45:13 UTC <mgsloan> I'm not gitting the new repos :)  https://github.com/defunkt/hub
+2012-07-25 20:45:28 UTC <mgsloan> now that we are using github, I recommend this utility script ^
+2012-07-25 20:45:55 UTC <mgsloan> I can do "git clone diagrams/cairo diagrams-cairo"
+2012-07-25 20:46:08 UTC <mgsloan> and then go into that directory, and do "git fork"
+2012-07-25 20:46:45 UTC <byorgey> sounds like a bug in boundingBox, though I haven't looked into the details
+2012-07-25 20:46:59 UTC <byorgey> however, the fact that there is no Transformable instance for BoundingBox is NOT a bug
+2012-07-25 20:47:14 UTC <byorgey> in fact, there used to be one and I removed it.  Applying affine transformations to bounding boxes does not make sense.
+2012-07-25 20:47:17 UTC <fryguybob> byorgey: I can see that.
+2012-07-25 20:47:36 UTC <byorgey> However, there IS a HasOrigin instance for BoundingBox (or at least there should be) so you can still translate them
+2012-07-25 20:48:00 UTC <byorgey> but using 'moveTo' and friends instead of 'translate'
+2012-07-25 20:49:10 UTC <mgsloan> right, if you want to apply affine transforms, you should use getAllCorners, transform those, and use fromPoints
+2012-07-25 20:49:40 UTC <byorgey> sure, that will give a conservative approximation to a transformed bounding box
+2012-07-25 20:49:48 UTC <byorgey> but it's not compositional
+2012-07-25 20:50:09 UTC <byorgey> abernstein: can you file a bug report at http://code.google.com/p/diagrams/issues/list ?  That would be great.
+2012-07-25 20:50:19 UTC <byorgey> I don't want to forget about it
+2012-07-25 20:50:29 UTC <abernstein> i tried boundingBox (moveTo (p2 (10,10)) unitSquare :: D R2), but i still get a 10.5 times 10.5 box
+2012-07-25 20:50:35 UTC <abernstein> byorgey: ok
+2012-07-25 20:50:58 UTC <abernstein> byorgey: i'll do that
+2012-07-25 20:51:02 UTC <byorgey> abernstein: thanks.
+2012-07-25 20:51:13 UTC <byorgey> abernstein: and what happens if you do  (moveTo (p2 (10,10)) (boundingBox (unitSquare :: D R2))) ?
+2012-07-25 20:52:58 UTC <abernstein> byorgey: that works :)
+2012-07-25 20:53:20 UTC <byorgey> oh, I see what the problem is
+2012-07-25 20:53:30 UTC <byorgey> I think
+2012-07-25 20:54:34 UTC <fryguybob> byorgey: envelopP give a point on the hyperplane, not a point on the bounding box.
+2012-07-25 20:54:40 UTC <byorgey> yes, exactly
+2012-07-25 20:54:42 UTC <fryguybob> (as it should)
+2012-07-25 20:54:52 UTC <byorgey> and in this case it happens to be giving points on each of the four axes.
+2012-07-25 20:55:00 UTC <fryguybob> Right
+2012-07-25 20:55:30 UTC <byorgey> hmm, so what's the right way to implement it
+2012-07-25 20:56:24 UTC <fryguybob> if you take the magnitudes (or use some basis function for efficiency) you can take the combinations of mins an maxs to get the box
+2012-07-25 21:01:04 UTC <fryguybob> If no one figures out something before tonight I'll come up with a fix when I'm not at work :D.
+2012-07-25 21:01:12 UTC <byorgey> ok =)
+2012-07-25 21:01:24 UTC <byorgey> yes, I guess you can use http://hackage.haskell.org/packages/archive/vector-space/0.8.2/doc/html/Data-Basis.html#v:decompose
+2012-07-25 21:02:10 UTC <byorgey> just use envelopeV then call decompose and extract the proper coordinates
+2012-07-25 21:04:12 UTC <byorgey> ugh, it looks like *I* wrote that code, last May!
+2012-07-25 21:04:22 UTC <mgsloan> really? I don't think so
+2012-07-25 21:04:25 UTC <byorgey> mgsloan is off the hook.  Also, we need more tests. =(
+2012-07-25 21:04:34 UTC <byorgey> https://github.com/diagrams/lib/commit/7d9f32f4712294f54428e072d01cdf9c4cfc30da
+2012-07-25 21:04:35 UTC <mgsloan> you might have edited that code last may
+2012-07-25 21:05:12 UTC <fryguybob> /tests/types/ =P
+2012-07-25 21:05:53 UTC <byorgey> well, it's not really important who wrote it.  I was just curious how long the bug has existed.
+2012-07-25 21:06:28 UTC <mgsloan> oh yeah, I guess you're right! here's the utils I wrote: https://github.com/diagrams/lib/commit/f654b52684b9dc627a53c89c9636ddb7f9e1bc9d
+2012-07-25 21:07:03 UTC <byorgey> yup, boundingBox was already there, and you wrote those in December
+2012-07-25 21:10:37 UTC <mgsloan> is there a reason that "diameter" is implemented in terms of envelopeV? seems inefficient - introduces scaling vectors and getting magnitudes
+2012-07-25 21:11:18 UTC <mgsloan> I can fix it - I feel like giving the new githubs a whirl :D
+2012-07-25 21:12:33 UTC <byorgey> mgsloan: go for it =)
+2012-07-25 21:12:42 UTC <byorgey> mgsloan: also, thanks for the link to 'hub'! that looks super useful.
+2012-07-25 21:13:25 UTC <byorgey> mgsloan: what's the better way to implement diameter?
+2012-07-25 21:13:35 UTC <fryguybob> Speaking of git, is there an equivalent of  hg serve  in the git world?
+2012-07-25 21:13:59 UTC <mgsloan> yes, it's very very nice.  I can fork someone's repo, create a patch, and submit a github pull request all through the command line
+2012-07-25 21:14:50 UTC <byorgey> mgsloan: I'd like to create a page on the diagrams wiki explaining "best practices" for using git/github and contributing to diagrams.  Is that something you could help with?
+2012-07-25 21:15:00 UTC <byorgey> I don't even really know what best practices are.
+2012-07-25 21:15:06 UTC <mgsloan> byorgey: well, you'd query along the vector, and query along the negation.  Then, you'd take the result of the query along the vector and add it to the result of the query in the opposite direction
+2012-07-25 21:15:41 UTC <mgsloan> byorgey: Sure!  I'm not a git expert, but I suppose I use it a decent amount
+2012-07-25 21:16:43 UTC <byorgey> mgsloan: that doesn't sound right.  Note that the result of an envelope query is a scalar *relative to the length of the input vector*, not an absolute distance
+2012-07-25 21:17:45 UTC <byorgey> fryguybob: http://stackoverflow.com/questions/377213/git-serve-i-would-like-it-that-simple ?
+2012-07-25 21:18:34 UTC <fryguybob> ACTION wonders if vector-space handles non-orthogonal basis.
+2012-07-25 21:19:01 UTC <mgsloan> fryguybob: If you're using github / hub, then you can do "git create", and it'll be created on your account
+2012-07-25 21:20:54 UTC <mgsloan> byorgey: ahh, didn't realize that.  I suppose it's a matter of efficiency.  We could convert to a unit vector.  That'd be a magnitude + two divisions + one addition.  Currently we have a magnitude, four multiplications, and two additions (for 2d)
+2012-07-25 21:21:30 UTC <byorgey> right, I don't think you can get away without calling magnitude at some point
+2012-07-25 21:21:30 UTC <mgsloan> divisions are traditionally expensive, but I've heard that they are pretty darn fast these days
+2012-07-25 21:21:34 UTC <mgsloan> yup
+2012-07-25 21:21:45 UTC <byorgey> sure, I don't know.
+2012-07-25 21:21:55 UTC <byorgey> If you care, try benchmarking it, and we can see which is faster
+2012-07-25 21:53:05 UTC <mgsloan> I'm amazed!  The current one is faster
+2012-07-25 21:53:39 UTC <mgsloan> current mean: 653.1291 us, lb 650.7195 us, ub 655.8391 us, ci 0.950
+2012-07-25 21:53:39 UTC <mgsloan> my mean: 760.2543 us, lb 757.1752 us, ub 763.7376 us, ci 0.950
+2012-07-25 21:53:53 UTC <mgsloan> (this is for computing 360 diameters of a unitSquare)
+2012-07-25 21:56:55 UTC <mgsloan> soo, what bounding box do we report for the empty diagram?
+2012-07-25 21:57:06 UTC <mgsloan> perhaps it'd be good to proliferate "Option" throughout?
+2012-07-25 22:06:10 UTC <byorgey> huh, what do you know
+2012-07-25 22:08:24 UTC <byorgey> mgsloan: oh, right, bounding boxes don't form a monoid
+2012-07-25 22:08:58 UTC <byorgey> hmmm
+2012-07-25 22:10:10 UTC <byorgey> mgsloan: maybe the thing to do is to make them one by defining  BoundingBox = BoundingBox (Option (Point v, Point v))
+2012-07-25 22:10:30 UTC <byorgey> i.e. add the Option directly to the definition of BoundingBox rather than sprinking it everywhere through the API
+2012-07-25 22:12:26 UTC <mgsloan> yup, that was our solution in lib2geom
+2012-07-25 22:12:34 UTC <mgsloan> we even called it optional :)
+2012-07-25 22:16:52 UTC <mgsloan> so, the following functions in BoundingBox already use "Maybe BoundingBox":  fromPoints, unions, intersections, intersection, combine.  Everything else except boxTransform has a meaning that makes sense for the Nothing case
+2012-07-25 22:23:05 UTC <mgsloan> so yeah, currently "boundingBox (mempty :: D R2)" is the box around the origin
+2012-07-25 23:31:52 UTC <mgsloan> byorgey: if BoundingBox is now a monoid / semigroup, should union still be exported?
+2012-07-25 23:39:09 UTC <byorgey> mgsloan: sure, why not
+2012-07-25 23:39:52 UTC <byorgey> with a note in the documentation stating that this is the <> operation for the semigroup/monoid instances
+2012-07-25 23:40:03 UTC <mgsloan> Yup!
+2012-07-25 23:40:05 UTC <byorgey> because if people see 'intersection' they will wonder where 'union' is
+2012-07-25 23:45:56 UTC <mgsloan> currently "fromCorners" is just like fromPoints except for two points - e.g. it doesn't care about order
+2012-07-25 23:46:15 UTC <mgsloan> how about changing it so that if the points are out of order, the result is empty?
+2012-07-25 23:53:00 UTC <byorgey> wait, you're saying currently fromCorners doesn't care about order and fromPoints does?
+2012-07-25 23:53:14 UTC <mgsloan> no, I'm saying currently both don't care
+2012-07-25 23:54:05 UTC <byorgey> oh, and fromCorners takes exactly two points, and fromPoints takes a set?
+2012-07-25 23:54:12 UTC <mgsloan> yup
+2012-07-25 23:55:30 UTC <byorgey> I suppose I could see that being useful
+2012-07-25 23:55:51 UTC <byorgey> "that" being making fromCorners care about order
+2012-07-25 23:56:42 UTC <byorgey> just to make sure I understand what you are proposing: the new fromCorners would only produce a non-empty bounding box if the coordinates of the first point are elementwise <= the coordinates of the second point?
+2012-07-25 23:57:30 UTC <mgsloan> yup
+2012-07-25 23:58:21 UTC <byorgey> ok, sure, that sounds good to me (as long as it is clearly explained of course)
+2012-07-25 23:59:08 UTC <mgsloan> I hope noone has used boundingbox extensively - I guess we'll have to make it pretty clear in the announcement that things are changing there
+2012-07-25 23:59:09 UTC <fryguybob> I'm not sure empty makes the most sense there.  Negative bounding boxes do have an interpretation.
+2012-07-25 23:59:40 UTC <byorgey> fryguybob: oh? what's that?
+2012-07-26 00:00:19 UTC <fryguybob> "Inside" a negative bounding box is the outside of a normal one.
+2012-07-26 00:00:56 UTC <mgsloan> what about "inside" a doubley negative bounding box? :)  (if we're considering winding)
+2012-07-26 00:02:12 UTC <byorgey> fryguybob: but wouldn't you need special cases then for containment tests?  using the usual >= the lower bound && <= the upper bound, if any coordinates are switched you just get that no points test as being contained in it
+2012-07-26 00:02:18 UTC <byorgey> i.e. exactly the same as the empty box
+2012-07-26 00:03:23 UTC <mgsloan> yeah, you'd need special cases for intersection / union as well
+2012-07-26 00:03:32 UTC <byorgey> having "inverted" bounding boxes sounds neat but it doesn't seem to me like the math works out to represent them by just switching the order of the corners
+2012-07-26 00:04:56 UTC <fryguybob> byorgey: No it is not simple anymore, union of positive and negative gives holes.
+2012-07-26 00:05:21 UTC <byorgey> oh, right, yikes
+2012-07-26 00:05:36 UTC <byorgey> let's not go there just yet =)
+2012-07-26 00:05:55 UTC <mgsloan> yeaaa, that's a compound structure :D
+2012-07-26 00:06:11 UTC <fryguybob> I think mapping to empty is like mapping subtraction that would be negative to zero with nats.
+2012-07-26 00:06:15 UTC <mgsloan> when doing boolops in lib2geom, I had to sanitize into a structure that properly separated holes and fills
+2012-07-26 00:07:14 UTC <byorgey> mgsloan: as for anyone using boundingbox extensively -- I know ClaudiusMaximus used it for some stuff (he's the one who wrote the initial version), but given that this bug with 'boundingBox' went undetected for over a year I think it's safe to say that it's not used much =)
+2012-07-26 00:07:15 UTC <fryguybob> Mapping to the same but positive is abs.
+2012-07-26 00:07:39 UTC <mgsloan> byorgey: yup, seems like a good time to change the meaning of some things
+2012-07-26 00:08:09 UTC <byorgey> Also, I want to not worry about backwards compatibility for as long as possible =)
+2012-07-26 00:08:43 UTC <byorgey> fryguybob: yes, makes sense.
+2012-07-26 00:08:55 UTC <byorgey> the point here is that if you want abs you can use fromPoints and pass it two points.
+2012-07-26 00:09:13 UTC <alpounet> ACTION will have to draw poker cards... was thinking about sketching up some simplistic and shitty ones with diagrams =P
+2012-07-26 00:09:30 UTC <byorgey> previously, it would have been more annoying to use fromPoints because it gave you a Maybe, whereas fromCorners didn't
+2012-07-26 00:09:53 UTC <byorgey> but now the Maybe-ness will be embodied in the BoundingBox type itself, so there's no difference
+2012-07-26 00:10:17 UTC <byorgey> so we ought to get rid of fromCorners, or make it do something more interesting
+2012-07-26 00:10:55 UTC <fryguybob> bbl
+2012-07-26 00:12:28 UTC <mgsloan> ACTION bb tomorrow
+2012-07-26 00:12:42 UTC <mgsloan> nearly done with the Option (Point v, Point v) conversion :D
+2012-07-26 00:13:02 UTC <byorgey> great =)
+2012-07-26 00:46:36 UTC <fryguybob> I'm back.
+2012-07-26 00:47:51 UTC <byorgey> \o/
+2012-07-26 00:47:57 UTC <luite> \o/
+2012-07-26 00:48:10 UTC <byorgey> ACTION is perpetrating yet more overly polymorphic typeclass nonsense
+2012-07-26 00:48:33 UTC <byorgey> which will allow you to write  things like  5 & 6  to create either a point or a vector
+2012-07-26 00:48:44 UTC <byorgey> and   5 & 6 & 7    to create a 3D point or vector
+2012-07-26 00:48:45 UTC <byorgey> etc.
+2012-07-26 00:48:57 UTC <luite> and then you must remove all typeclasses from diagrams to get fay support!
+2012-07-26 00:49:06 UTC <byorgey> haha
+2012-07-26 00:49:32 UTC <byorgey> if you remove all the typeclasses from diagrams I think all that would be left is a .cabal file
+2012-07-26 00:52:03 UTC <luite> hm this mountain lion update does feel snappy, but perhaps it's just that i finally rebooted my laptop :)
+2012-07-26 01:20:08 UTC <byorgey> *Diagrams.Prelude> 2 & 3 :: R2
+2012-07-26 01:20:08 UTC <byorgey> R2 {unR2 = (2.0,3.0)}
+2012-07-26 01:20:08 UTC <byorgey> *Diagrams.Prelude> 2 & 3 :: P2
+2012-07-26 01:20:08 UTC <byorgey> P (R2 {unR2 = (2.0,3.0)})
+2012-07-26 01:20:11 UTC <byorgey> =D
+2012-07-26 01:20:28 UTC <byorgey> I *think* this is a good idea...
+2012-07-26 01:20:41 UTC <byorgey> now you don't have to do all that  r2 (3,5)  nonsense
+2012-07-26 01:20:46 UTC <byorgey> you can just write  3 & 5
+2012-07-26 01:30:40 UTC <tgeeky__> bah. I still vote to banish the use of && and ||, and reclaim them for other purposes
+2012-07-26 01:30:54 UTC <tgeeky__> and use 3 || 5 || 8
+2012-07-26 01:30:55 UTC <tgeeky__> etc
+2012-07-26 01:31:48 UTC <tgeeky__> byorgey: but that's not nonsense!
+2012-07-26 01:33:16 UTC <byorgey> =)
+2012-07-26 01:34:21 UTC <tgeeky__> byorgey: hm. this cyclotomic package is nice and interesting. My version of factorize (from Bird) is not faster because they don't return all factors when asked (just prime factors)
+2012-07-26 01:34:37 UTC <byorgey> ah
+2012-07-26 01:34:38 UTC <tgeeky__> that is, it uses arithmoi's "factorize" which quickly returns all prime factors of an integer.
+2012-07-26 01:34:54 UTC <tgeeky__> However, bird's is a much more general function ... it returns all factors, and over any arithmetic expression, not just "x*x"
+2012-07-26 01:34:57 UTC <byorgey> tgeeky__: did you see when I mentioned before that the author of cyclotomic will be at hac phi?
+2012-07-26 01:34:58 UTC <tgeeky__> or "x"
+2012-07-26 01:35:08 UTC <tgeeky__> byorgey: yes. I hope to have some patches back to him before then.
+2012-07-26 01:35:14 UTC <byorgey> ok, cool
+2012-07-26 01:37:10 UTC <tgeeky__> I'm a little confused by something, though -- he provides a Num, Fractional, and Show instances (as well as a derived Eq instance)
+2012-07-26 01:37:51 UTC <tgeeky__> I tried to define the additional (Enum , Real) => Integral cases
+2012-07-26 01:39:30 UTC <tgeeky__> suffice it to say I don't think it makes sense to do so. I got the farthest with enum
+2012-07-26 01:39:49 UTC <tgeeky__> but no matter what numbers you put in the enum, you always get back [0,0,0,0] or [0,1,2,3..]
+2012-07-26 02:15:13 UTC <byorgey> I'd love feedback/code review on my new feature before it's merged: https://github.com/diagrams/lib/pull/1
+2012-07-26 02:15:22 UTC <byorgey> if anyone feels like taking a look
+2012-07-26 02:15:30 UTC <byorgey> anyway, I'm off to bed
+2012-07-26 02:16:24 UTC <edwardk> cute. the addition is the :& ?
+2012-07-26 02:28:37 UTC <byorgey> edwardk: and &
+2012-07-26 02:28:42 UTC <edwardk> ah
+2012-07-26 02:28:45 UTC <edwardk> nice
+2012-07-26 02:28:47 UTC <edwardk> go sleep
+2012-07-26 02:28:52 UTC <byorgey> ok =)
+2012-07-26 13:27:25 UTC <sleepyMonad> is there a nice way to set the background of a PNG image (instead of leaving it transparant)? I could of course place the diagram explicitly `atop` a background layer, but that seems a bit lame...
+2012-07-26 13:30:04 UTC <byorgey> sleepyMonad: the HEAD version of diagrams-lib exports some functions to help you do that, but they are not in the 0.5 release
+2012-07-26 13:30:14 UTC <byorgey> sleepyMonad: but you can just copy them into your .hs file for now: http://hpaste.org/66446
+2012-07-26 13:30:53 UTC <byorgey> ultimately it does work by putting the diagram `atop` a background layer, but it calculates the proper dimensions for you
+2012-07-26 13:31:39 UTC <byorgey> oh, except we just found a bug in boundingBox... but it will work fine as long as your diagram contains the origin
+2012-07-26 13:31:50 UTC <byorgey> otherwise the background might be too big
+2012-07-26 13:35:25 UTC <sleepyMonad> OK, thanks, I'll give it a try.
+2012-07-26 14:46:45 UTC <tgeeky> byorgey: did you see my note from last night? re: showing off cyclotomic changes
+2012-07-26 14:51:30 UTC <byorgey> tgeeky: uh, which note? about Enum, Real, Integral?
+2012-07-26 14:56:31 UTC <tgeeky> hm. nope, it was in main.
+2012-07-26 14:56:33 UTC <tgeeky> i'll repost
+2012-07-26 14:56:55 UTC <tgeeky> byorgey: http://hpaste.org/72133
+2012-07-26 15:15:23 UTC <tgeeky> byorgey: so i played with the cyclotomic code a lot last night; I primarily improved the showing of functions (so that you can get all the information available from a expression) and threading through the cyclotomic numbers (using as patterns in the Show instance
+2012-07-26 15:15:54 UTC <tgeeky> that's a joy in haskell - threading down an additional binding that you get from an as-pattern
+2012-07-26 18:16:27 UTC <fryguybob> byorgey: I'm wondering what naming conventions we should use for organization repos?
+2012-07-26 18:16:58 UTC <fryguybob> does svg, postscript, etc make sense?
+2012-07-26 18:18:02 UTC <fryguybob> And would the associated hackage packages always be prefixed with diagrams- ?
+2012-07-26 18:18:18 UTC <fryguybob> Humm we need to start a monoid organization :D.
+2012-07-26 18:22:42 UTC <byorgey> fryguybob: yeah, I was just wondering whether I did the names wrong
+2012-07-26 18:22:59 UTC <byorgey> diagrams/core looks so nice, but then when people clone it it looks like  byorgey/core, etc., which makes no sense
+2012-07-26 18:23:24 UTC <byorgey> diagrams/diagrams-core is probably better
+2012-07-26 18:23:41 UTC <byorgey> and that way the repo name matches the package name too
+2012-07-26 18:24:06 UTC <byorgey> well, I guess I'd better fix them now, before too many people clone them =)
+2012-07-26 18:25:28 UTC <fryguybob> byorgey: ok.  The names themeselves don't have any real "meaning" right?  As in, if I mv my clones no harm is done?
+2012-07-26 18:25:50 UTC <fryguybob> Well I guess changing what remote repo it points to changes.
+2012-07-26 18:25:54 UTC <byorgey> fryguybob: right, but you have to update them to point to the ... right
+2012-07-26 18:26:47 UTC <luite> right
+2012-07-26 18:26:56 UTC <byorgey> ok, renaming now, hold tight...
+2012-07-26 18:27:06 UTC <luite> are you going to have every package in a separate repo?
+2012-07-26 18:27:10 UTC <luite> <- holding tight
+2012-07-26 18:27:59 UTC <byorgey> yes, every package in a separate repo
+2012-07-26 18:28:00 UTC <fryguybob> Isn't there some github sugar for "sub repos" or something?
+2012-07-26 18:28:16 UTC <luite> git has submodules
+2012-07-26 18:28:22 UTC <fryguybob> ACTION does not want to complicate things.
+2012-07-26 18:28:26 UTC <byorgey> oh?
+2012-07-26 18:28:45 UTC <byorgey> one thing I want though is package-grained access control
+2012-07-26 18:28:59 UTC <byorgey> e.g. I want to be able to give some contributor push access to packages X and Y but not Z
+2012-07-26 18:29:08 UTC <byorgey> can the submodules thing handle that?
+2012-07-26 18:29:20 UTC <luite> ah i guess you can't do megarepositories then
+2012-07-26 18:29:32 UTC <luite> yeah a submodule refers to a revision in another repository
+2012-07-26 18:29:49 UTC <fryguybob> lets just add a sync-all perl script...
+2012-07-26 18:30:16 UTC <luite> so i think you can make a large one with all packages as submodules, and if you do git submodule init, git submodule update, you have updated repositories of those
+2012-07-26 18:30:42 UTC <luite> but when someone commits something in one of the subrepos directly, i think you have to update the reference manually or something
+2012-07-26 18:31:02 UTC <luite> not sure what the git command for that is
+2012-07-26 18:31:21 UTC <fryguybob> diagrams/monolith
+2012-07-26 18:32:52 UTC <byorgey> ok, renaming complete
+2012-07-26 18:40:14 UTC <fryguybob> Ok, to point to the new location I did:  $ git remote set-url origin git@github.com:diagrams/diagrams-core.git
+2012-07-26 18:51:26 UTC <byorgey> yes, that ought to do it
+2012-07-26 18:51:46 UTC <byorgey> woohoo, my new kinesis advantage arrived!
+2012-07-26 19:01:20 UTC <luite> hmm, are they really more comfortable to type on?
+2012-07-26 19:01:37 UTC <byorgey> quite
+2012-07-26 19:01:43 UTC <byorgey> for me at least
+2012-07-26 19:02:40 UTC <luite> hmm, i had a regular split keyboard (microsoft) but found the difference not that great
+2012-07-26 19:03:20 UTC <fryguybob> ACTION only stares at the screen.
+2012-07-26 19:04:03 UTC <luite> do they have a version with short travel keys?
+2012-07-26 19:04:09 UTC <byorgey> ff
+2012-07-26 19:04:31 UTC <byorgey> whoops, meant to hit backspace instead of enter =)
+2012-07-26 19:04:39 UTC <byorgey> still getting used to it
+2012-07-26 19:04:41 UTC <luite> hehe
+2012-07-26 19:04:57 UTC <byorgey> re: short travel keys, I don't know.
+2012-07-26 19:07:00 UTC <fryguybob> byorgey: I was going to try out that python comment migration tool yesterday, but I don't think I have the google api key.
+2012-07-26 19:11:49 UTC <byorgey> fryguybob: the google api key, or github api key?
+2012-07-26 19:13:53 UTC <fryguybob> Oh, I guess it is the github one, I think I can get that.  I probabaly don't even need it for a dry run.
+2012-07-26 19:16:08 UTC <fryguybob> Humm it may not work anyway as the API changed for github.
+2012-07-26 19:17:06 UTC <byorgey> ooh, boo
+2012-07-26 20:43:22 UTC <byorgey> hehe
+2012-07-26 20:43:39 UTC <byorgey> ok, yeah, makes sense, I'll just do IRC
+2012-07-26 20:44:24 UTC <tgeeky> byorgey: do you have the wolfram CDF viewer installed, by chance?
+2012-07-26 20:44:41 UTC <byorgey> tgeeky: I'm not sure
+2012-07-26 20:44:46 UTC <byorgey> I don't think so
+2012-07-26 20:46:18 UTC <tgeeky> I think I have discovered quite possibly the coolest recursive function ever
+2012-07-26 20:46:29 UTC <tgeeky> ACTION wonders how to make a quick video screencap
+2012-07-26 20:46:43 UTC <mgsloan> xvidcap?
+2012-07-26 20:46:57 UTC <tgeeky> ACTION is a windows user
+2012-07-26 20:48:26 UTC <byorgey> a video camera?
+2012-07-26 20:48:56 UTC <fryguybob> hit print scrn and paste into paint reallly fast.
+2012-07-26 20:49:01 UTC <tgeeky> hehe
+2012-07-26 20:49:11 UTC <tgeeky> what doth that mean, minus n
+2012-07-26 20:50:25 UTC <byorgey> I'm not sure
+2012-07-26 20:50:52 UTC <byorgey> I'm trying to figure out how to set up auto IRC notifications from github
+2012-07-26 20:56:07 UTC <mgsloan> With a quick google search I get a lot of Travis CI stuff - might be something to think about anyway!  Especially when there is more tests
+2012-07-26 20:56:25 UTC <mgsloan> s/is/are/
