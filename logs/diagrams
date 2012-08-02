@@ -21806,3 +21806,537 @@
 2012-07-26 20:50:52 UTC <byorgey> I'm trying to figure out how to set up auto IRC notifications from github
 2012-07-26 20:56:07 UTC <mgsloan> With a quick google search I get a lot of Travis CI stuff - might be something to think about anyway!  Especially when there is more tests
 2012-07-26 20:56:25 UTC <mgsloan> s/is/are/
+2012-07-26 20:57:55 UTC <byorgey> hey, it worked!
+2012-07-26 20:58:33 UTC <byorgey> yeah, I was looking into travis-ci a bit earlier today, looks cool
+2012-07-26 20:59:27 UTC <byorgey> one complication is that to build, say, diagrams-cairo you first have to check out and build diagrams-core and diagrams-lib
+2012-07-26 21:00:22 UTC <byorgey> since it certainly won't be the case that HEAD diagrams-cairo always builds against the versions of core and lib on Hackage
+2012-07-26 21:00:45 UTC <byorgey> (btw, did others also see the commit notification from github?)
+2012-07-26 21:00:52 UTC <fryguybob> yes
+2012-07-26 21:01:23 UTC <tgeeky> ok
+2012-07-26 21:01:25 UTC <tgeeky> i have the video
+2012-07-26 21:01:25 UTC <byorgey> ok. it was surprisingly easy to set up =)
+2012-07-26 21:01:28 UTC <tgeeky> anywhere I should uplod it?
+2012-07-26 21:02:05 UTC <byorgey> youtube? vimeo? hpaste?
+2012-07-26 21:02:11 UTC <tgeeky> hehehe
+2012-07-26 21:02:12 UTC <tgeeky> hpaste
+2012-07-26 21:07:26 UTC <mgsloan> so, here's an interesting problem.  Now that BoundingBox has a mempty, we can have unions return mempty when provided []
+2012-07-26 21:07:37 UTC <mgsloan> e.g. this is bottom (the identity for join)
+2012-07-26 21:07:49 UTC <byorgey> right
+2012-07-26 21:07:53 UTC <mgsloan> this means that intersections should yield top
+2012-07-26 21:08:02 UTC <byorgey> hehe,
+2012-07-26 21:08:16 UTC <byorgey> I see where you're going
+2012-07-26 21:08:21 UTC <mgsloan> do we want to add the constraint that Scalar is a RealFloat (or whatever has infinities)?
+2012-07-26 21:09:17 UTC <mgsloan> similarly to my feedback on the monoids paper, most monoids are lattices - but we've chosen a useful default (usually considered to be join)
+2012-07-26 21:09:57 UTC <mgsloan> maybe one way to do lattices would be to have a newtype Meet a = Meet a ?
+2012-07-26 21:10:14 UTC <mgsloan> and then define either semigroup or monoid (for bounded)
+2012-07-26 21:11:17 UTC <byorgey> RealFloat sounds icky
+2012-07-26 21:11:22 UTC <mgsloan> agreed
+2012-07-26 21:11:54 UTC <mgsloan> I guess I can go back to having Maybe (BoundingBox v) for intersections
+2012-07-26 21:12:11 UTC <byorgey> sure, that's one option
+2012-07-26 21:12:19 UTC <mgsloan> but only use the Maybe for empty list (and use the Maybe inside BoundingBox for actual lack of intersection)
+2012-07-26 21:12:31 UTC <byorgey> infinite bounding boxes seem less useful to me than empty ones.
+2012-07-26 21:12:46 UTC <byorgey> mgsloan: right, exactly
+2012-07-26 21:13:06 UTC <byorgey> it's not an Option inside BoundingBox?
+2012-07-26 21:13:21 UTC <mgsloan> nope, I had that at first, should it be?
+2012-07-26 21:13:30 UTC <mgsloan> having it be option did not give me a Monoid for free
+2012-07-26 21:13:35 UTC <tgeeky> byorgey: http://www.youtube.com/watch?v=QLnqwdeoK10&feature=youtu.be
+2012-07-26 21:13:39 UTC <tgeeky> and mgsloan
+2012-07-26 21:13:40 UTC <byorgey> really, why not?
+2012-07-26 21:14:06 UTC <tgeeky> byorgey: you can actually see something that looks like lorentz invariance
+2012-07-26 21:14:26 UTC <mgsloan> byorgey: well, currently it'd be BoundingBox (Option (Point v, Point v))
+2012-07-26 21:14:41 UTC <mgsloan> Points don't have Monoids
+2012-07-26 21:14:51 UTC <mgsloan> but now that I think of it, something like Min / Max could work here
+2012-07-26 21:16:08 UTC <byorgey> well, I don't think points have an Ord instance
+2012-07-26 21:16:25 UTC <byorgey> tgeeky: cool!
+2012-07-26 21:16:38 UTC <tgeeky> byorgey: byorgey does the structure ring any bells?
+2012-07-26 21:16:45 UTC <byorgey> no
+2012-07-26 21:16:56 UTC <mgsloan> they could have an Ord instance though - pointwise comparison is not so unreasonable
+2012-07-26 21:17:16 UTC <tgeeky> byorgey: those are the roots of the circle fractal!
+2012-07-26 21:17:21 UTC <byorgey> it would be sort of an abuse of Ord though, since it's not a total order
+2012-07-26 21:17:36 UTC <mgsloan> right
+2012-07-26 21:17:54 UTC <byorgey> I'd rather not do that
+2012-07-26 21:18:48 UTC <tgeeky> hm. i have a generating function. I wonder if I can convert that to haskell
+2012-07-26 21:18:50 UTC <byorgey> the other option would be to define  NonEmptyBoundingBox = (Point, Point), and give it a semigroup instance
+2012-07-26 21:19:12 UTC <mgsloan> Ooh, that's a good one
+2012-07-26 21:19:12 UTC <byorgey> then Option on top of that will get you a free Monoid instance
+2012-07-26 21:19:23 UTC <byorgey> even if we can't get semigroup for free
+2012-07-26 21:23:45 UTC <mgsloan> also, I'm going to remove "deriving Functor" because that could encourage violation of the invariants
+2012-07-26 21:24:18 UTC <mgsloan> also, make the ADTs abstract and have custom read / show in terms of functions
+2012-07-26 21:28:13 UTC <byorgey> yes, getting rid of the Functor instance makes sense
+2012-07-26 21:29:31 UTC <byorgey> BoundingBox was already abstract, agree with keeping it that way
+2012-07-26 21:31:54 UTC <mgsloan> yup, I was just about to mention that
+2012-07-26 21:32:18 UTC <mgsloan> I guess I'll avoid exporting NonEmptyBoundingBox
+2012-07-26 21:32:33 UTC <mgsloan> someone might want it, but may as well just have them store (Point v, Point v)
+2012-07-26 21:38:49 UTC <tgeeky> byorgey: so, it was totally dumb luck, but I stumbled upon an equation that (is surely) related to, if not the generator of, the circle fractal
+2012-07-26 21:39:05 UTC <tgeeky> byorgey: in the kocik paper, he mentions that the regular apollonian gasket
+2012-07-26 21:39:23 UTC <tgeeky> has no integral curvatures, and that its bends are (to scale):
+2012-07-26 21:39:46 UTC <tgeeky> (1 - sqrt(3))  ,  2  ,  2  ,  2  ,  (10 + 2*sqrt(3))
+2012-07-26 21:40:11 UTC <tgeeky> that's fine and dandy, but:
+2012-07-26 21:40:15 UTC <tgeeky> 2 / (1 - sqrt(3))  ,  2  ,  2  ,  2  ,  (10 + 2*sqrt(3)) / 2
+2012-07-26 21:40:26 UTC <tgeeky> is a recursive closed form equation
+2012-07-26 21:42:17 UTC <mgsloan> byorgey: is it ok to use the "s ~ Scalar v" trick for shorter constraint types?
+2012-07-26 21:43:07 UTC <tgeeky> byorgey: http://imgur.com/a/zjtA1 <-- note the first two images
+2012-07-26 21:50:42 UTC <mgsloan> byorgey: do you want to avoid a dependency on Newtype in monoid-extras?
+2012-07-26 21:58:49 UTC <byorgey> mgsloan: sure, s ~ Scalar v  is fine
+2012-07-26 21:59:13 UTC <byorgey> mgsloan: and no, a newtype dependency in monoid-extras is fine
+2012-07-26 21:59:36 UTC <byorgey> ACTION -> home
+2012-07-26 21:59:42 UTC <mgsloan> figured so, I just thought I vaguely remember hearing that it led to some funny stuff
+2012-07-26 22:00:02 UTC <mgsloan> cool! I don't really need newtype, but it might be somewhat prettier to use "pack . pack" and such
+2012-07-26 22:00:31 UTC <byorgey> well, ~ requires TypeFamilies
+2012-07-26 22:01:04 UTC <byorgey> there were some bugs related to it in early 7.0.x versions of ghc but I think they're all fixed now.
+2012-07-26 22:10:51 UTC <mgsloan> yeah, I know :) the funny stuff was just that you could do things that would otherwise require FlexibleContexts
+2012-07-26 22:10:59 UTC <mgsloan> maybe TypeFamilies -> FlexibleContexts
+2012-07-26 22:25:19 UTC <edwardk> byorgey: around?
+2012-07-26 23:12:04 UTC <mgsloan> byorgey: https://github.com/diagrams/diagrams-lib/pull/2
+2012-07-27 01:57:07 UTC <fryguybob> ACTION is in the process of making a lion: http://www.cs.rochester.edu/u/ryates/temp/lion.pdf
+2012-07-27 02:59:16 UTC <fryguybob> update: http://www.cs.rochester.edu/u/ryates/temp/lion2.pdf
+2012-07-27 11:29:30 UTC <byorgey> fryguybob: heh, nice lion =)
+2012-07-27 11:31:39 UTC <luite> hehe cool
+2012-07-27 11:32:07 UTC <luite> does anyone here know the program that replaces type3 bitmap fonts in latex-generated ps files?
+2012-07-27 11:32:10 UTC <luite> with outline fonts
+2012-07-27 11:42:28 UTC <byorgey> luite: is it this? http://www.ctan.org/pkg/pkfix
+2012-07-27 11:44:53 UTC <luite> ah that looks familiar, i thought the one i used before relied on metrics instead of comments to find the fonts though
+2012-07-27 11:45:52 UTC <byorgey> ok, I don't know, I just tried some googling
+2012-07-27 11:56:43 UTC <luite> hm doesn't work on this file
+2012-07-27 11:58:58 UTC <luite> ah, it's pkfix-helper! that inserts the PS comments necessary for pkfix to substitute the fonts
+2012-07-27 11:59:01 UTC <luite> tnx
+2012-07-27 14:49:54 UTC <fryguybob> byorgey: I don't think there is a drop in replacement for the github api part of that python script, so I think I will just make the google code reading side of it dump everything and then we can import using some github api tool of our choice.
+2012-07-27 15:28:24 UTC <fryguybob> byorgey: I haven't checked that it doesn't have anything wierd with it, but the raw data is here: http://www.cs.rochester.edu/u/ryates/temp/issue.json
+2012-07-27 15:29:10 UTC <fryguybob> Humm, that might not work out so well as it is all flat.
+2012-07-27 15:29:47 UTC <fryguybob> I think I can add some nesting.
+2012-07-27 15:36:03 UTC <fryguybob> Oh, it is a list of objects with only one item each so nothing is getting shadowed.  I don't have any more time to work on it so that will have to do for now.
+2012-07-27 15:38:19 UTC <fryguybob> I'm going to be gone this weekend to a bike ride/fund raiser.  Don't have too much fun with diagrams without me :D.
+2012-07-27 16:05:25 UTC <byorgey> fryguybob: thanks!  and have fun this weekend.  We'll be visiting my grandmother so I won't be doing much with diagrams. =)
+2012-07-27 16:06:02 UTC <luite> can't you teach her diagrams?
+2012-07-27 16:06:33 UTC <byorgey> hehe, well, my family did recently get her an ipad...
+2012-07-27 16:07:21 UTC <luite> my own grandma is more interested in knot theory ;p
+2012-07-27 16:07:27 UTC <luite> well, practice actualy
+2012-07-27 16:07:44 UTC <byorgey> hehe
+2012-07-27 16:07:54 UTC <byorgey> crocheting?
+2012-07-27 16:08:02 UTC <byorgey> knitting?
+2012-07-27 16:08:09 UTC <luite> both
+2012-07-27 16:08:22 UTC <byorgey> =)
+2012-07-27 16:08:26 UTC <luite> knitting is mostly an elaborate way to make unknots though
+2012-07-27 16:08:36 UTC <fryguybob> My family just got my grandma an ipad too.
+2012-07-27 16:08:57 UTC <byorgey> ok, need to go finish getting ready for my talk
+2012-07-27 16:09:07 UTC <luite> dunno about chrocheting, it's probably similar?
+2012-07-27 16:09:08 UTC <fryguybob> ACTION wonders if his grandma has a secret life as byorgey's grandma.
+2012-07-27 16:09:12 UTC <luite> hehe
+2012-07-27 16:09:48 UTC <luite> i wanted my family to give here an ipad last year but they thought it'd still be too intimidating to use
+2012-07-27 16:10:02 UTC <luite> guess i should try again this year
+2012-07-27 16:10:52 UTC <luite> perhaps they're just scared of finding her internet history after a year ;)
+2012-07-27 16:11:04 UTC <fryguybob> I was indifferent to the idea, but she was super excited to get it.
+2012-07-27 16:12:25 UTC <luite> why indifferent? afraid that your grandma would poke you all the time on facebook?
+2012-07-27 16:14:34 UTC <luite> (i don't have facebook, so i have no idea if this is a thing, i only got it from south park)
+2012-07-27 16:15:12 UTC <fryguybob> ha, no.  She has never showed interest in any technological things and I won't want to force her into it.
+2012-07-27 16:15:54 UTC <fryguybob> She has had a tremor for a long time and I worried that a touch interface would just frustrate her.
+2012-07-27 16:16:26 UTC <luite> buttons are fairly big though
+2012-07-27 16:17:05 UTC <fryguybob> Yeah.  The problem is more that it doesn't handle much motion during a touch to register a "click"
+2012-07-27 16:17:29 UTC <fryguybob> So there are many things that she can't do very easily, but scrolling around works great.
+2012-07-27 16:18:03 UTC <luite> does she like it now that se has it though?
+2012-07-27 16:18:16 UTC <fryguybob> Yes very much.  Voice recognition does well enough for her to post on facebook.
+2012-07-27 16:18:39 UTC <luite> oh cool
+2012-07-27 16:18:58 UTC <luite> that's only possible with the latest ipad, right?
+2012-07-27 16:19:03 UTC <fryguybob> I think so.
+2012-07-27 16:20:02 UTC <fryguybob> In the end I think the thing that makes it work is that someone else can very easily assist her for the parts that she cannot do.
+2012-07-27 16:20:36 UTC <fryguybob> I can click and type random things from upside down while she is still holding it.
+2012-07-27 16:20:49 UTC <luite> hm, only english, american, australian, french, german and japanese supported
+2012-07-27 18:03:11 UTC <byorgey> edwardk: were you looking for me?
+2012-07-27 18:12:45 UTC <edwardk> back
+2012-07-27 18:13:04 UTC <edwardk> had some slides on bound i was figuring i'd run past you before the talk ;)
+2012-07-27 18:13:21 UTC <edwardk> but as i gave the talk already the pressure is off =)
+2012-07-27 18:14:04 UTC <edwardk> http://www.slideshare.net/ekmett/bound-making-de-bruijn-succ-less is pretty close to what the final slides were
+2012-07-27 18:14:23 UTC <byorgey> ok =)
+2012-07-27 18:14:32 UTC <byorgey> I'll take a look anyway
+2012-07-27 18:15:02 UTC <edwardk> appreciate it =)
+2012-07-27 18:16:23 UTC <edwardk> i may update the talk for hac phi, either that or go into 'lens' and the use of traversals
+2012-07-27 18:25:09 UTC <byorgey> edwardk: talking about lens seems more practical for the average Haskell programmer
+2012-07-27 18:25:15 UTC <edwardk> probably
+2012-07-27 18:25:21 UTC <edwardk> but it means preparing slides ;)
+2012-07-27 18:25:37 UTC <byorgey> heh, good point =)
+2012-07-27 18:25:40 UTC <edwardk> actually i'm really liking the way the traversal code turned out in lens, so i'll probaby do that
+2012-07-27 18:28:26 UTC <byorgey> bound certainly sounds interesting, but I'd personally be more interested to hear about lens stuff
+2012-07-27 18:28:39 UTC <edwardk> sounds good
+2012-07-27 18:28:51 UTC <edwardk> besides i'll have video of the bound talk up soon
+2012-07-27 18:33:21 UTC <byorgey> edwardk: when will you be arriving in philly?
+2012-07-27 18:39:20 UTC <edwardk> sometime early friday
+2012-07-27 18:39:27 UTC <edwardk> i still need to book the hotel
+2012-07-27 18:39:37 UTC <edwardk> i booked the flght though
+2012-07-27 18:39:44 UTC <edwardk> sheesh its more expensive this year!
+2012-07-27 18:40:17 UTC <byorgey> what, the hotel, or the flight?  (or both?)
+2012-07-27 18:42:07 UTC <byorgey> hahaha, I had forgotten about conor's code from "I am not a number"
+2012-07-27 18:42:08 UTC <byorgey>  
+2012-07-27 18:42:19 UTC <byorgey>   | otherwise = F you
+2012-07-27 18:42:39 UTC <luite> :)
+2012-07-27 18:55:55 UTC <mgsloan> byorgey: So I'm fixing up my pull request.  One thing is that it seems strange to export "isEmpty", especially because boundingBox is exported from Diagrams.Prelude
+2012-07-27 18:56:38 UTC <byorgey> mgsloan: I'm not sure I understand what you mean.
+2012-07-27 18:57:53 UTC <mgsloan> well, it seems strange for diagrams to export such a generic sounding thing, but have it only be for bounding boxes
+2012-07-27 18:58:09 UTC <byorgey> mgsloan: ohh, I see what you're saying
+2012-07-27 18:58:16 UTC <byorgey> sure, I agree
+2012-07-27 18:58:17 UTC <mgsloan> "isEmptyBox" could work, but maybe it would make sense to have a typeclass for "IsEmpty"
+2012-07-27 18:58:28 UTC <byorgey> hmm
+2012-07-27 18:59:10 UTC <mgsloan> with the invariant that (IsEmpty a, Monoid a) => isEmpty mempty == True
+2012-07-27 18:59:54 UTC <byorgey> mgsloan: you know, the other thing that occurred to me is that perhaps we should export NonEmptyBoundingBox after all, and that boxFit should take one of those instead
+2012-07-27 19:01:01 UTC <byorgey> hmm, let me add a comment about boxFit
+2012-07-27 19:01:21 UTC <mgsloan> yeah, I could see that, I thought about that too, but the problem is that we wouldn't export any other operations for NonEmptyBoundingBox
+2012-07-27 19:01:36 UTC <byorgey> right, hmm
+2012-07-27 19:01:49 UTC <mgsloan> and we certainly don't want to wrap it up in a typeclass
+2012-07-27 19:03:16 UTC <mgsloan> class BBox a where getCorners :: a -> Maybe (Point (V a), Point (V a)); fromCorners :: (Point (V a), Point (V a)) -> a
+2012-07-27 19:03:24 UTC <mgsloan> this wouldn't be so bad
+2012-07-27 19:08:31 UTC <byorgey> it seems like there ought to be a simpler solution.
+2012-07-27 19:21:03 UTC <mgsloan> this is a pretty common problem with trying to lift knowledge about datatype invariants into the typesystem
+2012-07-27 19:21:52 UTC <mgsloan> either you end up introducing some boilerplate to transform to the more restrictive type and back, (Newtype.over), or you make polymorphic functions
+2012-07-27 19:25:36 UTC <byorgey> good point.
+2012-07-27 19:26:43 UTC <byorgey> well, anyway, I don't have super strong opinions on this.  Do something that seems most reasonable.
+2012-07-27 19:30:47 UTC <mgsloan> sounds good :)
+2012-07-27 19:31:04 UTC <mgsloan> I think I'm leaning towards not exposing, for the above reasons, and the huge name
+2012-07-27 19:38:49 UTC <mgsloan> https://github.com/mgsloan/api-compat/blob/master/examples/diagrams-lib-0.5.1.api
+2012-07-27 19:38:49 UTC <mgsloan> here's the full exports of Diagrams.Prelude
+2012-07-27 19:41:33 UTC <byorgey> wow
+2012-07-27 19:41:46 UTC <mgsloan> I think I might also do a mode that just focuses on names
+2012-07-27 19:41:54 UTC <mgsloan> instead of giving you full signatures
+2012-07-27 19:42:04 UTC <byorgey> maybe we should start thinking about things to NOT export from Diagrams.Prelude =)
+2012-07-27 19:42:13 UTC <mgsloan> maybe so :)
+2012-07-27 19:42:52 UTC <byorgey> after all, the Haskell Prelude doesn't export everything in base =)
+2012-07-27 19:43:26 UTC <byorgey> well, BoundingBox would be a good candidate for not exporting, I suppose
+2012-07-27 19:43:32 UTC <mgsloan> I think os
+2012-07-27 19:43:34 UTC <mgsloan> *so
+2012-07-27 19:43:59 UTC <mgsloan> might also consider exporting the important subsets of modules
+2012-07-27 19:44:06 UTC <mgsloan> that can get a little bit messy, though
+2012-07-27 19:44:14 UTC <byorgey> right
+2012-07-27 19:44:49 UTC <mgsloan> problem is that it's easy to add some utilities to a module without realizing that it's also getting exported from the Prelude
+2012-07-27 19:45:40 UTC <byorgey> that's true
+2012-07-27 19:47:12 UTC <byorgey> but on the flip side, if the Prelude has an explicit list of exports, it's easy to add a function to a module without realizing that it *isn't* getting exported from the Prelude
+2012-07-27 19:47:39 UTC <byorgey> so I think exports is just always going to be a fiddly thing no matter what
+2012-07-27 19:53:21 UTC <mgsloan> right
+2012-07-27 19:53:30 UTC <mgsloan> I like modules better, I think
+2012-07-27 19:53:44 UTC <mgsloan> maybe anything that doesn't belong in being exported from the prelude should go in contrib
+2012-07-27 19:54:05 UTC <mgsloan> time to go eat!
+2012-07-27 20:27:33 UTC <byorgey> http://www.haskell.org/haskellwiki/Diagrams/Contributing
+2012-07-27 20:27:51 UTC <byorgey> just a stub so far, help filling it in welcome/appreciated
+2012-07-27 20:31:58 UTC <fryguybob> "Getting involved\   EDIT ME" <-- Editing the wiki is one way to get involved :D
+2012-07-27 21:36:04 UTC <byorgey> fryguybob: indeed =)
+2012-07-27 21:36:16 UTC <byorgey> mgsloan: http://www.haskell.org/haskellwiki/Diagrams/Contributing
+2012-07-27 21:37:18 UTC <mgsloan> Cool! such a page is a good idea
+2012-07-27 21:37:41 UTC <mgsloan> where do you think a file similar to "https://github.com/mgsloan/gtk-toy-diagrams/blob/master/INSTALL.md"
+2012-07-27 21:37:45 UTC <mgsloan> should go?
+2012-07-27 21:38:04 UTC <mgsloan> I wish cabal could actually use the repository info
+2012-07-27 21:38:55 UTC <byorgey> mgsloan: see https://github.com/haskell/cabal/pull/2
+2012-07-27 21:38:57 UTC <mgsloan> e.g. "cabal pull --all" would pull all of the repositories of the given project and its dependencies
+2012-07-27 21:38:59 UTC <mgsloan> noice
+2012-07-27 21:39:33 UTC <byorgey> mgsloan: I guess that should go on the wiki somewhere
+2012-07-27 21:40:13 UTC <byorgey> mgsloan: by the way, you can replace most of that with  'cabal install monoid-extras/ dubl-tree/ diagrams-core/ ...'
+2012-07-27 21:40:30 UTC <mgsloan> oh? nice.
+2012-07-27 21:40:33 UTC <byorgey> with the slashes it installs the local packages instead of from hackage
+2012-07-27 21:40:45 UTC <mgsloan> The reason I don't do that is that cabal install tries to install the dependencies
+2012-07-27 21:40:54 UTC <byorgey> i.e. it interprets them as directories rather than package names
+2012-07-27 21:41:03 UTC <byorgey> not if you do them all at once like that.
+2012-07-27 21:41:16 UTC <byorgey> it topo sorts them first
+2012-07-27 21:41:31 UTC <mgsloan> gotcha
+2012-07-27 21:41:35 UTC <mgsloan> that's cool
+2012-07-27 21:43:29 UTC <byorgey> ACTION -> home
+2012-07-30 17:42:32 UTC <luite> ooh a bot
+2012-07-30 17:42:48 UTC <fryguybob> byorgey: I hope that worked :D
+2012-07-30 17:44:31 UTC <luite> now that it's on github i don't have a good excuse for not contributing anymore ;)
+2012-07-30 17:45:30 UTC <fryguybob> :D
+2012-07-30 17:45:58 UTC <fryguybob> Now that it is on github I should probably remember my github password.
+2012-07-30 17:46:22 UTC <luite> hehe i never remember my password, so i always have to switch to the browser that has a logged in session
+2012-07-30 19:39:48 UTC <byorgey> fryguybob: looks like it worked =)
+2012-07-30 19:45:01 UTC <fryguybob> byorgey: excellent.  I tried to do it with hub but it asked for the web password so I followed the steps that it said that it's merge would do (making guesses along the way).
+2012-07-30 19:45:27 UTC <fryguybob> Later I found that there is a switch that does ssh instead of web passwords, so I can try that next time :D.
+2012-07-30 19:46:18 UTC <fryguybob> (-p I think)
+2012-07-30 19:47:41 UTC <byorgey> ah, yes, -p
+2012-07-30 19:47:54 UTC <byorgey> I use -p when cloning using hub also
+2012-07-30 19:48:20 UTC <byorgey> it sets up the remote urls to be git@github:blahblah or whatever instead of https://github.com...
+2012-07-30 19:49:00 UTC <byorgey> fryguybob: for stuff that can be automerged you can also just click the big green button at the bottom of the pull request, I think
+2012-07-30 19:53:37 UTC <fryguybob> Ah, ok, I cloned without hub so I was already there.
+2012-07-30 19:53:48 UTC <fryguybob> Right, but I have to be signed in for that.
+2012-07-30 19:54:03 UTC <byorgey> oh, hehe, right =)
+2012-07-30 19:54:32 UTC <fryguybob> At least I think they closed the admin rights for anyone hole :D
+2012-07-30 19:54:45 UTC <byorgey> haha, what
+2012-07-30 19:55:38 UTC <fryguybob> https://github.com/rails/rails/issues/5228 -- quite amusing.
+2012-07-30 20:02:33 UTC <byorgey> haha, https://github.com/rails/rails/commit/b83965785db1eec019edf1fc272b1aa393e6dc57
+2012-07-30 20:05:04 UTC <mgsloan> lol@ github allowing images in comments
+2012-07-30 20:11:05 UTC <luite> oh they do?
+2012-07-30 20:11:30 UTC <luite> cool :)
+2012-07-30 20:17:31 UTC <byorgey> good to know, that might come in handy with diagrams =)
+2012-07-30 20:42:34 UTC <tgeeky> I think they have for a while, since they allow markdown (and markdown allows images?)
+2012-07-30 20:48:35 UTC <byorgey> well, they allow 'github flavored markdown'
+2012-07-30 20:48:47 UTC <byorgey> which means they can basically do whatever they want =)
+2012-07-30 20:49:03 UTC <byorgey> but yes, probably it's been supported for a while
+2012-07-30 23:20:44 UTC <fryguybob> byorgey: I should have a few hours this evening to get the issues migrated.
+2012-07-31 13:11:52 UTC <byorgey> fryguybob: thanks!  I just went through and made sure that every issue has exactly one Component tag, which you can use to route them into repo-specific issue trackers on github
+2012-07-31 17:10:51 UTC <fryguybob> byorgey: I made some progress, but didn't get all the way.
+2012-07-31 17:12:38 UTC <byorgey> fryguybob: ok, what's still left to do?
+2012-07-31 17:12:39 UTC <fryguybob> ACTION always feels like he is doing something wrong as every time he touches ByteString he ends up with some long string of decode, packs, and unpacks involving lazy strict and Text...
+2012-07-31 17:12:46 UTC <byorgey> hehehe
+2012-07-31 17:13:01 UTC <byorgey> why bother using ByteString for this?
+2012-07-31 17:13:24 UTC <fryguybob> To get from JSON.
+2012-07-31 17:13:29 UTC <byorgey> oh.
+2012-07-31 17:13:31 UTC <byorgey> right
+2012-07-31 17:13:36 UTC <fryguybob> At the time it seemed like the straight forward thing to do...
+2012-07-31 17:13:48 UTC <byorgey> heh
+2012-07-31 17:14:18 UTC <fryguybob> But the github package uses Strings in its structures.
+2012-07-31 17:15:12 UTC <byorgey> oh, there's a github paackage? nice.
+2012-07-31 17:15:21 UTC <fryguybob> I still need to figure out what I need to do to map all the stuff, but I have the data from gcode as some form of string in haskell taged with label, body, title, comment.
+2012-07-31 17:16:06 UTC <byorgey> if you didn't already, be sure to re-grab the data following my cleanup of the Component tags
+2012-07-31 17:16:18 UTC <byorgey> now every issue has exactly one
+2012-07-31 17:16:36 UTC <fryguybob> byorgey: Yeah I was planning on doing that once I was close.
+2012-07-31 17:16:44 UTC <byorgey> makes sense.
+2012-07-31 17:19:54 UTC <fryguybob> I won't have any time to work on it tonight though as it is Rebekah and my anniversary.
+2012-07-31 17:20:08 UTC <byorgey> oh, happy anniversary!
+2012-07-31 17:20:12 UTC <fryguybob> Thanks
+2012-07-31 17:20:52 UTC <byorgey> no worries.  it would be ideal to get it done before hac phi starts, but even that is not really a big deal.
+2012-07-31 17:21:38 UTC <byorgey> there are many things that would be ideal to get done before hac phi starts.  most of them will not get done. ce'st la vie.
+2012-07-31 17:24:15 UTC <fryguybob> That's the benefit of punchcard computing.  Programs can only get sooo big and then they become physically impractical.
+2012-07-31 17:24:46 UTC <byorgey> um, what? =)
+2012-07-31 17:25:22 UTC <fryguybob> You always have time to get things done because your programs are small ;D
+2012-07-31 21:13:44 UTC <fryguybob> gahh.  I never have the passwords I want when I want them :D (this summer at least...)
+2012-07-31 21:16:01 UTC <fryguybob> byorgey: I was going to add to the ReviewingAndMerging wiki something about making the action needed clear in reviews.
+2012-08-01 01:03:03 UTC <byorgey> fryguybob: don't have your Haskellwiki password, eh? =)
+2012-08-01 01:03:11 UTC <byorgey> fryguybob: good idea. I can add that.
+2012-08-01 01:16:14 UTC <byorgey> fryguybob: OK, I updated it, what do you think?
+2012-08-01 01:36:17 UTC <tgeeky> ACTION likey github bot!
+2012-08-01 01:46:28 UTC <byorgey> tgeeky: yeah, me too!
+2012-08-01 01:46:42 UTC <byorgey> ACTION <3 github
+2012-08-01 01:46:51 UTC <byorgey> ACTION </3 git
+2012-08-01 01:49:01 UTC <byorgey> It's not a bot, really, I just configured the repositories so that commits trigger IRC messages
+2012-08-01 01:51:32 UTC <edwardk> byorgey: heya did you get my msg that i'll probably be getting in a bit late for the PL lunch to work?
+2012-08-01 01:51:45 UTC <byorgey> edwardk: yeah, I did, too bad
+2012-08-01 01:51:46 UTC <edwardk> i get in philly around noon, so not sure the time to get from the airport, etc
+2012-08-01 01:52:01 UTC <byorgey> edwardk: I roped mgsloan into giving a talk instead =)
+2012-08-01 01:52:08 UTC <edwardk> score
+2012-08-01 01:52:24 UTC <edwardk> i still have to put together slides for lens
+2012-08-01 01:53:57 UTC <byorgey> yeah, if your plane lands at noon, you won't get to campus until after the lunch is over
+2012-08-01 01:54:06 UTC <edwardk> yeah
+2012-08-01 01:54:19 UTC <byorgey> anyway, looking forward to seeing you
+2012-08-01 01:55:23 UTC <edwardk> likewise. need to figure out how to switch diagrams over to use lens ;)
+2012-08-01 02:08:10 UTC <luite> what's mgsloan going to talk about?
+2012-08-01 02:08:49 UTC <tgeeky> ACTION still doesn't even know if will be going to hac-phi. :/
+2012-08-01 02:09:13 UTC <edwardk> tgeeky is an it?
+2012-08-01 02:09:26 UTC <tgeeky> hehe
+2012-08-01 02:09:31 UTC <tgeeky> s//he/
+2012-08-01 02:09:40 UTC <mgsloan> oh noes, you forgot the entire!
+2012-08-01 02:09:49 UTC <edwardk> you know you want to
+2012-08-01 02:09:56 UTC <edwardk> i had better book my hotel room soon
+2012-08-01 02:10:04 UTC <luite> ACTION does know if he will be going to hac phi
+2012-08-01 02:10:11 UTC <tgeeky> not!
+2012-08-01 02:10:27 UTC <luite> yeah
+2012-08-01 02:10:34 UTC <mgsloan> luite: I'm going to talk about instance templates + more
+2012-08-01 02:10:40 UTC <luite> ah cool
+2012-08-01 02:13:35 UTC <mgsloan> I'm thinking instance templates + API Diffs + ideas for its relevance to interface-limited coercion functions (kinda like weak typing - can generalize GeneralizedNewtypeDeriving)
+2012-08-01 02:14:32 UTC <mgsloan> (while making GeneralizedNewtypeDeriving sound, at the "cost" of making it more explicit)
+2012-08-01 02:17:07 UTC <mgsloan> I've also got some open questions regarding using types to dispatch to different instance templates / using this as a mechanism for checking minimal definitions of records
+2012-08-01 02:17:19 UTC <mgsloan> s/records/methods/
+2012-08-01 02:19:24 UTC <mgsloan> byorgey: does this sound reasonable for an hour?  I will allocate time based on audience feedback.  If everyone just "gets" instance templates, then that leaves plenty of time for the other stuff
+2012-08-01 02:30:52 UTC <tgeeky> hm. first time that's happened. I have stumbled upon something which I have calculated which wolframalpha can't (or won't)
+2012-08-01 02:30:58 UTC <tgeeky> !
+2012-08-01 02:32:15 UTC <tgeeky> and it took a good three or so minutes to run :o
+2012-08-01 02:32:27 UTC <tgeeky> ACTION assumed the calc would crash
+2012-08-01 03:16:19 UTC <fryguybob> byorgey: Your addition is well put.  Now we just need to bikeshed on a how to prevent bikesheding section.
+2012-08-01 13:35:05 UTC <byorgey> fryguybob: hehe
+2012-08-01 20:32:54 UTC <tgeeky> byorgey: not going to make it :\
+2012-08-01 20:33:15 UTC <luite> :(
+2012-08-01 20:34:26 UTC <tgeeky> on top of the normal trobles, I've been sick since Sunday. I went Monday, got a prescription for antibiotics (which he told me to wait a day to fill, in case it was just a overnight nose virus or something...)
+2012-08-01 20:34:46 UTC <tgeeky> and I got much, much worse, as expected. So I started them yesterday evening.
+2012-08-01 20:34:57 UTC <tgeeky> I don't think I'm going to be responsible for getting all of you guys sick :o
+2012-08-01 20:39:12 UTC <tgeeky> edwardk: do you know where multiplate fits into things, since the lens evolution that's happened in the last few months?
+2012-08-01 20:39:21 UTC <edwardk> yes
+2012-08-01 20:39:33 UTC <edwardk> i've been working on a variation on it ;)
+2012-08-01 20:39:41 UTC <tgeeky> varying how?
+2012-08-01 20:39:43 UTC <edwardk> its tricky though because i want type changing multiplates
+2012-08-01 20:40:33 UTC <edwardk> well, if you've been following the 'lens' chatter, i want to be able to compose them like i can the lenses an traversals
+2012-08-01 20:40:40 UTC <edwardk> but that is somewhat complicated by their structure
+2012-08-01 20:40:54 UTC <tgeeky> they only have the id and composure?
+2012-08-01 20:41:17 UTC <edwardk> well, no the issue is that if we take traverse
+2012-08-01 20:41:30 UTC <edwardk> traverse :: (c -> f d) -> t c -> f (t c)
+2012-08-01 20:41:41 UTC <edwardk> and we generate a traversal
+2012-08-01 20:42:00 UTC <edwardk> type Traversal a b c d = forall f. Applicative f => (c -> f d) -> a -> f b
+2012-08-01 20:42:18 UTC <edwardk> then we can see how multiplates are just the limited case where c = d, a = b, and that we have multiple input functions
+2012-08-01 20:42:33 UTC <edwardk> (b -> f b) -> (c -> f c) -> (d -> f d) -> a -> f a
+2012-08-01 20:42:44 UTC <edwardk> those are usually tupled up and called a plate
+2012-08-01 20:43:32 UTC <edwardk> the trick is finding the way to permit type varying multiplates so i can have say something that takes an Exp a and gives me back an Exp b
+2012-08-01 20:43:45 UTC <edwardk> that becomes analogous to making lens families/traversal families
+2012-08-01 20:43:51 UTC <edwardk> but then mkPlate breaks down
+2012-08-01 20:44:13 UTC <edwardk> so i've been working on how to rebuild that from first principles
+2012-08-01 20:45:17 UTC <edwardk> basically i'm trying to make applying the plate into the plate like how applying the traversal is the traversal
+2012-08-01 20:45:25 UTC <edwardk> if that is at all coherent
+2012-08-01 20:45:40 UTC <tgeeky> i know a finite number of those words
+2012-08-01 20:45:51 UTC <tgeeky> i have never actually tried plate composition/application in detail
+2012-08-01 20:46:40 UTC <edwardk> anyways i may be able to build a form of 'uniplate' that works with just taking a traversal and applying it to itself recursively
+2012-08-01 20:46:52 UTC <edwardk> e.g. everywhere :: Simple Traversal a a -> Simple Traversal a a
+2012-08-01 20:47:03 UTC <edwardk> those cease to be quite legal traversals
+2012-08-01 20:47:09 UTC <edwardk> so i need to come up with laws for them
+2012-08-01 20:47:18 UTC <tgeeky> edwardk: btw, have you looked at unfoldable and making putting some of that into your lens package?
+2012-08-01 20:47:41 UTC <edwardk> is there an Unfoldable class somewhere?
+2012-08-01 20:48:03 UTC <tgeeky> sjeord visscher (sp??)
+2012-08-01 20:48:05 UTC <edwardk> my focus right now has been generalizing Functor, Foldable, Traversable, functions and isomorphisms
+2012-08-01 20:48:18 UTC <byorgey> tgeeky: oh, sad =(
+2012-08-01 20:48:23 UTC <byorgey> tgeeky: hope you feel better soon
+2012-08-01 20:48:34 UTC <edwardk> icky
+2012-08-01 20:48:38 UTC <edwardk> looking at it
+2012-08-01 20:50:01 UTC <tgeeky> edwardk: my guess is this: the power of something like multiplate will come when it is equipped with a mechanism for both unfolding and folding (along with apos)
+2012-08-01 20:50:20 UTC <tgeeky> that is, you have a multiplate with some number of fields
+2012-08-01 20:50:23 UTC <edwardk> possibly, but i think its outside of the purview of lens
+2012-08-01 20:50:34 UTC <tgeeky> well, the lenses would be the projections I assumed?
+2012-08-01 20:50:42 UTC <tgeeky> excuse me, the invariants of the projections
+2012-08-01 20:50:45 UTC <tgeeky> would themselves be lenses
+2012-08-01 20:50:55 UTC <edwardk> one way to think about a multiplate is that a plate is a representable indexed functor
+2012-08-01 20:51:15 UTC <tgeeky> i don't understand those (representable, or indexed)
+2012-08-01 20:51:16 UTC <edwardk> thats the other approach i've been toying with
+2012-08-01 20:51:26 UTC <edwardk> have lens installed?
+2012-08-01 20:51:31 UTC <edwardk> look at Control.Lens.Representable
+2012-08-01 20:51:42 UTC <tgeeky> open
+2012-08-01 20:51:46 UTC <edwardk> in particular when working with lenses i spend a lot of time working in a funny category
+2012-08-01 20:52:00 UTC <edwardk> the category is the category of haskell types of the form (a -> f b)
+2012-08-01 20:52:24 UTC <tgeeky> covariant in a?
+2012-08-01 20:52:24 UTC <edwardk> thats why you can compose lenses, folds, traversals, etc. with (.) they are just composing functions between types of that form
+2012-08-01 20:52:53 UTC <edwardk> type Lens a b c d = forall f. Functor f => (c -> f d) -> (a -> f b)
+2012-08-01 20:52:57 UTC <tgeeky> oh
+2012-08-01 20:53:02 UTC <tgeeky> i have to keep that naming in mind
+2012-08-01 20:53:36 UTC <edwardk> so the different lens-like things are just different choices of constraints on 'f'
+2012-08-01 20:53:42 UTC <edwardk> if you choose Functor you get a Lens
+2012-08-01 20:53:48 UTC <edwardk> Applicative yields a Traversal
+2012-08-01 20:54:01 UTC <edwardk> if it is Const r for any r then its a Getter
+2012-08-01 20:54:06 UTC <edwardk> Const r for Monoid r then its a Fold
+2012-08-01 20:54:09 UTC <edwardk> Identity its a Setter
+2012-08-01 20:54:31 UTC <edwardk> and if i permit the outer arrow to vary as an isomorphism and f is a Functor we have an Iso
+2012-08-01 20:54:51 UTC <edwardk> type Iso a b c d = forall k f. (Isomorphic k, Functor f) => k (c -> f d) (a -> f b)
+2012-08-01 20:54:56 UTC <tgeeky> that's pretty f*ing amazing
+2012-08-01 20:54:57 UTC <tgeeky> isn't it
+2012-08-01 20:55:02 UTC <tgeeky> this list
+2012-08-01 20:55:08 UTC <edwardk> it made me happy as shit =)
+2012-08-01 20:55:26 UTC <tgeeky> so let's do this all over, with a trifunctor
+2012-08-01 20:55:35 UTC <tgeeky> so we can capture all three parts of the isomorphism :o
+2012-08-01 20:55:44 UTC <edwardk> Traversal is like traversable, getter is just a cps'd function, folds are foldables, setters are functors
+2012-08-01 20:55:52 UTC <edwardk> all of these can work for monomorphic containers, etc.
+2012-08-01 20:56:11 UTC <tgeeky> this single package is like a little typeclassopedia
+2012-08-01 20:56:33 UTC <tgeeky> edwardk: I have a project-in-the making called "ghh" -- gotta have haskell
+2012-08-01 20:57:05 UTC <tgeeky> needless to say, one of the subdirectories is "from-edward-kmett"
+2012-08-01 20:57:25 UTC <tgeeky> it's an answer to those questions -- which packages should you install?
+2012-08-01 20:57:52 UTC <edwardk> =)
+2012-08-01 20:58:07 UTC <edwardk> i'm hoping to use it to replace the use of generators in my reducers package
+2012-08-01 20:58:17 UTC <tgeeky> I found it easier to chunk up the available packages on hackage by adding a tag of "reliable producer of excellent code"
+2012-08-01 20:58:19 UTC <edwardk> and the notion of representable here lets me kill representable-functors
+2012-08-01 20:58:52 UTC <tgeeky> edwardk: seriously, though, what is a bifunctor (f g)? a lens transformer?
+2012-08-01 20:58:57 UTC <tgeeky> a bilens?
+2012-08-01 20:59:13 UTC <edwardk> haven't fiddled with bifunctors here, not sure how they'd work
+2012-08-01 20:59:37 UTC <edwardk> maybe useful to avoid having to instantiate things polymorphically when working with isomorphisms, i'll have to think about it
+2012-08-01 21:00:16 UTC <tgeeky> edwardk: well, my input from my genuine recent research is that when you have an isomorphism, you want it, *at least* both of the two homomorphisms that made it
+2012-08-01 21:00:47 UTC <edwardk> tgeeky: you can rederive them actually
+2012-08-01 21:01:17 UTC <edwardk> its a tricky but fun exercise to take a Simple Iso lens and rederive the a -> b and b -> a
+2012-08-01 21:01:36 UTC <edwardk> you have to instantiate it and its inverse with different versions of Const
+2012-08-01 21:02:03 UTC <edwardk> (b -> Const b b) -> a -> Const b a       -- pass it id, and it gives you a -> b
+2012-08-01 21:02:09 UTC <edwardk> and flip and do the same thing with Const a
+2012-08-01 21:02:13 UTC <edwardk> and you get b -> a
+2012-08-01 21:02:41 UTC <edwardk> of course you can just do this directly, by using ^.foo and ^.from foo
+2012-08-01 21:03:49 UTC <edwardk> an of course the mapping from a pair of functions to an Iso is an isomorphism itself ;)
+2012-08-01 21:04:05 UTC <edwardk> but alas i can't typecheck that predicatively
+2012-08-01 21:04:07 UTC <tgeeky> edwardk: right, but that breaks down when it's a 3-tuple
+2012-08-01 21:04:11 UTC <tgeeky> i mean, all of this does
+2012-08-01 21:04:32 UTC <edwardk> i don't understand your 3-tuple concept
+2012-08-01 21:04:51 UTC <edwardk> can you describe it further?
+2012-08-01 21:06:00 UTC <tgeeky> maybe, but I'll probably just waste time. I can think of examples that one might want to encode, that have 2-tuples, and 3-tuples:
+2012-08-01 21:06:22 UTC <tgeeky> Gaussian Integers: { +|- 1 , +/- i }
+2012-08-01 21:06:34 UTC <edwardk> not following at all
+2012-08-01 21:06:35 UTC <tgeeky> Eisenstein Int: { +/- 1 , +/- w, +/- w^2 }
+2012-08-01 21:06:57 UTC <edwardk> using lenses into them?
+2012-08-01 21:07:07 UTC <edwardk> e.g. real and imaginary in Data.Complex.Lens?
+2012-08-01 21:07:24 UTC <tgeeky> nope, you need to handle +/- first, but yes, I intend to try that
+2012-08-01 21:08:01 UTC <tgeeky> I want to encode the field itself as a n-tuple of lenses
+2012-08-01 21:08:02 UTC <tgeeky> err
+2012-08-01 21:08:09 UTC <tgeeky> as a lens family of a certain n-tuple width
+2012-08-01 21:08:37 UTC <tgeeky> this is just a concerete example of something to do, not a general explanation of my focus on at least 3-tuples
+2012-08-01 21:09:16 UTC <edwardk> well, i do something pretty weak but at least of this sort in physics
+2012-08-01 21:09:37 UTC <edwardk> instance Representable V3 where rep f = V3 (f x) (f y) (f z) -- x y and z are lenses
+2012-08-01 21:10:03 UTC <edwardk> but thats not to the operations, its to the positions, so you can view the set of polymorphic lenses as the basis for my vector space
+2012-08-01 21:10:12 UTC <tgeeky> that's a good start!
+2012-08-01 21:10:17 UTC <edwardk> i don't encode a field this way but a vector space over the field i can encode
+2012-08-01 21:10:33 UTC <tgeeky> well, I need the field, but if you have the lens you could at least be sure which field it's frome
+2012-08-01 21:10:33 UTC <edwardk> you get an Applicative, Monad, Distributive, etc for free by being Representable
+2012-08-01 21:11:00 UTC <edwardk> https://github.com/ekmett/physics/blob/master/Physics/Quaternion.hs#L48
+2012-08-01 21:11:27 UTC <tgeeky> edwardk: you don't happen to have code for the hyperbolic laplacian somewhere do you?
+2012-08-01 21:12:04 UTC <alp> whaaaaaaaaaat
+2012-08-01 21:12:23 UTC <edwardk> alp: ?
+2012-08-01 21:12:55 UTC <alp> i choked on hyperbolic laplacian
+2012-08-01 21:12:57 UTC <alp> sorry
+2012-08-01 21:12:59 UTC <edwardk> the d'alembert operator and stuff?
+2012-08-01 21:13:46 UTC <tgeeky> edwardk: yep, fixed
+2012-08-01 21:13:47 UTC <tgeeky> uhh
+2012-08-01 21:14:03 UTC <tgeeky> edwardk: i'm working on this: http://www.aimath.org/news/partition/brunier-ono.pdf
+2012-08-01 21:14:20 UTC <tgeeky> using cyclotomic and some bits from old-haskell-for-maths (eisenstein series, and dedekind eta)
+2012-08-01 21:14:50 UTC <tgeeky> I have F(z) defined
+2012-08-01 21:15:02 UTC <edwardk> ah, not very familiar with that stuff
+2012-08-01 21:15:10 UTC <tgeeky> i just need that laplacian
+2012-08-01 21:15:22 UTC <tgeeky> the -y^2 (d^2 / dx^2 + d^2 / dy^2)
+2012-08-01 21:17:06 UTC <tgeeky> edwardk: I've alrady got the cylotomic package extended to work over the guassian and eisenstein fields (sqrt(-4) and sqrt(-3) resp)
+2012-08-01 21:17:09 UTC <tgeeky> http://hpaste.org/72452
+2012-08-01 21:17:51 UTC <edwardk> cute
+2012-08-01 21:18:14 UTC <tgeeky> I have some of the code in place to cover all of the complex quadratic (class = 1) fields
+2012-08-01 21:19:33 UTC <tgeeky> i didn't think about looking at any of the eliptic curve packages. that stuff always scares me away
+2012-08-01 21:20:28 UTC <tgeeky> edwardk: btw, your packages are highlighted not only as good examples of good code, and being well maintained, but also as you know your struggles with getting haskell98 in many places means, I can add +*-from-edwardk to the list of hackage packages, and there's a good chance there won't be any weird deps
+2012-08-01 21:20:32 UTC <fryguybob> byorgey: I've made some progress on the issue importing.  I should be able to test against a dummy repo tonight.
+2012-08-01 21:20:58 UTC <edwardk> heh, well, lens is pretty bad in that it uses a lot of extensions
+2012-08-01 21:21:27 UTC <edwardk> but i've decided to just go for a decent library design, minimizing extensions so it doesn't need fundeps etc. for its own internal types, but is willing to use them for external deps
+2012-08-01 21:21:45 UTC <tgeeky> yeah, but as a side effect I can just automatically recommend your work :O
+2012-08-01 21:21:51 UTC <tgeeky> which I can't (yet) do for brent's :O
+2012-08-01 21:21:56 UTC <edwardk> uhoh
+2012-08-01 21:22:02 UTC <tgeeky> diagrams deps :(
+2012-08-01 21:22:14 UTC <fryguybob> moar extensions!
+2012-08-01 21:22:27 UTC <tgeeky> I'm fine with GHC only, but edwardk's code is very modular
+2012-08-01 21:23:10 UTC <tgeeky> here are the people who have packages by personal name instead of by specific reason:  brent-yorgey, daniel-fischer, daniel-schussler, edward-kmett, max-bolingbroke, michael-sloan, neil-mitchell, twan-van-laarhoven
+2012-08-01 21:23:57 UTC <alpounet> tgeeky, during next semester i'm going to do a lot of ECC crypto
+2012-08-01 21:24:02 UTC <alpounet> gonna be fun!
+2012-08-01 21:24:06 UTC <tgeeky> ! :)
+2012-08-01 21:24:12 UTC <alpounet> err
+2012-08-01 21:24:19 UTC <tgeeky> there has been some amazing progress in the field in the last few years
+2012-08-01 21:24:24 UTC <tgeeky> after Wiles
+2012-08-01 21:24:26 UTC <alpounet> EC crypto or ECC, not ECC crypto, obviously
+2012-08-01 21:24:26 UTC <edwardk> i have some old eliptic curve stuff from my crypto-in-java days, maybe i can port it to haskell at some point
+2012-08-01 21:24:36 UTC <tgeeky> bbiaf
+2012-08-01 21:24:44 UTC <alpounet> edwardk, hah, cool
+2012-08-01 21:24:55 UTC <alpounet> the few bits of ECC in haskell i've seen don't look very appealing
+2012-08-01 21:25:02 UTC <edwardk> i used to sell a JCA/JCE engine around the java 1.3-1.4 transition
+2012-08-01 21:25:20 UTC <edwardk> and i went out of my way to add a bunch of elliptic curve support by the end
+2012-08-01 21:25:39 UTC <edwardk> right before sun decided to stop renewing provider keys for anyone who wasn't on the scale of symantec
+2012-08-01 21:25:58 UTC <edwardk> and i decided to go do something else with my life after dumping most of the interesting hashes, and tricks on gnu crypto
+2012-08-01 21:26:09 UTC <alpounet> hah
+2012-08-01 21:26:39 UTC <edwardk> had they done differently i might still be doing that =P
+2012-08-01 21:26:53 UTC <alpounet> if nothing really satisfying is out there on hackage by then, i'll most likely write my own package
+2012-08-02 00:21:12 UTC <byorgey> fryguybob: awesome, thanks!
+2012-08-02 00:37:42 UTC <byorgey> hey mgsloan
+2012-08-02 00:38:00 UTC <mgsloan> 'lo byorgey :D
+2012-08-02 01:01:38 UTC <mgsloan> tgeeky: sorry to hear that you can't make it!!  We'll miss ya, but see you some other time
+2012-08-02 01:08:25 UTC <luite> :(
+2012-08-02 01:34:52 UTC <tgeeky> mgsloan: i'll still be hacking, for sure, but I'll miss you guys too
+2012-08-02 02:38:22 UTC <tgeeky> byorgey: here?
+2012-08-02 02:38:42 UTC <byorgey> tgeeky: yep
+2012-08-02 02:42:57 UTC <edwardk> tgeeky: you really should go ;)
+2012-08-02 02:43:08 UTC <tgeeky> :)
+2012-08-02 02:43:14 UTC <edwardk> whats keeping you away?
+2012-08-02 02:43:45 UTC <tgeeky> the biggest problem is a bad cold-flu-infection thing
+2012-08-02 02:43:51 UTC <edwardk> ah
+2012-08-02 02:44:01 UTC <edwardk> should room with copumpkin he's pretty miserable too ;)
+2012-08-02 02:44:09 UTC <tgeeky> and I am still symtomatic, and just started antibiotics, so I don't want to get all you guys sick :o
+2012-08-02 02:44:15 UTC <edwardk> fair nuff
+2012-08-02 02:47:56 UTC <luite> hm antibiotics for a cold, that's usually viral isn't it?
+2012-08-02 02:51:47 UTC <edwardk> well, that settles it, he's just ditching us =P
+2012-08-02 02:52:45 UTC <luite> either that or us healthcare is irresponsibly prescribing antibiotics!
+2012-08-02 02:53:06 UTC <edwardk> well, we do basically drown our cows in them
+2012-08-02 02:53:51 UTC <fryguybob> gahh, the feed from the code.google.com website has more data then is documented in the api.
+2012-08-02 02:54:55 UTC <luite> hm i hope js engines are good at optimizing array operations, otherwise this "i'll make my own closures" wasn't a good idea
+2012-08-02 02:55:24 UTC <edwardk> heh
+2012-08-02 02:55:31 UTC <fryguybob> luite: Yeah, "js" and "good at optimizing" go hand in hand :P
+2012-08-02 02:55:32 UTC <edwardk> using typed arrays or just normal ones?
+2012-08-02 02:56:07 UTC <luite> normal ones, since the arguments are objects (other arrays being other closures)
+2012-08-02 03:00:22 UTC <luite> i have a big array with all heap objects now
+2012-08-02 03:02:36 UTC <luite> fryguybob: they all have tracing jit compilers now, some low level code without too much branching should be optimizable, i hope...
+2012-08-02 03:08:47 UTC <fryguybob> Humm stabbing in the dark at python seems to have worked.  I have a sinking feeling that that is how all python code is written...
+2012-08-02 03:27:28 UTC <luite> yeah that's why developing python is faster than developing haskell, you only have to stab until it works, not until the compiler accepts it ;)
+2012-08-02 03:29:12 UTC <fryguybob> hehe
+2012-08-02 03:32:57 UTC <luite> hmm, it's getting light again... i should get some sleep, like you said, code is best written stabbing in the dark
+2012-08-02 03:33:10 UTC <tgeeky> hehe
+2012-08-02 03:36:32 UTC <luite> also i have no idea what i'm doing
+2012-08-02 03:36:55 UTC <tgeeky> i get that feeling too
+2012-08-02 03:37:09 UTC <tgeeky> i am also beginning to think I've made a genuine mathematics discovery
+2012-08-02 03:37:17 UTC <tgeeky> but I keep fumbling around with this bunsen burner
