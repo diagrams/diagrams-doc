@@ -907,6 +907,11 @@ the same direction before combining (see `Alignment`_):
 >                  (circle 1.5 # fc purple)
 >           # showOrigin
 
+If you want to place two diagrams next to each other using the local
+origin of the *second* diagram, you can use something like `beside' =
+flip . beside . negateV`, that is, use a vector in the opposite
+direction and give the diagrams in the other order.
+
 Since placing diagrams next to one another horizontally and vertically
 is quite common, special combinators are provided for convenience.
 `(|||)` and `(===)` are specializations of `beside` which juxtapose
