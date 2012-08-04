@@ -482,7 +482,7 @@ Next steps
 
 This tutorial has really only scratched the surface of what is
 possible! Included among the many things *not* covered by this
-tutorial are paths, splines, text, a wide array predefined shapes,
+tutorial are paths, splines, text, a wide array of predefined shapes,
 named subdiagrams, animation...  Here are pointers to some resources
 for learning more:
 
