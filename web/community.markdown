@@ -5,10 +5,15 @@ title: Community
 Get involved!  There are many ways to contribute to the diagrams
 project at a wide range of difficulty levels.
 
-* [Report a bug](http://code.google.com/p/diagrams/issues/list) or
-  browse open tickets.  If you are looking for some easy bugs or
-  enhancements to get started with but don't see anything likely, try
-  asking on the
+* Report a bug or browse open tickets using the issue trackers in the
+  [github diagrams organization](http://github.com/diagrams) (*e.g.*
+  [diagrams-core](http://github.com/diagrams/diagrams-core/issues),
+  [diagrams-lib](http://github.com/diagrams/diagrams-lib/issues),
+  [diagrams-cairo](http://github.com/diagrams/diagrams-cairo/issues),
+  [diagrams-doc](http://github.com/diagrams/diagrams-doc/issues),
+  [diagrams-contrib](http://github.com/diagrams/diagrams-contrib/issues)). If
+  you are looking for some easy bugs or enhancements to get started
+  with but don't see anything likely, try asking on the
   [mailing list](http://groups.google.com/group/diagrams-discuss) or
   in the `#diagrams` IRC channel.
 
@@ -18,12 +23,14 @@ project at a wide range of difficulty levels.
   projects, and so on.
 
 * Check out the [wiki](http://haskell.org/haskellwiki/Diagrams) for
-  frequently asked questions, tips and tricks, and discussion.
+  frequently asked questions, tips and tricks, discussion, projects,
+  and information on how to contribute.
 
-* Help improve or expand the [documentation](http://patch-tag.com/r/byorgey/diagrams-doc).
+* Help improve or expand the
+  [documentation](http://github.com/diagrams/diagrams-doc).
 
 * Contribute something to the
-  [diagrams-contrib](http://patch-tag.com/r/byorgey/diagrams-contrib) package!
+  [diagrams-contrib](http://github.com/diagrams/diagrams-contrib) package!
 
 * Drop by the IRC channel: `#diagrams` on freenode.org.
 
