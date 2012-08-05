@@ -232,39 +232,14 @@ Contributing
 ------------
 
 ``diagrams`` is an open-source project, and contributions are
-encouraged!  You can get the sources using darcs_:
+encouraged!  All diagrams-related repositories are in the `diagrams
+organization`_ on github.  The `Contributing page`_ on the
+diagrams wiki explains how to get the repositories and make
+contributions.
 
-::
+.. _`diagrams organization`: http://github.com/diagrams
+.. _`Contributing page`: http://www.haskell.org/haskellwiki/Diagrams/Contributing
 
-    darcs get http://patch-tag.com/r/byorgey/diagrams-FOO
-
-where ``FOO`` is one of
-
-  * ``core``: `the core diagrams framework`_
-  * ``lib``: `standard library of combinators and utilities`_
-  * ``cairo``: `rendering backend using cairo`_
-  * ``contrib``: `package of user-contributed extensions and tools`_
-  * ``doc``: `documentation, including website, manual, tutorials, etc.`_
-
-.. _`the core diagrams framework`: http://patch-tag.com/r/byorgey/diagrams-core
-.. _`standard library of combinators and utilities`: http://patch-tag.com/r/byorgey/diagrams-lib
-.. _`rendering backend using cairo`: http://patch-tag.com/r/byorgey/diagrams-cairo
-.. _`package of user-contributed extensions and tools`: http://patch-tag.com/r/byorgey/diagrams-contrib
-.. _`documentation, including website, manual, tutorials, etc.`: http://patch-tag.com/r/byorgey/diagrams-doc
-
-See the `bug tracker`_ for a list of bugs and feature requests.
-
-In the past, git_ mirrors of the ``diagrams`` repositories have been
-offered on github_, thanks to `Owen Stephens's`_ work on
-`darcs-bridge`_.  However, some bugs were discovered in darcs-bridge
-and the mirrors are currently not being updated.  We hope that the bugs will be
-fixed and git mirrors can be again offered at some point in the future.
-
-.. _darcs: http://darcs.net/
-.. _git: http://git-scm.com/
-.. _github: http://github.com/
-.. _`Owen Stephens's`: http://www.owenstephens.co.uk/
-.. _`darcs-bridge`: http://wiki.darcs.net/DarcsBridgeUsage
 
 Essential concepts
 ==================
