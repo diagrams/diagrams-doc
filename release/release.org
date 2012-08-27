@@ -1,3 +1,39 @@
+* Planning/status of current release (0.5.1? 0.6?)
+** finished uploads
+*** monoid-extras
+*** vector-space-points
+*** active
+*** diagrams-builder
+    Now builds successfully from what's on Hackage!
+    + [X] Make sure documentation is up to snuff
+    + [X] add diagrams-builder-cairo exe with flag?
+    + [X] make sure .cabal file is all up to code
+      - [X] source-repo
+      - [X] bug-reports
+      - [X] 1.10, default-language
+      - [X] other-extensions
+    + [X] add diagrams-latex.sty to extra-files and mention it
+    + [X] upload!
+*** BlogLiterately
+    Uploaded 0.5.2 with improved --upload-images behavior.
+
+    Still waiting for HTML to be released, to test with base-4.6. Will
+    make a minor point release once it's available.
+*** BlogLiterately-diagrams
+    Need to write blog post about this, diagrams-builder, diagrams-latex.sty.
+** uploads
+   For all of these, need to make sure documentation is up-to-date!
+   Except maybe diagrams-core, but should at least start on that.
+*** dual-tree
+    - rename and finish refactoring!
+*** diagrams-core
+*** diagrams-lib
+*** diagrams-cairo
+*** diagrams-contrib
+*** diagrams-doc
+    web site, user manual, etc.
+** other package statuses
+
 * Planning for release of version 0.5
 
   + [X] update diagrams package to depend on new versions of -core,
