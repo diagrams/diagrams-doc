@@ -12,15 +12,15 @@ import Control.Monad
 import qualified Data.Colour as C
 
 d = (stroke $
-   circlePath 2 # alignBR # translateX (-0.5)
+   circle 2 # alignBR # translateX (-0.5)
    <> (hcat' with { sep = 0.2 } . map (vcat' with {sep = 0.2})
-        $ (replicate 2 (replicate 9 (reversePath $ circlePath 0.3)))) # alignBR)
+        $ (replicate 2 (replicate 9 (reversePath $ circle 0.3)))) # alignBR)
     # fc red
     # lw 0
 
 ico_d = (stroke $
-        circlePath 2 # alignBR # translateX (-0.5) 
-        <> (vcat' with {sep = 0.3} $ replicate 5 (reversePath $ circlePath 0.5)) # alignBR)
+        circle 2 # alignBR # translateX (-0.5)
+        <> (vcat' with {sep = 0.3} $ replicate 5 (reversePath $ circle 0.5)) # alignBR)
         # fc red
         # lw 0
 
@@ -74,7 +74,7 @@ halfC = arc 0 (1/2 :: CircleFrac)
       # lw 0
 -}
 
-i = (circle 1 === strutY 0.5 === roundedRect (2,4) 0.4)
+i = (circle 1 === strutY 0.5 === roundedRect 2 4 0.4)
     # lw 0.05
     # lc blue
     # fc yellow
@@ -96,7 +96,7 @@ gbkg = grid
     # lc gray
     # rotateBy (-1/20)
     # clipBy p
-    # withBounds (p :: Path R2)
+    # withEnvelope (p :: Path R2)
     # lw 0.05
   where p = square 5
 
@@ -108,36 +108,37 @@ r = text "r" # fontSize 5
   <> square 1 # lw 0 # scale 5
 -}
 
-r = runTurtle (setHeading 90 >> forward 5 >> right 90 
+r = runTurtle (setPenWidth 0.3 >> setPenColor orange >>
+               setHeading 90 >> forward 5 >> right 90
                >> replicateM 5 (forward 0.9 >> right 36)
                >> forward 0.9 >> left 135 >> forward 3
               )
-  # reversePath  
-  # stroke' with { vertexNames = [["end"]] }
-  # lw 0.3
   # lineJoin LineJoinRound
   # lineCap LineCapRound
-  # lc orange
-  # (withName "end" $ \b -> atop (turtle # moveTo (location b)))
+  # (withName "end" $ atop . place turtle . location)
   where
     turtle = eqTriangle 1 # scaleY 1.3 # rotate (-135 :: Deg)
              # lw 0.1
-    
+
+-- XXX drawing the turtle above no longer works because we can't
+-- generate an actual path using runTurtle anymore, and hence we can't
+-- label its vertices.  See https://github.com/diagrams/diagrams-contrib/issues/5
+
 
 aTree = BNode () f f
   where f = BNode () (leaf ()) (leaf ())
 
 a2 = renderTree (\_ -> circle 0.5 # fc purple) (~~) t'' # lw 0.1
   where Just t' = uniqueXLayout 1 2 aTree
-        t''     = forceLayoutTree defaultForceLayoutTreeOpts t'
+        t''     = forceLayoutTree t'
 
 m = square 5 # lw 0.05 <>
     text "m"
       # fontSize 6 # italic # font "freeserif" # fc green
 
-vs = [(5,5), (3,6), (1,5), (1,4), (3,3), (5,2), (4,0), (0,0.5)]
+vs = map (uncurry (&)) [(5,5), (3,6), (1,5), (1,4), (3,3), (5,2), (4,0), (0,0.5)]
 s = (mconcat (map (\v -> translate v (dot blue)) vs) <>
-    cubicSpline False (map P vs) # lw 0.20)
+    cubicSpline False vs # lw 0.20)
     # scale 0.8
 
 dot c = circle 0.4 # fc c # lw 0
