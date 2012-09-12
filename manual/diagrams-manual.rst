@@ -82,7 +82,7 @@ like to know about, please bug the developers (using the ``#diagrams`` IRC
 channel on Freenode, or the `diagrams mailing list`_) so they can
 prioritize it!
 
-Warnings, "gotchas", and other important asides are in a red box with
+Warnings, "gotchas", and other important asides are in a yellow box with
 a "warning" icon, like this:
 
 .. container:: warning
@@ -110,17 +110,18 @@ about ``diagrams``:
     where you can get help from other ``diagrams`` users and developers.
   * Consider joining the `diagrams mailing list`_ for discussions
     and announcements about ``diagrams``.
-  * See the `bug tracker`_ for a list of open tickets.  If you find a
-    bug or would like to request a feature, please file a ticket!
+  * See the issue trackers in the `diagrams organization on github`_
+    for a list of open tickets.  If you find a bug or would like to
+    request a feature, please file a ticket!
 
 .. _`from the diagrams website`: http://projects.haskell.org/diagrams/doc/index.html
-.. _`report it as a bug`: http://code.google.com/p/diagrams/issues/list
+.. _`report it as a bug`: https://github.com/diagrams/diagrams-doc/issues
 .. _website: http://projects.haskell.org/diagrams
 .. _`diagrams wiki`: http://haskell.org/haskellwiki/Diagrams
 .. _`gallery of examples`: http://projects.haskell.org/diagrams/gallery.html
 .. _`diagrams mailing list`: http://groups.google.com/group/diagrams-discuss?pli=1
 .. _`developer wiki`: http://code.google.com/p/diagrams/
-.. _`bug tracker` : http://code.google.com/p/diagrams/issues/list
+.. _`diagrams organization on github` : https://github.com/diagrams/
 
 Installation
 ------------
@@ -132,7 +133,7 @@ Before installing ``diagrams``, you will need the following:
     ``diagrams`` hard to use).
 
   * It is recommended (but not required) to have the latest release of
-    the `Haskell Platform`_ (currently 2011.4.0.0).  At the very least
+    the `Haskell Platform`_ (currently XXX).  At the very least
     you will want the `cabal-install`_ tool.
 
 .. _`cabal-install`: http://hackage.haskell.org/trac/hackage/wiki/CabalInstall
@@ -159,13 +160,16 @@ solutions on various platforms.
 
 .. _`See the wiki for the most up-to-date information`: http://www.haskell.org/haskellwiki/Diagrams/Install
 
-If you can't get the cairo backend to work you can also try the
-(currently unreleased) `postscript backend`_.  A `native SVG backend`_
-is also being worked on, and hopefully the next release of diagrams will
-include it by default instead of cairo.
+If you can't get the cairo backend to work you can also try the native
+SVG backend, `diagrams-svg`:pkg: (instead of installing the
+`diagrams`:pkg: meta-package, which pulls in `diagrams-cairo`:pkg:,
+install `diagrams-core`:pkg:, `diagrams-lib`:pkg:, and
+`diagrams-svg`:pkg: individually). It is almost (but not quite) ready
+to replace `diagrams-cairo`:pkg: as the default "out-of-the-box"
+backend for diagrams.  There is also a (currently unreleased)
+`postscript backend`_.
 
-.. _`postscript backend`: http://www.patch-tag.com/r/fryguybob/diagrams-postscript/
-.. _`native SVG backend`: http://www.patch-tag.com/r/felipe/diagrams-svg/
+.. _`postscript backend`: http://github.com/fryguybob/diagrams-postscript/
 
 Getting started
 ---------------
@@ -179,11 +183,14 @@ the following contents:
 
   import Diagrams.Prelude
   import Diagrams.Backend.Cairo.CmdLine
+  -- or:
+  -- import Diagrams.Backend.SVG.CmdLine
+  -- if using the SVG backend
 
   main = defaultMain (circle 1)
 
 The first line turns off the `dreaded monomorphism restriction`_, which is
-quite important when using ``diagrams``: otherwise you will quickly
+quite important when using ``diagrams``: otherwise you will probably
 run into lots of crazy error messages.
 
 .. _`dreaded monomorphism restriction`: http://www.haskell.org/haskellwiki/Monomorphism_restriction
@@ -213,6 +220,9 @@ The above will generate a 100x100 PNG that should look like this:
 ::
 
 > example = circle 1
+
+(Of course, if using the SVG backend you should request an ``.svg``
+file instead of PNG.)
 
 Try typing
 
@@ -295,12 +305,13 @@ is also provided as a shorthand for the common operation of combining
 a whole list of elements with `mappend`.
 
 Since `mappend` is tediously long to write, ``diagrams`` provides the
-operator `(<>)` as a synonym. (Hopefully this synonym will soon become
-part of ``Data.Monoid`` itself!)
+operator `(<>)` as a synonym when built with versions of `base`:pkg:
+prior to 4.5.  base-4.5 and newer provide `(<>)` in
+`Data.Monoid`:mod:, which diagrams re-exports.
 
 Monoids are used extensively in ``diagrams``: diagrams,
-transformations, envelopes, trails, paths, styles, colors,
-and queries are all instances.
+transformations, envelopes, traces, trails, paths, styles, colors,
+and queries are all instances of `Monoid`.
 
 Faking optional named arguments
 -------------------------------
@@ -340,9 +351,11 @@ like this:
 
 There are a couple more things to note.  First, record update actually
 binds *more tightly* than function application, so the parentheses
-above are actually not necessary.  Second, ``diagrams`` also defines
-`with` as a synonym for `def`, which makes the syntax a bit more
-natural.  So, instead of the above, you could write
+above are actually not necessary (this is a strange corner of Haskell
+syntax but it works nicely for our purposes here).  Second,
+``diagrams`` also defines `with` as a synonym for `def`, which makes
+the syntax a bit more natural.  So, instead of the above, you could
+write
 
 ::
 
@@ -391,9 +404,10 @@ hand, represent a specific location. Translating a point results in a
 different point.
 
 Although it is a bad idea to *conflate* vectors and points, we can
-certainly *represent* points using vectors. ``diagrams`` defines a
-newtype wrapper around vectors called `Point`.  The most important
-connection between points and vectors is given by `(.-.)`, defined in
+certainly *represent* points using vectors. The
+`vector-space-points`:pkg: package defines newtype wrapper around
+vectors called `Point`.  The most important connection between points
+and vectors is given by `(.-.)`, defined in
 `Data.AffineSpace`:mod:. If `p1` and `p2` are points, `p2 .-. p1` is
 the vector giving the direction and distance from `p1` to `p2`.
 Offsetting a point by a vector (resulting in a new point) is
@@ -493,7 +507,7 @@ than reverse function application with a high precedence (namely, 8):
 `(#)` is provided simply because it often reads better to first write
 down what a diagram *is*, and then afterwards write down attributes
 and modifications.  Additionally, `(#)` has a high precedence so it
-can be used to make "local" modifications without using lots of
+can be used to make "local" modifications without requiring lots of
 parentheses:
 
 .. class:: lhs
@@ -503,9 +517,9 @@ parentheses:
 > example =     square 2 # fc red # rotateBy (1/3)
 >           ||| circle 1 # lc blue # fc green
 
-Note how the modifiers `fc red` and `rotateBy (1/3)` apply only to the square,
-and `lc blue` and `fc green` only to the circle (`(|||)` has a
-precedence of 6).
+Note how the modifiers `fc red` and `rotateBy (1/3)` apply only to the
+square, and `lc blue` and `fc green` only to the circle (`(|||)` has a
+precedence of 6, lower than that of `(#)`).
 
 Creating 2D diagrams
 ====================
@@ -549,12 +563,21 @@ two-dimensional space:
   `(Double, Double)` to the function `r2`; vectors can likewise be
   converted back into pairs using `unr2`.
 
+  Vectors can also be constructed and pattern-matched using the
+  utilities defined in `Diagrams.Coordinates`:mod:, which provides a
+  uniform interface for constructing points and vectors of any
+  dimension.  Vectors can be created using the syntax `(x & y)` and
+  pattern-matched by calling `coords` and then matching on the pattern
+  `(x :& y)`.
+
 * `P2` is the type of points in two-dimensional space. It is a synonym
   for `Point R2`.  The distinction between points and vectors is
   important; see `Vectors and points`_.
 
   Points can be created from pairs of coordinates using `p2` and
-  converted back using `unp2`.
+  converted back using `unp2`. They can also be constructed and
+  destructed using the same syntax as for vectors, as defined in
+  `Diagrams.Coordinates`:mod:.
 
 * `T2` is the type of two-dimensional affine transformations.  It is a
   synonym for `Transformation R2`.
@@ -669,8 +692,7 @@ polygons and other path-based shapes.  For example:
 >                                     , radiusTR = -0.2
 >                                     , radiusBR = 0.1 }
 
-More special polygons will likely be added in future versions of the
-library.
+More special polygons may be added in future versions of the library.
 
 Completing the hodgepodge in `Diagrams.TwoD.Shapes`:mod: for now, the
 functions `hrule` and `vrule` create horizontal and vertical lines,
@@ -742,12 +764,12 @@ consecutive vertices; for example:
 creating star polygons of this sort, although it is actually quite a
 bit more general.
 
-As its second argument, `star` expects a list of points.  One way
-to generate a list of points is with polygon-generating functions such
-as `polygon` or `regPoly`, or indeed, any function which can output
-any `PathLike` type (see the section about `PathLike`_), since a list
-of points is an instance of the `PathLike` class.  Of course, you are
-free to construct the list of points using whatever method you like!
+As its second argument, `star` expects a list of points.  One way to
+generate a list of points is with polygon-generating functions such as
+`polygon` or `regPoly`, or indeed, any function which can output any
+`PathLike` type (see the section about `PathLike`_), since a list of
+points is an instance of the `PathLike` class.  But of course, you are
+free to construct the list of points using whatever method you like.
 
 As its first argument, `star` takes a value of type `StarOpts`, for
 which there are two possibilities:
@@ -902,6 +924,17 @@ diagrams in the `x`:math:\- and `y`:math:\-directions, respectively.
 >                                          ===
 >                                          d2  )
 
+Sometimes, one may wish to *position* a diagram next to another
+diagram without actually composing them.  This can be accomplished
+with the `juxtapose` function.  In particular, `juxtapose v d1 d2`
+returns a modified version of `d2` which has been translated to be
+next to `d1` in the direction of `v`.  (In fact, `beside` itself is
+implemented as a call to `juxtapose` followed by a call to `(<>)`.)
+
+.. container:: todo
+
+  Example
+
 See `envelopes and local vector spaces`_ for more information on what
 "next to" means, `Working with envelopes`_ for information on
 functions available for manipulating envelopes, or `Envelopes`_ for
@@ -995,16 +1028,16 @@ recognized by most backends.  However, you can easily create your own
 attributes as well; for details, see `Style and attribute internals`_.
 
 In many examples, you will see attributes applied to diagrams using
-the `(#)` operator.  However, keep in mind that there is nothing
-special about this operator as far as attributes are concerned. It is
-merely backwards function application, which is used for attributes
-since it often reads better to have the main diagram come first,
-followed by modifications to its attributes.
+the `(#)` operator.  Keep in mind that there is nothing special about
+this operator as far as attributes are concerned. It is merely
+backwards function application, which is used for attributes since it
+often reads better to have the main diagram come first, followed by
+modifications to its attributes.  See `Postfix transformation`_.
 
 In general, inner attributes (that is, attributes applied earlier)
 override outer ones.  Note, however, that this is not a requirement.
 Each attribute may define its own specific method for combining
-multiple instances.  See `Style and attribute internals`_ for more
+multiple values.  See `Style and attribute internals`_ for more
 details.
 
 Most of the attributes discussed in this section are defined in
@@ -1147,10 +1180,10 @@ for three aspects of line drawing:
 The ``HasStyle`` class
 ^^^^^^^^^^^^^^^^^^^^^^
 
-Functions such as `fc`, `lc`, `lw`, `lineCap`, and so on, do not
-actually take only diagrams as arguments.  They take any type which is
-an instance of the `HasStyle` type class.  Of course, diagrams
-themselves are an instance.
+Functions such as `fc`, `lc`, `lw`, and `lineCap` do not take only
+diagrams as arguments.  They take any type which is an instance of the
+`HasStyle` type class.  Of course, diagrams themselves are an
+instance.
 
 However, the `Style` type is also an instance.  This is useful in
 writing functions which offer the caller flexible control over the
@@ -1180,9 +1213,8 @@ applying the desired attributes:
 
 If the type `T` is an instance of `HasStyle`, then `[T]` is also.
 This means that you can apply styles uniformly to entire lists of
-diagrams at once, which occasionally comes in handy.  The function
-type `a -> T` is also an instance of `HasStyle` whenever `T` is, which
-comes in handy even more occasionally.
+diagrams at once, which occasionally comes in handy.  Likewise, there
+are `HasStyle` instances for pairs, `Map`\s, `Set`\s, and functions.
 
 2D Transformations
 ~~~~~~~~~~~~~~~~~~
@@ -1338,7 +1370,7 @@ Transformations can be applied not just to diagrams, but values of any
 type which is an instance of the `Transformable` type class.
 Instances of `Transformable` include vectors, points, trails, paths,
 envelopes, and `Transformations` themselves.  In addition,
-lists, maps, or sets of `Transformable` things are also
+tuples, lists, maps, or sets of `Transformable` things are also
 `Transformable` in the obvious way.
 
 Alignment
@@ -1489,7 +1521,6 @@ starting point.
 
 To construct a `Trail`, you can use one of the following:
 
-* `fromSegments` takes an explicit list of `Segment`\s.
 * `fromOffsets` takes a list of vectors, and turns each one into a
   linear segment.
 * `fromVertices` takes a list of vertices, generating linear segments
@@ -1497,6 +1528,7 @@ To construct a `Trail`, you can use one of the following:
 * `(~~)` creates a simple linear trail between two points.
 * `cubicSpline` creates a smooth curve passing through a given list of
   points; it is described in more detail in the section on `Splines`_.
+* `fromSegments` takes an explicit list of `Segment`\s.
 
 If you look at the types of these functions, you will note that they
 do not, in fact, return just `Trail`\s: they actually return any type
@@ -2148,6 +2180,30 @@ as apply an alignment to a list of diagrams *considered as a group*.
 For some examples and an explanation of why this might be useful, see
 `Delayed composition`_.
 
+Traces
+------
+
+Envelopes are useful for placing diagrams relative to one another, but
+they are not particularly useful for finding actual points on the
+boundary of a diagram.
+
+Every diagram (and, more generally, anything which is an instance of
+the `Traced` type class) has a *trace*, 
+
+.. container:: todo
+
+  Working here.
+
+.. class:: dia-lhs
+
+::
+
+> example = square 1 <> maybe mempty (place (circle 0.1 # fc blue)) (traceP origin (1 & 1) (square 1 :: D R2))
+
+.. container:: todo
+
+  Write me.
+
 Named subdiagrams
 -----------------
 
@@ -2155,8 +2211,9 @@ Although the simple combinatorial approach to composing diagrams can
 get you a long way, for many tasks it becomes necessary (or, at least,
 much simpler) to have a way to refer to previously placed subdiagrams.
 That is, we want a way to give a name to a particular diagram, combine
-it with some others, and then later be able to ask "now where did that
-diagram end up?" in order to help us position other diagrams.
+it with some others, and then later be able to refer back to the the
+subdiagram by name. Any diagram can be given a name with the `named`
+function.
 
 .. container:: warning
 
@@ -2164,11 +2221,6 @@ diagram end up?" in order to help us position other diagrams.
    experimental; it is quite likely to change (in both small and large
    ways) in future versions of diagrams.  Your feedback on the current
    design is greatly appreciated!
-
-Any diagram can be given a name with the `named` function.  The local
-origin and envelope of the diagram will be associated with
-the name, and they will be tracked as the diagram is incorporated into
-other larger diagrams and transformed.
 
 User-defined names
 ~~~~~~~~~~~~~~~~~~
@@ -2207,7 +2259,7 @@ has the (admittedly scary-looking!) type
 
   withName :: ( IsName n, AdditiveGroup (Scalar v), Floating (Scalar v)
               , InnerSpace v, HasLinearMap v)
-           => n -> (LocatedEnvelope v -> QDiagram b v m -> QDiagram b v m)
+           => n -> (Subdiagram v -> QDiagram b v m -> QDiagram b v m)
                 -> (QDiagram b v m -> QDiagram b v m)
 
 Let's pick this apart a bit.  First, we see that the type `n` must be
@@ -2221,11 +2273,11 @@ function of type
 
 ::
 
-  LocatedEnvelope v -> QDiagram b v m -> QDiagram b v m
+  Subdiagram v -> QDiagram b v m -> QDiagram b v m
 
 We can see this function as a transformation on diagrams, except that
 it also gets to use some extra information---namely, a
-"`LocatedEnvelope v`", which records the local origin and envelope
+"`Subdiagram v`", which records the local origin and envelope
 associated with the name we pass as the first argument to `withName`.
 
 Finally, the return type of `withName` is itself a transformation of
@@ -2319,22 +2371,27 @@ Sometimes you may not be sure what names exist within a diagram---for
 example, if you have obtained the diagram from some external module,
 or are debugging your own code.  The `names` function extracts a list
 of all the names recorded within a diagram and their associated
-located envelopes.
+subdiagrams
 
 When using `names` you will often need to add a type annotation such
 as `D R2` to its argument, as shown below---for an explanation and
 more information, see `No instances for Backend b0 R2 ...`_.
 
+.. container:: todo
+
+  Check to make sure this example still works.  Actually, it doesn't.
+  SubMap doesn't have a Show instance.
+
 ::
 
     ghci> names (circle 1 # named "joe" ||| circle 2 # named "bob" :: D R2)
-    NameMap (fromList [	("bob", [ LocatedEnvelope
+    NameMap (fromList [	("bob", [ Subdiagram
                        	            (P (3.0,0.0))
                        	            (TransInv {unTransInv = <envelope>})
                        	        ]
                        	)
                        	,
-                       	("joe", [ LocatedEnvelope
+                       	("joe", [ Subdiagram
                        	            (P (0.0,0.0))
                        	            (TransInv {unTransInv = <envelope>})
                        	        ]
@@ -2347,6 +2404,10 @@ output of `names` can be manipulated in other ways than just printing.
 
 Using named envelopes
 ~~~~~~~~~~~~~~~~~~~~~
+
+.. container:: todo
+
+  This section needs to be rewritten, and given a better title.
 
 So far the examples we have seen have only made use of the local
 origin associated with each name.  However, the envelope of
@@ -2376,9 +2437,10 @@ edge of each child circle, instead of connecting their centers.
 >
 > example = nodes # applyAll (map parentToChild "abcde")
 
-The `boundaryFrom` function is used to compute boundary points:
-`boundaryFrom le v` computes the boundary point in direction `v` for
-the located envelope `le`.
+.. container:: todo
+
+  Explain this example. Also, make some nicer tools so the code isn't
+  so terrible.  Reinstate 'boundaryFrom' function?
 
 Qualifying names
 ~~~~~~~~~~~~~~~~
@@ -2584,16 +2646,62 @@ Envelopes (see `Working with envelopes`_) are more flexible and
 compositional than bounding boxes for the purposes of combining
 diagrams.  However, occasionally it is useful for certain applications
 to be able to work with bounding boxes, which support fast tests for
-inclusion as well as union and intersection operations.
+inclusion as well as union and intersection operations (envelopes
+support union but not inclusion testing or intersection).
 
-To this end, a generic implementation of arbitrary-dimension bounding
-boxes is provided in `Diagrams.BoundingBox`:mod:.  Bounding boxes can
-be created from sets of points or from any `Enveloped` object, used
-for inclusion or exclusion testing, and combined via union or
-intersection.
+To this end, a generic implementation of arbitrary-dimensional
+bounding boxes is provided in `Diagrams.BoundingBox`:mod:.  Bounding
+boxes can be created from sets of points or from any `Enveloped`
+object, used for inclusion or exclusion testing, and combined via
+union or intersection.
 
 To obtain a rectangle corresponding to a diagram's bounding box, use
 `boundingRect`.
+
+Type class reference
+====================
+
+This section serves as a reference for all the type classes defined or
+used by diagrams; there are quite a lot. (Some might even say too
+many.)  Most, if not all, of these are also covered elsewhere, but it
+is useful to have them collected all in one place.
+
+.. container:: todo
+
+  Write me!
+
+HasOrigin
+---------
+
+Transformable
+-------------
+
+Juxtaposable
+------------
+
+AttributeClass
+--------------
+
+HasStyle
+--------
+
+PathLike
+--------
+
+Enveloped
+---------
+
+Traced
+------
+
+IsName
+------
+
+Backend
+-------
+
+Renderable
+----------
 
 Tips and tricks
 ===============
