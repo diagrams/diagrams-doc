@@ -1,4 +1,6 @@
 
+import Control.Monad (when)
+import System.Directory (doesDirectoryExist, createDirectory)
 import System.FilePath ( (<.>), (</>) )
 import System.IO
 
@@ -25,14 +27,15 @@ main = do
                        , "vector-space-points"
                        ]
   docutilsCmdLine (diagramsManual modMap nameMap)
+  putStrLn ""
 
-diagramsManual modMap nameMap =
+diagramsManual modMap nameMap outDir =
   doTransforms [ linkifyHackage
                , linkifyModules modMap
                , highlightInlineHS
                , highlightBlockHS
-               , compileDiagrams
-               , compileDiagramsLHS
+               , compileDiagrams outDir
+               , compileDiagramsLHS outDir
                , linkifyHS nameMap modMap
                ]
   >>> xml2html
@@ -40,25 +43,25 @@ diagramsManual modMap nameMap =
                    , styleFile "css/syntax.css"
                    ]
 
-compileDiagrams :: XmlT (IOSLA (XIOState ()))
-compileDiagrams = onElemA "literal_block" [("classes", "dia")] $
+compileDiagrams :: FilePath -> XmlT (IOSLA (XIOState ()))
+compileDiagrams outDir = onElemA "literal_block" [("classes", "dia")] $
   eelem "div"
     += attr "class" (txt "exampleimg")
-    += compileDiaArr
+    += compileDiaArr outDir
 
 -- | Compile code blocks intended to generate both a diagram and the
 --   syntax highlighted code.
-compileDiagramsLHS :: XmlT (IOSLA (XIOState ()))
-compileDiagramsLHS = onElemA "literal_block" [("classes", "dia-lhs")] $
+compileDiagramsLHS :: FilePath -> XmlT (IOSLA (XIOState ()))
+compileDiagramsLHS outDir = onElemA "literal_block" [("classes", "dia-lhs")] $
   eelem "div"
     += attr "class" (txt "dia-lhs")
-    += (compileDiaArr <+> highlightBlockHSArr)
+    += (compileDiaArr outDir <+> highlightBlockHSArr)
 
-compileDiaArr :: (ArrowXml (~>), ArrowIO (~>)) => XmlT (~>)
-compileDiaArr =
+compileDiaArr :: (ArrowXml (~>), ArrowIO (~>)) => FilePath -> XmlT (~>)
+compileDiaArr outDir =
   getChildren >>>
   getText >>>
-  arrIO compileDiagram >>>
+  arrIO (compileDiagram outDir) >>>
   eelem "div"
     += attr "style" (txt "text-align: center")
     += (eelem "img"
@@ -67,8 +70,9 @@ compileDiaArr =
 
 -- | Compile the literate source code of a diagram to a .png file with
 --   a file name given by a hash of the source code contents
-compileDiagram :: String -> IO String
-compileDiagram src = do
+compileDiagram :: FilePath -> String -> IO String
+compileDiagram outDir src = do
+  ensureDir outDir
   res <- buildDiagram
            Cairo
            zeroV
@@ -85,16 +89,32 @@ compileDiagram src = do
            ]
            (hashedRegenerate
              (\hash opts -> opts { cairoFileName = mkFile hash })
-             "images"
+             outDir
            )
   case res of
-    ParseErr err    -> putStrLn ("\nError while parsing\n" ++ src) >>
-                       putStrLn err >>
-                       return "default.png"
-    InterpErr ierr  -> putStrLn ("\nError while interpreting\n" ++ src) >>
-                       putStrLn (ppInterpError ierr) >>
-                       return "default.png"
-    Skipped hash    -> putStr "." >> hFlush stdout >> return (mkFile hash)
-    OK hash (act,_) -> putStr "O" >> hFlush stdout >> act >> return (mkFile hash)
+    ParseErr err    -> do
+      putStrLn ("\nError while parsing\n" ++ src)
+      putStrLn err
+      return "default.png"
+
+    InterpErr ierr  -> do
+      putStrLn ("\nError while interpreting\n" ++ src)
+      putStrLn (ppInterpError ierr)
+      return "default.png"
+
+    Skipped hash    -> do
+      putStr "."
+      hFlush stdout
+      return (mkFile hash)
+
+    OK hash (act,_) -> do
+      putStr "O"
+      hFlush stdout
+      act
+      return (mkFile hash)
+
  where
-  mkFile base = "images" </> base <.> "png"
+  mkFile base = outDir </> base <.> "png"
+  ensureDir dir = do
+    b <- doesDirectoryExist dir
+    when (not b) $ createDirectory dir
