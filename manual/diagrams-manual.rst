@@ -4,9 +4,9 @@
 
 .. default-role:: hs
 
-====================
-Diagrams User Manual
-====================
+======================
+ Diagrams User Manual
+======================
 
 .. contents::
 
@@ -17,7 +17,8 @@ Introduction
 ------------
 
 ``diagrams`` is a flexible, powerful embedded domain-specific language
-(EDSL) for creating vector graphics.  The ``diagrams`` framework is:
+(EDSL) for creating vector graphics and animations.  The ``diagrams``
+framework is:
 
   * **Declarative**: you specify *what* a diagram is, not *how* to
     draw it.  ``diagrams`` takes care of the how.
@@ -924,6 +925,9 @@ diagrams in the `x`:math:\- and `y`:math:\-directions, respectively.
 >                                          ===
 >                                          d2  )
 
+Juxtaposing without composing
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 Sometimes, one may wish to *position* a diagram next to another
 diagram without actually composing them.  This can be accomplished
 with the `juxtapose` function.  In particular, `juxtapose v d1 d2`
@@ -931,9 +935,14 @@ returns a modified version of `d2` which has been translated to be
 next to `d1` in the direction of `v`.  (In fact, `beside` itself is
 implemented as a call to `juxtapose` followed by a call to `(<>)`.)
 
-.. container:: todo
+.. class:: dia-lhs
 
-  Example
+::
+
+> d1 = juxtapose unitX             (square 1) (circle 1 # fc red)
+> d2 = juxtapose (unitX ^+^ unitY) (square 1) (circle 1 # fc green)
+> d3 = juxtapose unitY             (square 1) (circle 1 # fc blue)
+> example = mconcat [d1, d2, d3]
 
 See `envelopes and local vector spaces`_ for more information on what
 "next to" means, `Working with envelopes`_ for information on
@@ -998,7 +1007,9 @@ Finally, `appends` is like an iterated variant of `beside`, with the
 important difference that multiple diagrams are placed next to a
 single central diagram without reference to one another; simply
 iterating `beside` causes each of the previously appended diagrams to
-be taken into account when deciding where to place the next one.
+be taken into account when deciding where to place the next one.  Of
+course, `appends` is implemented in terms of `juxtapose` (see
+`Juxtaposing without composing`_).
 
 .. class:: dia-lhs
 
@@ -1044,7 +1055,7 @@ Most of the attributes discussed in this section are defined in
 `Diagrams.Attributes`:mod:.
 
 Color
-^^^^^
++++++
 
 Two-dimensional diagrams have two main colors, the color used to
 stroke the paths in the diagram and the color used to fill them.
@@ -1104,7 +1115,7 @@ color.
 > example = t ||| t # bg orange
 
 Line width
-^^^^^^^^^^
+++++++++++
 
 To alter the *width* of the lines used to stroke paths, use `lw`. The
 default line width is (arbitrarily) `0.01`.  You can also set the line
@@ -1153,7 +1164,7 @@ function to convert a stroked path into an actual region, which would
 allow line width to be taken into account.
 
 Other line parameters
-^^^^^^^^^^^^^^^^^^^^^
++++++++++++++++++++++
 
 Many rendering backends provide some control over the particular way
 in which lines are drawn.  Currently, ``diagrams`` provides support
@@ -1178,7 +1189,7 @@ for three aspects of line drawing:
 >             ]
 
 The ``HasStyle`` class
-^^^^^^^^^^^^^^^^^^^^^^
+++++++++++++++++++++++
 
 Functions such as `fc`, `lc`, `lw`, and `lineCap` do not take only
 diagrams as arguments.  They take any type which is an instance of the
@@ -1240,7 +1251,7 @@ discuss verb forms), but getting one's hands on a transformation can
 occasionally be useful.
 
 Transformations in general
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+++++++++++++++++++++++++++
 
 Before looking at specific two-dimensional transformations, it's worth
 saying a bit about transformations in general (a fuller treatment can
@@ -1263,7 +1274,7 @@ To invert a transformation, use `inv`.  For any transformation `t`,
 To apply a transformation to a diagram, use `transform`.
 
 Rotation
-^^^^^^^^
+++++++++
 
 Use `rotate` to rotate a diagram couterclockwise by a given angle__
 about the origin.  Since `rotate` takes an angle, you must specify an
@@ -1288,7 +1299,7 @@ __ `Angles`_
 > example = hcat . map (eff #) $ rs
 
 Scaling and reflection
-^^^^^^^^^^^^^^^^^^^^^^
+++++++++++++++++++++++
 
 Scaling by a given factor is accomplished with `scale` (which scales
 uniformly in all directions), `scaleX` (which scales along the `x`:math:\-axis
@@ -1328,13 +1339,13 @@ To reflect in some line other than an axis, use `reflectAbout`.
 >        <> reflectAbout (p2 (0.2,0.2)) (rotateBy (-1/10) unitX) eff
 
 Translation
-^^^^^^^^^^^
++++++++++++
 
 Translation is achieved with `translate`, `translateX`, and
 `translateY`, which should be self-explanatory.
 
 Conjugation
-^^^^^^^^^^^
++++++++++++
 
 `Diagrams.Transform`:mod: exports useful transformation utilities
 which are not specific to two dimensions.  At the moment there are
@@ -1364,7 +1375,7 @@ Note that `reflectAbout` and `rotateAbout` are implemented using
 .. _`The Transformable class`:
 
 The ``Transformable`` class
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
++++++++++++++++++++++++++++
 
 Transformations can be applied not just to diagrams, but values of any
 type which is an instance of the `Transformable` type class.
@@ -1622,6 +1633,34 @@ For information on other path manipulation functions such as
 `pathFromTrail`, `pathFromTrailAt`, `pathVertices`, and `pathOffsets`,
 see the documentation in `Diagrams.Path`:mod:.
 
+Stroking trails and paths
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The `strokeT` and `stroke` functions, which turn trails and paths into
+diagrams respectively, have already been mentioned; they are defined
+in `Diagrams.TwoD.Path`:mod:.  Both also have primed variants,
+`strokeT'` and `stroke'`, which take a record of `StrokeOpts`.
+Currently, `StrokeOpts` has two fields:
+
+* `vertexNames` takes a list of lists of names, and zips each list
+  with a component of the path, creating point subdiagrams (using
+  `pointDiagram`) associated with the names.  This means that the
+  names can be used to later refer to the locations of the path
+  vertices (see `Named subdiagrams`_).  In the case of `strokeT'`,
+  only the first list is used.
+
+  By default, `vertexNames` is an empty list.
+
+* `queryFillRule` specifies the fill rule (see `Fill rules`_) used to
+  determine which points are inside the diagram, for the purposes of
+  its query (see `Using queries`_).  Note that it does *not* affect
+  how the diagram is actually drawn; for that, use the `fillRule`
+  function.  (This is not exactly a feature, but for various technical
+  reasons it is not at all obvious how to have this field actually
+  affect both the query and the rendering of the diagram.)
+
+  By default, `queryFillRule` is set to `Winding`.
+
 Decorating trails and paths
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1822,11 +1861,11 @@ Fill rules
 There are two main algorithms or "rules" used when determining which
 areas to fill with color when filling the interior of a path: the
 *winding rule* and the *even-odd rule*.  The rule used to draw a
-path-based diagram can be set with `fillRule`. For simple,
-non-self-intersecting paths, determining which points are inside is
-quite simple, and the two algorithms give the same results. However,
-for self-intersecting paths, they usually result in
-different regions being filled.
+path-based diagram can be set with `fillRule`, defined in
+`Diagrams.TwoD.Path`:mod:. For simple, non-self-intersecting paths,
+determining which points are inside is quite simple, and the two
+algorithms give the same results. However, for self-intersecting
+paths, they usually result in different regions being filled.
 
 .. class:: dia-lhs
 
@@ -2032,7 +2071,7 @@ function and specify a file name and size for the image:
 
 > no = (circle 1 <> hrule 2 # rotateBy (1/8))
 >    # lw 0.2 # lc red
-> example = no <> image "static/phone.png" 1.5 1.5
+> example = no <> image "manual/static/phone.png" 1.5 1.5
 
 Unfortunately, you must specify both a width and a height for each
 image.  You might hope to be able to specify just a width or just a
@@ -2185,24 +2224,115 @@ Traces
 
 Envelopes are useful for placing diagrams relative to one another, but
 they are not particularly useful for finding actual points on the
-boundary of a diagram.
+boundary of a diagram.  Finding points on the boundary of a diagram
+can be useful for things like drawing lines or arrows between two
+shapes, or deciding how to position another diagram relative to a
+given one.
 
 Every diagram (and, more generally, anything which is an instance of
-the `Traced` type class) has a *trace*, 
+the `Traced` type class) has a *trace*, a function which is like an
+"embedded ray tracer" for finding points on the diagram boundary.  In
+particular, the trace function takes a *ray* as input (represented by
+a base point and a vector indicating the direction) and returns the
+positive distance (given as a multiple of the input vector magnitude)
+to the nearest point where the ray intersects the diagram.
 
-.. container:: todo
+Normally, a trace is accessed using one of the four functions
+`traceV`, `traceP`, `maxTraceV`, and `maxTraceP`.
 
-  Working here.
+* `traceV` takes as inputs a base point ``p``, a vector ``v``, and any
+  instance of `Traced`.  It looks for intersection points with the
+  given object along the entire line determined by ``p`` and ``v``
+  (that is, the line with parametric form ``p .+^ (t *^ v)``), and
+  returns a scalar multiple of ``v`` which extends from ``p`` to the
+  point of intersection with the smallest parameter, or ``Nothing`` if
+  there is no such intersection.
+
+  Intuitively, the result of `traceV` extends from the given point to
+  the "closest" intersection, but it must be kept in mind that if any
+  intersection points lie in the direction opposite ``v``, it is
+  really the *furthest* such point which will be used (that is, the
+  point with the smallest, *i.e.* most negative, parameter).
+
+  This behavior is illustrated below.  Note that it can be somewhat
+  unintuitive when the base point lies inside the diagram.
+
+  .. class:: dia-lhs
+
+  ::
+
+  > import Data.Maybe (fromMaybe)
+  >
+  > drawV v = (arrowHead <> shaft) # fc black
+  >   where
+  >     shaft     = origin ~~ (origin .+^ v)
+  >     arrowHead = eqTriangle 0.1
+  >               # rotateBy (direction v - 1/4)
+  >               # translate v
+  > drawTraceV v d
+  >   = lc green $
+  >     fromMaybe mempty
+  >       ((origin ~~) <$> traceP origin v d)
+  > illustrateTraceV v d = (d <> drawV v <> drawTraceV v d) # showOrigin
+  >
+  > example = hcat' with {sep = 1}
+  >         . lw 0.03
+  >         . map (illustrateTraceV (0.5 *^ (1 & 1)))
+  >         $ [ circle 1 # translate ((-1.5) & (-1.5))
+  >           , circle 1
+  >           , circle 1 # translate (1.5 & 1.5)
+  >           ]
+
+* `traceP` works similarly, except that it returns the point of
+  intersection itself, which lies on the boundary of the object, or
+  ``Nothing`` if there is no such point.
+
+  `traceV` and `traceP` are related: ``traceP p v x == Just p'`` if and
+  only if ``traceV p v x == Just (p' .-. p)``.
+
+* `maxTraceV` and `maxTraceP` are similar to `traceV` and `traceP`,
+  respectively, except they look for the point of intersection with
+  the *greatest* parameter.
+
+For slightly more low-level access, the `Traced` class provides the
+`getTrace` method, which can be used to directly access the trace
+function for an object.  Currently, given inputs ``p`` and ``v``, it
+returns a scalar ``s`` such that ``s *^ v`` extends from ``p`` to the
+intersection point with the smallest parameter.  In the future, it may
+be extended to return a list of all intersection points instead of
+just the smallest; please contact the developers if you would be
+interested in this feature.
+
+The below diagram illustrates the use of the `traceP` function to
+identify points on the boundaries of several diagrams.
 
 .. class:: dia-lhs
 
 ::
 
-> example = square 1 <> maybe mempty (place (circle 0.1 # fc blue)) (traceP origin (1 & 1) (square 1 :: D R2))
+> import Data.Maybe (mapMaybe)
+>
+> illustrateTrace d = d <> traceLines
+>   where
+>     traceLines  = mconcat
+>                 . mapMaybe traceLine
+>                 . iterateN 30 (rotateBy (1/60))
+>                 $ unitX
+>     traceLine v = (basePt ~~) <$> traceP basePt v d
+>     basePt = 0 & (-2)
+>
+> example
+>   = hcat' with {sep = 1}
+>   . map illustrateTrace
+>   $ [ square 1
+>     , circle 1
+>     , eqTriangle 1 # rotateBy (-1/4) ||| eqTriangle 1 # rotateBy (1/4)
+>     ]
 
-.. container:: todo
-
-  Write me.
+Of course, diagrams are not the only instance of `Traced`.  Paths are
+also `Traced`, as are trails, segments, and points.  Lists and tuples
+are `Traced` as long as all of their components are---the trace for a
+list or tuple is the combination of all the element traces.
 
 Named subdiagrams
 -----------------
@@ -2246,8 +2376,36 @@ That's it!  No method definitions are even needed for the `IsName`
 instance, since `toName` (the sole method of `IsName`) has a default
 implementation which works just fine.
 
+Listing names
+~~~~~~~~~~~~~
+
+Sometimes you may not be sure what names exist within a diagram---for
+example, if you have obtained the diagram from some external module,
+or are debugging your own code.  The `names` function extracts a list
+of all the names recorded within a diagram and the locations of any
+associated subdiagrams.
+
+When using `names` you will often need to add a type annotation such
+as `D R2` to its argument, as shown below---for an explanation and
+more information, see `No instances for Backend b0 R2 ...`_.
+
+::
+
+    ghci> names (circle 1 # named "joe" ||| circle 2 # named "bob" :: D R2)
+    [("bob",[P (2.9999999999999996 & 0.0)]),("joe",[P (0.0 & 0.0)])]
+
+Of course, there is in fact an entire subdiagram (or subdiagrams)
+associated with each name, not just a point; but subdiagrams do not
+have a `Show` instance.
+
 Accessing names
 ~~~~~~~~~~~~~~~
+
+.. container:: todo
+
+  Create better tools for extracting subdiagrams directly and write
+  about them here.  Should also write about the low-level interface
+  here, I suppose.
 
 Once we have given names to one or more diagrams, what can we do with
 them?  The primary tool for working with names is `withName`, which
@@ -2277,7 +2435,7 @@ function of type
 
 We can see this function as a transformation on diagrams, except that
 it also gets to use some extra information---namely, a
-"`Subdiagram v`", which records the local origin and envelope
+"`Subdiagram v`", which records the local origin and envelope
 associated with the name we pass as the first argument to `withName`.
 
 Finally, the return type of `withName` is itself a transformation of
@@ -2363,58 +2521,16 @@ This computes the location of the name `n`, positions a square at that
 location, and then superimposes the positioned square atop the diagram
 containing `n`.
 
+Subdiagrams
+~~~~~~~~~~~
 
-Listing names
-~~~~~~~~~~~~~
-
-Sometimes you may not be sure what names exist within a diagram---for
-example, if you have obtained the diagram from some external module,
-or are debugging your own code.  The `names` function extracts a list
-of all the names recorded within a diagram and their associated
-subdiagrams
-
-When using `names` you will often need to add a type annotation such
-as `D R2` to its argument, as shown below---for an explanation and
-more information, see `No instances for Backend b0 R2 ...`_.
-
-.. container:: todo
-
-  Check to make sure this example still works.  Actually, it doesn't.
-  SubMap doesn't have a Show instance.
-
-::
-
-    ghci> names (circle 1 # named "joe" ||| circle 2 # named "bob" :: D R2)
-    NameMap (fromList [	("bob", [ Subdiagram
-                       	            (P (3.0,0.0))
-                       	            (TransInv {unTransInv = <envelope>})
-                       	        ]
-                       	)
-                       	,
-                       	("joe", [ Subdiagram
-                       	            (P (0.0,0.0))
-                       	            (TransInv {unTransInv = <envelope>})
-                       	        ]
-                       	)
-                      ]
-            )
-
-Envelopes, being functions, of course cannot be printed, but the
-output of `names` can be manipulated in other ways than just printing.
-
-Using named envelopes
-~~~~~~~~~~~~~~~~~~~~~
-
-.. container:: todo
-
-  This section needs to be rewritten, and given a better title.
-
-So far the examples we have seen have only made use of the local
-origin associated with each name.  However, the envelope of
-every named subdiagram is also tracked, and can be used to identify
-points other than the local origin.  The below example uses this
-ability to connect the *bottom* edge of the parent circle to the *top*
-edge of each child circle, instead of connecting their centers.
+So far, the examples we have seen have only made use of the local
+origin associated with each subdiagram, accessed using the `location`
+function.  However, subdiagrams are full-fledged diagrams, so there is
+much more information to be taken advantage of.  For example, the
+below code draws a tree of circles, using subdiagram traces (see
+`Traces`_) to connect the *bottom* edge of the parent circle to the
+*top* edge of each child circle, instead of connecting their centers.
 
 .. class:: dia-lhs
 
@@ -2642,6 +2758,10 @@ selected by the user after receiving the coordinates of a mouse click.
 Bounding boxes
 --------------
 
+.. container:: todo
+
+  Expand on this section, based on Michael Sloan's recent refactoring.
+
 Envelopes (see `Working with envelopes`_) are more flexible and
 compositional than bounding boxes for the purposes of combining
 diagrams.  However, occasionally it is useful for certain applications
@@ -2670,41 +2790,125 @@ is useful to have them collected all in one place.
 
   Write me!
 
+Classes for transforming and combining
+--------------------------------------
+
 HasOrigin
----------
+~~~~~~~~~
+
+`HasOrigin` is defined in `Graphics.Rendering.Diagrams.HasOrigin`:mod:.
+
+.. class:: lhs
+
+::
+
+> class VectorSpace (V t) => HasOrigin t where
+>   moveOriginTo :: Point (V t) -> t -> t
+
+`HasOrigin` classifies types with a notion of a fixed "location"
+relative to some "local origin", and provides a means of moving the
+local origin.  This is provided as a separate class from
+`Transformable` since some things with a local origin do not support
+other sorts of transformations; and contrariwise some things that
+support transformations are translation-invariant (like trails and
+vectors) and hence do not have a `HasOrigin` instance.
+
+Further reading: `Alignment`_.
 
 Transformable
--------------
+~~~~~~~~~~~~~
+
+`Transformable` is defined in
+`Graphics.Rendering.Diagrams.Transform`:mod:.
+
+.. class:: lhs
+
+::
+
+> class HasLinearMap (V t) => Transformable t where
+>   transform :: Transformation (V t) -> t -> t
+
+It represents types which support arbitrary affine (or linear, in the
+case of translationally invariant things) transformations.
+
+Further reading: `Euclidean 2-space`_; `2D Transformations`_.
 
 Juxtaposable
-------------
-
-AttributeClass
---------------
-
-HasStyle
---------
-
-PathLike
---------
+~~~~~~~~~~~~
 
 Enveloped
----------
+~~~~~~~~~
 
 Traced
-------
+~~~~~~
+
+Attributes and styles
+---------------------
+
+AttributeClass
+~~~~~~~~~~~~~~
+
+HasStyle
+~~~~~~~~
+
+Names
+-----
 
 IsName
-------
+~~~~~~
+
+Qualifiable
+~~~~~~~~~~~
+
+Paths
+-----
+
+PathLike
+~~~~~~~~
 
 Backend
 -------
 
+Backend
+~~~~~~~
+
+MultiBackend
+~~~~~~~~~~~~
+
 Renderable
-----------
+~~~~~~~~~~
+
+Poor man's type synonyms
+------------------------
+
+HasLinearMap
+~~~~~~~~~~~~
+
+OrderedField
+~~~~~~~~~~~~
 
 Tips and tricks
 ===============
+
+Using absolute coordinates
+--------------------------
+
+Diagrams tries to make it easy to construct many types of graphics
+while thinking in only "relative" terms: put this to the right of
+that; lay these out in a row; draw this wherever that other thing
+ended up; and so on.  Sometimes, however, this is not enough, and one
+really wants to just think in absolute coordinates: draw this here,
+draw that there.  If you find yourself wanting this, here are some
+tips:
+
+  * The `position` function takes a list of diagrams associated with
+    positions and combines them while placing them at the indicated
+    absolute positions.
+  * `moveTo` can be used to position a single diagram absolutely.
+
+.. container:: todo
+
+  * More tips?
 
 Delayed composition
 -------------------
@@ -2779,25 +2983,26 @@ the same effect as applying the operation to the composition of those
 diagrams.  In other words, operations such as `centerX`, `scale`,
 `juxtapose`, *etc.* all commute with `mconcat`.
 
-Using absolute coordinates
---------------------------
+Naming vertices
+---------------
 
-Diagrams tries to make it easy to construct many types of graphics
-while thinking in only "relative" terms: put this to the right of
-that; lay these out in a row; draw this wherever that other thing
-ended up; and so on.  Sometimes, however, this is not enough, and one
-really wants to just think in absolute coordinates: draw this here,
-draw that there.  If you find yourself wanting this, here are some
-tips:
+Most functions that create some sort of shape (*e.g.* `square`,
+`pentagon`, `polygon`...) can in fact create any instance of the
+`PathLike` class (see `The \`\`PathLike\`\` class`_).  You can often
+take advantage of this to do some custom processing of shapes by
+creating a *path* instead of a diagram, doing some processing, and
+then turning the path into a diagram.
 
-  * The `position` function takes a list of diagrams associated with
-    positions and combines them while placing them at the indicated
-    absolute positions.
-  * `moveTo` can be used to position a single diagram absolutely.
+In particular, assigning names to the vertices of a shape can be
+accomplished as follows. Instead of writing just (say) `pentagon`, write
 
-.. container:: todo
+.. class:: lhs
 
-  * More tips?
+::
+
+> stroke' with { vertexNames = [[0..]] } pentagon
+
+which assigns consecutive
 
 Deciphering error messages
 --------------------------
