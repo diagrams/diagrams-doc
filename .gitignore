@@ -11,10 +11,9 @@ cabal-dev
 dist_*
 history
 TAGS
-manual/icons/*.png
 _cache
 _site
 web/manual/*
-manual/images/*
-manual/*.html
-manual/*.xml
+.make
+.shake.database
+Shake
