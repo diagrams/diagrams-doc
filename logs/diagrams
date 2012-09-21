@@ -22340,3 +22340,435 @@
 2012-08-02 03:36:55 UTC <tgeeky> i get that feeling too
 2012-08-02 03:37:09 UTC <tgeeky> i am also beginning to think I've made a genuine mathematics discovery
 2012-08-02 03:37:17 UTC <tgeeky> but I keep fumbling around with this bunsen burner
+2012-08-02 15:25:54 UTC <luite> yay i can eval simple expressions now :)
+2012-08-02 15:34:06 UTC <byorgey> yay =)
+2012-08-02 16:00:11 UTC <luite> byorgey: thunks are not properly updated yet though, and i'm not really sure how to implement that. and how lazy blackholing can be implemented here
+2012-08-02 16:00:27 UTC <byorgey> luite: what are you working on? ghcjs?
+2012-08-02 16:00:32 UTC <luite> yeah
+2012-08-02 16:01:01 UTC <luite> just an experiment to see if i can get better performance by not using javascript closures for haskell heap closures
+2012-08-02 16:01:11 UTC <luite> but instead just arrays with free variables
+2012-08-02 16:01:47 UTC <luite> that ~15 seconds that the diagram sample took to render really was much too long for interactive applications
+2012-08-02 16:02:10 UTC <byorgey> ah, I see
+2012-08-02 16:02:34 UTC <luite> what i now have is much lower level, passing around arrays, only top level functions
+2012-08-02 16:03:12 UTC <luite> all heap objects are in an array, so it should be easier to see which ones are live
+2012-08-02 16:03:46 UTC <luite> the version in github now passes around arrays of live variables
+2012-08-02 16:04:24 UTC <luite> unfortunately just relying on the javascript garbage collector to clean up stuff isn't enough, since heap objects can have finalizers associated with them
+2012-08-02 16:04:45 UTC <luite> and there are no weak maps in javascript that can do this
+2012-08-02 16:05:05 UTC <luite> and finalizers are necessary for bytestring
+2012-08-02 16:06:47 UTC <byorgey> ah
+2012-08-02 16:06:59 UTC <byorgey> bytestring ruins everything =(
+2012-08-02 16:07:49 UTC <luite> hehe it's also possible to do a different implementation of bytestring for ghcjs, but i'm afraid that the need for finalizers would crop up eventually anyway
+2012-08-02 16:09:20 UTC <byorgey> fair enough.
+2012-08-02 16:11:26 UTC <luite> does mean that a garbage collector for haskell heap objects is now required though
+2012-08-02 16:11:59 UTC <luite> so atm i can only do expressions that have fewer than 10000 heap allocations, because then a gc is needed
+2012-08-02 16:12:36 UTC <luite> anyway enough to do for hac phi :p
+2012-08-02 16:13:00 UTC <byorgey> hehe
+2012-08-02 16:13:22 UTC <fryguybob> luite: Are you going to Hac phi?
+2012-08-02 16:13:39 UTC <byorgey> he is attending in spirit
+2012-08-02 16:14:08 UTC <fryguybob> Ah.  I'm not sure I can even do that :(
+2012-08-02 16:14:53 UTC <luite> well i heard there's a free spot ;p
+2012-08-02 16:16:18 UTC <byorgey> fryguybob: ah, too bad, but understood
+2012-08-02 16:16:41 UTC <luite> byorgey: this array also has the advantage that all heap can be preallocated, running the haskell stuff hardly needs dynamic allocation with this
+2012-08-02 16:17:34 UTC <fryguybob> I discovered there was extra data that I had to modify the python gdata api to get at, but now I think all the data is in the right place and ready for mapping to Github.
+2012-08-02 16:17:40 UTC <fryguybob> Only one last layer of glue :D.
+2012-08-02 16:18:22 UTC <luite> but it may well turn out to be less efficient than allocating news arrays all the time
+2012-08-02 16:18:33 UTC <luite> fortunately it's still easy to replace it
+2012-08-02 16:18:46 UTC <byorgey> fryguybob: yay!
+2012-08-02 16:18:55 UTC <luite> the garbage collector then would just test reachability for every heap object to run finalizers
+2012-08-02 16:19:00 UTC <byorgey> fryguybob: thanks for your work on that, it's much appreciated
+2012-08-02 16:19:32 UTC <fryguybob> byorgey: No problem.  I really should have used lenses though :P.
+2012-08-02 16:19:49 UTC <byorgey> hehe, nah, we don't need to translate back!
+2012-08-02 16:19:59 UTC <fryguybob> But for free!
+2012-08-02 16:20:01 UTC <luite> hm i should try to understand these new fancy lens families one day
+2012-08-02 16:21:07 UTC <luite> hehe i wonder what language the Knight Capital trading software is written in :)
+2012-08-02 16:22:06 UTC <byorgey> hehe, whoops
+2012-08-02 16:29:45 UTC <fryguybob> luite: I keep trying to think of a way for something like Intel's rivertrail to be helpful to you, but I'm not sure it would help much for general purpose things.
+2012-08-02 16:34:53 UTC <luite> dunno, maybe dph can be mapped to it?
+2012-08-02 16:35:06 UTC <fryguybob> Yeah I was wondering that.
+2012-08-02 16:35:45 UTC <fryguybob> If all your heap is in a big array maybe there is some crazy GPU GC you could do.
+2012-08-02 16:35:49 UTC <luite> NaCl would give easier results :)
+2012-08-02 16:36:53 UTC <luite> do you know a good javascript graph drawing thing btw? i think this can be extended to some really cool realtime reduction animations in the browser
+2012-08-02 16:38:12 UTC <fryguybob> luite: I don't know of any specific ones, but the ones bos uses in criterion seem nice.
+2012-08-02 16:38:25 UTC <fryguybob> I'm sure there are more complicated ones out there.
+2012-08-02 16:39:06 UTC <luite> i'm just doing single threaded without IO and exceptions now btw
+2012-08-02 16:39:40 UTC <luite> only if i can get it fast enough to get diagrams running at acceptable sped i'm going to continue working on this
+2012-08-02 16:39:49 UTC <fryguybob> Just becase it is single threaded doesn't mean it can't be parallel ;D
+2012-08-02 16:40:19 UTC <luite> yeah i know, but i just wanted to say that it's more experimental than a proper ghcjs backend at this point
+2012-08-02 16:40:27 UTC <fryguybob> yeah
+2012-08-02 16:40:36 UTC <luite> actually so far 99% of the code is either rts or stg stuff manually compiled to javascript :)
+2012-08-02 17:08:00 UTC <byorgey> luite: diagrams can probably be optimized too.  So if there's any way you can profile and get a sense of which parts are actually taking the longest maybe we can work on optimizing them.
+2012-08-02 18:47:29 UTC <luite> byorgey: diagrams does mostly already use double, doesn't it?
+2012-08-02 18:47:56 UTC <luite> instead of rational or int, integer?
+2012-08-02 18:48:06 UTC <luite> double is by far the fastest in javascript
+2012-08-02 18:48:30 UTC <luite> and it will probably help to specialize some code
+2012-08-02 18:48:34 UTC <luite> with pragmas
+2012-08-02 18:48:57 UTC <luite> if double calculations are inlined, the result should be acceptable
+2012-08-02 18:50:05 UTC <luite> since it's easy to combine a lot of unboxed primops in one function
+2012-08-02 18:56:28 UTC <fryguybob> luite: I think the only use of values other then double are in testing.  All the backends are double though (as far as I know).
+2012-08-02 18:58:35 UTC <luite> yeah but code is generated per module, if you have something that's fully polymorphic and the functions aren't inlined, you're going to end up with a lot of dictionary passing
+2012-08-02 19:03:18 UTC <luite> unless you SPECIALIZE
+2012-08-02 19:03:28 UTC <byorgey> luite: ah, I don't know about inlining/specialize, good question
+2012-08-02 19:03:37 UTC <byorgey> lots of stuff in diagrams is polymorphic
+2012-08-02 19:03:46 UTC <byorgey> but lots uses Double eventually.
+2012-08-02 19:04:26 UTC <tgeeky_> byorgey: GHC 7.6 support pragma passthrough
+2012-08-02 19:04:29 UTC <tgeeky_> in TH
+2012-08-02 19:10:08 UTC <byorgey> tgeeky_: hmmm?
+2012-08-02 19:10:43 UTC <tgeeky_> byorgey: it will be convenient in the future to write TH code which writes INLINE and specialize pragmas
+2012-08-02 19:10:55 UTC <byorgey> oh, I see, indeed
+2012-08-02 19:11:01 UTC <tgeeky_> as the version of TH in HEAD supports putting those pragmas ..
+2012-08-02 19:11:02 UTC <tgeeky_> yes
+2012-08-02 19:11:47 UTC <luite> hmm, do you think it would be a good idea to write TH that spits out those?
+2012-08-02 19:12:16 UTC <tgeeky_> I think it's a great idea
+2012-08-02 19:12:46 UTC <luite> but TH can't enumerate functions in a module, can it?
+2012-08-02 19:13:11 UTC <luite> and it can't see the type of the thing below
+2012-08-02 19:13:15 UTC <tgeeky_> oh, I don't know, but if you are generating a DSL I am sure you can figure something out
+2012-08-02 19:13:38 UTC <luite> yeah if you generate everything it's possible, but diagrams is plain haskell code
+2012-08-02 19:14:08 UTC <tgeeky_> luite: so, my though process was this: say you have a function which has a fold fusion law -- and you have an (automatically generated) class law instance which quickchecks the fold fusion law
+2012-08-02 19:14:17 UTC <byorgey> yeah, but I'm thinking of switching to having diagrams all generated by TH
+2012-08-02 19:14:28 UTC <tgeeky_> then you could add code which says: if the quickcheck law passes, admit this pragma to do the fold fusion
+2012-08-02 19:14:51 UTC <byorgey> basically I write down what I want in a .txt file, and then a general AI with a TH backend reads it in and spits out diagrams
+2012-08-02 19:15:08 UTC <tgeeky_> ACTION can't tell if serious
+2012-08-02 19:15:13 UTC <tgeeky_> hehe
+2012-08-02 19:15:14 UTC <tgeeky_> :)
+2012-08-02 19:15:30 UTC <tgeeky_> edwardk inline's like... all of his code, and he does it by hand :(
+2012-08-02 19:15:39 UTC <edwardk> hah
+2012-08-02 19:15:58 UTC <edwardk> as dolio says its the only way to make it work ;)
+2012-08-02 19:16:06 UTC <luite> byorgey: yeah and then you can run it overnight to let it optimize the api for combinations of ease of use, conciseness of code, and performance, and it gives you all pareto optimal solutions
+2012-08-02 19:16:16 UTC <edwardk> with lenses is really critical because after inlining most of them simplify to nothing
+2012-08-02 19:16:21 UTC <edwardk> without inlining they suck pretty hard
+2012-08-02 19:16:33 UTC <tgeeky_> edwardk: that makes perfect sense, however
+2012-08-02 19:16:40 UTC <edwardk> yeah
+2012-08-02 19:16:53 UTC <tgeeky_> but this is a good state of afairs
+2012-08-02 19:16:58 UTC <edwardk> because you want the code to move to the use site where the functor choice is known, etc. and it can turn all the cps'd code back right side out
+2012-08-02 19:17:07 UTC <byorgey> luite: ooh, nice
+2012-08-02 19:17:11 UTC <edwardk> i have the new template haskell for lenses actually emit inline pragmas for you too
+2012-08-02 19:17:51 UTC <luite> hmm
+2012-08-02 19:18:40 UTC <luite> i hope they actually reduce to nothing, otherwise you get stuff like Data.Text.Lazy where the generated code is in the megabytes (for ghcjs at least)
+2012-08-02 19:18:47 UTC <edwardk> so close to usable indexed traversals
+2012-08-02 19:18:54 UTC <edwardk> heh
+2012-08-02 19:19:09 UTC <luite> it's been liberally sprinkeld with inline
+2012-08-02 19:19:09 UTC <edwardk> well, ghcjs isn't my principal optimization target at this time ;)
+2012-08-02 19:19:21 UTC <luite> aw :(
+2012-08-02 19:19:36 UTC <tgeeky_> ^^^ byorgey: yeah and then you can run it overnight to let it optimize the api for combinations of ease of use, conciseness of code, and
+2012-08-02 19:19:40 UTC <tgeeky_>                performance, and it gives you all pareto optimal solutions
+2012-08-02 19:19:44 UTC <luite> hehe well it generates code from the stg, so if plain old ghc does proper inlining, ghcjs should benefit equally
+2012-08-02 19:19:51 UTC <edwardk> i'd be curious to see how the current version of lens does under ghcjs
+2012-08-02 19:19:53 UTC <tgeeky_> the fact that such a statement isn't totally absurd in principle is amazing (haskell gods)
+2012-08-02 19:20:14 UTC <byorgey> hehe
+2012-08-02 19:20:36 UTC <byorgey> except that no one has any idea how to quantify "ease of use" =)
+2012-08-02 19:20:50 UTC <tgeeky_> you could easily write code which just appliest INLINE and NOINLINE to each function, does a performance test, and picks the fastest
+2012-08-02 19:20:58 UTC <tgeeky_> byorgey: yeah, but we can quantify performance
+2012-08-02 19:20:59 UTC <luite> but it would be nice if ghc could do a little more global optimization by itself
+2012-08-02 19:21:12 UTC <luite> without all this guidance
+2012-08-02 19:21:29 UTC <edwardk> its hard to do so in a 'work safe' manner, in that you can do lots of optimizations that are pessimizations in many use cases
+2012-08-02 19:21:31 UTC <tgeeky_> the key is building the most guidence from the least information :o
+2012-08-02 19:21:50 UTC <tgeeky_> i think I spelled that one wrong
+2012-08-02 19:22:01 UTC <edwardk> another fun one to try in ghcjs would be vector-algorthms
+2012-08-02 19:22:23 UTC <edwardk> vector-algorithms overoaded ghc's inlining ability at one point
+2012-08-02 19:22:35 UTC <luite> oh interesting
+2012-08-02 19:22:52 UTC <edwardk> at some point the simons added a specialization/inlining cap
+2012-08-02 19:22:58 UTC <edwardk> and vector algorithms went _way_ over it
+2012-08-02 19:23:56 UTC <luite> right, this fusion that only works with agressive inlining doesn't look terribly scabale
+2012-08-02 19:24:05 UTC <luite> scalable
+2012-08-02 19:24:16 UTC <tgeeky_> i read an interesting thing on haskell weekly about explicit un-sharing
+2012-08-02 19:24:25 UTC <tgeeky_> which I found interesting
+2012-08-02 19:25:02 UTC <luite> someone mailed me this week about how they could help with ghcjs, i said test/benchmark suite, i hope they do it :)
+2012-08-02 19:27:19 UTC <edwardk> yeah sclv explained it at some point, not sure about the current banter
+2012-08-02 19:27:35 UTC <edwardk> how much can ghcjs handle at this point anyways?
+2012-08-02 19:27:41 UTC <edwardk> i haven't really looked at it
+2012-08-02 19:42:40 UTC <luite> edwardk: uh well, the current version can run diagrams, so it does support a fair bit, like foreign pointers with finalizers for bytestring, and threading with mvars
+2012-08-02 19:44:28 UTC <luite> but it uses javascript closures, so it's probably rather leaky on most (all?) js engines, if you only keep a thunk with one free variable, it will probably hold on the whole javascript closure that contains it
+2012-08-02 19:44:48 UTC <luite> and it's tricky to keep track of live heap objects to run finalizers
+2012-08-02 19:46:40 UTC <luite> since javascript has no way to do weak references
+2012-08-02 19:48:45 UTC <alpounet> you already did an insane amount of work luite
+2012-08-02 19:48:48 UTC <alpounet> congrats on that
+2012-08-02 19:49:26 UTC <luite> nah 99% of this was done by victor nazarov and hamish mackenzie
+2012-08-02 19:49:58 UTC <luite> but if this new heap thing works out, it will probably be more or less a complete rewrite
+2012-08-02 19:52:21 UTC <luite> alpounet: lack of tail calls is annoying :(
+2012-08-02 19:52:34 UTC <luite> since most of stg assumes that you have them
+2012-08-02 19:53:03 UTC <alpounet> you'll just end up writing your own JS engine and then submiting it to the major browsers
+2012-08-02 19:53:07 UTC <luite> hehe
+2012-08-02 19:53:25 UTC <luite> i want to experiment with dynamic translation one day
+2012-08-02 19:53:37 UTC <luite> from stg to machine code or something
+2012-08-02 19:55:04 UTC <luite> alpounet: it does call depth counting now, and throws back to the trampoline when depth has been reached. but i try to do as much regular function calls as possible, so it's not completely cps
+2012-08-02 19:56:12 UTC <alpounet> luite, are the different js engines consistent in the way they treat js code?
+2012-08-02 19:56:22 UTC <alpounet> or do you have to cope with their inconsistency as well?
+2012-08-02 19:56:29 UTC <luite> but of course if you do x = a(y); ... then a may throw somehwere, so you have to push a continuation in case it does throw
+2012-08-02 19:56:52 UTC <luite> alpounet: nah that's relatively consistent
+2012-08-02 19:57:18 UTC <luite> maximum call stack is rather variable
+2012-08-02 19:57:37 UTC <luite> but most browsers can handle 10000 at least
+2012-08-02 19:57:43 UTC <luite> the modern ones all can
+2012-08-02 19:59:34 UTC <luite> it's also annoying that javascript doesn't have suspensions, you need to push all arguments on the stack, bah... and no jumping back to the middle of functions either
+2012-08-02 20:01:58 UTC <luite> i'm trying eager blackholing now, that seems easier than lazy
+2012-08-02 20:03:24 UTC <luite> but probably slower (?)
+2012-08-02 20:05:16 UTC <luite> at least as i understand it, with eager blackholing, you replace the thunk function with blackhole immediately when you evaluate it. with lazy you only do that when switching to another thread
+2012-08-02 20:06:27 UTC <luite> anyway i don't really have an idea what i'm doing
+2012-08-02 20:17:05 UTC <alpounet> hah
+2012-08-02 20:17:13 UTC <alpounet> as long as you're having some kind of fun it's cool i guess
+2012-08-02 20:30:53 UTC <luite> :)
+2012-08-02 21:24:18 UTC <fryguybob> There is an airshow next door.  F-16s are loud...
+2012-08-02 21:58:58 UTC <tgeeky_> not as loud as F22s
+2012-08-02 21:59:15 UTC <tgeeky_> (I live near Lockheed Martin's Atlanta facility, which is where they make them)
+2012-08-02 21:59:32 UTC <tgeeky_> they are notoriously loud (and larger than you think)
+2012-08-02 21:59:44 UTC <tgeeky_> I can sympathize :)
+2012-08-02 22:00:37 UTC <fryguybob> They stopped, but now there is some harddrive going bad right next to me.
+2012-08-02 22:10:34 UTC <alpounet> luite, why are you guys (with chrisdone) not working together on a haskell->js compiler?
+2012-08-02 22:10:49 UTC <tgeeky_> chris done is a free spirit!
+2012-08-02 22:10:54 UTC <luite> because chrisdone should work on ghcjs ;p
+2012-08-02 22:11:26 UTC <luite> nah chrisdone is going for faster results, doing a subset of haskell, generating small readable code
+2012-08-02 22:12:24 UTC <alpounet> readable as opposed to blazingly fast?
+2012-08-02 22:13:09 UTC <luite> to being a buch of unreadable array manipulations generated by macros for low level operations
+2012-08-02 22:13:45 UTC <alpounet> hah
+2012-08-02 22:13:51 UTC <alpounet> got it
+2012-08-02 22:17:38 UTC <alpounet> luite, so your goals are not compatible?
+2012-08-02 22:19:23 UTC <luite> they're similar, but i think chrisdone wants to have typesafer way to do javascript
+2012-08-02 22:19:29 UTC <luite> and i want haskell
+2012-08-02 22:20:01 UTC <luite> chrisdone wants lightweight code for regular sites
+2012-08-02 22:20:22 UTC <luite> i don't really care that much about code size as long as modern js engines don't choke too much on it
+2012-08-02 22:21:16 UTC <luite> chrisdones goal is far more pragmatic, he can use it now, extend stuff... even if it has some problems like memory leaks, for regular sites it should be not too bad
+2012-08-02 22:21:32 UTC <luite> but it won't run diagrams
+2012-08-02 22:25:30 UTC <alpounet> luite, and i guess it's not possible for you guys to kind of find a common agreement in between what you do now? :p
+2012-08-02 22:26:00 UTC <alpounet> it's "sad" to see you doing many similar stuffs
+2012-08-02 22:26:11 UTC <luite> it's a bit difficult, chrisdone compiles directly from haskell AST
+2012-08-02 22:26:20 UTC <luite> ghcjs from STG
+2012-08-02 22:26:56 UTC <alpounet> ah yeah right
+2012-08-02 22:26:59 UTC <luite> STG benefits from all the core transformations that ghc does, like inlining and specialization
+2012-08-02 22:27:08 UTC <luite> but the code is not close to the original haskell anymore
+2012-08-02 22:28:45 UTC <luite> if you have STG, you automatically get support for all of haskell (at least what you want to support within your RTS), and the current ghcjs makes a fairly direct transformation of stg to js
+2012-08-02 22:28:57 UTC <luite> using js closures
+2012-08-02 22:37:26 UTC <alpounet> ok
+2012-08-02 22:37:34 UTC <luite> see he wants to get stuff done
+2012-08-02 22:38:02 UTC <alpounet> yeah
+2012-08-02 22:38:09 UTC <alpounet> and waits for you to rock the hell out of ghcjs
+2012-08-02 22:45:34 UTC <luite> :(
+2012-08-02 22:45:49 UTC <luite> i need to find someone who'd pay for ghcjs :p
+2012-08-03 03:07:32 UTC <tgeeky_> byorgey: have an hour to spare?
+2012-08-03 03:52:38 UTC <tgeeky_> just for reference, has hac phi started yet?
+2012-08-03 03:52:42 UTC <tgeeky_> officially or not?
+2012-08-03 03:54:50 UTC <mgsloan> not yet, tomorrow!
+2012-08-03 04:01:12 UTC <edwardk> i'm frantically trying to finish the design of lens before i get there ;)
+2012-08-03 04:01:22 UTC <edwardk> it can't start yet!
+2012-08-03 04:01:24 UTC <tgeeky_> hehe!
+2012-08-03 04:02:48 UTC <tgeeky_> edwardk: I have run some caluclations (I calculcated the coefficients of gerard t'hooft's lagragian's, and stuffed it into a single coupling constant sqrt(-g))
+2012-08-03 04:02:58 UTC <edwardk> gesundheit
+2012-08-03 04:03:06 UTC <tgeeky_> hehe
+2012-08-03 04:03:10 UTC <tgeeky_> gerard t'hooft = nobel winner
+2012-08-03 04:03:17 UTC <mgsloan> yeah, I'm thinking about / somewhat working on my presentation for tomorrow
+2012-08-03 04:03:35 UTC <edwardk> i haven't started
+2012-08-03 04:03:41 UTC <tgeeky_> he wrote a theory which was conformal (the base symmetry of string theory) -- the general lagrangian for any number of dimensions
+2012-08-03 04:03:46 UTC <edwardk> i need to break up makeLenses into makeLenses, makeIso and makeClassy
+2012-08-03 04:03:50 UTC <tgeeky_> but it has *no* real paramters
+2012-08-03 04:03:56 UTC <tgeeky_> it has only one imaginary paramter
+2012-08-03 04:04:01 UTC <edwardk> and then i need to get indexed traversals into the package
+2012-08-03 04:04:18 UTC <tgeeky_> edwardk: anyway, I have run lots of calculations with lots of different paramters, including many popular choices of dimensions
+2012-08-03 04:04:23 UTC <edwardk> ah
+2012-08-03 04:04:40 UTC <tgeeky_> and it seems like something very strange is going on in the dimension range 24..32
+2012-08-03 04:04:55 UTC <edwardk> i have no frame of reference, so i'll sit here and smile and nod
+2012-08-03 04:05:02 UTC <tgeeky_> in particular, the theory suddenly starts spitting out results which mix up *all* of the quadratic imaginary fields (instead of just the sqrt(-1) field)
+2012-08-03 04:05:36 UTC <tgeeky_> edwardk: this list: http://en.wikipedia.org/wiki/Stark%E2%80%93Heegner_theorem
+2012-08-03 04:05:50 UTC <tgeeky_> sqrt(-1) == sqrt(-4) == Gaussian integers = complex i = sqrt(-1) lattice
+2012-08-03 04:06:07 UTC <edwardk> yep. i've managed to flush almost all the number theory i knew
+2012-08-03 04:06:12 UTC <edwardk> that confirms it
+2012-08-03 04:06:16 UTC <tgeeky_> hehe
+2012-08-03 04:06:22 UTC <tgeeky_> edwardk: just think of the complex lattice.
+2012-08-03 04:06:29 UTC <tgeeky_> sqrt(-1) is the square lattice
+2012-08-03 04:06:35 UTC <tgeeky_> sqrt(-3) is the triangular lattice
+2012-08-03 04:09:04 UTC <tgeeky_> anyhoo, for n=28 dimensions (2 more than string theory usually), my fancy algorithim says that his equation does produce elements of those other fields!
+2012-08-03 04:09:24 UTC <tgeeky_> that is, the coupling constant that I get (think fine structure constant, but there's only one)
+2012-08-03 04:09:46 UTC <tgeeky_> is sitting in the fields: sqrt(-3), sqrt(-4), sqrt(-11), and sqrt(-19)!
+2012-08-03 04:09:58 UTC <tgeeky_> how bizarre!
+2012-08-03 16:57:36 UTC <edwardkbot> is anyone here at hac phi?
+2012-08-03 16:57:46 UTC <edwardkbot> i'm wandering around levine hall, its a ghost town ;)
+2012-08-03 17:00:22 UTC <luite> does it start today?
+2012-08-03 17:00:43 UTC <edwardk> typically
+2012-08-03 17:02:31 UTC <luite> :)
+2012-08-03 17:02:57 UTC <edwardk> at least it did the last 3 times i time traveled to this date
+2012-08-03 18:53:02 UTC <cheater__> luite.com?
+2012-08-03 18:53:06 UTC <cheater__> lol
+2012-08-03 18:53:10 UTC <cheater__> i thought it would at least be
+2012-08-03 18:53:21 UTC <cheater__> stegeman.com
+2012-08-03 18:53:22 UTC <cheater__> :D
+2012-08-03 18:53:34 UTC <luite> is already in use
+2012-08-03 18:53:41 UTC <cheater__> has a nice ring to it, like a character from seinfeld
+2012-08-03 18:54:04 UTC <luite> stegeman meat products has the domain
+2012-08-03 19:06:49 UTC <luite> i've never really liked seinfeld though :p
+2012-08-03 22:33:31 UTC <fryguybob> booo.  The Github API is pretty weak.
+2012-08-03 22:50:24 UTC <luite> hm you're not at hac phi?
+2012-08-03 22:58:40 UTC <fryguybob> luite: Sadly no.
+2012-08-03 23:00:21 UTC <fryguybob> byorgey: It turns out much of the data isn't settable via the Github API, so all the imported issues will be under the name of the importer and won't have the correct date etc.
+2012-08-03 23:00:37 UTC <fryguybob> I can try putting those fields in and see if it just takes it, but it probably won't.
+2012-08-03 23:01:39 UTC <fryguybob> An example of an imported issue: https://github.com/fryguybob/DiagramsIssueSandbox/issues/1
+2012-08-03 23:01:51 UTC <fryguybob> I still have to get labels and assigned users working.
+2012-08-03 23:02:30 UTC <fryguybob> But it should be a matter of small tweaks from here.
+2012-08-04 00:18:02 UTC <fryguybob> Comments now work.  I'm not sure why labels are not up.
+2012-08-04 00:20:32 UTC <byorgey> fryguybob: yeah, don't worry too much if we can't quite get all the metadata set properly
+2012-08-04 00:21:09 UTC <byorgey> fryguybob: can you automatically create closed issues?  The example imported issue you linked to is actually closed on google code
+2012-08-04 01:21:42 UTC <fryguybob> byorgey: Yeah, I have not done that bit yet.
+2012-08-04 01:21:52 UTC <byorgey> fryguybob: ok, no worries
+2012-08-04 01:22:00 UTC <byorgey> fryguybob: got lots of people here interested in diagrams =)
+2012-08-04 01:22:05 UTC <byorgey> sad you're not here
+2012-08-04 01:22:09 UTC <fryguybob> Woohoo!
+2012-08-04 01:22:23 UTC <fryguybob> I wish I could be.
+2012-08-04 01:23:45 UTC <byorgey> fryguybob: maybe we'll have to organize a diagrams mini-hackathon sometime prior to next summer.
+2012-08-04 01:24:20 UTC <fryguybob> That would be fun
+2012-08-04 01:25:07 UTC <fryguybob> In other news Rebekah's cousin is going to be working at the Green Line coffee shop in a week.
+2012-08-04 01:25:42 UTC <byorgey> haha, awesome
+2012-08-04 01:25:46 UTC <byorgey> fryguybob: which one?
+2012-08-04 01:27:30 UTC <fryguybob> She didn't know there was more then one so she didn't disambiguate.
+2012-08-04 01:27:49 UTC <byorgey> ah, ok
+2012-08-04 01:27:53 UTC <byorgey> they have three locations
+2012-08-04 01:28:38 UTC <byorgey> ACTION will now accost random Green Line employees asking whether they have a cousin-in-law named Ryan
+2012-08-04 01:28:44 UTC <byorgey> it won't be awkward at all
+2012-08-04 01:29:04 UTC <fryguybob> Ha, well if you did find the right one, he would think it was awesome.
+2012-08-04 01:29:23 UTC <fryguybob> He is fun to talk Calculus and ancient languages with.
+2012-08-04 01:29:42 UTC <fryguybob> Based on the context of the conversation Rebekah thinks it is the one closest to your house.
+2012-08-04 01:30:05 UTC <fryguybob> (as in she described that location and he didn't say that was not where he was going to work.)
+2012-08-04 01:30:14 UTC <byorgey> calculus and ancient languages, sounds fun =)
+2012-08-04 01:30:20 UTC <byorgey> ok, cool
+2012-08-04 01:30:29 UTC <byorgey> if there are any new employees at our location I will notice.
+2012-08-04 01:30:40 UTC <fryguybob> He has crazy blond curly hair.
+2012-08-04 01:31:00 UTC <byorgey> noted.
+2012-08-04 03:20:27 UTC <tgeeky> has anyone seen my cousin-in-law, Ryan?
+2012-08-04 16:14:51 UTC <fryguybob> byorgey: I'm about to declare the import good enough.  For some reason I can't get it to close an issue automatically, but that will be easy to do by hand.  They will all have some sort of tag that makes it clear that it is closed.
+2012-08-04 16:15:37 UTC <fryguybob> Can someone look for any obvious issues with the top four issues here: https://github.com/fryguybob/DiagramsIssueSandbox/issues?page=1&state=open
+2012-08-04 17:09:56 UTC <luite> doesn't look so bad :)
+2012-08-04 17:47:02 UTC <fryguybob> ACTION does a final round of testing...
+2012-08-04 17:51:45 UTC <fryguybob> Ah, it appears the spec lies.
+2012-08-04 18:16:46 UTC <fryguybob> byorgey: I think I'm ready to push the issues.  I'll pull down the one that just showed up first though.
+2012-08-04 18:41:54 UTC <byorgey> fryguybob: yay! thanks!
+2012-08-04 18:42:16 UTC <fryguybob> It looks like everything worked except it lost one comment due to a random internal server error
+2012-08-04 18:42:35 UTC <byorgey> not bad!
+2012-08-04 18:43:00 UTC <fryguybob> Yeah.  Good thing I didn't just try to do both halves in python :D
+2012-08-04 18:43:08 UTC <byorgey> hehe
+2012-08-04 18:43:41 UTC <fryguybob> We should turn off the google code issues now.  I don't think I have access to that.
+2012-08-04 18:44:17 UTC <byorgey> I'll see if there's a way to make it read-only
+2012-08-04 18:44:19 UTC <luite> :r
+2012-08-04 18:44:54 UTC <fryguybob> :help
+2012-08-04 18:46:17 UTC <fryguybob> byorgey: I didn't bother with importing the milestone stuff and in the google code an issue could be tagged as multiple projects, so there was some small data loss.
+2012-08-04 18:46:25 UTC <luite> hm my video driver is glitchy again, sometimes it doesn't refresh the terminal
+2012-08-04 18:49:29 UTC <fryguybob> It's a good thing issues and comments to github are not posted here like commits :D
+2012-08-04 19:10:05 UTC <tgeeky> byorgey: how's the hackathon going?
+2012-08-04 19:11:24 UTC <mgsloan> good! we've got a few people diagrams-ing away
+2012-08-04 19:11:35 UTC <mgsloan> one guy's done scale-invariant diagrams (for arrow heads and the like)
+2012-08-04 19:11:51 UTC <mgsloan> one guy's working on adding animation support to diagrams-ghci
+2012-08-04 19:12:35 UTC <luite> any pics of the hackathon?
+2012-08-04 19:12:51 UTC <mgsloan> I guess I could take some :D  Tubad I didn't bring my t3i
+2012-08-04 19:13:05 UTC <mgsloan> (I dunno if I reported that it came back to life a few days after getting turbo soaked)
+2012-08-04 19:14:40 UTC <luite> oh cool
+2012-08-04 19:15:06 UTC <luite> my mother has one too now, i like it, far better screen than mine
+2012-08-04 19:15:16 UTC <luite> and live view is usable for manual focussing
+2012-08-04 19:15:35 UTC <luite> much more precice with 5x or 10x live view than with viewfinder
+2012-08-04 19:20:42 UTC <fryguybob> luite: Nice.  I've only played with early SLR liveview and they had a lot of problems.
+2012-08-04 19:20:53 UTC <luite> focus is still rather slow
+2012-08-04 19:21:06 UTC <luite> but most new slrs have 640x480 screens, or better
+2012-08-04 19:22:31 UTC <luite> for macro it's particularly useful, very accurate manual focussing, no mirror slap
+2012-08-04 19:24:43 UTC <luite> but better bring an extra battery if you want to use it extensively :)
+2012-08-04 20:29:27 UTC <mgsloan> luite: some cell phone pics here https://plus.google.com/103514231937116060754/posts
+2012-08-04 20:30:24 UTC <luite> ah i recognize byorgey
+2012-08-04 20:30:31 UTC <luite> edwardk is the guy with the small laptop right?
+2012-08-04 20:31:38 UTC <tgeeky> lol
+2012-08-04 20:31:40 UTC <tgeeky> is there a child there?
+2012-08-04 20:32:37 UTC <tgeeky> mgsloan: which one is the guy who made "cyclotomic"
+2012-08-04 20:35:53 UTC <byorgey> tgeeky: Scott Walck is the balding one in a pink shirt in the second photo
+2012-08-04 20:36:28 UTC <tgeeky> byorgey: is daniel the one standing up and drinking in that photo?
+2012-08-04 20:36:48 UTC <byorgey> tgeeky: yes, there is an 8-year old learning Haskell =)
+2012-08-04 20:36:51 UTC <luite> i don't recognize anyone else :( which are the ones i should know?
+2012-08-04 20:36:59 UTC <byorgey> luite: I've tagged a few people now
+2012-08-04 20:37:03 UTC <tgeeky> luite: brent is the chillaxing guy
+2012-08-04 20:37:11 UTC <byorgey> tgeeky: yes, daniel is the one standing up drinking
+2012-08-04 20:37:55 UTC <alpounet> hah
+2012-08-04 20:37:58 UTC <luite> ah, doug beardsley, mightybyte, doesn't look so mighty next to edwardk
+2012-08-04 20:38:25 UTC <tgeeky> if that's the leftmost guy in the first pic
+2012-08-04 20:38:34 UTC <alpounet> would have enjoyed being around
+2012-08-04 20:38:35 UTC <luite> yeah green shirt
+2012-08-04 20:38:36 UTC <tgeeky> it looks a tiny bit like justin timberlake from that angle :o
+2012-08-04 20:43:20 UTC <luite> byorgey/mgsloan: ah gershomb is there, tell him i like his changes to jmacro that i requested in june, but that i'm going to bug him again to make identifier generation more flexible (shorter ids, restart sequence for local vars)
+2012-08-04 20:43:24 UTC <luite> :)
+2012-08-04 20:43:49 UTC <tgeeky> tell all of those people to install IRC damnit!
+2012-08-04 20:44:55 UTC <luite> i have to admit that i don't even know most real names
+2012-08-04 21:15:12 UTC <tgeeky> byorgey: can you make sure scott checks his email sometime in the next hour or eight? Hopefully he's the one at Lebanon Valley
+2012-08-04 21:22:46 UTC <tgeeky> s/make sure/ask
+2012-08-04 21:38:20 UTC <byorgey> tgeeky: ok, will do
+2012-08-04 21:39:36 UTC <tgeeky> maybe even try to convince him to install an IRC client so we can work on here in the future
+2012-08-04 21:39:40 UTC <tgeeky> bbiaf
+2012-08-04 23:18:01 UTC <byorgey> hrrrrm, I can't find any way to give a publicly accessible URL that shows all of an organization's issues at once
+2012-08-04 23:28:02 UTC <byorgey> oh well
+2012-08-04 23:36:52 UTC <fryguybob> byorgey: Oh, strange.
+2012-08-04 23:37:27 UTC <byorgey> yeah, you can only see all the issues at once on your "dashboard" if you are (a) logged in AND (b) a member of the diagrams organization
+2012-08-04 23:37:41 UTC <byorgey> but the individual issue trackers are publicly accessible.
+2012-08-04 23:40:08 UTC <fryguybob> I suppose you could make your own page that aggrigates it all.
+2012-08-05 00:04:55 UTC <luite> everyone still programming there? :)
+2012-08-05 00:07:59 UTC <alpounet> luite, hey, how is shapr's gsoc going by the way?
+2012-08-05 00:08:23 UTC <luite> he's still working on it
+2012-08-05 00:09:24 UTC <luite> it's not going at incredible speed... but i think something usable could come out of it
+2012-08-05 00:11:07 UTC <alpounet> cool :)
+2012-08-05 00:11:18 UTC <alpounet> will he likely continue working on it after the GSoC ends?
+2012-08-05 00:12:02 UTC <luite> dunno
+2012-08-05 00:12:25 UTC <luite> i think he expects to be busy with classes
+2012-08-05 00:12:35 UTC <alpounet> ok
+2012-08-05 00:14:25 UTC <luite> probably better to ask him :)
+2012-08-05 01:22:34 UTC <byorgey> no more programming at the moment, everyone has gone to dinner
+2012-08-05 01:22:42 UTC <byorgey> we shall resume tomorrow =)
+2012-08-05 01:40:58 UTC <luite> no 24h coding sessions? slackers!
+2012-08-05 01:42:09 UTC <luite> now why does ghc have so many primops
+2012-08-05 01:45:54 UTC <alpounet> did i mention i can't stand the time API?
+2012-08-05 01:45:56 UTC <alpounet> well, done
+2012-08-05 01:46:31 UTC <alpounet> everytime i have to use it i'm like "wait, no, i still have that other thing i can write before opening the time haddocks and writing that time code"
+2012-08-05 01:53:27 UTC <byorgey> alpounet: it is pretty difficult to use.
+2012-08-05 01:53:43 UTC <byorgey> I think some better documentation and a tutorial would go a long way.
+2012-08-05 01:53:51 UTC <alpounet> yeah...
+2012-08-05 01:54:05 UTC <byorgey> I think the API itself is fairly good, given how complicated it is to deal with time properly
+2012-08-05 01:54:19 UTC <alpounet> it's been written with too much interest in accuracy/preciseness and not enough in usability, in my opinion
+2012-08-05 01:54:34 UTC <alpounet> precision* uh
+2012-08-05 01:57:25 UTC <luite> i usually do not have enough recall of the api :p
+2012-08-05 01:58:08 UTC <luite> only 300 more primops to implement...
+2012-08-05 01:58:43 UTC <alpounet> same yeah, i just can't remember any bit of the API, thus my mention to opening the haddocks
+2012-08-05 02:01:55 UTC <luite> meh you didn't get my information retrieval (or classification algorithms) reference :p
+2012-08-05 02:03:59 UTC <alpounet> indeed, sorry
+2012-08-05 02:04:17 UTC <alpounet> i believe we're in the same timezone
+2012-08-05 02:04:52 UTC <alpounet> so you have an idea why i didn't :p
+2012-08-05 02:07:01 UTC <luite> hehe
+2012-08-05 02:07:44 UTC <luite> france, right?
+2012-08-05 02:07:53 UTC <alpounet> yeah
+2012-08-05 02:08:32 UTC <alpounet> will enjoy the sea tomorrow, so i'm off to bed
+2012-08-05 02:08:39 UTC <alpounet> night guys!
+2012-08-05 20:46:55 UTC <mgsloan> byorgey: diagrams-ghci now prints nicer errors, supports saving and restoring expressions, and can display normal haskell values mixed with diagrams
+2012-08-05 20:47:08 UTC <mgsloan> e.g.  map circle [1..10] actually draws list syntax around 10 circles
+2012-08-05 20:47:33 UTC <mgsloan> zip [1..] $ map circle [1..10],  draws cicles paired with their size
+2012-08-05 20:48:17 UTC <tgeeky> pics?
+2012-08-05 20:52:00 UTC <luite> is hac phi still going?
+2012-08-05 20:54:23 UTC <mgsloan> I left a few hrs before the end of yesterday (had to get home - starting work tomorrow)
+2012-08-05 20:54:30 UTC <mgsloan> I think it's just barely still going
+2012-08-05 20:54:35 UTC <mgsloan> 5 min from the end I think
+2012-08-05 20:54:57 UTC <luite> hehe guess i can't expect an updated jmacro then ;p
+2012-08-05 20:55:24 UTC <mgsloan> have y'all been following edwardk's lens stuff?
+2012-08-05 20:55:28 UTC <mgsloan> it's _awesome_
+2012-08-05 20:56:03 UTC <luite> i've been doing other thigns, so i'm way behind
+2012-08-05 20:56:49 UTC <mgsloan> pretty much it allows flexibly composing lenses, traversals, folds, and monad actions, all using plain old Prelude (.)
+2012-08-05 20:57:28 UTC <mgsloan> it's a system of type synonyms with very good properties of interactions
+2012-08-05 20:58:43 UTC <luite> hmm
+2012-08-05 21:02:57 UTC <mgsloan> tgeeky: https://github.com/mgsloan/diagrams-ghci/tree/master/screens
+2012-08-05 21:03:53 UTC <tgeeky> i have been following, but haven't yet used
+2012-08-05 21:04:01 UTC <mgsloan> https://github.com/mgsloan/diagrams-ghci/blob/master/screens/2012-08-05-140016_1280x800_scrot.png
+2012-08-05 21:04:18 UTC <mgsloan> yeah, I think I'm going to make lenq primarily target it'
+2012-08-05 21:04:33 UTC <mgsloan> before using a subset of Haskell to describe lenses / bijections etc just didn't feel clean
+2012-08-05 21:04:40 UTC <mgsloan> now I think it works out beautifully
+2012-08-05 21:05:00 UTC <tgeeky> well
+2012-08-05 21:05:06 UTC <tgeeky> there are some generalizations in the pipeline
+2012-08-05 21:05:08 UTC <tgeeky> multiplate, for one
+2012-08-05 21:05:26 UTC <tgeeky> but yeah, I think I might just jump right in
+2012-08-05 21:13:48 UTC <mgsloan> gtg!
+2012-08-05 22:14:34 UTC <mgsloan> https://github.com/mgsloan/diagrams-ghci/blob/master/screens/2012-08-05-151237_1280x800_scrot.png
+2012-08-05 22:18:39 UTC <mgsloan> scratch that; https://github.com/mgsloan/diagrams-ghci/blob/master/screens/2012-08-05-151606_1280x800_scrot.png
+2012-08-05 22:21:15 UTC <luite> very cool :
+2012-08-05 22:21:17 UTC <luite> :)
+2012-08-07 01:11:27 UTC <notthemessiah> anyone get the ghci interpreter working other than mgsloan himself?
+2012-08-07 01:11:58 UTC <notthemessiah> whoa redundant acronym
+2012-08-07 01:12:04 UTC <notthemessiah> sorry
+2012-08-07 01:25:58 UTC <fryguybob> notthemessiah: I don't have a working cairo or I would try.
+2012-08-07 01:31:35 UTC <notthemessiah> appreciate the thought
+2012-08-07 01:33:31 UTC <fryguybob> do you have a paricular error when you try?
+2012-08-07 01:35:37 UTC <notthemessiah> cabal: Could not resolve dependencies:, trying: diagrams-core-0.5.1 (user goal), next goal: dubl-tree (dependency of diagrams-core-0.5.1)
+2012-08-07 01:45:03 UTC <fryguybob> notthemessiah: Maybe you just need the latest of all the diagrams reops on github?
+2012-08-07 03:06:24 UTC <fryguybob> ACTION goes back to making his lion diagram.
+2012-08-07 04:25:12 UTC <fryguybob> progress: http://www.cs.rochester.edu/u/ryates/temp/lion3.pdf
