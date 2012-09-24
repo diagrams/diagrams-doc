@@ -27,7 +27,7 @@ main = shake shakeOptions { shakeThreads = 2, shakeVerbosity = Loud } $ do
   obj "//*.xml" *> \out -> do
     let rst = un $ replaceExtension out "rst"
     need [rst]
-    system' "rst2xml.py" ["--input-encoding=utf8", rst, out]
+    system' "rst2xml" ["--input-encoding=utf8", rst, out]
 
   obj "//*.hs.exe" *> \out -> do
     let hs = un $ dropExtension out
