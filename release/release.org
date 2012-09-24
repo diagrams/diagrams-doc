@@ -1,4 +1,4 @@
-* Planning/status of current release (0.5.1? 0.6?)
+* Planning for release of version 0.6
 ** finished uploads
 *** monoid-extras
 *** vector-space-points
@@ -21,19 +21,80 @@
     make a minor point release once it's available.
 *** BlogLiterately-diagrams
     Need to write blog post about this, diagrams-builder, diagrams-latex.sty.
-** uploads
+*** dual-tree
+** to upload
    For all of these, need to make sure documentation is up-to-date!
    Except maybe diagrams-core, but should at least start on that.
-*** dual-tree
-    - rename and finish refactoring!
 *** diagrams-core
 *** diagrams-lib
 *** diagrams-cairo
 *** diagrams-contrib
 *** diagrams-doc
     web site, user manual, etc.
-** other package statuses
-
+** To do for 0.6 release
+  + [ ] check re: containers versions (contrib, etc.?)
+  + [ ] rename diagrams-core modules?
+  + [-] finish adding Travis builds to all repos in github org.
+    + [X] diagrams-svg
+    + [X] diagrams
+    + [ ] set notifications -- send failed builds to diagrams-discuss?
+          [After I get them all working].
+    + [ ] link to Travis build page on website etc.
+  + [ ] bump versions and deps to 0.6
+    + [ ] diagrams-core
+    + [ ] diagrams-lib
+    + [ ] diagrams-cairo
+    + [ ] diagrams-svg
+    + [ ] diagrams-contrib (yes, make version match other pkgs!)
+    + [ ] diagrams
+  + [ ] add flags to diagrams package enabling svg backend as
+        experimental
+  + [ ] test build:
+    - [ ] ghc 6.12.3
+    - [ ] ghc 7.0.4
+    - [ ] ghc 7.2.1
+    - [ ] ghc 7.4.2
+    - [ ] ghc 7.6.1
+    - [ ] update tested-with fields
+  + [-] update CHANGES files and release info on website
+    + [X] diagrams-core
+    + [ ] diagrams-lib
+    + [ ] diagrams-cairo
+    + [ ] diagrams-svg
+    + [ ] diagrams-contrib
+    + [ ] diagrams
+  + [ ] 0.5 -> 0.6 migration page on wiki
+  + [ ] write announcement for blog + email
+    + [ ] list major new features since 0.5
+      - traces
+      - subdiagramsz
+    + [ ] link to gallery (email)
+    + [ ] include some examples (blog)
+    + [ ] say where/how to get involved
+  + [ ] update user manual
+  + [ ] build API docs
+  + [ ] add release date to all CHANGES files
+    + [ ] core
+    + [ ] lib
+    + [ ] cairo
+    + [ ] contrib
+    + [ ] svg
+  + [ ] add release date to releases.markdown
+  + [ ] publish new website
+  + [ ] upload
+    + [ ] diagrams-core
+    + [ ] diagrams-lib
+    + [ ] diagrams-cairo
+    + [ ] diagrams-contrib
+    + [ ] diagrams-svg
+    + [ ] diagrams
+  + [ ] upload/send announcement
+    + [ ] blog
+    + [ ] email
+      - [ ] diagrams-discuss
+      - [ ] haskell
+      - [ ] haskell-cafe
+      - [ ] haskell-art
 * Planning for release of version 0.5
 
   + [X] update diagrams package to depend on new versions of -core,
