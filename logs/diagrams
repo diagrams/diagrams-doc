@@ -22772,3 +22772,40 @@
 2012-08-07 01:45:03 UTC <fryguybob> notthemessiah: Maybe you just need the latest of all the diagrams reops on github?
 2012-08-07 03:06:24 UTC <fryguybob> ACTION goes back to making his lion diagram.
 2012-08-07 04:25:12 UTC <fryguybob> progress: http://www.cs.rochester.edu/u/ryates/temp/lion3.pdf
+2012-09-21 19:35:57 UTC <luite> oh that's great!
+2012-09-21 19:36:09 UTC <luite> OS X has cairo preinstalled, right?
+2012-09-21 19:36:18 UTC <luite> (an old version if i remember correctly)
+2012-09-21 19:47:28 UTC <byorgey> I don't know
+2012-09-21 19:47:40 UTC <byorgey> but anecdotally it's much easier to get just cairo installed than all of gtk
+2012-09-21 19:54:23 UTC <pr> the thing about gtk on OS X is that it's not actually clear what the best way to build it is (homebrew? macports? official os x distribution?). and even if you build it according to diagrams wiki, i.e. you build it via homebrew, you still may end up with weird errors
+2012-09-21 19:54:55 UTC <pr> (what actually failed building for me was gtk2hs)
+2012-09-21 20:07:48 UTC <pr> 21:36:18 < luite> (an old version if i remember correctly)
+2012-09-21 20:07:57 UTC <pr> yeah, i think it's 1.8.x or something
+2012-09-23 16:01:47 UTC <byorgey> sorry for all the noise, trying to get an 0.6 release together =)
+2012-09-23 16:03:58 UTC <ClaudiusMaximus> \o/
+2012-09-23 16:04:20 UTC <byorgey> hi ClaudiusMaximus, good to have you around again =)
+2012-09-23 16:04:23 UTC <ClaudiusMaximus> ACTION -> afk, rehearsing performance for /dev/art paris 2nd october
+2012-09-23 16:04:37 UTC <byorgey> cool, will it be recorded?
+2012-09-23 16:05:07 UTC <ClaudiusMaximus> fingers crossed
+2012-09-23 16:05:19 UTC <ClaudiusMaximus> giving a talk and a mini live-coding perf in C
+2012-09-23 16:05:54 UTC <ClaudiusMaximus> will have my own recording, but hopefully they have a nice camera + cameraperson to take care of that side of things too
+2012-09-23 16:06:42 UTC <ClaudiusMaximus> was in hospital for 2 months - extreme technology detox...  but i feel a lot better now  so it worked out ok
+2012-09-23 16:06:49 UTC <ClaudiusMaximus> some pics on my website, http://mathr.co.uk
+2012-09-23 16:07:10 UTC <ClaudiusMaximus> gotta practice my shizzle, hope to code up some diagrams mid-late october / early november
+2012-09-23 16:07:23 UTC <ClaudiusMaximus> laters, keep up the coding!
+2012-09-23 16:07:33 UTC <byorgey> ClaudiusMaximus: cool, good luck!
+2012-09-23 16:07:49 UTC <ClaudiusMaximus> ty
+2012-09-23 16:07:58 UTC <byorgey> ClaudiusMaximus: very glad to hear you're doing better now
+2012-09-23 17:39:52 UTC <ClaudiusMaximus> byorgey: it feels good to be healthy again :)
+2012-09-23 17:40:44 UTC <ClaudiusMaximus> now i have ~8 days to prepare a presentation - as LaTeX/Beamer n00b i might give up and just do it plain text with a large font in a text editor...
+2012-09-23 17:40:50 UTC <ClaudiusMaximus> and take screenshots
+2012-09-23 17:40:55 UTC <luite> oh it's not that bead
+2012-09-23 17:40:56 UTC <luite> bad
+2012-09-23 17:41:01 UTC <luite> if you have some examples to work from
+2012-09-23 17:41:39 UTC <luite> (acutally it's pretty bad but you learn to accept it ;p )
+2012-09-23 17:41:50 UTC <ClaudiusMaximus> the main problem i have so far with the defaults is: text is way too small, itemized lists cut off the start of my long item labels - essentially i want 3 or 4 short lines of big text per slide
+2012-09-23 17:42:14 UTC <ClaudiusMaximus> so oldschool text editor might end up quicker, it's only an hour so ~30 slides should be way too many :P
+2012-09-23 17:42:40 UTC <ClaudiusMaximus> especially as it's in france and i'll be speaking english...
+2012-09-23 17:42:57 UTC <ClaudiusMaximus> ...so will probably have to speak slower than my normal hyperactiveness
+2012-09-23 17:47:44 UTC <ClaudiusMaximus> and i definitely need to rehearse more, currently sounds like http://mathr.co.uk/devart/session-2012-09-23-162612-excerpt-finale.ogg 3mins after 45mins of almost white noise and mic feedback,,,  (compared with the last real performance: http://archive.org/details/ClaudiusMaximus_-_Live_At_The_Schip_2012-02-18 )
+2012-09-23 17:48:22 UTC <ClaudiusMaximus> now i have an urgent need for dinner, bbl
