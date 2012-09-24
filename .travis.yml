@@ -14,4 +14,8 @@ before_install:
   - cabal install monoid-extras/ dual-tree/ core/ lib/ cairo/ contrib/ docutils/
   - cd ..
 
-script: "ghc --make Shake && ./Shake"
+install: true
+
+before_script: ghc --make Shake
+
+script: ./Shake
