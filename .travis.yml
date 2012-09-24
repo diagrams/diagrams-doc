@@ -10,12 +10,12 @@ before_install:
   - git clone --quiet git://github.com/diagrams/diagrams-contrib.git diagrams/contrib
   - git clone --quiet git://github.com/diagrams/diagrams-builder.git diagrams/builder
   - git clone --quiet git://github.com/diagrams/docutils.git diagrams/docutils
+
+install: 
   - cd diagrams
   - cabal install gtk2hs-buildtools shake
   - cabal install monoid-extras/ dual-tree/ core/ lib/ cairo/ contrib/ builder/ docutils/
   - cd ..
-
-install: true
 
 before_script: ghc --make Shake
 
