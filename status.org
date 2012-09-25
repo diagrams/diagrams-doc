@@ -1,0 +1,27 @@
+* GHC 7.6
+** diagrams-builder
+
+   => hint
+
+   Latest hint requires unix <2.6 so doesn't build with GHC 7.6.
+   Bumping upper bound manually then reveals that
+
+   ghc-mtl
+
+   also doesn't build under 7.6, but for more involved reasons
+   (i.e. the GHC API changed).  So who knows what will happen with that.
+** core, lib, contrib?
+
+   All seem OK.
+
+** cairo
+
+   glib-0.12.3.1 doesn't build under GHC 7.6 because of this error:
+
+   
+System/Glib/GObject.chs:130:1:
+    Unacceptable result type in foreign declaration:
+      IO (FunPtr (Ptr () -> IO ()))
+    When checking declaration:
+      foreign import ccall safe "wrapper" mkDestroyNotifyPtr
+        :: IO () -> IO DestroyNotify

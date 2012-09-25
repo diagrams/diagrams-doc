@@ -32,7 +32,8 @@
 *** diagrams-doc
     web site, user manual, etc.
 ** To do for 0.6 release
-  + [ ] check re: containers versions (contrib, etc.?)
+  + [ ] look at mgsloan padR2 thing
+  + [X] check re: containers versions (contrib, etc.?)
   + [ ] rename diagrams-core modules?
   + [-] finish adding Travis builds to all repos in github org.
     + [X] diagrams-svg
@@ -49,6 +50,7 @@
     + [ ] diagrams
   + [ ] add flags to diagrams package enabling svg backend as
         experimental
+  + [ ] add to contributing page: documentation, CHANGES
   + [ ] test build:
     - [ ] ghc 6.12.3
     - [ ] ghc 7.0.4
@@ -67,12 +69,13 @@
   + [ ] write announcement for blog + email
     + [ ] list major new features since 0.5
       - traces
-      - subdiagramsz
+      - subdiagrams
     + [ ] link to gallery (email)
     + [ ] include some examples (blog)
     + [ ] say where/how to get involved
   + [ ] update user manual
   + [ ] build API docs
+  + [ ] finish porting doc build system to shake
   + [ ] add release date to all CHANGES files
     + [ ] core
     + [ ] lib
