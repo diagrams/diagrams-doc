@@ -74,7 +74,7 @@ requireImages = do
 webRules :: Rules ()
 webRules = do
   "web/manual" *> \out ->
-    system' "ln" ["-s", "../dist/manual", out]
+    system' "ln" ["-s", "-f", "../dist/manual", out]
 
 buildWeb :: Action ()
 buildWeb = do
