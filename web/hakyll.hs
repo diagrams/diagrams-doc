@@ -125,7 +125,7 @@ compilePng :: Bool -> Resource -> IO LB.ByteString
 compilePng isThumb resource = do
     let thumbFlag | isThumb   = "--thumb 175 "
                   | otherwise = ""
-    _ <- system $ "cd gallery && ./Build.exe " ++ thumbFlag ++ moduleName ++ " " ++ tmpPath
+    _ <- system $ "cd gallery && ../../.make/web/gallery/Build.hs.exe " ++ thumbFlag ++ moduleName ++ " " ++ tmpPath
     LB.readFile tmpPath
   where
     moduleName = takeBaseName $ unResource resource

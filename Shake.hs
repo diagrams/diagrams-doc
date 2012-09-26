@@ -8,7 +8,7 @@ un = dropDirectory1
 dist = ("dist" </>)
 
 main :: IO ()
-main = shake shakeOptions { shakeThreads = 2, shakeVerbosity = Diagnostic } $ do
+main = shake shakeOptions { shakeThreads = 2 } $ do
   want [dist "manual/diagrams-manual.html"]
   action $ requireIcons
   action $ requireStatic
@@ -80,7 +80,10 @@ buildWeb :: Action ()
 buildWeb = do
   alwaysRerun
 
-  need ["web/manual", dist "manual/diagrams-manual.html", obj "web/hakyll.hs.exe"]
+  need [ "web/manual"
+       , dist "manual/diagrams-manual.html"
+       , obj "web/hakyll.hs.exe"
+       , obj "web/gallery/Build.hs.exe"]
   requireIcons
   requireStatic
   requireImages
