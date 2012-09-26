@@ -5,7 +5,7 @@ authorurl: http://www.cmears.id.au/
 date: 2012-09-26
 description: A fractal made of squares and right-angled triangles that looks like a tree.
 tags: fractal
-height: 200
+height: 300
 width: 400
 ---
 
