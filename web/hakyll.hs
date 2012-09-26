@@ -40,7 +40,12 @@ main = hakyll $ do
                arr (setField "title" "User manual") >>>
                mainCompiler)
 
-    match (predicate (\i -> matches "manual/**" i && not (matches "manual/*.html" i)))
+    match (predicate (\i -> matches "manual/**" i
+                         && not (matches "manual/*.html" i)
+                         && not (matches "manual/manual" i)
+                         -- above needed due to some sort of weird bug in shake?? =(
+                     )
+          )
       $ do
         route idRoute
         compile copyFileCompiler

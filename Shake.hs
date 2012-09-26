@@ -8,10 +8,13 @@ un = dropDirectory1
 dist = ("dist" </>)
 
 main :: IO ()
-main = shake shakeOptions { shakeThreads = 2, shakeVerbosity = Loud } $ do
+main = shake shakeOptions { shakeThreads = 2, shakeVerbosity = Diagnostic } $ do
   want [dist "manual/diagrams-manual.html"]
   action $ requireIcons
   action $ requireStatic
+
+  webRules
+  action $ buildWeb
 
   -- Cheating a bit here; this rule also generates diagrams images,
   -- BUT we don't even know their names until after running xml2html,
@@ -67,6 +70,24 @@ requireImages = do
   images <- getDirectoryFiles (obj "manual/images") "*.png"
   let distImages = map (dist . ("manual/images" </>)) images
   need distImages
+
+webRules :: Rules ()
+webRules = do
+  "web/manual" *> \out ->
+    system' "ln" ["-s", "../dist/manual", out]
+
+buildWeb :: Action ()
+buildWeb = do
+  alwaysRerun
+
+  need ["web/manual", dist "manual/diagrams-manual.html", obj "web/hakyll.hs.exe"]
+  requireIcons
+  requireStatic
+  requireImages
+
+  systemCwd "web" (".." </> obj "web/hakyll.hs.exe") ["build"]
+
+  -- action $ requireGallery  -- replace hakyll building with our own here
 
 ghc out hs = do
   askOracle ["ghc-pkg"]
