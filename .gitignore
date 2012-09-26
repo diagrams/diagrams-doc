@@ -13,7 +13,7 @@ history
 TAGS
 _cache
 _site
-web/manual/*
+web/manual
 .make
 .shake.database
 Shake
