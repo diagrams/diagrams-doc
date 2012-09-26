@@ -9,17 +9,17 @@ height: 200
 width: 400
 ---
 
-This diagrams was inspired by the one at
-http://projecteuler.net/problem=395, which explains the algorithm for
-constructing the tree.
+This diagram was inspired by the one at
+[http://projecteuler.net/problem=395](http://projecteuler.net/problem=395),
+which explains the algorithm for constructing the tree.
 
 > {-# LANGUAGE NoMonomorphismRestriction #-}
 > import Diagrams.Prelude
 > import Diagrams.TwoD
 > import Data.Colour (blend)
 
-An order n tree has a square and a right-angled triangle on top, and
-an order n-1 tree on each short side of the triangle.  As the
+An order $n$ tree has a square and a right-angled triangle on top, and
+an order $n-1$ tree on each short side of the triangle.  As the
 recursion deepens, the limbs get smaller and more transparent.
 
 For aesthetics, let the leaves have circles instead of squares.
