@@ -22827,3 +22827,224 @@
 2012-09-24 23:54:35 UTC <luite> or like those math books that require nothing but basic calculus and mathematical maturity, and then go through 4 years worth of definitions and theorems in 25 pages before starting with really complicated stuff
 2012-09-25 02:52:43 UTC <luite> blah, /me has done too much coding lately, stressed
 2012-09-25 03:11:34 UTC <mgsloan> :(
+2012-09-25 13:16:09 UTC <fryguybob> ACTION is disappointed that byorgey doesn't want to regression test the irc logs.
+2012-09-25 13:16:42 UTC <byorgey> hahaha
+2012-09-25 13:18:13 UTC <byorgey> maybe we should write a script to automatically build a syntax-highlighted, searchable version of the IRC logs and stick it on the website
+2012-09-25 13:18:25 UTC <byorgey> then we would have to regression test them =)
+2012-09-25 13:19:06 UTC <fryguybob> Yeah, or template haskell into diagrams and output a word cloud.
+2012-09-25 13:19:17 UTC <byorgey> oh, nice =)
+2012-09-25 13:21:53 UTC <byorgey> haha, I pasted the logs into wordle.net and got a word cloud with an enormous "UTC" smack in the middle, flanked by some nicks and lots of tiny other words =)
+2012-09-25 13:21:58 UTC <byorgey> then firefox crashed =(
+2012-09-25 13:22:01 UTC <fryguybob> HA
+2012-09-25 13:22:35 UTC <fryguybob> Fitting that irc is dominated by time :D
+2012-09-25 13:26:09 UTC <ClaudiusMaximus> vaguelly related: http://archive.org/details/ClaudiusMaximus_-_Haskell_IRC_Fractal )
+2012-09-25 13:26:56 UTC <fryguybob> ClaudiusMaximus: Ha, that's a fun idea.
+2012-09-25 13:30:31 UTC <byorgey> http://www.wordle.net/show/wrdl/5762752/%23diagrams_logs
+2012-09-25 13:31:30 UTC <ClaudiusMaximus> byorgey: will that crash my firefox?
+2012-09-25 13:31:56 UTC <byorgey> ClaudiusMaximus: I hope not.  Mine seems unusually buggy.
+2012-09-25 13:32:08 UTC <byorgey> ClaudiusMaximus: awesome video =)
+2012-09-25 13:32:31 UTC <ClaudiusMaximus> byorgey: ty
+2012-09-25 13:32:48 UTC <byorgey> ClaudiusMaximus: how did you make it?
+2012-09-25 13:32:55 UTC <ClaudiusMaximus> byorgey: the current iteration (before my 2 months abscence in hospital) started looking more like http://img26.imageshack.us/img26/7627/gg2large.png
+2012-09-25 13:32:56 UTC <fryguybob> Gah... fire alarm.
+2012-09-25 13:33:04 UTC <ClaudiusMaximus> with circles fading out as they get larger
+2012-09-25 13:33:16 UTC <byorgey> oh, neat =)
+2012-09-25 13:33:20 UTC <byorgey> fryguybob: run!!
+2012-09-25 13:34:04 UTC <ClaudiusMaximus> byorgey: markov chain type thing, filter logs to strip dates/nicks and pick top 1000 words, then make a chain of which words follow which, and build graph-directed iterated function system from it
+2012-09-25 13:34:27 UTC <ClaudiusMaximus> byorgey: https://gitorious.org/maximus/graphgrow code
+2012-09-25 13:34:42 UTC <byorgey> oh! woah
+2012-09-25 13:34:43 UTC <ClaudiusMaximus> it's the one with the gtk toy diagrams node editor thing i started too
+2012-09-25 13:34:48 UTC <byorgey> right, I remember that
+2012-09-25 13:35:09 UTC <byorgey> very cool!
+2012-09-25 13:35:19 UTC <ClaudiusMaximus> then use symbolic sequences to renormalize periodically to visible parts, to avoid needing more than Double precision
+2012-09-25 13:35:29 UTC <ClaudiusMaximus> (that's the clever bit imo)
+2012-09-25 13:37:59 UTC <byorgey> right, I was wondering how you figure out when to cut off
+2012-09-25 13:38:19 UTC <byorgey> clearly you can't just render the whole thing including all the exponentially tiny nested nested nested nested ... words
+2012-09-25 13:42:36 UTC <ClaudiusMaximus> there's two modes, one where there's a "pixel size cutoff"
+2012-09-25 13:42:52 UTC <ClaudiusMaximus> and another that tries to render "as detailed as possible without dropping frames"
+2012-09-25 13:43:13 UTC <ClaudiusMaximus> which latter mode relies on OpenGL sync-to-vblank being operational and behaving sensibly, and is still buggy/needs work
+2012-09-25 13:43:19 UTC <fryguybob> ACTION is back.
+2012-09-25 13:44:05 UTC <ClaudiusMaximus> next step is to split the generation / animation into two phases, so the animation + culling is done on the GPU and the CPU just uploads new points/circles when they become visible
+2012-09-25 13:44:49 UTC <ClaudiusMaximus> but that's an optimisation, and so many other projects....
+2012-09-25 13:45:25 UTC <ClaudiusMaximus> lunch, bbiab
+2012-09-25 13:48:56 UTC <byorgey> enjoy lunch
+2012-09-25 13:49:16 UTC <byorgey> fryguybob: they put out the fire that quickly?
+2012-09-25 13:50:10 UTC <fryguybob> byorgey: I know.  Probably the ECE people letting out magic smoke.
+2012-09-25 13:52:16 UTC <byorgey> how unprofessional.
+2012-09-25 14:16:28 UTC <byorgey> https://github.com/diagrams/diagrams-lib/issues/49
+2012-09-26 06:08:17 UTC <cmears> I just submitted a pull request for this pretty gallery example: http://www.csse.monash.edu.au/~cmears/cicrle.png
+2012-09-26 06:20:10 UTC <mgsloan> pretty!  L-system?
+2012-09-26 06:20:44 UTC <cmears> No idea (:
+2012-09-26 06:23:46 UTC <mgsloan> http://en.wikipedia.org/wiki/L-system
+2012-09-26 06:24:00 UTC <mgsloan> now that I think of it - silly question
+2012-09-26 06:25:00 UTC <mgsloan> (as L systems would really just be a way of describing the recursion you used)
+2012-09-26 06:40:29 UTC <luite> yay just over 10% of native ghc speed now in firefox \o/
+2012-09-26 06:42:17 UTC <luite> might already be fast enough to run diagrams properly client side
+2012-09-26 06:48:21 UTC <luite> how do generational garbage collectors usually track writes to the old generation?
+2012-09-26 08:32:33 UTC <ClaudiusMaximus> nice Pythagoras tree, bonus points if you get the diagrams version animatable (changing ratios of the triangle)  (referring to cmears' cicrle.png)
+2012-09-26 08:33:17 UTC <ClaudiusMaximus> http://en.wikipedia.org/wiki/Pythagoras_tree_%28fractal%29  (well, variant of such)
+2012-09-26 14:15:08 UTC <byorgey> ClaudiusMaximus: shouldn't be hard to animate it in principle, though looking at the actual code cmears submitted it has lots of hardcoded magic numbers
+2012-09-26 14:15:16 UTC <byorgey> so it would have to be generalized a bit first
+2012-09-26 14:54:03 UTC <ClaudiusMaximus> byorgey: http://hpaste.org/75371
+2012-09-26 14:54:23 UTC <ClaudiusMaximus> byorgey: a bash/svg version of parameterizable pythagoras tree i wrote a while ago
+2012-09-26 14:55:02 UTC <byorgey> ClaudiusMaximus: ah, cool
+2012-09-26 14:55:05 UTC <byorgey> doesn't look too bad
+2012-09-26 14:56:05 UTC <byorgey> woah, I didn't know you could have here-docs in bash o.O
+2012-09-26 14:57:01 UTC <ClaudiusMaximus> $ man bash | cat -n | grep Here\ Documents 1903     Here Documents
+2012-09-26 14:57:10 UTC <ClaudiusMaximus> so it's quite a way down the huge man page
+2012-09-26 14:57:21 UTC <ClaudiusMaximus> that might actually be broken w.r.t. tabs/spaces
+2012-09-26 14:57:38 UTC <byorgey> ClaudiusMaximus: what's with the leading zeros like  0${aa}  ?
+2012-09-26 14:57:42 UTC <ClaudiusMaximus> but i figure you just want the algorithm and not to run it
+2012-09-26 14:58:21 UTC <ClaudiusMaximus> byorgey: iirc, bc prints out like ".123" instead of "0.123"
+2012-09-26 14:59:02 UTC <ClaudiusMaximus> byorgey: which SVG dislikes strongly
+2012-09-26 14:59:09 UTC <ClaudiusMaximus> yep, that's exactly the issue
+2012-09-26 14:59:26 UTC <byorgey> aha
+2012-09-26 14:59:36 UTC <ClaudiusMaximus> (something that should be documented in the source code, but you know my steez ;)
+2012-09-26 15:00:25 UTC <byorgey> =)
+2012-09-26 15:01:25 UTC <byorgey> yeah, no worries, I'm just trying to understand the algorithm
+2012-09-26 17:21:13 UTC <MagneticDuck> hiah
+2012-09-26 17:21:20 UTC <MagneticDuck> learning diagrams for the first time
+2012-09-26 17:21:26 UTC <MagneticDuck> is it a very bad idea to use diagrams for a game?
+2012-09-26 17:22:20 UTC <MagneticDuck> because I, as a good haskell programmer, don't want to use some sort of ugly C library to draw graphics
+2012-09-26 17:22:22 UTC <MagneticDuck> :(
+2012-09-26 17:22:32 UTC <MagneticDuck> so it'd be nice if I could use diagrams or something
+2012-09-26 17:22:37 UTC <MagneticDuck> is it really too slow though?
+2012-09-26 17:22:39 UTC <ClaudiusMaximus> MagneticDuck: try gtk-toy examples
+2012-09-26 17:22:48 UTC <ClaudiusMaximus> MagneticDuck: sae if they are fast enough for you
+2012-09-26 17:22:50 UTC <MagneticDuck> okay
+2012-09-26 17:23:01 UTC <ClaudiusMaximus> MagneticDuck: there's some nice particle simulation where you drag a net around
+2012-09-26 17:23:26 UTC <MagneticDuck> I see
+2012-09-26 17:23:27 UTC <ClaudiusMaximus> depends what kind of game, it should be fine for puzzle type games, but 3d fps shooter probably not
+2012-09-26 17:23:45 UTC <MagneticDuck> haha
+2012-09-26 17:23:51 UTC <MagneticDuck> I'm not going to make anything complicated
+2012-09-26 17:23:55 UTC <MagneticDuck> simple graphics
+2012-09-26 17:23:57 UTC <MagneticDuck> I like simple graphics
+2012-09-26 17:23:59 UTC <MagneticDuck> :P
+2012-09-26 17:24:10 UTC <ClaudiusMaximus> there may already be a tic-tac-toe example
+2012-09-26 17:24:13 UTC <ClaudiusMaximus> not sure
+2012-09-26 17:24:21 UTC <ClaudiusMaximus> vague memories...
+2012-09-26 17:24:28 UTC <MagneticDuck> hn
+2012-09-26 17:24:28 UTC <ClaudiusMaximus> maybe that was some FRP thing though
+2012-09-26 17:25:28 UTC <ClaudiusMaximus> you'll probably end up using some ugly C library underneath eventually though, but sufficiently hidden behind beautiful haskell veils
+2012-09-26 17:27:16 UTC <byorgey> yeah, it should be OK for simple games
+2012-09-26 17:27:20 UTC <MagneticDuck> :P
+2012-09-26 17:29:19 UTC <MagneticDuck> why would it be slow?
+2012-09-26 17:29:28 UTC <MagneticDuck> is there really a whole lot of computation going on?
+2012-09-26 17:29:36 UTC <MagneticDuck> processing the data structure
+2012-09-26 17:29:41 UTC <MagneticDuck> and rendering it?
+2012-09-26 17:30:08 UTC <MagneticDuck> well
+2012-09-26 17:30:22 UTC <MagneticDuck> I guess even a small inefficiency
+2012-09-26 17:30:26 UTC <MagneticDuck> would have consequences
+2012-09-26 17:32:34 UTC <ClaudiusMaximus> afaik each small change requires recomputing the whole thing, as it currently stands (though i believe work is taking place on caching?)
+2012-09-26 17:35:09 UTC <ClaudiusMaximus> the good news (from my biased perspective, and also having not paid attention for a couple of months)  is that diagrams is actively developed and looks like it will be for some time, while other alternatives seem slow/stagnant (and you don't want opengl or cairo if you don't want ugly c-style stuff)
+2012-09-26 17:41:01 UTC <byorgey> ACTION agrees! =)
+2012-09-26 17:41:17 UTC <ClaudiusMaximus> dinner time, bbl
+2012-09-26 17:41:29 UTC <byorgey> MagneticDuck: diagrams hasn't really been designed with efficiency in mind.  There's lots of low-hanging fruit efficiency-wise.
+2012-09-26 17:41:54 UTC <byorgey> MagneticDuck: but I have seen it used for real-time animation, frame-by-frame
+2012-09-26 17:42:08 UTC <byorgey> as long as there's not a ton of stuff in each frame
+2012-09-26 17:42:21 UTC <byorgey> and if you run into particular inefficiencies I'm definitely interested in trying to address them
+2012-09-26 17:43:08 UTC <luite> great :)
+2012-09-26 17:44:11 UTC <luite> byorgey: i can now run simple benchmarks with ghcjs -O2 "only" 10x slower than ghc -O2, with some extra ghcjs optimization later and optimization of diagrams, that could be enough for browser animation :)
+2012-09-26 17:44:37 UTC <byorgey> luite: yay!
+2012-09-26 17:45:16 UTC <byorgey> luite: Andy Gill is also working on his Sunroof thing, with one explicit goal of supporting diagrams animation in the browser
+2012-09-26 17:47:13 UTC <byorgey> it's not as general as ghcjs, but might actually give better results for diagrams since we can compile a diagram directly to special-purpose js running in a canvas, instead of having to actually compile the diagrams libs and all dependencies
+2012-09-26 17:48:46 UTC <luite> i'm a bit worried that simple things you take for granted in haskell won't work there, like a zipWith [1..] somehing. or does it work?
+2012-09-26 17:49:36 UTC <byorgey> luite: yeah, good question, I have no idea
+2012-09-26 17:51:19 UTC <byorgey> strangely enough, the diagrams repo with the most dependencies is diagrams-doc
+2012-09-26 17:51:59 UTC <luite> blaze for diagrams-svg is a bit tricky :)
+2012-09-26 17:52:11 UTC <byorgey> luite: I bet =)
+2012-09-26 17:52:34 UTC <luite> but the rest is not too bad, the GHC front end translates everything to nice and simple core. still a lot of code though
+2012-09-26 17:53:24 UTC <luite> but i'm pretty sure the current ghcjs, and haste, fay, don't correctly remove CAFs that are not referenced anymore
+2012-09-26 17:53:52 UTC <luite> which, in combination with GHCs let floating, will lead to huge memory leak
+2012-09-26 17:53:52 UTC <luite> s
+2012-09-26 17:54:33 UTC <byorgey> ah, I see
+2012-09-26 17:54:41 UTC <byorgey> that sounds tricky
+2012-09-26 17:54:58 UTC <luite> so i'm redoing memory management now with a garbage collector written in js
+2012-09-26 18:00:45 UTC <luite> fortunately haskell makes it relatively easy to write a generational collector without hardware support (no write traps needed to mark which old-gen objects might refer to new-gen, since only mutable cells/arrays and thunks can be updated on the heap, at only a few locations in the code)
+2012-09-27 02:28:54 UTC <byorgey> argh, I really hate that git can't properly handle moving files
+2012-09-27 02:29:31 UTC <shachaf> It can't?
+2012-09-27 02:30:26 UTC <byorgey> no, it can't.  There is no way to tell git 'I am moving this file'. It just does its best job to figure out that "gee, file B sure looks similar to what A used to look like, so I'll assume it was moved"
+2012-09-27 02:30:53 UTC <byorgey> the problem is that if you move a file and edit it "too much", chances are it won't be able to figure it out and will record it as a wholesale deletion and creation
+2012-09-27 02:30:59 UTC <byorgey> and then you lose all the history.
+2012-09-27 02:31:44 UTC <byorgey> the workaround of course is to just move the files and commit that, then edit them in a separate commit.  But it's annoying.
+2012-09-27 02:31:51 UTC <shachaf> byorgey: git mv?
+2012-09-27 02:32:26 UTC <luite> that's a shortcut for remvoing and adding
+2012-09-27 02:32:30 UTC <shachaf> Oh, yes.
+2012-09-27 02:32:32 UTC <shachaf> I see what you mean.
+2012-09-27 02:33:01 UTC <byorgey> shachaf: git mv is a lie.  It is just a wrapper around mv.
+2012-09-27 02:33:14 UTC <byorgey> the fact that you put 'git' in front of it pretty much means nothing.
+2012-09-27 02:36:42 UTC <shachaf> That doesn't seem right.
+2012-09-27 02:37:02 UTC <luite> git isn't about right ;)
+2012-09-27 02:38:07 UTC <shachaf> I mean, my test with git seems to indicate differently.
+2012-09-27 02:38:38 UTC <luite> it does add it to the index at the new location
+2012-09-27 13:11:47 UTC <byorgey> shachaf: hmm, actually, you're right, git mv and mv are certainly different
+2012-09-27 13:11:54 UTC <byorgey> perhaps it's improved in more recent version of git
+2012-09-27 13:13:20 UTC <ClaudiusMaximus> byorgey: did you figure out hte algotihtm from my script?
+2012-09-27 13:51:27 UTC <byorgey> ClaudiusMaximus: yes,
+2012-09-27 13:51:31 UTC <byorgey> I think so
+2012-09-27 13:51:59 UTC <byorgey> I spent like five minutes trying to generalize the example but failed so I gave up for now
+2012-09-27 13:52:04 UTC <byorgey> I have bigger fish to fry =)
+2012-09-27 14:15:33 UTC <ClaudiusMaximus> http://www.youtube.com/watch?v=b1QfXQakX2w
+2012-09-27 14:18:28 UTC <byorgey> =)
+2012-09-27 14:20:49 UTC <luite> :)
+2012-09-27 14:22:59 UTC <luite> hm i wonder how common functions with more than 24 arguments are in haskell
+2012-09-27 14:24:50 UTC <ClaudiusMaximus> "uncommon"
+2012-09-27 14:24:50 UTC <byorgey> wat
+2012-09-27 14:24:58 UTC <byorgey> I don't think I've ever seen one.
+2012-09-27 14:26:52 UTC <luite> since i use a single 31 bit value to store partial applications, that needs to  contain both the length of the heap/stack frame and a bitmap of pointers in the frame.... i guess i can skip support for now then
+2012-09-27 14:27:59 UTC <byorgey> ah, hehe
+2012-09-27 14:28:05 UTC <byorgey> yeah, I wouldn't worry about it =)
+2012-09-27 14:31:05 UTC <luite> (strictly speaking you could run into the limit much faster if you had lots of unboxed Word64# arguments, since they take up two javascript variables)
+2012-09-27 15:19:36 UTC <byorgey> yay, I beat Nikki and the Robots story mode =)
+2012-09-27 15:19:41 UTC <byorgey> now back to work!
+2012-09-27 16:23:33 UTC <fryguybob> byorgey: You did indeed have bigger fish to fry :D.
+2012-09-27 17:29:10 UTC <byorgey> hehehe
+2012-09-27 17:29:15 UTC <byorgey> busted!
+2012-09-27 19:43:13 UTC <luite> lol my new code generator is 200x faster than the old one at calculating fibonaccis :)
+2012-09-27 19:45:04 UTC <luite> booh only 70x faster in firefox
+2012-09-27 19:45:53 UTC <alpounet> wow
+2012-09-27 19:45:56 UTC <alpounet> what did you change?
+2012-09-27 19:46:09 UTC <luite> uh everything
+2012-09-27 19:46:26 UTC <luite> rewrite from scratch :)
+2012-09-27 19:47:31 UTC <alpounet> uh
+2012-09-27 19:47:35 UTC <alpounet> still using the trampoline?
+2012-09-27 19:47:39 UTC <luite> yes
+2012-09-27 19:48:03 UTC <luite> can't really get around that, until javascript gets tail-call optimization
+2012-09-27 19:48:18 UTC <luite> but how it's handled is completely different
+2012-09-27 19:48:32 UTC <luite> the evaluation stack is an array now
+2012-09-27 19:48:39 UTC <luite> and the heap is also an array
+2012-09-27 19:48:51 UTC <luite> and a garbage collector written in javascript is required to clean it up
+2012-09-27 19:49:16 UTC <alpounet> what actually make the generated code *that significantly* faster?
+2012-09-27 19:49:21 UTC <alpounet> what does*
+2012-09-27 19:52:13 UTC <luite> the fact that allocation is handled completely different now
+2012-09-27 19:52:52 UTC <alpounet> alright, cool then
+2012-09-27 19:52:52 UTC <luite> stack allocation is actually done on a stack (array), instead of by returning javascript closures that capture the required stuff
+2012-09-27 19:53:10 UTC <luite> heap allocation is also an array now, which makes it more efficient, but that's not as big a difference
+2012-09-27 19:53:16 UTC <alpounet> how does the generate code compare to Fay's?
+2012-09-27 19:53:20 UTC <alpounet> generated*
+2012-09-27 19:53:35 UTC <luite> 10-40x faster on the n-queens benchmark from the ghc suite
+2012-09-27 19:53:54 UTC <luite> even though fay doesn't have trampoline or general tco
+2012-09-27 19:54:19 UTC <luite> V8 / IonMonkey
+2012-09-27 19:54:19 UTC <luite> GHCJS: 6.2s / 5.0s  ( 26MB / 22MB )
+2012-09-27 19:54:19 UTC <luite> Haste: 25s / 71s ( 98MB / 1.8GB)
+2012-09-27 19:54:19 UTC <luite> Fay: 63s / 220s ( 49MB / 129MB )
+2012-09-27 19:54:19 UTC <luite> GHCJS current generator: 118s / 223s
+2012-09-27 19:54:21 UTC <luite> GHC Native: 0.5s (2.6MB)
+2012-09-27 19:54:32 UTC <luite> thats the n-queens benchmark on a 12x12 field
+2012-09-27 19:57:22 UTC <luite> Haste is a sort-of hybrid, it uses the javascript stack the same way as ghc uses the evaluation stack
+2012-09-27 19:57:54 UTC <luite> but that does mean that they can't implement green threads and async io
+2012-09-27 20:00:17 UTC <alpounet> wow, ghcjs is really doing great!
+2012-09-27 20:00:35 UTC <alpounet> barely 12x native
+2012-09-27 20:00:36 UTC <luite> it better be, i spent way too much time ont his already ;p
+2012-09-27 20:00:41 UTC <alpounet> it's really not bad i think
+2012-09-27 20:00:58 UTC <luite> with javascript tco and pointer tagging, another 2x speedup should be possible
+2012-09-27 20:01:06 UTC <luite> i'd be really happy with that
+2012-09-27 20:01:20 UTC <alpounet> you still have the fastest impl around
+2012-09-27 20:02:22 UTC <luite> ionmonkey also does great with this generator, always faster than v8
+2012-09-27 20:02:37 UTC <luite> 10x native here, only 7x or so on the really simple fibs benchmark
+2012-09-27 20:02:53 UTC <luite> some v8 dev already wanted to see my code because of the speed difference :)
+2012-09-27 20:06:53 UTC <alpounet> hah
+2012-09-27 20:30:31 UTC <byorgey> luite: awesome!
+2012-09-27 20:42:05 UTC <luite> hm the latest chrome made the old generator much faster, just insatlled the update to 22
+2012-09-27 20:42:41 UTC <luite> which takes 50s now (vs 1.2 new gen)
+2012-09-27 20:43:01 UTC <luite> still not bad i guess
