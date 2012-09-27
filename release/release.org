@@ -33,14 +33,15 @@
     web site, user manual, etc.
 ** To do for 0.6 release
   + [ ] look at mgsloan padR2 thing
+  + [X] look at other tickets with 0.6 milestone
   + [X] check re: containers versions (contrib, etc.?)
-  + [ ] rename diagrams-core modules?
+  + [X] rename diagrams-core modules?
   + [-] finish adding Travis builds to all repos in github org.
     + [X] diagrams-svg
     + [X] diagrams
     + [ ] set notifications -- send failed builds to diagrams-discuss?
           [After I get them all working].
-    + [ ] link to Travis build page on website etc.
+    + [ ] link to build status icons on website and in READMEs
   + [ ] bump versions and deps to 0.6
     + [ ] diagrams-core
     + [ ] diagrams-lib
