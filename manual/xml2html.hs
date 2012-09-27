@@ -81,7 +81,7 @@ compileDiagram outDir src = do
            "pad 1.1 example"
            ["DeriveDataTypeable"]
            [ "Diagrams.TwoD.Types"      -- WHY IS THIS NECESSARY =(
-           , "Graphics.Rendering.Diagrams.Points"
+           , "Diagrams.Core.Points"
                -- GHC 7.2 bug?  need  V (Point R2) = R2  (see #65)
            , "Diagrams.Backend.Cairo"
            , "Diagrams.Backend.Cairo.Internal"

@@ -1237,7 +1237,7 @@ which leaves the origin fixed and sends lines to lines) as well as
 translations.  `Diagrams.TwoD.Transform`:mod: defines a number of
 common affine transformations in two-dimensional space. (To construct
 transformations more directly, see
-`Graphics.Rendering.Diagrams.Transform`:mod:.)
+`Diagrams.Core.Transform`:mod:.)
 
 Every transformation comes in two variants, a noun form and a verb
 form.  For example, there are two functions for scaling along the
@@ -1256,7 +1256,7 @@ Transformations in general
 Before looking at specific two-dimensional transformations, it's worth
 saying a bit about transformations in general (a fuller treatment can
 be found under `Transformations`_).  The `Transformation` type is
-defined in `Graphics.Rendering.Diagrams.Transform`:mod:, from the
+defined in `Diagrams.Core.Transform`:mod:, from the
 `diagrams-core`:pkg: package.  `Transformation` is parameterized by
 the vector space over which it acts; recall that `T2` is provided as a
 synonym for `Transformation R2`.
@@ -2107,7 +2107,7 @@ Working with envelopes
 ----------------------
 
 The `Envelope` type, defined in
-`Graphics.Rendering.Diagrams.Envelope`:mod:, encapsulates *envelopes*
+`Diagrams.Core.Envelope`:mod:, encapsulates *envelopes*
 (see `envelopes and local vector spaces`_).  Things which have an
 associated envelope---including diagrams, segments, trails, and
 paths---are instances of the `Enveloped` type class.
@@ -2796,7 +2796,7 @@ Classes for transforming and combining
 HasOrigin
 ~~~~~~~~~
 
-`HasOrigin` is defined in `Graphics.Rendering.Diagrams.HasOrigin`:mod:.
+`HasOrigin` is defined in `Diagrams.Core.HasOrigin`:mod:.
 
 .. class:: lhs
 
@@ -2818,8 +2818,7 @@ Further reading: `Alignment`_.
 Transformable
 ~~~~~~~~~~~~~
 
-`Transformable` is defined in
-`Graphics.Rendering.Diagrams.Transform`:mod:.
+`Transformable` is defined in `Diagrams.Core.Transform`:mod:.
 
 .. class:: lhs
 
@@ -3027,7 +3026,7 @@ Couldn't match type `V P2` with `R2`
 This error is due to what appears to be a bug in recent versions of
 GHC.  For some reason the definition of the `V` type family for points
 is not exported.  To solve this you can add an explicit import of the
-form `import Graphics.Rendering.Diagrams.Points` to the top of your
+form `import Diagrams.Core.Points` to the top of your
 file.
 
 No instances for Backend b0 R2 ...
