@@ -18,6 +18,10 @@ Reference
 Blog posts/other
 ----------------
 
+* [Creating documents with embedded diagrams](http://byorgey.wordpress.com/2012/08/28/creating-documents-with-embedded-diagrams/)
+  (Brent Yorgey, 28 August 2012)
+* [Diagrams mentoring at Hac Phi](http://byorgey.wordpress.com/2012/07/09/diagrams-mentoring-at-hac-phi/)
+  (Brent Yorgey, 9 July 2012)
 * [Modern art with diagrams: the face of progress](http://byorgey.wordpress.com/2011/11/12/modern-art-with-diagrams-the-face-of-progress/)
   (Brent Yorgey, 12 November 2011)
 * [Generating plane tilings with diagrams](http://byorgey.wordpress.com/2011/11/12/generating-plane-tilings-with-diagrams/)
