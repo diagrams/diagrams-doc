@@ -41,7 +41,22 @@
     + [X] diagrams
     + [ ] set notifications -- send failed builds to diagrams-discuss?
           [After I get them all working].
-    + [ ] link to build status icons on website and in READMEs
+    + [-] link to build status icons on website and in READMEs
+      + [X] vector-space-points
+      + [X] monoid-extras
+      + [X] dual-tree
+      + [ ] active
+      + [ ] diagrams
+      + [ ] builder
+      + [ ] cairo
+      + [ ] contrib
+      + [ ] core
+      + [ ] doc
+      + [ ] lib
+      + [ ] povray
+      + [ ] svg
+      + [ ] test
+      + [ ] docutils
   + [ ] bump versions and deps to 0.6
     + [ ] diagrams-core
     + [ ] diagrams-lib
@@ -49,7 +64,7 @@
     + [ ] diagrams-svg
     + [ ] diagrams-contrib (yes, make version match other pkgs!)
     + [ ] diagrams
-  + [ ] add flags to diagrams package enabling svg backend as
+  + [X] add flags to diagrams package enabling svg backend as
         experimental
   + [ ] add to contributing page: documentation, CHANGES
   + [ ] test build:
