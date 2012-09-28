@@ -36,36 +36,36 @@
   + [X] look at other tickets with 0.6 milestone
   + [X] check re: containers versions (contrib, etc.?)
   + [X] rename diagrams-core modules?
-  + [-] finish adding Travis builds to all repos in github org.
+  + [X] finish adding Travis builds to all repos in github org.
     + [X] diagrams-svg
     + [X] diagrams
-    + [ ] set notifications -- send failed builds to diagrams-discuss?
-          [After I get them all working].
-    + [-] link to build status icons on website and in READMEs
+    + [X] link to build status icons on website and in READMEs
       + [X] vector-space-points
       + [X] monoid-extras
       + [X] dual-tree
-      + [ ] active
-      + [ ] diagrams
-      + [ ] builder
-      + [ ] cairo
-      + [ ] contrib
-      + [ ] core
-      + [ ] doc
-      + [ ] lib
-      + [ ] povray
-      + [ ] svg
-      + [ ] test
-      + [ ] docutils
-  + [ ] bump versions and deps to 0.6
-    + [ ] diagrams-core
-    + [ ] diagrams-lib
-    + [ ] diagrams-cairo
-    + [ ] diagrams-svg
-    + [ ] diagrams-contrib (yes, make version match other pkgs!)
-    + [ ] diagrams
+      + [X] active
+      + [X] diagrams
+      + [X] builder
+      + [X] cairo
+      + [X] contrib
+      + [X] core
+      + [X] doc
+      + [X] lib
+      + [X] povray
+      + [X] svg
+      + [X] test
+      + [X] docutils
+  + [X] bump versions and deps to 0.6
+    + [X] diagrams-core
+    + [X] diagrams-lib
+    + [X] diagrams-cairo
+    + [X] diagrams-svg
+    + [X] diagrams-contrib (yes, make version match other pkgs!)
+    + [X] diagrams
+    + [X] diagrams-builder
   + [X] add flags to diagrams package enabling svg backend as
         experimental
+  + [ ] finish porting doc build system to shake
   + [ ] add to contributing page: documentation, CHANGES
   + [ ] test build:
     - [ ] ghc 6.12.3
@@ -76,22 +76,22 @@
     - [ ] update tested-with fields
   + [-] update CHANGES files and release info on website
     + [X] diagrams-core
-    + [ ] diagrams-lib
-    + [ ] diagrams-cairo
-    + [ ] diagrams-svg
-    + [ ] diagrams-contrib
-    + [ ] diagrams
+    + [X] diagrams-lib
+    + [X] diagrams-cairo
+    + [X] diagrams-svg
+    + [X] diagrams-contrib
+    + [ ] website
   + [ ] 0.5 -> 0.6 migration page on wiki
   + [ ] write announcement for blog + email
     + [ ] list major new features since 0.5
       - traces
       - subdiagrams
+      - refactoring with dual-tree etc.
     + [ ] link to gallery (email)
     + [ ] include some examples (blog)
     + [ ] say where/how to get involved
   + [ ] update user manual
   + [ ] build API docs
-  + [ ] finish porting doc build system to shake
   + [ ] add release date to all CHANGES files
     + [ ] core
     + [ ] lib
@@ -107,6 +107,7 @@
     + [ ] diagrams-contrib
     + [ ] diagrams-svg
     + [ ] diagrams
+    + [ ] diagrams-builder
   + [ ] upload/send announcement
     + [ ] blog
     + [ ] email
