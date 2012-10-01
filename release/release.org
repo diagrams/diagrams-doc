@@ -65,6 +65,9 @@
     + [X] diagrams-builder
   + [X] add flags to diagrams package enabling svg backend as
         experimental
+  + [ ] add "manual: True" for cairo + svg flags?
+  + [ ] add "sized" function
+  + [ ] add "mark" function
   + [ ] improve READMEs
     + [ ] diagrams
     + [ ] diagrams-cairo
@@ -97,6 +100,8 @@
     + [ ] include some examples (blog)
     + [ ] say where/how to get involved
   + [ ] update user manual
+    + [ ] add "closable" to list of type classes
+    + [ ] add "types" section
   + [ ] build API docs
   + [ ] add release date to all CHANGES files
     + [ ] core
@@ -200,10 +205,8 @@
 
 * Put off to version 0.6
 
-  + [ ] release docutils package
-    - [ ] choose a different name for it
-  + [ ] release SVG backend
-  + [ ] write a contributor tutorial
+  + [X] release SVG backend
+  + [X] write a contributor tutorial
 
 * Tasks to complete before release of preview version
 
