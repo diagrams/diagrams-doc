@@ -65,8 +65,14 @@
     + [X] diagrams-builder
   + [X] add flags to diagrams package enabling svg backend as
         experimental
+  + [ ] improve READMEs
+    + [ ] diagrams
+    + [ ] diagrams-cairo
+  + [ ] split out gtk backend into separate package
   + [ ] finish porting doc build system to shake
   + [ ] add to contributing page: documentation, CHANGES
+        (need to finish porting build system first, so it's clear how
+        to build docs)
   + [ ] test build:
     - [ ] ghc 6.12.3
     - [ ] ghc 7.0.4
