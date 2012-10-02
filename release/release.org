@@ -65,11 +65,11 @@
     + [X] diagrams-builder
   + [X] add flags to diagrams package enabling svg backend as
         experimental
-  + [ ] add "manual: True" for cairo + svg flags?
+  + [X] add "manual: True" for cairo + svg flags?
   + [ ] add "sized" function
   + [ ] add "mark" function
-  + [ ] improve READMEs
-    + [ ] diagrams
+  + [-] improve READMEs
+    + [X] diagrams
     + [ ] diagrams-cairo
   + [ ] split out gtk backend into separate package
   + [ ] finish porting doc build system to shake
