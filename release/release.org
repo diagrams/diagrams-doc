@@ -71,6 +71,11 @@
   + [-] improve READMEs
     + [X] diagrams
     + [ ] diagrams-cairo
+  + [ ] send patches
+    + [ ] diagrams-postscript
+    + [ ] diagrams-tikz
+    + [ ] hs-logo
+    + [ ] diagrams-canvas
   + [ ] split out gtk backend into separate package
   + [ ] finish porting doc build system to shake
   + [ ] add to contributing page: documentation, CHANGES
