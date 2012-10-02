@@ -76,13 +76,11 @@
   + [ ] add to contributing page: documentation, CHANGES
         (need to finish porting build system first, so it's clear how
         to build docs)
-  + [ ] test build:
-    - [ ] ghc 6.12.3
-    - [ ] ghc 7.0.4
-    - [ ] ghc 7.2.1
-    - [ ] ghc 7.4.2
-    - [ ] ghc 7.6.1
-    - [ ] update tested-with fields
+  + [ ] update user manual
+    + [ ] add "closable" to list of type classes
+    + [ ] add "types" section
+    + [ ] other updates as needed
+  + [ ] build API docs
   + [-] update CHANGES files and release info on website
     + [X] diagrams-core
     + [X] diagrams-lib
@@ -91,6 +89,13 @@
     + [X] diagrams-contrib
     + [ ] website
   + [ ] 0.5 -> 0.6 migration page on wiki
+  + [ ] test build:
+    - [ ] ghc 6.12.3
+    - [ ] ghc 7.0.4
+    - [ ] ghc 7.2.1
+    - [ ] ghc 7.4.2
+    - [ ] ghc 7.6.1
+    - [ ] update tested-with fields
   + [ ] write announcement for blog + email
     + [ ] list major new features since 0.5
       - traces
@@ -99,10 +104,6 @@
     + [ ] link to gallery (email)
     + [ ] include some examples (blog)
     + [ ] say where/how to get involved
-  + [ ] update user manual
-    + [ ] add "closable" to list of type classes
-    + [ ] add "types" section
-  + [ ] build API docs
   + [ ] add release date to all CHANGES files
     + [ ] core
     + [ ] lib
