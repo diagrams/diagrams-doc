@@ -21,7 +21,7 @@ we can refer to later.  Names can be almost any type; here we choose
 >         h = stroke' with {vertexNames = [map ("x",) [0..n]]} (p unitX)
 >         v = stroke' with {vertexNames = [map ("y",) [0..n]]} (p unitY)
 
-To connect two named using index `i`, we request the points
+To connect two named points using index `i`, we request the points
 corresponding to those names, and superimpose a line between the points:
 
 > connect n i = withNames [("x",i), ("y", n - i)]

@@ -6,6 +6,7 @@ date: 2012-02-25
 description: The tree of function calls made by a naive Fibonacci implementation.
 tags: Fibonacci, recursion, tree
 width: 400
+view: -10,-5,10,10
 ---
 
 > {-# LANGUAGE NoMonomorphismRestriction #-}
