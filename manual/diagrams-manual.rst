@@ -522,6 +522,43 @@ Note how the modifiers `fc red` and `rotateBy (1/3)` apply only to the
 square, and `lc blue` and `fc green` only to the circle (`(|||)` has a
 precedence of 6, lower than that of `(#)`).
 
+Types and type classes
+----------------------
+
+Diagrams has been designed with the goals of *flexibility* and
+*power*.  The tradeoff is that it is far from simple, and the types
+can be intimidating at first.  For example, `hcat` is a function which
+takes a list of diagrams and lays them out in a horizontal row.  So
+one might expect its type to be something like `[Diagram] ->
+Diagram`.  In actuality, its type is
+
+.. class:: lhs
+
+::
+
+  hcat :: (Juxtaposable a, HasOrigin a, Monoid' a, V a ~ R2) => [a] -> a
+
+which may indeed be intimidating at first glance, and at any rate
+takes a bit of time and practice to understand!  The essential idea is
+to realize that `hcat` is actually quite a bit more general than
+previously described: it can lay out not just diagrams, but any
+two-dimensional things (``V a ~ R2``) which can be positioned "next
+to" one another (`Juxtaposable`), can be translated (`HasOrigin`), and
+are an instance of `Monoid` (`Monoid'` is actually a synonym for the
+combination of `Monoid` and `Semigroup`).  This certainly includes
+diagrams, but it also includes other things like paths, envelopes,
+animations, and even tuples, lists, sets, or maps containing any of
+these things.
+
+At first, you may want to just try working through some examples
+intuitively, without worrying too much about the types involved.
+However, at some point you will of course want to dig deeper into
+understanding the types, either to understand an error message (though
+for help interpreting some common error messages, see `Deciphering
+error messages`_) or to wield diagrams like a true type ninja.  When
+that point comes, you should refer to `Understanding diagrams types`_
+and the `Type class reference`_.
+
 Creating 2D diagrams
 ====================
 
@@ -2778,8 +2815,53 @@ union or intersection.
 To obtain a rectangle corresponding to a diagram's bounding box, use
 `boundingRect`.
 
+Type reference
+==============
+
+This section serves as a reference in understanding the types used in
+the diagrams framework.
+
+Understanding diagrams types
+----------------------------
+
+Let's look again at the type of `hcat`, mentioned in `Types and type
+classes`_:
+
+.. class:: lhs
+
+::
+
+  hcat :: (Juxtaposable a, HasOrigin a, Monoid' a, V a ~ R2) => [a] -> a
+
+This is fairly typical of the types you will encounter when using
+diagrams.  They can be intimidating at first, but with a little
+practice they are not hard to read.  Let's look at the components of
+this particular type from right to left:
+
+* `[a] -> a`.  This part is simple enough: it denotes a function from
+  a list of `a`\'s to a single `a`.  Typically, the type to the right
+  of `=>` will be some simple polymorphic type.
+
+* `V a ~ R2`.  This is a `type equality constraint`_, which says that
+  the types `V a` and `R2` must be equal.  In this case `R2` is the
+  `type of two-dimensional vectors`_, and `V` is a `type family`_
+  which tells us the vector space that corresponds to a particular
+  type.  So `V a ~ R2` means "the vector space corresponding to `a`
+  must be `R2`", or more informally, "`a` must be a type representing
+  two-dimensional things".
+
+* `Juxtaposable a, ...` These are type class constraints on `a`,
+  specifying what primitive operations `a` must support in order to be
+  meaningfully used with `hcat`.  For a complete reference on all the
+  type classes used by diagrams, see the next section, `Type class
+  reference`_.
+
+.. _`type equality constraint`: http://www.haskell.org/ghc/docs/latest/html/users_guide/equality-constraints.html
+.. _`type of two-dimensional vectors`: `Basic 2D types`_
+.. _`type family`: http://www.haskell.org/haskellwiki/GHC/Type_families
+
 Type class reference
-====================
+--------------------
 
 This section serves as a reference for all the type classes defined or
 used by diagrams; there are quite a lot. (Some might even say too
@@ -2788,13 +2870,13 @@ is useful to have them collected all in one place.
 
 .. container:: todo
 
-  Write me!
+  Finish me...
 
 Classes for transforming and combining
---------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 HasOrigin
-~~~~~~~~~
++++++++++
 
 `HasOrigin` is defined in `Diagrams.Core.HasOrigin`:mod:.
 
@@ -2816,7 +2898,7 @@ vectors) and hence do not have a `HasOrigin` instance.
 Further reading: `Alignment`_.
 
 Transformable
-~~~~~~~~~~~~~
++++++++++++++
 
 `Transformable` is defined in `Diagrams.Core.Transform`:mod:.
 
@@ -2827,64 +2909,121 @@ Transformable
 > class HasLinearMap (V t) => Transformable t where
 >   transform :: Transformation (V t) -> t -> t
 
-It represents types which support arbitrary affine (or linear, in the
-case of translationally invariant things) transformations.
+It represents types which support arbitrary affine transformations (or
+linear transformations, in the case of translationally invariant
+things).
+
+Instances: XXX
 
 Further reading: `Euclidean 2-space`_; `2D Transformations`_.
 
 Juxtaposable
-~~~~~~~~~~~~
+++++++++++++
+
+`Juxtaposable` is defined in `Diagrams.Core.Juxtapose`:mod:.
+
+.. class:: lhs
+
+::
+
+> class Juxtaposable a where
+>   juxtapose :: V a -> a -> a -> a
+
+`Juxtaposable` represents types of things which can be positioned
+"next to" one another.  Note that this is more general than "having an
+envelope" (though certainly any instance of `Enveloped` can be made an
+instance of `Juxtaposable`, using `juxtaposeDefault`).  For example,
+animations are an instance of `Juxtaposable` (which corresponds to
+juxtaposing them at every point in time), but not of `Enveloped`.
+
+`juxtapose v a1 a2` positions `a2` next to `a1` in the
+direction of `v`.  In particular, it places `a2` so that `v` points
+from the local origin of `a1` towards the old local origin of
+`a2`; `a1`\'s local origin becomes `a2`\'s new local origin.  The
+result is just a translated version of `a2`.  (In particular,
+`juxtapose` does not *combine* `a1` and `a2` in any way.)
+
+.. container:: todo
+
+  Instances:
+
+  Further reading:
 
 Enveloped
-~~~~~~~~~
++++++++++
+
+`Enveloped` is defined in `Diagrams.Core.Envelope`:mod:.  It
+classifies types which have an associated `Envelope`.
+
+.. class:: lhs
+
+> class (InnerSpace (V a), OrderedField (Scalar (V a))) => Enveloped a where
+>   getEnvelope :: a -> Envelope (V a)
+
+.. container:: todo
+
+  Mention something about imposed constraints?
+
+  Instances:
+
+  Further reading:
 
 Traced
-~~~~~~
+++++++
 
 Attributes and styles
----------------------
+~~~~~~~~~~~~~~~~~~~~~
 
 AttributeClass
-~~~~~~~~~~~~~~
+++++++++++++++
 
 HasStyle
-~~~~~~~~
+++++++++
 
 Names
------
+~~~~~
 
 IsName
-~~~~~~
+++++++
 
 Qualifiable
-~~~~~~~~~~~
++++++++++++
 
 Paths
------
+~~~~~
 
 PathLike
-~~~~~~~~
+++++++++
 
-Backend
--------
+Closable
+++++++++
 
 Backend
 ~~~~~~~
 
+Backend
++++++++
+
 MultiBackend
-~~~~~~~~~~~~
+++++++++++++
 
 Renderable
-~~~~~~~~~~
+++++++++++
 
 Poor man's type synonyms
-------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Monoid'
++++++++
 
 HasLinearMap
-~~~~~~~~~~~~
+++++++++++++
 
 OrderedField
-~~~~~~~~~~~~
+++++++++++++
+
+Type family reference
+---------------------
 
 Tips and tricks
 ===============
@@ -2987,7 +3126,7 @@ Naming vertices
 
 Most functions that create some sort of shape (*e.g.* `square`,
 `pentagon`, `polygon`...) can in fact create any instance of the
-`PathLike` class (see `The \`\`PathLike\`\` class`_).  You can often
+`PathLike` class (see `The PathLike class`_).  You can often
 take advantage of this to do some custom processing of shapes by
 creating a *path* instead of a diagram, doing some processing, and
 then turning the path into a diagram.
@@ -3001,7 +3140,7 @@ accomplished as follows. Instead of writing just (say) `pentagon`, write
 
 > stroke' with { vertexNames = [[0..]] } pentagon
 
-which assigns consecutive
+which assigns consecutive numbers to the vertices of the pentagon.
 
 Deciphering error messages
 --------------------------
