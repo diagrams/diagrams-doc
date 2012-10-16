@@ -13,16 +13,29 @@ This repository holds all documentation for the
 
 and more.
 
+## Building
+
 To build the user manual, you will need:
 
 * the diagrams framework itself (including the
 [contrib package](http://github.com/diagrams/diagrams-contrib),
-[cairo backend](http://github.com/diagrams/diagrams-cairo) and
-[diagrams-builder package](http://github.com/diagrams/diagrams-builder)),
-* the python [docutils suite](http://docutils.sourceforge.net/),
+[cairo backend](http://github.com/diagrams/diagrams-cairo), and
+[diagrams-builder package](http://github.com/diagrams/diagrams-builder)
+installed with the `-fcairo` flag),
+* the python [docutils suite](http://docutils.sourceforge.net/) (in
+  particular `rst2xml` should be on your PATH),
 * the Haskell [docutils package](http://github.com/diagrams/docutils), and
 * [shake](http://hackage.haskell.org/package/shake).
 
 To build the website, you will additionally need
 
 * [hakyll](http://hackage.haskell.org/package/hakyll).
+
+Once you have all the dependencies, simply do
+
+    ghc --make Shake
+    ./Shake preview
+    
+which will build the user manual and website, and run a web server on
+port 8000 serving a preview of the webiste.  Point your browser at
+`localhost:8000` to view it.
