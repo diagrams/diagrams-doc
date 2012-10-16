@@ -66,8 +66,7 @@
   + [X] add flags to diagrams package enabling svg backend as
         experimental
   + [X] add "manual: True" for cairo + svg flags?
-  + [ ] add "sized" function
-  + [ ] add "mark" function
+  + [X] add "sized" function
   + [-] improve READMEs
     + [X] diagrams
     + [ ] diagrams-cairo
@@ -77,12 +76,12 @@
     + [ ] hs-logo
     + [ ] diagrams-canvas
   + [ ] split out gtk backend into separate package
-  + [ ] finish porting doc build system to shake
-  + [ ] add to contributing page: documentation, CHANGES
+  + [X] finish porting doc build system to shake
+  + [X] add to contributing page: documentation, CHANGES
         (need to finish porting build system first, so it's clear how
         to build docs)
-  + [ ] update user manual
-    + [ ] add "closable" to list of type classes
+  + [-] update user manual
+    + [X] add "closable" to list of type classes
     + [ ] add "types" section
     + [ ] other updates as needed
   + [ ] build API docs
