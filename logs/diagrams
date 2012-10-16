@@ -23048,3 +23048,88 @@
 2012-09-27 20:42:05 UTC <luite> hm the latest chrome made the old generator much faster, just insatlled the update to 22
 2012-09-27 20:42:41 UTC <luite> which takes 50s now (vs 1.2 new gen)
 2012-09-27 20:43:01 UTC <luite> still not bad i guess
+2012-10-13 22:43:42 UTC <bigfg> hello, i'm trying to understand some compiler error when using Diagrams.Transform
+2012-10-13 22:44:05 UTC <bigfg> ACTION pastebins...
+2012-10-13 22:44:50 UTC <bigfg> http://hpaste.org/76247
+2012-10-13 22:58:30 UTC <fryguybob> bigfg: Can you paste the error too?
+2012-10-13 22:58:55 UTC <bigfg> yes sorry
+2012-10-13 22:59:11 UTC <bigfg> http://hpaste.org/76249 fryguybob
+2012-10-13 23:01:46 UTC <fryguybob> bigfg: I think you need to use v2 instead of p2 to translate.
+2012-10-13 23:02:24 UTC <fryguybob> There is a type separation between vectors and points in diagrams.  Vectors are "relative" directions and points are "absolute".
+2012-10-13 23:02:46 UTC <fryguybob> http://projects.haskell.org/diagrams/manual/diagrams-manual.html#vectors-and-points
+2012-10-13 23:04:17 UTC <bigfg> alright, makes sense
+2012-10-13 23:05:12 UTC <bigfg> i don't see p2 in the index-all
+2012-10-13 23:05:15 UTC <bigfg> http://hackage.haskell.org/packages/archive/diagrams-lib/0.5.0.1/doc/html/doc-index-All.html
+2012-10-13 23:05:40 UTC <bigfg> r2 maybe?
+2012-10-13 23:05:52 UTC <bigfg> ACTION tries
+2012-10-13 23:06:15 UTC <fryguybob> It's in there:  p2    Diagrams.TwoD.Types, Diagrams.TwoD, Diagrams.Prelude
+2012-10-13 23:06:27 UTC <bigfg> err, i don't see v2
+2012-10-13 23:06:45 UTC <fryguybob> Oh, yeah r2
+2012-10-13 23:07:08 UTC <fryguybob> Which will be d2 in the future.
+2012-10-13 23:40:14 UTC <bigfg> why d2?
+2012-10-13 23:45:34 UTC <fryguybob> Right now r2 is with doubles, but it could be generalized to include other numbers so d2 would be the specialized version of r2 to doubles.
+2012-10-14 00:10:46 UTC <bigfg> wouldn't that overload the [a-z]2 convention too much?
+2012-10-14 00:10:49 UTC <bigfg> :p
+2012-10-14 00:34:46 UTC <fryguybob> :D
+2012-10-14 20:15:05 UTC <fryguybob> We really should have a basic "plot a function in 2d" example.
+2012-10-14 21:25:24 UTC <alpounet> yup
+2012-10-14 21:59:21 UTC <luite> yes!
+2012-10-14 22:00:32 UTC <luite> hm if i keep my sleep schedule as it is now i'll hardly have any jet lag when i arrive in CA ;p
+2012-10-14 22:01:11 UTC <fryguybob> I might be the only person who has done that so perhaps it should be "I really need to ..."
+2012-10-14 22:03:13 UTC <luite> I've done some javascript plots (zoomable), would be fun if that was possible with diagrams later
+2012-10-14 22:04:18 UTC <luite> hm already almost 50 people for bahug
+2012-10-14 22:42:30 UTC <bfgun> i'm having trouble scaling text... at which point in the pipeline should i scale it?
+2012-10-14 22:43:25 UTC <bfgun> i want to name the vertexes, so i `mconcat $ zipWith translate coordinates texts`
+2012-10-14 22:44:09 UTC <bfgun> afterwards i want to apply a scaling function to everyone so i just do `scale 5 $ <previous stuff>`
+2012-10-14 22:44:28 UTC <bfgun> ohh i see the problem i think... resolution is fixed on the print
+2012-10-14 22:44:32 UTC <bfgun> ACTION tests
+2012-10-14 22:45:44 UTC <bfgun> text looks really big anyway :(
+2012-10-14 22:47:03 UTC <bfgun> (i'm using a very small scale it seems... maybe if i multiply everything by 10...)
+2012-10-14 23:03:54 UTC <fryguybob> bfgun: Humm, I think there is a separte font size attribute.  I haven't done much with text and I usually just tweek things until they work.
+2012-10-14 23:04:46 UTC <fryguybob> if you search for fontSize in here there is an example: http://projects.haskell.org/diagrams/manual/diagrams-manual.html
+2012-10-14 23:45:58 UTC <bfgun> yeah gonna try that now. What's the scale anyway, when relating vector space units to pixels for text?
+2012-10-14 23:46:07 UTC <bfgun> 1 vector space unit = 1 pixel?
+2012-10-14 23:46:42 UTC <bfgun> or is text height measured in vector space units?
+2012-10-14 23:48:01 UTC <fryguybob> bfgun: Which backend?
+2012-10-14 23:49:12 UTC <bfgun> cairo?
+2012-10-14 23:49:22 UTC <bfgun> i am not sure if my question even makes sense
+2012-10-14 23:50:47 UTC <bfgun> printing at 500 x 500 (with defaultMain) i get huge text
+2012-10-14 23:50:52 UTC <fryguybob> bfgun: I don't remember what Cairo does, but I think in my Postscript backend the font size is in the same unit space as the output size, so Adobe points (1/72 in).
+2012-10-14 23:50:53 UTC <bfgun> same as printing at 100x 100
+2012-10-14 23:52:36 UTC <fryguybob> bfgun: So if I output 12 point text atop a  circle 1  with output size 120 I get text 1/10 the size of the circle.
+2012-10-14 23:53:05 UTC <bfgun> ok, i'll have to reduce my text sizes then
+2012-10-14 23:55:49 UTC <fryguybob> I don't remember if scaling interacts with fontSize or not.  There is a transformable instance for text, so that probably applies as you would expect.
+2012-10-14 23:56:46 UTC <fryguybob> Perhaps the strange thing then is that the fontSize is relative to the output size, so doubling the output size will cut the font's relative appearence by half.
+2012-10-14 23:57:51 UTC <fryguybob> There is also the freeze function that potentially would change that behavior, but I wouldn't trust that it does the right thing at this point.
+2012-10-14 23:58:52 UTC <bfgun> i'll just reduce the font size using that function till i get the size i want
+2012-10-15 00:04:02 UTC <bfgun> :)
+2012-10-15 00:34:52 UTC <byorgey> no, the fontSize is relative to the final size of the diagram before rendering, not the output size
+2012-10-15 00:35:14 UTC <byorgey> at least it should be...
+2012-10-15 00:36:32 UTC <luite> anyone using magit here?
+2012-10-15 00:48:06 UTC <byorgey> luite: no, but I probably should
+2012-10-15 00:48:24 UTC <byorgey> I wanted to just do everything from the command line at first so I got comfortable with it
+2012-10-15 00:48:32 UTC <byorgey> but some automation would be nice
+2012-10-15 00:49:37 UTC <luite> yeah same here :) but now i'm struggling with some merge conflicts in magit/ediff
+2012-10-15 00:54:49 UTC <byorgey> luite: ah, boo
+2012-10-15 00:55:18 UTC <luite> i guess i'll have to read the manual then
+2012-10-15 00:56:19 UTC <byorgey> oh, the horror
+2012-10-15 00:56:56 UTC <fryguybob> byorgey: Ah, that might be a difference with the Postscript backend.
+2012-10-15 00:57:23 UTC <byorgey> fryguybob: yeah, I think so
+2012-10-15 00:57:37 UTC <byorgey> mind you, I'm not particularly happy with the way text is currently handled
+2012-10-15 00:57:47 UTC <fryguybob> me neither :D
+2012-10-15 00:58:50 UTC <fryguybob> It is already much better then dealing with text with a cutting machine however.
+2012-10-15 01:01:06 UTC <byorgey> hahaha
+2012-10-15 01:28:07 UTC <luite> ah i got the hang of it i think, this works pretty well :)
+2012-10-15 01:34:29 UTC <byorgey> excellent =)
+2012-10-15 02:47:30 UTC <frustratedwinuse> hi
+2012-10-16 01:31:53 UTC <byorgey> anyone brave want to try the user manual + website building instructions at the bottom of https://github.com/diagrams/diagrams-doc ?
+2012-10-16 01:32:24 UTC <byorgey> I want to make it as easy as possible for people to contribute to the documentation
+2012-10-16 01:32:41 UTC <byorgey> so I'd like to iron out any snags in the building instructions
+2012-10-16 01:45:05 UTC <fryguybob> byorgey: Does it require Cairo?
+2012-10-16 01:45:21 UTC <byorgey> fryguybob: yes =(
+2012-10-16 01:46:02 UTC <fryguybob> :(
+2012-10-16 01:46:09 UTC <byorgey> so I guess that's another thing we can do, try building the documentation using diagrams-svg and see how far we get
+2012-10-16 01:46:34 UTC <byorgey> that would be good concrete motivation for implementing the last remaining features
+2012-10-16 01:46:48 UTC <fryguybob> Sadly I don't have any time right now.  Currently burried in wiring a MIPS together.
+2012-10-16 01:47:12 UTC <byorgey> fryguybob: no worries.  good luck!
+2012-10-16 01:51:01 UTC <luite> hm, cairo stuff needed :(
