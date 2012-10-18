@@ -23133,3 +23133,120 @@
 2012-10-16 01:46:48 UTC <fryguybob> Sadly I don't have any time right now.  Currently burried in wiring a MIPS together.
 2012-10-16 01:47:12 UTC <byorgey> fryguybob: no worries.  good luck!
 2012-10-16 01:51:01 UTC <luite> hm, cairo stuff needed :(
+2012-10-16 16:13:08 UTC <dimka> Is there a possibility that diagrams-cairo will be buildable with ghc-7.6
+2012-10-16 16:13:08 UTC <dimka> ?
+2012-10-16 17:05:39 UTC <byorgey> dimka: eventually, yes.  Right now the thing holding it back is that gtk2hs itself does not build under ghc-7.6.
+2012-10-16 17:06:11 UTC <byorgey> dimka: for now you could try the version of diagrams-svg on github: http://github.com/diagrams/diagrams-svg
+2012-10-17 11:29:08 UTC <byorgey> trying to set up virtualbox so that I can compile stuff on ubuntu lucid 64 so that I can deploy ghclive to heroku so I can use it in my class tomorrow.
+2012-10-17 11:29:30 UTC <byorgey> the yaks have no hair left whatsoever.
+2012-10-17 12:42:26 UTC <fryguybob> byorgey: Any luck?
+2012-10-17 12:45:08 UTC <byorgey> fryguybob: so far so good.  got virtualbox working, ubuntu instance built, HP installed on it.
+2012-10-17 12:59:00 UTC <byorgey> now doing 'cabal install' of ghclive.  this ought to take a while.
+2012-10-17 13:10:21 UTC <byorgey> still cabal installing
+2012-10-17 13:44:07 UTC <byorgey> argh, well, I got ghclive running on a VM, but now it seems ghclive is too buggy to really use in class =(
+2012-10-17 13:44:33 UTC <byorgey> e.g. sometimes when there are type errors it deletes the shared document =(
+2012-10-17 13:44:40 UTC <ClaudiusMaximus> eep
+2012-10-17 13:45:06 UTC <byorgey> and instead of Show you need Display but it's unclear how to make an instance of Display for your own data types.
+2012-10-17 13:45:21 UTC <byorgey> e.g. if you want to declare a data type and then evaluate expressions involving it.
+2012-10-17 13:47:24 UTC <byorgey> also it's annoying that you have to explicitly import Prelude and Network.Web.GHCLive.Display
+2012-10-17 13:48:10 UTC <ClaudiusMaximus> sounds like it needs more love
+2012-10-17 13:48:36 UTC <byorgey> yep, I plan to poke shapr and/or send some patches =)
+2012-10-17 13:48:47 UTC <ClaudiusMaximus> still, a sleek yak is nice i guess
+2012-10-17 13:48:53 UTC <byorgey> but in the meantime looks like it's back to just plain old ghci for class tomorrow
+2012-10-17 13:48:56 UTC <byorgey> hehe, indeed
+2012-10-17 13:49:15 UTC <byorgey> I mean, I learned a lot so it wasn't a waste of time.
+2012-10-17 13:49:52 UTC <ClaudiusMaximus> i can vaguely relate, was up until almost 4am trying to get this to work with Rank2Types http://hpaste.org/76392
+2012-10-17 13:50:16 UTC <ClaudiusMaximus> then up at 8am to let builders in
+2012-10-17 13:50:31 UTC <byorgey> heh
+2012-10-17 13:50:47 UTC <ClaudiusMaximus> failed miserably, ended up with all kinds of other extensions
+2012-10-17 13:50:54 UTC <ClaudiusMaximus> and type errors a mile long
+2012-10-17 13:52:30 UTC <ClaudiusMaximus> starting to wonder whether it's possible at all
+2012-10-17 19:16:17 UTC <nand`> byorgey: I'm in #diagrams, what are you talking about?
+2012-10-17 19:16:25 UTC <byorgey> hehehe
+2012-10-17 19:16:36 UTC <nand`> (though I didn't know of the channel's existence up to and not including just about now)
+2012-10-17 19:16:59 UTC <byorgey> ah, sorry about that
+2012-10-17 19:17:11 UTC <nand`> was it mentioned in the user manual or tutorial somewhere?
+2012-10-17 19:17:19 UTC <nand`> if so, I may have glossed over it
+2012-10-17 19:17:56 UTC <byorgey> yes, I think so
+2012-10-17 19:19:20 UTC <byorgey> both of them near the beginning say something like "other resources" and list the mailing list, IRC channel, et.c
+2012-10-17 19:19:40 UTC <byorgey> also it's on the front page of the website =P
+2012-10-17 19:20:07 UTC <nand`> I skipped most of the early sections of each, since they seemed to be related to how to get diagrams running and/or learn Haskell, at least the former of which I seem to have already accomplished
+2012-10-17 19:20:25 UTC <nand`> but fair enough
+2012-10-17 19:20:26 UTC <byorgey> fair enough.
+2012-10-17 19:20:29 UTC <byorgey> =)
+2012-10-17 19:57:54 UTC <bfgun> cool, this channel is slowly growing :p
+2012-10-17 19:58:05 UTC <bfgun> a couple days ago it had ~12 people :p
+2012-10-17 19:58:28 UTC <nand`> maybe it will approach the growth behavior of #haskell
+2012-10-17 20:46:40 UTC <nand`> byorgey: is it okay if I blame you and your paper should my performance in tomorrow's exams unexpectedly drop due to lack of sleep?
+2012-10-17 20:47:03 UTC <nand`> I was planning on getting around 3 hours more
+2012-10-17 21:31:12 UTC <byorgey> nand`: hehe, why not =)
+2012-10-17 22:29:21 UTC <luite> so what's a good place to eat in sf :)
+2012-10-18 14:27:44 UTC <nand`> byorgey: would .~^ be fine for âpath from point via vectorâ ?
+2012-10-18 14:28:12 UTC <nand`> though then .~. would be an interesting mnemonic for the current ~~
+2012-10-18 14:38:17 UTC <byorgey> hmm, indeed
+2012-10-18 14:38:28 UTC <byorgey> and that fits well with the naming scheme from vector-space
+2012-10-18 14:38:35 UTC <byorgey> e.g. .+^, .-., etc.
+2012-10-18 16:47:53 UTC <nand`> byorgey: oh, I actually deleted that comment since I realized just after posting it that, 1. it was already mentioned and 2. as you mentioned, stuff like Isomorphism wouldn't get included
+2012-10-18 16:48:13 UTC <nand`> err, as mgsloan mentioned at any rate
+2012-10-18 16:48:14 UTC <byorgey> nand`: heh, fair enough
+2012-10-18 16:48:41 UTC <byorgey> it's still useful to write these things down
+2012-10-18 17:02:04 UTC <nand`> I looked at the code for âfreezeâ to see if I could puzzle together why the SVG backend would not freeze properly, and was immensely puzzled
+2012-10-18 17:02:19 UTC <byorgey> nand`: yes, it's immensely puzzling
+2012-10-18 17:02:30 UTC <byorgey> even I am still puzzled sometimes
+2012-10-18 17:05:09 UTC <byorgey> nand`: ah, well, essentially it comes down to the fact that the SVG backend hasn't implemented freezing at all!
+2012-10-18 17:05:26 UTC <byorgey> the place to look is the 'withStyle' function in the Backend instance
+2012-10-18 17:05:59 UTC <byorgey> https://github.com/diagrams/diagrams-svg/blob/master/src/Diagrams/Backend/SVG.hs#L78
+2012-10-18 17:06:26 UTC <byorgey> The first argument to withStyle is supposed to be ignored, it's just a token to help type inference.
+2012-10-18 17:06:34 UTC <nand`> so what's wrong with it? ignoring the Transformation?
+2012-10-18 17:06:43 UTC <byorgey> But the third argument is a transformation to be applied to the style
+2012-10-18 17:06:52 UTC <byorgey> which it currently ignores, right
+2012-10-18 17:07:40 UTC <byorgey> now, figuring out the correct thing to do with that transformation may be quite tricky, and depends on the semantics of SVG transformations and stroking etc.
+2012-10-18 17:08:51 UTC <byorgey> looking at how the cairo backend is implemented probably won't help, because it's very specific to cairo
+2012-10-18 17:09:27 UTC <byorgey> nand`: for more info you could try reading http://www.haskell.org/haskellwiki/Diagrams/Dev/Freezing
+2012-10-18 17:50:17 UTC <nand`> ACTION wonders what a GUI toolkit in the spirit of diagrams (monoids, monoids everywhere) would look like
+2012-10-18 17:53:16 UTC <fryguybob> byorgey: There is a whole page on freezing? wow. I'm behind.
+2012-10-18 17:55:16 UTC <fryguybob> I should check and see if the Postscript specification allows the naive implementation of freeze (i.e. let the backend do it) to work.  My guess is that it does and that's why Cairo works that way.
+2012-10-18 17:58:05 UTC <byorgey> fryguybob: ah, yes, I would guess so.
+2012-10-18 17:59:05 UTC <byorgey> the SVG specification must allow it as well, for the same reason.
+2012-10-18 18:01:06 UTC <fryguybob> The trick though is that SVG is more declarative so while in Postscript you can just transpose the scale and the transform, that may not work in SVG.
+2012-10-18 18:01:46 UTC <byorgey> true.
+2012-10-18 18:01:57 UTC <fryguybob> As in, implementations (of SVG render) would be tempted to just compute the entire transform on values, and then on scalars.
+2012-10-18 18:02:08 UTC <fryguybob> Rather then transforming strokes.
+2012-10-18 18:03:11 UTC <fryguybob> So you may have to "force" it by explicitly describing the brush and the transform on the brush.
+2012-10-18 18:04:15 UTC <byorgey> fryguybob: you mean that might be the only way to do it, or that might be the only way that doesn't run into bugs in implementations of SVG?
+2012-10-18 18:09:30 UTC <fryguybob> byorgey: Well, I'm not sure you can actually describe that in SVG.  If you can, then you would be more likely to have it work (because why implement that part of SVG if you don't get it right).
+2012-10-18 18:10:07 UTC <fryguybob> If you want something that works more broadly then we would want to implement in diagrams the transformation that freeze turns a stroke into a fill of a complex region.
+2012-10-18 18:10:28 UTC <fryguybob> (Where complex region is something with a hole)
+2012-10-18 18:12:05 UTC <byorgey> fryguybob: but the cairo backend always produces outputs that look the same, no matter whether producing SVG, PDF, PS, or PNG!
+2012-10-18 18:12:14 UTC <byorgey> at least, I have never observed an example where they are different
+2012-10-18 18:12:28 UTC <byorgey> so it's doing *something* with the SVGs.
+2012-10-18 18:13:52 UTC <byorgey> fryguybob: check out http://www.cis.upenn.edu/~byorgey/hosted/Fat.hs which produces http://www.cis.upenn.edu/~byorgey/hosted/Fat.svg
+2012-10-18 18:14:40 UTC <fryguybob> byorgey: Oh, good point we should be able to figure out what it is doing there.
+2012-10-18 18:14:44 UTC <byorgey> however, I totally agree it would be nice to be able to turn strokes into fills of complex regions, independently of freezing.
+2012-10-18 18:15:10 UTC <fryguybob> Cairo has the abilities to do that, so that might be what it is doing.
+2012-10-18 18:15:30 UTC <byorgey> nope, it isn't
+2012-10-18 18:15:35 UTC <byorgey> look at the SVG source
+2012-10-18 18:15:54 UTC <byorgey> it's just a single path with stroke-width 2 and a 'transform' attribute
+2012-10-18 18:16:47 UTC <fryguybob> humm that shows as all black for me.
+2012-10-18 18:16:57 UTC <byorgey> yes, that's what it's supposed to look like =)
+2012-10-18 18:17:04 UTC <fryguybob> oh ok.
+2012-10-18 18:17:08 UTC <fryguybob> Let me try something then.
+2012-10-18 18:17:09 UTC <byorgey> it's a radius-1 circle drawn with a line width of 2.
+2012-10-18 18:17:32 UTC <nand`> admittedly, the example would have probably been better as a radius-5 circle or so
+2012-10-18 18:17:45 UTC <nand`> I just picked something based on how it renders with diagrams-svg
+2012-10-18 18:17:57 UTC <byorgey> yes, that would have been better
+2012-10-18 18:22:32 UTC <byorgey> ok, check out http://www.cis.upenn.edu/~byorgey/hosted/Fat.{hs,png,svg} (improved example) and http://www.cis.upenn.edu/~byorgey/hosted/Freeze.{hs,png,svg}  (with freezing)
+2012-10-18 18:22:33 UTC <fryguybob> Perhaps what we need is the two diagrams from the freeze section of the manual both run through Cairo SVG.
+2012-10-18 18:22:57 UTC <byorgey> fryguybob: the above Freeze.svg is a start
+2012-10-18 18:23:07 UTC <fryguybob> yeah you beat me too it :D
+2012-10-18 18:23:35 UTC <byorgey> again it's just a path node with a transform attribute
+2012-10-18 18:24:57 UTC <fryguybob> Oh, I see.  The matrix parameter is applying to the final stroked image.
+2012-10-18 18:25:12 UTC <fryguybob> That is the `transform` attribute.
+2012-10-18 18:26:17 UTC <fryguybob> So the inverse of the "freeze" transform is applied to the path and the freeze transform is applied to the output transform.
+2012-10-18 18:28:17 UTC <fryguybob> Saddly I must go back to my MIPS processor.  It is due tonight and it can't run C++ yet :D.
+2012-10-18 18:28:22 UTC <byorgey> yes, something like that.
+2012-10-18 18:28:34 UTC <byorgey> ah, good luck!  thanks for helping think about this.
+2012-10-18 18:28:42 UTC <byorgey> looks like it actually shouldn't be too hard to implement.
+2012-10-18 18:29:28 UTC <fryguybob> Yeah
+2012-10-18 18:30:13 UTC <byorgey> ACTION checks to make sure the logger bot was still running...
+2012-10-18 18:30:19 UTC <byorgey> oh good
