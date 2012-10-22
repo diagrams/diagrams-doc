@@ -81,6 +81,8 @@
     + [X] add "closable" to list of type classes
     + [ ] add "types" section
     + [ ] other updates as needed
+  + [ ] fix build bug with manual+web: image links on the manual page
+        are to .make/...  Need to make them relative to root.
   + [ ] move stuff like withName, named, etc. into diagrams-lib
   + [ ] add boundaryFrom or something like that?
   + [ ] set up test/comparison framework
