@@ -2239,10 +2239,10 @@ Envelope-related functions
   ::
 
   > shapes = circle 1 
-  >      ||| square 2 
-  >      ||| circle # scaleY 0.3 # sizedAs (square 2)
+  >      ||| square 2
+  >      ||| circle 1 # scaleY 0.3 # sizedAs (square 2 :: D R2)
   >
-  > example = hrule 1 # sizedAs (shapes # scale 0.5) <> shapes # centerX
+  > example = hrule 1 # sizedAs (shapes # scale 0.5 :: D R2) <> shapes # centerX
 
 The ``Enveloped`` class
 ~~~~~~~~~~~~~~~~~~~~~~~
