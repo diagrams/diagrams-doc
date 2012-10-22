@@ -2231,6 +2231,19 @@ Envelope-related functions
   information from the envelopes of two-dimensional diagrams,
   such as `width`, `height`, `extentX`, `extentY`, and `center2D`.
 
+  It also provides functions `sized` and `sizedAs`, which can be used
+  for changing the size of an object.  For example:
+
+  .. class:: dia-lhs
+
+  ::
+
+  > shapes = circle 1 
+  >      ||| square 2 
+  >      ||| circle # scaleY 0.3 # sizedAs (square 2)
+  >
+  > example = hrule 1 # sizedAs (shapes # scale 0.5) <> shapes # centerX
+
 The ``Enveloped`` class
 ~~~~~~~~~~~~~~~~~~~~~~~
 
