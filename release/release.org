@@ -70,6 +70,8 @@
   + [-] improve READMEs
     + [X] diagrams
     + [ ] diagrams-cairo
+  + [ ] improve diagrams-cairo documentation
+  + [ ] finish updating diagrams-core documentation (see XXX's etc.)
   + [X] send patches
     + [X] diagrams-tikz
   + [ ] split out gtk backend into separate package
