@@ -32,7 +32,7 @@
 *** diagrams-doc
     web site, user manual, etc.
 ** To do for 0.6 release
-  + [ ] look at mgsloan padR2 thing
+  + [X] look at mgsloan padR2 thing
   + [X] look at other tickets with 0.6 milestone
   + [X] check re: containers versions (contrib, etc.?)
   + [X] rename diagrams-core modules?
@@ -87,7 +87,7 @@
         are to .make/...  Need to make them relative to root.
   + [ ] move stuff like withName, named, etc. into diagrams-lib
   + [ ] add boundaryFrom or something like that?
-  + [ ] set up test/comparison framework
+  + [X] set up test/comparison framework
   + [ ] fix some SVG issues -- maybe even finish it
   + [ ] build API docs
   + [-] update CHANGES files and release info on website
