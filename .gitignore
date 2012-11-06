@@ -17,3 +17,6 @@ web/manual
 .make
 .shake.database
 Shake
+*.aux
+*.log
+HCAR/*.pdf
