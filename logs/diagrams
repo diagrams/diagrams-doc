@@ -23250,3 +23250,680 @@
 2012-10-18 18:29:28 UTC <fryguybob> Yeah
 2012-10-18 18:30:13 UTC <byorgey> ACTION checks to make sure the logger bot was still running...
 2012-10-18 18:30:19 UTC <byorgey> oh good
+2012-10-18 18:31:50 UTC <nand`> âACTION checks to make sure the logger bot was still running...+2012-10-18 18:30:13 UTC <byorgey>â
+2012-10-18 18:31:52 UTC <nand`> yuck
+2012-10-18 18:32:17 UTC <byorgey> hehe
+2012-10-18 18:32:42 UTC <byorgey> oh well
+2012-10-19 04:57:59 UTC <byorgey> huh, IRC notification seems to not work for diagrams-svg, not sure why
+2012-10-19 04:58:59 UTC <byorgey> huh, there we go
+2012-10-19 06:13:31 UTC <mgsloan> nand`: RE a GUI toolkit in the spirit of diagrams, I sorta started one here: https://github.com/mgsloan/gtk-toy-diagrams
+2012-10-19 06:14:02 UTC <mgsloan> https://github.com/mgsloan/gtk-toy-diagrams/blob/master/src/Graphics/UI/Toy/Transformed.hs
+2012-10-19 06:14:44 UTC <mgsloan> You can juxtapose UI elements and such, and the mouse events get appropriately un-transformed
+2012-10-19 10:32:57 UTC <nand`> maybe when GtkHs starts working I'll have a look
+2012-10-20 03:19:26 UTC <byorgey> andyjgill: do I recall correctly that you had some kind of tool to help spit out parallel images for a bunch of example diagrams (i.e. with different backends, for easy comparison)?
+2012-10-20 03:21:11 UTC <andyjgill> Yes, I did - it was a large HTML file. I used linux to generate the golden. -- I'll look for it.
+2012-10-20 03:35:24 UTC <byorgey> was thinking of using something like that to work on getting the SVG backend on par with the cairo backend
+2012-10-20 09:37:26 UTC <nand`> do you know if diagrams-svg has any form of animation support?
+2012-10-20 09:38:17 UTC <nand`> I'd like to simulate some rolling shutter artifacts by generating a sequence of diagrams at different rotations, then taking one line out of each
+2012-10-20 13:47:37 UTC <andyjgill> https://github.com/ku-fpg/diagrams-tests
+2012-10-20 14:42:17 UTC <byorgey> nand`: diagrams-svg doesn't have any animation support built-in yet, but it's not too hard to create an Animation and use it to generate a sequence of SVGs with the SVG backend
+2012-10-20 14:43:05 UTC <byorgey> andyjgill: awesome, thanks!
+2012-10-20 14:49:27 UTC <nand`> byorgey: okay
+2012-10-20 14:50:40 UTC <andyjgill> byorgey: glad to be of help. From what I remember, it was pretty simple.
+2012-10-20 15:35:14 UTC <luite> hm
+2012-10-20 15:35:58 UTC <byorgey> hey luite
+2012-10-20 15:36:01 UTC <byorgey> what's up?
+2012-10-20 15:36:56 UTC <luite> hi, i'm at the gsoc summit
+2012-10-20 15:45:49 UTC <byorgey> oooh
+2012-10-20 15:46:02 UTC <byorgey> luite: how is it?  how was the trip?
+2012-10-20 15:46:53 UTC <luite> oh i arrived a few days ago actually
+2012-10-20 15:47:04 UTC <luite> stayed for 2 nights in a hostel in san francisco
+2012-10-20 15:47:20 UTC <byorgey> cool
+2012-10-20 18:30:11 UTC <luite> my feed still hurt from walking around in SF too much
+2012-10-20 18:30:49 UTC <luite> feet
+2012-10-20 18:31:17 UTC <luite> i'm in some large google cafetaria now
+2012-10-20 18:33:55 UTC <luite> and they have free shirts in sizes XS and 3XL
+2012-10-20 20:24:14 UTC <byorgey> luite: hehe.  I have never even seen a picture of you, but just statistically speaking I am guessing you are neither of those sizes.
+2012-10-20 20:25:28 UTC <alpounet> luite, google tshirts or gsoc tshirts?
+2012-10-20 20:25:31 UTC <alpounet> i've received the gsoc one
+2012-10-20 20:30:21 UTC <bigfg> hey, i was wondering, is there a vectorized backend?
+2012-10-20 20:33:52 UTC <byorgey> bigfg: what do you mean by "vectorized"?
+2012-10-20 20:34:01 UTC <byorgey> bigfg: the cairo backend can output PDF, PS, and SVG
+2012-10-20 20:34:06 UTC <byorgey> there is also a native SVG backend
+2012-10-20 23:16:37 UTC <bigfg> byorgey, how can i use defaultMain to output svg? i'm getting a png
+2012-10-21 01:17:23 UTC <luite> alpounet: a few different ones, i think all gsoc related, not sure though
+2012-10-21 01:33:12 UTC <luite> hm i guess he might be asleep now :)
+2012-10-21 01:45:10 UTC <fryguybob> bigfg: defaultMain chooses the output based on the file extension.
+2012-10-21 01:45:39 UTC <bigfg> awesome, let's try
+2012-10-21 01:46:25 UTC <bigfg> :)
+2012-10-21 01:46:35 UTC <bigfg> although ristretto crashed :p
+2012-10-21 01:48:02 UTC <bigfg> awesome, now everything looks right :)
+2012-10-21 02:47:30 UTC <luite> bluh
+2012-10-21 11:58:51 UTC <alpounet> luite, indeed, we apparently do not share the same timezone anymore, until you're back in Europe :)
+2012-10-21 18:23:44 UTC <BlackShift> from the tutorial I learned how to use the CmdLine backend
+2012-10-21 18:24:11 UTC <BlackShift> I'm trying to use one of the other backends, but can't figure out how
+2012-10-21 18:24:38 UTC <BlackShift> for example, this isn't allowed:
+2012-10-21 18:24:43 UTC <BlackShift> main =  renderDia Cairo (CairoOptions "foo.png" (Width 250) PNG) myDiagram
+2012-10-21 18:24:52 UTC <BlackShift> can someone enlighten me?
+2012-10-21 18:25:45 UTC <BlackShift> I'm missing some basic Haskell knowledge I'm afraid
+2012-10-21 18:57:50 UTC <byorgey> BlackShift: renderDia doesn't necessarily return a value of type  IO ()
+2012-10-21 18:58:08 UTC <byorgey> the kind of thing returned by renderDia depends on the particular backend
+2012-10-21 18:58:17 UTC <byorgey> BlackShift: which other backend are you trying to use?
+2012-10-21 18:58:21 UTC <BlackShift> ok
+2012-10-21 18:59:40 UTC <BlackShift> it apparently returns `(IO (), Graphics.Rendering.Cairo.Internal.Render ())'
+2012-10-21 18:59:49 UTC <BlackShift> so I did
+2012-10-21 18:59:59 UTC <BlackShift> (o,a) = renderDia Cairo (CairoOptions "foo.png" (Width 250) PNG) myDiagram
+2012-10-21 19:00:02 UTC <BlackShift> main = o
+2012-10-21 19:00:07 UTC <BlackShift> and now it works :)
+2012-10-21 19:00:21 UTC <byorgey> right =)
+2012-10-21 19:00:32 UTC <byorgey> you could also do   main = fst $ renderDia ...
+2012-10-21 19:00:49 UTC <BlackShift> a, from 'first'?
+2012-10-21 19:01:22 UTC <byorgey> hmm?  I don't understand your question
+2012-10-21 19:01:27 UTC <BlackShift> the 'fst'
+2012-10-21 19:01:46 UTC <byorgey> what about it?
+2012-10-21 19:02:15 UTC <BlackShift> 'fst' is an abbreviation for 'first'?
+2012-10-21 19:02:30 UTC <byorgey> no, fst is not an abbreviation
+2012-10-21 19:02:50 UTC <byorgey> oh!  you mean is it an abbreviation for the English word "first"? yes.
+2012-10-21 19:02:54 UTC <BlackShift> yes
+2012-10-21 19:03:07 UTC <byorgey> fst projects out the first element of a pair
+2012-10-21 19:03:10 UTC <byorgey> fst :: (a,b) -> a
+2012-10-21 19:03:11 UTC <BlackShift> I don't know many of the basic functions in Haskell yet :)
+2012-10-21 19:03:15 UTC <byorgey> ok =)
+2012-10-21 19:03:36 UTC <BlackShift> as an example I really appreciated the explanation of '#' in the tutorial
+2012-10-21 19:03:53 UTC <byorgey> cool
+2012-10-21 19:03:54 UTC <BlackShift> I did know $ already
+2012-10-21 19:04:04 UTC <byorgey> though note # is not really standard, it's specific to diagrams
+2012-10-21 19:04:11 UTC <byorgey> $ is standard
+2012-10-21 19:04:49 UTC <BlackShift> ah
+2012-10-21 19:05:29 UTC <BlackShift> it makes it quite readable
+2012-10-21 19:07:59 UTC <BlackShift> I feel like a kid again learning, when I thought 'fork' was actually a command in C64 basic, while it was 'for k'
+2012-10-21 19:10:05 UTC <BlackShift> as in, experimenting with syntax and functions
+2012-10-21 19:12:59 UTC <BlackShift> except that now there is no 'for' to be seen anywhere :)
+2012-10-21 19:15:48 UTC <byorgey> haha =)
+2012-10-22 00:18:59 UTC <byorgey> pr: ping?
+2012-10-22 01:14:59 UTC <byorgey> fryguybob: ah, thanks for taking a look at those
+2012-10-22 01:15:08 UTC <fryguybob> byorgey: No problem.
+2012-10-22 01:15:47 UTC <fryguybob> Let me know if you have some thing runing with the side by side comparison thing and I'll hook the postscript up to it and make sure it is all working.
+2012-10-22 01:18:05 UTC <byorgey> fryguybob: ah, sure, will do.  Yeah, I plan to try to get that set up soon.
+2012-10-22 01:19:31 UTC <fryguybob> ACTION must be tired.
+2012-10-22 01:19:56 UTC <byorgey> why is that?
+2012-10-22 01:20:05 UTC <byorgey> (though I don't doubt it)
+2012-10-22 01:21:06 UTC <fryguybob> I reread my sentence and it has a lot of generic specifiers :D
+2012-10-22 01:21:32 UTC <byorgey> hehe
+2012-10-22 01:21:35 UTC <byorgey> I knew what you meant =)
+2012-10-22 01:37:47 UTC <tgeeky> I read that sentence as "it has a lot of generic specifics"
+2012-10-22 01:37:53 UTC <tgeeky> and thought the comedy hour was going on
+2012-10-22 02:48:04 UTC <luite> back from gsoc!
+2012-10-22 02:49:36 UTC <luite> still in california though, but now google doesn't pay my hotel room anymore, so it's a lot smaller and has no private bathroom anymore :)
+2012-10-22 14:13:04 UTC <tgeeky> hehe
+2012-10-23 01:20:24 UTC <fryguybob> Is it crazy that edwardk's lens operators are starting to make sense? :D
+2012-10-23 01:49:20 UTC <luite> i think he designed them to make sense :p
+2012-10-23 01:50:09 UTC <luite> bah i'm cold, cycled through SF for 6 hours
+2012-10-23 02:00:33 UTC <fryguybob> ACTION sometimes wishes he lived in SF.
+2012-10-23 02:10:32 UTC <luite> it looks like a nice place to live
+2012-10-23 02:13:11 UTC <luite> I guess I'll be going now
+2012-10-23 02:13:24 UTC <luite> get some coffee and then back to the hotel, tired :)
+2012-10-23 02:13:31 UTC <fryguybob> Enjoy!
+2012-10-23 02:14:41 UTC <luite> they have hills here, and my phone battery was almost dead, so i turned off my phone. apparently i have great skill in choosing the wrong way that goes up the steepest/highest hill
+2012-10-23 14:09:59 UTC <pr> byorgey: sorry, but last couple of weeks + next couple of weeks i was/am really busy, haven't had the time to look at it again. decoupling gtk from cairo isn't that big of a deal and for a gtk backend one just has to write a sensible Backend instance, i guess. but i don't know if i'll have time to spare on this in the near future, so i hope i haven't delayed your release too much
+2012-10-23 14:10:17 UTC <byorgey> pr: ok, no worries!
+2012-10-23 14:10:41 UTC <byorgey> I took a look at it last night, it shouldn't be too bad, I'll just do it myself
+2012-10-23 14:11:01 UTC <byorgey> pr: I just didn't want to duplicate effort if you were already in the middle of it.
+2012-10-23 14:11:32 UTC <byorgey> and you haven't held up the release at all, there are still other things that need finishing up too
+2012-10-23 14:11:49 UTC <byorgey> pr: good luck with whatever you are really busy with!
+2012-10-23 19:52:26 UTC <tgeeky> byorgey: there are two new videos on one of my favorite lecture sites (IAS lectures): http://video.ias.edu/all
+2012-10-23 19:52:38 UTC <tgeeky> one of them is by Vladimir Voevodsky on Type Systems and Proof Assistant
+2012-10-23 19:53:24 UTC <tgeeky> looks like he gave a talk about something similar at UPenn last year
+2012-10-23 20:44:56 UTC <luite> hmm, i don't know what to do anymore... i think i visited the things i wanted to see
+2012-10-23 21:35:41 UTC <fryguybob> luite: Did you eat sourdough bread?
+2012-10-23 21:53:17 UTC <tgeeky_> luite: did you finish the internet?
+2012-10-23 21:53:52 UTC <tgeeky_> i think after that, e-suicide is the only option
+2012-10-23 21:54:25 UTC <luite> fryguybob: not yet
+2012-10-23 21:55:04 UTC <luite> but isn't it more or less the same as the sourdough you can get everywhere in europe?
+2012-10-23 22:12:15 UTC <luite> hm, interesting that they use haskell at JET
+2012-10-23 22:13:14 UTC <luite> i guess i'm not really qualified for the job though :/
+2012-10-23 22:48:10 UTC <fryguybob> luite: In my experience the quality of SF sourdough is unsurpassed in the US.  I cannot speak for europe.
+2012-10-23 22:48:44 UTC <fryguybob> I will admit that I am biased being a native of northern California.
+2012-10-23 23:27:46 UTC <luite> ah
+2012-10-24 04:15:38 UTC <luite> hmz
+2012-10-24 05:05:26 UTC <cmears> Hello diagrammers! Is there a neat way to get an R2 vector's angle from horizontal?
+2012-10-24 05:46:03 UTC <cmears> OK, an easier question:
+2012-10-24 05:46:14 UTC <cmears> Should translateX work on points (e.g. P2)?
+2012-10-24 05:46:32 UTC <cmears> Like "translateX 1 (p2 (10,20))"
+2012-10-24 11:39:05 UTC <byorgey> cmears: yes, translateX should work on points.  if you're getting "Can't match V P2 with R2", that's https://github.com/diagrams/diagrams-core/issues/17, which you can work around by importing Graphics.Rendering.Diagrams.Points
+2012-10-24 11:39:20 UTC <byorgey> or Diagrams.Core.Points if you're using the latest version from github for some reason
+2012-10-24 11:42:20 UTC <byorgey> cmears: you can get a vector's angle using the 'direction' function
+2012-10-24 11:54:42 UTC <fryguybob> byorgey: How is the recursion class going?
+2012-10-24 11:59:32 UTC <byorgey> fryguybob: it seems to be going well, thanks!  Though right this moment I've got a homework assignment to write, and two homeworks and a midterm to grade =P
+2012-10-24 12:00:03 UTC <byorgey> fryguybob: did you give your lecture on functional programming yet?
+2012-10-24 12:00:38 UTC <fryguybob> byorgey: Yeah the first one went well, and the second one was fine, but I think I lost some people.
+2012-10-24 12:01:16 UTC <fryguybob> byorgey: They were able to get their homework done :D.
+2012-10-24 12:01:59 UTC <fryguybob> byorgey: (given a parser generator make an interpreter)
+2012-10-24 12:02:26 UTC <byorgey> ah, fun =)
+2012-10-24 12:02:42 UTC <byorgey> I guess losing some people is probably inevitable, though of course one should strive not to
+2012-10-24 12:03:22 UTC <fryguybob> Yeah, I think I inspired some of them though as in class they now often ask "how would that work in Haskell".
+2012-10-24 12:04:10 UTC <fryguybob> (I say "I", but I hope it was Haskell that inspired them :D_
+2012-10-24 14:16:48 UTC <fryguybob> ACTION tries to see how far he can get with installing gtk on linux.
+2012-10-24 14:44:55 UTC <byorgey> fryguybob: I've never had any trouble installing gtk on linux, what's the worry?
+2012-10-24 14:46:09 UTC <fryguybob> byorgey: Our systems here are missing a lot of packages or -dev packages that one might expect to be there.
+2012-10-24 14:46:17 UTC <fryguybob> I've never figured out why...
+2012-10-24 15:00:58 UTC <byorgey> ah =(
+2012-10-24 15:01:14 UTC <byorgey> how responsive are the IT people if you ask them to install more packages?
+2012-10-24 15:03:00 UTC <alpounet> luite, they do not use haskell at JET *yet*. as to you being qualified for the job, well, are you really sure? feel free to pm me to talk a bit about it :)
+2012-10-24 15:05:04 UTC <fryguybob> byorgey: I asked once and they said, "thats a lot of packages".  I was able to work around locally, so I didn't ask again.
+2012-10-24 15:05:47 UTC <byorgey> heh
+2012-10-24 15:06:17 UTC <byorgey> yeah, I end up installing a bunch of stuff locally too
+2012-10-24 15:19:03 UTC <fryguybob> ACTION sees Cabal's "dangerous" and raises "--force-reinstall".
+2012-10-24 15:19:47 UTC <fryguybob> And now we get to the gtk errors...
+2012-10-24 15:56:40 UTC <fryguybob> It looks like at least cairo installed.
+2012-10-24 16:00:04 UTC <byorgey> ah.  more motivation for me to split diagrams-cairo into the purely cairo part and a separate diagrams-gtk backend
+2012-10-24 16:00:40 UTC <byorgey> I took a look at it the other day, it shouldn't be too bad.  Looks like there's also some code simplification that can be done at the same time.
+2012-10-24 17:12:44 UTC <luite> alpounet: oh right
+2012-10-24 17:29:28 UTC <luite> sorry i'm busy packing my bags etc, need to check out soon
+2012-10-24 17:30:10 UTC <byorgey> luite: have a good trip back
+2012-10-24 17:30:41 UTC <luite> not going back yet, next destination is mountain view, again :)
+2012-10-24 17:31:15 UTC <byorgey> ah =)
+2012-10-24 17:31:42 UTC <luite> to greg weber (yesod developer), who wants to go to yosemite, camping, this weekend :)
+2012-10-24 17:34:40 UTC <alpounet> cool
+2012-10-24 17:35:03 UTC <alpounet> luite, get back to me when you're back in NL, in case you're interested by the position and what to talk about it a bit further
+2012-10-24 17:37:49 UTC <byorgey> luite: sweet, sounds fun!
+2012-10-24 17:37:54 UTC <byorgey> ACTION hsa never been to yosemite
+2012-10-24 17:38:22 UTC <byorgey> alpounet: I haven't forgotten about factorization diagrams, btw =)
+2012-10-24 17:39:07 UTC <alpounet> byorgey, heh, don't worry i've been pretty busy too, with scoutess, hnn, my kind-of-consulting work, etc
+2012-10-24 17:39:16 UTC <byorgey> cool
+2012-10-24 17:39:18 UTC <alpounet> just ping me with the new Factorization.hs
+2012-10-24 17:39:22 UTC <byorgey> will do =)
+2012-10-24 17:39:26 UTC <alpounet> i'll rebuild my app and relaunch it, and that's about it
+2012-10-24 17:39:30 UTC <alpounet> not much burden on me :]
+2012-10-24 17:39:35 UTC <byorgey> right =)
+2012-10-24 17:40:19 UTC <alpounet> you're the one with all the pressure, that has to get pretty diagrams out of numbers
+2012-10-24 17:40:30 UTC <byorgey> hehehe
+2012-10-24 17:40:44 UTC <byorgey> it's a tough job, let me tell you
+2012-10-24 17:41:37 UTC <nand`> I should use diagrams to generate slides for my school presentation
+2012-10-24 17:41:38 UTC <alpounet> and it's not like there are manuals or books about that job, like "Factorization diagrams for dummies"
+2012-10-24 17:41:45 UTC <alpounet> this really is some kind of R&D
+2012-10-24 17:42:10 UTC <byorgey> nand`: try diagrams-latex.sty, which you can get from the diagrams-builder tarball
+2012-10-24 17:42:43 UTC <nand`> is that what I think it is?
+2012-10-24 17:43:18 UTC <byorgey> it depends what you think it is.
+2012-10-24 17:43:40 UTC <alpounet> also, do you believe it really is byorgey you're talking to?
+2012-10-24 17:44:03 UTC <byorgey> did you, perhaps, think it is a latex package that lets you insert diagrams code inline in your latex file and have images inserted automatically into the output pdf?
+2012-10-24 17:44:16 UTC <byorgey> if so: yes! =D
+2012-10-24 17:45:02 UTC <byorgey> nand`: it's still a bit rough around the edges -- I need to do some work to make it prettier/easier to use/more configurable/etc., but it works
+2012-10-24 17:45:15 UTC <byorgey> I used it for my "monoids" paper
+2012-10-24 17:45:53 UTC <nand`> A LaTeX backend for diagrams that just outputs something I can copy/paste into my LaTeX documents and have them print out the way they should
+2012-10-24 17:46:19 UTC <byorgey> ah! no, it isn't that
+2012-10-24 17:46:41 UTC <byorgey> there is https://github.com/mahrz/diagrams-tikz but I can't vouch for it
+2012-10-24 17:47:14 UTC <byorgey> though personally I think what it actually is, is better than what you thought it is =)
+2012-10-24 17:47:22 UTC <byorgey> no copy-pasting required
+2012-10-24 17:47:22 UTC <nand`> why, what is it?
+2012-10-24 17:47:37 UTC <byorgey> nand`: read the scrollback
+2012-10-24 17:47:57 UTC <nand`> I got disconnected, my log goes from âit dependsâ to âA LaTeX backendâ to âit's still a bit roughâ
+2012-10-24 17:48:10 UTC <alpounet> <byorgey> did you, perhaps, think it is a latex package that lets you insert diagrams code inline in your latex file and have images inserted automatically into the output pdf?
+2012-10-24 17:48:11 UTC <alpounet> <byorgey> if so: yes! =D
+2012-10-24 17:48:19 UTC <nand`> I
+2012-10-24 17:48:21 UTC <nand`> that's even cooler
+2012-10-24 17:48:38 UTC <nand`> I can inline Haskell into my LaTeX documents now?
+2012-10-24 17:48:42 UTC <byorgey> yep
+2012-10-24 17:49:07 UTC <alpounet> so naughty
+2012-10-24 17:49:30 UTC <byorgey> you just build it with  pdflatex --enable-write18  and when it gets to a diagram section, it calls out to diagrams-builder-cairo to generate a pdf, then sticks a reference to it in the output
+2012-10-24 17:50:24 UTC <nand`> sort of makes me wish cairo actually worked on my machine
+2012-10-24 17:50:39 UTC <nand`> hopefully it'll be updated before my presentation is due :)
+2012-10-24 17:50:52 UTC <nand`> (I distinctly remember asking dmwit if he had an estimate but never received a reply)
+2012-10-24 17:53:02 UTC <byorgey> oh, you have 7.6?
+2012-10-24 17:53:09 UTC <byorgey> yeah, I don't know
+2012-10-24 18:01:19 UTC <luite> blugh some lady with a louis vuitton bag accused me of stealing her iphone
+2012-10-24 18:03:24 UTC <alpounet> unsafePerformIO $ steal iPhone
+2012-10-24 18:04:57 UTC <luite> the fact that it's a "seven hundred dollar phone" doesn't automatically give her the right to search my bags/pockets, just because i sat down at some spot where she shouthg she left it
+2012-10-24 18:15:20 UTC <luite> meh so now i have a few hours to kill before going to mv
+2012-10-24 19:24:21 UTC <fryguybob> nand`: The postscript backend has even more hackish support for inline diagrams in latex.
+2012-10-24 19:26:35 UTC <byorgey> oh yeah, I was going to add postscript to the backends supported by diagrams-builder
+2012-10-24 19:27:33 UTC <fryguybob> even better.
+2012-10-24 19:48:58 UTC <luite> bluh, bored, can concentrate on reading
+2012-10-24 19:49:53 UTC <luite> <- in some upscale westfield shopping center now, first place i found where they have comfortable benches that don't belong to something that sells food or drinks
+2012-10-24 19:50:45 UTC <luite> and where $3 gets you a lot less coffee than elsewhere :)
+2012-10-24 23:13:18 UTC <cmears> byorgey: Thanks very much!
+2012-10-24 23:18:53 UTC <cmears> Is there any interest in lines/arcs/bezier curves with arrowheads?
+2012-10-24 23:20:57 UTC <fryguybob> cmears: Yes.  We descussed it a bit several times.
+2012-10-24 23:22:09 UTC <fryguybob> I think several of the supporting parts are there, but I'm not sure what is left.
+2012-10-24 23:26:50 UTC <cmears> fryguybob: OK, thanks
+2012-10-24 23:27:03 UTC <cmears> It seems easy enough to do by hand
+2012-10-24 23:27:16 UTC <cmears> Maybe the tricky part is getting to work well in general, and have a good interface
+2012-10-24 23:27:38 UTC <cmears> (for example, how the arrowhead thickness changes with line width)
+2012-10-24 23:28:26 UTC <fryguybob> cmears: Right.
+2012-10-25 02:37:16 UTC <byorgey> cmears: yup. that's on the list.  I think we have a good idea how to do it.  At this point it's just an issue of sitting down and putting together some of the existing pieces.
+2012-10-25 02:37:25 UTC <byorgey> I hope to do it sometime soon after the 0.6 release.
+2012-10-25 02:37:44 UTC <byorgey> or if someone else wants to do it I can do a brain dump into a wiki page with guidance.
+2012-10-25 02:39:33 UTC <cmears> I'd be willing to try, but I don't want to distract you from making the release
+2012-10-25 02:41:17 UTC <byorgey> nah, you wouldn't distract me
+2012-10-25 02:41:31 UTC <byorgey> I'll write up some notes for you soon
+2012-10-25 02:42:44 UTC <cmears> Great!
+2012-10-25 02:42:49 UTC <byorgey> thanks! =)
+2012-10-25 02:43:03 UTC <cmears> I made these nice arrowheads for my Bezier curves: http://www.csse.monash.edu.au/~cmears/n-queens.png
+2012-10-25 02:43:22 UTC <cmears> That is what got me thinking about it
+2012-10-25 02:44:18 UTC <byorgey> ah, nice
+2012-10-25 02:44:28 UTC <byorgey> wait, did you make that using diagrams?
+2012-10-25 02:44:51 UTC <cmears> Yes
+2012-10-25 02:46:28 UTC <byorgey> cool =)
+2012-10-25 02:48:51 UTC <cmears> Each arrowhead is just a 4-sided polygon oriented along the vector from the curve's control point to its end point
+2012-10-25 02:49:08 UTC <byorgey> right, makes sense
+2012-10-25 02:49:20 UTC <cmears> Unfortunately it's not the same notion of "orient" that the polygon code uses
+2012-10-25 02:49:30 UTC <byorgey> right.
+2012-10-25 02:49:50 UTC <cmears> But it's just a rotation by (direction vector)
+2012-10-25 02:50:08 UTC <byorgey> it's not clear how to automatically orient arbitrary polygons in the "right" way to be arrowheads.
+2012-10-25 02:50:30 UTC <byorgey> but we could just have a convention that if you specify an arbitrary polygon as an arrowhead it "points" along the positive x-axis, or something like that
+2012-10-25 02:50:36 UTC <cmears> In this case the polygon's natural direction is along the positive x-axis
+2012-10-25 02:50:37 UTC <cmears> Exactly
+2012-10-25 04:33:37 UTC <cmears> If I want to try the development versions of diagrams-*, what is the best way to do it without breaking the released version?
+2012-10-25 04:33:42 UTC <cmears> Something like cabal-dev?
+2012-10-25 04:36:13 UTC <byorgey> cmears: Yes, but instead of cabal-dev, use hsenv, it's much more convenient when working with multiple packages.  https://github.com/Paczesiowa/hsenv
+2012-10-25 04:36:54 UTC <byorgey> basically you start a new environment, then any commands you run in that shell are sandboxed
+2012-10-25 04:37:09 UTC <byorgey> so just start up a new dev environment and then do cabal install etc. as usual
+2012-10-25 04:37:26 UTC <byorgey> then when you deactivate the environment you're back to the released version.
+2012-10-25 04:37:37 UTC <byorgey> cmears: see also http://www.haskell.org/haskellwiki/Diagrams/Contributing
+2012-10-25 04:37:58 UTC <cmears> Great, that's what I was looking for
+2012-10-25 04:38:26 UTC <cmears> I was trying Google for all sorts of combinations of "cabal local packages" when I should have just read the wiki (:
+2012-10-25 04:38:35 UTC <byorgey> hehe
+2012-10-25 04:53:26 UTC <cmears> Does hsenv do anything strange with the Haddock documentation?
+2012-10-25 04:54:56 UTC <byorgey> uhh, good question, I don't actually know
+2012-10-25 04:55:16 UTC <byorgey> wait, let me check
+2012-10-25 04:55:34 UTC <byorgey> oh, well, doesn't it say in the build output where it's installing the documentation?
+2012-10-25 04:55:57 UTC <cmears> I'm getting "cabal: Run the 'configure' command first." I think when it tries to run "cabal haddock"
+2012-10-25 04:56:18 UTC <byorgey> cmears: and what command are you running that gives you that error?
+2012-10-25 05:23:49 UTC <cmears> cabal -v3 install --enable-documentation diagrams-core/ diagrams-lib/ --force-reinstalls
+2012-10-25 05:24:56 UTC <byorgey> hmm, weird
+2012-10-25 05:33:22 UTC <cmears> OK, even from the diagrams-core directory doing "cabal configure && cabal install --enable-documentation" doesn't work
+2012-10-25 05:33:24 UTC <cmears> That is weird
+2012-10-25 05:33:44 UTC <byorgey> this is inside an active hsenv environment?
+2012-10-25 05:34:07 UTC <cmears> Yeah
+2012-10-25 05:34:16 UTC <byorgey> weird indeed
+2012-10-25 05:34:23 UTC <byorgey> can you paste the output with -v3?
+2012-10-25 05:34:27 UTC <cmears> But just "cabal haddock" works
+2012-10-25 05:35:19 UTC <cmears> ... but no "all packages index" apparently
+2012-10-25 05:36:16 UTC <byorgey> boo
+2012-10-25 05:36:48 UTC <byorgey> I guess I've never run into this because hsenv creates a sandboxed version of cabal with a fresh config, and hence documentation isn't on by default
+2012-10-25 05:36:56 UTC <byorgey> and I've never bothered to pass --enable-documentation
+2012-10-25 05:37:09 UTC <cmears> http://hpaste.org/76739
+2012-10-25 05:37:26 UTC <cmears> line 474
+2012-10-25 05:38:27 UTC <cmears> I guess you don't need to refer to the documentation very often like I do (:
+2012-10-25 05:38:47 UTC <byorgey> exactly =)
+2012-10-25 05:39:25 UTC <byorgey> hmm, but after line 474 it looks like it's doing a bunch of copying of documentation
+2012-10-25 05:40:18 UTC <cmears> I think because I had successfully run cabal haddock before that run
+2012-10-25 05:40:23 UTC <cmears> The documentation was already made
+2012-10-25 05:40:44 UTC <byorgey> ahh
+2012-10-25 05:41:25 UTC <byorgey> well, I need to go to bed
+2012-10-25 05:41:47 UTC <byorgey> but we should file an hsenv bug
+2012-10-25 05:41:49 UTC <cmears> Thanks again for all your help
+2012-10-25 05:41:54 UTC <byorgey> you're welcome
+2012-10-25 05:41:56 UTC <cmears> Yeah, I'll check with hsenv
+2012-10-25 12:23:59 UTC <fryguybob> byorgey: cmears: Arrow head orrientation on Beziers might be best matching the angle a little bit back from the start in some cases.
+2012-10-25 12:24:21 UTC <fryguybob> cmears: Excellent diagram by the way!
+2012-10-26 00:23:06 UTC <cmears> fryguybob: thanks (:
+2012-10-26 04:33:41 UTC <cmears> I see "clampBefore" in active is not so safe to call (:
+2012-10-26 05:00:20 UTC <cmears> Can someone please test this animation: http://www.csse.monash.edu.au/~cmears/anim/anim.html
+2012-10-31 14:07:56 UTC <fryguybob> byorgey: FillRule is missing an Eq instance, do we have any conventions for what instances something like that should have?
+2012-10-31 14:07:57 UTC <fryguybob> I need it as I switched to tracking state at render time and eventually can use that to avoid emitting code that would do nothing (due to it being equal to the current state).
+2012-10-31 14:45:12 UTC <byorgey> fryguybob: ah, right, makes sense
+2012-10-31 14:50:10 UTC <byorgey> we don't have any conventions about that, but certainly Eq is reasonable
+2012-10-31 14:51:35 UTC <byorgey> and Ord, Enum, Bounded
+2012-10-31 14:52:01 UTC <fryguybob> byorgey: Ok, I have a pull request for the types that made sense to me.  The ceiling thing is trickier then I thought.
+2012-10-31 14:52:16 UTC <byorgey> fryguybob: oh? what makes it tricky?
+2012-10-31 14:52:24 UTC <byorgey> I had a proof and everything!
+2012-10-31 14:53:20 UTC <fryguybob> Hehe, so it needs to be `fromIntegral . ceiling` which would have to be via Integer so we don't have some weird overflow.
+2012-10-31 14:53:39 UTC <fryguybob> But then can we overflow double on the way back?
+2012-10-31 14:54:07 UTC <byorgey> ohh, I see, right
+2012-10-31 14:54:12 UTC <byorgey> stupid types
+2012-10-31 14:54:19 UTC <fryguybob> I guess that's still in a better place then adding 1 when that could be a noop against some large e anyway.
+2012-10-31 14:54:20 UTC <byorgey> always getting in the way =P
+2012-10-31 14:54:36 UTC <fryguybob> hehe, I said "yeah types" when I got the type error.
+2012-10-31 14:54:58 UTC <byorgey> I mean, I don't really envision people calling  arcT 298673.77 1  or whatever
+2012-10-31 14:55:11 UTC <byorgey> but it just seems like the Right Way (tm) to do it
+2012-10-31 14:55:42 UTC <fryguybob> Yeah, I don't think we introduce any new Double weirdness.
+2012-10-31 14:56:41 UTC <byorgey> Prelude Test.QuickCheck> quickCheck (\s (e :: Double) -> e < s ==> ceiling (s - e) > 0)
+2012-10-31 14:56:44 UTC <byorgey> +++ OK, passed 100 tests.
+2012-10-31 14:56:52 UTC <fryguybob> ACTION now has a whole new reading of 1984 with IEEE 754 in mind.
+2012-10-31 14:56:54 UTC <byorgey> see, it must be OK
+2012-10-31 14:56:59 UTC <fryguybob> hehe
+2012-10-31 14:57:17 UTC <byorgey> "some Doubles are more equal than others"?
+2012-10-31 14:57:47 UTC <fryguybob> doubleplusungood!
+2012-10-31 14:58:34 UTC <byorgey> hehehe
+2012-10-31 14:59:07 UTC <byorgey> if there are e < s with ceiling (s - e) > 0, it would be  doubleminusungood
+2012-10-31 15:13:21 UTC <fryguybob> Ok those changes are now up.  Postscript now has even-odd, dashing and join styles.
+2012-10-31 15:13:31 UTC <fryguybob> All that's left is fonts!
+2012-10-31 15:20:42 UTC <byorgey> yay!
+2012-10-31 15:20:59 UTC <byorgey> I'll re-generate the test matrix this afternoon
+2012-10-31 23:31:05 UTC <fryguybob> Humm, there are some extensions for getting PDF transparency in a Postscript file, but it appears that ghostscript does not support them :(
+2012-11-01 00:01:44 UTC <byorgey> aww =(
+2012-11-01 00:05:18 UTC <byorgey> updated backend test results: http://projects.haskell.org/diagrams/backend-tests/all-index.html
+2012-11-01 00:06:21 UTC <byorgey> also, repo for generating backend tests is now here:  github.com/diagrams/diagrams-backend-tests
+2012-11-01 00:09:26 UTC <luite> hm svg line width looks off in chrome
+2012-11-01 00:09:46 UTC <byorgey> luite: svg line width looks off everywhere
+2012-11-01 00:09:51 UTC <byorgey> because it is wrong =)
+2012-11-01 00:10:05 UTC <byorgey> I'm going to fix it soon
+2012-11-01 00:10:14 UTC <luite> oh safari displays it ok
+2012-11-01 00:10:39 UTC <byorgey> oh really?  you mean it looks the same as the others?
+2012-11-01 00:11:03 UTC <luite> yeah, maybe a very light difference
+2012-11-01 00:11:27 UTC <luite> line-attributes is still wrong though
+2012-11-01 00:11:34 UTC <luite> and grey things seem to be displayed black
+2012-11-01 00:11:47 UTC <luite> (or thin lines)
+2012-11-01 00:11:53 UTC <byorgey> I'd love to see a screenshot
+2012-11-01 00:12:16 UTC <luite> sure, one moment
+2012-11-01 00:17:28 UTC <byorgey> well, in any case, I know for a fact that SVG is wrong, because there's a function that completely ignores one of its arguments
+2012-11-01 00:17:36 UTC <fryguybob> Humm svg text only shows when you change the color.
+2012-11-01 00:17:51 UTC <byorgey> oh, interesting
+2012-11-01 00:18:00 UTC <byorgey> yeah, I was wondering why that green "world" was there
+2012-11-01 00:18:47 UTC <byorgey> ah, https://github.com/diagrams/diagrams-svg/issues/15
+2012-11-01 00:30:06 UTC <fryguybob> byorgey: Also, compare can can do image differences
+2012-11-01 00:31:54 UTC <byorgey> oh, interesting
+2012-11-01 00:35:44 UTC <fryguybob> I guess it is called compare in that case :D.
+2012-11-01 00:38:16 UTC <luite> byorgey: http://hdiff.luite.com/tmp/diagrams/
+2012-11-01 00:39:59 UTC <byorgey> luite: thanks
+2012-11-01 00:41:05 UTC <byorgey> off to bake some apple crisp, will look at this later
+2012-11-01 00:42:07 UTC <luite> oh apple crumble :)
+2012-11-01 00:42:51 UTC <fryguybob> byorgey: convert also has the stroke on svg.
+2012-11-01 00:43:33 UTC <fryguybob> trying inkscape...
+2012-11-01 00:44:33 UTC <fryguybob> inkscape shows stroke width set to 0.01px
+2012-11-01 00:51:54 UTC <cmears> Next iteration of animated diagrams, now with everything in one big file: http://www.csse.monash.edu.au/~cmears/anim/pythag.html
+2012-11-01 00:53:15 UTC <luite> cute
+2012-11-01 01:11:04 UTC <byorgey> cmears: nice!
+2012-11-01 01:12:36 UTC <cmears> The file is about 350 kilobytes
+2012-11-01 01:12:48 UTC <byorgey> yikes
+2012-11-01 01:12:48 UTC <cmears> But it compresses to about 8 kilobytes
+2012-11-01 01:13:01 UTC <byorgey> ah, not too bad
+2012-11-01 01:13:05 UTC <cmears> So if the server sends it compressed, it's fine
+2012-11-01 01:13:13 UTC <cmears> (I guess)
+2012-11-01 01:13:39 UTC <fryguybob> byorgey: If I zoom in with Chrome I see faint lines :D.
+2012-11-01 01:13:59 UTC <byorgey> hehe =)
+2012-11-01 01:14:30 UTC <fryguybob> So I think it is just a difference of how to interpret really thin lines.
+2012-11-01 01:14:42 UTC <fryguybob> (clearly the lines should not be so thin)
+2012-11-01 01:14:57 UTC <byorgey> luite: I just added a new test at the very end of http://projects.haskell.org/diagrams/backend-tests/all-index.html, what does it look like in Safari?
+2012-11-01 01:17:21 UTC <luite> http://hdiff.luite.com/tmp/diagrams/Screen%20Shot%202012-11-01%20at%202.15.59%20AM.png
+2012-11-01 01:17:51 UTC <byorgey> ok, that's what I thought.
+2012-11-01 01:18:30 UTC <byorgey> yes, it just looks like a difference in how to render very thin lines
+2012-11-01 01:19:31 UTC <byorgey> luite: thanks!
+2012-11-01 01:19:59 UTC <byorgey> this is not the first time we've run into differences in SVG rendering across browsers
+2012-11-01 01:20:03 UTC <byorgey> and I'm sure it won't be the last =P
+2012-11-01 01:20:14 UTC <fryguybob> I'm sure everyone is waiting on the edge of their seat to know what IE does.
+2012-11-01 01:20:34 UTC <byorgey> it probably crashes or something
+2012-11-01 01:20:52 UTC <fryguybob> Every svg is supposed to be a red x right?
+2012-11-01 01:21:15 UTC <byorgey> hahaha
+2012-11-01 01:22:12 UTC <cmears> I think some versions of IE will do SVG, but not with an IMG element
+2012-11-01 15:40:39 UTC <alpounet> byorgey, type matrices! omg
+2012-11-01 15:40:46 UTC <alpounet> ACTION stars the repo
+2012-11-01 16:06:59 UTC <fryguybob> "Matrices of types are sweet"
+2012-11-01 17:37:59 UTC <byorgey> hehehe
+2012-11-01 17:41:49 UTC <byorgey> alpounet: http://blog.sigfpe.com/2010/08/divided-differences-and-tomography-of.html http://byorgey.wordpress.com/2010/08/12/on-a-problem-of-sigfpe/ http://blog.sigfpe.com/2010/08/constraining-types-with-regular.html
+2012-11-01 17:42:06 UTC <byorgey> alpounet: basically we're going to properly write this stuff up
+2012-11-01 17:51:16 UTC <byorgey> but please don't publicize it yet
+2012-11-01 17:51:34 UTC <byorgey> though I guess with a public repo on github it's already out there =)
+2012-11-01 17:58:00 UTC <alpounet> byorgey, no problem for not publicizing it
+2012-11-01 17:58:07 UTC <alpounet> but that's some cool stuffs there!
+2012-11-01 17:58:14 UTC <byorgey> yes indeed!
+2012-11-01 18:02:27 UTC <alpounet> a bit mind bending, but still, very cool
+2012-11-01 18:02:47 UTC <byorgey> agreed =)
+2012-11-01 18:08:23 UTC <alpounet> i used to do similar stuffs with C++ template metaprogramming
+2012-11-01 18:08:38 UTC <alpounet> but mixing these stuffs with derivatives of types and the likes are giving me a bit of a hard time :]
+2012-11-01 18:10:00 UTC <luite> hm oh interesting
+2012-11-01 18:12:41 UTC <ClaudiusMaximus> when's the HCAR deadline?
+2012-11-01 18:14:16 UTC <ClaudiusMaximus> oh, today :S
+2012-11-01 18:15:09 UTC <luite> oh
+2012-11-01 18:17:16 UTC <luite> blugh i have no concentration
+2012-11-01 18:21:45 UTC <byorgey> yeah, HCAR dealine is today.  though Janis will usually take stuff a day or two late.
+2012-11-01 18:21:56 UTC <byorgey> but does not advertise that fact for obvious reasons.
+2012-11-01 21:01:44 UTC <luite> \o/
+2012-11-01 21:04:03 UTC <byorgey> \o/
+2012-11-01 21:04:17 UTC <byorgey> what are we \o/ing about?
+2012-11-01 21:04:21 UTC <luite> dunno
+2012-11-01 21:04:35 UTC <byorgey> I see, cool
+2012-11-01 21:04:54 UTC <byorgey> (...) [x] = repeat x
+2012-11-01 21:05:00 UTC <byorgey> (...) x@(x0:xs) = scanl (+) x0 ((zipWith (-) xs x)...)
+2012-11-01 21:05:19 UTC <byorgey> coolest code I've seen in a long time =)
+2012-11-01 21:08:59 UTC <luite> where did you find that?
+2012-11-01 21:09:24 UTC <byorgey> someone pasted a link to it in #haskell a few days ago
+2012-11-01 21:09:32 UTC <byorgey> http://codepad.org/WDXeV59b
+2012-11-01 21:09:46 UTC <byorgey> I guess rwbarton wrote it
+2012-11-01 21:11:50 UTC <luite> ah i think i
+2012-11-01 21:11:56 UTC <luite> 've seen it before, without the (...) :)
+2012-11-01 21:15:41 UTC <byorgey> yeah, I meant to paste a different version
+2012-11-01 21:16:08 UTC <byorgey> the (...) is cute but requires -XPostfixOperators
+2012-11-01 21:16:36 UTC <byorgey> I'm going to put it on my students' homework, as an optional exercise: "explain what this code does." =)
+2012-11-01 21:19:54 UTC <alpounet> byorgey, i wish that worked for metaprogramming, like figuring out the rest of the code for a module or smth
+2012-11-01 21:20:13 UTC <byorgey> alpounet: oh, it does!
+2012-11-01 21:20:18 UTC <alpounet> cool
+2012-11-01 21:20:29 UTC <byorgey> alpounet: unfortunately it only works for metaprograms which are described by polynomials
+2012-11-01 21:20:35 UTC <alpounet> going to try: module Scoutess where ...
+2012-11-01 21:23:16 UTC <alpounet> ACTION is staring at calls to "fix" in Hackage2's code base
+2012-11-01 21:24:00 UTC <byorgey> oooh
+2012-11-01 21:25:02 UTC <alpounet> http://hpaste.org/77132
+2012-11-01 21:27:19 UTC <byorgey> alpounet: that just means that within the body, r is bound to the value of the entire  RestoreBackup ...  value itself
+2012-11-01 21:27:47 UTC <byorgey> so it's a slightly obfuscated way of saying   let r = RestoreBackup ... r ...  in  r
+2012-11-01 21:28:00 UTC <alpounet> yeah
+2012-11-01 21:28:03 UTC <alpounet> neat trick though
+2012-11-01 21:28:13 UTC <byorgey> indeed =)
+2012-11-01 21:28:53 UTC <byorgey> oh, maybe you already knew that
+2012-11-01 21:29:04 UTC <byorgey> by 'staring' I thought you meant you were confused by it
+2012-11-01 21:29:48 UTC <alpounet> before your comment, i didn't "do the math" to know why that works
+2012-11-01 21:30:00 UTC <byorgey> ah, ok =)
+2012-11-01 21:30:08 UTC <alpounet> so you have been helpful :)
+2012-11-01 21:30:14 UTC <byorgey> excellent =)
+2012-11-01 21:30:22 UTC <alpounet> i'm trying to help a bit on the hackage2 front
+2012-11-01 21:30:31 UTC <alpounet> i'm sick of seeing people whining about cabal/hackage
+2012-11-01 21:30:36 UTC <alpounet> without any of them doing anything about it
+2012-11-01 21:37:02 UTC <byorgey> excellent =)
+2012-11-01 22:29:25 UTC <tgeeky> alpounet: well; several people have done "their own thing" about it
+2012-11-01 22:29:48 UTC <alpounet> yeah yeah i know
+2012-11-01 22:30:01 UTC <tgeeky> the issue is; how does the community advance under that model?
+2012-11-01 22:30:04 UTC <alpounet> i'm myself writing something to help with that (scoutess)
+2012-11-01 22:30:27 UTC <alpounet> (it's not like cabal-dev, cabal-nirvana or whatever, it's a build-bot-on-steroids kind of thing for cabal-powered projects)
+2012-11-01 22:31:07 UTC <alpounet> we're converging on providing the right tools for 1/ users 2/ package maintainers
+2012-11-01 22:31:38 UTC <alpounet> by we, i mean at most 20 people actively working on these problems.
+2012-11-01 22:32:15 UTC <tgeeky> I get rather frustrated by some of the ranting that goes on about cabal and hackage on reddit
+2012-11-01 22:35:34 UTC <alpounet> same here yes, i mean we almost all know what the problems are. the cabal/hackage devs know what to do, and they do it whenever they find some spare time. so, the usual "whinings" from people who don't even dare to contribute anything are getting *really* annoying.
+2012-11-01 22:37:19 UTC <tgeeky> yes; as well as getting facts wrong about policies (PVP) and causes and effects
+2012-11-01 22:37:19 UTC <tgeeky> it's not as though these problems aren't identified
+2012-11-01 22:38:33 UTC <tgeeky> also, it's important to recognize that some of these things operate on the thinnest of shoestring budgets
+2012-11-01 22:39:05 UTC <alpounet> yeah...
+2012-11-01 22:43:35 UTC <alpounet> oh: http://softwaresimply.blogspot.fr/2012/11/why-cabal-has-problems.html?utm_source=twitterfeed&utm_medium=twitter&utm_campaign=Feed:+SoftwareSimply+(Software+Simply)
+2012-11-02 02:48:21 UTC <fryguybob> byorgey: How goes the HCAR?
+2012-11-02 02:50:42 UTC <byorgey> fryguybob: fine, but I'm now working on stuff for my class since Janis said he would still take entries until the middle of next week.
+2012-11-02 02:51:06 UTC <byorgey> fryguybob: I hope to submit it sometime tomorrow or Saturday.  feel free to take a look at what's there so far and make edits/additions
+2012-11-02 02:51:34 UTC <fryguybob> Oh, is it in a repo?
+2012-11-02 02:51:57 UTC <byorgey> diagrams-doc/HCAR
+2012-11-02 02:52:10 UTC <fryguybob> Excellent.
+2012-11-02 02:52:31 UTC <fryguybob> ACTION tries to ignore the strange noises in his spice drawer...
+2012-11-02 02:54:07 UTC <byorgey> ACTION is unsure what sense of "strange" fryguybob is using
+2012-11-02 02:55:42 UTC <fryguybob> false alarm
+2012-11-02 02:56:50 UTC <byorgey> fryguybob: what, it was a friendly spice gnome?
+2012-11-02 02:57:58 UTC <fryguybob> I think it is just getting colder outside and that is causing poping noises for some reason.
+2012-11-02 02:58:16 UTC <fryguybob> Which of course sound like a mouse flopping around in the spice drawer.
+2012-11-02 03:02:05 UTC <byorgey> fryguybob: so I surmise you all made it through the storm fine?  no loss of power, trees on things trees shouldn't be on, etc.?
+2012-11-02 03:03:23 UTC <fryguybob> byorgey: We have worse storms every year.
+2012-11-02 03:04:01 UTC <fryguybob> The last leaves blew off the trees, but not much else around home.  Some power was out in a few places in Rochester.
+2012-11-02 03:04:19 UTC <fryguybob> How's it around there?
+2012-11-02 03:05:11 UTC <byorgey> fine, it really wasn't too bad in Philly
+2012-11-02 03:05:22 UTC <byorgey> we know a few friends who lost power but most (including us) didn't
+2012-11-02 04:13:13 UTC <byorgey> hooray for cabal install -j =)
+2012-11-02 04:55:44 UTC <byorgey> haha, mgsloan's interactive Extrude toy is fun =)
+2012-11-02 05:28:30 UTC <byorgey> there, that's all the outstanding pull requests!
+2012-11-02 05:28:42 UTC <byorgey> coming soon, a feature freeze for 0.6
+2012-11-02 05:28:45 UTC <byorgey> but now, to bed.
+2012-11-02 12:18:06 UTC <fryguybob> ACTION makes another attempt to get a working GTK.
+2012-11-02 12:20:22 UTC <ClaudiusMaximus> fryguybob: the patch bundle posted to the gtk list worked for me with ghc-7.6
+2012-11-02 12:20:29 UTC <ClaudiusMaximus> gtk2hs list
+2012-11-02 12:21:02 UTC <fryguybob> My issues start before that unfortunately.
+2012-11-02 12:21:07 UTC <ClaudiusMaximus> oh
+2012-11-02 12:21:12 UTC <fryguybob> I don't have complete control over the system.
+2012-11-02 12:21:15 UTC <ClaudiusMaximus> ACTION made false assumptions
+2012-11-02 12:44:51 UTC <fryguybob> ACTION gets one lib closer.
+2012-11-02 18:48:07 UTC <fryguybob> byorgey: When I get a chance I'll put up a pull request that just changes the name of `expandPath` to make way for better things when they are ready.
+2012-11-02 18:48:27 UTC <byorgey> fryguybob: ok, sounds good
+2012-11-02 18:48:53 UTC <byorgey> there, I just sent an email about preparing for the 0.6 release
+2012-11-03 18:34:23 UTC <ezyang> I wonder if a D3.js like model would be a good fit for 'animated diagrams'
+2012-11-03 18:43:06 UTC <luite> hmm d3 still looks fairly imperative right, with chained functiones?
+2012-11-03 18:44:01 UTC <ezyang> It's very imperative, but that's not really the point
+2012-11-03 18:45:08 UTC <luite> ah do you have an example of what you mean then?
+2012-11-03 18:45:17 UTC <ezyang> D3 proposes a very peculiar notion of reactivity, where the underlying data is always an array and you have different reactions per whether or not an element of the array is added, deleted or modified
+2012-11-03 18:45:53 UTC <luite> I'm still working on the low level bits, but i really want to have interactive digrams in the browser in a few months :)
+2012-11-03 18:46:34 UTC <ezyang> Nice!
+2012-11-03 18:46:50 UTC <ezyang> Actually, it sort of feels like it would be more profitable to port the diagrams API to JavaScript. Except *bleh javascript*
+2012-11-03 18:46:51 UTC <luite> (low level bits = ghcjs code generator that's fast enough for this)
+2012-11-03 18:47:48 UTC <luite> hm, you're at mit right, are you following some courses at stanford?
+2012-11-03 18:49:27 UTC <ezyang> No, I'm at Stanford now :)
+2012-11-03 18:49:32 UTC <luite> oh cool
+2012-11-03 18:49:42 UTC <ezyang> (actually, I'm doing pretty poorly in the class, but whatever, I'm a grad student now, I get to not care ^_^)
+2012-11-03 18:49:47 UTC <luite> hehe
+2012-11-03 18:50:25 UTC <luite> meh i visisted the stanford campus last week, museum etc, but i'm back in holland now
+2012-11-03 18:50:34 UTC <ezyang> Aw.
+2012-11-03 18:54:22 UTC <luite> anyway if you have specific ideas of how reactivity should work, please tell me :) ghcjs should support green threads soon-ish, so threading and blocking on events should be supported
+2012-11-03 18:55:29 UTC <ezyang> I haven't thought about it in enough detail
+2012-11-03 18:55:49 UTC <luite> (in the current generator, threads are already supported, but it's way too slow and leaks too much memory to do anything complex with diagrams)
+2012-11-03 18:56:04 UTC <ezyang> But you should read up on http://bost.ocks.org/mike/constancy/ (object constancy) which is a really big deal as far as efficiency and animation goes
+2012-11-03 18:56:42 UTC <luite> ah tnx
+2012-11-03 18:58:05 UTC <luite> there were some gloss-like examples with fay on reddit, but to do the same with diagrams, the whole lib would need be be rewritten without type classes
+2012-11-03 18:58:24 UTC <luite> i don't think anyone would want that :)
+2012-11-03 18:59:37 UTC <ezyang> I'm still kind of skeptical about the compiling to JavaScript thing, I must admit ^_^
+2012-11-03 19:00:14 UTC <luite> hehe we'll see, it's surely a lot of work. but simple benches from the ghc bench suite run only 10x slower than native ghc
+2012-11-03 19:00:31 UTC <luite> (while older ghcjs, hast and fay are usually 10x slower than that)
+2012-11-03 19:01:58 UTC <ezyang> :)
+2012-11-03 19:52:15 UTC <byorgey> ezyang: we have some cool stuff with animated/interactive diagrams hopefully coming down the pipeline, but I can't promise anything quite yet =)
+2012-11-03 20:05:53 UTC <romildo> Hi.
+2012-11-03 20:09:22 UTC <byorgey> hi romildo
+2012-11-03 20:10:41 UTC <romildo> I am trying to run the first example from the diagrams-contrib module  Diagrams.TwoD.Layout.Tree
+2012-11-03 20:11:13 UTC <romildo> I am getting a compilation error
+2012-11-03 20:11:34 UTC <byorgey> romildo: ah, hmm, can you paste the error somewhere?
+2012-11-03 20:12:19 UTC <romildo> The program : http://dpaste.com/823888/
+2012-11-03 20:13:11 UTC <byorgey> oh, I see you figured out to add the missing lf function and import Data.Tree
+2012-11-03 20:13:56 UTC <romildo> The error: http://dpaste.com/823889/
+2012-11-03 20:14:30 UTC <byorgey> oh, I see, that is only because GHC does not know what backend type to use for 'example'
+2012-11-03 20:15:32 UTC <romildo> In fact, I do not know how to do anything with diagrams. This is my first attempt. I want to layout a tree and save it to a file.
+2012-11-03 20:15:53 UTC <romildo> Would you please show how to do that with this example?
+2012-11-03 20:15:56 UTC <byorgey> romildo: sure
+2012-11-03 20:16:00 UTC <byorgey> romildo: do you have diagrams-cairo installed?
+2012-11-03 20:16:06 UTC <romildo> yes.
+2012-11-03 20:16:29 UTC <byorgey> romildo: ok. so import it with    import Diagrams.Backend.Cairo.CmdLine
+2012-11-03 20:16:35 UTC <romildo> I have successfully run the first example from the diagrams from the tutorial.
+2012-11-03 20:16:43 UTC <byorgey> and then add    main = defaultMain example
+2012-11-03 20:17:01 UTC <byorgey> that will actually make the type of example unambiguous because now GHC can infer that you are using the cairo backend.
+2012-11-03 20:17:30 UTC <byorgey> then compile and run with ./RenderTree -o RenderTree.png -w 400  or something like that
+2012-11-03 20:20:28 UTC <romildo> that worked.
+2012-11-03 20:21:27 UTC <romildo> And what about if I need to save the image from inside my program, without passing the file name as a command line argument?
+2012-11-03 20:22:15 UTC <romildo> That is, I want a function that is given a diagram (like "example" in this demo) and a string (a file name), and renders the diagram to the file name.
+2012-11-03 20:24:01 UTC <ClaudiusMaximus> romildo: quick hack is "withArgs", otherwise see how defaultMain is implemented
+2012-11-03 20:29:12 UTC <romildo> ' withArgs ["-o","test.pdf","-w","400"] (defaultMain example) ' worked.
+2012-11-03 20:29:30 UTC <romildo> Thanks for the help.
+2012-11-03 20:30:18 UTC <romildo> Maybe it would be a good idea to complete the examples so that it have 'main'.
+2012-11-04 08:36:41 UTC <romildo> Hi.
+2012-11-04 08:37:11 UTC <romildo> Please, help me with this module: http://dpaste.com/824210/
+2012-11-04 08:39:51 UTC <romildo> It does not work: http://dpaste.com/824211/
+2012-11-04 20:59:51 UTC <luite> hm
+2012-11-04 21:26:05 UTC <fryguybob> hmm
+2012-11-04 21:27:26 UTC <luite> :)
+2012-11-04 23:56:18 UTC <cmears> Hi everyone. I suppose people have seen the animated factorisation diagrams (http://www.datapointed.net/2012/10/animated-factorization-diagrams/) -- does anyone know if it's generated via the diagrams package?
+2012-11-05 01:08:17 UTC <byorgey> cmears: no, it isn't, I think it's just javascript
+2012-11-05 01:08:30 UTC <byorgey> pretty cool though
+2012-11-05 01:09:01 UTC <byorgey> I certainly envision a day when we'll be able to quickly hack up something like that using diagrams, but that day isn't here yet
+2012-11-05 01:09:03 UTC <cmears> Yeah, it's javascript using canvas, but I wondered if he had used the diagrams code or just mimicked it
+2012-11-05 01:09:19 UTC <byorgey> yeah, as far as I know he just mimicked it
+2012-11-05 01:09:32 UTC <cmears> Pretty good copy (:
+2012-11-05 01:09:34 UTC <luite> :(
+2012-11-05 01:10:14 UTC <byorgey> :( ?
+2012-11-05 01:10:42 UTC <luite> because that day isn't here yet
+2012-11-05 01:15:33 UTC <cmears> If I get some time I will try to mimic it with diagram's animation stuff
+2012-11-05 01:16:15 UTC <cmears> By the way, what is broken about the SVG backend? I'm using Cairo to produce SVG frames for animations, but maybe the SVG backend would be better
+2012-11-05 01:16:37 UTC <byorgey> cmears: cool, keep a list of features/enhancements that would make the animation stuff better/easier to use
+2012-11-05 01:17:08 UTC <byorgey> cmears: https://github.com/diagrams/diagrams-svg/issues?state=open
+2012-11-05 01:17:31 UTC <byorgey> the biggest thing is https://github.com/diagrams/diagrams-svg/issues/24  which is really due to  https://github.com/diagrams/diagrams-svg/issues/19
+2012-11-05 01:18:08 UTC <byorgey> cmears: you can also see a comparison of the current state of backends at  http://projects.haskell.org/diagrams/backend-tests/all-index.html
+2012-11-05 01:18:28 UTC <byorgey> cmears: also, I haven't forgotten about writing up some notes re: arrows for you, I just haven't found time to do it yet
+2012-11-05 01:22:24 UTC <cmears> Thanks, that's great, I'll take a look at those
+2012-11-05 01:22:35 UTC <cmears> Don't feel rushed on the arrow stuff (:
+2012-11-05 01:23:18 UTC <carter> cool
+2012-11-05 01:23:29 UTC <carter> byorgey: hows that refactor by that student going?
+2012-11-05 01:23:32 UTC <carter> on the points side?
+2012-11-05 01:23:52 UTC <byorgey> carter: going well, apparently
+2012-11-05 01:23:56 UTC <carter> cool
+2012-11-05 01:24:00 UTC <byorgey> he's in the middle of it
+2012-11-05 01:24:05 UTC <carter> the past 2 weeks on my side have been crazy :)
+2012-11-05 01:24:12 UTC <carter> even the NYC disaster zone piece aside :)
+2012-11-05 04:38:34 UTC <byorgey> alpounet: http://mathlesstraveled.com/2012/11/05/more-factorization-diagrams/
+2012-11-05 04:38:50 UTC <byorgey> sorry I didn't tell you about it before publishing
+2012-11-05 04:39:15 UTC <byorgey> I had to publish before midnight or lose at my goal of blogging twice a week ( https://www.beeminder.com/byorgey/goals/blogging )
+2012-11-05 04:39:19 UTC <byorgey> =)
+2012-11-05 04:40:19 UTC <byorgey> man, two blog posts a week doesn't sound like much but it's hard work.  it's been great though.
+2012-11-05 04:50:28 UTC <luite> ah cool pics :)
+2012-11-05 04:53:32 UTC <luite> i saw the irrationals book in my amazon suggestions earlier, but didn't order it because i thought it wouldn't contain enough that i didn't already know... maybe it's more intereting than i thought at first :)
+2012-11-05 05:00:15 UTC <byorgey> luite: which irrationals book?
+2012-11-05 05:00:27 UTC <luite> that you reviewed
+2012-11-05 05:00:32 UTC <byorgey> oh! hehe, right
+2012-11-05 05:00:55 UTC <byorgey> yeah, it actually goes into quite a bit of depth.
+2012-11-05 05:09:26 UTC <luite> hm bleh can't sleep
+2012-11-05 05:12:53 UTC <byorgey> =(
+2012-11-05 05:13:43 UTC <luite> hm you seem to get a lot of books from princeton university press :)
+2012-11-05 05:19:11 UTC <byorgey> yes, I do =)
+2012-11-05 05:20:04 UTC <byorgey> they publish a lot of cool math books, and somehow I made it onto their list of "people we should send free copies of books to"
+2012-11-05 05:20:33 UTC <luite> hehe i should try to get on that list :p
+2012-11-05 05:21:32 UTC <luite> i've almost finished 'elliptic tales' by ash and gross, published by them, but they have lots more interesting stuff :)
+2012-11-05 05:30:42 UTC <luite> (it kind of has the same problem as 'fearless symmetry' by the same authors, in that it starts relatively slowly, but the last few chapters take a lot more concentration and effort to understand)
+2012-11-05 05:32:00 UTC <luite> kind of reminds me of penrose's road to reality :)
+2012-11-05 05:40:23 UTC <byorgey> luite: yeah, they sent me a copy of "elliptic tales" too
+2012-11-05 05:40:54 UTC <byorgey> I learned some interesting stuff from it but overall I wasn't that impressed.  I think they are confused about who their audience is.
+2012-11-05 05:41:45 UTC <byorgey> and by that I think I mean something similar to your criticism.
+2012-11-05 05:47:16 UTC <luite> i guess there aren't that many other 'popular math' books on the same subject though :)
+2012-11-05 23:38:10 UTC <fryguybob> luite: Images in svg are already diagrams-svg issue #11.
+2012-11-05 23:39:13 UTC <luite> ah
+2012-11-06 00:09:17 UTC <byorgey> fryguybob, luite: though one could also imagine loading an SVG and getting a Path R2 instead of just an image.
+2012-11-06 00:09:30 UTC <byorgey> (obviously it wouldn't work for all SVGs).
+2012-11-06 00:10:05 UTC <luite> as long as it works for most thigns produced in inkscape it should be ok :)
+2012-11-06 00:10:29 UTC <fryguybob> byorgey: Yeah, there are some other shades inbetween too like load and know a bounding box.
+2012-11-06 00:11:15 UTC <fryguybob> ACTION has in the passed written very complicated code to extract paths from postscript/eps/pdf.
+2012-11-06 00:11:29 UTC <fryguybob> Oh and AI too.
+2012-11-06 00:12:04 UTC <luite> hm i've never worked with AI directly
+2012-11-06 00:12:36 UTC <luite> is it similar to svg in structure?
+2012-11-06 00:12:51 UTC <fryguybob> luite: It has a Postscript fallback of sorts but the libraries are not baked into each file (sometimes)
+2012-11-06 00:14:09 UTC <byorgey> you have written code to extract artificial intelligence from postscript/eps/pdf? o.O
+2012-11-06 00:15:39 UTC <fryguybob> I'm quite thoroughly convinced there is little intelligence to some of the hacks in the postscript family.
+2012-11-06 00:17:21 UTC <byorgey> hehe
+2012-11-06 00:17:54 UTC <fryguybob> The underlying theme is that you can send any of the files to a compliant printer and the right document will come out.  So half the time the files contain vast libraries to support the lastest features in some Adobe product.
+2012-11-06 00:18:25 UTC <fryguybob> Under two or three layers of compression and encoding of course.
+2012-11-06 00:19:24 UTC <fryguybob> And most of these libraries interact with some global state that each printer will have probing for features and building functionality based on the available features.
+2012-11-06 00:20:07 UTC <fryguybob> So if you want to extract paths and you do things slightly wrong it will think you don't support some feature and give you a rasterized version of part of the document.
+2012-11-06 00:21:32 UTC <fryguybob> Or it will adapt path resolution based on your reported DPI.  In some cases if you claim high DPI you get a good path, other cases you just get something really slow and redundant paths with way too many points.
+2012-11-06 00:22:00 UTC <luite> that's all postscript code that does that?
+2012-11-06 00:23:09 UTC <fryguybob> Most postscript code is rather nice, it is AI files that do most of the strange stuff in their postscript fall back (which they also use to be able to be future compatible).
+2012-11-06 00:27:28 UTC <byorgey> wow, craaaazy
+2012-11-06 00:28:41 UTC <luite> so when can i expect full AI support in diagrams, including future compatibility? ;)
+2012-11-06 00:29:12 UTC <byorgey> I was hoping to have that done by February 30
+2012-11-06 00:29:19 UTC <fryguybob> :D
+2012-11-06 00:30:20 UTC <luite> hehe, is dan doel going to implement it?
+2012-11-06 00:31:28 UTC <byorgey> If someone implements it by February 30, it will be dan doel
+2012-11-06 00:31:52 UTC <fryguybob> I was thinking earlier today that there are probably some other interesting data sources that we could support.
+2012-11-06 00:32:01 UTC <fryguybob> Along the lines of the open street map stuff.
+2012-11-06 00:32:12 UTC <byorgey> yeah, sounds awesome =)
+2012-11-06 00:32:19 UTC <byorgey> don't you already have a package for that?
+2012-11-06 00:32:34 UTC <fryguybob> Yeah http://github.com/fryguybob/diagrams-osm
+2012-11-06 00:33:04 UTC <fryguybob> It doesn't do anything very interesting at this point, but could easily do lots of neat stuff.
+2012-11-06 00:36:09 UTC <byorgey> yeah
+2012-11-06 00:36:49 UTC <byorgey> sounds fun.
+2012-11-06 00:38:04 UTC <fryguybob> Circuit layout would be (yet) another useful thing to have.
+2012-11-06 00:38:34 UTC <byorgey> you mean a little diagrams-based DSL for drawing circuit layouts?
+2012-11-06 00:38:41 UTC <byorgey> yes, that sounds awesome
+2012-11-06 00:39:08 UTC <luite> mask layout or circuit diagram layout? :)
+2012-11-06 00:39:31 UTC <byorgey> eventually I hope if we can make diagrams attractive enough and provide enough tutorials and support etc., people will start creating those sorts of things
+2012-11-06 00:39:42 UTC <fryguybob> Yeah, there is a transactional memory based parallel algorithm that I've looked, but it turns out to be incorrect.
+2012-11-06 00:40:21 UTC <fryguybob> (As in it does not produce the same results as the sequential version for certain situations)
+2012-11-06 00:41:53 UTC <fryguybob> The Kansas people should write that one.
+2012-11-06 00:44:16 UTC <byorgey> ah, indeed =)
+2012-11-06 00:44:44 UTC <byorgey> though I think Andy himself is the only one working on both diagrams *and* Lava.
+2012-11-06 00:44:51 UTC <byorgey> and his interest in diagrams is more pedagogical.
+2012-11-06 00:45:44 UTC <fryguybob> Humm, if I work STM into it I can proabably make it into a benchmark.
+2012-11-06 00:49:05 UTC <luite> ACTION looks up Kansas on the USA map... some day i will know where all these states are ;)
+2012-11-06 00:51:42 UTC <fryguybob> My wife's family has a US states jello mold and at family gatherings you had to correctly name the state before you could get your piece.
+2012-11-06 00:52:01 UTC <fryguybob> (correctly name the state's captial, actually, the state would be too easy)
+2012-11-06 00:55:39 UTC <byorgey> haha, awesome =)
+2012-11-06 00:56:00 UTC <fryguybob> diagrams-hog: Save this link for later when I want to look at routing -- http://users.eecs.northwestern.edu/~haizhou/357/lec6.pdf
+2012-11-06 00:56:16 UTC <luite> oh bah, so they have capitals too! ;)
+2012-11-06 00:57:17 UTC <fryguybob> ACTION cannot come up with the capital of Kansas at the moment.
+2012-11-06 00:57:39 UTC <byorgey> Topeka
+2012-11-06 00:58:02 UTC <fryguybob> Right!  (you were faster then Rebekah)
+2012-11-06 00:58:07 UTC <byorgey> yesssss
+2012-11-06 00:58:29 UTC <byorgey> I used to know them all.  I think I still remember most.
+2012-11-06 00:59:08 UTC <luite> i remember the capitals of the dutch provinces ;p
