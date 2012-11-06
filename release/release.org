@@ -1,4 +1,5 @@
 * Planning for release of version 0.6
+** RELEASE TARGET DATE: December 11
 ** finished uploads
 *** monoid-extras
 *** vector-space-points
