@@ -1,0 +1,11 @@
+* Notes on splitting gtk into separate diagrams-gtk backend
+
+  + [X] move GTK constructor from OutputType
+  + [X] add 'bypass' to cairo options.
+  + [X] move GTK case (line 146).
+  + [X] move Gtk module into its own package
+  + [X] clean up diagrams-cairo.cabal
+  + [X] create diagrams-gtk.cabal
+  + [X] fix cabal version in diagrams-cairo
+  + [ ] add tested-with to diagrams-gtk
+  + [X] add CHANGES and README to diagrams-gtk
