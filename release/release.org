@@ -29,6 +29,7 @@
 *** diagrams-core
 *** diagrams-lib
 *** diagrams-cairo
+*** diagrams-gtk
 *** diagrams-contrib
 *** diagrams-doc
     web site, user manual, etc.
@@ -68,14 +69,14 @@
         experimental
   + [X] add "manual: True" for cairo + svg flags?
   + [X] add "sized" function
-  + [-] improve READMEs
+  + [X] improve READMEs
     + [X] diagrams
-    + [ ] diagrams-cairo
-  + [ ] improve diagrams-cairo documentation
-  + [ ] finish updating diagrams-core documentation (see XXX's etc.)
+    + [X] diagrams-cairo
+  + [X] improve diagrams-cairo documentation
+  + [X] finish updating diagrams-core documentation (see XXX's etc.)
   + [X] send patches
     + [X] diagrams-tikz
-  + [ ] split out gtk backend into separate package
+  + [X] split out gtk backend into separate package
   + [X] finish porting doc build system to shake
   + [X] add to contributing page: documentation, CHANGES
         (need to finish porting build system first, so it's clear how
@@ -117,14 +118,18 @@
     + [ ] core
     + [ ] lib
     + [ ] cairo
+    + [ ] gtk
     + [ ] contrib
     + [ ] svg
+    + [ ] diagrams?
+    + [ ] builder
   + [ ] add release date to releases.markdown
   + [ ] publish new website
   + [ ] upload
     + [ ] diagrams-core
     + [ ] diagrams-lib
     + [ ] diagrams-cairo
+    + [ ] diagrams-gtk
     + [ ] diagrams-contrib
     + [ ] diagrams-svg
     + [ ] diagrams
@@ -241,5 +246,5 @@
 * Later tasks
 
   + [X] make website (with hakyll?)
-  + [ ] put Haddock documentation on website
+  + [X] put Haddock documentation on website
   + [X] change "homepage" link in .cabal files to website
