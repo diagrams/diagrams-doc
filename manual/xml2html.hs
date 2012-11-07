@@ -76,7 +76,7 @@ compileDiagram outDir src = do
   res <- buildDiagram
            Cairo
            zeroV
-           (CairoOptions "default.png" (Dims 500 200) PNG)
+           (CairoOptions "default.png" (Dims 500 200) PNG False)
            [src]
            "pad 1.1 example"
            ["DeriveDataTypeable"]

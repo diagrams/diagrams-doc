@@ -50,7 +50,7 @@ compileExample mThumb lhs out = do
   res <- buildDiagram
            Cairo
            zeroV
-           (CairoOptions out (mkSizeSpec w h) fmt)
+           (CairoOptions out (mkSizeSpec w h) fmt False)
            [f']
            toBuild
            []
