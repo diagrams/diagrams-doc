@@ -23927,3 +23927,474 @@
 2012-11-06 00:58:07 UTC <byorgey> yesssss
 2012-11-06 00:58:29 UTC <byorgey> I used to know them all.  I think I still remember most.
 2012-11-06 00:59:08 UTC <luite> i remember the capitals of the dutch provinces ;p
+2012-11-06 01:01:15 UTC <fryguybob> I know one of the dutch provences is friesland? (Ok, so I don't know how to spell it).
+2012-11-06 01:02:09 UTC <luite> yes, it's the correct spelling in dutch
+2012-11-06 01:02:30 UTC <luite> its official name, and spelling in frisian, is FryslÃ¢n
+2012-11-06 02:42:22 UTC <byorgey> http://www.cis.upenn.edu/~byorgey/hosted/diagrams-Bd.pdf
+2012-11-06 02:42:41 UTC <byorgey> here's what I propose to submit to the HCAR, comments or patches welcome
+2012-11-06 02:43:09 UTC <fryguybob> moar pages!
+2012-11-06 02:45:27 UTC <byorgey> =)
+2012-11-06 02:47:39 UTC <luite> :)
+2012-11-06 02:52:50 UTC <fryguybob> byorgey: The only comment I have is that the http://www.cis.upenn.edu/~byorgey/hosted/diagrams-Bd.pdf
+2012-11-06 02:52:54 UTC <fryguybob> oops
+2012-11-06 02:53:49 UTC <byorgey> drat, the hotel bar isn't open on Mondays.
+2012-11-06 02:53:58 UTC <fryguybob> byorgey: The only comment I have is that the line "Other plans for the near future include support for drawing arrows" sounds funny to me.
+2012-11-06 02:54:20 UTC <fryguybob> It would be better if arrows had a friend in that sentence.
+2012-11-06 02:54:29 UTC <fryguybob> Multi-page diagrams?
+2012-11-06 02:55:12 UTC <luite> svg font support
+2012-11-06 02:55:18 UTC <luite> wordart support
+2012-11-06 02:55:28 UTC <byorgey> hmm, also, I guess "support" and "drawing" are both redundant.
+2012-11-06 02:55:44 UTC <byorgey> what else is a drawing library going to do than support drawing.
+2012-11-06 02:55:58 UTC <fryguybob> heat up your CPU?
+2012-11-06 02:56:15 UTC <byorgey> "Other plans for the near future include making your CPU fan work even harder."
+2012-11-06 02:56:42 UTC <fryguybob> "We are putting a lot of energy into your diagrams"
+2012-11-06 02:57:17 UTC <byorgey> seriously, how about "Features planned for the near future include better support for arrows, multi-page diagrams, and ___"
+2012-11-06 02:57:40 UTC <byorgey> but we need three things.  Quick! Someone commit to implementing something in the near future!
+2012-11-06 02:58:11 UTC <fryguybob> "... and text blanks."
+2012-11-06 02:58:43 UTC <fryguybob> (I already have multi-page postscript diagrams)
+2012-11-06 02:58:47 UTC <byorgey> no, the SVG backend already supports blank text
+2012-11-06 02:58:59 UTC <byorgey> ah, excellent
+2012-11-06 02:59:00 UTC <fryguybob> hehe
+2012-11-06 02:59:22 UTC <luite> have gradients been implemented yet?
+2012-11-06 02:59:41 UTC <byorgey> nope
+2012-11-06 02:59:46 UTC <fryguybob> That's a good one.
+2012-11-06 03:00:03 UTC <byorgey> https://github.com/diagrams/diagrams-lib/issues/9
+2012-11-06 03:00:26 UTC <byorgey> ok, I'll add it.  It's not like anyone is going to hold us to this list anyway. ;)
+2012-11-06 03:02:21 UTC <byorgey> ahhhh, I just realized why git keeps complaining about whitespace errors, it's because this diagrams-Bd.tex uses DOS line endings
+2012-11-06 03:02:30 UTC <fryguybob> ACTION senses byorgey has no hope for gradients.
+2012-11-06 03:02:43 UTC <fryguybob> silly DOS
+2012-11-06 03:03:02 UTC <byorgey> haha, I have plenty of hope for gradients.  They shouldn't be that hard, really.
+2012-11-06 03:03:10 UTC <byorgey> they're just not a priority for me personally.
+2012-11-06 03:03:36 UTC <fryguybob> byorgey: Rebekah came across this today: http://mathmamawrites.blogspot.com/2012/11/factor-diagrams.html
+2012-11-06 03:04:01 UTC <fryguybob> She can't remember why she follows that blog, but clearly they have good taste :D
+2012-11-06 03:04:24 UTC <byorgey> hah, excellent =)
+2012-11-06 03:04:51 UTC <luite> :)
+2012-11-06 03:05:23 UTC <byorgey> yeah, Sue (the author of that blog) and I actually correspond quite a bit via blog comments and email etc.
+2012-11-06 03:05:24 UTC <fryguybob> She saw the title before she followed the link and said "whatever they are they can't be as cool as Brent's" :D
+2012-11-06 03:05:37 UTC <byorgey> hahaha =D
+2012-11-06 03:17:29 UTC <byorgey> HCAR submitted!
+2012-11-06 03:17:34 UTC <byorgey> and now to write my talk for tomorrow
+2012-11-06 03:33:48 UTC <luite> talk for when you win the elections?
+2012-11-06 03:34:00 UTC <byorgey> right, right
+2012-11-10 21:28:43 UTC <ClaudiusMaximus> i want to conformally map a long thin rectangle into the neighbourhood of a smooth curve (bezier spline or somesuch), such that the mid-line of the rectangle is along the curve - not sure how to proceed...
+2012-11-10 21:30:17 UTC <ClaudiusMaximus> ...other than some numerical mesh model
+2012-11-10 21:30:34 UTC <ClaudiusMaximus> maybe i should try it and see how it works
+2012-11-10 21:45:48 UTC <mgsloan> Does it need to be efficient?
+2012-11-10 21:46:46 UTC <ClaudiusMaximus> not necessarily at this stage
+2012-11-10 21:47:14 UTC <ClaudiusMaximus> i don't really even have much of a clue where to start with a mesh model either
+2012-11-10 21:47:39 UTC <mgsloan> An inefficient way to do it would be to step along the curve, computing the points that would be on the rectangle, and fit a spline to the results
+2012-11-10 21:48:38 UTC <ClaudiusMaximus> other than a vague intuition that the pseudo-squares on the inside of a wiggle would be smaller than the pseudo-squares on the outside of a wiggle
+2012-11-10 21:50:09 UTC <ClaudiusMaximus> not sure what you mean by "compute the points that would be on the rectangle"
+2012-11-10 21:50:18 UTC <mgsloan> At some point it'd be really awesome to have some haskell written to do closed calculations on curve representations, but it'd take a bit of work.  I started working on such a library once, but I've got too many projects :D
+2012-11-10 21:52:57 UTC <ClaudiusMaximus> some experiment with conformal mapping (poincare disc to strip)
+2012-11-10 21:52:59 UTC <ClaudiusMaximus> http://mathr.co.uk/bolix/2012-11-10_arrows.gif
+2012-11-10 21:55:22 UTC <mgsloan> Hmm, don't think I know how to do that!  Is it like this? http://en.flossmanuals.net/inkscape/live-path-effects/pattern-along-path/
+2012-11-10 21:56:21 UTC <ClaudiusMaximus> sorta like the top screenshot, but that is clearly not conformal (the angles are distorted)
+2012-11-10 21:59:09 UTC <ClaudiusMaximus> for a circle it's the difference between regular polar coordinates and exponential-radius polar coordinates, so maybe if i assume each bit of the curve is approximated by an arc..
+2012-11-10 22:06:25 UTC <mgsloan> yeah, that'd probably be a good way to go!  One issue is what about when the width of the thin rectangle is larger than the radius of curvature?
+2012-11-10 22:09:55 UTC <ClaudiusMaximus> the inside edge gets closer to the curve the tighter the curve turns, and the outside edge gets further away
+2012-11-10 22:10:33 UTC <ClaudiusMaximus> so that's not the problem really - the problem is changes in the radius of curvature
+2012-11-10 22:11:10 UTC <ClaudiusMaximus> but as a first approximation i think i'll write some calculations and plot some points, and see what it looks like
+2012-11-10 22:39:05 UTC <ClaudiusMaximus> http://mathr.co.uk/superscript/2012-11-10_quasiconformal.png  bit buggy, mainly because the input points weren't equidistant along the curve...
+2012-11-10 22:49:07 UTC <mgsloan> Cool!   Maybe arc-length re-parametrize? In diagrams terms, you'd step from 0 to "arcLength", and for each value call "arcLengthToParam" to compute the "t" parameter
+2012-11-10 22:50:50 UTC <ClaudiusMaximus> yep that's the plan
+2012-11-10 23:29:37 UTC <fryguybob> ClaudiusMaximus: I'll have to read up on confromal maps, but I do know how to give you things like curvature at a point for cubic splines or beziers.
+2012-11-10 23:30:16 UTC <ClaudiusMaximus> conformal maps preserve angles (but not distances)
+2012-11-10 23:31:05 UTC <ClaudiusMaximus> yeah my further tests without taking curvature into account are full of glitches and look terrible
+2012-11-10 23:31:12 UTC <fryguybob> There isn't a closed form for an offset of a bezier curve (where all the points on the new curve are are a constant distance to the original), but there are good ways to approximate it.
+2012-11-10 23:31:47 UTC <fryguybob> As in, we can subdivide until the obvious (but wrong) thing to do is close enough.
+2012-11-10 23:32:09 UTC <ClaudiusMaximus> mm, sure
+2012-11-10 23:32:15 UTC <ClaudiusMaximus> binary search?
+2012-11-10 23:32:39 UTC <fryguybob> Yeah if you want to get close to the minimal number of segments you can search for it.
+2012-11-10 23:32:57 UTC <ClaudiusMaximus> oh, i don't need an offset by a constant distance
+2012-11-10 23:33:37 UTC <ClaudiusMaximus> though i did a quick hack for that some time ago
+2012-11-10 23:35:47 UTC <fryguybob> Wikipedia says: "If the Jacobian matrix of the transformation is everywhere a scalar times a rotation matrix, then the transformation is conformal." which seems to imply you might be able to constructively start with the rotations and scaling and build a transformation.
+2012-11-10 23:38:03 UTC <ClaudiusMaximus> ah, interesting - so i could have some kind of continuity condition on the Jacobian and a boundary condition along the curve, then extrapolate?
+2012-11-10 23:39:37 UTC <fryguybob> Yeah that might translate to a nice thing to do with a mesh
+2012-11-10 23:40:19 UTC <fryguybob> So maping from some rectangle to a polar rectangle would be conformal right?
+2012-11-10 23:41:06 UTC <fryguybob> If so, bezier curves won't work out in any exact form.
+2012-11-10 23:43:46 UTC <ClaudiusMaximus> exp is conformal, but the standard polar transform isn't...  exp (x:+y) = exp |x:+y| * (cos y :+ sin y)  vs polar (x:+y) = x * (cos y :+ sin y)
+2012-11-10 23:43:52 UTC <ClaudiusMaximus> oops
+2012-11-10 23:43:57 UTC <ClaudiusMaximus> exp is conformal, but the standard polar transform isn't...  exp (x:+y) = exp x * (cos y :+ sin y)  vs polar (x:+y) = x * (cos y :+ sin y)
+2012-11-10 23:44:43 UTC <ClaudiusMaximus> at least, as far as i understood it :/
+2012-11-10 23:45:09 UTC <fryguybob> Ok, but still a vertical line would map to an arc with exp
+2012-11-10 23:45:14 UTC <ClaudiusMaximus> yep
+2012-11-10 23:45:31 UTC <fryguybob> Beziers can represent any line, but no arcs.
+2012-11-10 23:45:47 UTC <fryguybob> So you need NURBs :D
+2012-11-10 23:45:52 UTC <ClaudiusMaximus> :)
+2012-11-10 23:46:44 UTC <byorgey> NURBs sounds like a junior-high insult
+2012-11-10 23:46:49 UTC <byorgey> "what a nurb"
+2012-11-10 23:46:56 UTC <fryguybob> hehe
+2012-11-10 23:47:30 UTC <fryguybob> I wonder if hackage has any NURBs
+2012-11-10 23:48:18 UTC <byorgey> hah, I hadn't realized that Bezier and de Casteljau both worked for car makers =)
+2012-11-10 23:49:02 UTC <fryguybob> Yes, must have C^\inf smooth car bodies!!!
+2012-11-10 23:49:55 UTC <byorgey> http://hackage.haskell.org/package/splines
+2012-11-11 00:08:21 UTC <luite> oh i only knew about bezier :)
+2012-11-11 00:11:44 UTC <alpounet> byorgey, i've learned that a few days ago
+2012-11-11 00:11:50 UTC <alpounet> in a seminar by INRIA guys
+2012-11-11 00:11:52 UTC <alpounet> :)
+2012-11-11 00:39:38 UTC <byorgey> alpounet: fun =)
+2012-11-11 00:46:53 UTC <alpounet> computational geometry group
+2012-11-11 00:46:58 UTC <alpounet> they're doing pretty crazy stuffs
+2012-11-11 00:47:07 UTC <alpounet> wondering about doing my thesis on that :)
+2012-11-11 00:49:10 UTC <fryguybob> The next assignment for the class I'm TA for has some mesh generation.  I shoud make a haskell version of that.
+2012-11-11 00:51:34 UTC <alpounet> they also do stuffs like Manifold Learning
+2012-11-11 01:38:49 UTC <luite> alpounet: ah what's some of the crazy stuff they're doing?
+2012-11-11 01:39:46 UTC <byorgey> what's Manifold Learning?
+2012-11-11 01:40:28 UTC <luite> apparenly it's non-linear dimensionality reduction
+2012-11-11 01:40:51 UTC <luite> get high dimensional data and fit a lower-dimensional manifold to that
+2012-11-11 01:44:49 UTC <byorgey> mgsloan: just filed a bug re: Diagrams.Backend.Cairo.Text: https://github.com/diagrams/diagrams-cairo/issues/19
+2012-11-11 01:45:13 UTC <mgsloan> yikes!
+2012-11-11 01:45:40 UTC <mgsloan> it's wrong vertically as well, strange!
+2012-11-11 01:46:00 UTC <luite> what
+2012-11-11 01:46:13 UTC <luite> no love for descenders!
+2012-11-11 01:47:31 UTC <luite> looks like the line height is correct though, just shifted a bit
+2012-11-11 01:48:35 UTC <byorgey> mgsloan: I think it's correct vertically
+2012-11-11 01:49:09 UTC <byorgey> I mean, given what textLineBoundedIO claims to do
+2012-11-11 01:49:58 UTC <luite> does it give the same width for "WWWWWWWWWW" as "iiiiiiiiii" ?
+2012-11-11 01:50:58 UTC <mgsloan> byorgey: yup, given the distinction between "textVisualBounded" and "textLineBounded"
+2012-11-11 01:51:27 UTC <luite> oh bah you tried iiiii :)
+2012-11-11 01:51:47 UTC <byorgey> yeah, it crashed =)
+2012-11-11 01:52:04 UTC <byorgey> mgsloan: I can confirm that "iiiiiiiiii" returns an envelope of width 0
+2012-11-11 01:53:34 UTC <luite> hm interesting, wolfgang has as many repo viewers as diagrams-lib :p
+2012-11-11 01:53:43 UTC <byorgey> hehe =)
+2012-11-11 01:56:50 UTC <mgsloan> hmm, strange.  I get a different result for "Washington", but also a crash on "iiiii" bizarre
+2012-11-11 01:57:17 UTC <byorgey> weird
+2012-11-11 01:57:37 UTC <byorgey> fryguybob may have a point about switching to the "real" cairo text API
+2012-11-11 01:57:59 UTC <mgsloan> I didn't realize there was one!  unless you mean switching to pango
+2012-11-11 01:58:38 UTC <fryguybob> ACTION does not remember what the "real" one is.
+2012-11-11 01:59:05 UTC <fryguybob> All I know is after delving into the Cairo code I came back a different person.
+2012-11-11 01:59:10 UTC <byorgey> yeah, I guess it means pango
+2012-11-11 01:59:24 UTC <byorgey> though I really don't know anything about what pango is or how we might use it
+2012-11-11 01:59:56 UTC <mgsloan> from http://www.cairographics.org/manual/cairo-text.html:
+2012-11-11 01:59:56 UTC <mgsloan>  The functions with glyphs in their name form cairo's low-level text API.  The low-level API relies on the user to convert text to a set of glyph indexes and positions.  This is a very hard problem and is best handled by external libraries, like the pangocairo that is part of the Pango text layout and rendering library. Pango is available from http://www.pango.org/.
+2012-11-11 02:00:13 UTC <luite> hehe more dependencies
+2012-11-11 02:00:35 UTC <mgsloan> the good news is http://hackage.haskell.org/package/pango-0.12.3 :D
+2012-11-11 02:01:05 UTC <luite> yeah i guess if you manage to install gtk2hs you should have a working installation
+2012-11-11 02:01:26 UTC <byorgey> ah, cool
+2012-11-11 02:01:26 UTC <fryguybob> Which I have not managed to do for a while now...
+2012-11-11 02:01:33 UTC <luite> :)
+2012-11-11 02:01:35 UTC <luite> me neither...
+2012-11-11 02:01:48 UTC <byorgey> if we go that route (pango) we should split it out into a diagrams-pango package I think
+2012-11-11 02:02:02 UTC <mgsloan> probably so
+2012-11-11 02:02:08 UTC <byorgey> I have some patches here (unpushed so far) to split out the gtk stuff into a separate diagrams-gtk package
+2012-11-11 02:02:17 UTC <byorgey> so diagrams-cairo depends ONLY on the 'cairo' package again
+2012-11-11 02:02:25 UTC <byorgey> which may help a bit with installation
+2012-11-11 02:04:30 UTC <fryguybob> I wonder if pango will give you text if you target a PDF.
+2012-11-11 02:05:38 UTC <luite> does the current backend?
+2012-11-11 02:06:57 UTC <fryguybob> I think so.
+2012-11-11 02:07:17 UTC <byorgey> yes, the current backend does
+2012-11-11 02:07:17 UTC <fryguybob> Not that I can test :P
+2012-11-11 02:08:13 UTC <byorgey> "This package provides a wrapper around the Pango C library that allows high-quality rendering of Unicode text. It can be used either with Cairo to output text in PDF, PS or other documents or with Gtk+ to display text on-screen."
+2012-11-11 02:08:23 UTC <byorgey> from the 'pango' package header
+2012-11-11 02:08:32 UTC <byorgey> so at least it claims to work when targeting PDF.
+2012-11-11 02:09:20 UTC <fryguybob> Excellent.
+2012-11-11 12:32:51 UTC <fryguybob> byorgey: I think I do have Cairo without GTK here that I can test against.  I can also build on Windows, but get no output.
+2012-11-11 12:39:48 UTC <alpounet> luite: among other things, they are the guys behind CGAL
+2012-11-11 12:39:52 UTC <alpounet> http://www-sop.inria.fr/geometrica/index.php?option=com_content&view=section&id=11&Itemid=14
+2012-11-11 12:52:36 UTC <fryguybob> alpounet: When you mentioned them I browsed through CGAL.  Lots of cool stuff there.
+2012-11-11 12:52:52 UTC <alpounet> fryguybob, yeah!
+2012-11-11 12:53:01 UTC <alpounet> they showed us a few ongoing stuffs
+2012-11-11 12:53:05 UTC <alpounet> really cool people at INRIA Nice
+2012-11-11 12:53:13 UTC <alpounet> much cooler than the OCaml team :-]
+2012-11-11 14:49:52 UTC <fryguybob> byorgey: I had to remove gtk from the .cabal file and change from old-time to time for it to build for me.
+2012-11-11 14:57:11 UTC <fryguybob> I think it is due to the directory package being dependent on time with 7.6 (I don't have this problem on Windows because we CPP out the looped building).
+2012-11-11 15:08:55 UTC <alpounet> yeah we've had the same pb with scoutess
+2012-11-11 15:10:21 UTC <fryguybob> Humm, perhaps it is time to scrap the looping and just use builder?
+2012-11-11 16:06:30 UTC <byorgey> fryguybob: ah, I removed gtk from the .cabal file but I guess in a different commit that I didn't include in the pull request
+2012-11-11 16:06:46 UTC <byorgey> and I thought we already changed old-time to time?
+2012-11-11 16:06:55 UTC <byorgey> or am I confused?
+2012-11-11 16:07:38 UTC <byorgey> fryguybob: as for the looping, we still would need some code to check if the source file has changed
+2012-11-11 16:08:22 UTC <byorgey> fryguybob: but yeah, probably the thing to do is make a separate diagrams-loop which uses builder
+2012-11-11 16:08:36 UTC <byorgey> rather than baking the looping into each backend
+2012-11-11 16:08:54 UTC <byorgey> we've had that on the list of things to do for a long time anyway =)
+2012-11-11 16:09:18 UTC <byorgey> (I'm not sure what you mean by "scrap the looping" though)
+2012-11-11 16:09:59 UTC <byorgey> also, I just made some quick manual updates to the website, hopefully people won't get directed to google code or patch-tag any more
+2012-11-11 16:10:30 UTC <byorgey> I hadn't updated the website because I wanted to wait until releasing 0.6 which was going to be "Real Soon Now"
+2012-11-11 16:10:36 UTC <byorgey> but of course it's been months now
+2012-11-11 16:11:07 UTC <byorgey> ok, off for a family bike ride =)
+2012-11-11 16:13:58 UTC <byorgey> fryguybob: oh, wait, I see what you mean about removing gtk, I missed those
+2012-11-11 16:14:16 UTC <byorgey> I will look into the old-time/time thing later
+2012-11-11 17:35:26 UTC <fryguybob> byorgey: By scrap I just meat move to somewhere else.
+2012-11-11 17:48:45 UTC <alpounet> also had people from this team though http://www-sop.inria.fr/galaad/
+2012-11-11 21:50:38 UTC <fryguybob> byorgey: I'll just port over the fix from svg for CMDLOOP and 7.6.
+2012-11-11 22:06:19 UTC <fryguybob> strange... git says Everything up-to-date but I don't see my changes on github.
+2012-11-11 22:08:43 UTC <fryguybob> Ah, I had to specify the branch name.  I thought I tried that but I guess I hadn't.
+2012-11-11 23:58:12 UTC <byorgey> fryguybob: ah, I knew I had seen a relevant fix somewhere! thanks =)
+2012-11-12 00:00:24 UTC <cmears> byorgey: I've been spending some time trying to figure out how the Diagram type is implemented, to try to fix the SVG attributes + transformations
+2012-11-12 00:00:42 UTC <byorgey> cmears: ah, cool
+2012-11-12 00:00:46 UTC <byorgey> any questions?
+2012-11-12 00:01:00 UTC <cmears> Is the use of DUALTree and so on for diagrams documented anywhere? If not I could write some notes about it
+2012-11-12 00:01:10 UTC <cmears> (unless you are planning to change the implementation (:  )
+2012-11-12 00:01:57 UTC <byorgey> cmears: it is not yet documented.  It's one of those things I have been meaning to Get Around To, but if you wrote some notes on it that would be great!
+2012-11-12 00:02:09 UTC <byorgey> I am not planning to change the implementation yet again anytime soon =)
+2012-11-12 00:02:10 UTC <cmears> Is there any nice way to print the internal structure of the tree? That would help to understand how the transformations are combined, and what freeze does
+2012-11-12 00:02:19 UTC <cmears> It's easy-ish to print the leaves of the tree, at least
+2012-11-12 00:02:51 UTC <cmears> But by that point the transformations are combined, so you have to infer from that what happened
+2012-11-12 00:03:25 UTC <cmears> The fold function for DUALtree expressly says that you don't get access to the internal nodes (:
+2012-11-12 00:03:37 UTC <byorgey> gotta go put my son to bed, back later
+2012-11-12 00:04:12 UTC <cmears> OK
+2012-11-12 00:52:06 UTC <fryguybob> ACTION invesitages text in Postscript.
+2012-11-12 01:36:07 UTC <byorgey> cmears: right, at some point we're probably going to want to start duplicating Transformations in the 'a' annotations
+2012-11-12 01:36:36 UTC <cmears> Yes, that would do it
+2012-11-12 01:38:12 UTC <byorgey> and also attributes
+2012-11-12 01:38:37 UTC <luite> anyone know how to do a git pull --rebase with magit?
+2012-11-12 01:39:09 UTC <cmears> In the "Split (Transformation V)", is it right that the first transformation is the one before the freeze, and the second transformation is the one after (the "frozen" one) ?
+2012-11-12 01:41:10 UTC <byorgey> luite: I can type  F-rF  to  pull --rebase
+2012-11-12 01:41:52 UTC <byorgey> luite: but my version of magit doesn't seem to always match the documentation, I'm not sure if that's because mine is newer or older
+2012-11-12 01:43:05 UTC <luite> ah tnx
+2012-11-12 01:44:27 UTC <byorgey> cmears: I think it's the other way round.  basically if you imagine applying  t1 <> t2 <> t3 <> freeze <> t4 <> t5,  t5 is the "innermost" transformation and t1 is outermost
+2012-11-12 01:44:55 UTC <cmears> I should say what I mean by "before" and "after" (:
+2012-11-12 01:45:07 UTC <cmears> I am looking from the root and going down
+2012-11-12 01:45:41 UTC <byorgey> because  transform (t1 <> t2) == transform t1 . transform t2
+2012-11-12 01:46:36 UTC <byorgey> oh in that case, yes, though I would call the first transformation the "frozen" one
+2012-11-12 01:47:04 UTC <cmears> Oh
+2012-11-12 01:47:07 UTC <byorgey> because that is the one which is supposed to apply to things like line width etc.
+2012-11-12 01:47:44 UTC <cmears> Yes, I was thinking the other way
+2012-11-12 01:47:56 UTC <byorgey> I like to think of it from the leaves up, because that's the order in which you would apply transformations to a starting diagram
+2012-11-12 01:48:16 UTC <byorgey> so you apply t5, then t4, then you freeze, then after that the transformations affect the line width etc.
+2012-11-12 01:48:52 UTC <cmears> So you would say, in "scale 3 $ freeze $ scale 2 $ unitSquare" that the "scale 3" is the frozen one
+2012-11-12 01:50:22 UTC <byorgey> yes
+2012-11-12 01:52:05 UTC <byorgey> cmears: one other thing I was going to say: fixing the stuff with paths may be as simple as applying the *inverse* of the frozen transformation to the path points, and then emitting <path ... transform=...>
+2012-11-12 01:52:12 UTC <byorgey> but I am not really sure
+2012-11-12 01:52:23 UTC <cmears> Yes, that seemed like it would work
+2012-11-12 01:52:36 UTC <cmears> But it feels a bit strange to apply the transformation, invert it, then apply it again
+2012-11-12 01:52:51 UTC <byorgey> yes, I know
+2012-11-12 01:53:39 UTC <byorgey> this is why we should duplicate transformations in the 'a' annotations, so eventually we can have backends which can actually do things with internal tree nodes instead of just getting a list of all the primitives
+2012-11-12 01:53:59 UTC <byorgey> but that's a longer-term goal.
+2012-11-12 01:54:45 UTC <byorgey> for now I'd just like to get things working as simply as possible
+2012-11-12 01:54:53 UTC <cmears> So that, for example, SVG can do the internal transformations just by adding <g transform=...> as it goes down the tree?
+2012-11-12 01:56:22 UTC <byorgey> exactly
+2012-11-12 01:56:45 UTC <byorgey> same for attributes
+2012-11-12 02:00:43 UTC <fryguybob> byorgey: Is BoxAlignedText or BaselineText default? (if you know off the top of your head, I can look it up).
+2012-11-12 02:00:55 UTC <byorgey> I don't know
+2012-11-12 02:04:05 UTC <fryguybob> It is BoxAlignedText.
+2012-11-12 02:10:20 UTC <byorgey> good to know.
+2012-11-12 02:23:37 UTC <cmears> The default implementation of renderDia does t1 <> t2, then gives t1 to withStyle
+2012-11-12 02:24:14 UTC <byorgey> cmears: ah, true, so we might be able to do something slightly smarter there
+2012-11-12 02:24:19 UTC <cmears> What if I changed it to only apply t2, then just wrap the generated svg in "<g transform=t1>"
+2012-11-12 02:24:40 UTC <cmears> This actually seems to work
+2012-11-12 02:24:58 UTC <byorgey> really? nice
+2012-11-12 02:25:12 UTC <byorgey> of course you can't just change the default implementation of renderDia, other backends depend on that
+2012-11-12 02:25:15 UTC <cmears> At least for the backend-tests cases
+2012-11-12 02:25:19 UTC <cmears> No, I just did it for the SVG backend (:
+2012-11-12 02:25:29 UTC <byorgey> oh, you mean you just overrode renderDia?
+2012-11-12 02:25:32 UTC <cmears> Right
+2012-11-12 02:25:35 UTC <byorgey> cool
+2012-11-12 02:25:38 UTC <byorgey> yeah, sounds good
+2012-11-12 02:26:15 UTC <cmears> Seems to have broken the clipping test
+2012-11-12 02:26:50 UTC <byorgey> well, I'd rather have broken clipping than broken path transformation ;-)
+2012-11-12 02:27:02 UTC <cmears> Ah, the clip path definition is inside the "g transform"
+2012-11-12 02:27:14 UTC <byorgey> ah, right
+2012-11-12 02:29:15 UTC <cmears> I'd have to learn how clip paths are supposed to work in SVG to fix that I reckon
+2012-11-12 02:30:05 UTC <byorgey> perhaps
+2012-11-12 02:30:22 UTC <byorgey> but you don't necessarily need to worry about it for now
+2012-11-12 02:30:40 UTC <cmears> At least how transformation affects them: is the transformation important around the definition, or the use of the path, or both?
+2012-11-12 02:30:46 UTC <cmears> No, not terribly urgent
+2012-11-12 02:30:48 UTC <byorgey> I was really serious when I said I'm happy to trade off a bug in clipping for the current bug =)
+2012-11-12 02:31:38 UTC <cmears> I will package up the rendering change and make a pull request
+2012-11-12 02:31:42 UTC <byorgey> yeah, I am not clear on SVG semantics myself
+2012-11-12 02:31:56 UTC <byorgey> awesome =)
+2012-11-12 02:32:14 UTC <byorgey> Deepak (vyom), who wrote diagrams-svg, knowss it much better, but he hasn't been around recently
+2012-11-12 02:32:32 UTC <cmears> Are the pictures at http://projects.haskell.org/diagrams/backend-tests/all-index.html updated regularly?
+2012-11-12 02:33:10 UTC <byorgey> cmears: no, only when I push a new version out
+2012-11-12 02:33:23 UTC <byorgey> but it ought to be automated
+2012-11-12 02:35:13 UTC <cmears> Text is still a bit broken in SVG too
+2012-11-12 02:37:27 UTC <byorgey> yeah, not too surprising
+2012-11-12 02:37:27 UTC <byorgey> text is broken everywhere
+2012-11-12 02:38:02 UTC <byorgey> at some point we really need to all put our heads together and write down a specification of how text Ought To Work
+2012-11-12 02:38:29 UTC <byorgey> because I think even diagrams-cairo doesn't work the way I think it ought to sometimes
+2012-11-12 02:39:27 UTC <fryguybob> Postscript text is perfect :P
+2012-11-12 02:47:16 UTC <byorgey> OK, I guess we can just take diagrams-postscript as a reference implementation
+2012-11-12 03:05:15 UTC <fryguybob> That is, after I write myself some Postscript to do all the work, it will be perfect :D
+2012-11-12 03:06:37 UTC <fryguybob> The downside to this is I have to write it in postscript instead of Haskell.  Perhaps luite can make a ghcpostscript when he is done with ghcjs.
+2012-11-12 03:07:02 UTC <fryguybob> Because we *need* to write Haskell code that runs on printers.
+2012-11-12 03:39:01 UTC <cmears> https://github.com/diagrams/diagrams-svg/pull/25
+2012-11-12 03:40:50 UTC <luite> hehe
+2012-11-12 03:40:52 UTC <luite> noooh
+2012-11-12 03:41:38 UTC <luite> debugging this javascript rts is bad enough as it is...
+2012-11-12 03:42:20 UTC <luite> i'm trying to get some code running that combines type classes with partial applications and it ends up in a loop
+2012-11-12 03:43:01 UTC <luite> in theory type classes should be easy, they're just converted to some dictionary, but apparently this triggers some bug somewhere
+2012-11-12 03:58:47 UTC <cmears> Note to everyone: don't use geeqie to test SVG; it doesn't render it properly
+2012-11-12 03:59:23 UTC <cmears> Neither does emacs
+2012-11-12 04:11:56 UTC <cmears> Ha, text in SVG seemed so broken because by default it doesn't fill
+2012-11-12 04:12:07 UTC <cmears> Throw in a few "fc black" attributes and it works much better
+2012-11-12 04:12:15 UTC <cmears> (i.e. text actually appears)
+2012-11-12 04:14:12 UTC <cmears> Now the only thing broken is alignment
+2012-11-12 06:17:01 UTC <luite> phew bug smashed
+2012-11-12 06:17:09 UTC <luite> typeclasses work \o/
+2012-11-12 06:17:20 UTC <luite> and it's only 7am
+2012-11-12 11:57:52 UTC <co-dan> Hi
+2012-11-12 12:13:55 UTC <byorgey> luite: yay =)
+2012-11-12 12:18:17 UTC <ClaudiusMaximus> my brain hurts.. seems a scalar field satisfying laplace's equation generates a conformal map (equipotentials and their perpendiculars), but i can't figure out the boundary conditions i need
+2012-11-12 12:24:15 UTC <ClaudiusMaximus> something like gradient of field along a curve is perpendicular to the curve?  dunno, maybe i should wander off and do something totally unrelated to clear my heads..
+2012-11-12 12:24:18 UTC <ClaudiusMaximus> -s
+2012-11-12 12:51:50 UTC <byorgey> ClaudiusMaximus: if you think you have multiple heads, then you definitely need to clear them
+2012-11-12 12:53:11 UTC <ClaudiusMaximus> :)
+2012-11-12 14:52:28 UTC <fryguybob> byorgey: I have a fix for clip on svg.
+2012-11-12 14:52:57 UTC <byorgey> yay!
+2012-11-12 14:53:58 UTC <ClaudiusMaximus> ugh.  i got this conformal thingy working, but the results are the opposite of what i wanted, so i guess my intuition was wrong
+2012-11-12 14:54:18 UTC <fryguybob> :(
+2012-11-12 14:54:20 UTC <ClaudiusMaximus> it's closer to the curve at convex points than concave points
+2012-11-12 14:54:33 UTC <byorgey> aww
+2012-11-12 14:54:43 UTC <byorgey> well, at least you learned something I guess
+2012-11-12 14:54:47 UTC <ClaudiusMaximus> yep
+2012-11-12 14:56:11 UTC <fryguybob> byorgey: I'm not sure where I should put my fix :D.  Should I apply the pull request and open a new one?
+2012-11-12 14:56:13 UTC <ClaudiusMaximus> my new intuition has to do with fluid flow across the curve, converging stream lines have to flow faster to avoid compression, or something
+2012-11-12 14:56:30 UTC <byorgey> fryguybob: hehe, yeah, there's no way to have "contingent pull requests" =)
+2012-11-12 14:56:53 UTC <byorgey> fryguybob: of course you are welcome to review and apply cmears's patch
+2012-11-12 14:57:25 UTC <fryguybob> Ok, I'll do that.
+2012-11-12 15:00:51 UTC <fryguybob> byorgey: Oh, here is the clippling: http://www.cs.rochester.edu/u/ryates/diagrams/all-index.html
+2012-11-12 15:01:25 UTC <byorgey> sweet!
+2012-11-12 15:01:39 UTC <byorgey> that page is a thing of beauty
+2012-11-12 15:02:00 UTC <byorgey> I'm glad I put that together, it gives us something concrete to work towards =)
+2012-11-12 15:02:10 UTC <ClaudiusMaximus> http://mathr.co.uk/superscript/2012-11-12_equipotentials.png
+2012-11-12 15:02:16 UTC <ClaudiusMaximus> is the output of my code...
+2012-11-12 15:02:36 UTC <fryguybob> byorgey: Yes it is extreemly helpful.
+2012-11-12 15:02:52 UTC <byorgey> ClaudiusMaximus: well, it looks neat, even if it's not what you had in mind =)
+2012-11-12 15:03:05 UTC <ClaudiusMaximus> :)
+2012-11-12 15:03:29 UTC <ClaudiusMaximus> also slow (over 4mins for that)
+2012-11-12 15:03:48 UTC <ClaudiusMaximus> anywy, must get ready to go out to dentist..
+2012-11-12 15:05:47 UTC <luite> hmm, adding transparency to postscript will be tricky
+2012-11-12 15:06:10 UTC <byorgey> ClaudiusMaximus: good luck, may your teeth be well
+2012-11-12 15:07:02 UTC <fryguybob> luite: Yeah I don't think that is going to happen
+2012-11-12 15:07:30 UTC <luite> the only way is doing all blending manually, right?
+2012-11-12 15:07:45 UTC <fryguybob> There are some postscript engines that handle some extentions from PDF for transparency, but as far as I know it is only Adobe that supports them
+2012-11-12 15:08:01 UTC <luite> ah
+2012-11-12 15:08:18 UTC <fryguybob> Manually doing the blending also works but that requires union/intersection of paths (which we do want anyway)
+2012-11-12 15:08:25 UTC <fryguybob> And a lot of state.
+2012-11-12 15:08:53 UTC <fryguybob> I suppose you could do that on the postscript side, but that would be a lot of work.
+2012-11-12 15:09:24 UTC <fryguybob> Another option is to render PDF.  That isn't too hard.
+2012-11-12 15:09:57 UTC <luite> yeah i had some haskell code to output pdf files, but there is probably already better code on hackage :)
+2012-11-12 15:09:59 UTC <byorgey> ah, so maybe the postscript backend could give us a haskell-native way to generate PDF?  that would be nice
+2012-11-12 15:10:53 UTC <byorgey> http://hackage.haskell.org/package/HPDF ?
+2012-11-12 15:10:54 UTC <luite> hm, you do need some extra stuff to generate a proper pdf file (wrap instructions in objects and make an index)
+2012-11-12 15:11:07 UTC <luite> and the pdf drawing instructions are not quite postscript
+2012-11-12 15:11:59 UTC <fryguybob> Yeah it is a subset so we might not be able to do the postscript side computations that we do right now (adding more for text at the moment)
+2012-11-12 15:12:06 UTC <luite> ah that looks usable
+2012-11-12 15:12:21 UTC <fryguybob> Beyond that it is just some encoding.
+2012-11-12 15:12:38 UTC <luite> yeah that lib should handle that fine :)
+2012-11-12 15:13:06 UTC <fryguybob> Is zlib in the platform?
+2012-11-12 15:13:30 UTC <byorgey> yes
+2012-11-12 15:13:44 UTC <byorgey> so maybe someone should just make a new backend on top of HPDF?
+2012-11-12 15:13:50 UTC <fryguybob> ah, I see it includes the c source for Windows anyway.
+2012-11-12 15:14:13 UTC <byorgey> if it's in the platform then presumably it works on Windows.
+2012-11-12 15:15:46 UTC <luite> if it ends up being a problem, it's probably not that hard to remove the dependency later, generate uncompressed pdf documents
+2012-11-12 15:16:55 UTC <fryguybob> I don't think it will be a problem at all.
+2012-11-12 15:17:08 UTC <byorgey> fryguybob: oh, don't forget to close #19 and #24 if you merge cmears's patch
+2012-11-12 15:17:21 UTC <luite> yeah, me neither. only people installing ghc without the platform will probably need msys to build zlib
+2012-11-12 15:17:24 UTC <fryguybob> Ah, will do
+2012-11-12 15:17:32 UTC <luite> but that's still quite doable, i've done it a few times
+2012-11-12 15:17:59 UTC <byorgey> presumably people installing ghc without the platform can figure things out for themselves.
+2012-11-12 15:18:17 UTC <byorgey> I'm not interested in bending over backwards to make sure diagrams works without the platform =)
+2012-11-12 15:24:54 UTC <fryguybob> Humm HPDF calls out to C for text metrics.  I wonder what it is doing.
+2012-11-12 15:26:45 UTC <fryguybob> Humm, just a big lookup table.
+2012-11-12 15:27:11 UTC <fryguybob> Strange.
+2012-11-12 15:48:04 UTC <luite> for the built-in fonts?
+2012-11-12 15:57:24 UTC <fryguybob> luite: Yeah.  Maybe they are placeholders for some future library call.
+2012-11-12 18:37:59 UTC <byorgey> hi notdan, welcome
+2012-11-12 19:54:41 UTC <notdan> Hi! Just read your paper on monoids in FP, got interested :)
+2012-11-12 20:20:52 UTC <tgeeky> notdan: there is an associated (video) lecture
+2012-11-12 21:58:03 UTC <byorgey> just updated http://projects.haskell.org/diagrams/backend-tests/all-index.html
+2012-11-12 21:58:47 UTC <luite> so everything works except text?
+2012-11-12 22:00:17 UTC <byorgey> yep, looks like it
+2012-11-12 22:01:15 UTC <byorgey> with the SVG text I think the issues are (1) setting a black fill color explicitly and (2) implementing alignment
+2012-11-12 22:01:53 UTC <byorgey> (1) should be pretty easy
+2012-11-12 22:01:58 UTC <byorgey> no idea about (2)
+2012-11-12 22:03:14 UTC <byorgey> weird, I just pushed a commit to diagrams/diagrams-backend-tests and it says it succeeded, but the commit hasn't shown up on github
+2012-11-12 22:03:52 UTC <luite> hehe
+2012-11-12 22:04:08 UTC <byorgey> maybe it's just behind or something
+2012-11-12 22:04:15 UTC <luite> oh i guess it's not exactly the same as what fryguybob had yesterday
+2012-11-12 22:05:33 UTC <byorgey> what did fryguybob have?
+2012-11-12 22:06:13 UTC <luite> oh he pushed but he had to specify the branch
+2012-11-12 22:06:46 UTC <byorgey> oh, yeah, that's not it
+2012-11-12 22:06:54 UTC <byorgey> I was just pushing to master
+2012-11-12 22:06:59 UTC <byorgey> and it says it succeeded
+2012-11-12 22:07:09 UTC <byorgey> and if I try to push again it says "everything up-to-date"
+2012-11-12 22:29:15 UTC <fryguybob> byorgey: are you pushing from a branch?
+2012-11-12 22:29:36 UTC <byorgey> no
+2012-11-12 22:29:42 UTC <byorgey> oh, the commit showed up now
+2012-11-12 22:29:51 UTC <byorgey> I guess github was just a bit behind
+2012-11-12 22:30:04 UTC <fryguybob> I blame Ruby
+2012-11-12 22:30:09 UTC <byorgey> hahaha
+2012-11-12 22:30:17 UTC <byorgey> is github written in ruby?
+2012-11-12 22:30:18 UTC <fryguybob> Oh wait, it's webscale.
+2012-11-12 22:30:29 UTC <byorgey> oh, wait, I knew that, it's RoR
+2012-11-12 22:30:55 UTC <fryguybob> Yeah that security bug is how I learned how the sausage is made.
+2012-11-12 22:31:08 UTC <byorgey> hehe
+2012-11-12 22:36:04 UTC <byorgey> it's still behind, actually, it shows the new commit but it is just hung saying 'loading commit data...'
+2012-11-12 22:36:21 UTC <byorgey> and now it's finally done
+2012-11-12 22:37:45 UTC <byorgey> github must be using some dark magic to make the page slide left and right like that when you press the browser's back and forward buttons
+2012-11-12 22:39:24 UTC <luite> yeah they use the browser history API to add them to the history
+2012-11-12 22:39:27 UTC <luite> history.pushState
+2012-11-12 22:42:38 UTC <byorgey> but I mean, how does the browser know that when you hit "back" instead of just switching to some previous page, it should instead display a slick animation?
+2012-11-12 22:43:09 UTC <byorgey> is it really possible to just program the "back" button to do whatever you want? (and if so, how is that not a giant security hole?)
+2012-11-12 22:46:01 UTC <luite> looks like it's the window.popstate event
+2012-11-13 00:32:43 UTC <fryguybob> cmears: We got the clip bug fixed.
+2012-11-13 00:34:52 UTC <cmears> Yeah, I just saw the commit
+2012-11-13 00:34:53 UTC <cmears> Thanks!
+2012-11-13 00:35:14 UTC <byorgey> \o/
+2012-11-13 00:35:14 UTC <cmears> Is the problem that the transforms were being applied to the clip path?
+2012-11-13 00:35:28 UTC <cmears> (during freeze)
+2012-11-13 00:36:01 UTC <fryguybob> Yes, so I just apply the inverse of the freeze when we emit the clip path.
+2012-11-13 00:36:15 UTC <fryguybob> http://www.cs.rochester.edu/u/ryates/temp/text.pdf
+2012-11-13 00:36:17 UTC <cmears> Yeah, it should get the same transforms at the thing it's clipping
+2012-11-13 00:37:48 UTC <cmears> Is it possible to not apply those transformations in the first place, so they don't need to be inverted?
+2012-11-13 00:42:53 UTC <byorgey> fryguybob: is that what I think it is?
+2012-11-13 00:46:52 UTC <fryguybob> cmears: I didn't look too far into that possibility.
+2012-11-13 00:47:11 UTC <fryguybob> byorgey: Yes, but that was written by hand.  I'm integrating the changes now.
+2012-11-13 00:48:02 UTC <cmears> I was looking at it this morning, to figure out where the transformation is applied to the style: is it in applyD (called from freeze)?
+2012-11-13 00:57:12 UTC <byorgey> cmears: no, freeze doesn't really do anything
+2012-11-13 00:57:18 UTC <byorgey> it just adds a 'split'
+2012-11-13 00:57:41 UTC <byorgey> applyD is just a generic function for applying a new 'd' annotation
+2012-11-13 00:58:16 UTC <cmears> That part I didn't really understand (obviously (:  )
+2012-11-13 00:58:45 UTC <byorgey> cmears: transformations and attributes are collected in a value of type  (Split (Transformation v) :+: Style v)
+2012-11-13 00:58:48 UTC <byorgey> which is part of DownAnnots
+2012-11-13 00:59:06 UTC <byorgey> basically it consists of a list of alternating transformations and styles
+2012-11-13 00:59:07 UTC <cmears> Yes
+2012-11-13 00:59:22 UTC <byorgey> the transformations are actually applied when this gets collapsed... let me find where that is...
+2012-11-13 00:59:59 UTC <byorgey> oh, it's in the 'prims' function
+2012-11-13 01:00:28 UTC <byorgey> prims = (map . second) (untangle . option mempty id . fst) . D.flatten . unQD
+2012-11-13 01:00:42 UTC <byorgey> it's the 'untangle' that sorts out the transformations + styles
+2012-11-13 01:01:30 UTC <byorgey> you could probably do something different there
+2012-11-13 01:01:59 UTC <byorgey> which treated pre-freeze and post-freeze transformations differently, i.e. applied pre-freeze transformations to styles but just collected post-freeze transformations separately
+2012-11-13 01:02:18 UTC <cmears> Maybe it's better to wait until the transformations are in the "a" part of the tree
+2012-11-13 01:02:29 UTC <byorgey> yeah, probably
+2012-11-13 01:02:53 UTC <byorgey> at this point it's not clear what the benefit would really be
+2012-11-13 01:03:12 UTC <byorgey> other than that it just "feels wrong" to apply a transformation and then unapply it
+2012-11-13 01:03:16 UTC <cmears> Yeah
+2012-11-13 01:03:36 UTC <cmears> For now I can live with that feeling
+2012-11-13 01:03:50 UTC <byorgey> me too =)
+2012-11-13 01:04:19 UTC <cmears> I think only the text alignment is broken now in SVG
+2012-11-13 01:04:42 UTC <cmears> It has an interesting difference from Cairo's SVG output, in that the native SVG backend uses a text element to show the text
+2012-11-13 01:04:50 UTC <cmears> But Cairo actually draws a path to make the letters
+2012-11-13 01:04:58 UTC <cmears> I'm not sure which is better
+2012-11-13 01:05:13 UTC <byorgey> cmears: also there's the bug where text is drawn with a transparent fill
+2012-11-13 01:05:22 UTC <byorgey> oh, interesting
+2012-11-13 01:05:28 UTC <fryguybob> It is usually better to have the text as "native" as it can be.
+2012-11-13 01:05:45 UTC <cmears> Yes, the fill too
+2012-11-13 01:05:56 UTC <fryguybob> This allows for things like searching for the text in a PDF for exxample.
+2012-11-13 01:06:08 UTC <byorgey> though having text be as native as it can be makes it really hard to make things consistent across backends + platforms
+2012-11-13 01:06:13 UTC <byorgey> but I'm OK with that when it comes to text.
+2012-11-13 01:06:14 UTC <fryguybob> And better rendering.
+2012-11-13 01:12:48 UTC <cmears> Can the text fill bug be fixed by just having a default "fc black" on all text?
+2012-11-13 01:14:59 UTC <byorgey> cmears: what do you mean "on all text"?
+2012-11-13 01:16:04 UTC <byorgey> if you mean making that change in diagrams-lib, then no.  The problem is that inner attributes override outer ones.  So if every text object is automatically wrapped in 'fc black' then you can never set the color to anything else.
+2012-11-13 01:16:21 UTC <cmears> Ah
+2012-11-13 01:16:24 UTC <byorgey> it would be like Henry Ford's famous saying: "they can have any color they want, as long as it's black."
+2012-11-13 01:17:37 UTC <byorgey> in the SVG backend, at the point that you discover you are drawing some text, you have to check if there's already a non-default fill in effect, and if not set the fill to black
+2012-11-13 01:17:43 UTC <byorgey> or something like that
+2012-11-13 01:17:51 UTC <byorgey> it's a bit tricky, actually, now that I think about it
+2012-11-13 01:20:52 UTC <fryguybob> We already have state for the clip id right?
+2012-11-13 01:44:25 UTC <byorgey> true, so we do
+2012-11-13 01:44:51 UTC <byorgey> but I'm not sure that helps
+2012-11-13 01:45:01 UTC <byorgey> because SVG itself is not inherently stateful the way cairo is
+2012-11-13 01:45:12 UTC <byorgey> or postscript
+2012-11-13 01:47:18 UTC <byorgey> hmm, Deepak has an interesting point in  https://github.com/diagrams/diagrams-svg/commit/7f98ad48ff7c154ad6da9948fc2056268dc53263
+2012-11-13 01:47:28 UTC <byorgey> in some sense cairo's current behavior is inconsistent
+2012-11-13 01:47:45 UTC <byorgey> because fill color is used for text, and the default fill color is indeed transparent
+2012-11-13 01:47:54 UTC <byorgey> but cairo text is black by default nonetheless.
+2012-11-13 01:48:46 UTC <byorgey> so in a sense we are going through contortions to change the SVG backend from its current (sensible) behavior to match a quirk of the cairo backend
+2012-11-13 01:49:57 UTC <fryguybob> Ah, yes.  I think this comes from text being treated differently, you don't stroke or fill it, it is shown.
+2012-11-13 01:50:13 UTC <fryguybob> Or converted to a path.
+2012-11-13 01:51:17 UTC <fryguybob> So from that perspective it isn't sensable to "show" and have nothing happen.
