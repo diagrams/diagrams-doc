@@ -1,7 +1,7 @@
 
 import Control.Monad (when)
 import System.Directory (doesDirectoryExist, createDirectory)
-import System.FilePath ( (<.>), (</>) )
+import System.FilePath ( (<.>), (</>), joinPath, splitPath )
 import System.IO
 
 import Data.VectorSpace ( zeroV )
@@ -65,8 +65,12 @@ compileDiaArr outDir =
   eelem "div"
     += attr "style" (txt "text-align: center")
     += (eelem "img"
-         += attr "src" mkText
+         += attr "src" (dropPrefix outDir ^>> mkText)
        )
+
+dropPrefix :: FilePath -> FilePath -> FilePath
+dropPrefix pre = joinPath . drop (n-1) . splitPath
+  where n = length (splitPath pre)
 
 -- | Compile the literate source code of a diagram to a .png file with
 --   a file name given by a hash of the source code contents
