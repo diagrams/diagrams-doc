@@ -87,7 +87,6 @@
     + [ ] other updates as needed
   + [ ] fix build bug with manual+web: image links on the manual page
         are to .make/...  Need to make them relative to root.
-  + [ ] move stuff like withName, named, etc. into diagrams-lib
   + [ ] add boundaryFrom or something like that?
   + [X] set up test/comparison framework
   + [ ] fix some SVG issues -- maybe even finish it
@@ -141,6 +140,9 @@
       - [ ] haskell
       - [ ] haskell-cafe
       - [ ] haskell-art
+** put off
+    + [ ] re-export core functions intended for end users from
+          diagrams-lib
 * Planning for release of version 0.5
 
   + [X] update diagrams package to depend on new versions of -core,
