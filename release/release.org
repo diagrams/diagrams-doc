@@ -84,22 +84,23 @@
   + [-] update user manual
     + [X] add "closable" to list of type classes
     + [ ] add "types" section
-    + [ ] other updates as needed
-  + [ ] fix build bug with manual+web: image links on the manual page
+    + [ ] other updates as needed, see especially intro etc.
+  + [X] fix build bug with manual+web: image links on the manual page
         are to .make/...  Need to make them relative to root.
-  + [ ] add boundaryFrom or something like that?
+  + [ ] add boundaryFrom or something like that? (see migration page)
   + [X] set up test/comparison framework
-  + [ ] fix some SVG issues -- maybe even finish it
+  + [ ] fix/decide what to do re: SVG transparent text
   + [ ] build API docs
   + [-] update CHANGES files and release info on website
-    + [X] diagrams-core
-    + [X] diagrams-lib
-    + [X] diagrams-cairo
-    + [X] diagrams-svg
+    + [ ] diagrams-core
+    + [ ] diagrams-lib
+    + [ ] diagrams-cairo
+    + [ ] diagrams-svg
     + [X] diagrams-contrib
     + [ ] website
   + [ ] 0.5 -> 0.6 migration page on wiki
   + [ ] test build:
+    - [ ] make testing script -- use cabal-dev -w -j ?
     - [ ] ghc 7.0.4
     - [ ] ghc 7.2.1
     - [ ] ghc 7.4.2
@@ -110,6 +111,10 @@
       - traces
       - subdiagrams
       - refactoring with dual-tree etc.
+      - SVG backend
+      - postscript backend?
+      - cairo/gtk split
+      - others?
     + [ ] link to gallery (email)
     + [ ] include some examples (blog)
     + [ ] say where/how to get involved
