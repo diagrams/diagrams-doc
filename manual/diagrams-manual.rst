@@ -2908,6 +2908,8 @@ other sorts of transformations; and contrariwise some things that
 support transformations are translation-invariant (like trails and
 vectors) and hence do not have a `HasOrigin` instance.
 
+Instances: XXX
+
 Further reading: `Alignment`_.
 
 Transformable
@@ -2926,7 +2928,11 @@ It represents types which support arbitrary affine transformations (or
 linear transformations, in the case of translationally invariant
 things).
 
-Instances: XXX
+Instances: `Double`, `Rational`, ``(t,t)``, ``(t,t,t)``, ``[t]``,
+``Set t``, ``Map k t``, ``Deletable m``, ``Point v``, ``TransInv t``,
+``Transformation v``, ``Style v``, ``Attribute v``, ``Trace v``,
+``Envelope v``, ``NullPrim v``, ``Query v m``, ``Prim b v``, ``SubMap
+b v m``, ``Subdiagram b v m``, ``QDiagram b v m``.
 
 Further reading: `Euclidean 2-space`_; `2D Transformations`_.
 
@@ -2956,11 +2962,9 @@ from the local origin of `a1` towards the old local origin of
 result is just a translated version of `a2`.  (In particular,
 `juxtapose` does not *combine* `a1` and `a2` in any way.)
 
-.. container:: todo
+Instances: XXX
 
-  Instances:
-
-  Further reading:
+Further reading: XXX
 
 Enveloped
 +++++++++
@@ -2983,6 +2987,22 @@ classifies types which have an associated `Envelope`.
 
 Traced
 ++++++
+
+`Traced` is defined in `Diagrams.Core.Trace`:mod:.  `Traced` types
+have an associated `Trace`, which is XXX
+
+.. class:: lhs
+
+> class (Ord (Scalar (V a)), VectorSpace (V a)) => Traced a where
+>   getTrace :: a -> Trace (V a)
+
+.. container:: todo
+
+  Explain.
+
+  Instances:
+
+  Further reading:
 
 Attributes and styles
 ~~~~~~~~~~~~~~~~~~~~~
