@@ -24485,3 +24485,294 @@
 2012-11-14 03:00:37 UTC <byorgey> but I have docutils installed through my package manager too
 2012-11-14 03:00:47 UTC <byorgey> so I just deleted PYTHONPATH, and voila, it works now =)
 2012-11-14 03:01:03 UTC <fryguybob> woohoo!
+2012-11-14 14:49:24 UTC <byorgey> blargh, generating combined haddocks for multiple packages is super fiddly and frustrating
+2012-11-14 14:56:11 UTC <fryguybob> Sounds like a tricky problem
+2012-11-14 16:59:41 UTC <fryguybob> More progress: http://www.cs.rochester.edu/u/ryates/temp/text.pdf
+2012-11-14 17:11:49 UTC <fryguybob> byorgey: All tests pass: http://www.cs.rochester.edu/u/ryates/diagrams/all-index.html
+2012-11-14 17:13:00 UTC <fryguybob> The font has to be a built-in postscript font so the "freeserif" doesn't resolve to the expected font, but there isn't a lot of non-hack things to do about that.
+2012-11-14 17:52:54 UTC <byorgey> fryguybob: huzzah!
+2012-11-14 17:54:32 UTC <byorgey> fryguybob: so should we make postscript an "officially supported" diagrams backend?
+2012-11-14 17:55:08 UTC <fryguybob> byorgey: Yeah that's fine with me at this point.
+2012-11-14 17:55:16 UTC <byorgey> cool
+2012-11-14 17:55:45 UTC <fryguybob> ACTION pushes his latest changes.
+2012-11-14 18:00:44 UTC <byorgey> http://projects.haskell.org/diagrams/backend-tests/all-index.html   yay!
+2012-11-14 21:27:56 UTC <jbracker_> I am currently generalising reflectionAbout but I am constantly getting a type error I do not understand: http://hpaste.org/77754
+2012-11-14 21:28:51 UTC <jbracker_> I am getting the fleeling that I am missing the forest for the trees.
+2012-11-18 19:03:15 UTC <fryguybob> you could try converting it up to 32-bit and see if they look the same after that.
+2012-11-18 19:03:49 UTC <byorgey> fryguybob: how would I do that?
+2012-11-18 19:05:22 UTC <nand`> hmm
+2012-11-18 19:05:24 UTC <byorgey> fryguybob: https://groups.google.com/forum/?fromgroups=#!msg/comp.graphics/tylpVt2y9s8/eHWKNVLYMREJ
+2012-11-18 19:05:34 UTC <byorgey> looks like Portable Network Graphics is a backronym =)
+2012-11-18 19:05:35 UTC <nand`> Int -> Int -> Diagram Cairo R2 -> [[Colour Double]] -- could work
+2012-11-18 19:05:45 UTC <fryguybob> byorgey: ah
+2012-11-18 19:05:57 UTC <nand`> I don't know how I'd do this with repa after all
+2012-11-18 19:06:33 UTC <fryguybob> Would juicypixel make more sense?
+2012-11-18 19:06:50 UTC <nand`> maybe, but with the [[Colour Double]] version it could be put into daigrams-cairo
+2012-11-18 19:06:52 UTC <nand`> dia*
+2012-11-18 19:06:55 UTC <nand`> without pulling in any dependencies
+2012-11-18 19:07:07 UTC <nand`> and I've often wanted interfaces as simple as that
+2012-11-18 19:07:38 UTC <nand`> it does mean âPtrâ is not the best name for the module though
+2012-11-18 19:08:36 UTC <fryguybob> Humm, I can't seem to get convert to do it for me.
+2012-11-18 19:08:48 UTC <byorgey> nand`: well, I haven't applied the pull request yet
+2012-11-18 19:09:24 UTC <byorgey> you can close it or add a note saying not to apply it yet
+2012-11-18 19:09:36 UTC <byorgey> and push more changes once you have figured out a better API
+2012-11-18 19:10:03 UTC <byorgey> a function to give you a [[Colour Double]] would be neat
+2012-11-18 19:10:29 UTC <nand`> it's mainly a function of figuring out a good name for the module
+2012-11-18 19:11:53 UTC <fryguybob> byorgey: http://www.cs.rochester.edu/u/ryates/temp/spc.png
+2012-11-18 19:13:06 UTC <byorgey> fryguybob: that one looks purple too
+2012-11-18 19:13:25 UTC <byorgey> I guess we can just conclude that firefox sucks and move on
+2012-11-18 19:15:01 UTC <byorgey> it's times like these when I'm really glad that there are people who actually know something about graphics working on diagrams too
+2012-11-18 19:15:08 UTC <byorgey> "how hard can it be?" I thought
+2012-11-18 19:15:46 UTC <fryguybob> hehe
+2012-11-18 19:18:55 UTC <byorgey> ok, I've got some other things I need to do, back later
+2012-11-18 19:32:07 UTC <nand`> byorgey: would you be okay with adding a âcolourâ dependency to diagrams-cairo; since diagrams-lib already has one?
+2012-11-18 19:57:13 UTC <byorgey> nand`: yes, of course.  diagrams-cairo already transitively depends on colour anyway, so explicitly listing it in the .cabal doesn't make much difference
+2012-11-18 20:21:50 UTC <nand`> okay
+2012-11-18 20:21:59 UTC <nand`> this issue is starting to really, really confuse me
+2012-11-18 20:22:18 UTC <nand`> two pieces of code that should be identical; one inside the library (diagrams-cairo), one in a separate testfile; the one in the testfile works, the one called via the library does not
+2012-11-18 20:27:49 UTC <nand`> hmm
+2012-11-18 20:27:52 UTC <nand`> I think laziness may be involved
+2012-11-18 20:28:09 UTC <nand`> in particular, âfreeâ freeing the memory before âpeekArrayâ is reading it
+2012-11-18 20:28:31 UTC <nand`> the strictness optimizer might be responsible for why one code works and one does not
+2012-11-18 20:47:24 UTC <nand`> byorgey: it seems that if I render two images in a row, the second one is corrupted
+2012-11-18 21:33:50 UTC <nand`> fixed it
+2012-11-18 21:42:07 UTC <nand`> byorgey: excellent, renderToList seems to work, I've re-opened the pull request
+2012-11-18 21:48:25 UTC <nand`> byorgey: is there a way to, given a diagram and a SizeSpec2D, figure out the actual size it's going to render at?
+2012-11-18 21:49:11 UTC <nand`> if I can query that then I'd be able to re-use it for the buffer allocation; instead of having the user specify width/height; in particular, it would work for ânative-sizeâ diagrams, which might come in handy for a use case I've been keeping in the back of my head
+2012-11-19 00:55:03 UTC <cmears> A short post on the internals of Diagrams:
+2012-11-19 00:55:05 UTC <cmears> http://www.cmears.id.au/articles/diagrams-internals.html
+2012-11-19 00:55:30 UTC <cmears> Feedback welcome (especially on gross errors)
+2012-11-19 01:10:33 UTC <fryguybob> cmears: I'll look through it when I have time.  It is always good to get more things written up! :D
+2012-11-19 01:20:10 UTC <cmears> Yeah, that's what I thought -- even if it's not perfect, it's better than nothing (:
+2012-11-19 05:35:28 UTC <Ralith> are arcs as generated by TwoD.Arc.arc on a unit circle?
+2012-11-19 05:41:21 UTC <Ralith> looks like yes
+2012-11-19 05:46:45 UTC <Ralith> is there any sort of boolean operation support?
+2012-11-19 05:47:04 UTC <Ralith> e.g. intersection of two circles, minus a rectangle
+2012-11-19 06:13:11 UTC <cmears> You could use clipping to do intersection
+2012-11-19 06:13:41 UTC <cmears> Not sure about subtraction
+2012-11-19 06:19:41 UTC <cmears> In some cases it would be enough to just put a white-coloured rectangle on top
+2012-11-19 06:24:06 UTC <Ralith> ACTION prefers to retain accurate transparency information
+2012-11-19 06:24:10 UTC <Ralith> brb
+2012-11-19 06:26:04 UTC <Ralith> (I can probably use splines in this case; you can accurately represent circular arcs with them right?)
+2012-11-19 06:27:57 UTC <cmears> I think Diagrams already draws arcs as Bezier curvers
+2012-11-19 06:44:27 UTC <Ralith> cmears: any way I can reflect a segment?
+2012-11-19 06:49:09 UTC <cmears> You can reflect a diagram -- I'm don't think you could reflect just a segment within a path
+2012-11-19 06:49:15 UTC <cmears> http://hackage.haskell.org/packages/archive/diagrams-lib/0.5.0.1/doc/html/Diagrams-TwoD-Transform.html
+2012-11-19 06:50:21 UTC <Ralith> I'm having trouble getting anything to appear at all with paths :/
+2012-11-19 06:51:15 UTC <Ralith> reflectX typechecks fine on a Trail
+2012-11-19 06:53:41 UTC <cmears> You might have to consider the line width
+2012-11-19 06:53:49 UTC <cmears> By default it is 0.01
+2012-11-19 06:54:16 UTC <cmears> For a unit circle, that's fine, but if you scale it up by 200x, it's too thin to be seen
+2012-11-19 06:54:25 UTC <Ralith> well, I can see a unit circle fine
+2012-11-19 06:54:54 UTC <Ralith> or perhaps not
+2012-11-19 06:55:05 UTC <Ralith> blah
+2012-11-19 06:55:36 UTC <Ralith> okay, getting stuff now
+2012-11-19 06:58:29 UTC <Ralith> connecting the wrong bits together :/
+2012-11-19 06:59:53 UTC <cmears> The user guide has some examples that might help
+2012-11-19 07:02:53 UTC <Ralith> got it \o/
+2012-11-19 07:06:00 UTC <cmears> Great (:
+2012-11-19 07:41:58 UTC <Ralith> why do I sometimes get errors like:
+2012-11-19 07:41:59 UTC <Ralith> Draw: user error (invalid value (typically too big) for the size of the input (surface, pattern, etc.))
+2012-11-19 07:42:30 UTC <Ralith> when e.g. specifying a relatively large hrule and only constraining vertical size
+2012-11-19 07:42:41 UTC <Ralith> (but not when specifying the same hrule and constraining horizontal size)
+2012-11-19 07:42:46 UTC <Ralith> (size of output, that is)
+2012-11-19 07:47:22 UTC <cmears> Hmm, never seen that one before
+2012-11-19 07:49:38 UTC <Ralith> ACTION gets it when the hrule is on the order of 1k times larger than anything else
+2012-11-19 07:49:45 UTC <Ralith> (for example)
+2012-11-19 07:50:10 UTC <Ralith> of course, that's not actually a desirable circumstance, so it's not a serious problem, but it seemed worth mentioning
+2012-11-19 08:29:14 UTC <cmears> Yeah, it's worth looking into
+2012-11-19 08:37:15 UTC <Ralith> ACTION tries to work out why scaling his diagram up is making most of it invisible
+2012-11-19 08:39:31 UTC <cmears> Possibly because the line width doesn't get scaled
+2012-11-19 08:39:35 UTC <cmears> Try freezing it first
+2012-11-19 08:39:36 UTC <cmears> e.g.
+2012-11-19 08:39:47 UTC <cmears> scale 10 $ freeze $ myDiagram
+2012-11-19 08:43:00 UTC <Ralith> turned out to be another shape growing unexpectedly large with regard to everything else
+2012-11-19 08:45:08 UTC <cmears> Ah, that would do it
+2012-11-19 20:43:46 UTC <byorgey> oh nice, someone just uploaded  http://hackage.haskell.org/package/diagrams-tikz-0.1.1.0
+2012-11-19 20:43:51 UTC <byorgey> was it someone in this channel? =)
+2012-11-19 20:45:26 UTC <fryguybob> Wasn't me :D
+2012-11-19 21:43:55 UTC <nand`> byorgey: I can confirm that line widths are now fixed in diagrams-svg
+2012-11-19 21:45:21 UTC <nand`> byorgey: also, I'd be willing to give https://github.com/diagrams/diagrams-lib/issues/66 a try, but I probably can't/won't update all of the various backends; at least -cairo and -svg
+2012-11-19 21:53:57 UTC <byorgey> nand`: sure, though we should probably hold off on merging that until after the 0.6 release
+2012-11-19 21:54:19 UTC <byorgey> I suppose it's time to fork off 0.6 branches so we can continue working on cool new features while still preparing the release
+2012-11-19 21:55:35 UTC <byorgey> I will try to do that soon
+2012-11-19 23:09:30 UTC <tgeeky> diagrams-tikz is authored by Scott Walck (isn't that the physics professor?)
+2012-11-19 23:09:36 UTC <tgeeky> but uploaded by AriePeterson (who!?)
+2012-11-19 23:10:07 UTC <tgeeky> he (Arie) has several other packages.
+2012-11-20 00:48:00 UTC <fryguybob> ACTION is amused by his student who wrote that their code has "no fancy pants stuff".
+2012-11-20 02:13:38 UTC <Ralith> I'm trying to build a (sub)diagram for technical illustration style linear dimension annotations, but I'm having trouble getting it to behave properly in the presence of scaling--my data is small, but I'd like to be able to scale the complete diagram at once, rather than hardcoding magic numbers to get things to line up. Can anyone describe what the usual approach to something like this might be?
+2012-11-20 02:16:12 UTC <Ralith> |-----28.7mm-----| sort of thing
+2012-11-20 02:44:52 UTC <fryguybob> Ralith: Sorry, I'm kind of buried in work at the moment.  If you can paste some code on hpaste I'll take a look when I get a chance.
+2012-11-20 02:47:26 UTC <Ralith> so far all I've got is code which wrong for fairly self-explanatory reasons
+2012-11-20 02:47:45 UTC <Ralith> I'm more wondering what approach someone experienced with the library would take here
+2012-11-20 02:53:09 UTC <fryguybob> Ralith: Ah, well byorgey might have some pointers in that direction.  I only recently got text working with Postscript so before that I knew it was wrong and just played with the numbers until things worked out :(
+2012-11-20 05:06:42 UTC <luite> grmblz bugs
+2012-11-20 05:57:57 UTC <luite> #@
+2012-11-20 06:02:12 UTC <luite> blugh
+2012-11-20 08:17:23 UTC <luite> hm looks like my own fault, i need to implement exception handling
+2012-11-20 11:46:57 UTC <byorgey> Ralith: I'm not sure I understand exactly what you're trying to achieve, can you explain a bit more?
+2012-11-20 11:48:09 UTC <Ralith> byorgey: do you know what I mean when I refer to linear dimension annotations like |-----this-----| in diagrams?
+2012-11-20 11:48:32 UTC <Ralith> (diagrams as in technical diagrams, not as in the package)
+2012-11-20 11:48:36 UTC <byorgey> yes, I think so
+2012-11-20 11:49:15 UTC <Ralith> right, basically I just want to produce those in a way that doesn't force me to scale everything else to a certain size
+2012-11-20 11:49:18 UTC <byorgey> oh, hmm, so you want the number to change when you scale it?
+2012-11-20 11:49:23 UTC <Ralith> oh, no
+2012-11-20 11:49:25 UTC <Ralith> nothing so elaborate
+2012-11-20 11:49:46 UTC <byorgey> ok, so I still don't understand the problem
+2012-11-20 11:51:12 UTC <Ralith> well, let me describe what I've tried and the trouble I've had doing that
+2012-11-20 11:51:17 UTC <byorgey> ok
+2012-11-20 11:51:55 UTC <byorgey> (by the way, I might need to go at any minute, but if so I will see what you write and respond later)
+2012-11-20 11:51:58 UTC <Ralith> I'm drawing objects with dimension information in units of 'meters' but whose actual size is on the order of centimeters
+2012-11-20 11:52:02 UTC <Ralith> (no worries)
+2012-11-20 11:52:50 UTC <Ralith> I'd like to be able to describe the diagram in those units directly, i.e. without manually scaling the dimensions before passing them to the diagramming function
+2012-11-20 11:53:07 UTC <Ralith> so, the resulting diagram of a single object might have a bounding box of 0.01^2
+2012-11-20 11:54:29 UTC <Ralith> I also want to draw dimension annotations aligned with that object, with the bars being the correct distance apart and so on
+2012-11-20 11:55:42 UTC <Ralith> I'd like the dimension annotation diagram to be general, i.e. not specialized for the case of annotating things that start out really small
+2012-11-20 11:55:56 UTC <Ralith> (for some specific value of 'really small', no less)
+2012-11-20 11:57:57 UTC <byorgey> ok
+2012-11-20 11:58:14 UTC <Ralith> if I draw the annotation on the same scale as the objects, so that I can use the actual dimension information from the object directly, I can't work out how to e.g. define a consistent height for the | parts, or size for the padding; I could do something as a function of the dimension being measured, but that ends up with everything being padded differently and looks really bad.
+2012-11-20 11:59:21 UTC <Ralith> if I draw the annotation after scaling the objects up, then I can no longer use the real dimension information to determine the width of the annotation; I have to scale it by the same factor, which may be more or less arbitrary.
+2012-11-20 11:59:27 UTC <Ralith> that's doable, but seems really ugly.
+2012-11-20 12:00:20 UTC <Ralith> (but I can do things like set vertical padding to '1' and get sane results)
+2012-11-20 12:01:16 UTC <Ralith> (which has the end result that I *must* select a more or less magic number for the scaling of everything else for it to come out looking right...)
+2012-11-20 12:01:44 UTC <Ralith> byorgey: so, neither of those approaches seem Right; can you suggest an alternative?
+2012-11-20 12:03:52 UTC <byorgey> honestly, I am still having trouble understanding exactly what the problem is
+2012-11-20 12:04:16 UTC <byorgey> I am getting lost in all the actual vs notional dimensions, scaling, etc.
+2012-11-20 12:04:31 UTC <byorgey> could you perhaps give some actual code that illustrates the problem?
+2012-11-20 12:04:56 UTC <Ralith> yeah, though it'll probably include a variety of unrelated errors
+2012-11-20 12:05:00 UTC <byorgey> e.g. "this code is what I'd like to do but it looks bad", "this code makes a diagram that looks OK but the code is ugly", that sort of thing
+2012-11-20 12:05:07 UTC <Ralith> ACTION nod
+2012-11-20 12:06:01 UTC <Ralith> may take a little bit
+2012-11-20 12:06:41 UTC <byorgey> no worries
+2012-11-20 12:14:02 UTC <Ralith> d'you want something runnable, or just excerpts?
+2012-11-20 12:20:11 UTC <Ralith> this is the former case, where the size of the annotation is that of the actual unscaled dimension: http://i.imgur.com/K8wAE.png http://hpaste.org/77960
+2012-11-20 12:21:32 UTC <Ralith> (omitted the | parts for simplicity; the line at the bottom is what we're looking at)
+2012-11-20 12:21:41 UTC <Ralith> (and associated text)
+2012-11-20 12:27:35 UTC <Ralith> this is the latter case, where it actually looks like what I want, but I need to scale both the objects and the *input to* (but not actual diagram of) the annotations by a magic value to get it looking right: http://i.imgur.com/lKnpk.png http://hpaste.org/77961
+2012-11-20 12:33:31 UTC <cmears> Are they actually aligned in the second picture?
+2012-11-20 12:33:48 UTC <cmears> Or is it just that scaling them up a lot hides the small differences?
+2012-11-20 12:51:53 UTC <Ralith> dammit, missed him
+2012-11-20 12:51:58 UTC <Ralith> but yes, they are actually aligned
+2012-11-20 12:52:12 UTC <Ralith> (because they have a constant offset instead of relative-to-input-width)
+2012-11-20 13:19:52 UTC <Ralith> ACTION sleeps for now
+2012-11-20 14:08:13 UTC <nand`> byorgey: okay, I'll wait for the 0.6 fork
+2012-11-20 17:17:39 UTC <nand`> byorgey: what's the style guide for diagrams-lib? I have a type signature that's 78 colums wide, which seems wider than the 70 col or whatever your code conforms to
+2012-11-20 17:17:54 UTC <nand`> what's the appropriate way to split it? I've never found a way that I like
+2012-11-20 17:19:05 UTC <nand`> the signature is of the form (F a, G b) => Foo a -> b -> (a, a, a, a)
+2012-11-20 17:19:26 UTC <nand`> do I pull the â=>â below the â::â?
+2012-11-20 17:27:26 UTC <fryguybob> nand`: like this? https://github.com/diagrams/diagrams-lib/blob/master/src/Diagrams/Backend/Show.hs#L46
+2012-11-20 17:28:11 UTC <nand`> yeah fair enough
+2012-11-20 17:32:08 UTC <nand`> byorgey: I'm concerned about a lack of proper operational semantics for colors, blending, scaling and so forth in diagrams; especially when it comes to cairo, because cairo's extremely dumb when it comes to color spaces
+2012-11-20 17:32:41 UTC <nand`> the output we're getting from cairo is probably fairly non-ideal, but without proper semantics, it's hard to justify the effort it would take to fix it
+2012-11-20 17:33:23 UTC <nand`> but arguably that's a cairo bug
+2012-11-20 17:44:41 UTC <fryguybob> nand`: I thought the change was moving to the ability to choose the color semantics you want.
+2012-11-20 17:45:03 UTC <nand`> not quite
+2012-11-20 17:45:23 UTC <nand`> the change was moving to the ability to abide by what the backend requires
+2012-11-20 17:45:42 UTC <nand`> cairo wants sRGB as backend, other implementations may want linear light or XYZ or other representations
+2012-11-20 17:45:49 UTC <nand`> the previous behavior was to use sRGB everywhere
+2012-11-20 17:46:05 UTC <fryguybob> nand`: So just choose a different backend?
+2012-11-20 17:46:35 UTC <nand`> what do you mean?
+2012-11-20 17:46:52 UTC <nand`> also, is it okay to use Double everywhere instead of (Floating a, Ord a) => a or whatever?
+2012-11-20 17:47:02 UTC <nand`> I noticed the old code does that as well, so I might as well keep it that way
+2012-11-20 17:47:46 UTC <fryguybob> nand`: With the proposed changes am I now enabled to write a backend with the color semantics that I want?
+2012-11-20 17:48:47 UTC <nand`> fryguybob: technically, yes; since âdaigramsâ doesn't have any specification regarding this
+2012-11-20 17:48:52 UTC <nand`> diagrams*
+2012-11-20 17:49:34 UTC <nand`> note that while theoretically, it doesn't matter what color space the backend requires; as long as colors are mapped to it correctly (which is done by package âcolourâ); there is one problem that arises when interchanging color spaces:
+2012-11-20 17:49:35 UTC <fryguybob> Right now it doesn't specify or with the changes it won't specify?
+2012-11-20 17:49:46 UTC <nand`> the issue of gamma-correct scaling and blending
+2012-11-20 17:50:08 UTC <nand`> fryguybob: it's specified neither now nor with the changes
+2012-11-20 17:50:50 UTC <fryguybob> ok, then I miss understood.  I'll reread the issue.
+2012-11-20 17:52:47 UTC <nand`> I'll note that the new patch is relatively easy to adapt existing code for
+2012-11-20 17:53:07 UTC <nand`> I export a helper function âcolorToSRGBAâ which does what the old âcolorToRGBAâ did
+2012-11-20 17:53:25 UTC <nand`> in fact, if I dropped the âSâ all current backends would be compatible; if you think that's a good idea I'll do so
+2012-11-20 17:54:32 UTC <nand`> perhaps I could name it colorToSRGBA and provide colorToRGBA as a {-# DEPRECATED #-} alias for it, so existing code would still compile
+2012-11-20 17:54:38 UTC <nand`> because âcolorToRGBAâ is a misleading name
+2012-11-20 18:02:38 UTC <byorgey> nand`: I don't really care all that much about number of columns
+2012-11-20 18:03:51 UTC <byorgey> nand`: as for proper operational semantics for colors and so forth, I will defer to you.  Having something specified would be great.
+2012-11-20 18:04:31 UTC <byorgey> so far diagrams has in some ways played fast and loose with semantics.  But now that we really do have multiple viable backends it would be good to be a bit more precise about the intended semantics.
+2012-11-20 18:04:46 UTC <byorgey> I certainly don't want to go the route of treating cairo as a reference implementation
+2012-11-20 18:04:47 UTC <nand`> byorgey: the âhard workâ is done for us by the brilliant Data.Colour library; which already represents colors unambiguously
+2012-11-20 18:04:52 UTC <byorgey> indeed
+2012-11-20 18:05:00 UTC <nand`> really the only concern is linear light blending/scaling
+2012-11-20 18:05:34 UTC <nand`> for example, cairo right now blends and scales in companded space; which is incorrect and cause color artifacts for select test cases
+2012-11-20 18:05:46 UTC <byorgey> I believe you
+2012-11-20 18:05:58 UTC <nand`> the problem is, I don't know how easy fixing this would be, the worst case scenario would be rendering out to a buffer and doing the conversions to PNG etc. manually
+2012-11-20 18:06:21 UTC <fryguybob> nand`: The wrong space being 32-bit right?
+2012-11-20 18:06:49 UTC <nand`> fryguybob: what do you mean by âwrong spaceâ here?
+2012-11-20 18:07:20 UTC <fryguybob> nand`: Where it blends and scales.
+2012-11-20 18:07:32 UTC <nand`> ah; I don't know, that would depend on the internal workings of cairo
+2012-11-20 18:07:38 UTC <nand`> best case scenario: 32 bit, worst case scenario: 8 bit
+2012-11-20 18:07:49 UTC <fryguybob> Oh, I meant 8-bit per color.
+2012-11-20 18:08:21 UTC <nand`> (that actually complicates matters further, if it uses 8 bit colors then linear light blending could great the sort of banding you usually like to avoid by companding)
+2012-11-20 18:08:47 UTC <nand`> fryguybob: to be unambiguous, I was talking about per channel; ie. 8 bits * 4 channels = 32 bits per color
+2012-11-20 18:09:08 UTC <fryguybob> I don't really see doing the blending on the diagrams side as an option (at this point).
+2012-11-20 18:09:25 UTC <nand`> but rendering and so forth should ideally be done with more precision than that since rounding errors accumulate fast in 8bpc; so 32 bits (floating point) per channel would amount to 128 bits per color overall
+2012-11-20 18:09:49 UTC <nand`> fryguybob: yes, blending correctly would be the job of the backend implementors
+2012-11-20 18:10:40 UTC <fryguybob> Right, so is the question do we give backends a uniform color space of its choice or all the various color spaces used by the user?
+2012-11-20 18:11:12 UTC <nand`> everything the user provides is in the same space, technically
+2012-11-20 18:11:24 UTC <fryguybob> I don't know if Cairo can handle the latter, but Postscript should be fine with that.
+2012-11-20 18:11:28 UTC <nand`> it's converted to whatever space the backend needs at render time by Data.Colour
+2012-11-20 18:11:36 UTC <fryguybob> Ok, so the former.
+2012-11-20 18:12:46 UTC <nand`> (there's another limitation creeping its way in here but I don't think that one has a solution, ultimately; namely what happens if the user specifies a colour that is outside the color space a backend physically supports)
+2012-11-20 18:13:09 UTC <byorgey> THE MONITOR EXPLODES
+2012-11-20 18:13:24 UTC <fryguybob> Unless your monitor goes to 11.
+2012-11-20 18:13:29 UTC <nand`> for example, if I render to a PNG file or something, I'm limited to a certain set of values - I can't escape the gamut and use negative colors or anything
+2012-11-20 18:13:47 UTC <nand`> while PNG does allow arbitrary color spaces, the backend would need to know what color space the user is using
+2012-11-20 18:13:59 UTC <nand`> like, where to set the limit
+2012-11-20 18:14:30 UTC <fryguybob> nand`: Backends have a record of options.
+2012-11-20 18:14:51 UTC <nand`> (what could be done here is maybe carrying along the color space information of each color and merging the gamuts when combining diagrams, the same way the envelopes are merged)
+2012-11-20 18:15:05 UTC <nand`> fryguybob: yes, but I mean, it's not configurable - it comes from the diagram itself
+2012-11-20 18:15:24 UTC <nand`> what you mention would be a fair workaround though, ie. having the user specify if he wants a larger color space
+2012-11-20 18:16:10 UTC <nand`> worse; it doesn't look like Data.Colour.RGBSpace has functions for merging colour spaces
+2012-11-20 18:16:20 UTC <nand`> (which isn't exactly trivial either)
+2012-11-20 18:16:24 UTC <fryguybob> If we let the backends choose the color space I don't think there is anything we can do to make Cairo better, but we can make Postcript give whatever space is valid for Postscript
+2012-11-20 18:16:33 UTC <nand`> yes
+2012-11-20 18:16:41 UTC <nand`> (I don't know anything about postscript)
+2012-11-20 18:17:43 UTC <fryguybob> So I think I'm saying, I don't see any way to make Cairo better.
+2012-11-20 18:17:55 UTC <fryguybob> Without doing blending ourselves.
+2012-11-20 18:18:11 UTC <nand`> I'll need to take a closer look at diagrams-cairo, it may be salvageable
+2012-11-20 18:20:11 UTC <nand`> actually, I think cairo maybe genuinely fixable
+2012-11-20 18:20:23 UTC <nand`> may be*
+2012-11-20 18:20:44 UTC <nand`> maybe in the next patch
+2012-11-20 18:21:12 UTC <nand`> have a look at https://github.com/nandykins/diagrams-lib/commit/bfc8be9b0d83d3e394fb19c224461afde1ac87c0 if you will, it may be backwards compatible enough to just include as-is
+2012-11-20 18:21:34 UTC <nand`> the only thing that would readily break is new Color instances
+2012-11-20 18:22:36 UTC <byorgey> right, that looks reasonable to me
+2012-11-20 18:22:49 UTC <byorgey> I highly doubt anyone has been writing custom Color instances
+2012-11-20 18:23:52 UTC <fryguybob> ACTION hides his crayon name color space.
+2012-11-20 18:24:37 UTC <byorgey> hehe
+2012-11-20 18:25:01 UTC <nand`> (incidentally, the names Data.Colour provides can be a bit misleading at times, when âredâ comes out as orange ;)
+2012-11-20 18:25:12 UTC <byorgey> hehe
+2012-11-20 18:25:27 UTC <nand`> sRGB's red isn't that red at all
+2012-11-20 18:25:30 UTC <byorgey> maybe we need a Diagrams.Color.Crayola module =)
+2012-11-20 18:25:54 UTC <fryguybob> nand`: I think those changes would let the user specify CMYK and set an option in PostscriptOptions and the resulting ps file would have CMYK that never went throught RGB.
+2012-11-20 18:26:05 UTC <byorgey> ooh, nice
+2012-11-20 18:26:07 UTC <nand`> fryguybob: yes that's very possible
+2012-11-20 18:26:21 UTC <nand`> you just have to find some function for AlphaColour a -> CMYK a
+2012-11-20 18:26:30 UTC <nand`> ACTION doesn't have one
+2012-11-20 18:26:32 UTC <byorgey> http://en.wikipedia.org/wiki/List_of_Crayola_crayon_colors
+2012-11-20 18:26:49 UTC <fryguybob> Right and presumibly you would want the user to be specifying CMYK to begin with but they would know that.
+2012-11-20 18:27:19 UTC <nand`> the thing about CMYK is that it's a compl-- actually, a brilliant idea would be to send it through an ICC profile or something
+2012-11-20 18:27:22 UTC <fryguybob> For Postscript the Alpha parts get thrown out anyway.
+2012-11-20 18:27:44 UTC <nand`> --completely redundant color space, our vision model is defined by three variables; so in theory, all of our colors will be mathematically converted to CMY colors
+2012-11-20 18:27:51 UTC <fryguybob> The actual use of those colors would depend on what the user does with their ps file.
+2012-11-20 18:28:16 UTC <nand`> speaking of alpha, AlphaColour is unnecessarily hard to work with
+2012-11-20 18:28:32 UTC <fryguybob> I know that extra u and all.
+2012-11-20 18:28:41 UTC <nand`> there should be a function AlphaColour a -> Colour a, but there isn't; and the implementation we provide in Attributes.hs is needlessly complex
+2012-11-20 18:28:54 UTC <nand`> it would be as simple as three multiplications internally
+2012-11-20 18:40:50 UTC <nand`> I did some testing
+2012-11-20 18:40:56 UTC <nand`> looks like cairo internally blends in linear light
+2012-11-20 18:41:20 UTC <nand`> it seems like they assume the intput is sRGB and decompand it manually during blending
+2012-11-20 18:41:22 UTC <nand`> input*
+2012-11-20 18:41:36 UTC <nand`> s/decompand/expand/ -- interesting neologism there
+2012-11-20 18:46:05 UTC <nand`> ah, actually, it's a bit different
+2012-11-20 18:46:19 UTC <nand`> cairo uses companded color channels, but *linear* alpha
+2012-11-20 18:46:44 UTC <nand`> so it does alpha blending operations in linear light
+2012-11-20 18:51:01 UTC <nand`> byorgey: I fear there is some issue lurking here; even without my patch, I seem to be getting some output that I am not expecting from the cairo backend
+2012-11-20 18:51:23 UTC <nand`> main = defaultMain $ unitCircle # fcA (red `withOpacity` 0.5)
+2012-11-20 18:51:49 UTC <nand`> if I render this as png; I get a circle with a foreground color of (128,0,0) at opacity 50%
+2012-11-20 18:52:01 UTC <nand`> expected would be (255,0,0) at opacity 50%
+2012-11-20 18:52:04 UTC <nand`> since the opacity is already there
+2012-11-20 18:56:14 UTC <fryguybob> nand`: I saw something about Cario wanting premultiplied alpha.. I'll try to find this.
+2012-11-20 19:05:56 UTC <nand`> it seems to be fine with the svg backend though
+2012-11-20 19:06:15 UTC <nand`> like, the .svg comes out as (100%,0%,0%);fill-opacity:0.5
+2012-11-20 19:30:52 UTC <nand`> here, a minimal test case to reproduce it: http://hpaste.org/77977
