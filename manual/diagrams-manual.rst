@@ -2238,7 +2238,7 @@ Envelope-related functions
 
   ::
 
-  > shapes = circle 1 
+  > shapes = circle 1
   >      ||| square 2
   >      ||| circle 1 # scaleY 0.3 # sizedAs (square 2 :: D R2)
   >
@@ -2908,7 +2908,7 @@ other sorts of transformations; and contrariwise some things that
 support transformations are translation-invariant (like trails and
 vectors) and hence do not have a `HasOrigin` instance.
 
-Instances: XXX
+Instances: XXX auto-generate?  Link somewhere else?
 
 Further reading: `Alignment`_.
 
@@ -2928,11 +2928,15 @@ It represents types which support arbitrary affine transformations (or
 linear transformations, in the case of translationally invariant
 things).
 
-Instances: `Double`, `Rational`, ``(t,t)``, ``(t,t,t)``, ``[t]``,
-``Set t``, ``Map k t``, ``Deletable m``, ``Point v``, ``TransInv t``,
-``Transformation v``, ``Style v``, ``Attribute v``, ``Trace v``,
-``Envelope v``, ``NullPrim v``, ``Query v m``, ``Prim b v``, ``SubMap
-b v m``, ``Subdiagram b v m``, ``QDiagram b v m``.
+Instances:
+  * `Double`: Transforming a `Double` XXX.
+  * `Rational`,
+  * Container types can be transformed by transforming each
+    element (``(t,t)``, ``(t,t,t)``, ``[t]``, ``Set t``, ``Map k t``)
+  * ``Deletable m``, ``Point v``, ``TransInv t``,
+    ``Transformation v``, ``Style v``, ``Attribute v``, ``Trace v``,
+    ``Envelope v``, ``NullPrim v``, ``Query v m``, ``Prim b v``, ``SubMap
+    b v m``, ``Subdiagram b v m``, ``QDiagram b v m``.
 
 Further reading: `Euclidean 2-space`_; `2D Transformations`_.
 
@@ -2964,7 +2968,7 @@ result is just a translated version of `a2`.  (In particular,
 
 Instances: XXX
 
-Further reading: XXX
+Further reading: `Juxtaposing diagrams`_; `Juxtaposing without composing`_.
 
 Enveloped
 +++++++++
@@ -2974,89 +2978,372 @@ classifies types which have an associated `Envelope`.
 
 .. class:: lhs
 
+::
+
 > class (InnerSpace (V a), OrderedField (Scalar (V a))) => Enveloped a where
 >   getEnvelope :: a -> Envelope (V a)
 
-.. container:: todo
+The `getEnvelope` method simply computes or projects out its
+argument's associated `Envelope`.  `InnerSpace`, defined in
+`Data.VectorSpace`:mod:, classifies vector spaces with an inner (dot)
+product.  Computing envelopes almost always involves projection of one
+vector onto another, which requires an inner product.  The
+`OrderedField` class is simply a synonym for a collection of classes,
+requiring that the scalar type have multiplicative inverses and be
+linearly ordered.  See `OrderedField`_.
 
-  Mention something about imposed constraints?
+.. container:: todo
 
   Instances:
 
-  Further reading:
+Further reading: `Envelopes and local vector spaces`_; `Working with
+envelopes`_; `Envelopes`_.
 
 Traced
 ++++++
 
-`Traced` is defined in `Diagrams.Core.Trace`:mod:.  `Traced` types
-have an associated `Trace`, which is XXX
+`Traced` is defined in `Diagrams.Core.Trace`:mod:, and plays a similar
+role as `Enveloped`.  `Traced` types have an associated `Trace`, which
+is like an embedded ray tracer that can be used to find points on the
+boundary of an object.
 
 .. class:: lhs
+
+::
 
 > class (Ord (Scalar (V a)), VectorSpace (V a)) => Traced a where
 >   getTrace :: a -> Trace (V a)
 
 .. container:: todo
 
-  Explain.
-
   Instances:
 
-  Further reading:
+Further reading: `Traces`_.
 
-Attributes and styles
-~~~~~~~~~~~~~~~~~~~~~
+Classes for attributes and styles
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 AttributeClass
 ++++++++++++++
 
+`AttributeClass`, defined in `Diagrams.Core.Style`:mod:, is simply a
+proxy for `Typeable` and `Semigroup`; it has no methods.  Any type
+used as an attribute must be made a member of this class.
+
+.. class:: lhs
+
+::
+
+> class (Typeable a, Semigroup a) => AttributeClass a
+
+Instances: many; see `Diagrams.Attributes`:mod: and
+`Diagrams.TwoD.Path`:mod:.
+
+Further reading: `Attributes and styles`_; `Text`_; `Style and
+attribute internals`_.
+
 HasStyle
 ++++++++
 
-Names
-~~~~~
+`HasStyle`, also defined in `Diagrams.Core.Style`:mod:, classifies
+things to which a `Style` can be applied.
+
+.. class:: lhs
+
+::
+
+> class HasStyle a where
+>   applyStyle :: Style (V a) -> a -> a
+
+`applyStyle` applies the given `Style` to an object, combining it on
+the left with the existing `Style` (according to the `Monoid` instance
+of `Style`).
+
+Instances:
+  * `Style` itself is an instance
+  * Many container types are instances as long as their elements are;
+    applying a style to a container simply applies the style uniformly
+    to every element: `(a,b)`, `Map k a`, `Set`, `[a]`
+  * Functions `(b -> a)` are an instance as long as `a` is.  (This can
+    also be thought of as a "container type".)
+  * Of course, `QDiagram b v m` is an instance, given a few
+    restrictions on `v` and `m`.
+
+Further reading: `Attributes and styles`_; `Text`_; `Style and
+attribute internals`_.
+
+Classes for names
+~~~~~~~~~~~~~~~~~
 
 IsName
 ++++++
 
+`IsName` is defined in `Diagrams.Core.Names`:mod:. It simply provides
+the `toName` method for converting to `Name`, with a default
+implementation that wraps up a value as an atomic name.  It allows
+values of arbitrary types to be used as names for subdiagrams.
+
+.. class:: lhs
+
+::
+
+> class (Typeable a, Ord a, Show a) => IsName a where
+>   toName :: a -> Name
+>   toName = Name . (:[]) . AName
+
+Instances:
+  * Many primitive types such as `()`, `Bool`, `Char`, `Int`, `Float`,
+    `Double`, `Integer`, `String`, `[a]`, `(a,b)`, `(a,b,c)` have a
+    default `IsName` instance.
+  * `AName` is an instance; converting an atomic name to `Name` works
+    by creating a singleton list.
+  * `Name` is an instance, with `toName` as the identity function.
+
+Further reading: `Stroking trails and paths`_; `Named subdiagrams`_;
+`User-defined names`_.
+
 Qualifiable
 +++++++++++
 
-Paths
-~~~~~
+`Qualifiable` is also defined in `Diagrams.Core.Names`:mod:. Instances
+of `Qualifiable` are things which can be "qualified" by prefixing them
+with a name.
+
+.. class:: lhs
+
+::
+
+> class Qualifiable q where
+>   -- | Qualify with the given name.
+>   (|>) :: IsName a => a -> q -> q
+
+Instances:
+  * `Name`: qualifying one name with another is just concatenation.
+  * `SubMap` and `QDiagram`: qualifying prefixes a name on all the
+    existing names.
+
+Further reading: `Named subdiagrams`_; `Subdiagrams`_; `Qualifying
+names`_.
+
+Classes for paths
+~~~~~~~~~~~~~~~~~
 
 PathLike
 ++++++++
 
+The `PathLike` class, defined in `Diagrams.Path`:mod:, abstracts over
+things that are "path-like", so that functions such as `square` can be
+used to construct a diagram, a path, a trail, *etc.*.
+
+.. class:: lhs
+
+::
+
+> class (Monoid' p, VectorSpace (V p)) => PathLike p where
+>
+>   pathLike :: Point (V p)      -- ^ The starting point of the
+>                                --   path.  Some path-like things
+>                                --   (e.g. 'Trail's) may ignore this.
+>            -> Bool             -- ^ Should the path be closed?
+>            -> [Segment (V p)]  -- ^ Segments of the path.
+>            -> p
+
+The `pathLike` method provides a generic way to build a "path-like"
+thing by specifying the low-level path data.  Note that there should
+usually not be any need for end users to call `pathLike` directly
+(though there certainly may be some use cases).
+
+Instances:
+  * `Trail`: this is the most "direct" instance (in some sense the
+    class probably should have been named "TrailLike" instead of
+    "PathLike").  However, the starting point is ignored.
+  * `Path`: this instance creates a `Path` with a single `Trail`,
+    beginning at the given starting point.
+  * `QDiagram b R2 Any`: the diagram obtained by stroking the given
+    path.
+  * `[Point v]`: a list of the path's vertices.
+  * `Active p` (for any `PathLike p`): creates a constant `Active`
+    value.
+
+Further reading: `Working with paths`_; `Trails`_; `Paths`_; `The
+PathLike class`_.
+
 Closable
 ++++++++
 
-Backend
-~~~~~~~
+The `Closeable` class, also defined in `Diagrams.Path`:mod:,
+represents path-like things which can be "open" or "closed".
+
+.. class:: lhs
+
+::
+
+> class PathLike p => Closeable p where
+>   -- | "Open" a path-like thing.
+>   open  :: p -> p
+>
+>   -- | "Close" a path-like thing, by implicitly connecting the
+>   --   endpoint(s) back to the starting point(s).
+>   close :: p -> p
+
+Instances: `Trail` and `Path`.
+
+Further reading: `Working with paths`_; `The Closeable class`_.
+
+Classes for backends
+~~~~~~~~~~~~~~~~~~~~
 
 Backend
 +++++++
+
+The `Backend` class, defined in `Diagrams.Core.Types`:mod:, defines
+the primary interface for any diagrams rendering backend.  Unlike many
+of the other type classes in diagrams, it is quite large
+
+.. class:: lhs
+
+::
+
+> class (HasLinearMap v, Monoid (Render b v)) => Backend b v where
+>   data Render  b v :: *
+>   type Result  b v :: *
+>   data Options b v :: *
+>
+>   -- | Perform a rendering operation with a local style.
+>   withStyle      :: b          -- ^ Backend token (needed only for type inference)
+>                  -> Style v    -- ^ Style to use
+>                  -> Transformation v  -- ^ Transformation to be applied to the style
+>                  -> Render b v -- ^ Rendering operation to run
+>                  -> Render b v -- ^ Rendering operation using the style locally
+>
+>   -- | 'doRender' is used to interpret rendering operations.
+>   doRender       :: b           -- ^ Backend token (needed only for type inference)
+>                  -> Options b v -- ^ Backend-specific collection of rendering options
+>                  -> Render b v  -- ^ Rendering operation to perform
+>                  -> Result b v  -- ^ Output of the rendering operation
+>
+>   -- | 'adjustDia' allows the backend to make adjustments to the final
+>   --   diagram (e.g. to adjust the size based on the options) before
+>   --   rendering it.
+>   adjustDia :: Monoid' m => b -> Options b v
+>             -> QDiagram b v m -> (Options b v, QDiagram b v m)
+>   adjustDia _ o d = (o,d)
+>
+>   -- | Render a diagram.
+>   renderDia :: (InnerSpace v, OrderedField (Scalar v), Monoid' m)
+>             => b -> Options b v -> QDiagram b v m -> Result b v
+>   renderDia b opts d =
+>     doRender b opts' . mconcat . map renderOne . prims $ d'
+>       where (opts', d') = adjustDia b opts d
+>             renderOne :: (Prim b v, (Split (Transformation v), Style v))
+>                       -> Render b v
+>             renderOne (p, (M t,      s))
+>               = withStyle b s mempty (render b (transform t p))
+>
+>             renderOne (p, (t1 :| t2, s))
+>               = withStyle b s t1 (render b (transform (t1 <> t2) p))
+
+In brief: `Render`, `Result`, and `Options` are type and data families
+which associate a custom rendering type, result type, and options
+record type to each backend.
+
+XXX
 
 MultiBackend
 ++++++++++++
 
+`MultiBackend`, also defined in `Diagrams.Core.Types`:mod:, is for
+backends which support rendering multiple diagrams, for example to a
+multi-page pdf or something similar.  It simply provides the
+`renderDias` function for rendering multiple diagrams at once; the
+meaning of this function depends on the backend.
+
+.. class:: lhs
+
+::
+
+> class Backend b v => MultiBackend b v where
+>   renderDias :: (InnerSpace v, OrderedField (Scalar v), Monoid' m)
+>              => b -> Options b v -> [QDiagram b v m] -> Result b v
+
+Instances: Postscript XXX
+
+Further reading: `Rendering backends`_; `Backends`_.
+
 Renderable
 ++++++++++
+
+The `Renderable` type class (from `Diagrams.Core.Types`:mod:) is a
+two-parameter type class connecting backends to primitives which they
+know how to render.  Backend `B` declares that it knows how to draw
+primitive `P` by giving a `Renderable P B` instance, which requires
+implementing the `render` function which takes a primitive and renders
+it.
+
+.. class:: lhs
+
+::
+
+> class Transformable t => Renderable t b where
+>   render :: b -> t -> Render b (V t)
+
+Instances: There are many instances defined by each backend.
+
+Further reading: `Rendering backends`_.
 
 Poor man's type synonyms
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
+There are several cases where a certain set of type class constraints
+are used together so often that it is convenient to define a synonym
+to stand in for the entire set of constraints.  In more recent
+versions of GHC that support the ``ConstraintKinds`` extension, this
+could be accomplished with a simple type synonym.  However, since
+diagrams still supports older versions of GHC, these are declared as a
+new type class with no methods and a single universal instance.  For
+example,
+
+.. class:: lhs
+
+::
+
+> class (Class1 a, Class2 a, Class3 a) => Synonym a
+> instance (Class1 a, Class2 a, Class3 a) => Synonym a
+
+Ideally, at some point in the future diagrams will drop support for
+versions of GHC without ``ConstraintKinds`` and switch to the more
+sensible way of defining constraint synonyms.
+
 Monoid'
 +++++++
 
+`Monoid' m` is a synonym for `(Semigroup m, Monoid m)`, defined in  This is
+something of an unfortunate hack: although every monoid is a semigroup
+mathematically speaking, `Semigroup` is not actually a superclass of
+`Monoid`, so if we want to use both we have to actually declare both.
+
 HasLinearMap
 ++++++++++++
+
+
 
 OrderedField
 ++++++++++++
 
 Type family reference
 ---------------------
+
+V
+~
+
+Render
+~~~~~~
+
+Result
+~~~~~~
+
+Options
+~~~~~~~
 
 Tips and tricks
 ===============
