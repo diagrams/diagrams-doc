@@ -24776,3 +24776,391 @@
 2012-11-20 19:05:56 UTC <nand`> it seems to be fine with the svg backend though
 2012-11-20 19:06:15 UTC <nand`> like, the .svg comes out as (100%,0%,0%);fill-opacity:0.5
 2012-11-20 19:30:52 UTC <nand`> here, a minimal test case to reproduce it: http://hpaste.org/77977
+2012-11-20 19:48:15 UTC <nand`> byorgey: looks like it was a false alarm, my image editor is broken
+2012-11-20 19:48:34 UTC <byorgey> hehe, ok =)
+2012-11-20 19:48:46 UTC <byorgey> nand`: thanks for looking into all this
+2012-11-20 19:49:01 UTC <byorgey> I might not have time to sit down and look at it carefully until this weekend
+2012-11-20 19:56:43 UTC <nand`> byorgey: one thing that's not entirely clear to me either are the semantics of what happens when overlaying transparent diagrams with `atop`
+2012-11-20 19:57:11 UTC <nand`> is the intended result color c1 `over` c2?
+2012-11-20 20:12:49 UTC <nand`> I did lots of testing; looks like cairo does indeed do color blending in companded space, will need to fix
+2012-11-20 20:40:30 UTC <nand`> byorgey: upon further investigation, it seems cairo does not have the capability of sRGB companding an entire surface with the operations available to it; not even with exponentiation as an approximation - the next best solution would indeed be rendering to a region of memory, then companding that manually
+2012-11-20 20:40:58 UTC <nand`> I'll have to profile it to be sure, but I can only expect this to slow things down, so I'm not sure if it's worth it in the eyes of users
+2012-11-20 20:41:03 UTC <nand`> maybe it could be a toggleable option
+2012-11-20 20:41:33 UTC <nand`> the next problem is that cairo would render it out using an 8 bit format; which would introduce lots of banding
+2012-11-20 23:13:01 UTC <Ralith> byorgey: you still up?
+2012-11-21 00:03:59 UTC <Ralith> hm, looks like (one of) the problem(s) with SVG text is that it gets set to zero opacity.
+2012-11-21 00:37:29 UTC <cmears> I thought it was empty fill colour rather than zero opacity
+2012-11-21 00:37:49 UTC <cmears> maybe it's the same thing
+2012-11-21 02:35:38 UTC <cmears> Can you use a String as a name?  (e.g.   dia = square 2 #named "my diagram")
+2012-11-21 02:35:47 UTC <cmears> I get overlapping instances
+2012-11-21 03:35:43 UTC <cmears> See here for arrowheads in motion:
+2012-11-21 03:35:45 UTC <cmears> http://www.csse.monash.edu.au/~cmears/pent.html
+2012-11-21 03:36:33 UTC <luite> whoah
+2012-11-21 03:46:50 UTC <cmears> I hope that is a "whoah" of admiration (:
+2012-11-21 03:48:39 UTC <fryguybob> cmears: very nice!
+2012-11-21 03:55:27 UTC <luite> cmears: yes!
+2012-11-21 03:58:02 UTC <cmears> thanks (:
+2012-11-21 10:45:33 UTC <byorgey> cmears: yes, you can use a String as a name
+2012-11-21 10:45:37 UTC <byorgey> I just did it yesterday!
+2012-11-21 10:45:52 UTC <byorgey> curious to see what error yo uget
+2012-11-21 10:46:20 UTC <cmears> I'll get the actual message
+2012-11-21 10:46:39 UTC <cmears> it says there's an instance for String and another for (IsName a => [a])
+2012-11-21 10:50:19 UTC <byorgey> huh, so there is.  so why don't I get an overlapping instances error?
+2012-11-21 10:50:24 UTC <byorgey> what version of GHC do you have?
+2012-11-21 10:51:30 UTC <cmears> hpaste.org/78004
+2012-11-21 10:51:44 UTC <cmears> ghc 7.4.1
+2012-11-21 10:53:31 UTC <byorgey> I also have ghc 7.4.1
+2012-11-21 10:53:37 UTC <byorgey> and I don't get an error o.O
+2012-11-21 10:55:00 UTC <cmears> I only get the error with the dev version of diagrams-*
+2012-11-21 10:55:12 UTC <cmears> (i.e. inside the hsenv environment)
+2012-11-21 11:04:11 UTC <byorgey> I have the dev version too
+2012-11-21 11:04:23 UTC <cmears> Ah
+2012-11-21 11:04:40 UTC <cmears> In Diagrams.Core.Names, the "OverlappingInstances" seems to have gone away at some stage
+2012-11-21 11:05:28 UTC <cmears> Ah
+2012-11-21 11:05:32 UTC <cmears> In the commit with log message
+2012-11-21 11:05:49 UTC <cmears> "remove unnecessary imports and LANGUAGE pragmas"
+2012-11-21 11:06:03 UTC <byorgey> hah
+2012-11-21 11:06:04 UTC <byorgey> oops
+2012-11-21 11:06:17 UTC <cmears> (:
+2012-11-21 11:06:25 UTC <byorgey> just a second, I'll put it back
+2012-11-21 11:06:48 UTC <byorgey> I guess I must not actually be using the dev version, I thought I was
+2012-11-21 11:08:32 UTC <byorgey> it's an interesting point: I had naively assumed that if you remove a pragma and it still compiles, that pragma must have been unnecessary
+2012-11-21 11:08:58 UTC <cmears> OverlappingInstances takes effect where the instance is defined rather than where it is used
+2012-11-21 11:09:05 UTC <cmears> (so adding it to my user code does not help)
+2012-11-21 11:09:22 UTC <cmears> So unless you have some test example that uses IsName String, you'd never notice
+2012-11-21 11:10:15 UTC <byorgey> right
+2012-11-21 11:12:19 UTC <byorgey> cmears: oh, and thanks for writing that article on diagrams internals!
+2012-11-21 11:13:32 UTC <byorgey> it's quite terse, but I think it will a good starting place for anyone wanting to learn more about the internals
+2012-11-21 11:13:38 UTC <cmears> I hope it made some sense
+2012-11-21 11:13:44 UTC <byorgey> yes, definitely
+2012-11-21 11:13:46 UTC <cmears> Yeah, it is a bit terse
+2012-11-21 11:13:50 UTC <byorgey> I did not spot any inaccuracies
+2012-11-21 11:13:56 UTC <cmears> That's good!
+2012-11-21 11:14:13 UTC <cmears> At the very least it could do with some actual diagrams (:
+2012-11-21 11:14:23 UTC <byorgey> hehe, perhaps =)
+2012-11-21 11:14:46 UTC <cmears> it was the result of my digging into the clipping in svg
+2012-11-21 11:14:55 UTC <cmears> it seems there is a fundamental difference between cairo and svg
+2012-11-21 11:15:08 UTC <cmears> cairo wants the clip paths to be transformed, and svg doesn't
+2012-11-21 11:15:37 UTC <cmears> for example, i tried just making it a non-transformed attribute
+2012-11-21 11:15:42 UTC <cmears> and that worked pretty well with svg
+2012-11-21 11:15:46 UTC <cmears> but not cairo ):
+2012-11-21 11:17:59 UTC <byorgey> heh, interesting
+2012-11-21 11:18:28 UTC <byorgey> ah, hence why we have to unapply the transformation to clipping paths in the SVG backend?
+2012-11-21 11:18:50 UTC <cmears> Yes, we do it the cairo way at the moment, so we just have to untransform it in svg
+2012-11-21 11:19:34 UTC <cmears> Is it right that clipPath is the only transformed attribute at the moment?
+2012-11-21 11:21:49 UTC <byorgey> yes, I think so
+2012-11-21 11:24:30 UTC <cmears> I think the current way of fixing it is fine
+2012-11-21 11:24:57 UTC <cmears> you could do it the other way around -- make it non-transformable -- and then you'd have the special case in cairo instead
+2012-11-21 11:25:09 UTC <cmears> (you'd apply the transformation when rendering a clip path)
+2012-11-21 11:25:18 UTC <cmears> it doesn't seem to matter either way
+2012-11-21 11:25:37 UTC <cmears> (apply rather than invert, that is)
+2012-11-21 14:31:39 UTC <nand`> ACTION is still thinking about how to best form a color space monoid
+2012-11-21 14:32:22 UTC <nand`> one possibility, while ugly; is to start with sRGB and consider only linear expansions of it; the identity would be â1xâ and the operation would be âmaxâ
+2012-11-21 14:32:57 UTC <nand`> certainly more practicable than doing a Set (Colour a) or something and having the backend attempt to match a color space around it (especially given the fact that there are infinitely many)
+2012-11-21 14:33:40 UTC <nand`> byorgey: is there a reason the CairoOptions record isn't an instance of Default?
+2012-11-21 14:52:11 UTC <byorgey> nand`: no, no particular reason
+2012-11-21 15:02:42 UTC <nand`> byorgey: is it okay if I take out the StateT (); I'm adding a ReaderT instead
+2012-11-21 15:02:49 UTC <nand`> (it's not like the () is used right now)
+2012-11-21 15:19:17 UTC <nand`> I'm also not exactly sure what the separation between cairoStrokeStyle and cairoMiscStyle is there for
+2012-11-21 15:19:40 UTC <nand`> it would be great if âfill colorâ and âfont stuffâ could be separated
+2012-11-21 16:35:39 UTC <byorgey> nand`: taking out the StateT () is fine =)
+2012-11-21 16:35:44 UTC <byorgey> dunno why I kept that there, really
+2012-11-21 16:36:15 UTC <byorgey> I honestly don't remember exactly why I organized things the way they are (re: cairoStrokeStyle and cairoMiscStyle)
+2012-11-21 16:36:19 UTC <byorgey> feel free to reorganize
+2012-11-21 17:34:16 UTC <nand`> I'm not sure what to do with this patch for diagrams-cairo; I'm missing two key components: 1. a library to properly read and write PNG files, including tags; 2. a library for handling ICC profiles
+2012-11-21 17:34:54 UTC <nand`> I guess what I can do is, for now, skip full ICC support and only add a flag to enable linear light processing; and only write out sRGB PNGs as end result, instead of allowing the user to specify custom (arbitrary) color spaces
+2012-11-21 17:35:26 UTC <byorgey> nand`: and is that still an improvement over the current situation?
+2012-11-21 17:35:50 UTC <byorgey> to be honest, I really don't understand any of this stuff
+2012-11-21 17:35:57 UTC <byorgey> maybe you can point me to some places I can read up on it?
+2012-11-21 17:36:00 UTC <nand`> it has both benefits and drawbacks, which is why I'd make it a flag and default it off
+2012-11-21 17:36:12 UTC <byorgey> oh, ok, fair enough
+2012-11-21 17:37:00 UTC <nand`> I'm not sure of any good catch-all resources, wikipedia has some decent articles but they don't go into depth that well, http://argyllcms.com/ has some info as well
+2012-11-21 17:37:10 UTC <nand`> the problem is mainly that you really need to see the whole picture to make sense of it
+2012-11-21 17:38:12 UTC <byorgey> right
+2012-11-21 17:38:42 UTC <byorgey> well, in any case, I'm happy to accept patches that just add new non-default flags, even for stuff I don't understand =)
+2012-11-21 17:42:02 UTC <nand`> I'm not sure what to name the flag; â--linearâ collides with â--loopâ for the â-lâ short form
+2012-11-21 17:45:06 UTC <byorgey> hmm, isn't there a way to be explicit about which option you want the short form to belong to when they collide?
+2012-11-21 17:45:23 UTC <nand`> maybe; I don't know System.Console.CmdArgs.Implicit
+2012-11-21 17:45:33 UTC <byorgey> maybe try adding  &= name "l"  to the loop option?
+2012-11-21 17:55:23 UTC <nand`> I.. huh, I think I accidentally included the rendering code twice (left-over from debugging) in https://github.com/diagrams/diagrams-cairo/commit/7086e506127ce2a81fa4f8ca14a18802af2a089c
+2012-11-21 17:56:16 UTC <byorgey> huh? where?
+2012-11-21 17:56:30 UTC <byorgey> I don't see any repeated code
+2012-11-21 17:56:46 UTC <byorgey> oh, it calls renderPtr twice you mean?
+2012-11-21 17:57:01 UTC <byorgey> oh, hehe, wait, I see now
+2012-11-21 17:57:23 UTC <byorgey> so the first four lines can be deleted?
+2012-11-21 17:57:30 UTC <nand`> lines 21-24 should be removed
+2012-11-21 17:57:32 UTC <byorgey> yes, that 'return l' is certainly useless
+2012-11-21 17:57:33 UTC <byorgey> right
+2012-11-21 17:57:50 UTC <byorgey> should have looked at it more carefully =)
+2012-11-21 17:58:20 UTC <nand`> I only realized it because I changed the signature of renderPtr and suddenly it didn't compile after I changed only one..
+2012-11-21 17:59:00 UTC <byorgey> hahaha
+2012-11-21 17:59:14 UTC <byorgey> so maybe you should submit a patch fixing it first
+2012-11-21 18:07:37 UTC <nand`> hmm I should do that but I'm having trouble with git
+2012-11-21 18:20:13 UTC <byorgey> nand`: do you already have some other commits recorded?
+2012-11-21 18:20:34 UTC <byorgey> if so, don't worry about it
+2012-11-21 18:20:35 UTC <nand`> no, but apparently my âmasterâ tree is dirty; even though I *should* be working on a branch
+2012-11-21 18:20:53 UTC <nand`> the confusing thing is, the master branch seems to contain some edits that I was pretty sure were only in the branch
+2012-11-21 18:21:07 UTC <nand`> I'll just finish this up so it works then I can reset --hard HEAD my master without worrying
+2012-11-21 18:21:16 UTC <byorgey> nand`: if you've made some edits but not committed them, they will show up in any branch you switch to
+2012-11-21 18:21:29 UTC <byorgey> i.e. uncommitted modifications are not per-branch
+2012-11-21 18:21:40 UTC <byorgey> nand`: use  'git stash' to save your modifications first
+2012-11-21 18:21:57 UTC <byorgey> then 'git pop' to restore them after you make and submit the patch to master
+2012-11-21 18:22:04 UTC <nand`> ah
+2012-11-21 18:22:24 UTC <nand`> hrm, I've run into an unexpected problem
+2012-11-21 18:22:32 UTC <byorgey> oh?
+2012-11-21 18:22:48 UTC <nand`> I forgot I can only fix up the gamma in IO, not in Cairo.Render
+2012-11-21 18:23:32 UTC <nand`> but actually that isn't so bad
+2012-11-21 18:36:54 UTC <nand`> ugh, github
+2012-11-21 18:37:16 UTC <nand`> I'm going to close my pull request; can you cherry-pick? github's pull requests don't work very well
+2012-11-21 18:37:29 UTC <nand`> https://github.com/nandykins/diagrams-cairo/commit/0ee96750709fe44063648924f5a4ccd05a5cab61
+2012-11-21 18:39:51 UTC <nand`> byorgey: how do I copy the contents of one surface to another?
+2012-11-21 18:40:25 UTC <byorgey> yes, I can cherry-pick
+2012-11-21 18:40:37 UTC <byorgey> I don't know how to copy surfaces
+2012-11-21 18:54:08 UTC <byorgey> oh, looks like withImageSurfaceForData was only just added in cairo-0.12.4
+2012-11-21 18:54:34 UTC <byorgey> so I'm jacking up the lower bound on the required version of cairo
+2012-11-21 19:44:14 UTC <nand`> apparently I managed to break âgit stashâ as well
+2012-11-21 19:44:28 UTC <nand`> oh well, guess that just means I have to finish this commit
+2012-11-21 19:45:23 UTC <nand`> hrm, except I managed to break my working copy as well
+2012-11-21 19:45:45 UTC <nand`> I'll just delete the file and make sure not to include that change in the commit..
+2012-11-21 19:56:17 UTC <nand`> byorgey: this is getting horrendeously complicated, but it's starting to work :)
+2012-11-21 19:56:42 UTC <byorgey> hehe
+2012-11-21 19:56:55 UTC <byorgey> nand`: are you just learning git?
+2012-11-21 19:57:51 UTC <nand`> byorgey: I used to know more, I think; but it seems every thing I thought I learned is now working against me, when I enter some previously unexplored state that I don't know how to escape from
+2012-11-21 19:58:03 UTC <nand`> ACTION really can't stand git :)
+2012-11-21 19:58:06 UTC <byorgey> heh, yeah, I know the feeling
+2012-11-21 19:58:11 UTC <byorgey> I don't like git either
+2012-11-21 19:58:23 UTC <nand`> darcs person, personally; simple enough for me to understand
+2012-11-21 19:58:31 UTC <byorgey> magit for emacs makes it bearable (even pleasant at times)
+2012-11-21 19:58:35 UTC <byorgey> me too
+2012-11-21 19:59:16 UTC <byorgey> I moved diagrams to git/github just to encourage more contributions and to take advantage of github's features
+2012-11-21 19:59:26 UTC <byorgey> but reluctantly
+2012-11-21 20:02:37 UTC <nand`> okay
+2012-11-21 20:02:47 UTC <nand`> I'm fairly confident with my linear light logic
+2012-11-21 20:02:55 UTC <nand`> doing some tests it corresponds exactly with what it should
+2012-11-21 20:03:24 UTC <nand`> now comes the hard part of revising every tiny change, I wish âgit diffâ had colored diff output like darcs'
+2012-11-21 20:11:14 UTC <nand`> alright, I'll need some external testing on this before I can be confident releasing it into the wild
+2012-11-21 20:12:25 UTC <nand`> byorgey: you can cherry-pick https://github.com/nandykins/diagrams-cairo/commit/ead00cc5de73d6adb2cb9baeb42d83fd98e7080b ; that's a horrible bug that I'm completely ashamed I managed to oversee
+2012-11-21 20:12:48 UTC <nand`> actually, let me change one more thing
+2012-11-21 20:19:35 UTC <nand`> byorgey: okay, here: https://github.com/nandykins/diagrams-cairo/commit/6ef30aecc0769a38fb667e4f3fbd8d3fe29e542e
+2012-11-21 20:27:42 UTC <nand`> here's the big change: https://github.com/nandykins/diagrams-cairo/commit/f13bd574bf6eaa85448a467780aa938f390d4f20 <- needs testing
+2012-11-21 20:44:41 UTC <byorgey> nand`: and what sort of testing is needed for the big change?
+2012-11-21 20:45:05 UTC <byorgey> I can test that it compiles but I'm not sure how to test that it does what it's supposed to
+2012-11-21 20:45:13 UTC <byorgey> (because I don't understand what it's supposed to do)
+2012-11-21 20:45:29 UTC <nand`> you could start by comparing the output (without --linear) before and after
+2012-11-21 20:45:38 UTC <nand`> I already found a bug, it incorrectly handles alpha for the usual (non-linear) mode
+2012-11-21 20:46:23 UTC <byorgey> ok, maybe I'll first let you test it yourself a bit more =)
+2012-11-21 20:52:29 UTC <nand`> I thought I was being clever with the decompanded alpha but turns out cairo was calculating it correctly after all. Now the code shouldn't affect the old workings anymore :)
+2012-11-21 20:53:21 UTC <nand`> I guess this is the part where I upload an example to show the difference
+2012-11-21 20:53:56 UTC <nand`> I took the example here http://projects.haskell.org/diagrams/manual/images/068c05866196c2eb1a70e9c97de6f95b.png and added a white background (so cairo actually does the rendering, instead of the browser)
+2012-11-21 20:55:12 UTC <nand`> here's the standard output (no --linear), which should probably match what you're getting with the old behavior: http://sadpanda.us/images/1260037-EVKNVDZ.png
+2012-11-21 20:56:10 UTC <nand`> here's the linear light output: http://sadpanda.us/images/1260038-9HYXFBY.png
+2012-11-21 20:57:21 UTC <nand`> you'll notice it's slightly lighter; in fact, what's happening is that the light increase is now linear - the darker portions get the same 70% fade as the lighter portions
+2012-11-21 20:58:03 UTC <nand`> here's the calculation for reaffirmation:
+2012-11-21 20:58:06 UTC <nand`> Î» toSRGB24 $ red `withOpacity` (0.7*0.7*0.7) `over` white
+2012-11-21 20:58:15 UTC <nand`> RGB {channelRed = 255, channelGreen = 212, channelBlue = 212}
+2012-11-21 20:58:37 UTC <nand`> you'll notice that the --linear image has 255/212/212 for the âredâ square in the last image
+2012-11-21 20:58:56 UTC <nand`> the old (non-linear) image has 255/168/168
+2012-11-21 20:59:56 UTC <nand`> this may seem incorrect at first, since 255 - (255*0.7*0.7*0.7) is 168; but that's because those calculations are done in gamma companded space, which is not a representation of the actual luminosity
+2012-11-21 21:00:21 UTC <nand`> this may seem correct at first*
+2012-11-21 21:00:47 UTC <nand`> there's a more interesting example as well
+2012-11-21 21:02:31 UTC <nand`> this diagram is just a red square and blue sqare, both at 50% opacity, slightly overlapping. Here's the old (non-linear) output: http://sadpanda.us/images/1260041-CTCGJBF.png and here's the --linear output: http://sadpanda.us/images/1260043-KZ7QNZE.png
+2012-11-21 21:02:48 UTC <Ralith> ACTION pings byorgey 
+2012-11-21 21:06:26 UTC <nand`> again the calculation, to prove I'm not senile:
+2012-11-21 21:06:28 UTC <nand`> Î» (red `withOpacity` 0.5) `Data.Colour.over` (blue `withOpacity` 0.5)
+2012-11-21 21:06:28 UTC <nand`> Data.Colour.SRGB.Linear.rgb 0.6666666666666666 0.0 0.3333333333333333 `withOpacity` 0.75
+2012-11-21 21:06:29 UTC <nand`> Î» toSRGB24 $ Data.Colour.SRGB.Linear.rgb 0.6666666666666666 0.0 0.3333333333333333
+2012-11-21 21:06:32 UTC <nand`> RGB {channelRed = 213, channelGreen = 0, channelBlue = 156}
+2012-11-21 21:06:50 UTC <nand`> 255*0.75 opacity = 191.25
+2012-11-21 21:07:06 UTC <nand`> the --linear image has the expected 214/0/157/192
+2012-11-21 21:10:53 UTC <nand`> here's the patch in case you want to play around it: https://github.com/nandykins/diagrams-cairo/commit/2af4888eb18d84ac49bd3f4c9a2e993355817c77
+2012-11-21 21:12:07 UTC <byorgey> Ralith: sorry, I haven't forgotten about you, just haven't had time to look at your code yet
+2012-11-21 21:13:02 UTC <Ralith> kk
+2012-11-21 21:13:06 UTC <Ralith> no particular hurry
+2012-11-21 21:14:07 UTC <Ralith> unrelatedly, I've noticed that text in the SVG backend seems to be set to 0 opacity by default; is this something I might be able to fix with a reasonably bounded amount of poking around?
+2012-11-21 21:56:48 UTC <byorgey> Ralith: https://github.com/diagrams/diagrams-svg/issues/15
+2012-11-21 21:56:53 UTC <byorgey> no, it is not easy to fix
+2012-11-21 21:58:27 UTC <Ralith> hm.
+2012-11-21 21:59:38 UTC <nand`> byorgey: some food for thought: http://lists.cairographics.org/archives/cairo/2010-June/020111.html
+2012-11-21 21:59:40 UTC <nand`> the links at the bottom are useful too
+2012-11-22 02:34:38 UTC <byorgey> if Ralith comes back tell them this is exactly why I originally intended for text to work like line width (i.e. unaffected by transformations) except it doesn't actually work that way given how things are currently implemented.
+2012-11-22 02:35:00 UTC <byorgey> but in the meantime try using the new ScaleInv wrapper which prevents things from being scaled
+2012-11-22 02:35:19 UTC <byorgey> i.e. wrap the text in ScaleInv
+2012-11-22 02:37:02 UTC <byorgey> in Diagrams.TwoD.Transform
+2012-11-22 08:55:32 UTC <nand`windows> byorgey: do you know if diagrams-cairo runs on windows?
+2012-11-22 09:00:05 UTC <nand`windows> byorgey: also, huh? if I try to submit a pull request for the gamma changes, github includes two commits that you already cherry-picked, but your versions have different commit IDs for some reason
+2012-11-22 09:00:14 UTC <nand`windows> I can't seem to exclude them from the pull request
+2012-11-22 09:00:31 UTC <nand`windows> ACTION wishes this was on hub.darcs.net
+2012-11-22 10:10:30 UTC <byorgey> nand`: pull requests are always per-branch
+2012-11-22 10:10:38 UTC <byorgey> not per-commit
+2012-11-22 10:11:51 UTC <byorgey> nand`: they have different commit IDs because they are different commits.  The commit ID is identifying an object in git's graph.  It's not like a hash of just the changes or something.
+2012-11-22 10:12:56 UTC <byorgey> nand`: I'm not sure of the status of diagrams-cairo on windows; ask fryguybob
+2012-11-22 10:16:34 UTC <byorgey> Ralith: I looked at your code, BTW
+2012-11-22 10:16:48 UTC <byorgey> this is exactly why I originally intended for text to work like line width (i.e. unaffected by transformations) except it doesn't actually work that way given how things are currently implemented.
+2012-11-22 10:17:25 UTC <byorgey> but in the meantime, you could try using the new ScaleInv wrapper (in Diagrams.TwoD.Transform) which prevents things from being scaled
+2012-11-22 10:17:31 UTC <byorgey> i.e. wrap the text objects
+2012-11-22 10:18:11 UTC <Ralith> ACTION noticed that the documentation seemed inaccurate there
+2012-11-22 10:18:26 UTC <Ralith> I'll give that ago; it sounds promising
+2012-11-22 10:18:27 UTC <Ralith> thanks
+2012-11-22 10:19:21 UTC <Ralith> there's also the spacing problem, but that might be solvable with the same approach
+2012-11-22 10:19:27 UTC <Ralith> well, hm
+2012-11-22 10:19:31 UTC <Ralith> maybe not
+2012-11-22 10:20:06 UTC <Ralith> byorgey: I want the annotations to have a fixed real screenspace padding; any way to accomplish that?
+2012-11-22 10:22:15 UTC <Ralith> really, I want to define the whole thing in screenspace.
+2012-11-22 10:23:13 UTC <byorgey> if you want to define the whole thing in screenspace you can try setting the 'cairoBypassAdjust' option to True, perhaps?
+2012-11-22 10:23:47 UTC <Ralith> I'm actually using the SVG backend at present >_>
+2012-11-22 10:24:06 UTC <byorgey> but if you want the annotations to have a fixed padding, would it work to put the annotations on top of invisible rectangles of a certain size (or just a strut) and then wrap the whole thing (annotation + strut) in ScaleInv ?
+2012-11-22 10:24:10 UTC <Ralith> works just fine for my purposes with explicit text fill color, and I have another contributor on windows who doesn't want the trouble of compiling cairo
+2012-11-22 10:24:19 UTC <byorgey> oh, ok, sure
+2012-11-22 10:24:28 UTC <Ralith> I think it might
+2012-11-22 10:24:45 UTC <Ralith> I'll need to play with it to be sure
+2012-11-22 10:24:57 UTC <byorgey> ok, let me know how it works
+2012-11-22 10:25:16 UTC <Ralith> recall that my dimensions tend to be in the range of 1e-3, so if I have something unscalable at size 1 then it's going to be awkward to work with.
+2012-11-22 10:25:57 UTC <byorgey> well, you can scale them down by 100 or whatever before putting them in ScaleInv
+2012-11-22 10:26:10 UTC <byorgey> the point is that you can do it uniformly for all annotations
+2012-11-22 10:26:22 UTC <byorgey> even though the things they are annotating will not be scaled uniformly
+2012-11-22 10:26:58 UTC <byorgey> (if I've understood correctly)
+2012-11-22 10:27:40 UTC <Ralith> sounds right, but I'll still have to derive 100 or whatever by trial and error to see what works well, won't I?
+2012-11-22 10:28:01 UTC <Ralith> though even then it's an improvement in that I need only one magic number
+2012-11-22 10:28:04 UTC <byorgey> yes, I suppose so, but I don't see any way around that
+2012-11-22 10:28:10 UTC <Ralith> kk
+2012-11-22 10:28:11 UTC <Ralith> thanks!
+2012-11-22 10:28:33 UTC <Ralith> it seems to be that general support for doing things in screenspace might be useful, but I have no idea how hard that might be to achieve.
+2012-11-22 10:28:47 UTC <byorgey> I mean, fundamentally it seems there is no way to automate finding a size for text that "looks good"
+2012-11-22 10:29:07 UTC <byorgey> Ralith: it would be very easy to achieve actually
+2012-11-22 10:29:10 UTC <Ralith> I'm more concerned about finding a size for text (and struts) that doesn't result in the entire rest of the diagram being scald down to a pixel
+2012-11-22 10:29:18 UTC <Ralith> oh?
+2012-11-22 10:29:20 UTC <byorgey> it just means NOT calling a certain function =)
+2012-11-22 10:29:32 UTC <Ralith> huh.
+2012-11-22 10:29:33 UTC <byorgey> the only difficulty is that "screen space" means something different for each backend
+2012-11-22 10:29:47 UTC <Ralith> even SVG has a notion of a default mapping to pixels
+2012-11-22 10:29:51 UTC <Ralith> well
+2012-11-22 10:29:56 UTC <Ralith> I guess there are non-pixel backends, aren't there
+2012-11-22 10:30:04 UTC <byorgey> sure
+2012-11-22 10:30:05 UTC <Ralith> tikz and postscript and stuff
+2012-11-22 10:30:21 UTC <byorgey> anyway, I'm off to catch a train
+2012-11-22 10:30:24 UTC <Ralith> kk
+2012-11-22 10:30:25 UTC <Ralith> \o
+2012-11-22 10:30:27 UTC <byorgey> later
+2012-11-22 12:39:05 UTC <fryguybob> nand`: Cairo on Windows is fine until you want text, or easy install.
+2012-11-23 13:18:00 UTC <luite> \o/
+2012-11-23 13:18:12 UTC <byorgey> \o/
+2012-11-23 13:18:15 UTC <luite> :)
+2012-11-23 13:18:20 UTC <byorgey> what are we celebrating?
+2012-11-23 13:20:06 UTC <luite> dunno. do you have cool ideas for demos with diagrams wit ghcjs? maybe something that you've blogged about and thought that it would be cool if it was interactive? i have to do a ghcjs demo presentation in feb
+2012-11-23 13:22:21 UTC <luite> dunno how complicated it can be, i'm working fulltime on this but it's a lot of work
+2012-11-23 13:24:59 UTC <byorgey> hmm, not sure off the top of my head
+2012-11-23 13:25:05 UTC <byorgey> if I think of something I'll let you know
+2012-11-23 13:28:54 UTC <luite> i'd like to demo wolfgang obviously, but i'm not sure it will be ready in time
+2012-11-23 13:32:50 UTC <luite> hopefully this year i'll have an icfp / haskell symposium submission :)
+2012-11-23 13:33:05 UTC <luite> err, next year
+2012-11-23 13:42:48 UTC <byorgey> luite: sounds great =)
+2012-11-23 13:43:04 UTC <byorgey> luite: let me know if there are any ways I can help
+2012-11-23 13:46:13 UTC <luite> maybe some inline pragmas would be nice later, but i'm still doing more low-level things atm, memory management has to work better before blaze can work.
+2012-11-23 15:04:06 UTC <luite> hmm, 2 functional programming phd positions at chalmers
+2012-11-23 15:29:42 UTC <byorgey> chalmers sounds like a great place
+2012-11-23 15:30:05 UTC <byorgey> luite: why, are you thinking of applying for a PhD?
+2012-11-23 15:40:02 UTC <luite> byorgey: well i'd like to do a PhD
+2012-11-23 15:40:13 UTC <byorgey> cool
+2012-11-23 15:44:15 UTC <luite> but i'm not sure if applying there would be useful, i don't have any academic experience with FP (and i'm more interested in combinatorics, graph theory and algorithms etc actually, but there might be enough overlap, and good coworkers/students can help you get more interested in new stuff of course)
+2012-11-23 15:44:56 UTC <byorgey> I don't know if "academic" experience matters
+2012-11-23 15:45:03 UTC <byorgey> practical experience works just as well
+2012-11-23 15:45:13 UTC <luite> i've already spend 6 months at chalmers btw, but not that department
+2012-11-23 15:45:16 UTC <luite> spent
+2012-11-23 15:45:21 UTC <byorgey> ah, I forgot that
+2012-11-23 15:45:45 UTC <luite> gothenburg is a nice place to live, not cheap though
+2012-11-23 15:46:20 UTC <byorgey> but yeah, if you're interested in other stuff... good colleagues is a necessary, but not sufficient, criterion =)
+2012-11-23 15:48:13 UTC <luite> hehe right, well i do like fp obviously, but i don't know that much about the theory beyond some basic TaPL level :)
+2012-11-23 15:50:02 UTC <byorgey> right, fair enough
+2012-11-23 15:50:35 UTC <byorgey> I guess there's also a difference in US vs. European PhDs, in the US you wouldn't necessarily be expected to know much more than that (I didn't)
+2012-11-23 15:50:51 UTC <byorgey> but maybe since european PhDs are usually shorter you are expected to come in knowing more
+2012-11-23 15:51:06 UTC <luite> in the US you usually combine the master and phd in one program, right?
+2012-11-23 15:51:11 UTC <byorgey> right, yeah
+2012-11-23 15:51:21 UTC <luite> the chalmers program is 5 years
+2012-11-23 15:51:24 UTC <luite> for just PhD
+2012-11-23 15:51:30 UTC <byorgey> oh, that's pretty long then
+2012-11-23 15:51:52 UTC <luite> which includes 20% teaching, 80% research, should be enough time to get started :)
+2012-11-23 15:51:59 UTC <byorgey> I should think so =)
+2012-11-23 15:55:53 UTC <luite> in the netherlands it's usually 4 years
+2012-11-23 16:00:59 UTC <luite> bleh
+2012-11-23 16:25:33 UTC <byorgey> what in the heck, the cairo backend seems to be flaking out and generating empty PDF files sometimes
+2012-11-23 16:25:44 UTC <byorgey> but if you ask it to generate PNG or SVG they look fine
+2012-11-23 19:05:54 UTC <byorgey> `nand`: if someone asks me to create a diagram using the color ff6600, what's the right way to construct it?  Using the 'rgb' function from Data.Colour.SRGB.Linear ?
+2012-11-23 19:06:17 UTC <byorgey> I will accept "it depends" as an answer =)
+2012-11-23 19:12:27 UTC <byorgey> oh! haha, the arguments have to be between 0 and 1, not 0x00 to 0xff =P
+2012-11-23 19:12:48 UTC <luite> ff6600 is only a color if you have some color space in which it's specified ;p
+2012-11-23 19:13:12 UTC <byorgey> right.
+2012-11-23 19:13:24 UTC <byorgey> I mean I don't think this guy really knows anything about color either.
+2012-11-23 19:13:52 UTC <luite> usually a gamma of 2.0 or 2.2 is assumed, does the Linear thing mean that it's 1.0 gamma?
+2012-11-23 19:14:02 UTC <byorgey> I guess the question is really "if someone who doesn't really understand color asks for a PDF with something having color ff6600, what should I do in order to produce what they are most likely to actually mean"
+2012-11-23 19:14:56 UTC <byorgey> hmm, yes, probably I should actually use  Data.Colour.SRGB
+2012-11-23 19:15:22 UTC <luite> right, sRGB is an ok default
+2012-11-23 19:15:32 UTC <luite> sRGB24 seems to do what you're asking
+2012-11-23 19:16:57 UTC <byorgey> makes sense
+2012-11-23 19:16:58 UTC <byorgey> thanks!
+2012-11-23 19:17:24 UTC <byorgey> we should write up something for the diagrams user manual, "color for dummies"
+2012-11-23 19:28:36 UTC <fryguybob> Wait Williams colors are purple and gold?
+2012-11-23 19:29:05 UTC <fryguybob> ACTION really has some questions about byorgey's webbrowser's colors...
+2012-11-23 19:31:21 UTC <byorgey> fryguybob: http://archives.williams.edu/williamshistory/groups/williams-college-color.php
+2012-11-23 19:37:28 UTC <fryguybob> byorgey: But the mastodon looks purple and gold? https://www.facebook.com/photo.php?fbid=10152281359730643&set=p.10152281359730643&type=1&theater#
+2012-11-23 19:38:15 UTC <luite> oh it's without a 't' in english, didn't know that :)
+2012-11-23 19:38:30 UTC <luite> ("mastodont" in dutch)
+2012-11-23 19:39:02 UTC <byorgey> fryguybob: it looks purple and orange
+2012-11-23 19:39:21 UTC <luite> more blue than purple here
+2012-11-23 19:39:48 UTC <fryguybob> It's supposed to be blue and orange.
+2012-11-23 19:41:25 UTC <byorgey> so Google tells me
+2012-11-23 19:42:20 UTC <byorgey> hah, I saved the image and opened it in Gimp
+2012-11-23 19:42:35 UTC <byorgey> gimp says, "this image has an embedded color profile, would you like to convert it to sRGB?"
+2012-11-23 19:42:38 UTC <byorgey> so I clicked "convert"
+2012-11-23 19:42:46 UTC <byorgey> and now it looks blue
+2012-11-23 19:43:12 UTC <byorgey> I am coming to the conclusion that firefox is really confused about colors too
+2012-11-23 19:44:18 UTC <byorgey> this would also explain why every time I edit some photos and then upload them to smugmug the color looks wrong after they're uploaded
+2012-11-23 19:45:58 UTC <luite> hm, usually untagged files are assumed to be sRGB, but not all programs correctly map images correctly to the display device space
+2012-11-23 19:46:19 UTC <byorgey> I think maybe Firefox and I are through.  The only reason I was still using it was pentadactyl, but that still hasn't been updated for the latest firefox anyway
+2012-11-23 19:47:10 UTC <luite> do you have a monitor display profile configured?
+2012-11-23 19:48:33 UTC <luite> (i have to admit that i have no idea how to do that on linux)
+2012-11-23 19:50:13 UTC <byorgey> I wouldn't know
+2012-11-23 19:50:15 UTC <byorgey> I doubt it
+2012-11-23 19:50:23 UTC <fryguybob> byorgey: Judah is happy you now see his true colors :D
+2012-11-23 19:50:29 UTC <byorgey> excellent =)
+2012-11-23 19:51:38 UTC <luite> if you have a recent TFT screen with LED backlight, and you have two programs that display an image differently, the one that shows the most saturated image is probably the one not doing color management
+2012-11-23 19:52:01 UTC <luite> if it's an sRGB image
+2012-11-23 19:52:06 UTC <byorgey> that would be firefox
+2012-11-23 19:52:47 UTC <luite> hmm, odd, i thought firefox did color management if the file is tagged with a profile
+2012-11-23 19:53:51 UTC <luite> oh there's a bug in firefox where it doesn't use the configured monitor profile on X11
+2012-11-23 19:53:55 UTC <luite> but sRGB
+2012-11-23 19:54:40 UTC <luite> which means that the images are displayed too saturated on many screens
+2012-11-23 19:56:15 UTC <byorgey> yeah, that sounds like what I'm seeing
+2012-11-24 02:51:55 UTC <fryguybob> byorgey: Rebekah reminds me that purple and gold are the colors of Houghton... you know the school we live at... so at some point there will be some picture of Judah in Williams colors.
+2012-11-24 02:52:37 UTC <byorgey> excellent =)
+2012-11-24 02:53:37 UTC <byorgey> although probably firefox will show it as navy blue and fuchsia
+2012-11-24 02:54:02 UTC <fryguybob> I'll have to make several variations with color profiles baked in.
+2012-11-24 02:56:39 UTC <byorgey> but I think that picture with the mastodon *did* have a color profile baked in
+2012-11-24 03:02:00 UTC <fryguybob> Oh, I mean baked into the color bits.
+2012-11-24 03:02:11 UTC <byorgey> oh, right =)
+2012-11-24 12:44:31 UTC <`nand`> byorgey: I'll go with what luite said
+2012-11-24 12:44:44 UTC <`nand`> luite: yes the .Linear module is for linear light values
+2012-11-24 12:45:26 UTC <`nand`> byorgey: firefox has CMS support, but you need to enable it explicitly iirc; I don't know what the default is
+2012-11-24 12:45:52 UTC <`nand`> on the other hand, the only browser besides firefox that is color aware in the slightest is safari
+2012-11-24 12:46:34 UTC <`nand`> luite: firefox does CMS for everything if you set gfx.color_management.mode to a certain value, I think it was 4
+2012-11-24 12:46:47 UTC <`nand`> and only for tagged files in some other mode (the default, iirc)
+2012-11-24 12:47:19 UTC <`nand`> luite: you can also set the profile via gfx.color_management.display_profile
+2012-11-24 12:47:21 UTC <`nand`> and gfx.color_management.enablev4 to enable ICCv4 profiles
+2012-11-24 12:55:21 UTC <fryguybob> http://www.petapixel.com/2012/06/25/is-your-browser-color-managed/
+2012-11-24 12:56:12 UTC <fryguybob> Looks fine in Chrome for me.
+2012-11-24 12:56:26 UTC <luite> hm both chrome and firefox do it correctly here, no settings customized
+2012-11-24 12:57:11 UTC <luite> opera is wrong
+2012-11-24 12:57:39 UTC <`nand`> okay
+2012-11-24 12:57:45 UTC <`nand`> sounds like they decided to re-add it since the last time I had a look at chrome
+2012-11-24 12:57:48 UTC <`nand`> they originally removed it because it âslowed down rendering timesâ
+2012-11-24 12:59:38 UTC <luite> i doubt that's much noticeable, most display profiles are a 3x3 matrix and either a gamma function or a 1d gamma lut
+2012-11-24 12:59:46 UTC <luite> can easily be offloaded to the gpu even
+2012-11-24 13:00:12 UTC <`nand`> I did actually try it out with the ICC profile I usually used for firefox at the time
+2012-11-24 13:00:29 UTC <`nand`> it took a few minutes to render one image, then crashed on the next one
+2012-11-24 13:00:39 UTC <luite> that must be a terrible implementation o_O
+2012-11-24 13:09:25 UTC <fryguybob> links doesn't show the picture at all...
+2012-11-24 13:09:53 UTC <luite> hehe
+2012-11-24 13:14:35 UTC <`nand`> links is not compliant with the CSS color specifications :)
+2012-11-25 09:21:41 UTC <Ralith_> ACTION would be interested to read a basic intro to colors
+2012-11-25 09:24:27 UTC <luite> do you have any application in mind? or are you mainly interested in the theory?
+2012-11-25 09:31:44 UTC <Ralith_> the latter
+2012-11-25 09:31:59 UTC <Ralith_> though I tinker with graphics on occasion, so I might apply the knowledge at some point
