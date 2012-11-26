@@ -20,3 +20,5 @@ Shake
 *.aux
 *.log
 HCAR/*.pdf
+manual/icons/*.png
+manual/icons/*.png
