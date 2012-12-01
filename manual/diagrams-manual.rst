@@ -134,7 +134,7 @@ Before installing ``diagrams``, you will need the following:
     ``diagrams`` hard to use).
 
   * It is recommended (but not required) to have the latest release of
-    the `Haskell Platform`_ (currently XXX).  At the very least
+    the `Haskell Platform`_ (currently 2012.4.0.0).  At the very least
     you will want the `cabal-install`_ tool.
 
 .. _`cabal-install`: http://hackage.haskell.org/trac/hackage/wiki/CabalInstall
@@ -2828,6 +2828,13 @@ union or intersection.
 To obtain a rectangle corresponding to a diagram's bounding box, use
 `boundingRect`.
 
+Scale-invariance
+----------------
+
+.. container:: todo
+
+  Write about new `ScaleInv`
+
 Type reference
 ==============
 
@@ -2878,12 +2885,10 @@ Type class reference
 
 This section serves as a reference for all the type classes defined or
 used by diagrams; there are quite a lot. (Some might even say too
-many.)  Most, if not all, of these are also covered elsewhere, but it
-is useful to have them collected all in one place.
-
-.. container:: todo
-
-  Finish me...
+many!)  Most, if not all, of these are also covered elsewhere, but it
+is useful to have them collected all in one place.  The declaration of
+each type class is shown along with a short explanation, a list of
+instances, and links to further reading.
 
 Classes for transforming and combining
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2908,7 +2913,26 @@ other sorts of transformations; and contrariwise some things that
 support transformations are translation-invariant (like trails and
 vectors) and hence do not have a `HasOrigin` instance.
 
-Instances: XXX auto-generate?  Link somewhere else?
+The `moveOriginTo` method moves the *local origin* to the given
+point.
+
+Instances:
+
+  * The instances for `Point`, `SubMap`, `Subdiagram`, and `QDiagram`
+    all have the meaning you would expect.
+  * The instances for `Trace`, `Envelope`, and `Query` all obey the
+    invariant that, *e.g.*, ``getEnvelope . moveOriginTo p t ==
+    moveOriginTo p t . getEnvelope``. That is, if ``e`` is the
+    envelope/trace/query for diagram ``d``, moving the origin of ``e``
+    to ``p`` yields the envelope/trace/query for ``d`` with its origin
+    moved to ``p``.
+  * Container types can be translated by translating each
+    element (``(a,b)``, ``[a]``, `Set`, `Map`).
+  * Things wrapped in `TransInv` are not supposed to be affected by
+    translation, so the `TransInv` instance has `moveOriginTo = const
+    id`.
+  * The instance for `Transformation` constructs a translation and
+    composes it appropriately.
 
 Further reading: `Alignment`_.
 
@@ -2929,14 +2953,33 @@ linear transformations, in the case of translationally invariant
 things).
 
 Instances:
-  * `Double`: Transforming a `Double` XXX.
-  * `Rational`,
+  * `Prim`, `SubMap`, `Subdiagram`, `QDiagram`: these have the meaning
+    you would expect.
+  * Of course, `Transformation` is itself transformable, by composition.
   * Container types can be transformed by transforming each
-    element (``(t,t)``, ``(t,t,t)``, ``[t]``, ``Set t``, ``Map k t``)
-  * ``Deletable m``, ``Point v``, ``TransInv t``,
-    ``Transformation v``, ``Style v``, ``Attribute v``, ``Trace v``,
-    ``Envelope v``, ``NullPrim v``, ``Query v m``, ``Prim b v``, ``SubMap
-    b v m``, ``Subdiagram b v m``, ``QDiagram b v m``.
+    element (``(t,t)``, ``(t,t,t)``, ``[t]``, `Set`, `Map`).
+  * ``Point v`` is transformable whenever ``v`` is; translations
+    actually affect points (whereas they might not have an effect on
+    the underlying type ``v``).
+  * Anything wrapped in `TransInv` will not be affected by
+    translation.
+  * Anything wrapped in `ScaleInv` will not be affected by scaling.
+    See `Scale-invariance`_ for more information.
+  * Applying a transformation to a `Style`
+    simply applies it to every attribute.
+  * The meaning of transforming an `Attribute` depends on the
+    particular attribute.
+  * The instances for `Trace`, `Envelope`, and `Query` all obey the
+    invariant that, *e.g.*, ``getEnvelope . transform t == transform t
+    . getEnvelope``. That is, if ``e`` is the envelope/trace/query for
+    diagram ``d``, transforming ``e`` with ``t`` yields the
+    envelope/trace/query for ``d`` transformed by ``t``.
+  * The instance for `Deletable` simply lifts transformations on the
+    underlying type.
+  * The instance for `NullPrim` does nothing, since there is nothing
+    to transform.
+  * Uniform scales can be applied to `Double` and `Rational` values;
+    translations can also be applied but have no effect.
 
 Further reading: `Euclidean 2-space`_; `2D Transformations`_.
 
@@ -2966,7 +3009,11 @@ from the local origin of `a1` towards the old local origin of
 result is just a translated version of `a2`.  (In particular,
 `juxtapose` does not *combine* `a1` and `a2` in any way.)
 
-Instances: XXX
+Instances:
+  * `QDiagram` and `Envelope` are of course instances.
+  * Many container types are also instances, since container types
+    have `Enveloped` instances that work by superimposing all the
+    envelopes of the individual elements: `[a]`, `(a,b)`, `Set`, `Map`
 
 Further reading: `Juxtaposing diagrams`_; `Juxtaposing without composing`_.
 
@@ -2992,9 +3039,16 @@ vector onto another, which requires an inner product.  The
 requiring that the scalar type have multiplicative inverses and be
 linearly ordered.  See `OrderedField`_.
 
-.. container:: todo
-
-  Instances:
+Instances:
+  * The instance for `QDiagram` does what you would expect.
+  * The instance for `Subdiagram` yields an envelope positioned
+    relative to the parent diagram.
+  * Every `Point` has a "point envelope" consisting of the constantly
+    zero envelope translated to the given point.  Note this is not the
+    same as the empty envelope.
+  * Many container types have instances which work by combining all
+    the envelopes of the individual elements: `[a]`, `(a,b)`, `Set`,
+    `Map`.
 
 Further reading: `Envelopes and local vector spaces`_; `Working with
 envelopes`_; `Envelopes`_.
@@ -3014,9 +3068,14 @@ boundary of an object.
 > class (Ord (Scalar (V a)), VectorSpace (V a)) => Traced a where
 >   getTrace :: a -> Trace (V a)
 
-.. container:: todo
-
-  Instances:
+Instances:
+  * The instance for `QDiagram` does what you would expect.
+  * The instance for `Subdiagram` yields a trace positioned
+    relative to the parent diagram.
+  * The trace of a `Point` is the empty trace.
+  * Many container types have instances which work by combining all
+    the envelopes of the individual elements: `[a]`, `(a,b)`, `Set`,
+    `Map`.
 
 Further reading: `Traces`_.
 
@@ -3060,10 +3119,10 @@ the left with the existing `Style` (according to the `Monoid` instance
 of `Style`).
 
 Instances:
-  * `Style` itself is an instance
+  * `Style` itself is an instance.
   * Many container types are instances as long as their elements are;
     applying a style to a container simply applies the style uniformly
-    to every element: `(a,b)`, `Map k a`, `Set`, `[a]`
+    to every element: `(a,b)`, `Map k a`, `Set`, `[a]`.
   * Functions `(b -> a)` are an instance as long as `a` is.  (This can
     also be thought of as a "container type".)
   * Of course, `QDiagram b v m` is an instance, given a few
@@ -3198,56 +3257,8 @@ Backend
 
 The `Backend` class, defined in `Diagrams.Core.Types`:mod:, defines
 the primary interface for any diagrams rendering backend.  Unlike many
-of the other type classes in diagrams, it is quite large
-
-.. class:: lhs
-
-::
-
-> class (HasLinearMap v, Monoid (Render b v)) => Backend b v where
->   data Render  b v :: *
->   type Result  b v :: *
->   data Options b v :: *
->
->   -- | Perform a rendering operation with a local style.
->   withStyle      :: b          -- ^ Backend token (needed only for type inference)
->                  -> Style v    -- ^ Style to use
->                  -> Transformation v  -- ^ Transformation to be applied to the style
->                  -> Render b v -- ^ Rendering operation to run
->                  -> Render b v -- ^ Rendering operation using the style locally
->
->   -- | 'doRender' is used to interpret rendering operations.
->   doRender       :: b           -- ^ Backend token (needed only for type inference)
->                  -> Options b v -- ^ Backend-specific collection of rendering options
->                  -> Render b v  -- ^ Rendering operation to perform
->                  -> Result b v  -- ^ Output of the rendering operation
->
->   -- | 'adjustDia' allows the backend to make adjustments to the final
->   --   diagram (e.g. to adjust the size based on the options) before
->   --   rendering it.
->   adjustDia :: Monoid' m => b -> Options b v
->             -> QDiagram b v m -> (Options b v, QDiagram b v m)
->   adjustDia _ o d = (o,d)
->
->   -- | Render a diagram.
->   renderDia :: (InnerSpace v, OrderedField (Scalar v), Monoid' m)
->             => b -> Options b v -> QDiagram b v m -> Result b v
->   renderDia b opts d =
->     doRender b opts' . mconcat . map renderOne . prims $ d'
->       where (opts', d') = adjustDia b opts d
->             renderOne :: (Prim b v, (Split (Transformation v), Style v))
->                       -> Render b v
->             renderOne (p, (M t,      s))
->               = withStyle b s mempty (render b (transform t p))
->
->             renderOne (p, (t1 :| t2, s))
->               = withStyle b s t1 (render b (transform (t1 <> t2) p))
-
-In brief: `Render`, `Result`, and `Options` are type and data families
-which associate a custom rendering type, result type, and options
-record type to each backend.
-
-XXX
+of the other type classes in diagrams, it is quite large.  For a full
+discussion, see `The Backend class`_.
 
 MultiBackend
 ++++++++++++
@@ -3266,7 +3277,8 @@ meaning of this function depends on the backend.
 >   renderDias :: (InnerSpace v, OrderedField (Scalar v), Monoid' m)
 >              => b -> Options b v -> [QDiagram b v m] -> Result b v
 
-Instances: Postscript XXX
+So far, the only backend which supports multi-diagram rendering is
+postscript. XXX link to section on postscript backend
 
 Further reading: `Rendering backends`_; `Backends`_.
 
@@ -3317,18 +3329,37 @@ sensible way of defining constraint synonyms.
 Monoid'
 +++++++
 
-`Monoid' m` is a synonym for `(Semigroup m, Monoid m)`, defined in  This is
-something of an unfortunate hack: although every monoid is a semigroup
-mathematically speaking, `Semigroup` is not actually a superclass of
-`Monoid`, so if we want to use both we have to actually declare both.
+`Monoid' m` is a synonym for
+
+  `(Semigroup m, Monoid m)`,
+
+defined in `Diagrams.Core`:mod:. This is something of an unfortunate
+hack: although every monoid is a semigroup mathematically speaking,
+`Semigroup` is not actually a superclass of `Monoid`, so if we want to
+use both we have to actually declare both.
 
 HasLinearMap
 ++++++++++++
 
+`HasLinearMap v` is a synonym for
 
+  `(HasBasis v, HasTrie (Basis v), VectorSpace v)`,
+
+all of which are necessary for constructing linear maps over the
+vector space `v`.
 
 OrderedField
 ++++++++++++
+
+`OrderedField s`, defined in `Diagrams.Core.Envelope`:mod:, is a
+synonym for
+
+  `(Fractional s, Floating s, Ord s, AdditiveGroup s)`,
+
+*i.e.* a floating-point type which is totally ordered.  When dealing
+with `Envelopes` it's often necessary to have scalars which support
+all four arithmetic operations as well as square root, and can be
+compared for ordering.
 
 Type family reference
 ---------------------
@@ -3336,14 +3367,33 @@ Type family reference
 V
 ~
 
+The `V` type family is defined in `Diagrams.Core.V`.  The idea is that
+many types have an "associated" vector space, *i.e.* the vector space
+in which they "live".  `V` simply maps from types to their associated
+vector space.
+
 Render
 ~~~~~~
+
+`Render` is an associated data family of the `Backend` class.  It
+determines the type of rendering operations for a given backend.  For
+more information, see `The Backend class`_.
 
 Result
 ~~~~~~
 
+`Result` is an associated type family of the `Backend` class.  It
+determines the type of the final result obtained from the backend
+after rendering a complete diagram.  For more information, see `The
+Backend class`_.
+
 Options
 ~~~~~~~
+
+`Options` is an associated data family of the `Backend` class.  It
+determines the type of options which can be passed to the backend when
+initiating a rendering operation.  For more information, see `The
+Backend class`_.
 
 Tips and tricks
 ===============
@@ -3751,7 +3801,7 @@ wiki`_.
 
 .. _`the diagrams wiki`: http://www.haskell.org/haskellwiki/Diagrams/Projects#Backends
 
-.. container:: todo
+.. container:: todo  XXX
 
    Write a bit about each of these backends.
 
@@ -3829,11 +3879,12 @@ The ``Renderable`` class
 Related projects
 ================
 
-.. container:: todo
+.. container:: todo  XXX
 
    * diagrams-spiro
    * diagrams-ghci
    * diagrams-hint
    * hs-logo
+   * gtk-toy-diagrams
 
    * see diagrams wiki

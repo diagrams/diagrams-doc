@@ -83,7 +83,7 @@
         to build docs)
   + [-] update user manual
     + [X] add "closable" to list of type classes
-    + [ ] add "types" section
+    + [X] add "types" section
     + [ ] other updates as needed, see especially intro etc.
   + [ ] clean up ScaleInv and add to manual
   + [X] fix build bug with manual+web: image links on the manual page
@@ -99,6 +99,10 @@
     + [ ] diagrams-svg
     + [X] diagrams-contrib
     + [ ] website
+  + [ ] postscript backend
+    - [ ] add to 'diagrams' package (with flag)
+    - [ ] add to 'builder'
+    - [ ] write about it in user manual
   + [ ] 0.5 -> 0.6 migration page on wiki
   + [ ] test build:
     - [ ] make testing script -- use cabal-dev -w -j ?
