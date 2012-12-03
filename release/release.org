@@ -91,6 +91,7 @@
   + [ ] add boundaryFrom or something like that? (see migration page)
   + [X] set up test/comparison framework
   + [ ] fix/decide what to do re: SVG transparent text
+  + [ ] convert force-layout to lens and release
   + [ ] build API docs
   + [-] update CHANGES files and release info on website
     + [ ] diagrams-core
@@ -104,6 +105,7 @@
     - [ ] add to 'builder'
     - [ ] write about it in user manual
   + [ ] 0.5 -> 0.6 migration page on wiki
+  + [ ] test building with new vector-space (if it's released)
   + [ ] test build:
     - [ ] make testing script -- use cabal-dev -w -j ?
     - [ ] ghc 7.0.4
