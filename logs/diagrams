@@ -25164,3 +25164,165 @@
 2012-11-25 09:24:27 UTC <luite> do you have any application in mind? or are you mainly interested in the theory?
 2012-11-25 09:31:44 UTC <Ralith_> the latter
 2012-11-25 09:31:59 UTC <Ralith_> though I tinker with graphics on occasion, so I might apply the knowledge at some point
+2012-11-28 06:07:48 UTC <luite> morning mgsloan \o.
+2012-11-28 06:08:06 UTC <mgsloan> 'evening luite!
+2012-11-28 06:09:16 UTC <mgsloan> how's it going?  What have you been working on lately?
+2012-11-28 06:09:20 UTC <luite> ghcjs
+2012-11-28 06:10:02 UTC <luite> you?
+2012-11-28 06:10:54 UTC <luite> i'm going to work on ghcjs until feb, then integrate it in wolfgang
+2012-11-28 06:12:14 UTC <mgsloan> awesome!!!
+2012-11-28 06:46:13 UTC <luite> trying to implement part of iconv now, in js, to get the GHC test suite running
+2012-11-28 07:04:15 UTC <mgsloan> sorry, got distracted!!
+2012-11-28 07:04:26 UTC <mgsloan> I'd be more in favour of wolfgang sooner than later, but if it's mind blowingly awesome from ghcjs, more power to you!
+2012-11-28 07:04:49 UTC <mgsloan> Last week I was cleaning up gtk-toy-diagrams a bit
+2012-11-28 07:05:05 UTC <mgsloan> hoping to get it release worthy in time for the next diagrams release
+2012-11-28 07:05:45 UTC <mgsloan> but got sucked back into working on some lens stuff a couple days ago  (the lens TH DSL, and last night re-writing Control.Newtype in a lensy style)
+2012-11-28 07:19:50 UTC <luite> ah that's arguably more interesting code than low-level ghcjs stuff :p
+2012-11-28 07:21:50 UTC <mgsloan> question is, which is more impactful!  My bet's on ghcjs
+2012-11-28 07:22:21 UTC <mgsloan> though lens is pretty awesome, I'm just pitching in a little bit
+2012-11-28 07:22:24 UTC <luite> the code is really ugly now, but i don't want to do any major refactoring until the test suite works
+2012-11-28 07:23:15 UTC <luite> which means stdout has to work, which means locale and output buffering need tow ork
+2012-11-28 07:30:39 UTC <mgsloan> hehe, oh the things we take for granted in native development
+2012-11-28 07:31:51 UTC <luite> yeah GHC uses some annoying stuff in the base package for this, pointers are still relatively easy to implement in javascript (just an array and an offset), but pointers to pointers are causing some problems
+2012-11-28 07:32:38 UTC <luite> eventually, we can hopefully get this as an extra platform in base, with some #ifdef
+2012-11-28 07:32:42 UTC <luite> but atm it's easier just to emulate it on a lower level
+2012-11-28 07:34:55 UTC <luite> most end users probably wouldn't really use stdout in web applications
+2012-11-28 07:35:54 UTC <luite> although it's possible to do stdout.write = function(array, offset, len) { window.alert(decodeUtf8(array, offset, len)); }
+2012-11-30 16:33:28 UTC <byorgey> my son appears to have typed his own name: https://github.com/byorgey/noah-emacs/blob/master/noah.txt#L291
+2012-11-30 16:35:02 UTC <fryguybob> hehe
+2012-11-30 16:35:58 UTC <fryguybob> Clearly we need to make a diagrams based cross platform version of Baby Smash.
+2012-11-30 16:41:06 UTC <byorgey> woah, I didn't know about baby smash
+2012-11-30 16:45:06 UTC <fryguybob> It needs a feature where you get some nice factor diagrams when you type your own name.
+2012-11-30 16:45:06 UTC <byorgey> oh, .NET =(
+2012-11-30 16:45:06 UTC <fryguybob> In his defence he was one on the .NET design team.
+2012-11-30 16:45:07 UTC <byorgey> oh, I have nothing against .NET, except that I can't run it =P
+2012-11-30 16:48:55 UTC <fryguybob> ACTION is sad that that is often the case, yet usually you can run Java :(
+2012-12-01 02:44:38 UTC <byorgey> fryguybob: are you planning to release diagrams-postscript on Hackage?
+2012-12-01 02:46:06 UTC <fryguybob> byorgey: Yeah what would be good timing for that?
+2012-12-01 02:46:47 UTC <byorgey> fryguybob: oh, right, I guess it depends on unreleased versions of diagrams-core and -lib, duh
+2012-12-01 02:47:37 UTC <byorgey> but I wanted to add it to the 'diagrams' package so you can install it with  'cabal install diagrams -fpostscript'
+2012-12-01 02:47:45 UTC <byorgey> if it's going to be official
+2012-12-01 02:48:01 UTC <byorgey> so the best timing would be right *after* I upload diagrams-lib but right *before* I upload diagrams ;)
+2012-12-01 02:48:51 UTC <fryguybob> :D
+2012-12-01 02:50:29 UTC <byorgey> so I don't know what December 11 looks like for you, but that's when I (plan to be) uploading stuff
+2012-12-01 02:50:44 UTC <byorgey> alternatively you could just generate a tarball and send it to me, and I could upload it
+2012-12-01 02:52:48 UTC <fryguybob> byorgey: I have an out of order superscalar processor with some form of fancy branch prediction due on the 12th.
+2012-12-01 02:53:03 UTC <fryguybob> I don't expect to be getting much done until after that :(
+2012-12-01 02:53:04 UTC <byorgey> ah.
+2012-12-01 02:55:01 UTC <byorgey> well, I can upload it for you if you like.  In fact you don't even have to generate a tarball, I can easily do that too
+2012-12-01 02:55:28 UTC <byorgey> unless there's other stuff you still want to do with it before releasing.
+2012-12-01 02:55:41 UTC <byorgey> we can also easily wait and release it later.  there's no rush.
+2012-12-01 02:56:21 UTC <fryguybob> I think the only think I wanted to do was some Haddockifying.
+2012-12-01 02:59:14 UTC <byorgey> OK. we can just wait to release it until you have some time to do Haddockifying.
+2012-12-01 02:59:46 UTC <fryguybob> ok sounds good.
+2012-12-01 02:59:57 UTC <fryguybob> Sorry our timing is slighgly off.
+2012-12-01 03:01:58 UTC <byorgey> fryguybob: no worries.  I probably should have consulted you before scheduling the release.
+2012-12-01 03:03:48 UTC <fryguybob> byorgey: Might not have helped as our assignments got shuffled and merged anyway.
+2012-12-01 03:04:21 UTC <byorgey> hehe, I see
+2012-12-01 03:04:50 UTC <fryguybob> The 12th is approaching too quickly...
+2012-12-01 03:06:30 UTC <fryguybob> I am getting even more motivated to do a circuit layout module for diagrams-contrib though :D
+2012-12-01 03:06:52 UTC <byorgey> sounds fun =)
+2012-12-01 03:08:06 UTC <fryguybob> I really should checkout lava now that I have some sense of what goes on in the architecture world.
+2012-12-01 19:03:00 UTC <fryguybob> ACTION writes an EDSL to test his branch predictor ... in C :(
+2012-12-01 20:10:48 UTC <luite> hm
+2012-12-01 20:17:24 UTC <fryguybob> And it works!
+2012-12-01 20:34:13 UTC <luite> my stuff doesn't :/
+2012-12-01 20:40:23 UTC <fryguybob> luite: Most of everything else doesn't work for me either...
+2012-12-02 13:42:13 UTC <byorgey> http://hackermonthly.com/issue-31.html
+2012-12-02 13:42:20 UTC <byorgey> diagrams made the cover of Hacker Monthly! =D
+2012-12-02 16:55:56 UTC <mekeor> hey folks, i'm using the "rotate" function and wonder how exactly it works. i don't quite get how it rotates the object it's applied onâ¦ â so my precise question is which is the fix-point (around which it's rotated)?
+2012-12-02 16:59:58 UTC <morel> oh okayâ¦ it rotates around the "local origin"â¦
+2012-12-02 17:00:15 UTC <morel> was a little hidden in the docsâ¦ but now it's clear. thanks :)
+2012-12-02 17:00:57 UTC <morel> i'm gonna use rotateAbout, i think =)
+2012-12-02 17:10:30 UTC <byorgey> morel: glad you figured it out =)
+2012-12-02 17:13:26 UTC <byorgey> ACTION improves the documentation
+2012-12-02 17:14:29 UTC <morel> :)
+2012-12-02 17:14:59 UTC <morel> i actually still don't quite get where the local origin of my object isâ¦ :/
+2012-12-02 17:15:26 UTC <morel> ACTION goes afk, will come backâ¦
+2012-12-02 17:15:28 UTC <byorgey> morel: you can use 'showOrigin' to show it
+2012-12-02 17:37:10 UTC <morel> cooool! thanks, byorgey :D
+2012-12-02 18:12:54 UTC <morel> how are overlapping objects organised?
+2012-12-02 18:46:33 UTC <fryguybob> byorgey: Awesome!
+2012-12-02 19:31:50 UTC <luite> rf=werghwq
+2012-12-02 21:33:06 UTC <luite> hm oops didn't notice that, for some reason my server has load spikes today
+2012-12-02 21:33:10 UTC <luite> so it becomes unresponsive
+2012-12-02 21:38:33 UTC <luite> hm looks like one of the hdds is dying
+2012-12-02 21:38:52 UTC <luite> [6841600.870117] ata1.00: failed command: READ FPDMA QUEUED
+2012-12-02 22:00:46 UTC <luite> disabled the drive in the array
+2012-12-03 17:24:27 UTC <`nand`> byorgey: can I write literate haskell latex papers using that diagrams thing without them conflicting with the haskell program being literately included?
+2012-12-03 19:01:15 UTC <byorgey> `nand`: yes
+2012-12-03 19:01:51 UTC <byorgey> `nand`: the diagrams are defined in special blocks which are "comments" as far as the literate Haskell preprocessor is concerned
+2012-12-03 19:01:59 UTC <`nand`> ah
+2012-12-03 19:02:14 UTC <`nand`> ACTION was not quite sure how literate haskell + latex works
+2012-12-03 19:02:42 UTC <byorgey> code blocks are marked with \begin{code} ... \end{code}
+2012-12-03 19:02:53 UTC <byorgey> everything else is a comment
+2012-12-03 19:07:31 UTC <`nand`> speaking of which; I have no idea how to write nice latex documents for Haskell code. I'm supposed to be writing a project documentation for âJugend Forscht 2012/13â, but I want it to look as pretty as the papers often produced by the likes of SPJ and friends
+2012-12-03 19:07:52 UTC <`nand`> with next to zero LaTeX experience beyond the absolute basics :)
+2012-12-03 19:09:31 UTC <byorgey> `nand`: well, you'll want to use lhs2TeX
+2012-12-03 19:09:49 UTC <byorgey> http://hackage.haskell.org/package/lhs2tex
+2012-12-03 19:10:03 UTC <byorgey> that's what everyone uses, it's quite nice
+2012-12-03 19:10:17 UTC <`nand`> awesome
+2012-12-03 19:11:10 UTC <byorgey> `nand`: I'm also happy to provide feedback/answer questions, like "how do I do X" or "here's what I have so far, how can I make it look better"
+2012-12-03 19:12:19 UTC <`nand`> there doesn't seem to be a link to the manual for version 1.8 on the homepage
+2012-12-03 19:12:25 UTC <`nand`> 1.18
+2012-12-03 19:13:04 UTC <`nand`> I'll just use the manual for 1.17 and assume the API hasn't changed
+2012-12-03 19:21:19 UTC <byorgey> yeah, I don't think it's changed much
+2012-12-03 19:30:13 UTC <`nand`> hmm
+2012-12-03 19:30:31 UTC <byorgey> hmm?
+2012-12-03 19:31:06 UTC <`nand`> am I expected to hide stuff like imports and LANGUAGE pragmas, if I only want to demonstrate the code, and not give the full file? (but it should still be runnable)
+2012-12-03 19:32:47 UTC <byorgey> sure, you can do   %if False \n \begin{code} ... \end{code} \n %endif
+2012-12-03 19:33:09 UTC <`nand`> ah
+2012-12-03 19:35:44 UTC <`nand`> whoa
+2012-12-03 19:35:59 UTC <`nand`> vim has a lhs mode, that actually highlights the LaTeX stuff correctly and the haskell stuff inside it correctly too
+2012-12-03 19:39:13 UTC <byorgey> oh, neat =)
+2012-12-03 19:40:38 UTC <`nand`> is it common to use the two-column format? I have no idea what the expectations for this thing I'm supposed to write are
+2012-12-03 19:41:05 UTC <`nand`> all I know is I'm not supposed to use a font smaller than 10pt and I must provide a ToC, references, etc.
+2012-12-03 19:46:03 UTC <`nand`> I'm looking at the paper âGiving Haskell a Promotionâ, for example; and I like how it looks
+2012-12-03 19:47:03 UTC <`nand`> is that using lhs2TeX? I see for example that the kind * looks funny (it gets turned into some star); and PolyKinds variables do too (there's some squiggly X)
+2012-12-03 20:12:37 UTC <byorgey> `nand`: two-column is common for papers published in conferences
+2012-12-03 20:13:10 UTC <byorgey> `nand`: for a document that's supposed to be project documentation I would use one column and a bigger font size (i.e. just the default font size)
+2012-12-03 20:13:54 UTC <byorgey> `nand`: and yes, the promotion paper uses lhs2TeX.  I can send you the sources if you'd like to see how it's done
+2012-12-03 20:14:11 UTC <`nand`> sure
+2012-12-03 20:14:25 UTC <byorgey> `nand`: special symbols, etc. can be accomplished with the %format directive, which is explained in the lhs2tex manual
+2012-12-03 20:20:32 UTC <byorgey> `nand`: what's your email?
+2012-12-03 20:20:37 UTC <`nand`> nand@lavabit.com
+2012-12-03 20:29:19 UTC <byorgey> `nand`: send
+2012-12-03 20:29:22 UTC <byorgey> *sent
+2012-12-03 20:36:15 UTC <`nand`> looks good, thanks :)
+2012-12-04 15:33:26 UTC <`nand`> byorgey: I'm having some difficulties with LaTeX and German umlauts
+2012-12-04 15:33:45 UTC <`nand`> What's the proper procedure for getting them to render properly?
+2012-12-04 15:34:40 UTC <`nand`> in particular, I want to be able to input them directly, without using the "a "s representations
+2012-12-04 15:34:54 UTC <`nand`> if I use those, it works fine; but if I just input Ã¤Ã, they don't get displayed
+2012-12-04 15:35:39 UTC <fryguybob> \"a ?
+2012-12-04 15:36:17 UTC <fryguybob> I think there is a TeX varient that avoids the pain perhaps: http://en.wikipedia.org/wiki/XeTeX ?
+2012-12-04 15:36:22 UTC <`nand`> I'm using XeTeX
+2012-12-04 15:37:31 UTC <fryguybob> Maybe you need to include some package to "turn on" the unicode support.
+2012-12-04 15:38:33 UTC <fryguybob> `nand`: I'm sure someone in -blah would know.
+2012-12-04 15:56:15 UTC <`nand`> I worked around it :)
+2012-12-04 15:56:20 UTC <`nand`> using sed to replace Ã¤ by "a
+2012-12-04 18:23:10 UTC <byorgey> `nand`: \usepackage[german]{babel}
+2012-12-04 18:23:25 UTC <byorgey> that should let you use Ã¤ directly
+2012-12-04 18:23:27 UTC <`nand`> byorgey: I had that; actually, [ngerman] for the new german
+2012-12-04 18:23:32 UTC <byorgey> oh, ok
+2012-12-04 18:23:35 UTC <byorgey> and it didn't work?
+2012-12-04 18:25:04 UTC <byorgey> oh, you also need to load  inputenc  or something like that
+2012-12-04 18:25:21 UTC <byorgey> \usepackage[utf8]{inputen[}
+2012-12-04 18:25:26 UTC <byorgey> err, \usepackage[utf8]{inputenc}
+2012-12-04 18:25:32 UTC <`nand`> \usepackage[utf8]{inputenc} errors in XeTeX
+2012-12-04 18:25:32 UTC <byorgey> assuming you are using UTF-8
+2012-12-04 18:25:36 UTC <`nand`> which apparently isn't supposed to be used at all
+2012-12-04 18:25:37 UTC <byorgey> o.O
+2012-12-04 18:25:47 UTC <`nand`> I actually found a âproperâ solution
+2012-12-04 18:25:54 UTC <`nand`> or rather, -blah did
+2012-12-04 18:26:10 UTC <`nand`> \usepackage{fontspec}
+2012-12-04 18:26:12 UTC <`nand`> \defaultfontfeatures{Mapping=tex-text}
+2012-12-04 18:26:23 UTC <byorgey> wat
+2012-12-04 18:26:32 UTC <byorgey> ok, I believe you =)
+2012-12-04 18:26:34 UTC <byorgey> glad you got it to work =)
+2012-12-05 22:03:47 UTC <byorgey> fryguybob: so did the documentation for ScaleInv make sense?
+2012-12-05 22:22:55 UTC <fryguybob> byorgey: Yes.  Much better then before :D.
+2012-12-05 22:25:44 UTC <fryguybob> byorgey: I think there might be some properties that show that it has good behavior that we could show.  Such as showing that scaleInv gives the same result regardless of how you associate the transform applicaions.
+2012-12-05 22:26:22 UTC <fryguybob> ACTION is not sure he can make much sense right now as his brain is concentrated on an out of order pipeline at the moment.
+2012-12-05 23:38:06 UTC <byorgey> fryguybob: good thinking.  I suppose that should even be a law of the Transformable class.
+2012-12-05 23:38:27 UTC <byorgey> well, at least  transform t1 . transform t2 = transform (t1 <> t2)  should be a law
+2012-12-06 00:43:52 UTC <fryguybob> byorgey: Yeah, I think that gets to the heart of it.
