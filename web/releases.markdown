@@ -2,6 +2,26 @@
 title: Releases
 ---
 
+diagrams 0.6: 11 December 2012
+==============================
+
+[diagrams-core](http://hackage.haskell.org/package/diagrams%2Dcore) 0.6
+----------------
+
+[active]
+
+[diagrams-lib]
+
+[diagrams-contrib]
+
+[diagrams-cairo]
+
+[diagrams-gtk]
+
+[diagrams-svg]
+
+[diagrams-builder]
+
 diagrams 0.5: 9 March 2012
 ==========================
 
