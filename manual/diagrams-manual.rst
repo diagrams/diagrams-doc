@@ -2831,9 +2831,26 @@ To obtain a rectangle corresponding to a diagram's bounding box, use
 Scale-invariance
 ----------------
 
-.. container:: todo
+The `ScaleInv` wrapper can be used to create "scale-invariant"
+objects. (Note that `ScaleInv` is not exported from
+`Diagrams.Prelude`:mod:; to use it, import
+`Diagrams.TwoD.Transform`:mod:.)  A picture is worth a thousand words:
 
-  Write about new `ScaleInv`
+.. class:: dia-lhs
+
+::
+
+> import Diagrams.TwoD.Transform
+>
+> arrowhead = eqTriangle 0.5 # fc black # rotateBy (-1/4)
+> arrow hd  = (origin ~~ (3 & 0)) <> hd # translateX 3
+>
+> arrow1 = arrow arrowhead
+> arrow2 = arrow (scaleInv arrowhead unitX)
+>
+> showT tr = arrow1 # tr ||| strutX 1 ||| arrow2 # tr
+> 
+> example = showT id
 
 Type reference
 ==============
