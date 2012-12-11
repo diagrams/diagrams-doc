@@ -156,7 +156,7 @@ The `diagrams`:pkg: package is a convenience wrapper that simply pulls
 in (by default) four other packages:
 
 * `diagrams-core`:pkg: (core data
-type definitions and utilities),
+   type definitions and utilities),
 * `diagrams-lib`:pkg: (standard primitives and combinators),
 * `diagrams-contrib`:pkg: (user-contributed extensions), and
 * `diagrams-svg`:pkg: (Haskell-native backend generating SVG files).
@@ -2855,23 +2855,47 @@ Scale-invariance
 The `ScaleInv` wrapper can be used to create "scale-invariant"
 objects. (Note that `ScaleInv` is not exported from
 `Diagrams.Prelude`:mod:; to use it, import
-`Diagrams.TwoD.Transform`:mod:.)  A picture is worth a thousand words:
+`Diagrams.TwoD.Transform`:mod:.)  In the diagram below, the same
+transformation is applied to each pair of arrows; the arrowheads on
+the right are wrapped in `ScaleInv` but the ones on the left are not.
 
 .. class:: dia-lhs
 
 ::
 
+> {-# LANGUAGE TypeSynonymInstances, FlexibleInstances #-}
+>
 > import Diagrams.TwoD.Transform
 >
+> class Drawable d where
+>   draw :: d -> Diagram Cairo R2
+>
+> instance Drawable (Diagram Cairo R2) where
+>   draw = id
+>
+> instance Drawable a => Drawable (ScaleInv a) where
+>   draw = draw . unScaleInv
+>
+> instance (Drawable a, Drawable b) => Drawable (a,b) where
+>   draw (x,y) = draw x <> draw y
+>
+> arrowhead, shaft :: Diagram Cairo R2
 > arrowhead = eqTriangle 0.5 # fc black # rotateBy (-1/4)
-> arrow hd  = (origin ~~ (3 & 0)) <> hd # translateX 3
+> shaft = origin ~~ (3 & 0)
 >
-> arrow1 = arrow arrowhead
-> arrow2 = arrow (scaleInv arrowhead unitX)
+> arrow1 = (shaft,          arrowhead       # translateX 3)
+> arrow2 = (shaft, scaleInv arrowhead unitX # translateX 3)
 >
-> showT tr = arrow1 # tr ||| strutX 1 ||| arrow2 # tr
+> showT tr = draw (arrow1 # transform tr) 
+>        ||| strutX 1 
+>        ||| draw (arrow2 # transform tr)
 >
-> example = showT id
+> example = vcat' with {sep = 0.5} 
+>             (map (centerX . showT)
+>               [ scalingX (1/2)
+>               , scalingY 2
+>               , scalingX (1/2) <> rotation (-1/12 :: CircleFrac)
+>               ])
 
 Type reference
 ==============
