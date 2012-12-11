@@ -43,10 +43,9 @@ GHC/The Haskell Platform
 ------------------------
 
 You'll need a recent version of the [Glasgow Haskell
-Compiler](http://haskell.org/ghc) (6.12.3 *or* 7.0.2 or later; avoid
-7.0.1 since it has a typechecking bug which some of the path drawing
-functions run afoul of), as well as some standard libraries and tools.
-There are several methods for obtaining these:
+Compiler](http://haskell.org/ghc) (7.0.2 or later), as well as some
+standard libraries and tools.  There are several methods for obtaining
+these:
 
 * [The Haskell Platform](http://hackage.haskell.org/platform/) has
 everything you need in one convenient package. If you are unsure, you
@@ -57,31 +56,6 @@ install things yourself, just make sure you have
 [GHC](http://haskell.org/ghc) and a recent version of the
 [cabal-install
 tool](http://hackage.haskell.org/trac/hackage/wiki/CabalInstall).
-
-Cairo
------
-
-`diagrams` has been designed from the
-ground up with modularity in mind, and makes plugging in new rendering
-backends extremely easy.  Eventually there will be many different
-rendering backends (indeed, there are several backend projects
-underway); at the moment, however, the only seriously supported one is
-[cairo](http://cairographics.org/).  If you don't already have them,
-you will need to [install the cairo development
-libraries](http://cairographics.org/download/).
-
-If you are on Linux, you can now install the Haskell Cairo bindings with
-
-    cabal install gtk2hs-buildtools cairo
-
-Hopefully this should Just Work (tm). (Reports to the contrary gladly
-welcomed.)  If you have already installed gtk2hs-related packages
-before, you can probably omit `gtk2hs-buildtools`.
-
-If you are on Windows or OS X, installing cairo can be more
-difficult. [See the diagrams
-wiki](http://www.haskell.org/haskellwiki/Diagrams/Install) for the
-latest information, instructions, and workarounds.
 
 Installation
 ------------
@@ -100,10 +74,15 @@ three packages:
 * `diagrams-lib` is a standard library of drawing primitives,
   attributes, and combinators built on top of the core library.
 
-* `diagrams-cairo` is a backend which renders diagrams using cairo.
+* `diagrams-contrib` is a library of user-contributed extensions.
 
-You may also wish to install `diagrams-contrib`, a collection of
-user-contributed tools and extensions.
+* `diagrams-svg` is a backend which renders diagrams as SVG files.
+
+There are other backends as well; see the
+[diagrams package documentation](http://hackage.haskell.org/package/diagrams)
+and the
+[diagrams wiki](http://www.haskell.org/haskellwiki/Diagrams/Projects#Backends)
+for more information.
 
 Philosophy
 ==========
@@ -142,7 +121,7 @@ with the following contents (or you can simply edit this file itself):
 > {-# LANGUAGE NoMonomorphismRestriction #-}
 >
 > import Diagrams.Prelude
-> import Diagrams.Backend.Cairo.CmdLine
+> import Diagrams.Backend.SVG.CmdLine
 >
 > main = defaultMain (circle 1)
 
@@ -152,7 +131,7 @@ confused by the resulting error messages).
 
 The first `import` statement brings into scope the entire diagrams DSL
 and standard library.  The second `import` is so that we can use the
-cairo backend for rendering diagrams.  Among other things, it provides
+SVG backend for rendering diagrams.  Among other things, it provides
 the function `defaultMain`, which takes a diagram as input (in this
 case, a circle of radius 1) and creates a command-line-driven
 application for rendering it.
@@ -162,14 +141,14 @@ Let's compile and run it:
     $ ghc --make DiagramsTutorial.lhs
     [1 of 1] Compiling Main             ( DiagramsTutorial.lhs, DiagramsTutorial.o )
     Linking DiagramsTutorial ...
-    $ ./DiagramsTutorial -o circle.pdf -w 400
+    $ ./DiagramsTutorial -o circle.svg -w 400
 
-If you now view `circle.pdf` in your favorite PDF viewer, you should
+If you now view `circle.svg` in your favorite web browser, you should
 see an unfilled black circle on a white background (actually, it's on
-a transparent background, but most PDF viewers I know of use white).
+a transparent background, but most browsers I know of use white).
 
 Be careful not to omit the `-w 400` argument!  This specifies that the
-width of the output file should be 400 pixels, and the height should
+width of the output file should be 400 units, and the height should
 be determined automatically.  You can also specify just a height
 (using `-h`), or both a width and a height if you know the exact
 dimensions of the output image you want (note that the diagram will
@@ -178,9 +157,6 @@ not match).  If you do not specify a width or a height, the absolute
 scale of the diagram itself will be used, which in this case would be
 rather tiny---only 2x2.
 
-A few more things to note: in addition to PDF, the cairo backend can
-generate `.png`, `.ps`, and `.svg` formats; the format to use is
-determined automatically by the extension of the output file name.
 There are several more options besides `-o`, `-w`, and `-h`; you can
 see what they are by typing `./DiagramsTutorial --help`.
 
@@ -482,15 +458,15 @@ Next steps
 
 This tutorial has really only scratched the surface of what is
 possible! Included among the many things *not* covered by this
-tutorial are paths, splines, text, a wide array of predefined shapes,
-named subdiagrams, animation...  Here are pointers to some resources
-for learning more:
+tutorial are paths, splines, text, traces, a wide array of predefined
+shapes, named subdiagrams, animation...  Here are pointers to some
+resources for learning more:
 
 * The diagrams [user manual](/manual/diagrams-manual.html) goes into
   much more depth on all the topics covered in this tutorial, plus many
   others, and includes lots of illustrative examples.  If there is anything in the manual that you find
 unclear, confusing, or omitted, please
-[report it as a bug](http://code.google.com/p/diagrams/issues/list)!
+[report it as a bug](http://github.com/diagrams/diagrams-doc/issues)!
 
 * The diagrams-lib API is generally well-documented; start with the
 documentation for
@@ -498,11 +474,7 @@ documentation for
 and then drill down from there to learn about whatever you are
 interested in.  If there is anything in the API documentation that you find
 unclear or confusing, please
-[report it as a bug](http://code.google.com/p/diagrams/issues/list)!
-
-* The `diagrams-cairo` package includes a number of examples.
-Download the source tarball with `cabal unpack diagrams-cairo` and
-look in the `examples/` directory.
+[report it as a bug](http://github.com/diagrams/diagrams-lib/issues)!
 
 * If you run into difficulty or have any questions, join the `#diagrams`
 IRC channel on freenode.org, or the [diagrams-discuss mailing
