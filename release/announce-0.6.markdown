@@ -47,7 +47,9 @@ For the truly impatient:
 
     cabal install diagrams
 
-Diagrams is supported under GHC 7.0 through 7.6.
+Diagrams is supported under GHC 7.0 through 7.6, with the exception
+that the cairo and gtk backends do not build under GHC 7.0 (but the SVG
+backend does), and the gtk backend does not build under GHC 7.6.
 
 To get started with diagrams, read the
 [quick tutorial](http://projects.haskell.org/diagrams/tutorial/DiagramsTutorial.html),
