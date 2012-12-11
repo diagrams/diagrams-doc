@@ -81,20 +81,19 @@
   + [X] add to contributing page: documentation, CHANGES
         (need to finish porting build system first, so it's clear how
         to build docs)
-  + [-] update user manual
+  + [X] update user manual
     + [X] add "closable" to list of type classes
     + [X] add "types" section
-    + [ ] other updates as needed, see especially intro etc.
-  + [-] ScaleInv
+    + [X] other updates as needed, see especially intro etc.
+  + [X] ScaleInv
     + [X] clean up
-    + [ ] add to manual
+    + [X] add to manual
   + [X] fix build bug with manual+web: image links on the manual page
         are to .make/...  Need to make them relative to root.
-  + [ ] add boundaryFrom or something like that? (see migration page)
   + [X] set up test/comparison framework
   + [X] fix/decide what to do re: SVG transparent text
   + [X] convert force-layout to lens and release
-  + [ ] build API docs
+  + [X] build API docs
   + [X] switch CHANGES files to use Markdown format
   + [X] update CHANGES files and release info on website
     + [X] diagrams-core
@@ -104,7 +103,7 @@
     + [X] diagrams-contrib
     + [X] diagrams-gtk
     + [X] website
-  + [ ] 0.5 -> 0.6 migration page on wiki
+  + [X] 0.5 -> 0.6 migration page on wiki
   + [X] test building with new vector-space (if it's released)
   + [ ] test build:
     - [ ] make testing script -- use cabal-dev -w -j ?
@@ -159,6 +158,7 @@
     - [ ] add to 'diagrams' package (with flag)
     - [ ] add to 'builder'
     - [ ] write about it in user manual
+  + [ ] add boundaryFrom or something like that? (see migration page)
 * Planning for release of version 0.5
 
   + [X] update diagrams package to depend on new versions of -core,
