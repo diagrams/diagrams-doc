@@ -105,15 +105,15 @@
     + [X] website
   + [X] 0.5 -> 0.6 migration page on wiki
   + [X] test building with new vector-space (if it's released)
-  + [ ] test build:
-    - [ ] make testing script -- use cabal-dev -w -j ?
-    - [ ] ghc 7.0.4
-    - [ ] ghc 7.2.1
-    - [ ] ghc 7.4.2
-    - [ ] ghc 7.6.1
-    - [ ] update tested-with fields
-  + [ ] write announcement for blog + email
-    + [ ] list major new features since 0.5
+  + [X] update quick-start tutorial
+  + [X] test build:
+    - [X] ghc 7.0.4
+    - [X] ghc 7.2.1
+    - [X] ghc 7.4.2
+    - [X] ghc 7.6.1
+    - [X] update tested-with fields
+  + [-] write announcement for blog + email
+    + [X] list major new features since 0.5
       - traces
       - subdiagrams
       - refactoring with dual-tree etc.
@@ -121,9 +121,9 @@
       - postscript backend?
       - cairo/gtk split
       - others?
-    + [ ] link to gallery (email)
+    + [X] link to gallery (email)
     + [ ] include some examples (blog)
-    + [ ] say where/how to get involved
+    + [X] say where/how to get involved
   + [X] update LICENSE files/lists of contributors
   + [X] add release date to all CHANGES files
     + [X] core
@@ -134,6 +134,8 @@
     + [X] svg
     + [X] builder
   + [X] add release date to releases.markdown
+  + [X] merge all into 0.6 branch (as necessary)
+  + [ ] tag all with release version
   + [ ] publish new website
   + [ ] upload
     + [ ] diagrams-core
