@@ -25343,3 +25343,22 @@
 2012-12-11 02:04:48 UTC <fryguybob> ACTION celebrates hitting the milestone that he had hoped to hit a week ago.
 2012-12-11 02:04:54 UTC <byorgey> yay!
 2012-12-11 02:05:24 UTC <fryguybob> Over 1000 instructions including halt!
+2012-12-11 16:38:08 UTC <mightybyte> Just about ready to release?
+2012-12-11 16:40:04 UTC <byorgey> mightybyte: yep, later today
+2012-12-11 16:40:10 UTC <mightybyte> Woo hoo!
+2012-12-11 16:40:11 UTC <byorgey> still got some documentation to update and so on
+2012-12-11 16:40:14 UTC <mightybyte> Perfect timing
+2012-12-11 16:40:21 UTC <byorgey> =)
+2012-12-11 16:40:25 UTC <byorgey> what are you using diagrams for?
+2012-12-11 16:40:46 UTC <mightybyte> FYI, when I tried to change the split version bound by hand yesterday I got the following error.
+2012-12-11 16:40:49 UTC <mightybyte> src/Diagrams/Backend/Cairo/Text.hs:145:53:
+2012-12-11 16:40:49 UTC <mightybyte>     Couldn't match expected type `Point v0' with actual type `R2'
+2012-12-11 16:41:07 UTC <byorgey> mightybyte: that is fixed now
+2012-12-11 16:41:11 UTC <mightybyte> Ok
+2012-12-11 16:41:15 UTC <byorgey> that was due to a change in vector-space
+2012-12-11 16:41:48 UTC <mightybyte> I'm actually not sure.  I just started a new job and diagrams is a dependency in our largest project.
+2012-12-11 16:41:58 UTC <byorgey> hah, nice
+2012-12-11 18:19:10 UTC <luite> \o/
+2012-12-11 18:20:06 UTC <byorgey> `=D
+2012-12-11 18:20:17 UTC <byorgey> huh, where did that ` come from?
+2012-12-11 21:38:48 UTC <byorgey> building building building...
