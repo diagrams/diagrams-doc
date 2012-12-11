@@ -25326,3 +25326,20 @@
 2012-12-05 23:38:06 UTC <byorgey> fryguybob: good thinking.  I suppose that should even be a law of the Transformable class.
 2012-12-05 23:38:27 UTC <byorgey> well, at least  transform t1 . transform t2 = transform (t1 <> t2)  should be a law
 2012-12-06 00:43:52 UTC <fryguybob> byorgey: Yeah, I think that gets to the heart of it.
+2012-12-10 23:39:55 UTC <fryguybob> byorgey: No good.  At this point I'll be lucky to get just OoO.
+2012-12-11 00:25:09 UTC <mightybyte> byorgey: ping
+2012-12-11 00:51:56 UTC <byorgey> fryguybob: aww =(
+2012-12-11 00:52:05 UTC <byorgey> hi mightybyte, how's it going?
+2012-12-11 01:09:25 UTC <fryguybob> My current hang up is the instruction cache is not giving me the instruction I ask for (even though it gave the right value a few cycles ago...)
+2012-12-11 01:18:40 UTC <byorgey> fryguybob: threaten it with gamma rays?
+2012-12-11 01:19:19 UTC <fryguybob> hehe
+2012-12-11 01:29:16 UTC <fryguybob> ACTION tries a fix.
+2012-12-11 01:32:30 UTC <fryguybob> Woohoo, that worked.  Now I can successfully execute over 835 instructions in a row.
+2012-12-11 01:36:49 UTC <fryguybob> And now I finally reach the part where I'm to a known issue that I have to fix.
+2012-12-11 01:36:58 UTC <fryguybob> (diagrams is soooo much more fun)
+2012-12-11 01:42:38 UTC <byorgey> let me tell you, changing a bunch of text files into Markdown format is not really that much fun =P
+2012-12-11 01:43:00 UTC <byorgey> (but necessary for getting nice-looking release notes on the web...)
+2012-12-11 01:48:11 UTC <fryguybob> Ooooo fancy markdown changes changes.
+2012-12-11 02:04:48 UTC <fryguybob> ACTION celebrates hitting the milestone that he had hoped to hit a week ago.
+2012-12-11 02:04:54 UTC <byorgey> yay!
+2012-12-11 02:05:24 UTC <fryguybob> Over 1000 instructions including halt!
