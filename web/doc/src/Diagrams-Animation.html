@@ -38,7 +38,7 @@
 <a name="line-29"></a>
 <a name="line-30"></a>       <span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
 <a name="line-31"></a>
-<a name="line-32"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Graphics</span><span class='hs-varop'>.</span><span class='hs-conid'>Rendering</span><span class='hs-varop'>.</span><span class='hs-conid'>Diagrams</span>
+<a name="line-32"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Core</span>
 <a name="line-33"></a>
 <a name="line-34"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Combinators</span>
 <a name="line-35"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Animation</span><span class='hs-varop'>.</span><span class='hs-conid'>Active</span> <span class='hs-conid'>()</span>
@@ -50,9 +50,9 @@
 <a name="line-41"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Data</span><span class='hs-varop'>.</span><span class='hs-conid'>Active</span>
 <a name="line-42"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Data</span><span class='hs-varop'>.</span><span class='hs-conid'>Semigroup</span>
 <a name="line-43"></a>
-<a name="line-44"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Data</span><span class='hs-varop'>.</span><span class='hs-conid'>VectorSpace</span>
-<a name="line-45"></a>
-<a name="line-46"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Control</span><span class='hs-varop'>.</span><span class='hs-conid'>Applicative</span> <span class='hs-layout'>(</span><span class='hs-layout'>(</span><span class='hs-varop'>&lt;$&gt;</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span>
+<a name="line-44"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Control</span><span class='hs-varop'>.</span><span class='hs-conid'>Applicative</span> <span class='hs-layout'>(</span><span class='hs-layout'>(</span><span class='hs-varop'>&lt;$&gt;</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span>
+<a name="line-45"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Data</span><span class='hs-varop'>.</span><span class='hs-conid'>Foldable</span>       <span class='hs-layout'>(</span><span class='hs-varid'>foldMap</span><span class='hs-layout'>)</span>
+<a name="line-46"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Data</span><span class='hs-varop'>.</span><span class='hs-conid'>VectorSpace</span>
 <a name="line-47"></a>
 <a name="line-48"></a><a name="QAnimation"></a><span class='hs-comment'>-- | A value of type @QAnimation b v m@ is an animation (a</span>
 <a name="line-49"></a><a name="QAnimation"></a><span class='hs-comment'>--   time-varying diagram with start and end times) that can be</span>
@@ -128,9 +128,10 @@
 <a name="line-119"></a><span class='hs-comment'>--   accurate but slower.</span>
 <a name="line-120"></a><span class='hs-definition'>animRect'</span> <span class='hs-keyglyph'>::</span> <span class='hs-layout'>(</span><span class='hs-conid'>PathLike</span> <span class='hs-varid'>p</span><span class='hs-layout'>,</span> <span class='hs-conid'>Enveloped</span> <span class='hs-varid'>p</span><span class='hs-layout'>,</span> <span class='hs-conid'>Transformable</span> <span class='hs-varid'>p</span><span class='hs-layout'>,</span> <span class='hs-conid'>V</span> <span class='hs-varid'>p</span> <span class='hs-keyglyph'>~</span> <span class='hs-conid'>R2</span><span class='hs-layout'>)</span>
 <a name="line-121"></a>          <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>Rational</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>QAnimation</span> <span class='hs-varid'>b</span> <span class='hs-conid'>R2</span> <span class='hs-varid'>m</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>p</span>
-<a name="line-122"></a><span class='hs-definition'>animRect'</span> <span class='hs-varid'>r</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>maybe</span> <span class='hs-layout'>(</span><span class='hs-varid'>rect</span> <span class='hs-num'>1</span> <span class='hs-num'>1</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-varop'>`boxFit`</span> <span class='hs-varid'>rect</span> <span class='hs-num'>1</span> <span class='hs-num'>1</span><span class='hs-layout'>)</span>
-<a name="line-123"></a>            <span class='hs-varop'>.</span> <span class='hs-varid'>unions</span>
-<a name="line-124"></a>            <span class='hs-varop'>.</span> <span class='hs-varid'>map</span> <span class='hs-varid'>boundingBox</span>
-<a name="line-125"></a>            <span class='hs-varop'>.</span> <span class='hs-varid'>simulate</span> <span class='hs-varid'>r</span>
+<a name="line-122"></a><span class='hs-definition'>animRect'</span> <span class='hs-varid'>r</span> <span class='hs-varid'>anim</span>
+<a name="line-123"></a>    <span class='hs-keyglyph'>|</span> <span class='hs-varid'>null</span> <span class='hs-varid'>results</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>rect</span> <span class='hs-num'>1</span> <span class='hs-num'>1</span>
+<a name="line-124"></a>    <span class='hs-keyglyph'>|</span> <span class='hs-varid'>otherwise</span>    <span class='hs-keyglyph'>=</span> <span class='hs-varid'>boxFit</span> <span class='hs-layout'>(</span><span class='hs-varid'>foldMap</span> <span class='hs-varid'>boundingBox</span> <span class='hs-varid'>results</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-varid'>rect</span> <span class='hs-num'>1</span> <span class='hs-num'>1</span><span class='hs-layout'>)</span>
+<a name="line-125"></a>  <span class='hs-keyword'>where</span>
+<a name="line-126"></a>    <span class='hs-varid'>results</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>simulate</span> <span class='hs-varid'>r</span> <span class='hs-varid'>anim</span>
 </pre></body>
 </html>

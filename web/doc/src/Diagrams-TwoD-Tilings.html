@@ -7,8 +7,8 @@
 <link type='text/css' rel='stylesheet' href='hscolour.css' />
 </head>
 <body>
-<pre><a name="line-1"></a><span class='hs-comment'>{-# LANGUAGE TypeFamilies 
-<a name="line-2"></a>           , FlexibleContexts 
+<pre><a name="line-1"></a><span class='hs-comment'>{-# LANGUAGE TypeFamilies
+<a name="line-2"></a>           , FlexibleContexts
 <a name="line-3"></a>           , ScopedTypeVariables
 <a name="line-4"></a>           , ViewPatterns
 <a name="line-5"></a>           , CPP
@@ -27,57 +27,57 @@
 <a name="line-18"></a><span class='hs-comment'>--</span>
 <a name="line-19"></a><span class='hs-comment'>-----------------------------------------------------------------------------</span>
 <a name="line-20"></a><span class='hs-keyword'>module</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>TwoD</span><span class='hs-varop'>.</span><span class='hs-conid'>Tilings</span> <span class='hs-layout'>(</span>
-<a name="line-21"></a>  
+<a name="line-21"></a>
 <a name="line-22"></a>  <span class='hs-comment'>-- * The ring Q[sqrt 2, sqrt 3]</span>
-<a name="line-23"></a>  
+<a name="line-23"></a>
 <a name="line-24"></a>    <span class='hs-conid'>Q236</span><span class='hs-layout'>,</span> <span class='hs-varid'>rt2</span><span class='hs-layout'>,</span> <span class='hs-varid'>rt3</span><span class='hs-layout'>,</span> <span class='hs-varid'>rt6</span>
-<a name="line-25"></a>                  
+<a name="line-25"></a>
 <a name="line-26"></a>  <span class='hs-layout'>,</span> <span class='hs-varid'>toDouble</span>
-<a name="line-27"></a>    
+<a name="line-27"></a>
 <a name="line-28"></a>  <span class='hs-layout'>,</span> <span class='hs-conid'>Q2</span><span class='hs-layout'>,</span> <span class='hs-varid'>toR2</span><span class='hs-layout'>,</span> <span class='hs-varid'>toP2</span>
-<a name="line-29"></a>              
-<a name="line-30"></a>  <span class='hs-comment'>-- * Regular polygons              </span>
-<a name="line-31"></a>              
-<a name="line-32"></a>  <span class='hs-layout'>,</span> <span class='hs-conid'>TilingPoly</span><span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span>              
+<a name="line-29"></a>
+<a name="line-30"></a>  <span class='hs-comment'>-- * Regular polygons</span>
+<a name="line-31"></a>
+<a name="line-32"></a>  <span class='hs-layout'>,</span> <span class='hs-conid'>TilingPoly</span><span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span>
 <a name="line-33"></a>  <span class='hs-layout'>,</span> <span class='hs-varid'>polySides</span><span class='hs-layout'>,</span> <span class='hs-varid'>polyFromSides</span>
 <a name="line-34"></a>  <span class='hs-layout'>,</span> <span class='hs-varid'>polyCos</span><span class='hs-layout'>,</span> <span class='hs-varid'>polySin</span>
 <a name="line-35"></a>  <span class='hs-layout'>,</span> <span class='hs-varid'>polyRotation</span><span class='hs-layout'>,</span> <span class='hs-varid'>polyExtRotation</span>
-<a name="line-36"></a>                  
-<a name="line-37"></a>  <span class='hs-comment'>-- * Tilings                </span>
-<a name="line-38"></a>                  
-<a name="line-39"></a>  <span class='hs-comment'>-- ** Types                  </span>
+<a name="line-36"></a>
+<a name="line-37"></a>  <span class='hs-comment'>-- * Tilings</span>
+<a name="line-38"></a>
+<a name="line-39"></a>  <span class='hs-comment'>-- ** Types</span>
 <a name="line-40"></a>  <span class='hs-layout'>,</span> <span class='hs-conid'>Tiling</span><span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span>
 <a name="line-41"></a>  <span class='hs-layout'>,</span> <span class='hs-conid'>Edge</span><span class='hs-layout'>,</span> <span class='hs-varid'>mkEdge</span>
-<a name="line-42"></a>          
+<a name="line-42"></a>
 <a name="line-43"></a>  <span class='hs-layout'>,</span> <span class='hs-conid'>Polygon</span><span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span>
-<a name="line-44"></a>              
+<a name="line-44"></a>
 <a name="line-45"></a>  <span class='hs-comment'>-- ** Generation</span>
-<a name="line-46"></a>    
-<a name="line-47"></a>  <span class='hs-layout'>,</span> <span class='hs-conid'>TilingState</span><span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span><span class='hs-layout'>,</span> <span class='hs-varid'>initTilingState</span>  
+<a name="line-46"></a>
+<a name="line-47"></a>  <span class='hs-layout'>,</span> <span class='hs-conid'>TilingState</span><span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span><span class='hs-layout'>,</span> <span class='hs-varid'>initTilingState</span>
 <a name="line-48"></a>  <span class='hs-layout'>,</span> <span class='hs-conid'>TilingM</span>
-<a name="line-49"></a>    
+<a name="line-49"></a>
 <a name="line-50"></a>  <span class='hs-layout'>,</span> <span class='hs-varid'>generateTiling</span>
-<a name="line-51"></a>    
-<a name="line-52"></a>  <span class='hs-comment'>-- ** Pre-defined tilings  </span>
-<a name="line-53"></a>    
+<a name="line-51"></a>
+<a name="line-52"></a>  <span class='hs-comment'>-- ** Pre-defined tilings</span>
+<a name="line-53"></a>
 <a name="line-54"></a>  <span class='hs-layout'>,</span> <span class='hs-varid'>t3</span><span class='hs-layout'>,</span> <span class='hs-varid'>t4</span><span class='hs-layout'>,</span> <span class='hs-varid'>t6</span>
 <a name="line-55"></a>  <span class='hs-layout'>,</span> <span class='hs-varid'>mk3Tiling</span><span class='hs-layout'>,</span> <span class='hs-varid'>t4612</span><span class='hs-layout'>,</span> <span class='hs-varid'>t488</span><span class='hs-layout'>,</span> <span class='hs-varid'>t31212</span>
-<a name="line-56"></a>                            
+<a name="line-56"></a>
 <a name="line-57"></a>  <span class='hs-layout'>,</span> <span class='hs-varid'>t3636</span>
 <a name="line-58"></a>  <span class='hs-layout'>,</span> <span class='hs-varid'>semiregular</span>
 <a name="line-59"></a>  <span class='hs-layout'>,</span> <span class='hs-varid'>rot</span>
 <a name="line-60"></a>  <span class='hs-layout'>,</span> <span class='hs-varid'>t3464</span><span class='hs-layout'>,</span> <span class='hs-varid'>t33434</span><span class='hs-layout'>,</span> <span class='hs-varid'>t33344</span><span class='hs-layout'>,</span> <span class='hs-varid'>t33336L</span><span class='hs-layout'>,</span> <span class='hs-varid'>t33336R</span>
-<a name="line-61"></a>              
-<a name="line-62"></a>  <span class='hs-comment'>-- * Diagrams  </span>
-<a name="line-63"></a>    
+<a name="line-61"></a>
+<a name="line-62"></a>  <span class='hs-comment'>-- * Diagrams</span>
+<a name="line-63"></a>
 <a name="line-64"></a>  <span class='hs-layout'>,</span> <span class='hs-varid'>drawEdge</span>
 <a name="line-65"></a>  <span class='hs-layout'>,</span> <span class='hs-varid'>drawPoly</span>
 <a name="line-66"></a>  <span class='hs-layout'>,</span> <span class='hs-varid'>polyColor</span>
 <a name="line-67"></a>  <span class='hs-layout'>,</span> <span class='hs-varid'>drawTiling</span>
 <a name="line-68"></a>  <span class='hs-layout'>,</span> <span class='hs-varid'>drawTilingStyled</span>
-<a name="line-69"></a>    
+<a name="line-69"></a>
 <a name="line-70"></a>  <span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
-<a name="line-71"></a>    
+<a name="line-71"></a>
 <a name="line-72"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Control</span><span class='hs-varop'>.</span><span class='hs-conid'>Monad</span><span class='hs-varop'>.</span><span class='hs-conid'>State</span>
 <a name="line-73"></a><span class='hs-cpp'>#if __GLASGOW_HASKELL__ &gt;= 704</span>
 <a name="line-74"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Control</span><span class='hs-varop'>.</span><span class='hs-conid'>Monad</span><span class='hs-varop'>.</span><span class='hs-conid'>Writer</span> <span class='hs-varid'>hiding</span> <span class='hs-layout'>(</span><span class='hs-layout'>(</span><span class='hs-varop'>&lt;&gt;</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span>
@@ -111,9 +111,9 @@
 <a name="line-102"></a>
 <a name="line-103"></a><a name="toDouble"></a><span class='hs-comment'>-- | Convert a @Q236@ value to a @Double@.</span>
 <a name="line-104"></a><span class='hs-definition'>toDouble</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Q236</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Double</span>
-<a name="line-105"></a><span class='hs-definition'>toDouble</span> <span class='hs-layout'>(</span><span class='hs-conid'>Q236</span> <span class='hs-varid'>a</span> <span class='hs-varid'>b</span> <span class='hs-varid'>c</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>fromRational</span> <span class='hs-varid'>a</span> 
-<a name="line-106"></a>                        <span class='hs-varop'>+</span> <span class='hs-varid'>fromRational</span> <span class='hs-varid'>b</span> <span class='hs-varop'>*</span> <span class='hs-varid'>sqrt</span> <span class='hs-num'>2</span> 
-<a name="line-107"></a>                        <span class='hs-varop'>+</span> <span class='hs-varid'>fromRational</span> <span class='hs-varid'>c</span> <span class='hs-varop'>*</span> <span class='hs-varid'>sqrt</span> <span class='hs-num'>3</span> 
+<a name="line-105"></a><span class='hs-definition'>toDouble</span> <span class='hs-layout'>(</span><span class='hs-conid'>Q236</span> <span class='hs-varid'>a</span> <span class='hs-varid'>b</span> <span class='hs-varid'>c</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>fromRational</span> <span class='hs-varid'>a</span>
+<a name="line-106"></a>                        <span class='hs-varop'>+</span> <span class='hs-varid'>fromRational</span> <span class='hs-varid'>b</span> <span class='hs-varop'>*</span> <span class='hs-varid'>sqrt</span> <span class='hs-num'>2</span>
+<a name="line-107"></a>                        <span class='hs-varop'>+</span> <span class='hs-varid'>fromRational</span> <span class='hs-varid'>c</span> <span class='hs-varop'>*</span> <span class='hs-varid'>sqrt</span> <span class='hs-num'>3</span>
 <a name="line-108"></a>                        <span class='hs-varop'>+</span> <span class='hs-varid'>fromRational</span> <span class='hs-varid'>d</span> <span class='hs-varop'>*</span> <span class='hs-varid'>sqrt</span> <span class='hs-num'>6</span>
 <a name="line-109"></a>
 <a name="line-110"></a><a name="rt2"></a><span class='hs-definition'>rt2</span><span class='hs-layout'>,</span> <span class='hs-varid'>rt3</span><span class='hs-layout'>,</span> <span class='hs-varid'>rt6</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Q236</span>
@@ -121,7 +121,7 @@
 <a name="line-112"></a><a name="rt3"></a><span class='hs-definition'>rt3</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Q236</span> <span class='hs-num'>0</span> <span class='hs-num'>0</span> <span class='hs-num'>1</span> <span class='hs-num'>0</span>
 <a name="line-113"></a><a name="rt6"></a><span class='hs-definition'>rt6</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>rt2</span><span class='hs-varop'>*</span><span class='hs-varid'>rt3</span>
 <a name="line-114"></a>
-<a name="line-115"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Num</span> <span class='hs-conid'>Q236</span> <span class='hs-keyword'>where</span>
+<a name="line-115"></a><a name="instance%20Num%20Q236"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Num</span> <span class='hs-conid'>Q236</span> <span class='hs-keyword'>where</span>
 <a name="line-116"></a>  <span class='hs-layout'>(</span><span class='hs-varop'>+</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-layout'>(</span><span class='hs-varop'>^+^</span><span class='hs-layout'>)</span>
 <a name="line-117"></a>  <span class='hs-layout'>(</span><span class='hs-comment'>-</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-layout'>(</span><span class='hs-varop'>^-^</span><span class='hs-layout'>)</span>
 <a name="line-118"></a>  <span class='hs-layout'>(</span><span class='hs-conid'>Q236</span> <span class='hs-varid'>a1</span> <span class='hs-varid'>b1</span> <span class='hs-varid'>c1</span> <span class='hs-varid'>d1</span><span class='hs-layout'>)</span> <span class='hs-varop'>*</span> <span class='hs-layout'>(</span><span class='hs-conid'>Q236</span> <span class='hs-varid'>a2</span> <span class='hs-varid'>b2</span> <span class='hs-varid'>c2</span> <span class='hs-varid'>d2</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span>
@@ -132,14 +132,14 @@
 <a name="line-123"></a>  <span class='hs-varid'>abs</span> <span class='hs-layout'>(</span><span class='hs-conid'>Q236</span> <span class='hs-varid'>a</span> <span class='hs-varid'>b</span> <span class='hs-varid'>c</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Q236</span> <span class='hs-layout'>(</span><span class='hs-varid'>abs</span> <span class='hs-varid'>a</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-varid'>abs</span> <span class='hs-varid'>b</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-varid'>abs</span> <span class='hs-varid'>c</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-varid'>abs</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span>
 <a name="line-124"></a>  <span class='hs-varid'>fromInteger</span> <span class='hs-varid'>z</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Q236</span> <span class='hs-layout'>(</span><span class='hs-varid'>fromInteger</span> <span class='hs-varid'>z</span><span class='hs-layout'>)</span> <span class='hs-num'>0</span> <span class='hs-num'>0</span> <span class='hs-num'>0</span>
 <a name="line-125"></a>  <span class='hs-varid'>signum</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>error</span> <span class='hs-str'>"no signum for Q236"</span>
-<a name="line-126"></a>  
-<a name="line-127"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>AdditiveGroup</span> <span class='hs-conid'>Q236</span> <span class='hs-keyword'>where</span>
+<a name="line-126"></a>
+<a name="line-127"></a><a name="instance%20AdditiveGroup%20Q236"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>AdditiveGroup</span> <span class='hs-conid'>Q236</span> <span class='hs-keyword'>where</span>
 <a name="line-128"></a>  <span class='hs-varid'>zeroV</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Q236</span> <span class='hs-num'>0</span> <span class='hs-num'>0</span> <span class='hs-num'>0</span> <span class='hs-num'>0</span>
-<a name="line-129"></a>  <span class='hs-layout'>(</span><span class='hs-conid'>Q236</span> <span class='hs-varid'>a1</span> <span class='hs-varid'>b1</span> <span class='hs-varid'>c1</span> <span class='hs-varid'>d1</span><span class='hs-layout'>)</span> <span class='hs-varop'>^+^</span> <span class='hs-layout'>(</span><span class='hs-conid'>Q236</span> <span class='hs-varid'>a2</span> <span class='hs-varid'>b2</span> <span class='hs-varid'>c2</span> <span class='hs-varid'>d2</span><span class='hs-layout'>)</span> 
+<a name="line-129"></a>  <span class='hs-layout'>(</span><span class='hs-conid'>Q236</span> <span class='hs-varid'>a1</span> <span class='hs-varid'>b1</span> <span class='hs-varid'>c1</span> <span class='hs-varid'>d1</span><span class='hs-layout'>)</span> <span class='hs-varop'>^+^</span> <span class='hs-layout'>(</span><span class='hs-conid'>Q236</span> <span class='hs-varid'>a2</span> <span class='hs-varid'>b2</span> <span class='hs-varid'>c2</span> <span class='hs-varid'>d2</span><span class='hs-layout'>)</span>
 <a name="line-130"></a>    <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Q236</span> <span class='hs-layout'>(</span><span class='hs-varid'>a1</span> <span class='hs-varop'>+</span> <span class='hs-varid'>a2</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-varid'>b1</span> <span class='hs-varop'>+</span> <span class='hs-varid'>b2</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-varid'>c1</span> <span class='hs-varop'>+</span> <span class='hs-varid'>c2</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-varid'>d1</span> <span class='hs-varop'>+</span> <span class='hs-varid'>d2</span><span class='hs-layout'>)</span>
 <a name="line-131"></a>  <span class='hs-varid'>negateV</span> <span class='hs-layout'>(</span><span class='hs-conid'>Q236</span> <span class='hs-varid'>a</span> <span class='hs-varid'>b</span> <span class='hs-varid'>c</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Q236</span> <span class='hs-layout'>(</span><span class='hs-comment'>-</span><span class='hs-varid'>a</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-comment'>-</span><span class='hs-varid'>b</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-comment'>-</span><span class='hs-varid'>c</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-comment'>-</span><span class='hs-varid'>d</span><span class='hs-layout'>)</span>
-<a name="line-132"></a>  
-<a name="line-133"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>VectorSpace</span> <span class='hs-conid'>Q236</span> <span class='hs-keyword'>where</span>
+<a name="line-132"></a>
+<a name="line-133"></a><a name="instance%20VectorSpace%20Q236"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>VectorSpace</span> <span class='hs-conid'>Q236</span> <span class='hs-keyword'>where</span>
 <a name="line-134"></a>  <span class='hs-keyword'>type</span> <span class='hs-conid'>Scalar</span> <span class='hs-conid'>Q236</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Rational</span>
 <a name="line-135"></a>  <span class='hs-varid'>s</span> <span class='hs-varop'>*^</span> <span class='hs-layout'>(</span><span class='hs-conid'>Q236</span> <span class='hs-varid'>a</span> <span class='hs-varid'>b</span> <span class='hs-varid'>c</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Q236</span> <span class='hs-layout'>(</span><span class='hs-varid'>s</span> <span class='hs-varop'>*</span> <span class='hs-varid'>a</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-varid'>s</span> <span class='hs-varop'>*</span> <span class='hs-varid'>b</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-varid'>s</span> <span class='hs-varop'>*</span> <span class='hs-varid'>c</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-varid'>s</span> <span class='hs-varop'>*</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span>
 <a name="line-136"></a>
@@ -245,10 +245,10 @@
 <a name="line-236"></a><a name="Polygon"></a><span class='hs-keyword'>newtype</span> <span class='hs-conid'>Polygon</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Polygon</span> <span class='hs-layout'>{</span> <span class='hs-varid'>polygonVertices</span> <span class='hs-keyglyph'>::</span> <span class='hs-keyglyph'>[</span><span class='hs-conid'>Q2</span><span class='hs-keyglyph'>]</span> <span class='hs-layout'>}</span>
 <a name="line-237"></a>  <span class='hs-keyword'>deriving</span> <span class='hs-conid'>Show</span>
 <a name="line-238"></a>
-<a name="line-239"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Eq</span> <span class='hs-conid'>Polygon</span> <span class='hs-keyword'>where</span>
+<a name="line-239"></a><a name="instance%20Eq%20Polygon"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Eq</span> <span class='hs-conid'>Polygon</span> <span class='hs-keyword'>where</span>
 <a name="line-240"></a>  <span class='hs-layout'>(</span><span class='hs-conid'>Polygon</span> <span class='hs-varid'>vs1</span><span class='hs-layout'>)</span> <span class='hs-varop'>==</span> <span class='hs-layout'>(</span><span class='hs-conid'>Polygon</span> <span class='hs-varid'>vs2</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>sort</span> <span class='hs-varid'>vs1</span> <span class='hs-varop'>==</span> <span class='hs-varid'>sort</span> <span class='hs-varid'>vs2</span>
-<a name="line-241"></a>  
-<a name="line-242"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Ord</span> <span class='hs-conid'>Polygon</span> <span class='hs-keyword'>where</span>
+<a name="line-241"></a>
+<a name="line-242"></a><a name="instance%20Ord%20Polygon"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Ord</span> <span class='hs-conid'>Polygon</span> <span class='hs-keyword'>where</span>
 <a name="line-243"></a>  <span class='hs-varid'>compare</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>compare</span> <span class='hs-varop'>`on`</span> <span class='hs-layout'>(</span><span class='hs-varid'>sort</span> <span class='hs-varop'>.</span> <span class='hs-varid'>polygonVertices</span><span class='hs-layout'>)</span>
 <a name="line-244"></a>
 <a name="line-245"></a><a name="TilingState"></a><span class='hs-comment'>-- | The state maintained while generating a tiling, recording which</span>
@@ -280,61 +280,61 @@
 <a name="line-271"></a>               <span class='hs-keyglyph'>-&gt;</span> <span class='hs-layout'>(</span><span class='hs-conid'>Edge</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>w</span><span class='hs-layout'>)</span>          <span class='hs-comment'>-- ^ what to do with edges</span>
 <a name="line-272"></a>               <span class='hs-keyglyph'>-&gt;</span> <span class='hs-layout'>(</span><span class='hs-conid'>Polygon</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>w</span><span class='hs-layout'>)</span>       <span class='hs-comment'>-- ^ what to do with polygons</span>
 <a name="line-273"></a>               <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>w</span>
-<a name="line-274"></a><span class='hs-definition'>generateTiling</span> <span class='hs-varid'>t</span> <span class='hs-varid'>v</span> <span class='hs-varid'>d</span> <span class='hs-varid'>vPred</span> <span class='hs-varid'>e</span> <span class='hs-varid'>p</span> 
+<a name="line-274"></a><span class='hs-definition'>generateTiling</span> <span class='hs-varid'>t</span> <span class='hs-varid'>v</span> <span class='hs-varid'>d</span> <span class='hs-varid'>vPred</span> <span class='hs-varid'>e</span> <span class='hs-varid'>p</span>
 <a name="line-275"></a>  <span class='hs-keyglyph'>=</span> <span class='hs-varid'>evalState</span> <span class='hs-layout'>(</span><span class='hs-varid'>execWriterT</span> <span class='hs-layout'>(</span><span class='hs-varid'>generateTiling'</span> <span class='hs-varid'>t</span> <span class='hs-varid'>v</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span> <span class='hs-varid'>initTilingState</span> <span class='hs-keyword'>where</span>
-<a name="line-276"></a>    
-<a name="line-277"></a>  <span class='hs-varid'>generateTiling'</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Tiling</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Q2</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Q2</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>TilingM</span> <span class='hs-varid'>w</span> <span class='hs-conid'>()</span>  
+<a name="line-276"></a>
+<a name="line-277"></a>  <span class='hs-varid'>generateTiling'</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Tiling</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Q2</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Q2</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>TilingM</span> <span class='hs-varid'>w</span> <span class='hs-conid'>()</span>
 <a name="line-278"></a>  <span class='hs-varid'>generateTiling'</span> <span class='hs-varid'>t</span> <span class='hs-varid'>v</span> <span class='hs-varid'>d</span>
 <a name="line-279"></a>      <span class='hs-comment'>-- stop if the current vertex fails the predicate</span>
 <a name="line-280"></a>    <span class='hs-keyglyph'>|</span> <span class='hs-varid'>not</span> <span class='hs-layout'>(</span><span class='hs-varid'>vPred</span> <span class='hs-varid'>v</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>return</span> <span class='hs-conid'>()</span>
 <a name="line-281"></a>    <span class='hs-keyglyph'>|</span> <span class='hs-varid'>otherwise</span> <span class='hs-keyglyph'>=</span> <span class='hs-keyword'>do</span>
 <a name="line-282"></a>        <span class='hs-varid'>ts</span> <span class='hs-keyglyph'>&lt;-</span> <span class='hs-varid'>get</span>
-<a name="line-283"></a>        
+<a name="line-283"></a>
 <a name="line-284"></a>        <span class='hs-comment'>-- stop if we've seen this vertex before</span>
 <a name="line-285"></a>        <span class='hs-varid'>when</span> <span class='hs-layout'>(</span><span class='hs-varid'>v</span> <span class='hs-varop'>`</span><span class='hs-conid'>S</span><span class='hs-varop'>.</span><span class='hs-varid'>notMember</span><span class='hs-varop'>`</span> <span class='hs-varid'>visitedVertices</span> <span class='hs-varid'>ts</span><span class='hs-layout'>)</span> <span class='hs-varop'>$</span> <span class='hs-keyword'>do</span>
-<a name="line-286"></a>          
-<a name="line-287"></a>        <span class='hs-comment'>-- otherwise, mark it as visited  </span>
-<a name="line-288"></a>        <span class='hs-varid'>modify</span> <span class='hs-layout'>(</span><span class='hs-keyglyph'>\</span><span class='hs-varid'>ts</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>ts</span> <span class='hs-layout'>{</span> <span class='hs-varid'>visitedVertices</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>v</span> <span class='hs-varop'>`</span><span class='hs-conid'>S</span><span class='hs-varop'>.</span><span class='hs-varid'>insert</span><span class='hs-varop'>`</span> <span class='hs-varid'>visitedVertices</span> <span class='hs-varid'>ts</span> <span class='hs-layout'>}</span><span class='hs-layout'>)</span>
-<a name="line-289"></a>      
-<a name="line-290"></a>        <span class='hs-comment'>-- get the neighboring vertices and the polygons surrounding</span>
-<a name="line-291"></a>        <span class='hs-comment'>-- this vertex, and filter out ones we've already generated</span>
-<a name="line-292"></a>        <span class='hs-keyword'>let</span> <span class='hs-layout'>(</span><span class='hs-varid'>neighbors</span><span class='hs-layout'>,</span> <span class='hs-varid'>polys</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>genNeighbors</span> <span class='hs-varid'>t</span> <span class='hs-varid'>v</span> <span class='hs-varid'>d</span>
-<a name="line-293"></a>            <span class='hs-varid'>edges</span>  <span class='hs-keyglyph'>=</span> <span class='hs-conid'>S</span><span class='hs-varop'>.</span><span class='hs-varid'>fromList</span> <span class='hs-varop'>$</span> <span class='hs-varid'>map</span> <span class='hs-layout'>(</span><span class='hs-varid'>mkEdge</span> <span class='hs-varid'>v</span><span class='hs-layout'>)</span> <span class='hs-varid'>neighbors</span>
-<a name="line-294"></a>            <span class='hs-varid'>edges'</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>edges</span> <span class='hs-varop'>`</span><span class='hs-conid'>S</span><span class='hs-varop'>.</span><span class='hs-varid'>difference</span><span class='hs-varop'>`</span> <span class='hs-varid'>visitedEdges</span> <span class='hs-varid'>ts</span>
-<a name="line-295"></a>            <span class='hs-varid'>polys'</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>polys</span> <span class='hs-varop'>`</span><span class='hs-conid'>S</span><span class='hs-varop'>.</span><span class='hs-varid'>difference</span><span class='hs-varop'>`</span> <span class='hs-varid'>visitedPolygons</span> <span class='hs-varid'>ts</span>
-<a name="line-296"></a>            
-<a name="line-297"></a>        <span class='hs-comment'>-- generate some edges and polygons</span>
-<a name="line-298"></a>        <span class='hs-conid'>F</span><span class='hs-varop'>.</span><span class='hs-varid'>mapM_</span> <span class='hs-layout'>(</span><span class='hs-varid'>tell</span> <span class='hs-varop'>.</span> <span class='hs-varid'>e</span><span class='hs-layout'>)</span> <span class='hs-varid'>edges'</span>
-<a name="line-299"></a>        <span class='hs-conid'>F</span><span class='hs-varop'>.</span><span class='hs-varid'>mapM_</span> <span class='hs-layout'>(</span><span class='hs-varid'>tell</span> <span class='hs-varop'>.</span> <span class='hs-varid'>p</span><span class='hs-layout'>)</span> <span class='hs-varid'>polys'</span>
-<a name="line-300"></a>        
-<a name="line-301"></a>        <span class='hs-comment'>-- remember that we generated them</span>
-<a name="line-302"></a>        <span class='hs-varid'>modify</span> <span class='hs-layout'>(</span><span class='hs-keyglyph'>\</span><span class='hs-varid'>ts</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>ts</span> <span class='hs-layout'>{</span> <span class='hs-varid'>visitedEdges</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>edges'</span> <span class='hs-varop'>`</span><span class='hs-conid'>S</span><span class='hs-varop'>.</span><span class='hs-varid'>union</span><span class='hs-varop'>`</span> <span class='hs-varid'>visitedEdges</span> <span class='hs-varid'>ts</span> <span class='hs-layout'>}</span><span class='hs-layout'>)</span>
-<a name="line-303"></a>        <span class='hs-varid'>modify</span> <span class='hs-layout'>(</span><span class='hs-keyglyph'>\</span><span class='hs-varid'>ts</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>ts</span> <span class='hs-layout'>{</span> <span class='hs-varid'>visitedPolygons</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>polys'</span> <span class='hs-varop'>`</span><span class='hs-conid'>S</span><span class='hs-varop'>.</span><span class='hs-varid'>union</span><span class='hs-varop'>`</span> <span class='hs-varid'>visitedPolygons</span> <span class='hs-varid'>ts</span> <span class='hs-layout'>}</span><span class='hs-layout'>)</span>
-<a name="line-304"></a>      
-<a name="line-305"></a>        <span class='hs-comment'>-- follow edges and continue recursively</span>
-<a name="line-306"></a>        <span class='hs-varid'>zipWithM_</span> <span class='hs-layout'>(</span><span class='hs-keyglyph'>\</span><span class='hs-varid'>d</span> <span class='hs-varid'>i</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>generateTiling'</span> <span class='hs-layout'>(</span><span class='hs-varid'>follow</span> <span class='hs-varid'>t</span> <span class='hs-varid'>i</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-varid'>v</span> <span class='hs-varop'>^+^</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span> 
-<a name="line-307"></a>          <span class='hs-layout'>(</span><span class='hs-varid'>map</span> <span class='hs-layout'>(</span><span class='hs-varop'>^-^</span> <span class='hs-varid'>v</span><span class='hs-layout'>)</span> <span class='hs-varop'>$</span> <span class='hs-varid'>neighbors</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>[</span><span class='hs-num'>0</span><span class='hs-keyglyph'>..</span><span class='hs-keyglyph'>]</span>
+<a name="line-286"></a>
+<a name="line-287"></a>          <span class='hs-comment'>-- otherwise, mark it as visited</span>
+<a name="line-288"></a>          <span class='hs-varid'>modify</span> <span class='hs-layout'>(</span><span class='hs-keyglyph'>\</span><span class='hs-varid'>ts</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>ts</span> <span class='hs-layout'>{</span> <span class='hs-varid'>visitedVertices</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>v</span> <span class='hs-varop'>`</span><span class='hs-conid'>S</span><span class='hs-varop'>.</span><span class='hs-varid'>insert</span><span class='hs-varop'>`</span> <span class='hs-varid'>visitedVertices</span> <span class='hs-varid'>ts</span> <span class='hs-layout'>}</span><span class='hs-layout'>)</span>
+<a name="line-289"></a>
+<a name="line-290"></a>          <span class='hs-comment'>-- get the neighboring vertices and the polygons surrounding</span>
+<a name="line-291"></a>          <span class='hs-comment'>-- this vertex, and filter out ones we've already generated</span>
+<a name="line-292"></a>          <span class='hs-keyword'>let</span> <span class='hs-layout'>(</span><span class='hs-varid'>neighbors</span><span class='hs-layout'>,</span> <span class='hs-varid'>polys</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>genNeighbors</span> <span class='hs-varid'>t</span> <span class='hs-varid'>v</span> <span class='hs-varid'>d</span>
+<a name="line-293"></a>              <span class='hs-varid'>edges</span>  <span class='hs-keyglyph'>=</span> <span class='hs-conid'>S</span><span class='hs-varop'>.</span><span class='hs-varid'>fromList</span> <span class='hs-varop'>$</span> <span class='hs-varid'>map</span> <span class='hs-layout'>(</span><span class='hs-varid'>mkEdge</span> <span class='hs-varid'>v</span><span class='hs-layout'>)</span> <span class='hs-varid'>neighbors</span>
+<a name="line-294"></a>              <span class='hs-varid'>edges'</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>edges</span> <span class='hs-varop'>`</span><span class='hs-conid'>S</span><span class='hs-varop'>.</span><span class='hs-varid'>difference</span><span class='hs-varop'>`</span> <span class='hs-varid'>visitedEdges</span> <span class='hs-varid'>ts</span>
+<a name="line-295"></a>              <span class='hs-varid'>polys'</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>polys</span> <span class='hs-varop'>`</span><span class='hs-conid'>S</span><span class='hs-varop'>.</span><span class='hs-varid'>difference</span><span class='hs-varop'>`</span> <span class='hs-varid'>visitedPolygons</span> <span class='hs-varid'>ts</span>
+<a name="line-296"></a>
+<a name="line-297"></a>          <span class='hs-comment'>-- generate some edges and polygons</span>
+<a name="line-298"></a>          <span class='hs-conid'>F</span><span class='hs-varop'>.</span><span class='hs-varid'>mapM_</span> <span class='hs-layout'>(</span><span class='hs-varid'>tell</span> <span class='hs-varop'>.</span> <span class='hs-varid'>e</span><span class='hs-layout'>)</span> <span class='hs-varid'>edges'</span>
+<a name="line-299"></a>          <span class='hs-conid'>F</span><span class='hs-varop'>.</span><span class='hs-varid'>mapM_</span> <span class='hs-layout'>(</span><span class='hs-varid'>tell</span> <span class='hs-varop'>.</span> <span class='hs-varid'>p</span><span class='hs-layout'>)</span> <span class='hs-varid'>polys'</span>
+<a name="line-300"></a>
+<a name="line-301"></a>          <span class='hs-comment'>-- remember that we generated them</span>
+<a name="line-302"></a>          <span class='hs-varid'>modify</span> <span class='hs-layout'>(</span><span class='hs-keyglyph'>\</span><span class='hs-varid'>ts</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>ts</span> <span class='hs-layout'>{</span> <span class='hs-varid'>visitedEdges</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>edges'</span> <span class='hs-varop'>`</span><span class='hs-conid'>S</span><span class='hs-varop'>.</span><span class='hs-varid'>union</span><span class='hs-varop'>`</span> <span class='hs-varid'>visitedEdges</span> <span class='hs-varid'>ts</span> <span class='hs-layout'>}</span><span class='hs-layout'>)</span>
+<a name="line-303"></a>          <span class='hs-varid'>modify</span> <span class='hs-layout'>(</span><span class='hs-keyglyph'>\</span><span class='hs-varid'>ts</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>ts</span> <span class='hs-layout'>{</span> <span class='hs-varid'>visitedPolygons</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>polys'</span> <span class='hs-varop'>`</span><span class='hs-conid'>S</span><span class='hs-varop'>.</span><span class='hs-varid'>union</span><span class='hs-varop'>`</span> <span class='hs-varid'>visitedPolygons</span> <span class='hs-varid'>ts</span> <span class='hs-layout'>}</span><span class='hs-layout'>)</span>
+<a name="line-304"></a>
+<a name="line-305"></a>          <span class='hs-comment'>-- follow edges and continue recursively</span>
+<a name="line-306"></a>          <span class='hs-varid'>zipWithM_</span> <span class='hs-layout'>(</span><span class='hs-keyglyph'>\</span><span class='hs-varid'>d</span> <span class='hs-varid'>i</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>generateTiling'</span> <span class='hs-layout'>(</span><span class='hs-varid'>follow</span> <span class='hs-varid'>t</span> <span class='hs-varid'>i</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-varid'>v</span> <span class='hs-varop'>^+^</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span>
+<a name="line-307"></a>            <span class='hs-layout'>(</span><span class='hs-varid'>map</span> <span class='hs-layout'>(</span><span class='hs-varop'>^-^</span> <span class='hs-varid'>v</span><span class='hs-layout'>)</span> <span class='hs-varop'>$</span> <span class='hs-varid'>neighbors</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>[</span><span class='hs-num'>0</span><span class='hs-keyglyph'>..</span><span class='hs-keyglyph'>]</span>
 <a name="line-308"></a>
 <a name="line-309"></a><a name="genNeighbors"></a><span class='hs-comment'>-- | Generate the neighboring vertices and polygons of a given vertex.</span>
 <a name="line-310"></a><span class='hs-definition'>genNeighbors</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Tiling</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Q2</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Q2</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-layout'>(</span><span class='hs-keyglyph'>[</span><span class='hs-conid'>Q2</span><span class='hs-keyglyph'>]</span><span class='hs-layout'>,</span> <span class='hs-conid'>S</span><span class='hs-varop'>.</span><span class='hs-conid'>Set</span> <span class='hs-conid'>Polygon</span><span class='hs-layout'>)</span>
 <a name="line-311"></a><span class='hs-definition'>genNeighbors</span> <span class='hs-varid'>t</span> <span class='hs-varid'>v</span> <span class='hs-varid'>d</span> <span class='hs-keyglyph'>=</span> <span class='hs-layout'>(</span><span class='hs-varid'>neighbors</span><span class='hs-layout'>,</span> <span class='hs-conid'>S</span><span class='hs-varop'>.</span><span class='hs-varid'>fromList</span> <span class='hs-varid'>polys</span><span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
-<a name="line-312"></a>  <span class='hs-layout'>(</span><span class='hs-varid'>neighbors</span><span class='hs-layout'>,</span> <span class='hs-varid'>polys</span><span class='hs-layout'>)</span> 
+<a name="line-312"></a>  <span class='hs-layout'>(</span><span class='hs-varid'>neighbors</span><span class='hs-layout'>,</span> <span class='hs-varid'>polys</span><span class='hs-layout'>)</span>
 <a name="line-313"></a>    <span class='hs-keyglyph'>=</span> <span class='hs-varid'>unzip</span> <span class='hs-varop'>.</span> <span class='hs-varid'>snd</span>
-<a name="line-314"></a>      <span class='hs-varop'>$</span> <span class='hs-varid'>mapAccumL</span> 
+<a name="line-314"></a>      <span class='hs-varop'>$</span> <span class='hs-varid'>mapAccumL</span>
 <a name="line-315"></a>          <span class='hs-layout'>(</span><span class='hs-keyglyph'>\</span><span class='hs-varid'>d'</span> <span class='hs-varid'>poly</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-layout'>(</span><span class='hs-varid'>polyRotation</span> <span class='hs-varid'>poly</span> <span class='hs-varid'>d'</span><span class='hs-layout'>,</span> <span class='hs-layout'>(</span><span class='hs-varid'>v</span> <span class='hs-varop'>^+^</span> <span class='hs-varid'>d'</span><span class='hs-layout'>,</span> <span class='hs-varid'>genPolyVs</span> <span class='hs-varid'>poly</span> <span class='hs-varid'>v</span> <span class='hs-varid'>d'</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span>
 <a name="line-316"></a>          <span class='hs-layout'>(</span><span class='hs-varid'>negateV</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span>
 <a name="line-317"></a>          <span class='hs-layout'>(</span><span class='hs-varid'>curConfig</span> <span class='hs-varid'>t</span><span class='hs-layout'>)</span>
-<a name="line-318"></a>  
+<a name="line-318"></a>
 <a name="line-319"></a><a name="genPolyVs"></a><span class='hs-comment'>-- | Generate the vertices of the given polygon, with one vertex at the given point</span>
 <a name="line-320"></a><span class='hs-comment'>--   and an adjacent vertex at the given offset.</span>
-<a name="line-321"></a><span class='hs-definition'>genPolyVs</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>TilingPoly</span> 
+<a name="line-321"></a><span class='hs-definition'>genPolyVs</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>TilingPoly</span>
 <a name="line-322"></a>          <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Q2</span>          <span class='hs-comment'>-- ^ one vertex</span>
 <a name="line-323"></a>          <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Q2</span>          <span class='hs-comment'>-- ^ vector to second vertex</span>
 <a name="line-324"></a>          <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Polygon</span>
 <a name="line-325"></a><span class='hs-definition'>genPolyVs</span> <span class='hs-varid'>p</span> <span class='hs-varid'>v</span> <span class='hs-varid'>d</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Polygon</span>
-<a name="line-326"></a>                <span class='hs-varop'>.</span> <span class='hs-varid'>scanl</span> <span class='hs-layout'>(</span><span class='hs-varop'>^+^</span><span class='hs-layout'>)</span> <span class='hs-varid'>v</span> 
+<a name="line-326"></a>                <span class='hs-varop'>.</span> <span class='hs-varid'>scanl</span> <span class='hs-layout'>(</span><span class='hs-varop'>^+^</span><span class='hs-layout'>)</span> <span class='hs-varid'>v</span>
 <a name="line-327"></a>                <span class='hs-varop'>.</span> <span class='hs-varid'>take</span> <span class='hs-layout'>(</span><span class='hs-varid'>polySides</span> <span class='hs-varid'>p</span> <span class='hs-comment'>-</span> <span class='hs-num'>1</span><span class='hs-layout'>)</span>
-<a name="line-328"></a>                <span class='hs-varop'>.</span> <span class='hs-varid'>iterate</span> <span class='hs-layout'>(</span><span class='hs-varid'>polyExtRotation</span> <span class='hs-varid'>p</span><span class='hs-layout'>)</span> 
+<a name="line-328"></a>                <span class='hs-varop'>.</span> <span class='hs-varid'>iterate</span> <span class='hs-layout'>(</span><span class='hs-varid'>polyExtRotation</span> <span class='hs-varid'>p</span><span class='hs-layout'>)</span>
 <a name="line-329"></a>                <span class='hs-varop'>$</span> <span class='hs-varid'>d</span>
 <a name="line-330"></a>
 <a name="line-331"></a><span class='hs-comment'>------------------------------------------------------------</span>
@@ -359,28 +359,28 @@
 <a name="line-350"></a>
 <a name="line-351"></a><a name="drawTiling"></a><span class='hs-comment'>-- | Draw a tiling, with a given width and height and default colors</span>
 <a name="line-352"></a><span class='hs-comment'>--   for the polygons.</span>
-<a name="line-353"></a><span class='hs-definition'>drawTiling</span> <span class='hs-keyglyph'>::</span> <span class='hs-layout'>(</span><span class='hs-conid'>Renderable</span> <span class='hs-layout'>(</span><span class='hs-conid'>Path</span> <span class='hs-conid'>R2</span><span class='hs-layout'>)</span> <span class='hs-varid'>b</span><span class='hs-layout'>,</span> <span class='hs-conid'>Backend</span> <span class='hs-varid'>b</span> <span class='hs-conid'>R2</span><span class='hs-layout'>)</span> 
+<a name="line-353"></a><span class='hs-definition'>drawTiling</span> <span class='hs-keyglyph'>::</span> <span class='hs-layout'>(</span><span class='hs-conid'>Renderable</span> <span class='hs-layout'>(</span><span class='hs-conid'>Path</span> <span class='hs-conid'>R2</span><span class='hs-layout'>)</span> <span class='hs-varid'>b</span><span class='hs-layout'>,</span> <span class='hs-conid'>Backend</span> <span class='hs-varid'>b</span> <span class='hs-conid'>R2</span><span class='hs-layout'>)</span>
 <a name="line-354"></a>           <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>Tiling</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Double</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Double</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Diagram</span> <span class='hs-varid'>b</span> <span class='hs-conid'>R2</span>
-<a name="line-355"></a><span class='hs-definition'>drawTiling</span> <span class='hs-keyglyph'>=</span> 
-<a name="line-356"></a>  <span class='hs-varid'>drawTilingStyled</span> 
+<a name="line-355"></a><span class='hs-definition'>drawTiling</span> <span class='hs-keyglyph'>=</span>
+<a name="line-356"></a>  <span class='hs-varid'>drawTilingStyled</span>
 <a name="line-357"></a>    <span class='hs-layout'>(</span><span class='hs-varid'>mempty</span> <span class='hs-cpp'>#</span> <span class='hs-varid'>lw</span> <span class='hs-num'>0.02</span><span class='hs-layout'>)</span>
-<a name="line-358"></a>    <span class='hs-layout'>(</span><span class='hs-keyglyph'>\</span><span class='hs-varid'>p</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>mempty</span> 
+<a name="line-358"></a>    <span class='hs-layout'>(</span><span class='hs-keyglyph'>\</span><span class='hs-varid'>p</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>mempty</span>
 <a name="line-359"></a>           <span class='hs-cpp'>#</span> <span class='hs-varid'>lw</span> <span class='hs-num'>0</span>
-<a name="line-360"></a>           <span class='hs-cpp'>#</span> <span class='hs-varid'>fc</span> <span class='hs-layout'>(</span> <span class='hs-varid'>polyColor</span> 
-<a name="line-361"></a>                <span class='hs-varop'>.</span> <span class='hs-varid'>polyFromSides</span> 
-<a name="line-362"></a>                <span class='hs-varop'>.</span> <span class='hs-varid'>length</span> 
+<a name="line-360"></a>           <span class='hs-cpp'>#</span> <span class='hs-varid'>fc</span> <span class='hs-layout'>(</span> <span class='hs-varid'>polyColor</span>
+<a name="line-361"></a>                <span class='hs-varop'>.</span> <span class='hs-varid'>polyFromSides</span>
+<a name="line-362"></a>                <span class='hs-varop'>.</span> <span class='hs-varid'>length</span>
 <a name="line-363"></a>                <span class='hs-varop'>.</span> <span class='hs-varid'>polygonVertices</span>
 <a name="line-364"></a>                <span class='hs-varop'>$</span> <span class='hs-varid'>p</span>
 <a name="line-365"></a>                <span class='hs-layout'>)</span>
 <a name="line-366"></a>    <span class='hs-layout'>)</span>
-<a name="line-367"></a>  
+<a name="line-367"></a>
 <a name="line-368"></a><a name="drawTilingStyled"></a><span class='hs-comment'>-- | Draw a tiling with customizable styles for the polygons.  This is</span>
 <a name="line-369"></a><span class='hs-comment'>--   just an example, which you can use as the basis of your own</span>
 <a name="line-370"></a><span class='hs-comment'>--   tiling-drawing routine.</span>
-<a name="line-371"></a><span class='hs-definition'>drawTilingStyled</span> <span class='hs-keyglyph'>::</span> <span class='hs-layout'>(</span><span class='hs-conid'>Renderable</span> <span class='hs-layout'>(</span><span class='hs-conid'>Path</span> <span class='hs-conid'>R2</span><span class='hs-layout'>)</span> <span class='hs-varid'>b</span><span class='hs-layout'>,</span> <span class='hs-conid'>Backend</span> <span class='hs-varid'>b</span> <span class='hs-conid'>R2</span><span class='hs-layout'>)</span> 
+<a name="line-371"></a><span class='hs-definition'>drawTilingStyled</span> <span class='hs-keyglyph'>::</span> <span class='hs-layout'>(</span><span class='hs-conid'>Renderable</span> <span class='hs-layout'>(</span><span class='hs-conid'>Path</span> <span class='hs-conid'>R2</span><span class='hs-layout'>)</span> <span class='hs-varid'>b</span><span class='hs-layout'>,</span> <span class='hs-conid'>Backend</span> <span class='hs-varid'>b</span> <span class='hs-conid'>R2</span><span class='hs-layout'>)</span>
 <a name="line-372"></a>                 <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>Style</span> <span class='hs-conid'>R2</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-layout'>(</span><span class='hs-conid'>Polygon</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Style</span> <span class='hs-conid'>R2</span><span class='hs-layout'>)</span>
 <a name="line-373"></a>                 <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Tiling</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Double</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Double</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Diagram</span> <span class='hs-varid'>b</span> <span class='hs-conid'>R2</span>
-<a name="line-374"></a><span class='hs-definition'>drawTilingStyled</span> <span class='hs-varid'>eStyle</span> <span class='hs-varid'>pStyle</span> <span class='hs-varid'>t</span> <span class='hs-varid'>w</span> <span class='hs-varid'>h</span> <span class='hs-keyglyph'>=</span> 
+<a name="line-374"></a><span class='hs-definition'>drawTilingStyled</span> <span class='hs-varid'>eStyle</span> <span class='hs-varid'>pStyle</span> <span class='hs-varid'>t</span> <span class='hs-varid'>w</span> <span class='hs-varid'>h</span> <span class='hs-keyglyph'>=</span>
 <a name="line-375"></a>  <span class='hs-varid'>mkDia</span> <span class='hs-varop'>$</span> <span class='hs-varid'>generateTiling</span> <span class='hs-varid'>t</span> <span class='hs-layout'>(</span><span class='hs-num'>0</span><span class='hs-layout'>,</span><span class='hs-num'>0</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-num'>1</span><span class='hs-layout'>,</span><span class='hs-num'>0</span><span class='hs-layout'>)</span> <span class='hs-varid'>inRect</span>
 <a name="line-376"></a>
 <a name="line-377"></a>            <span class='hs-comment'>-- draw the edges and polygons into separate</span>
@@ -398,7 +398,7 @@
 <a name="line-389"></a><span class='hs-comment'>------------------------------------------------------------</span>
 <a name="line-390"></a>
 <a name="line-391"></a><span class='hs-comment'>-- Regular tilings</span>
-<a name="line-392"></a>    
+<a name="line-392"></a>
 <a name="line-393"></a><a name="t3"></a><span class='hs-definition'>t3</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Tiling</span>
 <a name="line-394"></a><span class='hs-definition'>t3</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Tiling</span> <span class='hs-layout'>(</span><span class='hs-varid'>replicate</span> <span class='hs-num'>6</span> <span class='hs-conid'>Triangle</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-varid'>const</span> <span class='hs-varid'>t3</span><span class='hs-layout'>)</span>
 <a name="line-395"></a>
@@ -414,14 +414,14 @@
 <a name="line-405"></a><span class='hs-comment'>--   The argument is the number of sides of the polygons surrounding a vertex.</span>
 <a name="line-406"></a><span class='hs-definition'>mk3Tiling</span> <span class='hs-keyglyph'>::</span> <span class='hs-keyglyph'>[</span><span class='hs-conid'>Int</span><span class='hs-keyglyph'>]</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Tiling</span>
 <a name="line-407"></a><span class='hs-definition'>mk3Tiling</span> <span class='hs-layout'>(</span><span class='hs-varid'>ps</span><span class='hs-keyglyph'>@</span><span class='hs-keyglyph'>[</span><span class='hs-varid'>a</span><span class='hs-layout'>,</span><span class='hs-varid'>b</span><span class='hs-layout'>,</span><span class='hs-varid'>c</span><span class='hs-keyglyph'>]</span><span class='hs-layout'>)</span>
-<a name="line-408"></a>      <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Tiling</span> 
+<a name="line-408"></a>      <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Tiling</span>
 <a name="line-409"></a>          <span class='hs-layout'>(</span><span class='hs-varid'>map</span> <span class='hs-varid'>polyFromSides</span> <span class='hs-varid'>ps</span><span class='hs-layout'>)</span>
 <a name="line-410"></a>          <span class='hs-layout'>(</span><span class='hs-keyglyph'>\</span><span class='hs-varid'>i</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-keyword'>case</span> <span class='hs-varid'>i</span> <span class='hs-varop'>`mod`</span> <span class='hs-num'>3</span> <span class='hs-keyword'>of</span>
 <a name="line-411"></a>                   <span class='hs-num'>0</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>mk3Tiling</span> <span class='hs-layout'>(</span><span class='hs-varid'>reverse</span> <span class='hs-varid'>ps</span><span class='hs-layout'>)</span>
 <a name="line-412"></a>                   <span class='hs-num'>1</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>mk3Tiling</span> <span class='hs-keyglyph'>[</span><span class='hs-varid'>a</span><span class='hs-layout'>,</span><span class='hs-varid'>c</span><span class='hs-layout'>,</span><span class='hs-varid'>b</span><span class='hs-keyglyph'>]</span>
 <a name="line-413"></a>                   <span class='hs-num'>2</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>mk3Tiling</span> <span class='hs-keyglyph'>[</span><span class='hs-varid'>b</span><span class='hs-layout'>,</span><span class='hs-varid'>a</span><span class='hs-layout'>,</span><span class='hs-varid'>c</span><span class='hs-keyglyph'>]</span>
 <a name="line-414"></a>                   <span class='hs-keyword'>_</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>error</span> <span class='hs-str'>"i `mod` 3 is not 0, 1,or 2! the sky is falling!"</span>
-<a name="line-415"></a>          <span class='hs-layout'>)</span>           
+<a name="line-415"></a>          <span class='hs-layout'>)</span>
 <a name="line-416"></a><span class='hs-definition'>mk3Tiling</span> <span class='hs-keyword'>_</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>error</span> <span class='hs-str'>"mk3Tiling may only be called on a list of length 3."</span>
 <a name="line-417"></a>
 <a name="line-418"></a><a name="t4612"></a><span class='hs-definition'>t4612</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Tiling</span>

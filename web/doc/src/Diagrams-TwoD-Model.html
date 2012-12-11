@@ -28,8 +28,8 @@
 <a name="line-19"></a>       <span class='hs-layout'>,</span> <span class='hs-varid'>showLabels</span>
 <a name="line-20"></a>       <span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
 <a name="line-21"></a>
-<a name="line-22"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Graphics</span><span class='hs-varop'>.</span><span class='hs-conid'>Rendering</span><span class='hs-varop'>.</span><span class='hs-conid'>Diagrams</span>
-<a name="line-23"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Graphics</span><span class='hs-varop'>.</span><span class='hs-conid'>Rendering</span><span class='hs-varop'>.</span><span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Names</span>
+<a name="line-22"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Core</span>
+<a name="line-23"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Core</span><span class='hs-varop'>.</span><span class='hs-conid'>Names</span>
 <a name="line-24"></a>
 <a name="line-25"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Path</span>
 <a name="line-26"></a>
@@ -59,7 +59,7 @@
 <a name="line-50"></a><a name="showOrigin"></a><span class='hs-comment'>-- | Mark the origin of a diagram by placing a red dot 1/50th its size.</span>
 <a name="line-51"></a><span class='hs-definition'>showOrigin</span> <span class='hs-keyglyph'>::</span> <span class='hs-layout'>(</span><span class='hs-conid'>Renderable</span> <span class='hs-layout'>(</span><span class='hs-conid'>Path</span> <span class='hs-conid'>R2</span><span class='hs-layout'>)</span> <span class='hs-varid'>b</span><span class='hs-layout'>,</span> <span class='hs-conid'>Backend</span> <span class='hs-varid'>b</span> <span class='hs-conid'>R2</span><span class='hs-layout'>,</span> <span class='hs-conid'>Monoid'</span> <span class='hs-varid'>m</span><span class='hs-layout'>)</span>
 <a name="line-52"></a>           <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>QDiagram</span> <span class='hs-varid'>b</span> <span class='hs-conid'>R2</span> <span class='hs-varid'>m</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>QDiagram</span> <span class='hs-varid'>b</span> <span class='hs-conid'>R2</span> <span class='hs-varid'>m</span>
-<a name="line-53"></a><span class='hs-definition'>showOrigin</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>showOrigin'</span> <span class='hs-varid'>def</span> 
+<a name="line-53"></a><span class='hs-definition'>showOrigin</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>showOrigin'</span> <span class='hs-varid'>def</span>
 <a name="line-54"></a>
 <a name="line-55"></a><a name="showOrigin'"></a><span class='hs-comment'>-- | Mark the origin of a diagram, with control over colour and scale</span>
 <a name="line-56"></a><span class='hs-comment'>-- of marker dot.</span>
@@ -78,7 +78,7 @@
 <a name="line-69"></a>                             <span class='hs-layout'>,</span> <span class='hs-varid'>oMinSize</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Double</span>
 <a name="line-70"></a>                             <span class='hs-layout'>}</span>
 <a name="line-71"></a>
-<a name="line-72"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Default</span> <span class='hs-conid'>OriginOpts</span> <span class='hs-keyword'>where</span>
+<a name="line-72"></a><a name="instance%20Default%20OriginOpts"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Default</span> <span class='hs-conid'>OriginOpts</span> <span class='hs-keyword'>where</span>
 <a name="line-73"></a>  <span class='hs-varid'>def</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>OriginOpts</span> <span class='hs-varid'>red</span> <span class='hs-layout'>(</span><span class='hs-num'>1</span><span class='hs-varop'>/</span><span class='hs-num'>50</span><span class='hs-layout'>)</span> <span class='hs-num'>0.001</span>
 <a name="line-74"></a>
 <a name="line-75"></a>
@@ -88,7 +88,7 @@
 <a name="line-79"></a>
 <a name="line-80"></a><a name="showLabels"></a><span class='hs-definition'>showLabels</span> <span class='hs-keyglyph'>::</span> <span class='hs-layout'>(</span><span class='hs-conid'>Renderable</span> <span class='hs-conid'>Text</span> <span class='hs-varid'>b</span><span class='hs-layout'>,</span> <span class='hs-conid'>Backend</span> <span class='hs-varid'>b</span> <span class='hs-conid'>R2</span><span class='hs-layout'>)</span>
 <a name="line-81"></a>           <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>QDiagram</span> <span class='hs-varid'>b</span> <span class='hs-conid'>R2</span> <span class='hs-varid'>m</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>QDiagram</span> <span class='hs-varid'>b</span> <span class='hs-conid'>R2</span> <span class='hs-conid'>Any</span>
-<a name="line-82"></a><span class='hs-definition'>showLabels</span> <span class='hs-varid'>d</span> <span class='hs-keyglyph'>=</span> 
+<a name="line-82"></a><span class='hs-definition'>showLabels</span> <span class='hs-varid'>d</span> <span class='hs-keyglyph'>=</span>
 <a name="line-83"></a>             <span class='hs-layout'>(</span> <span class='hs-varid'>mconcat</span>
 <a name="line-84"></a>             <span class='hs-varop'>.</span> <span class='hs-varid'>map</span> <span class='hs-layout'>(</span><span class='hs-keyglyph'>\</span><span class='hs-layout'>(</span><span class='hs-varid'>n</span><span class='hs-layout'>,</span><span class='hs-varid'>p</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>text</span> <span class='hs-layout'>(</span><span class='hs-varid'>show</span> <span class='hs-varid'>n</span><span class='hs-layout'>)</span> <span class='hs-cpp'>#</span> <span class='hs-varid'>translate</span> <span class='hs-layout'>(</span><span class='hs-varid'>p</span> <span class='hs-varop'>.-.</span> <span class='hs-varid'>origin</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span>
 <a name="line-85"></a>             <span class='hs-varop'>.</span> <span class='hs-varid'>concatMap</span> <span class='hs-layout'>(</span><span class='hs-keyglyph'>\</span><span class='hs-layout'>(</span><span class='hs-varid'>n</span><span class='hs-layout'>,</span><span class='hs-varid'>ps</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>zip</span> <span class='hs-layout'>(</span><span class='hs-varid'>repeat</span> <span class='hs-varid'>n</span><span class='hs-layout'>)</span> <span class='hs-varid'>ps</span><span class='hs-layout'>)</span>
@@ -98,17 +98,6 @@
 <a name="line-89"></a>             <span class='hs-layout'>)</span> <span class='hs-varop'>&lt;&gt;</span>
 <a name="line-90"></a>             <span class='hs-varid'>fmap</span> <span class='hs-layout'>(</span><span class='hs-varid'>const</span> <span class='hs-layout'>(</span><span class='hs-conid'>Any</span> <span class='hs-conid'>False</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span> <span class='hs-varid'>d</span>
 <a name="line-91"></a>  <span class='hs-keyword'>where</span>
-<a name="line-92"></a>    <span class='hs-conid'>NameMap</span> <span class='hs-varid'>m</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>names</span> <span class='hs-varid'>d</span>
-<a name="line-93"></a>
-<a name="line-94"></a><span class='hs-comment'>-- XXX finish:</span>
-<a name="line-95"></a>
-<a name="line-96"></a><span class='hs-comment'>--   Draw the separating lines between diagrams composed with 'beside'</span>
-<a name="line-97"></a><span class='hs-comment'>--   (or any combinators implemented in terms of 'beside', like '(|||)'</span>
-<a name="line-98"></a><span class='hs-comment'>--   or '(===)').</span>
-<a name="line-99"></a>
-<a name="line-100"></a><span class='hs-comment'>-- showSep :: QDiagram b R2 m -&gt; QDiagram b R2 m</span>
-<a name="line-101"></a><span class='hs-comment'>-- showSep d = s &lt;&gt; d</span>
-<a name="line-102"></a><span class='hs-comment'>--   where ... = case d of</span>
-<a name="line-103"></a><span class='hs-comment'>--                 QDiagram (Branch u ds children) -&gt; ...</span>
+<a name="line-92"></a>    <span class='hs-conid'>SubMap</span> <span class='hs-varid'>m</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>subMap</span> <span class='hs-varid'>d</span>
 </pre></body>
 </html>

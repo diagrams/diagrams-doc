@@ -29,37 +29,38 @@
 <a name="line-20"></a>       <span class='hs-layout'>,</span> <span class='hs-varid'>direction</span><span class='hs-layout'>,</span> <span class='hs-varid'>fromDirection</span><span class='hs-layout'>,</span>  <span class='hs-varid'>e</span>
 <a name="line-21"></a>       <span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
 <a name="line-22"></a>
-<a name="line-23"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>TwoD</span><span class='hs-varop'>.</span><span class='hs-conid'>Types</span>
-<a name="line-24"></a>
-<a name="line-25"></a><a name="unitX"></a><span class='hs-comment'>-- | The unit vector in the positive X direction.</span>
-<a name="line-26"></a><span class='hs-definition'>unitX</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>R2</span>
-<a name="line-27"></a><span class='hs-definition'>unitX</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>r2</span> <span class='hs-layout'>(</span><span class='hs-num'>1</span><span class='hs-layout'>,</span><span class='hs-num'>0</span><span class='hs-layout'>)</span>
-<a name="line-28"></a>
-<a name="line-29"></a><a name="unitY"></a><span class='hs-comment'>-- | The unit vector in the positive Y direction.</span>
-<a name="line-30"></a><span class='hs-definition'>unitY</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>R2</span>
-<a name="line-31"></a><span class='hs-definition'>unitY</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>r2</span> <span class='hs-layout'>(</span><span class='hs-num'>0</span><span class='hs-layout'>,</span><span class='hs-num'>1</span><span class='hs-layout'>)</span>
-<a name="line-32"></a>
-<a name="line-33"></a><a name="unit_X"></a><span class='hs-comment'>-- | The unit vector in the negative X direction.</span>
-<a name="line-34"></a><span class='hs-definition'>unit_X</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>R2</span>
-<a name="line-35"></a><span class='hs-definition'>unit_X</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>r2</span> <span class='hs-layout'>(</span><span class='hs-comment'>-</span><span class='hs-num'>1</span><span class='hs-layout'>,</span><span class='hs-num'>0</span><span class='hs-layout'>)</span>
-<a name="line-36"></a>
-<a name="line-37"></a><a name="unit_Y"></a><span class='hs-comment'>-- | The unit vector in the negative Y direction.</span>
-<a name="line-38"></a><span class='hs-definition'>unit_Y</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>R2</span>
-<a name="line-39"></a><span class='hs-definition'>unit_Y</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>r2</span> <span class='hs-layout'>(</span><span class='hs-num'>0</span><span class='hs-layout'>,</span><span class='hs-comment'>-</span><span class='hs-num'>1</span><span class='hs-layout'>)</span>
-<a name="line-40"></a>
-<a name="line-41"></a><a name="direction"></a><span class='hs-comment'>-- | Compute the direction of a vector, measured counterclockwise from</span>
-<a name="line-42"></a><span class='hs-comment'>--   the positive x-axis as a fraction of a full turn.  The zero</span>
-<a name="line-43"></a><span class='hs-comment'>--   vector is arbitrarily assigned the direction 0.</span>
-<a name="line-44"></a><span class='hs-definition'>direction</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Angle</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>R2</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span>
-<a name="line-45"></a><span class='hs-definition'>direction</span> <span class='hs-layout'>(</span><span class='hs-varid'>unr2</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-layout'>(</span><span class='hs-varid'>x</span><span class='hs-layout'>,</span><span class='hs-varid'>y</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>convertAngle</span> <span class='hs-varop'>.</span> <span class='hs-conid'>Rad</span> <span class='hs-varop'>$</span> <span class='hs-varid'>atan2</span> <span class='hs-varid'>y</span> <span class='hs-varid'>x</span>
-<a name="line-46"></a>
-<a name="line-47"></a><a name="fromDirection"></a><span class='hs-comment'>-- | Convert an angle into a unit vector pointing in that direction.</span>
-<a name="line-48"></a><span class='hs-definition'>fromDirection</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Angle</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>R2</span>
-<a name="line-49"></a><span class='hs-definition'>fromDirection</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>r2</span> <span class='hs-layout'>(</span><span class='hs-varid'>cos</span> <span class='hs-varid'>a'</span><span class='hs-layout'>,</span> <span class='hs-varid'>sin</span> <span class='hs-varid'>a'</span><span class='hs-layout'>)</span>
-<a name="line-50"></a>  <span class='hs-keyword'>where</span> <span class='hs-conid'>Rad</span> <span class='hs-varid'>a'</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>convertAngle</span> <span class='hs-varid'>a</span>
-<a name="line-51"></a>
-<a name="line-52"></a><a name="e"></a><span class='hs-comment'>-- | A convenient synonym for 'fromDirection'.</span>
-<a name="line-53"></a><span class='hs-definition'>e</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Angle</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>R2</span>
-<a name="line-54"></a><span class='hs-definition'>e</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>fromDirection</span>
+<a name="line-23"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Coordinates</span>
+<a name="line-24"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>TwoD</span><span class='hs-varop'>.</span><span class='hs-conid'>Types</span>
+<a name="line-25"></a>
+<a name="line-26"></a><a name="unitX"></a><span class='hs-comment'>-- | The unit vector in the positive X direction.</span>
+<a name="line-27"></a><span class='hs-definition'>unitX</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>R2</span>
+<a name="line-28"></a><span class='hs-definition'>unitX</span> <span class='hs-keyglyph'>=</span> <span class='hs-num'>1</span> <span class='hs-varop'>&amp;</span> <span class='hs-num'>0</span>
+<a name="line-29"></a>
+<a name="line-30"></a><a name="unitY"></a><span class='hs-comment'>-- | The unit vector in the positive Y direction.</span>
+<a name="line-31"></a><span class='hs-definition'>unitY</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>R2</span>
+<a name="line-32"></a><span class='hs-definition'>unitY</span> <span class='hs-keyglyph'>=</span> <span class='hs-num'>0</span> <span class='hs-varop'>&amp;</span> <span class='hs-num'>1</span>
+<a name="line-33"></a>
+<a name="line-34"></a><a name="unit_X"></a><span class='hs-comment'>-- | The unit vector in the negative X direction.</span>
+<a name="line-35"></a><span class='hs-definition'>unit_X</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>R2</span>
+<a name="line-36"></a><span class='hs-definition'>unit_X</span> <span class='hs-keyglyph'>=</span> <span class='hs-layout'>(</span><span class='hs-comment'>-</span><span class='hs-num'>1</span><span class='hs-layout'>)</span> <span class='hs-varop'>&amp;</span> <span class='hs-num'>0</span>
+<a name="line-37"></a>
+<a name="line-38"></a><a name="unit_Y"></a><span class='hs-comment'>-- | The unit vector in the negative Y direction.</span>
+<a name="line-39"></a><span class='hs-definition'>unit_Y</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>R2</span>
+<a name="line-40"></a><span class='hs-definition'>unit_Y</span> <span class='hs-keyglyph'>=</span> <span class='hs-num'>0</span> <span class='hs-varop'>&amp;</span> <span class='hs-layout'>(</span><span class='hs-comment'>-</span><span class='hs-num'>1</span><span class='hs-layout'>)</span>
+<a name="line-41"></a>
+<a name="line-42"></a><a name="direction"></a><span class='hs-comment'>-- | Compute the direction of a vector, measured counterclockwise from</span>
+<a name="line-43"></a><span class='hs-comment'>--   the positive x-axis as a fraction of a full turn.  The zero</span>
+<a name="line-44"></a><span class='hs-comment'>--   vector is arbitrarily assigned the direction 0.</span>
+<a name="line-45"></a><span class='hs-definition'>direction</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Angle</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>R2</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span>
+<a name="line-46"></a><span class='hs-definition'>direction</span> <span class='hs-layout'>(</span><span class='hs-varid'>coords</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>x</span> <span class='hs-conop'>:&amp;</span> <span class='hs-varid'>y</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>convertAngle</span> <span class='hs-varop'>.</span> <span class='hs-conid'>Rad</span> <span class='hs-varop'>$</span> <span class='hs-varid'>atan2</span> <span class='hs-varid'>y</span> <span class='hs-varid'>x</span>
+<a name="line-47"></a>
+<a name="line-48"></a><a name="fromDirection"></a><span class='hs-comment'>-- | Convert an angle into a unit vector pointing in that direction.</span>
+<a name="line-49"></a><span class='hs-definition'>fromDirection</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Angle</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>R2</span>
+<a name="line-50"></a><span class='hs-definition'>fromDirection</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>cos</span> <span class='hs-varid'>a'</span> <span class='hs-varop'>&amp;</span> <span class='hs-varid'>sin</span> <span class='hs-varid'>a'</span>
+<a name="line-51"></a>  <span class='hs-keyword'>where</span> <span class='hs-conid'>Rad</span> <span class='hs-varid'>a'</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>convertAngle</span> <span class='hs-varid'>a</span>
+<a name="line-52"></a>
+<a name="line-53"></a><a name="e"></a><span class='hs-comment'>-- | A convenient synonym for 'fromDirection'.</span>
+<a name="line-54"></a><span class='hs-definition'>e</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Angle</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>R2</span>
+<a name="line-55"></a><span class='hs-definition'>e</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>fromDirection</span>
 </pre></body>
 </html>

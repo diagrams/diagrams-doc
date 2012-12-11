@@ -9,44 +9,60 @@
 <body>
 <pre><a name="line-1"></a><span class='hs-comment'>{-# LANGUAGE TypeFamilies
 <a name="line-2"></a>           , FlexibleContexts
-<a name="line-3"></a>           , ViewPatterns
-<a name="line-4"></a>  #-}</span>
-<a name="line-5"></a><span class='hs-comment'>-----------------------------------------------------------------------------</span>
-<a name="line-6"></a><span class='hs-comment'>-- |</span>
-<a name="line-7"></a><span class='hs-comment'>-- Module      :  Diagrams.ThreeD.Shapes</span>
-<a name="line-8"></a><span class='hs-comment'>-- Copyright   :  (c) 2011 diagrams-lib team (see LICENSE)</span>
-<a name="line-9"></a><span class='hs-comment'>-- License     :  BSD-style (see LICENSE)</span>
-<a name="line-10"></a><span class='hs-comment'>-- Maintainer  :  diagrams-discuss@googlegroups.com</span>
-<a name="line-11"></a><span class='hs-comment'>--</span>
-<a name="line-12"></a><span class='hs-comment'>-- Various three-dimensional shapes.</span>
-<a name="line-13"></a><span class='hs-comment'>--</span>
-<a name="line-14"></a><span class='hs-comment'>-----------------------------------------------------------------------------</span>
-<a name="line-15"></a>
-<a name="line-16"></a><span class='hs-keyword'>module</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>ThreeD</span><span class='hs-varop'>.</span><span class='hs-conid'>Shapes</span>
-<a name="line-17"></a>       <span class='hs-layout'>(</span>
-<a name="line-18"></a>         <span class='hs-conid'>Ellipsoid</span><span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span>
-<a name="line-19"></a>       <span class='hs-layout'>,</span> <span class='hs-varid'>sphere</span>
-<a name="line-20"></a>       <span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
-<a name="line-21"></a>
-<a name="line-22"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Graphics</span><span class='hs-varop'>.</span><span class='hs-conid'>Rendering</span><span class='hs-varop'>.</span><span class='hs-conid'>Diagrams</span>
-<a name="line-23"></a>
-<a name="line-24"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>ThreeD</span><span class='hs-varop'>.</span><span class='hs-conid'>Types</span>
+<a name="line-3"></a>           , MultiParamTypeClasses
+<a name="line-4"></a>           , ViewPatterns
+<a name="line-5"></a>  #-}</span>
+<a name="line-6"></a><span class='hs-comment'>-----------------------------------------------------------------------------</span>
+<a name="line-7"></a><span class='hs-comment'>-- |</span>
+<a name="line-8"></a><span class='hs-comment'>-- Module      :  Diagrams.ThreeD.Shapes</span>
+<a name="line-9"></a><span class='hs-comment'>-- Copyright   :  (c) 2011 diagrams-lib team (see LICENSE)</span>
+<a name="line-10"></a><span class='hs-comment'>-- License     :  BSD-style (see LICENSE)</span>
+<a name="line-11"></a><span class='hs-comment'>-- Maintainer  :  diagrams-discuss@googlegroups.com</span>
+<a name="line-12"></a><span class='hs-comment'>--</span>
+<a name="line-13"></a><span class='hs-comment'>-- Various three-dimensional shapes.</span>
+<a name="line-14"></a><span class='hs-comment'>--</span>
+<a name="line-15"></a><span class='hs-comment'>-----------------------------------------------------------------------------</span>
+<a name="line-16"></a>
+<a name="line-17"></a><span class='hs-keyword'>module</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>ThreeD</span><span class='hs-varop'>.</span><span class='hs-conid'>Shapes</span>
+<a name="line-18"></a>       <span class='hs-layout'>(</span>
+<a name="line-19"></a>         <span class='hs-conid'>Ellipsoid</span><span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span>
+<a name="line-20"></a>       <span class='hs-layout'>,</span> <span class='hs-varid'>sphere</span>
+<a name="line-21"></a>       <span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
+<a name="line-22"></a>
+<a name="line-23"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Prelude</span> <span class='hs-varid'>hiding</span> <span class='hs-layout'>(</span><span class='hs-varid'>minimum</span><span class='hs-layout'>)</span>
+<a name="line-24"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Data</span><span class='hs-varop'>.</span><span class='hs-conid'>Semigroup</span>
 <a name="line-25"></a>
-<a name="line-26"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Data</span><span class='hs-varop'>.</span><span class='hs-conid'>Semigroup</span>
-<a name="line-27"></a>
-<a name="line-28"></a><a name="Ellipsoid"></a><span class='hs-keyword'>data</span> <span class='hs-conid'>Ellipsoid</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Ellipsoid</span> <span class='hs-conid'>T3</span>
+<a name="line-26"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Data</span><span class='hs-varop'>.</span><span class='hs-conid'>AffineSpace</span>
+<a name="line-27"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Data</span><span class='hs-varop'>.</span><span class='hs-conid'>Monoid</span><span class='hs-varop'>.</span><span class='hs-conid'>PosInf</span> <span class='hs-layout'>(</span><span class='hs-varid'>minimum</span><span class='hs-layout'>)</span>
+<a name="line-28"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Data</span><span class='hs-varop'>.</span><span class='hs-conid'>VectorSpace</span>
 <a name="line-29"></a>
-<a name="line-30"></a><span class='hs-keyword'>type</span> <span class='hs-keyword'>instance</span> <span class='hs-conid'>V</span> <span class='hs-conid'>Ellipsoid</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>R3</span>
+<a name="line-30"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Core</span>
 <a name="line-31"></a>
-<a name="line-32"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Transformable</span> <span class='hs-conid'>Ellipsoid</span> <span class='hs-keyword'>where</span>
-<a name="line-33"></a>  <span class='hs-varid'>transform</span> <span class='hs-varid'>t1</span> <span class='hs-layout'>(</span><span class='hs-conid'>Ellipsoid</span> <span class='hs-varid'>t2</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Ellipsoid</span> <span class='hs-layout'>(</span><span class='hs-varid'>t1</span> <span class='hs-varop'>&lt;&gt;</span> <span class='hs-varid'>t2</span><span class='hs-layout'>)</span>
+<a name="line-32"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>ThreeD</span><span class='hs-varop'>.</span><span class='hs-conid'>Types</span>
+<a name="line-33"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Solve</span>
 <a name="line-34"></a>
-<a name="line-35"></a><a name="sphere"></a><span class='hs-definition'>sphere</span> <span class='hs-keyglyph'>::</span> <span class='hs-layout'>(</span><span class='hs-conid'>Backend</span> <span class='hs-varid'>b</span> <span class='hs-conid'>R3</span><span class='hs-layout'>,</span> <span class='hs-conid'>Renderable</span> <span class='hs-conid'>Ellipsoid</span> <span class='hs-varid'>b</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>Diagram</span> <span class='hs-varid'>b</span> <span class='hs-conid'>R3</span>
-<a name="line-36"></a><span class='hs-definition'>sphere</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>mkQD</span> <span class='hs-layout'>(</span><span class='hs-conid'>Prim</span> <span class='hs-varop'>$</span> <span class='hs-conid'>Ellipsoid</span> <span class='hs-varid'>mempty</span><span class='hs-layout'>)</span>
-<a name="line-37"></a>              <span class='hs-layout'>(</span><span class='hs-varid'>mkEnvelope</span> <span class='hs-varid'>sphereEnv</span><span class='hs-layout'>)</span>
-<a name="line-38"></a>              <span class='hs-varid'>mempty</span>
-<a name="line-39"></a>              <span class='hs-layout'>(</span><span class='hs-conid'>Query</span> <span class='hs-varid'>sphereQuery</span><span class='hs-layout'>)</span>
-<a name="line-40"></a>  <span class='hs-keyword'>where</span> <span class='hs-varid'>sphereEnv</span> <span class='hs-layout'>(</span><span class='hs-varid'>unr3</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-layout'>(</span><span class='hs-varid'>x</span><span class='hs-layout'>,</span><span class='hs-varid'>y</span><span class='hs-layout'>,</span><span class='hs-varid'>z</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span>   <span class='hs-keyglyph'>=</span> <span class='hs-num'>1</span> <span class='hs-varop'>/</span> <span class='hs-varid'>sqrt</span><span class='hs-layout'>(</span><span class='hs-varid'>x</span><span class='hs-varop'>*</span><span class='hs-varid'>x</span> <span class='hs-varop'>+</span> <span class='hs-varid'>y</span><span class='hs-varop'>*</span><span class='hs-varid'>y</span> <span class='hs-varop'>+</span> <span class='hs-varid'>z</span><span class='hs-varop'>*</span><span class='hs-varid'>z</span><span class='hs-layout'>)</span>
-<a name="line-41"></a>        <span class='hs-varid'>sphereQuery</span> <span class='hs-layout'>(</span><span class='hs-varid'>unp3</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-layout'>(</span><span class='hs-varid'>x</span><span class='hs-layout'>,</span><span class='hs-varid'>y</span><span class='hs-layout'>,</span><span class='hs-varid'>z</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Any</span> <span class='hs-varop'>$</span> <span class='hs-varid'>x</span><span class='hs-varop'>*</span><span class='hs-varid'>x</span> <span class='hs-varop'>+</span> <span class='hs-varid'>y</span><span class='hs-varop'>*</span><span class='hs-varid'>y</span> <span class='hs-varop'>+</span> <span class='hs-varid'>z</span><span class='hs-varop'>*</span><span class='hs-varid'>z</span> <span class='hs-varop'>&lt;=</span> <span class='hs-num'>1</span>
+<a name="line-35"></a><a name="Ellipsoid"></a><span class='hs-keyword'>data</span> <span class='hs-conid'>Ellipsoid</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Ellipsoid</span> <span class='hs-conid'>T3</span>
+<a name="line-36"></a>
+<a name="line-37"></a><span class='hs-keyword'>type</span> <span class='hs-keyword'>instance</span> <span class='hs-conid'>V</span> <span class='hs-conid'>Ellipsoid</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>R3</span>
+<a name="line-38"></a>
+<a name="line-39"></a><a name="instance%20Transformable%20Ellipsoid"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Transformable</span> <span class='hs-conid'>Ellipsoid</span> <span class='hs-keyword'>where</span>
+<a name="line-40"></a>  <span class='hs-varid'>transform</span> <span class='hs-varid'>t1</span> <span class='hs-layout'>(</span><span class='hs-conid'>Ellipsoid</span> <span class='hs-varid'>t2</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Ellipsoid</span> <span class='hs-layout'>(</span><span class='hs-varid'>t1</span> <span class='hs-varop'>&lt;&gt;</span> <span class='hs-varid'>t2</span><span class='hs-layout'>)</span>
+<a name="line-41"></a>
+<a name="line-42"></a><a name="instance%20Renderable%20Ellipsoid%20NullBackend"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Renderable</span> <span class='hs-conid'>Ellipsoid</span> <span class='hs-conid'>NullBackend</span> <span class='hs-keyword'>where</span>
+<a name="line-43"></a>  <span class='hs-varid'>render</span> <span class='hs-keyword'>_</span> <span class='hs-keyword'>_</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>mempty</span>
+<a name="line-44"></a>
+<a name="line-45"></a><a name="sphere"></a><span class='hs-definition'>sphere</span> <span class='hs-keyglyph'>::</span> <span class='hs-layout'>(</span><span class='hs-conid'>Backend</span> <span class='hs-varid'>b</span> <span class='hs-conid'>R3</span><span class='hs-layout'>,</span> <span class='hs-conid'>Renderable</span> <span class='hs-conid'>Ellipsoid</span> <span class='hs-varid'>b</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>Diagram</span> <span class='hs-varid'>b</span> <span class='hs-conid'>R3</span>
+<a name="line-46"></a><span class='hs-definition'>sphere</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>mkQD</span> <span class='hs-layout'>(</span><span class='hs-conid'>Prim</span> <span class='hs-varop'>$</span> <span class='hs-conid'>Ellipsoid</span> <span class='hs-varid'>mempty</span><span class='hs-layout'>)</span>
+<a name="line-47"></a>              <span class='hs-layout'>(</span><span class='hs-varid'>mkEnvelope</span> <span class='hs-varid'>sphereEnv</span><span class='hs-layout'>)</span>
+<a name="line-48"></a>              <span class='hs-layout'>(</span><span class='hs-varid'>mkTrace</span> <span class='hs-varid'>sphereTrace</span><span class='hs-layout'>)</span>
+<a name="line-49"></a>              <span class='hs-varid'>mempty</span>
+<a name="line-50"></a>              <span class='hs-layout'>(</span><span class='hs-conid'>Query</span> <span class='hs-varid'>sphereQuery</span><span class='hs-layout'>)</span>
+<a name="line-51"></a>  <span class='hs-keyword'>where</span> <span class='hs-varid'>sphereEnv</span> <span class='hs-varid'>v</span> <span class='hs-keyglyph'>=</span> <span class='hs-num'>1</span> <span class='hs-varop'>/</span> <span class='hs-varid'>magnitude</span> <span class='hs-varid'>v</span>
+<a name="line-52"></a>        <span class='hs-varid'>sphereTrace</span> <span class='hs-varid'>p</span> <span class='hs-varid'>v</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>minimum</span> <span class='hs-layout'>(</span><span class='hs-varid'>quadForm</span> <span class='hs-varid'>a</span> <span class='hs-varid'>b</span> <span class='hs-varid'>c</span><span class='hs-layout'>)</span>
+<a name="line-53"></a>          <span class='hs-keyword'>where</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>v</span> <span class='hs-varop'>&lt;.&gt;</span> <span class='hs-varid'>v</span>
+<a name="line-54"></a>                <span class='hs-varid'>b</span> <span class='hs-keyglyph'>=</span> <span class='hs-num'>2</span> <span class='hs-varop'>*^</span> <span class='hs-varid'>p'</span> <span class='hs-varop'>&lt;.&gt;</span> <span class='hs-varid'>v</span>
+<a name="line-55"></a>                <span class='hs-varid'>c</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>p'</span> <span class='hs-varop'>&lt;.&gt;</span> <span class='hs-varid'>p'</span> <span class='hs-comment'>-</span> <span class='hs-num'>1</span>
+<a name="line-56"></a>                <span class='hs-varid'>p'</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>p</span> <span class='hs-varop'>.-.</span> <span class='hs-varid'>origin</span>
+<a name="line-57"></a>        <span class='hs-varid'>sphereQuery</span> <span class='hs-varid'>v</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Any</span> <span class='hs-varop'>$</span> <span class='hs-varid'>magnitudeSq</span> <span class='hs-layout'>(</span><span class='hs-varid'>v</span> <span class='hs-varop'>.-.</span> <span class='hs-varid'>origin</span><span class='hs-layout'>)</span> <span class='hs-varop'>&lt;=</span> <span class='hs-num'>1</span>
 </pre></body>
 </html>
