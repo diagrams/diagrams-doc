@@ -95,15 +95,15 @@
   + [X] fix/decide what to do re: SVG transparent text
   + [X] convert force-layout to lens and release
   + [ ] build API docs
-  + [ ] switch CHANGES files to use Markdown format
-  + [-] update CHANGES files and release info on website
+  + [X] switch CHANGES files to use Markdown format
+  + [X] update CHANGES files and release info on website
     + [X] diagrams-core
     + [X] diagrams-lib
     + [X] diagrams-cairo
     + [X] diagrams-svg
     + [X] diagrams-contrib
     + [X] diagrams-gtk
-    + [ ] website
+    + [X] website
   + [ ] 0.5 -> 0.6 migration page on wiki
   + [X] test building with new vector-space (if it's released)
   + [ ] test build:
@@ -125,18 +125,16 @@
     + [ ] link to gallery (email)
     + [ ] include some examples (blog)
     + [ ] say where/how to get involved
-  + [ ] update LICENSE files/lists of contributors
-    + [ ] put list of contributors on website?
-  + [ ] add release date to all CHANGES files
-    + [ ] core
-    + [ ] lib
-    + [ ] cairo
-    + [ ] gtk
-    + [ ] contrib
-    + [ ] svg
-    + [ ] diagrams?
-    + [ ] builder
-  + [ ] add release date to releases.markdown
+  + [X] update LICENSE files/lists of contributors
+  + [X] add release date to all CHANGES files
+    + [X] core
+    + [X] lib
+    + [X] cairo
+    + [X] gtk
+    + [X] contrib
+    + [X] svg
+    + [X] builder
+  + [X] add release date to releases.markdown
   + [ ] publish new website
   + [ ] upload
     + [ ] diagrams-core
