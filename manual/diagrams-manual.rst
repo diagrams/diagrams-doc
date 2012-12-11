@@ -146,31 +146,51 @@ Platform; if you are on Linux, you will have to install GHC first.
 .. _`Haskell Platform`: http://hackage.haskell.org/platform/
 
 Once you have successfully installed the Haskell platform, installing
-``diagrams`` *should* be as easy as issuing the command:
+``diagrams`` should be as easy as issuing the command:
 
 ::
 
-  cabal install gtk2hs-buildtools diagrams
+  cabal install diagrams
 
-Unfortunately, it often *isn't*.  On some platforms you may run into
-difficulties installing cairo.  `See the wiki for the most up-to-date
-information`_ regarding installation.  If you have trouble installing
-cairo on other platforms, feel free to send email to the `diagrams
-mailing list`_; we would like to collect reports of problems and
-solutions on various platforms.
+The `diagrams`:pkg: package is a convenience wrapper that simply pulls
+in (by default) four other packages:
+
+* `diagrams-core`:pkg: (core data
+type definitions and utilities),
+* `diagrams-lib`:pkg: (standard primitives and combinators),
+* `diagrams-contrib`:pkg: (user-contributed extensions), and
+* `diagrams-svg`:pkg: (Haskell-native backend generating SVG files).
+
+There is also a backend based on the `cairo graphics
+library`_; it has support for more
+features than the SVG backend and additional output formats (PNG, PS,
+PDF), but can be much more difficult to install on some platforms
+(notably OS X).  If you want the cairo backend, you can issue the
+command
+
+.. _`cairo graphics library`: http://www.cairographics.org/
+
+::
+
+  cabal install gtk2hs-buildtools -fcairo diagrams
+
+(You can omit ``gtk2hs-buildtools`` if you have already installed it
+previously.  If you don't want the SVG backend at all, you can add
+the ``-f-svg`` flag.)
+
+There is also a Haskell-native `postscript backend`_ which will soon
+become officially supported but is currently unreleased; you are
+welcome to build it from source and try it out.
+
+.. _`postscript backend`: http://github.com/fryguybob/diagrams-postscript/
+
+`See the wiki for the most up-to-date information`_ regarding
+installation.  If you have trouble installing diagrams, feel free to
+send email to the `diagrams mailing list`_; we would like to collect
+reports of problems and solutions on various platforms.
 
 .. _`See the wiki for the most up-to-date information`: http://www.haskell.org/haskellwiki/Diagrams/Install
 
-If you can't get the cairo backend to work you can also try the native
-SVG backend, `diagrams-svg`:pkg: (instead of installing the
-`diagrams`:pkg: meta-package, which pulls in `diagrams-cairo`:pkg:,
-install `diagrams-core`:pkg:, `diagrams-lib`:pkg:, and
-`diagrams-svg`:pkg: individually). It is almost (but not quite) ready
-to replace `diagrams-cairo`:pkg: as the default "out-of-the-box"
-backend for diagrams.  There is also a (currently unreleased)
-`postscript backend`_.
-
-.. _`postscript backend`: http://github.com/fryguybob/diagrams-postscript/
 
 Getting started
 ---------------
@@ -183,10 +203,10 @@ the following contents:
   {-# LANGUAGE NoMonomorphismRestriction #-}
 
   import Diagrams.Prelude
-  import Diagrams.Backend.Cairo.CmdLine
+  import Diagrams.Backend.SVG.CmdLine
   -- or:
-  -- import Diagrams.Backend.SVG.CmdLine
-  -- if using the SVG backend
+  -- import Diagrams.Backend.Cairo.CmdLine
+  -- if using the Cairo backend
 
   main = defaultMain (circle 1)
 
@@ -197,8 +217,8 @@ run into lots of crazy error messages.
 .. _`dreaded monomorphism restriction`: http://www.haskell.org/haskellwiki/Monomorphism_restriction
 
 `Diagrams.Prelude`:mod: re-exports most everything from the standard
-library; `Diagrams.Backend.Cairo.CmdLine`:mod: provides a command-line
-interface to the cairo rendering backend.
+library; `Diagrams.Backend.SVG.CmdLine`:mod: provides a command-line
+interface to the SVG rendering backend.
 
 To compile your program, type
 
@@ -212,9 +232,9 @@ appropriate options:
 
 ::
 
-  $ ./TestDiagram -w 100 -h 100 -o TestDiagram.png
+  $ ./TestDiagram -w 100 -h 100 -o TestDiagram.svg
 
-The above will generate a 100x100 PNG that should look like this:
+The above will generate a 100x100 SVG that should look like this:
 
 .. class:: dia
 
@@ -222,8 +242,9 @@ The above will generate a 100x100 PNG that should look like this:
 
 > example = circle 1
 
-(Of course, if using the SVG backend you should request an ``.svg``
-file instead of PNG.)
+(If you are using the cairo backend you can also request a ``.png``,
+``.ps``, or ``.pdf`` file; the output type is automatically
+determined by the extension.)
 
 Try typing
 
@@ -2849,7 +2870,7 @@ objects. (Note that `ScaleInv` is not exported from
 > arrow2 = arrow (scaleInv arrowhead unitX)
 >
 > showT tr = arrow1 # tr ||| strutX 1 ||| arrow2 # tr
-> 
+>
 > example = showT id
 
 Type reference
@@ -3295,7 +3316,7 @@ meaning of this function depends on the backend.
 >              => b -> Options b v -> [QDiagram b v m] -> Result b v
 
 So far, the only backend which supports multi-diagram rendering is
-postscript. XXX link to section on postscript backend
+the `postscript backend`_.
 
 Further reading: `Rendering backends`_; `Backends`_.
 
@@ -3807,8 +3828,14 @@ create active `Point`\s, `Path`\s, colors, or values of any other type.
 Rendering backends
 ==================
 
+The SVG backend
+---------------
+
 The cairo backend
 -----------------
+
+The postscript backend
+----------------------
 
 Other backends
 --------------
@@ -3818,12 +3845,10 @@ wiki`_.
 
 .. _`the diagrams wiki`: http://www.haskell.org/haskellwiki/Diagrams/Projects#Backends
 
-.. container:: todo  XXX
+.. container:: todo
 
    Write a bit about each of these backends.
 
-   * SVG
-   * postscript
    * HTML5 canvas
    * TikZ
    * povray
