@@ -14,7 +14,7 @@ First, get the
 the command:
 
 <div style="text-align: center">
-`cabal install gtk2hs-buildtools diagrams`
+`cabal install diagrams`
 </div>
 
 More detailed installation instructions [can be found on the diagrams wiki](http://www.haskell.org/haskellwiki/Diagrams/Install).
@@ -26,6 +26,16 @@ code.  Drop by the [`#diagrams` IRC channel](http://webchat.freenode.net/)
 with questions or post them to the
 [mailing list](http://groups.google.com/group/diagrams-discuss).
 
+News
+----
+
+* Diagrams 0.6 released! (11 December 2012)
+
+* Factorization diagrams make the
+  [cover of Hacker Monthly](http://hackermonthly.com/issue-31.html)!
+  (December 2012)
+
+ <!--
 <div style="text-align:center">
 <a href="/gallery/Paradox.html"><img src="/images/Paradox-small.png" style="vertical-align: middle" title="Fibonacci paradox" /></a>
 </div>
@@ -49,8 +59,9 @@ Diagrams is:
 * *Flexible*: diagrams is designed from the ground up to be as generic
    and flexible as possible.
 
+ -->
+
 <div style="text-align:center" >
 <a href="/gallery/Pentaflake.html"><img src="/images/Pentaflake-small.png" style="vertical-align: middle" title="Pentaflake" /></a>
 </div>
-
 
