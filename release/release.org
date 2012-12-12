@@ -112,7 +112,7 @@
     - [X] ghc 7.4.2
     - [X] ghc 7.6.1
     - [X] update tested-with fields
-  + [-] write announcement for blog + email
+  + [X] write announcement for blog + email
     + [X] list major new features since 0.5
       - traces
       - subdiagrams
@@ -122,7 +122,7 @@
       - cairo/gtk split
       - others?
     + [X] link to gallery (email)
-    + [ ] include some examples (blog)
+    + [X] include some examples (blog)
     + [X] say where/how to get involved
   + [X] update LICENSE files/lists of contributors
   + [X] add release date to all CHANGES files
