@@ -135,24 +135,25 @@
     + [X] builder
   + [X] add release date to releases.markdown
   + [X] merge all into 0.6 branch (as necessary)
-  + [ ] tag all with release version
-  + [ ] publish new website
-  + [ ] upload
-    + [ ] diagrams-core
-    + [ ] diagrams-lib
-    + [ ] diagrams-cairo
-    + [ ] diagrams-gtk
-    + [ ] diagrams-contrib
-    + [ ] diagrams-svg
-    + [ ] diagrams
-    + [ ] diagrams-builder
-  + [ ] upload/send announcement
-    + [ ] blog
-    + [ ] email
-      - [ ] diagrams-discuss
-      - [ ] haskell
-      - [ ] haskell-cafe
-      - [ ] haskell-art
+  + [X] tag all with release version
+  + [X] publish new website
+  + [X] upload
+    + [X] diagrams-core
+    + [X] diagrams-lib
+    + [X] diagrams-contrib
+    + [X] diagrams-svg
+    + [X] diagrams-cairo
+    + [X] diagrams-gtk
+    + [X] diagrams
+    + [X] diagrams-builder
+  + [X] upload/send announcement
+    + [X] blog
+    + [X] email
+      - [X] diagrams-discuss
+      - [X] haskell
+      - [X] haskell-cafe
+      - [X] haskell-art
+      - [X] plclub
 ** put off
   + [ ] re-export core functions intended for end users from
         diagrams-lib
