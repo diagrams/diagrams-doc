@@ -1,3 +1,4 @@
+{-# LANGUAGE RankNTypes #-}
 {-# LANGUAGE DeriveDataTypeable
            , FlexibleInstances
            , MultiParamTypeClasses
@@ -11,10 +12,19 @@ import Data.List (intersperse)
 import Control.Monad.Writer
 import Supply
 
+import Data.Generics
+
+everywhere'M :: Monad m => GenericM m -> GenericM m
+everywhere'M f x = do x' <- f x
+                      gmapM (everywhere'M f) x'
+
+topDownM :: (Monad m, Data a, Data b) => (a -> m a) -> b -> m b
+topDownM f = everywhere'M (mkM f)
+
 type SW = SupplyT Int (Writer [(Int, Target)])
 
 addFN :: Pandoc -> Pandoc
-addFN = appendLinks . runWriter . flip evalSupplyT [1..] . bottomUpM genFNs
+addFN = appendLinks . runWriter . flip evalSupplyT [1..] . topDownM genFNs
 
 appendLinks :: (Pandoc, [(Int, Target)]) -> Pandoc
 appendLinks (Pandoc meta bs, links) = Pandoc meta (bs ++ [linkPara])
