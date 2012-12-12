@@ -64,7 +64,7 @@ which will introduce you to the fundamentals of the framework.
 
 For those who are less impatient and want to really dig in and
 use the power features, read the
-[user manual](http://projects.haskell.org/manual/diagrams-manual.html).
+[user manual](http://projects.haskell.org/diagrams/manual/diagrams-manual.html).
 
 Get involved
 ------------
