@@ -5,6 +5,8 @@ drawing.  Check out the
 [gallery](http://projects.haskell.org/diagrams/gallery.html) for
 examples of what it can do!
 
+[![](http://mathlesstraveled.files.wordpress.com/2012/11/77455a72e05ff905c9c81cd250b45fa6.png)](http://mathlesstraveled.com/2012/11/05/more-factorization-diagrams/) [![](http://projects.haskell.org/diagrams/gallery/PythagoreanTree.png)](http://projects.haskell.org/diagrams/gallery/PythagoreanTree.html)
+
 Highlights of this release include:
 
 - Diagrams now comes with a native-Haskell
@@ -33,12 +35,11 @@ Highlights of this release include:
 
 - Support for GHC 7.6.
 
-- Many more new features, bug fixes, and improvements!
-
-See the [release notes](http://projects.haskell.org/diagrams/releases.html) for
-complete details, and the
-[diagrams wiki](http://www.haskell.org/haskellwiki/Diagrams/Migrate0.6)
-for help migrating from 0.5 to 0.6.
+- Many more new features, bug fixes, and improvements!  See the
+  [release notes](http://projects.haskell.org/diagrams/releases.html)
+  for complete details, and the
+  [diagrams wiki](http://www.haskell.org/haskellwiki/Diagrams/Migrate0.6)
+  for help migrating from 0.5 to 0.6.
 
 Try it out
 ----------
