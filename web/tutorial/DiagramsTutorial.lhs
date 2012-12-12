@@ -66,7 +66,7 @@ themselves should be a snap:
     cabal install diagrams
 
 `diagrams` is just a wrapper package which pulls in the following
-three packages:
+four packages:
 
 * `diagrams-core` contains the core data structures and definitions
   that form the abstract heart of the library.
