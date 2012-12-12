@@ -5,7 +5,13 @@ drawing.  Check out the
 [gallery](http://projects.haskell.org/diagrams/gallery.html) for
 examples of what it can do!
 
-[![](http://mathlesstraveled.files.wordpress.com/2012/11/77455a72e05ff905c9c81cd250b45fa6.png)](http://mathlesstraveled.com/2012/11/05/more-factorization-diagrams/) [![](http://projects.haskell.org/diagrams/gallery/PythagoreanTree.png)](http://projects.haskell.org/diagrams/gallery/PythagoreanTree.html)
+ <div style='text-align: center;'>
+
+[![](http://mathlesstraveled.files.wordpress.com/2012/11/77455a72e05ff905c9c81cd250b45fa6.png)](http://mathlesstraveled.com/2012/11/05/more-factorization-diagrams/) 
+
+[![](http://projects.haskell.org/diagrams/gallery/PythagoreanTree.png)](http://projects.haskell.org/diagrams/gallery/PythagoreanTree.html)
+
+ </div>
 
 Highlights of this release include:
 
