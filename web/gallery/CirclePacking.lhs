@@ -6,7 +6,6 @@ date: 2012-12-16
 description: Automatically arranging diagrams in a compact circular fashion
 tags: layout
 width: 400
-view: -10,-10,10,10
 ---
 
 > {-# LANGUAGE NoMonomorphismRestriction #-}
@@ -14,8 +13,8 @@ view: -10,-10,10,10
 > import Diagrams.Prelude
 
 This code demonstrates the circle-packing layout from the `diagrams-contrib`
-package. For more information on the algorithm used, see the `circle-packing`
-package.
+package. For more information on the algorithm used, see the [`circle-packing`
+package](http://hackage.haskell.org/package/circle%2Dpacking).
 
 > import Diagrams.TwoD.Layout.CirclePacking
 
