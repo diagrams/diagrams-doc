@@ -25362,3 +25362,408 @@
 2012-12-11 18:20:06 UTC <byorgey> `=D
 2012-12-11 18:20:17 UTC <byorgey> huh, where did that ` come from?
 2012-12-11 21:38:48 UTC <byorgey> building building building...
+2012-12-11 22:53:18 UTC <byorgey> sigh, not QUITE ready to upload...
+2012-12-11 22:53:41 UTC <byorgey> gotta go home and make dinner, but after dinner I should be able to continue... I still hope to have 0.6 out before midnight!
+2012-12-11 22:55:03 UTC <fryguybob> Woohoo!
+2012-12-12 01:12:32 UTC <fryguybob> ACTION brews some lambda tea to help byorgey with the final details.
+2012-12-12 01:16:11 UTC <byorgey> =D  thanks!
+2012-12-12 02:33:01 UTC <byorgey> updated website is live: projects.haskell.org/diagrams/
+2012-12-12 02:36:04 UTC <alpounet> nice!
+2012-12-12 02:36:09 UTC <byorgey> preview of release announcement is here: http://byorgey.wordpress.com/?p=1023&preview=true
+2012-12-12 02:36:32 UTC <byorgey> any feedback on the announcement in the next few minutes (while I go upload all the packages) is welcome
+2012-12-12 02:37:59 UTC <alpounet> Not Found
+2012-12-12 02:37:59 UTC <alpounet> Apologies, but the page you requested could not be found. Perhaps searching will help.
+2012-12-12 02:38:05 UTC <alpounet> byorgey ^^^
+2012-12-12 02:43:27 UTC <byorgey> alpounet: oh, huh, maybe you have to be logged in as me to see it
+2012-12-12 02:43:59 UTC <byorgey> oh well
+2012-12-12 02:45:34 UTC <alpounet> ACTION starts holding his breath
+2012-12-12 02:51:02 UTC <byorgey> commencing uploads...
+2012-12-12 02:51:20 UTC <byorgey> my internet connection is being flaky =(
+2012-12-12 02:53:43 UTC <fryguybob> :(
+2012-12-12 02:59:39 UTC <byorgey> all uploaded!
+2012-12-12 02:59:46 UTC <byorgey> blog post published!
+2012-12-12 03:00:06 UTC <byorgey> email sent!
+2012-12-12 03:02:44 UTC <byorgey> the sweet, sweet sound of being beeped repeatedly by hackagebot
+2012-12-12 03:07:11 UTC <jbracker> Congrats to the release ;)
+2012-12-12 03:09:34 UTC <byorgey> thanks =)
+2012-12-12 03:09:54 UTC <byorgey> sorry we couldn't get the generalized R2 stuff into this one
+2012-12-12 03:09:59 UTC <byorgey> but hopefully we can get that sorted out
+2012-12-12 03:10:31 UTC <byorgey> jbracker: actually, I hope to meet you in a week or so =)
+2012-12-12 03:11:25 UTC <jbracker> I am looking forward to that
+2012-12-12 03:11:39 UTC <jbracker> I am still far from finished with generalising that stuff
+2012-12-12 03:11:49 UTC <jbracker> currently I am working on sunroof
+2012-12-12 03:14:30 UTC <byorgey> cool, sounds good
+2012-12-12 03:41:22 UTC <fryguybob> byorgey: \o/ \o\ \o/ /o/ _o/ \o_ <-- release dance.
+2012-12-12 03:52:05 UTC <byorgey> =)
+2012-12-12 03:52:07 UTC <byorgey> ACTION -> bed
+2012-12-12 18:17:56 UTC <alpounet> byorgey, hey, how's the type matrices paper going?
+2012-12-12 18:23:34 UTC <byorgey> alpounet: it's coming along!  you can take a look at what's there in the repo
+2012-12-12 18:54:14 UTC <fryguybob> "wait until we implement better built-in support for arrows in diagrams (soon)" -- hehe
+2012-12-12 18:54:33 UTC <alpounet> byorgey, cool thanks
+2012-12-12 18:59:37 UTC <fryguybob> Arrow heads have been coming soon for faaaar too long (it's my fault... I'm ashamed).
+2012-12-12 19:49:20 UTC <byorgey> fryguybob: hehe, no worries
+2012-12-12 19:49:41 UTC <byorgey> fryguybob: but we have ScaleInv now!
+2012-12-12 19:50:01 UTC <byorgey> which was one of the biggest missing pieces
+2012-12-12 20:04:10 UTC <fryguybob> Well I hope to do some circuit diagrams and that will need arrow heads of course.  Only < 9 hours left...
+2012-12-12 20:52:37 UTC <jbracker> how do I introduce scoped type variables in a type class instance?
+2012-12-12 20:58:25 UTC <jbracker> oh... forget it was a version error...
+2012-12-12 21:31:46 UTC <jbracker> byorgey: I just noticed that the Color type class is restricting me to double. Should I add another type parameter for the Double or do you have a nicer idea for that one? The first time I have to generalize simething outside of Diagrams.TwoD
+2012-12-12 21:33:51 UTC <byorgey> jbracker: I don't understand why the Double in the Color type class would have anything to do with generalizing R2?
+2012-12-12 21:35:34 UTC <jbracker> Diagrams.TwoD.Model : showOrigin', OriginOpts : I had to generalize this because it does math and style stuff with the Path (D2 a
+2012-12-12 21:37:14 UTC <jbracker> byorgey: this problem basically occures everytime some datatype contains a Double and that double is used to manipulate some generalized graphical object
+2012-12-12 21:37:36 UTC <byorgey> jbracker: sure, but it shouldn't be a problem to leave oColor having type  Colour Double ?
+2012-12-12 21:37:37 UTC <jbracker> byorgey: Then the type checker want to do a ~ Double
+2012-12-12 21:38:12 UTC <jbracker> yeah ok that works
+2012-12-12 21:38:17 UTC <jbracker> was a bit fast there
+2012-12-12 21:38:20 UTC <byorgey> =)
+2012-12-12 21:38:55 UTC <jbracker> thanks
+2012-12-12 22:24:35 UTC <fryguybob> 7.5 out of 9 tests working isn't bad right?
+2012-12-12 22:25:09 UTC <byorgey> sounds pretty good to me
+2012-12-12 22:26:01 UTC <fryguybob> Too bad it's slow :D
+2012-12-12 22:26:36 UTC <fryguybob> It doesn't have much hope of being fast without branch prediction unfortunately.
+2012-12-12 22:31:28 UTC <byorgey> you should claim that your processor is actually running a simulation of itself
+2012-12-12 22:31:32 UTC <byorgey> that should throw them off the scent
+2012-12-12 22:33:28 UTC <fryguybob> "It may look slow, but...I N C E P T I O N..."
+2012-12-12 22:33:37 UTC <byorgey> exactly =)
+2012-12-13 00:58:22 UTC <fryguybob> 8.5/9
+2012-12-13 02:34:34 UTC <byorgey> fryguybob: \o/
+2012-12-13 02:34:52 UTC <byorgey> turn it in before the number goes down again!
+2012-12-13 03:06:38 UTC <fryguybob> hehe
+2012-12-13 03:07:12 UTC <fryguybob> I'm sooo close on the last one.  It (as usual) is doing things it shouldn't be doing!
+2012-12-13 03:08:41 UTC <byorgey> the nerve!
+2012-12-13 03:19:57 UTC <fryguybob> ACTION adds yet more logging...
+2012-12-13 03:23:49 UTC <fryguybob> ACTION wades through the 837M logfile...
+2012-12-13 03:27:56 UTC <byorgey> you should whip up some diagrams code to visualize it
+2012-12-13 03:34:01 UTC <fryguybob> I may have found the right thing to log.
+2012-12-13 04:14:13 UTC <fryguybob> I'm going to call it 8.8/9
+2012-12-13 04:43:41 UTC <fryguybob> And it is turned in.  Now sleep and at some point in the nearish future.   Diagrams.
+2012-12-13 11:56:22 UTC <byorgey> fryguybob: huzzah! sleep well.
+2012-12-13 19:06:23 UTC <luite> going to budapest next week \o/
+2012-12-13 19:16:46 UTC <byorgey> yay!
+2012-12-13 19:16:48 UTC <byorgey> for what?
+2012-12-13 19:41:05 UTC <fryguybob> I'm only aware of people going to Budapest for mathematics.
+2012-12-13 19:41:46 UTC <luite> hehe giving a ghcjs talk
+2012-12-13 19:42:11 UTC <byorgey> cool
+2012-12-13 19:42:17 UTC <byorgey> fryguybob is awake!
+2012-12-13 19:42:22 UTC <fryguybob> :D
+2012-12-13 19:42:30 UTC <byorgey> fryguybob: so was that the last thing you had this semester?
+2012-12-13 19:42:45 UTC <fryguybob> Only sort of.  I didn't sleep much due to my cold :(
+2012-12-13 19:42:51 UTC <luite> aw :/
+2012-12-13 19:42:52 UTC <byorgey> aww, boo =(
+2012-12-13 19:42:57 UTC <fryguybob> I still have a final for that class, but that will be easy.
+2012-12-13 19:42:59 UTC <luite> ACTION headache
+2012-12-13 19:43:02 UTC <byorgey> sweet
+2012-12-13 19:43:11 UTC <byorgey> congrats then.
+2012-12-13 19:43:21 UTC <fryguybob> And grading.  There is always more grading.
+2012-12-13 19:43:46 UTC <fryguybob> And I need to finish documenting how Haskell's STM works.
+2012-12-13 19:44:53 UTC <byorgey> ah, grading.  yes, I have a bunch of that to do too.
+2012-12-13 19:44:59 UTC <fryguybob> byorgey: How did you recursive class go?
+2012-12-13 19:45:07 UTC <byorgey> it went really well
+2012-12-13 19:45:16 UTC <byorgey> the students seemed to really enjoy it
+2012-12-13 19:45:16 UTC <fryguybob> Excellent!
+2012-12-13 19:46:00 UTC <byorgey> I still have some homework and a bunch of final projects to grade
+2012-12-13 19:47:19 UTC <fryguybob> Just grade the base case and show that grading a small part implies the grade for a slightly bigger part.
+2012-12-13 19:48:14 UTC <byorgey> oh, good idea =D
+2012-12-13 19:48:38 UTC <byorgey> the base case would be 0 I suppose
+2012-12-14 12:58:38 UTC <MasseR> Hi. There seems to be some problem with text alignment. No matter if I use text "foo", topLeftText "foo", or alignedText 1 1 "foo", the text always ends up in the same place
+2012-12-14 13:01:03 UTC <MasseR> Ah it's a known issue (from 6 months back)
+2012-12-14 14:10:32 UTC <byorgey> MasseR: you're using the SVG backend?
+2012-12-14 14:11:17 UTC <byorgey> yeah, sorry, it's simply not implemented yet =)
+2012-12-14 14:13:16 UTC <byorgey> MasseR: if you really need text alignment your options are (1) use the cairo backend (hard to install), (2) use https://github.com/fryguybob/diagrams-postscript (easy to install, postscript output only) (3) wait for it to be implemented (4) implement it yourself =)
+2012-12-14 14:15:40 UTC <byorgey> re (4), I actually don't know what would be necessary to implement it.  It's probably non-trivial to implement fully
+2012-12-14 14:18:21 UTC <MasseR> (5) manually align with translate :)
+2012-12-14 14:22:07 UTC <fryguybob> hehe
+2012-12-14 14:23:02 UTC <fryguybob> ACTION sadly due to time constraints often does (6) fix it in "post-production"
+2012-12-14 14:48:07 UTC <byorgey> ah yes, I forgot about (5) and (6)  =)
+2012-12-14 15:13:23 UTC <fryguybob> Humm seems like there is a lot of incompatability with text alignment and SVG.
+2012-12-14 15:13:29 UTC <fryguybob> Shocking, I know.
+2012-12-14 15:28:15 UTC <fryguybob> It looks like you can apply effects relative to the size of an object, but I don't see a way to apply a transform relative to the size of an object.
+2012-12-14 15:29:01 UTC <fryguybob> Maybe there are some magic variables...
+2012-12-14 20:15:41 UTC <byorgey> oooh, a patch from Deepak!
+2012-12-14 22:32:59 UTC <byorgey> http://www.cis.upenn.edu/~byorgey/hosted/IterLineFractal.png
+2012-12-14 22:33:01 UTC <byorgey> http://hpaste.org/79208
+2012-12-14 23:40:58 UTC <fryguybob> Nice
+2012-12-14 23:45:40 UTC <fryguybob> ACTION has a slowwww circuit router.
+2012-12-14 23:45:47 UTC <fryguybob> But it isn't hooked up to Diagrams yet.
+2012-12-15 15:31:19 UTC <byorgey> http://www.cis.upenn.edu/~byorgey/hosted/Wibble.png
+2012-12-15 15:34:03 UTC <fryguybob> Ooo splines?
+2012-12-15 15:43:40 UTC <byorgey> yep
+2012-12-15 15:44:22 UTC <byorgey> iteratively replacing segments by trails is no harder when the trails happen to have bezier segments =)
+2012-12-15 15:44:55 UTC <byorgey> I mean, as long as you're not trying to lay out the trails "along the segments", but just rotating and scaling so the trail has the same endpoints as the old segment
+2012-12-15 15:48:51 UTC <fryguybob> I figured out why my circuit routing was slow.  I was accounting for duplicate points for only half of the data.
+2012-12-15 15:51:48 UTC <byorgey> heh, oops
+2012-12-15 15:58:23 UTC <byorgey> http://www.cis.upenn.edu/~byorgey/hosted/Wibble2.png
+2012-12-15 15:58:57 UTC <luite> cool :)
+2012-12-15 16:52:44 UTC <byorgey> http://www.cis.upenn.edu/~byorgey/hosted/RandomIters.pdf
+2012-12-15 16:58:52 UTC <fryguybob> ACTION sees the self-similarity of self-similar things.
+2012-12-15 16:58:53 UTC <byorgey> http://www.cis.upenn.edu/~byorgey/hosted/RandomIters2.pdf
+2012-12-15 16:59:03 UTC <byorgey> ACTION is having way too much fun with this
+2012-12-15 16:59:49 UTC <byorgey> on the other hand it's probably good for me.  On occasion I realize that I have spent several weeks hacking on diagrams, writing documentation, etc., without actually making a single diagram
+2012-12-15 17:00:40 UTC <byorgey> on the other other hand I really do need to get some work done today =)
+2012-12-15 17:00:41 UTC <fryguybob> hehee
+2012-12-16 03:33:34 UTC <fryguybob> byorgey: Here is what I have so far: http://hpaste.org/79262
+2012-12-16 03:33:54 UTC <fryguybob> (shield your eyes)
+2012-12-16 14:11:15 UTC <byorgey> fryguybob: ...what is it?
+2012-12-16 14:12:42 UTC <fryguybob> byorgey: It finds the shortest path between two points in a grid that includes blocked cells.
+2012-12-16 14:12:54 UTC <byorgey> ah, cool
+2012-12-16 14:13:15 UTC <fryguybob> So circuit layout uses this for each wire.
+2012-12-16 14:13:26 UTC <byorgey> -- TODO: ah yeah.
+2012-12-16 14:13:43 UTC <fryguybob> You can also have a cost to any cell, but that doesn't work quit right yet.
+2012-12-16 14:13:48 UTC <fryguybob> Yeah, that line got a little long.
+2012-12-16 14:14:00 UTC <byorgey> hehe
+2012-12-16 14:14:19 UTC <byorgey> fryguybob: is this for the same class you were designing the processor for?
+2012-12-16 14:14:23 UTC <byorgey> or just for fun?
+2012-12-16 14:14:28 UTC <fryguybob> for fun
+2012-12-16 14:15:19 UTC <fryguybob> The next step is to let you define a diagram with some named points and give a diagram with those points wired together.
+2012-12-16 14:20:46 UTC <fryguybob> It should be easy to generate all shortest paths, then pick the one that gives the fewest path segments.
+2012-12-16 14:21:03 UTC <byorgey> ah! cool =)
+2012-12-16 16:22:56 UTC <somadivad> Hi, is it possible to render an SVG diagram from within ghci, rather than having to runHaskell and pass in command line arguments?
+2012-12-16 16:39:52 UTC <byorgey> somadivad: yes, it is possible
+2012-12-16 16:40:07 UTC <somadivad> great - how?
+2012-12-16 16:40:14 UTC <byorgey> hmm, I guess the diagrams-svg Haddocks need some improvement =P
+2012-12-16 16:41:30 UTC <byorgey> somadivad: just a minute
+2012-12-16 16:42:52 UTC <byorgey> somadivad: you can use the 'renderDia' function, which takes three arguments: the first must be SVG, the second is an SVGOptions record which takes a SizeSpec2D, the third is a diagram
+2012-12-16 16:42:59 UTC <byorgey> like here: https://github.com/diagrams/diagrams-svg/blob/master/src/Diagrams/Backend/SVG/CmdLine.hs#L138
+2012-12-16 16:43:20 UTC <byorgey> so maybe something like  renderDia SVG (SVGOptions (Width 400)) myDiagram
+2012-12-16 16:44:05 UTC <byorgey> that will result in some sort of Builder value, and you can call renderSvg from Text.Blaze.Svg.Renderer.Utf8 on that
+2012-12-16 16:44:19 UTC <byorgey> which gives you a ByteString, which you can write to a file
+2012-12-16 16:44:29 UTC <byorgey> so I guess the answer is "yes, but not easily"
+2012-12-16 16:45:23 UTC <byorgey> we should probably add a function of type   FilePath -> Diagram -> IO ()  which just writes a diagram directly to a file
+2012-12-16 16:46:21 UTC <somadivad> yeah, that would be good. ok, well that's a few clues anyway, I'll have a play around. Thanks
+2012-12-16 16:49:44 UTC <byorgey> https://github.com/diagrams/diagrams-svg/issues/28  -- just added this so I won't forget about it!
+2012-12-16 16:50:04 UTC <byorgey> patches welcome too, of course, if you decide you want to take a stab at it yourself
+2012-12-16 16:50:21 UTC <byorgey> I hope it shouldn't be too hard using that code I linked as an example
+2012-12-16 17:30:32 UTC <somadivad> byorgey: The following seems to work:
+2012-12-16 17:30:35 UTC <somadivad> BS.writeFile "circle1.svg" $ renderSvg (renderDia SVG (SVGOptions (mkSizeSpec (Just 400) (Just 500))) (circle 1 :: Diagram SVG R2))
+2012-12-16 17:30:52 UTC <somadivad> I'm not sure why the type annotation was required on circle 1 though
+2012-12-16 17:31:08 UTC <byorgey> yes, that looks like it should work
+2012-12-16 17:31:26 UTC <byorgey> oh, yes, the type annotation... I forget why that is required
+2012-12-16 17:32:19 UTC <somadivad> anyway thanks for your help - that sets me up to do what I want
+2012-12-16 17:32:31 UTC <byorgey> great =)
+2012-12-16 19:56:05 UTC <luite> hm edwardk has some travis script to fall back to hdiff when hackage is down
+2012-12-16 19:57:30 UTC <luite> bleh does working with tikz ever get better? :)
+2012-12-16 19:57:59 UTC <byorgey> dunno, I've never worked with tikz
+2012-12-16 19:58:35 UTC <byorgey> hdiff fallback sounds cool
+2012-12-17 03:03:15 UTC <byorgey> http://www.cis.upenn.edu/~byorgey/hosted/permutations4.mp4
+2012-12-17 03:16:09 UTC <fryguybob> oooOOOooo
+2012-12-17 03:36:06 UTC <byorgey> made with subdiagrams and keyframing =D
+2012-12-17 03:37:38 UTC <byorgey> and here's one that goes through all 24 permutations using only adjacent swaps: http://www.cis.upenn.edu/~byorgey/hosted/permutations4-sjt.mp4
+2012-12-17 03:37:41 UTC <byorgey> using http://en.wikipedia.org/wiki/Steinhaus%E2%80%93Johnson%E2%80%93Trotter_algorithm
+2012-12-17 03:38:13 UTC <fryguybob> Is that related to grey code?
+2012-12-17 03:39:01 UTC <fryguybob> ACTION notices the wikipedia article has a section "Relation to Gray codes"
+2012-12-17 03:39:11 UTC <byorgey> yes, I was just reading that =)
+2012-12-17 03:42:37 UTC <fryguybob> Is the order of the first one the way that the usual Haskell permutations definition goes?
+2012-12-17 03:42:56 UTC <byorgey> yes
+2012-12-17 03:43:03 UTC <byorgey> I don't quite understand what order it uses
+2012-12-17 03:43:20 UTC <byorgey> it's something a bit strange because it's designed to work for infinite lists too
+2012-12-17 03:43:32 UTC <fryguybob> I remember wondering before it if maximized sharing.
+2012-12-17 03:44:55 UTC <byorgey> I think it has the property that  permutations [1..n] == take (product [1..n]) . map (take n) $ permutations [1..]
+2012-12-17 03:46:04 UTC <fryguybob> Yeah
+2012-12-17 03:47:19 UTC <fryguybob> Gah, doesn't conal know it is hard to get things done when he writes interesting blog posts just as I'm about to finish :D
+2012-12-17 03:47:50 UTC <byorgey> haha, did he write a blog post about circuit timing or something?
+2012-12-17 03:48:44 UTC <fryguybob> Matrix multiplication this time.  But I'm on the verge of getting to the bottom of an STM bug so I can't look.
+2012-12-17 03:50:32 UTC <byorgey> then you definitely shouldn't spend 120 seconds watching http://www.cis.upenn.edu/~byorgey/hosted/permutations5-sjt.mp4
+2012-12-17 03:51:06 UTC <fryguybob> :D
+2012-12-17 03:52:12 UTC <fryguybob> We discovered the stacking cups someone got for Judah and I opened them up and said "watch towers of hanoi".  Rebekah may have rolled her eyes at me.
+2012-12-17 03:52:23 UTC <byorgey> haha, awesome =)
+2012-12-17 03:52:39 UTC <fryguybob> (At least, she rolled her eyes at me when I went for four)
+2012-12-17 03:53:00 UTC <byorgey> hmm, I think Noah has a set of like 12 stacking bath cups
+2012-12-17 03:53:12 UTC <byorgey> should make for fun (and very long) bath time =)
+2012-12-17 12:30:13 UTC <byorgey> I love watching all the dependencies of, say, diagrams-contrib get built.  For most of them I have no idea exactly why they are a transitive dependency.
+2012-12-17 12:30:48 UTC <byorgey> But that's what makes it cool---we get to build on all this great code that other people wrote.
+2012-12-17 12:31:44 UTC <alpounet> lens probably brings in a few packages yeah :p
+2012-12-17 12:33:09 UTC <byorgey> hehe, yes, a few, but I think most of them were already dependencies anyway
+2012-12-17 12:55:13 UTC <luite> what's a good way to do some simple syntax highlighting of haskell code in tikz nodes?
+2012-12-17 12:56:04 UTC <shachaf> diagrams uses lens?
+2012-12-17 12:56:13 UTC <byorgey> diagrams-contrib uses lens
+2012-12-17 12:56:14 UTC <shachaf> Oh, diagrams-contrib does.
+2012-12-17 12:56:31 UTC <shachaf> Lots of chaos in #-lens these days.
+2012-12-17 12:56:31 UTC <byorgey> luite: no clue.
+2012-12-17 12:56:52 UTC <byorgey> hmm? what's  #-lens ?
+2012-12-17 12:56:53 UTC <luite> hm, maybe some lhs2tex and including a file
+2012-12-17 12:58:04 UTC <luite> #-lens is everytime is read it i need to look up more things... costrength this time :p
+2012-12-17 12:58:07 UTC <fryguybob> byorgey: #haskell-lens the channel with way too much going on to follow.
+2012-12-17 12:59:55 UTC <byorgey> oh, I know what #haskell-lens is, I wasn't sure what #-lens meant, now I get it =)
+2012-12-17 20:09:48 UTC <byorgey> hi conal =)
+2012-12-17 20:10:24 UTC <conal> byorgey: hi! my first time here.
+2012-12-17 20:10:30 UTC <byorgey> welcome!
+2012-12-17 20:11:12 UTC <conal> :)
+2012-12-17 20:11:32 UTC <conal> i'm starting on the tutorial now.
+2012-12-17 20:12:08 UTC <conal> hurray for monoids!
+2012-12-17 20:12:33 UTC <conal> and vector spaces.
+2012-12-17 20:15:14 UTC <byorgey> =D
+2012-12-18 01:40:20 UTC <cmears> byorgey: congratulations on the new release!
+2012-12-18 01:41:44 UTC <fryguybob> Hi cmears
+2012-12-18 01:41:56 UTC <cmears> Hi fryguybob
+2012-12-18 01:45:02 UTC <cmears> hmm, what is one supposed to pass as the first argument to textVisualBounded?
+2012-12-18 01:45:17 UTC <cmears> (in Diagrams.Backend.Cairo.Text)
+2012-12-18 01:48:19 UTC <fryguybob> Humm, some attributes.
+2012-12-18 01:52:39 UTC <fryguybob> cmears: There is a note about it at the top of http://projects.haskell.org/diagrams/doc/Diagrams-Backend-Cairo-Text.html#v:getExtents
+2012-12-18 01:53:48 UTC <cmears> Ah, thanks
+2012-12-18 01:53:55 UTC <cmears> I really should read more carefully
+2012-12-18 01:54:00 UTC <fryguybob> hehe
+2012-12-18 01:54:27 UTC <fryguybob> The style thing often throws me for a loop as my normal mode of digging for defintions leads me astray there.
+2012-12-18 02:01:13 UTC <cmears> http://hpaste.org/79403
+2012-12-18 02:01:14 UTC <cmears> gives
+2012-12-18 02:01:22 UTC <cmears> http://imgur.com/peP7U
+2012-12-18 02:01:29 UTC <cmears> so obviously I am misunderstanding something
+2012-12-18 02:01:40 UTC <cmears> I thought the red box would go around the text
+2012-12-18 02:42:09 UTC <fryguybob> cmears: I'm not sure why that doesn't work, I don't have a working Cairo, so I can't test it here :(
+2012-12-18 02:44:50 UTC <cmears> Alas
+2012-12-18 02:56:53 UTC <byorgey> cmears: that's very odd.
+2012-12-18 02:56:58 UTC <byorgey> cmears: what happens if you don't set the font?
+2012-12-18 02:57:38 UTC <byorgey> cmears: also, see https://github.com/diagrams/diagrams-cairo/issues/19, textLineBoundedIO at least is known to be buggy
+2012-12-18 03:29:45 UTC <byorgey> testing
+2012-12-18 03:41:55 UTC <cmears> looks essentially the same without the font specified
+2012-12-18 03:45:12 UTC <cmears> but different font, of course (:
+2012-12-18 03:45:39 UTC <cmears> and very slightly different alignment of the box and the text, probably because the font makes them have slightly different sizes
+2012-12-18 03:49:24 UTC <byorgey> ok, yeah
+2012-12-18 03:54:54 UTC <cmears> having "fontSize 1" makes it much better, but not perfect (like the example in the bug report)
+2012-12-18 03:57:00 UTC <cmears> font "Times" seems to make the extent twice as tall
+2012-12-18 03:57:17 UTC <cmears> just generally strange (:
+2012-12-18 03:57:45 UTC <cmears> I have done some basic work on generating text via TeX and then including it in a diagram as an image
+2012-12-18 03:58:00 UTC <byorgey> oh, nice
+2012-12-18 03:58:20 UTC <byorgey> you can also do it the other way and use diagrams-tikz to embed diagram output in a TeX file
+2012-12-18 03:58:59 UTC <cmears> Yes, I was doing that previously to get nice TeX labels in diagrams
+2012-12-18 12:18:45 UTC <ClaudiusMaximus> something i made last year but only just uploaded http://mathr.co.uk/incidents/2012-12-18_packed_tracklisting.png
+2012-12-18 12:20:21 UTC <ClaudiusMaximus> tempted to recreate it using diagrams (with a diagram for each glyph instead of text, because that's how the original did it)
+2012-12-18 13:10:30 UTC <ClaudiusMaximus> ugh, powercut :(
+2012-12-18 14:19:44 UTC <ClaudiusMaximus> i want to make a diagram with 4 circles with arrows between them along a larger circle that passes through all their centres - best way to do this?
+2012-12-18 14:44:47 UTC <byorgey> ClaudiusMaximus: position the 4 circles using decoratePath, and give them names using 'named'
+2012-12-18 14:44:54 UTC <byorgey> superimpose atop the larger circle
+2012-12-18 14:45:00 UTC <byorgey> then use the names to draw arrows
+2012-12-18 14:45:11 UTC <byorgey> (I can provide more detail on that last step if you like)
+2012-12-18 14:45:16 UTC <ClaudiusMaximus> yes please
+2012-12-18 14:45:25 UTC <byorgey> ok, just a minute
+2012-12-18 14:45:34 UTC <ClaudiusMaximus> the arrows need to end at the circle boundary..
+2012-12-18 14:45:46 UTC <ClaudiusMaximus> which is the main thing i wasn't sure on
+2012-12-18 14:45:51 UTC <byorgey> right, you can do that using the trace
+2012-12-18 14:46:10 UTC <byorgey> check out this example: http://projects.haskell.org/diagrams/manual/diagrams-manual.html#subdiagrams
+2012-12-18 14:46:52 UTC <byorgey> we need to make some better convenience functions so you don't have to write code like   fromMaybe origin (traceP blah blah
+2012-12-18 14:46:57 UTC <byorgey> but the functionality is all there.
+2012-12-18 14:47:35 UTC <ClaudiusMaximus> cool, but would i still manually have to find the intersections of the larger circle with each smaller one?
+2012-12-18 14:47:50 UTC <ClaudiusMaximus> and then sort them by angle to pick the right one?
+2012-12-18 14:48:02 UTC <ClaudiusMaximus> i know how to do it, but i'm lazy
+2012-12-18 14:48:18 UTC <byorgey> you would have to manually find intersections, yes
+2012-12-18 14:48:23 UTC <ClaudiusMaximus> and all this reminds me i should port my konstrukt.svg to diagrams at some point
+2012-12-18 14:48:29 UTC <byorgey> we don't yet have any code to compute path intersections
+2012-12-18 14:48:48 UTC <ClaudiusMaximus> http://claudiusmaximus.goto10.org/cm/2010-11-09_konstrukt_3.html
+2012-12-18 14:48:50 UTC <byorgey> ClaudiusMaximus: but I don't understand why you would have to sort by angle?  I'm not sure what you mean
+2012-12-18 14:49:06 UTC <ClaudiusMaximus> circle-circle intersection results in 2 points
+2012-12-18 14:49:11 UTC <byorgey> oh, cool =)
+2012-12-18 14:49:59 UTC <ClaudiusMaximus> i need to have all the arrows going clockwise, for example, so i want the intersection on the anticlockwise side of the circle
+2012-12-18 14:50:07 UTC <ClaudiusMaximus> and draw an arrowhead there
+2012-12-18 14:51:09 UTC <ClaudiusMaximus> would be cool to have a humanize feature that strokes paths with slightly randomized position and thickness...
+2012-12-18 14:51:29 UTC <ClaudiusMaximus> to make your diagrams look like they took a lot of human effort to render :)
+2012-12-18 14:51:40 UTC <byorgey> hehe
+2012-12-18 14:52:40 UTC <byorgey> that wouldn't be all that hard to implement actually
+2012-12-18 14:53:39 UTC <ClaudiusMaximus> oo, can't wait :)
+2012-12-18 14:54:13 UTC <ClaudiusMaximus> "patches welcome" heh
+2012-12-18 14:54:19 UTC <ClaudiusMaximus> :)
+2012-12-18 15:03:01 UTC <luite> :)
+2012-12-18 15:17:04 UTC <byorgey> ClaudiusMaximus: dangit, this konstrukt thing is addictive =)
+2012-12-18 15:26:39 UTC <ClaudiusMaximus> :)
+2012-12-18 15:26:58 UTC <ClaudiusMaximus> the lack of undo is something that would be easier to fix if i port it to gtk/diagrams
+2012-12-18 15:27:15 UTC <byorgey> yes, undo would be nice
+2012-12-18 15:29:13 UTC <ClaudiusMaximus> and i'd probably make it use quad-double arithmetic so that you don't get as many annoying artifacts from rounding errors
+2012-12-18 15:29:14 UTC <luite> what's konstrukt?
+2012-12-18 15:29:27 UTC <ClaudiusMaximus> luite: see link i pasted
+2012-12-18 15:30:42 UTC <luite> ah cool :)
+2012-12-18 15:30:51 UTC <luite> i mean kool
+2012-12-18 15:36:28 UTC <luite> usability kould be a bit better though
+2012-12-18 15:39:46 UTC <luite> hm lhs2tex doesn't typeset @arg and Some# nicely
+2012-12-18 15:40:48 UTC <byorgey> luite: if you escape?  \@arg and Some\# ?
+2012-12-18 15:42:18 UTC <luite> hm that just shows the \ :)
+2012-12-18 15:42:51 UTC <luite> if i have x = \ @a @b @c d e f -> there are no spaces between a b c
+2012-12-18 15:43:26 UTC <byorgey> luite: oh, I just remembered you have to use @@
+2012-12-18 15:43:30 UTC <luite> maybe i should use the uppercase lambda notation instead instead of the core one
+2012-12-18 15:43:44 UTC <byorgey> @ means something special to lhs2TeX, I forget what
+2012-12-18 15:44:07 UTC <luite> oh this is in a code block
+2012-12-18 15:44:14 UTC <luite> @@ show two @
+2012-12-18 15:44:17 UTC <byorgey> oh, ok
+2012-12-18 15:44:25 UTC <luite> i'm trying to show what core haskell is tranlated to
+2012-12-18 15:44:31 UTC <byorgey> right
+2012-12-18 15:44:45 UTC <byorgey> well, you can manually insert some spaces
+2012-12-18 15:44:46 UTC <luite> so you get the type variables explicitly, core uses @a etc, the math notation is uppercase lambda
+2012-12-18 15:45:04 UTC <byorgey> %format ^ = " "  or something like that
+2012-12-18 15:45:17 UTC <byorgey> oh, I see
+2012-12-18 15:45:49 UTC <luite> i guess i'm abusing lhs2TeX for this since it's not really lhs anymore :)
+2012-12-18 15:46:45 UTC <alpounet> luite, is this for a talk?
+2012-12-18 15:46:53 UTC <luite> yeah
+2012-12-18 15:47:22 UTC <byorgey> luite: hehe, right =)
+2012-12-18 15:47:24 UTC <luite> i said i'd give an overview of the ghc pipeline and how ghcjs uses it
+2012-12-18 15:49:06 UTC <alpounet> luite, at your uni? or a local user group?
+2012-12-18 15:49:30 UTC <luite> not local
+2012-12-18 15:50:03 UTC <luite> and i'm not on a uni anymore :(
+2012-12-18 15:50:29 UTC <alpounet> oh right
+2012-12-18 15:54:41 UTC <luite> byorgey: tnx, i did the %format trick with tv_a/tv_b/tv_c etc (for type variable)
+2012-12-18 15:54:58 UTC <luite> and it renders them as properly spaced @a etc now
+2012-12-18 15:55:03 UTC <byorgey> great!
+2012-12-18 15:55:27 UTC <luite> alpounet: it's in budapest
+2012-12-18 15:55:36 UTC <alpounet> you're in hungary now?
+2012-12-18 15:55:46 UTC <luite> not yet, flying thursday
+2012-12-18 15:56:06 UTC <alpounet> going there for a while or just for the talk and some lookaround?
+2012-12-18 15:56:08 UTC <luite> and back home sunday
+2012-12-18 15:56:19 UTC <luite> just talk :)
+2012-12-18 15:56:30 UTC <alpounet> alright
+2012-12-18 15:56:34 UTC <alpounet> enjoy the trip nonetheless :)
+2012-12-18 15:56:52 UTC <luite> hehe i'll have a few days to see the city etc, have never been there
+2012-12-18 16:01:24 UTC <alpounet> i heard it was beautiful from a friend, but never been either
+2012-12-18 16:01:52 UTC <luite> i assume it will be cold :)
+2012-12-18 16:02:04 UTC <luite> hmm, i want to go skiing :p
+2012-12-18 16:02:44 UTC <fryguybob> We haven't had enough snow yet :(
+2012-12-18 16:03:56 UTC <alpounet> we haven't had snow at all here :/
+2012-12-18 16:04:25 UTC <luite> the lifts on the closest hills here are already open, but those are really flat terrain. have to go to the alps for proper skiing :)
+2012-12-18 16:04:39 UTC <alpounet> if you go to the alps
+2012-12-18 16:04:43 UTC <alpounet> drop by Marseille
+2012-12-18 16:04:56 UTC <alpounet> (well, French side of the Alps)
+2012-12-18 16:05:02 UTC <alpounet> it's a 3 hour drive
+2012-12-18 16:05:15 UTC <luite> hehe that's not quite en route :p
+2012-12-18 16:05:36 UTC <luite> the french alps are already further away than most of austria and switzerland
+2012-12-18 16:06:20 UTC <luite> but sometimes you can go there relatively cheaply by bus
+2012-12-18 16:06:32 UTC <alpounet> driving is funnier
+2012-12-18 16:06:45 UTC <luite> i don't have my own car though
+2012-12-18 16:06:53 UTC <alpounet> i think that if i ever go to Hungary, Czech Republic etc, I'll do it on a road trip
+2012-12-18 16:07:32 UTC <alpounet> i need a whole clear month at the very least and quite a lot of money though :/
+2012-12-18 16:07:35 UTC <luite> i've been to prague by car
+2012-12-18 16:07:58 UTC <alpounet> must have been nice
+2012-12-18 16:08:00 UTC <luite> but not really a road trip... more like a really long day of driving :)
+2012-12-18 16:08:19 UTC <alpounet> and i've heard prague's night life is awesome
+2012-12-18 16:08:30 UTC <alpounet> and that you have many beautiful stuffs to visit during the day
+2012-12-18 16:09:34 UTC <luite> hmm, i still need to figure out what to visit in budapest :)
+2012-12-18 16:13:47 UTC <byorgey> nah, just get a map when you arrive and start wandering around =)
+2012-12-18 16:17:06 UTC <luite> dunno if i want to walk around that much, i bought new shoes last week and now i have lots of blisters
+2012-12-18 16:22:52 UTC <byorgey> boo =(
+2012-12-18 18:40:42 UTC <conal> I went through the diagrams tutorial yesterday and poked through parts of the library (haddock) documentation. I'm impressed. A lot of thought went into the design.
+2012-12-18 18:41:32 UTC <byorgey> thanks =)
+2012-12-18 18:41:55 UTC <conal> :)
+2012-12-18 18:42:02 UTC <byorgey> that means a lot to me, coming from you
+2012-12-18 18:42:59 UTC <conal> I saw a Functor instance for QDiagram but no Applicative instance. Is there one? Is there an obstacle?
+2012-12-18 18:43:18 UTC <byorgey> conal: good question.
+2012-12-18 18:43:41 UTC <byorgey> there was an obstacle.  But I don't remember what it was, or whether it still applies.
+2012-12-18 18:43:59 UTC <conal> ah. okay.
+2012-12-18 18:44:30 UTC <byorgey> I haven't ever found myself wanting one though.
+2012-12-18 18:44:58 UTC <conal> the Monoid instance suggests one as a generalization.
+2012-12-18 18:45:20 UTC <byorgey> indeed.
+2012-12-18 18:46:08 UTC <conal> my other main question so far is the usual one: is there a semantic (denotational) model? if so, that model would suggest existence & meaning of various class instances.
+2012-12-18 18:46:54 UTC <byorgey> right.  I don't think I have a clear denotational model for QDiagram in all its generality.
+2012-12-18 18:47:44 UTC <conal> i'd expect the upward and downward annotations to disappear in the semantic model and reappear in the implementation as an efficiency measure.
+2012-12-18 18:48:03 UTC <byorgey> indeed.
+2012-12-18 18:48:50 UTC <conal> which would be good news, since users would then not have to think about the annotations.
+2012-12-18 18:49:41 UTC <byorgey> my "Monoids" paper from the HS does exactly that: starts with a simple denotational model (lists of primitives) and then derives the upward and downward annotations, etc. from that.
+2012-12-18 18:49:57 UTC <conal> oh, nice!
+2012-12-18 18:50:08 UTC <conal> i guess i haven't finished that paper. thx for the reminder.
+2012-12-18 18:50:46 UTC <conal> without a denotational discipline, it's easy for implementation issues to leak through, and people get attached to them. based on my painful past experience.
+2012-12-18 18:50:57 UTC <conal> so hard to get programmers to stop thinking operationally.
+2012-12-18 18:52:01 UTC <byorgey> oh look: https://github.com/diagrams/diagrams-core/blob/master/src/Diagrams/Core/Types.hs#L402  a commented-out Applicative instance!
+2012-12-18 18:52:19 UTC <byorgey> that code corresponds to an old implementation though
+2012-12-18 18:52:59 UTC <byorgey> I think the semantics of an Applicative instance are clear, but I was having trouble figuring out how to implement it.
+2012-12-18 18:53:15 UTC <conal> oh, hm.
+2012-12-18 18:53:17 UTC <byorgey> and since I've never wanted one I've never bothered to work it out.
+2012-12-18 18:54:04 UTC <byorgey> note the type argument to QDiagram is the type of "queries", and most of the time it is Any.
+2012-12-18 18:54:20 UTC <conal> oh, hm. i guessed i'd want one immediately if i used anything beyond monoidally-valued diagrams.
+2012-12-18 18:54:44 UTC <conal> just as i made Image be polymorphic in Pan.
+2012-12-18 18:54:58 UTC <conal> which was terrifically useful.
+2012-12-18 18:55:24 UTC <conal> maybe different issues in diagrams, however.
+2012-12-18 19:23:33 UTC <fryguybob> @hogsnack
+2012-12-18 19:24:02 UTC <conal> it's just this sort of thing that got me back into linear algebra (on semirings) recently. i just published my first in a series of blog posts.
