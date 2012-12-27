@@ -25767,3 +25767,94 @@
 2012-12-18 18:55:24 UTC <conal> maybe different issues in diagrams, however.
 2012-12-18 19:23:33 UTC <fryguybob> @hogsnack
 2012-12-18 19:24:02 UTC <conal> it's just this sort of thing that got me back into linear algebra (on semirings) recently. i just published my first in a series of blog posts.
+2012-12-18 19:24:41 UTC <fryguybob> :D
+2012-12-18 19:25:43 UTC <conal> oops! i tried to copy the chat window contents and deleted/closed the window instead.
+2012-12-18 19:26:09 UTC <conal> via M-w crossover from emacs. i've been bitten by that one before.
+2012-12-18 19:27:14 UTC <conal> fryguybob: would you do me the kindness of emailing or private-message-pasting the transcript above from "fryguybob: byorgey: The hog died." ? there are a few goodies i want to capture.
+2012-12-18 19:27:30 UTC <fryguybob> Yeah, no problem
+2012-12-18 19:27:58 UTC <conal> thanks!
+2012-12-18 19:28:48 UTC <conal> i bet there's some lovely functional parallelism to be extracted from these linear-algebra-in-disguise problems.
+2012-12-18 19:30:27 UTC <fryguybob> Yes.
+2012-12-18 19:31:37 UTC <conal> is the hog back? i still get a happstack error: "repo not found"
+2012-12-18 19:32:48 UTC <fryguybob> Oh, the logs are here: https://github.com/diagrams/diagrams-doc/tree/master/logs
+2012-12-18 19:33:09 UTC <byorgey> yeah, I'm trying to figure out how to modify the /topic
+2012-12-18 19:34:06 UTC <fryguybob> byorgey:  /topic #diagrams ... ?
+2012-12-18 19:34:21 UTC <byorgey> oh, indeed.
+2012-12-18 19:34:35 UTC <conal> i can never remember how to do op things on irc.
+2012-12-18 19:34:40 UTC <conal> fryguybob: thx.
+2012-12-18 19:35:13 UTC <conal> byorgey: how did you set up this logging?
+2012-12-18 19:35:55 UTC <conal> nice
+2012-12-18 19:36:21 UTC <fryguybob> conal: btw, your occasional tweets with pictures of California remind me of home :D.  I grew up in Grass Valley.
+2012-12-18 19:36:36 UTC <byorgey> conal: I use http://hackage.haskell.org/package/hog
+2012-12-18 19:36:37 UTC <conal> fryguybob: oh, hey. :)
+2012-12-18 19:36:48 UTC <conal> byorgey: cool. thx.
+2012-12-18 19:37:15 UTC <byorgey> conal: unfortunately I don't have a good solution for making the logs immediately available.  I just occasionally record a commit with the updated logs and push it.
+2012-12-18 19:37:42 UTC <conal> byorgey: got it. i was wondering.
+2012-12-18 19:38:05 UTC <byorgey> but I'm always happy to do so on demand if you want to refer to something recent.
+2012-12-18 19:38:34 UTC <byorgey> also, the log file is rather large at this point, which may become a problem...
+2012-12-18 19:38:46 UTC <byorgey> but we'll cross that bridge when we come to it I suppose
+2012-12-18 19:39:27 UTC <byorgey> looks like it's now 2.4MB
+2012-12-18 19:39:33 UTC <byorgey> of text!
+2012-12-18 19:39:35 UTC <conal> yeah
+2012-12-18 19:42:23 UTC <conal> fryguybob: got your email (log snippet). exactly what i wanted. thanks a bunch.
+2012-12-18 19:44:55 UTC <fryguybob> conal: no problem.
+2012-12-18 19:45:03 UTC <conal> :)
+2012-12-19 01:22:20 UTC <ClaudiusMaximus> ended up using konstrukt + gimp to make that diagram i was wanting earlier...  http://mathr.co.uk/lifecycles/
+2012-12-19 01:23:57 UTC <byorgey> ACTION takes that as a challenge to reconstruct it using diagrams
+2012-12-19 03:16:30 UTC <ClaudiusMaximus> i found a bug
+2012-12-19 03:16:31 UTC <ClaudiusMaximus> newtype CircleFrac = CircleFrac { getCircleFrac :: Double } deriving (Read, Show, Eq, Ord, Enum, Floating, Fractional, Num, Real, RealFloat, RealFrac)
+2012-12-19 03:17:14 UTC <ClaudiusMaximus> i think, anyway - the trig doesn't work out
+2012-12-19 03:18:14 UTC <ClaudiusMaximus> nope, i was too eager and confused
+2012-12-19 03:28:04 UTC <ClaudiusMaximus> err, i think i was right after all
+2012-12-19 03:28:05 UTC <ClaudiusMaximus> sin (0.5 :: CircleFrac)
+2012-12-19 03:28:05 UTC <ClaudiusMaximus> CircleFrac {getCircleFrac = 0.479425538604203}
+2012-12-19 03:28:25 UTC <ClaudiusMaximus> when if trig was working properly it'd give 0
+2012-12-19 03:28:36 UTC <ClaudiusMaximus> i go back to radians
+2012-12-19 03:38:15 UTC <fryguybob> ClaudiusMaximus: Yeah those derived instances are not going to work with trig.
+2012-12-19 03:39:47 UTC <fryguybob> But really we want the trig functions to change the type as well.
+2012-12-19 03:40:29 UTC <fryguybob> Something like: sin :: (Angle a, Floating b) => a -> b
+2012-12-19 03:41:58 UTC <ClaudiusMaximus> true
+2012-12-19 03:42:21 UTC <ClaudiusMaximus> radians are the one true way anyway
+2012-12-19 03:42:50 UTC <ClaudiusMaximus> at least for trig
+2012-12-19 04:00:05 UTC <ClaudiusMaximus> http://mathr.co.uk/haskell/2012-12-19_wheee_diagrams.png only took 4 hours \o/  (mostly confused about paths/trails/etc)
+2012-12-19 04:02:45 UTC <byorgey> oh, huh, I hadn't considered what happens when you do trig on CircleFrac =(
+2012-12-19 04:03:17 UTC <byorgey> ClaudiusMaximus: oh, very cool =)
+2012-12-19 04:04:13 UTC <ClaudiusMaximus> byorgey: much headscratching confusion when calculated arc end points don't match...
+2012-12-19 04:04:32 UTC <ClaudiusMaximus> the code is also there, just s/png/hs/
+2012-12-19 04:04:51 UTC <byorgey> heh
+2012-12-19 04:05:30 UTC <byorgey> huh, neat how a recursive binary subdivision leads to *three* interleaved infinite binary trees
+2012-12-19 04:05:38 UTC <byorgey> I mean, it makes sense looking at it
+2012-12-19 04:05:40 UTC <byorgey> just a bit surprising
+2012-12-19 04:10:08 UTC <byorgey> ClaudiusMaximus: want me to put that diagram in the gallery on the diagrams web page?
+2012-12-19 04:11:09 UTC <byorgey> conal: thanks for the patch!
+2012-12-19 04:11:21 UTC <byorgey> I'll be curious to see how you use it
+2012-12-19 04:11:48 UTC <ClaudiusMaximus> well, i wanted to add a few more layers and use it as the banner on my website...
+2012-12-19 04:11:48 UTC <conal> byorgey: i think you'll like it. nice & algebraic.
+2012-12-19 04:12:01 UTC <byorgey> =)
+2012-12-19 04:12:14 UTC <byorgey> ClaudiusMaximus: oh! well, by all means
+2012-12-19 04:13:11 UTC <conal> byorgey: like so: http://en.wikipedia.org/wiki/Conjugation_%28group_theory%29
+2012-12-19 04:13:39 UTC <byorgey> conal: yep, I know about conjugation
+2012-12-19 04:13:46 UTC <conal> byorgey: ah. :)
+2012-12-19 04:13:53 UTC <byorgey> I already like the new instance a lot!
+2012-12-19 04:14:06 UTC <byorgey> just curious to see how you make use of it.
+2012-12-19 04:14:46 UTC <byorgey> conal: in fact, see http://projects.haskell.org/diagrams/doc/Diagrams-Transform.html
+2012-12-19 04:15:02 UTC <conal> oh!
+2012-12-19 04:16:23 UTC <byorgey> don't worry, you couldn't have used that in implementing the instance anyway because the instance is in -core and that's in -lib =)
+2012-12-19 04:16:37 UTC <conal> okay. i was wondering.
+2012-12-19 04:17:25 UTC <byorgey> I guess 'under' is a restricted variant of your Transformable (a -> b) instance
+2012-12-19 04:18:11 UTC <byorgey> hmm, except maybe the transformation goes the other way?
+2012-12-19 04:19:07 UTC <byorgey> anyway. good stuff.  I'm off to bed and then to the airport early tomorrow.  Probably won't be on IRC much until after the 25th.
+2012-12-19 04:19:11 UTC <conal> byorgey: i'm working on a library for composable circuit drawings. signals have spatial positions. a circuit drawing is a function from incoming signals to a picture and outgoing signals. (a writer arrow transformer applied to a function on signal structures.) when such a function gets applied, it adds wires from the incoming signals. i want to transform those functions, and i think conjugation is exactly the thing for the j
+2012-12-19 04:19:49 UTC <conal> the whole thing will be an arrow.
+2012-12-19 04:19:50 UTC <byorgey> conal: ah, I see, cool
+2012-12-19 04:19:55 UTC <conal> yeah :)
+2012-12-19 04:20:43 UTC <conal> and it'll tie into the linear algebra stuff i've been toying with.
+2012-12-19 04:21:05 UTC <ClaudiusMaximus> merry xmas, byorgey!
+2012-12-19 04:21:38 UTC <byorgey> ClaudiusMaximus: thanks, and to you as well!
+2012-12-19 04:21:47 UTC <ClaudiusMaximus> :)
+2012-12-19 20:57:40 UTC <luite> bleh
+2012-12-19 20:58:03 UTC <luite> my presentation for tomorrow is unfinishd and i cna't concentrate :/
+2012-12-19 21:17:36 UTC <alpounet> coffe!
+2012-12-19 21:17:38 UTC <alpounet> +e
+2012-12-19 21:19:29 UTC <luite> didn't really help, only made me more stressed
+2012-12-19 21:25:30 UTC <luite> and i should probably get at least a few hours of sleep
