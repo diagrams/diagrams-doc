@@ -172,11 +172,11 @@ the `circle` diagram with the `(#)` operator:
 >                    # lc purple
 >                    # dashing [0.2,0.05] 0
 
-(To render this new diagram, just replace `defaultMain circle` with
+(To render this new diagram, just replace `defaultMain (circle 1)` with
 `defaultMain circle1`.)
 
 Note that the dashed purple border is cut off a bit at the edges of
-the PDF. This is by design: diagrams' bounds are computed based on
+the image. This is by design: diagrams' bounds are computed based on
 their "abstract shapes", without taking into account how they are
 actually drawn.  Future versions of diagrams may give you the option
 of taking things such as thick borders into account when computing
