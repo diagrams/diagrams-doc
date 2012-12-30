@@ -3906,6 +3906,11 @@ want to learn how ``diagrams`` actually works under the hood.
    This section may not get written for a while; yell if you'd like to
    read it.  The more people who yell, the faster it will get done. =)
 
+In the meantime, Chris Mears has written `an article giving a quick
+walkthrough of some of the internals
+<http://www.cmears.id.au/articles/diagrams-internals.html>`_ which is
+useful for getting started.
+
 Vector spaces
 -------------
 
