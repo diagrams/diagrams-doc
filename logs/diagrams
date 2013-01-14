@@ -25858,3 +25858,191 @@
 2012-12-19 21:17:38 UTC <alpounet> +e
 2012-12-19 21:19:29 UTC <luite> didn't really help, only made me more stressed
 2012-12-19 21:25:30 UTC <luite> and i should probably get at least a few hours of sleep
+2012-12-27 19:05:50 UTC <sleepyMonad> q
+2012-12-27 19:06:20 UTC <sleepyMonad> oops
+2012-12-28 21:47:45 UTC <jbracker> byorgey: I am currently trying to generalize the booleans of TwoD.Segment (last case of getTrace fpr FixedSegment). The problem is that filter is used there. Which causes some problems with the deep embedding. So I am trying to get rid of it by just mapping directly and then taking the minimum out of those values. Is there some maximum value they will not exceed  so that I can set them to that value and eliminate the need to filter
+2012-12-28 21:48:24 UTC <jbracker> Line 113 in https://github.com/jbracker/diagrams-lib/blob/master/src/Diagrams/TwoD/Segment.hs
+2012-12-28 21:50:35 UTC <byorgey> jbracker: no, there isn't
+2012-12-28 21:50:47 UTC <jbracker> thought so
+2012-12-28 21:50:58 UTC <byorgey> why does filter cause problems?
+2012-12-28 21:51:41 UTC <jbracker> because you basically need to evaluate the boolean to know if something stays in the haskell list or not, but for example with JS you can't just do that because your generating code
+2012-12-28 21:52:40 UTC <jbracker> filter does not just mingle the list into some computation like minimum for example it need to execute the boolean and return to haskell land afterwards
+2012-12-28 21:56:55 UTC <byorgey> hmm
+2012-12-28 21:59:47 UTC <byorgey> jbracker: can you do something like mapping to Maybe and then taking the minimum Just value?
+2012-12-28 22:00:16 UTC <byorgey> I don't think I really understand the problem so I am not sure what is allowed and what isn't
+2012-12-28 22:08:21 UTC <jbracker> well when using the predicate in filter we generate a boolean value
+2012-12-28 22:09:07 UTC <jbracker> this boolean value can be some arbitrary piece of javascript that be cannot execute at this stage, we don't know if it is true or false while compiling it with haskell
+2012-12-28 22:10:06 UTC <jbracker> so we cannot createh the list without the elements we want to filter because we don't know if the create boolean is true or false
+2012-12-28 22:10:42 UTC <jbracker> I think the same problem would occure translating the value into Nothing or Just
+2012-12-28 22:10:57 UTC <jbracker> you still would need to know wether we have a true or not
+2012-12-28 22:11:46 UTC <jbracker> so basically: the list is on haskell level, the booleans are on javascript level, but we cannot execute javascript on haskell level
+2012-12-28 22:15:56 UTC <jbracker> I think I got a solution: map (\x -> (p x, x)) (cubForm a b c d) :: [(BooleanOf a, a)]
+2012-12-28 22:16:39 UTC <jbracker> with that I could write a special minimum function that ignores a value in the list if the predicate is not true
+2012-12-28 22:20:44 UTC <byorgey> this still seems weird to me.
+2012-12-28 22:21:14 UTC <byorgey> it seems to me you are trying to write the code in such a way that the definition of filter (essentially) gets inlined into the generated javascript code
+2012-12-28 22:21:20 UTC <byorgey> because filter cannot be run on the Haskell level.
+2012-12-28 22:21:39 UTC <jbracker> yes exactly
+2012-12-28 22:21:45 UTC <byorgey> clearly I don't understand how the reifying works very well since I would have hoped that just happens automatically.
+2012-12-28 22:22:14 UTC <byorgey> maybe filter should be a method of the Boolean type class?
+2012-12-28 22:22:59 UTC <jbracker> I don't think that would change the basic problem that you want to handle a haskell list on javascript level
+2012-12-28 22:24:20 UTC <jbracker> I think the only really good approach would be to generalize list so they can be represented on the javascript level
+2012-12-28 22:24:32 UTC <byorgey> thinking a bit more broadly, OK, maybe we can rewrite this particular case in such a way that it will work.
+2012-12-28 22:24:40 UTC <byorgey> but won't we run into issues like this in other places as well?
+2012-12-28 22:24:53 UTC <ClaudiusMaximus> sounds vaguely like the accelerate arrays on GPU stuff?
+2012-12-28 22:25:11 UTC <ClaudiusMaximus> maybe a similar approach could work, though i don't know what they did
+2012-12-28 22:25:13 UTC <byorgey> I don't like the idea of having to write code in funny/contorted ways
+2012-12-28 22:25:23 UTC <byorgey> it's harder to maintain and makes things even harder for potential contributors
+2012-12-28 22:25:32 UTC <jbracker> that is true
+2012-12-28 22:26:01 UTC <byorgey> jbracker: maybe can you write up a more detailed description of the issue and send it to the mailing list, or make a ticket on the bug tracker?
+2012-12-28 22:26:23 UTC <byorgey> I still don't feel like I understand the problem that well, and also perhaps other people will have some good ideas
+2012-12-28 22:26:31 UTC <jbracker> and I just noticed it does not work because it is pattern matching to see if the list is empty or not. And I don't see a way to get around that pattern match
+2012-12-28 22:27:12 UTC <jbracker> ok I will do that
+2012-12-28 22:27:35 UTC <byorgey> thanks
+2013-01-06 20:49:21 UTC <luite> :)
+2013-01-06 20:52:37 UTC <byorgey> =)
+2013-01-07 09:53:18 UTC <mahrz> byorgey, the paste regarding the not drawn circles: http://hpaste.org/80420 generates a completely white pdf for me, switching to PNG however shows a black circle
+2013-01-07 14:19:53 UTC <fryguybob> mahrz: Can you try going to Postscript (via Cairo), it should be the same code path as PDF (on the Cairo side for at lest part of it) and is a little easier to decypher then PDF.
+2013-01-07 14:20:19 UTC <fryguybob> I don't have a working Cairo or I would try myself
+2013-01-07 17:19:41 UTC <byorgey> mahrz: interesting, when I run that I get a quarter of a filled black circle in the upper left (as I would expect)
+2013-01-07 17:20:13 UTC <byorgey> ok, it's system specs time!
+2013-01-07 17:20:45 UTC <byorgey> I'm using GHC 7.6, cairo-0.12.4, and I'll have to check on the version of the actual cairo lib
+2013-01-07 17:20:54 UTC <byorgey> I can test on other versions of GHC too, later
+2013-01-07 17:21:01 UTC <byorgey> mahrz: what versions of stuff do you have?
+2013-01-07 17:21:39 UTC <byorgey> mahrz: also, can you create a new issue at http://github.com/diagrams/diagrams-cairo/issues ?  I want to have a place to keep track of all of this
+2013-01-07 19:16:56 UTC <mahrz> i'll do that tomorrow and let you know, i'm having a friend visiting this day, so I'm rarely at the pc :)
+2013-01-07 19:26:00 UTC <byorgey> mahrz: ok, enjoy your friend's visit =)
+2013-01-07 21:22:14 UTC <byorgey> sorry for the noise, dealing with the new semigroups release =)
+2013-01-07 21:24:41 UTC <luite> the noise, it's unbearable!
+2013-01-07 21:26:40 UTC <byorgey> hehe =)
+2013-01-07 22:00:35 UTC <byorgey> whew, all done =)
+2013-01-07 23:07:02 UTC <tgeeky_> a SEA OF VIOLET
+2013-01-07 23:07:11 UTC <tgeeky_> assaults thine eyes
+2013-01-07 23:17:04 UTC <luite> must be pink noise
+2013-01-08 16:55:52 UTC <mahrz> ok, I filed a bug, specs, description and code are in there: https://github.com/diagrams/diagrams-cairo/issues/28
+2013-01-08 16:57:04 UTC <byorgey> mahrz: awesome, thanks!
+2013-01-08 16:57:19 UTC <byorgey> it is a very mysterious bug
+2013-01-08 16:58:13 UTC <mahrz> it is indeed ... especially that PS works but PDF doesn't makes me suspect libcairo or the cairo bindings itself ...
+2013-01-08 16:58:25 UTC <byorgey> yeah, me too
+2013-01-08 16:58:37 UTC <byorgey> hopefully we can figure out which
+2013-01-09 01:45:38 UTC <alpounet> byorgey, great post on species, this is a cool series of post :)
+2013-01-09 02:38:37 UTC <byorgey> thanks alpounet! =)
+2013-01-09 03:00:55 UTC <luite> ah looks like i have more reading to do :)
+2013-01-09 23:59:37 UTC <peterjoel> hi, I know this has been asked before, and probably in the docs. But.. is there a shorter way to write a diagram's type?
+2013-01-09 23:59:45 UTC <peterjoel> shape :: (HasStyle b, Transformable b, PathLike b, V b ~ R2) => b
+2013-01-09 23:59:45 UTC <peterjoel> shape = circle 1 # fc red
+2013-01-10 00:00:03 UTC <peterjoel> is it usually best to just omit the type annotation?
+2013-01-10 02:38:32 UTC <fryguybob> ACTION waves hello from San Diego.
+2013-01-10 02:41:25 UTC <luite> hello
+2013-01-10 03:48:23 UTC <byorgey> peterjoel: I usually just omit the type, or give a more specific type
+2013-01-10 03:48:46 UTC <byorgey> not necessarily ideal... it's a tricky problem
+2013-01-10 20:24:32 UTC <pr> byorgey: happy birthday!
+2013-01-10 20:52:47 UTC <byorgey> pr: thanks! =D
+2013-01-10 21:36:38 UTC <pr> let's hope that numbergossip.com/YourAgeHere provides you with some interesting facts, hehe
+2013-01-10 21:38:33 UTC <byorgey> apparently, it's the number of integers that cannot be expressed as the sum of distinct squares
+2013-01-10 21:38:44 UTC <byorgey> and it's a Mersenne prime
+2013-01-10 21:38:50 UTC <byorgey> =)
+2013-01-10 21:39:53 UTC <pr> mersenne prime, lovely!
+2013-01-10 21:44:00 UTC <byorgey> That's a dead giveaway I guess (not that I mind revealing my age =)
+2013-01-10 21:44:27 UTC <byorgey> don't think I'll survive to the next Mersenne prime.
+2013-01-10 21:47:20 UTC <pr> yeah, probably not
+2013-01-10 21:49:29 UTC <pr> but sophie germain primes are cool, too! so you have something to look forward to :)
+2013-01-10 21:50:22 UTC <carter> oh yeah, happy bday byorgey
+2013-01-10 21:50:34 UTC <byorgey> thanks carter!
+2013-01-10 21:51:06 UTC <byorgey> pr: good point!
+2013-01-10 21:52:25 UTC <alpounet> happy birthday byorgey !
+2013-01-10 21:52:42 UTC <byorgey> thanks alpounet!
+2013-01-10 22:36:53 UTC <luite> congrats byorgey :)
+2013-01-11 00:01:43 UTC <ClaudiusMaximus> happy b;day
+2013-01-11 00:03:28 UTC <ClaudiusMaximus> working on diagrams to explain my tessellation/colouring code https://gitorious.org/maximus/butterflies/blobs/master/flat/diagram.hs - the area of the red triangle divided by the area of the green grid triangles equals the number of vertices in the purple rhombus - i don't know why that is so, but it is
+2013-01-11 00:04:07 UTC <ClaudiusMaximus> code is really horrible, generates a huge grid then trims the edges off (which gives huge SVG files and is slow)
+2013-01-11 00:05:27 UTC <ClaudiusMaximus> oops, parallelogram not rhombus
+2013-01-11 00:05:43 UTC <ClaudiusMaximus> anyway, abed
+2013-01-11 16:47:23 UTC <ClaudiusMaximus> updated and pushed my tessellation/colouring diagram code (it's still horrible though..), now to write a blog post :)
+2013-01-11 18:36:01 UTC <ClaudiusMaximus> http://mathr.co.uk/blog/2013-01-11_butterfly_variations.html  text is rambling and unclear, but the diagrams turned out nice
+2013-01-11 18:37:07 UTC <luite> and that's what matters!
+2013-01-11 18:37:31 UTC <ClaudiusMaximus> :)
+2013-01-11 18:40:34 UTC <ClaudiusMaximus> could still be improved (mainly by tweaking the line styles to be monochrome printer friendly)
+2013-01-11 18:41:25 UTC <luite> do people still print? :p
+2013-01-11 18:43:58 UTC <byorgey> ooooh, pretty!!
+2013-01-11 18:45:03 UTC <ClaudiusMaximus> luite: it's on my mind, since i today inherited my dad's old printer (he got a new computer and new windows doesn't support old printer, works fine with cups though)
+2013-01-11 18:45:16 UTC <ClaudiusMaximus> thanks :)
+2013-01-11 18:45:30 UTC <luite> hm i hardly print anymore :)
+2013-01-11 18:46:13 UTC <ClaudiusMaximus> i tend to print out a couple of papers when i have a trip planned to read while travelling
+2013-01-11 18:46:32 UTC <ClaudiusMaximus> before i had to beg favours, not having my own printer
+2013-01-11 18:46:33 UTC <luite> tablet!
+2013-01-11 18:47:01 UTC <ClaudiusMaximus> i don't even have a mobile phone :P
+2013-01-11 18:47:11 UTC <luite> makes life much easier for chaotic people like me, no more huge piles of printed papers ;p
+2013-01-11 18:47:43 UTC <luite> hm running the ghcjs test suite really drains my battery :/
+2013-01-11 18:47:54 UTC <luite> in better news, ghcjs has a working test suite now!
+2013-01-11 18:48:12 UTC <ClaudiusMaximus> :)
+2013-01-11 18:48:23 UTC <byorgey> ACTION prints stuff a lot
+2013-01-11 18:48:25 UTC <luite> that tests with the v8 and spidermonkey javascript engines
+2013-01-11 18:48:31 UTC <byorgey> luite: yay!
+2013-01-11 18:48:52 UTC <luite> byorgey: yeah the main problem with tablet is that you can't easily write notes and other stuff on the papers
+2013-01-11 18:48:55 UTC <luite> for me
+2013-01-11 18:49:00 UTC <byorgey> yep
+2013-01-11 18:49:12 UTC <byorgey> that's the main reason I print stuff
+2013-01-11 18:49:29 UTC <byorgey> also I want to be able to read without the distraction of potential internet =)
+2013-01-11 18:49:40 UTC <luite> hehe
+2013-01-11 18:50:33 UTC <luite> i used to have that, because my access point would sometimes not let my ipad connect
+2013-01-11 18:50:56 UTC <luite> but it develoed more problems so i had to replace it, now there's always potential internet :/
+2013-01-11 21:57:26 UTC <luite> alpounet: i should mention ghcjs more often, people only know fay :/ :p
+2013-01-13 17:55:32 UTC <byorgey> roadfish: not in general.  There is an (incomplete) one for this channel at https://github.com/diagrams/diagrams-doc/blob/master/logs/diagrams
+2013-01-13 17:55:48 UTC <byorgey> but the logger bot is unreliable and I don't have a good way to be notified when it dies
+2013-01-13 18:02:08 UTC <roadfish> ok, I though that URL was for diagram documentation
+2013-01-13 18:02:41 UTC <byorgey> roadfish: that's the repository for diagrams documentation, yes.  But we have all sorts of stuff in there, including IRC logs
+2013-01-13 18:04:41 UTC <roadfish> mostly I was curious if you had any comments on what I did after you went to bed
+2013-01-13 18:04:49 UTC <roadfish> on my assorted babbling
+2013-01-13 18:05:35 UTC <roadfish> I'm trying to make a little C program that will create a simple cario object and then output. My C is a tad rusty ... but it's coming back.
+2013-01-13 18:08:30 UTC <byorgey> roadfish: oh, ok.  I did read your comments, but hadn't responded
+2013-01-13 18:08:38 UTC <byorgey> roadfish: can you explain a bit more what you are trying to do?
+2013-01-13 18:09:49 UTC <roadfish> at this point, I need to write some FFI to output the stdout instead of a file. I've seen webpages talking about cairo outputing to stdout. But this isn't availabe in the Haskell cairo package.
+2013-01-13 18:10:10 UTC <byorgey> right, but I mean, what is your larger goal?  Why do you want to output to stdout?
+2013-01-13 18:10:14 UTC <roadfish> I'm still pretty new to Haskell. So mostly I'm treating this as a big learning exercise.
+2013-01-13 18:10:35 UTC <byorgey> sure, I'm all for learning exercises =)
+2013-01-13 18:10:42 UTC <roadfish> I want to write a Haskell program that will take keystrokes fed from an emacs program.
+2013-01-13 18:11:28 UTC <roadfish> The Haskell program will run continuously to interpret the keystrokes. It will build various objects and then output a fresh png image.
+2013-01-13 18:11:43 UTC <roadfish> then, on the emacs side, I will keep replacing the displayed image.
+2013-01-13 18:11:53 UTC <byorgey> sounds cool!
+2013-01-13 18:12:03 UTC <byorgey> but I don't see why you need to output the PNG to stdout
+2013-01-13 18:12:15 UTC <roadfish> of course, using some intermediate file is feasible ... but I'm just being finicky.
+2013-01-13 18:12:18 UTC <byorgey> wouldn't it work just as well to create a file somewhere in /tmp and tell emacs where to look for it?
+2013-01-13 18:12:24 UTC <byorgey> OK, fair enough =)
+2013-01-13 18:13:08 UTC <roadfish> yes, outputing to /tmp isn't a showstopper. but I want to see how far I can push things.
+2013-01-13 18:13:18 UTC <byorgey> OK, sure, go for it =)
+2013-01-13 18:13:40 UTC <roadfish> you folks have really built up something amazing with this diagrams module
+2013-01-13 18:13:48 UTC <byorgey> roadfish: thanks =)
+2013-01-13 18:14:02 UTC <roadfish> lots of power in Haskell and lots of power in cairo ... and now you've liberated/unified all this power
+2013-01-13 18:14:24 UTC <byorgey> roadfish: how hard would it be to add a binding for  write_to_png_stream  to the cairo package?
+2013-01-13 18:14:30 UTC <byorgey> that seems like the way to go if that works
+2013-01-13 18:14:35 UTC <roadfish> I was really impressed when I saw. http://projects.haskell.org/diagrams/manual/diagrams-manual.html
+2013-01-13 18:14:55 UTC <byorgey> excellent!  I have spent a LOT of time on that =)
+2013-01-13 18:15:03 UTC <roadfish> right, adding to cairo is the cleanest solution.
+2013-01-13 18:15:34 UTC <roadfish> but I don't know about the politics of making a request. who are the cairo people and do the add stuff.
+2013-01-13 18:15:56 UTC <roadfish> for now, I was just going to do this stuff on my own and then maybe offer up if anyone is interested.
+2013-01-13 18:16:02 UTC <byorgey> roadfish: the maintainer is my officemate =)
+2013-01-13 18:16:18 UTC <roadfish> so a sharp elbow would get the job done
+2013-01-13 18:16:48 UTC <byorgey> if you sent a working patch adding a binding to a new function I'm sure he would be happy to merge it
+2013-01-13 18:17:06 UTC <roadfish> I saw the same Paolo Martini in PNG.chs. Or is this somewone else?
+2013-01-13 18:17:13 UTC <roadfish> s/same/name
+2013-01-13 18:17:25 UTC <byorgey> I don't think Paolo works on it anymore
+2013-01-13 18:17:39 UTC <byorgey> the current maintainer is Daniel Wagner, he goes by dmwit in #haskell
+2013-01-13 22:22:51 UTC <alpounet> byorgey, dimwit is your officemate? really?
+2013-01-13 22:22:54 UTC <alpounet> dmwit*
+2013-01-13 22:23:29 UTC <alpounet> you guys probably end up chatting about many random stuffs all the time, he seems to be a pretty funny guy too
+2013-01-14 03:06:22 UTC <byorgey> alpounet: yep, he is, and yes, we do
+2013-01-14 03:06:25 UTC <byorgey> he's great =)
+2013-01-14 03:08:14 UTC <alpounet> heh
+2013-01-14 03:08:34 UTC <alpounet> alright, ready for my train tomorrow. i have 5 hours to fill with some intense reading
+2013-01-14 03:08:51 UTC <byorgey> ooh, nice
+2013-01-14 03:08:54 UTC <alpounet> a few funny CT stuffs, some AI too, i think i'm good to go
+2013-01-14 03:09:42 UTC <alpounet> my brain will most likely be dead when leaving the train though.
+2013-01-14 03:12:21 UTC <byorgey> just don't forget any of your belongings
+2013-01-14 03:16:55 UTC <alpounet> i guess i'll tie them to my wrists or smth like that
+2013-01-14 03:20:19 UTC <roadfish> I had a question about the Cairo Haskell package so I sent a message to its maintainer which is "gtk2hs-users@lists.sourceforge.net"
+2013-01-14 03:20:23 UTC <alpounet> but yeah i've been thinking over and over again about this "category theory in machine learning" post i saw on the n-cat cafÃ©
+2013-01-14 03:20:28 UTC <alpounet> ( http://golem.ph.utexas.edu/category/2007/09/category_theory_in_machine_lea.html )
+2013-01-14 03:22:14 UTC <roadfish> I checked for my posting but it hasn't shown up yet at http://sourceforge.net/mailarchive/forum.php?forum=gtk2hs-users
+2013-01-14 03:22:41 UTC <roadfish> Do you folks use sourceforge.net mailing lists? Do they take a while to process?
+2013-01-14 04:06:16 UTC <fryguybob> ACTION is back home.  Finally!
+2013-01-14 14:58:50 UTC <byorgey> fryguybob: hooray!
