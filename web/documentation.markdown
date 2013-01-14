@@ -18,6 +18,8 @@ Reference
 Blog posts/other
 ----------------
 
+* [Butterfly Variations](http://mathr.co.uk/blog/2013-01-11_butterfly_variations.html)
+  (Claude Heiland-Allen, 11 January 2013)
 * [Creating documents with embedded diagrams](http://byorgey.wordpress.com/2012/08/28/creating-documents-with-embedded-diagrams/)
   (Brent Yorgey, 28 August 2012)
 * [Diagrams mentoring at Hac Phi](http://byorgey.wordpress.com/2012/07/09/diagrams-mentoring-at-hac-phi/)
