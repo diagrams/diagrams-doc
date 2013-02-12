@@ -3917,6 +3917,11 @@ Vector spaces
 The V type function
 ~~~~~~~~~~~~~~~~~~~
 
+The `V` type family is defined in `Diagrams.Core.V`.  The idea is that
+many types have an "associated" vector space, *i.e.* the vector space
+in which they "live".  `V` simply maps from types to their associated
+vector space.
+
 Points and vectors
 ~~~~~~~~~~~~~~~~~~
 
