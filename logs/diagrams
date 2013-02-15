@@ -26046,3 +26046,242 @@
 2013-01-14 03:22:41 UTC <roadfish> Do you folks use sourceforge.net mailing lists? Do they take a while to process?
 2013-01-14 04:06:16 UTC <fryguybob> ACTION is back home.  Finally!
 2013-01-14 14:58:50 UTC <byorgey> fryguybob: hooray!
+2013-01-15 17:45:46 UTC <fryguybob> byorgey: I didn't get to go to much at the math conference (there was a nice math art section in the exhibit hall, but I only briefly could look for some inspiration for diagrams) but I did get to go to two talks both teaching oriented.
+2013-01-15 17:46:47 UTC <fryguybob> byorgey: I don't know if you know Francis Su, but he one a teaching award this year and give this excellent talk: https://www.facebook.com/notes/francis-su/the-lesson-of-grace-in-teaching/10151372450043217
+2013-01-15 18:22:27 UTC <fryguybob> (/one/won/ somehow when I'm typing with Judah in one hand I lose the little spelling ability I have.)
+2013-01-15 18:36:01 UTC <luite> i received a math picture book today, hopefully gives me some inspiration :)
+2013-01-15 18:36:21 UTC <luite> http://www.bilder-der-mathematik.de/
+2013-01-15 18:37:23 UTC <luite> looks like mostly fairly standard examples, but with nice pictures
+2013-01-15 18:52:13 UTC <ClaudiusMaximus> this has nice pictures too.. http://images.math.cnrs.fr/Ringworld.html
+2013-01-15 18:52:22 UTC <conal> in case you folks haven't seen it: http://www.bridgesmathart.org/ . i attended this conference several years ago in seattle.
+2013-01-15 18:53:43 UTC <luite> oh its in the netherlands
+2013-01-15 18:53:54 UTC <luite> in enschede, i did my undergrad there :)
+2013-01-15 19:05:50 UTC <fryguybob> Nice links!
+2013-01-15 19:06:55 UTC <luite> that conference looks interesting, i can take the train every day probably :)
+2013-01-15 19:11:37 UTC <fryguybob> Here are the ones I kind of saw: http://gallery.bridgesmathart.org/exhibitions/2013-Joint-Mathematics-Meetings
+2013-01-15 19:19:50 UTC <conal> wow -- gorgeous.
+2013-01-15 19:27:49 UTC <fryguybob> Of the ones I saw I thought these two would be interesting diagrams: http://gallery.bridgesmathart.org/exhibitions/2013-joint-mathematics-meetings/jlm-phi
+2013-01-15 19:47:18 UTC <byorgey> wow, cool stuff everyone!
+2013-01-15 19:47:41 UTC <byorgey> but why oh why did you share all these links *today* when I really need to be working on my thesis proposal =P
+2013-01-15 19:47:44 UTC <luite> fryguybob: oh cool :)
+2013-01-15 19:47:54 UTC <luite> hmm, i hope i'll have time to go this summer
+2013-01-15 19:49:08 UTC <luite> teh $160 registration fee isn't too outrageous :)
+2013-01-15 19:55:08 UTC <fryguybob> byorgey: Hehe
+2013-01-17 02:31:49 UTC <ClaudiusMaximus> hm, is this a bug?  mconcat [ ...huge list of Diagram SVG R2 ... ]  -> stack overflow crash; splitting it up into chunks like  (mconcat . map mconcat) [ ...less huge list of less huge lists of Diagram SVG R2... ] seems to work fine
+2013-01-17 03:18:55 UTC <byorgey> ClaudiusMaximus: hmm, I wouldn't expect there to be a difference
+2013-01-17 03:19:02 UTC <byorgey> feel free to file a bug report
+2013-01-18 00:32:07 UTC <fryguybob> oooOOOooo improvements.
+2013-01-18 03:57:12 UTC <byorgey> yep.  I made it so you can use other backends than just cairo, and also some minor stuff like creating a directory if it doesn't exist, etc.
+2013-01-18 03:57:49 UTC <byorgey> tomorrow I think I might start in on factoring out a bunch of the repeated backend stuff into a generic backend-tools package.
+2013-01-18 19:10:44 UTC <jbracker> @byorgey: Is there something like a decomposable monoid class? Like "Comonoid" or something that gives you the ability to take apart what your monoid put together?
+2013-01-18 19:29:42 UTC <byorgey> jbracker: I don't know of one.
+2013-01-18 19:29:59 UTC <byorgey> jbracker: if you really do have a monoid then you have associativity, which makes taking apart problematic
+2013-01-18 19:30:22 UTC <byorgey> (a <> b) <> c == a <> (b <> c)  so if you decompose  a <> b <> c   what do you get?
+2013-01-18 19:30:48 UTC <jbracker> well you could do something like deconsl and decondr
+2013-01-18 19:30:53 UTC <jbracker> deconsr
+2013-01-18 19:31:01 UTC <byorgey> unless you don't care about getting back exactly what you put in, i.e. you're OK with just getting back some  x <> y  such that neither is mempty
+2013-01-18 19:31:21 UTC <byorgey> sure
+2013-01-18 19:31:40 UTC <byorgey> interesting
+2013-01-18 19:31:44 UTC <byorgey> jbracker: what's the use case?
+2013-01-18 19:32:44 UTC <jbracker> I am just thinking of ways to get rid of problem with returning lists in the deep embedding. So a nice  generalization of lists. As monoids are a good was of constructing list like things I would just need something to work with them, by giving the ability of taking them apart
+2013-01-18 19:33:47 UTC <jbracker> and I just noticed monoid does not provide construction of singletons, which would be important for a deep embedding
+2013-01-18 19:40:48 UTC <jbracker> byorgey: just dont want to reinvent the wheel
+2013-02-12 01:44:50 UTC <mgsloan> byorgey: Yeah, I've been pretty darn busy the last few months.  Hoping to spare some cycles for opensource Haskell projects soon
+2013-02-12 01:45:03 UTC <byorgey> cool
+2013-02-12 01:45:14 UTC <shachaf> byorgey: You can give the user a nicer name, like diagramsbot
+2013-02-12 01:45:26 UTC <byorgey> yep, just going to go configure that
+2013-02-12 01:46:03 UTC <fryguybob> byorgey: I noticed there is a test button on the irc bot on github, I think if you push that it resends the last message.
+2013-02-12 01:47:46 UTC <shachaf> Better yet, test github notifications by editing .travis.yml
+2013-02-12 01:48:04 UTC <shachaf> That way you get extra notifications.
+2013-02-12 01:48:23 UTC <hpaste> mgsloan pasted âdiagrams-lens-WIPâ at http://hpaste.org/82190
+2013-02-12 01:49:33 UTC <mgsloan> I've been thinking that zipper-izing DUAL tree could be pretty powerful
+2013-02-12 01:49:47 UTC <mgsloan> might be able to get incremental re-rendering of diagrams
+2013-02-12 01:50:19 UTC <mgsloan> shachaf: have you read byorgey's monoid pearl?  Might get you interested in it from the theory end of things :)
+2013-02-12 01:50:42 UTC <shachaf> mgsloan: I have!
+2013-02-12 01:50:54 UTC <shachaf> I like the general idea of diagrams, I just don't have much to diagram.
+2013-02-12 01:54:44 UTC <mgsloan> I need to get that type-diagrams project restarted!  Then you can help try to make lens types intuitively understandable
+2013-02-12 01:55:10 UTC <mgsloan> lens is my new holy grail of type explanations.  If you can explain lens, you can explain anything
+2013-02-12 02:05:20 UTC <byorgey> aha, no wonder it wasn't working before, someone else is using the nick 'diabot' already =P
+2013-02-12 02:06:36 UTC <fryguybob> Now we have no excuse to commit like crazy.
+2013-02-12 02:06:44 UTC <fryguybob> (not to)
+2013-02-12 02:08:57 UTC <byorgey> go go go!
+2013-02-12 02:10:44 UTC <byorgey> well, I have to go through and update the settings for all the diagrams repos first =P
+2013-02-12 02:23:45 UTC <travis-ci> [travis-ci] 13diagrams-core/06master 144eda1a2 http://travis-ci.org/diagrams/diagrams-core/builds/4736591 The build passed.
+2013-02-12 02:23:58 UTC <byorgey> sweet, it works =)
+2013-02-12 02:25:23 UTC <travis-ci> [travis-ci] 13diagrams-core/06master 141bff75b http://travis-ci.org/diagrams/diagrams-core/builds/4736622 The build passed.
+2013-02-12 02:25:38 UTC <fryguybob> The build did not errored
+2013-02-12 02:25:46 UTC <byorgey> hehehe
+2013-02-12 02:26:11 UTC <luite> :)
+2013-02-12 02:48:31 UTC <tgeeky> anythign that adds more purple to this chatroom
+2013-02-12 02:48:33 UTC <tgeeky> is a plus in my mind
+2013-02-12 03:05:25 UTC <cmears> Hello diagrammers
+2013-02-12 03:05:34 UTC <cmears> Has anyone looked at using pango for text in the Cairo backend?
+2013-02-12 03:05:42 UTC <cmears> (to get nice kerning, for example)
+2013-02-12 03:09:19 UTC <fryguybob> cmears: We looked at it a bit.  The current Cairo api that we use is not very robust at all.  On Windows it doesn't even work.
+2013-02-12 03:09:48 UTC <fryguybob> The details might be in an issue somewhere...
+2013-02-12 03:13:46 UTC <fryguybob> I'm not seeing any particular mention, but we do need to revisit text and figure out what we really want.
+2013-02-12 03:20:20 UTC <cmears> There is an issue about Cairo text not working on Windows
+2013-02-12 03:20:59 UTC <cmears> But I didn't see anything about Pango
+2013-02-12 03:21:13 UTC <cmears> (but I didn't look very hard)
+2013-02-12 03:21:23 UTC <byorgey> there are no tickets about Pango.
+2013-02-12 03:21:43 UTC <byorgey> I think we're currently more at the stage of "make a page on the wiki and brainstorm" then we are at "open a ticket"
+2013-02-12 03:21:50 UTC <byorgey> I wouldn't even know what the ticket should say.
+2013-02-12 03:23:11 UTC <cmears> "let's use pango"
+2013-02-12 03:23:48 UTC <byorgey> hehe =)
+2013-02-12 03:24:03 UTC <byorgey> also, hiya cmears, long time no see =)
+2013-02-12 03:24:12 UTC <cmears> Is it the "toy text API" in Cairo that is broken in Windows
+2013-02-12 03:24:24 UTC <byorgey> yes, I think so
+2013-02-12 03:24:28 UTC <cmears> So that using pango would fix that problem, as well as being better in general?
+2013-02-12 03:24:36 UTC <byorgey> perhaps?
+2013-02-12 03:24:45 UTC <cmears> Cool (:
+2013-02-12 03:24:52 UTC <cmears> And hello, nice to be around again
+2013-02-12 03:24:53 UTC <byorgey> anyway, I have to go to bed
+2013-02-12 03:24:59 UTC <byorgey> =)
+2013-02-12 03:25:03 UTC <byorgey> make a pango page on the wiki!
+2013-02-12 03:25:11 UTC <cmears> OK (:
+2013-02-12 03:25:20 UTC <tgeeky> don't quite do that -- the problem isn't the lack of pango
+2013-02-12 03:25:25 UTC <tgeeky> it's the lack of text support :o
+2013-02-12 03:33:18 UTC <fryguybob> cmears: Yes pango should fix that.
+2013-02-12 16:28:22 UTC <byorgey> pardon the imminent flood
+2013-02-12 16:30:05 UTC <travis-ci> [travis-ci] 13vector-space-points/06master 144dc929a http://travis-ci.org/diagrams/vector-space-points/builds/4748420 The build passed.
+2013-02-12 16:30:13 UTC <fryguybob> Oooo
+2013-02-12 16:30:15 UTC <travis-ci> [travis-ci] 13diagrams-core/06master 14a1a5987 http://travis-ci.org/diagrams/diagrams-core/builds/4748416 The build passed.
+2013-02-12 16:32:05 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 14b5e515e http://travis-ci.org/diagrams/diagrams-lib/builds/4748437 The build passed.
+2013-02-12 16:33:35 UTC <travis-ci> [travis-ci] 13diagrams-svg/06master 1403abc8b http://travis-ci.org/diagrams/diagrams-svg/builds/4748486 The build passed.
+2013-02-12 16:33:45 UTC <travis-ci> [travis-ci] 13active/06master 14e7c18ad http://travis-ci.org/diagrams/active/builds/4748422 The build passed.
+2013-02-12 16:34:17 UTC <travis-ci> [travis-ci] 13diagrams-cairo/06master 142597664 http://travis-ci.org/diagrams/diagrams-cairo/builds/4748488 The build passed.
+2013-02-12 16:34:27 UTC <travis-ci> [travis-ci] 13diagrams-postscript/06master 14693ae18 http://travis-ci.org/diagrams/diagrams-postscript/builds/4748492 The build passed.
+2013-02-12 16:36:33 UTC <travis-ci> [travis-ci] 13diagrams/06master 148c4f9ca http://travis-ci.org/diagrams/diagrams/builds/4748406 The build passed.
+2013-02-12 16:37:43 UTC <travis-ci> [travis-ci] 13diagrams-core/06master 1411acdda http://travis-ci.org/diagrams/diagrams-core/builds/4748552 The build passed.
+2013-02-12 16:44:34 UTC <travis-ci> [travis-ci] 13diagrams-builder/06master 140d16a64 http://travis-ci.org/diagrams/diagrams-builder/builds/4748496 The build passed.
+2013-02-12 16:45:07 UTC <travis-ci> [travis-ci] 13diagrams-gtk/06master 145cb4988 http://travis-ci.org/diagrams/diagrams-gtk/builds/4748500 The build passed.
+2013-02-12 17:44:31 UTC <tgeeky> oh baby
+2013-02-12 17:45:13 UTC <tgeeky> s/active/diagrams-dxdt/
+2013-02-12 17:48:11 UTC <tgeeky> pretty neat and simple system for travis IRC notifications
+2013-02-12 19:19:58 UTC <tgeeky> any commit that begins with 'oops', is a good commit.
+2013-02-12 19:21:04 UTC <travis-ci> [travis-ci] 13diagrams-povray/06master 14f58fcbc http://travis-ci.org/diagrams/diagrams-povray/builds/4752247 The build has errored.
+2013-02-12 19:21:19 UTC <byorgey> =)
+2013-02-12 19:24:33 UTC <byorgey> just procrastinating from writing my thesis proposal
+2013-02-12 19:27:57 UTC <travis-ci> [travis-ci] 13diagrams-povray/06master 14c69b7b8 http://travis-ci.org/diagrams/diagrams-povray/builds/4752419 The build passed.
+2013-02-12 19:28:06 UTC <byorgey> =D
+2013-02-12 20:04:24 UTC <byorgey> ACTION is at a loss as to why the diagrams-contrib build is failing
+2013-02-12 20:05:06 UTC <byorgey> when it gets to installing diagrams-contrib itself the build plan downgrades transformers to 0.2, and then it fails since that would break some packages
+2013-02-12 20:05:19 UTC <byorgey> but that doesn't happen when I build it locally
+2013-02-12 20:07:27 UTC <alpounet> byorgey, maybe some library you already have around takes over one of the suggested dependencies for some reason
+2013-02-12 20:07:54 UTC <byorgey> no, I tried building it with cabal-dev starting from scratch
+2013-02-12 20:08:43 UTC <alpounet> meh
+2013-02-12 20:08:48 UTC <alpounet> annoying, and hard to diagnose
+2013-02-12 20:09:43 UTC <byorgey> let's see if this helps
+2013-02-12 20:12:48 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06master 14067691f http://travis-ci.org/diagrams/diagrams-contrib/builds/4753336 The build has errored.
+2013-02-12 20:13:16 UTC <alpounet> byorgey, i also did setup travis & github notifications for all my serious projects, and i get everything it's #hnn - i've got to admit this is really handy
+2013-02-12 20:14:18 UTC <alpounet> s/it's/in/
+2013-02-12 20:49:29 UTC <byorgey> alpounet: indeed
+2013-02-12 20:49:58 UTC <byorgey> it's also fun & seems to encourage more collaboration + contribution, since anyone in the channel can see there's development going on
+2013-02-12 20:52:58 UTC <alpounet> yeah
+2013-02-12 20:53:10 UTC <alpounet> byorgey, have you solved your diagrams-contrib build failure?
+2013-02-12 20:53:26 UTC <byorgey> not yet, I'm currently staring at the -v3 output
+2013-02-12 20:53:41 UTC <byorgey> trying to figure out what the constraint solver was doing
+2013-02-12 20:54:54 UTC <alpounet> hmm, it did pick transformers 0.3 this time apparently
+2013-02-12 20:55:34 UTC <byorgey> hmm?  no it didn't
+2013-02-12 20:55:40 UTC <alpounet> oh wait no, it was for diagrams-lib
+2013-02-12 20:56:02 UTC <byorgey> right
+2013-02-12 20:56:13 UTC <ClaudiusMaximus> to me it looks like regex-base depends on wrong mtl version, maybe?
+2013-02-12 20:56:25 UTC <ClaudiusMaximus> but i'm not used to staring at cabal -v3
+2013-02-12 20:58:04 UTC <byorgey> yeah, it looks like somehow an old mtl version is installed, and regex-base depends on it
+2013-02-12 20:58:15 UTC <byorgey> I don't know why such an old version of mtl is installed
+2013-02-12 20:59:35 UTC <ClaudiusMaximus> is there a "cabal why" similar to aptitude's ?
+2013-02-12 20:59:47 UTC <ClaudiusMaximus> maybe you could try removing it and seeing what would break, i guess..
+2013-02-12 20:59:56 UTC <ClaudiusMaximus> but i don't know how travis-ci works
+2013-02-12 21:00:03 UTC <byorgey> http://about.travis-ci.org/docs/user/languages/haskell/ says the environment is HP 2012.2.0.0, which comes with mtl-2.1.1
+2013-02-12 21:01:17 UTC <byorgey> and transformers-0.3
+2013-02-12 21:01:32 UTC <byorgey> but the cabal -v3 output says stuff about mtl-2.0.1.0/installed-db1 and transformers==0.2.2.0/installed-367
+2013-02-12 21:08:03 UTC <byorgey> yeah, I think the travis Haskell build environment regressed
+2013-02-12 21:08:24 UTC <byorgey> because really nothing changed except adding IRC notifications since the last time it build successfully
+2013-02-12 21:25:12 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06master 142911940 http://travis-ci.org/diagrams/diagrams-contrib/builds/4754760 The build has errored.
+2013-02-12 21:26:33 UTC <byorgey> argh.
+2013-02-12 21:28:40 UTC <byorgey> looking at previous successful builds, it looks like it has always had transformers-0.2.2.0 installed.
+2013-02-12 21:30:56 UTC <byorgey> for some reason it has never caused problems before.
+2013-02-12 21:34:33 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06master 144674421 http://travis-ci.org/diagrams/diagrams-contrib/builds/4755005 The build has errored.
+2013-02-12 21:35:30 UTC <byorgey> the hole goes deeper.  I think travis is lying about which version of the HP they have installed.
+2013-02-12 22:21:19 UTC <alpounet> haha
+2013-02-13 00:34:48 UTC <cmears> In this document, we are in Phase 1, right?  http://www.haskell.org/haskellwiki/Diagrams/Dev/Text
+2013-02-13 00:50:29 UTC <byorgey> yes, and I'm not even sure we implement everything in Phase 1 =P
+2013-02-13 00:51:12 UTC <byorgey> note also that everything in that document is up for debate
+2013-02-13 01:01:12 UTC <cmears> It seems like pango can do the "reifying" of text --- you can convert the glyphs into a Cairo path, then examine the path
+2013-02-13 01:31:15 UTC <byorgey> cool!
+2013-02-13 03:24:50 UTC <fryguybob> Humm, I should flesh out some of the path stuff I'm working on/thinking about on the wiki.
+2013-02-13 17:08:23 UTC <fryguybob> New wiki stuff: http://www.haskell.org/haskellwiki/Diagrams/Dev/Paths
+2013-02-13 17:17:33 UTC <byorgey> sweet
+2013-02-13 17:19:19 UTC <byorgey> fryguybob: I am actually considering adding an arc segment type, would love your input on that
+2013-02-13 17:19:35 UTC <byorgey> the idea is that if we know something is an arc most backends can render it much more simply
+2013-02-13 17:19:47 UTC <byorgey> it would result in smaller SVGs/PSs etc.
+2013-02-13 17:20:02 UTC <byorgey> not sure what the exact savings would be and whether it is worth it
+2013-02-13 17:21:32 UTC <byorgey> the main difficulty is with transformations; one thing we could do is just store a transformation along with the arc parameters
+2013-02-13 17:21:46 UTC <byorgey> so it would really represent the class of all affine transformations of arcs
+2013-02-13 17:22:36 UTC <byorgey> and then of course keep the code for converting arcs to beziers which could be used e.g. by backends that can draw beziers but not arcs
+2013-02-13 17:22:46 UTC <fryguybob> byorgey: Right, transformations are what kill arcs.
+2013-02-13 17:22:55 UTC <fryguybob> Otherwise they are fairly nice to work with.
+2013-02-13 17:25:16 UTC <fryguybob> We can also always punt and if we don't want to deal with arcs for some particular thing, covert it to a bezier first.
+2013-02-13 17:27:02 UTC <fryguybob> (you did just say that :D)
+2013-02-13 17:30:22 UTC <byorgey> right =)
+2013-02-13 17:30:53 UTC <byorgey> the only downside is it might be a little strange if the number of segments in your path changes depending on what you do with it.
+2013-02-13 17:46:06 UTC <fryguybob> byorgey: Yeah.  Anything that I can think of right now that would help with that just makes things more complicated.
+2013-02-13 17:46:37 UTC <fryguybob> Like tracking both a cubic segment and the arc and giving one if the transform is non-square...
+2013-02-13 22:40:55 UTC <luite> blurhg snow
+2013-02-13 22:55:35 UTC <tgeeky> byorgey: just do like string theory does, and insist that the number of segments per linear section is always constant, even when it's not
+2013-02-13 22:56:30 UTC <fryguybob> luite: Just put skis on the plane!
+2013-02-13 22:58:56 UTC <luite> yeah...
+2013-02-13 22:59:29 UTC <tgeeky> luite: to clarify, in case it's not clear. putting skis in the cabin of the plane is probably inadequate for a snow landing.
+2013-02-13 23:07:40 UTC <fryguybob> Alternatively, sled dog to your destination.
+2013-02-13 23:10:04 UTC <tgeeky> The LHC is going to go quiet at the end of this week, for 18 months. :(
+2013-02-13 23:11:08 UTC <luite> :(
+2013-02-13 23:12:09 UTC <luite> bleh useless, customer service unreachable
+2013-02-13 23:12:24 UTC <tgeeky> what's going awn?
+2013-02-13 23:12:38 UTC <luite> they canceled half the flights to/from AMS i think
+2013-02-13 23:12:54 UTC <tgeeky> where is it being held this year?
+2013-02-13 23:12:59 UTC <luite> what?
+2013-02-13 23:13:21 UTC <tgeeky> hehe
+2013-02-13 23:13:25 UTC <tgeeky> AMS = amsterdam
+2013-02-13 23:13:37 UTC <tgeeky> i figured you were going to an American Mathematics Society meeting, for some reason
+2013-02-13 23:13:50 UTC <luite> right, that would be fun
+2013-02-13 23:14:05 UTC <luite> nah i'm going to give a talk about ghcjs
+2013-02-13 23:14:12 UTC <luite> in budapest
+2013-02-13 23:14:21 UTC <luite> at least if i can get there
+2013-02-13 23:14:36 UTC <tgeeky> and AMS is the airport you would depart from
+2013-02-13 23:14:39 UTC <tgeeky> ?
+2013-02-13 23:14:58 UTC <luite> yes
+2013-02-13 23:15:31 UTC <tgeeky> hm. the weather there looks acceptable.
+2013-02-13 23:17:59 UTC <luite> there's some snow forecast for tomorrow, but nothing extreme...
+2013-02-13 23:19:01 UTC <tgeeky> luite: fun fact that I learned: the inner compressor/turbine blades on modern jet engines
+2013-02-13 23:19:27 UTC <tgeeky> which are a little bigger than credit card sized
+2013-02-13 23:19:37 UTC <tgeeky> produce *each* the amount of power of a modern F1 car
+2013-02-13 23:20:32 UTC <luite> meh the compressor blades only consume power ;)
+2013-02-13 23:21:47 UTC <luite> the airline customer service number is 020-4747747
+2013-02-13 23:22:00 UTC <tgeeky> that sounds fake to me
+2013-02-13 23:22:27 UTC <tgeeky> is 020- the area code for fake amsterdamwood numbers?
+2013-02-13 23:22:32 UTC <tgeeky> we use 555-xxxx in the US
+2013-02-13 23:22:40 UTC <luite> yes
+2013-02-13 23:48:56 UTC <luite> grmb
+2013-02-13 23:53:09 UTC <luite> at least the time to random disconnect increased from 2 to 17 minutes
+2013-02-14 00:02:37 UTC <fryguybob> :(
+2013-02-14 00:14:29 UTC <luite> it's only 1400km by car
+2013-02-14 00:23:29 UTC <tgeeky> I'm an American, so I probably think that km is a unit of cheeseburger flavor intensity
+2013-02-14 00:23:36 UTC <tgeeky> but if it's a distance, that's a loooooooong distance
+2013-02-14 00:40:00 UTC <luite> ah i think i have a new flight over dusseldorf
+2013-02-14 00:40:15 UTC <luite> annoyingly the site doesn't let me log in
+2013-02-14 02:38:58 UTC <byorgey> http://www.cis.upenn.edu/~byorgey/hosted/toothpicks.pdf
+2013-02-14 02:39:13 UTC <byorgey> an implementation of http://bit-player.org/2013/joshua-trees-and-toothpicks  with gratuitous use of color
+2013-02-14 03:29:07 UTC <tgeeky> I think If I looked at that with 3D glasses I'd have a stroke
+2013-02-14 21:35:30 UTC <bergey> I'm finding that diagrams-doc (from git) doesn't build, apparently because Shake's types changed between 0.4 and 0.5.  Has anyone else run into this?
+2013-02-14 21:36:35 UTC <byorgey> bergey: oh, I believe you.  I haven't tried building diagrams-doc since ndm released shake-0.5
+2013-02-14 21:37:35 UTC <bergey> I just unregistered shake-0.8, and tried with 0.4, and it works fine.
+2013-02-14 21:38:20 UTC <byorgey> OK, good to know.
+2013-02-14 21:38:34 UTC <byorgey> bergey: can you file a ticket on the diagrams-doc issue tracker?  that would be great
+2013-02-14 21:38:40 UTC <bergey> sure
+2013-02-14 21:39:18 UTC <byorgey> I'll get around to fixing it eventually, but patches are always welcome of course =)
+2013-02-14 21:40:21 UTC <bergey> Good to know.  I was trying to look into https://github.com/diagrams/diagrams-doc/issues/20 when I ran into this one.
+2013-02-14 21:40:57 UTC <byorgey> ah, cool
+2013-02-14 21:41:11 UTC <byorgey> bergey: what's your github username?
+2013-02-14 21:41:40 UTC <bergey> bergey, same as here
+2013-02-14 21:43:17 UTC <byorgey> ok, I just gave you push access to diagrams-doc =)
+2013-02-14 21:45:43 UTC <bergey> Thanks :)
