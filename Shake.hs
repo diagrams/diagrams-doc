@@ -124,6 +124,6 @@ needWeb = do
   -- requireGallery  -- replace hakyll building with our own here
 
 ghc out hs = do
-  askOracleWith (GhcPkg ()) ""
+  askOracleWith (GhcPkg ()) [""]
   let odir = takeDirectory out
   system' "ghc" ["--make", "-O2", "-outputdir", odir, "-o", out, hs]
