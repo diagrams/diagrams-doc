@@ -20,3 +20,11 @@ install:
 before_script: ghc --make Shake
 
 script: ./Shake
+
+notifications:
+  irc:
+    channels:
+      - "irc.freenode.org#diagrams"
+    skip_join: true
+    template:
+      - "\x0313diagrams-doc\x03/\x0306%{branch}\x03 \x0314%{commit}\x03 %{build_url} %{message}"
