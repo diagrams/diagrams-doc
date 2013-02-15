@@ -1,7 +1,10 @@
 {-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
 import Development.Shake
 import Development.Shake.FilePath
+import Development.Shake.Classes (Hashable, Binary)
+import Control.Parallel.Strategies (NFData)
 import System.Console.CmdArgs
 import System.Directory
 
@@ -19,6 +22,9 @@ mkModes = modes
   [ Build &= auto
   , Preview
   ]
+
+newtype GhcPkg = GhcPkg ()
+               deriving (Show, Typeable, Eq, Hashable, Binary, NFData)
 
 main :: IO ()
 main = do
@@ -60,9 +66,11 @@ main = do
     copyFiles "manual/static"
     copyImages
 
-    addOracle ["ghc-pkg"] $ do
+    addOracle $ \(GhcPkg _) -> do
       (out,_) <- systemOutput "ghc-pkg" ["list","--simple-output"]
       return $ words out
+
+    return ()
 
 copyFiles dir = dist (dir ++ "/*") *> \out -> copyFile' (un out) out
 
@@ -70,19 +78,19 @@ copyImages = dist ("manual/images/*") *> \out -> copyFile' (obj . un $ out) out
 
 requireIcons :: Action ()
 requireIcons = do
-  hsIcons <- getDirectoryFiles "manual/icons" "*.hs"
+  hsIcons <- getDirectoryFiles "manual/icons" ["*.hs"]
   let icons = map (\i -> dist $ "manual/icons" </> replaceExtension i "png") hsIcons
   need icons
 
 requireStatic :: Action ()
 requireStatic = do
-  staticSrc <- getDirectoryFiles "manual/static" "*"
+  staticSrc <- getDirectoryFiles "manual/static" ["*"]
   let static = map (dist . ("manual/static" </>)) staticSrc
   need static
 
 requireImages :: Action ()
 requireImages = do
-  images <- getDirectoryFiles (obj "manual/images") "*.png"
+  images <- getDirectoryFiles (obj "manual/images") ["*.png"]
   let distImages = map (dist . ("manual/images" </>)) images
   need distImages
 
@@ -116,6 +124,6 @@ needWeb = do
   -- requireGallery  -- replace hakyll building with our own here
 
 ghc out hs = do
-  askOracle ["ghc-pkg"]
+  askOracleWith (GhcPkg ()) ""
   let odir = takeDirectory out
   system' "ghc" ["--make", "-O2", "-outputdir", odir, "-o", out, hs]
