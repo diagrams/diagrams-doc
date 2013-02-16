@@ -1,6 +1,9 @@
+{-# LANGUAGE Arrows #-}
 
+import Control.Arrow
 import Control.Monad (when)
 import System.Directory (doesDirectoryExist, createDirectory)
+import System.Exit
 import System.FilePath ( (<.>), (</>), joinPath, splitPath )
 import System.IO
 
@@ -26,8 +29,8 @@ main = do
                        , "vector-space"
                        , "vector-space-points"
                        ]
-  docutilsCmdLine (diagramsManual modMap nameMap)
-  putStrLn ""
+  errCode <- docutilsCmdLine (diagramsManual modMap nameMap)
+  exitWith errCode
 
 diagramsManual modMap nameMap outDir =
   doTransforms [ linkifyHackage
@@ -57,11 +60,11 @@ compileDiagramsLHS outDir = onElemA "literal_block" [("classes", "dia-lhs")] $
     += attr "class" (txt "dia-lhs")
     += (compileDiaArr outDir <+> highlightBlockHSArr)
 
-compileDiaArr :: (ArrowXml (~>), ArrowIO (~>)) => FilePath -> XmlT (~>)
+compileDiaArr :: FilePath -> XmlT (IOSLA (XIOState ()))
 compileDiaArr outDir =
   getChildren >>>
   getText >>>
-  arrIO (compileDiagram outDir) >>>
+  diagramOrPlaceholder outDir >>>
   eelem "div"
     += attr "style" (txt "text-align: center")
     += (eelem "img"
@@ -72,9 +75,14 @@ dropPrefix :: FilePath -> FilePath -> FilePath
 dropPrefix pre = joinPath . drop (n-1) . splitPath
   where n = length (splitPath pre)
 
+diagramOrPlaceholder outdir =
+  arrIO (compileDiagram outdir) >>> (missing ||| passthrough) where
+    missing = issueErr "diagram could not be rendered"  >>^ (const "default.png")
+    passthrough = arr id
+
 -- | Compile the literate source code of a diagram to a .png file with
 --   a file name given by a hash of the source code contents
-compileDiagram :: FilePath -> String -> IO String
+compileDiagram :: FilePath -> String -> IO (Either String String)
 compileDiagram outDir src = do
   ensureDir outDir
   res <- buildDiagram
@@ -99,23 +107,23 @@ compileDiagram outDir src = do
     ParseErr err    -> do
       putStrLn ("\nError while parsing\n" ++ src)
       putStrLn err
-      return "default.png"
+      return $ Left "Error while parsing"
 
     InterpErr ierr  -> do
       putStrLn ("\nError while interpreting\n" ++ src)
       putStrLn (ppInterpError ierr)
-      return "default.png"
+      return $ Left "Error while interpreting"
 
     Skipped hash    -> do
       putStr "."
       hFlush stdout
-      return (mkFile hash)
+      return $ Right (mkFile hash)
 
     OK hash (act,_) -> do
       putStr "O"
       hFlush stdout
       act
-      return (mkFile hash)
+      return $ Right (mkFile hash)
 
  where
   mkFile base = outDir </> base <.> "png"
