@@ -17,19 +17,21 @@ and more.
 
 To build the user manual, you will need:
 
+* GHC 7.4 (currently doesn't build under 7.6)
 * the diagrams framework itself (including the
-[contrib package](http://github.com/diagrams/diagrams-contrib),
-[cairo backend](http://github.com/diagrams/diagrams-cairo), and
-[diagrams-builder package](http://github.com/diagrams/diagrams-builder)
+  [contrib package](http://github.com/diagrams/diagrams-contrib),
+  [cairo backend](http://github.com/diagrams/diagrams-cairo), and
+  [diagrams-builder package](http://github.com/diagrams/diagrams-builder)
 installed with the `-fcairo` flag),
 * the python [docutils suite](http://docutils.sourceforge.net/) (in
   particular `rst2xml` should be on your PATH),
 * the Haskell [docutils package](http://github.com/diagrams/docutils), and
-* [shake](http://hackage.haskell.org/package/shake).
+* [shake](http://hackage.haskell.org/package/shake) version 0.8 or later.
 
 To build the website, you will additionally need
 
-* [hakyll](http://hackage.haskell.org/package/hakyll).
+* [hakyll](http://hackage.haskell.org/package/hakyll)-3.x (the
+  diagrams website has not yet been ported to hakyll-4).
 
 Once you have all the dependencies, simply do
 
