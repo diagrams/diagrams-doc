@@ -3861,6 +3861,25 @@ welcome!  To get started, take a look at the existing backends for
 examples, and read the sections below on `Tools for backends`_ and
 `Backends`_.
 
+The SVG backend
+---------------
+
+The SVG backend, `diagrams-svg`:pkg:, outputs SVG files.  It is the
+default "out-of-the-box" backend, i.e. what one gets by typing just
+``cabal install diagrams``.  It is implemented purely in Haskell, with
+no dependencies on external libraries via the FFI.  This means that it
+should be easy to install on all platforms.
+
+Note that at the moment the SVG backend does not yet support embedding
+images, but this is planned for a future release.  Otherwise, the SVG
+backend is on a par with the cairo backend in terms of features
+(excluding a few special features specific to the cairo backend,
+described above).  For information on making use of the SVG backend,
+see `Diagrams.Backend.SVG`:mod:.
+
+The source code for the SVG backend can be found in the
+`diagrams-svg`:repo: repository.
+
 The cairo backend
 -----------------
 
@@ -3907,14 +3926,21 @@ instead of to a file.  Note that it is possible to receive mouse
 clicks and then query the corresponding location in a diagram to find
 out which part the user clicked on (see `Using queries`_).
 
-The source code for the GTK backend ca nbe found in the
+The source code for the GTK backend can be found in the
 `diagrams-gtk`:repo: repository.
-
-The SVG backend
----------------
 
 The postscript backend
 ----------------------
+
+The postscript backend, `diagrams-postscript`:pkg:, like the SVG
+backend, is written purely in Haskell.  It outputs encapsulated
+PostScript (EPS) files.  Note that by nature, EPS does not support
+transparency.  The postscript backend also does not support embedded
+images.  However, it is fairly complete in its support for other
+features.
+
+The source code for the postscript backend can be found in the
+`diagrams-postscript`:repo: repository.
 
 Other backends
 --------------
@@ -3923,15 +3949,6 @@ For a list of other backends and their status, see `the diagrams
 wiki`_.
 
 .. _`the diagrams wiki`: http://www.haskell.org/haskellwiki/Diagrams/Projects#Backends
-
-.. container:: todo
-
-   Write a bit about each of these backends.
-
-   * HTML5 canvas
-   * TikZ
-   * povray
-   * OpenGL?
 
 Tools for backends
 ------------------
