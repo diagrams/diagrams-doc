@@ -8,6 +8,8 @@
   + incorporate Jan Bracker R2 generalization
   + write about diagrams-core in user manual
 
+  + update projects/backends wiki page
+
 * Someday projects
 
   + envelope/trace memoization
