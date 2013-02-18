@@ -3471,14 +3471,14 @@ really wants to just think in absolute coordinates: draw this here,
 draw that there.  If you find yourself wanting this, here are some
 tips:
 
+  * If you have a list of diagrams which are already correctly
+    positioned, you can combine them with `mconcat`.
   * The `position` function takes a list of diagrams associated with
     positions and combines them while placing them at the indicated
     absolute positions.
   * `moveTo` can be used to position a single diagram absolutely.
-
-.. container:: todo
-
-  * More tips?
+  * `place` is a flipped version of `moveTo` which is sometimes
+    convenient.
 
 Delayed composition
 -------------------
