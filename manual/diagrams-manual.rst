@@ -1,6 +1,7 @@
 .. role:: pkg(literal)
 .. role:: hs(literal)
 .. role:: mod(literal)
+.. role:: repo(literal)
 
 .. default-role:: hs
 
@@ -3852,11 +3853,65 @@ create active `Point`\s, `Path`\s, colors, or values of any other type.
 Rendering backends
 ==================
 
-The SVG backend
----------------
+Diagrams has a system for "pluggable" rendering backends, so new
+backends can be added by implementing instances of some type classes.
+There are currently four "officially supported" backends, described
+below, and several other experimental backends.  New backends are
+welcome!  To get started, take a look at the existing backends for
+examples, and read the sections below on `Tools for backends`_ and
+`Backends`_.
 
 The cairo backend
 -----------------
+
+The cairo backend, `diagrams-cairo`:pkg:, is built on top of the
+`cairo`:pkg: package, which contains bindings to the `cairo 2D
+graphics library`_.  Although it is quite full-featured, the cairo
+library itself can be unfortunately difficult to install on some
+platforms, particularly OS X.
+
+.. _`cairo 2D graphics library`: http://www.cairographics.org/
+
+The cairo backend can produce PNG, SVG, PDF, and postscript output.
+For specific information on how to make use of it, see the
+documentation for the `Diagrams.Backend.Cairo`:mod: module.
+
+``diagrams-cairo`` was the first officially supported backend, and has
+quite a few advanced features that other backends do not have:
+
+* `Diagrams.Backend.Cairo.Text`:mod: has functions for working with
+  text and creating diagrams from text with proper bounding boxes
+  (though currently it seems a bit buggy).
+
+* `Diagrams.Backend.Cairo.List`:mod: exports the `renderToList`
+  function, which can convert a 2D diagram to a matrix of pixel color
+  values.
+
+* `Diagrams.Backend.Cairo.Ptr`:mod: exports functions for rendering
+  diagrams directly to buffers in memory.
+
+The source code for the cairo backend can be found in the
+`diagrams-cairo`:repo: repository.
+
+The GTK backend
+---------------
+
+The GTK backend, `diagrams-gtk`:pkg:, used to be part of the cairo
+backend (and is still built on top of it), but has been split out into
+a separate package in order to reduce the dependencies of the cairo
+backend, hence making it easier to install for those who don't need
+GTK support.
+
+The GTK backend allows rendering diagrams directly to GTK windows
+instead of to a file.  Note that it is possible to receive mouse
+clicks and then query the corresponding location in a diagram to find
+out which part the user clicked on (see `Using queries`_).
+
+The source code for the GTK backend ca nbe found in the
+`diagrams-gtk`:repo: repository.
+
+The SVG backend
+---------------
 
 The postscript backend
 ----------------------
@@ -3891,6 +3946,11 @@ paths can be "compiled" into lists of `FixedSegment`\s with absolute
 locations using `fixTrail` and `fixPath`.  This is of interest to
 authors of rendering backends that do not support relative drawing
 commands.
+
+A test harness for comparing the outputs of different backends can be
+found in the `diagrams-backend-tests`:repo: repo; the output of the
+test harness for all officially supported backends is `kept up-to-date
+here <http://projects.haskell.org/diagrams/backend-tests/all-index.html>`_.
 
 Core library
 ============
