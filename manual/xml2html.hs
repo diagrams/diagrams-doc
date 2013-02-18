@@ -33,7 +33,8 @@ main = do
   exitWith errCode
 
 diagramsManual modMap nameMap outDir =
-  doTransforms [ linkifyHackage
+  doTransforms [ linkifyGithub
+               , linkifyHackage
                , linkifyModules modMap
                , highlightInlineHS
                , highlightBlockHS
@@ -45,6 +46,16 @@ diagramsManual modMap nameMap outDir =
   >>> doTransforms [ styleFile "css/default.css"
                    , styleFile "css/syntax.css"
                    ]
+
+linkifyGithub :: ArrowXml a => XmlT a
+linkifyGithub =
+  onElemA "literal" [("classes", "repo")] $
+    removeAttr "classes" >>>
+    eelem "span"
+      += attr "class" (txt "repo")
+      += mkLink (getChildren >>> getText >>> arr (githubPrefix ++))
+
+githubPrefix = "http://github.com/diagrams/"
 
 compileDiagrams :: FilePath -> XmlT (IOSLA (XIOState ()))
 compileDiagrams outDir = onElemA "literal_block" [("classes", "dia")] $
