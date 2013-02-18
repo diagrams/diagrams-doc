@@ -3953,21 +3953,17 @@ wiki`_.
 Tools for backends
 ------------------
 
-.. container:: todo
+* `Diagrams.Segment`:mod: exports a `FixedSegment` type, representing
+  segments which *do* have an inherent starting location. Trails and
+  paths can be "compiled" into lists of `FixedSegment`\s with absolute
+  locations using `fixTrail` and `fixPath`.  This is of interest to
+  authors of rendering backends that do not support relative drawing
+  commands.
 
-  * lots more stuff goes in this section
-
-`Diagrams.Segment`:mod: exports a `FixedSegment` type, representing
-segments which *do* have an inherent starting location. Trails and
-paths can be "compiled" into lists of `FixedSegment`\s with absolute
-locations using `fixTrail` and `fixPath`.  This is of interest to
-authors of rendering backends that do not support relative drawing
-commands.
-
-A test harness for comparing the outputs of different backends can be
-found in the `diagrams-backend-tests`:repo: repo; the output of the
-test harness for all officially supported backends is `kept up-to-date
-here <http://projects.haskell.org/diagrams/backend-tests/all-index.html>`_.
+* A test harness for comparing the outputs of different backends can be
+  found in the `diagrams-backend-tests`:repo: repo; the output of the
+  test harness for all officially supported backends is `kept up-to-date
+  here <http://projects.haskell.org/diagrams/backend-tests/all-index.html>`_.
 
 Core library
 ============
