@@ -1,6 +1,5 @@
 * Current projects
 
-  + write up GSoC project suggestions
   + Metafont paths
   + Factorization diagram improvements
   + keyframing
