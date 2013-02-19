@@ -3974,56 +3974,71 @@ read this section (although a quick skim may well turn up something
 interesting).  It is intended more for developers and power users who
 want to learn how ``diagrams`` actually works under the hood.
 
-.. container:: todo
-
-   This section may not get written for a while; yell if you'd like to
-   read it.  The more people who yell, the faster it will get done. =)
-
-In the meantime, Chris Mears has written `an article giving a quick
-walkthrough of some of the internals
+Chris Mears has written `an article giving a quick walkthrough of some
+of the internals
 <http://www.cmears.id.au/articles/diagrams-internals.html>`_ which is
 useful for getting started.
 
-Vector spaces
--------------
+The remainder of this section is organized around the modules in
+`diagrams-core`:pkg:.  At some level, there is no substitute for just
+diving in and reading the source code (see the `diagrams-core`:repo:
+repository), but the hope is that this chapter can serve to orient you
+and supply useful commentary.
 
-The V type function
-~~~~~~~~~~~~~~~~~~~
-
-The `V` type family is defined in `Diagrams.Core.V`.  The idea is that
-many types have an "associated" vector space, *i.e.* the vector space
-in which they "live".  `V` simply maps from types to their associated
-vector space.
-
-Points and vectors
-~~~~~~~~~~~~~~~~~~
-
-Transformations
+Diagrams.Core.V
 ---------------
 
-Envelopes
----------
+`Diagrams.Core.V`:mod: contains the definition of the `V` type family
+(see the `V`_ section in the `Type family reference`_) along with some
+basic instances.
 
-Queries
--------
+Diagrams.Core.Points
+--------------------
 
-Style and attribute internals
------------------------------
+.. container:: todo
+  
+  Should some of this go elsewhere?
 
-Names
------
+Diagrams makes a strong type distinction between vectors and points.
+The `vector-space-points`:pkg: package defines a `Point` type for
+points built on top of the `vector-space`:pkg: package, along with an
+"unsafe" `unPoint` function, the `origin` constant for referring to
+the origin of a vector space, and the `(*.)` operator for scaling a
+point.
 
-UD-Trees
---------
+The `Diagrams.Core.Points`:mod: module simply re-exports a few things
+from `vector-space-points`:pkg:, and defines an instance of `V` for
+`Point`.
 
-Backends
---------
+Diagrams.Core.Names
+-------------------
 
-The ``Backend`` class
-~~~~~~~~~~~~~~~~~~~~~
+`Diagrams.Core.Names`:mod: 
 
-The ``Renderable`` class
-~~~~~~~~~~~~~~~~~~~~~~~~
+Diagrams.Core.HasOrigin
+-----------------------
+
+Diagrams.Core.Juxtapose
+-----------------------
+
+Diagrams.Core.Transform
+-----------------------
+
+Diagrams.Core.Envelope
+----------------------
+
+Diagrams.Core.Trace
+-------------------
+
+Diagrams.Core.Query
+-------------------
+
+Diagrams.Core.Style
+-------------------
+
+Diagrams.Core.Types
+-------------------
+
 
 Related projects
 ================
