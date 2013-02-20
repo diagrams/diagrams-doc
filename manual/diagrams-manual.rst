@@ -1005,8 +1005,8 @@ implemented as a call to `juxtapose` followed by a call to `(<>)`.)
 
 See `envelopes and local vector spaces`_ for more information on what
 "next to" means, `Working with envelopes`_ for information on
-functions available for manipulating envelopes, or `Envelopes`_ for
-precise details.
+functions available for manipulating envelopes, or the section on
+`Diagrams.Core.Envelope`_ for precise details.
 
 Concatenating diagrams
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -1095,7 +1095,7 @@ Every diagram has a *style* which is an arbitrary collection of
 *attributes*.  This section will describe some of the default
 attributes which are provided by the ``diagrams`` library and
 recognized by most backends.  However, you can easily create your own
-attributes as well; for details, see `Style and attribute internals`_.
+attributes as well; for details, see the section on `Diagrams.Core.Style`_.
 
 In many examples, you will see attributes applied to diagrams using
 the `(#)` operator.  Keep in mind that there is nothing special about
@@ -1107,7 +1107,7 @@ modifications to its attributes.  See `Postfix transformation`_.
 In general, inner attributes (that is, attributes applied earlier)
 override outer ones.  Note, however, that this is not a requirement.
 Each attribute may define its own specific method for combining
-multiple values.  See `Style and attribute internals`_ for more
+multiple values.  See the section on `Diagrams.Core.Style`_ for more
 details.
 
 Most of the attributes discussed in this section are defined in
@@ -1314,11 +1314,11 @@ Transformations in general
 
 Before looking at specific two-dimensional transformations, it's worth
 saying a bit about transformations in general (a fuller treatment can
-be found under `Transformations`_).  The `Transformation` type is
-defined in `Diagrams.Core.Transform`:mod:, from the
-`diagrams-core`:pkg: package.  `Transformation` is parameterized by
-the vector space over which it acts; recall that `T2` is provided as a
-synonym for `Transformation R2`.
+be found in the section on `Diagrams.Core.Transform`_).  The
+`Transformation` type is defined in `Diagrams.Core.Transform`:mod:,
+from the `diagrams-core`:pkg: package.  `Transformation` is
+parameterized by the vector space over which it acts; recall that `T2`
+is provided as a synonym for `Transformation R2`.
 
 `Transformation v` is a `Monoid` for any vector space `v`:
 
@@ -3114,7 +3114,7 @@ Instances:
     `Map`.
 
 Further reading: `Envelopes and local vector spaces`_; `Working with
-envelopes`_; `Envelopes`_.
+envelopes`_; `Diagrams.Core.Envelope`_.
 
 Traced
 ++++++
@@ -3161,8 +3161,7 @@ used as an attribute must be made a member of this class.
 Instances: many; see `Diagrams.Attributes`:mod: and
 `Diagrams.TwoD.Path`:mod:.
 
-Further reading: `Attributes and styles`_; `Text`_; `Style and
-attribute internals`_.
+Further reading: `Attributes and styles`_; `Text`_; `Diagrams.Core.Style`_.
 
 HasStyle
 ++++++++
@@ -3191,8 +3190,8 @@ Instances:
   * Of course, `QDiagram b v m` is an instance, given a few
     restrictions on `v` and `m`.
 
-Further reading: `Attributes and styles`_; `Text`_; `Style and
-attribute internals`_.
+Further reading: `Attributes and styles`_; `Text`_;
+`Diagrams.Core.Style`_.
 
 Classes for names
 ~~~~~~~~~~~~~~~~~
@@ -3321,7 +3320,7 @@ Backend
 The `Backend` class, defined in `Diagrams.Core.Types`:mod:, defines
 the primary interface for any diagrams rendering backend.  Unlike many
 of the other type classes in diagrams, it is quite large.  For a full
-discussion, see `The Backend class`_.
+discussion, see `Backends`_.
 
 MultiBackend
 ++++++++++++
@@ -3440,23 +3439,22 @@ Render
 
 `Render` is an associated data family of the `Backend` class.  It
 determines the type of rendering operations for a given backend.  For
-more information, see `The Backend class`_.
+more information, see `Backends`_.
 
 Result
 ~~~~~~
 
 `Result` is an associated type family of the `Backend` class.  It
 determines the type of the final result obtained from the backend
-after rendering a complete diagram.  For more information, see `The
-Backend class`_.
+after rendering a complete diagram.  For more information, see
+`Backends`_.
 
 Options
 ~~~~~~~
 
 `Options` is an associated data family of the `Backend` class.  It
 determines the type of options which can be passed to the backend when
-initiating a rendering operation.  For more information, see `The
-Backend class`_.
+initiating a rendering operation.  For more information, see `Backends`_.
 
 Tips and tricks
 ===============
@@ -4038,6 +4036,12 @@ Diagrams.Core.Style
 
 Diagrams.Core.Types
 -------------------
+
+QDiagram
+~~~~~~~~
+
+Backends
+~~~~~~~~
 
 
 Related projects
