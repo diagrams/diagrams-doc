@@ -6,8 +6,7 @@
   + scale-inv
   + incorporate Jan Bracker R2 generalization
   + write about diagrams-core in user manual
-
-  + update projects/backends wiki page
+  + diagrams+haddock tool
 
 * Someday projects
 
