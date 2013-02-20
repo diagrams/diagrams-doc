@@ -4011,7 +4011,42 @@ from `vector-space-points`:pkg:, and defines an instance of `V` for
 Diagrams.Core.Names
 -------------------
 
-`Diagrams.Core.Names`:mod: 
+`Diagrams.Core.Names`:mod: defines the infrastructure for names which
+can be used to identify subdiagrams.
+
+`AName`, representing *atomic names*, is an existential wrapper,
+allowing (almost) any type to be used for names, as the user finds
+convenient.  Strings may be used of course, but also numbers,
+characters, even user-defined types.  The only restriction is that the
+wrapped type must be an instance of the following three classes:
+
+* `Typeable` (so values can be pulled back out of the wrappers in a
+  type-safe way),
+* `Show` (so names can be displayed, for debugging purposes), and
+* `Ord` (in order to be able to create a `Map` from names to
+  subdiagrams).
+
+Equality on atomic names works as expected: two names are equal if their
+types match and their values are equal.
+
+The `Ord` instance for atomic names works by first ordering names
+according to (a `String` representation of) their type, and then by
+value for equal types (using the required `Ord` instance).
+
+A *qualified name* (`Name`) is a list of atomic names.  The `IsName`
+class covers things which can be used as a name, including many
+standard base types as well as `ANames` and `Names`.  Most user-facing
+functions which take a name as an argument actually take any type with
+an `IsName` constraint, so the user can just pass in a `String` or an
+`Int` or whatever they want.
+
+The motivation for having names consist of *lists* of atomic names is
+that it is not always convenient or even feasible to have globally
+unique names (especially when multiple modules by different authors
+are involved).  In such a situation it is possible to *qualify* all
+the names in a particular diagram by some prefix.  This operation
+governed by the `Qualifiable` class, containing the function ``(|>) ::
+IsName a => a -> q -> q`` for performing qualification.
 
 Diagrams.Core.HasOrigin
 -----------------------
