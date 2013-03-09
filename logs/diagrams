@@ -26285,3 +26285,904 @@
 2013-02-14 21:41:40 UTC <bergey> bergey, same as here
 2013-02-14 21:43:17 UTC <byorgey> ok, I just gave you push access to diagrams-doc =)
 2013-02-14 21:45:43 UTC <bergey> Thanks :)
+2013-02-15 19:26:43 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 145323cc4 http://travis-ci.org/diagrams/diagrams-doc/builds/4822693 The build has errored.
+2013-02-15 20:03:20 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14950676c http://travis-ci.org/diagrams/diagrams-doc/builds/4823753 The build has errored.
+2013-02-15 20:50:01 UTC <byorgey> bergey: awesome, thanks for all the work fixing up the diagrams-doc build!
+2013-02-15 20:51:18 UTC <bergey> Thanks for the advice along the way.
+2013-02-15 20:51:28 UTC <bergey> And sorry for that last commit with the missing quotes.
+2013-02-15 20:51:57 UTC <bergey> I got tangled up in git merge.
+2013-02-15 20:56:34 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 1406d4b8f http://travis-ci.org/diagrams/diagrams-doc/builds/4824187 The build passed.
+2013-02-15 20:56:46 UTC <byorgey> bergey: oh, no worries, I do stuff like that all the time =)
+2013-02-15 20:56:49 UTC <byorgey> huzzah!
+2013-02-15 20:57:33 UTC <byorgey> bergey: out of curiosity, what's your interest in diagrams? are you using it for something in particular? just looking to help out? etc?
+2013-02-15 21:12:45 UTC <bergey> I actually found diagrams a few months back while looking for 3D geometry libraries in haskell.  I was doing that for reasons somewhere between "frustrated by lack of open source CAD" and "curious how CAD gets implemented"
+2013-02-15 21:13:19 UTC <bergey> So, looking for something like OpenSCAD, except with a nice declarative syntax.
+2013-02-15 21:14:09 UTC <bergey> Diagrams has lovely syntax, but of course doesn't do 3D.  Among other things, I'm curious if there's any design document about diagrams-opengl.
+2013-02-15 21:30:07 UTC <byorgey> bergey: right, to clarify, diagrams already supports any vector space, including 3D, the only things lacking are 3D stuff in diagrams-lib and a backend to support it.
+2013-02-15 21:30:17 UTC <byorgey> one of those things that someone will hopefully get around to someday =)
+2013-02-15 21:30:51 UTC <byorgey> bergey: there is no design document about diagrams-opengl.  There have been a few people who have expressed interest in working on such a thing over the past few years but nothing has ever come of it.
+2013-02-15 21:33:53 UTC <bergey> =)  I'd noticed that the vector space parts were generic.  I haven't looked at the backends at all.
+2013-02-15 21:34:52 UTC <byorgey> there's a diagrams-povray backend but right now I think it can only generate spheres in the dark =)
+2013-02-15 21:38:28 UTC <bergey> Hah!  Personally, I'd rather work on an openGL backend.  But I suppose spheres in the dark are nice.
+2013-02-15 21:40:01 UTC <bergey> I'm planning to keep working through some of the issues on the bug-tracker as a way to learn my way around the code.  And then maybe talk more about a 3D backend, when I can picture what that would look like.
+2013-02-15 21:41:20 UTC <byorgey> oh, sure, I wasn't suggesting you should work on the povray backend.  If you want to work on an openGL backend, great!
+2013-02-15 21:41:41 UTC <byorgey> and I'm quite happy to have you work through issues in the bug tracker =)
+2013-02-16 15:46:30 UTC <fryguybob> byorgey: http://www.cs.rochester.edu/u/ryates/temp/liontwo.pdf
+2013-02-16 16:37:16 UTC <byorgey> lion gears! =D
+2013-02-16 16:38:26 UTC <byorgey> oh, cool, github does IRC notifications for pull requests too
+2013-02-16 17:03:37 UTC <hpaste> byorgey pasted âI just discovered that the hpaste bot is in #diagrams!â at http://hpaste.org/82479
+2013-02-16 17:18:27 UTC <fryguybob> byorgey: In case it wasn't clear, the lions are using the image primative.
+2013-02-16 17:31:02 UTC <byorgey> fryguybob: that wasn't clear at first but it just occurred to me while changing Noah's diaper =)
+2013-02-16 17:32:34 UTC <byorgey> fryguybob: so is there still some additional testing you want to do?
+2013-02-16 17:33:15 UTC <byorgey> Just wondering whether it makes sense to go ahead and merge/release it along with a disclaimer saying to send us reports if it doesn't work
+2013-02-16 17:45:43 UTC <fryguybob> byorgey: I think I can make it all work out with another commit, so lets wait for that.
+2013-02-16 17:46:14 UTC <fryguybob> At least for the case of importing Postscript made from Postscript then running epstopdf.
+2013-02-16 17:46:27 UTC <fryguybob> (made from diagrams-postscript that is)
+2013-02-16 18:02:30 UTC <byorgey> ok, cool
+2013-02-16 19:19:00 UTC <byorgey> > map succ "gh\USk`lac`ans "
+2013-02-16 19:19:01 UTC <lambdabot>   "hi lambdabot!"
+2013-02-16 19:20:47 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06master 14ee4f12e http://travis-ci.org/diagrams/diagrams-contrib/builds/4841413 The build has errored.
+2013-02-16 19:30:01 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06master 14f7b99fa http://travis-ci.org/diagrams/diagrams-contrib/builds/4841583 The build has errored.
+2013-02-16 19:35:19 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06master 140fed06f http://travis-ci.org/diagrams/diagrams-contrib/builds/4841620 The build has errored.
+2013-02-16 19:41:36 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06master 14a6670eb http://travis-ci.org/diagrams/diagrams-contrib/builds/4841630 The build passed.
+2013-02-16 19:41:43 UTC <byorgey> huzzah!
+2013-02-16 19:42:18 UTC <bergey> sweet!
+2013-02-16 19:42:31 UTC <byorgey> was a little more complicated than for diagrams-doc
+2013-02-16 19:43:01 UTC <byorgey> I am not quite sure which of the magic incantations I added are actually necessary.  But I'm not interested in poking at it any more at this point. =)
+2013-02-16 19:43:02 UTC <bergey> I noticed.  That confuses me, since diagrams-doc builds contrib.
+2013-02-16 19:43:18 UTC <byorgey> you're right, that's weird.
+2013-02-16 19:43:19 UTC <bergey> Indeed. =)
+2013-02-16 19:44:02 UTC <byorgey> but I guess installing *more* stuff can actually make things better since it may end up constraining versions more (hence getting you the versions that actually work)
+2013-02-16 19:44:22 UTC <bergey> Huh.  That makes sense.
+2013-02-16 19:45:08 UTC <byorgey> Also, which things get installed together in a single cabal install command, and which things are installed separately, can make a big difference
+2013-02-16 19:45:31 UTC <bergey> yeah.  diagrams-doc installs all the other diagrams packages in one cabal call
+2013-02-16 19:45:44 UTC <byorgey> yeah, exactly
+2013-02-16 19:53:37 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06master 14ed3712a http://travis-ci.org/diagrams/diagrams-contrib/builds/4841801 The build passed.
+2013-02-16 20:05:15 UTC <fryguybob> byorgey: I think that we are in the same position as fonts with image in Postscript :(.  We can't tell the size of the linked file so the size you give to `image` must match what is in the file.
+2013-02-16 20:13:57 UTC <fryguybob> Oh, I think I found what I need.
+2013-02-16 20:20:47 UTC <byorgey> aren't EPS files required to have a bounding box thingy?
+2013-02-16 20:21:02 UTC <byorgey> ACTION knows just enough about PS to be dangerous
+2013-02-16 20:37:07 UTC <fryguybob> Yes, each EPS does have a bounding box.  But just running the file doesn't give us access to that at the Postscript level (that I can tell).
+2013-02-16 20:38:09 UTC <fryguybob> I can switch the page device to the null device, then there should be no output (as long as the code we are runnning doesn't fiddle with the page device) but I'm not sure how to extract the current bounding box after I've done that.
+2013-02-16 20:43:09 UTC <fryguybob> Humm, looks like some people parse the comments from the file to get the bounding box.
+2013-02-16 21:01:48 UTC <byorgey> haha, hackish but effective
+2013-02-16 23:32:27 UTC <travis-ci> [travis-ci] 13diagrams-doc/06travis-error-on-failed-diagrams 14c0ac13b http://travis-ci.org/diagrams/diagrams-doc/builds/4844605 The build passed.
+2013-02-17 00:50:37 UTC <byorgey> bergey: what version of GHC are you using?
+2013-02-17 02:33:32 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14164b145 http://travis-ci.org/diagrams/diagrams-doc/builds/4847558 The build passed.
+2013-02-17 02:35:03 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 1400049f5 http://travis-ci.org/diagrams/diagrams-doc/builds/4847603 The build passed.
+2013-02-17 14:58:54 UTC <bergey> ghc --version
+2013-02-17 14:58:54 UTC <bergey> The Glorious Glasgow Haskell Compilation System, version 7.4.1
+2013-02-17 14:59:55 UTC <byorgey> bergey: ok, just checking.  diagrams-doc doesn't build under GHC 7.6 for me
+2013-02-17 15:00:22 UTC <byorgey> a few simple-to-fix version upper bounds, and some more serious breakage because of changes in the GHC API
+2013-02-17 15:03:46 UTC <bergey> I was just reading your notes on those.
+2013-02-17 19:31:28 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06turtle-path 14698f3ab http://travis-ci.org/diagrams/diagrams-contrib/builds/4859590 The build passed.
+2013-02-17 19:44:16 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06turtle-path 140b913cd http://travis-ci.org/diagrams/diagrams-contrib/builds/4859773 The build passed.
+2013-02-17 23:58:29 UTC <fryguybob> ACTION prepares to use the force-layout.
+2013-02-18 00:00:53 UTC <cmears> You might need to add some random jitter so that two nodes on top of each other don't stay on top of each other
+2013-02-18 00:01:01 UTC <cmears> In other words, you'll need a disturbance in the force
+2013-02-18 00:01:12 UTC <byorgey> hahahaha
+2013-02-18 00:01:13 UTC <fryguybob> hehe
+2013-02-18 00:03:45 UTC <luite> :)
+2013-02-18 01:26:55 UTC <tgeeky> cmears: you've had that little ditty sitting on the shelf for some time now, haven't you
+2013-02-18 01:30:44 UTC <cmears> whenever I go quiet I am searching desperately for a joke
+2013-02-18 01:30:49 UTC <cmears> (:
+2013-02-18 02:21:01 UTC <byorgey> there, now we can once again generate Paths using LOGO =)
+2013-02-18 02:23:15 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06turtle-path 14561dbe2 http://travis-ci.org/diagrams/diagrams-contrib/builds/4866618 The build passed.
+2013-02-18 02:23:23 UTC <fryguybob> byorgey: You were working on METAPOST like paths right?
+2013-02-18 02:24:11 UTC <byorgey> fryguybob: yeah, it's in the metafont branch of diagrams-contrib
+2013-02-18 02:24:53 UTC <fryguybob> Ah, I'll have to look at it.  I don't know much about these things.
+2013-02-18 02:24:55 UTC <byorgey> it's kind of stalled at the moment, not for any blocking technical reason, but just because it was getting a little ugly and I wasn't sure of the best way to proceed
+2013-02-18 02:25:38 UTC <byorgey> fryguybob: remember at hac phi when we were like "man, I wish we had a copy of that book" and then I walked 100 feet down the hall and got the book from the library?
+2013-02-18 02:25:50 UTC <fryguybob> byorgey: Yeah
+2013-02-18 02:26:00 UTC <byorgey> well, I still have that book checked out =)
+2013-02-18 02:26:07 UTC <fryguybob> hehe
+2013-02-18 02:26:14 UTC <byorgey> and that's where I'm getting this from
+2013-02-18 02:27:14 UTC <byorgey> (note it's actually METAFONT, not METAPOST)
+2013-02-18 02:27:40 UTC <byorgey> though I guess metapost probably has similar stuff
+2013-02-18 02:28:00 UTC <fryguybob> Oh, looking at the commits, I did read over those.
+2013-02-18 02:28:57 UTC <byorgey> oh! I guess MetaPost was developed by John Hobby, who is exactly the guy who came up with the algorithms used by Knuth in MetaFont to do the path stuff
+2013-02-18 02:29:23 UTC <byorgey> so saying "METAPOST-like paths" isn't as far off as I thought =)
+2013-02-18 02:29:24 UTC <fryguybob> Ah
+2013-02-18 03:38:44 UTC <byorgey> @ask mgsloan when you get a chance can you take a look at https://github.com/diagrams/diagrams-contrib/pull/11 (re: turtle stuff) ?
+2013-02-18 03:38:44 UTC <lambdabot> Consider it noted.
+2013-02-18 03:40:29 UTC <mgsloan> byorgey: looks good to me! I commented on the pull aswell
+2013-02-18 03:40:30 UTC <lambdabot> mgsloan: You have 1 new message. '/msg lambdabot @messages' to read it.
+2013-02-18 03:44:07 UTC <mgsloan> does it look like the generalization of R2 is going through?
+2013-02-18 03:44:20 UTC <mgsloan> It's tubad that the deep embedding thing didn't work out
+2013-02-18 03:44:28 UTC <mgsloan> I wish that such a change wasn't so invasive
+2013-02-18 03:44:53 UTC <mgsloan> e.g. if overloaded syntax extended far enough that most computational things could be deeply embedded
+2013-02-18 04:11:07 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 1485dc1b0 http://travis-ci.org/diagrams/diagrams-doc/builds/4867589 The build passed.
+2013-02-18 04:27:53 UTC <byorgey> mgsloan: thanks!
+2013-02-18 04:28:04 UTC <byorgey> mgsloan: I think the generalizing R2 thing will go through
+2013-02-18 04:28:15 UTC <byorgey> I haven't had a chance to test it out thoroughly yet
+2013-02-18 04:28:16 UTC <mgsloan> np, thanks for refreshing the api a bit!
+2013-02-18 04:28:32 UTC <mgsloan> awesome, hopefully get some time to do that auto-layout thing
+2013-02-18 04:28:38 UTC <byorgey> neat =)
+2013-02-18 04:35:08 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06master 1411b0bc0 http://travis-ci.org/diagrams/diagrams-contrib/builds/4868329 The build passed.
+2013-02-18 04:39:04 UTC <carter> byorgey that plotting project may finally happen soon btw :) 
+2013-02-18 04:39:14 UTC <carter> life got a bit busy this past year 
+2013-02-18 04:39:18 UTC <byorgey> carter: awesome =)
+2013-02-18 04:39:34 UTC <byorgey> carter: get used to it ;-)
+2013-02-18 04:39:45 UTC <carter> byorgey yeah: the busy's been a good thing
+2013-02-18 04:40:09 UTC <carter> if things get much busier i might be able to hire someone to help with that even 
+2013-02-18 04:40:12 UTC <carter> :)
+2013-02-18 04:40:17 UTC <carter> i'm slightly not kidding
+2013-02-18 04:40:20 UTC <carter> hopefully
+2013-02-18 04:40:26 UTC <byorgey> cool
+2013-02-18 06:46:58 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 145cbadf0 http://travis-ci.org/diagrams/diagrams-doc/builds/4869520 The build passed.
+2013-02-18 06:49:36 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14577a53f http://travis-ci.org/diagrams/diagrams-doc/builds/4869563 The build passed.
+2013-02-18 21:48:29 UTC <hpaste> fryguybob pasted âStateful Diagramâ at http://hpaste.org/82642
+2013-02-18 21:52:42 UTC <byorgey> fryguybob: ooh, nice
+2013-02-18 21:53:25 UTC <byorgey> fryguybob: this kind of thing would also work well for generating memory diagrams when teaching something like Java or C
+2013-02-18 22:16:38 UTC <fryguybob> byorgey: That's the idea.  I'm also going to allow "snapshots" in the middle giving some sort of animation.
+2013-02-18 22:16:50 UTC <byorgey> cool =)
+2013-02-18 22:16:59 UTC <byorgey> ugh, we need better arrows
+2013-02-18 22:17:28 UTC <byorgey> maybe I'll work on that next, once this stupid thesis proposal is out of the way =P
+2013-02-19 14:02:04 UTC <fryguybob> Humm.  Is there a way to get the location of a named subdiagram like:  locationOf :: Name -> Diagram b v -> Point v ?
+2013-02-19 14:10:13 UTC <fryguybob> Oh, never mind, I found `names`.
+2013-02-19 15:37:48 UTC <byorgey> fryguybob: well, it would have to be  Name -> Diagram -> Maybe (Point v)
+2013-02-19 15:37:57 UTC <byorgey> we could certainly add such a function
+2013-02-19 15:38:13 UTC <byorgey> I think there are probably quite a few functions we should add for working more conveniently with subdiagrams
+2013-02-19 15:38:18 UTC <byorgey> I'm just not sure which ones they are.
+2013-02-19 15:41:43 UTC <fryguybob> byorgey: Yeah.  I think names should work fine for what I want (I do want all the names).
+2013-02-19 15:42:10 UTC <fryguybob> byorgey: Thesis proposal all done?
+2013-02-19 15:42:38 UTC <byorgey> fryguybob: not quite =P
+2013-02-19 15:42:50 UTC <byorgey> it's close though.  finishing it up now.
+2013-02-19 15:43:01 UTC <fryguybob> :D you can do it!
+2013-02-19 15:43:06 UTC <byorgey> thanks =)
+2013-02-19 16:37:11 UTC <tgeeky> byorgey: how about meow
+2013-02-19 17:43:59 UTC <byorgey> ...aaaaand... done!!
+2013-02-19 17:44:26 UTC <byorgey> well, with the document... I still have to make some slides for my presentation on March 4 =P
+2013-02-19 17:44:46 UTC <byorgey> but I am going to explicitly not think about that at all for the next couple days =)
+2013-02-19 17:45:08 UTC <byorgey> and now for some diagrams hacking!! =D
+2013-02-19 17:45:11 UTC <byorgey> ...right after lunch
+2013-02-19 18:53:46 UTC <fryguybob> byorgey: Woohoo!
+2013-02-19 18:59:21 UTC <byorgey> =)
+2013-02-19 18:59:30 UTC <byorgey> currently fleshing out the GSoC page on the wiki
+2013-02-19 19:01:56 UTC <luite> hm what do conferences do if none of the authors of a paper can come? are proceedings-only papers usually acceptable?
+2013-02-19 19:03:29 UTC <byorgey> luite: yes, I would imagine so
+2013-02-19 19:03:44 UTC <byorgey> luite: you could probably also arrange to record a video and have it played in place of a talk
+2013-02-19 19:53:18 UTC <luite> hm, tbh i think that's worse than no talk at all (unless it's a live video or you have a question session or something)
+2013-02-19 19:53:33 UTC <luite> better upload something to youtube then
+2013-02-19 19:55:05 UTC <byorgey> yeah, you're probably right
+2013-02-19 19:55:23 UTC <byorgey> unless you make the video really entertaining
+2013-02-19 19:55:29 UTC <byorgey> but that takes a lot of time and effort
+2013-02-19 19:55:33 UTC <luite> righty
+2013-02-19 19:55:35 UTC <luite> -y
+2013-02-19 19:55:44 UTC <byorgey> righty-o
+2013-02-19 20:53:34 UTC <tgeeky> byorgey: did you stay up all night?
+2013-02-19 21:55:16 UTC <byorgey> tgeeky: nope
+2013-02-19 21:55:36 UTC <byorgey> tgeeky: got about 4 hours of sleep
+2013-02-19 22:23:49 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 143b6c12f http://travis-ci.org/diagrams/diagrams-doc/builds/4913914 The build passed.
+2013-02-20 01:37:29 UTC <fryguybob> ACTION 's experiment in forces is going to require some serious de-uglification... after he gets it to compile.
+2013-02-20 02:46:25 UTC <tgeeky> byorgey: art thou concious?
+2013-02-20 13:44:28 UTC <byorgey> tgeeky: at the time you sent that, I actually wasn't.  Went to bed at 9pm last night =)
+2013-02-20 18:07:07 UTC <fryguybob> getting closer: http://www.cs.rochester.edu/u/ryates/temp/trecf.pdf
+2013-02-20 18:08:12 UTC <byorgey> ooh!
+2013-02-20 18:11:29 UTC <fryguybob> On the left is before applying forces.
+2013-02-20 18:13:11 UTC <byorgey> aha, I see.
+2013-02-20 19:47:14 UTC <byorgey> ACTION is finally getting around to writing the diagrams-core section of the user manual =)
+2013-02-20 20:11:43 UTC <fryguybob> ACTION may have just made something similar to (~~) allowing (a ~/ b ~.~ c \~ d) to be a path with one cubic segment and is doubtful that this is a good idea.
+2013-02-20 20:12:29 UTC <byorgey> hehe
+2013-02-20 20:15:45 UTC <fryguybob> ACTION switches to (a /~ b ~~~ c ~\ d) now it is a *great* idea.
+2013-02-20 20:33:01 UTC <byorgey> =D
+2013-02-20 20:33:24 UTC <byorgey> ACTION is working on https://github.com/diagrams/diagrams-doc/issues/2
+2013-02-20 20:33:42 UTC <fryguybob> Now we just need dependent types so we can make ~/ and ~\ mean that the points must conform to making that kind of shape.
+2013-02-20 20:33:49 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 1415aef3a http://travis-ci.org/diagrams/diagrams-doc/builds/4938650 The build passed.
+2013-02-20 20:33:53 UTC <byorgey> hehe
+2013-02-20 20:34:07 UTC <fryguybob> Because that would be easy and productive thing to do :D
+2013-02-20 20:34:28 UTC <fryguybob> oooOOOooo haddock diagrams.
+2013-02-20 20:34:45 UTC <byorgey> yep, should be awesome
+2013-02-20 20:34:58 UTC <byorgey> then we can go on a spree adding diagrams to everything =D
+2013-02-21 01:26:51 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 14f68edb1 http://travis-ci.org/diagrams/diagrams-haddock/builds/4945794 The build passed.
+2013-02-21 02:09:46 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 14b28026a http://travis-ci.org/diagrams/diagrams-haddock/builds/4946460 The build passed.
+2013-02-21 02:34:22 UTC <tgeeky>  <Oprah> You get a diagram. You get a diagram. YOU get a diagram. Everbody gets diagrams! DIAAAAGRAMMMMSSS!
+2013-02-21 03:34:29 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 141aa9749 http://travis-ci.org/diagrams/diagrams-haddock/builds/4947391 The build passed.
+2013-02-21 03:36:39 UTC <byorgey> tgeeky: huzzah!
+2013-02-21 03:37:02 UTC <byorgey> ACTION doesn't watch Oprah but assumes tgeeky's impression is accurate
+2013-02-21 03:50:15 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 143aca8af http://travis-ci.org/diagrams/diagrams-haddock/builds/4947596 The build passed.
+2013-02-21 03:51:28 UTC <tgeeky> except she (once) gave away cars
+2013-02-21 14:58:06 UTC <byorgey> good <word describing generic time of day approprite to your time zone> #diagrams!
+2013-02-21 15:17:22 UTC <fryguybob> Good morning to you byorgey.
+2013-02-21 15:32:24 UTC <mgsloan> morning!  Aaand it's time to go to bed
+2013-02-21 15:33:48 UTC <byorgey> sleep well mgsloan =)
+2013-02-21 15:34:35 UTC <mgsloan> Thanks! You too!
+2013-02-21 19:04:26 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 14320cb08 http://travis-ci.org/diagrams/diagrams-haddock/builds/4963943 The build has errored.
+2013-02-21 19:13:25 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 145817955 http://travis-ci.org/diagrams/diagrams-haddock/builds/4963985 The build passed.
+2013-02-21 19:22:29 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 1447af72c http://travis-ci.org/diagrams/diagrams-haddock/builds/4964191 The build passed.
+2013-02-21 19:40:31 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 14197000c http://travis-ci.org/diagrams/diagrams-haddock/builds/4964558 The build passed.
+2013-02-21 20:02:17 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 1464b871b http://travis-ci.org/diagrams/diagrams-haddock/builds/4965041 The build passed.
+2013-02-21 20:02:34 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 14438a6db http://travis-ci.org/diagrams/diagrams-haddock/builds/4965115 The build passed.
+2013-02-22 20:59:21 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 144313399 http://travis-ci.org/diagrams/diagrams-haddock/builds/4989113 The build passed.
+2013-02-24 01:03:59 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 14699b77e http://travis-ci.org/diagrams/diagrams-haddock/builds/5011119 The build passed.
+2013-02-24 04:18:50 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 14f9b4f02 http://travis-ci.org/diagrams/diagrams-haddock/builds/5012976 The build passed.
+2013-02-24 18:28:45 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 14712d39f http://travis-ci.org/diagrams/diagrams-haddock/builds/5023706 The build passed.
+2013-02-24 18:33:13 UTC <fryguybob> hehe.  I have had some failed attempts at lens.
+2013-02-24 18:34:19 UTC <fryguybob> Almost always involving maps and indexes.
+2013-02-24 18:34:29 UTC <byorgey> hehe
+2013-02-24 18:34:49 UTC <byorgey> I asked about it in #haskell-lens but no replies yet.  I feel like there must be a simple way to do what I'm trying to do.
+2013-02-24 18:35:31 UTC <fryguybob> Yeah, I think we are in great need of Hoogle for lens that can do the right kind of generalizing...
+2013-02-24 18:35:44 UTC <byorgey> Loogle
+2013-02-24 18:37:10 UTC <byorgey> Anyway, diagrams-haddock is coming along quite nicely!  If you want to try it out on any projects you can just load Diagrams.Haddock and call processHaddockDiagrams manually
+2013-02-24 18:37:24 UTC <byorgey> The next step is to make a command-line tool
+2013-02-24 18:37:50 UTC <fryguybob> byorgey: And that spits out the diagrams in the right locations so when you run Haddock it will link to it?
+2013-02-24 18:38:51 UTC <byorgey> fryguybob: no, it spits out diagrams wherever you ask it to.  Then you have to copy the diagrams to where Haddock can link to them
+2013-02-24 18:38:54 UTC <fryguybob> I'm working on getting a functioning radius of curvature: http://www.cs.rochester.edu/u/ryates/temp/offsetC.pdf  Clearly not there yet.
+2013-02-24 18:38:54 UTC <byorgey> fryguybob: for an example see eone attempts to use a Getter as a Setter.
+2013-02-24 18:38:59 UTC <fryguybob> Ah, ok
+2013-02-24 18:39:00 UTC <byorgey> whoops
+2013-02-24 18:39:09 UTC <byorgey> I meant to say "for an example see https://github.com/diagrams/diagrams-haddock/blob/master/Setup.hs"
+2013-02-24 18:39:47 UTC <byorgey> hehe
+2013-02-24 18:40:03 UTC <byorgey> what are the scribbles on the RHS?
+2013-02-24 18:40:39 UTC <fryguybob> Those are the curves that I'm supposed to be measuring the RoC on.
+2013-02-24 18:40:43 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 142433ce5 http://travis-ci.org/diagrams/diagrams-haddock/builds/5023973 The build passed.
+2013-02-24 18:40:51 UTC <byorgey> oh, I see
+2013-02-24 18:41:20 UTC <fryguybob> The circles should be tangent locally at t = 0.5
+2013-02-24 18:41:47 UTC <byorgey> hmm, I don't see any tangent circles =)
+2013-02-24 18:43:15 UTC <fryguybob> Yeah.
+2013-02-24 18:43:29 UTC <fryguybob> Humm, perhaps you want something from here: http://hackage.haskell.org/packages/archive/lens/3.8.7.3/doc/html/Control-Lens-Action.html
+2013-02-24 18:47:47 UTC <byorgey> yes, perhaps I do.
+2013-02-24 18:48:19 UTC <byorgey> hmm, yes, I probably do.
+2013-02-24 18:49:14 UTC <fryguybob> Ah ha.  Much better now.
+2013-02-24 18:50:24 UTC <byorgey> yay =)
+2013-02-24 18:55:16 UTC <byorgey> hmm, well, I can do it with Control.Lens.Action but it's not really any shorter than what I already have.
+2013-02-24 18:56:35 UTC <fryguybob> Ah.
+2013-02-24 18:57:04 UTC <fryguybob> Clipping is not doing what I hoped it would.
+2013-02-24 18:58:56 UTC <fryguybob> oh.  boundingBox is giving corners in a different order then I assumed.
+2013-02-24 18:59:53 UTC <fryguybob> Envelopes are not affected by clipBy :(
+2013-02-24 19:24:46 UTC <fryguybob> I wanted withEnvelope anyway :D
+2013-02-24 19:41:05 UTC <byorgey> indeed, envelopes are not affected by clipBy... I seem to recall thinking it would be hard to add that but I don't remember why
+2013-02-24 19:41:11 UTC <byorgey> anyway, glad you figured it out =)
+2013-02-24 19:44:31 UTC <fryguybob> If you refesh that file you can see a lot of radii.
+2013-02-24 19:44:46 UTC <fryguybob> But some look a little off :(
+2013-02-24 19:45:09 UTC <fryguybob> I don't know if it is numerical error or something else off.
+2013-02-24 19:45:44 UTC <fryguybob> Specifically the bottom left corner doesn't look quite on.
+2013-02-24 19:48:01 UTC <fryguybob> Oh, the worst one is the second curve from the left bottom-most circle.
+2013-02-24 19:49:32 UTC <byorgey> fryguybob: which one?  it doesn't look bad to me
+2013-02-24 19:50:15 UTC <byorgey> in any case that's some nice artwork =)
+2013-02-24 19:50:25 UTC <fryguybob> :D
+2013-02-24 19:50:59 UTC <fryguybob> You might have to zoom in to see it, but the second blue curve, the first circle from the bottom.
+2013-02-24 19:51:35 UTC <fryguybob> It has a pretty large radius, but it seems like it is crossing through the point on the curve and not tangent.
+2013-02-24 19:51:49 UTC <byorgey> oh, I was looking in the wrong place, yes, I see it now
+2013-02-24 19:51:53 UTC <byorgey> yep
+2013-02-24 19:52:50 UTC <fryguybob> It would be nice if there was some tool that you could give an expression to and it would find the most numerically stable form of it (for doubles).
+2013-02-24 19:53:04 UTC <byorgey> I was parsing it as "second curve from the ((left bottom)-most circle)"
+2013-02-24 19:53:14 UTC <fryguybob> Oh :D.
+2013-02-24 19:53:16 UTC <byorgey> which doesn't really make sense but I was doing my best
+2013-02-24 19:53:19 UTC <byorgey> =)
+2013-02-24 20:02:40 UTC <luite> blergh still sock... :(
+2013-02-24 20:02:41 UTC <luite> sick
+2013-02-24 20:03:04 UTC <fryguybob> :(
+2013-02-24 20:03:31 UTC <luite> since wednesday
+2013-02-24 20:08:17 UTC <byorgey> aww =(
+2013-02-24 20:08:31 UTC <byorgey> sorry to hear that
+2013-02-24 20:08:54 UTC <luite> a souvenir from budapest i guess
+2013-02-24 20:09:30 UTC <byorgey> so you did make it to budapest, eh?  how was it?
+2013-02-24 20:10:04 UTC <luite> oh yeah they rescheduled my flight to later the same day, with a transfer in germany though
+2013-02-24 20:12:21 UTC <byorgey> ah, cool
+2013-02-24 20:16:02 UTC <fryguybob> Gahh, something is fishy.  If you look now there are two straight lines.  One is a perpendicular using my first derivative, the other is subdividing and using the handle vector.
+2013-02-24 20:17:01 UTC <fryguybob> ACTION wonders if this is what he gets for using Wolfram Alpha...
+2013-02-24 20:17:13 UTC <byorgey> hehe
+2013-02-24 20:23:35 UTC <luite> byorgey: the conference itself was a lot more practical than i was used to 
+2013-02-24 20:23:54 UTC <luite> which did make the talks more accessible
+2013-02-24 20:23:57 UTC <byorgey> luite: was that a good thing or a bad thing?  or just different?
+2013-02-24 20:24:02 UTC <byorgey> ah, nice
+2013-02-24 20:26:22 UTC <luite> dunno i prefer a bit more academic, there were some real salesperson talks
+2013-02-24 20:29:18 UTC <luite> the organization was ok i guess, with free dinner/lunch included both days, party with DJ, free beer etc, i guess they got more sponsoring than the average academic conference...
+2013-02-24 20:32:34 UTC <byorgey> heh, I guess so
+2013-02-24 20:33:11 UTC <byorgey> I guess that tends to be the case with more practical/industry oriented stuff
+2013-02-24 20:33:16 UTC <luite> lots of google people there with application forms
+2013-02-24 20:41:46 UTC <luite> but i had the feeling that most visitors there were sent by their boss on a free vacation or something... either that or there's just less overlap in interests than i'm used to :)
+2013-02-24 20:45:46 UTC <luite> the audience also was a whole lot less diverse too... I think 99% was age 20-35, male
+2013-02-24 20:46:32 UTC <byorgey> hmm, sad
+2013-02-24 20:47:16 UTC <luite> it's probably representative for most of googles workforce
+2013-02-24 20:47:39 UTC <byorgey> really?  I'm surprised
+2013-02-24 20:47:51 UTC <byorgey> perhaps I shouldn't be
+2013-02-24 20:48:22 UTC <luite> dunno, i mean software engineers in non-research positions... other departments are probably different
+2013-02-24 20:49:27 UTC <luite> i could be wrong though, i have only visited google's offices briefly
+2013-02-24 21:11:58 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 14609a69b http://travis-ci.org/diagrams/diagrams-haddock/builds/5026781 The build passed.
+2013-02-24 23:16:21 UTC <fryguybob> Ah ha!  Much better.
+2013-02-24 23:17:20 UTC <fryguybob> I was being stupid and leaving the first term in as though the first point was at 1, but it is at zero so the term should be... zero.
+2013-02-25 00:07:38 UTC <fryguybob> Moar circles!
+2013-02-25 00:46:10 UTC <fryguybob> Something tells me I need a better way to convert to animation: http://www.cs.rochester.edu/u/ryates/temp/animation.gif
+2013-02-25 00:53:42 UTC <fryguybob> Much better, but has strange clipped circles: http://www.cs.rochester.edu/u/ryates/temp/animation2.gif
+2013-02-25 01:05:25 UTC <fryguybob> The recipe of  diagrams-postscript | epstopdf | pdftoppm -png | convert -delay 10 -loop 0 *.png blah.gif  seems to do the best.
+2013-02-25 01:05:28 UTC <fryguybob> http://www.cs.rochester.edu/u/ryates/temp/animation4.gif
+2013-02-25 02:27:27 UTC <travis-ci> [travis-ci] 13diagrams-postscript/06master 149e2d4a1 http://travis-ci.org/diagrams/diagrams-postscript/builds/5031585 The build passed.
+2013-02-25 03:07:51 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 14ed16951 http://travis-ci.org/diagrams/diagrams-haddock/builds/5032052 The build passed.
+2013-02-25 03:13:14 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 149ae54fb http://travis-ci.org/diagrams/diagrams-haddock/builds/5032160 The build passed.
+2013-02-25 04:07:01 UTC <fryguybob> byorgey: I have direct embedding of images now: http://www.cs.rochester.edu/u/ryates/temp/liontwo.pdf
+2013-02-25 04:07:29 UTC <fryguybob> So I'm actually parsing the file (in a pretty hacky way) and using the bounding box then embeding the file directly.
+2013-02-25 04:13:22 UTC <travis-ci> [travis-ci] 13diagrams-postscript/06images 1425cc59d http://travis-ci.org/diagrams/diagrams-postscript/builds/5032727 The build passed.
+2013-02-25 04:18:43 UTC <carter> fryguybob that looks cool
+2013-02-25 15:18:08 UTC <fryguybob> byorgey: I'm wondering where I should put the curvature stuff.  It does generalize to higher dimension space curves, but for now I think it would be useful to have the two dimensional version.  Does Diagrams.TwoD.Segment in lib make sense?
+2013-02-25 15:30:47 UTC <fryguybob> Humm, maybe Diagrams.TwoD.Curvature would make more sense.
+2013-02-25 15:32:55 UTC <byorgey> fryguybob: yes, Diagrams.TwoD.Curvature sounds best to me
+2013-02-25 15:33:04 UTC <byorgey> no reason we have to shove it in alongside an existing module.
+2013-02-25 15:34:06 UTC <fryguybob> byorgey: Yeah
+2013-02-25 15:36:47 UTC <fryguybob> byorgey: I'm a little confused by the definition given on Wikipedia for higher dimensions as it is defined by an arclength parameterization, but I don't know how important that is :(.
+2013-02-25 15:37:00 UTC <fryguybob> Regardless I'll work on getting the 2d version in.
+2013-02-25 15:49:07 UTC <byorgey> awesome
+2013-02-25 16:31:31 UTC <fryguybob> *sigh* just when I'm about to push it appears our network file system died...
+2013-02-25 16:51:41 UTC <byorgey> doh =(
+2013-02-25 16:52:04 UTC <byorgey> fryguybob: is this a frequent occurrence?
+2013-02-25 16:55:10 UTC <byorgey> well, the Travis build seems to have passed at least =)
+2013-02-25 17:02:16 UTC <fryguybob> byorgey: Not really.  For reasons I can't comprehend there is an abismal amount of space available so I tend to just keep stuff on the local disk.
+2013-02-25 17:02:46 UTC <fryguybob> It seems to be back now.
+2013-02-25 17:04:23 UTC <fryguybob> ACTION types random git commands until things are happy.
+2013-02-25 17:07:08 UTC <fryguybob> ACTION gives up and starts over :D
+2013-02-25 17:30:22 UTC <fryguybob> byorgey: After compiling I fixed a couple silly things and now I can produce this with curvature in lib:  http://www.cs.rochester.edu/u/ryates/temp/output.gif
+2013-02-25 17:31:03 UTC <fryguybob> The first and second deriviative are in a where in the code.  It would be nice to have those live somewhere more general.
+2013-02-25 17:46:01 UTC <luite> funky
+2013-02-27 02:27:54 UTC <byorgey> sigh, I wish there was some easy way to get notified when diagrams-hog is logged out
+2013-02-27 02:29:30 UTC <fryguybob> poll its pid?
+2013-02-27 02:29:52 UTC <fryguybob> Or does it not die, just disconnect?
+2013-02-27 02:31:14 UTC <byorgey> right, that's the problem
+2013-02-27 02:32:07 UTC <byorgey> it just disconnects but doesn't realize it
+2013-02-27 02:33:02 UTC <fryguybob> humm
+2013-02-27 02:33:33 UTC <fryguybob> As a systems person I should have some answer involving /proc or something.
+2013-02-27 02:47:11 UTC <fryguybob> If I do $ grep IpExt /proc/`pidof irssi`/net/netstat  the numbers change.
+2013-02-27 02:50:41 UTC <byorgey> haha wat
+2013-02-27 02:51:50 UTC <fryguybob> I think that should give you stats of bytes of network traffic from that process or something.
+2013-02-27 02:52:13 UTC <fryguybob> (in my case the process is irssi)
+2013-02-27 02:53:22 UTC <byorgey> heh, I see
+2013-02-27 03:12:58 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 14a1b94ae http://travis-ci.org/diagrams/diagrams-haddock/builds/5091853 The build has errored.
+2013-02-27 03:25:41 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 14e62abce http://travis-ci.org/diagrams/diagrams-haddock/builds/5091869 The build passed.
+2013-02-27 03:35:40 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 149969db4 http://travis-ci.org/diagrams/diagrams-haddock/builds/5092016 The build passed.
+2013-02-27 03:42:08 UTC <fryguybob> byorgey: My cpp "support": https://github.com/fryguybob/diagrams-haddock
+2013-02-27 03:44:52 UTC <fryguybob> It looks like the ! bug in zipper is due to a strict field marked in a GADT.
+2013-02-27 03:45:46 UTC <fryguybob> It looks like it is #ifdef'ed out for HLINT which I think uses HSE :D.
+2013-02-27 03:46:16 UTC <fryguybob> ACTION goes to bed
+2013-02-27 13:32:06 UTC <fryguybob> One bug down :D
+2013-02-27 13:47:18 UTC <fryguybob> Also the strictness with GADT's is already in there as issue 9.
+2013-02-27 13:53:29 UTC <byorgey> two bugs down!
+2013-02-27 15:16:59 UTC <fryguybob> byorgey: BTW it is still killing files.
+2013-02-27 15:24:56 UTC <fryguybob> Also, I'm afraid we need to parse cpp if we are going to write back :(.  Without writing back we should be fine for extracting comments as long as we have the right things defined for cpphs.
+2013-02-27 16:41:12 UTC <byorgey> fryguybob: dang.  can you file a bug ticket re: kiling files?
+2013-02-27 16:41:27 UTC <fryguybob> byorgey: Yeah
+2013-02-27 16:41:33 UTC <byorgey> fryguybob: and you're right about parsing CPP =(
+2013-02-27 16:42:41 UTC <fryguybob> byorgey: It would probably work in any sane cases to just do a new pass at the end that was a search and replace for the particular line we want to write.
+2013-02-27 16:43:01 UTC <fryguybob> Not nice and clean solution though.  But this is CPP we are talking about :D
+2013-02-27 16:45:15 UTC <byorgey> hehe
+2013-02-27 16:45:59 UTC <byorgey> you know, the other thing we could do is to forget about haskell-src-exts and just run the 'diagram URL' parser on the entire file
+2013-02-27 16:46:29 UTC <byorgey> oh, no, wait, we have to find code blocks too
+2013-02-27 16:46:31 UTC <byorgey> never mind =(
+2013-02-27 16:47:10 UTC <byorgey> oh, but ONCE we have compiled all the diagrams, we could do a new pass running the diagram URL parser on the entire file.
+2013-02-27 16:48:05 UTC <fryguybob> Yeah
+2013-02-27 16:48:11 UTC <byorgey> at some level, anything that is trying to deal with real-world Haskell code is going to have some weird corner cases and workarounds.  So I'm not too concerned about having something that's super clean and elegant.
+2013-02-27 16:49:17 UTC <byorgey> that approach (doing a separate pass at the end to alter diagram URLs) also has the benefit of nicely solving the problem re: trailing whitespace
+2013-02-27 16:49:34 UTC <byorgey> and we will know whether we've changed anything instead of having to compare the final output with the original file
+2013-02-27 16:53:12 UTC <fryguybob> Humm, it's not killing files now...
+2013-02-27 16:54:10 UTC <fryguybob> As in my smaller test case.  Have to run.
+2013-02-27 16:54:11 UTC <byorgey> haha
+2013-02-27 16:54:16 UTC <byorgey> ok, see you
+2013-02-27 17:57:45 UTC <fryguybob> ok finally have a test case that works.
+2013-02-27 18:47:53 UTC <byorgey> OK, I really really need to work on my thesis proposal presentation for Monday.
+2013-02-27 18:48:02 UTC <byorgey> please don't let me work on diagrams anymore until it is done.
+2013-02-27 18:48:23 UTC <byorgey> it is an extremely tempting way to procrastinate =)
+2013-02-27 18:49:52 UTC <tgeeky> ACTION hacks into github and removes byorgey's public keys
+2013-02-27 18:50:15 UTC <byorgey> noooooooo
+2013-02-27 19:03:01 UTC <fryguybob> byorgey: What if your thesis proposal needs some diagrams in it!!?!?
+2013-02-27 19:03:28 UTC <byorgey> fryguybob: oh, it does!
+2013-02-27 19:03:48 UTC <byorgey> but diagrams already has all the features I need to make them.
+2013-02-27 19:04:04 UTC <byorgey> my thesis proposal actually has quite a few diagrams in it
+2013-02-27 19:38:35 UTC <tgeeky> damn it's late already. I'm going to go make some lunch, and I'll be back. I wanted to discussing negative types / the dirac sea / filling of the dirac sea trick
+2013-02-27 19:40:58 UTC <tgeeky> byorgey: if you are still here
+2013-02-27 20:09:02 UTC <tgeeky> byorgey: back. here?
+2013-02-27 20:22:52 UTC <tgeeky> byorgey: so the dirac sea trick comes about in a few-step process to resolve the fact that (the more correct, complicated version of) the equation E = mc^2 has positive and negative solutions
+2013-02-27 20:23:49 UTC <tgeeky> Dirac, like everyone else since him, "knew" that negative energy solutions were absurd, but his work lead him to believe the solution is just as valid as the positive energy solutions.
+2013-02-27 20:24:38 UTC <tgeeky> so you have a chart, like this, where E goes from negative infinity, to 0, to positive infinity:
+2013-02-27 20:25:26 UTC <tgeeky> <---o--->, where an electron's lowest energy state might look like: <---o-|->
+2013-02-27 20:26:21 UTC <tgeeky> Dirac figured that it's absurd to throw away everything left of the 0, but it's also absurd to have genuine negative energy states. So he postulated that these were not absurd, but were instead filled.
+2013-02-27 20:26:28 UTC <tgeeky> <|||o--->
+2013-02-27 20:27:30 UTC <tgeeky> I think it was almost two years later that he realized that an incomplete filling of these negative energy states would actually be a resonance (particle)
+2013-02-27 20:28:22 UTC <tgeeky> If the electron is: <---o-|->, then the un-filled space is the anti-particle: <|-|o--->  
+2013-02-27 20:29:21 UTC <tgeeky> and that the sum of the two states: <---o-|-> + <|-|o---> is the "filled dirac sea" <|||o--->
+2013-02-27 20:29:36 UTC <tgeeky> byorgey: so, that's the physics side. Does this spark anything re: negative types? :o
+2013-02-27 20:37:22 UTC <tgeeky> the moral of the story in my mind is that having holes isn't quite enough, you need this whole filling-of-holes process
+2013-02-27 23:53:12 UTC <tgeeky> byorgey: are there even people who are experts on "negative types"?
+2013-02-28 00:23:30 UTC <byorgey> tgeeky: presumably.  I don't really know who they are though.
+2013-02-28 00:23:54 UTC <tgeeky> byorgey: i hope my short ramble sparks questions other than "how the hell does this help *me*"?
+2013-02-28 00:24:29 UTC <byorgey> tgeeky: I'll have to think about the stuff re: filling negative energy states etc.  It seems like it could be relevant but I'm not exactly sure how yet.
+2013-02-28 00:25:02 UTC <tgeeky> on n-cat wiki, it says that negative types are just [constructor,eliminator] reversed versions of regular types
+2013-02-28 00:25:20 UTC <byorgey> tgeeky: link?
+2013-02-28 00:26:12 UTC <tgeeky> http://ncatlab.org/nlab/show/negative+type
+2013-02-28 00:29:53 UTC <tgeeky> byorgey: are negative types a large part of your proposal? Or just one among many things involving diagrams+species?
+2013-02-28 00:32:28 UTC <tgeeky> i'm ignorant of these things, but regardless of what negative-types are, it seems to me like this "filling in" process isn't included
+2013-02-28 00:32:43 UTC <tgeeky> it also sounds a little codata-y
+2013-02-28 00:36:28 UTC <byorgey> tgeeky: negative types are not in my proposal at all!
+2013-02-28 00:36:53 UTC <byorgey> tgeeky: oh, that ncatlab page is an entirely different use of the term "negative"
+2013-02-28 00:37:26 UTC <byorgey> tgeeky: that use of negative is indeed codata-y
+2013-02-28 00:37:56 UTC <byorgey> it is just classifying types into two sets by their "polarity", negative and positive
+2013-02-28 00:38:09 UTC <byorgey> but all of them are still positive in the species sense
+2013-02-28 00:38:36 UTC <byorgey> the ncatlab page negative types are not negative in the sense of being additive inverses of other types
+2013-02-28 00:41:43 UTC <tgeeky> the overloaded use of 'species' makes searching for this frustrating
+2013-02-28 00:58:23 UTC <byorgey> tgeeky: search for 'virtual species'
+2013-02-28 01:27:21 UTC <fryguybob> \o/
+2013-02-28 01:27:48 UTC <byorgey> fryguybob: \o/ ?
+2013-02-28 01:27:57 UTC <fryguybob> http://www.cs.rochester.edu/u/ryates/temp/offsetR.pdf
+2013-02-28 01:28:34 UTC <fryguybob> This is offset using radius of curvature to adjust the handle lengths.
+2013-02-28 01:29:14 UTC <byorgey> awesome!
+2013-02-28 01:31:31 UTC <fryguybob> For comparison, without the RoC factor: http://www.cs.rochester.edu/u/ryates/temp/offset-2.pdf
+2013-02-28 01:33:46 UTC <byorgey> yeah, obviously much better
+2013-02-28 01:34:29 UTC <byorgey> every time I see those four curves of yours I can't help but read 'SpAl'
+2013-02-28 01:41:54 UTC <fryguybob> hehe
+2013-02-28 02:13:25 UTC <tgeeky> byorgey: regarding http://byorgey.wordpress.com/2010/11/24/species-subtraction-made-simple/ , why is Neg Z, etc (Neg (Neg Z)) uglier than Succ (Succ Z), etc?
+2013-02-28 02:13:41 UTC <tgeeky> or the ugliness is just needing them both?
+2013-02-28 02:14:02 UTC <tgeeky> s/needing/having them without needing them/
+2013-02-28 02:18:34 UTC <fryguybob> Even better (I was throwing away a sign I needed): http://www.cs.rochester.edu/u/ryates/temp/offsetS.pdf
+2013-02-28 02:20:30 UTC <tgeeky> what is this magic you are working on?
+2013-02-28 02:20:40 UTC <tgeeky> something about showing curvature using beizer curves? :o
+2013-02-28 02:22:34 UTC <fryguybob> tgeeky: Computing the offset of a Bezier segment.
+2013-02-28 02:22:38 UTC <byorgey> fryguybob: spiffy!
+2013-02-28 02:23:55 UTC <fryguybob> Code: https://gist.github.com/fryguybob/4945944
+2013-02-28 02:24:12 UTC <tgeeky> bwhahahhaha
+2013-02-28 02:24:15 UTC <tgeeky> the wikipedia links to you
+2013-02-28 02:24:16 UTC <tgeeky> bwhahahahaha
+2013-02-28 02:24:28 UTC <tgeeky> wait, no it doesn't
+2013-02-28 02:24:29 UTC <tgeeky> nevermind me
+2013-02-28 02:25:03 UTC <fryguybob> Now I need to polish up with the code for Paths and we can ship it.
+2013-02-28 02:26:50 UTC <fryguybob> ACTION Follows the wikipedia link to see what Victor Ostromoukhov does.
+2013-02-28 02:41:10 UTC <byorgey> tgeeky: I don't understand your question re: Neg etc.
+2013-02-28 02:41:41 UTC <byorgey> tgeeky: Neg (Neg Z) does not type check
+2013-02-28 02:43:16 UTC <tgeeky> what is negative 2?
+2013-02-28 02:43:49 UTC <fryguybob> I don't see any benefits for us with Victor Ostromoukhov's method.
+2013-02-28 02:44:10 UTC <byorgey> tgeeky: in which representation? data I' = Pos Nat | Neg Nat ?
+2013-02-28 02:44:22 UTC <byorgey> tgeeky: Neg (S (S Z))
+2013-02-28 02:44:32 UTC <tgeeky> oh. that's weird
+2013-02-28 02:44:33 UTC <tgeeky> to me
+2013-02-28 02:44:52 UTC <byorgey> well, it IS weird
+2013-02-28 02:45:00 UTC <byorgey> the point is that it's not a very nice representation to work with
+2013-02-28 02:45:08 UTC <tgeeky> I assumed you would do something like Pred (if S Z is succ z)
+2013-02-28 02:45:40 UTC <tgeeky> so if S (S Z) is two, P (P Z) is negative two
+2013-02-28 02:46:04 UTC <tgeeky> s/I would have/
+2013-02-28 02:46:30 UTC <byorgey> tgeeky: you could do that, sure.  But that would be annoying for many of the same reasons data I' = Pos Nat | Neg Nat  is annoying
+2013-02-28 02:47:23 UTC <byorgey> not to mention that you have things like  P (S (P (S Z)))
+2013-02-28 02:48:33 UTC <tgeeky> yeah, I thought of that but I figured it was the same (or nearly the same) problem as (-2) == (5 + -7) == (6 + -8) == ...
+2013-02-28 02:48:54 UTC <tgeeky> same kind of redundancy
+2013-02-28 02:49:53 UTC <tgeeky> so what kind of presentation format does one use to propose a thesis? 20 minutes powerpoint? :o
+2013-02-28 02:52:46 UTC <fryguybob> One hour and twenty containers of play-doh.
+2013-02-28 02:53:16 UTC <tgeeky> that sounds pretty awesome.
+2013-02-28 02:54:35 UTC <tgeeky> 8 minutes, silly string.
+2013-02-28 03:02:39 UTC <byorgey> tgeeky: a 35-page document and a 45 minute powerpoint =P
+2013-02-28 03:02:55 UTC <byorgey> where by "powerpoint" I mean "beamer"
+2013-02-28 03:03:43 UTC <byorgey> tgeeky: you're right, the redundancy is not really that big of a deal.  The issue is more that implementing algorithms on it is going to involve lots of annoying case analysis
+2013-02-28 03:06:13 UTC <tgeeky> byorgey: aside: where did you first / most in-depth-ly learn about comb. species?
+2013-02-28 03:06:45 UTC <byorgey> tgeeky: "Combinatorial Species and Tree-Like Structures" by Bergeron, Labelle, and Leroux
+2013-02-28 03:07:09 UTC <byorgey> that's really the ONLY place to learn about them
+2013-02-28 03:07:13 UTC <byorgey> (in English)
+2013-02-28 03:07:36 UTC <tgeeky> who handed that book to you, I mean? Did a math class get taught using it? Or it was extra reading?
+2013-02-28 03:08:13 UTC <byorgey> I saw a blog post about combinatorial species and it sounded cool, so I went to the Penn library and checked out the book
+2013-02-28 03:08:28 UTC <tgeeky> this was while you were in grad school?
+2013-02-28 03:08:31 UTC <byorgey> I then had it checked out for about four years
+2013-02-28 03:08:32 UTC <byorgey> yes
+2013-02-28 03:08:50 UTC <byorgey> (I now have my own copy)
+2013-02-28 03:08:54 UTC <tgeeky> I have eight copies of the book on my computer. It must be important to me.
+2013-02-28 03:09:07 UTC <byorgey> haha, what
+2013-02-28 03:10:35 UTC <tgeeky> well, 4 of them are pdfs, 4 of them are .djvu-s
+2013-02-28 03:11:45 UTC <byorgey> that doesn't make me feel any better
+2013-02-28 03:12:39 UTC <tgeeky> for some people it's music and movies, for some people it's e-books.technical
+2013-02-28 03:13:20 UTC <byorgey> fair enough =)
+2013-02-28 03:13:23 UTC <tgeeky> i also have a habit of picking out e-books that I think might be interesting to me (cs, math, physics) and just coping them
+2013-02-28 03:13:39 UTC <byorgey> and not remembering whether you have already copied them before?
+2013-02-28 03:13:40 UTC <tgeeky> copying* to a folder -- actually, for the reason that using bookmarks, etc, modifies the file
+2013-02-28 03:14:02 UTC <tgeeky> it seems my deduplicator software doesn't work quite as well as I hoped :O
+2013-02-28 03:16:31 UTC <tgeeky> byorgey: if you're ever in a "man, I wish I could lay my hands on _______ (textbook, technical book, etc)"
+2013-02-28 03:17:12 UTC <tgeeky> I might be your guy. :o
+2013-02-28 03:18:41 UTC <tgeeky> I always wonder what I would do when/if I publish a paper using results in these e-books. Perhaps I'll send a fiver to each citation. :o
+2013-03-01 20:45:14 UTC <carter> byorgey woot! i think thats my most high impact patch i've done for haskell libs yet :)
+2013-03-01 20:46:50 UTC <byorgey> carter: heh, and it certainly has the highest impact/size of actual change ratio =)
+2013-03-01 20:47:40 UTC <carter> yeah, a thousand haskellers rejoiced because they no longer have to remember how to mechanically add "hs-source-dirs:" constantly :) 
+2013-03-01 21:10:08 UTC <fryguybob> byorgey: Did you give your talk yet?
+2013-03-01 21:10:17 UTC <byorgey> fryguybob: no, it's on Monday
+2013-03-01 21:10:28 UTC <fryguybob> Ah, ok.
+2013-03-01 21:30:40 UTC <carter> talk on what? :)
+2013-03-01 21:31:22 UTC <byorgey> carter: my thesis proposal
+2013-03-01 21:31:27 UTC <byorgey> so, species.
+2013-03-01 21:31:27 UTC <carter> gluck!
+2013-03-01 21:31:40 UTC <carter> ooo
+2013-03-01 21:31:50 UTC <byorgey> thanks!
+2013-03-01 21:31:54 UTC <carter> read "analytic combinatorics" when you have some time then
+2013-03-01 21:32:17 UTC <byorgey> yup, I'm currently enrolled in the Coursera course Sedgewick is teaching
+2013-03-01 21:32:34 UTC <byorgey> very very related but with a different focus.
+2013-03-01 21:32:44 UTC <carter> ooo
+2013-03-01 21:33:02 UTC <carter> yeah, if I had the time i'd do so too
+2013-03-01 21:33:04 UTC <carter> finite timee though
+2013-03-01 21:33:17 UTC <carter> i just ordered the book even though the pdf is nice
+2013-03-01 21:34:06 UTC <byorgey> yep, I have a dead tree copy of it sitting about 12 inches from me
+2013-03-01 21:55:22 UTC <luite> oh cool i didn't know there was a course
+2013-03-01 21:55:30 UTC <luite> do have the book though
+2013-03-01 21:59:36 UTC <luite> hm isn't it possible to just download lectures and exercises?
+2013-03-02 02:57:13 UTC <tgeeky> yeah, i was looking for that book just yesterday
+2013-03-02 02:57:24 UTC <tgeeky> i kept typing in 'flaojet' with no results
+2013-03-02 02:57:34 UTC <tgeeky> flaJOlet
+2013-03-02 03:13:22 UTC <tgeeky> i posted it everywhere else, may as well put it here: category theory for scientists 
+2013-03-02 03:13:28 UTC <tgeeky> http://arxiv.org/abs/1302.6946
+2013-03-02 16:53:25 UTC <fryguybob> Looks like someone could use some diagrams-haddock: http://hackage.haskell.org/packages/archive/gloss/1.7.8.2/doc/html/Graphics-Gloss-Geometry-Line.html
+2013-03-02 16:53:48 UTC <byorgey> hahaha
+2013-03-02 16:54:05 UTC <byorgey> that would be hilarious if gloss used diagrams for its documentation =)
+2013-03-02 16:54:28 UTC <fryguybob> :D
+2013-03-02 16:54:50 UTC <byorgey> but we can tell Ben the tricks for including images with the documentation, and let him generate the images with gloss =)
+2013-03-02 16:57:57 UTC <fryguybob> GSOC: ascii art to diagrams compiler, then luite can scour his hackage mirror for diagrams.
+2013-03-02 16:58:23 UTC <byorgey> hehehe
+2013-03-02 16:58:32 UTC <byorgey> an ascii art TO diagrams compiler, now there's an idea =D
+2013-03-02 16:59:04 UTC <byorgey> "don't know how to use any software other than emacs but want to draw beautiful pictures?  no problem!"
+2013-03-02 16:59:53 UTC <fryguybob> We would finally have a use for the pony package.
+2013-03-02 17:02:10 UTC <byorgey> =D
+2013-03-02 20:17:31 UTC <byorgey> hi zalenix 
+2013-03-02 20:17:46 UTC <zalenix> hi byorgey !
+2013-03-02 20:18:50 UTC <zalenix> I am a CS student looking for a haskell project. I want to gain experience in haskell coding through gsoc 2013, which has led me to this place
+2013-03-02 20:20:05 UTC <byorgey> zalenix: cool, welcome.  I guess you have probably seen this page: http://www.haskell.org/haskellwiki/Diagrams/GSoC ?
+2013-03-02 20:20:24 UTC <zalenix> Yes!
+2013-03-02 20:20:41 UTC <zalenix> I am going through this page and am learning more about the ideas currently
+2013-03-02 20:22:13 UTC <byorgey> zalenix: great.
+2013-03-02 20:22:46 UTC <byorgey> zalenix: the best place to start would just be to go through the tutorial and/or user manual, and play around with creating your own diagrams
+2013-03-02 20:23:13 UTC <zalenix> That is exactly what is on my to-do list right now!
+2013-03-02 20:25:54 UTC <byorgey> excellent =)
+2013-03-02 20:26:17 UTC <byorgey> have fun, ask questions in here, and of course show us your creations =)
+2013-03-02 20:27:21 UTC <zalenix> thanks byorgey ! =)
+2013-03-02 20:30:49 UTC <luite> \o/
+2013-03-02 20:31:06 UTC <luite> hm when is the gsoc application deadline?
+2013-03-02 20:31:45 UTC <byorgey> luite: organizations apply at the end of this month.
+2013-03-02 20:32:08 UTC <byorgey> luite: the deadline for student applications is sometime in May I think.
+2013-03-02 20:32:15 UTC <luite> do you want a separate diagrams organization?
+2013-03-02 20:32:47 UTC <byorgey> I wasn't planning on it.
+2013-03-02 20:32:59 UTC <byorgey> do you think we should?
+2013-03-02 20:33:19 UTC <byorgey> I don't really know what is involved in applying and/or what the benefits would be.
+2013-03-02 20:33:55 UTC <luite> nah haskell.org will probably be fine
+2013-03-02 20:34:12 UTC <luite> maybe you can get some extra slots with more orgs
+2013-03-02 20:35:00 UTC <byorgey> I figure if we do this for a few years with some success then we can think about applying as a separate org
+2013-03-02 20:35:06 UTC <byorgey> like darcs is doing this year, apparently
+2013-03-02 20:35:08 UTC <luite> right
+2013-03-02 20:35:24 UTC <luite> oh i thought darcs had been a separate org for a few years now
+2013-03-02 20:35:31 UTC <byorgey> oh? maybe so.
+2013-03-02 20:37:51 UTC <luite> bleh is there an easy way to export/mount a filesystem securerly over the internet that's more reliable and performant than sshfs?
+2013-03-02 20:38:55 UTC <byorgey> no idea.
+2013-03-02 20:40:34 UTC <luite> this thing loses its connection every few minutes, i need to find something better before i throw my laptop out of the window
+2013-03-02 20:40:52 UTC <tgeeky> well, you can use any normal less secure system combined with a VPN
+2013-03-02 20:41:16 UTC <byorgey> throwing one's laptop out of the window is not good for filesystem reliability
+2013-03-02 20:41:30 UTC <tgeeky> byorgey: nine out of ten IT professionals agree.
+2013-03-02 20:41:33 UTC <tgeeky> the other is a psycopath
+2013-03-02 20:41:53 UTC <luite> tgeeky: does NFS work well over the internet?
+2013-03-02 20:42:04 UTC <luite> with perhaps minor packet loss and higher latency
+2013-03-02 20:42:16 UTC <tgeeky> luite: yep, sure does.
+2013-03-03 14:00:35 UTC <insitu> hello
+2013-03-03 14:00:53 UTC <insitu> I am trying to use diagrams to draw 2D line charts
+2013-03-03 14:01:55 UTC <insitu> did anybody already tried to do that? If so, any sample that I can study? 
+2013-03-04 19:49:46 UTC <fryguybob> ACTION hopes byorgey's talk is going well.
+2013-03-04 20:04:51 UTC <byorgey> thanks
+2013-03-04 20:04:54 UTC <byorgey> it went OK!
+2013-03-04 20:05:13 UTC <fryguybob> Good!
+2013-03-04 20:05:20 UTC <byorgey> but it's done now. thank goodness.
+2013-03-04 20:16:25 UTC <carter> congrats!
+2013-03-04 20:16:32 UTC <carter> now go read Analytic Combinatorics :)
+2013-03-04 20:22:51 UTC <byorgey> no, I'm going to go hack on diagrams =)
+2013-03-04 20:23:01 UTC <byorgey> I want to NOT think about this for at least a week.
+2013-03-04 20:23:12 UTC <fryguybob> :D
+2013-03-04 21:38:00 UTC <fryguybob> I have some silly dynamic programming problems to do and one involved decomposing a rectangle into squares: http://www.cs.rochester.edu/u/ryates/temp/square.pdf
+2013-03-04 21:50:35 UTC <byorgey> neato
+2013-03-04 21:50:40 UTC <byorgey> something with the golden ratio?
+2013-03-04 22:01:51 UTC <fryguybob> byorgey: I think the distribution of the cuts might be maximized as the ratio of the sides approaches phi.  Something like that.
+2013-03-04 22:02:17 UTC <fryguybob> Basically my diagrams were not looking very interesting until I put in some sides with a ratio close to phi :D
+2013-03-04 22:03:22 UTC <byorgey> hehe, I see =)
+2013-03-04 22:07:29 UTC <luite> hm
+2013-03-04 22:09:14 UTC <fryguybob> The take away here is, using diagrams as values makes for easy "verification" of your algorithm.
+2013-03-04 22:14:16 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 149124280 http://travis-ci.org/diagrams/diagrams-haddock/builds/5238391 The build passed.
+2013-03-04 23:16:27 UTC <luite> byorgey: use the fontforge program to convert postscript and opentype fonts to svg
+2013-03-04 23:16:35 UTC <byorgey> ah, cool
+2013-03-04 23:42:28 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 149a01a82 http://travis-ci.org/diagrams/diagrams-haddock/builds/5241448 The build passed.
+2013-03-04 23:45:39 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 14bbd260c http://travis-ci.org/diagrams/diagrams-haddock/builds/5241554 The build passed.
+2013-03-05 00:57:50 UTC <byorgey> check out the NEW AND IMPROVED diagrams-haddock!  It slices! It dices! It processes whole Cabal packages at once! It won't eat your files!
+2013-03-05 00:58:23 UTC <fryguybob> ooooOOOoooo
+2013-03-05 00:58:33 UTC <fryguybob> But my files are tasty!
+2013-03-05 00:58:47 UTC <byorgey> right, which is why diagrams-haddock lets YOU eat them YOURSELF!
+2013-03-05 00:59:01 UTC <fryguybob> I'm sold!
+2013-03-05 00:59:09 UTC <byorgey> =D
+2013-03-05 01:01:46 UTC <byorgey> I am unsure what the status is re: CPP.  There's no code in there to handle CPP, and yet I ran it over lens with no errors.
+2013-03-05 01:02:00 UTC <fryguybob> Humm
+2013-03-05 01:03:57 UTC <byorgey> ah, no, it still fails on #.
+2013-03-05 01:04:02 UTC <fryguybob> Ok
+2013-03-05 01:04:09 UTC <byorgey> But we should be able to incorporate your CPP stuff pretty easily now
+2013-03-05 01:04:19 UTC <fryguybob> I'll do that now for my branch.
+2013-03-05 01:04:42 UTC <byorgey> awesome
+2013-03-05 01:05:57 UTC <byorgey> hmm, I guess we should probably have some logging output.  Like, "Processing foo/bar.hs..."
+2013-03-05 01:06:48 UTC <byorgey> ah, diagrams-haddock does fail on lens.  Not sure what I did before where I thought it wasn't.
+2013-03-05 01:07:11 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 14169fb02 http://travis-ci.org/diagrams/diagrams-haddock/builds/5242907 The build passed.
+2013-03-05 01:07:57 UTC <fryguybob> Even with CPP there are a couple of places where it imports a file and cpp doesn't know where to find it.
+2013-03-05 01:09:20 UTC <byorgey> fair enough.  I don't think it's possible to handle it perfectly.
+2013-03-05 01:22:58 UTC <fryguybob> byorgey: Updated CPP. https://github.com/fryguybob/diagrams-haddock/
+2013-03-05 01:28:21 UTC <fryguybob> Humm, I need to change what it uses to write back with.
+2013-03-05 01:45:53 UTC <byorgey> fryguybob: hmm? what do you mean re: change what it uses to write back with?
+2013-03-05 01:49:21 UTC <fryguybob> So when it writes back it is using the source from after the CPP pass.
+2013-03-05 01:49:57 UTC <byorgey> fryguybob: you mean from before the CPP pass?
+2013-03-05 01:50:17 UTC <byorgey> fryguybob: I left a comment on your merge commit
+2013-03-05 01:58:16 UTC <fryguybob> Oh, ok.  I was thinking that it needed the other one.
+2013-03-05 02:15:41 UTC <fryguybob> byorgey: I fixed it.  Much better now.
+2013-03-05 02:16:35 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 14efa942f http://travis-ci.org/diagrams/diagrams-haddock/builds/5243985 The build passed.
+2013-03-05 02:17:13 UTC <byorgey> fryguybob: awesome, looks good
+2013-03-05 02:17:26 UTC <byorgey> fryguybob: want to open a pull request so I can merge it in?
+2013-03-05 02:19:49 UTC <fryguybob> done
+2013-03-05 02:20:50 UTC <fryguybob> Given enough info from the cabal I think we should be able to include handing of #includes.
+2013-03-05 02:21:36 UTC <byorgey> fryguybob: Oh, cool.  Have you taken a look at what I added in tools/diagrams-haddock.hs?
+2013-03-05 02:22:31 UTC <byorgey> When you invoke it on a cabal project it gets its hands on the whole LocalBuildInfo record which has all the info from the .cabal file (after conditionals have been resolved)
+2013-03-05 02:22:41 UTC <fryguybob> byorgey: Just briefly.  I'll see if I can get the  include-dirs  field and propogate that to cpphs.
+2013-03-05 02:22:56 UTC <byorgey> I just use it to get the list of exposed modules, but it's easy to pull out anything else too
+2013-03-05 02:23:01 UTC <fryguybob> ok
+2013-03-05 02:32:41 UTC <byorgey> fryguybob: is there a particular reason for cpphs >= 1.16, or just because you haven't tested with prior versions?
+2013-03-05 02:32:52 UTC <byorgey> (it seems I have 1.15 installed)
+2013-03-05 02:33:03 UTC <fryguybob> I don't think there was any reason for that.
+2013-03-05 02:33:49 UTC <byorgey> OK.  I'm trying it with 1.15
+2013-03-05 02:34:36 UTC <byorgey> seems to work fine.  does much better on lens now =)
+2013-03-05 02:34:47 UTC <fryguybob> Super
+2013-03-05 02:36:56 UTC <fryguybob> Does CmdArgs support concatenating multiple arguments?
+2013-03-05 02:38:15 UTC <byorgey> fryguybob: yes, e.g. if you use a list field   foo :: [String]  in the options record,  doing  --foo "blah" --foo "bar" --foo "baz"  gets you  foo = ["blah", "bar", "baz"]
+2013-03-05 02:38:23 UTC <byorgey> assuming I understood your question correctly
+2013-03-05 02:38:43 UTC <fryguybob> byorgey: Yes.
+2013-03-05 02:40:16 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 143f45864 http://travis-ci.org/diagrams/diagrams-haddock/builds/5244301 The build passed.
+2013-03-05 02:46:23 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 14801435c http://travis-ci.org/diagrams/diagrams-haddock/builds/5244397 The build passed.
+2013-03-05 02:48:02 UTC <fryguybob> Humm, I added in the includes but it is still having problems with Fold.hs from lens.
+2013-03-05 02:56:35 UTC <byorgey> fryguybob: hmm.  It looks like it wants monoids.x which lives in includes/ ?
+2013-03-05 02:58:56 UTC <fryguybob> byorgey: I think HSE doesn't like the #line pragmas that it is sprinkling around.
+2013-03-05 02:59:04 UTC <fryguybob> I can turn those off though.
+2013-03-05 03:01:33 UTC <byorgey> really?  hmm, I thought HSE could deal with those
+2013-03-05 03:02:01 UTC <fryguybob> byorgey: Well, it is emitting some that are a little strange.  like:  #line 1 "./include
+2013-03-05 03:02:10 UTC <byorgey> at least, it has an option to ignore them, which I assumed meant that it could also not-ignore them.
+2013-03-05 03:02:12 UTC <fryguybob> No close quote, no full file name.
+2013-03-05 03:02:15 UTC <byorgey> oh, I see, weird.
+2013-03-05 03:02:35 UTC <fryguybob> But it is easy to turn them off and we don't need them.
+2013-03-05 03:02:42 UTC <byorgey> great.
+2013-03-05 03:04:58 UTC <fryguybob> I suppose HSE could be using them to adjust the line numbers in error reporting...
+2013-03-05 03:05:57 UTC <byorgey> yes, I think that's what it does
+2013-03-05 03:06:35 UTC <fryguybob> I'll look into reporting a bug to cpphs and have the lines turned off for now.
+2013-03-05 03:06:46 UTC <byorgey> sure, that sounds reasonable.
+2013-03-05 03:10:11 UTC <fryguybob> Oh, it does do {-# LINE ... #-} comments correctly.  I wonder if HSE picks those up for line numbering.
+2013-03-05 03:11:35 UTC <byorgey> ohhhh, that's what the 'ignoreLinePragmas' option is about, not #line directives
+2013-03-05 03:12:15 UTC <byorgey> what sorts of tools generate {-# LINE ... #-} comments?
+2013-03-05 03:12:31 UTC <byorgey> I suppose stuff like hsc2hs?
+2013-03-05 03:12:51 UTC <fryguybob> Yeah I think happy and alex might also.
+2013-03-05 03:12:55 UTC <byorgey> right
+2013-03-05 03:13:21 UTC <byorgey> anyway, turn off the #line directives! full steam ahead!
+2013-03-05 03:58:58 UTC <mgsloan> As you can tell by the fact that SoH does not yet support diagrams, I haven't had any spare cycles yet!
+2013-03-05 03:59:26 UTC <mgsloan> awesome work on diagrams-haddocks, I may appropriate some of the code to provide a Haddocks --> SoH tool (not that there are even plans for this)
+2013-03-05 04:00:01 UTC <byorgey> mgsloan: hah, no worries!  You're helping make something awesome which is good enough for me. =)
+2013-03-05 04:00:26 UTC <byorgey> mgsloan: cool, appropriate away!
+2013-03-05 04:00:36 UTC <byorgey> though maybe wait till the dust settles a bit =)
+2013-03-05 04:01:00 UTC <mgsloan> Probably a good idea!  Maybe I'll even split off the bit that does the haddocks parsing
+2013-03-05 04:02:03 UTC <byorgey> well, we mostly rely on haskell-src-exts to do the haddock parsing
+2013-03-05 04:02:45 UTC <byorgey> the only parsing we do is very diagrams-haddock specific (looking for <<URLs>> of a certain form)
+2013-03-05 04:05:05 UTC <mgsloan> ohh, gotcha.  I haven't looked very hard at it, as you can tell
+2013-03-05 04:05:57 UTC <byorgey> sure
+2013-03-05 04:06:01 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 1472aee25 http://travis-ci.org/diagrams/diagrams-haddock/builds/5245497 The build passed.
+2013-03-05 04:24:03 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 14754ee93 http://travis-ci.org/diagrams/diagrams-haddock/builds/5245697 The build passed.
+2013-03-05 05:44:21 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 1407d2377 http://travis-ci.org/diagrams/diagrams-haddock/builds/5246581 The build passed.
+2013-03-05 05:50:23 UTC <byorgey> I think diagrams-haddock is getting close to being ready for an initial release
+2013-03-05 05:50:51 UTC <byorgey> but maybe we should try using it to pimp a few packages first, to have some nice examples to show off
+2013-03-05 05:51:20 UTC <byorgey> anyway, I'm off to bed!
+2013-03-05 05:54:15 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 1457aea67 http://travis-ci.org/diagrams/diagrams-haddock/builds/5246710 The build passed.
+2013-03-05 11:04:15 UTC <cmears2> Hello all
+2013-03-05 11:04:32 UTC <cmears2> I just noticed the SVGFonts package (due to the discussion on haskell-cafe)
+2013-03-05 11:04:38 UTC <cmears2> This seems like a really useful thing
+2013-03-05 11:06:38 UTC <cmears2> There is a slight bug in that it makes the trails unclosed, which makes the stroked letters miss a line occasionally
+2013-03-05 13:44:44 UTC <fryguybob> byorgey: What do you think of making a version of processHaddockDiagrams that takes a full CpphsOptions record?  I think we can easily include defines and perhaps the record makes more sense.
+2013-03-05 13:45:15 UTC <fryguybob> In the case of lens it already has the HLINT define to avoid problems due to HSE.
+2013-03-05 13:55:19 UTC <byorgey> fryguybob: ah, sure, that could make sense
+2013-03-05 13:55:38 UTC <byorgey> although if you want to allow users to specify the entire CpphsOptions record from the diagrams-haddock command line that would be tedious.
+2013-03-05 13:55:44 UTC <byorgey> (and probably unnecessary)
+2013-03-05 13:55:56 UTC <byorgey> but maybe that's not what you had in mind.
+2013-03-05 13:56:04 UTC <fryguybob> Right, I was going to just have includes and defines.
+2013-03-05 13:56:33 UTC <fryguybob> In the tool.
+2013-03-05 13:59:55 UTC <byorgey> right, makes sense.
+2013-03-05 14:08:25 UTC <byorgey> cmears: oh, thanks for the report!  Can you file a bug report at https://github.com/tkvogt/SVGFonts/issues ?
+2013-03-05 14:09:11 UTC <byorgey> hmm, we ought to push SVGFonts more.  I haven't paid that much attention to it but I'm not sure why.
+2013-03-05 14:39:23 UTC <fryguybob> Boo.  Cabal doesn't export the function I need.
+2013-03-05 14:48:57 UTC <byorgey> awww
+2013-03-05 14:49:01 UTC <byorgey> which function?
+2013-03-05 14:49:42 UTC <fryguybob> It can build up commandline arguments for cpphs.
+2013-03-05 14:50:03 UTC <fryguybob> I suppose we could consider just using cabal to run all the preprocessing.
+2013-03-05 14:52:15 UTC <byorgey> yes, that might be a better idea anyway
+2013-03-05 14:52:45 UTC <byorgey> cabal already knows how to do all of this, no point in reimplementing everything =)
+2013-03-05 14:52:52 UTC <fryguybob> Right
+2013-03-05 14:53:14 UTC <byorgey> I'm gonna go add some illustrations to the diagrams-contrib documentation =)
+2013-03-05 14:53:28 UTC <fryguybob> Excellent
+2013-03-05 15:01:13 UTC <fryguybob> Humm, that does complicate things if diagrams-haddock only sees the temp files that have been preprocessed we can't easily do updates.
+2013-03-05 15:02:40 UTC <fryguybob> As it is now, if we have a diagram url in a not-included #ifdef block it will complain about not finding the code for the url (it finds the url in the original source, but not the code from the preprocessed/HSE pass).
+2013-03-05 15:03:57 UTC <byorgey> hmm, right.  It only prints a warning though.  I mean it doesn't stop it from working on everything else in the file
+2013-03-05 15:04:06 UTC <fryguybob> Right
+2013-03-05 15:04:21 UTC <byorgey> I don't think we should spend TOO much energy worrying about corner cases like this until someone complains =)
+2013-03-05 15:04:41 UTC <byorgey> though I certainly appreciate the value of Doing Things Right
+2013-03-05 15:05:08 UTC <fryguybob> Yeah, I'll finish up these changes and that should get us to where we can process all of lens.
+2013-03-05 15:06:04 UTC <byorgey> well, except for the modules with parse errors on ! and so on, right?
+2013-03-05 15:06:10 UTC <byorgey> or do you mean those too?
+2013-03-05 15:06:29 UTC <byorgey> OH, because those are already CPPed-out for hint?
+2013-03-05 15:06:29 UTC <fryguybob> byorgey: Those too because I think they are all protected by CPP HLINT.
+2013-03-05 15:06:33 UTC <fryguybob> Right
+2013-03-05 15:06:36 UTC <byorgey> hlint I mean
+2013-03-05 15:06:39 UTC <byorgey> right, got it
+2013-03-05 15:07:49 UTC <fryguybob> Humm, I don't want to parse everything so I'll just allow for simple defines (ones in a cabal file can be more complex).
+2013-03-05 15:24:51 UTC <fryguybob> Well, now that defines are working we get DEFAULT_SIGNATURES turned on in lens leading to HSE failure on that... but the HLINT things are safe :D.
+2013-03-05 15:25:17 UTC <byorgey> doh!
+2013-03-05 15:30:20 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06master 1417c628b http://travis-ci.org/diagrams/diagrams-contrib/builds/5256887 The build passed.
+2013-03-05 15:33:56 UTC <byorgey> oh man, this is so sexy
+2013-03-05 15:33:59 UTC <byorgey> http://www.cis.upenn.edu/~byorgey/hosted/diagrams-haddock-screenshot.png
+2013-03-05 15:35:32 UTC <fryguybob> Nice!
+2013-03-05 15:37:06 UTC <fryguybob> byorgey: I think I remember something about being able to hide the diagram code sections from Haddock.  Is there a way to do that?
+2013-03-05 15:37:33 UTC <byorgey> fryguybob: you can't hide them per se, but you can simply put them inside a non-Haddock comment
+2013-03-05 15:37:42 UTC <byorgey> since the code blocks don't have to go right next to the URLs
+2013-03-05 15:37:54 UTC <fryguybob> byorgey: Ah, right.
+2013-03-05 15:38:14 UTC <byorgey> for diagrams-contrib of course I want to show the code as well
+2013-03-05 15:38:57 UTC <fryguybob> If we had an external LaTeX renderer then this could be a (somewhat roundabout) way to get a block of equations into the Haddock.
+2013-03-05 15:39:15 UTC <fryguybob> byorgey: Right
+2013-03-05 15:39:34 UTC <byorgey> heh, rather roundabout indeed =)
+2013-03-05 15:39:37 UTC <byorgey> but yes, that could work
+2013-03-05 15:48:08 UTC <byorgey> fryguybob: we should make a little test suite of files that diagrams-haddock should be able to deal with, perhaps along with the expected outputs
+2013-03-05 15:48:45 UTC <byorgey> I'm bad about making test suites.  It's always about ten times less exciting than the next feature.
+2013-03-05 15:50:15 UTC <fryguybob> byorgey: Yeah, I have a few locally here, I'll work on getting them in with tests.
+2013-03-05 16:08:00 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 145ded2c9 http://travis-ci.org/diagrams/diagrams-haddock/builds/5257637 The build passed.
+2013-03-05 19:43:49 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 148f8eb84 http://travis-ci.org/diagrams/diagrams-lib/builds/5263522 The build passed.
+2013-03-05 19:46:41 UTC <travis-ci> [travis-ci] 13diagrams-postscript/06master 14e862b3b http://travis-ci.org/diagrams/diagrams-postscript/builds/5263618 The build passed.
+2013-03-05 19:47:27 UTC <travis-ci> [travis-ci] 13diagrams-svg/06master 1495cbdc6 http://travis-ci.org/diagrams/diagrams-svg/builds/5263575 The build passed.
+2013-03-05 19:48:54 UTC <travis-ci> [travis-ci] 13diagrams-cairo/06master 14e382d4b http://travis-ci.org/diagrams/diagrams-cairo/builds/5263573 The build passed.
+2013-03-05 19:59:47 UTC <3JTAAP0IP> [travis-ci] 13diagrams-builder/06master 14f8f8b36 http://travis-ci.org/diagrams/diagrams-builder/builds/5263827 The build passed.
+2013-03-05 20:04:40 UTC <lemao> I have just stumbled upon diagrams and wondering how far the current status quo is from being able to render sequence diagrams from test a la sdedit?
+2013-03-05 20:04:53 UTC <lemao> test == text
+2013-03-05 20:17:58 UTC <byorgey> hi lemao, I am not familiar with sequence diagrams or sdedit, can you explain a bit more?
+2013-03-05 20:18:34 UTC <lemao> byorgey: hi! take a quick peak at this example: http://sdedit.sourceforge.net/example/index.html
+2013-03-05 20:18:44 UTC <byorgey> also, I am on a crappy coffeeshop internet connection that keeps dropping, so if I stop responding just be patient =)
+2013-03-05 20:19:20 UTC <byorgey> ah, I see
+2013-03-05 20:19:22 UTC <lemao> byorgey: it is basically a textual DSL to general sequence diagrams
+2013-03-05 20:19:47 UTC <lemao> bergey: you can then include it in asciidoc/markdown and have it generate the diagrams for you
+2013-03-05 20:19:56 UTC <byorgey> well, we have no code specifically for drawing sequence diagrams, but it looks like they should be easy to generate using diagrams
+2013-03-05 20:21:09 UTC <byorgey> and one of the great benefits of diagrams being embedded in Haskell means it is easy to combine with other libraries, e.g. to parse a sequence diagram description or whatever
+2013-03-05 20:21:38 UTC <byorgey> hehe, byorgey /= bergey =)
+2013-03-05 20:21:51 UTC <lemao> byorgey: oops!
+2013-03-05 20:22:30 UTC <byorgey> we do have strikingly similar nicks, but it's a complete coincidence
+2013-03-05 20:22:52 UTC <byorgey> lemao: anyway, are you interested in trying to draw some sequence diagrams yourself?
+2013-03-05 20:22:53 UTC <lemao> byorgey: I have been drawing these seqdiagrams by hand using sdedit, basically reverse engineering Haskell call sequences
+2013-03-05 20:23:29 UTC <byorgey> ah, I see
+2013-03-05 20:23:51 UTC <lemao> byorgey: it seems that using a Haskell parsing library to parse a set of modules and then a general filtering criteria one could generate a focused seq diagram
+2013-03-05 20:24:00 UTC <byorgey> sure
+2013-03-05 20:24:22 UTC <lemao> byorgey: SourceGraph is nice but too much imo. I just want to see the layering and investigate call paths through the layers
+2013-03-05 20:24:33 UTC <byorgey> sounds quite feasible
+2013-03-05 20:25:36 UTC <byorgey> and haskell-src-exts is a very nice Haskell parsing library
+2013-03-05 20:26:42 UTC <lemao> byorgey: I was actually curious about that: wouldnt a subset of GHC compiler be the ideal candidate for this parsing lib?
+2013-03-05 20:28:42 UTC <byorgey> lemao: no, because to just get a parse tree out of the GHC API is really complicated
+2013-03-05 20:28:55 UTC <lemao> byorgey: ok
+2013-03-05 20:29:06 UTC <lemao> byorgey: second general question about diagrams... 
+2013-03-05 20:29:16 UTC <byorgey> I mean, it might be ideal *if* GHC were extensively refactored to split out a nice standalone parsing module.  But it is not that simple.
+2013-03-05 20:29:19 UTC <byorgey> sure
+2013-03-05 20:29:25 UTC <lemao> byorgey: have you heard of d3.js?
+2013-03-05 20:29:32 UTC <byorgey> yes, I have
+2013-03-05 20:30:10 UTC <lemao> is there is way to bind data to diagrams and as the data changes have the digrams change?
+2013-03-05 20:30:57 UTC <byorgey> lemao: no, not at the moment
+2013-03-05 20:31:07 UTC <byorgey> there are some experiments in that direction
+2013-03-05 20:31:12 UTC <byorgey> but don't hold your breath =)
+2013-03-05 20:32:33 UTC <lemao> byorgey: sure. there is always too much that can be done and too little time
+2013-03-05 20:34:20 UTC <byorgey> indeed =)
+2013-03-05 20:34:51 UTC <byorgey> right now we are working on a tool to let you embed diagrams code in your Haddock documentation, and end up with pictures in your documentation
+2013-03-05 20:39:13 UTC <lemao> byorgey: that would be great. will there be a special high-level dsl for specifying the pictures?
+2013-03-05 20:39:58 UTC <byorgey> lemao: I'm not sure what you mean.  diagrams already is a special high-level DSL =)
+2013-03-05 20:40:28 UTC <byorgey> We don't have in mind any particular types of illustrations that people might want to include in their documentation
+2013-03-05 20:40:53 UTC <byorgey> it could be anything at all.  Whatever helps people understand your library.
+2013-03-05 20:46:24 UTC <carter> byorgey that'll be awesome! You could generate visuals reps of interesting datastructures
+2013-03-05 20:46:37 UTC <byorgey> yep, that would be one cool use case
+2013-03-05 20:47:23 UTC <carter> byorgey crazy idea: what about a latex package that lets you embed diagrams code in a latex doc ?
+2013-03-05 20:47:41 UTC <carter> (assuming diagrams is installed etc)
+2013-03-05 20:47:56 UTC <carter> migth be simpler though jsut generate out of band though
+2013-03-05 20:48:04 UTC <byorgey> carter: uh, that already exists =)
+2013-03-05 20:48:06 UTC <carter> and then just use graphicx
+2013-03-05 20:48:08 UTC <carter> oh
+2013-03-05 20:48:09 UTC <carter> ok
+2013-03-05 20:48:21 UTC <carter> this? http://hackage.haskell.org/package/diagrams-builder-0.2.0.0
+2013-03-05 20:48:23 UTC <carter> cool
+2013-03-05 20:48:30 UTC <byorgey> that's an old version
+2013-03-05 20:48:45 UTC <byorgey> but yes, if you get the source tarball for that package it comes with 'diagrams-latex.sty'
+2013-03-05 20:49:02 UTC <carter> starring the github
+2013-03-05 20:49:04 UTC <byorgey> https://github.com/diagrams/diagrams-builder/blob/master/latex/diagrams-latex.sty
+2013-03-05 20:49:07 UTC <byorgey> use this one
+2013-03-05 20:50:17 UTC <lemao> byorgey: my knowledge of diagrams is thin, but by high-level I was thinking about a DSL to render more specific things : a call, a module, etc and have the figures and layout be done automatically for you 
+2013-03-05 20:50:51 UTC <lemao> byorgey: but I could be completely off ... maybe is time to RTFM
+2013-03-05 20:51:15 UTC <lemao> byorgey: in any case, diagrams looks great!
+2013-03-05 20:51:58 UTC <byorgey> lemao: right, you're thinking of diagrams to illustrate the structure of the package, but I am thinking much more generally than that.
+2013-03-05 20:52:49 UTC <byorgey> like maybe you have a package for doing path-finding, and you want to illustrate some function with a picture of a path that the algorithm finds
+2013-03-05 20:53:23 UTC <byorgey> we are also going to use it to illustrate the diagrams documentation itself, to show examples
+2013-03-05 20:53:45 UTC <byorgey> lemao: but it's easy to build higher-level DSLs for particular things on top of diagrams
+2013-03-05 20:55:40 UTC <lemao> byorgey: ok, I will bug you later for some directions
+2013-03-05 20:55:44 UTC <lemao> byorgey: have to go now
+2013-03-05 20:55:51 UTC <byorgey> sounds good
+2013-03-05 20:55:55 UTC <byorgey> talk to you later
+2013-03-05 21:28:53 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 144b420f1 http://travis-ci.org/diagrams/diagrams-haddock/builds/5266031 The build passed.
+2013-03-05 21:55:50 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 14f4083e5 http://travis-ci.org/diagrams/diagrams-haddock/builds/5267059 The build passed.
+2013-03-05 21:59:00 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06master 145407e42 http://travis-ci.org/diagrams/diagrams-contrib/builds/5267158 The build passed.
+2013-03-05 22:17:08 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06master 14f085551 http://travis-ci.org/diagrams/diagrams-contrib/builds/5267752 The build passed.
+2013-03-06 00:48:29 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06master 149cd6419 http://travis-ci.org/diagrams/diagrams-contrib/builds/5271444 The build passed.
+2013-03-06 01:47:36 UTC <travis-ci> [travis-ci] 13diagrams-core/06master 14f3a216e http://travis-ci.org/diagrams/diagrams-core/builds/5272394 The build passed.
+2013-03-06 02:02:32 UTC <travis-ci> [travis-ci] 13diagrams-core/06master 144c567fc http://travis-ci.org/diagrams/diagrams-core/builds/5272622 The build passed.
+2013-03-06 02:30:59 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06master 146853930 http://travis-ci.org/diagrams/diagrams-contrib/builds/5272916 The build passed.
+2013-03-06 16:53:21 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 145cc9172 http://travis-ci.org/diagrams/diagrams-haddock/builds/5288549 The build passed.
+2013-03-06 20:18:10 UTC <fryguybob> byorgey: By the way, I submitted the #line bug to cpphs.  It is due to the trailing slash causing // which is then stripped off as a comment.
+2013-03-06 20:19:37 UTC <byorgey> fryguybob: ah, I see, nice
+2013-03-06 20:20:27 UTC <byorgey> fryguybob: did you see the two tickets I filed on diagrams-haddock?
+2013-03-06 20:20:54 UTC <byorgey> any thoughts/ideas/comments appreciated
+2013-03-06 20:22:14 UTC <fryguybob> Ok, I'll take a look
+2013-03-06 20:22:37 UTC <fryguybob> Do you have the haddocks for the changes to contrib up somewhere?
+2013-03-06 20:25:09 UTC <byorgey> No, but I could
+2013-03-06 20:26:42 UTC <byorgey> hmm, I just realized some of the generated SVGs are multiple megabytes, which is not so friendly to include on a web page =(
+2013-03-06 20:26:57 UTC <byorgey> of course it works just fine when my browser loads it from my disk!
+2013-03-06 20:28:06 UTC <fryguybob> byorgey: Humm, I bet there is an SVG minifier somewhere.
+2013-03-06 20:34:49 UTC <byorgey> http://code.google.com/p/svgmin/ , but it hasn't been updated since 2009
+2013-03-06 20:36:20 UTC <byorgey> also http://codedread.com/scour/
+2013-03-06 20:36:27 UTC <fryguybob> ACTION tries it out.
+2013-03-06 20:37:14 UTC <fryguybob> I did try  convert a.svg b.svg, but that went from 581 bytes to 3.7M.
+2013-03-06 20:39:11 UTC <byorgey> hahaha
+2013-03-06 20:39:45 UTC <byorgey> well, imagemagick is raster-based, right?  So it probably rasterizes a.svg and then produces b.svg by listing all the pixels or something =P
+2013-03-06 20:41:12 UTC <byorgey> drat, I ran out of space on my boot partition again =(
+2013-03-06 20:41:32 UTC <fryguybob> :(
+2013-03-06 20:42:03 UTC <fryguybob> I saw the c++ in svgmin and ran.  Scour went from 581 bytes to 499.
+2013-03-06 20:42:21 UTC <fryguybob> And it had a breakdown of what it was doing.
+2013-03-06 20:45:46 UTC <fryguybob> ACTION builds a harder test case.
+2013-03-06 20:46:41 UTC <fryguybob> AAaaannd python is slow.
+2013-03-06 20:51:31 UTC <fryguybob> ACTION gives up on it ever finishing.
+2013-03-06 20:55:15 UTC <byorgey> freed up 10% of my boot partition by uninstalling coq, ocaml, boost, and virtualbox.
+2013-03-06 20:56:07 UTC <byorgey> better go get Mr. four-hour-nap up before he sleeps right through dinner.
+2013-03-06 20:57:01 UTC <fryguybob> That's a long nap.
+2013-03-06 21:14:30 UTC <byorgey> indeed.  these days he usually takes a single 2.5-3 hour nap
+2013-03-06 21:14:54 UTC <byorgey> but I think he is catching up from this past weekend which involved an exciting train trip to DC and much less sleep than usual.
+2013-03-06 21:16:47 UTC <fryguybob> Ah yes.  We thought Judah was catching up recently, but now he has a cold :(
+2013-03-06 21:19:17 UTC <byorgey> =(
+2013-03-06 22:38:21 UTC <cmears> byorgey, I ended up fixing that unclosed-trail bug in SVGFonts
+2013-03-06 22:44:58 UTC <luite> \o/
+2013-03-06 23:52:16 UTC <byorgey> cmears: yes, I saw!
+2013-03-06 23:52:25 UTC <byorgey> cmears: and making a bunch of other improvements too, apparently =)
+2013-03-06 23:52:31 UTC <byorgey> cmears: thanks!
+2013-03-06 23:52:36 UTC <cmears> Well, why stop when you are having fun?
+2013-03-06 23:52:45 UTC <byorgey> makes sense to me =)
+2013-03-07 03:22:21 UTC <byorgey> most recent diagrams-contrib Haddocks can now be found at http://www.cis.upenn.edu/~byorgey/hosted/diagrams-contrib
+2013-03-07 03:24:21 UTC <fryguybob> byorgey: Did you end up doing anything to get the svg smaller?
+2013-03-07 03:24:26 UTC <byorgey> no
+2013-03-07 03:24:59 UTC <byorgey> everything seems reasonable except Diagrams.TwoD.Factorization, which has several multi-megabyte SVGs
+2013-03-07 03:26:33 UTC <fryguybob> Ah, I think arcs would help there.
+2013-03-07 03:26:46 UTC <byorgey> yes, probably so.
+2013-03-07 03:27:22 UTC <byorgey> hmm, I just realized we have a namespacing problem too.  You can't have diagrams from different files with the same name in the same package or they will clobber each other.
+2013-03-07 03:29:30 UTC <fryguybob> Good point.  I was wondering if having primes in a name would cause problems too, but both Windows and linux were happy with those in file names.  I didn't try urls though.
+2013-03-07 03:30:19 UTC <byorgey> right, good question
+2013-03-07 03:31:04 UTC <byorgey> anyway, I'm off to bed, g'night!
+2013-03-07 03:31:22 UTC <fryguybob> good night!
+2013-03-07 05:00:43 UTC <cmears> Those diagrams are pretty
+2013-03-09 00:35:54 UTC <fryguybob> Not enough diagrams!
+2013-03-09 00:36:04 UTC <luite> no?
+2013-03-09 00:39:07 UTC <fryguybob> ACTION may or may not have been spending too much time dynamic programming lately.
+2013-03-09 00:40:22 UTC <luite> for diagrams?
+2013-03-09 00:41:49 UTC <fryguybob> luite: No, for my advanced algorithms class.  But it has given me a few ideas for interesting diagrams and some constraint based things.
+2013-03-09 00:42:20 UTC <luite> oh are you teaching that class, or the labs?
+2013-03-09 00:42:28 UTC <fryguybob> I'm taking the class.
+2013-03-09 00:42:35 UTC <luite> oh ok :)
+2013-03-09 00:42:42 UTC <luite> less work i guess ;p
+2013-03-09 00:44:17 UTC <luite> any slides or other material online?
+2013-03-09 00:45:33 UTC <fryguybob> Unfortunately not really.
+2013-03-09 00:47:28 UTC <fryguybob> But right now, I'm going to either integrate bezier offsets with the rest of the path offset code or make an option for the SVG backend to output smaller code.
+2013-03-09 00:58:12 UTC <fryguybob> luite: If you want to see what we are covering there is a course web page: http://cs.rochester.edu/courses/484/spring2013/
+2013-03-09 01:19:14 UTC <luite> ah interesting, my own algorithms classes were much more focused on optimization and np hard graph stuffs
+2013-03-09 01:19:42 UTC <luite> coupling from the past is an interesting trick though, i used it in a paper :)
+2013-03-09 14:14:59 UTC <fryguybob> I added another idea here: http://www.haskell.org/haskellwiki/Diagrams/GSoC
+2013-03-09 14:57:59 UTC <luite> hm quite a few interesting ideas :)
+2013-03-09 14:58:51 UTC <fryguybob> Yes! Add more!
+2013-03-09 15:03:49 UTC <luite> adding plotting would be great, and 1.2,1.3,1.4 also sound like really fun projects :)
+2013-03-09 15:05:01 UTC <luite> are you available to mentor, and byorgey?
+2013-03-09 15:06:50 UTC <fryguybob> Well I'm looking at trying to be a student this summer with something related to improving STM.
+2013-03-09 15:07:16 UTC <luite> ah
+2013-03-09 16:03:43 UTC <luite> <- can't be a student anymore this year... sadface
+2013-03-09 16:03:53 UTC <fryguybob> :(
+2013-03-09 18:41:10 UTC <byorgey> luite: yes, I'm available to mentor
+2013-03-09 18:46:31 UTC <byorgey> fryguybob: cool ideas!
+2013-03-09 18:46:43 UTC <byorgey> looks like we could use about 8 GSoC students =)
+2013-03-09 18:49:07 UTC <fryguybob> I know!
+2013-03-09 19:19:23 UTC <luite> i'm not sure if ghcjs will be ready enough for gsoc, with the ghc 7.8.1 release pushed back
+2013-03-09 19:20:02 UTC <luite> but the diagrams projects look much cooler anyway :p
+2013-03-09 19:21:12 UTC <luite> though the inefficient tree code thing could be solved with ghcjs: instead of rendering the diagram to svg, compile diagrams+rendering code to js, embed it in an empty svg
+2013-03-09 19:22:29 UTC <luite> will only work if the resulting diagram would've been bigger than a few megabytes :)
+2013-03-09 19:24:41 UTC <fryguybob> hehe
+2013-03-09 19:57:34 UTC <byorgey> unfortunately some of the factorization diagrams ARE bigger than a few megabytes.  But we have some good ideas for bringing that number down.
+2013-03-09 19:58:51 UTC <byorgey> fryguybob: the thing about how many decimal places to output might not actually be that hard.  When we render we know exactly how big the requested output is.
+2013-03-09 19:59:15 UTC <byorgey> By default we could choose to resolve down to, arbitrarily, say, 10^-3 or 10^-4 times the max output dimension
+2013-03-09 19:59:27 UTC <byorgey> and if you want it finer there could be a command-line option
+2013-03-09 20:00:19 UTC <byorgey> though I guess there are probably some subtle issues there that I haven't thought about
