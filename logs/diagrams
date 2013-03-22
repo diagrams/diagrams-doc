@@ -27186,3 +27186,442 @@
 2013-03-09 19:59:15 UTC <byorgey> By default we could choose to resolve down to, arbitrarily, say, 10^-3 or 10^-4 times the max output dimension
 2013-03-09 19:59:27 UTC <byorgey> and if you want it finer there could be a command-line option
 2013-03-09 20:00:19 UTC <byorgey> though I guess there are probably some subtle issues there that I haven't thought about
+2013-03-09 20:11:30 UTC <fryguybob> byorgey: Yeah I don't think it is too hard.  I did an experiment last nigth and just added a wrapper with a show instance that does showFFloat at two digits.
+2013-03-09 20:11:40 UTC <fryguybob> Just to see how much it would save.
+2013-03-09 20:11:52 UTC <fryguybob> But the output was quite a bit off.
+2013-03-09 20:12:28 UTC <byorgey> ah, interesting
+2013-03-09 20:12:48 UTC <byorgey> you did this for *all* floating point values?  Including ones in transformation matrices?
+2013-03-09 20:12:56 UTC <fryguybob> No, just paths.
+2013-03-09 20:12:59 UTC <byorgey> I would imagine those would be a little tricker to get right
+2013-03-09 20:13:01 UTC <byorgey> oh, ok
+2013-03-09 20:13:02 UTC <fryguybob> Right
+2013-03-09 20:13:30 UTC <byorgey> how much did it save though?
+2013-03-09 20:13:34 UTC <fryguybob> half
+2013-03-09 20:13:45 UTC <byorgey> ah, not too shabby =)
+2013-03-09 20:14:30 UTC <fryguybob> I don't know how much SVG would save by applying more transformations through to the paths or grouping together paths that are under the same transformation.
+2013-03-09 20:14:45 UTC <fryguybob> I looked at doing that in postscript and we were just missing a few things to get that right.
+2013-03-09 20:15:22 UTC <fryguybob> That's more something I've been cataloging under "optimized" backends.
+2013-03-09 22:55:31 UTC <hpaste> dmj pasted âeckâ at http://hpaste.org/83772
+2013-03-09 22:56:48 UTC <fryguybob> ?
+2013-03-09 23:11:18 UTC <hpaste> dmj revised âeckâ: âeck1â at http://hpaste.org/83772
+2013-03-10 00:15:29 UTC <hpaste> dude pasted âyoâ at http://hpaste.org/83777
+2013-03-10 00:21:07 UTC <byorgey> I'm guessing they selected #diagrams by accident... twice?
+2013-03-10 06:08:58 UTC <ClaudiusMaximus> ACTION needs a custom widget in gtk - think diagrams is the way to go :)   so far i have sets of 3 sliders to adjust ratio x:y:z (so doubling each value gives the same effect), would be saner to have a circle that i can move around inside a triangle (which i suppose is like part of a colour composition widget)
+2013-03-10 06:18:22 UTC <mgsloan> ClaudiusMaximus: You might take a look at my toy-gtk-diagrams stuff: https://github.com/mgsloan/toy-gtk-diagrams
+2013-03-10 06:19:34 UTC <mgsloan> In particular, https://github.com/mgsloan/toy-diagrams/blob/master/src/Graphics/UI/Toy/Slider.hs https://github.com/mgsloan/toy-diagrams/blob/master/src/Graphics/UI/Toy/Draggable.hs
+2013-03-10 06:23:28 UTC <mgsloan> ACTION really needs to get that stuff on hackage
+2013-03-10 06:23:40 UTC <mgsloan> not sure if I should keep the "toy" in the title though
+2013-03-10 06:24:19 UTC <mgsloan> comes from the lineage of the C++ toy-framework, part of lib2geom, part of inkscape
+2013-03-10 06:25:04 UTC <mgsloan> toy-gtk was actually written by looking at the C++ and writing the haskell (not that I really needed to do that - it's a pretty simple thing)
+2013-03-10 06:58:05 UTC <hpaste> ClaudiusMaximus pasted âFailed to install toy-gtk-diagrams-0.3.0â at http://hpaste.org/83790
+2013-03-10 06:59:04 UTC <mgsloan> doh!
+2013-03-10 06:59:09 UTC <ClaudiusMaximus> mgsloan: yep, was looking at it, but failed somewhere
+2013-03-10 06:59:29 UTC <mgsloan> This is why I need to you know, publish it and get users and stuff
+2013-03-10 06:59:46 UTC <ClaudiusMaximus> had to s/gtk-toy/toy-gtk/ in the other repo
+2013-03-10 06:59:55 UTC <mgsloan> yikes
+2013-03-10 07:00:05 UTC <ClaudiusMaximus> still has gtk-toy.cabal
+2013-03-10 07:00:07 UTC <mgsloan> I guess I never finished the name switch
+2013-03-10 07:00:22 UTC <ClaudiusMaximus> and i had to add UndecideableInstances in one file too
+2013-03-10 07:00:25 UTC <mgsloan> Orr I never committed my changes
+2013-03-10 07:00:29 UTC <mgsloan> DOH
+2013-03-10 07:00:33 UTC <mgsloan> well that sucks
+2013-03-10 07:00:44 UTC <ClaudiusMaximus> (ghc 7.6.2, fwiw)
+2013-03-10 07:01:13 UTC <ClaudiusMaximus> forgot to push maybe? the wonders of decentralized version control...
+2013-03-10 07:01:14 UTC <mgsloan> when I get some freetime I'm going to travis this stuff up
+2013-03-10 07:01:32 UTC <mgsloan> yeah that "DOH" was me seeing there's uncommitted diffs in toy-gtk
+2013-03-10 07:02:35 UTC <mgsloan> ClaudiusMaximus: this might take a bit, thanks for discovering that!
+2013-03-10 07:02:49 UTC <ClaudiusMaximus> i tried sticking all my various online repos into one (locally cloned, not on the interwebs) using git submodule, not quite figured out how it's supposed to work, but it seems to help a bit (along with ssh-agent)
+2013-03-10 07:03:00 UTC <mgsloan> taking a bit because I need to install all the dependencies - my .cabal got reset since I last did diagrams stuff
+2013-03-10 07:03:23 UTC <mgsloan> oh, that's a cool way to do it
+2013-03-10 07:03:26 UTC <ClaudiusMaximus> i also had to add a --constraint="template-haskell installed"
+2013-03-10 07:04:07 UTC <ClaudiusMaximus> but that could be anywhere in the deps
+2013-03-10 07:04:40 UTC <mgsloan> I just recently had some submodule problems, but now that I'm using 1.8 and I understand them a little more, I think I'll use that strategy
+2013-03-10 07:05:07 UTC <ClaudiusMaximus> i have no real clue, keep getting annoyed that i'm not on a branch, or whatever
+2013-03-10 07:05:09 UTC <mgsloan> (git 1.8 -- older versions of git used absolute paths for submodules - blech)
+2013-03-10 07:05:53 UTC <mgsloan> yeah, when you update with submodules it takes you off the branch and puts you on a specific commit, I think
+2013-03-10 07:06:12 UTC <mgsloan> or maybe that's sync
+2013-03-10 07:06:18 UTC <mgsloan> I don't really fully grok them yet
+2013-03-10 07:07:46 UTC <ClaudiusMaximus> yes, submodule update puts you on a commit, then i have to do something along the lines of git submodule foreach (git checkout master && git pull) (or whatever the syntax really is)
+2013-03-10 07:08:29 UTC <ClaudiusMaximus> but probably submodule is the wrong way to go about things in my case (just avoiding having to get all my code from wherever with a handrolled script or something)
+2013-03-10 07:10:11 UTC <mgsloan> Hmm, I dunno, it seems like a good way to keep track of what repositories you've changed without pushing
+2013-03-10 07:10:26 UTC <ClaudiusMaximus> ah yeah, that too
+2013-03-10 07:10:50 UTC <ClaudiusMaximus> apparently i have git 1.7.something, will be on the lookout for path mayhem..
+2013-03-10 07:11:24 UTC <mgsloan> if it's 1.7.10 you're fine
+2013-03-10 07:11:33 UTC <mgsloan> unfortunately, ubuntu has 1.7.9
+2013-03-10 07:12:23 UTC <ClaudiusMaximus> ok, got 1.7.10.4..  (i'm a bit fuzzy at the moment, insomnia on top of a week-long headache and general exhaustion)
+2013-03-10 07:16:58 UTC <mgsloan> yikes! well, hopefully I can reduce the toy-gtk headache soon
+2013-03-10 07:17:09 UTC <mgsloan> I guess you already fixed it yourself though
+2013-03-10 07:32:22 UTC <ClaudiusMaximus> the toy-gtk-diagrams had too scary errors for me to attempt..
+2013-03-10 07:49:24 UTC <mgsloan> yeah
+2013-03-10 07:49:27 UTC <mgsloan> my bad
+2013-03-10 07:49:39 UTC <mgsloan> I think the best thing to do there is just to comment out the whole thing
+2013-03-10 07:49:47 UTC <mgsloan> that was WIP, I shouldn't have comitted it
+2013-03-10 07:50:10 UTC <mgsloan> it's not necessary - the idea was to make it easy to make ghci toys
+2013-03-10 07:50:15 UTC <ClaudiusMaximus> ACTION uploads a demo of his current wip
+2013-03-10 07:52:37 UTC <ClaudiusMaximus> http://mathr.co.uk/misc/2013-03-10_bitbreeder.png screenshot ; http://mathr.co.uk/misc/2013-03-10_bitbreeder.ogg audio (11MB)
+2013-03-10 07:53:20 UTC <mgsloan> cool! GAs for sound?
+2013-03-10 07:53:22 UTC <ClaudiusMaximus> recorded with laptop speakers, so might have wrong amounts of bass
+2013-03-10 07:53:23 UTC <ClaudiusMaximus> yep
+2013-03-10 07:53:55 UTC <mgsloan> fun stuff, I hope to get around to doing some GA stuff someday, pretty interested in using GP for fun and profit
+2013-03-10 07:54:07 UTC <ClaudiusMaximus> i evolve this kind of code http://countercomplex.blogspot.co.uk/2011/10/algorithmic-symphonies-from-one-line-of.html
+2013-03-10 07:54:31 UTC <ClaudiusMaximus> so basically an arithmetic expresssion from sample index to sample value
+2013-03-10 07:55:31 UTC <mgsloan> Ahh, yeah, I remember seeing that youtube video!
+2013-03-10 07:55:59 UTC <ClaudiusMaximus> the 4 sliders next to each spectrogram weight different parameters - from top to bottom  "frequency histogram shape", "volume histogram shape", "textural detail", "novelty"
+2013-03-10 07:56:22 UTC <mgsloan> great idea :D
+2013-03-10 07:56:44 UTC <mgsloan> I can't wait for it to be the first user of the toy-* (if it works out for you)
+2013-03-10 07:56:46 UTC <ClaudiusMaximus> the bottom 3 sets are crossbred together, the top one is the one that plays
+2013-03-10 07:56:51 UTC <mgsloan> needs to work first though..
+2013-03-10 07:58:35 UTC <mgsloan> The next step is to make a classifier that looks for certain varieties of samples out of the population, and composes a piece with them
+2013-03-10 07:58:50 UTC <mgsloan> (snare, bass drum, etc, maybe predetermined drum loops)
+2013-03-10 07:59:19 UTC <ClaudiusMaximus> well, already quite complicated really - generating C code that's compiled twice (once to executable, once to .so) - the exe makes a wav file which gets turned into a pgm spectrogram which then gets judged - results are fed back into the main program, which tells another program which .so to load to make sound
+2013-03-10 08:00:45 UTC <ClaudiusMaximus> but yes that could be fun too
+2013-03-10 08:01:04 UTC <mgsloan> maybe I should have said "next level" instead of "next step" ;)
+2013-03-10 08:01:19 UTC <ClaudiusMaximus> ROUND 2: FIGHT!
+2013-03-10 08:02:34 UTC <mgsloan> some seriously great stuff at 8:30 orso
+2013-03-10 08:02:57 UTC <ClaudiusMaximus> i do need better metrics though, the volume thing is particularly fiddly - when turned up the gaps tend to get larger, instead of there being more of them...
+2013-03-10 08:03:26 UTC <ClaudiusMaximus> gonna listen on my proper speakers now - hope my neighbours don't mind (8am sunday...)
+2013-03-10 08:07:09 UTC <mgsloan> ClaudiusMaximus: Ok, updated toy-gtk and toy-gtk-diagrams
+2013-03-10 08:07:12 UTC <mgsloan> really sorry about that!
+2013-03-10 08:07:41 UTC <ClaudiusMaximus> no worries :)
+2013-03-10 08:07:48 UTC <mgsloan> I hope to get them up on hackage at some point, but had a lot of other stuff to do
+2013-03-10 08:08:11 UTC <ClaudiusMaximus> will give them a go in a couple of hours, need to chill out and maybe do some dishes first..  too much coding overnight...
+2013-03-10 08:08:55 UTC <mgsloan> Yeah, I know that feeling.  Been trying to get into a regular cycle lately
+2013-03-10 08:09:26 UTC <mgsloan> (ideally both meanings of regular - at regular intervals, and normal times)
+2013-03-10 16:50:18 UTC <amitshree> is there any way to create a link against a file in github?
+2013-03-10 16:56:43 UTC <byorgey> hi amitshree, I don't think I understand your question
+2013-03-10 16:56:49 UTC <byorgey> in what context?
+2013-03-10 16:57:44 UTC <amitshree> i mean i am solving questions of projecteuler.net
+2013-03-10 16:58:09 UTC <amitshree> and storing source code in git after creating a repo
+2013-03-10 16:59:08 UTC <amitshree> and i don't want to write question with source code in github
+2013-03-10 16:59:16 UTC <byorgey> amitshree: just navigate through the github interface to the file you want to link to.  Then copy the URL.
+2013-03-10 16:59:31 UTC <byorgey> you can even click on a particular line, then the URL becomes one that will take you directly to that line in the code
+2013-03-10 17:00:06 UTC <byorgey> amitshree: Though I'm curious why you are asking this in #diagrams?
+2013-03-10 17:01:02 UTC <amitshree> i wais it not a github related channel?
+2013-03-10 17:01:42 UTC <amitshree> is it not a github related channel?
+2013-03-10 17:04:17 UTC <byorgey> amitshree: no, this channel is for discussion of the Haskell diagrams library, http://projects.haskell.org/diagrams
+2013-03-10 17:05:08 UTC <amitshree> ok
+2013-03-10 17:12:20 UTC <fryguybob> Humm, perhaps that was because we have github in the topic?
+2013-03-10 17:18:00 UTC <byorgey> fryguybob: that's probably how amitshree found this channel, I suppose.  But by that logic this is also a channel about logs, presumably the wooden kind
+2013-03-10 17:18:23 UTC <byorgey> new BlogLiterately release is almost ready!
+2013-03-10 17:40:25 UTC <fryguybob> Woohoo!
+2013-03-10 17:45:09 UTC <byorgey> done!
+2013-03-10 17:45:29 UTC <byorgey> man, why do releases always take about five times as long as you think they will?
+2013-03-10 17:45:37 UTC <byorgey> time for lunch!
+2013-03-11 05:20:40 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06issue8-unicode 146a251dd http://travis-ci.org/diagrams/diagrams-haddock/builds/5401262 The build passed.
+2013-03-11 16:01:00 UTC <luite> byorgey: i think i've said it before, but great homework exercise sheets with the stories and margin notes+pictures :) I'm almost jealous that i don't have to do them :p
+2013-03-11 17:01:47 UTC <byorgey> luite: hehe, thanks =)
+2013-03-11 19:14:21 UTC <fryguybob> Sooo many people want plotting.
+2013-03-11 19:16:01 UTC <carter> fryguybob i'm starting to hack on ti
+2013-03-11 19:16:03 UTC <carter> actually
+2013-03-11 19:16:23 UTC <carter> i should have something simple but sane on github in the next week or two
+2013-03-11 19:16:34 UTC <carter> for at least basic baby plotting
+2013-03-11 19:16:49 UTC <carter> was planning to do that a year ago... but now im at the point whre I actually need to work on that
+2013-03-11 19:16:54 UTC <fryguybob> :E
+2013-03-11 19:17:01 UTC <fryguybob> Oops that was supposed to be :D
+2013-03-11 19:17:03 UTC <carter> is that a moustache face?
+2013-03-11 19:17:04 UTC <carter> ah
+2013-03-11 19:17:12 UTC <fryguybob> I'm not on my normal keyboard.
+2013-03-11 19:17:16 UTC <carter> np
+2013-03-11 19:17:20 UTC <carter> what sort are you on?
+2013-03-11 19:17:29 UTC <fryguybob> It says Microsoft on it.
+2013-03-11 19:17:41 UTC <fryguybob> I'm used to my laptop keyboard.
+2013-03-11 19:18:16 UTC <fryguybob> I've been meaning to put some simple examples of basic plotting together, not as an API, but just examples of writing in diagrams directly.
+2013-03-11 19:19:34 UTC <carter> fryguybob yeah ... thats "easy"
+2013-03-11 19:19:49 UTC <carter> i think i have a sane way of making a sort of plotting DSL on top
+2013-03-11 19:20:09 UTC <carter> i'll start having time to hack on it towards the end of this week i think
+2013-03-11 19:20:40 UTC <fryguybob> I haven't touched it in a while, but I made a DSL (not embedded) for my wife to make the kind of plots that are in books, but are not partcularly easy to get out of a normal plotting program.
+2013-03-11 19:21:00 UTC <carter> what sort of plots do you have in mind?
+2013-03-11 19:21:21 UTC <carter> were what sort where those?
+2013-03-11 19:21:31 UTC <fryguybob> Piecewise continuous mostly.
+2013-03-11 19:21:39 UTC <fryguybob> http://patch-tag.com/r/fryguybob/LaTeXGrapher/home
+2013-03-11 19:22:25 UTC <carter> huh, that shouldn't be a problem for what i've got planned
+2013-03-11 19:22:30 UTC <carter> i think
+2013-03-11 19:44:51 UTC <carter> byorgey: I think that the haskell-cafe requests for ggplot2 from your students is asking a bit much :)
+2013-03-11 19:45:05 UTC <carter> if i come up wiht some good project ideas i'll reply to that thread
+2013-03-11 20:15:58 UTC <rodlogic> byorgey: what about a Erlang's webmachine lib for Haskell as a useful project? I.e. an implementation of this decision tree: https://github.com/basho/webmachine/wiki/Diagram
+2013-03-11 20:16:43 UTC <rodlogic> so that it can be plugged into cloud-haskell or plain http servers
+2013-03-11 20:18:32 UTC <rodlogic> and here is the core impl in Erlang: https://github.com/basho/webmachine/blob/master/src/webmachine_decision_core.erl#L115
+2013-03-11 20:22:20 UTC <luite> hmm that looks like something you could build with wai with the warp server?
+2013-03-11 20:24:06 UTC <luite> although i'm not quite sure what the goal is. webmachine does some resource management on top of a basic http server, where the application and external http requests can retrieve and modify the resources?
+2013-03-11 20:29:22 UTC <rodlogic> the goal would be to provide an API to create RESTful resources where all the restful HTTP handling is taken care of by the library based on the above diagram and using webmachine as a reference 
+2013-03-11 20:30:08 UTC <rodlogic> on top of wai/warp would be great
+2013-03-11 20:30:36 UTC <rodlogic> although not a taks on an existing open source project, the scope seems well defined and already documented out there
+2013-03-11 20:31:35 UTC <luite> a lot of that diagram is already implemented in warp obviously
+2013-03-11 20:31:36 UTC <rodlogic> I particularly like webmachine's simplicity for creating programmatic APIs
+2013-03-11 20:31:46 UTC <rodlogic> that are fully restful
+2013-03-11 20:33:12 UTC <rodlogic> I guess whatever needs to be done to make sure the decision tree is respected and possibly extended
+2013-03-11 20:33:52 UTC <rodlogic> sorry, I guess this is the wrong channel for this discussion ...
+2013-03-11 20:34:59 UTC <luite> hehe dunno
+2013-03-11 20:36:45 UTC <luite> but is it important that exactly this tree is followed? warp can make some of the early decisions (bad request, uri too long), but some others must be made later in the wai app (unauthorized, method not allowed)
+2013-03-11 20:41:02 UTC <rodlogic> do you mean that the ordering of checks could be different than the diagram? Or that the actual response codes etc would be different?
+2013-03-11 20:41:14 UTC <luite> no the ordering
+2013-03-11 20:41:26 UTC <rodlogic> That diagram is not gospel but contains some good best practices
+2013-03-11 20:43:22 UTC <rodlogic> do you have experience with wai/warp?
+2013-03-11 20:45:13 UTC <luite> yeah some
+2013-03-11 20:46:34 UTC <luite> a way app is more or less a (Request -> Response) function where both Request and Response can be streamed through conduit. so warp will send an error code if it doesn't understand enough of the request to make a Request, otherwise the wai app will deal with it
+2013-03-11 20:48:07 UTC <luite> if it's not a problem that warp will do some of the early decisions, perhaps in a different order, you can implement the rest of the tree in your app 
+2013-03-11 20:48:26 UTC <rodlogic> is wai tied to conduit?
+2013-03-11 20:48:30 UTC <luite> yes
+2013-03-11 20:51:05 UTC <luite> there are some alternatives with snap and happstack, but they don't really have such an explicit low level web server interface
+2013-03-11 20:51:40 UTC <rodlogic> and from what I know warp is the performance winner, no?
+2013-03-11 20:53:57 UTC <luite> it's quite fast, and kazu, one of the authors, is working with the ghc devs on better io manager scaling to make it better on multiple cores
+2013-03-11 20:54:20 UTC <luite> dunno if it's really faster than the rest at this point
+2013-03-11 23:05:12 UTC <byorgey> ooh, this is neat: http://hackage.haskell.org/package/monoid-subclasses
+2013-03-11 23:06:26 UTC <luite> some look a bit ad hoc though
+2013-03-11 23:07:15 UTC <luite> left/right cancellative and factorial seem useful
+2013-03-11 23:07:45 UTC <byorgey> yup
+2013-03-11 23:11:02 UTC <byorgey> factorial in particular is very similar to something I was thinking about for optimizing diagram attributes
+2013-03-11 23:11:47 UTC <byorgey> you want to compute sets of common attributes and lift them up the tree when possible
+2013-03-11 23:12:31 UTC <luite> oh that's in interesting application
+2013-03-11 23:12:33 UTC <luite> an
+2013-03-11 23:12:40 UTC <byorgey> e.g. automatically transform  hcat (replicate 100 (circle 1 # fc blue))  into   hcat (replicate 100 (circle 1)) # fc blue
+2013-03-11 23:13:50 UTC <byorgey> right now we don't have any backends which would take advantage of the difference, but hopefully we will soon =)
+2013-03-11 23:15:39 UTC <luite> hmm, do people really think of -fdefer-type-errors as a way to make haskell more appealing to dynamically typed programmers? i always thought of it as strictly a debugging aid
+2013-03-11 23:40:21 UTC <byorgey> I don't know if anyone really thinks of it that way.  But it sounds nice.
+2013-03-11 23:42:29 UTC <luite> yeah i was kind of surprised, Hamish Mackenzie wanted me to mentioned it to the JavaScript audience, and now Kazu mentions that use case on the glasgow-haskell-users mailing list
+2013-03-12 00:17:46 UTC <mgsloan> ACTION has been wondering how such monoid subclasses would fit in with lattice classes
+2013-03-12 00:19:46 UTC <luite> where you replace mappend with meet and join?
+2013-03-12 00:20:30 UTC <mgsloan> yeah, where mappend is probably join, but you get commutativity, and for bounded lattices you have top and/or bottom
+2013-03-12 00:21:30 UTC <mgsloan> Cancellative monoid seems related to lattice complement
+2013-03-12 00:22:05 UTC <luite> hm do you want commutativity? skew lattice would be closer to monoid then
+2013-03-12 00:22:09 UTC <mgsloan> The LeftGCDMonoid / RightGCDMonoid are totally lattice meets
+2013-03-12 00:22:21 UTC <mgsloan> lattices are always commutative, I thought
+2013-03-12 00:22:29 UTC <luite> yeah skew lattices aren't
+2013-03-12 00:22:39 UTC <mgsloan> ahh, cool
+2013-03-12 00:22:54 UTC <luite> but i'd have to check to see if that's the only difference
+2013-03-12 00:23:11 UTC <mgsloan> residuated lattice might be related to the cancellative monoids
+2013-03-12 00:26:31 UTC <mgsloan> Hmm, I guess skew lattices are like monoids + another operation, with properties between them (absorption)
+2013-03-12 00:28:12 UTC <mgsloan> luite: dcoutts (I think) was mentioning that -fdefer-type-errors was part of a larger effort to make GHC able to handle partialness more gracefully.  E.g. we might be able to somewhat typecheck code that has syntax errors
+2013-03-12 00:28:13 UTC <luite> the cancellative monoids feel a bit icky though, with the Maybe requirement
+2013-03-12 00:29:34 UTC <mgsloan> Oh snap, that's like patching on "bottom"
+2013-03-12 00:29:59 UTC <mgsloan> http://hackage.haskell.org/packages/archive/lattices/1.2.1/doc/html/Algebra-Lattice-Lifted.html
+2013-03-12 00:30:43 UTC <mgsloan> So, ideally a super library would be made out of this, semigroups, and lattices
+2013-03-12 00:31:14 UTC <mgsloan> But monoid-subclasses does seem to be fairly bent on being "practical" rather than mathematical
+2013-03-12 00:31:16 UTC <luite> dunno if it would really work for this purpose though
+2013-03-12 00:31:18 UTC <luite> right
+2013-03-12 00:31:45 UTC <luite> the Textual thing has default implementations for most stuff, but no one would use them because performance would be horrible
+2013-03-12 00:32:15 UTC <mgsloan> (which is probably a good call, I'm not sure what to do about the natural conflict between Haskell being good mathematical abstractions, and engineering)
+2013-03-12 00:32:20 UTC <luite> it's basically having some interesting typeclasses and then not using them :p
+2013-03-12 00:32:40 UTC <mgsloan> Haskell of course is good for both, but when the mathematical stuff is a prereq for some engineering libraries, hrmm
+2013-03-12 00:33:02 UTC <mgsloan> ah
+2013-03-12 00:37:24 UTC <luite> is there already something for the map function of Textual? (and many of the other ones as well)?
+2013-03-12 00:39:14 UTC <mgsloan> the classy prelude
+2013-03-12 00:39:20 UTC <luite> hehe
+2013-03-12 00:40:44 UTC <luite> yeah that looks like it has them, lots of fundeps :)
+2013-03-12 00:40:57 UTC <mgsloan> fun fun!
+2013-03-12 00:42:36 UTC <luite> lens must also have something like htis?
+2013-03-12 00:44:46 UTC <mgsloan> http://hackage.haskell.org/packages/archive/lens/3.8.7.3/doc/html/Data-ByteString-Lens.html
+2013-03-12 00:44:54 UTC <mgsloan> err, I guess we're not looking at bytestring
+2013-03-12 00:45:04 UTC <mgsloan> http://hackage.haskell.org/packages/archive/lens/3.8.7.3/doc/html/Data-Text-Lens.html
+2013-03-12 00:45:53 UTC <mgsloan> Maybe lens should similarly unify the textual typeclasses
+2013-03-12 00:45:57 UTC <mgsloan> who knows
+2013-03-12 00:46:06 UTC <mgsloan> I'll bet edwardk has reasons
+2013-03-12 00:46:33 UTC <luite> hmm, different classes yeah
+2013-03-12 00:47:06 UTC <mgsloan> But yeah, lens handles all of Textual
+2013-03-12 00:48:49 UTC <mgsloan> ahh, the reason that monoid-subclasses one has multiple instances is that "ByteStringUTF8" is defined in that package
+2013-03-12 00:49:08 UTC <mgsloan> and the stuff for "String" is just handled by traverse or itraverse in lens
+2013-03-12 22:35:28 UTC <tgeeky> whew!
+2013-03-12 22:36:14 UTC <tgeeky> for almost an entire week, I thought I lost all of my data, work, and code (or nearly all of it)
+2013-03-12 22:36:27 UTC <tgeeky> 1) never doing RAID0 again, ever.
+2013-03-12 22:37:49 UTC <tgeeky> 2) it turns out dead hard drives really can be resurrected by putting them in (a vacuum in) the freezer
+2013-03-12 22:38:05 UTC <tgeeky> and then issuing hdparm --write-sector commands to the bad sectors
+2013-03-12 22:50:42 UTC <fryguybob> tgeeky: Sounds like a close one!
+2013-03-12 22:51:12 UTC <tgeeky> fryguybob: yes. It's not like there were any masterpieces in there, but there is a lot of work and experimentation
+2013-03-12 22:51:19 UTC <tgeeky> I really thought I lost it all :(
+2013-03-12 23:06:50 UTC <luite> a vacuum?
+2013-03-12 23:07:30 UTC <luite> oh a plastic bag?
+2013-03-12 23:07:34 UTC <fryguybob> Removing the moisture right?
+2013-03-12 23:07:53 UTC <luite> hard drives don't work in a vacuum
+2013-03-12 23:17:24 UTC <tgeeky> hm.
+2013-03-12 23:17:32 UTC <tgeeky> a vacuum sealed food container thing
+2013-03-12 23:17:39 UTC <tgeeky> and yes, to prevent condensation buildup
+2013-03-12 23:22:28 UTC <tgeeky> but, for instance, I get dozens of bad sectors if the drive is warm, and SMART responses are malformed (saying the drive has 60 PB of space, for instance)
+2013-03-12 23:22:36 UTC <tgeeky> but once it's cooled, it mostly works
+2013-03-12 23:23:26 UTC <luite> oh is an airtight seal commonly called a vacuum seal?
+2013-03-12 23:24:00 UTC <luite> tgeeky: do you have working backups now? :)
+2013-03-12 23:24:16 UTC <tgeeky> not yet, I just got the data recovered
+2013-03-12 23:24:21 UTC <fryguybob> I don't know if it is true or not, but I heard that the cooling thing works on bad motors.
+2013-03-12 23:24:51 UTC <tgeeky> luite: A chamber which has less atmospheric pressure than ... the atmosphere is a vacuum. 
+2013-03-12 23:25:26 UTC <luite> obviously :p
+2013-03-12 23:25:36 UTC <tgeeky> I put the drive in one of these: http://www.bestkitchencooked.com/wp-content/uploads/2013/02/FoodSaverT02-0050-05_812.jpg
+2013-03-12 23:25:41 UTC <tgeeky> without the meat and potatoes
+2013-03-12 23:26:00 UTC <tgeeky> it's more than airtight, though. It has the air removed from it.
+2013-03-12 23:26:21 UTC <tgeeky> If there were air inside the container, it too would condense and I would be worried about moisture
+2013-03-12 23:26:34 UTC <fryguybob> Where do the wires go?
+2013-03-12 23:26:42 UTC <tgeeky> I took the drive out to use it :)
+2013-03-12 23:27:05 UTC <tgeeky> I let it warm up by 5 degrees C (measured by IR) to prevent reheating condensation, and then turned it on
+2013-03-12 23:27:46 UTC <tgeeky> I have dd-backups of both of the two drives, though this is not exactly helpful (since it's evidently not possible to do anything with a fakeraid drive image)
+2013-03-12 23:27:55 UTC <fryguybob> The vegetables look tasty.
+2013-03-12 23:28:19 UTC <luite> hm i wonder why motors work better in the cold... because magnets get weaker at higher temperatures?
+2013-03-12 23:28:45 UTC <tgeeky> I'm not actually convinced it's the motor. I don't think the motor would have anything to do with the SMART status being corrupt (as it's all stored on a chip)
+2013-03-12 23:29:01 UTC <luite> tgeeky: raid0 layout should be pretty straightforward shouldn't it?
+2013-03-12 23:29:26 UTC <tgeeky> luite: I suppose it should be. It should look like ABABAB...
+2013-03-12 23:29:32 UTC <fryguybob> Well once the motors are no longer spinning like they should that kind of throws everything else off.
+2013-03-12 23:29:51 UTC <tgeeky> also, cold temperatures shrink things (that may have expanded due to heat)
+2013-03-12 23:30:19 UTC <tgeeky> for instance, the LHC beam pipes lose a few cm in diameter when they cryo cool them
+2013-03-12 23:31:44 UTC <fryguybob> ACTION hardware is always sooo messy.
+2013-03-12 23:32:43 UTC <luite> bleh i wonder if i can write anything about ghcjs that's interesting enough for icfp...
+2013-03-12 23:33:09 UTC <tgeeky> luite: I can answer this one: yes, you can.
+2013-03-12 23:33:43 UTC <luite> first version is due in 2 wks
+2013-03-12 23:35:58 UTC <luite> did some very simple benches earlier today at the request of some uhc-js guy (for some other paper), results were still 7-10x slower than native ghc
+2013-03-12 23:36:50 UTC <luite> tgeeky: what kind of things would you want to read about?
+2013-03-13 00:00:09 UTC <luite> that's what i mean ;p
+2013-03-13 00:14:11 UTC <alpounet> luite, native ghc with -O2 ?
+2013-03-13 00:15:10 UTC <luite> yeah both with -O2
+2013-03-13 00:23:15 UTC <luite> i'm now adding argc/argv support so i can run nofib tests that require a command line argument for the size
+2013-03-13 00:26:21 UTC <alpounet> luite, well remember that you implement a runtime on top of a "slow" language
+2013-03-13 00:26:46 UTC <alpounet> i don't know how fast you think you can make ghcjs but i'm not sure you can reach 2x 3x on most programs
+2013-03-13 00:28:21 UTC <mgsloan> yeah, 7-10x slower than native ghc is fast enough for most realistic purposes
+2013-03-13 00:28:22 UTC <luite> emscripten gets 2-3x for llvm, but haskell is a bit harder because of threading and cps transformation
+2013-03-13 00:28:50 UTC <luite> some things are probably much slower than 10x, looks like JSBN is much worse
+2013-03-13 00:28:51 UTC <mgsloan> I mean, people using ruby were ok with 100x slower for a long time
+2013-03-13 00:28:57 UTC <luite> = bignum lib
+2013-03-13 00:30:07 UTC <luite> k command line args work in node.js and spidermonkey now, time to import nofib stuff into the ghcjs test suite :)
+2013-03-13 00:34:15 UTC <luite> bernouilli 500, (nofib/imaginary/bernouilli: 0.124 sec native, 21 sec ghcjs
+2013-03-13 00:34:37 UTC <luite> oh v8 i s faster, 5 seconds
+2013-03-13 00:34:56 UTC <luite> that test spends almost all time in the bignum library
+2013-03-13 00:35:06 UTC <luite> so anyone want to write a faster one than JSBN?
+2013-03-13 00:50:36 UTC <alpounet> nah, busy with http://core.alpmestan.com/ (e.g http://core.alpmestan.com/core/14 )
+2013-03-13 00:53:10 UTC <luite> fun :)
+2013-03-13 00:57:46 UTC <alpounet> will probably talk a bit about it on my blog or smth to let people know about this, in case they might find it useful
+2013-03-13 02:04:16 UTC <rodlogic> alpounet: how are you generating core? exec ghc or ghc lib?
+2013-03-13 02:06:42 UTC <alpounet> rodlogic, calling out to ghc for now because "it's enough"
+2013-03-13 02:07:24 UTC <luite> how do you make it safe?
+2013-03-13 02:07:53 UTC <alpounet> luite, for now it isn't
+2013-03-13 02:08:14 UTC <alpounet> that's why i'm just showing here 
+2013-03-13 02:08:15 UTC <alpounet> :p
+2013-03-13 02:08:57 UTC <alpounet> i'm not executing the haskell code so that's that out of the way. but TH can get annoying I suppose
+2013-03-13 02:11:01 UTC <luite> ah :)
+2013-03-13 02:11:14 UTC <luite> also preprocessor pragmas
+2013-03-13 02:11:30 UTC <alpounet>  yeah
+2013-03-13 02:11:47 UTC <alpounet> forbidding CPP and TH should protect me I suppose
+2013-03-13 02:14:53 UTC <luite> OPTIONS_GHC too, since that lets you specify things like -pgmF
+2013-03-13 02:15:36 UTC <alpounet> yeah
+2013-03-13 02:15:53 UTC <alpounet> thing is
+2013-03-13 02:16:18 UTC <alpounet> if I disable TH, but if I put {-# LANGUAGE TemplateHaskell #-} in the haskell code, who wins? the latter, isn't it?
+2013-03-13 02:22:07 UTC <fryguybob> It seems so.
+2013-03-13 02:22:58 UTC <alpounet> meh
+2013-03-13 02:23:36 UTC <fryguybob> Humm  -hide-package template-haskell  didn't help either.
+2013-03-13 02:25:44 UTC <tgeeky> fryguybob: what are you trying to do? SafeHaskell or whatever will turn TH off, no?
+2013-03-13 02:26:14 UTC <alpounet> i need safe compilation 
+2013-03-13 02:26:20 UTC <alpounet> isn't safe haskell for safely running?
+2013-03-13 02:26:52 UTC <tgeeky> alpounet: I never know how to answer questions like that. It does what it says it does in the docs.
+2013-03-13 02:27:05 UTC <tgeeky> I think one of the SafeHaskell-like pragmas diasbles TH from being used at all
+2013-03-13 02:27:35 UTC <alpounet> I will read the manual about SafeHaskell and see if that could fit -- thanks for the idea 
+2013-03-13 02:27:46 UTC <tgeeky> alpounet: http://hackage.haskell.org/trac/ghc/wiki/SafeHaskell
+2013-03-13 02:27:58 UTC <tgeeky> alpounet: -XSafe disables LANGUAGE TemplateHaskell
+2013-03-13 02:28:01 UTC <fryguybob> tgeeky: Yes, using -XSafe does cause it to fail.
+2013-03-13 02:28:35 UTC <tgeeky> fryguybob: I just got here. That's what you want? :O
+2013-03-13 02:29:56 UTC <alpounet> fryguybob, what if you then use {-# LANGUAGE Unsafe #-} in the file and -XSafe given to ghc? :p
+2013-03-13 02:30:18 UTC <alpounet> oh wait Unsafe isn't really what i thought it was
+2013-03-13 02:32:22 UTC <fryguybob> tgeeky: We were just wondering about ways to prevent TemplateHaskell from running.
+2013-03-13 02:32:28 UTC <tgeeky> alpounet: yeah, that's why I try not to describe how it works. Every time I try that, I say something incorrect.
+2013-03-13 02:34:27 UTC <alpounet> tgeeky, heh, you've been helpful anyway
+2013-03-13 02:34:52 UTC <alpounet> soo, first I'd need some sneaky TH code 
+2013-03-13 02:37:02 UTC <alpounet> oh, runIO will do.
+2013-03-13 02:45:02 UTC <byorgey> fryguybob: I think I figured out how to solve the issue with ScaleInv + freeze while sitting in jury duty today
+2013-03-13 02:45:14 UTC <byorgey> I'll try to code it up soon =)
+2013-03-13 02:50:03 UTC <fryguybob> Nice!
+2013-03-13 02:50:45 UTC <tgeeky> byorgey: a productive jury duty? unpossible!
+2013-03-13 02:52:36 UTC <luite> hm how often does one have jury duty?
+2013-03-13 02:53:02 UTC <tgeeky> luite: once or twice a decade, depending on state
+2013-03-13 02:55:54 UTC <byorgey> about once a year in Philadelphia
+2013-03-13 02:56:21 UTC <byorgey> if you don't get picked to serve on a jury that is, if you do serve on a jury I think it's like two or three years before they call you again
+2013-03-13 02:56:38 UTC <byorgey> anyway
+2013-03-13 02:56:42 UTC <byorgey> ACTION -> bed
+2013-03-13 03:03:05 UTC <luite> hm bed, i almost forgot what that is
+2013-03-13 03:09:19 UTC <mgsloan> When my dad was in jury duty selection, the thing that ruled him out was that he'd spent 1 yr in africa with the peace corps
+2013-03-13 03:09:56 UTC <mgsloan> Kinda makes you wonder about juries... "Lets select the people who have no context for understanding this case.."
+2013-03-13 03:10:12 UTC <mgsloan> I mean, he was happy with that, of course
+2013-03-13 03:23:47 UTC <luite> grmblz program pending 60% of its running time allocating objects
+2013-03-13 03:27:32 UTC <tgeeky> byorgey: I was going for, getting picked to serve
+2013-03-13 03:27:40 UTC <tgeeky> byorgey: that happens rarely here in GA / Atlanta
+2013-03-13 03:28:13 UTC <tgeeky> mgsloan: yes. Jury selection is the worst process ever.
+2013-03-13 03:31:00 UTC <luite> hm do most people support jury trial?
+2013-03-13 03:31:12 UTC <mgsloan> Yeah, it has an underlying assumption that everyone is fit to think logically and pass judgment.  Instead of selecting people that would be good at such things (maybe this is good, they have better things to do), it'll trend towards people who the prosecution and defense think are easily manipulable
+2013-03-13 03:32:39 UTC <mgsloan> I actually had no idea that the prosecution and defense were involved in the process, till recently.  Seems like that component of it really mucks things up
+2013-03-13 03:33:01 UTC <mgsloan> (clearly, I really don't know much about this)
+2013-03-13 03:33:09 UTC <mgsloan> (haven't had to do it, myself)
+2013-03-13 03:33:34 UTC <luite> (me neither)
+2013-03-13 11:08:52 UTC <byorgey> mgsloan: the prosecution and defense get a certain number of "vetos", as it were, i.e. they can simply disqualify someone without having to give a reason
+2013-03-13 11:09:11 UTC <byorgey> but I think they only get a certain number, and they can't just look at a big group of people and pick which ones they want
+2013-03-13 11:09:24 UTC <mgsloan> byorgey: ahh, yeah, that's certainly better
+2013-03-13 11:10:30 UTC <byorgey> notionally, the idea is to exclude people who might already be biased in a certain direction
+2013-03-13 11:10:47 UTC <byorgey> though I'm sure it is not always quite so idealistic.
+2013-03-13 22:07:19 UTC <fryguybob> ACTION refills the pi ice-cube tray.
+2013-03-15 05:14:15 UTC <luite> bleh who would've thought ghcjs was so much work
+2013-03-15 21:59:06 UTC <ClaudiusMaximus> mgsloan: i kinda abandoned trying to make a custom widget, mainly because i increased the number of parameters dramatically.. maybe some other time
+2013-03-15 21:59:44 UTC <mgsloan> ClaudiusMaximus: Gotcha.  gtk-toy-diagrams worked alright though, right?
+2013-03-15 21:59:45 UTC <lambdabot> mgsloan: You have 1 new message. '/msg lambdabot @messages' to read it.
+2013-03-15 22:00:26 UTC <ClaudiusMaximus> here's what my current user interface looks like: http://mathr.co.uk/misc/2013-03-15_bitbreeder_edit.png
+2013-03-15 22:00:42 UTC <ClaudiusMaximus> mgsloan: i didn't get as far as rebuilding it after you pushed fixes, sadly
+2013-03-15 22:01:20 UTC <mgsloan> Whoah, that is a /dark/ theme
+2013-03-15 22:01:32 UTC <ClaudiusMaximus> my laptop screen is kinda bright i think..
+2013-03-15 22:01:38 UTC <mgsloan> I can barely see the sliders over here
+2013-03-15 22:01:56 UTC <ClaudiusMaximus> i did think the same when i looked at it on this other computer..
+2013-03-15 22:03:58 UTC <ClaudiusMaximus> sounds are more varied in texture now, or maybe my ears have gotten more finely attuned to the details... http://mathr.co.uk/misc/2013-03-15_bitbreeder_edit.ogg
+2013-03-15 22:04:29 UTC <mgsloan> it's post dubstep!  I kidd I kidd
+2013-03-15 22:04:57 UTC <mgsloan> Hmm yeah, ther're more gradual fades / resonances now
+2013-03-15 22:05:33 UTC <ClaudiusMaximus> the key magic ingredient is the "granularity" controls...
+2013-03-15 22:06:58 UTC <ClaudiusMaximus> it's a multiresolution centroid of standard deviation, or something - the further right it is the more longer-time-scale changes are
+2013-03-15 22:07:36 UTC <mgsloan> cool!
+2013-03-15 22:08:14 UTC <ClaudiusMaximus> and the target sliders (left column) are autoscaled to (mean +- 5 stddev)
+2013-03-15 22:09:11 UTC <ClaudiusMaximus> which does have an unfortunate side effect of "shifting the goal posts" during usage, but hey, more fun
+2013-03-15 22:48:42 UTC <mgsloan> Yeah, could have quite a bit of utility, actually
+2013-03-15 22:49:00 UTC <mgsloan> real evolution does have shifting goal posts as the environment changes
+2013-03-15 22:49:38 UTC <mgsloan> It'd be cool to have manual selection, maybe.  I dunno.  I think that's the idea behind the electric sheep screensaver stuff
+2013-03-15 22:49:46 UTC <ClaudiusMaximus> yeah, voting
+2013-03-15 22:49:51 UTC <ClaudiusMaximus> by actual people
+2013-03-15 22:50:13 UTC <ClaudiusMaximus> and also "intelligent design" injected into the system
+2013-03-15 22:51:12 UTC <ClaudiusMaximus> but if you say "my target X is mean(X) + stddev(X)", the mean will increase over time, presumably...
+2013-03-15 22:53:41 UTC <ClaudiusMaximus> and you can get stuck if you're not careful - if you have a zillion things at X=0 and 1 thing at X=1, X=1 might be more than 5stddevs away from the mean..
+2013-03-15 22:54:30 UTC <ClaudiusMaximus> would also be cool to have a histogram for each slider, showing how many things there across the range..
+2013-03-15 22:56:48 UTC <ClaudiusMaximus> but not that high priority - want to display the ASTs graphically so any potential audience have something to stare at other than my face
+2013-03-15 22:57:13 UTC <ClaudiusMaximus> (and fix the wonky alignment of the sliders)
+2013-03-15 22:59:17 UTC <ClaudiusMaximus> and add a tabbed interface so i can have more than one target and cross breed them (like the earlier version had)
+2013-03-15 22:59:43 UTC <mgsloan> ooh, that'd be really cool
+2013-03-15 22:59:51 UTC <mgsloan> (the histograms and ASTs)
+2013-03-15 23:01:26 UTC <ClaudiusMaximus> for the AST i want to use samples of my handwriting for the glyphs and connecting strokes, will re-use the tree layout from my lambda calculus experiments
+2013-03-15 23:02:50 UTC <ClaudiusMaximus> http://archive.org/movies/thumbnails.php?identifier=ClaudiusMaximus_-_ULCIv1
+2013-03-15 23:08:44 UTC <lemao> ClaudiusMaximus: how did you generate these animations?
+2013-03-15 23:10:15 UTC <ClaudiusMaximus> lemao: those ones were rendering lots of svg files (using homebrew crappy String interface) then combined with rsvg ffmpeg etc
+2013-03-15 23:11:36 UTC <lemao> so you printed the events as string messages and build svg frames and then put them together? Neat
+2013-03-15 23:13:14 UTC <ClaudiusMaximus> http://archive.org/download/ClaudiusMaximus_-_ULCIv1/ulci.tar.bz2 is the source code, probably bitrotted by now..
+2013-03-15 23:13:46 UTC <ClaudiusMaximus> anyway, must clean... laters
+2013-03-15 23:59:20 UTC <luite> hehe Prof. Yorgey
+2013-03-16 00:00:30 UTC <luite> i must call him that from now on :)
+2013-03-16 01:10:45 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 149830493 http://travis-ci.org/diagrams/diagrams-haddock/builds/5541773 The build passed.
+2013-03-16 01:34:19 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06issue7 14e54d0eb http://travis-ci.org/diagrams/diagrams-haddock/builds/5542020 The build passed.
+2013-03-16 01:59:44 UTC <byorgey> luite: heh, what?
+2013-03-16 02:00:20 UTC <luite> byorgey: oh someone called you Prof. Yorgey on -cafe
+2013-03-16 02:00:44 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 142f13cc3 http://travis-ci.org/diagrams/diagrams-haddock/builds/5542409 The build passed.
+2013-03-16 02:00:47 UTC <byorgey> oh, hehe =)
+2013-03-16 02:01:31 UTC <byorgey> ACTION -> bed
+2013-03-16 14:01:41 UTC <jtootf> hi! can anyone please point me at the direction for the easiest creation of complex plane function/lattice graphs with diagrams? something like http://upload.wikimedia.org/wikipedia/commons/a/a8/Eisenstein_integer_lattice.png to start with. I'm reading through the manual right now and I've stumbled upon diagrams-contrib package already which has some pretty plane tilings, but still I don't see how to display cartesian axes (except for maki
+2013-03-16 14:01:41 UTC <jtootf> ng them all-by-hand from segments) and have fixed coordinate system.
+2013-03-16 14:02:39 UTC <jtootf> best example I've seen so far is http://projects.haskell.org/diagrams/gallery/Quasifuchsian.html but it lacks axes as well (while being very good from all other standpoints)
+2013-03-16 14:11:12 UTC <fryguybob> jtootf: I don't know of any examples that have already done that, but if I were to do it I would start with generating some vertical lines.
+2013-03-16 14:11:33 UTC <fryguybob> Then do that again rotated and put that on top.
+2013-03-16 14:12:57 UTC <fryguybob> Then I would replace that diagram's envelope with the evelope of the view that I want.
+2013-03-16 14:13:27 UTC <fryguybob> I can make an example in a minute.
+2013-03-16 14:23:07 UTC <jtootf> fryguybob: thanks! I definitely need to read on envelopes
+2013-03-16 14:49:58 UTC <fryguybob> jtootf: http://www.cs.rochester.edu/u/ryates/temp/axis.svg
+2013-03-16 14:51:15 UTC <hpaste> fryguybob pasted âAxisâ at http://hpaste.org/84162
+2013-03-16 15:17:23 UTC <jtootf> aww! thanks a lot! it looks exactly like the way I wanted :)
+2013-03-16 15:25:47 UTC <fryguybob> jtootf: No problem.  It could probably be cleaner in several ways (using align instead of some transaltions, clipping) but if it works it's good :D.
+2013-03-16 15:26:37 UTC <fryguybob> Also the circle is only there to show that the axis stuff is aligned to the coordinate space as you would expect it to be with the origin at (0,0).
+2013-03-16 17:40:25 UTC <luite_> hm annyoing i can't reach my server through ssh
+2013-03-16 17:49:05 UTC <fryguybob> :(
+2013-03-16 17:49:25 UTC <luite_> can you reach http://www.hetzner-status.de/
+2013-03-16 17:49:37 UTC <fryguybob> yes
+2013-03-16 17:50:25 UTC <luite_> oh i can't
+2013-03-16 17:50:49 UTC <luite_> does it say anything about routing problems or links to the netherlands?
+2013-03-16 17:52:07 UTC <tgeeky>  StÃ¶rungsmeldung Shared Hosting Server www236.your-server.de
+2013-03-16 17:52:09 UTC <fryguybob> The things listed are for yesterday.
+2013-03-16 17:52:40 UTC <fryguybob> In case it is just DNS the IP I get is 193.47.99.7
+2013-03-16 17:56:29 UTC <luite_> tgeeky: yeah this server isn't shared, must be a network problem
+2013-03-16 18:00:07 UTC <luite_> fryguybob: i get the same ip
+2013-03-16 18:00:21 UTC <luite_> with high ping time and ~50% packet loss
+2013-03-16 18:03:28 UTC <luite> hello!
+2013-03-16 18:03:37 UTC <luite> it looks like they fixed it :)
+2013-03-17 03:36:56 UTC <travis-ci> [travis-ci] 13active/06master 1476a1c42 http://travis-ci.org/diagrams/active/builds/5562083 The build passed.
