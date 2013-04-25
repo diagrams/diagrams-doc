@@ -27625,3 +27625,1243 @@
 2013-03-16 18:03:28 UTC <luite> hello!
 2013-03-16 18:03:37 UTC <luite> it looks like they fixed it :)
 2013-03-17 03:36:56 UTC <travis-ci> [travis-ci] 13active/06master 1476a1c42 http://travis-ci.org/diagrams/active/builds/5562083 The build passed.
+2013-03-22 15:50:19 UTC <kinghajj> Hello, all.
+2013-03-22 15:53:15 UTC <kinghajj> Anyone home?
+2013-03-22 15:55:48 UTC <fryguybob> kinghajj: Hi
+2013-03-22 15:56:16 UTC <fryguybob> I'm not around for long, but I'll be back later if you have a question someone will see it.
+2013-03-22 15:57:04 UTC <kinghajj> I just wanted some suggestions on implementing a basic XY line graph in Diagrams. Specifically, I want to graph Bitcoin prices.
+2013-03-22 16:00:33 UTC <fryguybob> kinghajj: If you have your data as ordered pairs the simplest thing might be to do something like  mconcat . zipWith (~~) <*> tails
+2013-03-22 16:00:57 UTC <fryguybob> I've got to run :(
+2013-03-22 16:01:00 UTC <bergey> for the graph, I'd do something like fromPoints $ zipWith (r2 . (,)) times prices
+2013-03-22 16:01:07 UTC <bergey> I can probably help.
+2013-03-22 16:01:13 UTC <fryguybob> Oh yeah, fromPoints.
+2013-03-22 16:01:27 UTC <bergey> I like yours too, just already had mine typed.
+2013-03-22 16:02:22 UTC <bergey> kinghajj: Do these lines make sense to you, or should I slow down and explain in more detail?
+2013-03-22 20:38:43 UTC <travis-ci> [travis-ci] 13diagrams-core/06master 142a85db0 http://travis-ci.org/diagrams/diagrams-core/builds/5726217 The build passed.
+2013-03-22 20:39:25 UTC <travis-ci> [travis-ci] 13diagrams-core/06master 14c7c69b8 http://travis-ci.org/diagrams/diagrams-core/builds/5726225 The build passed.
+2013-03-22 20:40:34 UTC <tgeeky> ACTION only couns three
+2013-03-22 20:41:56 UTC <byorgey> the github bot shows a maximum of three
+2013-03-22 20:42:12 UTC <byorgey> so it doesn't flood the channel if you push like 68 commits or whatever
+2013-03-22 20:42:37 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 140b58a5f http://travis-ci.org/diagrams/diagrams-lib/builds/5726309 The build passed.
+2013-03-22 20:53:14 UTC <tgeeky> who here would be in support of occasional voice-chats (using something nice and free, like Mumble) about diagrams and haskell?
+2013-03-22 20:53:41 UTC <tgeeky> it seems weird to me that thousand of people use such a thing for playing video games, but virtually nobody (to my knowledge) uses them for development
+2013-03-22 20:55:12 UTC <tgeeky> if it forces you to respond, s/support/oppose/
+2013-03-22 20:57:33 UTC <ClaudiusMaximus> i think it might not work so well (it's easier to talk and play games simultaneously than it is to talk and write code, probably because most games don't need language processing)
+2013-03-22 20:57:40 UTC <ClaudiusMaximus> but i haven't tried
+2013-03-22 20:58:04 UTC <tgeeky> I sort of imagine us looking at the same piece of code in a web browser or in chat
+2013-03-22 20:58:22 UTC <ClaudiusMaximus> ah that makes more sense i guess
+2013-03-22 20:58:54 UTC <tgeeky> perhaps we could experiment with it? Mumble is free, fast, and easy to install.
+2013-03-22 20:59:04 UTC <tgeeky> and cross-platform (Windows and Linux, at least)
+2013-03-22 21:00:04 UTC <ClaudiusMaximus> http://mathr.co.uk/misc/2013-03-22_icosa.png (inspired by http://www.svgattic.com/images/PaperOrnaments.gif )
+2013-03-22 21:00:41 UTC <tgeeky> wow it's hard to see the differences looking right to left
+2013-03-22 21:02:54 UTC <ClaudiusMaximus> vertical axis is "flatness" (size of triangle relative to maximum possible size), horizontal axis is "depth" (relative to circumradius of icosahedron)
+2013-03-22 21:03:52 UTC <ClaudiusMaximus> it's sort of truncated pyramids poking into an icosahedron, or something, with circular bits
+2013-03-22 21:05:00 UTC <byorgey> ClaudiusMaximus: neat =)
+2013-03-22 21:05:06 UTC <byorgey> tgeeky: could be fun
+2013-03-22 21:05:45 UTC <tgeeky> I think it's plainly obvious that there is a *ton* of information not transmitted when we comm. over IRC
+2013-03-22 21:06:06 UTC <tgeeky> getting voice would be a step in the direction of recovering it
+2013-03-22 21:06:10 UTC <ClaudiusMaximus> yeah irc is kinda low bandwidth
+2013-03-22 21:06:29 UTC <ClaudiusMaximus> byorgey: :)
+2013-03-22 21:06:47 UTC <byorgey> ACTION installs mumble
+2013-03-22 21:07:07 UTC <byorgey> installed!
+2013-03-22 21:07:11 UTC <tgeeky> that was easy
+2013-03-22 21:07:16 UTC <tgeeky> are you still on Arch, byorgey ?
+2013-03-22 21:07:20 UTC <byorgey> yes
+2013-03-22 21:07:29 UTC <byorgey> pacman -S mumble  -- super easy
+2013-03-22 21:07:52 UTC <tgeeky> yep.
+2013-03-22 21:07:58 UTC <byorgey> can't talk right this minute though, I'm in a coffeeshop 
+2013-03-22 21:08:07 UTC <byorgey> and should be working on that type matrices paper
+2013-03-22 21:08:10 UTC <tgeeky> yeah, we need to find / arrange to use a server
+2013-03-22 21:08:16 UTC <tgeeky> type matrices!
+2013-03-22 21:08:35 UTC <byorgey> trying to submit it to ICFP.  We'll see if we actually make it.
+2013-03-22 21:08:45 UTC <byorgey> (the deadline is Thursday)
+2013-03-22 21:09:16 UTC <tgeeky> when you have a draft, send it to me, I'll do everything I can to help
+2013-03-22 21:10:01 UTC <carter> gl!
+2013-03-22 21:10:14 UTC <carter> btw: i'm looking at dual tree right now, i might be using it quite a bit soon ;)
+2013-03-22 21:10:36 UTC <carter> ClaudiusMaximus those are neat figures
+2013-03-22 21:10:45 UTC <byorgey> tgeeky: thanks!
+2013-03-22 21:10:52 UTC <byorgey> carter: cool
+2013-03-22 21:11:31 UTC <carter> byorgey i might use it as a hacky way of avoiding writing (for now) writing some quad trees that know their own convex hulls of their sub regions
+2013-03-22 21:12:17 UTC <carter> its kinda funny, i'm trying to view the data vis layer as being something that "emits" to diagrams, but i'm also finding i can reuse a lot of the support machinery all the same :)
+2013-03-22 21:12:42 UTC <tgeeky> ACTION thinks my first project with diagrams after my hardware crash is going to be feynman diagrams.
+2013-03-22 21:12:49 UTC <carter> those are neat
+2013-03-22 21:12:57 UTC <carter> i really want to learn enough physics to understand them at some point
+2013-03-22 21:13:01 UTC <tgeeky> and also very simple
+2013-03-22 21:14:24 UTC <ClaudiusMaximus> carter: :)
+2013-03-22 21:16:28 UTC <tgeeky> man, ICFP is already happening again. Time flies.
+2013-03-22 21:16:47 UTC <byorgey> well, it's not happening until September.
+2013-03-22 21:16:49 UTC <tgeeky> byorgey: is Thursday the already-slipped deadline?
+2013-03-22 21:17:03 UTC <byorgey> tgeeky: the deadline for ICFP never slips.
+2013-03-22 21:17:08 UTC <tgeeky> It seems every single time someone posts a deadline to haskell mailing lists, there is always a follow up :o
+2013-03-22 21:17:11 UTC <tgeeky> ah, an exception! :o
+2013-03-22 21:17:27 UTC <tgeeky> People who know what the term, deadline, means.
+2013-03-22 21:17:29 UTC <byorgey> bigger conferences tend not to do that
+2013-03-22 21:17:52 UTC <ClaudiusMaximus> phantom' x = phantom x `asTypeOf` x
+2013-03-22 21:17:53 UTC <byorgey> when deadlines are extended it's usually for smaller workshops and such who need more submissions
+2013-03-22 21:18:07 UTC <carter> or when NYC gets flooded and the north east is out
+2013-03-22 21:18:10 UTC <carter> for a week
+2013-03-22 21:18:16 UTC <carter> i saw that happen fro a few big conferences
+2013-03-22 21:18:43 UTC <tgeeky> carter: if only there were conferences on natural disasters, that had to be rescheduled.
+2013-03-22 21:18:49 UTC <byorgey> ClaudiusMaximus: ooh, I like that
+2013-03-22 21:18:52 UTC <tgeeky> or better, natural disaster preparedness.
+2013-03-22 21:20:10 UTC <byorgey> ClaudiusMaximus: perhaps that should be called phantom and the current phantom called phantom'
+2013-03-22 21:20:31 UTC <byorgey> because that's usually how it gets used anyway
+2013-03-22 21:21:01 UTC <byorgey> ACTION would happily accept such a patch
+2013-03-22 21:22:41 UTC <byorgey> Hac Phi June 7-9! Save the date!
+2013-03-22 21:23:24 UTC <tgeeky> that's quite a bit earlier
+2013-03-22 21:25:50 UTC <byorgey> earlier than what?
+2013-03-22 21:26:01 UTC <byorgey> oh, than what it was last year? I suppose so
+2013-03-22 21:26:15 UTC <byorgey> there's no attempt to have it around the same time every year
+2013-03-22 21:26:22 UTC <tgeeky> ~ 2 months
+2013-03-22 21:26:29 UTC <tgeeky> yep, I didn't think so
+2013-03-22 21:26:29 UTC <byorgey> we just find a time that doesn't conflict with stuff
+2013-03-22 21:29:29 UTC <luite> oh that's just a month after odhac
+2013-03-22 21:30:43 UTC <byorgey> true
+2013-03-22 21:31:22 UTC <tgeeky> if only we lived in a time period where it would be impossible to travel from the Ukraine to Philidelphia in one month.
+2013-03-22 21:31:38 UTC <byorgey> luite: why, are you thinking of attending both? =)
+2013-03-22 21:32:25 UTC <byorgey> tgeeky: if only!
+2013-03-22 21:43:45 UTC <carter> i should be able to swing hacphi
+2013-03-22 21:45:24 UTC <luite> byorgey: hehe unfortunately no
+2013-03-22 21:45:57 UTC <luite> unless Hac Phi offers travel compensation :)
+2013-03-22 21:49:14 UTC <byorgey> luite: heh, I totally wish we could!
+2013-03-22 21:49:41 UTC <carter> byorgey has anyone written a convex hull alg for diagrams?
+2013-03-22 21:49:57 UTC <carter> should be pretty simple to write a sort and sweep one 
+2013-03-22 21:50:02 UTC <carter> at least for point sets
+2013-03-22 21:50:06 UTC <byorgey> carter: nope
+2013-03-22 21:50:10 UTC <carter> ok
+2013-03-22 21:50:22 UTC <byorgey> carter: it's not really diagrams-specific, but I guess it would be nice to have one that uses the same types as diagrams
+2013-03-22 21:50:30 UTC <carter> i'll look into that
+2013-03-22 21:50:37 UTC <carter> might be 2D specific 
+2013-03-22 21:50:42 UTC <carter> but thats not a bad problem to have
+2013-03-22 21:51:00 UTC <byorgey> yes, convex hull is considerably more complicated in higher dimensions
+2013-03-22 21:51:09 UTC <carter> i'm going to be on a diagrams + computational geometry bender for the next 2-4 weeks
+2013-03-22 21:51:26 UTC <byorgey> nice =)
+2013-03-22 21:51:44 UTC <byorgey> I'm sure there are already implementations of convex hull on Hackage
+2013-03-22 21:52:03 UTC <byorgey> I seem to recall I wanted an implementation of Voronoi diagrams at some point in the past, and found a package that does it, but couldn't figure out how to use it
+2013-03-22 21:52:33 UTC <carter> ok, theres some  sweep hull algs
+2013-03-22 21:52:46 UTC <carter> but i'm not sure if i'm ok with how they look
+2013-03-22 21:52:59 UTC <carter> remind me about voronoi in a week or so
+2013-03-22 21:53:17 UTC <carter> i know some neat tricks for doing generalized voronio
+2013-03-22 21:53:34 UTC <carter> and doing that is conducive to some other stuff i'll be focusing on
+2013-03-22 21:54:02 UTC <carter> theres also the small chance i may secure some biz funding that would partially overlap with adding such nice things 
+2013-03-22 21:54:13 UTC <carter> in the work i'd be doing
+2013-03-22 22:07:45 UTC <tgeeky> carter: for what it's worth, there is a convex hull related pearl in the Functional Pearls book
+2013-03-22 22:07:55 UTC <carter> tgeeky neat
+2013-03-22 22:08:00 UTC <carter> the recent edition?
+2013-03-22 22:08:09 UTC <tgeeky> yep.
+2013-03-22 22:08:10 UTC <carter> how fancy is it?
+2013-03-22 22:08:23 UTC <tgeeky> http://www.amazon.com/Pearls-Functional-Algorithm-Design-Richard/dp/0521513383
+2013-03-22 22:08:42 UTC <carter> i'm planning to do a convex hull quad treee
+2013-03-22 22:08:50 UTC <carter> as in each sub tree has its convex hul
+2013-03-22 22:08:56 UTC <carter> and then merging the hulls
+2013-03-22 22:09:03 UTC <carter> each level hup
+2013-03-22 22:09:04 UTC <carter> *up
+2013-03-22 22:09:30 UTC <carter> i should still order the book 'caue it'd probably be  fun reading
+2013-03-22 22:09:59 UTC <carter> i'll wait till next week htough
+2013-03-22 22:10:02 UTC <carter> merry friday all
+2013-03-22 22:13:58 UTC <tgeeky> doh. I'm sending PMs to nobody
+2013-03-22 22:25:35 UTC <tgeeky> luite: do you have the package 'plugin' installed?
+2013-03-22 22:28:49 UTC <luite> probably not
+2013-03-22 22:28:57 UTC <luite> should i? :)
+2013-03-22 22:31:38 UTC <tgeeky> maybe. It'd dons' eval package, I think
+2013-03-22 22:31:49 UTC <tgeeky> I also think it (or something like it) is used in lambdabot
+2013-03-22 22:32:05 UTC <tgeeky> 'plugins', that is.
+2013-03-23 00:36:44 UTC <fryguybob> byorgey: Hac-phi!
+2013-03-23 00:47:37 UTC <byorgey> yeah!
+2013-03-23 01:17:53 UTC <travis-ci> [travis-ci] 13diagrams-builder/06master 140ebcf85 http://travis-ci.org/diagrams/diagrams-builder/builds/5731728 The build has errored.
+2013-03-23 01:18:17 UTC <travis-ci> [travis-ci] 13diagrams-builder/06master 14133ad3f http://travis-ci.org/diagrams/diagrams-builder/builds/5731730 The build has errored.
+2013-03-23 01:23:08 UTC <travis-ci> [travis-ci] 13diagrams-builder/06master 143c67e49 http://travis-ci.org/diagrams/diagrams-builder/builds/5731825 The build has errored.
+2013-03-23 01:26:37 UTC <travis-ci> [travis-ci] 13diagrams-builder/06master 14e107d35 http://travis-ci.org/diagrams/diagrams-builder/builds/5731868 The build has errored.
+2013-03-23 01:45:57 UTC <byorgey> gah!
+2013-03-23 01:46:22 UTC <byorgey> I need some CI for the CI.
+2013-03-23 01:51:37 UTC <bergey> This one found NumInstances 1.2 :)
+2013-03-23 01:52:39 UTC <bergey> When I was trying to get diagrams-doc to build, I came really close to firing up a VM to try to reproduce the travis behavior....
+2013-03-23 01:52:40 UTC <byorgey> bergey: exactly =)
+2013-03-23 01:52:45 UTC <byorgey> hehe
+2013-03-23 01:52:52 UTC <byorgey> good luck! =P
+2013-03-23 01:53:32 UTC <bergey> I figure it wouldn't be any faster, but at least less embarassing than the string of commits :)
+2013-03-23 01:54:33 UTC <byorgey> hehe =)
+2013-03-23 01:54:53 UTC <byorgey> I don't find it all that embarrassing, just annoying
+2013-03-23 01:55:39 UTC <tgeeky> tracking your own build env in haskell can be challenging enough, tracking someone else's :(
+2013-03-23 01:56:15 UTC <travis-ci> [travis-ci] 13diagrams-builder/06master 14acefc25 http://travis-ci.org/diagrams/diagrams-builder/builds/5732259 The build passed.
+2013-03-23 01:56:31 UTC <byorgey> \o/
+2013-03-23 01:58:57 UTC <tgeeky> that is the build from 21:47?
+2013-03-23 01:58:59 UTC <tgeeky> that's not too slow at all
+2013-03-23 02:04:25 UTC <byorgey> yeah, it's not bad
+2013-03-23 02:08:56 UTC <byorgey> ACTION might release diagrams-haddock and diagrams-contrib-0.6.1 tomorrow
+2013-03-23 02:09:46 UTC <byorgey> I have to write a blog post by tomorrow anyway (https://www.beeminder.com/byorgey/goals/blogging) =)
+2013-03-23 02:11:05 UTC <luite> wow 40 goals
+2013-03-23 02:11:44 UTC <byorgey> only 23 active
+2013-03-23 02:14:23 UTC <tgeeky> ACTION is a little confused by this graph, but reading the FAQ... is the money donated to charity?
+2013-03-23 02:14:32 UTC <tgeeky> or to beeminder?
+2013-03-23 02:14:36 UTC <byorgey> no, it goes to beeminder
+2013-03-23 02:14:47 UTC <byorgey> that's part of their business model =)
+2013-03-23 02:14:50 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 1448f23cd http://travis-ci.org/diagrams/diagrams-haddock/builds/5732554 The build passed.
+2013-03-23 02:16:07 UTC <tgeeky> are these mystery goals in your profile really mysteries
+2013-03-23 02:16:07 UTC <tgeeky> or just private?
+2013-03-23 02:16:39 UTC <byorgey> hehe, no, just private
+2013-03-23 02:20:13 UTC <tgeeky> clean one shower item per day
+2013-03-23 02:20:58 UTC <byorgey> does it really say per day?
+2013-03-23 02:21:17 UTC <byorgey> heh, it's per week
+2013-03-23 02:21:43 UTC <tgeeky> i can't see that part, it just cuts off, and I coudln't find that in the full page
+2013-03-23 02:21:50 UTC <tgeeky> can you have negative goals?
+2013-03-23 02:21:53 UTC <byorgey> you're right, I can't find it either
+2013-03-23 02:21:54 UTC <tgeeky> I guess why not
+2013-03-23 02:21:54 UTC <byorgey> yes, you can
+2013-03-23 02:22:08 UTC <tgeeky> goal stats 1.0 per week
+2013-03-23 02:22:14 UTC <byorgey> many people use beeminder to lose weight
+2013-03-23 02:22:42 UTC <byorgey> you can also have a goal where the line goes up but you want to be *below* it, i.e. you want to limit the amount of something you do
+2013-03-23 02:22:59 UTC <tgeeky> yeah, that's what I was referring to
+2013-03-23 02:23:05 UTC <byorgey> but those don't work that well for me because it's too easy to get lazy and not enter any data
+2013-03-23 02:23:13 UTC <byorgey> e.g. see my 'sugar' goal all the way at the bottom
+2013-03-23 02:23:15 UTC <tgeeky> this site is, the art of staying on a linear curve :o
+2013-03-23 02:24:59 UTC <luite> should they rotate the site 45 degrees? i guess that would motivate less
+2013-03-23 02:25:42 UTC <tgeeky> i think in this sense, the goal is rotationally invariant
+2013-03-23 02:29:46 UTC <luite> nah but if your target is a horizontal line then you don't feel like you're progressing
+2013-03-23 02:31:32 UTC <tgeeky> perhaps not, but you know you're falling if you're falling :o
+2013-03-23 02:46:48 UTC <luite> hm i could use some goals: go to bed early, write more papers, work more on ghcjs, comment less in discussions about feminism.
+2013-03-23 02:47:09 UTC <luite> but i'm afraid they'd hit $2430 pretty quickly, then i'd be goalless and penniless
+2013-03-23 02:49:52 UTC <luite> but going to bed late on friday should be acceptble eh?
+2013-03-23 04:18:56 UTC <tgeeky> that's a cool moment for me. I just looked through conal's slides, and I have already done most of the examples the same way he did.
+2013-03-23 04:19:39 UTC <tgeeky> I missed the most important one, of course.
+2013-03-23 04:19:49 UTC <tgeeky> slide 20
+2013-03-23 04:24:15 UTC <luite> ack gc() can replace the current thread's stack :/
+2013-03-23 04:32:50 UTC <tgeeky> luite: whose gc()?
+2013-03-23 04:33:52 UTC <luite> mein
+2013-03-23 04:46:39 UTC <luite> yay all tests succeed now
+2013-03-23 04:49:31 UTC <luite> although i should add some optimization for when to run the garbage collector
+2013-03-23 05:13:52 UTC <luite> if weak refs now work then all basic functionality except STM works
+2013-03-23 05:17:49 UTC <luite> but i probably shouldn't start a new thread for each weak ref finalizer
+2013-03-23 05:45:55 UTC <tgeeky> this is one of the coolest things on the internet: http://www.youtube.com/watch?v=xe-f4gokRBs
+2013-03-23 05:48:43 UTC <luite> grmblz it finalizes stdout because finalizers don't keep references alive
+2013-03-23 05:49:08 UTC <luite> tgeeky: hehe cool, must be a lot of stress due to rapid cooling
+2013-03-23 18:59:38 UTC <byorgey> tgeeky: woah, that's amazing
+2013-03-23 19:11:25 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06master 145d11ed8 http://travis-ci.org/diagrams/diagrams-contrib/builds/5745312 The build has errored.
+2013-03-23 19:20:46 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06master 142d6209f http://travis-ci.org/diagrams/diagrams-contrib/builds/5745425 The build passed.
+2013-03-23 19:30:16 UTC <byorgey> oooh, force-push is red, nice =)
+2013-03-23 19:32:41 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06master 14c41f768 http://travis-ci.org/diagrams/diagrams-contrib/builds/5745657 The build passed.
+2013-03-23 19:36:27 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06master 146d93ca9 http://travis-ci.org/diagrams/diagrams-contrib/builds/5745726 The build passed.
+2013-03-23 19:48:35 UTC <luite> :)
+2013-03-23 19:55:30 UTC <byorgey> aaaaand diagrams-contrib-0.6.1 is away!
+2013-03-23 19:55:56 UTC <byorgey> with circle packing, factorization diagrams, iterated subset fractals, a more general turtle API, and lots of diagrams-haddock examples
+2013-03-23 19:56:14 UTC <byorgey> next up: diagrams-haddock
+2013-03-23 20:07:53 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 1496899f1 http://travis-ci.org/diagrams/diagrams-haddock/builds/5746223 The build passed.
+2013-03-23 20:24:38 UTC <byorgey> and now to just wait for the diagrams-contrib documentation to get built on Hackage (and make sure the images work) before writing a blog post about it!
+2013-03-23 20:51:12 UTC <carter> byorgey Data vis substrate hacking is underway! mwahahahah
+2013-03-23 20:51:30 UTC <carter> (stay tuned)
+2013-03-23 20:51:36 UTC <carter> and merry icfp submitting
+2013-03-23 20:55:25 UTC <byorgey> carter: sweet!
+2013-03-23 20:55:38 UTC <byorgey> carter: do you have it on github or somewhere publicly visible?
+2013-03-23 20:55:44 UTC <carter> byorgey not yet
+2013-03-23 20:55:58 UTC <carter> i'm first hacking out a whole bunch of support internal data structures this week
+2013-03-23 20:56:13 UTC <carter> those will be on github first
+2013-03-23 20:56:24 UTC <carter> then the things on top of them will be hacked out and made visible too
+2013-03-23 20:57:05 UTC <carter> like, first I'm writing the fastest known ephemeral priority queue
+2013-03-23 20:57:14 UTC <carter> adding some binning / aggregation support
+2013-03-23 20:57:59 UTC <carter> etc
+2013-03-23 21:01:22 UTC <carter> in some way the data structure substrate i'm first rolling is a warm up for crazier stuff hacking wise in the analytics db project
+2013-03-23 21:15:24 UTC <byorgey> sweet, the docs are built on Hackage, with images! http://hackage.haskell.org/package/diagrams%2Dcontrib
+2013-03-23 21:25:20 UTC <fryguybob> woohoo!
+2013-03-23 21:29:13 UTC <tgeeky> sweet jesus!
+2013-03-23 21:29:15 UTC <tgeeky> amazing!
+2013-03-23 21:29:50 UTC <tgeeky> byorgey: this will drive up diagrams adoption by the haskelliverse
+2013-03-23 21:29:57 UTC <tgeeky> byorgey: mark my words! :o
+2013-03-23 21:29:58 UTC <byorgey> I hope so!
+2013-03-23 21:30:51 UTC <tgeeky> heck, there are probably a few of my packages that I haven't published specifically because I don't have a non-arbitrary way to include a picture
+2013-03-23 21:31:35 UTC <byorgey> I guess you no longer have an excuse!
+2013-03-23 21:36:23 UTC <tgeeky> http://hackage.haskell.org/packages/archive/diagrams-contrib/0.6.1/doc/html/Diagrams-TwoD-Tilings.html <-- like this
+2013-03-23 21:36:50 UTC <tgeeky> this is incomparably more approachable and useful as reference compared to before.
+2013-03-23 21:39:53 UTC <fryguybob> hehe "incomparably more ... as ... compared to ..."
+2013-03-23 21:40:17 UTC <tgeeky> fryguybob: yes! it's that drastic!
+2013-03-23 21:40:26 UTC <tgeeky> it's self-invalidatingly important
+2013-03-23 21:40:48 UTC <fryguybob> byorgey: I didn't realize hackage would build the diagrams, oh, they are in the upload and cabal just copies them, I get it now.
+2013-03-23 21:40:59 UTC <fryguybob> hehe
+2013-03-23 21:41:51 UTC <tgeeky> fryguybob: still, this way you have the impression that you could have build the same docs locally for yourself
+2013-03-23 21:41:52 UTC <fryguybob> "It is so amazing this sentence can't even describe it."
+2013-03-23 21:42:37 UTC <tgeeky> fryguybob: exactly!
+2013-03-23 21:43:01 UTC <tgeeky> Forget the two sentence Godelian contradiction.
+2013-03-23 22:08:52 UTC <carter> question: how much work would it be to add a pdf backend using either http://hackage.haskell.org/package/HPDF-1.4.5 or  http://hackage.haskell.org/package/pdf-toolbox-document-0.0.1.0 ?
+2013-03-23 22:09:18 UTC <carter> i might be open to sacrificing some time to trying to do that if folks who know more think thats tractable
+2013-03-23 22:09:41 UTC <byorgey> not too much work, I think
+2013-03-23 22:10:28 UTC <byorgey> you could probably mostly copy the postscript backend
+2013-03-23 22:10:42 UTC <byorgey> postscript and/or cairo
+2013-03-23 22:20:30 UTC <luite> pdf support would be cool for transparency
+2013-03-23 22:22:55 UTC <carter> hrmmm,  i like the pdf-toolbox license more, but hpdf migthhave the right machinery for now
+2013-03-23 22:24:07 UTC <luite> are there things that direct pdf output would give you over converting through svg?
+2013-03-23 22:24:18 UTC <carter> luite probably not
+2013-03-23 22:24:22 UTC <carter> but would sound cool
+2013-03-23 22:24:28 UTC <carter> i'll see if its *easy*
+2013-03-23 22:24:31 UTC <luite> pdf font support is probably better
+2013-03-23 22:25:13 UTC <byorgey> honestly carter I would rather see you working on your data vis framework than coding up yet another backend
+2013-03-23 22:25:17 UTC <carter> ok
+2013-03-23 22:25:22 UTC <carter> thanks for reminding me :)
+2013-03-23 22:25:40 UTC <byorgey> =)
+2013-03-23 22:25:43 UTC <carter> yeah... also was looking at the hpdf stuff and someone needs to clean up some of the api even though it *should* have enough machinery
+2013-03-23 22:25:59 UTC <carter> half of good engineering is people chearleading eachother in effective prioritization
+2013-03-23 22:26:10 UTC <byorgey> very true =)
+2013-03-23 22:26:40 UTC <luite> :)
+2013-03-23 22:27:02 UTC <luite> getting diagrams to build with HEAD would also be very useful ;)
+2013-03-23 22:27:15 UTC <byorgey> ah, see, thanks for reminding me luite =)
+2013-03-23 22:27:33 UTC <byorgey> that's one of the next things on my list
+2013-03-23 22:28:03 UTC <luite> i hope there are no annoying depency problems
+2013-03-23 22:28:41 UTC <byorgey> I guess we'll find out
+2013-03-23 22:37:54 UTC <fryguybob> luite: A benefit of PDF over SVG is more compliant renderers.
+2013-03-23 22:39:47 UTC <luite> hmm i did notice some significant differences between adobe and apple
+2013-03-23 22:40:17 UTC <luite> but that was mostly in image handling
+2013-03-24 00:16:38 UTC <gabsiml> is byorgey brent?
+2013-03-24 00:16:53 UTC <fryguybob> gabsiml: Yes
+2013-03-24 00:17:07 UTC <gabsiml> I must be in the right place
+2013-03-24 00:17:29 UTC <fryguybob> Oh yes, this is the right place!
+2013-03-24 00:17:54 UTC <gabsiml> I can't seem to make the -l watched file thing actually work. I tried incron but... toonooby
+2013-03-24 00:19:23 UTC <fryguybob> gabsiml: Which backend?
+2013-03-24 00:19:33 UTC <gabsiml> the svg backend
+2013-03-24 00:20:04 UTC <gabsiml> I'm following the tutorial
+2013-03-24 00:20:21 UTC <fryguybob> I've never tried that feature myself, I'll see if it works for me.
+2013-03-24 00:25:36 UTC <fryguybob> gabsiml: It does work for me.  Did you compile with GHC (I don't think it works with ghci) and did you specify the source with -s?
+2013-03-24 00:25:56 UTC <gabsiml> Brent was trying to explain that if I ran the render with this -l loop it would rerender when the file changed
+2013-03-24 00:25:58 UTC <fryguybob> (also it doesn't work on windows)
+2013-03-24 00:26:19 UTC <gabsiml> but do I have to re --make?
+2013-03-24 00:27:09 UTC <fryguybob> gabsiml: I did: ghc --make Blah.hs ; ./Blah -w 400 -o blah.svg -l -s Blah.hs
+2013-03-24 00:28:07 UTC <gabsiml> ok, that makes more sense I was just looping the render and it didn't seem right
+2013-03-24 00:28:35 UTC <fryguybob> Oh, yeah, it should just be  defaultMain myDiagram
+2013-03-24 00:32:28 UTC <gabsiml> YAAY! <fryguybob> is my new best friend
+2013-03-24 00:33:06 UTC <gabsiml> This is the graphics workflow I have always wanted and didn't know how to implement
+2013-03-24 00:33:58 UTC <byorgey> hi gabsiml =)
+2013-03-24 00:34:03 UTC <fryguybob> gabsiml: Excellent!
+2013-03-24 00:34:48 UTC <byorgey> http://byorgey.wordpress.com/2013/03/23/introducing-diagrams-haddock/
+2013-03-24 00:34:56 UTC <byorgey> ACTION -> off to watch a movie
+2013-03-24 00:35:03 UTC <gabsiml> sounds good
+2013-03-24 00:35:10 UTC <fryguybob> I hope it is a good movie!
+2013-03-24 00:35:23 UTC <byorgey> I think we have Good Will Hunting
+2013-03-24 00:35:41 UTC <byorgey> which I seem to recall being good, though it was a long time ago that I saw it
+2013-03-24 00:37:49 UTC <gabsiml> sad elliot smith music
+2013-03-24 00:45:28 UTC <gabsiml> how does one break this loop? I use ctrl-c
+2013-03-24 00:45:42 UTC <fryguybob> gabsiml: Yes
+2013-03-24 00:46:32 UTC <gabsiml> gonna be some geometric art tonight! well maybe a few nights from now
+2013-03-24 00:48:39 UTC <fryguybob> gabsiml: Fun!  We would love to see it if you feel like sharing.
+2013-03-24 00:50:00 UTC <gabsiml> I usually develop stuff and then hang them like paintings (3'x20') but with this new workflow I might be able to show more
+2013-03-24 00:50:12 UTC <gabsiml> on the web
+2013-03-24 00:50:34 UTC <luite> http://hdiff.luite.com:3000/
+2013-03-24 00:53:02 UTC <fryguybob> byorgey: Nice arrow in the  foozleDia
+2013-03-24 00:53:55 UTC <gabsiml> <luite> that's a beauty! is that an alife blinker?
+2013-03-24 00:54:04 UTC <fryguybob> luite: It's alive!
+2013-03-24 00:54:31 UTC <fryguybob> And rts.js is only 18505 lines!
+2013-03-24 00:54:38 UTC <luite> gabsiml: an oscillator, kok's galaxy
+2013-03-24 00:54:55 UTC <luite> fryguybob: out.js is the one you need :)
+2013-03-24 00:55:12 UTC <luite> totally unoptimized for size, that's the next step
+2013-03-24 00:55:40 UTC <fryguybob> hehe
+2013-03-24 00:56:39 UTC <luite> close web developer tools if you want it to run fast, i think it disables the jit compiler, at least in firefo
+2013-03-24 00:56:42 UTC <luite> x
+2013-03-24 00:57:13 UTC <luite> still firefox is slower than i expected
+2013-03-24 00:57:58 UTC <fryguybob> ACTION fires up IE just because.
+2013-03-24 00:58:18 UTC <luite> i hope it's IE 10 :)
+2013-03-24 00:58:31 UTC <fryguybob> It is telling me that it is.
+2013-03-24 00:58:45 UTC <fryguybob> "Meet your new browser"
+2013-03-24 01:00:12 UTC <luite> oh i guess I could've compiled with -O2
+2013-03-24 01:01:39 UTC <fryguybob> Looks like it can't get passed line 2 of lib.js
+2013-03-24 01:01:47 UTC <fryguybob> ACTION closes IE until next time.
+2013-03-24 01:02:28 UTC <luite> oh that's annoying
+2013-03-24 01:02:41 UTC <luite> i think i haven't written that myself
+2013-03-24 01:04:01 UTC <luite> http://hdiff.luite.com:3000/life.hs.txt
+2013-03-24 03:27:15 UTC <luite> http://hdiff.luite.com:3000/ :)
+2013-03-24 03:27:28 UTC <luite> every square is a different thread
+2013-03-24 03:28:47 UTC <tgeeky> i bet on "red square"
+2013-03-24 03:28:51 UTC <tgeeky> and they're off!
+2013-03-24 03:29:13 UTC <tgeeky> red square edges out red square. But no, red square overtakes red square!
+2013-03-24 03:29:21 UTC <luite> scheduling isn't supposed to be totally deterministic :p
+2013-03-24 03:29:44 UTC <luite> although i can think it can be made deterministic by removing external timeouts
+2013-03-24 03:29:58 UTC <tgeeky> ut oh. Red square appears to have reached a hole in the space time continuum, and the end line is identified with the start! Red square teleports,and now he's at the start line!
+2013-03-24 03:30:13 UTC <tgeeky> I'll stop horse-race announcing this.
+2013-03-24 03:30:47 UTC <luite> ACTION is sorry for the stupid examples :p
+2013-03-24 03:37:35 UTC <luite> I've removed the threadDelay now :)
+2013-03-24 03:37:53 UTC <luite> so it's all preemptive threading, every thread does a lot of updates before the scheduler preempts it
+2013-03-24 03:38:22 UTC <luite> and the browser gets a lot less opportunities to redraw (Although you can adjust the preemption timeout and the redraw timeouts)
+2013-03-24 03:39:09 UTC <luite> http://hdiff.luite.com:3000/race.hs.txt
+2013-03-24 03:43:38 UTC <luite> hm, yield doesn't save the thread state properly
+2013-03-24 03:56:20 UTC <luite> yay yield fixed
+2013-03-24 04:50:37 UTC <luite> hm i need a compellign example thing to build with ghcjs, preferably something that really uses threads, async exceptions etc
+2013-03-24 04:52:30 UTC <tgeeky> luite: provide a seed list of possibly bad ideas
+2013-03-24 04:56:54 UTC <tgeeky> byorgey: have you tried providing a ramdisk to --cachedir in diagrams-haddock?
+2013-03-24 04:57:18 UTC <tgeeky> or an SVG, something rather fast
+2013-03-24 04:57:23 UTC <tgeeky> SSD. sorry
+2013-03-24 04:59:50 UTC <luite> tgeeky: perhaps some reactive-banana thing
+2013-03-24 05:01:48 UTC <tgeeky> luite: you could do the examples that come with simonmar's parallel haskell paper
+2013-03-24 05:03:50 UTC <tgeeky> https://github.com/simonmar/par-tutorial
+2013-03-24 05:04:37 UTC <luite> oh i didnt know there was a github
+2013-03-24 05:05:15 UTC <tgeeky> he has others that are related, I think
+2013-03-24 05:05:22 UTC <tgeeky> they certainly would make good starts?
+2013-03-24 05:06:14 UTC <luite> hmm, i'm not sure they're really suitable
+2013-03-24 05:06:38 UTC <tgeeky> you want more of a point-at-a-package and go kind of thing? :o
+2013-03-24 05:06:40 UTC <luite> ghcjs doesn't have stm yet, and no parallelism
+2013-03-24 05:07:00 UTC <tgeeky> ah, well then they will eventually be helpful
+2013-03-24 05:07:13 UTC <luite> that's true :)
+2013-03-24 05:07:32 UTC <luite> do you like javascript and are you interested in stm? ;)
+2013-03-24 05:08:14 UTC <tgeeky> no and yes
+2013-03-24 05:08:28 UTC <tgeeky> though ultimately I will have to get over the former
+2013-03-24 05:08:51 UTC <luite> fryguybob is going to document the stm implementation a bit
+2013-03-24 05:09:03 UTC <luite> that will hopefully help :)
+2013-03-24 05:09:16 UTC <tgeeky> luite: you could do something yourself with haskell-diagrams
+2013-03-24 05:09:38 UTC <luite> diagram's doesn't compile yet with ghcjs because it's based on HEAD
+2013-03-24 05:09:42 UTC <luite> diagrams
+2013-03-24 05:09:57 UTC <tgeeky> ghcjs <- GHC HEAD?
+2013-03-24 05:10:01 UTC <luite> yeah
+2013-03-24 05:10:13 UTC <tgeeky> because of bugs or features?
+2013-03-24 05:10:13 UTC <luite> not in the main tree, but it doesn't compile with 7.6
+2013-03-24 05:10:17 UTC <luite> features
+2013-03-24 05:10:25 UTC <tgeeky> extensions?
+2013-03-24 05:10:40 UTC <tgeeky> (new) extensions?
+2013-03-24 05:10:43 UTC <luite> http://hdiff.luite.com:3000/race.hs.txt <- see the foreign import, not supported in regular ghc yet
+2013-03-24 05:10:54 UTC <luite> also cross compilation support and some minor other patches
+2013-03-24 05:11:10 UTC <tgeeky> how neat is that
+2013-03-24 05:12:13 UTC <tgeeky> of course, you also don't need parallelism, but you can use parallel code anyway.
+2013-03-24 05:12:43 UTC <tgeeky> I mean, if you can't support it, it doesn't stop you from trying to complete with one data point on the performace listings in the paper
+2013-03-24 05:12:45 UTC <luite> yeah sparks just won't do anything
+2013-03-24 05:13:09 UTC <luite> i'm not sure if they don't break, haven't really checked the primops for those
+2013-03-24 05:14:34 UTC <luite> https://github.com/ghcjs/ghcjs/blob/gen2-64-alth/src/Gen2/Prim.hs <- hm, still a bunch of unimplemented ones, that will probably give some errors, need to add stubs
+2013-03-24 06:21:15 UTC <tgeeky> wow.
+2013-03-24 06:21:22 UTC <tgeeky> this is extraordinary: http://vimeo.com/62507729
+2013-03-24 06:21:52 UTC <tgeeky> haha. curiously, a lightning bolt struck right behind my house as I pasted that
+2013-03-24 18:42:20 UTC <tgeeky> byorgey: in the reddit thread accompanying your diagrams-haddock...
+2013-03-24 18:42:44 UTC <tgeeky> byorgey: isn't the fact that you linked to built diagrams on Hackage evidence that it works? Surely Hackage isn't building HEAD for you.
+2013-03-24 18:42:57 UTC <tgeeky> or maybe it is running cabal HEAD
+2013-03-24 19:30:25 UTC <byorgey> tgeeky: no one was disputing that it works.  Hackage is not running cabal HEAD; I am not using the extra-source-files feature yet
+2013-03-24 20:05:15 UTC <fryguybob> luite: I wish I had time I would just write an STM for you.  It wouldn't be hard, the tricky bits being of course throwing an exception to a susspended thread in a transaction.
+2013-03-24 20:06:36 UTC <luite> async exceptions already work in ghcjs, masking/unmasking and interruptible actions too. does STM need anything else?
+2013-03-24 20:08:21 UTC <fryguybob> luite: There are a few cases that need to be checked.  The GC normally also validates running transactions to kill off ones that won't terminate due to seeing inconsistent state.
+2013-03-24 20:10:39 UTC <luite> ah that's also quite doable i guess
+2013-03-24 20:11:38 UTC <fryguybob> Yeah, I don't think any of it is hard.  It looks like if you ignore invariants things get even easier.  I don't think invariants were really intended to be used beyond debugging which you want to do not in JS anyway.
+2013-03-24 20:15:47 UTC <tgeeky> byorgey: he says: "EDIT: As of now, I imagine that the auto-generated haddock documentation on Hackage will stop being generated for packages that try to use this."
+2013-03-24 20:16:15 UTC <byorgey> tgeeky: I interpreter "this" in that comment to mean "the extra-html-files field"
+2013-03-24 20:16:26 UTC <byorgey> not "diagrams-haddock"
+2013-03-24 20:16:46 UTC <byorgey> but in any case I'm pretty sure even extra-html-files doesn't stop haddock documentation getting built on Hackage.
+2013-03-24 20:17:23 UTC <tgeeky> byorgey: oh, I interpreted it as meaning that it wouldn't work in general
+2013-03-24 20:17:43 UTC <tgeeky> "this" including the Setup.hs solution
+2013-03-24 20:17:53 UTC <byorgey> well, who knows what it was intended to mean.  Whatever it was, it's wrong =P
+2013-03-24 20:18:03 UTC <tgeeky> indeed!
+2013-03-24 20:18:15 UTC <luite> fryguybob: yeah the hard part was redoing the whole heap to make async exceptions and blackholes possible :)
+2013-03-24 20:19:03 UTC <luite> unfortunately every time i think it gets easier now i find more hard parts ;)
+2013-03-24 20:19:16 UTC <luite> and i still have no paper
+2013-03-24 22:58:00 UTC <cmears> mgsloan, diagrams-ghci looks really nice, I think it is what I have longed for
+2013-03-25 02:46:51 UTC <tgeeky> oh well. I suppose #haskell-blah is a waste of time anyway.
+2013-03-25 02:53:55 UTC <tgeeky> byorgey_: I should have noticed that you're never in #haskell-blah, and followed suit :)
+2013-03-25 02:56:36 UTC <tgeeky> byorgey_: also, I'll give you mumble server information tonight or tomorrow just so you can test / setup
+2013-03-25 03:07:33 UTC <luite> are you still banned?
+2013-03-25 03:47:26 UTC <tgeeky> yes. There was a nice bueracratic exchange in #haskell-ops, where I have been asking #haskell-blah ops to unban me. Instead of addressing me at all, Philippa noted that there is a no-idle policy in #haskell-ops, how #haskell-ops isn't responsible for #-blah
+2013-03-25 03:50:41 UTC <tgeeky> I think maybe it's supposed to be a lesson in arbitrary authority?
+2013-03-25 03:53:20 UTC <luite> hm hadn't thought of that... 
+2013-03-25 03:54:01 UTC <luite> i kinda doubt it though, since the discussion wasn't about blatantly obvious oppression, more the subtle variant
+2013-03-25 03:56:27 UTC <tgeeky> it's subtle in the sense of severity.
+2013-03-25 03:56:43 UTC <luite> that's true
+2013-03-25 03:56:56 UTC <luite> i hope for you at least :p
+2013-03-25 03:58:23 UTC <luite> now that you mention it, it's actually quite close, being arbitrarily excluded from some group of 'brochatters'
+2013-03-25 03:58:56 UTC <luite> that pun doesn't really work there eh
+2013-03-25 04:04:29 UTC <tgeeky> hehe. I don't see sex, sexuality, or sexism being involved, but there was some wolves-cornering-a-child kind of activity preceeding the banning.
+2013-03-25 04:05:06 UTC <tgeeky> i want to get the physics people from #-blah in #-physics or something
+2013-03-25 04:05:27 UTC <tgeeky> people with any level of interest in that subject are the only people I'd be looking for in #-blah
+2013-03-25 04:32:18 UTC <luite> hm i'm still quite surprised everytime ghcjs still works after i change something
+2013-03-25 04:33:16 UTC <luite> is there going to be a haskell implementors workshop this year at icfp again?
+2013-03-25 04:34:24 UTC <tgeeky> luite: http://icfpconference.org/icfp2013/affiliated.html
+2013-03-25 04:34:58 UTC <carter> ooo
+2013-03-25 04:35:09 UTC <carter> also boston is easy for me to get to :)
+2013-03-25 04:36:58 UTC <luite> tgeeky: ah it wasn't on the wiki
+2013-03-25 04:37:35 UTC <luite> i've changed so much in the past week that it wasn't a good idea to write a paper about the current state of ghcjs
+2013-03-25 04:39:09 UTC <tgeeky> hahahahaha
+2013-03-25 04:39:37 UTC <tgeeky> luite: The State of GHCJS is: in transition. Next question.
+2013-03-25 04:44:18 UTC <luite> tgeeky: well, async ffi (being able to let an ffi function do an ajax request for example, which suspends the current thread, and then wake it up again when the ajax result is in), the "foreign import javascript" thing with the $1, $2 etc placeholder macros, support for weak references, adjustable CAF retaining policy and now callback support from javascript (onClick events etc), all less than a week old
+2013-03-25 04:45:14 UTC <tgeeky> luite: I would say, then, I think you should keep doing what you're doing.
+2013-03-25 04:45:39 UTC <tgeeky> re: our earlier discussion of doing other things
+2013-03-25 04:45:59 UTC <luite> hm i don't remember that one :/
+2013-03-25 04:46:33 UTC <tgeeky> maybe I hallucinated it
+2013-03-25 04:46:42 UTC <luite> more likely that i forgotted it :p
+2013-03-25 04:50:15 UTC <luite> a few weaks more time would've been great
+2013-03-25 04:50:17 UTC <luite> weeks
+2013-03-25 04:50:35 UTC <tgeeky> are you done?
+2013-03-25 04:50:44 UTC <tgeeky> with whatever ghcjs bounty hunting thing you are doing
+2013-03-25 04:51:23 UTC <luite> oh ghcjs won't be done in a few weeks, but then the basics would work well enough, and i'd have written a few apps in it
+2013-03-25 04:52:10 UTC <luite> still lots to be done wrt code size, cabal support, optimization, support for more packages (that require some foreign functions)
+2013-03-25 04:54:11 UTC <luite> and then documentation with examples
+2013-03-25 04:55:09 UTC <tgeeky> is wolfgang backended by GHCJS head?
+2013-03-25 04:55:15 UTC <tgeeky> or GHCJS at all?
+2013-03-25 04:55:47 UTC <luite> not yet
+2013-03-25 04:56:02 UTC <luite> need a GHCJS dynamic linker for that
+2013-03-25 04:56:08 UTC <luite> or whatever you call it
+2013-03-25 04:56:46 UTC <luite> something that doesn't make one big javascript "executable" with everything, but that can build blocks that can be loaded independently
+2013-03-25 04:58:57 UTC <luite> it feels like GHCJS is mostly done, but that means it's probably about 20% :)
+2013-03-25 07:06:43 UTC <luite> http://hdiff.luite.com:3020/
+2013-03-25 07:07:55 UTC <luite> http://hdiff.luite.com:3020/event.hs.txt
+2013-03-25 07:12:25 UTC <luite> comments on how event handling is done, would that be usable?
+2013-03-25 08:40:26 UTC <mgsloan> luite: looks good to me!  I'm doing most of my event handling via something like https://github.com/faylang/fay-jquery/blob/master/src/JQuery.hs#L545
+2013-03-25 08:40:26 UTC <mgsloan> Also, even though there's a comment saying "unbind not useful in Fay ?", that's not quite right - yes, yes it is
+2013-03-25 08:46:57 UTC <timthelion> Hey, has anyone looked into the possibility of adding support for fixed width letters which take up space?
+2013-03-25 08:47:10 UTC <timthelion> As a method of displaying + formatting text?
+2013-03-25 08:52:04 UTC <luite> mgsloan: I still need to tweak some stuff, i think that when an event handling thread is asleep, it might need to get high priority wakeup, to make handling more snappy
+2013-03-25 08:52:42 UTC <luite> unfortunately google closure library doesn't have a dequeue, so I can't push new tasks to the front of the runqueue :(
+2013-03-25 08:53:25 UTC <luite> i could just use the PriorityQueue though
+2013-03-25 09:09:58 UTC <luite> mgsloan: yeah fay can use direct callbacks, problem with ghcjs is the scheduler, all haskell stuff can be async so has to go through the scheduler
+2013-03-25 09:11:31 UTC <mgsloan> ah, gotcha.  It hasn't been a problem, but I suspect that nested event handlers *might* be able to blow the stack in fay 
+2013-03-25 09:12:02 UTC <mgsloan> doing something that's a little more guaranteed to have a constant stack size is more principled
+2013-03-25 09:12:32 UTC <luite> the biggest probbelm i think with teh threads is that you cannot call stopPropagation() conditionally from the handler
+2013-03-25 09:13:21 UTC <luite> what you can do is call that unconditionally, and then from haskell decide whether to redispatch from the parent
+2013-03-25 09:13:30 UTC <luite> but then you might miss a handler when you have more than one on an element
+2013-03-25 09:14:50 UTC <mgsloan> Hmm, yeah, tricky stuff!
+2013-03-25 09:16:05 UTC <luite> redispatch to the same thing is also possible
+2013-03-25 09:16:19 UTC <luite> but then some handlers might get it twice
+2013-03-25 09:16:26 UTC <luite> you can mark it with some property though
+2013-03-25 09:16:45 UTC <luite> anyway not ideal :)
+2013-03-25 09:20:45 UTC <timthelion> ACTION wonders if he is even in the right channel.
+2013-03-25 09:44:30 UTC <mgsloan> timthelion: http://hackage.haskell.org/packages/archive/diagrams-cairo/latest/doc/html/Diagrams-Backend-Cairo-Text.html  Can do that if you set the font monospaced
+2013-03-25 09:44:43 UTC <mgsloan> it'd be interesting to not rely on unsafePerformIO, though
+2013-03-25 09:45:28 UTC <mgsloan> (for the unsafe, though more popular, variants)
+2013-03-25 09:49:24 UTC <mgsloan> ACTION sleeps
+2013-03-25 17:44:00 UTC <luite> ooh dcharts!
+2013-03-25 17:44:26 UTC <luite> http://patch-tag.com/r/mf/dcharts/snapshot/current/content/pretty/src/Diagrams/Charts.hs
+2013-03-25 17:44:41 UTC <tgeeky> window 11
+2013-03-25 17:55:02 UTC <tgeeky> byorgey: if you're here and free, I can give you mumble server info
+2013-03-25 17:56:50 UTC <tgeeky> byorgey: namely: Label: [ meh. ] mumble / Address: 66.150.214.6 / Port: 17810 / Username: byorgey
+2013-03-25 18:00:09 UTC <luite> window 11
+2013-03-25 18:01:39 UTC <fryguybob> windows 7  :(
+2013-03-25 18:04:50 UTC <luite> hm it's taking me longer than i expected to rewrite that event handling example using reactive-banana, that lib uses annoying tricks under the hood
+2013-03-25 18:15:17 UTC <luite> tgeeky: hm, still the hostile attitude, i am disappoit
+2013-03-25 18:15:19 UTC <luite> point
+2013-03-25 18:22:56 UTC <tgeeky> :/
+2013-03-25 19:55:40 UTC <carter> byorgey i just skimed the dcharts code
+2013-03-25 21:31:33 UTC <alpounet> byorgey, you around?
+2013-03-26 13:46:21 UTC <hpaste> byorgey revised âArcArrowsâ: âarc arrowsâ at http://hpaste.org/84673
+2013-03-26 13:47:13 UTC <hpaste> byorgey revised âArcArrowsâ: âarc arrowsâ at http://hpaste.org/84673
+2013-03-26 13:49:16 UTC <byorgey> http://www.cis.upenn.edu/~byorgey/hosted/ArcArrows.png
+2013-03-26 13:49:57 UTC <byorgey> check it!  Building up little bits and pieces for arrow support... I wanted curvy arrows for drawing DFAs so I made this
+2013-03-26 13:50:56 UTC <luite> hmm, cool! perhaps it should be changed so that the arrowhead is aligned so that the line always exits (enters?) it perpendicularly in the middle
+2013-03-26 13:51:50 UTC <byorgey> hmm, maybe so
+2013-03-26 13:52:04 UTC <byorgey> I'm not sure how e.g. inkscape handles this
+2013-03-26 13:52:21 UTC <fryguybob> byorgey: Nice!  I agree with luite.  There is a slight aesthetic tweak for arrowheads to look right.
+2013-03-26 13:52:38 UTC <fryguybob> byorgey: Inkscape doesn't in my experience.
+2013-03-26 13:52:53 UTC <byorgey> OK.  Well, that sounds difficult =)  but worthwhile.
+2013-03-26 13:53:41 UTC <fryguybob> byorgey: But I think it is sufficient to pick the angle back a bit like at 1/2 the arrowhead length back.
+2013-03-26 13:54:15 UTC <byorgey> OK, makes sense.  I guess that is actually not too bad now that I think about it.
+2013-03-26 13:54:19 UTC <fryguybob> I think the places where that fails are all situations where you need a different path anyway.
+2013-03-26 13:54:47 UTC <byorgey> Do we have any generic code somewhere for finding segment derivatives?
+2013-03-26 13:55:04 UTC <fryguybob> byorgey: There is some in the offset path branch.
+2013-03-26 13:55:10 UTC <byorgey> OK, I thought there might be
+2013-03-26 13:55:26 UTC <fryguybob> byorgey: I wasn't sure the best place to put it, but it should be factored out from where it is.
+2013-03-26 13:55:43 UTC <byorgey> I am not actually finding slopes of paths here, I'm taking advantage of the fact that they are arcs so I know exactly what the slope is in the first place
+2013-03-26 13:55:59 UTC <fryguybob> byorgey: Ah, ok.
+2013-03-26 13:56:01 UTC <byorgey> but when we do arrowheads more generically we'll want that of course.
+2013-03-26 13:57:24 UTC <fryguybob> For beziers there is the odd exception that the angle you want happens to be at the location of a cusp.  I can't remember if the type of the derivatives that I have for the offset code reflects that possibility or not.
+2013-03-26 13:58:09 UTC <byorgey> hehe, right.
+2013-03-26 13:58:24 UTC <byorgey> oooh, new SVGFonts!
+2013-03-26 14:01:10 UTC <byorgey> wow, the diagrams-discuss mailing list has 52 subscribers!
+2013-03-26 14:01:18 UTC <byorgey> I didn't realize it was that many
+2013-03-26 14:12:15 UTC <luite> that's almost 53!
+2013-03-26 14:17:37 UTC <mgsloan> byorgey: Pretty!
+2013-03-26 14:18:28 UTC <mgsloan> Inkscape doesn't handle that, btw
+2013-03-26 14:18:40 UTC <mgsloan> Even worse with arrows is that they don't get the stroke color
+2013-03-26 14:18:44 UTC <mgsloan> (in inkscape)
+2013-03-26 14:19:07 UTC <mgsloan> There's some technical reason or other for this, having to do with SVG and clones and such
+2013-03-26 14:19:11 UTC <mgsloan> but it just sucks
+2013-03-26 14:19:34 UTC <mgsloan> ah I see that fryguybob already answered that
+2013-03-26 14:19:52 UTC <mgsloan> ACTION was involved in inkscape back in his pre-Haskell days
+2013-03-26 14:20:51 UTC <mgsloan> But yeah, arc-length re-parameterizing the curve, and querying for the derivative at the back of the arrow head would be cool :)
+2013-03-26 14:21:04 UTC <byorgey> mgsloan: right, I remember the thing with inkscape and stroke color
+2013-03-26 14:21:15 UTC <byorgey> there was some plugin you could call to set the color of the arrowhead
+2013-03-26 14:21:18 UTC <byorgey> bizarre
+2013-03-26 14:21:27 UTC <mgsloan> hahah, yeah
+2013-03-26 14:22:08 UTC <mgsloan> Inkscape has some good UI here and there, but a lot of rough corners
+2013-03-26 14:22:37 UTC <byorgey> yep
+2013-03-26 15:03:18 UTC <luite> Uncaught h$ap_1_0_fast: unexpected closure type: 2   grrrrrrrrrrrrrrr
+2013-03-26 15:03:59 UTC <byorgey> No one expects... closure type 2!
+2013-03-26 15:05:06 UTC <luite> that means is tries to apply a data constructor as a function
+2013-03-26 15:05:43 UTC <byorgey> but... data constructors ARE functions, aren't they?
+2013-03-26 15:05:49 UTC <byorgey> Or you mean a nullary data constructor?
+2013-03-26 15:06:14 UTC <luite> oh sorry, I mean a data value
+2013-03-26 15:06:18 UTC <luite> or what are they called
+2013-03-26 15:06:24 UTC <luite> they have closure type CON
+2013-03-26 15:06:52 UTC <luite> the actual constructors are functions indeed, type FUN (forgot the number, i think 1), and return a CON
+2013-03-26 15:07:28 UTC <byorgey> oh, I see
+2013-03-26 15:07:33 UTC <luite> the constructor function is usually trivial, but when you have strict or unboxed fields it has to force some of the arguments
+2013-03-26 15:10:31 UTC <luite> but i think there's some bug here where a hashmap somehow contains the wrong values (or lookup goes wrong), i'm trying to use reactive-banana with ghcjs, it uses funky things to make heterogenous maps
+2013-03-26 15:11:21 UTC <luite> h$ap_1_0 means apply the function to 1 argument, total size 0 (which is equivalent to stg_ap_v in native ghc), usually an IO action applied to the realworld token
+2013-03-26 15:11:58 UTC <luite> but if it gets the wrong thing from the heterogenous map, it might not be an IO action
+2013-03-26 15:13:23 UTC <byorgey> strange
+2013-03-26 15:14:14 UTC <luite> yeah i'm not sure what's happening, but explaining bugs to others sometimes helps in finding the real problem :)
+2013-03-26 15:14:27 UTC <byorgey> luite: btw, here are the next things on my todo list for diagrams: http://www.cis.upenn.edu/~byorgey/hosted/diagrams-todo.png =)
+2013-03-26 15:14:42 UTC <byorgey> luite: sure, I am happy to be your rubber duck =)
+2013-03-26 15:14:42 UTC <luite> great!
+2013-03-26 15:14:54 UTC <luite> oh yeah that was what it's called :p
+2013-03-26 15:14:59 UTC <byorgey> I don't know much more about the GHC RTS etc. than a rubber duck anyway
+2013-03-26 15:20:24 UTC <luite> on my list are generated code size reduction, better cabal support and working out the bugs in all the new features
+2013-03-26 15:20:48 UTC <byorgey> work out ALL THE BUGS
+2013-03-26 15:21:05 UTC <luite> :)
+2013-03-26 15:21:22 UTC <luite> hopefully the first will make large libs like diagrams less of a problem
+2013-03-26 15:21:51 UTC <byorgey> cool
+2013-03-26 15:22:01 UTC <luite> gzipped code for something that uses reactive-banana is ~300kB, for diagrams i'd expect it to be over 500k
+2013-03-26 15:22:39 UTC <byorgey> 500k isn't that bad.  The Haddock documentation for Diagrams.TwoD.Factorization is ~10MB! ;-)
+2013-03-26 15:22:44 UTC <luite> hehe
+2013-03-26 15:22:52 UTC <byorgey> (need to optimize the SVG backend =)
+2013-03-26 15:23:10 UTC <luite> is that after gzipping?
+2013-03-26 15:24:13 UTC <byorgey> ah, no, that's uncompressed
+2013-03-26 15:24:20 UTC <byorgey> good point
+2013-03-26 15:24:25 UTC <luite> before minification (layout squashing, identifier shortening) and gzipping a reactive-banana program is actually ~10MB
+2013-03-26 15:24:52 UTC <luite> though i have to admit that i have terrible variable name atm
+2013-03-26 15:27:32 UTC <luite> var h$_reactivezmbananazm0zi7zi1zi1ZCReactiveziBananaziCombinatorszisat_1929532920 = h$c(h$_reactivezmbananazm0zi7zi1zi1ZCReactiveziBananaziCombinatorszisat_e_1929532920);
+2013-03-26 15:27:35 UTC <luite> h$_reactivezmbananazm0zi7zi1zi1ZCReactiveziBananaziCombinatorszisat_1929532920.d1 = h$_reactivezmbananazm0zi7zi1zi1ZCReactiveziBananaziCombinatorszif_1929532504;
+2013-03-26 15:28:48 UTC <mgsloan> cool! I remember back when when a diagrams using thing was 20 mb!
+2013-03-26 15:29:25 UTC <luite> mgsloan: oh it's probably still that when uncompressed
+2013-03-26 15:29:32 UTC <luite> and that 20MB was also uncompressed :p
+2013-03-26 15:29:45 UTC <mgsloan> ah, well, at least it compresses well :D
+2013-03-26 15:29:47 UTC <luite> code size hasn't really improved in the nex generator
+2013-03-26 15:29:50 UTC <luite> the new
+2013-03-26 15:30:30 UTC <luite> performance has, and correctness too
+2013-03-26 15:30:32 UTC <luite> and features
+2013-03-26 15:30:50 UTC <luite> although i think async exceptions aren't 100% what ghc has
+2013-03-26 15:30:56 UTC <luite> yet
+2013-03-27 01:43:40 UTC <luite> hm implementing stablename hte way reactive-banana wants is surprisingly difficult
+2013-03-27 02:43:23 UTC <luite> hah i found a way
+2013-03-27 02:45:58 UTC <tgeeky> only 1 hour!
+2013-03-27 02:46:03 UTC <luite> no a day
+2013-03-27 02:46:13 UTC <tgeeky> oh, I meant from last two comments
+2013-03-27 02:46:18 UTC <luite> well that included finding where the problem was :p
+2013-03-27 02:46:37 UTC <tgeeky> doesn't GHC provide a stablename somewhere?
+2013-03-27 02:46:38 UTC <luite> hehe exacly an hour
+2013-03-27 02:46:54 UTC <luite> yes, but you have to implement it if you write a code generator and rts
+2013-03-27 02:47:10 UTC <luite> StableName uses some primops that oyu need to implement
+2013-03-27 02:47:45 UTC <luite> my heap objects look like { f: function, d1: someData, d2: someData, m: someInt }
+2013-03-27 02:48:00 UTC <luite> problem was that a thunk update to whnf, just copies over those properties to a new object
+2013-03-27 02:48:29 UTC <luite> a StableName should give the same answer for the same object (but is not required to)
+2013-03-27 02:49:19 UTC <luite> but the same haskell heap object can be multiple js objects now
+2013-03-27 02:54:15 UTC <tgeeky> byorgey: I can't wait until you have grad students to do your optimization for you!
+2013-03-27 02:56:05 UTC <luite> i guess the svg backend could do some hash consing and convert that to <defs> <use>
+2013-03-27 03:08:28 UTC <luite> bleh apparently that was not it :/
+2013-03-27 06:12:39 UTC <tgeeky> yay, just had a titilating conversation with wavewave
+2013-03-27 06:13:19 UTC <tgeeky> physics, SUSY, Higgs, and such
+2013-03-27 11:31:44 UTC <byorgey> luite: ah, cool idea re: hash consing
+2013-03-27 17:03:13 UTC <byorgey> ACTION bites the bullet and starts working on merging https://github.com/diagrams/diagrams-lib/pull/65
+2013-03-27 17:47:50 UTC <travis-ci> [travis-ci] 13diagrams-lib/06generalize-R2 14bbce885 http://travis-ci.org/diagrams/diagrams-lib/builds/5845788 The build passed.
+2013-03-27 18:06:37 UTC <luite> hmm, has anyone done diagrams benchmarks? i suspect that might be a performance hit that can be fixed with some SPECIALIZE at the right places
+2013-03-27 18:08:28 UTC <byorgey> luite: nope! I am 100% certain there are lots of simple ways diagrams could be optimized, performance-wise
+2013-03-27 18:08:44 UTC <byorgey> no one has yet put much (any) effort into it
+2013-03-27 18:13:00 UTC <luite> does the version on github compile with HEAD now?
+2013-03-27 18:15:13 UTC <byorgey> no
+2013-03-27 18:15:32 UTC <byorgey> that's next on my list
+2013-03-27 18:15:42 UTC <byorgey> it might just be as simple as bumping some upper bounds but I haven't tested yet
+2013-03-27 18:36:50 UTC <travis-ci> [travis-ci] 13diagrams-lib/06generalize-R2 143da688b http://travis-ci.org/diagrams/diagrams-lib/builds/5847076 The build passed.
+2013-03-27 19:34:03 UTC <travis-ci> [travis-ci] 13diagrams-cairo/06generalize-R2 14e1d4076 http://travis-ci.org/diagrams/diagrams-cairo/builds/5848488 The build has errored.
+2013-03-27 19:37:12 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06dia-haddock-0.1 14e983fce http://travis-ci.org/diagrams/diagrams-haddock/builds/5848152 The build passed.
+2013-03-27 19:44:28 UTC <travis-ci> [travis-ci] 13diagrams-lib/06generalize-R2 14d6b07df http://travis-ci.org/diagrams/diagrams-lib/builds/5848471 The build passed.
+2013-03-27 20:21:21 UTC <travis-ci> [travis-ci] 13diagrams-cairo/06master 1476fed72 http://travis-ci.org/diagrams/diagrams-cairo/builds/5849362 The build passed.
+2013-03-27 23:01:52 UTC <luite> gr, i is too dumb for lens
+2013-03-27 23:27:49 UTC <fryguybob> :(
+2013-03-27 23:48:18 UTC <luite> anyone familiar with the biplate rewrite things in lens?
+2013-03-27 23:51:20 UTC <fryguybob> @type rewrite
+2013-03-27 23:51:21 UTC <lambdabot> Plated a => (a -> Maybe a) -> a -> a
+2013-03-27 23:51:28 UTC <fryguybob> Lambdabot is!
+2013-03-27 23:51:47 UTC <fryguybob> @type plate
+2013-03-27 23:51:48 UTC <lambdabot> (Applicative f, Plated a) => (a -> f a) -> a -> f a
+2013-03-28 00:11:42 UTC <fryguybob> > rewrite (\a -> case a of (Node "a" cs) -> Just $ Node "A" cs; _ -> Nothing) $ Node "root" [Node "a" [Node "b" [], Node "a" []], Node "c" [Node "d" []]]
+2013-03-28 00:11:44 UTC <lambdabot>   Node {rootLabel = "root", subForest = [Node {rootLabel = "A", subForest = [...
+2013-03-28 00:14:30 UTC <luite> yeah but it's not just rewrite, i have a JStat (from jmacro), need to rewrite JExpr that match ValExpr (JFunc ...) inside, bottom up
+2013-03-28 00:47:53 UTC <byorgey> luite: use 'transform'?
+2013-03-28 00:48:29 UTC <byorgey> oh, but you need to rewrite pieces with a different type?
+2013-03-28 00:49:04 UTC <byorgey> for that I guess you want transformOn
+2013-03-28 00:49:37 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 142869f19 http://travis-ci.org/diagrams/diagrams-haddock/builds/5848150 The build passed.
+2013-03-28 00:51:31 UTC <luite> but i don't have a Plated instance
+2013-03-28 00:51:38 UTC <luite> biplate works with Data
+2013-03-28 00:51:54 UTC <luite> oh wait, transformOnOf
+2013-03-28 00:51:57 UTC <luite> perhaps
+2013-03-28 00:52:08 UTC <byorgey> do you have a Data instance?
+2013-03-28 00:53:40 UTC <byorgey> aha, you're supposed to use  transformOnOf biplate  I think
+2013-03-28 00:54:39 UTC <luite> yeah that seems to work
+2013-03-28 00:54:43 UTC <byorgey> cool
+2013-03-28 00:55:10 UTC <byorgey> wow, 6 hours between pushing a commit and successful Travis build?
+2013-03-28 00:55:17 UTC <byorgey> travis must be really backed up, or something
+2013-03-28 00:55:33 UTC <luite> unfortunately i don't want to rename all my variables and identifiers to "helloWorld", so i guess the real solution will be a tad more complicated ;)
+2013-03-28 00:55:59 UTC <byorgey> hehe
+2013-03-28 00:56:44 UTC <luite> i want to rename all local vars in nested scopes, so that but not use names that are already used in that scope to refer to global things
+2013-03-28 00:57:12 UTC <luite> i guess that sentence is not quite correct :)
+2013-03-28 00:57:13 UTC <byorgey> ah, tricky
+2013-03-28 00:57:26 UTC <byorgey> not quite, but I get the general idea
+2013-03-28 00:58:14 UTC <luite> bottom up should do the trick, all local variables are declared there, so i collect them. also collect all used identifiers not declared there (this needs to traverse nested scopes), filter the list of new names with the used vars, and map them
+2013-03-28 00:58:25 UTC <luite> doing that bottomuply should do the trick
+2013-03-28 00:59:05 UTC <luite> hopefully :)
+2013-03-28 01:00:00 UTC <luite> hopefully there's an easy way to collect the identifiers global to some scope, so that the "traverse nested scopes" part just means combining earlier results
+2013-03-28 01:01:46 UTC <byorgey> hehe, bottomuply =)
+2013-03-28 01:02:05 UTC <luite> adverbing weirds language
+2013-03-28 01:03:46 UTC <byorgey> =)
+2013-03-28 02:21:02 UTC <travis-ci> [travis-ci] 13diagrams-svg/06generalize-R2 144727af2 http://travis-ci.org/diagrams/diagrams-svg/builds/5856785 The build has errored.
+2013-03-28 02:25:46 UTC <travis-ci> [travis-ci] 13diagrams-postscript/06generalize-R2 14be41cbe http://travis-ci.org/diagrams/diagrams-postscript/builds/5856832 The build has errored.
+2013-03-28 02:32:09 UTC <cmears> "errored"?
+2013-03-28 02:32:28 UTC <cmears> worse than "bottomuply"
+2013-03-28 11:17:23 UTC <byorgey> cmears: I know, right?
+2013-03-28 13:00:03 UTC <travis-ci> [travis-ci] 13monoid-extras/06monoid-extras-0.2.2 14fbcc15a http://travis-ci.org/diagrams/monoid-extras/builds/5866913 The build passed.
+2013-03-28 13:21:58 UTC <travis-ci> [travis-ci] 13dual-tree/06dual-tree-0.1 14cf16293 http://travis-ci.org/diagrams/dual-tree/builds/5867307 The build passed.
+2013-03-28 13:34:38 UTC <travis-ci> [travis-ci] 13vector-space-points/06vector-space-points-0.1.2 14705b05d http://travis-ci.org/diagrams/vector-space-points/builds/5867668 The build passed.
+2013-03-28 13:34:58 UTC <travis-ci> [travis-ci] 13vector-space-points/06master 14819dc35 http://travis-ci.org/diagrams/vector-space-points/builds/5867666 The build passed.
+2013-03-28 13:46:39 UTC <travis-ci> [travis-ci] 13diagrams-core/06master 144d717ff http://travis-ci.org/diagrams/diagrams-core/builds/5867892 The build passed.
+2013-03-28 20:57:54 UTC <tgeeky> shachaf: some of my favorite peoples are joining the #diagrams cult!
+2013-03-28 20:59:07 UTC <carter> tgeeky who are these entities
+2013-03-28 20:59:51 UTC <tgeeky> carter: you too!
+2013-03-28 20:59:58 UTC <carter> tgeeky thanks! though we hardly chat
+2013-03-28 21:00:08 UTC <tgeeky> conal, shachaf, byorgey, dmwit, luite, fryguybob 
+2013-03-28 21:00:13 UTC <carter> <pulls out pipe, notebook  and couch>
+2013-03-28 21:00:19 UTC <carter> those are cool people
+2013-03-28 21:00:31 UTC <tgeeky> our cult GROWS IN STRENGTH
+2013-03-28 21:00:31 UTC <fryguybob> Awww
+2013-03-28 21:00:54 UTC <tgeeky> i'm missing some people because i don't know how to get a list of users in this channel
+2013-03-28 21:02:44 UTC <fryguybob>  /who maybe
+2013-03-28 21:04:28 UTC <tgeeky> mgsloan is on that list of cool people I like too. and ClaudiusMaximus. and transitively cmears. and alpounet.
+2013-03-28 21:05:14 UTC <tgeeky> luite: hmm: re your buttomuply renaming trick...
+2013-03-28 21:05:22 UTC <tgeeky> luite: I think somewhere I read that 'multiplate' would be good for that.
+2013-03-28 21:06:10 UTC <luite> oh yeah lens has copied the things from all the *plate libraries before and implemented those in its own language
+2013-03-28 21:06:28 UTC <tgeeky> oh yeah?
+2013-03-28 21:06:48 UTC <luite> based on some more generalized things, and peppered with inlines to make them faster than the originals. quite the edwardk style
+2013-03-28 21:09:19 UTC <tgeeky> luite: do you know where to look in lens?
+2013-03-28 21:09:25 UTC <tgeeky> for multiplate type functionality
+2013-03-28 21:09:35 UTC <tgeeky>  .Plated?
+2013-03-28 21:10:04 UTC <luite> also Data.Data.Lens
+2013-03-28 21:10:36 UTC <tgeeky> luite: am I to assume you are actually using this to do your renaming?
+2013-03-28 21:10:44 UTC <luite> then you use transformOnOf or something similar with one of those traversals
+2013-03-28 21:10:52 UTC <luite> tgeeky: yeah at least that's the plan if it's fast enough
+2013-03-28 21:11:16 UTC <ClaudiusMaximus> tgeeky: aww thanks. have a donut :) http://mathr.co.uk/misc/2013-03-28_torus_loop.webm
+2013-03-28 21:12:13 UTC <tgeeky> ClaudiusMaximus: lies! I'm wearing topology glasses, but see two planes or two donuts, but not one donut!
+2013-03-28 21:14:29 UTC <luite> tgeeky: but I'm working on some FFI things first
+2013-03-28 21:15:03 UTC <luite> need to make it a bit easier to use
+2013-03-28 21:15:16 UTC <luite> automatic string marshalling
+2013-03-28 21:21:23 UTC <carter> yeah
+2013-03-28 21:21:25 UTC <carter> that'd be nice
+2013-03-28 21:27:11 UTC <luite> it wouldn't be String -> Javascript string though
+2013-03-28 21:27:28 UTC <luite> rather Ptr JSChar -> Javascript string
+2013-03-28 21:27:42 UTC <luite> but the first one can be converted from a Text value rather efficiently
+2013-03-28 21:28:03 UTC <luite> without copying the buffer
+2013-03-28 21:29:11 UTC <luite> directly marshalling a String in ffi code is impossible unfortunately
+2013-03-28 21:29:12 UTC <carter> cool
+2013-03-28 21:29:17 UTC <carter> huh?
+2013-03-28 21:29:21 UTC <carter> i know nothing
+2013-03-28 21:29:33 UTC <luite> no i mean in GHCJS, when emitting the foreign call
+2013-03-28 21:29:49 UTC <luite> since converting the String requires forcing it
+2013-03-28 21:30:05 UTC <luite> and at that point it's too late, unless i do some restructuring
+2013-03-28 21:31:08 UTC <luite> but we probably shouldn't encourage using String too much in web apps
+2013-03-28 21:31:21 UTC <luite> if Text is an option
+2013-03-28 21:33:09 UTC <carter> do text
+2013-03-28 21:33:09 UTC <carter> yeah
+2013-03-28 21:33:24 UTC <carter> because you have to provide a sane unicode layer anyways
+2013-03-28 21:33:28 UTC <carter> 'cause the JS does it wrong
+2013-03-28 21:33:37 UTC <luite> hehe, yeah that's annoying
+2013-03-28 21:33:50 UTC <luite> i have some unicode tables in the rts, because JS doesn't give the right anwsers
+2013-03-28 21:34:03 UTC <carter> so whats the minimal amount of madness to port Text to being able to work on ghc.js?
+2013-03-28 21:36:58 UTC <luite> one conversion function to slice its internal ByteArray Int Int representation (slice the underlying ArrayBuffer without copying) and cast to Ptr JSChar
+2013-03-28 21:37:05 UTC <carter> ok
+2013-03-28 21:37:07 UTC <carter> awesome
+2013-03-28 21:37:36 UTC <luite> that gives the ffi function an array with offset, the FFI code emits a h$decodeUtf16 call for that before it passes it to the javascript code
+2013-03-28 21:37:43 UTC <luite> so js gets a real string
+2013-03-28 21:37:54 UTC <luite> with all its limitations unfortunately
+2013-03-28 21:43:55 UTC <carter> meaning?
+2013-03-28 21:52:10 UTC <luite> oh nothing to do with haskell, just that .length, .charCodeAt etc don't give the right answers
+2013-03-28 21:59:08 UTC <carter> ah
+2013-03-28 23:23:33 UTC <byorgey> ClaudiusMaximus: woah, trippy donut
+2013-03-29 00:41:39 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 142ecf3d1 http://travis-ci.org/diagrams/diagrams-lib/builds/5886207 The build passed.
+2013-03-29 00:41:57 UTC <luite> donut?
+2013-03-29 00:42:13 UTC <byorgey> (17:11) <ClaudiusMaximus> tgeeky: aww thanks. have a donut :) http://mathr.co.uk/misc/2013-03-28_torus_loop.webm
+2013-03-29 00:42:42 UTC <luite> ah
+2013-03-29 00:42:50 UTC <luite> that's indeed the sound donuts make
+2013-03-29 00:43:40 UTC <byorgey> perhaps marijuana-laced donuts make that sound.
+2013-03-29 00:45:02 UTC <luite> oh those are the only ones you can get here
+2013-03-29 02:30:09 UTC <tgeeky> THESE ARE NOT 'ASH BROWNIES.
+2013-03-29 21:06:30 UTC <travis-ci> [travis-ci] 13diagrams-core/06scaleinv-prim 14b1de95b http://travis-ci.org/diagrams/diagrams-core/builds/5907894 The build passed.
+2013-03-29 23:57:11 UTC <tgeeky> http://www.jasondavies.com/ <-- ha
+2013-03-29 23:57:28 UTC <tgeeky> http://www.jasondavies.com/factorisation-diagrams/ <-- byorgey: he mentions you
+2013-03-30 01:32:43 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 145c56431 http://travis-ci.org/diagrams/diagrams-lib/builds/5913537 The build passed.
+2013-03-30 01:33:56 UTC <fryguybob> I sound so excited!
+2013-03-30 01:34:23 UTC <luite> isn't this exciting then!
+2013-03-30 01:34:43 UTC <fryguybob> Yes!
+2013-03-30 01:43:30 UTC <fryguybob> byorgey: Inquiring minds want to if you have met my wife's cousin at the Green Line yet?
+2013-03-30 01:46:52 UTC <fryguybob> ^ want to know
+2013-03-30 01:58:05 UTC <byorgey> hmm, what's her name again?
+2013-03-30 01:58:14 UTC <byorgey> and/or what does she look like?
+2013-03-30 01:58:38 UTC <byorgey> http://www.cis.upenn.edu/~byorgey/hosted/hexaflower.png
+2013-03-30 01:59:57 UTC <byorgey> tgeeky: yep, I've seen jason davies' implementation
+2013-03-30 02:00:42 UTC <luite> trippy
+2013-03-30 02:01:14 UTC <luite> somehow i want to try 3d red/green glasses with that and see if it somehow becoms more spectacular
+2013-03-30 02:01:21 UTC <luite> that's a lot of somehow
+2013-03-30 02:01:37 UTC <byorgey> hehe, I doubt it =)
+2013-03-30 02:02:06 UTC <byorgey> ok, I'm off to bed, night all
+2013-03-30 02:02:36 UTC <luite> night
+2013-03-30 14:51:18 UTC <fryguybob> byorgey: The cousin is a he :D, with long curly blond hair.
+2013-03-30 14:51:26 UTC <fryguybob> Caleb
+2013-03-30 14:52:08 UTC <fryguybob> Also, sorry I forgot that pull request was still outstanding.  Unfortunately I'm going to be burried for at least another month :(
+2013-03-30 15:16:24 UTC <byorgey> fryguybob: ah, hehe, I see. =)  I don't think I've met him.
+2013-03-30 15:16:29 UTC <byorgey> fryguybob: and no worries.
+2013-03-31 00:30:50 UTC <luite> does anyone have suggestions for what could be a good gsoc project with ghcjs?
+2013-03-31 00:44:47 UTC <jfischoff> is the svg the recommended backend for getting started with diagrams?
+2013-03-31 00:45:53 UTC <luite> yes
+2013-03-31 00:46:56 UTC <fryguybob> jfischoff: I think text alignment is the only thing not working correctly with SVG.
+2013-03-31 00:47:07 UTC <jfischoff> cool
+2013-03-31 00:47:27 UTC <fryguybob> luite: Making all the packages work?  Oh, STM :D
+2013-03-31 00:47:59 UTC <luite> dunno if STM is such a good idea, it's not terribly high priority i think
+2013-03-31 00:48:30 UTC <fryguybob> luite: True.
+2013-03-31 00:48:46 UTC <luite> making all packages work is kind of ambitious :p
+2013-03-31 00:49:05 UTC <fryguybob> luite: Making it all smaller?
+2013-03-31 00:49:12 UTC <luite> please rewrite blas and linpack javascript ;p
+2013-03-31 00:49:14 UTC <luite> +in
+2013-03-31 00:49:18 UTC <fryguybob> hehe
+2013-03-31 00:49:23 UTC <luite> hmm
+2013-03-31 00:49:31 UTC <luite> i'm working on making it smaller right now
+2013-03-31 00:50:02 UTC <luite> i committed a basic minifier with lens (that does some scoping wrong, fixing that now) earlier today
+2013-03-31 00:50:37 UTC <luite> and some dataflow rules will be added later (constant propagation, dead var elim, liveness, some optimizations to stack updates)
+2013-03-31 00:51:41 UTC <luite> main problem for size are then the long varnames for exported functions, and inefficient static references encoding
+2013-03-31 00:51:55 UTC <luite> that's probably both fixed before gsoc starts though
+2013-03-31 00:51:59 UTC <jfischoff> how does one render a diagram to a file (without using default main)?
+2013-03-31 00:52:25 UTC <luite> renderDia
+2013-03-31 00:52:44 UTC <jfischoff> thanks
+2013-03-31 00:52:58 UTC <luite> depends on the backend what exactly the result is
+2013-03-31 00:53:39 UTC <luite> and also see the backend-specific associated data type for the configuration
+2013-03-31 00:56:01 UTC <byorgey> ah, hmm, I really should make a new release of diagrams-svg
+2013-03-31 00:56:09 UTC <byorgey> the documentation is much improved
+2013-03-31 00:56:47 UTC <jfischoff> The doc for contrib is really cool looking with the embedded diagrams
+2013-03-31 00:56:58 UTC <byorgey> I know right? =)
+2013-03-31 00:57:01 UTC <luite> :)
+2013-03-31 00:57:19 UTC <byorgey> jfischoff: take a look at http://hackage.haskell.org/packages/archive/diagrams-cairo/0.6/doc/html/Diagrams-Backend-Cairo.html  which should give you some ideas of how to use 'renderDia' with the SVG backend
+2013-03-31 00:57:33 UTC <jfischoff> oh thanks
+2013-03-31 00:58:33 UTC <byorgey> jfischoff: actually, you can also take a look at the HEAD version of diagrams-svg on github, which has lots more documentation than what's on Hackage right now
+2013-03-31 00:58:51 UTC <jfischoff> cool I forked it :)
+2013-03-31 00:58:55 UTC <byorgey> I mean, you don't need to install it from github, just look at the documentation
+2013-03-31 00:59:16 UTC <byorgey> cool
+2013-03-31 00:59:41 UTC <jfischoff> have you seen the hardware accelerated svg stuff nvidia is doing? https://developer.nvidia.com/gpu-accelerated-path-rendering
+2013-03-31 01:00:03 UTC <jfischoff> looks pretty cool
+2013-03-31 01:00:29 UTC <luite> i think someone mentioned that paper here before
+2013-03-31 01:00:58 UTC <byorgey> oh, neat
+2013-03-31 01:01:54 UTC <luite> oh i think it was a different one, for font rendering
+2013-03-31 01:03:22 UTC <jfischoff> Oh that was me :) Same basic idea, but they are doing pretty much all the work
+2013-03-31 01:04:27 UTC <luite> ah
+2013-03-31 01:14:54 UTC <byorgey> http://www.cis.upenn.edu/~byorgey/hosted/path_averaging.mp4
+2013-03-31 01:15:30 UTC <byorgey> Take a closed path, and replace every segment by its midpoint.  Repeat.
+2013-03-31 01:16:20 UTC <byorgey> apparently it's a theorem that starting from any random path this procedure converges on an ellipse!
+2013-03-31 01:18:48 UTC <luite> does it have to be a cubic path?
+2013-03-31 01:19:20 UTC <luite> bleh 3:20am already, annoying dst
+2013-03-31 01:19:30 UTC <byorgey> no, this is using only linear segments
+2013-03-31 01:20:18 UTC <luite> hm a square would remain a square, although a smaller one
+2013-03-31 01:21:07 UTC <byorgey> true
+2013-03-31 01:21:38 UTC <byorgey> you have to rescale the resulting path to be the same size as the original or else it actually shrinks down to a point.
+2013-03-31 01:22:11 UTC <byorgey> if you rescale then a square just oscillates back and forth between a square and a rotated square
+2013-03-31 01:22:18 UTC <byorgey> which you can see as a degenerate ellipse
+2013-03-31 01:22:25 UTC <byorgey> i.e. all the vertices lie on an ellipse
+2013-03-31 01:22:44 UTC <luite> but you can draw an ellipse through the corners of a square. since you never get more segments than you started with, that's as much as converging to an ellipse as you can ask fork
+2013-03-31 01:22:51 UTC <luite> :/
+2013-03-31 01:22:55 UTC <byorgey> right, exactly
+2013-03-31 01:23:43 UTC <byorgey> the precise statement of the theorem is that the vertices converge to lying on an ellipse.
+2013-03-31 01:29:29 UTC <jfischoff> byorgey: cool video
+2013-03-31 01:31:46 UTC <byorgey> jfischoff: thanks.  source code is here: https://github.com/byorgey/diagrams-play/blob/master/ShrinkPath.hs https://github.com/byorgey/diagrams-play/blob/master/ShrinkPathAnim.hs
+2013-03-31 01:32:40 UTC <jfischoff> nice and small :)
+2013-03-31 01:33:01 UTC <byorgey> yep =)
+2013-03-31 03:02:46 UTC <jfischoff> circle 1 # lw 0.01 is not displaying the line width correctly with the svg backend
+2013-03-31 03:03:01 UTC <jfischoff> circle 1 # lw 0.1 is ok
+2013-03-31 03:10:37 UTC <jfischoff> heh svg doesn't like 1e-2 want 0.01
+2013-03-31 19:11:32 UTC <byorgey> ClaudiusMaximus: nice proof
+2013-03-31 19:11:55 UTC <byorgey> also, I <3 MathJAx
+2013-03-31 19:12:06 UTC <byorgey> ...and also MathJax
+2013-03-31 19:22:09 UTC <carter> mathjax rocks
+2013-03-31 19:29:30 UTC <jfischoff> so when I construct points I use p2 (x, y), but I would rather do p2' x y or x .|. 
+2013-03-31 19:29:32 UTC <jfischoff> y
+2013-03-31 19:29:53 UTC <jfischoff> are there other methods for making points besides p2?
+2013-03-31 19:30:35 UTC <jfischoff> .|. I guess might not be an allowable operator but some infix method would be nice
+2013-03-31 19:31:14 UTC <byorgey> jfischoff: use &
+2013-03-31 19:31:18 UTC <jfischoff> ah
+2013-03-31 19:31:30 UTC <byorgey> from Diagrams.Coordinates
+2013-03-31 19:31:47 UTC <jfischoff> cool
+2013-03-31 19:43:01 UTC <ClaudiusMaximus> byorgey: wow, didn't know anyone read my blog
+2013-03-31 19:43:08 UTC <ClaudiusMaximus> byorgey: thanks :)
+2013-03-31 19:43:34 UTC <byorgey> ClaudiusMaximus: hehe, maybe I'm the only one ;-)
+2013-03-31 19:43:36 UTC <ClaudiusMaximus> i did have a thought about mathjax - it would cause problems for people reading via rss feed
+2013-03-31 19:43:48 UTC <byorgey> ClaudiusMaximus: yes, I am one such person
+2013-03-31 19:44:10 UTC <byorgey> but I am used to that, I often click through to read a post on the original blog instead of in my rss reader
+2013-03-31 19:44:21 UTC <byorgey> because of MathJax or similar things
+2013-03-31 19:44:23 UTC <byorgey> I don't really mind
+2013-03-31 19:45:52 UTC <ClaudiusMaximus> got another blog post in vague preparation, about why i wanted to cut rectangles out of triangular tilings in the first place..
+2013-03-31 19:46:45 UTC <ClaudiusMaximus> probably guessable given the butterfly variations post and the trippy donut video
+2013-03-31 19:46:50 UTC <ClaudiusMaximus> :)
+2013-03-31 19:48:07 UTC <ClaudiusMaximus> also i had some realisation about what 'K' means ; it's whether the edge you start with is the short edge or the long edge of the rectangle (which has aspect ratio 1:sqrt3 or sqrt3:1)
+2013-03-31 19:48:44 UTC <ClaudiusMaximus> i think - not proved that yet :)
+2013-03-31 19:49:12 UTC <byorgey> ah, cool
+2013-03-31 19:49:44 UTC <byorgey> I had made the connection between this post and the butterfly variations post, but hadn't thought of a connection to the trippy donut video
+2013-03-31 19:50:09 UTC <byorgey> I guess I didn't watch that closely enough, I don't remember what the patterns on the donut and plane were like, I just remember the donut rolling around and some really weird sounds
+2013-03-31 19:50:36 UTC <ClaudiusMaximus> heh, maybe a still would be clearer: http://mathr.co.uk/misc/2013-03-27_torus_colourful.jpg
+2013-03-31 19:51:41 UTC <byorgey> ah, so you make the torus by cutting out a rectangle with vertices on a square grid?
+2013-03-31 19:51:47 UTC <ClaudiusMaximus> the weird sounds are sampled from Theme From Rawhide by The Blues Brother
+2013-03-31 19:51:53 UTC <byorgey> but you could do it on a triangular grid too
+2013-03-31 19:52:01 UTC <ClaudiusMaximus> yep
+2013-03-31 19:52:07 UTC <byorgey> cool, makes sense
+2013-03-31 19:52:24 UTC <ClaudiusMaximus> http://bridgesmathart.org/2011/cdrom/proceedings/134/index.html describes the conformal warping
+2013-03-31 19:53:16 UTC <ClaudiusMaximus> buti had to invert it (ie, go from XYZ to xy) for that raytraced image, and i might have made a mistake
+2013-03-31 19:53:50 UTC <ClaudiusMaximus> but it seems to look ok
+2013-03-31 19:57:32 UTC <byorgey> neat
+2013-03-31 19:57:36 UTC <byorgey> yeah, looks OK to me
+2013-03-31 20:45:06 UTC <tgeeky> ClaudiusMaximus: in the program that drew this, is the bottom an actual projection from the torus, or is it a seperate texture?
+2013-03-31 20:47:47 UTC <ClaudiusMaximus> tgeeky: separate object
+2013-03-31 20:50:03 UTC <hpaste> ClaudiusMaximus pasted âtorus fragmentarium scriptâ at http://hpaste.org/84934
+2013-03-31 20:50:14 UTC <ClaudiusMaximus> http://syntopia.github.com/Fragmentarium/
+2013-03-31 20:50:31 UTC <ClaudiusMaximus> i tried with a git checkout, so it might bork in older released versions
+2013-03-31 20:51:50 UTC <ClaudiusMaximus> also that's after some more modifications to try to get it to be more physically accurate
+2013-03-31 20:56:19 UTC <ClaudiusMaximus> still woeful though :)  i then tried implementing a physical model in haskell but that failed miserably (torus shot off to infinity) - didn't pay enough attention in highschool mechanics i think, and we didn't cover inertia tensors then either
+2013-03-31 22:33:06 UTC <jfischoff> Is this parametric equation for a line in diagrams somewhere: parametericLine start end t = start .+^ (t *^ (end .-. start)) ?
+2013-03-31 23:00:41 UTC <byorgey> jfischoff: well, Segments have an 'atParam' function which does that but restricted to start = origin
+2013-03-31 23:01:09 UTC <byorgey> but that's an awfully low-level way to get at that functionality
+2013-03-31 23:01:44 UTC <jfischoff> that's good to know
+2013-03-31 23:02:18 UTC <byorgey> mgsloan has some patches for parameterizing trails, paths, etc.: https://github.com/diagrams/diagrams-lib/issues/53
+2013-03-31 23:02:31 UTC <byorgey> but I haven't had a chance to look at them in detail yet
+2013-03-31 23:03:00 UTC <jfischoff> I am having a lot of fun so far :)
+2013-03-31 23:03:18 UTC <byorgey> jfischoff: ah, however, it just occurred to me you should just use the 'alerp' function from Data.AffineSpace
+2013-03-31 23:03:37 UTC <byorgey> in fact parametricLine = alerp =)
+2013-03-31 23:03:43 UTC <jfischoff> yep
+2013-03-31 23:03:48 UTC <jfischoff> cool thanks
+2013-03-31 23:03:51 UTC <byorgey> glad you're having fun =)
+2013-03-31 23:03:54 UTC <byorgey> what are you drawing?
+2013-03-31 23:04:17 UTC <jfischoff> I the diagrams from the fractional and negative types paper
+2013-03-31 23:04:34 UTC <jfischoff> the ol' project dmwit worked on before
+2013-03-31 23:05:31 UTC <byorgey> ah, very cool =)
+2013-03-31 23:05:38 UTC <jfischoff> :)
+2013-03-31 23:06:00 UTC <jfischoff> how's the thesis going?
+2013-03-31 23:06:56 UTC <byorgey> fine, passed my proposal a few weeks ago
+2013-03-31 23:07:41 UTC <jfischoff> is that the major hurtle?
+2013-03-31 23:08:04 UTC <jfischoff> or just one of the many :)
+2013-03-31 23:08:55 UTC <byorgey> one of many, but the important point is that it's the penultimate hurdle
+2013-03-31 23:09:06 UTC <jfischoff> ah
+2013-03-31 23:09:19 UTC <byorgey> now I have "only" to actually write a thesis =)
+2013-03-31 23:09:36 UTC <jfischoff> eh, piece of cake ;)
+2013-03-31 23:10:07 UTC <jfischoff> its on species right?
+2013-03-31 23:10:53 UTC <byorgey> yep
+2013-03-31 23:11:35 UTC <jfischoff> no pressure, but I'm excited to read it :)
+2013-03-31 23:14:32 UTC <tgeeky> ACTION cuts in line, somehow demonstrating a higher level of excitement than jfischoff 
+2013-03-31 23:14:50 UTC <jfischoff> tgeeky: hey!
+2013-03-31 23:15:01 UTC <byorgey> hey, no pushing!
+2013-03-31 23:15:37 UTC <tgeeky> ACTION points out his use of "!" indicates his excitement of something *other* than byorgey's thesis, lowering jfischoff's excitement allotment
+2013-03-31 23:15:38 UTC <jfischoff> tgeeky: working on pi-eta-epsilon again. Cleaned up the project in my branch adding diagrams
+2013-03-31 23:15:50 UTC <byorgey> it turns out that using some newfangled copying technology, it's possible to make TWO copies of a document and have two people read it AT THE SAME TIME
+2013-03-31 23:15:59 UTC <tgeeky> byorgey: WITCH!
+2013-03-31 23:16:02 UTC <tgeeky> burn the witch!
+2013-03-31 23:16:20 UTC <tgeeky> jfischoff: excellllent.
+2013-03-31 23:16:22 UTC <byorgey> ACTION turns tgeeky into a newt
+2013-03-31 23:17:12 UTC <tgeeky> ACTION and his newt friends start singing Always Look On The Bright Side of Life
+2013-03-31 23:48:16 UTC <fryguybob> It's getting pythony in here :D
+2013-04-01 00:33:29 UTC <jfischoff> very cool: capsule w h = roundedRect w h h
+2013-04-03 00:37:06 UTC <luite> hm i kinda regret catching that glass bottle falling from the fridge with my foot
+2013-04-03 00:57:03 UTC <byorgey> ouch
+2013-04-03 01:27:50 UTC <travis-ci> [travis-ci] 13diagrams-lib/06generalize-R2 1483d347a http://travis-ci.org/diagrams/diagrams-lib/builds/6003738 The build passed.
+2013-04-03 07:07:32 UTC <_mr> Has it been done, or would it be easy to make gloss a backend for diagrams?
+2013-04-03 07:12:58 UTC <luite> i don't think it has, not sure
+2013-04-03 07:15:25 UTC <luite> i suppose you'd have to do some work to draw splines in it, but doesn't look impossible
+2013-04-03 07:28:57 UTC <_mr> Ok, I'll just try to adjust the simplest backend around - SVG
+2013-04-03 07:29:42 UTC <_mr> Show.. even better
+2013-04-03 07:29:58 UTC <luite> SVG does have paths built in though, so it's likely more work
+2013-04-03 07:30:18 UTC <luite> wait until byorgey or fryguybob are around though, they probably know more about existign backends
+2013-04-03 07:30:41 UTC <_mr> Ok, thanks
+2013-04-03 10:56:05 UTC <fryguybob> _mr: I don't think a gloss backend would be hard, but it might be a little annoying juggling the name clashes.
+2013-04-03 11:02:05 UTC <_mr> fryguybob: Great, thanks. I'll come back when my efforts go astray ;-)
+2013-04-03 11:05:47 UTC <byorgey> incidentally, it should be possible to also translate in the other direction -- take gloss Pictures and turn them into diagrams.
+2013-04-03 11:08:09 UTC <_mr> fun
+2013-04-03 11:29:00 UTC <fryguybob> _mr: A quick glance at gloss leads me to believe that they don't have cubic splines.  We know how to decompose a spline into a either short line segments or arcs as an approximation, but there isn't any prepackaged code to do that yet.
+2013-04-03 11:36:18 UTC <_mr> fryguybob: That just means that I have to write something that draws the cubic splines given a list of points?
+2013-04-03 11:45:31 UTC <fryguybob> _mr: Well there will be a point in the backend where you are given a Cubic spline segment and have do do something with it.
+2013-04-03 11:46:04 UTC <fryguybob> _mr: We can make a function that will convert that into a sequence of arcs and or lines.
+2013-04-03 11:46:13 UTC <fryguybob> (given an error bound).
+2013-04-03 12:15:50 UTC <_mr> fryguybob: when you say it is not prepackaged, does that mean it is not public or is it sitting somewhere on github? ;-)
+2013-04-03 12:18:17 UTC <fryguybob> _mr: It isn't written yet.  But as soon as you need such a thing I can write it for you :D
+2013-04-03 12:19:38 UTC <fryguybob> _mr: We have some code written that does a bit more related work creating offsets for paths that will (when I have time) end up in diagrams-lib.
+2013-04-03 12:22:11 UTC <_mr> maybe it would be worthwhile to just add splines to gloss..
+2013-04-03 13:29:52 UTC <bergey`> I ran into the same problem for the OpenGL backend.  I used the easy hack of hardcoding the number of segments.
+2013-04-03 13:30:00 UTC <bergey`> https://github.com/bergey/diagrams-opengl/commit/b78e08bc9bb646f43cde8c4113fdcc73eba95568
+2013-04-03 13:30:22 UTC <bergey`> fryguybob's solution with the error bound is much nicer; I'd also use it when it's available.
+2013-04-03 13:39:04 UTC <_mr> And there I thought OpenGL had some spliny stuff already
+2013-04-03 14:16:28 UTC <byorgey> well, if OpenGL doesn't, that explains why gloss doesn't either
+2013-04-03 14:20:47 UTC <_mr> That's true. But that is not the only explaination why gloss wouldn't have it.
+2013-04-03 14:22:50 UTC <bergey`> GLU and GLUT have spline support, reachable in an API that's been deprecated for 4+ years in OpenGL proper.
+2013-04-03 14:23:43 UTC <bergey`> I haven't found advice I trust on which API's of the 20+ year accretion around OpenGL one should use if writing new code in 2013. :)
+2013-04-03 14:24:56 UTC <_mr> Hehe
+2013-04-03 14:32:38 UTC <_mr> That approximation doesn't look all that easy
+2013-04-03 23:10:37 UTC <travis-ci> [travis-ci] 13diagrams-builder/06master 149a53102 http://travis-ci.org/diagrams/diagrams-builder/builds/6032183 The build passed.
+2013-04-03 23:13:05 UTC <travis-ci> [travis-ci] 13diagrams-builder/06master 14080766a http://travis-ci.org/diagrams/diagrams-builder/builds/6032368 The build passed.
+2013-04-04 02:00:39 UTC <travis-ci> [travis-ci] 13diagrams-builder/06builder-0.3 1437927af http://travis-ci.org/diagrams/diagrams-builder/builds/6036440 The build has errored.
+2013-04-04 02:01:02 UTC <tgeeky> ACTION thinks strongbad is the one who says that
+2013-04-04 02:08:51 UTC <travis-ci> [travis-ci] 13diagrams-builder/06master 1448513ef http://travis-ci.org/diagrams/diagrams-builder/builds/6036438 The build passed.
+2013-04-04 02:09:01 UTC <byorgey> ERRORED
+2013-04-04 02:09:10 UTC <tgeeky> ha ha, you predicted wrong
+2013-04-04 02:10:17 UTC <tgeeky> byorgey: so, I think it was last thursday, but if it was *this* thursday, do you have a draft of that paper?
+2013-04-04 02:10:53 UTC <byorgey> we didn't end up submitting anything, Dan didn't have time to work on it and it's just not ready yet
+2013-04-04 02:11:04 UTC <byorgey> but you can see what we have in the repo on github
+2013-04-04 02:11:49 UTC <tgeeky> byorgey: so you have to select among: [abort, submit to other journal, submit next year] ?
+2013-04-04 02:11:49 UTC <tgeeky> with a default?
+2013-04-04 02:11:58 UTC <byorgey> we are not choosing abort
+2013-04-04 02:12:12 UTC <byorgey> we'll submit it somewhere.  just not sure where yet.
+2013-04-04 02:13:19 UTC <byorgey> ACTION -> bed
+2013-04-04 02:14:19 UTC <tgeeky> night
+2013-04-04 02:17:33 UTC <luite_> hm
+2013-04-04 02:21:26 UTC <tgeeky> luite_: hmm?
+2013-04-04 02:21:32 UTC <luite_> hmmm
+2013-04-04 02:21:38 UTC <luite_> hidden markov models
+2013-04-04 02:22:08 UTC <tgeeky> indeed? I was involved in a project related to that in college and I in no way learned anything about them
+2013-04-04 02:25:01 UTC <tgeeky> what do you know, It's still there, bad acronym and all: https://wiki.cc.gatech.edu/ccg/projects/gt2k/gt2k
+2013-04-04 02:25:04 UTC <tgeeky> GART
+2013-04-04 02:25:52 UTC <luite_> ah
+2013-04-04 02:26:04 UTC <tgeeky> it sould be noted that I'm none of those people :o
+2013-04-04 02:27:16 UTC <tgeeky> it was an undergrad capstone under Ian Woon-Kim
+2013-04-04 02:29:21 UTC <luite_> hm, releated to Ian-Woo Kim? ;p
+2013-04-04 02:30:04 UTC <tgeeky> too late to make a joke
+2013-04-04 02:30:19 UTC <luite_> oh
+2013-04-04 02:32:05 UTC <tgeeky> the AMS-02 results came out to day, they are perplexing. http://physics.aps.org/featured-article-pdf/10.1103/PhysRevLett.110.141102
+2013-04-04 02:32:36 UTC <tgeeky> If you read the last sentence first, it sounds like something interesting. If you read it normally, it seems really weird to tack on the last sentence at the end, to me.
+2013-04-04 02:35:39 UTC <tgeeky> the paper really says: we have a condensed LHC-detector style detector, in space!!!!, and it works, and we did the simplest data cut we could do
+2013-04-04 02:36:09 UTC <tgeeky> and we got back not inconsistent results, and don't yet have statistics to say something interesting.
+2013-04-04 02:36:41 UTC <luite_> hmm
+2013-04-04 02:37:17 UTC <tgeeky> for the first time, I read the paper first before I saw anything on blogosphere, and I kind of agree with the odd way this has been shaped by media / AMS / NASA / CERN
+2013-04-04 02:43:45 UTC <tgeeky> I think the results after 2028 (when data collection ends due to consumables -> zero), if he's still alive, the result may be worth of a 2nd Nobel prize
+2013-04-04 02:44:54 UTC <tgeeky> according to wikipedia, one of Samuel Ting's doctoral advisors won the Nobel Physics for the tau lepton (the 3rd electron-like thing)
+2013-04-04 02:45:03 UTC <tgeeky> in 1995, after Ting won his for J/psi
+2013-04-04 02:45:11 UTC <tgeeky> (in... 1976)
+2013-04-04 02:54:20 UTC <luite_> hmm
+2013-04-04 02:54:36 UTC <tgeeky> what about your thing? what are you do-ing?
+2013-04-04 02:54:54 UTC <luite_> ACTION trying to build step by step heap view using some d3 graph layout lib
+2013-04-04 02:55:25 UTC <luite_> i was doing some dataflow analysis to reduce code size, but i needed something else because i didn't amke much progress
+2013-04-04 03:01:07 UTC <tgeeky> so you're currently looking at d3.js to do it, or you need something else still?
+2013-04-04 03:01:26 UTC <luite_> no i have some lib already and it draws graphs, but it doesn't look correct
+2013-04-04 03:01:48 UTC <luite_> also i need to find a way to add fixed nodes (fixed location) to the graph, for the stack and registers
+2013-04-04 03:02:37 UTC <luite_> it's just a very messy hack, nothing serial
+2013-04-04 03:10:40 UTC <luite_> ah fixed location should be possible with the pos attr
+2013-04-04 03:30:12 UTC <luite_> hm it almost works :)
+2013-04-04 03:40:12 UTC <tgeeky> hm. I just realized something bad...
+2013-04-04 03:40:15 UTC <tgeeky> http://www.reddit.com/r/worldnews/comments/1bmpd4/north_korea_seen_moving_midrange_missile_to_east/
+2013-04-04 03:41:04 UTC <tgeeky> it occurs to me that EMP from an airbirst nuke would cripple the region but wouldn't affect NK (since they have almost no grid, comparatively)
+2013-04-04 03:41:13 UTC <tgeeky> so they could just shoot upward and detonate
+2013-04-04 03:41:34 UTC <cmears> without electricity how would they make their propaganda videos?
+2013-04-04 03:42:07 UTC <tgeeky> cmears: well, we're talking about country-suicide anyway.
+2013-04-04 03:42:20 UTC <tgeeky> but yes. Perahps they could just contract EA directly instead of ripping off their games.
+2013-04-04 03:46:11 UTC <cmears> I think Kim Jong Un can make an EMP burst just by clapping his hands anyway
+2013-04-04 03:49:14 UTC <tgeeky> maybe EMPs are how unicorns are born?
+2013-04-04 03:51:09 UTC <carter> korean unicorns specifically?
+2013-04-04 03:57:52 UTC <tgeeky> you know, I don't like to discriminate. Any unicorn will be fine.
+2013-04-04 03:59:16 UTC <luite_> http://hdiff.luite.com:3000/
+2013-04-04 03:59:58 UTC <tgeeky> how cool is this!
+2013-04-04 04:00:14 UTC <cmears> I don't know what it is doing but I like it
+2013-04-04 04:00:21 UTC <luite_> it evaluates the expression
+2013-04-04 04:00:22 UTC <tgeeky> it tells you what it's doing
+2013-04-04 04:00:35 UTC <luite_> it shows what's on the heap at every step (i should add stack and registers)
+2013-04-04 04:00:43 UTC <tgeeky> make the box taller too
+2013-04-04 04:00:48 UTC <tgeeky> very cool though
+2013-04-04 04:00:58 UTC <cmears> I mean I don't quite know how to interpret it
+2013-04-04 04:01:18 UTC <cmears> But I do like the idea of visualising evaluation
+2013-04-04 04:01:48 UTC <tgeeky> luite_: given how long it takes to execute, perhaps do something smaller (=6 or 7) maybe
+2013-04-04 04:02:00 UTC <luite_> that doesn't show the thunks on the heap so nicely
+2013-04-04 04:02:09 UTC <tgeeky> i mean
+2013-04-04 04:02:13 UTC <tgeeky> foldl + 0 [1..6]
+2013-04-04 04:02:23 UTC <luite_> yeah that tree is a lot less tall
+2013-04-04 04:02:37 UTC <luite_> so it's gone pretty quickly
+2013-04-04 04:02:43 UTC <tgeeky> oh. i don't see the tall-ness of the tree, I only see the width
+2013-04-04 04:03:10 UTC <tgeeky> the height for me is never > 3, and I never see the whole box for the 3rd level from the top
+2013-04-04 04:03:19 UTC <tgeeky> (I just assumed it was down there)
+2013-04-04 04:03:23 UTC <luite_> oh firefox
+2013-04-04 04:03:43 UTC <tgeeky> yeah, not back on chrome yet
+2013-04-04 04:08:06 UTC <carter> luite_ neat
+2013-04-04 04:08:15 UTC <tgeeky> that's what I said!
+2013-04-04 04:10:52 UTC <tgeeky> http://www.reddit.com/r/worldnews/comments/1bmpd4/north_korea_seen_moving_midrange_missile_to_east/c985953
+2013-04-04 04:11:05 UTC <tgeeky> hopefully no blacksuits come interrogate me.
+2013-04-04 04:20:51 UTC <luite_> bleh no one likes it other than Cale :p
+2013-04-04 04:21:14 UTC <tgeeky> nobody else is paying attention :o
+2013-04-04 04:22:04 UTC <mgsloan> luite: No, that's awesome!!!
+2013-04-04 04:22:11 UTC <mgsloan> is that using diagrams?
+2013-04-04 04:22:16 UTC <luite_> no sorry :(
+2013-04-04 04:22:23 UTC <mgsloan> Ah, no worries :)
+2013-04-04 04:22:34 UTC <mgsloan> It's awesome regardless
+2013-04-04 04:22:43 UTC <luite_> it uses d3 and dagre
+2013-04-04 04:22:58 UTC <luite_> so i just generate a string in dot format, and it draws it
+2013-04-04 04:23:17 UTC <mgsloan> Ahh, sweet, yeah, it does look graph-viz-ey
+2013-04-04 04:23:25 UTC <mgsloan> I guess asking if it was diagrams was pretty far fetched
+2013-04-04 04:23:35 UTC <mgsloan> as noone's done a graph viz clone yet afaik
+2013-04-04 04:24:03 UTC <cmears> you could just ask dot to do the layout, and draw the result with diagrams
+2013-04-04 04:24:18 UTC <luite_> yeah but this is javascript, i can't call dot
+2013-04-04 04:24:22 UTC <luite_> it's realtime, not precalculated
+2013-04-04 04:24:46 UTC <luite_> i hacked the ghcjs thread scheduler to jump to the graph displayer every step, and pause 100ms or so
+2013-04-04 04:32:05 UTC <luite_> adding the stack now, hopefully this lib recognizes the pos attribute
+2013-04-04 04:43:27 UTC <carter> luite_ wat, you're doing the rendering and running on the browser both?
+2013-04-04 04:43:31 UTC <carter> neat :)
+2013-04-04 04:47:42 UTC <luite_> carter: yes it's compiled to js
+2013-04-04 04:48:52 UTC <carter> props
+2013-04-04 04:49:17 UTC <carter> luite has ghc.js been labor of love hobby hacking?
+2013-04-04 04:49:42 UTC <luite_> bith of both recently
+2013-04-04 04:49:52 UTC <luite_> euh
+2013-04-04 04:51:52 UTC <luite_> so not purely hobby
+2013-04-04 04:53:51 UTC <tgeeky> paid hobby ftw
+2013-04-04 05:03:20 UTC <tgeeky> http://www.youtube.com/watch?v=0RHLtx9r2LA
+2013-04-04 05:03:22 UTC <tgeeky> bwhahaha
+2013-04-04 05:03:30 UTC <luite_> i made the nodes a bit smaller
+2013-04-04 05:07:18 UTC <tgeeky> luite_: curiosly, because you made the box bigger (and it had to draw more stuff), it ran a lot slower
+2013-04-04 05:08:28 UTC <luite_> oh firefox is relatively slow with this]
+2013-04-04 05:16:03 UTC <luite_> i think i just need to add the stack things manually to d3
+2013-04-04 05:16:11 UTC <luite_> instead of letting the graph layouter do ti
+2013-04-04 18:42:52 UTC <ClaudiusMaximus> http://mathr.co.uk/constructions/woven-torus/  used diagrams to make the net!
+2013-04-04 18:44:20 UTC <byorgey> woohoo!
+2013-04-04 18:44:27 UTC <byorgey> that's really really cool
+2013-04-04 18:44:37 UTC <byorgey> gonna write about it on your blog? =)
+2013-04-04 18:44:48 UTC <ClaudiusMaximus> possibly :)
+2013-04-04 18:44:50 UTC <ClaudiusMaximus> thanks
+2013-04-04 18:45:44 UTC <ClaudiusMaximus> i had to take into account that paper isn't infinitely thin/flexible... might be a better way but i just made everything a bit narrower
+2013-04-04 18:50:33 UTC <byorgey> sounds like an excellent first approximation =)
+2013-04-04 18:51:09 UTC <byorgey> Anyone who knows anything about color theory want to hack on https://github.com/diagrams/diagrams-lib/issues/77 ?
+2013-04-04 18:51:16 UTC <byorgey> I really really want it =)
+2013-04-04 18:55:19 UTC <ClaudiusMaximus> my technique is using golden angle for hsv hue increment when i want distinct-ish colours without thinking too hard - doing it properly would be a lot harder, colour is complicated
+2013-04-04 18:59:28 UTC <byorgey> ah, I like that idea
+2013-04-04 18:59:44 UTC <byorgey> but see, I don't even know anything about hsv
+2013-04-04 19:00:35 UTC <ClaudiusMaximus> it's a hack to turn tgb cube into hexagonal bipyramid, or something
+2013-04-04 19:00:38 UTC <ClaudiusMaximus> *rgb
+2013-04-04 19:02:11 UTC <bergey`> Cylindrical bipyramid, I thought
+2013-04-04 19:03:41 UTC <ClaudiusMaximus> it's nonlinear, anyay, all the code i've seen has 6-way branching for each hextant
+2013-04-04 19:05:07 UTC <bergey`> Huh.  I guess I understand color even less well than I thought.  One more thing to read about :)
+2013-04-04 19:07:14 UTC <ClaudiusMaximus> i think rgb is a horrible perceptual hack - but then colour is perceptual anyway (like those illusions with gray (in pixel value) squares that look yellow/blue depending on the lighting of the rest of the scene)
+2013-04-04 19:08:34 UTC <ClaudiusMaximus> if you wanted to use 'diagrams' for posters displayed at bus stops, you might want to choose inks that respond well to both daylight sunlight spectrum and sodium street light spectrum...
+2013-04-04 19:09:24 UTC <bergey`> My impression is that RGB is how displays & eyes work, but that HSV is always what I want to work in for talking about color.    Kindof odd.  (Not that my art profs ever referred to HSV as such.)
+2013-04-04 19:10:40 UTC <ClaudiusMaximus> that's roughly my impession too - but as soon as you go into print you have all the physics of light reflection at different frequencies...
+2013-04-04 19:11:12 UTC <ClaudiusMaximus> anyway, gotta clean/cook/eat - laters...
+2013-04-04 19:11:18 UTC <bergey`> later
+2013-04-04 20:08:51 UTC <tgeeky> luite_: here's the picture showing how much better AMS is re: all other similar experiments: http://www.quantumdiaries.org/wp-content/uploads/2013/04/Press_33.jpg
+2013-04-04 20:21:03 UTC <tgeeky> byorgey: re:     182 comments
+2013-04-04 20:21:03 UTC <tgeeky>     share
+2013-04-04 20:21:03 UTC <tgeeky> 33
+2013-04-04 20:21:03 UTC <tgeeky> 1624
+2013-04-04 20:21:03 UTC <tgeeky> With all due respect to the armed forces of Reddit, this is kinda true. (quickmeme.com)
+2013-04-04 20:21:06 UTC <tgeeky> submitted 5 hours ago by Ninjapork to AdviceAnimals
+2013-04-04 20:21:09 UTC <tgeeky>     497 comments
+2013-04-04 20:21:11 UTC <tgeeky> oh god
+2013-04-04 20:21:21 UTC <tgeeky> i hate my client sometimes.
+2013-04-04 20:21:48 UTC <tgeeky> byorgey: re: https://github.com/diagrams/diagrams-lib/issues/77 -- perhaps it's time to get edwardk interested in diagrams? :o
+2013-04-04 20:22:09 UTC <byorgey> edwardk is already vaguely interested in diagrams
+2013-04-04 20:22:19 UTC <byorgey> for doing visualization on top of his analytics stuff
+2013-04-04 20:22:25 UTC <tgeeky> i think he's as expert as you can get re: color
+2013-04-04 20:22:28 UTC <tgeeky> for #haskellers
+2013-04-04 20:22:36 UTC <byorgey> him and roconnor
+2013-04-04 20:22:57 UTC <tgeeky> hehe. edwardk is like a 40/10 in code productivity
+2013-04-04 20:23:03 UTC <tgeeky> I don't know where roconnor is, but its <= 10
+2013-04-04 20:23:05 UTC <byorgey> I don't think we really need a color *expert* for #77 though.
+2013-04-04 20:23:10 UTC <tgeeky> true enough
+2013-04-04 20:24:14 UTC <tgeeky> byorgey: I remember d3.js having some feature w.r.t sets of colors: https://github.com/mbostock/d3/wiki/Ordinal-Scales
+2013-04-04 20:24:17 UTC <luite_> i sometimes used this http://colorschemedesigner.com/
+2013-04-04 20:24:21 UTC <tgeeky> is that worthy of adding as a comment?
+2013-04-04 20:24:25 UTC <carter> byorgey i will be playing with color pallettes later this month...
+2013-04-04 20:24:30 UTC <luite_> they have a few approaches that you can copy
+2013-04-04 20:24:49 UTC <tgeeky> luite_: yeah, I assumed you would always do the first 4 (mono, complement, triad, tetrad)
+2013-04-04 20:24:58 UTC <tgeeky> as everyone seems to use those schemes
+2013-04-04 20:25:10 UTC <byorgey> any info is worth adding as a comment.
+2013-04-04 20:25:15 UTC <tgeeky> byorgey: ok
+2013-04-04 20:26:21 UTC <luite_> tgeeky: yeah you can do some variations on the angles, and choose colors with similar saturation and brightness
+2013-04-04 20:26:28 UTC <carter> having a nice way of geneerating good color schemes is valuable
+2013-04-04 20:26:54 UTC <tgeeky> i agree. you take the arbitrary and usually uninteresting choices of coders who want to focus on something else
+2013-04-04 20:27:01 UTC <tgeeky> away, and replace them with something default
+2013-04-04 20:27:54 UTC <luite_> i uploaded all three folds here btw http://hdiff.luite.com/reduce/
+2013-04-04 20:28:14 UTC <luite_> on the regular nginx server, not the temp :3000 one
+2013-04-04 20:28:38 UTC <byorgey> yep
+2013-04-04 20:28:44 UTC <byorgey> oops, wrong channel
+2013-04-04 20:28:47 UTC <tgeeky> luite_: noice!
+2013-04-04 20:28:51 UTC <byorgey> luite_: awesome!
+2013-04-04 20:29:03 UTC <byorgey> Thunk Thunk Thunk Thunk
+2013-04-04 20:30:24 UTC <luite_> byorgey: yeah i should display a bit more info about the functions, they all refer to the plusInt function probably. in the beginning you briefly see a flash of a big data structure, that's probably the Num dict for Int
+2013-04-04 20:30:57 UTC <byorgey> ah, cool, I was wondering what that was
+2013-04-04 20:31:18 UTC <carter> neat
+2013-04-04 20:31:32 UTC <fryguybob> ClaudiusMaximus: Cool torus!
+2013-04-04 20:31:37 UTC <carter> byorgey the color space thing is subtle to do well
+2013-04-04 20:32:03 UTC <byorgey> carter: I am aware of that.  To start, I would just like someone to do it poorly =)
+2013-04-04 20:32:09 UTC <byorgey> then we can improve it
+2013-04-04 20:32:15 UTC <luite_> what is the color space thing?
+2013-04-04 20:32:27 UTC <carter> luite_ how to color things in a diagram
+2013-04-04 20:32:30 UTC <carter> for various goals
+2013-04-04 20:32:43 UTC <carter> eg: preceptually linear color scale
+2013-04-04 20:32:48 UTC <byorgey> luite_: https://github.com/diagrams/diagrams-lib/issues/77
+2013-04-04 20:33:02 UTC <mgsloan> luite: wow, these are awesome.  Maybe debugging code will end up being easier in the browser!
+2013-04-04 20:33:40 UTC <luite_> mgsloan: yeah in theory you can stop any ghcjs program and step a single thread with this
+2013-04-04 20:33:44 UTC <carter> mgsloan only if you have a time step slider
+2013-04-04 20:33:45 UTC <mgsloan> I mean, this'd be pretty low level debugging, but could be useful for some stuff
+2013-04-04 20:33:47 UTC <luite_> just replace the scheduler temporaritly
+2013-04-04 20:33:54 UTC <mgsloan> carter - Yeah, make it reversible!
+2013-04-04 20:33:57 UTC <carter> yesss
+2013-04-04 20:34:04 UTC <carter> reversible debugging
+2013-04-04 20:34:09 UTC <mgsloan> Would be so sweet
+2013-04-04 20:34:18 UTC <carter> plus play with tracking the scheduler interleaving
+2013-04-04 20:34:31 UTC <mgsloan> luite: Why doesn't ghcjs vm run backwards? come on, it's trivial ;)
+2013-04-04 20:34:51 UTC <luite_> reversible is slighly more tricky, but it can be done (probably the easiest way is to take snapshots from time to time, and run the code forwarid again to the desired location from the latest checkpoint)
+2013-04-04 20:35:22 UTC <luite_> not quite, required values on the stack may have been overwritten
+2013-04-04 20:35:27 UTC <luite_> it's not really a state monad ;p
+2013-04-04 20:35:37 UTC <carter> luite_ it might be slightly tricky
+2013-04-04 20:35:42 UTC <carter> but it'd be magicaly cool
+2013-04-04 20:35:47 UTC <mgsloan> yeah, I kidd.  That would be pretty nifty.  It'd also be pretty interesting if all of the external events could be captured
+2013-04-04 20:35:52 UTC <carter> yeah
+2013-04-04 20:36:11 UTC <carter> more tractable to do that interception logging with ghc.js probably than normal compiled haskell
+2013-04-04 20:36:13 UTC <mgsloan> As otherwise you wouldn't have consistency between runs from the snapshots
+2013-04-04 20:36:29 UTC <luite_> anyway i had thought of that, but wanted to show something first, this is just a proof of concept
+2013-04-04 20:36:36 UTC <mgsloan> and given how common events are in realworld javascript..  You can't really afford a snapshot per event
+2013-04-04 20:37:09 UTC <luite_> hmm, external events would be rather tricky
+2013-04-04 20:37:16 UTC <luite_> since the ffi can basically do anything
+2013-04-04 20:37:17 UTC <mgsloan> luite_: Nah, this is crazy cool, I can't believe it's modeling STG with such fidelity (I mean, not that I'd really be able to judge)
+2013-04-04 20:38:18 UTC <luite_> there are probably some differences in stack frame layout and sometimes object layout compared to the native implementation
+2013-04-04 20:38:43 UTC <luite_> native optimizes stack frames to reduce the number of slot reloads, that's not in ghcjs yet
+2013-04-04 20:38:51 UTC <luite_> not extremely difficult probably
+2013-04-04 20:39:47 UTC <luite_> and ghcjs sometimes stores objects in itself, if you have a recursive 'go' function for example, it needs to call itself and therefore has itself in its closure
+2013-04-04 20:39:50 UTC <luite_> rather useless :p
+2013-04-04 20:39:55 UTC <luite_> i should add some stack to avoid that
+2013-04-04 20:40:04 UTC <luite_> err
+2013-04-04 20:40:05 UTC <luite_> check
+2013-04-04 20:40:16 UTC <luite_> but that makes loading variables a tad more difficult
+2013-04-04 20:41:57 UTC <luite_> oh and ghcjs uses eager blackholing, ghc lazy by default
+2013-04-04 20:42:20 UTC <luite_> so it would keep thunks around as thunk longer
+2013-04-04 20:42:45 UTC <luite_> (until you do a nondupable IO or garbage collection)
+2013-04-04 20:44:12 UTC <luite_> now i need to find that bug that forgets all preprocessor options when doing `cabal install --ghcjs text'
+2013-04-04 20:46:43 UTC <luite_> mgsloan: it would be cooler with multiple threads
+2013-04-04 20:47:04 UTC <luite_> in particular with async exceptions where you can see one thread stealing a computation from another
+2013-04-04 20:48:47 UTC <carter> luite_ either way: great great work
+2013-04-04 20:48:51 UTC <carter> its really exciting
+2013-04-04 20:49:39 UTC <mgsloan> luite_: That would be cool!  That makes sense about the black-holing, I was surprised to see so many around
+2013-04-04 20:50:23 UTC <luite_> yeah when a thunk is being computed it's immediately set to a black hole, all references are reset to prevent memory leaks
+2013-04-04 20:50:48 UTC <luite_> but that menas that when a thread receives an async exception, there's no way to recover the original thunks it was computing
+2013-04-04 20:51:14 UTC <luite_> so it converts them to restore thunks, that copy the stack from the interrupted computation
+2013-04-04 21:20:18 UTC <carter> byorgey just saw your types email
+2013-04-04 21:20:20 UTC <carter> its interesting
+2013-04-04 21:20:35 UTC <byorgey> carter: oh, re: generalizing R2 etc.?
+2013-04-04 21:20:39 UTC <carter> yes
+2013-04-04 21:22:43 UTC <carter> i will have to think about it
+2013-04-04 21:23:01 UTC <carter> i'm actually doing some simple vs pro api desgn stuff prsently
+2013-04-04 22:35:06 UTC <luite_> I first thought that you were going to generalize it to non-flat geometries :)
+2013-04-04 22:35:57 UTC <luite_> design your football or horse saddle with diagrams!
+2013-04-04 23:17:10 UTC <ClaudiusMaximus> mm, would be great if Diagrams.Backend.SVG.CmdLine.multiMain had an option to list availiable diagrams
+2013-04-04 23:17:36 UTC <ClaudiusMaximus> also an option to render all diagrams to files at once..
+2013-04-04 23:21:26 UTC <fryguybob> ClaudiusMaximus: I thought it did have a list option.
+2013-04-04 23:22:13 UTC <fryguybob> Oh, SVG doesn't, but the others do.
+2013-04-04 23:22:56 UTC <ClaudiusMaximus> fryguybob: thanks btw, working on diagrams for a blog post about it..
+2013-04-04 23:23:32 UTC <ClaudiusMaximus> guess it calls to be factored out to a defaultDefaultMain / defaultMultiMain thingy
+2013-04-04 23:24:19 UTC <fryguybob> ClaudiusMaximus: Super! I'll pass it along to my wife who will get the math club to make some.
+2013-04-04 23:24:54 UTC <fryguybob> ClaudiusMaximus: Yeah, we have been lazy about copy-and-pasting large chunks of backend.
+2013-04-04 23:25:10 UTC <ClaudiusMaximus> be warned, it's very fiddly, took me about 3 hours to make it from print out to finished thing
+2013-04-04 23:25:27 UTC <fryguybob> ClaudiusMaximus: All the better, give them something to do :D
+2013-04-04 23:25:30 UTC <tgeeky> defaultdefault?
+2013-04-04 23:25:40 UTC <ClaudiusMaximus> defaultMainFactory perhaps
+2013-04-04 23:25:44 UTC <ClaudiusMaximus> ;)
+2013-04-04 23:25:47 UTC <tgeeky> you're fired!
+2013-04-04 23:25:49 UTC <tgeeky> hehe
+2013-04-05 00:11:30 UTC <luite_> fryguybob: whoah i didn't know you used windows
+2013-04-05 00:11:33 UTC <luite_> what a disappointment ;)
+2013-04-05 00:12:27 UTC <fryguybob> luite_: It appears all of my "I'll fire up IE" statements were not taken literally :P
+2013-04-05 00:13:36 UTC <luite_> that's just something people say but not actually mean, right? just like "oh i don't know that, I'll just Bing it"
+2013-04-05 00:14:10 UTC <luite_> do you have IE8 btw?
+2013-04-05 00:14:29 UTC <fryguybob> I think I have 10 now, they pushed that out the other day.
+2013-04-05 00:14:50 UTC <luite_> yeah ghcjs does work with that, but not with IE8
+2013-04-05 00:14:57 UTC <fryguybob> Not that I use it except when there is something new with GHCJS.
+2013-04-05 00:15:06 UTC <luite_> :p
+2013-04-05 00:15:32 UTC <luite_> I did add another fold, with a Set now: http://hdiff.luite.com:3000/
+2013-04-05 00:15:38 UTC <fryguybob> luite_: I only use windows because I used to write software for customers with windows and I'm still using the laptop that I did that with.
+2013-04-05 00:19:14 UTC <fryguybob> luite_: The heap stuff is awesome btw.
+2013-04-05 02:45:12 UTC <ClaudiusMaximus> fryguybob: blogged here http://mathr.co.uk/blog/2013-04-05_weaving_a_torus.html
+2013-04-05 02:49:49 UTC <cmears> ClaudiusMaximus: what size paper did you print the net on?
+2013-04-05 02:49:51 UTC <luite_> cool, almost as good as torus.bas ;)
+2013-04-05 02:50:13 UTC <ClaudiusMaximus> cmears: A4
+2013-04-05 02:50:59 UTC <ClaudiusMaximus> luite_: not familiar with that one!
+2013-04-05 02:51:24 UTC <luite_> ClaudiusMaximus: ehe is a demo program that draws a torus on the screen, and then rotates its colors
+2013-04-05 02:52:05 UTC <luite_> came with quickbasic i think
+2013-04-05 02:52:12 UTC <ClaudiusMaximus> cool, i remember quickbasic - think i did some crazy matrix exponential for simulating dsp stuff in it, using strings to store the matrix data..
+2013-04-05 02:52:13 UTC <cmears> I was thinking of trying an A3 version, but you wouldn't necessarily need an A3 printer to make a bigger one, as long as you could fit the biggest individual component on A4 after you've scaled it up
+2013-04-05 02:52:39 UTC <ClaudiusMaximus> cmears: right :)  and remember to scale each part by the same amount
+2013-04-05 02:52:56 UTC <cmears> Do you think having it bigger would make it easier to construct?
+2013-04-05 02:53:47 UTC <ClaudiusMaximus> probably - any smaller would be impossible - though it might be "too loose" if you just scale it up, rather than regenerating the net at the new larger size with the same wiggle-room
+2013-04-05 02:54:16 UTC <ClaudiusMaximus> (ie, at double the size there'd be 3mm gap at the corners rather than 1.5mm)
+2013-04-05 02:54:36 UTC <cmears> Yeah, especially since the paper's thickness doesn't get scaled up
+2013-04-05 03:09:01 UTC <ClaudiusMaximus> bedtime, gone 4am.. - g'night
