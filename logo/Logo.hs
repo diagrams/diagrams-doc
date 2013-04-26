@@ -108,22 +108,20 @@ r = text "r" # fontSize 5
   <> square 1 # lw 0 # scale 5
 -}
 
-r = runTurtle (setPenWidth 0.3 >> setPenColor orange >>
-               setHeading 90 >> forward 5 >> right 90
-               >> replicateM 5 (forward 0.9 >> right 36)
-               >> forward 0.9 >> left 135 >> forward 3
-              )
+r = sketchTurtle (setHeading 90 >> forward 5 >> right 90
+                 >> replicateM 5 (forward 0.9 >> right 36)
+                 >> forward 0.9 >> left 135 >> forward 3
+                 )
+  # reversePath
+  # stroke' with { vertexNames = [["end"]] }
+  # lw 0.3
   # lineJoin LineJoinRound
   # lineCap LineCapRound
+  # lc orange
   # (withName "end" $ atop . place turtle . location)
   where
     turtle = eqTriangle 1 # scaleY 1.3 # rotate (-135 :: Deg)
              # lw 0.1
-
--- XXX drawing the turtle above no longer works because we can't
--- generate an actual path using runTurtle anymore, and hence we can't
--- label its vertices.  See https://github.com/diagrams/diagrams-contrib/issues/5
-
 
 aTree = BNode () f f
   where f = BNode () (leaf ()) (leaf ())
