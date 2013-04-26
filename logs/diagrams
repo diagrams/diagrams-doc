@@ -28865,3 +28865,224 @@
 2013-04-05 02:54:16 UTC <ClaudiusMaximus> (ie, at double the size there'd be 3mm gap at the corners rather than 1.5mm)
 2013-04-05 02:54:36 UTC <cmears> Yeah, especially since the paper's thickness doesn't get scaled up
 2013-04-05 03:09:01 UTC <ClaudiusMaximus> bedtime, gone 4am.. - g'night
+2013-04-25 14:12:45 UTC <fryguybob> byorgey: There is also a problem (though in many ways easier to solve) that our curved primitives stop behaving nicely.
+2013-04-25 14:13:22 UTC <fryguybob> byorgey: For instance any transformation that takes a line segment to an arc cannot be represented exaclty with a bezier curve.
+2013-04-25 14:13:44 UTC <fryguybob> byorgey: That is the new curve isn't just a transformation on the control points.
+2013-04-25 14:14:05 UTC <byorgey> ah, I see
+2013-04-25 14:14:28 UTC <fryguybob> But this is precisely the sort of transformation that offsets are and I feel like we are getting close to good ways to handle that.
+2013-04-25 14:14:34 UTC <byorgey> that's true.
+2013-04-25 14:14:55 UTC <fryguybob> I guess you could pharse the envelop problem in the same way.
+2013-04-25 14:15:04 UTC <fryguybob> (phrase)
+2013-04-25 14:15:32 UTC <byorgey> But I wonder if there is some nice simple internal representation to use where transformations etc. behave nicely, and then we just have to do some grungy conversions + approximations when actually generating an image at the very end.
+2013-04-25 14:15:53 UTC <byorgey> presumably you would want to be able to use different models of hyperbolic space, e.g. Poincare disk model or upper-half-plane model
+2013-04-25 14:16:24 UTC <byorgey> but again, I don't really understand it well enough yet to know what I'm talking about =)
+2013-04-25 14:16:34 UTC <fryguybob> byorgey: Yeah I think that is the trick, just doing the approximate conversion once.
+2013-04-25 14:17:15 UTC <fryguybob> byorgey: Also having NURBs *might* get us a little further along with some transformations.
+2013-04-25 15:04:51 UTC <JamesJRH> Hello. Any ideas how to represent a 3D object and draw orthographic projections from it? Can I do this using Haskell?
+2013-04-25 15:06:33 UTC <JamesJRH> I'm trying to work out how to represent an object such that edges that aren't in view are represented as âhidden detailâ, a dashed line.
+2013-04-25 15:08:48 UTC <fryguybob> JamesJRH: We would like to support exactly that kind of thing with diagrams, but do not yet.
+2013-04-25 15:08:53 UTC <JamesJRH> And also how to represent cylinders such that they are drawn with ellipses and lines.
+2013-04-25 15:09:08 UTC <JamesJRH> Ok.
+2013-04-25 15:09:48 UTC <fryguybob> JamesJRH: We have similar projects mentioned in our future projects wiki: http://www.haskell.org/haskellwiki/Diagrams/GSoc
+2013-04-25 15:09:58 UTC <fryguybob> Ooops
+2013-04-25 15:10:06 UTC <JamesJRH> Yes, I've seen that.
+2013-04-25 15:10:13 UTC <fryguybob> http://www.haskell.org/haskellwiki/Diagrams/GSoC
+2013-04-25 15:10:24 UTC <JamesJRH> That page is how I found diagrams.
+2013-04-25 15:10:33 UTC <JamesJRH> (from a search)
+2013-04-25 15:11:43 UTC <fryguybob> As to the how, doing a projection is not very hard and it plays nicely with all of our primitives.  You will need some ability to do more advanced clipping then we support.
+2013-04-25 15:12:12 UTC <fryguybob> And the ability to sort things in space.
+2013-04-25 15:13:52 UTC <fryguybob> Even if you don't care about drawing the surfaces directly, you do need to clip to those surfaces and find the maximal profiles to discover where the lines are.
+2013-04-25 15:14:17 UTC <fryguybob> I'm not up on the work that has been done in this area in general but I imagine there is quite a lot.
+2013-04-25 15:14:47 UTC <fryguybob> It might be that most of it focuses on getting the *effect* of a line drawing using various shader programs.
+2013-04-25 15:15:05 UTC <fryguybob> This approach would not work too well with Diagrams (at least what I have in mind).
+2013-04-25 15:15:19 UTC <fryguybob> ACTION has to run.
+2013-04-25 15:15:40 UTC <JamesJRH> I think the faces have to be drawn. Or at least there needs to be a way of telling if a line is in the foreground.
+2013-04-25 15:18:01 UTC <JamesJRH> A very basic approach to hidden detail would be to draw each face as a solid border filled with white, and draw all lines as dashed again on top.
+2013-04-25 15:19:03 UTC <JamesJRH> - ie. draw each face again with a dashed border and no fill.
+2013-04-25 15:22:54 UTC <JamesJRH> but that approach is very basic and inefficient, because lines would be drawn on top of each other multiple times.
+2013-04-25 15:26:14 UTC <byorgey> JamesJRH: I don't think that works because you want some parts of some lines to be hidden.
+2013-04-25 15:26:27 UTC <byorgey> to do that you have to draw the faces and lines interleaved, in the right order.
+2013-04-25 15:26:52 UTC <byorgey> well, so I guess it works if you also do some analysis to figure out the correct order in which to draw things.
+2013-04-25 15:30:08 UTC <JamesJRH> byorgey: If you can get a solid to draw with white sides and black edges (no hidden detail), and superimpose a dashed wireframe ontop, the effect is that hidden detail is dashed and visible lines are solid.
+2013-04-25 15:30:33 UTC <JamesJRH> It's a bit of a hack idea though.
+2013-04-25 15:31:46 UTC <byorgey> oh, I see what you're saying
+2013-04-25 15:31:58 UTC <JamesJRH> The order matters for drawing the solid though, the foreground faces have to obscure all the hidden detail.
+2013-04-25 15:32:08 UTC <byorgey> yeah
+2013-04-25 15:54:08 UTC <fryguybob> ACTION back
+2013-04-25 15:54:17 UTC <JamesJRH> Hi.
+2013-04-25 15:55:48 UTC <fryguybob> What I was saying before about the faces depends on what primitives you want to draw.  For instance, what should a sphere look like?  If it is always a circle then no faces are really being drawn, but the maximal edge is getting extracted as a circle.
+2013-04-25 15:56:44 UTC <fryguybob> If you are always going to decompose into polygons then that is simpler.
+2013-04-25 15:58:08 UTC <JamesJRH> Hmm.. I was thinking of drawing spheres with circles, and circles with ellipses.
+2013-04-25 15:59:03 UTC <JamesJRH> ..cylinders with ellipses and lines.
+2013-04-25 15:59:14 UTC <fryguybob> Right in the case of a cylinder the ends make sense, but how do you draw the length of it?
+2013-04-25 16:00:48 UTC <fryguybob> Perhaps "maximal extent under projection" is the right phrase?
+2013-04-25 16:01:12 UTC <JamesJRH> If you've worked out how to calculate the axes of the ellipse, then the 2 lines are between the ends of the long axes of the 2 ellipses.
+2013-04-25 16:01:53 UTC <fryguybob> Not quite I think.
+2013-04-25 16:02:22 UTC <JamesJRH> At least in orthographic.
+2013-04-25 16:02:47 UTC <fryguybob> Ah, yeah, in orthographic that sounds right.
+2013-04-25 16:06:28 UTC <JamesJRH> In perspective, I guess it's that the 2 lines are tangent to the 2 ellipses and pass through a vanishing point which the axis of the cylinder also passes through.
+2013-04-25 16:10:41 UTC <fryguybob> After working out what each primitive would do and what primitives to have we have the question of how they can interact.
+2013-04-25 16:11:41 UTC <fryguybob> Something simple like a box with a smaller sphere poking into the box, does the sphere's circle show part solid and part hidden line?  What about the intersection of the box and the sphere?
+2013-04-25 16:12:15 UTC <JamesJRH> Yes, I was just going to say this.
+2013-04-25 16:12:32 UTC <JamesJRH> Also, have you heard of halfspaces?
+2013-04-25 16:12:46 UTC <fryguybob> More complicated would be the intersection of two cylinders in the middle.
+2013-04-25 16:13:10 UTC <fryguybob> JamesJRH: as in everything on one side of a hyperplane?
+2013-04-25 16:14:21 UTC <JamesJRH> I think that should be how polyhedra are constructed - the intersection, union, complement, difference, etc. of halfspaces.
+2013-04-25 16:15:54 UTC <fryguybob> JamesJRH: I think that only gives you convex shapes right?
+2013-04-25 16:15:58 UTC <JamesJRH> ..and general solids are constructed from halfspaces, infinite cylinders, spheres, and others.
+2013-04-25 16:17:10 UTC <JamesJRH> No, intersection only gives convex, but union and the others give concave aswell.
+2013-04-25 16:18:08 UTC <fryguybob> Oh, I was thinking union with a half-space, not union of intersections.
+2013-04-25 16:19:50 UTC <fryguybob> Wait, that doesn't matter, yeah union gets you convex.
+2013-04-25 16:20:03 UTC <JamesJRH> So a cube is made by the intersection of 6 halfspaces, and a cube with a spherical cup is the difference of a cube and a sphere.
+2013-04-25 16:23:01 UTC <JamesJRH> A halfspace can be represented by 3 points making it easy to use. The order of the points can determine which side is solid using the right-hand rule.
+2013-04-25 16:23:50 UTC <JamesJRH> An infinite cylinder could be 2 points and a radius, a sphere 1 point and a radius.
+2013-04-25 16:24:29 UTC <JamesJRH> This would be the ultimate way of doing things I think.
+2013-04-25 16:25:31 UTC <JamesJRH> But turning easy representation into projected technical drawings is going to be hard.
+2013-04-25 16:26:40 UTC <fryguybob> It may not be too bad.
+2013-04-25 16:28:56 UTC <JamesJRH> I can't get my head round how union would work with intersection. I can't think how to calculate faces and edges from concave shapes.
+2013-04-25 16:29:45 UTC <fryguybob> ACTION must go again.
+2013-04-25 17:33:49 UTC <hpaste> ClaudiusMaximus annotated âcompassâ with âcompass (annotation)â at http://hpaste.org/86549#a86584
+2013-04-25 17:33:56 UTC <ClaudiusMaximus> http://mathr.co.uk/misc/2013-04-25_hyperbolic_compass_and_straightedge.png
+2013-04-25 17:43:45 UTC <JamesJRH> fryguybob: Hmm, yes, 2 cylinders would be complicated, especially if their axes don't cross. The edge between them would be like the outline of a pringle!
+2013-04-25 17:44:49 UTC <luite> pringles, the tastiest hyberbolic geometry
+2013-04-25 17:45:03 UTC <JamesJRH> :-p
+2013-04-25 17:45:18 UTC <luite> hyperbolic...
+2013-04-25 17:47:55 UTC <fryguybob> JamesJRH: yes pringles.  There is a nice trick that makes that particular one easy :D
+2013-04-25 17:48:04 UTC <fryguybob> (easy-ish)
+2013-04-25 17:48:24 UTC <JamesJRH> or if the axes are closer than a radius, perhaps a bit more like the line on a tennis ball.
+2013-04-25 17:48:37 UTC <ClaudiusMaximus> JamesJRH: one way to do CSG it is with signed distance estimates from the surface, then union is min and intersection is max
+2013-04-25 17:48:55 UTC <fryguybob> You can classify each of these primitives further by noting how much of the half plane is in the final surface.
+2013-04-25 17:50:05 UTC <fryguybob> If it is an area of the half-plane then you do as you would with the half-plane, but locally.  If it is a line from the half plane, then you work with only that line.  If it is a point, then you don't have much information.
+2013-04-25 17:51:15 UTC <fryguybob> Cylinders and cones are developable surfaces (the line option) so questions about their intersections is just a question about line intersections with a single slice of the world.
+2013-04-25 17:51:38 UTC <JamesJRH> ClaudiusMaximus: Ooh wow, CSG looks like it's exactly where I'm going with this!
+2013-04-25 17:51:58 UTC <fryguybob> luite: You were right, coupling from the past is a neat trick.
+2013-04-25 17:52:37 UTC <ClaudiusMaximus> JamesJRH: there is mecha, with a few forks on github - but i think it does rendering using external programs
+2013-04-25 17:53:34 UTC <luite> fryguybob: oh hah, i forgot about that :)
+2013-04-25 17:54:50 UTC <fryguybob> ACTION goes away again.
+2013-04-25 18:12:47 UTC <byorgey> mecha could compile to diagrams though =)
+2013-04-25 19:02:36 UTC <JamesJRH> In trying to install mecha, I've realised that my cabal-install is completely broken. I've tried purging haskell-platform and it's dependencies and reinstalling, and removing ~/.cabal/ but it's still broken. How do I start over?
+2013-04-25 19:24:41 UTC <ClaudiusMaximus> JamesJRH: http://www.vex.net/~trebla/haskell/sicp.xhtml has lots of sage advice re broken cabal
+2013-04-25 19:37:06 UTC <JamesJRH> Thanks.
+2013-04-25 20:03:10 UTC <JamesJRH> ClaudiusMaximus: I have mecha installed now, do you know how to run the example?
+2013-04-25 20:27:46 UTC <ClaudiusMaximus> JamesJRH: no clue, never tried it (just looked at the sources a bit)
+2013-04-25 20:29:23 UTC <JamesJRH> I'm also not sure what mecha actually does if it relies on external renderers.. it takes CSG code and outputs what?
+2013-04-25 20:29:44 UTC <ClaudiusMaximus> CSG input for povray and scad, afaict
+2013-04-25 20:31:32 UTC <JamesJRH> So does that mean it doesn't actually compute things like edges or corners? It merely just converts CSG code into another CSG format?
+2013-04-25 20:31:52 UTC <ClaudiusMaximus> i think that is true...
+2013-04-25 20:32:13 UTC <byorgey> I think so, it just gives you a nice way to write CSG descriptions as Haskell code
+2013-04-25 20:32:48 UTC <byorgey> but if we end up doing CSG stuff in diagrams, mecha could make for a nice frontend for describing stuff, perhaps
+2013-04-25 20:33:12 UTC <byorgey> bergey has been thinking about 3D stuff, I wonder if he's thought about CSG
+2013-04-25 20:33:17 UTC <ClaudiusMaximus> http://mathr.co.uk/misc/2013-04-25_fish_construction.svg (need to add a primitive to choose which intersection is the "right" one, and some other stuff to generalize regions - then fingers crossed i could make both diagrams from the same code...)
+2013-04-25 20:33:41 UTC <byorgey> ClaudiusMaximus: awesome =)
+2013-04-25 20:34:40 UTC <byorgey> ClaudiusMaximus: what do you mean, "which intersection"?
+2013-04-25 20:34:48 UTC <byorgey> is this a Poincare disk on the right?
+2013-04-25 20:35:12 UTC <ClaudiusMaximus> yes, poincare disk
+2013-04-25 20:35:30 UTC <byorgey> don't geodesics in hyperbolic space still only have one (or zero) intersections?
+2013-04-25 20:35:47 UTC <ClaudiusMaximus> i mean, if you intersect a circle and a line you'll get 0, 1 or 2 points, but you probably only want one of the points
+2013-04-25 20:36:06 UTC <ClaudiusMaximus> yes, geodesics - but i also have hyperbolic circles :)
+2013-04-25 20:36:14 UTC <byorgey> oh, I see, right =)
+2013-04-25 20:39:31 UTC <ClaudiusMaximus> the ways of specifying arcs seem to be a pain everywhere... generally i want "arc from point p to point q centered at c and i do assert that p and q are the same distance from c".  still arc' is less pain than SVG
+2013-04-25 20:40:05 UTC <ClaudiusMaximus> actually "shortest arc from point p to point q"
+2013-04-25 20:56:11 UTC <fryguybob> ClaudiusMaximus: Yeah, the best way to specify arcs is often not to and have them fall out from other constraints.
+2013-04-25 21:13:38 UTC <ClaudiusMaximus> http://mathr.co.uk/misc/2013-04-25_fish_construction_generalized.svg
+2013-04-25 21:14:17 UTC <ClaudiusMaximus> i can now say "fishGrid 6 3" for the flat case, and increase the numbers for the hyperbolic case (no spherical stuff yet)
+2013-04-25 21:27:17 UTC <hpaste> ClaudiusMaximus annotated âcompassâ with âcompass (annotation) (annotation)â at http://hpaste.org/86549#a86595
+2013-04-25 21:32:43 UTC <fryguybob> ClaudiusMaximus: Nice!
+2013-04-25 21:34:03 UTC <ClaudiusMaximus> :)
+2013-04-25 21:34:28 UTC <byorgey> ClaudiusMaximus: very cool!
+2013-04-25 21:34:52 UTC <byorgey> ClaudiusMaximus: and I'd be happy to add more functions for constructing arcs if you can think of some nice APIs
+2013-04-25 21:36:21 UTC <ClaudiusMaximus> byorgey: will have a try, i think my arc'' relies on the region being stroked in an anticlockwise winding, but not entirely sure - it's a bit of a mess...
+2013-04-25 21:37:22 UTC <ClaudiusMaximus> need to blog about this, but it's getting late and i need to eat...
+2013-04-25 21:43:33 UTC <byorgey> hehe, no rush =)
+2013-04-25 21:45:29 UTC <byorgey> ClaudiusMaximus: how about an arc function that takes two points and a signed radius, and draws an arc with the center lying to the right or left of the vector from p1 to p2, depending on the sign
+2013-04-25 21:45:39 UTC <byorgey> and if the given radius is too small it just doesn't draw anything.
+2013-04-25 21:46:16 UTC <byorgey> actually, I think I have some code lying around somewhere which does exactly that
+2013-04-25 21:46:28 UTC <byorgey> I was using it to draw arc-shaped arrows
+2013-04-25 21:46:34 UTC <fryguybob> byorgey: That one can also be nice as an "offset" from the line.
+2013-04-25 21:46:41 UTC <fryguybob> instead of radius
+2013-04-25 21:46:51 UTC <byorgey> fryguybob: ah, yes, *that's* actually what my code does
+2013-04-25 21:47:16 UTC <byorgey> doing it in terms of radius is even easier to implement
+2013-04-25 21:47:22 UTC <fryguybob> yeah
+2013-04-25 21:48:01 UTC <byorgey> I've got some diagrams hacking time coming up, I'll try to generalize that code a bit and stick it in -lib
+2013-04-25 21:49:30 UTC <fryguybob> There are a bunch of useful ones given two intersecting lines.  Fit to the corner tangent to the lines.  Fit in the corner at a fixed radius.
+2013-04-25 21:50:12 UTC <byorgey> makes sense.
+2013-04-25 21:50:56 UTC <byorgey> ACTION -> home
+2013-04-25 21:52:06 UTC <fryguybob> I should see if I can make some progress on the offset stuff as I have a little bit of time tonight.
+2013-04-26 00:29:54 UTC <ClaudiusMaximus> http://mathr.co.uk/misc/2013-04-25_fish_tilings.png
+2013-04-26 00:30:17 UTC <luite> did you make those with diagrams?
+2013-04-26 00:31:33 UTC <ClaudiusMaximus> yes
+2013-04-26 00:31:50 UTC <luite> not bad :)
+2013-04-26 00:32:08 UTC <ClaudiusMaximus> :)
+2013-04-26 00:32:13 UTC <ClaudiusMaximus> bedtime...
+2013-04-26 00:33:06 UTC <luite> can you easily render it to another model?
+2013-04-26 00:35:08 UTC <ClaudiusMaximus> fairly easily - just need to add another parameter to make a choice between poincare half plane instead of disc...
+2013-04-26 00:36:21 UTC <ClaudiusMaximus> already automagically chooses between euclidean space and hyperbolic space depending on the number of sides and how many about each vertex
+2013-04-26 14:20:42 UTC <fryguybob> ACTION has a plan to incorporate diagrams into his research by making visulaizations of "fairness" of STM by building diagrams in transactions.
+2013-04-26 14:22:53 UTC <luite> are you working on better fairness in STM? i thought the current version wasn't fair at all
+2013-04-26 14:23:35 UTC <fryguybob> luite: That might be a direction I go, but I'm working on incorporating HTM and will need to know how it impacts fairness.
+2013-04-26 14:23:44 UTC <fryguybob> luite: And yes, it is not fair right now.
+2013-04-26 14:24:32 UTC <luite> is your research funded by intel? :p
+2013-04-26 14:24:55 UTC <fryguybob> luite: I was an intern there last summer :D
+2013-04-26 14:25:19 UTC <fryguybob> ACTION would happly take there money, but more importantly their hardware.
+2013-04-26 14:25:22 UTC <luite> yeah i know, and also that it had somethign to do with HTM
+2013-04-26 14:26:02 UTC <luite> hm, HTM is going to be in the next generation of consumer cpus isn't it?
+2013-04-26 14:26:35 UTC <fryguybob> Only the cool ones.
+2013-04-26 14:26:58 UTC <fryguybob> ACTION notes that was not a vailed reference to binning.
+2013-04-26 15:22:42 UTC <ClaudiusMaximus> http://mathr.co.uk/blog/2013-04-26_fish_variations.html
+2013-04-26 15:25:08 UTC <fryguybob> ClaudiusMaximus: I like it!
+2013-04-26 15:26:54 UTC <ClaudiusMaximus> a few of the tilings have gaps near the boundary, but it's good enough for now :)
+2013-04-26 15:27:45 UTC <ClaudiusMaximus> luite: has half-plane there too
+2013-04-26 15:31:14 UTC <luite> ClaudiusMaximus: oh very cool, i wanted to ask you about the construction yesterday
+2013-04-26 18:18:16 UTC <fryguybob> ACTION failed to remember that if I'm not changing the example code diagrams-haddock doesn't rebuild.
+2013-04-26 18:35:45 UTC <byorgey> fryguybob: are you using the latest diagrams-haddock and diagrams-builder?
+2013-04-26 18:36:19 UTC <byorgey> fryguybob: I made some improvements semi-recently to the way rebuilding works.  If you have an example where you wanted it to rebuild but it didn't I'd be very interested to hear aboutit.
+2013-04-26 18:37:23 UTC <byorgey> ClaudiusMaximus: that's super cool
+2013-04-26 18:38:02 UTC <byorgey> ClaudiusMaximus: now have it take an actual image of a fish and map it onto each of those tilings
+2013-04-26 18:41:17 UTC <ClaudiusMaximus> byorgey: like this version i did in opengl? http://mathr.co.uk/misc/2013-04-20_hyperbolic_fish_6_colours.jpg
+2013-04-26 18:41:18 UTC <fryguybob> byorgey: I had a diagram in the file  src/.../Offset.hs  and wrote the haddocks, ran diagrams-haddock then started making changes to a dependent function in the original source (not in a comment)
+2013-04-26 18:41:33 UTC <byorgey> ClaudiusMaximus: yes! =D
+2013-04-26 18:42:01 UTC <ClaudiusMaximus> bit glitchy because the hexagon isn't distorted properly
+2013-04-26 18:42:47 UTC <byorgey> fryguybob: ah, and the diagrams code had "import ...Offset" at the top?
+2013-04-26 18:42:51 UTC <ClaudiusMaximus> this version undistorts more properly but the source texture is bad... http://mathr.co.uk/misc/2013-04-20_hyperbolic_fish_recursive.jpg
+2013-04-26 18:42:55 UTC <fryguybob> byorgey: Yeah
+2013-04-26 18:45:49 UTC <byorgey> fryguybob: hmm, I recently changed it so it notices changes to "local" imports
+2013-04-26 18:46:19 UTC <byorgey> but I guess in this case Offset.hs doesn't count as "local" because it's actually getting it from the installed diagrams-lib package, not from the local filesystem
+2013-04-26 18:46:51 UTC <ClaudiusMaximus> i worked out how to colour {8,3} fishes with 12 colours http://mathr.co.uk/misc/2013-04-26_fish_colours_8-3_12.png - need to add colour permutation stuff to my haskell+diagrams tiling generator code (sorta exists in the opengl version, with a couple of hacks for the {6,4} in 6 colours using 3x3 matrices)
+2013-04-26 18:47:36 UTC <byorgey> ClaudiusMaximus: neat
+2013-04-26 18:48:34 UTC <ClaudiusMaximus> not sure if there is a formula for "number of colours needed to symmetrically colour a tiling with distinct colours at each edge and (optionally) vertex" - apparently {4,5} needs a really large number...
+2013-04-26 18:49:56 UTC <byorgey> there must be
+2013-04-26 18:50:01 UTC <byorgey> but I have no idea what it is =)
+2013-04-26 18:53:03 UTC <fryguybob> Oops, for got to actually commit the changes.
+2013-04-26 18:56:20 UTC <byorgey> yay!
+2013-04-26 18:57:32 UTC <travis-ci> [travis-ci] 13diagrams-lib/06offset 14f0ec6b4 http://travis-ci.org/diagrams/diagrams-lib/builds/6667822 The build has errored.
+2013-04-26 18:57:36 UTC <fryguybob> :(
+2013-04-26 18:58:37 UTC <fryguybob> byorgey: This doesn't have the stuff for full paths yet, but that will be next.  This can be pushed independantly (as long as it is working...)
+2013-04-26 18:59:13 UTC <ClaudiusMaximus> byorgey: maybe i should re-read Rigby,Compound Tilings and Perfect Colourings
+2013-04-26 18:59:25 UTC <byorgey> it looks like a problem with the build system, it's trying to install diagrams-core from Hackage and then complaining it will break the git HEAD version it just built
+2013-04-26 18:59:44 UTC <fryguybob> Yeah, why is it doing that?
+2013-04-26 19:00:28 UTC <fryguybob> Oh, I guess I never have that problem because I do  cabal install diagrams-core/ diagrams-lib/
+2013-04-26 19:00:29 UTC <byorgey> hmm, maybe it's because of the new version of NumInstances
+2013-04-26 19:00:37 UTC <byorgey> fryguybob: right
+2013-04-26 19:01:30 UTC <byorgey> aha, it's because diagrams-core depends on NumInstances only indirectly so it was happy to build it with 1.3
+2013-04-26 19:01:36 UTC <byorgey> but -lib has an explicit < 1.3  upper bound
+2013-04-26 19:01:45 UTC <byorgey> so we should just bump the upper bound in diagrams-lib.cabal
+2013-04-26 19:02:14 UTC <byorgey> I looked at the changes in NI-1.3, it shouldn't affect us
+2013-04-26 19:02:19 UTC <fryguybob> byorgey: Ok, I can do that.
+2013-04-26 19:02:27 UTC <byorgey> thanks
+2013-04-26 19:05:42 UTC <byorgey> this build looks much more promising so far =)
+2013-04-26 19:06:53 UTC <travis-ci> [travis-ci] 13diagrams-lib/06offset 146614cbe http://travis-ci.org/diagrams/diagrams-lib/builds/6668043 The build passed.
+2013-04-26 19:07:01 UTC <fryguybob> woohoo
+2013-04-26 19:07:07 UTC <byorgey> \o/
+2013-04-26 19:07:13 UTC <fryguybob> Haddocks are here: http://www.cs.rochester.edu/u/ryates/temp/dl/html/diagrams-lib/Diagrams-TwoD-Offset.html
+2013-04-26 19:07:24 UTC <byorgey> ah, cool, thanks
+2013-04-26 19:12:06 UTC <byorgey> fryguybob: I don't understand the code but it looks really nice =)
+2013-04-26 19:13:04 UTC <byorgey> fryguybob: can you also commit cubicOffsetExample.svg ?
+2013-04-26 19:13:29 UTC <fryguybob> yeah
+2013-04-26 19:14:18 UTC <fryguybob> byorgey: Should I include the images for the curvature page too?
+2013-04-26 19:14:28 UTC <byorgey> fryguybob: oh, sure
+2013-04-26 19:14:41 UTC <fryguybob> http://www.cs.rochester.edu/u/ryates/temp/dl/html/diagrams-lib/Diagrams-TwoD-Curvature.html
+2013-04-26 19:14:52 UTC <byorgey> right
+2013-04-26 19:19:03 UTC <77CAA0WS9> [travis-ci] 13diagrams-lib/06offset 14749a247 http://travis-ci.org/diagrams/diagrams-lib/builds/6668385 The build passed.
+2013-04-26 19:45:08 UTC <ClaudiusMaximus> fryguybob: nice!
+2013-04-26 19:46:15 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 14c8df658 http://travis-ci.org/diagrams/diagrams-lib/builds/6668834 The build passed.
+2013-04-26 19:46:39 UTC <byorgey> exciting stuff.
