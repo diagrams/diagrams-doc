@@ -2,7 +2,7 @@
 \begin{hcarentry}[updated]{diagrams}
 \report{Brent Yorgey}%11/12
 \status{active development}
-\participants{Jan Bracker, Andy Gill, Chris Mears, Michael Sloan, Ryan Yates}
+\participants{Daniel Bergey, Jan Bracker, Andy Gill, Chris Mears, Michael Sloan, Ryan Yates}
 \makeheader
 
 The diagrams framework provides an embedded domain-specific language
@@ -26,29 +26,49 @@ annotations, named subdiagrams, and more.
 
 \subsubsection*{What's new}
 
-Development proceeds slowly (since most of the main developers are
-busy with other things) but passionately.  The upcoming 0.6 release
-didn't make it out the door in time for the HCAR deadline, but look
-for a new release in early December!  New features in 0.6 will
-include:
+Since the last HCAR edition, version 0.6 was released in December.
+Features include:
 \begin{itemize}
-\item All diagrams-related repositories have now moved to github, to
-  foster increased contribution.
+\item A new native SVG backend now comes ``out of the box'', making
+  installation of diagrams far easier for many users.  There is also a
+  new official postscript backend.  The cairo backend is still
+  supported, but is no longer required to use diagrams.
 \item ``Traces'', which give an easy way to find arbitrary points on
   the boundary of a diagram (useful for, \emph{e.g.} drawing
   connecting lines between diagrams).
-\item Proper support for \emph{subdiagrams}, making possible advanced
-  techniques like constructing animations via keyframing.
-\item Nicer syntax for constructing literal points and vectors.
-\item More work on SVG, postscript, and HTML5 canvas backends.  The
-  status of various backends can be seen at
-  \url{http://projects.haskell.org/diagrams/backend-tests/all-index.html}.
-\item Two new general-purpose libraries spun off from
-  \texttt{diagrams-core}, namely \texttt{monoid-extras} (containing
-  some special-purpose constructions on monoids) and
-  \texttt{dual-tree} (a rose tree data structure with cached and
-  accumulating monoidal annotations).
-\item Many other small improvements, new features, and bug fixes.
+\end{itemize}
+
+Perhaps the most exciting news since the last HCAR edition is the
+release of the \texttt{diagrams-haddock} package, which enables
+embedding diagrams code directly in Haddock documentation, with images
+automatically compiled and inserted into the Haddock output.  This is
+an easy way to spruce up your documentation with declaratively
+constructed graphics.  \texttt{diagrams-haddock} is already in use
+with a few packages on Hackage, most notably \texttt{diagrams-contrib}.
+
+In conjunction with the \texttt{diagrams-haddock}, there have also
+been significant improvements to the underlying
+\texttt{diagrams-builder} package, which renders diagrams dynamically
+at run time.  The cacheing and conditional rebuilding of diagrams is
+now much smarter, so that it ``does the right thing'' in most
+situations (rebuilding a diagram when it has changed, and avoiding
+a rebuild it when it hasn't).  This directly improves the experience
+of using \texttt{diagrams-haddock} as well as
+\texttt{BlogLiterately-diagrams} and \texttt{diagrams-latex}.
+
+In addition, there have been many improvements and changes to the core
+diagrams libraries as well, with an 0.7 release planned for the
+not-too-distant future. Features slated for the upcoming release
+include
+\begin{itemize}
+\item arrows
+\item additions to diagrams-contrib including XYZ
+\item deletable submaps
+\item transformable instance for functions
+\item generalized Color stuff
+\item better documentation using dia-haddock
+\item curvature
+\item segment (+ path?) offsets
 \end{itemize}
 
 %**<img width=350 src="./PythagoreanTree.png">
@@ -58,17 +78,6 @@ include:
 \end{center}
 %*endignore
 
-Some other exciting recent things in diagrams-land:
-\begin{itemize}
-\item The \texttt{diagrams-builder} package allows rendering diagrams
-  dynamically, at run time, and has been used to support things like
-  inline diagrams code in blog posts and \LaTeX\ documents (see
-  \url{https://byorgey.wordpress.com/2012/08/28/creating-documents-with-embedded-diagrams/}).
-\item Brent recently presented a paper at the Haskell Symposium,
-  \emph{Monoids: Theme and Variations}, based on diagrams and
-  motivating the design of some of its core data structures:
-  \url{http://www.cis.upenn.edu/~byorgey/pub/monoid-pearl.pdf}.
-\end{itemize}
 
 %**<img width=350 src="./FibCalls.png">
 %*ignore
@@ -97,20 +106,13 @@ to get started, see the Contributing page on the diagrams wiki:
 \end{center}
 %*endignore
 
+XXX include here picture of a large random tree?
+
 \FuturePlans
 
 Some exciting work on animation, interactivity, and using diagrams as
 a high-powered presentation tool is underway---stay tuned!
 
-A native SVG backend is under active development and almost ready to
-be used as a drop-in replacement for the cairo backend.  The cairo
-backend will still be supported, but SVG will replace cairo as the
-default ``out-of-the-box'' backend, vastly simplifying installation
-for new useres. Other features planned for the near future include
-better arrow support, multi-page diagrams, and gradients.  Longer-term
-plans include a richer API for drawing curved paths, interactive
-diagrams, and a custom Gtk application for interactively developing
-diagrams and animations.
 
 \FurtherReading
 \begin{compactitem}
