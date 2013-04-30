@@ -27,7 +27,7 @@ annotations, named subdiagrams, and more.
 \subsubsection*{What's new}
 
 Since the last HCAR edition, version 0.6 was released in December.
-Features include:
+New features in 0.6 include:
 \begin{itemize}
 \item A new native SVG backend now comes ``out of the box'', making
   installation of diagrams far easier for many users.  There is also a
@@ -46,29 +46,33 @@ an easy way to spruce up your documentation with declaratively
 constructed graphics.  \texttt{diagrams-haddock} is already in use
 with a few packages on Hackage, most notably \texttt{diagrams-contrib}.
 
-In conjunction with the \texttt{diagrams-haddock}, there have also
-been significant improvements to the underlying
-\texttt{diagrams-builder} package, which renders diagrams dynamically
-at run time.  The cacheing and conditional rebuilding of diagrams is
-now much smarter, so that it ``does the right thing'' in most
-situations (rebuilding a diagram when it has changed, and avoiding
-a rebuild it when it hasn't).  This directly improves the experience
-of using \texttt{diagrams-haddock} as well as
-\texttt{BlogLiterately-diagrams} and \texttt{diagrams-latex}.
+In conjunction with \texttt{diagrams-haddock}, there have also been
+significant improvements to the underlying \texttt{diagrams-builder}
+package, which renders diagrams dynamically at run time.  The cacheing
+and conditional rebuilding of diagrams is now much smarter, so that it
+``does the right thing'' in most situations (rebuilding a diagram when
+it has changed, and avoiding a rebuild it when it hasn't).  This
+directly improves the experience of using \texttt{diagrams-haddock} as
+well as \texttt{BlogLiterately-diagrams} (for writing blog posts with
+embedded diagrams) and \texttt{diagrams-latex} (for \LaTeX\ documents
+with embedded diagrams).
 
 In addition, there have been many improvements and changes to the core
 diagrams libraries as well, with an 0.7 release planned for the
 not-too-distant future. Features slated for the upcoming release
-include
+include:
 \begin{itemize}
-\item arrows
-\item additions to diagrams-contrib including XYZ
-\item deletable submaps
-\item transformable instance for functions
-\item generalized Color stuff
-\item better documentation using dia-haddock
-\item curvature
-\item segment (+ path?) offsets
+\item A nice API for drawing arrows between arbitrary points or diagrams.
+\item Additions to the \textt{diagrams-contrib} library, including a
+  symmetric layout algorithm for binary trees, circle packing layout, a
+  generalized turtle drawing interface, factorization diagrams, and
+  iterated subset fractals.
+\item Computing the curvature of path segments at a given point.
+\item Generating paths as a constant offset from another path.
+\item A generalized color API, allowing backends to use whatever color
+  space they want.
+\item Lots of improved documentation with example images generated via
+  \texttt{diagrams-haddock}.
 \end{itemize}
 
 %**<img width=350 src="./PythagoreanTree.png">
@@ -106,13 +110,16 @@ to get started, see the Contributing page on the diagrams wiki:
 \end{center}
 %*endignore
 
-XXX include here picture of a large random tree?
+%**<img width=400 src="./tree500.jpg">
+%*ignore
+\begin{center}
+\includegraphics[width=0.4\textwidth]{html/tree500.jpg}
+\end{center}
+%*endignore
 
 \FuturePlans
 
-Some exciting work on animation, interactivity, and using diagrams as
-a high-powered presentation tool is underway---stay tuned!
-
+XXX gsoc, animation, IDE, ...?
 
 \FurtherReading
 \begin{compactitem}
