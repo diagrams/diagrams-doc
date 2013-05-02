@@ -1,3 +1,11 @@
+\documentclass{article}
+
+\usepackage{hcar}
+\usepackage{graphicx}
+\usepackage{paralist}
+
+\begin{document}
+
 % diagrams-Bd.tex
 \begin{hcarentry}[updated]{diagrams}
 \report{Brent Yorgey}%11/12
@@ -29,10 +37,12 @@ annotations, named subdiagrams, and more.
 Since the last HCAR edition, version 0.6 was released in December.
 New features in 0.6 include:
 \begin{itemize}
-\item A new native SVG backend now comes ``out of the box'', making
-  installation of diagrams far easier for many users.  There is also a
-  new official postscript backend.  The cairo backend is still
-  supported, but is no longer required to use diagrams.
+\item A new Haskell-native SVG backend now comes ``out of the
+  box''---making installation of diagrams far easier for many users,
+  since it no longer depends on any external libraries via the
+  FFI. There is also a new official Postscript backend.  The cairo
+  backend is still supported, but is no longer required to use
+  diagrams.
 \item ``Traces'', which give an easy way to find arbitrary points on
   the boundary of a diagram (useful for, \emph{e.g.} drawing
   connecting lines between diagrams).
@@ -44,11 +54,18 @@ embedding diagrams code directly in Haddock documentation, with images
 automatically compiled and inserted into the Haddock output.  This is
 an easy way to spruce up your documentation with declaratively
 constructed graphics.  \texttt{diagrams-haddock} is already in use
-with a few packages on Hackage, most notably \texttt{diagrams-contrib}.
+in a few packages on Hackage, most notably \texttt{diagrams-contrib}.
+
+%**<img width=400 src="./diagrams-haddock.jpg">
+%*ignore
+\begin{center}
+\includegraphics[width=0.4\textwidth]{html/diagrams-haddock.jpg}
+\end{center}
+%*endignore
 
 In conjunction with \texttt{diagrams-haddock}, there have also been
 significant improvements to the underlying \texttt{diagrams-builder}
-package, which renders diagrams dynamically at run time.  The cacheing
+package, which renders diagrams dynamically at run time.  The caching
 and conditional rebuilding of diagrams is now much smarter, so that it
 ``does the right thing'' in most situations (rebuilding a diagram when
 it has changed, and avoiding a rebuild it when it hasn't).  This
@@ -57,13 +74,13 @@ well as \texttt{BlogLiterately-diagrams} (for writing blog posts with
 embedded diagrams) and \texttt{diagrams-latex} (for \LaTeX\ documents
 with embedded diagrams).
 
-In addition, there have been many improvements and changes to the core
+There have been many improvements and changes to the core
 diagrams libraries as well, with an 0.7 release planned for the
 not-too-distant future. Features slated for the upcoming release
 include:
 \begin{itemize}
 \item A nice API for drawing arrows between arbitrary points or diagrams.
-\item Additions to the \textt{diagrams-contrib} library, including a
+\item Additions to the \texttt{diagrams-contrib} library, including a
   symmetric layout algorithm for binary trees, circle packing layout, a
   generalized turtle drawing interface, factorization diagrams, and
   iterated subset fractals.
@@ -71,8 +88,8 @@ include:
 \item Generating paths as a constant offset from another path.
 \item A generalized color API, allowing backends to use whatever color
   space they want.
-\item Lots of improved documentation with example images generated via
-  \texttt{diagrams-haddock}.
+\item Many documentation improvements, using \texttt{diagrams-haddock}
+  to  generate example images.
 \end{itemize}
 
 %**<img width=350 src="./PythagoreanTree.png">
@@ -101,14 +118,8 @@ diagrams can be intimidating to would-be users and contributors;
 however, we are actively working on new documentation and resources to
 help combat this.  For more information on ways to contribute and how
 to get started, see the Contributing page on the diagrams wiki:
-\url{http://haskell.org/haskellwiki/Diagrams/Contributing}.
-
-%**<img width=500 src="./triangular-numbers.jpg">
-%*ignore
-\begin{center}
-\includegraphics[width=0.47\textwidth]{html/triangular-numbers.jpg}
-\end{center}
-%*endignore
+\url{http://haskell.org/haskellwiki/Diagrams/Contributing}, or come
+hang out in the \texttt{\#diagrams} IRC channel on freenode.
 
 %**<img width=400 src="./tree500.jpg">
 %*ignore
@@ -116,10 +127,6 @@ to get started, see the Contributing page on the diagrams wiki:
 \includegraphics[width=0.4\textwidth]{html/tree500.jpg}
 \end{center}
 %*endignore
-
-\FuturePlans
-
-XXX gsoc, animation, IDE, ...?
 
 \FurtherReading
 \begin{compactitem}
@@ -133,3 +140,5 @@ XXX gsoc, animation, IDE, ...?
 \item \url{http://www.youtube.com/watch?v=X-8NCkD2vOw}
 \end{compactitem}
 \end{hcarentry}
+
+\end{document}
