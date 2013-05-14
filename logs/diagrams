@@ -29971,3 +29971,606 @@
 2013-05-02 01:49:47 UTC <cmccann> but if it works then hey.
 2013-05-02 01:50:16 UTC <cmears> yeah, but I got that fly good
 2013-05-02 01:51:29 UTC <cmccann> well. modern technology is all about using incredibly sophisticated machines running incredibly complex software to accomplish incredibly simple tasks.
+2013-05-03 02:11:09 UTC <travis-ci> [travis-ci] 13diagrams-lib/06arrows 143abc661 http://travis-ci.org/diagrams/diagrams-lib/builds/6839605 The build was broken.
+2013-05-03 02:20:37 UTC <travis-ci> [travis-ci] 13diagrams-lib/06arrows 14d906678 http://travis-ci.org/diagrams/diagrams-lib/builds/6839710 The build is still failing.
+2013-05-03 15:37:13 UTC <ClaudiusMaximus> just had a thought: xml namespaces allow embedding html in svg (afaik) and (definitely) svg in html; could be cool to be able to use (eg.) <video> tags inside diagrams-svg
+2013-05-03 15:39:45 UTC <ClaudiusMaximus> or more generally have a "backend-specific raw content" primitive that gets ignored if the backend doesn't match
+2013-05-03 15:40:59 UTC <luite> ClaudiusMaximus: I think you can't embed it directly, only with a <foreignObject> tag, not sure though
+2013-05-03 15:41:45 UTC <luite> http://www.w3.org/TR/SVG/extend.html <- it says here that it will ignore unknown elements except in that tag
+2013-05-03 15:46:10 UTC <ClaudiusMaximus> luite: ah ok, for the other way I've done it using <html xmlns="http://www.w3.org/1999/xhtml" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:lang="en" lang="en"> ... <div><svg:svg version="1.1" baseProfile="full" width="900px" height="1300px"> svg content here with svg: namespace prefix </svg:svg></div>
+2013-05-03 15:46:42 UTC <ClaudiusMaximus> probably there's a way to avoid svg: on all the svg elements too
+2013-05-03 15:47:25 UTC <luite> oh did that really work, render html things directly in svg?
+2013-05-03 15:49:25 UTC <ClaudiusMaximus> no, i was rendering svg things inside html
+2013-05-03 15:51:46 UTC <ClaudiusMaximus> i'm so out of practice giving presentations... realized that most of the slides i made so far are focussed on tiny details of the implementation instead of the big picture...
+2013-05-03 17:25:59 UTC <luite> ClaudiusMaximus: might work nicely to include latex labels in svg, just add mathjax and foreignObject
+2013-05-03 20:23:33 UTC <byorgey> http://www.cis.upenn.edu/~byorgey/hosted/Fountains.pdf
+2013-05-03 20:30:24 UTC <luite> do they have some combinatorial meaning related to the position?
+2013-05-03 20:55:57 UTC <byorgey> no, the position is fairly random
+2013-05-03 20:57:03 UTC <byorgey> http://www.cis.upenn.edu/~byorgey/hosted/Fountains-cols.pdf
+2013-05-03 20:57:13 UTC <byorgey> here's one that's less silly
+2013-05-03 21:12:33 UTC <ClaudiusMaximus> cairo backend behaviour is confusing
+2013-05-03 21:12:52 UTC <ClaudiusMaximus> if an image is not found, it aborts with "user error: file not found"  but doesn't say which file
+2013-05-03 21:13:04 UTC <ClaudiusMaximus> if a font isn't found, it uses the default font without warning...
+2013-05-03 21:18:26 UTC <luite> byorgey: ah
+2013-05-03 21:18:56 UTC <byorgey> ClaudiusMaximus: ugh
+2013-05-03 22:03:29 UTC <cmccann> ClaudiusMaximus: clearly if an image is not found it should load a random image and use it instead
+2013-05-03 22:03:31 UTC <cmccann> y'know to be consistent
+2013-05-03 22:10:29 UTC <tgeeky> cmccann: to be consistent, you really mean, 'to be consistently inconsistent'.
+2013-05-03 22:10:56 UTC <cmccann> that's the best kind of consistency.
+2013-05-03 22:11:47 UTC <tgeeky> I'm pretty good at it.
+2013-05-03 22:12:46 UTC <tgeeky> ACTION feels like we could do an Animaniacs episode about this, if only the setting were a Constantine Consistory
+2013-05-03 22:13:20 UTC <tgeeky> or better yet, an Incan Consistory!
+2013-05-03 22:13:45 UTC <tgeeky> http://www.youtube.com/watch?v=eIu4fP4fOHE
+2013-05-03 22:15:53 UTC <tgeeky> If you can recite that without being clearly being heard to say several swear words, you will have impressed me.
+2013-05-03 22:16:30 UTC <cmccann> man, animaniacs was a great show.
+2013-05-03 22:17:10 UTC <tgeeky> it's the only thing I saw in my childhood, that I can remember (I don't remember much), that makes me think that
+2013-05-04 18:40:01 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 142dc81eb http://travis-ci.org/diagrams/diagrams-lib/builds/6884237 The build passed.
+2013-05-04 20:29:56 UTC <travis-ci> [travis-ci] 13diagrams-lib/06arrows 14b3a479a http://travis-ci.org/diagrams/diagrams-lib/builds/6886378 The build was fixed.
+2013-05-04 20:30:59 UTC <tgeeky> ACTION is curious about why it sometimes says 'was fixed' and sometimes 'passed' / 'failed'
+2013-05-04 21:16:56 UTC <byorgey> tgeeky: I think it says 'was fixed' iff the build passed and the previous build failed.
+2013-05-04 21:17:08 UTC <byorgey> tgeeky: however, it seems it didn't show the failing builds here on IRC, not sure why.
+2013-05-04 21:17:20 UTC <byorgey> but they were from a different branch anyway, so the 'was fixed' doesn't really make sense
+2013-05-05 19:06:09 UTC <travis-ci> [travis-ci] 13diagrams-lib/06arrows 1476e5678 http://travis-ci.org/diagrams/diagrams-lib/builds/6903000 The build passed.
+2013-05-05 20:20:27 UTC <ClaudiusMaximus> best way to make a multi-page pdf with cairo backend?
+2013-05-05 20:21:47 UTC <byorgey> ClaudiusMaximus: https://github.com/diagrams/diagrams-cairo/issues/18
+2013-05-05 20:25:27 UTC <ClaudiusMaximus> byorgey: so not implemented yet?
+2013-05-05 20:27:09 UTC <ClaudiusMaximus> maybe i better use beamer instead of implemting half of beamer badly in diagrams...
+2013-05-05 21:45:37 UTC <byorgey> ClaudiusMaximus: not implemented yet, but should be easy to implement
+2013-05-05 22:18:18 UTC <fryguybob> ClaudiusMaximus: It is implemented in the Postscript backend.  It can probably be ported over to Cairo easily.  The API could grow a little to handle things like different page sizes.
+2013-05-05 22:29:25 UTC <fryguybob> Also, combining eps files into a pdf can be done with ghostscript.  This worked for me:
+2013-05-05 22:29:30 UTC <fryguybob> gs -sDEVICE=pdfwrite -dPDFSETTINGS=/prepress -sEPSCrop -sOutputFile=everything.pdf -dBATCH -dNOPAUSE off*.eps
+2013-05-05 22:30:25 UTC <fryguybob> Resulting in: http://www.cs.rochester.edu/u/ryates/temp/everything.pdf
+2013-05-06 00:28:27 UTC <byorgey> fryguybob: oh yeah, you have some code in there to compute the slope at the endpoints of a path, don't you?
+2013-05-06 00:28:33 UTC <byorgey> though I guess it's not that difficult
+2013-05-06 00:28:37 UTC <byorgey> I need that for arrows
+2013-05-06 00:29:25 UTC <fryguybob> byorgey: I have that somewhere, I'll check
+2013-05-06 00:29:40 UTC <byorgey> hmm, if we merge mgsloan's parametric generalization stuff we can make an instance for derivatives of paths
+2013-05-06 00:29:50 UTC <byorgey> so you can ask for the derivative at a particular parameter or at the endpoints
+2013-05-06 00:29:55 UTC <fryguybob> Right
+2013-05-06 00:30:15 UTC <byorgey> because to make the arrowheads look right when the path is very curvy at the end you actually want the derivative a little ways back from the endpoint, and so on
+2013-05-06 00:31:44 UTC <byorgey> gotta go pack for Canada
+2013-05-06 00:32:57 UTC <fryguybob> Humm, this might be the best that I have: https://github.com/diagrams/diagrams-lib/blob/master/src/Diagrams/TwoD/Curvature.hs#L149
+2013-05-06 00:33:32 UTC <fryguybob> What's in Canada?
+2013-05-06 00:34:54 UTC <byorgey> fryguybob: Jacques Carette, I'm going up to visit & collaborate with him re: species stuff for a week
+2013-05-06 00:35:23 UTC <byorgey> fryguybob: so do you think path/trail parameterization should be [0,1] or [0,numSegments] ?
+2013-05-06 00:36:59 UTC <fryguybob> byorgey: Well... I've never been settled on that question myself.
+2013-05-06 00:38:30 UTC <fryguybob> I think that I prefer [0,1].  Having a mapping to parameterization by length is more important for the things I have done before.
+2013-05-06 00:38:51 UTC <fryguybob> That seems important for animation more then other parts of diagrams.
+2013-05-06 00:39:23 UTC <byorgey> fryguybob: oh, you want it to be parameterized by (normalized) arc length?
+2013-05-06 00:39:44 UTC <byorgey> I mean, I guess we could have all the options, with some newtype wrappers =)
+2013-05-06 00:40:04 UTC <fryguybob> byorgey: No, just a mapping between the normal parametric and the arc length one.
+2013-05-06 00:40:15 UTC <byorgey> oh, I see
+2013-05-06 00:40:44 UTC <byorgey> so you mean [0,1] where 1/n, 2/n, ... correspond to segment joins
+2013-05-06 00:41:05 UTC <byorgey> and within each segment it's just the segment's native parameterization scaled by 1/n
+2013-05-06 00:41:24 UTC <fryguybob> Yeah.  The problem is if you really want to talk about the path as a whole you don't want to care about how many segments it has.
+2013-05-06 00:41:35 UTC <byorgey> right
+2013-05-06 00:42:50 UTC <byorgey> yeah, I'm leaning towards [0,1] myself, seems more consistent
+2013-05-06 00:44:55 UTC <fryguybob> btw, that part of Canada is only 130 miles away, you will be closer!
+2013-05-06 00:50:22 UTC <byorgey> true!
+2013-05-06 09:47:16 UTC <ClaudiusMaximus> whee presentation slides finished (bar the examples that are still rendering, then to make a multi-page pdf...) - ended up using diagrams for almost the whole thing...  think i may have overprepared though.. still, easier to skip than fill :)
+2013-05-06 09:48:17 UTC <ClaudiusMaximus> https://gitorious.org/maximus/lyapunov-fm/blobs/master/doc/slides/slides.hs
+2013-05-06 13:17:24 UTC <byorgey> ClaudiusMaximus: awesome! =D
+2013-05-06 18:29:02 UTC <carter> byorgey is unbound the state of the art in libs for handling binding / DSLs in haskell?
+2013-05-06 18:29:10 UTC <carter> or what should i be looking at?
+2013-05-06 18:31:39 UTC <carter> (if you have opinions)
+2013-05-06 19:52:46 UTC <tgeeky> carter: it is, or is close to, state of the art
+2013-05-06 19:53:10 UTC <carter> tgeeky ok.. was confused because conor mcbride indicated otherwise on twitter earlier
+2013-05-06 19:53:46 UTC <tgeeky> carter: well, unbound is probably easier than other solutions
+2013-05-06 19:53:51 UTC <carter> tgeeky because to my knowledge bound is current tech, as you say. Thanks! (i'll punt researching HOAS tech for now then :) )
+2013-05-06 19:53:53 UTC <tgeeky> carter: and edwardk does something similar to unbound also
+2013-05-06 19:54:14 UTC <tgeeky> carter: yeah, i was going to mention HOAS and PHOAS, but they both are not easy to learn or use
+2013-05-06 19:54:32 UTC <carter> tgeeky are there any upside to hoas or phoas ?
+2013-05-06 19:54:45 UTC <carter> if i'm just wanting to make a really nice DSL that i can compile?
+2013-05-06 19:54:57 UTC <tgeeky> carter: PHOAS lets you have mutual recursion embedded in your language.
+2013-05-06 19:55:13 UTC <carter> darn, thats something i'd want
+2013-05-06 19:55:15 UTC <carter> i can't otherwise?
+2013-05-06 19:55:26 UTC <tgeeky> I don't want to say, because I'm not sure. :(
+2013-05-06 19:55:33 UTC <carter> ok
+2013-05-06 19:55:49 UTC <carter> basically end users wise, it'll just look like a haskell lib
+2013-05-06 19:55:50 UTC <tgeeky> http://hackage.haskell.org/package/compdata
+2013-05-06 19:57:01 UTC <carter> ACTION i mean thats the goal
+2013-05-06 19:57:06 UTC <carter> i think i've seen compdata before
+2013-05-06 19:57:09 UTC <carter> but i'll stare at it again
+2013-05-06 19:57:33 UTC <tgeeky> http://www.andres-loeh.de/HaskellForDSLs.pdf
+2013-05-06 19:57:59 UTC <carter> thankee
+2013-05-06 19:58:00 UTC <tgeeky> c. mcbride is a smart cookie though, so I doubt he's wrong
+2013-05-06 19:58:20 UTC <tgeeky> and byorgey isn't one to value opinions as much as facts, so I'm sure he'd agree on whatever facts are available
+2013-05-06 19:58:35 UTC <carter> ok
+2013-05-06 19:58:44 UTC <carter> well, i'm needing the state of the art facts :)
+2013-05-06 19:58:48 UTC <tgeeky> hehe :)
+2013-05-06 19:59:15 UTC <carter> theres a huge amoutn of work on the formal modelling sideâ¦ which doesn't matter for me
+2013-05-06 19:59:18 UTC <tgeeky> I have written code in HOAS and PHOAS styles before, and tried to incorporate kind polymorphism too (which I failed at, and would fail at again if I tried again)
+2013-05-06 19:59:20 UTC <carter>  well
+2013-05-06 19:59:24 UTC <carter> for this use case
+2013-05-06 20:00:01 UTC <carter> well, this is going to be for a DSL for numerical code
+2013-05-06 20:00:10 UTC <tgeeky> I thought edwardk had an alternative to 'unbound', too
+2013-05-06 20:00:11 UTC <carter> that may or may not be expressed in a higher order way
+2013-05-06 20:00:13 UTC <carter> bound
+2013-05-06 20:00:16 UTC <carter> yes
+2013-05-06 20:00:49 UTC <carter> that was the thing he said wasn't state of the art
+2013-05-06 20:00:52 UTC <carter> https://twitter.com/pigworker/status/331473393025171457
+2013-05-06 20:01:00 UTC <tgeeky> yes, I agree with that.
+2013-05-06 20:01:07 UTC <tgeeky> He basically re-approaches de brujin indices
+2013-05-06 20:01:11 UTC <carter> ok
+2013-05-06 20:01:20 UTC <carter> thats true
+2013-05-06 20:01:44 UTC <carter> i meant state of the art in being "easy to use and nice for both end user and comipler writer both"
+2013-05-06 20:01:49 UTC <tgeeky> I've had a hard time understanding what each solution brings to the table
+2013-05-06 20:02:00 UTC <carter> sounds like you've played with them more than me though
+2013-05-06 20:03:19 UTC <tgeeky> this is a paper I've read once (thus don't fully understand, and haven't coded by hand yet): http://www.cs.utexas.edu/~wcook/Drafts/2012/graphs.pdf
+2013-05-06 20:03:50 UTC <carter> what should i look at in that paper?
+2013-05-06 20:03:55 UTC <tgeeky> this the paper I wrote all of the code out by hand:
+2013-05-06 20:04:04 UTC <tgeeky> this is really the starting point of my understanding of PHOAS: http://ropas.snu.ac.kr/~bruno/papers/ASGDSL.pdf
+2013-05-06 20:04:37 UTC <tgeeky> they lay out the meanings of 'deep' and 'shallow' embedding
+2013-05-06 20:04:49 UTC <carter> hrmmmâ¦ i do like knowing where theres sharing / thats meaningful for my stuff
+2013-05-06 20:05:00 UTC <carter> thanks tgeeky !
+2013-05-06 20:08:26 UTC <carter> ive a lot of reading / experimentation later this week i guess
+2013-05-07 03:16:08 UTC <byorgey> greetings from Kitchner, Ontario, Canada, North America, Earth, etc.
+2013-05-07 04:09:36 UTC <tgeeky> byorgey: eh!
+2013-05-07 04:10:00 UTC <byorgey> the guy who drove me here from the airport definitely said eh quite a few times
+2013-05-07 04:10:31 UTC <tgeeky> byorgey: Solar System, Milky Way, Universe A
+2013-05-07 04:11:09 UTC <byorgey> tgeeky: surely there's some sort of galaxy cluster which can be inserted in the penultimate slot there
+2013-05-07 04:11:29 UTC <tgeeky> yep.
+2013-05-07 04:11:37 UTC <tgeeky> I used to think about this a lot :o
+2013-05-07 04:11:42 UTC <byorgey> hehe
+2013-05-07 04:11:58 UTC <tgeeky> there is a local group, and then a local supercluster
+2013-05-07 04:12:18 UTC <byorgey> neat
+2013-05-07 04:12:38 UTC <tgeeky> everything not in the local group (nearest dozen or so galaxies) is *not* gravitationally bound and hence will eventually be redshifted out of our future
+2013-05-07 04:14:08 UTC <tgeeky> they (their light) will literally get frozen onto the observable horizon of our universe
+2013-05-07 04:14:24 UTC <byorgey> ACTION boggles
+2013-05-07 04:14:49 UTC <tgeeky> weeee
+2013-05-07 04:14:59 UTC <tgeeky> did you ever get to see any northern light stuff in PA?
+2013-05-07 04:16:51 UTC <byorgey> tgeeky: I tried, but I didn't see anything
+2013-05-07 04:16:57 UTC <byorgey> I don't think there was anything to see
+2013-05-07 04:18:41 UTC <tgeeky> probably not :(
+2013-05-07 04:19:09 UTC <tgeeky> have fun in Cannnnnada. I'm fasting this week (first time) for four days. Should be an interesting experience.
+2013-05-07 04:19:43 UTC <tgeeky> something that I understand was important in the Hebrew bible and other works.
+2013-05-07 04:21:20 UTC <byorgey> indeed.
+2013-05-07 04:21:51 UTC <byorgey> I'll be interested to hear how it goes.  The longest I have ever fasted was ~60 hours.
+2013-05-07 04:22:10 UTC <carter> enjoy!
+2013-05-07 04:22:15 UTC <carter> fastingâ¦ why
+2013-05-07 04:22:33 UTC <tgeeky> recent research says it does pretty helpful things, metabolically speaking
+2013-05-07 04:22:59 UTC <tgeeky> it offsets alzheimers onset in (predestined) mice from ~ 40 human year equivalents to ~ 80 years
+2013-05-07 04:23:28 UTC <tgeeky> in this area I can only report other's results, not claim to understand them.
+2013-05-07 04:24:24 UTC <tgeeky> plus, it's a challenge.
+2013-05-07 04:24:51 UTC <tgeeky> byorgey: did you "break", or just didn't have a specific goal in mind?
+2013-05-07 04:25:01 UTC <tgeeky> I'm being safe and monitoring my blood sugar at least
+2013-05-07 04:25:42 UTC <byorgey> tgeeky: I had a specific goal in mind, which was ~60 hours =)
+2013-05-07 04:26:01 UTC <tgeeky> hasn't been so bad on the first day.
+2013-05-07 04:26:05 UTC <byorgey> in particular it was from sundown Maundy Thursday until Easter morning
+2013-05-07 04:26:31 UTC <byorgey> so for religious rather than health reasons.
+2013-05-07 04:27:03 UTC <tgeeky> but what is [the good parts of] religion but things we should do for the good of our health, though we may not understand them
+2013-05-07 04:27:55 UTC <byorgey> well obviously I don't think it can be *reduced* to that, but otherwise I agree. =)
+2013-05-07 04:28:32 UTC <tgeeky> hehe
+2013-05-07 04:28:34 UTC <tgeeky> me too
+2013-05-07 04:28:59 UTC <tgeeky> I'm still not sure if I believe in "ancient knowledge". But it doesn't seem absurd to me.
+2013-05-07 04:29:44 UTC <tgeeky> Either way, they (the ancient Jews, in this case) don't get credit for it, because they didn't publish the medical studies along with the guidelines :)
+2013-05-07 04:30:43 UTC <tgeeky> come to think of it, that would be hillarious if several of the redacted books of the New Testament were scientific results
+2013-05-07 04:32:14 UTC <byorgey> hehe
+2013-05-07 04:32:35 UTC <carter> https://github.com/bos/llvm/issues/50
+2013-05-07 04:32:38 UTC <carter> oops
+2013-05-07 04:32:40 UTC <carter> wrong window
+2013-05-07 04:32:44 UTC <byorgey> OK, I'm off to bed, night all
+2013-05-07 04:32:45 UTC <carter> 'night!
+2013-05-07 04:32:51 UTC <tgeeky> night byorgey 
+2013-05-07 14:44:04 UTC <tgeeky> byorgey: I hope you're ice fishing with elk and grizzlie bears, drinking molson and listening to the latest hockey match!
+2013-05-07 14:45:14 UTC <luite> is he going canadian?
+2013-05-07 14:45:23 UTC <luite> ah he is
+2013-05-07 14:45:45 UTC <luite> cool
+2013-05-07 14:45:59 UTC <tgeeky> luite: he is the newest proud visitor to our mighty Canuckistan
+2013-05-07 14:46:10 UTC <tgeeky> our stout friends to the north
+2013-05-07 14:46:17 UTC <luite> 'our', are you originally canadian?
+2013-05-07 14:46:23 UTC <luite> or just friends :p
+2013-05-07 14:46:39 UTC <tgeeky> they are such a nice people I include them as friends :)
+2013-05-07 14:46:43 UTC <luite> hehe
+2013-05-07 14:46:57 UTC <luite> i met lots of nice canadians in vancouver
+2013-05-07 14:47:15 UTC <tgeeky> they really do live up to that reputation
+2013-05-07 14:47:43 UTC <luite> american tourists were perhaps a bit more talkative on average
+2013-05-07 14:48:02 UTC <luite> maybe just because they're tourists
+2013-05-07 14:48:11 UTC <tgeeky> in TF2 if someone apologizes for taking an ammo or health pack, and it's not me, they're canadian
+2013-05-07 14:48:32 UTC <luite> ah
+2013-05-07 14:48:48 UTC <luite> hm i haven't played tf2 for a long time
+2013-05-07 14:49:08 UTC <tgeeky> same game, more weapons, more hats, more silliness
+2013-05-07 14:49:32 UTC <luite> yeah i downloaded it when it became free, played a few times
+2013-05-07 14:49:42 UTC <tgeeky> oh.
+2013-05-07 14:49:47 UTC <tgeeky> that wasn't that long ago.
+2013-05-07 14:49:49 UTC <luite> which was after the hats i think
+2013-05-07 14:49:55 UTC <tgeeky> yep
+2013-05-07 14:50:41 UTC <luite> i don't play that many games though
+2013-05-07 14:50:50 UTC <luite> perhaps i'll get the new sc2
+2013-05-07 14:50:52 UTC <tgeeky> i don't play any except tf2
+2013-05-07 14:51:06 UTC <tgeeky> it's one of the few that works in Linux, too
+2013-05-07 14:51:13 UTC <luite> but i don't really want to invest the time to play online sc2 :)
+2013-05-07 14:51:19 UTC <tgeeky> yeah.
+2013-05-07 14:51:22 UTC <tgeeky> you'll get clobbered
+2013-05-07 14:51:27 UTC <luite> it takes like 50 years to play like a korean
+2013-05-07 14:51:50 UTC <tgeeky> and even then, some 9 year old korean will wipe us with zergling dust
+2013-05-07 14:51:58 UTC <luite> :)
+2013-05-07 14:52:25 UTC <luite> perhaps they should drug test the best korean players, it can't be humanly possible
+2013-05-07 14:52:34 UTC <luite> videos always look scary
+2013-05-07 14:52:45 UTC <luite> micromanaging everything while still expanding bases like crazy
+2013-05-07 14:53:13 UTC <tgeeky> just imagine, soon enough we'll have actual people in actual militaries controlling armies of drones that way
+2013-05-07 14:53:49 UTC <luite> those drones probably read 'samsung' then ;p
+2013-05-07 14:53:54 UTC <luite> the new zerg
+2013-05-07 14:56:06 UTC <luite> if only real armies would spend just as much time balancing the factions as blizzard does
+2013-05-07 14:56:35 UTC <tgeeky> haha. Yeah, it is kind of weird when you state it that way.
+2013-05-07 14:58:05 UTC <luite> having almost perfect balance sells a lot more drones, some companies must already be planning the unwinnable neverending war!
+2013-05-07 14:58:25 UTC <tgeeky> yeah. In that sense, war has always been a racket.
+2013-05-07 14:58:44 UTC <tgeeky> People have always funded both sides and waited to see who would come out on top
+2013-05-07 14:59:15 UTC <tgeeky> there is a famous story about the Napoleonic wars and the Rockefellers slowing down the progress of a messenger with the news of battle results so they could corner a market
+2013-05-07 14:59:37 UTC <luite> yeah recently read about that
+2013-05-07 14:59:40 UTC <luite> +i
+2013-05-07 15:00:14 UTC <tgeeky> and several American banks funded the Nazis almost until the end of WWII
+2013-05-07 15:00:40 UTC <tgeeky> (and they got repaid, by reconstruction money)
+2013-05-07 15:00:50 UTC <luite> not bad :)
+2013-05-07 15:00:56 UTC <luite> well, from a business perspective
+2013-05-07 15:01:39 UTC <tgeeky> hehe. yeah :|
+2013-05-07 15:02:05 UTC <tgeeky> i have some good news about me: I'm not diabetic!
+2013-05-07 15:02:16 UTC <luite> great!
+2013-05-07 15:02:21 UTC <tgeeky> hour ~ 32 of a 72 hour fast, and my blood sugar is nice and steady
+2013-05-07 15:02:23 UTC <luite> though i never suspected you were ;)
+2013-05-07 15:03:03 UTC <tgeeky> http://i.imgur.com/dn2QikI.jpg
+2013-05-07 15:03:10 UTC <tgeeky> haha, that picture is hillarious
+2013-05-07 15:03:48 UTC <luite> hehe
+2013-05-07 15:04:14 UTC <luite> how are you fasting, you still eating some stuff, or nothing at all?
+2013-05-07 15:04:40 UTC <tgeeky> nothing at all. (black) coffee, and a half packet of cup-of-soup for minerals per day
+2013-05-07 15:05:08 UTC <luite> no water, only coffee? o_O *twitch* ?
+2013-05-07 15:05:16 UTC <tgeeky> hehe. I forgot water.
+2013-05-07 15:05:43 UTC <tgeeky> it's been pretty much fine so far, no hunger that was more than distracting
+2013-05-07 15:05:49 UTC <luite> i've been drinking more tea recently
+2013-05-07 15:06:03 UTC <luite> but you need more than twice as much tea to get the same amount of cafeine!
+2013-05-07 15:06:19 UTC <tgeeky> yep. your drinking black or green or white tea?
+2013-05-07 15:06:47 UTC <luite> black, earl grey usually
+2013-05-07 15:06:58 UTC <tgeeky> the 'ol Picard
+2013-05-07 15:07:08 UTC <luite> 5 hour energy appears to be the most efficient way
+2013-05-07 15:07:25 UTC <luite> it comes with free sugar and tooth decay
+2013-05-07 15:07:29 UTC <tgeeky> I've never tried one of them. One my friends swears by them, and my brother said they don't do anything at all
+2013-05-07 15:07:43 UTC <luite> i think they have twice as much cafeine as coffee
+2013-05-07 15:07:52 UTC <luite> oh wait they have no sugar
+2013-05-07 15:07:58 UTC <tgeeky> yeah, no sugar
+2013-05-07 15:08:02 UTC <tgeeky> caffine + placebo
+2013-05-07 15:10:50 UTC <luite> hm, 157mg in regular, 206mg in extra strength
+2013-05-07 15:11:00 UTC <luite> according to wikipedia
+2013-05-07 15:11:03 UTC <tgeeky> man first world problem. I want to get a fast SSD (Samsung 840 pro), but I only have SATAII available (which is slower). I could get a SATAIII card, but it requires a PCI-e v2.0 x1 slot, and my motherboard's x1 slots are all PCI-e v1.1, which are slower still.
+2013-05-07 15:11:14 UTC <luite> aw :(
+2013-05-07 15:11:26 UTC <luite> fortunately the sequential speeds aren't the most important
+2013-05-07 15:11:28 UTC <tgeeky> because I have two, dual core, video cards running 4 monitors in my PCI-E v2.0 x16 slots
+2013-05-07 15:11:43 UTC <luite> for most use cases at least
+2013-05-07 15:11:47 UTC <tgeeky> yep
+2013-05-07 15:11:54 UTC <luite> i kinda regret getting the 256GB 830 lastyear
+2013-05-07 15:11:59 UTC <luite> it's always full
+2013-05-07 15:12:04 UTC <tgeeky> i am getting a 128
+2013-05-07 15:12:15 UTC <tgeeky> all I can afford. I don't think I even need the Pro
+2013-05-07 15:12:35 UTC <luite> the 830 was cheap last year when the 840 was just introduced
+2013-05-07 15:12:36 UTC <tgeeky> I am splitting it for a boot partition and a pair of cache partitions
+2013-05-07 15:12:40 UTC <luite> selling off old stock
+2013-05-07 15:12:47 UTC <tgeeky> yep. 840 is now $100
+2013-05-07 15:12:54 UTC <tgeeky> 75 when sales are going on
+2013-05-07 15:12:59 UTC <luite> oh right, this is in my laptop
+2013-05-07 15:13:01 UTC <tgeeky> but you have a laptop, so you can only have one
+2013-05-07 15:13:03 UTC <luite> so i can't really add another drive
+2013-05-07 15:13:06 UTC <tgeeky> yep
+2013-05-07 15:13:15 UTC <tgeeky> i have (4 + 1 + 1 + 1 + 0.5) TB now
+2013-05-07 15:13:21 UTC <luite> not bad :)
+2013-05-07 15:13:33 UTC <tgeeky> well, I'm not going to lose this stuff.
+2013-05-07 15:13:41 UTC <tgeeky> The scare I had woke me up a bit.
+2013-05-07 15:13:46 UTC <luite> oh right
+2013-05-07 15:14:00 UTC <luite> i use crashplan for automatic backup
+2013-05-07 15:14:02 UTC <luite> to a linux server
+2013-05-07 15:14:16 UTC <luite> with some raid5 drives that can be expanded when necessary
+2013-05-07 15:14:17 UTC <tgeeky> I have thought about (but not researched) online backup plans
+2013-05-07 15:14:30 UTC <tgeeky> but I would be *required* to encrypt everything, and it would still be ~ 2.2 TB
+2013-05-07 15:14:55 UTC <luite> you have 2.2TB of shady material ;p
+2013-05-07 15:15:03 UTC <tgeeky> 2.2 TB is *just* the e-books
+2013-05-07 15:15:18 UTC <luite> can still be shady, drone plans etc
+2013-05-07 15:15:31 UTC <luite> did you download the whole libgen or something?
+2013-05-07 15:15:32 UTC <tgeeky> yes. There are nuke plans in there
+2013-05-07 15:15:45 UTC <tgeeky> alt.binaries.e-book.technical -- poster Rockhound
+2013-05-07 15:15:47 UTC <luite> i saw that it was posted on usenet
+2013-05-07 15:15:58 UTC <luite> but more like 10TB i think
+2013-05-07 15:16:01 UTC <tgeeky> I think he's somewhere in the publishing pipeline
+2013-05-07 15:16:07 UTC <tgeeky> and he routinely uploads brand new stuff
+2013-05-07 15:16:08 UTC <luite> ah
+2013-05-07 15:16:17 UTC <tgeeky> for several different companies (including the infamous Elisver)
+2013-05-07 15:16:18 UTC <luite> or he just has access to some university library
+2013-05-07 15:16:35 UTC <luite> and perhaps knows how to remove watermarks?
+2013-05-07 15:16:52 UTC <tgeeky> I am not totally sure, and certainly won't ask :)
+2013-05-07 15:17:04 UTC <luite> he probably wouldn't tell :)
+2013-05-07 15:17:08 UTC <tgeeky> University libraries usually don't have textbooks in pdf format, do they?
+2013-05-07 15:17:16 UTC <luite> utrecht has some
+2013-05-07 15:17:28 UTC <luite> deal with springer i think
+2013-05-07 15:17:36 UTC <luite> unfortunately i don't have access anymore
+2013-05-07 15:17:46 UTC <luite> maybe they have more now, they only started last year
+2013-05-07 15:17:54 UTC <tgeeky> Maybe it is through a Uni. Some of the books are actually "free" (published by Intech)
+2013-05-07 15:18:58 UTC <luite> carmack is learning haskell :)
+2013-05-07 15:19:18 UTC <tgeeky> I heard. He and his padawans at other companies have been talking about it for some time.
+2013-05-07 15:19:21 UTC <tgeeky> about FP in general, at least.
+2013-05-07 15:20:06 UTC <tgeeky> ACTION thinks if we weren't so wrapped up in using Haskell, we would say something like "Man, Haskell is a beautiful and wonderful language." daily
+2013-05-07 15:21:41 UTC <luite> didn't cliffyb also mention it some time ago? i'm not sure what he does now though, after leaving epic
+2013-05-07 15:21:51 UTC <tgeeky> yep
+2013-05-07 15:21:56 UTC <tgeeky> me neither
+2013-05-07 15:22:01 UTC <tgeeky> I know Carmark is in the rocket business
+2013-05-07 15:24:25 UTC <luite> conals work also seems intriguing, he's compiling haskell to programmable logic. i don't know more than that though
+2013-05-07 15:24:46 UTC <tgeeky> conal is one of the 'prolifics' I mentioned in #haskell
+2013-05-07 15:34:05 UTC <luite> replicateM 5 fpu <> replicateM 12 alu -- multicore cpus!
+2013-05-07 15:35:28 UTC <luite> hm, i wonder if i should add more g+ commuities
+2013-05-07 15:35:31 UTC <luite> +n
+2013-05-07 15:35:44 UTC <luite> are there interesting ones?
+2013-05-07 15:35:50 UTC <tgeeky> dunno, I'm not on there
+2013-05-07 15:37:16 UTC <luite> well, join the mathematics one if you want 0.999.. ~ 1  discussions and what is 5+5*5-5 discussions twice a week ;p
+2013-05-07 15:38:31 UTC <luite> it's reather active though, perhaps theres some wheat in the chaff :p
+2013-05-07 21:55:15 UTC <cmccann> luite and tgeeky: tim sweeney from epic is also familiar with haskell, fwiw
+2013-05-07 21:55:21 UTC <cmccann> he even posts on LtU occasionally
+2013-05-07 22:06:43 UTC <carter> cmccann btw.. i'm going llvm crazy now :)
+2013-05-07 22:07:03 UTC <cmccann> carter: oh?
+2013-05-07 23:30:18 UTC <luite> ah
+2013-05-08 01:26:49 UTC <byorgey> I wrote some braindead (i.e. O(n^3)) code to compute Delaunay triangulations
+2013-05-08 01:26:54 UTC <byorgey> and now I can't remember why I wanted it.
+2013-05-08 01:27:09 UTC <byorgey> there was some diagram I wanted to draw.
+2013-05-08 01:27:52 UTC <fryguybob> byorgey: hehe
+2013-05-08 01:27:58 UTC <byorgey> in any case, http://www.cis.upenn.edu/~byorgey/hosted/Delaunay.pdf =)
+2013-05-08 01:28:33 UTC <fryguybob> byorgey: I'm trying to decide about hac-phi.  I'd like to go but it is in the middle of four other weekends with things going on.
+2013-05-08 01:28:41 UTC <byorgey> yikes
+2013-05-08 01:29:40 UTC <byorgey> fryguybob: I would be ecstatic if you came.  But I most certainly understand if you can't.
+2013-05-08 01:30:16 UTC <byorgey> ^^^ that was me not-helping you make a decision
+2013-05-08 01:31:33 UTC <fryguybob> byorgey: Ha. I'm leaning toward going. Is there any deadline in deciding?
+2013-05-08 01:31:44 UTC <byorgey> for you, no.
+2013-05-08 01:33:09 UTC <fryguybob> Delaunay or the distribution of beans in byorgey's kitchen? You decide.
+2013-05-08 01:33:39 UTC <byorgey> hahaha
+2013-05-08 01:36:20 UTC <fryguybob> ACTION should make a Haskell parallel Delaunay... never enough time.
+2013-05-08 01:36:51 UTC <byorgey> ooh, that would be nifty
+2013-05-08 01:46:04 UTC <fryguybob> Ooo this paper started with a NESL version: http://www.cs.cmu.edu/afs/cs.cmu.edu/Web/People/blelloch/papers/delaunay99.pdf
+2013-05-08 02:09:31 UTC <byorgey> neat
+2013-05-08 03:05:39 UTC <byorgey> http://www.cis.upenn.edu/~byorgey/hosted/Delaunay2.pdf
+2013-05-08 03:06:02 UTC <carter> byorgey i should be nerd snipable to do some computational geometry stuff (maybe) come hackphi
+2013-05-08 03:06:09 UTC <carter> i hope
+2013-05-08 03:09:29 UTC <byorgey> welcome yogert =)
+2013-05-08 03:09:36 UTC <yogert> : )
+2013-05-08 03:12:38 UTC <tgeeky> still going strong!
+2013-05-08 03:14:34 UTC <yogert> cool stuff. I'm always interested in graphics stuff. I'm actually very new to haskell and attempted to get going with DevIL recently, but found myself a bit lost.
+2013-05-08 03:15:14 UTC <byorgey> yogert: welcome!
+2013-05-08 03:15:38 UTC <yogert> are you the author/maintainer of diagrams?
+2013-05-08 03:15:48 UTC <byorgey> yogert: you can read more about diagrams here: http://projects.haskell.org/diagrams/
+2013-05-08 03:15:54 UTC <byorgey> yogert: the primary one, yes
+2013-05-08 03:15:58 UTC <byorgey> though there are many contributors
+2013-05-08 03:16:24 UTC <tgeeky> he is our wise and gracious leader, third only to the head of Richard Nixon and the hypnotoad.
+2013-05-08 03:18:00 UTC <byorgey> yogert: diagrams can have a bit of a learning curve, but there is a tutorial, user manual, and examples on the website, and you are always welcome to ask questions in here
+2013-05-08 03:20:30 UTC <yogert> i'm reading the tutorial right now
+2013-05-08 03:24:45 UTC <byorgey> yogert: I'm off to bed, but if you have any questions just leave them here and I'll answer in the morning, or maybe someone else will answer
+2013-05-08 03:24:49 UTC <byorgey> have fun =)
+2013-05-08 03:28:49 UTC <yogert> oh you can animate with this? Is it possible to incorporate interaction as well? SVG has some interactive features rightâ¦? 
+2013-05-08 04:00:54 UTC <tgeeky> yogert: animation is possible and has been worked on in 'active'
+2013-05-08 04:01:05 UTC <tgeeky> interaction is being thought about and possibly worked on
+2013-05-08 04:06:44 UTC <yogert> yeah, i suppose it would mean somehow compiling to javascript
+2013-05-08 04:08:55 UTC <tgeeky> yogert: that is a speciality of luite's
+2013-05-08 04:09:01 UTC <tgeeky> yogert: he's working on GHCjs
+2013-05-08 04:10:51 UTC <ClaudiusMaximus> yogert: mgsloan's gtk toy diagrams thingy has some interactive diagrams examples https://github.com/mgsloan/toy-gtk-diagrams
+2013-05-08 04:14:49 UTC <yogert> oh terrific. perhaps this can supersede d3. : )  While it does a lot, I've always found its design very strange...
+2013-05-08 04:15:14 UTC <tgeeky> yogert: several of us here have opinions about d3.
+2013-05-08 04:15:28 UTC <yogert> mind sharing?
+2013-05-08 04:15:42 UTC <tgeeky> Mine isn't that important, I like it, and I like anything with lots of examples.
+2013-05-08 04:16:00 UTC <tgeeky> but Haskell is a better world to do everything in
+2013-05-08 04:16:30 UTC <tgeeky> yogert: there are a few hackages packages which use d3.js as their UI of sorts
+2013-05-08 04:17:18 UTC <tgeeky> criterion is one, I think
+2013-05-08 04:18:00 UTC <yogert> i like it in so far I makes it relatively easy to accomplish a lot, but the way its designed always seemed very awkward to me. Also I don't like reading its source code
+2013-05-08 04:18:57 UTC <yogert> what do you mean the packages use it as its UI? ill look criterion up now
+2013-05-08 04:19:10 UTC <tgeeky> they use d3.js to draw diagrams for results
+2013-05-08 04:19:31 UTC <yogert> oh okay
+2013-05-08 04:19:47 UTC <tgeeky> UI was pushing it. I almost corrected myself, but I'm distracted too :)
+2013-05-08 04:20:01 UTC <tgeeky> yogert: the real answer is, though, we're working on it
+2013-05-08 04:20:39 UTC <yogert> cool. wish I could help :P
+2013-05-08 04:21:44 UTC <tgeeky> you can. stick around. this is all open source
+2013-05-08 17:40:22 UTC <fryguybob> ACTION has his area exam in 20 minutes, sadly it has no diagrams.
+2013-05-09 02:03:56 UTC <byorgey> fryguybob: how'd it go?
+2013-05-09 02:06:43 UTC <tgeeky> byorgey: so fasting is like monads, in that much of the difficulty is fabricated in our heads
+2013-05-09 02:06:54 UTC <tgeeky> that said, fooooooood
+2013-05-09 02:07:18 UTC <byorgey> hehe
+2013-05-09 02:07:31 UTC <tgeeky> I found it to be occasionally very distracting, but otherwise pretty bearable
+2013-05-09 02:07:48 UTC <tgeeky> it's much better than, say, having a cold or a sinus infection
+2013-05-09 02:10:27 UTC <byorgey> oh, for sure
+2013-05-09 02:10:42 UTC <tgeeky> I thought it would be much worse than that.
+2013-05-09 02:11:21 UTC <tgeeky> byorgey: who, if anyone, reviews your beeminder other than internet stalkers like me?
+2013-05-09 02:11:33 UTC <tgeeky> and is it telling that your three hidden beeminder goals all got updated while you're travelling?
+2013-05-09 02:12:19 UTC <tgeeky> other than you, of course
+2013-05-09 02:12:37 UTC <byorgey> tgeeky: no one
+2013-05-09 02:12:44 UTC <tgeeky> not even your wife!?
+2013-05-09 02:13:10 UTC <byorgey> tgeeky: hehe, I don't know, is it?  it means they are the type of goals that I want to continue doing even when travelling.
+2013-05-09 02:13:31 UTC <tgeeky> byorgey: i was going to ask if they are positive or negative goals
+2013-05-09 02:13:41 UTC <byorgey> tgeeky: not formally, I'm sure she has looked at it
+2013-05-09 02:13:46 UTC <byorgey> they are positive
+2013-05-09 02:15:11 UTC <fryguybob> byorgey: I survived. :D
+2013-05-09 02:15:22 UTC <byorgey> fryguybob: glad to hear it!
+2013-05-09 02:15:35 UTC <fryguybob> I ended up spending too much time giving Haskell background, but that's ok.
+2013-05-09 02:15:46 UTC <byorgey> hehe
+2013-05-09 02:16:23 UTC <fryguybob> Slides for my talk: http://www.cs.rochester.edu/u/ryates/files/ryates-area-slides.pdf
+2013-05-09 02:18:01 UTC <tgeeky> fryguybob: it's unfair to say "under continual development for ~ 20 years" without mentioning the exponential growth
+2013-05-09 02:19:13 UTC <fryguybob> tgeeky: True, I was making a different point then that I guess.  Just that the concepts are not new.
+2013-05-09 02:19:46 UTC <tgeeky> fryguybob: I figured, but I guess that isn't even the subject of the talk. Also, even that's not fair, because some of the popular concepts are new
+2013-05-09 02:19:58 UTC <tgeeky> conduits/pipes, lenses, etc
+2013-05-09 02:20:19 UTC <tgeeky> for STM yeah actually, it is fair :)
+2013-05-09 02:20:56 UTC <byorgey> fryguybob: nice!
+2013-05-09 02:22:12 UTC <tgeeky> fryguybob: these slides are post-presentation?
+2013-05-09 02:22:21 UTC <fryguybob> tgeeky: Yes :D
+2013-05-09 02:22:43 UTC <tgeeky> what does the word hajim mean?
+2013-05-09 02:22:51 UTC <tgeeky> or is it just a name in this case?
+2013-05-09 02:22:57 UTC <fryguybob> Just a name
+2013-05-09 02:23:21 UTC <fryguybob> ACTION drives away to get some sleep.
+2013-05-09 02:23:25 UTC <fryguybob> Good night all!
+2013-05-09 02:23:34 UTC <tgeeky> night
+2013-05-09 02:35:23 UTC <andyjgill> byorgey: I reworked the active stuff this afternoon, as per our discussion last month.
+2013-05-09 02:35:51 UTC <byorgey> andyjgill: oh, excellent!
+2013-05-09 02:37:05 UTC <byorgey> andyjgill: I won't have time to take a look at it until next week -- I'm currently visiting Jacques Carette
+2013-05-09 02:37:09 UTC <andyjgill> I'll rework the XOX example; and see if the idea works. 
+2013-05-09 02:37:16 UTC <byorgey> sounds good
+2013-05-09 02:37:31 UTC <andyjgill> No worries, I'm at TFP next week, and will not get properly online till the week after.
+2013-05-09 02:37:46 UTC <byorgey> OK.
+2013-05-09 02:38:15 UTC <tgeeky> andyjgill: are you ... a founding member and guitarist for the English rock group Gang of Four, considered among the most influential post-punk ...
+2013-05-09 02:38:42 UTC <tgeeky> andyjgill: just teasing :(
+2013-05-09 02:38:45 UTC <andyjgill> tgeeky: No, but I have had the other Andy Gill's fan mail.
+2013-05-09 02:39:22 UTC <tgeeky> andyjgill: I've got to say, it's going to be tough for you to look more majestic than his google photo is.
+2013-05-09 02:39:28 UTC <andyjgill> And I called my four star undergrad students my "gang of four".
+2013-05-09 02:39:39 UTC <byorgey> ...influential post-punk design pattern experts?
+2013-05-09 02:41:03 UTC <byorgey> ACTION -> bed
+2013-05-09 02:41:12 UTC <tgeeky> hio
+2013-05-09 22:55:01 UTC <tgeeky> cmccann: weird line of questioning, I guess, but here goes:
+2013-05-09 22:55:11 UTC <tgeeky> you mentioned the interplay between order of arguments and partial application
+2013-05-09 22:55:28 UTC <cmccann> yeah
+2013-05-09 22:55:36 UTC <cmccann> it's a good rule of thumb for argument order
+2013-05-09 22:56:52 UTC <tgeeky> to be precise, the most-likely-to-partially apply are left (outer)-most, right?
+2013-05-09 22:57:16 UTC <cmccann> right
+2013-05-09 22:57:37 UTC <tgeeky> so if had say 5 arguments, a b c d e
+2013-05-09 22:57:44 UTC <cmccann> note that includes things like plausibility of using in a map or zipWith or whatnot
+2013-05-09 22:58:08 UTC <tgeeky> you may need (a b c) to partially apply something
+2013-05-09 22:58:17 UTC <tgeeky> but you should not get yourself in a situation where you need (c d e)
+2013-05-09 22:58:29 UTC <cmccann> ideally
+2013-05-09 22:58:36 UTC <cmccann> not always possible, though
+2013-05-09 22:58:42 UTC <cmccann> and sometimes other concerns might dominate
+2013-05-09 22:59:09 UTC <cmccann> like if you expect to use something infix-y Applicative style, order the arguments by what makes sense for the "actions"
+2013-05-09 23:00:10 UTC <cmccann> (e.g., the order of fields in a data type being parsed should match the syntax of the input)
+2013-05-09 23:01:08 UTC <cmccann> another consideration is possible sharing of intermediate computation when partially applying but that's getting a bit fiddly
+2013-05-09 23:01:57 UTC <cmccann> (and mostly coincides with the likelihood of partial application bit anyway)
+2013-05-09 23:01:59 UTC <tgeeky> so suppose you have a bunch more arguments (for a few different reasons, all well-inteneioned)
+2013-05-09 23:02:22 UTC <tgeeky> say, twenty eight or so
+2013-05-09 23:03:17 UTC <cmccann> that's when you reconsider your choices in life
+2013-05-09 23:03:20 UTC <tgeeky> hehe :)
+2013-05-09 23:03:38 UTC <tgeeky> well, first thing I intend to do is smartly prune all of them which aren't actually needed
+2013-05-09 23:03:56 UTC <tgeeky> so I presume the a b c d e case is just a b c d e Void Void Void ...
+2013-05-09 23:03:59 UTC <tgeeky> or something like that
+2013-05-09 23:04:34 UTC <cmccann> if there are a well-defined number of possibilities, just make it a sum type for each group
+2013-05-09 23:04:43 UTC <cmccann> with a smart constructor if needed to make sure invariants are checked
+2013-05-09 23:06:43 UTC <cmccann> I mean I try to keep lines to mostly < 80 char wide when possible and usually no more than 100-ish at worst
+2013-05-09 23:07:05 UTC <tgeeky> cmccann: yes, I mean to provide editor support for this scheme.
+2013-05-09 23:07:15 UTC <cmccann> and you're talking at least, what, 60 chars wide just for the argument list? sweet flipping christ on a carousel that's crazy.
+2013-05-09 23:07:31 UTC <tgeeky> cmccann: well, you would elide all of the unused ones in the editor
+2013-05-09 23:09:37 UTC <cmccann> is this a special-purpose language? I'm not sure the world is ready for a general-purpose programming language that requires an editor to be usable :[
+2013-05-09 23:09:52 UTC <tgeeky> cmccann: nope. just haskell. it's not a language.
+2013-05-09 23:10:24 UTC <cmccann> well good luck then :P
+2013-05-09 23:10:27 UTC <tgeeky> cmccann: the origin of the thought is learning the implementation of applicative
+2013-05-09 23:10:41 UTC <cmccann> hm?
+2013-05-09 23:10:50 UTC <tgeeky> that it can be implemented using a 2-tuple, and presumably bi-applicative can be implemented as a 3-tuple
+2013-05-09 23:12:32 UTC <tgeeky> err
+2013-05-09 23:12:36 UTC <tgeeky> first of all, scratch that lsat one
+2013-05-09 23:12:54 UTC <tgeeky> no that's right. Applicative has (a, f a)
+2013-05-09 23:13:05 UTC <tgeeky> Bi- has (g a, a, f a)
+2013-05-09 23:13:50 UTC <tgeeky> cmccann: you can ignore me from now on. I've asked this question before and it's not well posed :)
+2013-05-09 23:13:55 UTC <tgeeky> *for today
+2013-05-09 23:13:56 UTC <cmccann> yeah I'm confused
+2013-05-09 23:14:13 UTC <cmccann> what do you mean by (a, f a)?
+2013-05-09 23:14:18 UTC <tgeeky> I sat down one day last year and find sources for all of the n-Functors and tried to find n-Applicatives
+2013-05-09 23:15:53 UTC <tgeeky> I remember seeing an implementation of Idioms or Applicatives as a bunch of plumbing functions on 2-tuples
+2013-05-09 23:16:07 UTC <tgeeky> along with assoc. operators, and other things like that
+2013-05-09 23:17:03 UTC <tgeeky> cmccann: I doubt I can find the source easily today. I'll re-ask if I make progress. For now, pretend it never happened. :)
+2013-05-09 23:17:41 UTC <cmccann> I'm just not sure what you mean by n-Functors in this case
+2013-05-09 23:26:23 UTC <cmccann> tgeeky: incidentally, you know what Applicative really "means" in category theory terms, right?
+2013-05-09 23:26:42 UTC <cmccann> the explanation in the haddocks is slightly misleading on that I think
+2013-05-09 23:39:25 UTC <tgeeky> cmccann: I looked up the answer, after being afk for a while. 'lax monodial functor'
+2013-05-09 23:39:32 UTC <tgeeky> I should have remembered that
+2013-05-09 23:40:36 UTC <cmccann> yes
+2013-05-09 23:41:05 UTC <cmccann> but being a closed functor is more relevant
+2013-05-09 23:41:24 UTC <cmccann> (they're equivalent in this case)
+2013-05-09 23:42:08 UTC <tgeeky> ACTION rembers reading a diagrammatic book of monodial categories
+2013-05-09 23:42:37 UTC <tgeeky> yes, this thing: http://www.mscs.dal.ca/~selinger/papers/graphical.pdf
+2013-05-09 23:43:32 UTC <cmccann> the essence of it is that Applicative instances are functors that preserve monoidal closed structure
+2013-05-09 23:45:08 UTC <tgeeky> cmccann: your confusion stems from the fact that s/functors/bifunctors/ to that statement is nonsense
+2013-05-09 23:45:12 UTC <tgeeky> ?
+2013-05-09 23:45:14 UTC <tgeeky> (confusion from earlier)
+2013-05-09 23:46:07 UTC <cmccann> I doubt it's nonsense, it just isn't clear to me what that would actually mean
+2013-05-10 02:42:03 UTC <luite> bleh can't sleep
+2013-05-10 06:38:24 UTC <werde29> Hi All!  I'm finding it hard to play around with diagrams in ghci, because most things do not have a Show instance.  So do you guys use a more reasonable print function with ghci -interactive-print, perhaps, or some other solution?
+2013-05-10 06:45:39 UTC <werde29> surely it's a ghci problem and not specifically a diagrams problem. it's only that diagrams makes a very good example case for demonstrating the problem
+2013-05-10 06:51:29 UTC <werde29> ghci's problem being "lack of introspection" for interactive development. (circle 1 # lc blue) , I want ghci to show me the structure of what I just wrote, so that I know and can understand. Couldn't care less for serialization 
+2013-05-10 06:52:08 UTC <werde29> nor referential transparency
+2013-05-11 01:41:03 UTC <luite> hm this is a tad distracting indeed
+2013-05-11 01:41:05 UTC <luite> oops
+2013-05-13 22:35:53 UTC <tgeeky> https://github.com/mhwombat/grid/wiki
+2013-05-13 22:36:09 UTC <tgeeky> how cool is that?
+2013-05-13 23:51:36 UTC <fryguybob> tgeeky: Mmmmm grids.
+2013-05-13 23:52:33 UTC <fryguybob> byorgey: Do you know Satyan Devadoss?
+2013-05-14 00:02:10 UTC <cmears> Do you know how the pictures in the grid wiki page were made?
+2013-05-14 00:04:12 UTC <fryguybob> ACTION has the same question.
+2013-05-14 01:14:02 UTC <cmears> The grid package is a prime candidate for diagrams embedded inline in the Haddock
+2013-05-14 01:28:22 UTC <tgeeky> that's mhwombat (awwwwww)'s only github repo with writes, but it's a goodie
+2013-05-14 02:30:58 UTC <andyjgill> byorgey: Can PC member submit to the FARM?
+2013-05-14 11:42:01 UTC <byorgey> fryguybob: yes, the quite well actually, the Devadosses are great friends of ours
+2013-05-14 11:49:49 UTC <byorgey> @tell andyjgill yes, PC members are explicitly invited to submit to FARM
+2013-05-14 11:49:50 UTC <lambdabot> Consider it noted.
+2013-05-14 11:53:32 UTC <ClaudiusMaximus> i clearly haven't trained google well enough - it serves me texan agriculture...
+2013-05-14 11:54:30 UTC <ClaudiusMaximus> not sure if i can justify funding myself to another conference this year, sadly...
+2013-05-14 11:55:47 UTC <ClaudiusMaximus> plus most of my code (in any language) is a horrible mess of hacks :)
+2013-05-14 11:56:19 UTC <byorgey> hehe =)
+2013-05-14 11:59:14 UTC <ClaudiusMaximus> met Henning at the Linux Audio Conference, his live-sequencer is nice - maybe if i get it running i could add diagrams visualisation to it
+2013-05-14 11:59:45 UTC <byorgey> ClaudiusMaximus: ah, fun
+2013-05-14 12:00:00 UTC <byorgey> diagrams visualization for live-sequencer would be really cool
+2013-05-14 12:00:09 UTC <ClaudiusMaximus> would be nice to have a timeline of when the next name-bindings would take place
+2013-05-14 12:00:22 UTC <ClaudiusMaximus> so you know how long you have to make your code changes
+2013-05-14 12:39:40 UTC <fryguybob> byorgey: Cool! He's one of the speakers at the conference Rebekah and I are going to at the end of the month.
+2013-05-14 14:38:29 UTC <luite> hm i hope diagrams would be fast enough
+2013-05-14 14:38:37 UTC <luite> otherwise make it fast enough
+2013-05-14 14:43:33 UTC <byorgey> yep
+2013-05-14 14:43:55 UTC <byorgey> I might actually work on optimization at Hac Phi, not sure
+2013-05-14 14:46:13 UTC <ClaudiusMaximus> well, the main diagram would only need to be updated at name-binding events or when the viewport needs to scroll or resize, and overlaying a current time cursor at ~30Hz shouldn't need much cpu?
+2013-05-14 14:46:44 UTC <ClaudiusMaximus> if you're talking about the same thing (of course, moar fasts is always good)
+2013-05-14 14:47:03 UTC <byorgey> ClaudiusMaximus: right, I think it should be OK
+2013-05-14 14:47:30 UTC <byorgey> but optimization is one of those things I've been Meaning To Get Around To for quite a while
+2013-05-14 14:49:08 UTC <byorgey> and am actually starting to care about (e.g. it would be nice if generating a one-minute-long animation took ten seconds instead of five minutes, etc.)
+2013-05-14 14:49:09 UTC <ClaudiusMaximus> hehe, yes..
+2013-05-14 14:49:10 UTC <mr-> byorgey: do you have ideas where to optimize?
+2013-05-14 14:49:13 UTC <byorgey> mr-: yes, I have some ideas
+2013-05-14 14:49:13 UTC <byorgey> but I would probably just start by doing some profiling
+2013-05-14 14:49:35 UTC <fryguybob> Cutting out redundent information in backends that can handle it could help on two fronts.
+2013-05-14 14:50:02 UTC <ClaudiusMaximus> fryguybob: you mean like <use> in svg?
+2013-05-14 14:50:20 UTC <ClaudiusMaximus> fryguybob: or even just <g> to group things with the same attributes?
+2013-05-14 14:50:27 UTC <byorgey> yes, that would probably help a lot
+2013-05-14 14:50:49 UTC <fryguybob> ClaudiusMaximus: It is often the case that there are several primatives with exactly the same transforamtion matrix, but they all get their own one emitted.
+2013-05-14 14:50:54 UTC <byorgey> ClaudiusMaximus: the second is the lowest-hanging fruit
+2013-05-14 14:51:03 UTC <byorgey> recovering sharing would be really cool though
+2013-05-14 14:51:08 UTC <luite> ClaudiusMaximus: it's worse, all attributes/transformations are sent to each element separately, no tree structure
+2013-05-14 14:51:13 UTC <ClaudiusMaximus> fryguybob: i see
+2013-05-14 14:51:22 UTC <byorgey> (and there are some nice well-known techniques for doing it)
+2013-05-14 14:51:49 UTC <fryguybob> That one might not show up in profiling, but we know we need to do it anyway :D
+2013-05-14 14:51:53 UTC <luite> i hope they don't rely on StableName
+2013-05-14 14:52:12 UTC <fryguybob> luite: No good story for StableName in ghcjs?
+2013-05-14 14:52:41 UTC <luite> hehe well they should work, but for some reason something goes wrong when running reactive-banana
+2013-05-14 14:53:56 UTC <byorgey> luite: don't worry, I doubt we'll actually get around to recovering sharing anytime real soon
+2013-05-14 14:54:21 UTC <byorgey> and if we do, it would be nice to use something like PHOAS instead of a hack like StableName
+2013-05-14 14:55:31 UTC <luite> ah
+2013-05-14 14:55:42 UTC <luite> i hope to fix the problem before release though
+2013-05-14 14:56:07 UTC <byorgey> fryguybob: you know, if we could replicate using diagrams even one-tenth of the cool diagrams Satyan has ever made, we would have an insanely cool gallery =)
+2013-05-14 14:56:19 UTC <byorgey> and it would probably drive all sorts of nifty features
+2013-05-14 14:57:14 UTC <byorgey> actually, trying to get people to just *replicate* existing cool graphics is probably a good idea
+2013-05-14 14:57:28 UTC <byorgey> we either end up with cool examples or with ideas for new features.
+2013-05-14 14:57:37 UTC <luite> but i'm doing some optimization atm, reusing stack slots works now (compiler keeps track of what it knows is on the stack, so it can reorder stack frames and avoid rewriting data that's already on the stack somewhere), next step is unboxing some more things
+2013-05-14 14:58:20 UTC <ClaudiusMaximus> byorgey: maybe porting this from processing would be nice? http://recodeproject.com/
+2013-05-14 14:58:49 UTC <ClaudiusMaximus> though, that's more art than diagrams
+2013-05-14 14:59:29 UTC <byorgey> ClaudiusMaximus: There is no bright line separating art and diagrams =)
+2013-05-14 14:59:48 UTC <byorgey> ClaudiusMaximus: yes, that looks really cool!
+2013-05-14 14:59:52 UTC <luite> hmm many look doable with diagrams :)
+2013-05-14 15:00:02 UTC <byorgey> yes, many do, and some don't
+2013-05-14 15:00:21 UTC <byorgey> in fact it's the ones that don't which are in some sense most interesting... what would need to change/be added to allow them?  etc.
+2013-05-14 15:01:56 UTC <byorgey> yikes, some of the processing code here is mind-numbingly awful
+2013-05-14 15:02:16 UTC <ClaudiusMaximus> btw, here are the slides that i made with diagrams http://mathr.co.uk/lyapunov-fm/lyapunov-fm_lac2013_slides.pdf (6.3MB, rasterized...)
+2013-05-14 15:02:24 UTC <byorgey> sweet!
+2013-05-14 15:02:31 UTC <ClaudiusMaximus> byorgey: lots of copy/paste instead of loops?
+2013-05-14 15:02:42 UTC <ClaudiusMaximus> (haven't actually checked the code yet)
+2013-05-14 15:02:47 UTC <byorgey> ClaudiusMaximus: yes
+2013-05-14 15:03:06 UTC <byorgey> and just the fact that it is very low-level... begin_shape(), restore_matrix(), etc. etc.
+2013-05-14 15:03:11 UTC <byorgey> exactly the kind of thing diagrams lets you avoid
+2013-05-14 15:03:12 UTC <ClaudiusMaximus> ah yes
+2013-05-14 15:03:31 UTC <luite> are they supposed to be a direct translation of the original program?
+2013-05-14 15:03:47 UTC <byorgey> oh, good question, I don't know
+2013-05-14 15:05:36 UTC <ClaudiusMaximus> the page says "The majority of the artworks have no code published alongside the original result"
+2013-05-14 15:05:59 UTC <ClaudiusMaximus> so there's just scanned pdfs of magazine
+2013-05-14 15:07:20 UTC <byorgey> I see
+2013-05-14 15:11:25 UTC <luite> ah
+2013-05-14 15:17:44 UTC <fryguybob> byorgey: Yeah I saw a small sampling of thing on his website.  I'll have to look for more.
+2013-05-14 15:29:51 UTC <byorgey> http://www.haskell.org/haskellwiki/Diagrams/Projects
+2013-05-14 15:30:16 UTC <byorgey> folded the GSoC page back into the projects page, and added a project for reproducing existing cool graphics
+2013-05-14 15:30:55 UTC <byorgey> with links to Satyan Devadoss's page, recodeproject, Bridges, and some other stuff
+2013-05-14 15:30:55 UTC <byorgey> feel free to add other ideas!
+2013-05-14 15:34:46 UTC <fryguybob> byorgey: I'm going to add a link to the projects page in the Hac-\phi project page.
+2013-05-14 15:34:57 UTC <byorgey> fryguybob: good idea, thanks
+2013-05-14 17:31:33 UTC <byorgey> new project idea: generate "connect-the-dots" puzzles given line drawings as inputs =)
+2013-05-14 17:33:21 UTC <ClaudiusMaximus> there are bindings to OpenCV right?
+2013-05-14 17:33:59 UTC <ClaudiusMaximus> -> connect-the-dots animation flipbook generator
+2013-05-14 17:35:11 UTC <byorgey> =)
+2013-05-14 17:35:18 UTC <byorgey> yes, I think there are bindings to OpenCV
+2013-05-14 17:35:39 UTC <ClaudiusMaximus> (though OpenCV is huge so the bindings are probably incomplete)
