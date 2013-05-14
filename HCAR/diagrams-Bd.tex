@@ -1,14 +1,6 @@
-\documentclass{article}
-
-\usepackage{hcar}
-\usepackage{graphicx}
-\usepackage{paralist}
-
-\begin{document}
-
 % diagrams-Bd.tex
 \begin{hcarentry}[updated]{diagrams}
-\report{Brent Yorgey}%11/12
+\report{Brent Yorgey}%05/13
 \status{active development}
 \participants{Daniel Bergey, Jan Bracker, Andy Gill, Chris Mears, Michael Sloan, Ryan Yates}
 \makeheader
@@ -68,7 +60,7 @@ significant improvements to the underlying \texttt{diagrams-builder}
 package, which renders diagrams dynamically at run time.  The caching
 and conditional rebuilding of diagrams is now much smarter, so that it
 ``does the right thing'' in most situations (rebuilding a diagram when
-it has changed, and avoiding a rebuild it when it hasn't).  This
+it has changed, and avoiding a rebuild when it hasn't).  This
 directly improves the experience of using \texttt{diagrams-haddock} as
 well as \texttt{BlogLiterately-diagrams} (for writing blog posts with
 embedded diagrams) and \texttt{diagrams-latex} (for \LaTeX\ documents
@@ -140,5 +132,3 @@ hang out in the \texttt{\#diagrams} IRC channel on freenode.
 \item \url{http://www.youtube.com/watch?v=X-8NCkD2vOw}
 \end{compactitem}
 \end{hcarentry}
-
-\end{document}
