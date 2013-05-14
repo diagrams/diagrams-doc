@@ -2,8 +2,6 @@ language: haskell
 before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -qq libgtk-3-dev libcairo2-dev python-docutils
-  - git clone --quiet git://github.com/diagrams/monoid-extras.git diagrams/monoid-extras
-  - git clone --quiet git://github.com/diagrams/dual-tree.git diagrams/dual-tree
   - git clone --quiet git://github.com/diagrams/diagrams-core.git diagrams/core
   - git clone --quiet git://github.com/diagrams/diagrams-lib.git diagrams/lib
   - git clone --quiet git://github.com/diagrams/diagrams-cairo.git diagrams/cairo
@@ -11,7 +9,7 @@ before_install:
   - git clone --quiet git://github.com/diagrams/diagrams-builder.git diagrams/builder
   - git clone --quiet git://github.com/diagrams/docutils.git diagrams/docutils
 
-install: 
+install:
   - cd diagrams
   - sudo ghc-pkg --global unregister cgi
   - sudo ghc-pkg --global unregister HTTP
@@ -20,7 +18,7 @@ install:
   - sudo ghc-pkg --global unregister regex-posix
   - cabal install --force-reinstalls transformers-0.3.0.0 mtl-2.1.1 parsec-3.1.2
   - cabal install gtk2hs-buildtools shake 'hakyll<4'
-  - cabal install monoid-extras/ dual-tree/ core/ lib/ cairo/ contrib/ builder/ docutils/
+  - cabal install core/ lib/ cairo/ contrib/ builder/ docutils/
   - cd ..
 
 before_script: ghc --make Shake
