@@ -30574,3 +30574,930 @@
 2013-05-14 17:35:11 UTC <byorgey> =)
 2013-05-14 17:35:18 UTC <byorgey> yes, I think there are bindings to OpenCV
 2013-05-14 17:35:39 UTC <ClaudiusMaximus> (though OpenCV is huge so the bindings are probably incomplete)
+2013-05-14 19:16:36 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14ff923b8 http://travis-ci.org/diagrams/diagrams-doc/builds/7165487 The build has errored.
+2013-05-14 19:16:47 UTC <byorgey> whyyyyyy
+2013-05-14 19:19:13 UTC <byorgey> oh, I see why
+2013-05-14 19:38:34 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 147f965f6 http://travis-ci.org/diagrams/diagrams-doc/builds/7166251 The build has errored.
+2013-05-14 22:11:30 UTC <ClaudiusMaximus> has anyone used diagrams with wx?
+2013-05-15 02:32:28 UTC <tgeeky> ACTION is confused about beeminder. I finished my goal early, but nothing has happened.
+2013-05-15 02:35:27 UTC <luite> were you expecting a reward?
+2013-05-15 02:35:37 UTC <tgeeky> no, but I was expecting something to happen. :O
+2013-05-15 02:36:01 UTC <tgeeky> on the example beeminder charts, there is a "Success!" thing at the top
+2013-05-15 02:37:24 UTC <tgeeky> ut oh, I've broken it now.
+2013-05-15 02:37:40 UTC <tgeeky> it gives me 5485 days, 1 hour, 22 min, 26 seconds to complete my goal
+2013-05-15 11:41:10 UTC <byorgey> tgeeky: it only says "success!" when you actually reach your goal
+2013-05-15 11:41:26 UTC <byorgey> tgeeky: you can change the goal date to a week from now if it is way in the future
+2013-05-15 11:41:49 UTC <byorgey> and when I say "reach your goal" I mean reach the *date* of your goal, not just the *amount*
+2013-05-15 17:02:04 UTC <tgeeky> byorgey: yep, that's what I figured. I did that (moved the date up), but hit retroratchet and now the graph is all screwey. I wish they included an undo retroratchet button :o
+2013-05-15 17:02:23 UTC <byorgey> oh, boo =(
+2013-05-15 17:02:45 UTC <tgeeky> https://www.beeminder.com/technogeeky/goals/stationary :(
+2013-05-15 17:02:46 UTC <byorgey> tgeeky: if you email them I'm sure they will undo it for you.
+2013-05-15 17:02:51 UTC <byorgey> they are really nice about stuff like that.
+2013-05-15 17:10:49 UTC <tgeeky> byorgey: done. Did you end up using pledges to get past the 7 pledgeless goals limit?
+2013-05-15 17:11:12 UTC <byorgey> tgeeky: I don't think I've come up against it yet, they grandfathered in any existing pledgeless goals
+2013-05-15 17:11:27 UTC <tgeeky> ah, this was before they had the limit, ok that makes sense
+2013-05-15 17:12:10 UTC <tgeeky> I think I'm going to make a real-name account, and another account for other things like my puppy (brush his teeth, give his meds, groom him, etc)
+2013-05-15 17:13:06 UTC <tgeeky> the main thing I want now is the ability to do data entry to beeminder using a voice recognition program
+2013-05-15 17:13:24 UTC <byorgey> if you mean in order to get around the 7 pledgeless goal limit, I cannot condone dishonesty
+2013-05-15 17:13:47 UTC <tgeeky> byorgey: oh, no... I mean because they aren't my goals, they are my dog's goals, but he can't use beeminder :O
+2013-05-15 17:14:00 UTC <tgeeky> i'll have far more than 7 goals in my beeminder
+2013-05-15 17:14:02 UTC <byorgey> those don't sound like your dog's goals to me
+2013-05-15 17:14:14 UTC <byorgey> your dog has a goal to brush his own teeth?
+2013-05-15 17:14:24 UTC <tgeeky> his doctor has a goal, and he hasn't been doing it :(
+2013-05-15 17:14:46 UTC <byorgey> well tell your dog's doctor to get over there and start brushing your dog's teeth then
+2013-05-15 17:15:13 UTC <tgeeky> byorgey: actually, a way to simply catagorize one account's beeminders on the frontpage would suffice, too
+2013-05-15 17:15:31 UTC <byorgey> hehe, I do understand about categorization
+2013-05-15 17:16:26 UTC <tgeeky> I've wanted for some time a way to have my smartphone + lapel (shirt) microphone to voice recognize simple robotic-like phrases (so not full natural language)
+2013-05-15 17:17:01 UTC <tgeeky> seems like a nice first target to have it enter data for me when I say something like "stationary 14 12.00"
+2013-05-15 17:18:37 UTC <tgeeky> btw, you had a commit that referenced IRC Logs. is #diagrams logged completely?
+2013-05-15 17:19:08 UTC <byorgey> tgeeky: yes, it is
+2013-05-15 17:19:13 UTC <byorgey> sorry if you didn't know that
+2013-05-15 17:19:20 UTC <byorgey> (it's in the /topic)
+2013-05-15 17:19:27 UTC <tgeeky> so it is :O
+2013-05-15 17:19:34 UTC <tgeeky> oh well, I haven't embarassed myself too much
+2013-05-15 17:19:44 UTC <byorgey> I don't think so =)
+2013-05-15 17:20:16 UTC <tgeeky> i don't know why I never look at titles with irssi. I never had that problem with other IRC clients
+2013-05-15 17:20:25 UTC <byorgey> actually, I don't either
+2013-05-15 17:21:14 UTC <byorgey> irssi displays the topic in a very unobtrusive place, far away from where you are usually looking
+2013-05-15 17:21:40 UTC <tgeeky> yep, and I don't think it displays the topic in the channel area on join, by default.
+2013-05-15 17:21:59 UTC <byorgey> right, maybe not
+2013-05-15 17:22:33 UTC <byorgey> anyway, if you ever want something to be off the record, you just have to tell me before the next time I commit the IRC logs
+2013-05-15 17:22:52 UTC <byorgey> they are only logged to my local machine and I have to periodically record the changes and push
+2013-05-15 17:22:56 UTC <tgeeky> hehe. OK. I doubt I ever will. :O
+2013-05-15 17:23:13 UTC <tgeeky> wait, how does logging continue when you turn your computer off?
+2013-05-15 17:23:28 UTC <tgeeky> is it the bot who logs?
+2013-05-15 17:24:19 UTC <tgeeky> ACTION also doesn't have join/quits turned on, so never knows if people leave :O
+2013-05-15 17:24:31 UTC <byorgey> tgeeky: the logging does not continue when I turn my computer off.
+2013-05-15 17:24:44 UTC <byorgey> there is a bot, diagrams-hog
+2013-05-15 17:25:38 UTC <byorgey> LVN513-9 :: ~ Â» uptime
+2013-05-15 17:25:41 UTC <byorgey>  13:25pm  up 54 days  6:25,  5 users,  load average: 0.00, 0.01, 0.05
+2013-05-15 17:26:06 UTC <tgeeky> nice. there's a barely used, stable computer
+2013-05-15 17:26:28 UTC <byorgey> yep, this is the machine on my desk at school, which is provided by Penn
+2013-05-15 17:27:16 UTC <tgeeky> you have missed some conversations after you slept, then
+2013-05-15 17:27:24 UTC <tgeeky> some of my embarassing ones were in there, but some other ones were in there too
+2013-05-15 17:27:31 UTC <tgeeky> ACTION shrugs
+2013-05-15 17:27:33 UTC <tgeeky> no biggie.
+2013-05-15 17:28:04 UTC <byorgey> the bot sometimes gets disconnected and it takes me a while to notice.
+2013-05-15 17:46:20 UTC <mgsloan> woohoo!
+2013-05-15 17:46:49 UTC <byorgey> not quite done merging it all in yet but getting close =)
+2013-05-15 17:46:57 UTC <byorgey> I mean, it compiles
+2013-05-15 17:47:09 UTC <byorgey> but I still want to look over the instances for segments, trails, etc.
+2013-05-15 17:47:26 UTC <byorgey> mgsloan: actually, did you even add an instance for trails?  I haven't looked
+2013-05-15 17:47:32 UTC <byorgey> I'm guessing not
+2013-05-15 17:47:48 UTC <mgsloan> Right, there are some missing instances
+2013-05-15 17:47:58 UTC <byorgey> OK, makes sense
+2013-05-15 17:48:06 UTC <mgsloan> I agree that keeping paths to (0..1) might make sense
+2013-05-15 17:48:15 UTC <mgsloan> this'd obviate DomainBounds
+2013-05-15 17:48:26 UTC <luite> \o/
+2013-05-15 17:48:29 UTC <luite> i think
+2013-05-15 17:48:38 UTC <byorgey> well, I can imagine cases where you would still want it
+2013-05-15 17:48:56 UTC <byorgey> i.e. (0,1) is the *default* parametrization but maybe you explicitly want a different one
+2013-05-15 17:49:01 UTC <byorgey> I'm not sure
+2013-05-15 17:49:03 UTC <mgsloan> on the other hand, it means a lot of function will need to divide the parameter by the seg count
+2013-05-15 17:49:18 UTC <byorgey> true
+2013-05-15 18:24:37 UTC <travis-ci> [travis-ci] 13diagrams-lib/06parametric 1459b976a http://travis-ci.org/diagrams/diagrams-lib/builds/7195443 The build failed.
+2013-05-15 18:46:32 UTC <travis-ci> [travis-ci] 13diagrams-lib/06parametric 1453513d7 http://travis-ci.org/diagrams/diagrams-lib/builds/7196579 The build was fixed.
+2013-05-15 20:12:41 UTC <tgeeky> amazing. I got a genetic assay back today which says due to two genes variants I have, a medicine I have been taking for several years now is not doing anything
+2013-05-15 21:06:49 UTC <byorgey> tgeeky: doh.
+2013-05-16 13:51:20 UTC <byorgey> argh, looks like this parametric stuff is going to finally force me to straighten out the situation with open/closed trails
+2013-05-16 13:52:31 UTC <byorgey> for efficiency, we need to cache the segment count of a trail
+2013-05-16 13:53:14 UTC <byorgey> how many segments does a closed trail have? and right now, reversing a closed trail actually increases its segment count
+2013-05-16 13:53:40 UTC <byorgey> for now we've kind of lived with that bug but it's absolutely inexcusable if we're going to have trails be parameterized.
+2013-05-16 14:24:33 UTC <fryguybob> byorgey: Humm, indeed.
+2013-05-16 14:43:37 UTC <byorgey> I have some notes brainstorming notes here from when I had jury duty
+2013-05-16 14:43:42 UTC <byorgey> s/notes//
+2013-05-16 14:44:22 UTC <byorgey> they involve making Segment and Trail into GADTs parameterized over a phantom type parameter which is either Open or Closed
+2013-05-16 14:45:01 UTC <byorgey> I haven't decided yet whether this is a brilliant or a terrible idea
+2013-05-16 14:48:08 UTC <byorgey> I think it would also involve representing trails as trees, maybe fingertrees
+2013-05-16 14:48:34 UTC <byorgey> which is probably good idea independently.
+2013-05-16 14:56:12 UTC <mgsloan> hmm, yeah, that could be pretty cool
+2013-05-16 14:56:19 UTC <mgsloan> measured monoids for arclength!
+2013-05-16 14:59:05 UTC <fryguybob> byorgey: So most functions could consume things polymorphic in their Open or Closed-ness?
+2013-05-16 14:59:31 UTC <byorgey> mgsloan: yes! for arc length, number of segments, total offset, etc.
+2013-05-16 14:59:45 UTC <mgsloan> fun!
+2013-05-16 14:59:47 UTC <byorgey> fryguybob: yes, probably
+2013-05-16 15:00:03 UTC <byorgey> though note, for example, that there would only be a Monoid instance for  Trail Open
+2013-05-16 15:00:26 UTC <byorgey> I just wrote out a few more notes here and I think I
+2013-05-16 15:00:44 UTC <byorgey> 'm actually liking this.  I'll hack something up in a branch and you guys can see what you think.
+2013-05-16 15:00:57 UTC <fryguybob> byorgey: Sounds good.
+2013-05-16 15:03:13 UTC <byorgey> ugh, I have so many branches with half-finished features, it makes me feel icky
+2013-05-16 15:03:25 UTC <fryguybob> hehe
+2013-05-16 15:03:25 UTC <byorgey> on the other hand, I should be thankful that git makes it even possible
+2013-05-16 15:10:41 UTC <travis-ci> [travis-ci] 13diagrams-lib/06arrows 145cd7be8 http://travis-ci.org/diagrams/diagrams-lib/builds/7221986 The build passed.
+2013-05-16 15:26:47 UTC <byorgey> bee-coh is what it sounds like when Noah says "open, close" =)
+2013-05-16 15:27:57 UTC <byorgey> aaand I'm off to Colorado for a wedding.  later all.
+2013-05-16 15:28:23 UTC <mgsloan> Enjoy!
+2013-05-16 15:32:48 UTC <travis-ci> [travis-ci] 13diagrams-lib/06bee-coh 14760172a http://travis-ci.org/diagrams/diagrams-lib/builds/7222725 The build failed.
+2013-05-16 17:30:51 UTC <luite> dhm
+2013-05-16 17:30:53 UTC <luite> oop
+2013-05-16 17:30:54 UTC <luite> s
+2013-05-17 21:50:42 UTC <luite> fryguybob: tnx for the stm description, really useful :)
+2013-05-17 22:03:57 UTC <fryguybob> luite: Thanks! I hope it is useful.  I certainly learned a lot writing it.
+2013-05-17 22:52:06 UTC <luite> i should probably try implementing it :)
+2013-05-17 23:08:33 UTC <tgeeky> luite: do you mean, using it?
+2013-05-17 23:10:50 UTC <fryguybob> tgeeky: A JS implementation for the ghcjs rts I would assume.
+2013-05-17 23:11:18 UTC <tgeeky> oh. that makes more sense, but doesn't sound any less ambitious
+2013-05-17 23:18:34 UTC <luite> hm
+2013-05-17 23:18:40 UTC <luite> yes that's what i meant
+2013-05-18 01:25:20 UTC <tgeeky> fryguybob: This is probably wrong? "very every" Global data invariant checks can be introduced with the always operation which demands that the transaction it is given results in True very every transaction that is committed globally.
+2013-05-18 01:38:17 UTC <fryguybob> tgeeky: Humm looks like some of that got cut out.  Thanks!
+2013-05-18 01:42:04 UTC <fryguybob> tgeeky: Fixed, it takes a minute or two for the change to show up.
+2013-06-04 20:24:17 UTC <luite_> byorgey: looks like my pull req text was borked a bit because of the html tag
+2013-06-04 20:24:19 UTC <luite_> s
+2013-06-04 20:24:46 UTC <luite_> byorgey: it uses <pre class="sourceCode haskell"><code class="sourceCode haskell"> for haskell blocks
+2013-06-04 20:25:03 UTC <byorgey> cool
+2013-06-04 20:25:28 UTC <luite_> and it doesn't omit the <code> tag anymore when running --hscolour-css (it was inserted only for icss)
+2013-06-04 20:26:00 UTC <byorgey> sounds good
+2013-06-04 20:31:38 UTC <luite_> is there a way to have --upload-images and --hscolour-css set by default?
+2013-06-04 20:33:40 UTC <byorgey> luite_: you can make a profile
+2013-06-04 20:34:05 UTC <byorgey> I forget if you can specify hscolour-css in a profile, but you can certainly set upload-images
+2013-06-04 20:34:19 UTC <byorgey> and if you can't specify hscolour-css it's only because I hadn't gotten around to adding it
+2013-06-04 20:34:28 UTC <byorgey> not for any fundamental reason
+2013-06-04 20:35:18 UTC <byorgey> luite_: search for the "Profiles" section on http://byorgey.wordpress.com/blogliterately/
+2013-06-04 20:43:22 UTC <luite_> ah hscolour doesn't seem to be there, i've added upload-images
+2013-06-05 01:52:56 UTC <byorgey> !botsnack
+2013-06-05 01:52:56 UTC <diagramsbot> :)
+2013-06-05 01:53:07 UTC <byorgey> !type hcat
+2013-06-05 01:53:08 UTC <diagramsbot> Not in scope: `hcat'
+2013-06-05 01:57:07 UTC <byorgey> > 2 + 3
+2013-06-05 01:57:10 UTC <diagramsbot>   mueval-core: GhcException "cannot satisfy -package lambdabot\n    (use -v f...
+2013-06-05 01:57:26 UTC <byorgey> !type hcat
+2013-06-05 01:57:27 UTC <diagramsbot> Not in scope: `hcat'
+2013-06-05 01:57:31 UTC <byorgey> !type repeat
+2013-06-05 01:57:32 UTC <diagramsbot> a -> [a]
+2013-06-05 02:10:56 UTC <cmears> poor diagramsbot
+2013-06-05 02:25:59 UTC <byorgey> the new lambdabot code reorganization is quite nice, but still a bit rough around the edges
+2013-06-05 02:26:14 UTC <byorgey> I wanted to get a version of lambdabot that has diagrams stuff in scope
+2013-06-05 02:26:26 UTC <byorgey> but haven't been able to get it to work yet, obviously =)
+2013-06-05 10:33:43 UTC <notdan> hi
+2013-06-05 10:46:10 UTC <luite> hello
+2013-06-05 20:50:57 UTC <jbracker_> byorgey: How do I test if a backend works or not? I remember there was some kind of test suite somewhere
+2013-06-05 20:51:46 UTC <byorgey> jbracker_: https://github.com/diagrams/diagrams-backend-tests
+2013-06-05 20:51:58 UTC <jbracker_> thanks!
+2013-06-05 20:52:02 UTC <byorgey> sure
+2013-06-05 20:53:51 UTC <luite> byorgey: do you have an example somewhere that draws a tree with arrows to connect the nodes and labels for the arrows?
+2013-06-05 20:57:12 UTC <byorgey> luite: hmm, I don't think I have anything like that
+2013-06-05 20:57:18 UTC <byorgey> but I could easily construct one for you
+2013-06-05 20:57:24 UTC <byorgey> be back in a minute
+2013-06-05 21:02:12 UTC <byorgey> OK, I'm back
+2013-06-05 21:08:05 UTC <byorgey> luite: if only I could just show you an example on some sort of diagrams paste site... ;-)
+2013-06-05 21:08:10 UTC <luite> hehe
+2013-06-05 21:08:28 UTC <luite> well notdan seems to be making good progress
+2013-06-05 21:08:32 UTC <byorgey> indeed
+2013-06-05 21:08:37 UTC <byorgey> ACTION is excited
+2013-06-05 21:10:01 UTC <byorgey> luite: to draw a tree you get to give an arbitrary function for drawing nodes, and another function for drawing edges which is given two points and also the data at the two nodes
+2013-06-05 21:10:16 UTC <byorgey> so you just need a way to draw a labelled edge
+2013-06-05 21:10:51 UTC <byorgey> we don't have anything specifically for drawing labelled edges but it's not too bad to do manually
+2013-06-05 21:11:08 UTC <luite> ah, i see now
+2013-06-05 21:11:40 UTC <luite> renderTree from diagrams-extras
+2013-06-05 21:11:45 UTC <byorgey> right
+2013-06-05 21:12:06 UTC <byorgey> or renderTree'
+2013-06-05 21:12:11 UTC <luite> and arrowheads, do they work in 0.6.0.x?
+2013-06-05 21:12:22 UTC <byorgey> depending on how much info you need to draw the connections
+2013-06-05 21:12:30 UTC <byorgey> arrowheads do not work in any version ;-)
+2013-06-05 21:12:39 UTC <luite> oh, but triangles do? :)
+2013-06-05 21:12:44 UTC <byorgey> indeed =)
+2013-06-05 21:13:03 UTC <byorgey> we *will* have some nice arrow-drawing stuff soon
+2013-06-05 21:13:13 UTC <luite> i need it now ;)
+2013-06-05 21:13:17 UTC <luite> want to post before hac phi
+2013-06-05 21:13:46 UTC <byorgey> hehe
+2013-06-05 21:14:14 UTC <byorgey> well, it's not too hard to implement a specific style of straight arrows yourself
+2013-06-05 21:14:28 UTC <byorgey> just more verbose
+2013-06-05 21:14:38 UTC <byorgey> I'm also happy to help
+2013-06-05 21:14:59 UTC <luite> i'll tinker a bit myself first
+2013-06-05 21:15:02 UTC <byorgey> ok
+2013-06-05 21:15:30 UTC <byorgey> I'll go continue shaving the yak behind the yak behind the arrows yak
+2013-06-05 21:15:32 UTC <luite> you can proofread my post later or tomorrow if you want :)
+2013-06-05 21:15:40 UTC <byorgey> sure, I'd be glad to
+2013-06-05 21:15:44 UTC <luite> scary, posting something on the web for everyone to see
+2013-06-05 21:16:07 UTC <byorgey> super scary
+2013-06-05 21:17:03 UTC <luite> bah i'm sad i'm not going to hac phi :(  but at least i'm going to austria, mountainbiking and hiking, in a week
+2013-06-05 21:26:29 UTC <byorgey> luite: ooh, sounds awesome
+2013-06-05 21:26:53 UTC <byorgey> luite: I'm sad you're not coming to hac phi too.  I really want to meet you.
+2013-06-05 21:27:00 UTC <byorgey> I wish I had some money to fly you here.
+2013-06-05 21:27:37 UTC <byorgey> well, we *did* have some money, but we blew it all on food
+2013-06-05 21:29:51 UTC <luite> aw, food :(
+2013-06-05 21:30:41 UTC <luite> austria is a lot cheaper for me since my parents are already paying :)
+2013-06-05 21:30:57 UTC <byorgey> ah, nice =)
+2013-06-05 21:32:36 UTC <luite> ill still come to icfp though probably... but i'm not sure if i get a paper for the haskell symposium done in time. otherwise i'll try to get a system demo
+2013-06-05 21:32:58 UTC <byorgey> cool 
+2013-06-05 21:33:03 UTC <byorgey> are you working on a paper?
+2013-06-05 21:33:11 UTC <byorgey> about ghcjs I presume
+2013-06-05 21:33:17 UTC <luite> ghcjs is not really researchy
+2013-06-05 21:33:26 UTC <byorgey> oh
+2013-06-05 21:33:42 UTC <byorgey> about what then?
+2013-06-05 21:33:47 UTC <luite> oh no about ghcjs
+2013-06-05 21:33:53 UTC <luite> but i'm not sure if it's researchy enough
+2013-06-05 21:34:22 UTC <byorgey> oh, sorry, I misunderstood.
+2013-06-05 21:34:26 UTC <byorgey> Right, I don't know.
+2013-06-05 21:35:04 UTC <byorgey> well in any case I think a system demonstration would definitely be cool.
+2013-06-05 21:35:13 UTC <byorgey> you should submit one of those even if you also submit a paper
+2013-06-05 21:55:15 UTC <travis-ci> [travis-ci] 13diagrams-lib/06bee-coh 141ddf126 http://travis-ci.org/diagrams/diagrams-lib/builds/7821890 The build is still failing.
+2013-06-05 22:51:29 UTC <jbracker_> byorgey: Slowly getting the sunroof backend to work
+2013-06-05 22:52:06 UTC <jbracker_> shall I fork the backend tests and do a pull request for my sunroof tests?
+2013-06-05 22:53:33 UTC <jbracker_> I'll just do so...
+2013-06-06 01:37:23 UTC <travis-ci> [travis-ci] 13diagrams-lib/06bee-coh 1419e7f62 http://travis-ci.org/diagrams/diagrams-lib/builds/7826768 The build was fixed.
+2013-06-06 01:40:13 UTC <byorgey> it compiles!!
+2013-06-06 01:40:41 UTC <byorgey> however:
+2013-06-06 01:40:57 UTC <byorgey> grep -R 'undefined' | wc -l
+2013-06-06 01:41:02 UTC <byorgey> 25
+2013-06-06 01:41:20 UTC <byorgey> bit of work still to do =)
+2013-06-06 01:52:13 UTC <cmears> http://www.cmears.id.au/files/plot.png
+2013-06-06 01:52:18 UTC <cmears> pretty chart via diagrams
+2013-06-06 01:53:31 UTC <fryguybob> cmears: Nice!
+2013-06-06 01:54:02 UTC <cmears> thanks (:
+2013-06-06 01:54:49 UTC <cmears> I used SVGFonts for the axis labels, which is how I managed to get them to be right-aligned
+2013-06-06 01:55:25 UTC <byorgey> cmears: oooh, awesome!
+2013-06-06 01:55:33 UTC <byorgey> ah, very nice
+2013-06-06 01:55:45 UTC <byorgey> I keep intending to try out SVGFonts
+2013-06-06 01:56:08 UTC <cmears> and I generate a PDF version to include in a PDF document, and it zooms in and out nicely
+2013-06-06 01:56:19 UTC <cmears> (the fonts in a PNG get fuzzy when you zoom out)
+2013-06-06 01:57:29 UTC <cmears> Some advice for SVGFonts: don't try to stroke the characters
+2013-06-06 01:57:36 UTC <cmears> set the line-width to zero and use fill
+2013-06-06 01:57:59 UTC <cmears> text' s = (stroke $ textSVG' (TextOpts s lin2 INSIDE_H KERN False 0.4 0.4)) # fc black # lw 0
+2013-06-06 01:58:16 UTC <cmears> is how I did it -- just use that function instead of "text"
+2013-06-06 02:03:09 UTC <byorgey> noted, thanks
+2013-06-06 02:07:06 UTC <byorgey> arc length, number of segments, total offset -- any other monoidal annotations you might want on a fingertree of segments?
+2013-06-06 02:08:05 UTC <cmears> maybe the index of the segment?
+2013-06-06 02:08:11 UTC <cmears> oh
+2013-06-06 02:08:15 UTC <cmears> do you get that anyway with the fingertree?
+2013-06-06 02:08:22 UTC <byorgey> that's covered by "number of segments"
+2013-06-06 02:08:35 UTC <byorgey> I didn't explain that one very wel
+2013-06-06 02:08:48 UTC <cmears> oh, I see (:
+2013-06-06 02:09:03 UTC <byorgey> every subtree will cache the number of segments it contains, which you can use to do log(n) indexing
+2013-06-06 02:09:32 UTC <travis-ci> [travis-ci] 13diagrams-lib/06bee-coh 14b223bea http://travis-ci.org/diagrams/diagrams-lib/builds/7827326 The build passed.
+2013-06-06 02:10:00 UTC <byorgey> well, we can easily add more at any time, just thought I'd ask =)
+2013-06-06 02:24:23 UTC <mgsloan> Yeah, I can't think of anything else that reasonably accumulates :D
+2013-06-06 02:29:57 UTC <mgsloan> Hmm, unless Segment will eventually have other types of curves, one possible monoid is the number of handles
+2013-06-06 02:30:14 UTC <mgsloan> I'd hold off on that, though
+2013-06-06 02:30:54 UTC <mgsloan> If anyone was going to associate handles with a path, they'd want to keep track of which segment each handle was associated with, anyway
+2013-06-06 04:40:29 UTC <cmears> http://www.cmears.id.au/files/excerpt.png
+2013-06-06 04:40:49 UTC <cmears> excerpt from Latex document with pretty diagrammy charts
+2013-06-06 04:44:38 UTC <carter> cmears whats that?
+2013-06-06 04:44:39 UTC <carter> ooo
+2013-06-06 04:44:43 UTC <carter> explain more
+2013-06-06 04:45:35 UTC <carter> cmears is the plotting codes online?
+2013-06-06 04:45:36 UTC <cmears> I've been making some charts using diagrams
+2013-06-06 04:45:39 UTC <carter> neat
+2013-06-06 04:45:46 UTC <cmears> It's all a bit ad hoc at the moment
+2013-06-06 04:45:50 UTC <carter> cmears i was planning to a year ago, but I got distracted
+2013-06-06 04:45:55 UTC <carter> I first has to fix numerical computation
+2013-06-06 04:46:00 UTC <carter> I'm nearly done with that part :)
+2013-06-06 04:46:16 UTC <cmears> Making charts should be easy compared to that (:
+2013-06-06 04:46:18 UTC <carter> (well, at least i have some mat mult codes that are 10x faster than atlas)
+2013-06-06 04:46:39 UTC <carter> a fancier mat mult i hope to hack oout over the next few days may be even fastter
+2013-06-06 04:47:33 UTC <carter> cmears though jbrakers stuff will be pretty cool
+2013-06-06 04:48:02 UTC <carter> cmears I have this problem/strenght/problem/strength of "figure out the ALL THE THINGS BEST"
+2013-06-06 04:48:04 UTC <carter> for a problem
+2013-06-06 04:49:11 UTC <carter> cmears so this is combinatorial optimziation work?
+2013-06-06 04:49:31 UTC <cmears> yes, that's what the charts are showing
+2013-06-06 04:49:34 UTC <carter> cool
+2013-06-06 04:49:45 UTC <carter> ACTION looks around the domain
+2013-06-06 04:50:01 UTC <carter> later this summer i may start playing aroudn with constraint programs and stuff
+2013-06-06 04:50:13 UTC <carter> that or porting my stuff to GPUS or hacking on ghc
+2013-06-06 04:50:15 UTC <carter> its unclear
+2013-06-06 04:50:27 UTC <carter> depends on some business bits that will hopefully resolve over the next month
+2013-06-06 04:50:55 UTC <cmears> you seem quite busy (:
+2013-06-06 04:51:13 UTC <carter> symmetry breaking is basically saying "don't search logically equivalent configurations"
+2013-06-06 04:51:14 UTC <carter> right?
+2013-06-06 04:51:28 UTC <cmears> yeah, that's right
+2013-06-06 04:51:35 UTC <carter> cool
+2013-06-06 04:51:42 UTC <carter> i'm busy
+2013-06-06 04:51:50 UTC <carter> somehow managing to make monotonic progress on my work
+2013-06-06 04:51:57 UTC <carter> and having fun
+2013-06-06 04:52:49 UTC <carter> and possibly if the next 1-2 months go well, running an actually working business that builds cool tools using haskell
+2013-06-06 04:53:11 UTC <carter> (this is all i think about while ithats unresolved)
+2013-06-06 04:53:17 UTC <carter> then i'll go back to focusing on cool stuff
+2013-06-06 04:53:24 UTC <carter> like making everything more awsome
+2013-06-06 04:54:00 UTC <carter> cmears what are good texts / literature starting points  in combinatorial optimization / constraint solving literature
+2013-06-06 04:54:12 UTC <carter> if i wind up experimenting with writing tools / algs in that space?
+2013-06-06 04:54:13 UTC <carter> at some point
+2013-06-06 04:54:35 UTC <carter> ACTION or at least learning enough to decide not to :)
+2013-06-06 04:54:42 UTC <carter> finite time and all
+2013-06-06 04:54:48 UTC <cmears> for discrete optimization there is a coursera course starting soon: https://www.coursera.org/course/optimization
+2013-06-06 04:55:09 UTC <carter> i understand it all theoretically
+2013-06-06 04:55:21 UTC <carter> i'm more interested in all the different types of solvers ;)
+2013-06-06 04:55:27 UTC <carter> and how to write them well
+2013-06-06 04:55:49 UTC <cmears> that part seems quite hard
+2013-06-06 04:56:01 UTC <cmears> there's still a lot of research in that area
+2013-06-06 04:56:08 UTC <carter> cmears so would writing code thats robustly faster than ATLAS for dense matrix multiply
+2013-06-06 04:56:20 UTC <carter> but I seem to be doing ok so far :)
+2013-06-06 04:56:33 UTC <carter> if it was easy, wouldn't be interesting !
+2013-06-06 04:57:40 UTC <carter> eg: someone folks who are at AT&T labs I chatted with last year made some interesting remarks that sounded like theres no effective LP (or was it MIP) solvers that handle larger than RAM models 
+2013-06-06 04:58:00 UTC <carter> (which is kinda related to also trying to do  semi distributed computation for solving)
+2013-06-06 04:58:13 UTC <carter> or at least that was my interpretation
+2013-06-06 04:58:23 UTC <carter> "we need to use our BIG server to solve our instances"
+2013-06-06 04:58:34 UTC <cmears> I think that's true
+2013-06-06 04:59:04 UTC <cmears> yes, distributed solving is still an open area
+2013-06-06 04:59:10 UTC <carter> cool
+2013-06-06 05:00:05 UTC <carter> it probably does require some "static analysis" to figure out which parts can be worked on with out constant coord 
+2013-06-06 05:00:11 UTC <carter> but that'd be cool to stare at
+2013-06-06 05:00:42 UTC <carter> if the next month goes well, i'll actually put a core subset of my lin alg stuff on hackage
+2013-06-06 05:00:48 UTC <carter> because theres no sanely license good lin alg
+2013-06-06 05:00:57 UTC <carter> granted, it won't build off x86_64
+2013-06-06 05:01:11 UTC <carter> but if you care about numerics, thats your only sane core CPU choice
+2013-06-06 05:01:37 UTC <cmears> that would be useful
+2013-06-06 05:02:27 UTC <carter> cmears and fast
+2013-06-06 05:02:32 UTC <carter> and theres some neat bits
+2013-06-06 05:02:40 UTC <carter> where I can make it obvious via the API 
+2013-06-06 05:02:46 UTC <carter> which operations will have good memory locality
+2013-06-06 05:02:47 UTC <carter> and which one
+2013-06-06 05:02:57 UTC <carter> *explicit in the API while not limiting which you do*
+2013-06-06 05:03:53 UTC <cmears> cool
+2013-06-06 05:04:17 UTC <carter> cmears https://gist.github.com/cartazio/5716430 is some benchmark data from earlier today: "fat dot product" is one of my stupider codes that is in working order right now, and "apple blas"  is the DGEMM in the Apple provided build of Atlas
+2013-06-06 05:04:42 UTC <carter> if you scroll to the bottom you'll see "3* 2^24 element"
+2013-06-06 05:05:06 UTC <carter> which means 3 * 128mb of matrices
+2013-06-06 05:05:17 UTC <carter> from fitting in l1 up to that size
+2013-06-06 05:05:28 UTC <carter> (my computer only has 3mb of L3 cache)
+2013-06-06 05:05:32 UTC <carter> i have sequential matrix mult 
+2013-06-06 05:05:47 UTC <carter> that is robustly ~ 10x faster than atlas
+2013-06-06 05:05:54 UTC <carter> (or i've a subtle bug i've not found yet)
+2013-06-06 05:05:59 UTC <carter> should double check on that :)
+2013-06-06 05:06:43 UTC <cmears> yes, probably best to check the results (:
+2013-06-06 05:06:46 UTC <carter> yeah
+2013-06-06 05:06:53 UTC <carter> i'm pretty comfortable with saying its right
+2013-06-06 05:07:10 UTC <carter> generally when the code is wrong, its "always 5 ns"
+2013-06-06 05:07:16 UTC <carter> because the compiler optimized it way
+2013-06-06 05:07:29 UTC <carter> granted, thats also a C kernel i'm calling from haskell
+2013-06-06 05:10:21 UTC <carter> though now i'm looking at the assembly and getting nervious
+2013-06-06 05:10:21 UTC <carter> ok
+2013-06-06 05:11:58 UTC <carter> ok, asm looks correct
+2013-06-06 05:13:42 UTC <carter> woot
+2013-06-06 05:13:45 UTC <carter> that was nervous
+2013-06-06 05:14:59 UTC <carter> yay
+2013-06-06 05:15:05 UTC <carter> should stil update my test suite though
+2013-06-06 14:29:16 UTC <byorgey> mgsloan: yeah, I do actually intend to add some more segment types
+2013-06-06 14:29:24 UTC <byorgey> mgsloan: in particular I want to have explicit arcs and circles
+2013-06-06 14:29:52 UTC <byorgey> and maybe we can add fancier sorts of splines
+2013-06-06 14:30:07 UTC <byorgey> but I don't know why you'd want to know the total number of handles of a trail =)
+2013-06-06 14:30:30 UTC <byorgey> (though if there is a reason I'd be interested to hear it)
+2013-06-06 14:36:07 UTC <fryguybob> byorgey: I suppose you could use the path types in a context of some GUI app (not targeting them to a diagram) and collect the handles for display.
+2013-06-06 14:36:22 UTC <byorgey> ah, true
+2013-06-06 14:36:49 UTC <byorgey> so not the number of handles, but an actual set of handles
+2013-06-06 14:36:58 UTC <fryguybob> Yeah that would be my guess.
+2013-06-06 14:37:06 UTC <byorgey> makes sense.
+2013-06-06 14:37:22 UTC <fryguybob> Would envelops be another thing?
+2013-06-06 14:40:12 UTC <fryguybob> As far as other interesting segments, the obvious additional types are BSpline and NURBS but I'm not sure what things like arc-length and envelope look like for them.
+2013-06-06 14:41:39 UTC <bergey`> And here I was hoping you could answer those questions for me :)
+2013-06-06 14:42:11 UTC <bergey`> (I assume there are answers in the literature; I haven't found them yet.)
+2013-06-06 14:43:50 UTC <bergey`> I hope there's a better answer than "treat each knot span as a Bezier curve" (and that breaks down if p>2)
+2013-06-06 14:44:00 UTC <fryguybob> bergey`: Yeah, I never got that far in my studying of NURBS.  For envelope all you need is the max in one direction, transforms can give you the rest.
+2013-06-06 14:45:07 UTC <fryguybob> bergey`: I don't think arc-length is any worse then bezier with NURBS.  You can express conic sections directly (which you cannot do with Bezier) and that gets you in a better place for arc-length.
+2013-06-06 14:46:44 UTC <byorgey> fryguybob: oh! indeed, you're right, we should cache envelopes and traces too
+2013-06-06 14:47:36 UTC <byorgey> previously we computed those with an O(n) scan, which furthermore resulted in O(n) envelope and trace functions
+2013-06-06 14:48:12 UTC <byorgey> oh, well, I guess the resulting envelope and trace functions will still be O(n), but balanced
+2013-06-06 14:48:31 UTC <fryguybob> byorgey: Ah, right.
+2013-06-06 14:48:55 UTC <byorgey> there were even comments like "-- XXX can we do this more efficiently with a balanced fold?"
+2013-06-06 14:50:00 UTC <fryguybob> Humm, I guess you need some BSP like thing to do better.
+2013-06-06 14:50:57 UTC <byorgey> BSP?
+2013-06-06 14:51:28 UTC <fryguybob> http://en.wikipedia.org/wiki/Binary_space_partitioning
+2013-06-06 14:52:23 UTC <byorgey> ah
+2013-06-06 14:52:48 UTC <byorgey> yeah, sounds neat
+2013-06-06 14:53:24 UTC <fryguybob> Something like splitting segments when you know an envelope always dominates then ordering those split segments.
+2013-06-06 18:47:59 UTC <luite> bah hetzner compromised...
+2013-06-06 18:51:14 UTC <fryguybob> D:
+2013-06-06 18:54:07 UTC <luite> the same happened to linode earlier this year
+2013-06-06 19:01:08 UTC <luite> i dunno how to check my server though, in theory they could've gained access through the rescue system, installed some backdoor to remove traces of the reboot
+2013-06-06 19:02:23 UTC <carter> luite check for what?
+2013-06-06 19:05:16 UTC <luite> carter: oh the server admin system for hetzner (hosting provider where i have a server, haskell.org is also hosted there) was compromised, someone got access to the client database
+2013-06-06 19:05:25 UTC <carter> AHHHH
+2013-06-06 19:26:56 UTC <byorgey> luite: BOO
+2013-06-06 21:50:37 UTC <travis-ci> [travis-ci] 13diagrams-lib/06bee-coh 14b0e7aa8 http://travis-ci.org/diagrams/diagrams-lib/builds/7857258 The build passed.
+2013-06-06 22:01:28 UTC <tgeeky> pass!
+2013-06-06 23:19:26 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 14c1e0605 http://travis-ci.org/diagrams/diagrams-lib/builds/7859776 The build passed.
+2013-06-07 00:15:28 UTC <fryguybob> ACTION does some cabal installing to get ready for hac phi.
+2013-06-07 01:49:34 UTC <travis-ci> [travis-ci] 13diagrams-lib/06bee-coh 1458d03e1 http://travis-ci.org/diagrams/diagrams-lib/builds/7863023 The build has errored.
+2013-06-07 01:56:41 UTC <travis-ci> [travis-ci] 13diagrams-lib/06bee-coh 14eacb540 http://travis-ci.org/diagrams/diagrams-lib/builds/7863139 The build has errored.
+2013-06-07 02:02:34 UTC <travis-ci> [travis-ci] 13diagrams-lib/06bee-coh 14d9b128a http://travis-ci.org/diagrams/diagrams-lib/builds/7863157 The build passed.
+2013-06-07 17:27:18 UTC <luite> cool :)
+2013-06-07 17:29:22 UTC <bergey`> NURBS don't actually work yet, but I figured folks I might show folks this weekend anyway.
+2013-06-07 17:29:55 UTC <bergey`> I do have the OpenGL backend rendering spheres, at least on my primary machine.
+2013-06-07 17:30:16 UTC <travis-ci> [travis-ci] 13diagrams-lib/06nurbs 14fcf27e2 http://travis-ci.org/diagrams/diagrams-lib/builds/7883586 The build failed.
+2013-06-07 17:30:43 UTC <luite> are you at hac phi?
+2013-06-07 17:31:14 UTC <bergey`> About to be, yes.
+2013-06-07 17:31:19 UTC <luite> cool :)
+2013-06-07 17:31:39 UTC <luite> i'm almost done with my GHCJS intro post
+2013-06-07 17:31:50 UTC <luite> ask Ian-Woo Kim if you need to know how awesome GHCJS is ;)
+2013-06-07 17:32:36 UTC <bergey`> Heh.  I look forward to your post.
+2013-06-07 17:32:48 UTC <luite> i really hope that web charts with diagrams and ghcjs work by the end of the summer :)
+2013-06-07 19:29:09 UTC <luite> bergey`: http://weblog.luite.com/wordpress/?p=14
+2013-06-07 19:31:03 UTC <fryguybob> luite: That's a long post.
+2013-06-07 19:31:14 UTC <luite> sorry :p
+2013-06-07 19:31:25 UTC <luite> it's my first, i didn't know i had only 140 chars
+2013-06-07 19:31:32 UTC <fryguybob> haha
+2013-06-07 19:32:05 UTC <luite> of course github is having problems now, i get timeouts doing the vagrant build :(
+2013-06-07 19:34:08 UTC <luite> BlogLiterately was quite useful for this post :)
+2013-06-07 19:57:54 UTC <luite> urgh fpcomplete handing out a $1000 prize per month for school of haskell content
+2013-06-07 19:58:02 UTC <luite> how can i compate with that with wolfgang :p
+2013-06-07 19:58:27 UTC <luite> cheaper than hiring people to write the content though
+2013-06-07 19:59:19 UTC <luite> does anyone have a reddit account ant want to link my blog?
+2013-06-07 20:14:20 UTC <alpounet> luite, sure -- unless someone did it already?
+2013-06-07 20:14:36 UTC <luite> i don't think it's on /r/haskell yet
+2013-06-07 20:14:43 UTC <luite> unless someone posted in the past 5 mins
+2013-06-07 20:15:49 UTC <alpounet> luite, want your name in the reddit "title" ?
+2013-06-07 20:16:37 UTC <luite> well if oyu want, it's your link. though i'm not very well known outside IRC i think :)
+2013-06-07 20:17:25 UTC <alpounet> done!
+2013-06-07 20:17:41 UTC <alpounet> oh you're not the least known haskeller I think
+2013-06-07 20:17:58 UTC <luite> i don't know who the least known haskeller is ;)
+2013-06-07 20:19:14 UTC <alpounet> the guy who doesn't even know himself he's going to learn haskell inâ¦ one second
+2013-06-07 20:19:39 UTC <alpounet> holy crap
+2013-06-07 20:19:57 UTC <alpounet> indeed, fpcomplete's new initiative is prettyâ¦ impressive
+2013-06-07 20:30:18 UTC <tgeeky> luite: I tried to get Ian (wavewave) in here more often. He only has time like once a week
+2013-06-07 20:30:37 UTC <luite> he is at hac phi though
+2013-06-07 20:30:42 UTC <luite> and he visits #ghcjs
+2013-06-07 20:30:43 UTC <tgeeky> ah cool
+2013-06-07 20:30:52 UTC <tgeeky> well, I actually meant, in #haskell
+2013-06-07 20:30:55 UTC <luite> ah
+2013-06-07 20:30:58 UTC <tgeeky> what is he using it for?
+2013-06-07 20:31:01 UTC <luite> hoodle
+2013-06-07 20:31:02 UTC <tgeeky> and are you at hachi?
+2013-06-07 20:31:08 UTC <luite> at least that's what he wants to use it for
+2013-06-07 20:31:10 UTC <luite> web interface
+2013-06-07 20:31:21 UTC <tgeeky> i thought that was... oh ok
+2013-06-07 20:31:27 UTC <tgeeky> GTK or wx or something
+2013-06-07 20:31:36 UTC <luite> he was the first person we helped set up the new ghcjs version
+2013-06-07 20:31:45 UTC <luite> now we have an automated build in a vm
+2013-06-07 20:31:51 UTC <tgeeky> he's a smart dude and a pretty productive coder
+2013-06-07 20:32:03 UTC <luite> he's coming to europe later this year
+2013-06-07 20:32:06 UTC <luite> to work at CERN
+2013-06-07 20:32:23 UTC <tgeeky> cool. I know he was working on some algorithims to do particle detection
+2013-06-07 20:32:27 UTC <luite> perhaps i can meet him when i'm in the neighbourhood :)
+2013-06-07 20:32:29 UTC <tgeeky> i'll have to catch up
+2013-06-07 20:34:48 UTC <tgeeky> hacphi is this weekend, yes?
+2013-06-07 20:34:53 UTC <tgeeky> luite: and you're not going, yes?
+2013-06-07 20:35:06 UTC <luite> unfortunately not
+2013-06-07 20:35:10 UTC <luite> but i'm going to icfp
+2013-06-07 20:35:32 UTC <tgeeky> wayyy more serious
+2013-06-07 20:35:40 UTC <luite> and a promised to give a talk at NYC Haskell at Oct 2nd if the venue is available
+2013-06-07 20:37:39 UTC <alpounet> luite, the reddit thread's already got a comment
+2013-06-07 20:37:48 UTC <alpounet> first of many, IMO
+2013-06-07 20:38:16 UTC <tgeeky> luite: your blog looks nice
+2013-06-07 20:46:41 UTC <luite> the contents or the theme? :p
+2013-06-07 20:46:52 UTC <tgeeky> luite: the theme, I haven't read the contents yet
+2013-06-07 20:47:09 UTC <luite> hehe
+2013-06-07 20:47:19 UTC <luite> i chose one of the simplest themes that looked modern
+2013-06-07 20:47:47 UTC <luite> it's written in markdown, published with BlogLiterately (awesome tool)
+2013-06-07 20:48:09 UTC <luite> i customized the syntax highlighting css a bit to make it less bright
+2013-06-07 20:50:57 UTC <luite> i hope i haven't made any typos in the vagrant setup script
+2013-06-07 20:51:21 UTC <luite> it's still building here
+2013-06-08 00:54:06 UTC <travis-ci> [travis-ci] 13diagrams-lib/06bee-coh 14d6f09da http://travis-ci.org/diagrams/diagrams-lib/builds/7894831 The build passed.
+2013-06-08 02:32:46 UTC <tgeeky> let the hac phi begin?
+2013-06-08 02:49:09 UTC <mgsloan> hac (1 + sqrt 5) / 2
+2013-06-08 02:49:13 UTC <mgsloan> \o/
+2013-06-08 13:00:23 UTC <notdan> luite: hi
+2013-06-08 13:00:38 UTC <notdan> luite: great GHCJS post :) I am setting up the environment atm
+2013-06-08 13:14:43 UTC <luite> ah most people still seem to be complainting about the setup progress (i kind of agree though, it's hard to keep someone's attention for more than 15 seconds on the internet)
+2013-06-08 13:15:51 UTC <luite> notdan: i think i'll add some shorter practical examples later, something with FRP, since that seems all the rage
+2013-06-08 13:16:41 UTC <luite> notdan: the full source build took almost 4 hours on my server (core i7 3770 with 16GB RAM), so it's best to stick with the prebuilt version
+2013-06-08 13:16:44 UTC <luite> for now
+2013-06-08 13:17:54 UTC <notdan> Yeah. Basically you are building GHC two times (patched version and ghcjs) and then rebuliding the base libraries
+2013-06-08 13:17:59 UTC <notdan> am I correct?
+2013-06-08 13:18:08 UTC <notdan> Why do you need a patched version of GHC tho?
+2013-06-08 13:18:58 UTC <luite> foreign import javascript isn't supported out of the box
+2013-06-08 13:19:26 UTC <luite> and some extra things to support better crossplatform building, including a javascript architecture
+2013-06-08 13:20:15 UTC <luite> what really takes long is all the dependencies of some of the examples, including gtk2hs and webkit
+2013-06-08 13:21:10 UTC <luite> we only use the libraries from the second build, base, ghc-prim, integer-gmp, containers, template-haskell and a few more
+2013-06-08 15:03:13 UTC <notdan> Why does it take so long for vagrant to set up the vm? :(
+2013-06-08 15:03:45 UTC <notdan> is it installing packages from the sources?
+2013-06-08 15:19:14 UTC <luite> notdan: did you use the prebuilt branch
+2013-06-08 15:19:16 UTC <luite> ?
+2013-06-08 15:19:29 UTC <luite> in that case it downloads a 1.2GB tar.gz file with all the binaries
+2013-06-08 15:19:44 UTC <luite> use tail -f /etc/extract.log to see progress
+2013-06-08 15:20:10 UTC <luite> otherwise it does build it from source, really inefficiently, building webkitgtk, gtk2hs and lots of dependencies with ghcjs
+2013-06-08 15:20:58 UTC <notdan> oh it might be downloading the 1.2GB file
+2013-06-08 15:22:11 UTC <notdan> The last message I got was notice: /Stage[main]//Package[libbz2-dev]/ensure: ensure changed 'purged' to 'present'
+2013-06-08 15:22:18 UTC <notdan> and there is no extract.log file
+2013-06-08 15:38:56 UTC <travis-ci> [travis-ci] 13diagrams-lib/06bee-coh 14bff3e07 http://travis-ci.org/diagrams/diagrams-lib/builds/7906174 The build was broken.
+2013-06-08 15:59:59 UTC <travis-ci> [travis-ci] 13diagrams-lib/06bee-coh 1417cb95a http://travis-ci.org/diagrams/diagrams-lib/builds/7906543 The build was fixed.
+2013-06-08 16:29:02 UTC <notdan> luite: is that a problem that a ghcjs-hello example does not work?
+2013-06-08 16:29:20 UTC <notdan> I got Uncaught ReferenceError: h$SystemziGlibziMainLoop_df4K is not defined 
+2013-06-08 16:30:18 UTC <notdan> recompiled it, still does not work
+2013-06-08 16:38:13 UTC <luite> notdan: oh that's possible
+2013-06-08 16:38:18 UTC <luite> the weblog examples should work
+2013-06-08 16:38:37 UTC <luite> the other ones might have some missing things since they were only tested with the old version of ghcjs
+2013-06-08 16:38:46 UTC <luite> we just merged the new code generator yesterday
+2013-06-08 16:38:56 UTC <luite> and it doen't support foreign import dynamic yet
+2013-06-08 16:43:14 UTC <notdan> I see. Weblog examples do work nicely :)
+2013-06-08 17:32:04 UTC <travis-ci> [travis-ci] 13diagrams-lib/06bee-coh 145e4c822 http://travis-ci.org/diagrams/diagrams-lib/builds/7908235 The build passed.
+2013-06-08 18:02:38 UTC <travis-ci> [travis-ci] 13diagrams-lib/06bee-coh 146ff05fc http://travis-ci.org/diagrams/diagrams-lib/builds/7908776 The build was broken.
+2013-06-08 18:35:45 UTC <travis-ci> [travis-ci] 13diagrams-cairo/06bee-coh 145dd4ba5 http://travis-ci.org/diagrams/diagrams-cairo/builds/7909291 The build failed.
+2013-06-08 20:14:09 UTC <travis-ci> [travis-ci] 13diagrams-lib/06bee-coh 14437c8f8 http://travis-ci.org/diagrams/diagrams-lib/builds/7911164 The build was fixed.
+2013-06-08 20:56:56 UTC <luite> \o/
+2013-06-08 21:01:13 UTC <fryguybob> \o/
+2013-06-08 21:01:44 UTC <luite> is hac phi still going strong?
+2013-06-08 21:02:13 UTC <fryguybob> Yes.  We are in the middle of heap profiling a diagram that explodes.
+2013-06-08 21:04:08 UTC <luite> any pics yet?
+2013-06-08 21:04:41 UTC <fryguybob> http://www.cs.rochester.edu/u/ryates/temp/weave.pdf
+2013-06-08 21:08:10 UTC <fryguybob> Humm, I could take a grainy photo with my webcam
+2013-06-08 21:11:28 UTC <fryguybob> http://i.imgur.com/sYACcxm.jpg
+2013-06-08 21:12:43 UTC <luite> that's Brent, to the right of you?
+2013-06-08 21:14:15 UTC <fryguybob> luite: Yes and bergey` across the table.  Not seen behind me is carter.
+2013-06-08 21:14:24 UTC <carter> WOOT
+2013-06-08 21:14:29 UTC <luite> ah
+2013-06-08 21:14:38 UTC <luite> OH HAI CARTER
+2013-06-08 21:14:43 UTC <carter> YES
+2013-06-08 21:14:47 UTC <carter> hello luite 
+2013-06-08 21:14:49 UTC <luite> shapr mode :p
+2013-06-08 21:14:56 UTC <carter> eh?
+2013-06-08 21:15:53 UTC <luite> oh he often greets like that on irc, and with similar exuberance in real life, I'm told
+2013-06-08 21:21:27 UTC <byorgey> OHAI LUITE
+2013-06-08 21:21:36 UTC <byorgey> we solved the mystery of the exploding heap diagram =)
+2013-06-08 21:24:20 UTC <luite> by eliminating the impossible?
+2013-06-08 21:25:20 UTC <byorgey> pretty much
+2013-06-08 21:26:07 UTC <byorgey> trails used to be lazy enough that you could work with infinite trails.  In a fit of cuteness I implemented hcat' using an infinite trail.
+2013-06-08 21:26:25 UTC <byorgey> but now trails are represented as fingertrees which are spine-strict
+2013-06-08 21:26:39 UTC <byorgey> so the test case that used hcat' blew up =)
+2013-06-08 21:27:28 UTC <travis-ci> [travis-ci] 13diagrams-lib/06bee-coh 14e94dc5c http://travis-ci.org/diagrams/diagrams-lib/builds/7912624 The build passed.
+2013-06-08 21:41:11 UTC <luite> ah :)
+2013-06-08 21:45:30 UTC <byorgey> bergey` is working on NURBS
+2013-06-08 21:45:47 UTC <byorgey> fryguybob is working on path intersections and path-zippery-operation-stuff
+2013-06-08 21:46:07 UTC <luite> cool :)
+2013-06-08 21:46:23 UTC <luite> although i don't really know what path-zippery-operation-stuff is
+2013-06-08 21:47:17 UTC <byorgey> neither do we ;-)
+2013-06-08 21:47:27 UTC <byorgey> that's what fryguybob is figuring out
+2013-06-08 21:48:07 UTC <fryguybob> Take paths and zipper them with operations and stuff.
+2013-06-08 21:53:10 UTC <luite> are weblog pingbacks/trackbacks useful in any way?
+2013-06-08 21:55:42 UTC <fryguybob> You could go have discussions elsewhere?
+2013-06-08 21:56:09 UTC <luite> hmm
+2013-06-08 21:56:18 UTC <luite> aren't they mostly just linkspam though?
+2013-06-08 21:57:04 UTC <fryguybob> I would imagine so.
+2013-06-08 21:57:42 UTC <carter> luite for social media marketing / SEO
+2013-06-08 21:57:43 UTC <carter> so nope :)
+2013-06-08 21:59:02 UTC <luite> k i guess i'll disable them
+2013-06-09 19:52:11 UTC <byorgey> fryguybob: I want a map-in-context over the vertices of a trail in order to implement 'orient' =)
+2013-06-09 20:06:51 UTC <ClaudiusMaximus> oo that sounds handy, could you use that to have something like "how many times does this closed curve wind about this point in a positive direction"?
+2013-06-09 20:08:03 UTC <byorgey> ClaudiusMaximus: we already have that =)
+2013-06-09 20:08:28 UTC <ClaudiusMaximus> oh ok :)
+2013-06-09 20:08:50 UTC <byorgey> ClaudiusMaximus: the idea is that you could use it do "local transformations" on trails where you get to see the local information
+2013-06-09 20:08:59 UTC <byorgey> e.g. a vertex together with the segments on either side of it
+2013-06-09 20:09:24 UTC <byorgey> or maybe a segment with its absolute location that you get to replace by one or more different segments that get spliced back into the trail
+2013-06-09 20:09:39 UTC <byorgey> fryguybob has been working on designing a nice API for this sort of thing since it seems to keep coming up.
+2013-06-09 20:09:59 UTC <ClaudiusMaximus> ah i see - so you could for example use it to round off corners, unless they're sharper than a threshold in which case you leave the corner sharp?
+2013-06-09 20:10:06 UTC <byorgey> ClaudiusMaximus: yes, exactly
+2013-06-09 20:10:21 UTC <ClaudiusMaximus> nice :)
+2013-06-09 20:10:51 UTC <byorgey> ok,  Foo a = (Point (V a), a)
+2013-06-09 20:11:04 UTC <byorgey> a good name for Foo?  suggestions?  Sited? Located? Rooted? Pointed? ...?
+2013-06-09 20:11:21 UTC <ClaudiusMaximus> At?
+2013-06-09 20:13:32 UTC <ClaudiusMaximus> with   at = flip (,) (or some newtype for monoids?)  so you could have   a `at` p  <>  b `at` q   or something?
+2013-06-09 20:13:49 UTC <byorgey> oh, I like the lowercase at
+2013-06-09 20:14:02 UTC <byorgey> but it seems strange as the name of the type....   At (Trail R2) ?
+2013-06-09 20:14:26 UTC <ClaudiusMaximus> mm, yes...
+2013-06-09 20:16:03 UTC <ClaudiusMaximus> with   a `at` p <> b `at` q  = (a <> (translate (q-p) b)) `at` p   or something similar?
+2013-06-09 20:16:46 UTC <ClaudiusMaximus> but then mempty might be a problem
+2013-06-09 20:17:40 UTC <ClaudiusMaximus> i think Located or Positioned would be ok
+2013-06-09 20:17:41 UTC <byorgey> I'm not convinced it should have a Monoid instance at all
+2013-06-09 20:18:02 UTC <ClaudiusMaximus> but i heard you liked monoids :P
+2013-06-09 20:18:07 UTC <byorgey> hehe
+2013-06-09 20:18:26 UTC <ClaudiusMaximus> true, might not make sense
+2013-06-09 20:20:24 UTC <ClaudiusMaximus> ACTION been a bit quiet on diagrams/haskell/etc lately - someone pointed me to a technique for rendering deep mandelbrot zooms using double precision deltas from a high precision reference point, so i've been sucked down that rabbit hole again..
+2013-06-09 20:20:57 UTC <luite> do you have more examples? i quite liked the b/w one you posted earlier :)
+2013-06-09 20:21:10 UTC <ClaudiusMaximus> http://mathr.co.uk/misc/2013-06-08_detecting_bad_references.png currently trying to automate switching to a different reference point when the delta-method fails
+2013-06-09 20:22:01 UTC <luite> it's cool to see that the set is connected, often hard to see when you color the points not in the set
+2013-06-09 20:23:27 UTC <byorgey> ClaudiusMaximus: no apologies necessary, glad to see you're making cool stuff =)
+2013-06-09 20:23:28 UTC <ClaudiusMaximus> yeah, it's not a proof, but distance estimate images have the nice property that every dark pixel is near the boundary and every light pixel is far from it
+2013-06-09 20:23:55 UTC <byorgey> luite: people here are impressed with ghcjs
+2013-06-09 20:24:09 UTC <byorgey> luite: what's the size of the generated JS like now?
+2013-06-09 20:24:17 UTC <byorgey> people were wondering and I didn't know
+2013-06-09 20:27:45 UTC <luite> byorgey: pretty big, expect a few hundred kB after minifying and gzip for an app that uses a few libs from hackage. but i haven't spent much time optimizing code size yet, we encode thunk metadata really inefficiently for example, and there is some more low hanging fruit
+2013-06-09 20:29:51 UTC <luite> i hope most of tht is done by the time we have our first hackage release
+2013-06-09 20:30:43 UTC <luite> ClaudiusMaximus: i have to admit that i don't know much about the connectedness proof
+2013-06-09 20:31:33 UTC <ClaudiusMaximus> nor do i
+2013-06-09 20:33:53 UTC <byorgey> luite: ah, cool, that's actually smaller than I thought
+2013-06-09 20:34:15 UTC <luite> byorgey: gzip really helps a lot since the generated code is quite repetitive
+2013-06-09 20:34:51 UTC <byorgey> makes sense.
+2013-06-09 20:35:00 UTC <luite> and we have really long function names (longer than fay or haste) since we include the package name
+2013-06-09 20:35:18 UTC <byorgey> hehe, I see
+2013-06-09 20:35:19 UTC <luite> for haste, if you have multiple packages with the same module and symbol name, they will clash
+2013-06-09 20:35:36 UTC <byorgey> oops =)
+2013-06-09 20:58:48 UTC <luite> also fay and haste don't have this thunk metadata since they don't support deallocation of unused global thunks and weak references
+2013-06-09 20:59:17 UTC <luite> byorgey: have people actually been able to install ghcjs there?
+2013-06-09 20:59:28 UTC <byorgey> luite: I don't know if anyone has tried yet
+2013-06-09 20:59:34 UTC <byorgey> people have been busy hacking on their own stuff
+2013-06-09 20:59:40 UTC <luite> yeah i imagine
+2013-06-09 21:05:35 UTC <byorgey> fryguybob: I'm adding Located since it's nice having  instance TrailLike t => TrailLike (Located t).  We can also do away with FixedSegment in favor of  Located Segment
+2013-06-09 21:05:47 UTC <byorgey> b
+2013-06-09 21:06:01 UTC <byorgey> oops, this is not emacs
+2013-06-09 22:05:22 UTC <travis-ci> [travis-ci] 13diagrams-core/06master 1457de221 http://travis-ci.org/diagrams/diagrams-core/builds/7934733 The build passed.
+2013-06-09 22:11:37 UTC <travis-ci> [travis-ci] 13diagrams-lib/06bee-coh 14b3b2a84 http://travis-ci.org/diagrams/diagrams-lib/builds/7934804 The build passed.
+2013-06-10 00:27:50 UTC <fryguybob> byorgey: Yeah sounds good (I'm back home by the way) :D
+2013-06-10 01:00:31 UTC <byorgey> fryguybob: glad to hear it =)
+2013-06-10 01:03:23 UTC <byorgey> fryguybob: did you get home in time to see Judah?
+2013-06-10 01:33:58 UTC <byorgey> fryguybob: by the way, I think you left your yellow fleece
+2013-06-10 01:34:30 UTC <byorgey> we can mail it to you =)
+2013-06-10 02:23:29 UTC <fryguybob> byorgey: Oops.  You could bring it to ICFP.
+2013-06-10 03:25:10 UTC <tgeeky> fryguybob: that's a lot of responsibility!
+2013-06-10 03:25:41 UTC <tgeeky> stewardship of a fine yellow garmet for an extended duration!
+2013-06-10 10:07:59 UTC <luite> i'm selling these fine yellow garments
+2013-06-10 11:11:37 UTC <byorgey> fryguybob: OK, I suppose you won't be needing a fleece quite as much during the next few months
+2013-06-10 11:17:26 UTC <byorgey> haha, with the hacking I did on diagrams this weekend Beeminder tells me I don't need to work on it again for 26 days
+2013-06-10 11:17:42 UTC <byorgey> (I just retroratcheted though =)
+2013-06-10 13:03:52 UTC <fryguybob> :D
+2013-06-10 14:20:09 UTC <fryguybob> byorgey: I keep confusing open and closed as I think of open as not having its end points and closed as having them...
+2013-06-10 14:20:24 UTC <byorgey> oh, hehe
+2013-06-10 14:20:43 UTC <byorgey> well, if we can come up with better/less confusing names I'd be quite happy to change them
+2013-06-10 14:20:58 UTC <fryguybob> Clearly clopen.
+2013-06-10 14:21:01 UTC <byorgey> hahaha
+2013-06-10 14:21:20 UTC <fryguybob> And oposed
+2013-06-10 14:21:34 UTC <byorgey> data Clopen = Closed | Open | Clopen | Oposed | FileNotFound
+2013-06-10 14:21:36 UTC <fryguybob> opclosed
+2013-06-10 14:22:42 UTC <byorgey> you're right though, if you think about trails corresponding to intervals, "closed" and "open" would mean the opposite
+2013-06-10 14:23:05 UTC <byorgey> which is much more than just a silly analogy, if we want to think of trails as parameterized things
+2013-06-10 14:23:29 UTC <byorgey> I guess it would be Closed and HalfOpen =)
+2013-06-10 14:24:41 UTC <fryguybob> Yeah, Trail Open is saying open on the left and Trail Closed is saying open on both and Path is closed.  For open on the right you reverse.
+2013-06-10 14:25:30 UTC <byorgey> well, Located (Trail Open) is closed.
+2013-06-10 14:25:35 UTC <fryguybob> Right
+2013-06-10 14:25:47 UTC <fryguybob> Path is another thing.
+2013-06-10 14:26:03 UTC <byorgey> ok, well now we have to change the names, because now you've confused me too ;-)
+2013-06-10 14:26:23 UTC <fryguybob> Hehe.
+2013-06-10 14:27:06 UTC <byorgey> Cyclic/NonCyclic?
+2013-06-10 14:27:09 UTC <byorgey> Cyclic/Linear?
+2013-06-10 14:27:35 UTC <byorgey> although I guess those only make sense as indices for Trail, not for Segment
+2013-06-10 14:30:35 UTC <fryguybob> Maybe we can think of Open and Closed as they are now are properties of a set in 2d, Open being empty and closed being non-empty?
+2013-06-10 14:31:17 UTC <byorgey> properties of what set?
+2013-06-10 14:31:25 UTC <byorgey> oh, you mean the interior of the path?
+2013-06-10 14:31:27 UTC <fryguybob> byorgey: The inside
+2013-06-10 14:31:28 UTC <fryguybob> Right
+2013-06-10 14:31:47 UTC <byorgey> well... this is more general than just 2D though
+2013-06-10 14:31:54 UTC <byorgey> e.g. you could just as well have a path in 3D
+2013-06-10 14:32:14 UTC <fryguybob> byorgey: Right, but a path only has an inside if it is planer
+2013-06-10 14:32:21 UTC <fryguybob> (I think)
+2013-06-10 14:32:33 UTC <byorgey> I don't know
+2013-06-10 14:32:42 UTC <fryguybob> A surface has an inside for R^n
+2013-06-10 14:32:51 UTC <fryguybob> A surface in 2d is a path.
+2013-06-10 14:32:53 UTC <byorgey> right
+2013-06-10 14:33:30 UTC <fryguybob> We should have had this conversation in front of ddarius so he could tell us we are all wrong.
+2013-06-10 14:33:35 UTC <byorgey> but I'm saying we can have trails in 3D and it still makes sense to talk about whether they form a loop or not.
+2013-06-10 14:33:42 UTC <byorgey> hehe
+2013-06-10 14:34:03 UTC <fryguybob> byorgey: Yes, that's what I'm getting at.
+2013-06-10 14:34:08 UTC <luite> he doesn't believe in the jordan curve theorem?
+2013-06-10 14:34:29 UTC <fryguybob> byorgey: That property is no about open or closed it is about "looped" or not.
+2013-06-10 14:34:48 UTC <byorgey> ohhh, now I understand what you are saying.  Yes, I agree completely.
+2013-06-10 14:34:50 UTC <fryguybob> luite: I don't know that's why we needed him.
+2013-06-10 14:36:25 UTC <fryguybob> byorgey: I bet topologists have the right terminology for us.
+2013-06-10 14:36:47 UTC <byorgey> so maybe we should have segments which are Open or Closed (in the interval sense, i.e. the opposite of what they are now!), and then you can have trails which are Loopy or... whatever the opposite of Loopy is
+2013-06-10 14:36:58 UTC <byorgey> Snoopy?
+2013-06-10 14:37:06 UTC <fryguybob> byorgey: Ypool
+2013-06-10 14:37:13 UTC <byorgey> CoLoopy
+2013-06-10 14:37:16 UTC <byorgey> hehehe
+2013-06-10 14:38:42 UTC <fryguybob> So when you have exactly one hole in your continuous set then you can be Located.
+2013-06-10 14:39:21 UTC <byorgey> when you have one canonical hole.
+2013-06-10 14:40:22 UTC <byorgey> or something like that.
+2013-06-10 14:40:49 UTC <byorgey> you can really make anything Located.  In particular I have defined it as   Located a = (Point (V a), TransInv a)
+2013-06-10 14:41:05 UTC <fryguybob> And a Closed thing is when you locate a () where the ends are identified.  The same path is Open when you locate a (] even if the limit on the left and the value on the right are the same.
+2013-06-10 14:42:04 UTC <byorgey> by "Closed" and "Open" do you mean "Loopy" and "Ypool"?
+2013-06-10 14:42:19 UTC <fryguybob> No I mean them in the "has an inside" sense.
+2013-06-10 14:42:48 UTC <byorgey> oh. hmm.
+2013-06-10 14:43:27 UTC <byorgey> I think I get what you're saying.
+2013-06-10 14:43:41 UTC <byorgey> how much of this to stick in the type system is another question.
+2013-06-10 14:43:44 UTC <byorgey> ;-)
+2013-06-10 14:43:44 UTC <fryguybob> () is loopy and (] is not
+2013-06-10 14:43:48 UTC <byorgey> right.
+2013-06-10 14:44:18 UTC <fryguybob> byorgey: Yeah, I don't think the "must have exactly one hole" thing fits well with types.
+2013-06-10 14:44:54 UTC <fryguybob> If you have multiple holes a topologist would care, but once you fix one of them the others always have the same limit point from our view, so it is like fixing all of them.
+2013-06-10 14:45:12 UTC <fryguybob> (my view at least :D)
+2013-06-10 14:45:56 UTC <byorgey> no, having multiple holes would be like having a list of trails, each of which has no specified endpoint
+2013-06-10 14:46:44 UTC <byorgey> it is like a chain of segments where some of the segments are rigid and some are "wiggly"
+2013-06-10 14:47:02 UTC <byorgey> so to concretely locate the entire thing you need to give locations to each of the holes
+2013-06-10 14:47:18 UTC <fryguybob> byorgey: Right, I was thinking of something else.
+2013-06-10 14:47:21 UTC <byorgey> oh, okl.
+2013-06-10 14:47:25 UTC <byorgey> *ok
+2013-06-10 14:47:35 UTC <byorgey> what were you thinking of?
+2013-06-10 14:48:42 UTC <fryguybob> Take a path and start deleting points, but that's assuming you have the path as a set of points, not in the sort of relative sense where having a hole is having something *not* defined (less information)
+2013-06-10 14:49:07 UTC <fryguybob> So that part doesn't really make sense
+2013-06-10 14:49:08 UTC <byorgey> oh, I see
+2013-06-10 14:49:14 UTC <byorgey> right
+2013-06-10 14:51:26 UTC <fryguybob> Humm, I still like the idea of trails being a generalization of vectors.
+2013-06-10 14:54:34 UTC <fryguybob> Instead of a magnitude and direction they have a ... function from parameter to Trail?
+2013-06-10 14:55:13 UTC <fryguybob> Function from parameter to Trail and offset?
+2013-06-10 15:14:23 UTC <luite> notdan: my name only has one g! :p
+2013-06-10 15:14:49 UTC <notdan> oops, sorry
+2013-06-10 15:14:51 UTC <notdan> and... how
+2013-06-10 15:15:08 UTC <notdan> I was about to paste the link
+2013-06-10 15:15:22 UTC <byorgey> fryguybob: they have a magnitude, a direction, and a wiggle ;-)
+2013-06-10 15:15:37 UTC <luite> notdan: i got a pingback on my blog (thought i disabled them)
+2013-06-10 15:15:42 UTC <notdan> Ah
+2013-06-10 15:16:13 UTC <notdan> So, anyway, made a first post here: http://parenz.wordpress.com/2013/06/10/soc-2013/ as promised, I am going to make small writeups on my progress
+2013-06-10 15:16:26 UTC <byorgey> fryguybob: seriously though, yes, we can view them as (continuous) functions from parameters to vectors
+2013-06-10 15:16:27 UTC <notdan> right now I have a bunch of information, but stored only as notes in org-mode buffer
+2013-06-10 15:17:35 UTC <luite> notdan: sounds good
+2013-06-10 15:18:05 UTC <byorgey> fryguybob: and Located Trail === Located (Param -> V) === Param -> Located V === Param -> (P,V) === Param -> P
+2013-06-10 15:18:25 UTC <byorgey> (where the last step corresponds to fmap (.+^))
+2013-06-10 15:19:57 UTC <fryguybob> byorgey: Yeah, I wonder if it is useful or not to be able to distinguish "just the wiggle" (closed trail in the current language).
+2013-06-10 15:20:29 UTC <fryguybob> Is that just having a function with an open interval on the parameter to vectors?
+2013-06-10 15:21:06 UTC <fryguybob> ACTION goes for a walk in the rain.
+2013-06-10 15:21:18 UTC <byorgey> hmm, I'm not sure
+2013-06-10 15:21:20 UTC <byorgey> enjoy!
+2013-06-10 17:10:37 UTC <fryguybob> Oh, a wiggly part without the offset doesn't have the subdividing property in a concrete way.
+2013-06-11 15:23:04 UTC <fryguybob> I'm getting closer: http://www.cs.rochester.edu/u/ryates/temp/weave.pdf
+2013-06-11 15:38:37 UTC <byorgey> =D
+2013-06-11 21:18:05 UTC <luite_> gr stupid travis
+2013-06-12 00:10:19 UTC <tgeeky> luite_: you called a robot stupid and it's the stupid one?
+2013-06-12 00:35:39 UTC <byorgey> tgeeky: now now. anthropomorphizing robots is a time-honored tradition.
+2013-06-12 01:42:42 UTC <tgeeky> byorgey: sure, maybe Commander Data. But travis doesn't have an emotion chip. Just a cold, uncalculating stare of indifference. And that will only make you more mad!
+2013-06-12 02:00:07 UTC <byorgey> I wonder if it would make everyone feel better if travis appended a sad face to build failure messages
+2013-06-12 02:00:21 UTC <byorgey> "I'm sorry, your build is still failing. =("
+2013-06-12 02:03:00 UTC <fryguybob> "When I can actually feel things, I'll feel sorry.  Take this emoticon as a down payment for my future sorrow: =("
+2013-06-12 02:57:55 UTC <fryguybob> More progress: http://www.cs.rochester.edu/u/ryates/temp/weave.pdf
+2013-06-12 02:58:29 UTC <fryguybob> byorgey: This is only acting on segments which gives the unbalanced nature to it.
+2013-06-12 10:41:56 UTC <byorgey> fryguybob: cool =)
+2013-06-12 11:56:14 UTC <luite_> hmm, hpaste is down, what's a good alternative?
+2013-06-12 11:56:49 UTC <luite_> ah perhaps github gist
+2013-06-12 11:58:30 UTC <luite_> notdan: https://gist.github.com/luite/5764654
+2013-06-12 12:00:02 UTC <luite_> notdan: that's the code i mentioned last week, with ghcLoad you can preload packages, then fork the process and continue from the existing session. rendering a simple cairo diagram (i tested with factorizationDiagram 10) goes down from ~0.6 to ~0.08 seconds
+2013-06-12 12:01:00 UTC <luite_> notdan: with hintLoad you can't keep the whole session, but the GHC API does remember the linker state, so it's a bit faster than starting from scratch, but still 3x slower than ghcLoad the first diagram
+2013-06-12 12:02:09 UTC <notdan> Oh, awesome
+2013-06-12 12:02:10 UTC <luite_> notdan: so you just need to run some code that uses all packages you want to use, to make sure they're linked, then go into server mode, fork an interpreter for every request
+2013-06-12 12:02:22 UTC <notdan> I'll use the first version anyway because hint does not compile with the latest GHC
+2013-06-12 12:02:45 UTC <notdan> yep, that's really cool
+2013-06-12 12:03:14 UTC <luite_> only disadvantage is that it requires forkProcess, windows doesn't ahve this
+2013-06-12 12:03:22 UTC <luite_> but no one hosts websites on windows anyway :)
+2013-06-12 12:03:36 UTC <notdan> True
+2013-06-12 12:04:14 UTC <notdan> Hm, I didn't know about forkProcess. It's actually going to be very handy, because I didn't manage to find a way to kill thread after a timeout, but I know how to kill a process after timeout
+2013-06-12 12:05:13 UTC <luite_>  yep, a separate process is the only reliable way to make something killable (ezyang is working on threads with resource limits for safe haskell but i don't trust them enough for a public site yet)
+2013-06-12 12:05:54 UTC <luite_> also a separate process can do an SELinux API call before it runs any sensitive code, to restrict its own file/network access
+2013-06-12 12:06:48 UTC <mr-> notdan: (Control.Concurrent.Async's race (threadDelay 10000) (this_will_stop_after_10000_somethings) :-)
+2013-06-12 12:09:24 UTC <luite_> mr-: but the thread can forkIO more threads itself that keep running that way
+2013-06-12 12:09:45 UTC <luite_> mr-: and a tight loop that does no allocation can starve the other threads
+2013-06-12 12:14:14 UTC <mr-> Bummer.. nothing works as expected in concurrent programs
+2013-06-12 12:45:44 UTC <notdan> Concurrency is hard :(
+2013-06-12 12:46:26 UTC <notdan> byorgey: you are probably aware, but diagrams-lib from Git does not currently compile with active from Git
+2013-06-12 13:03:14 UTC <byorgey> notdan: yes, I'm aware of that
+2013-06-12 13:03:38 UTC <byorgey> notdan: the dev version of active is undergoing some potentially big changes
+2013-06-12 13:03:49 UTC <byorgey> and it's in-process so there's no point updating diagrams to work with it yet
+2013-06-12 13:04:20 UTC <byorgey> git diagrams does build with the latest active from Hackage (which is the recommended thing to do right now for doing diagrams development)
+2013-06-12 13:21:21 UTC <notdan> Yeah, you still had to fiddle with active.cabal a little bit if you are building it against base-4.7 tho, but that's alright
+2013-06-12 13:54:57 UTC <byorgey> ah, true, I haven't finished updating everything to build with HEAD GHC
+2013-06-12 14:13:11 UTC <notdan> http://parenz.wordpress.com/2013/06/12/ghcjs-buid/
+2013-06-12 14:13:54 UTC <notdan> My latest update ^. I have to admit, writing blog posts in English takes longer than I thought.
+2013-06-12 14:15:01 UTC <mr-> notdan: and the troubles start with the url :-)
+2013-06-12 14:15:15 UTC <notdan> Jesus
+2013-06-12 14:15:35 UTC <notdan> argh, thanks for noticing mr- 
+2013-06-12 14:15:49 UTC <notdan> I tought that I doubled checked everything
+2013-06-12 15:01:30 UTC <luite_> notdan: are you going to submit ti to a mailing list or reddit?
+2013-06-12 17:39:47 UTC <notdan> luite_: I've submitted it to Planet Haskell (and it got accepted)
+2013-06-12 17:40:03 UTC <notdan> I'll post it to the mailing list when I get more substential content
+2013-06-12 17:40:24 UTC <notdan> substantial*
+2013-06-12 17:42:13 UTC <luite_> ok, later posts may also be more discussionable :)
+2013-06-12 17:42:58 UTC <notdan> True :)
+2013-06-12 17:49:11 UTC <fryguybob> byorgey: Updated http://www.cs.rochester.edu/u/ryates/temp/weave.pdf
+2013-06-12 17:49:23 UTC <fryguybob> https://gist.github.com/anonymous/64da4ef89c637e36a425
+2013-06-12 17:50:17 UTC <fryguybob> byorgey: It is pretty hacky to get it nice with that form of  pathZipperyOperationStuff.
+2013-06-12 17:51:19 UTC <fryguybob> Something else would be a better example to motivate that particular form.  I'll try to do a form that operates on trails and includes the searching in the zippery part.
+2013-06-12 17:55:14 UTC <ClaudiusMaximus> ugh, github syntax highlighting is completely broken with my browser defaults (white on black) - mostly visible, apart from operators...
+2013-06-12 17:56:00 UTC <fryguybob> hehe
+2013-06-12 17:57:05 UTC <ClaudiusMaximus> if pages set colours, better set *all* of them
+2013-06-12 17:57:58 UTC <ClaudiusMaximus> either that or iceweasel isn't applying its colour scheme at the right level in the cascade
+2013-06-12 18:53:23 UTC <byorgey> fryguybob: nice
+2013-06-12 18:53:38 UTC <byorgey> fryguybob: also, excellent name =)
+2013-06-12 18:58:13 UTC <carter> fryguybob oh, i forgot to intro you to another dude who was at hack phi who's big on STM and concurrency things
+2013-06-12 18:58:19 UTC <carter> fryguybob fun meeting yah though
+2013-06-12 19:05:16 UTC <fryguybob> carter: Likewise, who is this other person?
+2013-06-12 19:13:43 UTC <carter> Luke
+2013-06-12 19:15:20 UTC <carter> the guy who was from chicago / works in futures trading?
+2013-06-12 19:15:56 UTC <fryguybob> Ok, I didn't meet him.  That's too bad.
+2013-06-12 19:15:59 UTC <carter> jah
+2013-06-12 19:16:01 UTC <carter> my fault 
+2013-06-12 19:16:26 UTC <fryguybob> No problem :D
+2013-06-12 19:20:10 UTC <luite_> hmm, not Luke Palmer?
+2013-06-12 19:21:22 UTC <carter> luite_ nope, pretty sure different dude
+2013-06-12 19:21:41 UTC <carter> http://www.haskell.org/haskellwiki/Hac_%CF%86/Attendees
+2013-06-12 19:21:45 UTC <carter> luke hoersten?
+2013-06-12 19:22:19 UTC <byorgey> yes, Luke Hoersten
+2013-06-12 19:22:35 UTC <byorgey> is the Luke from Chicago
+2013-06-12 19:37:32 UTC <notdan> Do you people know any way to search GHC API? I tried Hoogle and Hayoo but to no avail
+2013-06-12 19:41:10 UTC <luite_> notdan: i usually use a local GHC installation
+2013-06-12 19:45:05 UTC <notdan> luite_: hm, and what do you do with it? I thought you can't get much information apart from type signature
+2013-06-12 19:45:47 UTC <fryguybob> notdan: :browse and :info ?
+2013-06-12 19:46:40 UTC <fryguybob> notdan: There is also this: http://www.haskell.org/ghc/docs/latest/html/libraries/ghc/index.html
+2013-06-12 19:47:59 UTC <luite_> notdan: lick on the [source] links a lot
+2013-06-12 19:48:00 UTC <luite_> click
+2013-06-12 19:48:40 UTC <fryguybob> Don't lick them, they don't taste good.
+2013-06-12 19:48:51 UTC <notdan> fryguybob: but it doesn't show haddock documentation, unfortunately
+2013-06-12 19:53:38 UTC <fryguybob> notdan: Which, ghci or the link?  It is sad that ghci doesn't do such a thing, but the link shows that in this case there isn't much haddocky stuff in many cases.
+2013-06-12 19:54:09 UTC <fryguybob> Of course someone could always write more documentation...
+2013-06-12 19:58:46 UTC <notdan> the former; of course, you can do :i expression and then go to the web page and look it up in the apprpriate module
+2013-06-12 20:00:35 UTC <fryguybob> notdan: I often have the Index All page open for packages I'm working with then I can just Ctrl+F and find definitions.
+2013-06-12 20:01:44 UTC <notdan> Hm, that's a good idea
+2013-06-12 20:02:30 UTC <notdan> There was this function in ghc-mod for emacs that would automatically parse the :i <expr> output and open a web browser for you but I remember it making a lot of mistakes
+2013-06-12 20:05:27 UTC <luite_> notdan: whoops i meant a local hoogle installation, not a local ghc installation
+2013-06-12 20:07:09 UTC <notdan> ah, it allows you to search ghc api? splendid
+2013-06-12 20:07:16 UTC <notdan> I ment to install hoogle locally anyway
+2013-06-12 20:15:54 UTC <luite_> if you add it to your index then it shows up in the results yeah
+2013-06-12 21:03:31 UTC <notdan> luite_: how did you manage to generate the index for GHC API?
+2013-06-12 21:04:09 UTC <notdan> I tried, but stumbled upon a strange error: http://hpaste.org/89836
+2013-06-12 21:05:20 UTC <luite_> notdan: i think it automatically generated the hoogle file
+2013-06-12 21:05:55 UTC <luite_> haddock comes with ghc i think, you need to use the version that you get with your ghc
+2013-06-12 21:07:02 UTC <notdan> It got automatically generated when you compiled the GHC?
+2013-06-12 21:07:22 UTC <notdan> oh well, I haven't installed haddock back then
+2013-06-12 21:10:55 UTC <travis-ci> [travis-ci] 13diagrams-lib/06bee-coh 142e34ccc http://travis-ci.org/diagrams/diagrams-lib/builds/8031177 The build was broken.
+2013-06-12 21:23:21 UTC <travis-ci> [travis-ci] 13diagrams-lib/06bee-coh 14404288c http://travis-ci.org/diagrams/diagrams-lib/builds/8031514 The build was fixed.
+2013-06-12 21:56:11 UTC <travis-ci> [travis-ci] 13diagrams-lib/06bee-coh 14ea8a405 http://travis-ci.org/diagrams/diagrams-lib/builds/8032514 The build was broken.
+2013-06-12 23:35:52 UTC <mjo> Hello
+2013-06-12 23:36:04 UTC <mjo> Hello
+2013-06-12 23:36:33 UTC <mjo> Can one change the font in the Cairo PDF backend ?
+2013-06-12 23:37:07 UTC <mjo> Or, to ask the real question, if I'm generating PDFs via Cairo is there any way to label them with Unicode text ?
+2013-06-13 00:04:13 UTC <ClaudiusMaximus> i think you can, but i think there's some bad behaviour if the font isn't present (maybe it uses a default font, which might not have enough code points)
+2013-06-13 00:12:11 UTC <mjo> That's OK. Do you know how I change the font ?
+2013-06-13 00:12:30 UTC <mjo> And, forgive me, thanks for thinking about it
+2013-06-13 00:13:09 UTC <byorgey> mjo: yes, you can use the 'font' function
+2013-06-13 00:13:30 UTC <byorgey> like   circle 1 <> text "blah" # font "SomeFontName"
+2013-06-13 00:13:43 UTC <byorgey> mjo: you may also be interested in the SVGFonts package
+2013-06-13 00:13:44 UTC <mjo> byorgey: Gosh, however did I miss that!
+2013-06-13 00:14:04 UTC <mjo> byorgey: I want to make PDFs, so I thought the SVG stuff wasnt' relevant. Am I wrong ?
+2013-06-13 00:14:40 UTC <byorgey> mjo: right, if you want to make PDFs and you are able to build cairo on your system, that is the best way
+2013-06-13 00:15:01 UTC <byorgey> I guess there are probably also ways to convert SVG to PDF
+2013-06-13 00:15:12 UTC <mjo> Happily Cairo seems fine on MacOS with homebrew
+2013-06-13 00:15:16 UTC <byorgey> but that's not as direct or convenient
+2013-06-13 00:15:19 UTC <byorgey> good!
+2013-06-13 00:15:49 UTC <mjo> Ah, splendid. A little beta has now appeared! 
+2013-06-13 00:16:00 UTC <mjo> Thank you for the help, and sorry to waste your time
+2013-06-13 00:16:05 UTC <byorgey> mjo: oh, sorry, I misunderstood your question before.  You can use the SVGFonts package with the cairo backend
+2013-06-13 00:16:16 UTC <byorgey> SVGFonts just refers to the SVG font format
+2013-06-13 00:16:23 UTC <byorgey> but that is independent of whether you are generating SVGs =)
+2013-06-13 00:16:57 UTC <mjo> byorgey: Ah, I see. I think I'll stick with this for now, but it's good to know that there are alternatives
+2013-06-13 00:18:19 UTC <byorgey> Sure. if the built-in font stuff works for you that is simplest.  SVGFonts gives you a lot more flexibility and power but it is also more difficult to use.
+2013-06-13 00:18:56 UTC <mjo> Simple's good. I'm drawing some graphs and just want to label the nodes and edges
+2013-06-13 00:19:45 UTC <byorgey> cool
+2013-06-13 00:19:45 UTC <byorgey> eventually I'd like to have a module in diagrams-contrib for drawing graphs
+2013-06-13 00:20:11 UTC <mjo> It would be nice to grab the ideas from the graphviz package for layout
+2013-06-13 00:21:44 UTC <byorgey> oh, I wasn't really talking about layout
+2013-06-13 00:22:07 UTC <byorgey> I don't think it makes much sense to reimplement layout stuff.  graphviz already does a pretty good job of that and it's quite complicated.
+2013-06-13 00:22:22 UTC <byorgey> but I hope to make it easy to use graphviz to layout your graphs, and then diagrams to draw them
+2013-06-13 00:23:08 UTC <mjo> I suppose I wonder if there's scope to implement better constraints if you move the layout engine into Haskell
+2013-06-13 00:24:14 UTC <byorgey> yes, perhaps
+2013-06-13 00:24:20 UTC <byorgey> but that is a really big project
+2013-06-13 00:24:31 UTC <mjo> But there are many projects and few tuits
+2013-06-13 00:24:34 UTC <mjo> Yes, indeed
+2013-06-13 00:24:35 UTC <byorgey> indeed =)
+2013-06-13 00:25:09 UTC <byorgey> we have definitely given some thought to implementing a general-purpose layout framework on top of diagrams, integrating a constraint solver, etc.
+2013-06-13 00:25:25 UTC <byorgey> but it's probably on the scale of a GSoC project
+2013-06-13 00:26:16 UTC <mjo> My thought was simply that your graphics stuff is exceedingly good at describing how parts of the diagram are positioned relative to each other without resorting to coordinate calculations. That sounds like the right way to express constraints
+2013-06-13 00:26:29 UTC <byorgey> agreed.
+2013-06-13 00:27:52 UTC <mjo> Anyway, for now, I think sleep beckons. Thanks again for solving my problem.
+2013-06-13 00:29:33 UTC <tgeeky> coordinates are for the gravitational theorists and mapmakers
+2013-06-13 01:57:39 UTC <travis-ci> [travis-ci] 13diagrams-lib/06bee-coh 14460a04e http://travis-ci.org/diagrams/diagrams-lib/builds/8037777 The build was fixed.
+2013-06-13 01:58:47 UTC <travis-ci> [travis-ci] 13diagrams-cairo/06bee-coh 145b8681f http://travis-ci.org/diagrams/diagrams-cairo/builds/8037811 The build is still failing.
+2013-06-13 02:23:20 UTC <byorgey> refactoring complete!
+2013-06-13 02:23:27 UTC <byorgey> now to add lots of documentation
+2013-06-13 12:34:53 UTC <luite_> does anyone know/have system demo proposals for the haskell symposium? i'd like to submit one for ghcjs, but don't really know what i should write, other than that it should be 1-2 pages
+2013-06-13 13:48:09 UTC <byorgey> luite_: I don't really know, but I think you should write something along the lines of: 1. Introduction: what is ghcjs and why is it cool? 2. What you plan to demo 3. Why this is of interest to the Haskell community, references to related stuff, etc.
+2013-06-13 13:50:43 UTC <byorgey> basically you want to prove to the committee that (a) you have something cool to show off (b) which will be of general interest to the Haskell community, and (c) you know what you are talking about
+2013-06-13 13:53:16 UTC <luite_> ack, (c) is going to be a problem :(
+2013-06-13 13:54:14 UTC <byorgey> I *highly* doubt that.
+2013-06-13 13:55:12 UTC <byorgey> it's not like you need a section called "I Know What I Am Talking About"
+2013-06-13 13:55:43 UTC <byorgey> just by describing the project, what you intend to demo, etc. in more than superficial detail you prove that you know what you are talking about.
+2013-06-13 14:02:01 UTC <fryguybob> luite_: "It works and I did it" is often excellent evidence of (c).
+2013-06-13 14:03:49 UTC <byorgey> indeed.
+2013-06-13 14:04:38 UTC <fryguybob> luite_: "We found bugs in GHC" is also a good one.
+2013-06-13 14:04:44 UTC <byorgey> hehe, indeed =)
+2013-06-13 14:09:04 UTC <luite_> theorem 1. i know what i'm talking about, proof
+2013-06-13 14:09:07 UTC <notdan> Hello.
+2013-06-13 14:09:10 UTC <notdan> How are you doing?
+2013-06-13 14:10:43 UTC <notdan> luite_: I think you just have to metion recent work on compiling Haskell to JS, Fay, Roy
+2013-06-13 14:11:32 UTC <luite_> Roy isn't really haskell
+2013-06-13 14:11:32 UTC <byorgey> hi notdan
+2013-06-13 14:11:41 UTC <fryguybob> notdan: Fine, thanks. How are you?
+2013-06-13 14:12:43 UTC <luite_> i noticed that the haste compiler guy is working on his project again, i thought he stopped. that's much closer to ghcjs (actually rather close to our old code generator), perhaps he's preparing some haskell symposium or icfp thing
+2013-06-13 14:13:24 UTC <luite_> he also uses the ghc api, but not threaded and not fully tail call optimized (only direct tail calls, like fay)
+2013-06-13 14:13:28 UTC <byorgey> perhaps.  it would be fun to have two different projects of that sort both represented at ICFP
+2013-06-13 14:15:44 UTC <luite_> dunno, it's good to explore multiple paths, but i kind of hate the snap vs yesod kind of discussions on reddit, i hope it doesn't become something like that
+2013-06-13 14:23:17 UTC <byorgey> hehe
+2013-06-13 14:23:46 UTC <byorgey> I hope it doesn't too.  But either way there's not a lot you can do about it.
+2013-06-13 14:24:00 UTC <byorgey> Or rather, the only thing you can do about it is make your thing so awesome that there's no comparison.
+2013-06-13 14:24:06 UTC <byorgey> and it seems you are well down that path =)
+2013-06-13 14:24:23 UTC <luite_> we'll see, i'm not so sure yet
+2013-06-13 14:26:04 UTC <luite_> we finally have travis support though, i'm happy about that one :) https://travis-ci.org/ghcjs/ghcjs
+2013-06-13 14:26:23 UTC <byorgey> oh, nice =)
+2013-06-13 14:26:28 UTC <luite_> 375 passed, 0 failed :)
+2013-06-13 14:26:34 UTC <byorgey> haha, how long do the builds take?
+2013-06-13 14:26:41 UTC <luite_> 2x 30 minutes
+2013-06-13 14:26:47 UTC <byorgey> oh, that's not so bad
+2013-06-13 14:26:53 UTC <luite_> i had to disable the ghcjs optimizer :/
+2013-06-13 14:26:59 UTC <byorgey> hehe
+2013-06-13 14:27:19 UTC <luite_> but i want to optimize that anyway, it's too slow
+2013-06-13 14:27:24 UTC <luite_> and the testrunner runs with -j2
+2013-06-13 14:27:28 UTC <luite_> saves a lot of time
+2013-06-13 14:28:06 UTC <byorgey> you want to optimize the optimizer? =)
+2013-06-13 14:28:22 UTC <byorgey> oh, does the travis build environment have multiple cores?
+2013-06-13 14:28:32 UTC <byorgey> that would speed up the diagrams builds too =)
+2013-06-13 14:28:40 UTC <luite_> don't know, but it does help :)
+2013-06-13 14:29:01 UTC <mgsloan> -j2 can help with even one core, due to IO blocking 'n such
+2013-06-13 14:29:04 UTC <luite_> some part is io heavy (linker), and some cpu bound part
+2013-06-13 14:29:08 UTC <byorgey> ah, good point
+2013-06-13 14:29:32 UTC <luite_> the ghcjs testsuite compiles every testcase to an 'executable', so there's lots of linking overhead
+2013-06-13 14:29:43 UTC <luite_> it's mostly just the should_run tests from the ghc testsuite :)
+2013-06-13 14:30:09 UTC <byorgey> ah, I see
+2013-06-13 16:04:33 UTC <notdan> luite_: I have problems with linker using GHC API on both OS X and in the ghcjs-build prebuilt version: https://gist.github.com/co-dan/21b557de871cb877b085 They are different but I didn't manage to solve neither of them :(
+2013-06-13 16:05:22 UTC <notdan> In the OS X case it looks like the compiler didn't produce something? And in the prebuilt version I have some terrible package failure
+2013-06-13 16:12:08 UTC <notdan> The libdir is correct: "/home/vagrant/ghc/lib/ghc-7.7.20130606" and there is /home/vagrant/ghc/lib/ghc-7.7.20130606/base-4.7.0.0/libHSbase-4.7.0.0.a
+2013-06-13 16:38:46 UTC <notdan> luite_: oh, nevermind, monochrome has helped me with the problem
+2013-06-13 19:17:05 UTC <notdan> luite_: OK, I managed to get my pastebin to work with GHC API, it renders everything correctly now. Next I am going to work on performance (preloading the libraries) and security (disabling modules, whitelisting packages, etc)
+2013-06-13 19:19:32 UTC <notdan> https://github.com/co-dan/interactive-diagrams/tree/eval/scotty-pastebin
+2013-06-13 19:20:10 UTC <byorgey> notdan++
+2013-06-13 19:21:31 UTC <notdan> Thanks Brent :)
+2013-06-13 19:31:27 UTC <notdan> The Hoogle page on the wiki is really outdated. I made some changes but it's being phased out
+2013-06-13 19:46:17 UTC <luite_> notdan: oh what was the problem?
+2013-06-13 19:48:10 UTC <luite_> notdan: you'll probably need a few more changes, the load LoadAllTargets line returns a SuccessFlag, that needs to be checked before continuing
+2013-06-13 19:49:11 UTC <luite_> notdan: but it logs all errors through the LogAction in DynFlags, so change that to capture them so you can return them to the client
+2013-06-13 19:51:12 UTC <notdan> Yeah, I'll also have to use exceptions, because 'exprType' throws one if the typecheck fails
+2013-06-13 19:51:14 UTC <notdan> s/use/catch/
