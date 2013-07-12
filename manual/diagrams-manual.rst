@@ -343,7 +343,7 @@ Many diagram-related operations can be customized in a wide variety of
 ways.  For example, when creating a regular polygon, one can customize
 the number of sides, the radius, the orientation, and so on. However,
 to have a single function that takes all of these options as separate
-arguments is a real pain: it's hard to remember what the arugments are
+arguments is a real pain: it's hard to remember what the arguments are
 and what order they should go in, and often one wants to use default
 values for many of the options and only override a few.  Some
 languages (such as Python) support *optional, named* function
@@ -1335,7 +1335,7 @@ To apply a transformation to a diagram, use `transform`.
 Rotation
 ++++++++
 
-Use `rotate` to rotate a diagram couterclockwise by a given angle__
+Use `rotate` to rotate a diagram counterclockwise by a given angle__
 about the origin.  Since `rotate` takes an angle, you must specify an
 angle type, such as `rotate (80 :: Deg)`.  In the common case that you
 wish to rotate by an angle specified as a certain fraction of a
@@ -2200,7 +2200,7 @@ Envelope-related functions
   >   where c = circle 0.5
   >
   > example = surround (square 1) ||| strutX 1
-  >       ||| surround (pad 1.2 $ square 1)
+  >       ||| surround (square 1 # pad 1.2)
 
   However, the behavior of `pad` often trips up first-time users of
   ``diagrams``:
@@ -3659,7 +3659,7 @@ The special type `D` is provided for exactly this situation, defined as
 for use in cases where GHC insists on knowing what backend to use but
 the backend really does not matter.
 
-For exapmle, the solution to the problem with `width` is to annotate
+For example, the solution to the problem with `width` is to annotate
 `circle 1` with the type `D R2`, like so:
 
 ::
