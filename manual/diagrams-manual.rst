@@ -1335,7 +1335,7 @@ To apply a transformation to a diagram, use `transform`.
 Rotation
 ++++++++
 
-Use `rotate` to rotate a diagram couterclockwise by a given angle__
+Use `rotate` to rotate a diagram counterclockwise by a given angle__
 about the origin.  Since `rotate` takes an angle, you must specify an
 angle type, such as `rotate (80 :: Deg)`.  In the common case that you
 wish to rotate by an angle specified as a certain fraction of a
