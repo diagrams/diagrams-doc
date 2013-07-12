@@ -2200,7 +2200,7 @@ Envelope-related functions
   >   where c = circle 0.5
   >
   > example = surround (square 1) ||| strutX 1
-  >       ||| surround (pad 1.2 $ square 1)
+  >       ||| surround (square 1 # pad 1.2)
 
   However, the behavior of `pad` often trips up first-time users of
   ``diagrams``:
