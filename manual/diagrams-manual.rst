@@ -3659,7 +3659,7 @@ The special type `D` is provided for exactly this situation, defined as
 for use in cases where GHC insists on knowing what backend to use but
 the backend really does not matter.
 
-For exapmle, the solution to the problem with `width` is to annotate
+For example, the solution to the problem with `width` is to annotate
 `circle 1` with the type `D R2`, like so:
 
 ::
