@@ -343,7 +343,7 @@ Many diagram-related operations can be customized in a wide variety of
 ways.  For example, when creating a regular polygon, one can customize
 the number of sides, the radius, the orientation, and so on. However,
 to have a single function that takes all of these options as separate
-arguments is a real pain: it's hard to remember what the arugments are
+arguments is a real pain: it's hard to remember what the arguments are
 and what order they should go in, and often one wants to use default
 values for many of the options and only override a few.  Some
 languages (such as Python) support *optional, named* function
