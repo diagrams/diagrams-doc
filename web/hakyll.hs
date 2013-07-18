@@ -1,23 +1,22 @@
-{-# LANGUAGE OverloadedStrings
-           , NoMonomorphismRestriction
-   #-}
-import Control.Arrow ((>>>), (>>^), (^>>), arr, second)
-import Control.Monad (forM_)
-import Data.List (sortBy)
-import Data.Ord (comparing)
-import Data.Char (isAlphaNum)
-import Data.Monoid
+{-# LANGUAGE NoMonomorphismRestriction #-}
+{-# LANGUAGE OverloadedStrings         #-}
 
-import Data.String
+import           Control.Monad          (forM_, (>=>))
+import           Data.Char              (isAlphaNum)
+import           Data.List              (sortBy)
+import           Data.Monoid
+import           Data.Ord               (comparing)
 
-import System.FilePath
-import System.Process (system)
-import qualified Data.ByteString.Lazy as LB
+import           Data.String
 
-import Text.Pandoc.Definition
-import Text.Pandoc.Generic
+import qualified Data.ByteString.Lazy   as LB
+import           System.FilePath
+import           System.Process         (system)
 
-import Hakyll
+import           Text.Pandoc.Definition
+import           Text.Pandoc.Generic
+
+import           Hakyll
 
 main :: IO ()
 main = hakyll $ do
@@ -35,7 +34,7 @@ main = hakyll $ do
     -- User manual --------------------------------
     match "manual/diagrams-manual.html" $ do
       route idRoute
-      compile (readPageCompiler >>>
+      compile (readItemCompiler >>>
                addDefaultFields >>>
                arr (setField "title" "User manual") >>>
                mainCompiler)
@@ -69,12 +68,12 @@ main = hakyll $ do
     -- Normal .html pages, built from .markdown ---
     forM_ pages $ flip match $ do
         route   $ setExtension "html"
-        compile $ pageCompiler >>> mainCompiler
+        compile $ pandocCompiler >>= mainCompiler
 
     -- Example gallery ----------------------------
 
       -- make all gallery/*.lhs available for building gallery.html
-    match "gallery/*.lhs" $ compile (pageCompiler >>^ (setHtmlURL . setImgURL))
+    match "gallery/*.lhs" $ compile (pandocCompiler >>^ (setHtmlURL . setImgURL))
 
       -- build gallery.html from gallery.markdown and gallery/*.lhs
       -- note the inGroup Nothing, which ensures we don't get
@@ -83,23 +82,23 @@ main = hakyll $ do
     match "gallery.markdown" $ do
         route $ setExtension "html"
 
-        compile $ pageCompiler
+        compile $ pandocCompiler
             >>> requireAllA ("gallery/*.lhs" `mappend` inGroup Nothing) buildGallery
             >>> mainCompiler
 
       -- generate .png from .lhs
-    group "png" $ match "gallery/*.lhs" $ do
+    match "gallery/*.lhs" $ version "png" $ do
         route $ setExtension "png"
         compile $ unsafeCompiler (compilePng False)
 
-    group "png-thumb" $ match "gallery/*.lhs" $ do
+    match "gallery/*.lhs" $ version "png-thumb" $ do
         route $ gsubRoute ".lhs" (const "-thumb.png")
         compile $ unsafeCompiler (compilePng True)
 
       -- build syntax-highlighted source code for examples
-    group "gallery" $ match "gallery/*.lhs" $ do
+    match "gallery/*.lhs" $ version "gallery" $ do
         route $ setExtension "html"
-        compile $ pageCompilerWithMathJax
+        compile $ withMathJax
             >>> arr setImgURL
             >>> arr (pandocFields ["description"])
             >>> applyTemplateCompiler "templates/exampleHi.html"
@@ -109,11 +108,13 @@ main = hakyll $ do
       -- metadata first
     group "raw" $ forM_ lhs $ flip match $ do
         route idRoute
-        compile (readPageCompiler >>^ pageBody)
+        compile (readItemCompiler >>^ pageBody)
 
-pageCompilerWithMathJax :: Compiler Resource (Page String)
-pageCompilerWithMathJax =
-  pageCompilerWithPandoc defaultHakyllParserState defaultHakyllWriterOptions
+withMathJax :: Compiler (Item String)
+withMathJax =
+  pandocCompilerWithTransform
+    defaultHakyllReaderOptions
+    defaultHakyllWriterOptions
     (bottomUp latexToMathJax)
   where latexToMathJax (Math InlineMath str)
           = RawInline "html" ("\\(" ++ str ++ "\\)")
@@ -131,39 +132,39 @@ compilePng isThumb resource = do
     moduleName = takeBaseName $ unResource resource
     tmpPath    = "/tmp/" ++ moduleName ++ (if isThumb then "-thumb" else "") ++ ".png"
 
-mainCompiler :: Compiler (Page String) (Page String)
-mainCompiler = applyTemplateCompiler "templates/default.html"
-           >>> relativizeUrlsCompiler
+mainCompiler :: Item String -> Compiler (Item String)
+mainCompiler = loadAndApplyTemplate "templates/default.html" undefined -- context
+           >=> relativizeUrls
 
-setThumbURL, setImgURL, setHtmlURL :: Page a -> Page a
+setThumbURL, setImgURL, setHtmlURL :: Item a -> Item a
 setThumbURL  = setURL "-thumb.png"
 setImgURL    = setURL "png"
 setHtmlURL   = setURL "html"
 
-setURL :: String -> Page a -> Page a
+setURL :: String -> Item a -> Item a
 setURL ext p = trySetField (extNm ++ "url") fieldVal p
   where extNm = filter isAlphaNum ext
         fieldVal = dropExtension (getField "url" p) ++ ext'
         ext' | '.' `elem` ext = ext
              | otherwise      = '.' : ext
 
-pandocFields :: [String] -> Page String -> Page String
+pandocFields :: [String] -> Item String -> Item String
 pandocFields = foldr (.) id . map pandocField
 
-pandocField :: String -> Page String -> Page String
+pandocField :: String -> Item String -> Item String
 pandocField f p = setField f newField p
   where newField = writePandoc . readPandoc Markdown Nothing $ getField f p
 
 
-buildGallery :: Compiler (Page String, [Page String]) (Page String)
+buildGallery :: Compiler (Item String, [Item String]) (Item String)
 buildGallery = second (mapCompiler compileExample >>> sortDate >>> arr (map pageBody))
                >>> arr (\(bod, exs) -> modBody (++ (concat exs)) bod)
   where sortDate = arr (sortBy $ flip (comparing (getField "date")))
 
-compileExample :: Compiler (Page String) (Page String)
+compileExample :: Compiler (Item String) (Item String)
 compileExample = (setHtmlURL . setThumbURL) ^>> applyTemplateCompiler "templates/example.html"
 
-modBody :: (a -> b) -> Page a -> Page b
+modBody :: (a -> b) -> Item a -> Item b
 modBody f p = p { pageBody = f (pageBody p) }
 
 pages, md, lhs :: IsString s => [s]
