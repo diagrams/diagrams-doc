@@ -1,3 +1,96 @@
+* Planning for release of version 0.7
+** RELEASE TARGET DATE: August 2
+** to check/upload
+*** vector-space-points
+*** monoid-extras
+*** dual-tree
+*** force-layout
+*** active
+*** BlogLiterately
+*** BlogLiterately-diagrams
+*** SVGFonts
+** finished uploads
+** To do for 0.6 release
+  + [ ] add Monoid for Trail (with cut etc.)
+  + [ ] add Turn synonym for CircleFrac
+  + [ ] re-export stuff from -core in -lib
+  + [ ] add boundaryFrom or something like that? (see migration page)
+  + [ ] migrate website to Hakyll 4
+  + [ ] fix user manual examples
+  + [ ] update user manual
+  + [ ] write a better tutorial?
+  + [ ] make sure postscript backend is in user manual
+  + [ ] add -core and -lib examples with diagrams-haddock
+  + [ ] close other tickets with 0.7 milestone
+  + [ ] bump versions and deps to 0.7
+    + [ ] diagrams-core
+    + [ ] diagrams-lib
+    + [ ] diagrams-cairo
+    + [ ] diagrams-svg
+    + [ ] diagrams-gtk
+    + [ ] diagrams-postscript
+    + [ ] diagrams-contrib
+    + [ ] diagrams
+    + [ ] diagrams-builder
+    + [ ] diagrams-haddock
+  + [ ] build API docs
+  + [ ] update CHANGES files and release info on website
+    + [ ] diagrams-core
+    + [ ] diagrams-lib
+    + [ ] diagrams-cairo
+    + [ ] diagrams-svg
+    + [ ] diagrams-gtk
+    + [ ] diagrams-postscript
+    + [ ] diagrams-contrib
+    + [ ] diagrams-builder
+    + [ ] diagrams-haddock
+    + [ ] website
+  + [ ] 0.6 -> 0.7 migration page on wiki
+  + [ ] update quick-start tutorial
+  + [ ] test build:
+    - [ ] ghc 7.4.2
+    - [ ] ghc 7.6.1
+    - [ ] update tested-with fields
+  + [ ] write announcement for blog + email
+    + [ ] list major new features since 0.6
+    + [ ] link to gallery (email)
+    + [ ] include some examples (blog)
+    + [ ] say where/how to get involved
+  + [ ] update LICENSE files/lists of contributors
+  + [ ] add release date to all CHANGES files
+    + [ ] core
+    + [ ] lib
+    + [ ] cairo
+    + [ ] svg
+    + [ ] gtk
+    + [ ] postscript
+    + [ ] contrib
+    + [ ] builder
+    + [ ] haddock
+  + [ ] add release date to releases.markdown
+  + [ ] merge all into 0.7 branch (as necessary)
+  + [ ] tag all with release version
+  + [ ] publish new website
+  + [ ] upload
+    + [ ] diagrams-core
+    + [ ] diagrams-lib
+    + [ ] diagrams-contrib
+    + [ ] diagrams-svg
+    + [ ] diagrams-cairo
+    + [ ] diagrams-gtk
+    + [ ] diagrams-postscript
+    + [ ] diagrams
+    + [ ] diagrams-builder
+    + [ ] diagrams-haddock
+  + [ ] upload/send announcement
+    + [ ] blog
+    + [ ] email
+      - [ ] diagrams-discuss
+      - [ ] haskell
+      - [ ] haskell-cafe
+      - [ ] haskell-art
+      - [ ] plclub
+** put off
 * Planning for release of version 0.6
 ** RELEASE TARGET DATE: December 11
 ** finished uploads
