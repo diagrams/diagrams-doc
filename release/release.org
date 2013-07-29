@@ -11,9 +11,11 @@
 *** SVGFonts
 ** finished uploads
 ** To do for 0.6 release
-  + [ ] add Monoid for Trail (with cut etc.)
-  + [ ] add Turn synonym for CircleFrac
-  + [ ] re-export stuff from -core in -lib
+  + [X] add Monoid for Trail (with cut etc.)
+  + [X] add Turn synonym for CircleFrac
+  + [X] re-export stuff from -core in -lib
+    + [X] Query stuff -- new Query module in -lib? query, sample,
+      value, resetValue, clearValue
   + [ ] add boundaryFrom or something like that? (see migration page)
   + [ ] migrate website to Hakyll 4
   + [ ] fix user manual examples
@@ -21,14 +23,14 @@
   + [ ] write a better tutorial?
   + [ ] make sure postscript backend is in user manual
   + [ ] add -core and -lib examples with diagrams-haddock
-  + [ ] close other tickets with 0.7 milestone
-  + [ ] bump versions and deps to 0.7
-    + [ ] diagrams-core
-    + [ ] diagrams-lib
-    + [ ] diagrams-cairo
-    + [ ] diagrams-svg
+  + [X] close other tickets with 0.7 milestone
+  + [-] bump versions and deps to 0.7
+    + [X] diagrams-core
+    + [X] diagrams-lib
+    + [X] diagrams-cairo
+    + [X] diagrams-svg
     + [ ] diagrams-gtk
-    + [ ] diagrams-postscript
+    + [X] diagrams-postscript
     + [ ] diagrams-contrib
     + [ ] diagrams
     + [ ] diagrams-builder
