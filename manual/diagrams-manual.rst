@@ -649,8 +649,9 @@ The `Angle` type class classifies types which measure two-dimensional
 angles.  Three instances are provided by default (you can, of course,
 also make your own):
 
-* `CircleFrac` represents fractions of a circle.  A value of `1`
-  represents a full turn.
+* `Turn` represents fractions of a circle.  A value of `1`
+  represents a full turn, `1/4 :: Turn` represents a right angle, and
+  so on.
 * `Rad` represents angles measured in radians.  A value of `tau` (that
   is, `\tau = 2 \pi`:math:) represents a full turn. (If you haven't heard of
   `\tau`:math:, see `The Tau Manifesto`__.)
@@ -798,7 +799,7 @@ optional arguments that control the generated polygon:
 
 > poly1 = polygon with { polyType   = PolyRegular 13 5
 >                      , polyOrient = OrientV }
-> poly2 = polygon with { polyType   = PolyPolar (repeat (1/40 :: CircleFrac))
+> poly2 = polygon with { polyType   = PolyPolar (repeat (1/40 :: Turn))
 >                                               (take 40 $ cycle [2,7,4,6]) }
 > example = (poly1 ||| strutX 1 ||| poly2) # lw 0.05
 
@@ -1339,7 +1340,7 @@ Use `rotate` to rotate a diagram counterclockwise by a given angle__
 about the origin.  Since `rotate` takes an angle, you must specify an
 angle type, such as `rotate (80 :: Deg)`.  In the common case that you
 wish to rotate by an angle specified as a certain fraction of a
-circle, like `rotate (1/8 :: CircleFrac)`, you can use `rotateBy`
+circle, like `rotate (1/8 :: Turn)`, you can use `rotateBy`
 instead. `rotateBy` is specialized to only accept fractions of a
 circle, so in this example you would only have to write
 `rotateBy (1/8)`.
@@ -1422,7 +1423,7 @@ along the diagonal line `y = x`:math: can be accomplished thus:
 ::
 
 > eff = text "F" <> square 1 # lw 0
-> example = (scaleX 2 `under` rotation (-1/8 :: CircleFrac)) eff
+> example = (scaleX 2 `under` rotation (-1/8 :: Turn)) eff
 
 The letter F is first rotated so that the desired scaling axis lies
 along the `x`:math:\-axis; then `scaleX` is performed; then it is rotated back
@@ -2895,7 +2896,7 @@ the right are wrapped in `ScaleInv` but the ones on the left are not.
 >             (map (centerX . showT)
 >               [ scalingX (1/2)
 >               , scalingY 2
->               , scalingX (1/2) <> rotation (-1/12 :: CircleFrac)
+>               , scalingX (1/2) <> rotation (-1/12 :: Turn)
 >               ])
 
 Type reference
