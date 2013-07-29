@@ -33640,3 +33640,1028 @@
 2013-07-13 20:56:25 UTC <luite> perhaps it's possible to write it with potrace
 2013-07-13 21:02:09 UTC <luite> adobe also cunningly removed their main incentive for improving their products: by switching from the usual license model where users only pay when upgrading to a subscription based model, where users lose access when they stop paying
 2013-07-13 21:16:03 UTC <luite> ah so there is an open source thing that tries to do this: http://www.csse.uwa.edu.au/~shafait/papers/Hasan-Decapod-Evaluation-ICPR12.pdf
+2013-07-13 23:20:35 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14a95b3a3 http://travis-ci.org/diagrams/diagrams-doc/builds/9051552 The build is still failing.
+2013-07-14 15:57:45 UTC <notdan> Hi
+2013-07-14 15:58:08 UTC <notdan> Anyone feeling bored and want to proof-read a blog post for me? :P
+2013-07-14 20:25:22 UTC <travis-ci> [travis-ci] 13diagrams-lib/06parametric 14be7f2b6 http://travis-ci.org/diagrams/diagrams-lib/builds/9073203 The build passed.
+2013-07-14 20:55:26 UTC <travis-ci> [travis-ci] 13diagrams-lib/06parametric 14f0d12c5 http://travis-ci.org/diagrams/diagrams-lib/builds/9073936 The build passed.
+2013-07-14 22:14:30 UTC <byorgey> hmm, I may push arrow stuff back to 0.7.1, and just work on getting an 0.7 release out
+2013-07-14 22:14:47 UTC <byorgey> since the arrow stuff should not introduce any breakages, just add features
+2013-07-14 22:55:42 UTC <carter> ooo, whats this?
+2013-07-14 23:18:19 UTC <fryguybob> byorgey: That sounds good.  This parametric commit is the last generic feature needed right?
+2013-07-14 23:21:14 UTC <fryguybob> ACTION builds a ghc with hardware lock elision.
+2013-07-14 23:21:22 UTC <carter> OOOOO
+2013-07-14 23:21:33 UTC <carter> fryguybob are the patches online anywhere?
+2013-07-14 23:21:45 UTC <carter> are you going to run NoFib?
+2013-07-14 23:25:13 UTC <fryguybob> carter: Nothing exciting yet, just want to get it to work.  It isn't fun until I get the kernel patched to count transactional events with perf.
+2013-07-14 23:25:24 UTC <carter> ahhh
+2013-07-14 23:59:04 UTC <byorgey> fryguybob: right, the trail refactoring + parametric stuff were the generic features we want/need in order to support arrows
+2013-07-14 23:59:29 UTC <byorgey> well, and the scale-invariant stuff
+2013-07-15 00:07:08 UTC <fryguybob> It's a good thing this machine is fast, silly mistakes are making build more.
+2013-07-15 09:51:54 UTC <jbracker> I am working on implementing the Diagrams backend for Charts right now. What would be the expected return type? (Renderable (Path R2) b => Diagram b R2) ?
+2013-07-15 10:03:09 UTC <notdan> return type of what?
+2013-07-15 10:17:17 UTC <jbracker> notdan: The chart backend implementation, e.g. I have a Chart and want to render it as diagram. What would I get if I call runBackend on my chart?
+2013-07-15 10:24:49 UTC <notdan> Hm, but Renderable is a type, not a typeclass, how come you are using it as a constraint?
+2013-07-15 10:25:01 UTC <notdan> I guess I am missing something here, sorry, I am not very familiar with Charts
+2013-07-15 11:01:38 UTC <jbracker> notdan: Renderable from Diagrams is a classs
+2013-07-15 11:15:02 UTC <byorgey> jbracker: yes,  Renderable (Path R2) b => Diagram b R2  sounds right
+2013-07-15 11:15:28 UTC <byorgey> or maybe  ... => IO (Diagram b R2)  if you need that
+2013-07-15 11:15:51 UTC <jbracker> byorgey: Thanks! I will see about the IO when I need it. I'll implement text last.
+2013-07-15 11:16:09 UTC <jbracker> Right now I am trying to convert Charts paths to Diagrams paths...
+2013-07-15 11:18:18 UTC <byorgey> right
+2013-07-15 11:19:23 UTC <byorgey> have fun!
+2013-07-15 11:19:53 UTC <jbracker> thanks!
+2013-07-15 12:48:57 UTC <luite> fryguybob: oh that might've worked, but it had some comments about not being able to extract images and text yet
+2013-07-15 12:49:48 UTC <luite> fryguybob: in the end i used a js lib to extract the jpeg2000 images, run imagemagick to adjust them, then replace them back. and also adjust the drawing instructions with a regexp (yes, hacky) :)
+2013-07-15 12:49:56 UTC <luite> not js, but java
+2013-07-15 12:50:32 UTC <luite> first time in a few years that i used java again :)
+2013-07-15 13:03:41 UTC <notdan> luite, hi, can you preview a blog post for me
+2013-07-15 13:12:58 UTC <luite> sure
+2013-07-15 13:14:57 UTC <jbracker> How do I fill an entire diagram (the complete clip region) with a color?
+2013-07-15 13:18:24 UTC <byorgey> jbracker: http://hackage.haskell.org/packages/archive/diagrams-lib/0.6.0.3/doc/html/Diagrams-TwoD-Combinators.html#v:bg
+2013-07-15 13:18:54 UTC <byorgey> jbracker: diagrams has no primitive notion of a background color
+2013-07-15 13:19:01 UTC <byorgey> though perhaps we should
+2013-07-15 13:19:50 UTC <jbracker> Ok. That works with regard to the current clip region, e.g. if there is none all is filled otherwise only clip is filled?
+2013-07-15 13:20:44 UTC <byorgey> jbracker: well, all 'bg' does is create a filled rectangle which is big enough to enclose the diagram's envelope, and puts it behind the diagram
+2013-07-15 13:20:59 UTC <jbracker> Though what I actually need is: Fill the clip region, if there is none fill everything. How can I get the clip region? How can I fill everything?
+2013-07-15 13:21:45 UTC <fryguybob> luite: Ah, good that you got it working.
+2013-07-15 13:21:59 UTC <fryguybob> (took me a second to realize the context)
+2013-07-15 13:21:59 UTC <byorgey> jbracker: will the clip region exceed the envelope?
+2013-07-15 13:22:11 UTC <jbracker> Yes, it might do so
+2013-07-15 13:22:14 UTC <byorgey> hmm
+2013-07-15 13:24:18 UTC <byorgey> perhaps it is time to add an actual background color attribute to diagrams-lib
+2013-07-15 13:24:59 UTC <jbracker> actually there might not be any clip at all and then I want to say fill the entire diagram independent of what child we are inside of currently
+2013-07-15 13:25:28 UTC <jbracker> it's not so much about a background color
+2013-07-15 13:25:37 UTC <jbracker> though this might be sonething Chart's should handle differently
+2013-07-15 13:25:54 UTC <byorgey> what's the difference between filling the entire diagram and a background color?
+2013-07-15 13:26:00 UTC <byorgey> I think I still don't understand exactly what you want
+2013-07-15 13:26:22 UTC <jbracker> Filling say draw over everything. A background color is used where nothing is painted yet
+2013-07-15 13:26:30 UTC <byorgey> oh, I see
+2013-07-15 13:26:47 UTC <jbracker> But:
+2013-07-15 13:27:06 UTC <jbracker> I think Charts uses fillClip to create a background color
+2013-07-15 13:27:18 UTC <byorgey> ok, right.
+2013-07-15 13:27:22 UTC <luite> fryguybob: oh sorry. it always surprises me how poor pdf tool support is, unless you go really low level and extract all the objects yourself using a lib
+2013-07-15 13:27:28 UTC <byorgey> "filling = draw over everything" is a rather imperative notion
+2013-07-15 13:27:29 UTC <jbracker> which could be handled in a better way instead of creating such a global operation
+2013-07-15 13:27:59 UTC <byorgey> jbracker: do you have the clip region easily available as a polygon?
+2013-07-15 13:28:04 UTC <jbracker> byorgey: Yes, I know. Thats because the current API is derived from cairo
+2013-07-15 13:28:08 UTC <byorgey> right
+2013-07-15 13:28:30 UTC <jbracker> yes I do. But what if there is none?
+2013-07-15 13:28:51 UTC <jbracker> i.e. I want to fill everything
+2013-07-15 13:29:32 UTC <jbracker> independent of my position in the hirarchy
+2013-07-15 13:29:52 UTC <byorgey> right, and at that point you may not know how big the entire diagram is going to be
+2013-07-15 13:30:16 UTC <luite> fryguybob: in particular some scanner software produces annoying pdf (black is not quite black, white not quite white), where the color is stored as low res jpeg2000, text as a high res jbig2 bitonal mask, and a text layer behind the images. acrobat then refuses to do any OCR with it since it sees existing text, has no way to remove it (except by manually selecting/deleting al text boxes), and adjusting the color is also impossible for the whole doc
+2013-07-15 13:30:52 UTC <jbracker> exactly
+2013-07-15 13:31:14 UTC <byorgey> jbracker: this still seems fishy to me.  For example, what would it mean if two different nodes somewhere in a diagram hierarchy each set the background color / fill  with a different color?
+2013-07-15 13:32:14 UTC <jbracker> byorgey: But as I said maybe we should change our API and instead of providing such an imperative operation, just provide a way to set the background color. AFAIK thats the only reason the operation exists anyway
+2013-07-15 13:32:48 UTC <jbracker> byorgey: First come, first served
+2013-07-15 13:32:52 UTC <jbracker> as in cairo
+2013-07-15 13:33:15 UTC <fryguybob> luite: Ah, strange.  There was no end to surprises when I was working on extracting vector data from pdf, AI, eps and postscript.
+2013-07-15 13:34:20 UTC <byorgey> jbracker: hmm, I suppose.  The background color which is furthest "atop" the other ones will win.
+2013-07-15 13:34:47 UTC <luite> fryguybob: fortunately on the docs i had to do, just regexping all the BT ... ET (begin .. end text block instructions) out worked fine :)
+2013-07-15 13:36:16 UTC <byorgey> jbracker: if you change your API so it provides a way to set the background color, then would it be possible for you to keep track of it and know what the background color should be at the very end, so you can set it globally on the entire diagram, at the top level?
+2013-07-15 13:36:29 UTC <byorgey> that would be easiest because then you can just use the existing 'bg' function
+2013-07-15 13:37:07 UTC <byorgey> otherwise we will have to add a background color attribute, and I am still not convinced it will be simple.  That is the reason we have no background attribute, because I could never figure out what it is supposed to mean.
+2013-07-15 13:37:30 UTC <fryguybob> luite: Yeah, if I ever wanted to run an evil company I would make all my file formats programming languages where you could *just* get by for any single task with just regex but you could corner the market on tools that actually work by actually implementing the language.
+2013-07-15 13:37:44 UTC <jbracker> byorgey: Right now we provide a deep embedding, and for every operation we have access to our current state
+2013-07-15 13:37:59 UTC <byorgey> jbracker: ah, cool
+2013-07-15 13:38:12 UTC <byorgey> so you can just set the background color in the state and then see what it is at the end?
+2013-07-15 13:38:22 UTC <jbracker> yes
+2013-07-15 13:38:28 UTC <byorgey> great
+2013-07-15 13:39:28 UTC <luite> fryguybob: hehe. yeah PDF did remove of the PS instructions that it's not quite a programming language anymore, right? just drawing instructions with a state
+2013-07-15 13:39:49 UTC <luite> +enough
+2013-07-15 13:40:52 UTC <fryguybob> luite: Yeah unless you are adobe then you throw in special features like JS and a 3D model viewer ...
+2013-07-15 13:40:55 UTC <jbracker> byorgey: Thanks for your input I will think this through and talk to Tim about it tomorrow
+2013-07-15 13:41:34 UTC <byorgey> jbracker: OK.
+2013-07-15 13:42:03 UTC <luite> fryguybob: oh yeah JS, i think it might've actually been doable from acrobat using the built-in JS engine, but i don't really know how that thing works
+2013-07-15 13:44:09 UTC <luite> i'm not the only person with this scanner ocr problem, i've seen 'solutions' like exporting to multipage tiff, then reimporting as pdf, where you lose all metadata and probably a lot of image quality
+2013-07-15 13:45:27 UTC <luite> which means i should sell my 20 line java thing as an enterprise digital document preprocessor
+2013-07-15 13:47:16 UTC <fryguybob> hehe "Process to convert from convoluted crippled scanner format to usable format prepared for OCR" is the patent to search for.
+2013-07-15 13:51:03 UTC <byorgey> "First, a convoluted cripped scanner format lexer generator generates a convoluted cripped scanner format lexer (Fig. 1). Then the convoluted cripped scanner format lexer lexes the convoluted cripped scanner format (Fig. 2)."
+2013-07-15 13:51:38 UTC <jbracker> ...
+2013-07-15 13:51:56 UTC <luite> hehe sorry for starting something off-topic again ;)
+2013-07-15 13:52:11 UTC <luite> i hope jbracker didn't need to discuss much more gsoc stuff
+2013-07-15 13:52:13 UTC <byorgey> In German, of course, each of those sentences would be just a few words =)
+2013-07-15 13:52:21 UTC <luite> very long words though
+2013-07-15 13:52:25 UTC <jbracker> XD
+2013-07-15 13:52:43 UTC <jbracker> not even sure I could translate this into correct german
+2013-07-15 13:53:08 UTC <jbracker> luite: I'm done with the last discussion
+2013-07-15 13:53:27 UTC <byorgey> aw man, I missed a golden opportunity to use 'scanner' as a synonym for 'lexer'
+2013-07-15 13:53:35 UTC <luite> byorgey: it's actually kind of annoying, dutch has more or less the same spelling rules with regard to using spaces, but people are so used to having multiple words in english that they get uncomfortable now, writing very long words in dutch, inserting spaces incorrectly
+2013-07-15 13:53:57 UTC <byorgey> luite: huh, strange
+2013-07-15 13:54:08 UTC <fryguybob> byorgey: haha
+2013-07-15 13:55:36 UTC <jbracker> byorgey: I can only do relative transformations right, e.g. I can not reset the transformation matrix in diagrams?
+2013-07-15 13:56:28 UTC <byorgey> jbracker: right
+2013-07-15 13:57:30 UTC <jbracker> byorgey: Ok, then I will have to hand in the latest transformation instead of the complete transformation to my operations.
+2013-07-15 13:59:09 UTC <jbracker> byorgey: Can I set the text color independent of other colors or is the line color reused for that?
+2013-07-15 13:59:23 UTC <jbracker> foe the TwoD.Text stuff I mean
+2013-07-15 14:01:14 UTC <byorgey> jbracker: one of them is reused... I think it's the fill color, actually.
+2013-07-15 14:01:25 UTC <jbracker> ok
+2013-07-15 14:01:35 UTC <byorgey> jbracker: If it would make things easier for you I would be happy to consider adding a separate text color attribute
+2013-07-15 14:01:41 UTC <byorgey> it might be the right thing to do anyway
+2013-07-15 14:02:16 UTC <jbracker> it does not make things complicated I just need to consider it while implementing
+2013-07-15 14:02:22 UTC <byorgey> ok.
+2013-07-15 14:13:37 UTC <luite> [1525924.418278] EXT4-fs (dm-3): Unaligned AIO/DIO on inode 135148527 by VBoxHeadless; performance will be poor.
+2013-07-15 14:13:40 UTC <luite> whoops
+2013-07-15 14:31:31 UTC <notdan> http://parenz.wordpress.com/2013/07/15/interactive-diagrams-gsoc-progress-report/ wrote another blog post, probably not very interesting to most of the people here though :)
+2013-07-15 14:36:45 UTC <luite> notdan: at least it means that most of the annoying security work is probably done now :p
+2013-07-15 14:37:16 UTC <notdan> Yep!
+2013-07-15 14:37:43 UTC <luite> and plenty of time left for more diagrams-esque work
+2013-07-15 14:38:03 UTC <byorgey> yay for annoying security work being done!
+2013-07-15 15:21:37 UTC <jbracker> what is my easist option to create a T2 from a affine transformation matrix?
+2013-07-15 18:08:51 UTC <notdan> byorgey: can I direct my interactive-diagrams notifications here or will the channel be too cluttered? maybe I could redirect them to #ghcjs if luite and hamishmack are OK with that
+2013-07-15 18:10:11 UTC <gabor> notdan: why not try it for an hour and if it gets unbearable send it to #diagrams-chatter?
+2013-07-15 18:18:05 UTC <notdan> I don't think it would get really unbearable - I don't commit that much - but I am afraid it would be mostly irrelevant
+2013-07-15 18:44:25 UTC <byorgey> notdan: sure, you can direct them here
+2013-07-15 18:45:13 UTC <byorgey> notdan: note that by default it only sends notifications of commits here
+2013-07-15 18:45:34 UTC <byorgey> if you want to change which events generate notifications the only way to do it is by calling the github API manually =P
+2013-07-15 18:46:35 UTC <byorgey> see http://cogo.wordpress.com/2012/11/07/irc-notifications-on-github/ though note there are now additional available events since that blog post was written (see the hook source code to find out which)
+2013-07-15 18:48:13 UTC <notdan> Oh, so you use a custom bot
+2013-07-15 18:52:31 UTC <byorgey> notdan: no
+2013-07-15 18:53:45 UTC <byorgey> notdan: sorry, I think I was not clear.  If you want to *configure* the standard IRC hook to generate notifications for anything other than just commits, you have to make a single manual call to the github API.
+2013-07-15 18:53:55 UTC <notdan> ah I see
+2013-07-15 18:54:07 UTC <notdan> sorry I didn't properly read the post you linked, my bad
+2013-07-15 18:54:13 UTC <byorgey> np
+2013-07-15 19:06:56 UTC <fryguybob> ACTION is now within arms reach of the reset button.
+2013-07-15 20:05:03 UTC <byorgey> check it:  http://byorgey.imagekind.com/factorization
+2013-07-15 20:05:10 UTC <byorgey> password is the name of this channel (without the hash)
+2013-07-15 20:05:32 UTC <carter> byorgey PRETTY :)
+2013-07-15 20:05:35 UTC <byorgey> I've just ordered one, I'm going to wait until it comes and make sure it looks OK before publicizing more widely
+2013-07-15 20:06:39 UTC <byorgey> so now you can get a ginormous custom-framed chart of factorization diagrams for $500, just like you've always wanted
+2013-07-15 20:07:04 UTC <byorgey> or... you can just get a reasonbly-sized unframed one for like $20-30
+2013-07-15 20:07:10 UTC <byorgey> well, plus shipping
+2013-07-15 20:07:37 UTC <byorgey> but from what I can tell this company makes really high-quality prints
+2013-07-15 20:11:10 UTC <fryguybob> byorgey: Cool, I think I know what Rebekah is getting for her birthday :D
+2013-07-15 20:11:47 UTC <notdan> is that your poster for that FARM conference? looks cool
+2013-07-15 20:13:58 UTC <carter> notdan thats the factorization diagram stuff that was really popular on the internet last december
+2013-07-15 20:16:42 UTC <notdan> carter: yeah, I remember that
+2013-07-15 20:17:12 UTC <notdan> it's how the diagrams got big, right?
+2013-07-15 20:18:14 UTC <carter> well
+2013-07-15 20:18:16 UTC <fryguybob> Wait we are big? Sweet!
+2013-07-15 20:18:41 UTC <carter> "big" in the sense of everyone wrote their own wee factorization diagram code in every PL after brent did his 
+2013-07-15 20:19:46 UTC <notdan> heh
+2013-07-15 20:25:21 UTC <gabor> notdan: Deserialization error: ConversionException "length\ntoo few bytes\nFrom:\tdemandInput\n\n"
+2013-07-15 20:25:35 UTC <gabor> just happened to me
+2013-07-15 20:25:51 UTC <gabor> but it is not reproducible
+2013-07-15 20:29:35 UTC <notdan> gabor: most likely it's an out-of-memory exception
+2013-07-15 20:29:47 UTC <notdan> for some reason I struggle to catch async exceptions like those
+2013-07-15 20:32:29 UTC <byorgey> fryguybob: when is Rebekah's birthday?
+2013-07-15 20:33:09 UTC <byorgey> ACTION did not notice any particular increase in the popularity of diagrams due to the factorization diagram stuff =)
+2013-07-15 20:33:41 UTC <byorgey> notdan: yeah, it's not for FARM, just for fun
+2013-07-15 20:37:13 UTC <notdan> I see :)
+2013-07-15 20:42:18 UTC <notdan> http://paste.hskll.org/get/157 oh, I like the background light thingy
+2013-07-15 20:44:27 UTC <byorgey> woah, nice, how did you do that?
+2013-07-15 20:44:48 UTC <byorgey> oh, it's just a star polygon with 2000 points?
+2013-07-15 20:44:49 UTC <carter> woah
+2013-07-15 20:44:52 UTC <carter> that is nice
+2013-07-15 20:44:59 UTC <carter> accidental Moire?
+2013-07-15 20:46:05 UTC <notdan> heh
+2013-07-15 20:46:12 UTC <notdan> I didn't do it tho, somebody else has psted it
+2013-07-15 20:46:15 UTC <notdan> pasted&
+2013-07-15 20:46:17 UTC <notdan> *
+2013-07-15 20:46:32 UTC <byorgey> ah
+2013-07-15 20:46:45 UTC <byorgey> eventually I assume you are going to add an 'author' field
+2013-07-15 20:48:06 UTC <notdan> Yeah
+2013-07-15 20:48:16 UTC <notdan> Author, title, parent paste
+2013-07-15 20:48:21 UTC <byorgey> right, cool
+2013-07-15 20:49:12 UTC <notdan> I just need to swith to some templating engine first
+2013-07-15 20:49:21 UTC <notdan> Right now I am using scotty + blaze-html
+2013-07-15 20:49:50 UTC <notdan> which was Ok, but it's kinda painful to write HTML that way
+2013-07-15 20:52:18 UTC <byorgey> hehe, right, fair enough
+2013-07-15 20:53:13 UTC <byorgey> well, take your time, and let us know when you want suggestions.  There are a lot of suggestions I could make but I have refrained since I know you're probably already intending to do all of them anyway =)
+2013-07-15 20:54:04 UTC <notdan> > 123 * 23
+2013-07-15 20:54:04 UTC <iDiagrams> 2829
+2013-07-15 20:54:04 UTC <lambdabot>   2829
+2013-07-15 20:54:12 UTC <notdan> > 100000 * 9999
+2013-07-15 20:54:13 UTC <iDiagrams> 999900000
+2013-07-15 20:54:13 UTC <lambdabot>   999900000
+2013-07-15 20:54:17 UTC <byorgey> iDiagrams!
+2013-07-15 20:54:20 UTC <notdan> Faster than lambdabot ;)
+2013-07-15 20:55:19 UTC <carter> now if only one was 32bit compiled so you could check that your math is portable :)
+2013-07-15 20:55:26 UTC <carter> mwahahahah
+2013-07-15 20:55:54 UTC <notdan> byorgey: actually I will be glad to hear all the suggestions! It would be super awesome if you could actually compile a list and send it to me
+2013-07-15 20:56:15 UTC <notdan> or you can just send me your suggestion along the way and I'll write them down somewhere
+2013-07-15 20:56:42 UTC <byorgey> notdan: ok! I will start a list and send it to you
+2013-07-15 20:56:51 UTC <notdan> thanks
+2013-07-15 20:57:13 UTC <notdan> btw if anyone else have any comments/suggestions please msg/mail me
+2013-07-15 20:57:52 UTC <carter> notdan a meme version that lets you overlay diagrams on top of jpegs or gifs :)
+2013-07-15 20:58:01 UTC <byorgey> nooooooooooo
+2013-07-15 20:58:02 UTC <notdan> haha
+2013-07-15 20:59:03 UTC <carter> giffy-diagrams!
+2013-07-15 20:59:11 UTC <carter> portable embedded annimations :)
+2013-07-15 20:59:31 UTC <carter> < 256 colors is ok :)
+2013-07-15 20:59:31 UTC <carter> you get to pick which ones!
+2013-07-15 21:00:35 UTC <carter> hrmmm
+2013-07-15 21:00:40 UTC <carter> i've been wanting ot mess with gifs
+2013-07-15 21:10:53 UTC <gabor> the 2000 polygon was mine ;-)
+2013-07-15 21:11:14 UTC <notdan> the bot has to go for the  night, I haven't configured the security yet
+2013-07-15 21:11:20 UTC <notdan> gabor: nice one!
+2013-07-15 21:13:53 UTC <byorgey> notdan: sent
+2013-07-15 21:14:22 UTC <byorgey> notdan: what will the bot do?  notify us of new pastes?
+2013-07-15 21:14:31 UTC <notdan> thanks, will look into it tomorrow, gotta head to the bed now
+2013-07-15 21:14:36 UTC <byorgey> ok, sleep well!
+2013-07-15 21:15:13 UTC <notdan> byorgey: well I was thinking that you can evaluate code with it and if the user decides to evaluate a diagram it would post it to the site for him
+2013-07-15 21:15:16 UTC <notdan> and return a link
+2013-07-15 21:15:28 UTC <byorgey> ah, yes, that sounds great
+2013-07-15 21:15:43 UTC <byorgey> I've been meaning to set up a bot so I'm glad someone else is doing it =)
+2013-07-15 21:17:34 UTC <byorgey> ACTION goes home
+2013-07-15 23:18:38 UTC <fryguybob> byorgey: Middle of August is her birthday.
+2013-07-16 00:38:44 UTC <luite> hm what's a good cheap hotel in boston? :)
+2013-07-16 00:40:03 UTC <fryguybob> luite: I wish we knew
+2013-07-16 00:42:28 UTC <luite> are you staying in the hilton boston logan?
+2013-07-16 00:55:27 UTC <fryguybob> luite: It seems like the best option.
+2013-07-16 00:57:52 UTC <luite> hmm
+2013-07-16 00:58:15 UTC <luite> perhaps i can stay one night and fly back home after my talk ;)
+2013-07-16 00:59:23 UTC <fryguybob> I'm not sure if byorgey has found a better optio
+2013-07-16 01:08:57 UTC <luite> hmm in the city center are cheaper options, but apparently that takes 40 mins by public transit, or more than 2 hours walking (according to google maps)
+2013-07-16 01:09:13 UTC <fryguybob> yeah
+2013-07-16 01:11:08 UTC <luite> hm i guess i really should make it a short trip and skip the main icfp stuff and nyc
+2013-07-16 01:13:06 UTC <carter> luite asking one of the people in boston if they have a couch is probably cheapest
+2013-07-16 01:13:47 UTC <carter> ask the organizers or some of the boston folks like edwardk for hotel / couch opinions
+2013-07-16 01:13:48 UTC <luite> meh i don't know them. what if i turn out to be a huge asshole
+2013-07-16 01:13:58 UTC <carter> luite well, then they'll tell the community
+2013-07-16 01:14:00 UTC <carter> done
+2013-07-16 01:14:01 UTC <carter> :)
+2013-07-16 01:14:13 UTC <carter> also theres Air BnB even though its weird
+2013-07-16 01:17:18 UTC <carter> luite point being : look into Air BnB, and also ask people who are currently in boston, or have been there for spans of time for ideas
+2013-07-16 01:17:47 UTC <carter> likewise, sclv can probably help you figure out making the NYC part of the trip fit your budget
+2013-07-16 01:18:11 UTC <carter> thats kind of one of his reponsibilities as organizer for nyc haskell
+2013-07-16 01:18:39 UTC <luite> i haven't heard from the nyc haskell at all
+2013-07-16 01:18:58 UTC <carter> luite you mean SCLV / gershom?
+2013-07-16 01:19:07 UTC <carter> well, ping him 
+2013-07-16 01:19:09 UTC <carter> he's on IRC
+2013-07-16 01:19:10 UTC <carter> prolly
+2013-07-16 01:46:17 UTC <luite> hm
+2013-07-16 01:49:42 UTC <carter> there is NO downside to asking
+2013-07-16 01:49:57 UTC <carter> bah, trying to get agda installed and usable 
+2013-07-16 02:07:39 UTC <travis-ci> [travis-ci] 13diagrams-core/06master 1412d1ab6 http://travis-ci.org/diagrams/diagrams-core/builds/9121787 The build has errored.
+2013-07-16 02:09:15 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 14450a06e http://travis-ci.org/diagrams/diagrams-lib/builds/9121794 The build has errored.
+2013-07-16 02:12:29 UTC <travis-ci> [travis-ci] 13dual-tree/06master 145d59dd0 http://travis-ci.org/diagrams/dual-tree/builds/9121832 The build passed.
+2013-07-16 02:13:40 UTC <travis-ci> [travis-ci] 13dual-tree/06dual-tree-0.1 14986d88f http://travis-ci.org/diagrams/dual-tree/builds/9121871 The build passed.
+2013-07-16 02:14:10 UTC <travis-ci> [travis-ci] 13dual-tree/06master 14802bee7 http://travis-ci.org/diagrams/dual-tree/builds/9121873 The build passed.
+2013-07-16 02:15:16 UTC <byorgey> luite: want to share a room with me and fryguybob?
+2013-07-16 02:15:19 UTC <travis-ci> [travis-ci] 13diagrams-core/06master 1412d1ab6 http://travis-ci.org/diagrams/diagrams-core/builds/9121787 The build passed.
+2013-07-16 02:17:24 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 14450a06e http://travis-ci.org/diagrams/diagrams-lib/builds/9121794 The build passed.
+2013-07-16 02:18:47 UTC <luite> byorgey: in the hilton logan hotel?
+2013-07-16 02:19:58 UTC <fryguybob> luite: Yes
+2013-07-16 02:22:01 UTC <luite> hm they only have rooms with 2 double beds?
+2013-07-16 02:22:34 UTC <byorgey> yes, that's true.  so we'd either have to share double beds or take turns sleeping on the floor
+2013-07-16 02:22:38 UTC <fryguybob> luite: Yeah, I told byorgey I'm good at sleeping on the edge of the bed.
+2013-07-16 02:22:44 UTC <byorgey> it's also possible the hotel has a cot they could put in the room
+2013-07-16 02:22:55 UTC <byorgey> hotels can often do that sort of thing
+2013-07-16 02:23:51 UTC <byorgey> luite: note also that our advisors are paying for it, I have not quite thought through all the ethics of the situation but probably we don't need to split the cost three ways.  Maybe you don't even have to pay at all.
+2013-07-16 02:24:59 UTC <luite> well the room is more expensive for more guests
+2013-07-16 02:25:11 UTC <byorgey> oh that's true, a bit more
+2013-07-16 02:25:20 UTC <byorgey> so maybe you could just pay the difference
+2013-07-16 02:26:40 UTC <luite> hm when do you want to book?
+2013-07-16 02:27:17 UTC <byorgey> anytime really
+2013-07-16 02:27:23 UTC <fryguybob> yeah
+2013-07-16 02:27:50 UTC <byorgey> so if you want to look into other options take your time
+2013-07-16 02:28:58 UTC <byorgey> ok, I'm off to bed, night all
+2013-07-16 02:29:22 UTC <carter> luite yay! 
+2013-07-16 02:29:27 UTC <carter> see people want to help
+2013-07-16 02:31:51 UTC <luite> byorgey: ok, me too. tnx for the offer :)
+2013-07-16 05:52:35 UTC <notdan> are you guys going to the ICFP?
+2013-07-16 05:53:07 UTC <carter> i hope to :)
+2013-07-16 05:53:17 UTC <carter> luite plans to,  fryguybob  and byorgey  def are
+2013-07-16 08:43:29 UTC <jbracker> what is my easist option to create a T2 from a affine transformation matrix?
+2013-07-16 09:17:21 UTC <alpounet> woah
+2013-07-16 09:17:22 UTC <alpounet> http://www.josleys.com/show_gallery.php?galid=342
+2013-07-16 09:17:30 UTC <alpounet> "Hyperbolic tesselations in 3D"
+2013-07-16 09:17:55 UTC <alpounet> ClaudiusMaximus, don't know if you have worked on that kind of things, but these definitely look awesome
+2013-07-16 09:20:23 UTC <alpounet> from the inside in particular
+2013-07-16 09:38:25 UTC <ClaudiusMaximus> alpounet: nice!  I've only done hyperbolic stuff in 2d
+2013-07-16 09:49:09 UTC <alpounet> luite, notdan, so, did you manage guys to wrap the selinux stuffs up? 
+2013-07-16 09:56:06 UTC <jbracker> byorgey: There?
+2013-07-16 09:56:38 UTC <alpounet> looks like it
+2013-07-16 09:56:44 UTC <alpounet> (re. selinux)
+2013-07-16 09:59:41 UTC <notdan> alpounet: yep :) I'll be refactoring the code later and moving the workers code to a separate library
+2013-07-16 10:00:18 UTC <notdan> For your app you could use an IO worker (performs IO actions in a separate process with limits) or roll your own worker for your monad or whatnot
+2013-07-16 10:06:33 UTC <alpounet> notdan, IO worker should be fine for a starter
+2013-07-16 10:07:08 UTC <alpounet> i just need to build a hs file (not even entirely, getting the Core output is just enough) and dump the Core
+2013-07-16 10:07:13 UTC <alpounet> that should be pretty simple
+2013-07-16 10:18:06 UTC <jbracker> I am trying to use the diagrams cairo backend but for some reason I always get the error that "CairoOptions" is not exported by "Diagrams.Backend.Cairo"
+2013-07-16 10:18:43 UTC <jbracker> or that it's simply not in scope
+2013-07-16 10:18:44 UTC <jbracker> ...
+2013-07-16 10:22:43 UTC <jbracker> oh... good thing the _sources_ tell you that you need to import Diagrams.Backend.Cairo.Internal
+2013-07-16 10:27:10 UTC <mr-> jbracker: documentation works :-)
+2013-07-16 11:00:57 UTC <byorgey> jbracker: re: making a T2 from a matrix, no one has ever wanted that before... =)
+2013-07-16 11:01:21 UTC <byorgey> jbracker: you'll have to just make one explicitly using the Transformation constructor
+2013-07-16 11:01:21 UTC <jbracker> there are some CPP hacks in Diagrams.Backend.Cairo that could be removed or rewritten du allow >=7.2
+2013-07-16 11:01:41 UTC <jbracker> byorgey: Still not sure how that works
+2013-07-16 11:02:10 UTC <jbracker> I got a function Matrix -> R2 -> R2
+2013-07-16 11:02:25 UTC <jbracker> how would I put that in there?
+2013-07-16 11:02:43 UTC <byorgey> jbracker: does that include the translation?
+2013-07-16 11:02:51 UTC <jbracker> Yes!
+2013-07-16 11:03:03 UTC <byorgey> so it really should be  Matrix -> P2 -> P2 ?
+2013-07-16 11:03:13 UTC <byorgey> translation is supposed to have no effect on R2
+2013-07-16 11:03:41 UTC <jbracker> ok right, still I don't know how to put it in the Transformation
+2013-07-16 11:03:52 UTC <byorgey> sure, I'm getting there, just clarifying
+2013-07-16 11:04:13 UTC <byorgey> well, you have to separate out the translation component from the linear component
+2013-07-16 11:05:18 UTC <byorgey> the first step would be to make a modified function  Matrix -> R2 -> R2  which ignores the translation
+2013-07-16 11:05:45 UTC <byorgey> do you have a function to invert a Matrix?
+2013-07-16 11:05:51 UTC <jbracker> yes I do
+2013-07-16 11:05:57 UTC <byorgey> ok, great.
+2013-07-16 11:06:02 UTC <jbracker> and since its affine that should always work
+2013-07-16 11:07:31 UTC <byorgey> so you want to do something like   Transformation (run m <-> run (inv m)) (run (transpose m) <-> run (transpose (inv m))) (<translation component of m>)
+2013-07-16 11:07:40 UTC <byorgey> where 'run :: Matrix -> R2 -> R2'
+2013-07-16 11:07:52 UTC <byorgey> but run should ignore the translation component
+2013-07-16 11:08:24 UTC <byorgey> actually, don't worry about changing run, just first make a version of the matrix where you zero out the translation component
+2013-07-16 11:08:56 UTC <jbracker> For the x component that would mean: xx m * x + xy m * y + x0 m ===> xx m * x + xy m * y
+2013-07-16 11:09:23 UTC <byorgey> right
+2013-07-16 11:11:13 UTC <byorgey> anyway, does that make sense?
+2013-07-16 11:11:31 UTC <jbracker> what does transpose do?
+2013-07-16 11:11:40 UTC <jbracker> take just the translation?
+2013-07-16 11:11:42 UTC <notdan> Hm, maybe I should use Hastache templates for the site. The look OK. Heist's test-suite does not compile
+2013-07-16 11:12:01 UTC <byorgey> transposing a matrix means reflecting it around the diagonal axis
+2013-07-16 11:12:05 UTC <notdan> all the popular Haskell web frameworks do not compile with the latest GHC out of the box
+2013-07-16 11:12:24 UTC <byorgey> so  transpose [[a b] [c d]]   ==>  [[a c] [b d]]
+2013-07-16 11:12:59 UTC <jbracker> so there I also lose the translation component?
+2013-07-16 11:13:02 UTC <byorgey> of course this does not make sense for a 2x3 matrix which includes a translation component in the last column, that's one reason you need to put zeros in that column first
+2013-07-16 11:13:22 UTC <byorgey> in this case  transpose [[a b 0] [c d 0]] ==> [[a c 0] [b d 0]]
+2013-07-16 11:14:10 UTC <byorgey> so let me state more precisely what I wrote above
+2013-07-16 11:14:47 UTC <byorgey> let m' = m without the translation component, then you want  Transformation (run m' <-> run (inv m')) (run (transpose m') <-> run (transpose (inv m'))) (<translation component of m>)
+2013-07-16 11:15:29 UTC <jbracker> <translation component of m> :: R2 ???
+2013-07-16 11:15:49 UTC <byorgey> yes
+2013-07-16 11:16:29 UTC <byorgey> think of Matrix as isomorphic to (R2,R2,R2)  (the three columns)
+2013-07-16 11:17:07 UTC <byorgey> the first two R2 say where unitX and unitY are sent by the transformation (without translation)
+2013-07-16 11:17:14 UTC <byorgey> the third R2 is the amount of translation.
+2013-07-16 11:25:36 UTC <byorgey> anyway, we should probably add a generic function for doing matrix -> Transformation  conversion in Diagrams.Core.Transformation
+2013-07-16 11:26:31 UTC <byorgey> but it would have to be a bit more general since it needs to work for arbitrary dimensions.  Hopefully the above discussion will be good enough for what you need at the moment.
+2013-07-16 11:30:42 UTC <jbracker> byorgey: Does this look correct: http://pastebin.com/wGaHbNAZ
+2013-07-16 11:38:47 UTC <byorgey> jbracker: yes, I think so
+2013-07-16 11:40:12 UTC <jbracker> ok then I will try it when the meeting with tim is over. Thanks!
+2013-07-16 12:19:40 UTC <jbracker> byorgey: If I clip with an empty path, the clip area will be empty right?
+2013-07-16 12:38:19 UTC <byorgey> jbracker: hmm, honestly I am not sure what happens if you clip with an empty path
+2013-07-16 12:39:04 UTC <byorgey> jbracker: if something happens other than what you think should happen, file a bug report and we can discuss it
+2013-07-16 12:39:22 UTC <jbracker> ok
+2013-07-16 12:46:07 UTC <byorgey> ugh, 96F/35C here today =(
+2013-07-16 13:10:27 UTC <fryguybob> :(
+2013-07-16 13:13:19 UTC <luite> :(
+2013-07-16 13:13:40 UTC <luite> 24C here :p
+2013-07-16 14:29:47 UTC <fryguybob> byorgey: Yesterday we were working in the machine room on our shiny new haswell machine and the AC floor vents were blasting really cold air right under our chairs.  I guess there are some benefits to being a systems person :D.
+2013-07-16 14:31:14 UTC <byorgey> haha, I guess so =)
+2013-07-16 14:32:13 UTC <byorgey> though, to be fair, my office is quite comfortable today.  Usually it is so cold during the summer I have to wear a sweater (which I keep in my office for that purpose).
+2013-07-16 14:36:53 UTC <notdan> Hm, apparently snap uses enumerators, I thought that library as dead and ditched in favour of iteratees/conduit
+2013-07-16 14:37:29 UTC <notdan> Oh, they are switching to io-streams
+2013-07-16 14:52:30 UTC <byorgey> I think it was the snap people who developed io-streams
+2013-07-16 17:21:58 UTC <byorgey> > 2 + 3
+2013-07-16 17:21:59 UTC <lambdabot>   5
+2013-07-16 17:23:02 UTC <byorgey> notdan: does InteractiveDiagr do anything interesting yet?
+2013-07-16 17:52:38 UTC <notdan> Not really, it only evaluates expressions (faster than lambdabot)
+2013-07-16 17:52:46 UTC <notdan> I'll make it paste diagrams once I am finished with templating
+2013-07-16 18:01:03 UTC <byorgey> ok, no worries, just curious =)
+2013-07-16 18:05:08 UTC <notdan> I didn't manage to compile any substantial web-server/framework with GHC7.7 and Heist doesn't play well with Scotty, I have switched to Hastache for now
+2013-07-16 18:08:13 UTC <byorgey> sounds good
+2013-07-16 18:09:54 UTC <byorgey> notdan: btw, you can set 'message without join' in your IRC hook settings, that way the github bot doesn't clutter the channel with additional joins and parts
+2013-07-16 18:13:47 UTC <notdan> Oh, ok, I will
+2013-07-16 18:13:58 UTC <notdan> I didn't notice that your channel was -n
+2013-07-16 18:15:03 UTC <byorgey> I made it -n for this purpose =)
+2013-07-16 18:55:22 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 1408164e9 http://travis-ci.org/diagrams/diagrams-lib/builds/9150221 The build passed.
+2013-07-16 19:02:43 UTC <carter> luite question: whats the storage size of your set of Hdiff repos?
+2013-07-16 19:03:33 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 1414cf9b9 http://travis-ci.org/diagrams/diagrams-lib/builds/9150593 The build passed.
+2013-07-16 19:06:21 UTC <luite> carter: dunno exactly, it's lots of very small files
+2013-07-16 19:06:33 UTC <tgeeky> fryguybob: yes, it's nice to be in a room with a chiller, until you have to do something to 50 or 200 machines, and you have to stop every once in a while with the teeth chatters.
+2013-07-16 19:06:35 UTC <luite> the archives themselves are under 2GB
+2013-07-16 19:06:39 UTC <carter> ok
+2013-07-16 19:06:42 UTC <carter> all together?
+2013-07-16 19:06:42 UTC <carter> cool
+2013-07-16 19:07:02 UTC <luite> yeah but the git repos make it bigger, and millions of files with inode overhead
+2013-07-16 19:07:07 UTC <tgeeky> quick poll: current recommended linux distro, go
+2013-07-16 19:07:16 UTC <carter> luite how big is the folder with all of them?
+2013-07-16 19:07:23 UTC <luite> lemme check
+2013-07-16 19:07:28 UTC <carter> thanks
+2013-07-16 19:12:34 UTC <carter> :)
+2013-07-16 19:13:03 UTC <luite> du takes a while :)
+2013-07-16 19:13:10 UTC <carter> soke
+2013-07-16 19:13:18 UTC <luite> oh it just finished
+2013-07-16 19:13:22 UTC <luite> it says 8.9GB
+2013-07-16 19:13:37 UTC <carter> and thats because of all the extra git overhead?
+2013-07-16 19:14:02 UTC <luite> also because everything is extracted
+2013-07-16 19:14:07 UTC <luite> and it includes the original archives
+2013-07-16 19:14:16 UTC <notdan> for some reason this chat reminded me of thislink: http://www.olark.com/spw/2011/08/you-can-list-a-directory-with-8-million-files-but-not-with-ls/
+2013-07-16 19:14:33 UTC <luite> oh number of files is not as bad as i thought, 809014
+2013-07-16 19:15:01 UTC <luite> notdan: fortunately it's all in different dirs
+2013-07-16 19:15:34 UTC <luite> reminds me of when i tried to abuse the filesystem as a database, with millions of records as files in a db. it failed horribly obviously :)
+2013-07-16 19:17:29 UTC <carter> hehe
+2013-07-16 20:00:55 UTC <gabor> notdan: I hoe to got
+2013-07-16 20:01:03 UTC <gabor> damn...
+2013-07-16 20:01:24 UTC <gabor> notdan: I hope to go to IFL
+2013-07-16 20:02:42 UTC <gabor> notdan: do you build (released) diagrams with GHC HEAD ?
+2013-07-16 20:03:05 UTC <gabor> or the github trunk version of diagrams?
+2013-07-16 20:10:11 UTC <notdan> github version
+2013-07-16 20:11:02 UTC <byorgey> github version of diagrams should build on GHC HEAD, if you have trouble, let me know
+2013-07-16 20:11:07 UTC <notdan> github version of diagrams, but 'active' (package) needs a little patch http://parenz.wordpress.com/2013/06/12/ghcjs-build/
+2013-07-16 20:11:17 UTC <notdan> just a version bump
+2013-07-16 20:11:50 UTC <byorgey> oh right
+2013-07-16 20:11:59 UTC <byorgey> I ought to release a patched version of that
+2013-07-16 20:12:28 UTC <byorgey> it's hard to really be motivated though since we're in the process of ripping active to pieces and rewriting it from scratch =)
+2013-07-16 20:12:34 UTC <notdan> yeah :)
+2013-07-16 20:13:17 UTC <notdan> I wish people would always use MonadIO constrain instead of just limiting functions to IO
+2013-07-16 20:13:43 UTC <notdan> But Control.Monad.Morph is a life savior!
+2013-07-16 20:14:53 UTC <notdan> luite: so I ment to ask, what version of Emacs have you ended up using?
+2013-07-16 20:33:33 UTC <luite> notdan: oh sorry i forgot to answer, i switched back to emacs for os x 24, since they both had the sam crash
+2013-07-16 20:33:56 UTC <notdan> oh :(
+2013-07-16 20:34:26 UTC <luite> why, is aquamacs better?
+2013-07-16 20:35:46 UTC <notdan> nah, I just got used to it :) It actually started to perform pretty bad, freezing up, using all the CPU time
+2013-07-16 20:36:10 UTC <notdan> I was hoping you had switched to some version of Aquamacs and it worked flawlessly and briliantly :P
+2013-07-16 20:36:18 UTC <notdan> I'll get Emacs for OSX 24 too
+2013-07-16 20:36:45 UTC <luite> ah
+2013-07-16 20:41:31 UTC <tgeeky> OSX 24 looks foreign to me?
+2013-07-16 20:41:34 UTC <tgeeky> what version is it?
+2013-07-16 20:42:40 UTC <tgeeky> oh, emacs version 24
+2013-07-16 20:43:03 UTC <notdan> Yeah, that's emacs' version, not OSX's :)
+2013-07-16 21:01:05 UTC <luite> tgeeky: hehe not much software has version numbers that high. even linux only goes to 3.11
+2013-07-16 22:48:27 UTC <notdan> https://gist.github.com/co-dan/6015894 
+2013-07-16 22:48:54 UTC <notdan> in order to do this I had to rewrite Scotty to use monad transformers instead of just monads :D
+2013-07-16 22:49:04 UTC <notdan> ok, 3am, time to go to bed I guess
+2013-07-16 22:49:39 UTC <luite> :)
+2013-07-16 22:49:48 UTC <luite> oh less time difference than i thought
+2013-07-16 22:50:02 UTC <luite> i'd have guessed it was almost 4am now there
+2013-07-16 22:52:52 UTC <luite> looks like my guesses are bad, only ~33 degrees difference, with 15 degrees per time zone
+2013-07-16 23:05:31 UTC <alpounet> luite, you're still in NL right?
+2013-07-16 23:07:03 UTC <luite> yeah
+2013-07-16 23:08:07 UTC <alpounet> looking for a job?
+2013-07-16 23:08:14 UTC <alpounet> or have you found one already?
+2013-07-16 23:13:08 UTC <luite> haven't found one
+2013-07-16 23:37:42 UTC <travis-ci> [travis-ci] 13active/06active-0.1 1435b2139 http://travis-ci.org/diagrams/active/builds/9160442 The build passed.
+2013-07-16 23:38:09 UTC <byorgey> notdan: just released active-0.1.0.5 which relaxes the upper bound on base
+2013-07-16 23:38:18 UTC <travis-ci> [travis-ci] 13active/06master 140528da7 http://travis-ci.org/diagrams/active/builds/9160444 The build passed.
+2013-07-16 23:54:23 UTC <travis-ci> [travis-ci] 13active/06master 1404587d2 http://travis-ci.org/diagrams/active/builds/9160724 The build passed.
+2013-07-16 23:58:57 UTC <travis-ci> [travis-ci] 13active/06master 14a5ebc06 http://travis-ci.org/diagrams/active/builds/9160829 The build passed.
+2013-07-17 00:05:37 UTC <travis-ci> [travis-ci] 13active/06active-0.1 146d8c9a5 http://travis-ci.org/diagrams/active/builds/9160957 The build passed.
+2013-07-17 02:53:38 UTC <byorgey> martingalemeasur: welcome =)
+2013-07-17 02:54:33 UTC <byorgey> ACTION -> bed
+2013-07-17 16:59:56 UTC <byorgey> I'm back, did I miss anything? =)
+2013-07-17 17:23:10 UTC <byorgey> mgsloan: had a chance to look at my pull request with the new parametric stuff?
+2013-07-17 17:23:41 UTC <byorgey> no rush, I just wanted to make sure you saw it.  I would love to have your comments since it's based on your code.
+2013-07-17 17:24:29 UTC <mgsloan> byorgey: I haven't yet, but I'm glad you're adding such stuff!
+2013-07-17 17:24:35 UTC <mgsloan> I can take a look at it now
+2013-07-17 17:24:42 UTC <byorgey> cool
+2013-07-17 17:25:10 UTC <mgsloan> Hopefully my code didn't lead you too far astray ;)
+2013-07-17 17:25:57 UTC <byorgey> hehe, I don't think so =)
+2013-07-17 17:26:03 UTC <mgsloan> yeah, looks like the typeclasses stayed very similar! neat!
+2013-07-17 17:26:08 UTC <byorgey> most of your code is still intact, yep
+2013-07-17 17:26:28 UTC <byorgey> I think I merged the two arc length-related type classes into one
+2013-07-17 17:27:05 UTC <byorgey> other than that I didn't change much, most of the work was in implementing the new instances of course
+2013-07-17 17:27:15 UTC <mgsloan> Yup!
+2013-07-17 17:36:01 UTC <mgsloan> byorgey: Looks good to me!
+2013-07-17 17:36:22 UTC <mgsloan> The only things that are concerning are the behavior of sectionable for closed trails
+2013-07-17 17:36:35 UTC <mgsloan> (but there's a comment about that)
+2013-07-17 17:36:46 UTC <byorgey> oh... what does the comment say?  I forget =)
+2013-07-17 17:37:13 UTC <byorgey> and why is it concerning?
+2013-07-17 17:37:20 UTC <mgsloan> https://github.com/diagrams/diagrams-lib/pull/92/files#L7R451
+2013-07-17 17:37:29 UTC <mgsloan> Oh, it's not too concerning, it's just tricky
+2013-07-17 17:37:44 UTC <byorgey> oh, whoops, I forgot to expand that comment =)
+2013-07-17 17:38:06 UTC <byorgey> ah, right, loops get split into two lines
+2013-07-17 17:38:40 UTC <mgsloan> If you do support sectioning across the loop boundary, then you also start to ask questions like "what if I ask for (0, 1000) on a loop that has domain (0, 1)? Does it go around 1000 times?"
+2013-07-17 17:40:11 UTC <byorgey> oh.... right
+2013-07-17 17:40:21 UTC <byorgey> hmm
+2013-07-17 17:40:38 UTC <byorgey> The Parametric instance for loops does in fact "do the right thing" (wrapping around) for the parametrization
+2013-07-17 17:41:12 UTC <mgsloan> Right, so logically sectionable should also do that
+2013-07-17 17:41:41 UTC <byorgey> though in a sense splitting a loop at a certain parameter should result in a *single* line
+2013-07-17 17:42:00 UTC <byorgey> so the type of splitAtParam does not even really make sense for loops
+2013-07-17 17:42:21 UTC <mgsloan> Sectionable is funny because it's saying "I can precompose with a linear function"
+2013-07-17 17:42:56 UTC <byorgey> what do you mean by that?
+2013-07-17 17:43:26 UTC <mgsloan> It's a linear transformation on the domain
+2013-07-17 17:43:41 UTC <byorgey> oh, I see
+2013-07-17 17:43:41 UTC <mgsloan> So with loops that ends up bringing up the periodicness of the domain
+2013-07-17 17:44:11 UTC <mgsloan> splitAtParam mostly exists because it happens to be efficient for beziers
+2013-07-17 17:44:17 UTC <byorgey> right
+2013-07-17 17:44:18 UTC <byorgey> oh, actually, I note that I did NOT make a Sectionable instance for Trail' Loop.
+2013-07-17 17:44:38 UTC <byorgey> but we want an instance for Trail  so the question is what you do if the Trail happens to contain a Loop.
+2013-07-17 17:45:23 UTC <byorgey> so maybe the comment should say "here's what happens when you have a Loop, but it doesn't make sense, so Don't Do That"
+2013-07-17 17:46:00 UTC <mgsloan> Hmm, maybe :)
+2013-07-17 17:46:54 UTC <mgsloan> This was one of my main motives for "Periodic": https://github.com/mgsloan/curve/blob/master/Data/Curve/Periodic.hs
+2013-07-17 17:47:40 UTC <byorgey> ah, interesting =)
+2013-07-17 17:47:51 UTC <mgsloan> Things get really messy when you start doing operations on periodics, though
+2013-07-17 17:47:56 UTC <byorgey> I bet
+2013-07-17 17:48:29 UTC <byorgey> though I strongly believe that's just because we haven't found the right semantics, not because it's inherently messy =)
+2013-07-17 17:49:05 UTC <mgsloan> Hmm, maybe so!
+2013-07-17 17:49:07 UTC <byorgey> I wouldn't be entirely surprised if four years from now we end up completely rewriting all this stuff again =)
+2013-07-17 17:49:16 UTC <byorgey> once we understand it a bit better
+2013-07-17 17:50:33 UTC <mgsloan> One decent-ish semantics would be "if it goes around more than once, it's identity"
+2013-07-17 17:52:10 UTC <mgsloan> The reason it's not so decent is that it'd break any laws you might imagine that relate atParam / atStart / atEnd / section
+2013-07-17 17:52:41 UTC <mgsloan> Ahh, could just remove all complete loops
+2013-07-17 17:53:38 UTC <byorgey> why remove complete loops?
+2013-07-17 17:54:08 UTC <byorgey> I kind of like the idea of loops that can go around more than once.  It seems elegant.  Like the "usual" loops that only go around once are sort of a "degenerate case". =)
+2013-07-17 17:54:24 UTC <byorgey> mgsloan: ^^^ how does that comment look to you?
+2013-07-17 17:54:41 UTC <mgsloan> Hmm, yeah, that's reasonable, maybe I'm worrying too much about performance
+2013-07-17 17:54:57 UTC <byorgey> performance? what's that?
+2013-07-17 17:55:04 UTC <byorgey> ;-)
+2013-07-17 17:56:28 UTC <byorgey> hmm, this makes me think perhaps we want a function like cutLoop but which takes a parameter as an argument
+2013-07-17 17:56:47 UTC <byorgey> i.e. like splitAtParam except for the special case of loops where what you get out is a line
+2013-07-17 17:57:09 UTC <travis-ci> [travis-ci] 13diagrams-lib/06parametric 149ecc5fb http://travis-ci.org/diagrams/diagrams-lib/builds/9198894 The build has errored.
+2013-07-17 17:57:24 UTC <byorgey> o noes!
+2013-07-17 17:58:17 UTC <mgsloan> Yup, comment looks good to me!
+2013-07-17 17:58:26 UTC <byorgey> oh, I see, don't worry about that build failure, it's because of some changes in HEAD that aren't merged into parametric
+2013-07-17 17:58:33 UTC <byorgey> but it should be fine
+2013-07-17 17:58:51 UTC <byorgey> mgsloan: great!  want to merge it?
+2013-07-17 17:58:53 UTC <mgsloan> If someone really needs the loopy semantics it shouldn't be all that hard to implement it
+2013-07-17 17:58:59 UTC <byorgey> agreed
+2013-07-17 17:59:57 UTC <byorgey> . o O ( cutLoop/splitAtParam are sort of like a combinatorial derivative... C' -> L; L' -> L^2 )
+2013-07-17 18:00:31 UTC <mgsloan> Ah, so this is your clever scheme to get me back to diagramsing!  It might just work :D
+2013-07-17 18:00:35 UTC <byorgey> muahahaha!!!
+2013-07-17 18:00:35 UTC <mgsloan> Sure I can merge it
+2013-07-17 18:00:36 UTC <byorgey> thanks =)
+2013-07-17 18:00:51 UTC <mgsloan> I have been itching to do a bit of opensource on the side
+2013-07-17 18:01:34 UTC <mgsloan> thanks for rescuing my parametrics code from obscurity! :D
+2013-07-17 18:03:42 UTC <byorgey> you're welcome!  I'd wanted to get around to it for a while but suddenly when working on arrows I had a specific reason to want it rather than just a general desire.
+2013-07-17 18:04:42 UTC <byorgey> mgsloan: I guess it's probably too far, but might you be at ICFP?
+2013-07-17 18:07:35 UTC <mgsloan> I'm considering going!  Afterall, it's closer than last year
+2013-07-17 18:07:58 UTC <byorgey> that's true =)
+2013-07-17 18:08:37 UTC <byorgey> fryguybob and I will be there, and hopefully luite
+2013-07-17 18:08:56 UTC <byorgey> mgsloan: have you even met fryguybob ?
+2013-07-17 18:09:19 UTC <mgsloan> I don't think so!  There's lots of the Haskell community that I haven't met
+2013-07-17 18:09:19 UTC <byorgey> I think you alternated Hac Phis
+2013-07-17 18:09:38 UTC <mgsloan> Yup, 'fraid so
+2013-07-17 18:09:55 UTC <byorgey> well in that case you simply *must* come. ;-)  I would love to get the two of you in the same room.
+2013-07-17 18:10:45 UTC <mgsloan> It would definitely be interesting to meet some GHC people, other than a few folks at hac phi / oplss, I haven't really met any of them
+2013-07-17 18:10:58 UTC <mgsloan> Yeah, that'd be fun!
+2013-07-17 18:12:07 UTC <byorgey> because you are both People Who Actually Know Stuff About Computational Geometry
+2013-07-17 18:12:10 UTC <byorgey> and also just cool people
+2013-07-17 18:12:45 UTC <byorgey> yeah, ICFP is a ton of fun for meeting people
+2013-07-17 18:15:52 UTC <mgsloan> Hmm, yeah, I'm sure it'd be a blast
+2013-07-17 18:16:00 UTC <mgsloan> I always go away from such things extra motivated
+2013-07-17 18:22:10 UTC <fryguybob> mgsloan: Yes come to ICFP!
+2013-07-17 18:26:11 UTC <luite> i might also come
+2013-07-17 18:27:12 UTC <luite> ah byorgey mentioned that
+2013-07-17 18:28:28 UTC <byorgey> oh, I think carter_away is coming too?
+2013-07-17 18:29:00 UTC <byorgey> not sure if there are any other #diagrams regulars planning to come
+2013-07-17 18:29:36 UTC <mgsloan> I'm certainly hoping to make it!  I know johnw is going, would be fun to see him in person too
+2013-07-17 18:31:34 UTC <byorgey> ah, yeah, I'm looking forward to meeting him too
+2013-07-17 18:31:56 UTC <byorgey> I guess you probably haven't met a whole lot of your coworkers in person, eh?
+2013-07-17 18:34:40 UTC <luite> hmm
+2013-07-17 18:46:36 UTC <carter_away> byorgey i hope to go
+2013-07-17 18:46:37 UTC <carter_away> yes
+2013-07-17 18:47:03 UTC <luite> ok, so they're still expecting me at nyc, and ryant apparently offered a couch, which i forgot :)
+2013-07-17 18:47:47 UTC <carter_away> luite yes
+2013-07-17 18:47:48 UTC <carter> luite i may have told them they needed to be more explicit about that :)
+2013-07-17 18:48:00 UTC <luite> ah
+2013-07-17 18:48:22 UTC <luite> tnx :)
+2013-07-17 18:48:37 UTC <carter> np
+2013-07-17 18:48:44 UTC <carter> i'm doing a lot of that lately
+2013-07-17 18:48:55 UTC <carter> luite relatedly: all the IOS Haskellers want TH :)
+2013-07-17 18:49:15 UTC <carter> ie they want your th cross compiler patch
+2013-07-17 18:49:21 UTC <luite> i'll try to stay 2 weeks then
+2013-07-17 18:49:31 UTC <luite> oh i'm not sure that's terribly usable for them
+2013-07-17 18:49:49 UTC <luite> since i can piggyback on the native compiler
+2013-07-17 18:50:15 UTC <luite> but perhaps with some changes, i haven't really thought it through though
+2013-07-17 18:50:27 UTC <carter> luite yeah
+2013-07-17 18:50:28 UTC <carter> the point being: you've already gotten part of the work done
+2013-07-17 18:50:53 UTC <luite> i want to finish the plugin-able ffi typechecking and desugaring first though
+2013-07-17 18:51:26 UTC <carter> are those tightly coupled?
+2013-07-17 18:52:39 UTC <luite> not with the th patch
+2013-07-17 18:52:45 UTC <carter> ok
+2013-07-17 18:53:08 UTC <carter> mainly the reason its better sooner rather than later is then the IOS folks can test it out / find bugs sooner 
+2013-07-17 18:53:21 UTC <carter> or mod it to work for them too
+2013-07-17 18:53:45 UTC <carter> even if near term that requires both native and cross compilers hooked in
+2013-07-17 18:53:49 UTC <carter> that'd still be nice 
+2013-07-17 18:54:01 UTC <luite> but there have been some changes in plugins, with some weird workarounds for global static data
+2013-07-17 18:54:26 UTC <carter> wellâ¦ ask people for help then!
+2013-07-17 18:54:48 UTC <carter> its faster than getting stuck
+2013-07-17 18:54:51 UTC <luite> oh i'm not stuck, i just need to work that workaround into the patch
+2013-07-17 18:55:03 UTC <luite> it already works if you link with the ghc api
+2013-07-17 18:55:04 UTC <carter> ok
+2013-07-17 18:55:20 UTC <carter> ah
+2013-07-17 18:55:22 UTC <carter> ok
+2013-07-17 18:55:23 UTC <carter> you're the expert (relatively)
+2013-07-17 18:55:39 UTC <luite> but the problem is that a statically linked ghc + static api lib for the plugin means two copies of the global data everywhere
+2013-07-17 18:55:51 UTC <luite> so if you use it as an actual plugin, it breaks
+2013-07-17 18:56:25 UTC <carter> oh
+2013-07-17 18:56:43 UTC <carter> and this is an issue for you (not TH) because ghcjs pretends to be a plugin
+2013-07-17 18:57:17 UTC <luite> no wait, this is for the typechecking stuff
+2013-07-17 18:57:53 UTC <luite> for the TH stuff, the problem is that i can let GHC load the static libs for the native platform, even though it is generating js code
+2013-07-17 18:57:54 UTC <carter> huh?
+2013-07-17 18:58:08 UTC <luite> which is probably not possible with a cross compiler
+2013-07-17 18:58:19 UTC <luite> because it's just a plugin for the native compiler
+2013-07-17 18:58:36 UTC <carter> huh
+2013-07-17 18:58:50 UTC <luite> err, bleh i'm saying that wrong, sorry, not a plugin
+2013-07-17 18:59:00 UTC <carter> its ok
+2013-07-17 18:59:29 UTC <luite> sorry for being incoherent, bleh, i hope my talkk wil be better :)
+2013-07-17 18:59:31 UTC <carter> luite more importantly: if you actively ping manuel, i think he would be willing to help 
+2013-07-17 18:59:37 UTC <carter> its ok, its late over there
+2013-07-17 18:59:47 UTC <luite> not really, 21:00 hours
+2013-07-17 19:00:06 UTC <carter> :P
+2013-07-17 19:00:20 UTC <luite> my productivity in the past week was rather abysmal, check my github activity, nonexistent :(
+2013-07-17 19:00:59 UTC <carter> its ok
+2013-07-17 19:01:06 UTC <carter> mine is 0 if you ignore issue tracker stuff
+2013-07-17 19:29:29 UTC <luite> mgsloan: do you know what you're doing with hotel for icfp? sharing a room with johnw?
+2013-07-17 19:30:05 UTC <mgsloan> luite: not sure if I'm going yet, but I dunno, I've heard that the ICFP hotel is pretty pricey
+2013-07-17 19:31:15 UTC <luite> yeah, i can't afford it for a whole week on my own. byorgey/fryguybob offered to share a room with me, which would be cool, but i dunno what you're doing
+2013-07-17 19:33:39 UTC <carter> mgsloan fpcomplete is covering right? :P
+2013-07-17 19:34:07 UTC <mgsloan> carter: Dunno, haven't brought it up yet!
+2013-07-17 19:34:11 UTC <carter> do it
+2013-07-17 19:34:14 UTC <luite> oh in that case mgsloan should offer to share it with me for free :p
+2013-07-17 19:34:17 UTC <carter> legit biz expese :P
+2013-07-17 19:34:38 UTC <carter> luite "submit" ghcjs as one of the demo apps for that contest
+2013-07-17 19:34:56 UTC <luite> that's not really a real world app
+2013-07-17 19:34:59 UTC <mgsloan> luite: Haha, yeah I'd definitely want to share a room if I go for the venue hotel
+2013-07-17 19:35:51 UTC <luite> i think the contest is a bit vague though... "submit arbitrary real world app" ?
+2013-07-17 19:36:05 UTC <carter> luite yes
+2013-07-17 19:36:12 UTC <mgsloan> I'm not sure if I could 100% justify it as a business expense, as I'd largely be going for personal enjoyment / benefit :D
+2013-07-17 19:36:19 UTC <carter> mgsloan you'll also be saying "i work at fp complete"
+2013-07-17 19:36:25 UTC <carter> and be both branding
+2013-07-17 19:36:27 UTC <luite> mgsloan: just pretend that you hate it then ;p
+2013-07-17 19:36:29 UTC <carter> and passively recruiting
+2013-07-17 19:36:39 UTC <carter> its good for the biz
+2013-07-17 19:36:51 UTC <carter> puts a Real World face
+2013-07-17 19:37:02 UTC <carter> and I don't mean RealWorld# ST monad IO stuff ;)
+2013-07-17 19:37:35 UTC <mgsloan> true true
+2013-07-17 19:39:00 UTC <carter> mgsloan no down side to asking
+2013-07-17 19:39:07 UTC <carter> worst case is same as not asking
+2013-07-17 19:39:23 UTC <mgsloan> yup!
+2013-07-17 19:39:44 UTC <carter> so do i t:)
+2013-07-17 19:39:52 UTC <carter> mgsloan have you seen llvm-general?
+2013-07-17 19:40:43 UTC <mgsloan> I haven't! looks neat
+2013-07-17 19:40:55 UTC <mgsloan> Is this what would be needed to write custom LLVM passes?
+2013-07-17 19:40:55 UTC <carter> essssssss
+2013-07-17 19:40:57 UTC <carter> *yessss
+2013-07-17 19:41:03 UTC <carter> mgsloan no, thats C++ :)
+2013-07-17 19:41:08 UTC <carter> this is for everything else but that
+2013-07-17 19:41:10 UTC <mgsloan> aww :/
+2013-07-17 19:41:32 UTC <carter> mgsloan custom passes are dylibs you give to llvm
+2013-07-17 19:42:04 UTC <carter> C++ ABI â¦. is kinda fictional
+2013-07-17 19:42:14 UTC <carter> Johnw was tellling me and some others about this recently
+2013-07-17 19:42:16 UTC <carter> ask ihim!
+2013-07-17 19:42:31 UTC <mgsloan> It'd be neat if you could have a custom pass that was informed by info from GHC.  I think I read recently that LLVM has a hard time with GHC's LLVM backend since it uses CPS
+2013-07-17 19:42:31 UTC <carter> mgsloan relaatedly: theres a #haskell-llvm :)
+2013-07-17 19:42:41 UTC <carter> mgsloan nope
+2013-07-17 19:42:43 UTC <carter> well
+2013-07-17 19:42:59 UTC <carter> part of the issue is that ghc doesn't pass as much meta data along 
+2013-07-17 19:43:05 UTC <mgsloan> right
+2013-07-17 19:43:33 UTC <mgsloan> So if you could write a custom LLVM pass that knew about the GHC metadata..
+2013-07-17 19:43:38 UTC <carter> mgsloan no
+2013-07-17 19:43:40 UTC <mgsloan> well, just a thought
+2013-07-17 19:43:48 UTC <mgsloan> Probably not a very well thought out thought ;)
+2013-07-17 19:43:49 UTC <carter> mgsloan let me tell you the two issues
+2013-07-17 19:43:55 UTC <carter> 1) we don't pass the aliasing info
+2013-07-17 19:44:51 UTC <luite> does ghc know much aliasing info?
+2013-07-17 19:44:55 UTC <carter> yes
+2013-07-17 19:45:08 UTC <carter> or at least you can deduce a lot pretty easily if you wanted to
+2013-07-17 19:45:31 UTC <luite> hmm
+2013-07-17 19:45:59 UTC <carter> theres a reason why UnsafePerformIO are unsafe :)
+2013-07-17 19:46:04 UTC <carter> and thats ok
+2013-07-17 19:46:19 UTC <carter> mgsloan the other thing missing is mem2reg
+2013-07-17 19:46:23 UTC <carter> which is fundamental
+2013-07-17 19:46:29 UTC <carter> to a lot of low hanging fruit
+2013-07-17 19:46:40 UTC <carter> llvm can't do it because it doesn't understand ghc stack
+2013-07-17 19:46:47 UTC <carter> would be worth doing it on the ghc side
+2013-07-17 19:47:10 UTC <carter> http://llvm.org/docs/Passes.html#passes-mem2reghttp://llvm.org/docs/Passes.html#scalarrepl-scalar-replacement-of-aggregates-dt
+2013-07-17 19:47:12 UTC <carter> http://llvm.org/docs/Passes.html#scalarrepl-scalar-replacement-of-aggregates-dt
+2013-07-17 19:47:15 UTC <carter> http://llvm.org/docs/Passes.html#passes-mem2reg
+2013-07-17 19:48:17 UTC <carter> mgsloan luite  http://ghc.haskell.org/trac/ghc/ticket/8048#comment:4 is a recent ticket that relates to this
+2013-07-17 19:53:16 UTC <mgsloan> interesting stuff!
+2013-07-17 19:53:53 UTC <carter> mgsloan i may investigate that rather than the AVX patches I was planning
+2013-07-17 19:53:58 UTC <mgsloan> It's good that existing solutions to this sort of thing can be pointed at
+2013-07-17 19:54:18 UTC <luite> http://acoutts.com/a1ex/dual_iso.pdf <- this is quite a cool hack, reprogramming the adc chip to do dual-iso readout for high dynamic range video (14 EV). now i want an EOS 5D Mark III :p
+2013-07-17 19:54:40 UTC <carter> luite first figure out people giving you money :)
+2013-07-17 19:55:24 UTC <mgsloan> carter: Yeah, if I'm understanding properly, this could have a lot of benefits even for non numerical code
+2013-07-17 19:55:24 UTC <carter> yes
+2013-07-17 19:55:25 UTC <carter> it'd make everythign faster
+2013-07-17 19:55:38 UTC <carter> AVX for reasons, won't always hlep
+2013-07-17 19:56:23 UTC <luite> carter: yeah i can't think of a reason why people would do that :p
+2013-07-17 19:56:57 UTC <carter> luite no, i mean it'd be a pain in the ass to make it supported sanely
+2013-07-17 19:57:18 UTC <carter> because the lazy way would be to make make -fllvm only work wiht LLVM HEAD (well, 3.4 )
+2013-07-17 19:57:22 UTC <carter> and say "NO"
+2013-07-17 19:57:25 UTC <carter> otherwise
+2013-07-17 19:57:30 UTC <carter> the "nice for users way"
+2013-07-17 19:57:39 UTC <carter> requires two different stack spilling and register schemes
+2013-07-17 19:58:40 UTC <mgsloan> luite: Wow, that does produce awesome photos
+2013-07-17 19:59:32 UTC <mgsloan> Savvy camera manufacturers will probably pick up this technique
+2013-07-17 19:59:36 UTC <luite> mgsloan: i think it's probably mostly useful for video
+2013-07-17 19:59:37 UTC <mgsloan> I hope!
+2013-07-17 19:59:40 UTC <mgsloan> Yup
+2013-07-17 19:59:46 UTC <luite> since you sacrifice vertical res
+2013-07-17 19:59:51 UTC <mgsloan> Which the 5D already dominates
+2013-07-17 20:00:35 UTC <luite> 5D is used a lot yeah, but some sony sensors have better dynamic range
+2013-07-17 20:00:56 UTC <carter> dynamic range is the yummiest of ranges
+2013-07-17 20:01:10 UTC <luite> canon needs to integrate their digital processing on the main cmos chip, like sony did
+2013-07-17 20:01:21 UTC <luite> that will get them 2-3EV of extra DR at low iso
+2013-07-17 20:02:07 UTC <mgsloan> I imagine at the price of costing more to manufacture, though
+2013-07-17 20:02:34 UTC <luite> probably, canon gets away with producing their current CMOS chips at an ancient 0.5um process
+2013-07-17 20:02:53 UTC <luite> with the digital electronics on the same chip they'd probably have to switch to something modern :)
+2013-07-17 20:04:08 UTC <luite> perhaps they've already upgraded their stuff to something better to make those new 40 megapixel 70D sensors
+2013-07-18 01:52:33 UTC <travis-ci> [travis-ci] 13diagrams-doc/06hakyll4 14e7d3f9e http://travis-ci.org/diagrams/diagrams-doc/builds/9211491 The build has errored.
+2013-07-18 02:43:15 UTC <mgsloan> byorgey: Hopefully that didn't break anything!  It builds but I can't run the tests atm
+2013-07-18 02:45:50 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 1421444c2 http://travis-ci.org/diagrams/diagrams-lib/builds/9212492 The build passed.
+2013-07-19 06:53:43 UTC <ClaudiusMaximus> is there an ascii art backend yet?
+2013-07-19 07:03:45 UTC <ClaudiusMaximus> actually what i want is a bit specific: reflowing cells of different sizes into a table with minimal width columns and minimal height rows given a fixed output text width
+2013-07-19 07:25:16 UTC <lpaste> ClaudiusMaximus pasted âpacking blocks outputâ at http://lpaste.net/91048
+2013-07-19 11:36:38 UTC <byorgey> s
+2013-07-19 11:36:47 UTC <byorgey> uhh, oops =)
+2013-07-19 11:36:57 UTC <byorgey> ClaudiusMaximus: no ascii art backend, sorry =)
+2013-07-19 13:40:21 UTC <notdan> http://paste.hskll.org/gallery 
+2013-07-19 13:40:30 UTC <notdan> Also, how do you like the improved design? :)
+2013-07-19 14:04:27 UTC <fryguybob> notdan: It looks nice!
+2013-07-19 14:06:58 UTC <luite> :)
+2013-07-19 14:14:43 UTC <fryguybob> byorgey: Do you know when things start off for ICFP?  Are you going to get there on the 21st or the 22nd?
+2013-07-19 14:26:23 UTC <luite> are you flying from jfk or ewr?
+2013-07-19 14:32:00 UTC <fryguybob> luite: Rochester or Buffalo, neither of which have direct flights :(
+2013-07-19 14:32:09 UTC <luite> ah ok
+2013-07-19 14:33:57 UTC <luite> ewr->bos is cheaper, is it difficult/expensive to get there from jfk?
+2013-07-19 14:36:09 UTC <fryguybob> I imagine JFK would have flights.  I'm at least 7 hours away from there though.
+2013-07-19 14:37:07 UTC <fryguybob> Humm, there are direct flights, but not in the morning.
+2013-07-19 14:37:57 UTC <fryguybob> I can get there around 10am on the 22nd.
+2013-07-19 14:38:24 UTC <luite> delta, american and jetblue have direct flights from jfk to boston
+2013-07-19 14:38:32 UTC <luite> 125-150 euro
+2013-07-19 14:45:45 UTC <luite> oh hmm, it's cheaper to go AMS -> PHL -> BOS  and then JFK -> AMS  return
+2013-07-19 14:52:08 UTC <luite> oh no wonder, 7:40 layover on PHL on the return flight
+2013-07-19 14:52:16 UTC <fryguybob> wow
+2013-07-19 14:52:30 UTC <fryguybob> That's not a layover, that's a holiday
+2013-07-19 16:00:24 UTC <notdan> http://orbt.io/QL4d.png http://orbt.io/QL4Q.png what do you think? I don't like that the output of the paste is below the code, but I don't know how to place it better
+2013-07-19 16:00:30 UTC <notdan> maybe it should go above?
+2013-07-19 16:01:10 UTC <mr-> what's wrong with "next to"?
+2013-07-19 16:11:58 UTC <notdan> what's "next to"?
+2013-07-19 17:33:23 UTC <byorgey> notdan: awesome!
+2013-07-19 17:33:44 UTC <byorgey> yes, I think the output should be above the code
+2013-07-19 17:35:49 UTC <byorgey> fryguybob: I plan to arrive the evening of the 21st, since I'm going to attend the Haskell Implementors' Workshop on the 22nd
+2013-07-19 17:36:19 UTC <byorgey> fryguybob: the Haskell Symposium is the 23rd-24th, then ICFP proper is 25-27, then FARM is on the 28th
+2013-07-19 17:39:33 UTC <byorgey> mr-: not enough space for both code and output next to each other, IMO
+2013-07-19 17:56:46 UTC <fryguybob> byorgey: Ok, I'll plan on the 21st also.
+2013-07-19 18:35:04 UTC <luite> byorgey: 8 nights? or are you leaving the 28th already?
+2013-07-19 18:37:56 UTC <byorgey> yes, I will leave the evening of the 28th
+2013-07-19 18:53:51 UTC <luite> ah
+2013-07-19 18:55:40 UTC <luite> at what time does it end? is a 6:39 pm flight too early?
+2013-07-19 18:57:03 UTC <byorgey> luite: FARM ends at 5pm, other things may end at different times.
+2013-07-19 18:57:57 UTC <byorgey> the hotel is right next to the airport so leaving at 5pm for a 6:39 flight might be OK, but then again it might be cutting it too close
+2013-07-19 18:58:09 UTC <byorgey> also depends whether it is a domestic or international flight
+2013-07-19 18:58:16 UTC <luite> domestic to nyc
+2013-07-19 18:58:18 UTC <byorgey> in any case you can always duck out a little early.
+2013-07-19 18:58:39 UTC <byorgey> it's probably fine then.
+2013-07-19 18:58:40 UTC <carter> luite might be cheaper to take the train
+2013-07-19 18:58:50 UTC <luite> oh there are later nonstop flights to ewr
+2013-07-19 18:59:23 UTC <byorgey> carter: we have already been over this.  the train is not actually that much cheaper than flying.
+2013-07-19 18:59:27 UTC <luite> carter: i'd be ok with that as well, what site to i check for timetables and fares?
+2013-07-19 18:59:27 UTC <byorgey> and it takes a lot longer.
+2013-07-19 18:59:29 UTC <carter> ok
+2013-07-19 18:59:33 UTC <carter> true
+2013-07-19 18:59:35 UTC <byorgey> luite: amtrak.com
+2013-07-19 18:59:47 UTC <carter> if byorgey says so
+2013-07-19 18:59:49 UTC <carter> :)
+2013-07-19 18:59:59 UTC <luite> flight is ~60 euro
+2013-07-19 19:00:10 UTC <carter> ah
+2013-07-19 19:00:11 UTC <carter> ok
+2013-07-19 19:00:12 UTC <luite> 80 usd (single)
+2013-07-19 19:00:18 UTC <carter> thts pretty good
+2013-07-19 19:00:18 UTC <carter> amtrak is same
+2013-07-19 19:00:21 UTC <carter> so do the flight
+2013-07-19 19:00:42 UTC <luite> that's delta to jfk or jetblue to ewr, what is the better airport?
+2013-07-19 19:00:57 UTC <carter> ewr is what again?
+2013-07-19 19:01:05 UTC <carter> oh
+2013-07-19 19:01:10 UTC <carter> jfk is in nyc
+2013-07-19 19:01:23 UTC <carter> http://web.mta.info/mta/airtrain.htm
+2013-07-19 19:01:28 UTC <luite> google suggested it as being more or less close ;p
+2013-07-19 19:02:17 UTC <luite> oh that airtrain is quite affordable
+2013-07-19 19:02:54 UTC <carter> and then its a 1ish hour subway ride to ryan's couch
+2013-07-19 19:03:48 UTC <luite> carter: do you get closer to the city center if you take amtrak?
+2013-07-19 19:04:02 UTC <carter> penn station is in manhattan
+2013-07-19 19:04:58 UTC <byorgey> actually EWR is closer to manhattan than JFK
+2013-07-19 19:05:04 UTC <carter> hrm
+2013-07-19 19:05:06 UTC <carter> you may be right
+2013-07-19 19:05:08 UTC <byorgey> at least distance-wise
+2013-07-19 19:05:13 UTC <carter> what transit would he do?
+2013-07-19 19:05:23 UTC <byorgey> I don't know, I'm just looking at a map =)
+2013-07-19 19:05:41 UTC <luite> EWR has later direct flights, so that would be more convenient
+2013-07-19 19:05:52 UTC <luite> amtrak is cheaper, $49, 4h train ride
+2013-07-19 19:06:20 UTC <byorgey> ah, that is a bit cheaper
+2013-07-19 19:07:51 UTC <byorgey> carter: do you know where Ryan lives, or wherever luite will be staying?
+2013-07-19 19:08:07 UTC <luite> if skytrain takes an hour, and then it's longer with the subway, then flying might not be too much faster
+2013-07-19 19:08:18 UTC <byorgey> yeah, you might be right
+2013-07-19 19:08:36 UTC <luite> and if it's a good train with power outlets and catering it's more comforable :p
+2013-07-19 19:08:42 UTC <byorgey> since the train takes you right into the middle of manhattan
+2013-07-19 19:08:47 UTC <byorgey> also true =)
+2013-07-19 19:09:06 UTC <byorgey> it will definitely have power outlets.  and probably food too.
+2013-07-19 19:09:25 UTC <byorgey> and the seats are bigger.
+2013-07-19 19:09:30 UTC <byorgey> (than a plane)
+2013-07-19 19:21:30 UTC <fryguybob> Humm upgrade to first class for only $775.00 more, so tempting.
+2013-07-19 19:21:36 UTC <luite> lol :(
+2013-07-19 19:22:40 UTC <carter> byorgey upper east side area of manahattan
+2013-07-19 19:30:53 UTC <mr-> luite: Use Amtrak if you've never done it before, it
+2013-07-19 19:31:15 UTC <mr-> 's quite an experience compared to european trains
+2013-07-19 19:31:23 UTC <carter> how so?
+2013-07-19 19:32:05 UTC <mr-> carter: I thought it feels quite like flying but extremely comfy. They even wake you at your stop!
+2013-07-19 19:32:18 UTC <carter> in europe?
+2013-07-19 19:32:21 UTC <carter> or amtrak?
+2013-07-19 19:32:25 UTC <mr-> amtrak
+2013-07-19 19:32:34 UTC <carter> ah
+2013-07-19 19:32:41 UTC <carter> acella is nice, shame its not much faster
+2013-07-19 19:32:44 UTC <carter> but both are pretty solid
+2013-07-19 19:32:58 UTC <carter> whats the european version?
+2013-07-19 19:33:33 UTC <carter> byorgey question: how much of diagrams would work with rational numbers and how much needs norms and floating point things?
+2013-07-19 19:33:52 UTC <luite> oh hmm, feeling like flying is a bad thing imho :)
+2013-07-19 19:34:00 UTC <mr-> Nobody cares if you miss your stop, you have to worry about space for your luggage, less space for your feet, ..
+2013-07-19 19:34:24 UTC <mr-> luite: in the sense that you check in your luggage and get it back in the trainstation at your destination
+2013-07-19 19:34:35 UTC <carter> mr-: I'd argue that amtrak is more spacious than an ariplain
+2013-07-19 19:34:39 UTC <carter> *airplane
+2013-07-19 19:34:56 UTC <luite> mr-: oh that's different indeed, but rather less convenient
+2013-07-19 19:35:10 UTC <mr-> luite: depends on how much you'd have to carry around :-)
+2013-07-19 19:35:35 UTC <luite> is it more comfortable than the european high speed trains?
+2013-07-19 19:35:38 UTC <carter> luite i keep my luggage with me on amtrack
+2013-07-19 19:35:40 UTC <luite> ice/tgv?
+2013-07-19 19:35:45 UTC <mr-> luite: yes
+2013-07-19 19:35:52 UTC <luite> oh cool
+2013-07-19 19:36:11 UTC <carter> just slower right/ :)
+2013-07-19 19:36:12 UTC <mr-> luite: much more space, at least in the trains I took
+2013-07-19 19:36:25 UTC <luite> and what kind of food do they have?
+2013-07-19 19:36:34 UTC <carter> shitty american food
+2013-07-19 19:36:38 UTC <luite> carter: how far is that with subway from penn station? ~20 mins?
+2013-07-19 19:36:43 UTC <carter> hehe
+2013-07-19 19:36:45 UTC <carter> 100ft
+2013-07-19 19:37:05 UTC <byorgey> carter: that's a good question.  There's quite a bit that would work with just rational numbers... but there some fundamental things need floating point.  I've never put in the effort to try to tease apart precisely what features require floating point.
+2013-07-19 19:37:32 UTC <carter> k
+2013-07-19 19:37:40 UTC <luite> carter: no i mean ryans place
+2013-07-19 19:37:42 UTC <carter> oh
+2013-07-19 19:37:57 UTC <carter> i don't recall his address
+2013-07-19 19:38:25 UTC <carter> but you'd take the 1,2, or  3 (either) from 34th st to 42nd, then take the shuttle, then take the 6 up to whatever stop he says
+2013-07-19 19:38:29 UTC <carter> idk where he's based 
+2013-07-19 19:38:33 UTC <carter> just upper east side
+2013-07-19 19:38:41 UTC <carter> pretty short subway ride though
+2013-07-19 19:43:13 UTC <carter> byorgey i've been trying to tease out how much numerical linear algebra i can do with just rationals
+2013-07-19 19:43:55 UTC <luite> at all, or in polynomial time?
+2013-07-19 19:44:31 UTC <mr-> What is numerical linear algebra?
+2013-07-19 19:44:52 UTC <carter> mr- : good question: solving math problems with numbers on a computer
+2013-07-19 19:44:59 UTC <carter> using linear algebra and solvers etc
+2013-07-19 19:45:20 UTC <carter> luite i'm only going to do rational algs i can make "exact"
+2013-07-19 19:45:36 UTC <mr-> Ok, but linear algebra works well with any field, such as the rationals.
+2013-07-19 19:45:43 UTC <carter> mr- nope
+2013-07-19 19:45:47 UTC <mr-> Sure
+2013-07-19 19:45:52 UTC <carter> many solver algorithms need square root
+2013-07-19 19:46:05 UTC <mr-> What are those solving?
+2013-07-19 19:46:12 UTC <carter> matrix factorizations
+2013-07-19 19:46:18 UTC <carter> eg: QR factorizations
+2013-07-19 19:46:26 UTC <carter> useful for finding the SVD
+2013-07-19 19:46:32 UTC <carter> or solving a least squares problem
+2013-07-19 19:46:33 UTC <carter> ec
+2013-07-19 19:46:35 UTC <carter> etc
+2013-07-19 19:46:45 UTC <carter> M = Q * R
+2013-07-19 19:46:47 UTC <carter> Q = unitary
+2013-07-19 19:46:57 UTC <carter> R upper triangular
+2013-07-19 19:47:31 UTC <mr-> Sorry, I know the math, but seem to be woefully unprepared when it comes to actual computations..
+2013-07-19 19:47:36 UTC <carter> mr- np
+2013-07-19 19:47:47 UTC <mr-> I was just thinking "Gauss", all the time ;_)
+2013-07-19 19:48:00 UTC <carter> numerical linear algebra is like an applied form of functional analysis on Finite dimensional spaces
+2013-07-19 19:48:15 UTC <carter> mr- gausian elimin is fine on rationals
+2013-07-19 19:48:23 UTC <carter> because exact
+2013-07-19 19:48:25 UTC <mr-> I know, that's why I was confused
+2013-07-19 19:48:27 UTC <carter> yes
+2013-07-19 19:48:43 UTC <carter> but say you want to do gram-schmidth orthogonalization
+2013-07-19 19:50:07 UTC <luite> exponential complexity though
+2013-07-19 19:50:33 UTC <carter> luite in the rational numbers?
+2013-07-19 19:50:40 UTC <carter> yeah
+2013-07-19 19:50:43 UTC <luite> carter: yeah the standard gauss elim algorithm
+2013-07-19 19:50:45 UTC <carter> not meant for speed
+2013-07-19 19:50:51 UTC <carter> luite ohh, the blow up
+2013-07-19 19:51:07 UTC <carter> luite funny thing though, the results will be the same 
+2013-07-19 19:51:14 UTC <carter> nor matter if you have the blow up in the mean time or onot
+2013-07-19 19:52:15 UTC <carter> your'e right
+2013-07-19 19:52:16 UTC <mr-> Yeah, gram-schmidt does not work, but just because you can't really normalize
+2013-07-19 19:52:25 UTC <carter> mr- actually found a paper that may evade that
+2013-07-19 19:53:17 UTC <carter> 	 "solving linear least squares problems by gram-schmidt orthogonalization" by ake bjÃ¶rck 1967
+2013-07-19 19:55:19 UTC <mr-> carter: but you are right, gram-schmidt doesn't exist in Q^n, because the reals don't act on Q^n (e.g. you can't normalize (1,1) in Q^2)
+2013-07-19 19:55:23 UTC <mr-> Am I confused again?
+2013-07-19 19:55:36 UTC <carter> mr- no
+2013-07-19 19:55:42 UTC <carter> its a slightly different alg
+2013-07-19 19:55:58 UTC <carter> your right though
+2013-07-19 19:56:03 UTC <carter> you can't do square roots
+2013-07-19 19:56:06 UTC <carter> or L2 norm
+2013-07-19 19:56:07 UTC <carter> on reals
+2013-07-19 19:56:20 UTC <carter> i mean Q
+2013-07-19 19:56:25 UTC <carter> grrr
+2013-07-19 19:56:29 UTC <mr-> :-)
+2013-07-19 19:56:54 UTC <carter> oo http://www.mai.liu.se/~akbjo/shanghai.pdf
+2013-07-19 19:57:05 UTC <carter> more recent talk by same dude
+2013-07-19 19:57:24 UTC <mr-> lol
+2013-07-19 20:00:45 UTC <mr-> Fun.. I've never relly considered the importance of the action of the reals (as domain of the norm) on the vectorspace
+2013-07-20 01:18:51 UTC <byorgey> bye all, I'm off to the Oregon coast with no Internet
+2013-07-20 01:18:54 UTC <byorgey> see you in a week =)
+2013-07-20 01:23:51 UTC <byorgey> I will still be logged in here though, so if you were hoping to take the opportunity to talk about me behind my back, tough luck
+2013-07-20 01:32:29 UTC <carter> enjoy !
+2013-07-20 01:32:37 UTC <byorgey> thanks!
+2013-07-20 01:34:33 UTC <carter> byorgey who knows, by the time your'e back haskell numerics will be changed for every :)
+2013-07-20 01:34:35 UTC <carter> *ever
+2013-07-20 01:34:36 UTC <carter> mahaha
+2013-07-20 01:37:36 UTC <byorgey> ACTION decides a week would be a long time to hold his breath
+2013-07-20 01:39:21 UTC <fryguybob> byorgey: Ooooo Oregon coast.
+2013-07-20 01:42:04 UTC <fryguybob> byorgey: Be sure to eat some blackberries while you are there.
+2013-07-20 01:42:14 UTC <byorgey> I'll try my best.
+2013-07-20 01:42:34 UTC <byorgey> my uncle is a food scientist specializing in berries so I don't think I'll have to try very hard.
+2013-07-20 01:43:15 UTC <fryguybob> Ah, excellent.  The sub-par berries that we have here are Judah's favorite food at the moment.
+2013-07-20 01:43:48 UTC <byorgey> nice.  Just wait until he has REAL berries.
+2013-07-20 01:44:13 UTC <byorgey> we took Noah blueberry picking last weekend.  I think he ate his weight in blueberries, straight off the bush.
+2013-07-20 01:56:33 UTC <carter> byorgey i do have some stuff open yet, i've just not promoted it :)
+2013-07-20 01:56:35 UTC <carter> shh
+2013-07-20 01:56:45 UTC <carter> i'll tell yah next week
+2013-07-20 02:30:27 UTC <byorgey> carter: ok, looking forward to it =)
+2013-07-20 02:31:10 UTC <carter> i have hasnumerics.com just in case it fails as a biz and is just a neat open source lib :)
+2013-07-20 09:51:38 UTC <notdan> howdy hi
+2013-07-20 11:02:09 UTC <notdan> http://paste.hskll.org/get/298 unicode also should work
+2013-07-20 11:42:20 UTC <luite> hehe i see you're using all the latest packages ;)
+2013-07-20 12:49:43 UTC <notdan> :)
+2013-07-20 15:27:54 UTC <qwebirc752502> can anyone help me with a problem installing diagrams in an hsenv from the repo
+2013-07-20 15:28:53 UTC <qwebirc752502> I try: cabal install diagrams-core/ diagrams-lib/ diagrams-contrib/ diagrams-svg/ and get: cabal: Could not resolve dependencies: trying: diagrams-core-0.6.1 rejecting: monoid-extras-0.2.2.3/installed-954... (conflict: diagrams-core => monoid-extras>=0.3 && <0.4) trying: monoid-extras-0.3.0.0 rejecting: diagrams-svg-0.6.1 (conflict: monoid-extras==0.3.0.0, diagrams-svg
+2013-07-20 15:46:19 UTC <fryguybob> qwebirc752502: Humm, perhaps you need to include the latest monoid-extras.
+2013-07-20 15:59:33 UTC <qwebirc752502> thanks - i'm not sure how but i got it.
+2013-07-21 16:55:26 UTC <notdan> Oh bummer, because of JavaScript online code editor thingy I now have more JS in my repo than I have Haskell: https://github.com/co-dan/interactive-diagrams
+2013-07-21 16:57:18 UTC <luite> hehe
+2013-07-28 18:10:06 UTC <byorgey> greetings!
+2013-07-28 18:11:22 UTC <byorgey> notdan: re: favicon, of course I don't mind, steal away =)
+2013-07-28 18:30:07 UTC <luite> :)
+2013-07-28 18:47:48 UTC <fryguybob> byorgey: You are back? so soon?
+2013-07-28 19:00:26 UTC <byorgey> fryguybob: what? I was gone a whole week!
+2013-07-28 19:01:29 UTC <byorgey> guess you didn't miss me very much ;)
+2013-07-28 19:03:00 UTC <luite> it was vewy vewy quiet here :(
+2013-07-28 19:04:09 UTC <byorgey> hehe
+2013-07-28 19:04:37 UTC <byorgey> well it's about to be a lot noisier since I am going to work on an 0.7 release this week
+2013-07-28 19:24:31 UTC <fryguybob> byorgey: I just figured the blackberries would keep you there for at least two weeks.
+2013-07-28 19:24:55 UTC <byorgey> I was sorely tempted
+2013-07-28 19:25:08 UTC <byorgey> we had berries pretty much for every meal
+2013-07-28 19:25:15 UTC <byorgey> Noah was in berry heaven
+2013-07-28 19:25:15 UTC <fryguybob> Nice
+2013-07-28 19:56:44 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 14082f90a http://travis-ci.org/diagrams/diagrams-haddock/builds/9582530 The build passed.
+2013-07-29 00:49:37 UTC <carter> byorgey egads your back
+2013-07-29 00:49:56 UTC <carter> i do have some code online, but still another week or so from publicizing :)
+2013-07-29 00:57:08 UTC <byorgey> carter: I suggest you stop predicting times in the future when you will do something.  I have long since stopped believing you. =)
+2013-07-29 00:57:14 UTC <carter> yes
+2013-07-29 00:57:19 UTC <carter> i don't believe myself either
+2013-07-29 00:57:27 UTC <carter> im my own biggest bottle neck
+2013-07-29 00:57:51 UTC <byorgey> however, I have no doubt that you are accomplishing stuff.
+2013-07-29 00:57:58 UTC <carter> true!
+2013-07-29 00:58:07 UTC <carter> spj said thankyou to me in an email last week!
+2013-07-29 00:58:12 UTC <luite> \o/
+2013-07-29 00:58:13 UTC <carter> that was awesome
+2013-07-29 00:58:13 UTC <byorgey> nice =)
+2013-07-29 00:58:48 UTC <luite> oh carter must also know things to do in the area
+2013-07-29 00:59:27 UTC <carter> i do! 
+2013-07-29 00:59:30 UTC <carter> luite context?
+2013-07-29 00:59:36 UTC <carter> was someone asking for things to do?
+2013-07-29 00:59:59 UTC <carter> honestly, i kinda want to nudge people into helping on hackage 2 more
+2013-07-29 01:00:01 UTC <luite> carter: what shouldn't i miss on a visit to boston, nyc?
+2013-07-29 01:00:03 UTC <carter> easier to test well
+2013-07-29 01:00:07 UTC <carter> hrmm
+2013-07-29 01:00:11 UTC <luite> hehe no not haskell this time, sorry ;)
+2013-07-29 01:00:21 UTC <carter> darn
+2013-07-29 01:00:30 UTC <carter> hrmm
+2013-07-29 01:00:33 UTC <carter> i'm a bad tourist
+2013-07-29 01:00:38 UTC <luite> nah i was asking byorgey for suggestions
+2013-07-29 01:00:45 UTC <carter> luite in boston you should wander through the mit area
+2013-07-29 01:00:50 UTC <carter> is a really cool neighborhood
+2013-07-29 01:00:56 UTC <carter> really industrial
+2013-07-29 01:00:59 UTC <luite> hmm
+2013-07-29 01:01:02 UTC <carter> i like the architecture
+2013-07-29 01:01:13 UTC <luite> oh i guess i should bring a camera
+2013-07-29 01:01:16 UTC <carter> otoh, i don't like yale's architecture and people call yale "hogwarts"
+2013-07-29 01:01:30 UTC <luite> or is that unsafe anywhere i can expect to go?
+2013-07-29 01:01:37 UTC <carter> nope, should be fine :)
+2013-07-29 01:01:47 UTC <carter> boston and nyc are very safe cities
+2013-07-29 01:02:08 UTC <carter> i walk around NYC carrying my laptop + wearing a floppy hat
+2013-07-29 01:04:16 UTC <carter> somehow carrying around a laptop+ reading some papers + having a pen+ paper notebook + floppy hat makes people ask me for directions in nyc 
+2013-07-29 01:04:18 UTC <carter> tis odd
+2013-07-29 01:04:39 UTC <luite> oh yale is in a more urban setting than i expected
+2013-07-29 01:04:57 UTC <carter> yale is ghetto as hell too
+2013-07-29 01:05:16 UTC <carter> dont go to new haven
+2013-07-29 01:07:47 UTC <luite> ok :)
+2013-07-29 01:10:46 UTC <carter> yay
+2013-07-29 01:17:08 UTC <carter> on the new york side, there is a tiny math museum
+2013-07-29 01:17:19 UTC <carter> + a museum of sex that I think is near the math museum
+2013-07-29 01:17:23 UTC <carter> plus lots of otehr museums
+2013-07-29 01:19:33 UTC <carter> also just wandering around will be fun honestly
+2013-07-29 01:20:50 UTC <luite> yeah i guess i'll do that :)
+2013-07-29 01:21:24 UTC <luite> momath?
+2013-07-29 01:21:38 UTC <carter> yeah
+2013-07-29 01:21:40 UTC <carter> its tiny
+2013-07-29 01:21:49 UTC <carter> errr
+2013-07-29 01:21:53 UTC <luite> oh that looks a bit like what they had in amsterdam, with those bikes
+2013-07-29 01:21:55 UTC <carter> or was it they charged a lot? 
+2013-07-29 01:22:06 UTC <carter> thres a LOT of good museums that say "donation"
+2013-07-29 01:22:07 UTC <luite> and minimal surfaces with soap bubbles
+2013-07-29 01:22:07 UTC <carter> but are free
+2013-07-29 01:22:29 UTC <luite> aimed at children mostly, but fun
+2013-07-29 01:22:44 UTC <carter> point being: research which museums don't require taking your money :)
+2013-07-29 01:22:48 UTC <carter> budgetting is hard 
+2013-07-29 01:27:19 UTC <luite> well i guess it would be a shame to miss out on some just because they aren't free?
+2013-07-29 01:28:04 UTC <carter> theres SO MANY
+2013-07-29 01:28:17 UTC <carter> how many days will you be in nyc?
+2013-07-29 01:29:28 UTC <carter> 'cause theres lots 
+2013-07-29 01:29:39 UTC <carter> and thers lots of things that aren't museums too
+2013-07-29 01:29:42 UTC <carter> not sure what 
+2013-07-29 01:29:43 UTC <carter> but lots
+2013-07-29 01:30:03 UTC <luite> dunno yet, i should make some rough plan, that's mostly why i was asking, for example whether to book my return flight from jfk or from somewhere else
+2013-07-29 01:31:00 UTC <carter> ask sclv for opinions too
+2013-07-29 01:31:02 UTC <carter> he probably has some
+2013-07-29 01:46:56 UTC <fryguybob> First mouse after a dormant six months or so... it begins.
+2013-07-29 01:59:28 UTC <byorgey> what, is the snake gone now?
+2013-07-29 02:00:13 UTC <luite> snaaaaake!
+2013-07-29 02:05:08 UTC <fryguybob> byorgey: We haven't seen the snake in a while.
+2013-07-29 03:58:19 UTC <carter> woah, a snake?
+2013-07-29 04:27:09 UTC <luite> mushroom mushroom
+2013-07-29 14:22:27 UTC <martingalemeasur> How do I render a scaleInvPrim using the SVG backend. I''m trying: main = defaultMain $ scaleInvPrim (circle 1 :: Path R2) unitX -- for example
+2013-07-29 15:06:21 UTC <fryguybob> martingalemeasur: Hi, I'm a little confused by your question.  What are you expecting?  Does that give you an error?
+2013-07-29 15:41:53 UTC <byorgey> martingalemeasur: note you have to  import Diagrams.TwoD.Transform
+2013-07-29 15:42:15 UTC <byorgey> scaleInvPrim is not intended for general users so we don't re-export it from Diagrams.Prelude
+2013-07-29 16:12:43 UTC <martingalemeasur> @fryguybob. I'm expecting a program that makes a circle. I'm getting  a empty diagram.
+2013-07-29 16:12:43 UTC <lambdabot> Unknown command, try @list
+2013-07-29 16:13:11 UTC <martingalemeasur> @byorgey. I am. I want to modify some of the Arrows.hs code to test my arrow heads.
+2013-07-29 16:13:11 UTC <lambdabot> Unknown command, try @list
+2013-07-29 16:15:38 UTC <byorgey> martingalemeasur: ah, that's because scaleInvPrim creates a diagram with an empty envelope (as explained in the scaleInvPrim documentation)
+2013-07-29 16:16:00 UTC <byorgey> martingalemeasur: try something like   scaleInvPrim ... <> square 2
