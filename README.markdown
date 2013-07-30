@@ -17,16 +17,16 @@ and more.
 
 To build the user manual, you will need:
 
-* GHC 7.4 (currently doesn't build under 7.6)
+* GHC 7.4 or 7.6
 * the diagrams framework itself (including the
   [contrib package](http://github.com/diagrams/diagrams-contrib),
   [cairo backend](http://github.com/diagrams/diagrams-cairo), and
   [diagrams-builder package](http://github.com/diagrams/diagrams-builder)
-installed with the `-fcairo` flag),
+  installed with the `-fcairo` flag),
 * the python [docutils suite](http://docutils.sourceforge.net/) (in
   particular `rst2xml` should be on your PATH),
 * the Haskell [docutils package](http://github.com/diagrams/docutils), and
-* [shake](http://hackage.haskell.org/package/shake) version 0.8 or later.
+* the latest version of [shake](http://hackage.haskell.org/package/shake).
 
 To build the website, you will additionally need
 
@@ -37,7 +37,7 @@ Once you have all the dependencies, simply do
 
     ghc --make Shake
     ./Shake preview
-    
+
 which will build the user manual and website, and run a web server on
 port 8000 serving a preview of the webiste.  Point your browser at
 `localhost:8000` to view it.
