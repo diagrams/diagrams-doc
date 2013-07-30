@@ -2619,17 +2619,14 @@ below code draws a tree of circles, using subdiagram traces (see
 > parentToChild child
 >   = withName "root" $ \rb ->
 >     withName child  $ \cb ->
->       atop (   fromMaybe origin (traceP (location rb) unitY rb)
->             ~~ fromMaybe origin (traceP (location cb) unit_Y cb))
+>       atop (boundaryFrom rb unit_Y ~~ boundaryFrom cb unitY)
 >
 > nodes  = root === strutY 2 === leaves
 >
 > example = nodes # applyAll (map parentToChild "abcde")
 
-.. container:: todo
-
-  Explain this example. Also, make some nicer tools so the code isn't
-  so terrible.  Reinstate 'boundaryFrom' function?
+Note the use of the `boundaryFrom` function, which uses the traces of
+the subdiagrams to compute suitable points on their boundary.
 
 Qualifying names
 ~~~~~~~~~~~~~~~~
