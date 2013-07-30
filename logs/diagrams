@@ -34665,3 +34665,72 @@
 2013-07-29 16:13:11 UTC <lambdabot> Unknown command, try @list
 2013-07-29 16:15:38 UTC <byorgey> martingalemeasur: ah, that's because scaleInvPrim creates a diagram with an empty envelope (as explained in the scaleInvPrim documentation)
 2013-07-29 16:16:00 UTC <byorgey> martingalemeasur: try something like   scaleInvPrim ... <> square 2
+2013-07-29 16:25:40 UTC <martingalemeasur> I was actually trying    stroke p <>h;  where h  = scaleInvPrim (ht (arrowHead opts) # moveTo e) unitX # fc black # lw 0; p is a straight line and ht gets the arrowhead
+2013-07-29 16:26:23 UTC <martingalemeasur> maybe i should email you some code -- it's still a bit raw.
+2013-07-29 16:30:34 UTC <byorgey> martingalemeasur: if p  is a horizontal or vertical line that will still have an infinitely thin envelope, which may cause problems depending on how you specify the requested size of the output
+2013-07-29 16:30:44 UTC <byorgey> but sure, you can send me some code
+2013-07-29 16:32:53 UTC <martingalemeasur> that's probably it, but i sent you the code anyway.
+2013-07-29 16:40:25 UTC <byorgey> martingalemeasur: ok, I got the code
+2013-07-29 16:40:41 UTC <byorgey> are you still having trouble?  What exactly should I be looking at?
+2013-07-29 17:05:14 UTC <travis-ci> [travis-ci] 13diagrams-svg/06master 1468ff35d http://travis-ci.org/diagrams/diagrams-svg/builds/9612588 The build passed.
+2013-07-29 17:06:25 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 147c7e897 http://travis-ci.org/diagrams/diagrams-lib/builds/9612628 The build passed.
+2013-07-29 17:20:07 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 144de3998 http://travis-ci.org/diagrams/diagrams-doc/builds/9611868 The build has errored.
+2013-07-29 17:20:50 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 14e03ea62 http://travis-ci.org/diagrams/diagrams-lib/builds/9613120 The build passed.
+2013-07-29 17:32:14 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14a2c0f45 http://travis-ci.org/diagrams/diagrams-doc/builds/9612683 The build has errored.
+2013-07-29 18:41:12 UTC <travis-ci> [travis-ci] 13diagrams-core/06master 146db32fb http://travis-ci.org/diagrams/diagrams-core/builds/9616277 The build passed.
+2013-07-29 18:45:29 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 144faee5b http://travis-ci.org/diagrams/diagrams-lib/builds/9616341 The build passed.
+2013-07-29 19:09:11 UTC <travis-ci> [travis-ci] 13diagrams-core/06master 1417776be http://travis-ci.org/diagrams/diagrams-core/builds/9617388 The build passed.
+2013-07-29 19:12:09 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 1480230f1 http://travis-ci.org/diagrams/diagrams-lib/builds/9617395 The build passed.
+2013-07-29 20:44:10 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 146785d2d http://travis-ci.org/diagrams/diagrams-lib/builds/9621016 The build passed.
+2013-07-29 20:52:42 UTC <travis-ci> [travis-ci] 13diagrams-core/06master 1471601e1 http://travis-ci.org/diagrams/diagrams-core/builds/9621480 The build passed.
+2013-07-29 21:31:49 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 14aa6e847 http://travis-ci.org/diagrams/diagrams-lib/builds/9622899 The build passed.
+2013-07-29 21:43:03 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 143c5fd38 http://travis-ci.org/diagrams/diagrams-lib/builds/9623337 The build passed.
+2013-07-29 21:48:51 UTC <travis-ci> [travis-ci] 13diagrams-core/06master 142d488b3 http://travis-ci.org/diagrams/diagrams-core/builds/9623579 The build passed.
+2013-07-29 21:53:51 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 1451186a9 http://travis-ci.org/diagrams/diagrams-lib/builds/9623642 The build passed.
+2013-07-29 21:56:09 UTC <travis-ci> [travis-ci] 13diagrams-postscript/06master 14839c724 http://travis-ci.org/diagrams/diagrams-postscript/builds/9623849 The build passed.
+2013-07-29 21:56:27 UTC <travis-ci> [travis-ci] 13diagrams-svg/06master 1489f60b7 http://travis-ci.org/diagrams/diagrams-svg/builds/9623788 The build passed.
+2013-07-30 12:11:32 UTC <ClaudiusMaximus> hi - i had a weird issue at the weekend, feeding some svgs from diagrams-cairo into a cutting maching (think plotter but with a knife instead of a pen..) - it went over every path twice, and debugging seemed to show there were indeed 2 copies of each path...
+2013-07-30 12:11:55 UTC <ClaudiusMaximus> is this a diagrams-cairo issue or something in diagrams, or maybe diagrams-contrib turtle?
+2013-07-30 12:12:46 UTC <ClaudiusMaximus> I'm thinking that it might be some duplication to make stroke/fill work properly? is there a way to turn off the duplication (eg: fill is useless with a plotter/cutter)
+2013-07-30 12:15:04 UTC <ClaudiusMaximus> hm, actually looking at the svg source makes me think it's a turtle issue..
+2013-07-30 12:16:32 UTC <ClaudiusMaximus> there's the path i made with turtle, followed by a duplicate but without the final "L x,y" and instead a "Z"
+2013-07-30 12:19:39 UTC <ClaudiusMaximus> (i better test with diagrams-contrib 0.6.1 before complaining further, i had an older version...)
+2013-07-30 13:08:21 UTC <byorgey> ClaudiusMaximus: interesting
+2013-07-30 13:09:08 UTC <byorgey> ClaudiusMaximus: if you send me a minimal .hs file which gives you that behavior, I can try it out with the latest HEAD version of everything
+2013-07-30 13:09:21 UTC <byorgey> I already have HEAD all built so it would be easier for me
+2013-07-30 13:13:36 UTC <hpaste> ClaudiusMaximus pasted âturtle duplicationâ at http://lpaste.net/91330
+2013-07-30 13:14:58 UTC <ClaudiusMaximus> byorgey: annotated it with output
+2013-07-30 13:27:51 UTC <byorgey> ClaudiusMaximus: thanks, taking a look now
+2013-07-30 13:39:53 UTC <fryguybob> ClaudiusMaximus: Out of curiosity what plotting software are you using?
+2013-07-30 13:40:55 UTC <ClaudiusMaximus> fryguybob: think it was whatever comes with silhouette cameo on OS X - not sure, it's my gf's
+2013-07-30 13:41:54 UTC <byorgey> ClaudiusMaximus: I can reproduce it with HEAD, and it does seem to be turtle-specific (at least, when I try drawing just 'square 1' I only get one path)
+2013-07-30 13:41:55 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06master 1414da44f http://travis-ci.org/diagrams/diagrams-contrib/builds/9648237 The build has errored.
+2013-07-30 13:43:52 UTC <ClaudiusMaximus> byorgey: cool, hope it can be fixed..
+2013-07-30 13:44:11 UTC <byorgey> interestingly, if I use the cairo backend I only get one path
+2013-07-30 13:44:20 UTC <byorgey> er, I mean if I use the SVG backend
+2013-07-30 13:44:38 UTC <ClaudiusMaximus> now that's odd..
+2013-07-30 13:44:42 UTC <byorgey> indeed
+2013-07-30 13:45:01 UTC <byorgey> so perhaps it is a bug in the cairo backend rather than in the turtle module itself
+2013-07-30 13:46:06 UTC <fryguybob> We used to get a lot of postscript files that would include the paths twice where one instance was for fill even if they didn't have a fill.
+2013-07-30 13:46:52 UTC <byorgey> yes, I wonder if that's what's going on
+2013-07-30 13:49:20 UTC <byorgey> hah, nope, it is a turtle bug
+2013-07-30 13:49:40 UTC <byorgey> now I am really confused why we only get one path with the SVG backend...
+2013-07-30 13:49:50 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06master 145353a82 http://travis-ci.org/diagrams/diagrams-contrib/builds/9648354 The build has errored.
+2013-07-30 13:51:19 UTC <byorgey> OH
+2013-07-30 13:51:46 UTC <byorgey> hehe, it would have helped, when I tested the SVG backend, if I had switched back to drawing the turtle stuff instead of 'square 1' =)
+2013-07-30 13:51:58 UTC <byorgey> the SVG backend gives a double path too.
+2013-07-30 13:52:30 UTC <ClaudiusMaximus> :)
+2013-07-30 13:54:33 UTC <fryguybob> ClaudiusMaximus: Looks like a fun little cutter.
+2013-07-30 13:56:00 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06master 1414da44f http://travis-ci.org/diagrams/diagrams-contrib/builds/9648237 The build has errored.
+2013-07-30 13:57:43 UTC <byorgey> I am gratified to know that when converting the Turtle module over to the new trail refactoring, I did such a good job that I even preserved existing bugs
+2013-07-30 13:59:14 UTC <ClaudiusMaximus> fryguybob: makes cool noises while it works too
+2013-07-30 14:13:06 UTC <fryguybob> ClaudiusMaximus: The only cutters of that size that I had seen were the Cricut cutter, but those charge for basic shapes.  It is quite the racket.
+2013-07-30 14:18:36 UTC <byorgey> ClaudiusMaximus: fixed =)
+2013-07-30 14:28:17 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06master 14e8e4856 http://travis-ci.org/diagrams/diagrams-contrib/builds/9649829 The build passed.
+2013-07-30 14:40:28 UTC <ClaudiusMaximus> yay
+2013-07-30 18:00:26 UTC <byorgey> martingalemeasur: just sent you some emails re: arrowheads, and helping with the 0.7 release
+2013-07-30 18:38:00 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 141ba2e63 http://travis-ci.org/diagrams/diagrams-lib/builds/9660599 The build passed.
+2013-07-30 18:39:43 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 147f6c8f9 http://travis-ci.org/diagrams/diagrams-doc/builds/9660680 The build has errored.
+2013-07-30 18:52:02 UTC <travis-ci> [travis-ci] 13diagrams/06master 14f690266 http://travis-ci.org/diagrams/diagrams/builds/9661035 The build has errored.
+2013-07-30 19:00:45 UTC <travis-ci> [travis-ci] 13diagrams-builder/06master 14b286e6d http://travis-ci.org/diagrams/diagrams-builder/builds/9661114 The build passed.
+2013-07-30 19:11:56 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 14f708287 http://travis-ci.org/diagrams/diagrams-haddock/builds/9661370 The build passed.
