@@ -34,18 +34,11 @@ main = hakyll $ do
     -- User manual --------------------------------
     match "manual/diagrams-manual.html" $ do
       route idRoute
-      compile (readItemCompiler >>>
-               addDefaultFields >>>
-               arr (setField "title" "User manual") >>>
-               mainCompiler)
+      let manualCtx = constField "title" "User manual" `mappend` defaultContext
+      compile (getResourceBody >>= mainCompiler manualCtx)
 
-    match (predicate (\i -> matches "manual/**" i
-                         && not (matches "manual/*.html" i)
-                         && not (matches "manual/manual" i)
-                         -- above needed due to some sort of weird bug in shake?? =(
-                     )
-          )
-      $ do
+    match ("manual/**" .&&. complement "manual/*.html" .&&. complement "manual/manual") $ do
+                         -- last pattern needed due to some sort of weird bug in shake?? =(
         route idRoute
         compile copyFileCompiler
 
@@ -108,7 +101,7 @@ main = hakyll $ do
       -- metadata first
     group "raw" $ forM_ lhs $ flip match $ do
         route idRoute
-        compile (readItemCompiler >>^ pageBody)
+        compile (getResourceBody >>= pageBody)
 
 withMathJax :: Compiler (Item String)
 withMathJax =
@@ -132,29 +125,38 @@ compilePng isThumb resource = do
     moduleName = takeBaseName $ unResource resource
     tmpPath    = "/tmp/" ++ moduleName ++ (if isThumb then "-thumb" else "") ++ ".png"
 
-mainCompiler :: Item String -> Compiler (Item String)
-mainCompiler = loadAndApplyTemplate "templates/default.html" undefined -- context
-           >=> relativizeUrls
+mainCompiler :: Context String -> Item String -> Compiler (Item String)
+mainCompiler ctx = loadAndApplyTemplate "templates/default.html" ctx
+               >=> relativizeUrls
 
-setThumbURL, setImgURL, setHtmlURL :: Item a -> Item a
+setThumbURL, setImgURL, setHtmlURL :: Context String
 setThumbURL  = setURL "-thumb.png"
 setImgURL    = setURL "png"
 setHtmlURL   = setURL "html"
 
-setURL :: String -> Item a -> Item a
-setURL ext p = trySetField (extNm ++ "url") fieldVal p
+setURL :: String -> Context String
+setURL ext = field (extNm ++ "url") fieldVal
   where extNm = filter isAlphaNum ext
-        fieldVal = dropExtension (getField "url" p) ++ ext'
+        fieldVal i = do
+          u <- getMetadataField' (itemIdentifier i) "url"
+          return (dropExtension u ++ ext')
         ext' | '.' `elem` ext = ext
              | otherwise      = '.' : ext
 
-pandocFields :: [String] -> Item String -> Item String
-pandocFields = foldr (.) id . map pandocField
+pandocFieldsCtx :: [String] -> Context String
+pandocFieldsCtx = mconcat . map pandocFieldCtx
 
-pandocField :: String -> Item String -> Item String
-pandocField f p = setField f newField p
-  where newField = writePandoc . readPandoc Markdown Nothing $ getField f p
+pandocFieldCtx :: String -> Context String
+pandocFieldCtx f = mapField f (writePandoc . readPandoc Markdown Nothing)
 
+mapField :: String -> (String -> String) -> Context a
+mapField k f = field k comp
+  where
+    comp i = do
+      ms <- getMetadataField (itemIdentifier i) k
+      case ms of
+        Nothing -> return ""
+        Just s  -> return (f s)
 
 buildGallery :: Compiler (Item String, [Item String]) (Item String)
 buildGallery = second (mapCompiler compileExample >>> sortDate >>> arr (map pageBody))
