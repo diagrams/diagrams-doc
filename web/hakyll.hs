@@ -66,7 +66,8 @@ main = hakyll $ do
     -- Example gallery ----------------------------
 
       -- make all gallery/*.lhs available for building gallery.html
-    match "gallery/*.lhs" $ compile (pandocCompiler >>^ (setHtmlURL . setImgURL))
+    match "gallery/*.lhs" $ compile pandocCompiler
+       -- >>^ (setHtmlURL . setImgURL))  -- XXX can we just delete these?
 
       -- build gallery.html from gallery.markdown and gallery/*.lhs
       -- note the inGroup Nothing, which ensures we don't get
@@ -75,9 +76,10 @@ main = hakyll $ do
     match "gallery.markdown" $ do
         route $ setExtension "html"
 
-        compile $ pandocCompiler
-            >>> requireAllA ("gallery/*.lhs" `mappend` inGroup Nothing) buildGallery
-            >>> mainCompiler
+        compile $ do
+          gall <- pandocCompiler
+          lhss <- loadAll ("gallery/*.lhs" .&&. hasNoVersion)
+          buildGallery gall lhss >>= mainCompiler (setHtmlURL `mappend` setImgURL `mappend` defaultContext)
 
       -- generate .png from .lhs
     match "gallery/*.lhs" $ version "png" $ do
@@ -158,7 +160,7 @@ mapField k f = field k comp
         Nothing -> return ""
         Just s  -> return (f s)
 
-buildGallery :: Compiler (Item String, [Item String]) (Item String)
+buildGallery :: Item String -> [Item String] -> Compiler (Item String)
 buildGallery = second (mapCompiler compileExample >>> sortDate >>> arr (map pageBody))
                >>> arr (\(bod, exs) -> modBody (++ (concat exs)) bod)
   where sortDate = arr (sortBy $ flip (comparing (getField "date")))
