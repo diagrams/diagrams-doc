@@ -16,7 +16,7 @@
   + [X] re-export stuff from -core in -lib
     + [X] Query stuff -- new Query module in -lib? query, sample,
       value, resetValue, clearValue
-  + [ ] add boundaryFrom or something like that? (see migration page)
+  + [X] add boundaryFrom or something like that? (see migration page)
   + [ ] migrate website to Hakyll 4
   + [ ] fix user manual examples
   + [ ] update user manual
@@ -24,17 +24,17 @@
   + [ ] make sure postscript backend is in user manual
   + [ ] add -core and -lib examples with diagrams-haddock
   + [X] close other tickets with 0.7 milestone
-  + [-] bump versions and deps to 0.7
+  + [X] bump versions and deps to 0.7
     + [X] diagrams-core
     + [X] diagrams-lib
     + [X] diagrams-cairo
     + [X] diagrams-svg
-    + [ ] diagrams-gtk
+    + [X] diagrams-gtk
     + [X] diagrams-postscript
-    + [ ] diagrams-contrib
-    + [ ] diagrams
-    + [ ] diagrams-builder
-    + [ ] diagrams-haddock
+    + [X] diagrams-contrib
+    + [X] diagrams
+    + [X] diagrams-builder
+    + [X] diagrams-haddock
   + [ ] build API docs
   + [ ] update CHANGES files and release info on website
     + [ ] diagrams-core
@@ -52,6 +52,7 @@
   + [ ] test build:
     - [ ] ghc 7.4.2
     - [ ] ghc 7.6.1
+    - [ ] ghc HEAD
     - [ ] update tested-with fields
   + [ ] write announcement for blog + email
     + [ ] list major new features since 0.6
