@@ -649,8 +649,9 @@ The `Angle` type class classifies types which measure two-dimensional
 angles.  Three instances are provided by default (you can, of course,
 also make your own):
 
-* `CircleFrac` represents fractions of a circle.  A value of `1`
-  represents a full turn.
+* `Turn` represents fractions of a circle.  A value of `1`
+  represents a full turn, `1/4 :: Turn` represents a right angle, and
+  so on.
 * `Rad` represents angles measured in radians.  A value of `tau` (that
   is, `\tau = 2 \pi`:math:) represents a full turn. (If you haven't heard of
   `\tau`:math:, see `The Tau Manifesto`__.)
@@ -798,7 +799,7 @@ optional arguments that control the generated polygon:
 
 > poly1 = polygon with { polyType   = PolyRegular 13 5
 >                      , polyOrient = OrientV }
-> poly2 = polygon with { polyType   = PolyPolar (repeat (1/40 :: CircleFrac))
+> poly2 = polygon with { polyType   = PolyPolar (repeat (1/40 :: Turn))
 >                                               (take 40 $ cycle [2,7,4,6]) }
 > example = (poly1 ||| strutX 1 ||| poly2) # lw 0.05
 
@@ -1339,7 +1340,7 @@ Use `rotate` to rotate a diagram counterclockwise by a given angle__
 about the origin.  Since `rotate` takes an angle, you must specify an
 angle type, such as `rotate (80 :: Deg)`.  In the common case that you
 wish to rotate by an angle specified as a certain fraction of a
-circle, like `rotate (1/8 :: CircleFrac)`, you can use `rotateBy`
+circle, like `rotate (1/8 :: Turn)`, you can use `rotateBy`
 instead. `rotateBy` is specialized to only accept fractions of a
 circle, so in this example you would only have to write
 `rotateBy (1/8)`.
@@ -1422,7 +1423,7 @@ along the diagonal line `y = x`:math: can be accomplished thus:
 ::
 
 > eff = text "F" <> square 1 # lw 0
-> example = (scaleX 2 `under` rotation (-1/8 :: CircleFrac)) eff
+> example = (scaleX 2 `under` rotation (-1/8 :: Turn)) eff
 
 The letter F is first rotated so that the desired scaling axis lies
 along the `x`:math:\-axis; then `scaleX` is performed; then it is rotated back
@@ -2515,12 +2516,12 @@ diagrams.
 
 So here's how `withName` works.  Suppose we call it with the arguments
 `withName n f d`.  If some subdiagram of `d` has the name `n`, then
-`f` is called with the located envelope associated with `n`
-as its first argument, and `d` itself as its second argument.  So we
-get to transform `d` based on information about where the subdiagram
-named `n` is located within it.  And what if there is no subdiagram
-named `n` in `d`? In that case `f` is ignored, and `d` is returned
-unmodified.
+`f` is called with that subdiagram as its first argument, and `d`
+itself as its second argument.  So we get to transform `d` based on
+information about the given subdiagram, and its context within the
+parent diagram `d` (for example, its location, attributes applied to
+it, and so on).  And what if there is no subdiagram named `n` in `d`?
+In that case `f` is ignored, and `d` is returned unmodified.
 
 Here's a simple example making use of names to draw a line connecting
 the centers of two subdiagrams.
@@ -2548,9 +2549,9 @@ denoted by the two names.  Note how the two calls to `withName` are
 chained, and how we have written the second arguments to `withName`
 using lambda expressions (this is a common style).  Finally, we draw a
 line between the two points (using the `location` function to access
-the base points of the located envelopes), give it a style, and
-specify that it should be layered on top of the diagram given as the
-third argument to `connect`.
+the locations of the subdiagrams within the parent diagram), give it a
+style, and specify that it should be layered on top of the diagram
+given as the third argument to `connect`.
 
 We then draw a square and a circle, give them names, and use `connect`
 to draw a line between their centers.  Of course, in this example, it
@@ -2561,7 +2562,7 @@ examples such manual calculation can be quite out of the question.
 `withName` also has two other useful variants:
 
 * `withNameAll` takes a single name and makes available a list of
-  *all* located envelopes associated with that name.
+  *all* subdiagrams associated with that name.
   (`withName`, by contrast, returns only the most recent.)  This is
   useful when you want to work with a collection of named subdiagrams all
   at once.
@@ -2618,17 +2619,14 @@ below code draws a tree of circles, using subdiagram traces (see
 > parentToChild child
 >   = withName "root" $ \rb ->
 >     withName child  $ \cb ->
->       atop (   fromMaybe origin (traceP (location rb) unitY rb)
->             ~~ fromMaybe origin (traceP (location cb) unit_Y cb))
+>       atop (boundaryFrom rb unit_Y ~~ boundaryFrom cb unitY)
 >
 > nodes  = root === strutY 2 === leaves
 >
 > example = nodes # applyAll (map parentToChild "abcde")
 
-.. container:: todo
-
-  Explain this example. Also, make some nicer tools so the code isn't
-  so terrible.  Reinstate 'boundaryFrom' function?
+Note the use of the `boundaryFrom` function, which uses the traces of
+the subdiagrams to compute suitable points on their boundary.
 
 Qualifying names
 ~~~~~~~~~~~~~~~~
@@ -2895,7 +2893,7 @@ the right are wrapped in `ScaleInv` but the ones on the left are not.
 >             (map (centerX . showT)
 >               [ scalingX (1/2)
 >               , scalingY 2
->               , scalingX (1/2) <> rotation (-1/12 :: CircleFrac)
+>               , scalingX (1/2) <> rotation (-1/12 :: Turn)
 >               ])
 
 Type reference
