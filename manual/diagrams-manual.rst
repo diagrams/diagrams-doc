@@ -2516,12 +2516,12 @@ diagrams.
 
 So here's how `withName` works.  Suppose we call it with the arguments
 `withName n f d`.  If some subdiagram of `d` has the name `n`, then
-`f` is called with the located envelope associated with `n`
-as its first argument, and `d` itself as its second argument.  So we
-get to transform `d` based on information about where the subdiagram
-named `n` is located within it.  And what if there is no subdiagram
-named `n` in `d`? In that case `f` is ignored, and `d` is returned
-unmodified.
+`f` is called with that subdiagram as its first argument, and `d`
+itself as its second argument.  So we get to transform `d` based on
+information about the given subdiagram, and its context within the
+parent diagram `d` (for example, its location, attributes applied to
+it, and so on).  And what if there is no subdiagram named `n` in `d`?
+In that case `f` is ignored, and `d` is returned unmodified.
 
 Here's a simple example making use of names to draw a line connecting
 the centers of two subdiagrams.
@@ -2549,9 +2549,9 @@ denoted by the two names.  Note how the two calls to `withName` are
 chained, and how we have written the second arguments to `withName`
 using lambda expressions (this is a common style).  Finally, we draw a
 line between the two points (using the `location` function to access
-the base points of the located envelopes), give it a style, and
-specify that it should be layered on top of the diagram given as the
-third argument to `connect`.
+the locations of the subdiagrams within the parent diagram), give it a
+style, and specify that it should be layered on top of the diagram
+given as the third argument to `connect`.
 
 We then draw a square and a circle, give them names, and use `connect`
 to draw a line between their centers.  Of course, in this example, it
@@ -2562,7 +2562,7 @@ examples such manual calculation can be quite out of the question.
 `withName` also has two other useful variants:
 
 * `withNameAll` takes a single name and makes available a list of
-  *all* located envelopes associated with that name.
+  *all* subdiagrams associated with that name.
   (`withName`, by contrast, returns only the most recent.)  This is
   useful when you want to work with a collection of named subdiagrams all
   at once.
