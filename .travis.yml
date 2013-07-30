@@ -26,6 +26,7 @@ before_script: ghc --make Shake
 script: ./Shake
 
 notifications:
+  email: false
   irc:
     channels:
       - "irc.freenode.org#diagrams"

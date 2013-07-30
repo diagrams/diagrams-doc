@@ -34734,3 +34734,6 @@
 2013-07-30 18:52:02 UTC <travis-ci> [travis-ci] 13diagrams/06master 14f690266 http://travis-ci.org/diagrams/diagrams/builds/9661035 The build has errored.
 2013-07-30 19:00:45 UTC <travis-ci> [travis-ci] 13diagrams-builder/06master 14b286e6d http://travis-ci.org/diagrams/diagrams-builder/builds/9661114 The build passed.
 2013-07-30 19:11:56 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 14f708287 http://travis-ci.org/diagrams/diagrams-haddock/builds/9661370 The build passed.
+2013-07-30 19:52:00 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 140f22e9d http://travis-ci.org/diagrams/diagrams-doc/builds/9663028 The build has errored.
+2013-07-30 20:17:35 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14a2c0f45 http://travis-ci.org/diagrams/diagrams-doc/builds/9612683 The build is still failing.
+2013-07-30 20:31:51 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14668458b http://travis-ci.org/diagrams/diagrams-doc/builds/9663639 The build has errored.
