@@ -67,7 +67,7 @@ main = do
     copyImages
 
     addOracle $ \(GhcPkg _) -> do
-      (out,_) <- systemOutput "ghc-pkg" ["list","--simple-output"]
+      (out,_) <- systemOutput "ghc-pkg" ["dump"]
       return $ words out
 
     return ()
