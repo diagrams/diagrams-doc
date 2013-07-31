@@ -3,7 +3,9 @@
 
 import           Control.Monad          (forM_, (>=>))
 import           Data.Char              (isAlphaNum)
+import           Data.Functor           ((<$>))
 import           Data.List              (sortBy)
+import           Data.Maybe             (fromMaybe)
 import           Data.Monoid
 import           Data.Ord               (comparing)
 
@@ -61,13 +63,12 @@ main = hakyll $ do
     -- Normal .html pages, built from .markdown ---
     forM_ pages $ flip match $ do
         route   $ setExtension "html"
-        compile $ pandocCompiler >>= mainCompiler
+        compile $ pandocCompiler >>= mainCompiler defaultContext
 
     -- Example gallery ----------------------------
 
       -- make all gallery/*.lhs available for building gallery.html
     match "gallery/*.lhs" $ compile pandocCompiler
-       -- >>^ (setHtmlURL . setImgURL))  -- XXX can we just delete these?
 
       -- build gallery.html from gallery.markdown and gallery/*.lhs
       -- note the inGroup Nothing, which ensures we don't get
@@ -77,33 +78,49 @@ main = hakyll $ do
         route $ setExtension "html"
 
         compile $ do
-          gall <- pandocCompiler
+          galleryContent <- pandocCompiler
           lhss <- loadAll ("gallery/*.lhs" .&&. hasNoVersion)
-          buildGallery gall lhss >>= mainCompiler (setHtmlURL `mappend` setImgURL `mappend` defaultContext)
+          gallery <- buildGallery galleryContent lhss
+          mainCompiler
+            ( mconcat
+              [ setHtmlURL
+              , setImgURL
+              , defaultContext
+              ]
+            )
+            gallery
 
       -- generate .png from .lhs
     match "gallery/*.lhs" $ version "png" $ do
         route $ setExtension "png"
-        compile $ unsafeCompiler (compilePng False)
+        compile $ do
+          i <- getUnderlying
+          unsafeCompiler (compilePng False i)
 
     match "gallery/*.lhs" $ version "png-thumb" $ do
         route $ gsubRoute ".lhs" (const "-thumb.png")
-        compile $ unsafeCompiler (compilePng True)
+        compile $ do
+          i <- getUnderlying
+          unsafeCompiler (compilePng True i)
 
       -- build syntax-highlighted source code for examples
     match "gallery/*.lhs" $ version "gallery" $ do
         route $ setExtension "html"
         compile $ withMathJax
-            >>> arr setImgURL
-            >>> arr (pandocFields ["description"])
-            >>> applyTemplateCompiler "templates/exampleHi.html"
-            >>> mainCompiler
+            >>= loadAndApplyTemplate "templates/exampleHi.html"
+                  ( mconcat
+                    [ setImgURL
+--                    , pandocFieldsCtx ["description"]
+                    , defaultContext
+                    ]
+                  )
+            >>= mainCompiler defaultContext
 
       -- export raw .lhs of examples for download, stripping off the
       -- metadata first
-    group "raw" $ forM_ lhs $ flip match $ do
+    forM_ lhsPages $ \l -> match l $ version "raw" $ do
         route idRoute
-        compile (getResourceBody >>= pageBody)
+        compile getResourceBody
 
 withMathJax :: Compiler (Item String)
 withMathJax =
@@ -117,14 +134,14 @@ withMathJax =
           = RawInline "html" ("\\[" ++ str ++ "\\]")
         latexToMathJax x = x
 
-compilePng :: Bool -> Resource -> IO LB.ByteString
-compilePng isThumb resource = do
+compilePng :: Bool -> Identifier -> IO (Item LB.ByteString)
+compilePng isThumb i = do
     let thumbFlag | isThumb   = "--thumb 175 "
                   | otherwise = ""
     _ <- system $ "cd gallery && ../../.make/web/gallery/Build.hs.exe " ++ thumbFlag ++ moduleName ++ " " ++ tmpPath
-    LB.readFile tmpPath
+    Item i <$> LB.readFile tmpPath
   where
-    moduleName = takeBaseName $ unResource resource
+    moduleName = takeBaseName $ toFilePath i
     tmpPath    = "/tmp/" ++ moduleName ++ (if isThumb then "-thumb" else "") ++ ".png"
 
 mainCompiler :: Context String -> Item String -> Compiler (Item String)
@@ -145,37 +162,41 @@ setURL ext = field (extNm ++ "url") fieldVal
         ext' | '.' `elem` ext = ext
              | otherwise      = '.' : ext
 
-pandocFieldsCtx :: [String] -> Context String
-pandocFieldsCtx = mconcat . map pandocFieldCtx
+-- pandocFieldsCtx :: [String] -> Context String
+-- pandocFieldsCtx = mconcat . map pandocFieldCtx
 
-pandocFieldCtx :: String -> Context String
-pandocFieldCtx f = mapField f (writePandoc . readPandoc Markdown Nothing)
+-- pandocFieldCtx :: String -> Context String
+-- pandocFieldCtx f = mapField f (writePandoc . readPandoc)
 
-mapField :: String -> (String -> String) -> Context a
-mapField k f = field k comp
-  where
-    comp i = do
-      ms <- getMetadataField (itemIdentifier i) k
-      case ms of
-        Nothing -> return ""
-        Just s  -> return (f s)
+-- mapField :: String -> (Item String -> Item String) -> Context a
+-- mapField k f = field k comp
+--   where
+--     comp i = maybe "" f <$> getMetadataField (itemIdentifier i) k
 
 buildGallery :: Item String -> [Item String] -> Compiler (Item String)
-buildGallery = second (mapCompiler compileExample >>> sortDate >>> arr (map pageBody))
-               >>> arr (\(bod, exs) -> modBody (++ (concat exs)) bod)
-  where sortDate = arr (sortBy $ flip (comparing (getField "date")))
+buildGallery content lhss = do
+  lhss' <- mapM addDate lhss
+  exs   <- mapM compileExample . map snd . sortBy (comparing fst) $ lhss'
+  return (fmap (++ (concatMap itemBody exs)) content)
+  where
+    addDate lhs = do
+      d <- fromMaybe "" <$> getMetadataField (itemIdentifier lhs) "date"
+      return (d,lhs)
 
-compileExample :: Compiler (Item String) (Item String)
-compileExample = (setHtmlURL . setThumbURL) ^>> applyTemplateCompiler "templates/example.html"
+compileExample :: Item String -> Compiler (Item String)
+compileExample = loadAndApplyTemplate "templates/example.html"
+                 ( mconcat
+                   [ setHtmlURL
+                   , setThumbURL
+                   , defaultContext
+                   ]
+                 )
 
-modBody :: (a -> b) -> Item a -> Item b
-modBody f p = p { pageBody = f (pageBody p) }
+pages, mdPages, lhsPages :: IsString s => [s]
 
-pages, md, lhs :: IsString s => [s]
+pages = mdPages ++ lhsPages
 
-pages = md ++ lhs
-
-md = map (fromString . (++".markdown"))
+mdPages = map (fromString . (++".markdown"))
   [ "index"
   , "download"
   , "documentation"
@@ -183,4 +204,4 @@ md = map (fromString . (++".markdown"))
   , "releases"
   ]
 
-lhs = [ "tutorial/DiagramsTutorial.lhs", "gallery/*.lhs" ]
+lhsPages = [ "tutorial/DiagramsTutorial.lhs", "gallery/*.lhs" ]
