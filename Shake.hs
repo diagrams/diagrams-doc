@@ -107,6 +107,7 @@ runWeb m = do
   alwaysRerun
   needWeb
 
+  system' "rm" ["dist/manual/manual"] -- work around weird bug(?)
   systemCwd "web" (".." </> obj "web/hakyll.hs.exe")
     [ case m of
         Build   -> "build"
