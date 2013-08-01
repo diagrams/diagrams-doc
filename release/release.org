@@ -13,9 +13,8 @@
   + [X] add boundaryFrom or something like that? (see migration page)
   + [-] migrate website to Hakyll 4
     + [X] get it to compile
-    + [ ] get gallery descriptions working (wait for Jeff R. to
-          finish fixing user manual)
-  + [ ] fix user manual examples
+    + [ ] get gallery descriptions working
+  + [X] fix user manual examples
   + [ ] update user manual
     + [ ] postscript backend
     + [ ] SVG backend?
@@ -28,7 +27,7 @@
     + [ ] add trails + paths to the tutorial
   + [ ] add -core and -lib examples with diagrams-haddock
   + [X] close other tickets with 0.7 milestone
-  + [-] bump versions and deps to 0.7
+  + [X] bump versions and deps to 0.7
     + [X] diagrams-core
     + [X] diagrams-lib
     + [X] diagrams-cairo
@@ -39,21 +38,21 @@
     + [X] diagrams
     + [X] diagrams-builder
     + [X] diagrams-haddock
-    + [ ] BlogLiterately-diagrams
-    + [ ] SVGFonts
+    + [X] BlogLiterately-diagrams
+    + [X] SVGFonts
   + [ ] build API docs
   + [-] update CHANGES files and release info on website
     + [X] diagrams-core
-    + [ ] diagrams-lib
-    + [ ] diagrams-cairo
-    + [ ] diagrams-svg
-    + [ ] diagrams-gtk
-    + [ ] diagrams-postscript
-    + [ ] diagrams-contrib
-    + [ ] diagrams-builder
-    + [ ] diagrams-haddock
+    + [X] diagrams-lib
+    + [X] diagrams-cairo
+    + [X] diagrams-svg
+    + [X] diagrams-gtk
+    + [X] diagrams-postscript
+    + [X] diagrams-contrib
+    + [X] diagrams-builder
+    + [X] diagrams-haddock
     + [ ] website
-  + [ ] 0.6 -> 0.7 migration page on wiki
+  + [X] 0.6 -> 0.7 migration page on wiki
   + [ ] update quick-start tutorial
   + [ ] test build:
     - [ ] ghc 7.4.2
@@ -65,32 +64,32 @@
     + [ ] link to gallery (email)
     + [ ] include some examples (blog)
     + [ ] say where/how to get involved
-  + [ ] update LICENSE files/lists of contributors
-  + [ ] add release date to all CHANGES files
+  + [X] update LICENSE files/lists of contributors
+  + [-] add release date to all CHANGES files
     + [ ] core
     + [ ] lib
     + [ ] cairo
     + [ ] svg
-    + [ ] gtk
+    + [X] gtk
     + [ ] postscript
     + [ ] contrib
     + [ ] builder
-    + [ ] haddock
+    + [X] haddock
   + [ ] add release date to releases.markdown
   + [ ] merge all into 0.7 branch (as necessary)
   + [ ] tag all with release version
   + [ ] publish new website
-  + [ ] upload
+  + [-] upload
     + [ ] diagrams-core
     + [ ] diagrams-lib
     + [ ] diagrams-contrib
     + [ ] diagrams-svg
     + [ ] diagrams-cairo
-    + [ ] diagrams-gtk
+    + [X] diagrams-gtk
     + [ ] diagrams-postscript
     + [ ] diagrams
     + [ ] diagrams-builder
-    + [ ] diagrams-haddock
+    + [X] diagrams-haddock
     + [ ] SVGFonts
     + [ ] BlogLiterately-diagrams
   + [ ] upload/send announcement
