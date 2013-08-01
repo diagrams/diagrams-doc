@@ -1,16 +1,16 @@
-{-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE DeriveDataTypeable         #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
-import Development.Shake
-import Development.Shake.FilePath
-import Development.Shake.Classes (Hashable, Binary)
-import Control.Parallel.Strategies (NFData)
-import System.Console.CmdArgs
-import System.Directory
+import           Control.Parallel.Strategies (NFData)
+import           Development.Shake
+import           Development.Shake.Classes   (Binary, Hashable)
+import           Development.Shake.FilePath  (dropDirectory1, dropExtension,
+                                              takeDirectory, (-<.>), (</>))
+import           System.Console.CmdArgs
 
+obj, un, dist :: FilePath -> FilePath
 obj = (".make" </>)
 un = dropDirectory1
-
 dist = ("dist" </>)
 
 data MkMode =
@@ -18,6 +18,7 @@ data MkMode =
   | Preview
   deriving (Show, Data, Typeable)
 
+mkModes :: MkMode
 mkModes = modes
   [ Build &= auto
   , Preview
@@ -42,14 +43,14 @@ main = do
     -- which generates diagrams-manual.html as well.  So we have to be
     -- careful to call 'requireImages' *after* running xml2html.
     dist "manual/diagrams-manual.html" *> \out -> do
-      let xml = obj . un $ replaceExtension out "xml"
+      let xml = obj . un $ out -<.> "xml"
           exe = obj "manual/xml2html.hs.exe"
       need [xml, exe]
       system' exe [xml, "-o", obj "manual/images", out]
       requireImages
 
     obj "//*.xml" *> \out -> do
-      let rst = un $ replaceExtension out "rst"
+      let rst = un $ out -<.> "rst"
       need [rst]
       system' "rst2xml" ["--input-encoding=utf8", rst, out]
 
@@ -59,7 +60,7 @@ main = do
       ghc out hs
 
     dist "manual/icons/*.png" *> \out -> do
-      let exe = obj . un $ replaceExtension out ".hs.exe"
+      let exe = obj . un $ out -<.> ".hs.exe"
       need [exe]
       system' exe ["-w", "40", "-h", "40", "-o", out]
 
@@ -72,14 +73,16 @@ main = do
 
     return ()
 
+copyFiles :: String -> Rules ()
 copyFiles dir = dist (dir ++ "/*") *> \out -> copyFile' (un out) out
 
+copyImages :: Rules ()
 copyImages = dist ("manual/images/*") *> \out -> copyFile' (obj . un $ out) out
 
 requireIcons :: Action ()
 requireIcons = do
   hsIcons <- getDirectoryFiles "manual/icons" ["*.hs"]
-  let icons = map (\i -> dist $ "manual/icons" </> replaceExtension i "png") hsIcons
+  let icons = map (\i -> dist $ "manual/icons" </> i -<.> "png") hsIcons
   need icons
 
 requireStatic :: Action ()
@@ -123,6 +126,7 @@ needWeb = do
 
   -- requireGallery  -- replace hakyll building with our own here
 
+ghc :: String -> String -> Action ()
 ghc out hs = do
   askOracleWith (GhcPkg ()) [""]
   let odir = takeDirectory out
