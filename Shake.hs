@@ -36,7 +36,7 @@ main = do
     action $ requireStatic
 
     webRules
-    action $ runWeb m
+    --action $ runWeb m
 
     -- Cheating a bit here; this rule also generates diagrams images,
     -- BUT we don't even know their names until after running xml2html,

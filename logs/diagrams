@@ -34737,3 +34737,244 @@
 2013-07-30 19:52:00 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 140f22e9d http://travis-ci.org/diagrams/diagrams-doc/builds/9663028 The build has errored.
 2013-07-30 20:17:35 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14a2c0f45 http://travis-ci.org/diagrams/diagrams-doc/builds/9612683 The build is still failing.
 2013-07-30 20:31:51 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14668458b http://travis-ci.org/diagrams/diagrams-doc/builds/9663639 The build has errored.
+2013-07-30 21:08:43 UTC <travis-ci> [travis-ci] 13diagrams-doc/06hakyll4 144c106ea http://travis-ci.org/diagrams/diagrams-doc/builds/9665440 The build has errored.
+2013-07-30 21:17:22 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 148fa1cda http://travis-ci.org/diagrams/diagrams-doc/builds/9665680 The build has errored.
+2013-07-30 21:20:12 UTC <travis-ci> [travis-ci] 13diagrams-doc/06hakyll4 14797fd3a http://travis-ci.org/diagrams/diagrams-doc/builds/9666289 The build has errored.
+2013-07-30 21:24:16 UTC <travis-ci> [travis-ci] 13diagrams-doc/06hakyll4 1414bff44 http://travis-ci.org/diagrams/diagrams-doc/builds/9665856 The build failed.
+2013-07-31 14:33:56 UTC <byorgey> martingalemeasur: are you there?
+2013-07-31 14:34:24 UTC <martingalemeasur> yes
+2013-07-31 14:34:57 UTC <byorgey> martingalemeasur: what happens if you run the '.make/manual/xml2html.hs.exe ....' command manually?
+2013-07-31 14:35:35 UTC <martingalemeasur> same thing: cannot satisfy -package diagrams-cairo
+2013-07-31 14:36:13 UTC <byorgey> hmmm
+2013-07-31 14:37:26 UTC <byorgey> very strange indeed
+2013-07-31 14:37:48 UTC <byorgey> and you're running this all inside an hsenv
+2013-07-31 14:37:57 UTC <martingalemeasur> yes
+2013-07-31 14:40:14 UTC <byorgey> ohhhh, wait, I might know why
+2013-07-31 14:40:32 UTC <martingalemeasur> i hope so, this type of debugging is always frustrating
+2013-07-31 14:40:44 UTC <byorgey> I know!
+2013-07-31 14:40:58 UTC <byorgey> xml2html.hs is using the GHC API to get some information from the package database... but I guess it doesn't know to use the hsenv database
+2013-07-31 14:41:17 UTC <byorgey> I suppose we ought to fix that anyway
+2013-07-31 14:41:33 UTC <martingalemeasur> Is there a work around for now?
+2013-07-31 14:41:56 UTC <byorgey> I don't know, I'm looking
+2013-07-31 14:42:50 UTC <martingalemeasur> OK
+2013-07-31 14:46:40 UTC <byorgey> OK, so I think the relevant code is here, from docutils: https://github.com/diagrams/docutils/blob/master/src/Text/Docutils/Transformers/Haskell.hs#L180
+2013-07-31 14:47:35 UTC <byorgey> that function is reading some package database and returning a data structure we can use to look up module names or something like that
+2013-07-31 14:47:47 UTC <byorgey> the problem is that it's reading the wrong package database, I think
+2013-07-31 14:48:27 UTC <byorgey> we can configure the package database in the call to initPackages, by modifying dflags'
+2013-07-31 14:48:46 UTC <byorgey> the documentation for DynFlags (the type of dflags') is here: http://lambda.haskell.org/platform/doc/current/ghc-api/DynFlags.html#t:DynFlags
+2013-07-31 14:49:03 UTC <byorgey> I guess we need to change the pkgDatabase field of dflags'
+2013-07-31 14:49:16 UTC <byorgey> martingalemeasur: do you want to try tackling this?
+2013-07-31 14:49:33 UTC <martingalemeasur> so i need to clone the docutils repo and edit?
+2013-07-31 14:49:37 UTC <byorgey> yes
+2013-07-31 14:49:46 UTC <martingalemeasur> OK ill give it a go
+2013-07-31 14:50:42 UTC <byorgey> I'm going to see what the pkgDatabase field is currently set to
+2013-07-31 14:50:51 UTC <martingalemeasur> thanks
+2013-07-31 14:52:20 UTC <luite> yeah it's a common problem, hsenv uses a wrapper to pass the right args, but non-ghc progs don't see it. we had the same prob for yesod devel
+2013-07-31 14:52:33 UTC <luite> there used to be an env var for this, but that got deprecated
+2013-07-31 14:55:27 UTC <byorgey> luite: hmm, so is there a good way to auto-detect what the right package db is?
+2013-07-31 14:55:32 UTC <byorgey> how does the wrapper program work?
+2013-07-31 14:56:03 UTC <byorgey> OK, pkgDatabase seems to be Nothing by default
+2013-07-31 14:56:15 UTC <byorgey> which I guess means it just uses the standard one?  Not sure what the semantics are
+2013-07-31 14:56:59 UTC <luite> byorgey: not really, i think yesod devel just reads the hsenv config
+2013-07-31 14:57:46 UTC <byorgey> hmmm
+2013-07-31 14:58:02 UTC <luite> https://github.com/yesodweb/yesod/blob/master/yesod-bin/GhcBuild.hs#L68
+2013-07-31 14:59:03 UTC <byorgey> aha
+2013-07-31 14:59:05 UTC <byorgey> cool, thanks luite
+2013-07-31 14:59:48 UTC <byorgey> hmm, not sure how that should be adapted for using the GHC API
+2013-07-31 14:59:54 UTC <byorgey> we're not constructing a command line
+2013-07-31 14:59:57 UTC <luite> this is useing the GHC API
+2013-07-31 15:00:04 UTC <luite> using
+2013-07-31 15:00:35 UTC <luite> byorgey: you can still use parseStaticFlags / parseDynamicFlags
+2013-07-31 15:01:28 UTC <luite> you probably already are using the first, to initalize some global data structures?
+2013-07-31 15:02:12 UTC <byorgey> nope
+2013-07-31 15:02:23 UTC <byorgey> but those look like they will work
+2013-07-31 15:02:59 UTC <martingalemeasur> I'm not sure how to proceed, I'm looking at the DynFlags docs
+2013-07-31 15:03:17 UTC <byorgey> martingalemeasur: note, to find a particular function in the GHC API docs it's useful to go to http://lambda.haskell.org/platform/doc/current/ghc-api/ and click on "index"
+2013-07-31 15:03:21 UTC <byorgey> just FYI
+2013-07-31 15:04:02 UTC <martingalemeasur> thanks
+2013-07-31 15:04:43 UTC <luite> byorgey: oh i thought parseStaticFlags was pretty much required to do GHC API work, perhaps you're lucky since you don't do any code generation so you don't hit any unitalized data
+2013-07-31 15:06:35 UTC <luite> the haddocks say this about parseStaticFlags "This function must be called before any session is started, i.e., before the first call to withGhc.", i guess it can be interpreted in two ways :)
+2013-07-31 15:07:41 UTC <byorgey> luite: yep, we're using it strictly to read info about the package DB
+2013-07-31 15:07:46 UTC <byorgey> martingalemeasur: I realize I'm kind of throwing you in the deep end here.  Please let me know if and when you are no longer having fun and would rather work on something else!
+2013-07-31 15:08:51 UTC <luite> martingalemeasur: i'd also be happy to help out a bit with the GHC API if you get stuck
+2013-07-31 15:08:52 UTC <martingalemeasur> I'm having fun, I'm just not sure I'll be able to takle this in a timely fashion. I haven't done much with the GHC API
+2013-07-31 15:09:19 UTC <byorgey> eh, I'm not super worried about the timely part =)
+2013-07-31 15:09:46 UTC <byorgey> martingalemeasur: OK, so did you see the code luite linked to above?  That is looking up the HSENV and PACKAGE_DB_FOR_GHC environment variables, which is how we can discover whether we need to look at an hsenv package database
+2013-07-31 15:10:15 UTC <byorgey> you can copy that function pretty much verbatim
+2013-07-31 15:10:39 UTC <byorgey> that will give us some command-line arguments
+2013-07-31 15:10:44 UTC <martingalemeasur> byorgey, not yet I'll look now
+2013-07-31 15:10:59 UTC <byorgey> then we need to call parseDynamicFlags (I think) to update the DynFlags using those arguments
+2013-07-31 15:11:17 UTC <byorgey> that should be pretty much it.
+2013-07-31 15:11:59 UTC <byorgey> where by "that should be pretty much it" I mean "of course there will be further complications I don't know about"
+2013-07-31 15:12:45 UTC <martingalemeasur> byorgey: so i need to copy the function prependHsenvArgv and then call parseDynamicFlags
+2013-07-31 15:13:14 UTC <luite> you can feed it to parseStaticFlags, then that will give you the remainder of the command line arguments that you can pass to parseDynamicFlags (just in case HSENV is is configured to pass static flag arguments for some reason)
+2013-07-31 15:15:05 UTC <byorgey> hsenv passes flags like "-no-user-package-db  -package-db=/home/brent/src/diagrams/.hsenv_master/ghc_pkg_db"
+2013-07-31 15:15:12 UTC <byorgey> are those static or dynamic? (how can you tell?)
+2013-07-31 15:15:17 UTC <luite> dynamic
+2013-07-31 15:15:24 UTC <martingalemeasur> byorgey: this should all happen in Haskell.hs
+2013-07-31 15:15:27 UTC <byorgey> OK, so parseDynamicFlags should suffice?
+2013-07-31 15:15:39 UTC <byorgey> martingalemeasur: yes
+2013-07-31 15:16:00 UTC <luite> but i think the parseStaticFlags call doesn't hurt, it's just one extra line and filters out any static thing that would otherwise cause an error in parseDynamicFlags
+2013-07-31 15:16:11 UTC <byorgey> OK, fair enough
+2013-07-31 15:16:27 UTC <byorgey> martingalemeasur: in particular, in between the lines "let dflags' = dflags { packageFlags = ExposePackage pkg : packageFlags dflags }" and "(dflags'', pids) <- liftIO $ initPackages dflags'"
+2013-07-31 15:16:29 UTC <luite> perhaps it can be removed again in some future GHC, they're trying to remove the static flags at some point
+2013-07-31 15:16:56 UTC <luite> since they're a bit inconvenient, they can't be reconfigured in the same process
+2013-07-31 15:18:12 UTC <martingalemeasur> byorgey: is that where i call prependHsenvArgv
+2013-07-31 15:19:21 UTC <byorgey> martingalemeasur: yes, and parseDynamicFlags to update dflags'
+2013-07-31 15:19:52 UTC <martingalemeasur> byorgey: what is the argument to prependDynamicFlags?
+2013-07-31 15:20:07 UTC <byorgey> martingalemeasur: though note you might as well remove the argument from prependHsenvArgv, we don't have anything to prepend to
+2013-07-31 15:20:20 UTC <byorgey> and give it a name without 'prepend' in it of course =)
+2013-07-31 15:20:55 UTC <martingalemeasur> OK, what do i do with the returned IO [String]
+2013-07-31 15:21:47 UTC <byorgey> martingalemeasur: pass the [String] to parseDynamicFlags
+2013-07-31 15:21:58 UTC <byorgey> you can call noLoc to turn Strings into Located Strings
+2013-07-31 15:22:25 UTC <byorgey> luite wants us to use parseStaticFlags but let's just see if we can get it working with parseDynamicFlags first
+2013-07-31 15:23:13 UTC <luite> yeah sorry for that :p
+2013-07-31 15:23:43 UTC <martingalemeasur> what does parseDynamicFlags return
+2013-07-31 15:24:09 UTC <byorgey> martingalemeasur: go to the index of the GHC API and look up parseDynamicFlags so you can see its type
+2013-07-31 15:24:23 UTC <martingalemeasur> ok
+2013-07-31 15:24:51 UTC <luite> the located strings are left-over argument and warnings
+2013-07-31 15:25:01 UTC <byorgey> basically it takes a DynFlags value, a list of command-line arguments, and returns a new DynFlags, along with some extra Strings we can ignore
+2013-07-31 15:25:38 UTC <luite> blurgh try/catch is annoying
+2013-07-31 15:26:46 UTC <martingalemeasur> so something like (dflags''', _ , _) <- parseDynamicFlags prependHsenvArgv
+2013-07-31 15:27:39 UTC <byorgey> martingalemeasur: you have to pass the old dflags' to parseDynamicFlags as well
+2013-07-31 15:28:01 UTC <byorgey> also, prependHsenvArg has type  IO [String],  not [String]
+2013-07-31 15:28:16 UTC <byorgey> so you have to first say   args <- liftIO prependHsenvArgv
+2013-07-31 15:28:23 UTC <martingalemeasur> i.e. dflags'
+2013-07-31 15:28:27 UTC <byorgey> right
+2013-07-31 15:28:45 UTC <byorgey> then you have to convert  args :: [String]  into  [Located String] using  map noLoc
+2013-07-31 15:31:12 UTC <martingalemeasur> so i have args <- liftIO prependHsenvArgv       args' = map noLoc args       parseDynamicFlags dflags' args
+2013-07-31 15:31:44 UTC <byorgey> looks about right
+2013-07-31 15:33:03 UTC <martingalemeasur> OK so should i try to compile Haskell.hs
+2013-07-31 15:33:45 UTC <byorgey> martingalemeasur: no, you should try to compile the whole package: just go to the docutils/ directory and run  cabal configure && cabal build
+2013-07-31 15:33:58 UTC <byorgey> compiling Haskell.hs on its own is unlikely to work right
+2013-07-31 15:34:03 UTC <martingalemeasur> OK
+2013-07-31 15:34:30 UTC <byorgey> once it compiles of course you can install it using  cabal install  and then see if it fixes ./Shake prview
+2013-07-31 15:34:53 UTC <byorgey> I've got to run, will be back later in the afternoon
+2013-07-31 15:34:58 UTC <byorgey> though I have an abstract I need to write
+2013-07-31 15:35:14 UTC <byorgey> martingalemeasur: if you run into more issues you can ask luite or anyone else who's around
+2013-07-31 15:35:45 UTC <byorgey> this is the other reason IRC is often better than email, people who actually know stuff chime in =)
+2013-07-31 15:35:59 UTC <martingalemeasur> Thanks I'll see if i can get it going otherwise maybe luite can help or we can chat briefly this afternoon
+2013-07-31 15:36:06 UTC <byorgey> sounds good
+2013-07-31 18:27:39 UTC <travis-ci> [travis-ci] 13active/06master 1465260d2 http://travis-ci.org/diagrams/active/builds/9704350 The build passed.
+2013-07-31 18:58:43 UTC <byorgey> luite: do you know anything about hint -- specifically, whether it's possible to make it use a custom package database?
+2013-07-31 18:58:58 UTC <byorgey> we're running into the same problem as before
+2013-07-31 18:59:01 UTC <byorgey> re: hsenv
+2013-07-31 18:59:17 UTC <luite> hmm, dunno, i'll have a look
+2013-07-31 19:00:32 UTC <byorgey> ah, maybe Language.Haskell.Interpreter.Unsafe.unsafeRunInterpreterWithArgs ?
+2013-07-31 19:00:32 UTC <travis-ci> [travis-ci] 13active/06master 142ce11cf http://travis-ci.org/diagrams/active/builds/9705732 The build passed.
+2013-07-31 19:07:01 UTC <byorgey> martingale: so it looks like we'll have to make a similar change to Executes the interpreter, setting the args as though they were command-line args. In particular, this means args that have no effect with :set in ghci might function properly from this context.
+2013-07-31 19:07:15 UTC <byorgey> doh, stupid irssi
+2013-07-31 19:07:30 UTC <byorgey> martingale: so it looks like we'll have to make a similar change to https://github.com/diagrams/diagrams-builder/blob/master/src/Diagrams/Builder.hs#L115
+2013-07-31 19:08:03 UTC <byorgey> copy in getHsenvArgs, and change 'runInterpreter' to http://hackage.haskell.org/packages/archive/hint/0.3.3.6/doc/html/Language-Haskell-Interpreter-Unsafe.html#v:unsafeRunInterpreterWithArgs
+2013-07-31 19:08:06 UTC <luite> ah
+2013-07-31 19:08:22 UTC <byorgey> ought to do the trick I think
+2013-07-31 19:12:47 UTC <martingale> I'm just on a conference call right now.  Should be done in a few minutes and I'll give it a try.
+2013-07-31 19:30:41 UTC <martingale> byorgey: so would the call to getHsenvArgs be in getLocalImportHashes
+2013-07-31 19:38:34 UTC <martingale> byorgey: whoops! I think i see what you mean put the dflags-like code in the interpretDiagram Function
+2013-07-31 19:58:58 UTC <martingale> byrogey: In interpretDiagram I tried: do args <- liftIO getHsenvArgv; unsafeRunInterpreter args $ do.
+2013-07-31 20:20:01 UTC <martingale> byorgey: code is at https://github.com/jeffreyrosenbluth/diagrams-builder/blob/master/src/Diagrams/Builder.hs
+2013-07-31 20:24:23 UTC <travis-ci> [travis-ci] 13active/06master 14f392158 http://travis-ci.org/diagrams/active/builds/9709152 The build passed.
+2013-07-31 20:30:11 UTC <travis-ci> [travis-ci] 13active/06master 14cf62ccf http://travis-ci.org/diagrams/active/builds/9709316 The build passed.
+2013-07-31 20:47:01 UTC <travis-ci> [travis-ci] 13active/06master 144aff85b http://travis-ci.org/diagrams/active/builds/9710062 The build passed.
+2013-07-31 20:52:06 UTC <travis-ci> [travis-ci] 13active/06master 14f823ce4 http://travis-ci.org/diagrams/active/builds/9710188 The build passed.
+2013-07-31 20:56:07 UTC <travis-ci> [travis-ci] 13active/06master 1469512ef http://travis-ci.org/diagrams/active/builds/9710392 The build passed.
+2013-07-31 20:59:17 UTC <travis-ci> [travis-ci] 13active/06master 14d48d319 http://travis-ci.org/diagrams/active/builds/9710556 The build passed.
+2013-07-31 21:03:35 UTC <travis-ci> [travis-ci] 13active/06master 14e5af52e http://travis-ci.org/diagrams/active/builds/9710729 The build passed.
+2013-07-31 21:12:37 UTC <travis-ci> [travis-ci] 13active/06master 14da3db55 http://travis-ci.org/diagrams/active/builds/9711054 The build passed.
+2013-07-31 22:22:11 UTC <byorgey> martingale: incidentally, what sorts of errors do you get when building the manual example?
+2013-07-31 22:22:19 UTC <byorgey> *examples
+2013-07-31 22:31:05 UTC <luite> has anyone here hdevtools working in emacs, connecting to a different machine?
+2013-07-31 22:37:43 UTC <travis-ci> [travis-ci] 13diagrams-builder/06master 14f72a99c http://travis-ci.org/diagrams/diagrams-builder/builds/9713614 The build passed.
+2013-07-31 22:42:41 UTC <travis-ci> [travis-ci] 13diagrams-doc/06hakyll4 1499faeb1 http://travis-ci.org/diagrams/diagrams-doc/builds/9713806 The build has errored.
+2013-08-01 01:42:16 UTC <travis-ci> [travis-ci] 13diagrams-doc/06hakyll4 1406972a5 http://travis-ci.org/diagrams/diagrams-doc/builds/9717637 The build has errored.
+2013-08-01 13:13:38 UTC <fryguybob> humm, I'm not sure what to think of the HRC paper after a brief scan.  Not only are there no async exceptions, but also no lightweight threads.  They don't mention STM, but I doubt they have it.
+2013-08-01 13:16:02 UTC <luite> hmm, those shouldn't affect performance too much though
+2013-08-01 13:16:25 UTC <fryguybob> Well for the right programs it certainly would.
+2013-08-01 13:16:51 UTC <fryguybob> No sparks, only explicit forkIO..
+2013-08-01 13:17:27 UTC <luite> oh i mean that a singlethreaded, non-parallel program would probably not run much slower if those things were implemented
+2013-08-01 13:18:54 UTC <fryguybob> luite: Right.  But they are interested in parallel workloads.  It just seems like they are interested in the ones that are not very Haskelly.
+2013-08-01 13:19:35 UTC <luite> hm right
+2013-08-01 13:20:53 UTC <fryguybob> Also 32-bit only is disappointing.  Other then that, it is very interesting :D
+2013-08-01 13:37:39 UTC <byorgey> what's HRC?
+2013-08-01 13:37:58 UTC <byorgey> oh, the Intel Haskell Research Compiler?
+2013-08-01 13:39:50 UTC <fryguybob> byorgey: Intel Labs :P
+2013-08-01 13:40:47 UTC <byorgey> oh, the Intel LABS Haskell Research Compiler, I see.  Pardon me. =)
+2013-08-01 14:59:00 UTC <ClaudiusMaximus> hi!  how might i create something like this in diagrams instead of pens/paper/gimp?  http://mathr.co.uk/misc/2013-08-01_wedged_wobbly.jpg  i'm thinking "for each segment of a path, make a wobbly line, generate offset curve at variable width, colour fill it, offset it a bit outwards/inwards, fill the difference black"
+2013-08-01 14:59:50 UTC <ClaudiusMaximus> the wobbly line is something i'll have to code up, and i vaguely remember some seeing some offset curve stuff here
+2013-08-01 15:01:22 UTC <ClaudiusMaximus> alternatively i could approximate it by a whole bunch of circles, which might be easier...
+2013-08-01 15:18:51 UTC <byorgey> ooh, neat idea.
+2013-08-01 15:19:22 UTC <byorgey> unfortunately I think the answer is "use the stuff fryguybob has been working on but isn't done yet"
+2013-08-01 15:20:18 UTC <byorgey> but let's think if there's a shortcut you could use in this particular case...
+2013-08-01 15:21:17 UTC <byorgey> ClaudiusMaximus: so far we have offset curves for segments, but not for entire trails/paths
+2013-08-01 15:22:21 UTC <byorgey> if we had offset curves for entire trails/paths, then I think what you described would work
+2013-08-01 15:23:20 UTC <byorgey> in order to "generate offset curve at variable width" you could e.g. generate an offset curve at a fixed width, then split it into suitably small pieces, then introduce suitable wiggle by modifying the pieces
+2013-08-01 15:35:39 UTC <ClaudiusMaximus> byorgey: so far i've been working on the wobbly part by recursively subdividing a catmull-rom spline and perturbing the midpoint tangent at each step
+2013-08-01 15:37:04 UTC <ClaudiusMaximus> byorgey: i think i'll just approximate the fattening by putting a whole bunch of circles along the path, at least for now...
+2013-08-01 15:40:48 UTC <byorgey> hehe, OK =)
+2013-08-01 16:05:11 UTC <travis-ci> [travis-ci] 13diagrams-core/06master 140fb2f49 http://travis-ci.org/diagrams/diagrams-core/builds/9741568 The build passed.
+2013-08-01 16:13:05 UTC <fryguybob> ClaudiusMaximus, byorgey: Sorry, since I have actual hardware my time is kind of sucked up.
+2013-08-01 16:13:39 UTC <luite> are you doing lots of stm implementation?
+2013-08-01 16:14:01 UTC <fryguybob> luite: Yeah, also porting benchmarks.
+2013-08-01 16:15:04 UTC <luite> oh what benchmarks?
+2013-08-01 16:15:15 UTC <fryguybob> luite: Some selections from STAMP
+2013-08-01 16:15:37 UTC <fryguybob> Which are not very good, but there is a lot of data from other systems.
+2013-08-01 16:18:04 UTC <fryguybob> ClaudiusMaximus: Your picture makes me wonder if you can take some sort of sampling approach where you get some fair subset of t-values then pick around the original from some distribution perpendicular then have an ordered set of points that you could pass a cubic spline through.
+2013-08-01 16:18:09 UTC <luite> hmm that's written in C isn't it? is that reasonably portable to haskell, do you end up with haskellish code?
+2013-08-01 16:18:25 UTC <fryguybob> ClaudiusMaximus: When you get to a fork in the road there should be something sensible to do.
+2013-08-01 16:19:17 UTC <fryguybob> luite: I'm not going for haskellish at this point, I just want to measure comparative overhead from existing STM's to see how expensive haskells is and how much we can reasonably expect to gain from HTM.
+2013-08-01 16:19:41 UTC <luite> ok
+2013-08-01 16:21:58 UTC <byorgey> fryguybob: yeah, no worries
+2013-08-01 16:22:18 UTC <luite> we can force fryguybob to work on it in ~7 weeks ;)
+2013-08-01 16:22:28 UTC <fryguybob> hehe
+2013-08-01 16:22:56 UTC <byorgey> =)
+2013-08-01 16:23:32 UTC <fryguybob> Speaking of which, byorgey, we should book things.
+2013-08-01 16:23:42 UTC <luite> \o/
+2013-08-01 16:23:47 UTC <byorgey> indeed
+2013-08-01 16:24:58 UTC <luite> you both arrive the 21st, right?
+2013-08-01 16:25:59 UTC <fryguybob> luite: I get in late on the 21st
+2013-08-01 16:26:31 UTC <luite> ok, i was planning ot arrive the same day, delta has a direct flight from amsterdam
+2013-08-01 16:29:06 UTC <travis-ci> [travis-ci] 13backend-tests/06master 147677af4 http://travis-ci.org/diagrams/diagrams-backend-tests/builds/9742527 The build has errored.
+2013-08-01 16:29:22 UTC <luite> <- dinner
+2013-08-01 16:38:28 UTC <ClaudiusMaximus> turns out splines are too complicated for my brain so i just subdivided linear segments - seems to look ok (no variable width yet though) http://mathr.co.uk/misc/2013-08-01_diagrams_wobble.png
+2013-08-01 16:40:13 UTC <fryguybob> ClaudiusMaximus: Those look ince and wobbly :D
+2013-08-01 16:41:35 UTC <byorgey> nice =)
+2013-08-01 16:42:30 UTC <byorgey> ClaudiusMaximus: once you have the linear segments, you could try just extracting their vertices and calling 'cubicSpline'
+2013-08-01 16:42:45 UTC <byorgey> that might make it look a bit smoother, and/or require less subdivision
+2013-08-01 16:46:34 UTC <ClaudiusMaximus> interesting, and then get points from the spline to put circles on?
+2013-08-01 16:46:53 UTC <ClaudiusMaximus> thanks btw, will post the code soon, gotta do dishes right now...
+2013-08-01 16:50:44 UTC <fryguybob> Humm, graphs are an interesting generalization of paths... why have I never thought about this before?
+2013-08-01 16:59:28 UTC <travis-ci> [travis-ci] 13backend-tests/06master 144af334e http://travis-ci.org/diagrams/diagrams-backend-tests/builds/9743171 The build has errored.
+2013-08-01 17:03:58 UTC <fryguybob> Mmmm crypto magic.
+2013-08-01 17:14:03 UTC <travis-ci> [travis-ci] 13backend-tests/06master 143682980 http://travis-ci.org/diagrams/diagrams-backend-tests/builds/9744267 The build passed.
+2013-08-01 17:15:55 UTC <byorgey> I wanted to get travis to automatically upload the results of the backend-tests to the diagrams website upon successful completion of a build
+2013-08-01 17:16:31 UTC <byorgey> but that requires authenticating to projects.haskell.org, which can only be done via SSH key, and obviously I don't want to store my private SSH key in the repository.
+2013-08-01 17:17:59 UTC <byorgey> travis has some complicated stuff you can do involving encrypting stuff with a travis-generated public key and then instructing travis to unencrypt it during the build, but (a) it's very complicated and (b) seems to require a pro account
+2013-08-01 17:19:04 UTC <fryguybob> byorgey: 
+2013-08-01 17:19:07 UTC <fryguybob> byorgey: Ah
+2013-08-01 17:59:02 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14a4fc9bb http://travis-ci.org/diagrams/diagrams-doc/builds/9744875 The build passed.
+2013-08-01 18:16:05 UTC <travis-ci> [travis-ci] 13diagrams-gtk/06master 14e476e4a http://travis-ci.org/diagrams/diagrams-gtk/builds/9746124 The build passed.
+2013-08-01 18:21:56 UTC <travis-ci> [travis-ci] 13diagrams-gtk/06master 147b39e98 http://travis-ci.org/diagrams/diagrams-gtk/builds/9746293 The build passed.
+2013-08-01 18:42:16 UTC <fryguybob> luite: By the way, my benchmark work in progress is here: https://github.com/fryguybob/ghc-stm-benchmarks
+2013-08-01 18:42:50 UTC <luite> oh vacation? where are you?
+2013-08-01 18:44:04 UTC <fryguybob> luite: The benchmark is called vacation :D
+2013-08-01 18:44:52 UTC <fryguybob> But I am in a Starbucks in Rochester if that counts as a vacation.
+2013-08-01 18:46:09 UTC <luite> ow :(
+2013-08-01 18:46:13 UTC <luite> hehe
+2013-08-01 18:46:24 UTC <luite> for me it would count
+2013-08-01 19:09:23 UTC <carter> i need a vacation
+2013-08-01 19:09:52 UTC <luite> come to holland
+2013-08-01 19:09:56 UTC <luite> we have windmills and stuff
+2013-08-01 19:15:04 UTC <carter> stufff
+2013-08-01 19:16:17 UTC <luite> yes stuff
+2013-08-01 19:16:49 UTC <luite> most of our windmills are made of steel and polyester though, nowadays, and made in germany
+2013-08-01 19:16:53 UTC <byorgey> and you have stroopwafels!
+2013-08-01 19:17:05 UTC <luite> oh yes stroopwafels, how could i forget
+2013-08-01 19:17:06 UTC <byorgey> or stroopwafeln, or whatever the right plural is
+2013-08-01 19:17:23 UTC <luite> no that would be the german plural, except they don't have stroopwafels
+2013-08-01 19:17:29 UTC <byorgey> indeed.
+2013-08-01 19:17:46 UTC <byorgey> you also have yummy cheese
+2013-08-01 19:18:44 UTC <luite> that is true, old gouda is one of my favourites :)
+2013-08-01 19:20:23 UTC <byorgey> mine too =)
+2013-08-01 19:25:24 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 149b0db22 http://travis-ci.org/diagrams/diagrams-haddock/builds/9748506 The build passed.
+2013-08-01 19:26:08 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06dia-haddock-0.1 142098cd2 http://travis-ci.org/diagrams/diagrams-haddock/builds/9748508 The build passed.
+2013-08-01 19:28:57 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 1414eee30 http://travis-ci.org/diagrams/diagrams-haddock/builds/9748666 The build passed.

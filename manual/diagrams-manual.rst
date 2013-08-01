@@ -1647,8 +1647,8 @@ the edges individually:
 > example = lw 0.1
 >         . mconcat
 >         . zipWith lc colors
->         . map stroke . explodeTrail origin
->         $ burst
+>         . map strokeLocT . explodeTrail
+>         $ burst `at` origin
 
 (If we wanted to fill the starburst with yellow as before, we would
 have to separately draw another copy of the trail with a line width of
@@ -2335,6 +2335,7 @@ Normally, a trace is accessed using one of the four functions
   ::
 
   > import Data.Maybe (fromMaybe)
+  > import Diagrams.Coordinates ((&))
   >
   > drawV v = (arrowHead <> shaft) # fc black
   >   where
@@ -2384,6 +2385,7 @@ identify points on the boundaries of several diagrams.
 ::
 
 > import Data.Maybe (mapMaybe)
+> import Diagrams.Coordinates ((&))
 >
 > illustrateTrace d = d <> traceLines
 >   where
@@ -2865,6 +2867,7 @@ the right are wrapped in `ScaleInv` but the ones on the left are not.
 > {-# LANGUAGE TypeSynonymInstances, FlexibleInstances #-}
 >
 > import Diagrams.TwoD.Transform
+> import Diagrams.Coordinates ((&))
 >
 > class Drawable d where
 >   draw :: d -> Diagram Cairo R2
@@ -2885,11 +2888,11 @@ the right are wrapped in `ScaleInv` but the ones on the left are not.
 > arrow1 = (shaft,          arrowhead       # translateX 3)
 > arrow2 = (shaft, scaleInv arrowhead unitX # translateX 3)
 >
-> showT tr = draw (arrow1 # transform tr) 
->        ||| strutX 1 
+> showT tr = draw (arrow1 # transform tr)
+>        ||| strutX 1
 >        ||| draw (arrow2 # transform tr)
 >
-> example = vcat' with {sep = 0.5} 
+> example = vcat' with {sep = 0.5}
 >             (map (centerX . showT)
 >               [ scalingX (1/2)
 >               , scalingY 2
@@ -3992,7 +3995,7 @@ Diagrams.Core.Points
 --------------------
 
 .. container:: todo
-  
+
   Should some of this go elsewhere?
 
 Diagrams makes a strong type distinction between vectors and points.
