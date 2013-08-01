@@ -1,10 +1,6 @@
 * Planning for release of version 0.7
 ** RELEASE TARGET DATE: August 2
-** to check/upload
-*** BlogLiterately-diagrams
-*** SVGFonts
-** finished uploads
-** To do for 0.6 release
+** To do for 0.7 release
   + [X] add Monoid for Trail (with cut etc.)
   + [X] add Turn synonym for CircleFrac
   + [X] re-export stuff from -core in -lib
