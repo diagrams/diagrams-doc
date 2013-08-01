@@ -1,12 +1,6 @@
 * Planning for release of version 0.7
 ** RELEASE TARGET DATE: August 2
 ** to check/upload
-*** vector-space-points
-*** monoid-extras
-*** dual-tree
-*** force-layout
-*** active
-*** BlogLiterately
 *** BlogLiterately-diagrams
 *** SVGFonts
 ** finished uploads
@@ -17,14 +11,24 @@
     + [X] Query stuff -- new Query module in -lib? query, sample,
       value, resetValue, clearValue
   + [X] add boundaryFrom or something like that? (see migration page)
-  + [ ] migrate website to Hakyll 4
+  + [-] migrate website to Hakyll 4
+    + [X] get it to compile
+    + [ ] get gallery descriptions working (wait for Jeff R. to
+          finish fixing user manual)
   + [ ] fix user manual examples
   + [ ] update user manual
+    + [ ] postscript backend
+    + [ ] SVG backend?
+    + [ ] trails + paths
+    + [ ] make a pass over the whole thing & look for stuff to improve/update
+    + [ ] mention & etc.
+    + [ ] go through release notes for new material to add to manual
   + [ ] write a better tutorial?
-  + [ ] make sure postscript backend is in user manual
+    + [ ] brainstorm ideas for a single example that we can work through
+    + [ ] add trails + paths to the tutorial
   + [ ] add -core and -lib examples with diagrams-haddock
   + [X] close other tickets with 0.7 milestone
-  + [X] bump versions and deps to 0.7
+  + [-] bump versions and deps to 0.7
     + [X] diagrams-core
     + [X] diagrams-lib
     + [X] diagrams-cairo
@@ -35,9 +39,11 @@
     + [X] diagrams
     + [X] diagrams-builder
     + [X] diagrams-haddock
+    + [ ] BlogLiterately-diagrams
+    + [ ] SVGFonts
   + [ ] build API docs
-  + [ ] update CHANGES files and release info on website
-    + [ ] diagrams-core
+  + [-] update CHANGES files and release info on website
+    + [X] diagrams-core
     + [ ] diagrams-lib
     + [ ] diagrams-cairo
     + [ ] diagrams-svg
@@ -85,6 +91,8 @@
     + [ ] diagrams
     + [ ] diagrams-builder
     + [ ] diagrams-haddock
+    + [ ] SVGFonts
+    + [ ] BlogLiterately-diagrams
   + [ ] upload/send announcement
     + [ ] blog
     + [ ] email
