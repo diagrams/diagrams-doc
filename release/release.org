@@ -18,7 +18,9 @@
     + [ ] make a pass over the whole thing & look for stuff to improve/update
     + [ ] mention & etc.
     + [ ] go through release notes for new material to add to manual
-  + [ ] write a better tutorial?
+  + [ ] improve tutorial
+    + [ ] convert tutorial to ReST format (like user manual)
+    + [ ] generate lhs from ReST format??
     + [ ] brainstorm ideas for a single example that we can work through
     + [ ] add trails + paths to the tutorial
   + [ ] add -core and -lib examples with diagrams-haddock
@@ -49,7 +51,9 @@
     + [X] diagrams-haddock
     + [X] website
   + [X] 0.6 -> 0.7 migration page on wiki
-  + [ ] update quick-start tutorial
+  + [X] make sure wiki is up to date
+    + [X] installation instructions
+    + [X] contributing instructions
   + [ ] test build:
     - [ ] ghc 7.4.2
     - [ ] ghc 7.6.1
@@ -71,9 +75,7 @@
     + [ ] contrib
     + [ ] builder
     + [X] haddock
-    + [ ] website
   + [ ] add release date to releases.markdown
-  + [ ] merge all into 0.7 branch (as necessary)
   + [ ] tag all with release version
   + [ ] publish new website
   + [-] upload
