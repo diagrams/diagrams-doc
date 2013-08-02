@@ -176,7 +176,7 @@ needWeb = do
   requireIcons
   requireStatic
   requireImages
-  requireGallery  -- replace hakyll building with our own here
+  requireGallery
 
 ghc :: String -> String -> Action ()
 ghc out hs = do

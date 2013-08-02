@@ -1,22 +1,21 @@
 {-# LANGUAGE NoMonomorphismRestriction #-}
 {-# LANGUAGE OverloadedStrings         #-}
 
-import           Control.Monad          (forM_, (>=>))
-import           Data.Char              (isAlphaNum)
-import           Data.Functor           ((<$>))
-import           Data.List              (sortBy)
-import           Data.Maybe             (fromMaybe)
+import           Control.Monad        (forM_, (>=>))
+import           Data.Char            (isAlphaNum)
+import           Data.Functor         ((<$>))
+import           Data.List            (sortBy)
+import           Data.Maybe           (fromMaybe)
 import           Data.Monoid
-import           Data.Ord               (comparing)
+import           Data.Ord             (comparing)
 
 import           Data.String
 
-import qualified Data.ByteString.Lazy   as LB
+import qualified Data.ByteString.Lazy as LB
 import           System.FilePath
-import           System.Process         (system)
+import           System.Process       (system)
 
-import           Text.Pandoc.Definition
-import           Text.Pandoc.Generic
+import           Text.Pandoc
 
 import           Hakyll
 
@@ -100,7 +99,7 @@ main = hakyll $ do
                   ( mconcat
                     [ setImgURL
                     , setHtmlURL
---                    , pandocFieldsCtx ["description"]
+                    , markdownFieldsCtx ["description"]
                     , defaultContext
                     ]
                   )
@@ -140,16 +139,18 @@ setURL dir ext = field (extNm ++ "url") fieldVal
           let (path,f) = splitFileName u
           return (path </> dir </> replaceExtension f ext)
 
--- pandocFieldsCtx :: [String] -> Context String
--- pandocFieldsCtx = mconcat . map pandocFieldCtx
+-- | Take the content of the specified fields and make them available
+--   after typesetting them as Markdown via pandoc.
+markdownFieldsCtx :: [String] -> Context String
+markdownFieldsCtx = mconcat . map markdownFieldCtx
 
--- pandocFieldCtx :: String -> Context String
--- pandocFieldCtx f = mapField f (writePandoc . readPandoc)
-
--- mapField :: String -> (Item String -> Item String) -> Context a
--- mapField k f = field k comp
---   where
---     comp i = maybe "" f <$> getMetadataField (itemIdentifier i) k
+markdownFieldCtx :: String -> Context String
+markdownFieldCtx f = field f $ \i -> do
+  markdown <- fromMaybe "" <$> getMetadataField (itemIdentifier i) f
+  return
+    . writeHtmlString defaultHakyllWriterOptions
+    . readMarkdown defaultHakyllReaderOptions
+    $ markdown
 
 buildGallery :: Item String -> [Item String] -> Compiler (Item String)
 buildGallery content lhss = do
@@ -173,4 +174,3 @@ buildGallery content lhss = do
     addDate lhs = do
       d <- fromMaybe "" <$> getMetadataField (itemIdentifier lhs) "date"
       return (d,lhs)
-
