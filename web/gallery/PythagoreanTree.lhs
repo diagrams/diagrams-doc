@@ -31,7 +31,7 @@ For aesthetics, let the leaves have circles instead of squares.
 >   `atop` tree (n-1) # rotate (-asin 0.8 :: Rad) # scale 0.6 # translate (r2 ( 0.32,1.24)) # fade
 >   `atop` tree (n-1) # rotate ( asin 0.6 :: Rad) # scale 0.8 # translate (r2 (-0.18,1.24)) # fade
 >   where
->     triangle = translate (r2 (-0.5,0)) . stroke . close
+>     triangle = translate (r2 (-0.5,0)) . strokeLoop . glueLine
 >                  . fromVertices . map p2 $ [(0,0), (1,0), (0.8*0.8,0.8*0.6)]
 >     fade = opacity 0.95
 >

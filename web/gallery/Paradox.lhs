@@ -29,9 +29,9 @@ Create a grid by gluing together a bunch of squares.
 The trapezoid and triangle shapes, with sides lengths based on two
 Fibonacci numbers.
 
-> trap s1 s2 = lw 0 . strokeT . close
+> trap s1 s2 = lw 0 . strokeLoop . closeLine
 >            . fromOffsets . map r2 $ [(0,-s2), (s2,0), (0,s1)]
-> tri s1 s2  = lw 0 .  strokeT . close
+> tri s1 s2  = lw 0 .  strokeLoop . closeLine
 >            . fromOffsets . map r2 $ [(s1,0), (0,s1+s2)]
 
 Draw the paradox diagram based on the nth Fibonacci number.

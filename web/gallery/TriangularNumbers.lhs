@@ -18,14 +18,14 @@ and backed by a solid-colored triangle to visually group them.  Note
 how the dots are laid out by creating a trail called `edge`, rotating
 it 60 degrees, and using `decorateTrail` to lay out the rows of dots.
 
-> tri c n = dots <> (strokeT edges # lc c # lw 0.2 # fcA (c `withOpacity` 0.5))
+> tri c n = dots <> (strokeLoop edges # lc c # lw 0.2 # fcA (c `withOpacity` 0.5))
 >   where rows = map (hcat' with { sep = 1 })
 >              . zipWith replicate [n,n-1..1]
 >              . repeat
 >              $ dot c
 >         dots = decorateTrail (rotateBy (1/6) edge) rows
 >         edge = fromOffsets . replicate (n-1) $ unitX # scale 3
->         edges = close (edge <> rotateBy (1/3) edge <> rotateBy (2/3) edge)
+>         edges = glueLine (edge <> rotateBy (1/3) edge <> rotateBy (2/3) edge)
 > 
 > dot c = unitCircle
 >       # lw 0
