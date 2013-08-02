@@ -17,7 +17,7 @@ install:
   - sudo ghc-pkg --global unregister regex-compat
   - sudo ghc-pkg --global unregister regex-posix
   - cabal install --force-reinstalls transformers-0.3.0.0 mtl-2.1.1 parsec-3.1.2
-  - cabal install gtk2hs-buildtools shake 'hakyll<4'
+  - cabal install gtk2hs-buildtools shake hakyll
   - cabal install core/ lib/ cairo/ contrib/ builder/ docutils/
   - cd ..
 
