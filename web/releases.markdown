@@ -2,6 +2,281 @@
 title: Releases
 ---
 
+diagrams 0.7: XXX
+=================
+
+[diagrams-core 0.7](http://hackage.haskell.org/package/diagrams%2Dcore-0.7)
+----------------
+
+* **New features**
+
+    - new function `onBasis`, to extract the matrix equivalent of a
+      `Transformation`
+
+    - `SubMap`s are now `Deletable`
+
+    - new function `localize` for hiding/deleting names from scope
+
+    - new `IsPrim` class, containing `transformWithFreeze` function.
+        This is primarily intended to support scale-invariant primitives
+        (*e.g.* arrowheads) but may be useful for other stuff as well.
+	The default implementation of `renderDia` now uses
+	`transformWithFreeze`.
+
+    - optimized `Transformable` instance for `TransInv`
+
+* **New instances**
+
+    - `Eq`, `Ord`, `Enveloped`, `Traced`, and `Qualifiable` instances
+      for `TransInv`
+
+    - `Transformable` instance for functions, which acts by conjugation
+
+* **API changes**
+
+    - `named` and `namePoint` have moved to the `diagrams-lib` package.
+
+* **Dependency/version changes**
+
+    - allow `base-4.7`
+    - upgrade to `monoid-extras-0.3`
+    - allow `semigroups-0.9`
+
+* **Bug fixes**
+
+    - the `diameter` and `radius` functions now work correctly.
+
+[active 0.1.0.6](http://hackage.haskell.org/package/active-0.1.0.6)
+----------------
+
+  - allow `semigroupoids-3.1`
+  - allow `base-4.7`
+  - allow `QuickCheck-2.6`
+  - allow `semigroups-0.9`
+
+[diagrams-lib 0.7](http://hackage.haskell.org/package/diagrams%2Dlib-0.7)
+----------------
+
+* **New features**
+
+    - New module `Diagrams.TwoD.Curvature`, for computing the
+      curvature of 2D segments at any given point.
+
+    - New module `Diagrams.Offset`, containing an `offsetSegment`
+      function that builds a trail a fixed distance from the original
+      segment.  This is a precursor to planned functions `offsetTrail`
+      and `offsetPath`.
+
+    - New function `Diagrams.TwoD.Transform.onBasis`, for extracting a
+      matrix representation of a 2D transformation
+
+    - New functions `extrudeEnvelope` and `intrudeEnvelope`, for
+      extending or shrinking an envelope only in a certain direction.
+
+    - Generalize the `Color` class to absolute colors.
+      This addresses concerns raised in issue #66 by letting the backend
+      choose which color space to render `Color` instances to. Functions are
+      provided for backwards compatibility with the old semantics.
+
+    - New function `scaleInvPrim` for creating a diagram from a single
+      scale-invariant primitive.
+
+    - New module `Diagrams.Parametric`, containing a collection of
+      classes abstracting over "parametric" things: `Parametric`,
+      `DomainBounds`, `EndValues`, `Sectionable`, and `HasArcLength`,
+      with instances for segments, trails, and related things.
+
+    - A big refactoring of segments and trails:
+        - Segments can now be either "closed" or "open".
+        - There are now two types of trails: "lines" (which travel
+          from point A to point B) or "loops" (closed curves which end
+          where they started). `Trail` is now a wrapper type which can
+          contain both loops and lines.
+        - There is a new `Located` wrapper type for adding locations to
+          translation-invariant things.  `Path`s now consist of a
+          collection of `Located Trail`s.
+        - The `PathLike` class is now renamed to `TrailLike`; the
+          `trailLike` function takes a `Located Trail` as input.
+
+    - New convenience functions `boundaryFrom` and `boundaryFromMay`,
+      for computing boundaries of subdiagrams.
+
+    - Re-export from `diagrams-lib` a lot of things defined in
+      `diagrams-core`, to make them easier for users to find.  Several
+      new modules have been created as a result: `Diagrams.Query`,
+      `Diagrams.Envelope`, `Diagrams.Trace`, and `Diagrams.Names`.
+
+    - Export the `centroid` function from `Diagrams.Prelude`.
+
+    - `triangle` is now a synonym for `eqTriangle`.
+
+* **New instances**
+
+    - `IsPrim` instances for `Path`, `Ellipsoid`, `Image`, `Text`, and
+      `ScaleInv`
+    - `Eq`, `Ord`, and `Show` instances for `SizeSpec2D`
+
+* **API changes**
+
+    - `CircleFrac` has been renamed `Turn` (though `CircleFrac` is
+      retained as a deprecated synonym).
+
+    - `Diagrams.Coordinates` is no longer exported from
+      `Diagrams.Prelude`.  This is for compatibility with `lens`, as `(&)`
+      is a rather important lens operator and clashes with
+      `Diagrams.Coordinates`.  Users who want the `Coordinates` stuff can import
+      `Diagrams.Coordinates` explicitly.
+
+* **Dependency/version changes**
+
+    - allow `base-4.7`
+    - allow `semigroups-0.9`
+    - allow `NumInstances-1.3`
+    - upgrade to `monoid-extras-0.3`
+    - depend on `data-default-class` instead of `data-default`
+    - Tested with GHC 7.7.
+
+* **Bug fixes**
+
+    - Quadratic solver is now more numerically stable, getting rid of some
+      incorrect behavior of `juxtapose`
+      ([\#46](https://github.com/diagrams/diagrams-lib/issues/46))
+
+    - Added a special case that was a not handled properly by the
+      quadratic solver, resulting in bogus envelopes in certain cases
+      ([\#88](https://github.com/diagrams/diagrams-lib/issues/88)).
+
+    - Import only `Data.NumInstances.Tuple` instead of
+      `Data.NumInstances`. Previously, `Diagrams.Prelude` exported
+      `Eq`, `Show`, and `Num` instances for functions and tuples; now
+      it only exports tuple instances. Users wishing to use
+      `Diagrams.CubicSpline` with a vector space built over functions
+      (!?)  can import `Data.NumInstances.Function`
+      themselves. ([\#48](https://github.com/diagrams/diagrams-lib/issues/48))
+
+    - Do scaling on a `Path` *before* constructing a `TrailLike` in
+      `rect` ([\#43](https://github.com/diagrams/diagrams-lib/issues/43))
+
+[diagrams-contrib 0.7](http://hackage.haskell.org/package/diagrams%2Dcontrib-0.7)
+----------------
+
+* **New features**
+
+    - New module `Diagrams.Color.HSV` with an `hsvBlend` function for
+      blending colors in HSV space.
+
+    - Diagrams logo code is now in `Diagrams.Example.Logo`.
+
+    - New symmetric layout algorithm for binary trees in
+      `Diagrams.TwoD.Layout.Tree`.
+
+    - New `Diagrams.TwoD.Path.IteratedSubset` module, for constructing
+      paths using an "iterated subset" algorithm (repeatedly replacing
+      segments with a given path).
+
+    - New `Diagrams.TwoD.Layout.CirclePacking` module for
+      circle-packing layout
+
+    - New `Diagrams.TwoD.Factorization` module, for creating
+      "factorization diagrams" as seen at
+      http://mathlesstraveled.com/2012/11/05/more-factorization-diagrams/
+      and on the cover of Hacker Monthly
+      (http://mathlesstraveled.com/2012/10/05/factorization-diagrams/).
+
+    - `Diagrams.TwoD.Path.Turtle`: generalize `runTurtle` function,
+      and add new functions `drawTurtle` and `sketchTurtle`.
+      `drawTurtle` results in a diagram (like the old `runTurtle`),
+      and `sketchTurtle` yields a path (ignoring pen style commands).
+
+* **Dependency/version changes**
+
+    - Require `lens-3.8`
+    - allow `QuickCheck-2.6`
+
+* **Bug fixes**
+
+    - Fix a bug in `Diagrams.TwoD.Path.Turtle` which sometimes caused
+      it to output a doubled path (#13).
+
+* **Documentation**
+
+    - Added lots of example images using `diagrams-haddock`
+
+[diagrams-svg 0.7](http://hackage.haskell.org/package/diagrams%2Dsvg-0.7)
+----------------
+
+* **New features**
+
+    - New `renderToSVG` convenience function
+    - Vastly improved Haddock documentation
+
+* **New instances**
+
+    - `Show` instance for `Options SVG R2`
+
+* **Dependency/version changes**
+    - allow `base-4.7` and `unix-2.7`
+    - Upgrade to `monoid-extras-0.3`
+
+[diagrams-postscript 0.7](http://hackage.haskell.org/package/diagrams%2Dpostscript-0.7)
+----------------
+
+First release as an officially supported diagrams backend, generating
+Postscript via native Haskell. Supports all features except
+transparency.
+
+[diagrams-cairo 0.7](http://hackage.haskell.org/package/diagrams%2Dcairo-0.7)
+----------------
+
+* **New features**
+
+    - New `renderCairo` function for more convenient use of the cairo
+      backend.
+    - Lots of Haddock documentation improvements.
+
+* **New instances**
+
+    - `Show` instance for `Options Cairo R2`.
+
+[diagrams-gtk 0.6.0.1](http://hackage.haskell.org/package/diagrams%2Dgtk-0.6.0.1)
+----------------
+
+The `diagrams-gtk` package continues to work with no changes;
+`0.6.0.1` has been released simply to allow the dependency versions
+`base-4.7`, `diagrams-lib-0.7`, and `diagrams-cairo-0.7`.
+
+[diagrams-builder 0.4](http://hackage.haskell.org/package/diagrams%2Dbuilder-0.4)
+----------------
+
+* **New features**
+
+    * Add `hsenv` compatibility.
+
+    * Big improvements in the way rebuilding is handled:
+	- Strip comments before deciding whether to rebuild, so
+	  changing only comments does not trigger a rebuild
+	- Take local imports into account: if a diagram has an import
+	  which corresponds to a local file, rebuild if that file has
+	  changed
+	- Rebuild when options (*e.g.* size) change
+
+    * new `diagrams-builder-postscript` tool
+
+    * miscellaneous improvements to `diagrams-latex.sty`
+
+* **Dependency/version changes**
+
+    * depend on `cryptohash >= 0.8 && < 0.10` (use new unified API)
+    * remove `base16-bytestring` dependency
+
+[diagrams-haddock 0.1.1.1](http://hackage.haskell.org/package/diagrams%2Dhaddock-0.1.1.1)
+----------------
+
+`diagrams-haddock` is a new tool for embedding automatically-generated
+diagrams in Haddock documentation.  It has been released for a while,
+but `0.1.1.1` is the first version officially included in a major
+diagrams release.
+
 diagrams 0.6: 11 December 2012
 ==============================
 
@@ -18,7 +293,7 @@ diagrams 0.6: 11 December 2012
 
         See
         [`Diagrams.Core.Types`](https://github.com/diagrams/diagrams-core/blob/27b275f45cad514caefcd3035e4e261f1b4adf6f/src/Diagrams/Core/Types.hs#L493).
-	  
+
     - Traces: in addition to an envelope, each diagram now stores a
       "trace", which is like an embedded raytracer: given any ray
       (represented by a base point and a vector), the trace computes
@@ -34,8 +309,8 @@ diagrams 0.6: 11 December 2012
       module naming scheme in the rest of the diagrams universe.  In
       particular:
 
-        `Graphics.Rendering.Diagrams`       -->  `Diagrams.Core`  
-        `Grahpics.Rendering.Diagrams.Core`  -->  `Diagrams.Core.Types`  
+        `Graphics.Rendering.Diagrams`       -->  `Diagrams.Core`
+        `Grahpics.Rendering.Diagrams.Core`  -->  `Diagrams.Core.Types`
         `Graphics.Rendering.Diagrams.*`     -->  `Diagrams.Core.*`
 
     - `Graphics.Rendering.Diagrams.UDTree` has been split out into a
@@ -227,7 +502,7 @@ Version bumped to 0.6 to match other diagrams packages.
 
     - New pure implementation of Turtle library, in `Turtle.Internals`
 
-    - `Diagrams.TwoD.Layout.Tree`: 
+    - `Diagrams.TwoD.Layout.Tree`:
 
 	- New `renderTree'` function which gives
 	  the edge-drawing function access to the values stored at the
@@ -240,7 +515,7 @@ Version bumped to 0.6 to match other diagrams packages.
 
     - Tiling generation code in `Diagrams.TwoD.Tilings` wasn't actually
       checking whether vertexes had been already visited.
-      
+
 * **Dependency/version changes**
 
     - Switch from `fclabels` to `lens`
@@ -293,7 +568,7 @@ Version bumped to 0.6 to match other diagrams packages.
     - Add dependency on `colour`
 
     - Lower bound on `cairo` raised to 0.12.4
-    
+
 * **Bug fixes**
 
     - Fixed looped compile mode, which was repeatedly trying to compile
@@ -304,6 +579,7 @@ Version bumped to 0.6 to match other diagrams packages.
       the "bypass" mode used by the gtk backend. ([\#16](https://github.com/diagrams/diagrams-cairo/pull/16))
 
 [diagrams-gtk 0.6](http://hackage.haskell.org/package/diagrams-gtk-0.6)
+----------------
 
 Initial release.  Split out into a separate package from
 `diagrams-cairo`.

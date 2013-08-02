@@ -7,9 +7,9 @@
     + [X] Query stuff -- new Query module in -lib? query, sample,
       value, resetValue, clearValue
   + [X] add boundaryFrom or something like that? (see migration page)
-  + [-] migrate website to Hakyll 4
+  + [X] migrate website to Hakyll 4
     + [X] get it to compile
-    + [ ] get gallery descriptions working
+    + [X] get gallery descriptions working
   + [X] fix user manual examples
   + [ ] update user manual
     + [ ] postscript backend
@@ -37,7 +37,7 @@
     + [X] BlogLiterately-diagrams
     + [X] SVGFonts
   + [ ] build API docs
-  + [-] update CHANGES files and release info on website
+  + [X] update CHANGES files and release info on website
     + [X] diagrams-core
     + [X] diagrams-lib
     + [X] diagrams-cairo
@@ -47,7 +47,7 @@
     + [X] diagrams-contrib
     + [X] diagrams-builder
     + [X] diagrams-haddock
-    + [ ] website
+    + [X] website
   + [X] 0.6 -> 0.7 migration page on wiki
   + [ ] update quick-start tutorial
   + [ ] test build:
@@ -71,6 +71,7 @@
     + [ ] contrib
     + [ ] builder
     + [X] haddock
+    + [ ] website
   + [ ] add release date to releases.markdown
   + [ ] merge all into 0.7 branch (as necessary)
   + [ ] tag all with release version
