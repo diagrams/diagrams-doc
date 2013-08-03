@@ -54,7 +54,7 @@ main = do
       , "rm -f Shake"
       , "rm -f Shake.o"
       , "rm -f Shake.hi"
-      , "rm .shake.database"
+      , "rm -f .shake.database"
       ]
 
     _ -> shake shakeOptions { shakeThreads = 2 `max` (n - 1) } $ do
