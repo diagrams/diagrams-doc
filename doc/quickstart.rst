@@ -19,7 +19,7 @@ DSL to create graphics in a powerful, modular, and declarative way.
 There's enough here to get you started quickly; for more in-depth
 information, see the `user manual`_.
 
-.. _`user manual`: /doc/diagrams-manual.html
+.. _`user manual`: /doc/manual.html
 
 This is not a Haskell tutorial (although a
 Haskell-tutorial-via-diagrams is a fun idea and may happen in the

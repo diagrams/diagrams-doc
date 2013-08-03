@@ -47,9 +47,9 @@ main = hakyll $ do
         let docCtx = field "title" $ \i -> do
               let baseName = takeBaseName . toFilePath . itemIdentifier $ i
               return $ case baseName of
-                "diagrams-manual" -> "User manual"
-                "diagrams-quickstart" -> "Quick start tutorial"
-                _ -> baseName
+                "manual"     -> "User manual"
+                "quickstart" -> "Quick start tutorial"
+                _            -> baseName
         compile (getResourceBody >>= mainCompiler (docCtx <> defaultContext))
 
     match ("doc/**" .&&. complement "doc/*.html") $ do

@@ -262,7 +262,7 @@ To get started quickly, you may wish to continue by reading the `quick
 start tutorial`_; or you can continue reading the rest of this user
 manual.
 
-.. _`quick start tutorial`: http://projects.haskell.org/diagrams/tutorial/DiagramsTutorial.html
+.. _`quick start tutorial`: /doc/quickstart.html
 
 Contributing
 ------------

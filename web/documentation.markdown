@@ -5,9 +5,9 @@ title: Documentation
 Reference
 ---------
 
-* [Quick start tutorial](/doc/diagrams-tutorial.html) --- get
+* [Quick start tutorial](/doc/quickstart.html) --- get
   started making simple diagrams quickly.
-* [User manual](/doc/diagrams-manual.html) --- (almost) everything
+* [User manual](/doc/manual.html) --- (almost) everything
   you ever wanted to know about diagrams.
 * [API reference](/haddock/index.html) --- Haddock-generated reference
   documentation.
