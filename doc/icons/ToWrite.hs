@@ -1,7 +1,9 @@
 {-# LANGUAGE NoMonomorphismRestriction #-}
 
-import Diagrams.Prelude
-import Diagrams.Backend.Cairo.CmdLine
+module ToWrite where
+
+import           Diagrams.Backend.Cairo.CmdLine
+import           Diagrams.Prelude
 
 frame = rect 8.5 11
       # lw 0.4

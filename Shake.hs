@@ -55,7 +55,6 @@ main = do
       , "rm -f Shake.o"
       , "rm -f Shake.hi"
       , "rm .shake.database"
-      , "rm -f web/gallery/Build.{hi,o}"
       ]
 
     _ -> shake shakeOptions { shakeThreads = 2 `max` (n - 1) } $ do
@@ -101,7 +100,7 @@ main = do
 
 compilePng :: Bool -> FilePath -> Action ()
 compilePng isThumb outPath = do
-    systemCwd "web/gallery" ("../.." </> obj "web/gallery/Build.hs.exe")
+    systemCwd "web/gallery" ("../.." </> obj "web/gallery/build-gallery.hs.exe")
       ( (if isThumb then [ "--thumb", "175" ] else [])
         ++ [(takeBaseName . takeBaseName) outPath, "../.." </> outPath]
       )
@@ -164,7 +163,7 @@ needWeb = do
   need [ "web/doc"
        , "web/gallery/images"
        , obj "web/hakyll.hs.exe"
-       , obj "web/gallery/Build.hs.exe"
+       , obj "web/gallery/build-gallery.hs.exe"
        ]
   requireIcons
   requireStatic
@@ -175,4 +174,7 @@ ghc :: String -> String -> Action ()
 ghc out hs = do
   askOracleWith (GhcPkg ()) [""]
   let odir = takeDirectory out
-  system' "ghc" ["--make", "-O2", "-outputdir", odir, "-o", out, hs]
+      base = (takeBaseName . takeBaseName) out
+      mainIs | head base `elem` ['A'..'Z'] = ["-main-is", base]
+             | otherwise                   = []
+  system' "ghc" (["--make", "-O2", "-outputdir", odir, "-o", out, hs] ++ mainIs)
