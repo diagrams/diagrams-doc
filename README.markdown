@@ -35,9 +35,14 @@ To build the website, you will additionally need
 
 Once you have all the dependencies, simply do
 
-    ghc --make Shake
-    ./Shake preview
+    ghc --make Shake -threaded
+    ./Shake +RTS -N4 -RTS preview
 
 which will build the user manual and website, and run a web server on
-port 8000 serving a preview of the webiste.  Point your browser at
-`localhost:8000` to view it.
+port 8000 serving a preview of the webiste. (In place of `-N4` you
+should use `-NX` where X is the number of cores you have.)  Point your
+browser at `localhost:8000` to view it.  It works well to leave this
+invocation of `Shake preview` running, and then start another process
+calling `Shake +RTS -NX -RTS buildh` repeatedly in a loop.  The
+website will now be automatically be rebuilt any time any source files
+change.
