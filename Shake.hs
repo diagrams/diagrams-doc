@@ -2,6 +2,7 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
 import           Control.Concurrent          (getNumCapabilities)
+import           Control.Monad               (when)
 import           Control.Parallel.Strategies (NFData)
 import           Data.Functor                ((<$>))
 import           Data.List                   (isPrefixOf)
@@ -20,14 +21,17 @@ un = dropDirectory1
 dist = ("dist" </>)
 
 data MkMode =
-    Build
-  | Preview
-  | Clean
-  deriving (Show, Data, Typeable)
+    Build    -- Build pre-Hakyll stuff only.  Works well to first run 'Shake preview',
+             -- then while it is still running, run 'Shake build' in a loop.
+  | BuildH   -- build Hakyll.
+  | Preview  -- build everything and run hakyll preview.
+  | Clean    -- full clean.
+  deriving (Eq, Show, Data, Typeable)
 
 mkModes :: MkMode
 mkModes = modes
   [ Build &= auto
+  , BuildH
   , Preview
   , Clean
   ]
@@ -55,12 +59,12 @@ main = do
       ]
 
     _ -> shake shakeOptions { shakeThreads = 2 `max` (n - 1) } $ do
-      want [dist "doc/diagrams-manual.html"]
+      action $ requireDoc
       action $ requireIcons
       action $ requireStatic
 
       webRules
-      action $ runWeb m
+      when (m /= Build) (action $ runWeb m)
 
       dist "doc/*.html" *> \out -> do
         let xml = obj . un $ out -<.> "xml"
@@ -151,7 +155,7 @@ runWeb m = do
 
   systemCwd "web" (".." </> obj "web/hakyll.hs.exe")
     [ case m of
-        Build   -> "build"
+        BuildH  -> "build"
         Preview -> "preview"
     ]
 

@@ -23,7 +23,7 @@ install:
 
 before_script: ghc --make Shake
 
-script: ./Shake
+script: ./Shake buildh
 
 notifications:
   email: false
