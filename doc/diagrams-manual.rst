@@ -63,10 +63,13 @@ code examples to take you to its documentation.  Try it:
 
   example = circle 2 ||| unitCircle
 
-Mathematical equations are typeset using MathJax_.  Right-click on any
-equation to access MathJax options, like displaying the LaTeX source,
-switching between MathML and HTML/CSS for display, zoom settings, and
-so on.
+Mathematical equations are typeset using MathJax_:
+
+  `\sum_{k=1}^\infty \frac{1}{k^2} = \frac{\pi^2}{6}`:math:
+
+Right-click on any equation to access MathJax options, like displaying
+the LaTeX source, switching between MathML and HTML/CSS for display,
+zoom settings, and so on.
 
 .. _MathJax: http://www.mathjax.org/
 
@@ -2131,7 +2134,7 @@ function and specify a file name and size for the image:
 
 > no = (circle 1 <> hrule 2 # rotateBy (1/8))
 >    # lw 0.2 # lc red
-> example = no <> image "manual/static/phone.png" 1.5 1.5
+> example = no <> image "doc/static/phone.png" 1.5 1.5
 
 Unfortunately, you must specify both a width and a height for each
 image.  You might hope to be able to specify just a width or just a
