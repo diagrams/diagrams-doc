@@ -29,17 +29,6 @@ you need for working with diagrams.
 
 .. _`Learn You a Haskell`: http://learnyouahaskell.com/
 
-This tutorial is available in several formats:
-
-* HTML_
-* `Literate Haskell`_  (XXX is this true?!)
-
-.. _HTML: /doc/diagrams-tutorial.html
-.. _`Literate Haskell`: /doc/DiagramsTutorial.lhs
-
-Whatever you do, don't just read it: download the ``.lhs`` version
-so you can play around with the content of the tutorial interactively!
-
 Resources
 =========
 
@@ -177,7 +166,7 @@ If you now view `circle.svg` in your favorite web browser, you should
 see an unfilled black circle on a white background (actually, it's on
 a transparent background, but most browsers I know of use white):
 
-.. class:: dia-lhs
+.. class:: dia
 
 ::
 
@@ -207,12 +196,11 @@ the `circle` diagram with the `(#)` operator:
 
 ::
 
-> blueCircle = circle 1 # fc blue
->                       # lw 0.05
->                       # lc purple
->                       # dashing [0.2,0.05] 0
->
-> example = blueCircle
+> example = circle 1 # fc blue
+>                    # lw 0.05
+>                    # lc purple
+>                    # dashing [0.2,0.05] 0
+
 
 There's actually nothing special about the `(#)` operator: it's just
 reverse function application, that is,
@@ -232,7 +220,7 @@ Just to illustrate,
 > example = dashing [0.2,0.05] 0 . lc purple . lw 0.05 . fc blue
 >         $ circle 1
 
-produces exactly the same diagram as `blueCircle`.  So why bother with
+produces exactly the same diagram as before.  So why bother with
 `(#)`?  First, it's often more natural to write (and easier to read)
 what a diagram *is* first, and what it is *like* second.  Second,
 `(#)` has a high precedence (namely, 8), making it more convenient to
@@ -272,9 +260,7 @@ with `atop`:
 
 ::
 
-> circleSq = square 1 # fc aqua `atop` circle 1
->
-> example = circleSq
+> example = square 1 # fc aqua `atop` circle 1
 
 (Incidentally, these colors are coming from the
 `Data.Colour.Names`:mod: module.)
@@ -300,9 +286,7 @@ local origin of a diagram.
 
 ::
 
-> circleWithO = circle 1 # showOrigin
->
-> example = circleWithO
+> example = circle 1 # showOrigin
 
 Not surprisingly, the local origin of `circle` is at its center.  So
 is the local origin of `square`.  This is why ``square 1 `atop` circle 1``
@@ -314,25 +298,21 @@ Side-by-side
 Another fundamental way to combine two diagrams is by placing them
 *next to* each other.  The `(|||)` and `(===)` operators let us
 conveniently put two diagrams next to each other in the horizontal or
-vertical directions, respectively.  For example:
+vertical directions, respectively.  For example, horizontal:
 
 .. class:: dia-lhs
 
 ::
 
-> circleSqH = circle 1 ||| square 2
->
-> example = circleSqH
+> example = circle 1 ||| square 2
 
-
+and vertical:
 
 .. class:: dia-lhs
 
 ::
 
-> circleSqV = circle 1 === square 2
->
-> example = circleSqV
+> example = circle 1 === square 2
 
 The two diagrams are arranged next to each other so that their local
 origins are on the same horizontal or vertical line.  As you can
@@ -345,7 +325,7 @@ the more general `beside` combinator. `beside` takes as arguments a
 the vector"---that is, in such a way that the vector points from the
 local origin of the first diagram to the local origin of the second.
 
-.. class:: dia-lhs "foo bar"
+.. class:: dia-lhs
 
 ::
 
@@ -384,10 +364,8 @@ line between them with `vrule` and you will see why.)
 
 ::
 
-> e2 = ell ||| ell
+> example = ell ||| ell
 >   where ell = circle 1 # scaleX 0.5 # rotateBy (1/6)
->
-> example = e2
 
 If we want to position these ellipses next to each other horizontally
 so that they are tangent, it is not clear how to accomplish this.
@@ -447,9 +425,7 @@ relative to its local origin.
 
 ::
 
-> circleT = circle 1 # translate (r2 (0.5, 0.3)) # showOrigin
->
-> example = circleT
+> example = circle 1 # translate (r2 (0.5, 0.3)) # showOrigin
 
 As `circleT` shows, translating a diagram by `(0.5, 0.3)` is the same
 as moving its local origin by `(-0.5, -0.3)`.
@@ -490,12 +466,10 @@ local origin ends up exactly on the edge of its envelope.
 
 ::
 
-> circlesTop = hrule (2 * sum sizes) # lw 0.1 === circles # centerX
+> example = hrule (2 * sum sizes) # lw 0.1 === circles # centerX
 >   where circles = hcat . map alignT . zipWith scale sizes
 >                 $ repeat (circle 1 # lw 0.1)
 >         sizes   = [2,5,4,7,1,3]
->
-> example = circlesTop
 
 See `Diagrams.TwoD.Align`:mod: for other alignment combinators.
 
