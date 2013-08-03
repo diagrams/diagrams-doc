@@ -19,7 +19,7 @@ DSL to create graphics in a powerful, modular, and declarative way.
 There's enough here to get you started quickly; for more in-depth
 information, see the `user manual`_.
 
-.. _`user manual`: /manual/diagrams-manual.html
+.. _`user manual`: /doc/diagrams-manual.html
 
 This is not a Haskell tutorial (although a
 Haskell-tutorial-via-diagrams is a fun idea and may happen in the
@@ -34,8 +34,8 @@ This tutorial is available in several formats:
 * HTML_
 * `Literate Haskell`_  (XXX is this true?!)
 
-.. _HTML: /tutorial/diagrams-tutorial.html
-.. `Literate Haskell`_: /tutorial/DiagramsTutorial.lhs
+.. _HTML: /doc/diagrams-tutorial.html
+.. _`Literate Haskell`: /doc/DiagramsTutorial.lhs
 
 Whatever you do, don't just read it: download the ``.lhs`` version
 so you can play around with the content of the tutorial interactively!
@@ -50,9 +50,8 @@ Some resources that may be helpful to you as you learn about diagrams:
 * The `diagrams-discuss mailing list`_
 * The ``#diagrams`` IRC channel on freenode.org
 
-.. `user manual`_: /manual/diagrams-manual.html
-.. `API documentation`_: /doc/index.html
-.. `diagrams-discuss mailing list`_: http://groups.google.com/group/diagrams-discuss
+.. _`API documentation`: /haddock/index.html
+.. _`diagrams-discuss mailing list`: http://groups.google.com/group/diagrams-discuss
 
 Getting started
 ===============
@@ -68,18 +67,17 @@ Compiler`_ (7.4 or later), as well as some
 standard libraries and tools.  There are several methods for obtaining
 these:
 
-* `The Haskell Platform`_ has
-everything you need in one convenient package. If you are unsure, you
-should use this.
+* `The Haskell Platform`_ has everything you need in one convenient
+  package. If you are unsure, you should use this.
 
 * If you already have GHC and/or know what you are doing and want to
-install things yourself, just make sure you have `GHC`_ and a recent
-version of the `cabal-install tool`_.
+  install things yourself, just make sure you have `GHC`_ and a recent
+  version of the `cabal-install tool`_.
 
-.. `Glasgow Haskell Compiler`_: http://haskell.org/ghc
-.. `The Haskell Platform`_: http://hackage.haskell.org/platform/
-.. `GHC`_: http://haskell.org/ghc
-.. `cabal-install tool`_: http://hackage.haskell.org/trac/hackage/wiki/CabalInstall
+.. _`Glasgow Haskell Compiler`: http://haskell.org/ghc
+.. _`The Haskell Platform`: http://hackage.haskell.org/platform/
+.. _`GHC`: http://haskell.org/ghc
+.. _`cabal-install tool`: http://hackage.haskell.org/trac/hackage/wiki/CabalInstall
 
 Installation
 ------------
@@ -107,8 +105,8 @@ four packages:
 There are other backends as well; see the `diagrams package
 documentation`_ and the `diagrams wiki`_ for more information.
 
-.. `diagrams package documentation`_: http://hackage.haskell.org/package/diagrams
-.. `diagrams wiki`_: http://www.haskell.org/haskellwiki/Diagrams/Projects#Backends
+.. _`diagrams package documentation`: http://hackage.haskell.org/package/diagrams
+.. _`diagrams wiki`: http://www.haskell.org/haskellwiki/Diagrams/Projects#Backends
 
 Philosophy
 ==========
@@ -129,7 +127,7 @@ section for now---but you might want to come back and read it later!)
 * Almost everything is based around the concept of *monoids* (more on
   this later).
 
-* The core library is as simple and elegant as possible -- almost
+* The core library is as simple and elegant as possible---almost
   everything is built up from a very small set of primitive types and
   operations.  One consequence is that diagrams is optimized for
   simplicity and flexibility rather than for speed; if you are looking
@@ -202,58 +200,62 @@ Attributes
 ==========
 
 Suppose we want our circle to be blue, with a thick dashed purple
-outline (there's no accounting for taste).  We can apply attributes to
+outline (there's no accounting for taste!).  We can apply attributes to
 the `circle` diagram with the `(#)` operator:
 
-> circle1 = circle 1 # fc blue
->                    # lw 0.05
->                    # lc purple
->                    # dashing [0.2,0.05] 0
+.. class:: dia-lhs
 
-(To render this new diagram, just replace `defaultMain (circle 1)` with
-`defaultMain circle1`.)
+::
 
-Note that the dashed purple border is cut off a bit at the edges of
-the image. This is by design: diagrams' bounds are computed based on
-their "abstract shapes", without taking into account how they are
-actually drawn.  Future versions of diagrams may give you the option
-of taking things such as thick borders into account when computing
-boundaries.  For now, we can simply add a bit of "padding" to make the
-whole drawing visible. 10% should do nicely:
-
-> pCircle1 = circle1 # pad 1.1
+> blueCircle = circle 1 # fc blue
+>                       # lw 0.05
+>                       # lc purple
+>                       # dashing [0.2,0.05] 0
+>
+> example = blueCircle
 
 There's actually nothing special about the `(#)` operator: it's just
 reverse function application, that is,
 
-~~~ {.haskell}
-x # f = f x
-~~~
+.. class:: lhs
+
+::
+
+> x # f = f x
 
 Just to illustrate,
 
-> pCircle1' = pad 1.1 . dashing [0.2,0.05] 0 . lc purple . lw 0.05 . fc blue $ circle 1
+.. class:: dia-lhs
 
-produces exactly the same diagram as `pCircle1`.  So why bother with `(#)`?
-First, it's often more natural to write (and easier to read) what a
-diagram *is* first, and what it is *like* second.  Second, `(#)` has a
-high precedence (8), making it more convenient to combine diagrams
-with specified attributes.  For example,
+::
 
-~~~ {.haskell}
-circle 1 # fc red # lw 0 ||| circle 1 # fc green # lw 0
-~~~
+> example = dashing [0.2,0.05] 0 . lc purple . lw 0.05 . fc blue
+>         $ circle 1
+
+produces exactly the same diagram as `blueCircle`.  So why bother with
+`(#)`?  First, it's often more natural to write (and easier to read)
+what a diagram *is* first, and what it is *like* second.  Second,
+`(#)` has a high precedence (namely, 8), making it more convenient to
+combine diagrams with specified attributes.  For example,
+
+.. class:: dia-lhs
+
+::
+
+> example = circle 1 # fc red # lw 0 ||| circle 1 # fc green # lw 0
 
 places a red circle with no border next to a green circle with no
 border (we'll see more about the `(|||)` operator shortly). Without
 `(#)` we would have to write something with more parentheses, like
 
-~~~ {.haskell}
-(fc red . lw 0 $ circle 1) ||| (fc green . lw 0 $ circle 1)
-~~~
+.. class:: lhs
+
+::
+
+> (fc red . lw 0 $ circle 1) ||| (fc green . lw 0 $ circle 1)
 
 For information on other standard attributes, see
-[Diagrams.Attributes](http://hackage.haskell.org/packages/archive/diagrams-lib/latest/doc/html/Diagrams-Attributes.html).
+the `Diagrams.Attributes`:mod: module.
 
 Combining diagrams
 ==================
@@ -266,9 +268,16 @@ Let's start with the most basic way of combining two diagrams:
 superimposing one diagram on top of another.  We can accomplish this
 with `atop`:
 
-> circleSq = square 1 # fc aqua `atop` pCircle1
+.. class:: dia-lhs
 
-(Incidentally, these colors are coming from [Data.Colour.Names](http://hackage.haskell.org/packages/archive/colour/2.3.1/doc/html/Data-Colour-Names.html).)
+::
+
+> circleSq = square 1 # fc aqua `atop` circle 1
+>
+> example = circleSq
+
+(Incidentally, these colors are coming from the
+`Data.Colour.Names`:mod: module.)
 
 "Putting one thing on top of another" sounds rather vague: how do we
 know exactly where the circle and square will end up relative to one
@@ -279,7 +288,7 @@ Local origins
 -------------
 
 Every diagram has a distinguished point called its *local origin*.
-Many operations on diagrams -- such as `atop` -- work somehow with
+Many operations on diagrams---such as `atop`---work somehow with
 respect to the local origin.  `atop` in particular works by
 superimposing two diagrams so that their local origins coincide (and
 this point becomes the local origin of the new, combined diagram).
@@ -287,13 +296,17 @@ this point becomes the local origin of the new, combined diagram).
 The `showOrigin` function is provided for conveniently visualizing the
 local origin of a diagram.
 
+.. class:: dia-lhs
+
+::
+
 > circleWithO = circle 1 # showOrigin
+>
+> example = circleWithO
 
 Not surprisingly, the local origin of `circle` is at its center.  So
 is the local origin of `square`.  This is why ``square 1 `atop` circle 1``
 produces a square centered on a circle.
-
-> circleSqWithO = circleSq # showOrigin
 
 Side-by-side
 ------------
@@ -303,9 +316,23 @@ Another fundamental way to combine two diagrams is by placing them
 conveniently put two diagrams next to each other in the horizontal or
 vertical directions, respectively.  For example:
 
+.. class:: dia-lhs
+
+::
+
 > circleSqH = circle 1 ||| square 2
 >
+> example = circleSqH
+
+
+
+.. class:: dia-lhs
+
+::
+
 > circleSqV = circle 1 === square 2
+>
+> example = circleSqV
 
 The two diagrams are arranged next to each other so that their local
 origins are on the same horizontal or vertical line.  As you can
@@ -315,12 +342,18 @@ combined diagram coincides with the local origin of the first diagram.
 `(|||)` and `(===)` are actually just convenient specializations of
 the more general `beside` combinator. `beside` takes as arguments a
 *vector* and two diagrams, and places them next to each other "along
-the vector" --- that is, in such a way that the vector points from the
+the vector"---that is, in such a way that the vector points from the
 local origin of the first diagram to the local origin of the second.
+
+.. class:: dia-lhs "foo bar"
+
+::
 
 > circleSqV1 = beside (r2 (1,1)) (circle 1) (square 2)
 >
 > circleSqV2 = beside (r2 (1,-2)) (circle 1) (square 2)
+>
+> example = hcat [circleSqV1, strutX 1, circleSqV2]
 
 Notice how we use the `r2` function to create a 2D vector from a pair
 of coordinates.
@@ -347,8 +380,14 @@ space in between them.  For example, the two rotated ellipses in the
 diagram below have some space between them. (Try adding a vertical
 line between them with `vrule` and you will see why.)
 
+.. class:: dia-lhs
+
+::
+
 > e2 = ell ||| ell
 >   where ell = circle 1 # scaleX 0.5 # rotateBy (1/6)
+>
+> example = e2
 
 If we want to position these ellipses next to each other horizontally
 so that they are tangent, it is not clear how to accomplish this.
@@ -382,65 +421,35 @@ for transforming diagrams, such as:
 
 For example:
 
+.. class:: dia-lhs
+
+::
+
 > circleRect  = circle 1 # scale 0.5 ||| square 1 # scaleX 0.3
 >
-> circleRect2 = circle 1 # scale 0.5 ||| square 1 # scaleX 0.3 
->                                                 # rotateBy (1/6) 
+> circleRect2 = circle 1 # scale 0.5 ||| square 1 # scaleX 0.3
+>                                                 # rotateBy (1/6)
 >                                                 # scaleX 0.5
+>
+> example = hcat [circleRect, strutX 1, circleRect2]
 
 (Of course, `circle 1 # scale 0.5` would be better written as just `circle 0.5`.)
-
-Freezing
---------
-
-Note that the transformed circles and squares in the examples above
-were all drawn with the same uniform lines.  This is because by
-default, transformations operate on the abstract geometric ideal of a
-diagram, and not on its attributes.  Often this is what you want; but
-occasionally you want scaling a diagram to have an effect on the width
-of its lines, and so on.  This can be accomplished with the `freeze`
-combinator: whereas transformations normally do not affect a diagram's
-attributes, transformations *do* affect the attributes of a frozen diagram.
-
-Here is an example. On the left is an untransformed circle drawn with
-a line 0.1 units thick.  The next circle is a scaled version of the
-first: notice how the line thickness is the same.  The third circle
-was produced by first freezing, then scaling the first circle,
-resulting in a line twice as thick.  The last two circles illustrate a
-non-uniform scale applied to an unfrozen circle (which is drawn with a
-uniform line) and to a frozen one (in which the line gets thicker and
-thinner according to the non-uniform scale).
-
-> c = circle 1 # lw 0.1
->
-> circles = hcat' with {sep = 0.5} 
->           [ c 
->
->           , c # scale 2
->           , c # freeze # scale 2
->
->           , c # scaleX 0.2
->           , c # freeze # scaleX 0.2
->           ]
->           # centerXY
->           # pad 1.1
-
-This example also illustrates the `hcat'` function, which takes a list
-of diagrams and lays them out horizontally, here with a separation of
-0.5 units between each one.  For more information on `hcat'` and
-similar combinators, see the
-[Diagrams.TwoD.Combinators](http://hackage.haskell.org/packages/archive/diagrams-lib/latest/doc/html/Diagrams-TwoD-Combinators.html)
-documentation.
 
 Translation
 -----------
 
 Of course, there are also translation transformations like
 `translate`, `translateX`, and `translateY`.  These operations
-translate a diagram within its *local vector space* --- that is,
+translate a diagram within its *local vector space*---that is,
 relative to its local origin.
 
+.. class:: dia-lhs
+
+::
+
 > circleT = circle 1 # translate (r2 (0.5, 0.3)) # showOrigin
+>
+> example = circleT
 
 As `circleT` shows, translating a diagram by `(0.5, 0.3)` is the same
 as moving its local origin by `(-0.5, -0.3)`.
@@ -448,13 +457,19 @@ as moving its local origin by `(-0.5, -0.3)`.
 Since diagrams are always composed with respect to their local
 origins, translation can affect the way diagrams are composed.
 
+.. class:: dia-lhs
+
+::
+
 > circleSqT   = square 1 `atop` circle 1 # translate (r2 (0.5, 0.3))
 > circleSqHT  = square 1 ||| circle 1 # translate (r2 (0.5, 0.3))
 > circleSqHT2 = square 1 ||| circle 1 # translate (r2 (19.5, 0.3))
+>
+> example = hcat [circleSqT, strutX 1, circleSqHT, strutX 1, circleSqHT2]
 
 As `circleSqHT` and `circleSqHT2` demonstrate, when we place a
 translated circle next to a square, it doesn't matter how much the
-circle was translated in the *horizontal* direction --- the square and
+circle was translated in the *horizontal* direction---the square and
 circle will always simply be placed next to each other.  The vertical
 direction matters, though, since the local origins of the square and
 circle are placed on the same horizontal line.
@@ -463,7 +478,7 @@ Aligning
 --------
 
 It's quite common to want to *align* some diagrams in a certain way
-when placing them next to one another --- for example, we might want a
+when placing them next to one another---for example, we might want a
 horizontal row of diagrams aligned along their top edges.  The
 *alignment* of a diagram simply refers to its position relative to its
 local origin, and convenient alignment functions are provided for
@@ -471,49 +486,57 @@ aligning a diagram with respect to its envelope.  For example,
 `alignT` translates a diagram in a vertical direction so that its
 local origin ends up exactly on the edge of its envelope.
 
+.. class:: dia-lhs
+
+::
+
 > circlesTop = hrule (2 * sum sizes) # lw 0.1 === circles # centerX
 >   where circles = hcat . map alignT . zipWith scale sizes
 >                 $ repeat (circle 1 # lw 0.1)
 >         sizes   = [2,5,4,7,1,3]
+>
+> example = circlesTop
 
-See [Diagrams.TwoD.Align](http://hackage.haskell.org/packages/archive/diagrams-lib/latest/doc/html/Diagrams-TwoD-Align.html) for other alignment combinators.
+See `Diagrams.TwoD.Align`:mod: for other alignment combinators.
 
 Diagrams as a monoid
 ====================
 
 As you may have already suspected if you are familiar with monoids,
-diagrams form a monoid under `atop`.  The diagrams standard library
-provides `(<>)` as a convenient synonym for `mappend`, so `(<>)` can
-also be used to superimpose diagrams.  This also means that `mempty`
-is available to construct the "empty diagram", which takes up no space
-and produces no output.
+diagrams form a monoid under `atop`.  This means that you can use
+`(<>)` instead of `atop` to superimpose two diagrams.  It also means
+that `mempty` is available to construct the "empty diagram", which
+takes up no space and produces no output.
 
 Quite a few other things in the diagrams standard library are also
-monoids (transformations, trails, paths, styles, and colors).
+monoids (transformations, trails, paths, styles, colors, envelopes,
+traces...).
 
 Next steps
 ==========
 
 This tutorial has really only scratched the surface of what is
 possible! Included among the many things *not* covered by this
-tutorial are paths, splines, text, traces, a wide array of predefined
-shapes, named subdiagrams, animation...  Here are pointers to some
-resources for learning more:
+tutorial are trails, paths, splines, text, traces, a wide array of
+predefined shapes, named subdiagrams, animation...  Here are pointers
+to some resources for learning more:
 
-* The diagrams [user manual](/manual/diagrams-manual.html) goes into
-  much more depth on all the topics covered in this tutorial, plus many
-  others, and includes lots of illustrative examples.  If there is anything in the manual that you find
-unclear, confusing, or omitted, please
-[report it as a bug](http://github.com/diagrams/diagrams-doc/issues)!
+* The diagrams `user manual`_ goes into much more depth on all the
+  topics covered in this tutorial, plus many others, and includes lots
+  of illustrative examples.  If there is anything in the manual that
+  you find unclear, confusing, or omitted, please `report it as a
+  bug`_!
 
 * The diagrams-lib API is generally well-documented; start with the
-documentation for
-[Diagrams.Prelude](http://hackage.haskell.org/packages/archive/diagrams-lib/latest/doc/html/Diagrams-Prelude.html),
-and then drill down from there to learn about whatever you are
-interested in.  If there is anything in the API documentation that you find
-unclear or confusing, please
-[report it as a bug](http://github.com/diagrams/diagrams-lib/issues)!
+  documentation for `Diagrams.Prelude`:mod:, and then drill down from
+  there to learn about whatever you are interested in.  If there is
+  anything in the API documentation that you find unclear or
+  confusing, please `report it as a bug as well`_!
 
-* If you run into difficulty or have any questions, join the `#diagrams`
-IRC channel on freenode.org, or the [diagrams-discuss mailing
-list](http://groups.google.com/group/diagrams-discuss).
+* If you run into difficulty or have any questions, join the
+  ``#diagrams`` IRC channel on freenode.org, or the `diagrams-discuss
+  mailing list`_.
+
+.. _`report it as a bug`: http://github.com/diagrams/diagrams-doc/issues
+.. _`report it as a bug as well`: http://github.com/diagrams/diagrams/issues
+.. _`diagrams-discuss mailing list`: http://groups.google.com/group/diagrams-discuss
