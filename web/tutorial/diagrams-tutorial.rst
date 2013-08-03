@@ -119,24 +119,24 @@ decisions. (If you're particularly impatient, feel free to skip this
 section for now---but you might want to come back and read it later!)
 
 * Positioning and scaling are always *relative*.  There is never any
-global coordinate system to think about; everything is done relative
-to diagrams' *local* vector spaces.  This is not only easier to think
-about, it also increases modularity and compositionality, since diagrams
-can always be designed without thought for the context in which they
-will eventually be used.  Doing things this way is more work for the
-*library* and less work for the *user*, which is the way it should be.
+  global coordinate system to think about; everything is done relative
+  to diagrams' *local* vector spaces.  This is not only easier to think
+  about, it also increases modularity and compositionality, since diagrams
+  can always be designed without thought for the context in which they
+  will eventually be used.  Doing things this way is more work for the
+  *library* and less work for the *user*, which is the way it should be.
 
 * Almost everything is based around the concept of *monoids* (more on
-this later).
+  this later).
 
 * The core library is as simple and elegant as possible -- almost
-everything is built up from a very small set of primitive types and
-operations.  One consequence is that diagrams is optimized for
-simplicity and flexibility rather than for speed; if you are looking
-to do *real-time* graphics generation you will probably be best served
-by looking elsewhere! (With that said, however, we certainly are
-interested in making diagrams as fast as possible without sacrificing
-other features.)
+  everything is built up from a very small set of primitive types and
+  operations.  One consequence is that diagrams is optimized for
+  simplicity and flexibility rather than for speed; if you are looking
+  to do *real-time* graphics generation you will probably be best
+  served by looking elsewhere! (With that said, however, we certainly
+  are interested in making diagrams as fast as possible without
+  sacrificing other features.)
 
 Your first diagram
 ==================
