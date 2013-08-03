@@ -2,11 +2,16 @@
 title: Documentation
 ---
 
-Reference
+Tutorials
 ---------
 
 * [Quick start tutorial](/doc/quickstart.html) --- get
   started making simple diagrams quickly.
+* [Segments, trails, and paths](/doc/paths.html)
+
+Reference
+---------
+
 * [User manual](/doc/manual.html) --- (almost) everything
   you ever wanted to know about diagrams.
 * [API reference](/haddock/index.html) --- Haddock-generated reference
