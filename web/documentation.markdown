@@ -7,9 +7,9 @@ Reference
 
 * [Quick start tutorial](/tutorial/DiagramsTutorial.html) --- get
   started making simple diagrams quickly.
-* [User manual](/manual/diagrams-manual.html) --- (almost) everything
+* [User manual](/doc/diagrams-manual.html) --- (almost) everything
   you ever wanted to know about diagrams.
-* [API reference](/doc/index.html) --- Haddock-generated reference
+* [API reference](/haddock/index.html) --- Haddock-generated reference
   documentation.
 * [Diagrams wiki](http://www.haskell.org/haskellwiki/Diagrams) ---
   frequently asked questions, installation instructions, examples,

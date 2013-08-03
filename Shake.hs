@@ -1,6 +1,7 @@
 {-# LANGUAGE DeriveDataTypeable         #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
+import           Control.Concurrent          (getNumCapabilities)
 import           Control.Parallel.Strategies (NFData)
 import           Data.Functor                ((<$>))
 import           Data.List                   (isPrefixOf)
@@ -37,11 +38,12 @@ newtype GhcPkg = GhcPkg ()
 main :: IO ()
 main = do
   m <- cmdArgs mkModes
+  n <- getNumCapabilities
   case m of
     Clean -> mapM_ system
       [ "rm -rf web/_site"
       , "rm -rf web/_cache"
-      , "rm -f web/manual"
+      , "rm -f web/doc"
       , "rm -f web/gallery/images"
       , "rm -rf .make"
       , "rm -rf dist"
@@ -51,26 +53,20 @@ main = do
       , "rm .shake.database"
       , "rm -f web/gallery/Build.{hi,o}"
       ]
-    _ -> shake shakeOptions { shakeThreads = 2
---                          , shakeVerbosity = Chatty
-                            } $ do
-      want [dist "manual/diagrams-manual.html"]
+
+    _ -> shake shakeOptions { shakeThreads = 2 `max` (n - 1) } $ do
+      want [dist "doc/diagrams-manual.html"]
       action $ requireIcons
       action $ requireStatic
 
       webRules
       action $ runWeb m
 
-      -- Cheating a bit here; this rule also generates diagrams images,
-      -- BUT we don't even know their names until after running xml2html,
-      -- which generates diagrams-manual.html as well.  So we have to be
-      -- careful to call 'requireImages' *after* running xml2html.
-      dist "manual/diagrams-manual.html" *> \out -> do
+      dist "doc/*.html" *> \out -> do
         let xml = obj . un $ out -<.> "xml"
-            exe = obj "manual/xml2html.hs.exe"
+            exe = obj "doc/xml2html.hs.exe"
         need [xml, exe]
-        system' exe [xml, "-o", obj "manual/images", out]
-        requireImages
+        system' exe [xml, "-o", dist "doc/images", out]
 
       obj "//*.xml" *> \out -> do
         let rst = un $ out -<.> "rst"
@@ -82,13 +78,12 @@ main = do
         need [hs]
         ghc out hs
 
-      dist "manual/icons/*.png" *> \out -> do
+      dist "doc/icons/*.png" *> \out -> do
         let exe = obj . un $ out -<.> ".hs.exe"
         need [exe]
         system' exe ["-w", "40", "-h", "40", "-o", out]
 
-      copyFiles "manual/static"
-      copyImages
+      copyFiles "doc/static"
 
       dist "web/gallery/*.big.png" *> compilePng False
 
@@ -110,26 +105,17 @@ compilePng isThumb outPath = do
 copyFiles :: String -> Rules ()
 copyFiles dir = dist (dir ++ "/*") *> \out -> copyFile' (un out) out
 
-copyImages :: Rules ()
-copyImages = dist ("manual/images/*") *> \out -> copyFile' (obj . un $ out) out
-
 requireIcons :: Action ()
 requireIcons = do
-  hsIcons <- getDirectoryFiles "manual/icons" ["*.hs"]
-  let icons = map (\i -> dist $ "manual/icons" </> i -<.> "png") hsIcons
+  hsIcons <- getDirectoryFiles "doc/icons" ["*.hs"]
+  let icons = map (\i -> dist $ "doc/icons" </> i -<.> "png") hsIcons
   need icons
 
 requireStatic :: Action ()
 requireStatic = do
-  staticSrc <- getDirectoryFiles "manual/static" ["*"]
-  let static = map (dist . ("manual/static" </>)) staticSrc
+  staticSrc <- getDirectoryFiles "doc/static" ["*"]
+  let static = map (dist . ("doc/static" </>)) staticSrc
   need static
-
-requireImages :: Action ()
-requireImages = do
-  images <- getDirectoryFiles (obj "manual/images") ["*.png"]
-  let distImages = map (dist . ("manual/images" </>)) images
-  need distImages
 
 requireGallery :: Action ()
 requireGallery = do
@@ -139,12 +125,16 @@ requireGallery = do
       thumbs = map (dist . ("web/gallery" </>) . (-<.> "thumb.png")) gallerySrc
   need (pngs ++ thumbs)
 
-  -- XXX add rule to link them into the real web dir?
+requireDoc :: Action ()
+requireDoc = do
+  docs <- filter (not . (".#" `isPrefixOf`))
+          <$> getDirectoryFiles "doc" ["*.rst"]
+  need (map (dist . ("doc" </>) . (-<.> "html")) docs)
 
 webRules :: Rules ()
 webRules = do
-  "web/manual" *> \out ->
-    system' "ln" ["-s", "-f", "../dist/manual", out]
+  "web/doc" *> \out ->
+    system' "ln" ["-s", "-f", "../dist/doc", out]
 
   "web/gallery/images" *> \out -> do
     liftIO $ createDirectoryIfMissing True "dist/web/gallery"
@@ -156,7 +146,7 @@ runWeb m = do
   needWeb
 
   -- work around weird bug(?)
-  system' "rm" ["-f", "dist/manual/manual"]
+  system' "rm" ["-f", "dist/doc/doc"]
   system' "rm" ["-f", "dist/web/gallery/gallery"]
 
   systemCwd "web" (".." </> obj "web/hakyll.hs.exe")
@@ -167,16 +157,15 @@ runWeb m = do
 
 needWeb :: Action ()
 needWeb = do
-  need [ "web/manual"
+  need [ "web/doc"
        , "web/gallery/images"
-       , dist "manual/diagrams-manual.html"
        , obj "web/hakyll.hs.exe"
        , obj "web/gallery/Build.hs.exe"
        ]
   requireIcons
   requireStatic
-  requireImages
   requireGallery
+  requireDoc
 
 ghc :: String -> String -> Action ()
 ghc out hs = do

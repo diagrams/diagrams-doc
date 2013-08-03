@@ -46,12 +46,17 @@ main = hakyll $ do
         compile copyFileCompiler
 
     -- User manual --------------------------------
-    match "manual/diagrams-manual.html" $ do
+    match "doc/*.html" $ do
         route idRoute
-        let manualCtx = constField "title" "User manual" `mappend` defaultContext
-        compile (getResourceBody >>= mainCompiler manualCtx)
+        let docCtx = field "title" $ \i -> do
+              let baseName = takeBaseName . toFilePath . itemIdentifier $ i
+              return $ case baseName of
+                "diagrams-manual" -> "User manual"
+                "diagrams-quickstart" -> "Quick start tutorial"
+                _ -> baseName
+        compile (getResourceBody >>= mainCompiler (docCtx <> defaultContext))
 
-    match ("manual/**" .&&. complement "manual/*.html") $ do
+    match ("doc/**" .&&. complement "doc/*.html") $ do
         route idRoute
         compile copyFileCompiler
 
