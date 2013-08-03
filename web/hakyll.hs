@@ -57,7 +57,7 @@ main = hakyll $ do
 
     -- API documentation --------------------------
 
-    match "doc/**" $ do
+    match "haddock/**" $ do
         route idRoute
         compile copyFileCompiler
 
