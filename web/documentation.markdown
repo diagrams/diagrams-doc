@@ -5,7 +5,7 @@ title: Documentation
 Reference
 ---------
 
-* [Quick start tutorial](/tutorial/DiagramsTutorial.html) --- get
+* [Quick start tutorial](/doc/diagrams-tutorial.html) --- get
   started making simple diagrams quickly.
 * [User manual](/doc/diagrams-manual.html) --- (almost) everything
   you ever wanted to know about diagrams.

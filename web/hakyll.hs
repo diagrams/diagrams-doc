@@ -19,18 +19,14 @@ import           Text.Pandoc
 
 import           Hakyll
 
-pages, mdPages, lhsPages :: IsString s => [s]
-pages = mdPages ++ lhsPages
-
-mdPages = map (fromString . (++".markdown"))
+pages :: IsString s => [s]
+pages = map (fromString . (++".markdown"))
   [ "index"
   , "download"
   , "documentation"
   , "community"
   , "releases"
   ]
-
-lhsPages = [ "tutorial/DiagramsTutorial.lhs" ]
 
 main :: IO ()
 main = hakyll $ do
@@ -111,7 +107,7 @@ main = hakyll $ do
             >>= mainCompiler defaultContext
 
       -- export raw .lhs of examples for download
-    match ("gallery/*.lhs" .||. fromList lhsPages) $ version "raw" $ do
+    match "gallery/*.lhs" $ version "raw" $ do
         route idRoute
         compile getResourceBody
 
