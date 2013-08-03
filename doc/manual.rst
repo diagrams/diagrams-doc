@@ -133,13 +133,14 @@ Installation
 
 Before installing ``diagrams``, you will need the following:
 
-  * The `Glasgow Haskell Compiler`_ (GHC), version 6.12 or later
-    (*except* 7.0.1, which has a type inference bug making
-    ``diagrams`` hard to use).
+  * The `Glasgow Haskell Compiler`_ (GHC), version 7.4.x or later.
 
   * It is recommended (but not required) to have the latest release of
-    the `Haskell Platform`_ (currently 2012.4.0.0).  At the very least
-    you will want the `cabal-install`_ tool.
+    the `Haskell Platform`_ (currently 2013.2.0.0).  At the very least
+    you will want the `cabal-install`_ tool.  Diagrams is always
+    tested on at least two versions of the Haskell Platform (the
+    current and previous releases), and may work on earlier HP
+    releases as well.
 
 .. _`cabal-install`: http://hackage.haskell.org/trac/hackage/wiki/CabalInstall
 
@@ -165,6 +166,15 @@ in (by default) four other packages:
 * `diagrams-contrib`:pkg: (user-contributed extensions), and
 * `diagrams-svg`:pkg: (Haskell-native backend generating SVG files).
 
+There is also a Haskell-native `postscript backend`_, which supports
+all features except transparency.  To get it, add the ``-fps`` flag:
+
+::
+
+  cabal install -fps diagrams
+
+.. _`postscript backend`: http://github.com/diagrams/diagrams-postscript/
+
 There is also a backend based on the `cairo graphics
 library`_; it has support for more
 features than the SVG backend and additional output formats (PNG, PS,
@@ -176,17 +186,18 @@ command
 
 ::
 
-  cabal install gtk2hs-buildtools -fcairo diagrams
+  cabal install gtk2hs-buildtools
+  cabal install -fcairo diagrams
 
 (You can omit ``gtk2hs-buildtools`` if you have already installed it
-previously.  If you don't want the SVG backend at all, you can add
-the ``-f-svg`` flag.)
+previously, though note that you may need to reinstall it if you are
+building under GHC 7.6 and the last time you installed
+``gtk2hs-buildtools`` was sufficiently long ago---otherwise you may
+get FFI-related errors when building the `cairo`:pkg: package.)
 
-There is also a Haskell-native `postscript backend`_ which will soon
-become officially supported but is currently unreleased; you are
-welcome to build it from source and try it out.
-
-.. _`postscript backend`: http://github.com/fryguybob/diagrams-postscript/
+You can also mix and match these flags to get multiple backends.
+Note, if you don't want the SVG backend at all, you must add the
+``-f-svg`` flag to disable it.
 
 `See the wiki for the most up-to-date information`_ regarding
 installation.  If you have trouble installing diagrams, feel free to
@@ -248,7 +259,8 @@ The above will generate a 100x100 SVG that should look like this:
 
 (If you are using the cairo backend you can also request a ``.png``,
 ``.ps``, or ``.pdf`` file; the output type is automatically
-determined by the extension.)
+determined by the extension; the postscript backend can produce
+``.eps`` files.)
 
 Try typing
 
@@ -287,10 +299,10 @@ feel free to skip this section at first, and come back to it when
 necessary; there are many links to this chapter from elsewhere in the
 manual.
 
-Monoids
--------
+Semigroups and monoids
+----------------------
 
-A *monoid* consists of
+A *semigroup* consists of
 
   * A set of elements `S`:math:
   * An *associative binary operation* on the set, that is, some
@@ -302,13 +314,25 @@ A *monoid* consists of
 
     `(x \oplus y) \oplus z = x \oplus (y \oplus z).`:math:
 
+A *monoid* is a semigroup with the addition of
+
   * An *identity element* `i \in S`:math: which is the identity for
     `\oplus`:math:, that is,
 
     `x \oplus i = i \oplus x = x.`:math:
 
-In Haskell, monoids are expressed using the `Monoid` type class,
-defined in ``Data.Monoid``:
+In Haskell, semigroups are expressed using the `Semigroup` type class
+from the `semigroups`:pkg: package:
+
+.. class:: lhs
+
+::
+
+  class Semigroup s where
+    (<>) :: s -> s -> s
+
+and monoids are expressed using the `Monoid` type class, defined in
+``Data.Monoid``:
 
 .. class:: lhs
 
@@ -319,7 +343,9 @@ defined in ``Data.Monoid``:
     mappend :: m -> m -> m
 
 The `mappend` function represents the associative binary operation,
-and `mempty` is the identity element.  A function
+and `mempty` is the identity element.  (`mappend` and `(<>)` should
+always be the same; there are two different functions for historical
+reasons.) A function
 
 .. class:: lhs
 
@@ -328,16 +354,11 @@ and `mempty` is the identity element.  A function
   mconcat :: Monoid m => [m] -> m
 
 is also provided as a shorthand for the common operation of combining
-a whole list of elements with `mappend`.
+a whole list of elements with `(<>)`/`mappend`.
 
-Since `mappend` is tediously long to write, ``diagrams`` provides the
-operator `(<>)` as a synonym when built with versions of `base`:pkg:
-prior to 4.5.  base-4.5 and newer provide `(<>)` in
-`Data.Monoid`:mod:, which diagrams re-exports.
-
-Monoids are used extensively in ``diagrams``: diagrams,
-transformations, envelopes, traces, trails, paths, styles, colors,
-and queries are all instances of `Monoid`.
+Semigroups and monoids are used extensively in ``diagrams``: diagrams,
+transformations, envelopes, traces, trails, paths, styles, colors, and
+queries are all instances of both `Semigroup` and `Monoid`.
 
 Faking optional named arguments
 -------------------------------
@@ -431,7 +452,7 @@ different point.
 
 Although it is a bad idea to *conflate* vectors and points, we can
 certainly *represent* points using vectors. The
-`vector-space-points`:pkg: package defines newtype wrapper around
+`vector-space-points`:pkg: package defines a newtype wrapper around
 vectors called `Point`.  The most important connection between points
 and vectors is given by `(.-.)`, defined in
 `Data.AffineSpace`:mod:. If `p1` and `p2` are points, `p2 .-. p1` is
@@ -550,12 +571,15 @@ precedence of 6, lower than that of `(#)`).
 Types and type classes
 ----------------------
 
-Diagrams has been designed with the goals of *flexibility* and
-*power*.  The tradeoff is that it is far from simple, and the types
-can be intimidating at first.  For example, `hcat` is a function which
-takes a list of diagrams and lays them out in a horizontal row.  So
-one might expect its type to be something like `[Diagram] ->
-Diagram`.  In actuality, its type is
+*Flexibility*, *power*, *simplicity*: in general, you can have any two
+of these but not all three.  Diagrams chooses *flexibility* and
+*power*, at the expense of *simplicity*. (In comparison, the excellent
+`gloss`:pkg: library instead chooses *flexibility* and *simplicity*.)
+In particular, the types in the diagrams library can be quite
+intimidating at first.  For example, `hcat` is a function which takes
+a list of diagrams and lays them out in a horizontal row.  So one
+might expect its type to be something like `[Diagram] -> Diagram`.  In
+actuality, its type is
 
 .. class:: lhs
 
@@ -610,9 +634,10 @@ Euclidean 2-space
 There are three main type synonyms defined for referring to
 two-dimensional space:
 
-* `R2` is the type of the two-dimensional Euclidean vector space. The
-  positive `x`:math:\-axis extends to the right, and the positive
-  `y`:math:\-axis extends *upwards*.  This is consistent with standard
+* `R2` is the type of the two-dimensional Euclidean vector
+  space. Standard ``diagrams`` backends render images with the
+  positive `x`:math:\-axis extending to the right, and the positive
+  `y`:math:\-axis extending *upwards*.  This is consistent with standard
   mathematical practice, but upside-down with respect to many common
   graphics systems.  This is intentional: the goal is to provide an
   elegant interface which is abstracted as much as possible from
@@ -716,7 +741,9 @@ Arcs
 
 `Diagrams.TwoD.Arc`:mod: provides a function `arc`, which constructs a
 radius-one circular arc starting at a first angle__ and extending
-counterclockwise to the second.
+counterclockwise to the second, as well as `wedge` which constructs a
+wedge shape (an arc plus two radii), and various other
+functions for conveniently constructing arcs.
 
 __ `Angles`_
 
@@ -724,7 +751,10 @@ __ `Angles`_
 
 ::
 
-> example = arc (tau/4 :: Rad) (4 * tau / 7 :: Rad)
+> example = hcat [arc a1 a2, strutX 1, wedge 1 a1 a2]
+>   where
+>     a1 = tau/4 :: Rad
+>     a2 = 4 * tau / 7 :: Rad
 
 Pre-defined shapes
 ~~~~~~~~~~~~~~~~~~
@@ -732,12 +762,13 @@ Pre-defined shapes
 `Diagrams.TwoD.Shapes`:mod: provides a number of pre-defined
 polygons and other path-based shapes.  For example:
 
-* `eqTriangle` constructs an equilateral triangle with sides of a
+* `triangle` constructs an equilateral triangle with sides of a
   given length.
 * `square` constructs a square with a given side length; `unitSquare`
   constructs a square with sides of length `1`.
 * `pentagon`, `hexagon`, ..., `dodecagon` construct other regular
-  polygons with sides of a given length.
+  polygons with sides of a given length. (For constructing polygons
+  with a given *radius*, see `General polygons`_.)
 * In general, `regPoly` constructs a regular polygon with any number
   of sides.
 * `rect` constructs a rectangle of a given width and height.
@@ -748,15 +779,14 @@ polygons and other path-based shapes.  For example:
 
 ::
 
-> example = square 1 ||| rect 0.3 0.5
->       ||| eqTriangle 1
+> example = square 1
+>       ||| rect 0.3 0.5
+>       ||| triangle 1
 >       ||| roundedRect  0.5 0.4 0.1
 >       ||| roundedRect  0.5 0.4 (-0.1)
 >       ||| roundedRect' 0.7 0.4 with { radiusTL = 0.2
 >                                     , radiusTR = -0.2
 >                                     , radiusBR = 0.1 }
-
-More special polygons may be added in future versions of the library.
 
 Completing the hodgepodge in `Diagrams.TwoD.Shapes`:mod: for now, the
 functions `hrule` and `vrule` create horizontal and vertical lines,
@@ -766,22 +796,43 @@ respectively.
 
 ::
 
-> example = circle 1 ||| hrule 2 ||| circle 1
+> example = c ||| hrule 1 ||| c
+>   where c = circle 1 <> vrule 2
 
 General polygons
 ~~~~~~~~~~~~~~~~
 
 The `polygon` function from `Diagrams.TwoD.Polygons`:mod: can be used
 to construct a wide variety of polygons.  Its argument is a record of
-optional arguments that control the generated polygon:
+optional parameters that control the generated polygon:
 
 * `polyType` specifies one of several methods for determining the
   vertices of the polygon:
 
     * `PolyRegular` indicates a regular polygon with a certain number
       of sides and a given *radius*.
+
+      .. class:: dia-lhs
+
+      ::
+
+      > example = strutX 1 ||| p 6 ||| p 24 ||| strutX 1
+      >   where p n = polygon with
+      >                 { polyType = PolyRegular n 1 }
+
     * `PolySides` specifies the vertices using a list of angles
       between edges, and a list of edge lengths.
+
+      .. class:: dia-lhs
+
+      ::
+
+      > example = polygon with
+      >   { polyType = PolySides
+      >       [ 20 :: Deg, 90 :: Deg, 40 :: Deg, 100 :: Deg ]
+      >       [ 1        , 5        , 2        , 4          ]
+      >   }
+
     * `PolyPolar` specifies the vertices using polar coordinates: a
       list of central angles between vertices, and a list of vertex
       radii.
@@ -831,8 +882,8 @@ bit more general.
 As its second argument, `star` expects a list of points.  One way to
 generate a list of points is with polygon-generating functions such as
 `polygon` or `regPoly`, or indeed, any function which can output any
-`PathLike` type (see the section about `PathLike`_), since a list of
-points is an instance of the `PathLike` class.  But of course, you are
+`TrailLike` type (see the section about `TrailLike`_), since a list of
+points is an instance of the `TrailLike` class.  But of course, you are
 free to construct the list of points using whatever method you like.
 
 As its first argument, `star` takes a value of type `StarOpts`, for
@@ -850,7 +901,8 @@ which there are two possibilities:
   >       ||| stroke (star (StarSkip 3) (regPoly 8 1))
 
   As you can see, `star` may result in a path with multiple components,
-  if the argument to `StarSkip` evenly divides the number of vertices.
+  if the argument to `StarSkip` and the number of vertices have a
+  nontrivial common divisor.
 
 * `StarFun` takes as an argument a function of type `(Int -> Int)`,
   which specifies which vertices should be connected to which other
@@ -877,9 +929,9 @@ which there are two possibilities:
 You may notice that all the above examples need to call `stroke` (or
 `stroke'`), which converts a path into a diagram.  Many functions
 similar to `star` are polymorphic in their return type over any
-`PathLike`, but `star` is not. As we have seen, `star` may need to
+`TrailLike`, but `star` is not. As we have seen, `star` may need to
 construct a path with multiple components, which is not supported by
-the `PathLike` class.
+the `TrailLike` class.
 
 Composing diagrams
 ------------------
@@ -903,12 +955,11 @@ by identifying their local vector spaces.
 
 > example = circle 1 `atop` square (sqrt 2)
 
-As noted before, diagrams form a monoid_
-with composition given by identification of vector spaces.  `atop` is
-simply a synonym for `mappend` (or `(<>)`), specialized to two
-dimensions.
+As noted before, diagrams form a monoid_ with composition given by
+superposition.  `atop` is simply a synonym for `mappend` (or `(<>)`),
+specialized to two dimensions.
 
-.. _monoid: Monoids_
+.. _monoid: `Semigroups and monoids`_
 
 This also means that a list of diagrams can be stacked with `mconcat`;
 that is, `mconcat [d1, d2, d3, ...]` is the diagram with `d1` on top
@@ -919,9 +970,9 @@ of `d2` on top of `d3` on top of...
 ::
 
 > example = mconcat [ circle 0.1 # fc green
->                   , eqTriangle 1 # scale 0.4 # fc yellow
->                   , square 1 # fc blue
->                   , circle 1 # fc red
+>                   , triangle 1 # scale 0.4 # fc yellow
+>                   , square 1   # fc blue
+>                   , circle 1   # fc red
 >                   ]
 
 Juxtaposing diagrams
@@ -949,15 +1000,24 @@ As can be seen from the above example, the *length* of the vector
 makes no difference, only its *direction* is taken into account. (To
 place diagrams at a certain fixed distance from each other, see
 `cat'`.)  As can also be seen, the local origin of the new, combined
-diagram is the same as the local origin of the first diagram.  (This
+diagram is the same as the local origin of the first diagram.  This
 makes `beside v` associative, so diagrams under `beside v` form a
-semigroup---but *not* a monoid, since there is no identity
-element. `mempty` is a right but not a left identity for `beside v`.)
+semigroup.  In fact, they form a monoid, since `mempty` is a left and
+right identity for `beside v`, as can be seen in the example below:
+
+.. class:: dia-lhs
+
+::
+
+> example = hcat' with {sep = 1} . map showOrigin
+>         $ [ d, mempty ||| d, d ||| mempty ]
+>   where d = square 1
 
 In older versions of ``diagrams``, the local origin of the combined
 diagram was at the point of tangency between the two diagrams.  To
-recover the old behavior, simply perform an alignment on the first in
-the same direction before combining (see `Alignment`_):
+recover the old behavior, simply perform an alignment on the first
+diagram in the same direction as the argument to `beside` before
+combining (see `Alignment`_):
 
 .. class:: dia-lhs
 
@@ -1005,7 +1065,8 @@ implemented as a call to `juxtapose` followed by a call to `(<>)`.)
 > d1 = juxtapose unitX             (square 1) (circle 1 # fc red)
 > d2 = juxtapose (unitX ^+^ unitY) (square 1) (circle 1 # fc green)
 > d3 = juxtapose unitY             (square 1) (circle 1 # fc blue)
-> example = mconcat [d1, d2, d3]
+> example = circles ||| strutX 1 ||| (circles <> square 1)
+>   where circles = mconcat [d1, d2, d3]
 
 See `envelopes and local vector spaces`_ for more information on what
 "next to" means, `Working with envelopes`_ for information on
@@ -1045,8 +1106,8 @@ local origin of the final result.
 > example = cat (r2 (2,-1)) (map p [3..8]) # showOrigin
 >   where p n = regPoly n 1 # lw 0.03
 
-Semantically speaking, `cat v === foldr (beside v) mempty`, although
-the actual implementation of `cat` uses a more efficient balanced fold.
+Semantically, `cat v === foldr (beside v) mempty`, although the actual
+implementation of `cat` uses a more efficient balanced fold.
 
 For more control over the way in which the diagrams are laid out, use
 `cat'`, a variant of `cat` which also takes a `CatOpts` record.  See
@@ -1287,8 +1348,19 @@ applying the desired attributes:
 
 If the type `T` is an instance of `HasStyle`, then `[T]` is also.
 This means that you can apply styles uniformly to entire lists of
-diagrams at once, which occasionally comes in handy.  Likewise, there
-are `HasStyle` instances for pairs, `Map`\s, `Set`\s, and functions.
+diagrams at once, which occasionally comes in handy, for example, to
+assign a default attribute to all diagrams in a list which do not
+already have one:
+
+.. class:: dia-lhs
+
+::
+
+> example = hcat $
+>   [circle 1, square 2, triangle 2 # fc yellow, hexagon 1] # fc blue
+
+Likewise, there are `HasStyle` instances for pairs, `Map`\s, `Set`\s,
+and functions.
 
 2D Transformations
 ~~~~~~~~~~~~~~~~~~
@@ -1304,13 +1376,14 @@ transformations more directly, see
 
 Every transformation comes in two variants, a noun form and a verb
 form.  For example, there are two functions for scaling along the
-`x`:math:\-axis, `scalingX` and `scaleX`.  The noun form constructs a
-transformation object, which can then be stored in a data structure,
-passed as an argument, combined with other transformations, *etc.*,
-and ultimately applied to a diagram with the `transform` function.
-The verb form directly applies the transformation to a diagram.  The
-verb form is much more common (and the documentation below will only
-discuss verb forms), but getting one's hands on a transformation can
+`x`:math:\-axis, `scalingX` and `scaleX`.  The noun form (*e.g.*
+`scalingX`) constructs a `Transformation` value, which can then be
+stored in a data structure, passed as an argument, combined with other
+transformations, *etc.*, and ultimately applied to a diagram (or other
+`Transformable` value) with the `transform` function.  The verb form
+directly applies the transformation.  The verb form is much more
+common (and the documentation below will only discuss verb forms), but
+getting one's hands on a first-class `Transformation` value can
 occasionally be useful.
 
 Transformations in general
@@ -1334,7 +1407,7 @@ To invert a transformation, use `inv`.  For any transformation `t`,
 
 `t <> inv t === inv t <> t === mempty`.
 
-To apply a transformation to a diagram, use `transform`.
+To apply a transformation, use `transform`.
 
 Rotation
 ++++++++
@@ -1344,9 +1417,8 @@ about the origin.  Since `rotate` takes an angle, you must specify an
 angle type, such as `rotate (80 :: Deg)`.  In the common case that you
 wish to rotate by an angle specified as a certain fraction of a
 circle, like `rotate (1/8 :: Turn)`, you can use `rotateBy`
-instead. `rotateBy` is specialized to only accept fractions of a
-circle, so in this example you would only have to write
-`rotateBy (1/8)`.
+instead. `rotateBy` is specialized to only accept `Turn`s, so in this
+example you would only have to write `rotateBy (1/8)`.
 
 You can also use `rotateAbout` in the case that you want to rotate
 about some point other than the origin.
@@ -1378,7 +1450,7 @@ results in a reflection (in the case of `scaleX` and `scaleY`) or a
 
 > eff = text "F" <> square 1 # lw 0
 > ts  = [ scale (1/2), id, scale 2,    scaleX 2,    scaleY 2
->       ,     scale (-1), scaleX (-1), scaleY (-1)
+>       ,                  scale (-1), scaleX (-1), scaleY (-1)
 >       ]
 >
 > example = hcat . map (eff #) $ ts
@@ -1386,10 +1458,11 @@ results in a reflection (in the case of `scaleX` and `scaleY`) or a
 Scaling by zero is forbidden.  Let us never speak of it again.
 
 For convenience, `reflectX` and `reflectY` perform reflection along
-the `x`:math:\- and `y`:math:\-axes, respectively; but I think you can guess how they
-are implemented.  Their names can be confusing (does `reflectX`
-reflect *along* the `x`:math:\-axis or *across* the `x`:math:\-axis?) but you can just
-remember that `reflectX = scaleX (-1)`.
+the `x`:math:\- and `y`:math:\-axes, respectively.  Their names can be
+confusing (does `reflectX` reflect *along* the `x`:math:\-axis or
+*across* the `x`:math:\-axis?) but you can just remember that
+`reflectX = scaleX (-1)`, and similarly for `reflectY`; that is,
+``reflectQ`` acts on ``Q``-coordinates.
 
 To reflect in some line other than an axis, use `reflectAbout`.
 
@@ -1508,12 +1581,12 @@ interpolating between the bottom and top of the square:
 > example = hcat . map showOrigin
 >         $ zipWith alignY [-1, -0.8 .. 1] (repeat s)
 
-Working with paths
-------------------
+Working with trails and paths
+-----------------------------
 
-Paths are one of the most fundamental tools in ``diagrams``.  They can
-be used not only directly to draw things, but also as guides to help
-create and position other diagrams.
+Trails and paths are some of the most fundamental tools in
+``diagrams``.  They can be used not only directly to draw things, but
+also as guides to help create and position other diagrams.
 
 Segments
 ~~~~~~~~
@@ -1841,7 +1914,7 @@ semantics depending on which type is inferred.
 
 ::
 
-> ts = mconcat . take 3 . iterate (rotateBy (1/9)) $ eqTriangle 1
+> ts = mconcat . take 3 . iterate (rotateBy (1/9)) $ triangle 1
 > example = (ts ||| stroke ts ||| strokeT ts ||| fromVertices ts) # fc red
 
 The above example defines `ts` by generating three equilateral
@@ -2119,6 +2192,8 @@ text into a *path* tracing the outline of the text.  This may
 eventually be merged into the main diagrams codebase; for now, you can
 just import it if you need fancier font support.
 
+XXX write more here, with an example or two
+
 .. _`SVGFonts package`: http://hackage.haskell.org/package/SVGFonts
 
 Images
@@ -2268,7 +2343,8 @@ Envelope-related functions
   >      ||| square 2
   >      ||| circle 1 # scaleY 0.3 # sizedAs (square 2 :: D R2)
   >
-  > example = hrule 1 # sizedAs (shapes # scale 0.5 :: D R2) <> shapes # centerX
+  > example = hrule 1 # sizedAs (shapes # scale 0.5 :: D R2)
+  >        <> shapes # centerX
 
 The ``Enveloped`` class
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -2343,7 +2419,7 @@ Normally, a trace is accessed using one of the four functions
   > drawV v = (arrowHead <> shaft) # fc black
   >   where
   >     shaft     = origin ~~ (origin .+^ v)
-  >     arrowHead = eqTriangle 0.1
+  >     arrowHead = triangle 0.1
   >               # rotateBy (direction v - 1/4)
   >               # translate v
   > drawTraceV v d
@@ -2404,7 +2480,7 @@ identify points on the boundaries of several diagrams.
 >   . map illustrateTrace
 >   $ [ square 1
 >     , circle 1
->     , eqTriangle 1 # rotateBy (-1/4) ||| eqTriangle 1 # rotateBy (1/4)
+>     , triangle 1 # rotateBy (-1/4) ||| triangle 1 # rotateBy (1/4)
 >     ]
 
 Of course, diagrams are not the only instance of `Traced`.  Paths are
@@ -2700,8 +2776,8 @@ Using queries
 
 Every diagram has an associated *query*, which assigns a value to
 every point in the diagram.  These values must be taken from some
-monoid (see `Monoids`_).  Combining two diagrams results in their
-queries being combined pointwise.
+monoid (see `Semigroups and monoids`_).  Combining two diagrams
+results in their queries being combined pointwise.
 
 The default query
 ~~~~~~~~~~~~~~~~~
@@ -2885,7 +2961,7 @@ the right are wrapped in `ScaleInv` but the ones on the left are not.
 >   draw (x,y) = draw x <> draw y
 >
 > arrowhead, shaft :: Diagram Cairo R2
-> arrowhead = eqTriangle 0.5 # fc black # rotateBy (-1/4)
+> arrowhead = triangle 0.5 # fc black # rotateBy (-1/4)
 > shaft = origin ~~ (3 & 0)
 >
 > arrow1 = (shaft,          arrowhead       # translateX 3)
@@ -3290,7 +3366,7 @@ Instances:
   * `Active p` (for any `PathLike p`): creates a constant `Active`
     value.
 
-Further reading: `Working with paths`_; `Trails`_; `Paths`_; `The
+Further reading: `Working with trails and paths`_; `Trails`_; `Paths`_; `The
 PathLike class`_.
 
 Closable
@@ -3313,7 +3389,7 @@ represents path-like things which can be "open" or "closed".
 
 Instances: `Trail` and `Path`.
 
-Further reading: `Working with paths`_; `The Closeable class`_.
+Further reading: `Working with trails and paths`_; `The Closeable class`_.
 
 Classes for backends
 ~~~~~~~~~~~~~~~~~~~~
@@ -3493,7 +3569,7 @@ another.  For example:
 
 ::
 
-> t = eqTriangle 5   # fc orange
+> t = triangle   5   # fc orange
 > s = square     3   # fc red
 > o = ellipseXY  2 3 # fc blue
 > c = circle     2   # fc green
@@ -3533,7 +3609,7 @@ random "jitter" to a layout):
 
 ::
 
-> t = eqTriangle 5   # fc orange
+> t = triangle   5   # fc orange
 > s = square     3   # fc red
 > o = ellipseXY  2 3 # fc blue
 > c = circle     2   # fc green
