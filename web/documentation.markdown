@@ -8,6 +8,8 @@ Tutorials
 * [Quick start tutorial](/doc/quickstart.html) --- get
   started making simple diagrams quickly.
 * [Segments, trails, and paths](/doc/paths.html)
+* [How to write diagrams tutorials](/doc/tutorials.html) --- how to
+  write one of these here things, and have it included in this list!
 
 Reference
 ---------

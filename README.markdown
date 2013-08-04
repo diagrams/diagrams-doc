@@ -21,8 +21,7 @@ To build the user manual, you will need:
 * the diagrams framework itself (including the
   [contrib package](http://github.com/diagrams/diagrams-contrib),
   [cairo backend](http://github.com/diagrams/diagrams-cairo), and
-  [diagrams-builder package](http://github.com/diagrams/diagrams-builder)
-  installed with the `-fcairo` flag),
+  [diagrams-builder package](http://github.com/diagrams/diagrams-builder)).
 * the python [docutils suite](http://docutils.sourceforge.net/) (in
   particular `rst2xml` should be on your PATH),
 * the Haskell [docutils package](http://github.com/diagrams/docutils), and
@@ -30,8 +29,7 @@ To build the user manual, you will need:
 
 To build the website, you will additionally need
 
-* [hakyll](http://hackage.haskell.org/package/hakyll)-3.x (the
-  diagrams website has not yet been ported to hakyll-4).
+* [hakyll](http://hackage.haskell.org/package/hakyll)-4.x.
 
 Once you have all the dependencies, simply do
 
@@ -46,3 +44,19 @@ invocation of `Shake preview` running, and then start another process
 calling `Shake +RTS -NX -RTS buildh` repeatedly in a loop.  The
 website will now be automatically be rebuilt any time any source files
 change.
+
+For example, on a four-core Ubuntu machine, assuming you already have
+the Haskell Platform installed, and have cloned the relevant diagrams
+repositories from github, you could issue the commands
+
+```
+sudo apt-get install libgtk-3-dev libcairo2-dev python-docutils
+cabal install hsenv
+hsenv --name=dia
+.hsenv_dia/bin/activate
+cabal install gtk2hs-buildtools shake hakyll
+cabal install diagrams-core/ diagrams-lib/ diagrams-cairo/ diagrams-contrib/ diagrams-builder/ docutils/
+cd diagrams-doc
+ghc --make Shake -threaded
+./Shake +RTS -N4 -RTS preview
+```

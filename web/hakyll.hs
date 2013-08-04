@@ -49,6 +49,7 @@ main = hakyll $ do
               return $ case baseName of
                 "manual"     -> "User manual"
                 "quickstart" -> "Quick start tutorial"
+                "tutorials"  -> "How to write tutorials"
                 _            -> baseName
         compile (getResourceBody >>= mainCompiler (docCtx <> defaultContext))
 
