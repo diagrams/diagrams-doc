@@ -1,22 +1,27 @@
 {-# LANGUAGE Arrows #-}
 
-import Control.Arrow
-import Control.Monad (when)
-import System.Directory (doesDirectoryExist, createDirectory)
-import System.Exit
-import System.FilePath ( (<.>), (</>), joinPath, splitPath )
-import System.IO
+import           Control.Arrow
+import           Control.Monad                      (when)
+import           System.Directory                   (createDirectory,
+                                                     doesDirectoryExist)
+import           System.Exit
+import           System.FilePath                    (joinPath, splitPath, (<.>),
+                                                     (</>))
+import           System.IO
 
-import Data.VectorSpace ( zeroV )
-import Diagrams.Backend.Cairo
-import Diagrams.Backend.Cairo.Internal
-import Diagrams.Builder ( buildDiagram, BuildResult(..), ppInterpError, hashedRegenerate )
-import Diagrams.TwoD.Size ( SizeSpec2D(Dims) )
-import Text.Docutils.CmdLine
-import Text.Docutils.Transformers.Haskell
-import Text.Docutils.Util
-import Text.Docutils.Writers.HTML
-import Text.XML.HXT.Core hiding (when)
+import           Data.VectorSpace                   (zeroV)
+import           Diagrams.Backend.Cairo
+import           Diagrams.Backend.Cairo.Internal
+import           Diagrams.Builder                   (BuildResult (..),
+                                                     buildDiagram,
+                                                     hashedRegenerate,
+                                                     ppInterpError)
+import           Diagrams.TwoD.Size                 (SizeSpec2D (Dims))
+import           Text.Docutils.CmdLine
+import           Text.Docutils.Transformers.Haskell
+import           Text.Docutils.Util
+import           Text.Docutils.Writers.HTML
+import           Text.XML.HXT.Core                  hiding (when)
 
 main :: IO ()
 main = do
@@ -29,10 +34,10 @@ main = do
                        , "vector-space"
                        , "vector-space-points"
                        ]
-  errCode <- docutilsCmdLine (diagramsManual modMap nameMap)
+  errCode <- docutilsCmdLine (diagramsDoc modMap nameMap)
   exitWith errCode
 
-diagramsManual modMap nameMap outDir =
+diagramsDoc modMap nameMap outDir =
   doTransforms [ linkifyGithub
                , linkifyHackage
                , linkifyModules modMap
