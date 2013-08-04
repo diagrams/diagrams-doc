@@ -427,8 +427,8 @@ relative to its local origin.
 
 > example = circle 1 # translate (r2 (0.5, 0.3)) # showOrigin
 
-As `circleT` shows, translating a diagram by `(0.5, 0.3)` is the same
-as moving its local origin by `(-0.5, -0.3)`.
+As the above example shows, translating a diagram by `(0.5, 0.3)` is
+the same as moving its local origin by `(-0.5, -0.3)`.
 
 Since diagrams are always composed with respect to their local
 origins, translation can affect the way diagrams are composed.

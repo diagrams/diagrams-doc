@@ -47,7 +47,8 @@ reference`_ for more details.
 * Headings levels are indicated by underlining heading titles, with a
   different character for each level.  From top (biggest) to bottom
   (smallest), the heading characters are ``=``, ``-``, ``~``, and
-  ``+``.
+  ``+``.  The title of the tutorial should be enclosed with ``=`` on
+  top and bottom.
 
 .. _`quick reference`: http://docutils.sourceforge.net/docs/user/rst/quickref.html
 
