@@ -1591,17 +1591,17 @@ also as guides to help create and position other diagrams.
 Segments
 ~~~~~~~~
 
-The most basic path component is a `Segment`, which is some sort of
-primitive path from one point to another.  Segments are
+The most basic component of trails and paths is a `Segment`, which is
+some sort of primitive path from one point to another.  Segments are
 *translationally invariant*; that is, they have no inherent location,
 and applying a translation to a segment has no effect (however, other
 sorts of transformations, such as rotations and scales, have the
-effect you would expect). In other words, a segment is not
-a way to get from point A to point B; it is a way to get from
-*wherever you are* to *somewhere else*.
+effect you would expect). In other words, a segment is not a way to
+get from some particular point A to another point B; it is a way to
+get from *wherever you currently happen to be* to *somewhere else*.
 
-Currently, ``diagrams`` supports
-two types of segment, defined in `Diagrams.Segment`:mod:\:
+Currently, ``diagrams`` supports two types of segment, defined in
+`Diagrams.Segment`:mod:\:
 
 * A *linear* segment is simply a straight line, defined by an offset
   from its beginning point to its end point; you can construct one
@@ -1643,24 +1643,37 @@ __ http://en.wikipedia.org/wiki/Bézier_curve
 >
 > example = illustrateBezier c1 c2 x2
 
-`Diagrams.Segment`:mod: also provides a few tools for working with
-segments:
+Independently of the two types of segments explained above, segments
+can be either *closed* or *open*.  A *closed* segment has a fixed
+endpoint relative to its start.  An *open* segment, on the other hand,
+has an endpoint determined by its context; open segments are used to
+implement loops (explained in the `Trails`_ section below).  Most
+users should have no need to work with open segments.  (For that
+matter, most users will have no need to work directly with segments at
+all.)
 
-* `atParam` for computing points along a segment;
-* `segOffset` for computing the offset from the start of a segment to its endpoint;
-* `splitAtParam` for splitting a segment into two smaller segments;
-* `arcLength` for approximating the arc length of a segment;
-* `arcLengthToParam` for approximating the parameter corresponding to
-  a given arc length along the segment; and
-* `adjustSegment` for extending or shrinking a segment.
+If you look in the `Diagrams.Segment`:mod: module, you will see quite
+a bit of other stuff related to the implementation of trails
+(`SegMeasure` and so on); this is explained in more detail in XXX.
 
 Trails
 ~~~~~~
 
-`Trail`\s, defined in `Diagrams.Path`:mod:, are essentially lists of
+`Trail`\s, defined in `Diagrams.Trail`:mod:, are essentially lists of
 segments laid end-to-end.  Since segments are translationally
 invariant, so are trails; that is, trails have no inherent starting
 location, and translating them has no effect.
+
+There are two types of trail:
+
+  * a *line*, with a type like `Trail' Line v`, is XXX.
+  * a *loop*, with a type like `Trail' Loop v`, is XXX.
+
+Lines
++++++
+
+Loops
++++++
 
 Trails can also be *open* or *closed*: a closed trail is one with an
 implicit (linear) segment connecting the endpoint of the trail to the
@@ -1823,13 +1836,14 @@ decorate it with the rows.
 
 ::
 
-> dot = circle 1 # fc black
-> mkRow n = hcat' with {sep = 0.5} (replicate n dot)
-> mkTri n = decoratePath
->             (fromOffsets (replicate (n-1) (2.5 *^ unitX))
->                # rotateBy (1/6))
->             (map mkRow [n, n-1 .. 1])
-> example = mkTri 5
+> dot       = circle 1 # fc black
+> dotSep    = 0.5
+> dotOffset = (width (dot :: D R2) + dotSep) *^ unitX
+> mkRow n   = hcat' with {sep = dotSep} (replicate n dot)
+> mkTri n   = decoratePath
+>               (fromOffsets (replicate (n-1) dotOffset) # rotateBy (1/6))
+>               (map mkRow [n, n-1 .. 1])
+> example   = mkTri 5
 
 .. _PathLike:
 
@@ -2228,6 +2242,8 @@ image, blank space will be left in one of the two dimensions to
 compensate.  If you wish to alter an image's aspect ratio, you can do
 so by scaling nonuniformly with `scaleX`, `scaleY`, or something
 similar.
+
+XXX check if the postscript backend supports images?
 
 Currently, the cairo backend can only include images in ``.png``
 format, but hopefully this will be expanded in the future.  Other

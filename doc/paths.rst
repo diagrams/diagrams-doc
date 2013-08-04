@@ -5,13 +5,26 @@
 
 .. default-role:: hs
 
-==========================
-Segments, trails and paths
-==========================
+================
+Trails and paths
+================
 
 .. contents::
 
 Introduction
 ============
 
-This tutorial will teach you about trails and paths.
+XXX a tutorial on trails and paths, presented as a series of
+exercises, with links to relevant documentation?
+
+Lines
+=====
+
+Loops
+=====
+
+Trails
+======
+
+Paths
+=====
