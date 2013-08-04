@@ -23,7 +23,7 @@
     + [ ] generate lhs from ReST format??
     + [ ] brainstorm ideas for a single example that we can work through
     + [ ] add trails + paths to the tutorial
-  + [ ] describe postscript backend in diagrams package docs (README, .cabal...)
+  + [X] describe postscript backend in diagrams package docs (README, .cabal...)
   + [ ] add -core and -lib examples with diagrams-haddock
   + [X] close other tickets with 0.7 milestone
   + [X] bump versions and deps to 0.7
