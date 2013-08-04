@@ -75,6 +75,9 @@ some text in backquotes, followed by a tag surrounded by colons, like
   Haddock documentation *hosted on the diagrams website* (not
   Hackage), like this: `Diagrams.Path`:mod:. Hence, this should only
   be used for modules which are hosted on the diagrams website.
+* To link to a repository in the ``diagrams`` github organization, use
+  the ``repo`` tag.  For example, ```diagrams-lib`:repo:`` turns into
+  `diagrams-lib`:repo:.
 
 .. _MathJax: http://www.mathjax.org/
 
