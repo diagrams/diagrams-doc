@@ -26,6 +26,9 @@
   + [X] describe postscript backend in diagrams package docs (README, .cabal...)
   + [ ] add -core and -lib examples with diagrams-haddock
   + [X] close other tickets with 0.7 milestone
+  + [ ] don't fill lines
+    + [ ] SVG
+    + [ ] postscript
   + [X] bump versions and deps to 0.7
     + [X] diagrams-core
     + [X] diagrams-lib
@@ -40,6 +43,8 @@
     + [X] BlogLiterately-diagrams
     + [X] SVGFonts
   + [ ] build API docs
+    + [ ] get standalone-haddock to build?
+    + [ ] use old path, with hproj etc.?
   + [X] update CHANGES files and release info on website
     + [X] diagrams-core
     + [X] diagrams-lib
