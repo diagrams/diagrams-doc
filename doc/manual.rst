@@ -1652,34 +1652,110 @@ users should have no need to work with open segments.  (For that
 matter, most users will have no need to work directly with segments at
 all.)
 
-If you look in the `Diagrams.Segment`:mod: module, you will see quite
-a bit of other stuff related to the implementation of trails
-(`SegMeasure` and so on); this is explained in more detail in XXX.
+.. container:: todo
+
+  If you look in the `Diagrams.Segment`:mod: module, you will see quite
+  a bit of other stuff related to the implementation of trails
+  (`SegMeasure` and so on); this is explained in more detail in XXX
 
 Trails
 ~~~~~~
 
-`Trail`\s, defined in `Diagrams.Trail`:mod:, are essentially lists of
-segments laid end-to-end.  Since segments are translationally
-invariant, so are trails; that is, trails have no inherent starting
-location, and translating them has no effect.
+Trails are defined in `Diagrams.Trail`:mod:.
+
+.. container:: todo
+
+  Reference trail & path tutorial
+
+.. container:: todo
+
+  Semantically, a *trail* is a translation-invariant XXX
+
+More concretely, trails are essentially lists of segments laid
+end-to-end.
 
 There are two types of trail:
 
-  * a *line*, with a type like `Trail' Line v`, is XXX.
-  * a *loop*, with a type like `Trail' Loop v`, is XXX.
+* A *loop*, with a type like `Trail' Loop v`, is a trail which forms
+  a "closed loop", ending at the same place where it started.
 
-Lines
-+++++
+  .. class:: dia
 
-Loops
-+++++
+  ::
 
-Trails can also be *open* or *closed*: a closed trail is one with an
-implicit (linear) segment connecting the endpoint of the trail to the
-starting point.
+  > import Diagrams.Coordinates
+  > example = fromOffsets [1 & 1, 2 & (-1), (-1) & (-1), (-3) & 1]
+  >         # closeLine # strokeLoop # fc blue
 
-To construct a `Trail`, you can use one of the following:
+  Loops in 2D can be filled, as in the example above.
+
+* A *line*, with a type like `Trail' Line v`, is a trail which does
+  not form a closed loop, that is, it starts in one place and ends
+  in another.
+
+  .. class:: dia
+
+  ::
+
+  > import Diagrams.Coordinates
+  > example = fromOffsets [1 & 1, 2 & (-1), (-1) & (-1), (-3) & 1]
+  >         # strokeLine
+
+  Actually, a line can in fact happen to end in the same place where
+  it starts, but even so it is still not considered closed.  Lines
+  have no inside and outside, and are never filled.
+
+Finally, the type `Trail` can contain either a line or a loop.
+
+The most important thing to understand about lines, loops, and trails
+is how to convert between them.
+
+* To convert from a line or a loop to a trail, use `wrapLine` or
+  `wrapLoop`.
+* To convert from a loop to a line, use `cutLoop`.  This results in a
+  line which just so happens to end where it starts.
+* To convert from a line to a loop, there are two choices:
+
+  * `closeLine` adds a new linear segment from the end to the start of
+    the line.
+  * `glueLine` simply modifies the endpoint of the final segment to be
+    the start of the line.  This is most often useful if you have a
+    line which you know just so happens to end where it starts;
+    calling `closeLine` in such a case would result in the addition of
+    a gratuitous length-zero segment.
+
+    .. container:: todo
+
+      Illustration of `glueLine` and `closeLine`
+
+Lines form a monoid under concatenation. For example, below we create
+a two-segment line called ``spike`` and then construct a starburst
+path by concatenating a number of rotated copies.  Note how we call
+`glueLine` to turn the starburst into a closed loop, so that we can
+fill it (lines cannot be filled).  `strokeLoop` turns a loop into a
+diagram, with the start of the loop at the local origin. (There are
+also analogous functions `strokeLine` and `strokeT`.)
+
+.. class:: dia-lhs
+
+::
+
+> spike :: Trail' Line R2
+> spike = fromOffsets . map r2 $ [(1,3), (1,-3)]
+>
+> burst :: Trail' Loop R2
+> burst = glueLine . mconcat . take 13 . iterate (rotateBy (-1/13)) $ spike
+>
+> example = strokeLoop burst # fc yellow # lw 0.1 # lc orange
+
+For convenience, there is also a monoid instance for `Trail` based on
+the instance for lines: any loops are first cut with `cutLine`, and
+the results concatenated.  Typically this would be used in a situation
+where you know that all your trails actually contain lines.
+
+Loops, on the other hand, have no monoid instance.
+
+To construct a line, loop, or trail, you can use one of the following:
 
 * `fromOffsets` takes a list of vectors, and turns each one into a
   linear segment.
@@ -1690,32 +1766,22 @@ To construct a `Trail`, you can use one of the following:
   points; it is described in more detail in the section on `Splines`_.
 * `fromSegments` takes an explicit list of `Segment`\s.
 
+.. container:: todo
+
+  Illustrate each of the above?
+
+All the above functions construct loops by first constructing a line
+and then calling `glueLine`.
+
 If you look at the types of these functions, you will note that they
 do not, in fact, return just `Trail`\s: they actually return any type
-which is an instance of `PathLike`, which includes `Trail`\s, `Path`\s
-(to be covered in the next section), `Diagram`\s, and lists of points.
-See the `PathLike`_ section for more on the `PathLike` class.
+which is an instance of `TrailLike`, which includes lines, loops,
+`Trail`\s, `Path`\s (to be covered in the next section), `Diagram`\s,
+lists of points, and any of these wrapped in `Located` (see below).
+See the `TrailLike`_ section for more on the `TrailLike` class.
 
-Trails form a `Monoid` with *concatenation* as the binary operation,
-and the empty (no-segment) trail as the identity element.  The example
-below creates a two-segment trail called ``spike`` and then constructs
-a starburst path by concatenating a number of rotated copies.
-`strokeT` turns a trail into a diagram, with the start of the trail at
-the local origin.
-
-.. class:: dia-lhs
-
-::
-
-> spike :: Trail R2
-> spike = fromOffsets . map r2 $ [(1,3), (1,-3)]
->
-> burst = mconcat . take 13 . iterate (rotateBy (-1/13)) $ spike
->
-> example = strokeT burst # fc yellow # lw 0.1 # lc orange
-
-For details on the functions provided for manipulating trails, see the
-documentation for `Diagrams.Path`:mod:.  One other function worth
+For details on other functions provided for manipulating trails, see
+the documentation for `Diagrams.Trail`:mod:.  One other function worth
 mentioning is `explodeTrail`, which turns each segment in a trail into
 its own individual `Path`.  This is useful when you want to construct
 a trail but then do different things with its individual segments.
@@ -1743,14 +1809,21 @@ the edges individually:
 have to separately draw another copy of the trail with a line width of
 zero and fill that; this is left as an exercise for the reader.)
 
+Located
+~~~~~~~
+
+.. container:: todo
+
+  Write about `Located`
+
 Paths
 ~~~~~
 
 A `Path`, also defined in `Diagrams.Path`:mod:, is a (possibly empty)
-collection of trails, along with an absolute starting location for
-each trail. Paths of a single trail can be constructed using the same
-functions described in the previous section: `fromSegments`,
-`fromOffsets`, `fromVertices`, `(~~)`, and `cubicSpline`.
+collection of located trails. Paths of a single trail can be
+constructed using the same functions described in the previous
+section: `fromSegments`, `fromOffsets`, `fromVertices`, `(~~)`, and
+`cubicSpline`.
 
 `Path`\s also form a `Monoid`\, but the binary operation is
 *superposition* (just like that of diagrams).  Paths with
@@ -1845,10 +1918,10 @@ decorate it with the rows.
 >               (map mkRow [n, n-1 .. 1])
 > example   = mkTri 5
 
-.. _PathLike:
+.. _TrailLike:
 
-The ``PathLike`` class
-~~~~~~~~~~~~~~~~~~~~~~
+The ``TrailLike`` class
+~~~~~~~~~~~~~~~~~~~~~~~
 
 As you may have noticed by now, a large class of functions in the
 standard library---such as `square`, `polygon`, `fromVertices`, and so
@@ -2206,7 +2279,9 @@ text into a *path* tracing the outline of the text.  This may
 eventually be merged into the main diagrams codebase; for now, you can
 just import it if you need fancier font support.
 
-XXX write more here, with an example or two
+.. container:: todo
+
+  write more here, with an example or two
 
 .. _`SVGFonts package`: http://hackage.haskell.org/package/SVGFonts
 
@@ -2243,7 +2318,9 @@ compensate.  If you wish to alter an image's aspect ratio, you can do
 so by scaling nonuniformly with `scaleX`, `scaleY`, or something
 similar.
 
-XXX check if the postscript backend supports images?
+.. container:: todo
+
+  check if the postscript backend supports images
 
 Currently, the cairo backend can only include images in ``.png``
 format, but hopefully this will be expanded in the future.  Other
@@ -4178,7 +4255,7 @@ Backends
 Related projects
 ================
 
-.. container:: todo  XXX
+.. container:: todo
 
    * diagrams-spiro
    * diagrams-ghci
