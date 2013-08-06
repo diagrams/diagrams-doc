@@ -15,7 +15,8 @@ and more.
 
 ## Building
 
-To build the user manual, you will need:
+To build the website (which includes the gallery, user manual, and
+tutorials), you will need:
 
 * GHC 7.4 or 7.6
 * the diagrams framework itself (including the
@@ -26,9 +27,6 @@ To build the user manual, you will need:
   particular `rst2xml` should be on your PATH),
 * the Haskell [docutils package](http://github.com/diagrams/docutils), and
 * the latest version of [shake](http://hackage.haskell.org/package/shake).
-
-To build the website, you will additionally need
-
 * [hakyll](http://hackage.haskell.org/package/hakyll)-4.x.
 
 Once you have all the dependencies, simply do
@@ -42,7 +40,7 @@ should use `-NX` where X is the number of cores you have.)  Point your
 browser at `localhost:8000` to view it.  It works well to leave this
 invocation of `Shake preview` running, and then start another process
 calling `Shake +RTS -NX -RTS buildh` repeatedly in a loop.  The
-website will now be automatically be rebuilt any time any source files
+website will now automatically be rebuilt any time any source files
 change.
 
 For example, on a four-core Ubuntu machine, assuming you already have
