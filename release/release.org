@@ -11,11 +11,11 @@
     + [X] get it to compile
     + [X] get gallery descriptions working
   + [X] fix user manual examples
-  + [ ] update user manual
-    + [ ] postscript backend
-    + [ ] SVG backend?
-    + [ ] trails + paths
-    + [ ] make a pass over the whole thing & look for stuff to improve/update
+  + [-] update user manual
+    + [X] postscript backend
+    + [X] SVG backend?
+    + [X] trails + paths
+    + [X] make a pass over the whole thing & look for stuff to improve/update
     + [ ] mention & etc.
     + [ ] go through release notes for new material to add to manual
   + [-] improve tutorial
