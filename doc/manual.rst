@@ -656,7 +656,9 @@ two-dimensional space:
   uniform interface for constructing points and vectors of any
   dimension.  Vectors can be created using the syntax `(x & y)` and
   pattern-matched by calling `coords` and then matching on the pattern
-  `(x :& y)`.
+  `(x :& y)`.  Note that `Diagrams.Coordinates`:mod: is not exported
+  from `Diagrams.Prelude`:mod: (to avoid clashing with `lens`:pkg:),
+  so to use it you must explicitly import it.
 
 * `P2` is the type of points in two-dimensional space. It is a synonym
   for `Point R2`.  The distinction between points and vectors is
