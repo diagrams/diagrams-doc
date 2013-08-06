@@ -2123,6 +2123,13 @@ Answers to the `square 2` type inference challenge:
 #. `[P2]`
 #. `Trail' Line R2`
 
+Segments and trails as parametric objects
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. container:: todo
+
+  `Diagrams.Parametric`:mod:.
+
 Splines
 ~~~~~~~
 
@@ -2472,6 +2479,39 @@ Envelope-related functions
   >
   > example = surround (pad 1.2 $ p # showOrigin) ||| strutX 1
   >       ||| surround (pad 1.2 $ p # centerXY # showOrigin)
+
+* Envelopes can be "extruded"---like `pad`, but only in a certain
+  direction---using `extrudeEnvelope`.  Likewise, `intrudeEnvelope`
+  does the same but pushes the envelope inwards.
+
+  .. class:: dia-lhs
+
+  ::
+
+  > {-# LANGUAGE ViewPatterns #-}
+  > import Diagrams.TwoD.Vector
+  > import Diagrams.Coordinates
+  > import Data.Maybe (fromJust)
+  >
+  > sampleEnvelope2D n d = foldr (flip atop) (d # lc red) bs
+  >   where b  = fromJust $ appEnvelope (envelope d)
+  >         bs = [stroke $ mkLine (origin .+^ (s *^ v))
+  >                               (5 *^ normalized (perp v))
+  >              | v <- vs, let s = b v
+  >              ]
+  >         vs = map r2 [ (2 * cos t, 2 * sin t)
+  >                     | i <- [0..n]
+  >                     , let t = ((fromIntegral i) * 2.0 * pi)
+  >                             / (fromIntegral n)
+  >                     ]
+  >         mkLine a v = moveTo a $ fromOffsets [v] # centerXY
+  >
+  > example
+  >   = square 2
+  >   # extrudeEnvelope (2 & 1)
+  >   # sampleEnvelope2D 100
+  >   # lw 0.05
+  >   # centerXY # pad 1.1
 
 * Manually setting the envelope of a diagram can be
   accomplished using `withEnvelope`.  Additionally, `phantom` can be
@@ -3146,6 +3186,11 @@ the right are wrapped in `ScaleInv` but the ones on the left are not.
 >               , scalingY 2
 >               , scalingX (1/2) <> rotation (-1/12 :: Turn)
 >               ])
+
+In addition, the `scaleInvPrim` function creates a scale-invariant
+diagram from a primitive (such as a path).  At the moment it is not
+possible to create a scale-invariant diagram from another *diagram*
+(since this would require nesting diagrams in a funny way).
 
 Type reference
 ==============
@@ -4206,6 +4251,23 @@ Tools for backends
   found in the `diagrams-backend-tests`:repo: repo; the output of the
   test harness for all officially supported backends is `kept up-to-date
   here <http://projects.haskell.org/diagrams/backend-tests/all-index.html>`_.
+
+Other tools
+===========
+
+diagrams-builder
+----------------
+
+.. container:: todo
+
+  Write about `diagrams-builder`
+
+diagrams-haddock
+----------------
+
+.. container:: todo
+
+  Write about `diagrams-haddock`
 
 Core library
 ============

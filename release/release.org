@@ -11,13 +11,13 @@
     + [X] get it to compile
     + [X] get gallery descriptions working
   + [X] fix user manual examples
-  + [-] update user manual
+  + [X] update user manual
     + [X] postscript backend
     + [X] SVG backend?
     + [X] trails + paths
     + [X] make a pass over the whole thing & look for stuff to improve/update
-    + [ ] mention & etc.
-    + [ ] go through release notes for new material to add to manual
+    + [X] mention & etc.
+    + [X] go through release notes for new material to add to manual
   + [-] improve tutorial
     + [X] convert tutorial to ReST format (like user manual)
     + [ ] generate lhs from ReST format??
