@@ -1609,13 +1609,13 @@ Currently, ``diagrams`` supports two types of segment, defined in
 
 * A *Bézier* segment is a cubic curve defined by an offset from its
   beginning to its end, along with two control points; you can
-  construct one using `bezier3`.  An example is shown below, with the
-  endpoints shown in red and the control points in blue.  `Bézier
-  curves`__ always start off from the beginning point heading towards
-  the first control point, and end up at the final point heading away
-  from the last control point.  That is, in any drawing of a Bézier
-  curve like the one below, the curve will be tangent to the two
-  dotted lines.
+  construct one using `bezier3` (or `bézier3`, if you are feeling
+  snobby).  An example is shown below, with the endpoints shown in red
+  and the control points in blue.  `Bézier curves`__ always start off
+  from the beginning point heading towards the first control point,
+  and end up at the final point heading away from the last control
+  point.  That is, in any drawing of a Bézier curve like the one
+  below, the curve will be tangent to the two dotted lines.
 
 __ http://en.wikipedia.org/wiki/Bézier_curve
 
@@ -1623,14 +1623,14 @@ __ http://en.wikipedia.org/wiki/Bézier_curve
 
 ::
 
-> illustrateBezier c1 c2 x2
+> illustrateBézier c1 c2 x2
 >     =  endpt
 >     <> endpt  # translate x2
 >     <> ctrlpt # translate c1
 >     <> ctrlpt # translate c2
 >     <> l1
 >     <> l2
->     <> fromSegments [bezier3 c1 c2 x2]
+>     <> fromSegments [bézier3 c1 c2 x2]
 >   where
 >     dashed  = dashing [0.1,0.1] 0
 >     endpt   = circle 0.05 # fc red  # lw 0
@@ -1641,7 +1641,7 @@ __ http://en.wikipedia.org/wiki/Bézier_curve
 > x2      = r2 (3,-1) :: R2         -- endpoint
 > [c1,c2] = map r2 [(1,2), (3,0)]   -- control points
 >
-> example = illustrateBezier c1 c2 x2
+> example = illustrateBézier c1 c2 x2
 
 Independently of the two types of segments explained above, segments
 can be either *closed* or *open*.  A *closed* segment has a fixed
@@ -1652,27 +1652,24 @@ users should have no need to work with open segments.  (For that
 matter, most users will have no need to work directly with segments at
 all.)
 
-.. container:: todo
-
-  If you look in the `Diagrams.Segment`:mod: module, you will see quite
-  a bit of other stuff related to the implementation of trails
-  (`SegMeasure` and so on); this is explained in more detail in XXX
+If you look in the `Diagrams.Segment`:mod: module, you will see quite
+a bit of other stuff related to the implementation of trails
+(`SegMeasure` and so on); this is explained in more detail in the
+section `Trail and path implementation details`_.
 
 Trails
 ~~~~~~
 
-Trails are defined in `Diagrams.Trail`:mod:.
+Trails are defined in `Diagrams.Trail`:mod:.  Informally, you can
+think of trails as lists of segments laid end-to-end.  Since segments
+are translation-invariant, so are trails.  More formally, the
+semantics of a trail is a continuous (though not necessarily
+differentiable) function from the real interval `[0,1]`:math: to
+vectors in some vector space.  This section serves as a reference on
+trails; for a more hands-on introduction, refer to the `Trail and path
+tutorial`__.
 
-.. container:: todo
-
-  Reference trail & path tutorial
-
-.. container:: todo
-
-  Semantically, a *trail* is a translation-invariant XXX
-
-More concretely, trails are essentially lists of segments laid
-end-to-end.
+__ /doc/paths.html
 
 There are two types of trail:
 
@@ -1705,28 +1702,46 @@ There are two types of trail:
   it starts, but even so it is still not considered closed.  Lines
   have no inside and outside, and are never filled.
 
+  .. container:: warning
+
+    Lines are never filled, even when they happen to start and end in
+    the same place!
+
 Finally, the type `Trail` can contain either a line or a loop.
 
 The most important thing to understand about lines, loops, and trails
 is how to convert between them.
 
 * To convert from a line or a loop to a trail, use `wrapLine` or
-  `wrapLoop`.
+  `wrapLoop` (or `wrapTrail`, if you don't know or care whether the
+  parameter is a line or loop).
 * To convert from a loop to a line, use `cutLoop`.  This results in a
   line which just so happens to end where it starts.
 * To convert from a line to a loop, there are two choices:
 
   * `closeLine` adds a new linear segment from the end to the start of
     the line.
+
+    .. class:: dia-lhs
+
+    ::
+
+    > import Diagrams.Coordinates
+    >
+    > almostClosed :: Trail' Line R2
+    > almostClosed = fromOffsets
+    >   [2 & (-1), (-3) & (-0.5), (-2) & 1, 1 & 0.5]
+    >
+    > example = pad 1.1 . centerXY . fc orange . hcat' with {sep = 1}
+    >   $ [ almostClosed # strokeLine
+    >     , almostClosed # closeLine # strokeLoop
+    >     ]
+
   * `glueLine` simply modifies the endpoint of the final segment to be
     the start of the line.  This is most often useful if you have a
     line which you know just so happens to end where it starts;
     calling `closeLine` in such a case would result in the addition of
     a gratuitous length-zero segment.
-
-    .. container:: todo
-
-      Illustration of `glueLine` and `closeLine`
 
 Lines form a monoid under concatenation. For example, below we create
 a two-segment line called ``spike`` and then construct a starburst
@@ -1759,16 +1774,42 @@ To construct a line, loop, or trail, you can use one of the following:
 
 * `fromOffsets` takes a list of vectors, and turns each one into a
   linear segment.
+
+  .. class:: dia-lhs
+
+  ::
+
+  > theLine = fromOffsets (iterateN 5 (rotateBy (1/20)) unitX)
+  > example = theLine # strokeLine
+  >         # lc blue # lw 0.05 # centerXY # pad 1.1
+
 * `fromVertices` takes a list of vertices, generating linear segments
   between them.
+
+  .. class:: dia-lhs
+
+  ::
+
+  > vertices = map p2 $ [(x,y) | x <- [0,0.2 .. 2], y <- [0,1]]
+  > example = fromVertices vertices # strokeLine
+  >         # lc red # centerXY # pad 1.1
+
 * `(~~)` creates a simple linear trail between two points.
 * `cubicSpline` creates a smooth curve passing through a given list of
   points; it is described in more detail in the section on `Splines`_.
-* `fromSegments` takes an explicit list of `Segment`\s.
 
-.. container:: todo
+  .. class:: dia-lhs
 
-  Illustrate each of the above?
+  ::
+
+  > vertices = map p2 . init $ [(x,y) | x <- [0,0.5 .. 2], y <- [0,0.5]]
+  > theLine = cubicSpline False vertices
+  > example = mconcat (iterateN 6 (rotateBy (-1/6)) theLine)
+  >         # glueLine # strokeLoop
+  >         # lc green # lw 0.05 # fc aqua # centerXY # pad 1.1
+
+* `fromSegments` takes an explicit list of `Segment`\s, which can
+  occasionally be useful if, say, you want to generate some Bézier
 
 All the above functions construct loops by first constructing a line
 and then calling `glueLine`.
@@ -1820,7 +1861,7 @@ Paths
 ~~~~~
 
 A `Path`, also defined in `Diagrams.Path`:mod:, is a (possibly empty)
-collection of located trails. Paths of a single trail can be
+collection of `Located Trail`s. Paths of a single trail can be
 constructed using the same functions described in the previous
 section: `fromSegments`, `fromOffsets`, `fromVertices`, `(~~)`, and
 `cubicSpline`.
@@ -2044,14 +2085,6 @@ Answers to the `square 2` type inference challenge:
 #. `[P2]`
 #. `Trail R2`
 
-The ``Closeable`` class
-~~~~~~~~~~~~~~~~~~~~~~~
-
-Creating closed paths can be accomplished with the `close` method of
-the `Closeable` type class.  There is also an `open` method, which
-does what you would think.  Currently, there are only two instances of
-`Closeable`: `Trail` and `Path`.
-
 Splines
 ~~~~~~~
 
@@ -2188,6 +2221,15 @@ image does not match the aspect ratio of the rectangle given to
 `view` (and also because of the use of `pad` by the framework which
 renders the user manual examples).  If the aspect ratios matched the
 viewed portion would be exactly that specified in the call to `view`.
+
+Trail and path implementation details
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. container:: todo
+
+  * fingertree of closed segments, + optional open segment
+  * segment measures
+  * segregate lines and loops into different primitives
 
 Text
 ----
@@ -3461,28 +3503,6 @@ Instances:
 
 Further reading: `Working with trails and paths`_; `Trails`_; `Paths`_; `The
 PathLike class`_.
-
-Closable
-++++++++
-
-The `Closeable` class, also defined in `Diagrams.Path`:mod:,
-represents path-like things which can be "open" or "closed".
-
-.. class:: lhs
-
-::
-
-> class PathLike p => Closeable p where
->   -- | "Open" a path-like thing.
->   open  :: p -> p
->
->   -- | "Close" a path-like thing, by implicitly connecting the
->   --   endpoint(s) back to the starting point(s).
->   close :: p -> p
-
-Instances: `Trail` and `Path`.
-
-Further reading: `Working with trails and paths`_; `The Closeable class`_.
 
 Classes for backends
 ~~~~~~~~~~~~~~~~~~~~
