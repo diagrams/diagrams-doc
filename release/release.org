@@ -18,13 +18,9 @@
     + [X] make a pass over the whole thing & look for stuff to improve/update
     + [X] mention & etc.
     + [X] go through release notes for new material to add to manual
-  + [-] improve tutorial
+  + [X] improve tutorial
     + [X] convert tutorial to ReST format (like user manual)
-    + [ ] generate lhs from ReST format??
-    + [ ] brainstorm ideas for a single example that we can work through
-    + [ ] add trails + paths to the tutorial
   + [X] describe postscript backend in diagrams package docs (README, .cabal...)
-  + [ ] add -core and -lib examples with diagrams-haddock
   + [X] close other tickets with 0.7 milestone
   + [ ] don't fill lines
     + [ ] SVG
@@ -106,6 +102,9 @@
       - [ ] haskell-art
       - [ ] plclub
 ** put off
+  + [ ] more improvements to user manual
+  + [ ] write trail + path tutorial
+  + [ ] add -core and -lib examples with diagrams-haddock
 * Planning for release of version 0.6
 ** RELEASE TARGET DATE: December 11
 ** finished uploads
