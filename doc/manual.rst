@@ -1802,7 +1802,7 @@ To construct a line, loop, or trail, you can use one of the following:
 
   ::
 
-  > vertices = map p2 . init $ [(x,y) | x <- [0,0.5 .. 2], y <- [0,0.5]]
+  > vertices = map p2 . init $ [(x,y) | x <- [0,0.5 .. 2], y <- [0,0.2]]
   > theLine = cubicSpline False vertices
   > example = mconcat (iterateN 6 (rotateBy (-1/6)) theLine)
   >         # glueLine # strokeLoop
@@ -1812,12 +1812,13 @@ To construct a line, loop, or trail, you can use one of the following:
   occasionally be useful if, say, you want to generate some Bézier
 
 All the above functions construct loops by first constructing a line
-and then calling `glueLine`.
+and then calling `glueLine` (see also the below section on
+`TrailLike`_).
 
 If you look at the types of these functions, you will note that they
 do not, in fact, return just `Trail`\s: they actually return any type
 which is an instance of `TrailLike`, which includes lines, loops,
-`Trail`\s, `Path`\s (to be covered in the next section), `Diagram`\s,
+`Trail`\s, `Path`\s (to be covered in an upcoming section), `Diagram`\s,
 lists of points, and any of these wrapped in `Located` (see below).
 See the `TrailLike`_ section for more on the `TrailLike` class.
 
@@ -1853,15 +1854,44 @@ zero and fill that; this is left as an exercise for the reader.)
 Located
 ~~~~~~~
 
-.. container:: todo
+Something of type `Located a` consists, essentially, of a value of
+type `a` paired with a point.  In this way, `Located` serves to
+transform translation-invariant things (such as `Segment`\s or
+`Trail`\s) into things with a fixed location.  A `Located Trail` is a
+`Trail` where we have picked a concrete location for its starting
+point, and so on.
 
-  Write about `Located`
+The module `Diagrams.Located`:mod: defines the `Located` type and
+utilities for working with it:
+
+* `at` is used to construct `Located` values, and is designed to be
+  used infix, like `someTrail \`at\` somePoint`.
+* `viewLoc`, `unLoc`, and `loc` can be used to project out the
+  components of a `Located` value.
+* `mapLoc` can be used to apply a function to the value of type `a`
+  inside a value of type `Located a`.  Note that `Located` is not a
+  functor, since it is not possible to change the contained type
+  arbitrarily: `mapLoc` does not change the location, and the vector
+  space associated to the type `a` must therefore remain the same.
+
+Much of the utility of having a concrete type for the `Located`
+concept (rather than just passing around values paired with points)
+lies in the type class instances we can give to `Located`:
+
+* `HasOrigin`: translating a `Located a` simply translates the
+  associated point, leaving the value of type `a` unaffected.
+* `Transformable`: only the linear component of transformations are
+  applied to the wrapped value.
+* `Enveloped`: the envelope of a `Located a` is the envelope of the
+  contained `a`, translated to the stored location (and similarly for
+  `Traced`).
+* The `TrailLike` instance is also useful; see TrailLike_.
 
 Paths
 ~~~~~
 
 A `Path`, also defined in `Diagrams.Path`:mod:, is a (possibly empty)
-collection of `Located Trail`s. Paths of a single trail can be
+collection of `Located Trail`\s. Paths of a single trail can be
 constructed using the same functions described in the previous
 section: `fromSegments`, `fromOffsets`, `fromVertices`, `(~~)`, and
 `cubicSpline`.
@@ -1893,8 +1923,9 @@ of which is a sequence of segments, `explodePath` actually returns a
 list of lists of paths.
 
 For information on other path manipulation functions such as
-`pathFromTrail`, `pathFromTrailAt`, `pathVertices`, and `pathOffsets`,
-see the documentation in `Diagrams.Path`:mod:.
+`pathFromTrail`, `pathFromLocTrail`, `pathVertices`, `pathOffsets`,
+`scalePath`, and `reversePath`, see the Haddock documentation in
+`Diagrams.Path`:mod:.
 
 Stroking trails and paths
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -1929,9 +1960,9 @@ Decorating trails and paths
 
 Paths (and trails) can be used not just to draw certain shapes, but
 also as tools for positioning other objects.  To this end,
-``diagrams`` provides `decoratePath` and `decorateTrail`, which
-position a list of objects at the vertices of a given path or trail,
-respectively.
+``diagrams`` provides `decoratePath`, `decorateLocatedTrail`, and
+`decorateTrail`, which position a list of objects at the vertices of a
+given path or trail.
 
 For example, suppose we want to create an equilateral triangular
 arrangement of dots.  One possibility is to create horizontal rows of
@@ -1943,8 +1974,8 @@ some trig, or both, and we'd rather avoid all that.
 
 Fortunately, there's an easier way: after creating the horizontal
 rows, we create the path corresponding to the left-hand side of the
-triangle (which can be done using a simple rotation), and then
-decorate it with the rows.
+triangle (which can be done using `fromOffsets` and a simple
+rotation), and then decorate it with the rows.
 
 .. class:: dia-lhs
 
@@ -1955,8 +1986,8 @@ decorate it with the rows.
 > dotOffset = (width (dot :: D R2) + dotSep) *^ unitX
 > mkRow n   = hcat' with {sep = dotSep} (replicate n dot)
 > mkTri n   = decoratePath
->               (fromOffsets (replicate (n-1) dotOffset) # rotateBy (1/6))
->               (map mkRow [n, n-1 .. 1])
+>               (fromOffsets (replicate (n-1) dotOffset) # rotateBy (-1/3))
+>               (map mkRow [1..n])
 > example   = mkTri 5
 
 .. _TrailLike:
@@ -1967,63 +1998,69 @@ The ``TrailLike`` class
 As you may have noticed by now, a large class of functions in the
 standard library---such as `square`, `polygon`, `fromVertices`, and so
 on---generate not just diagrams, but *any* type which is an instance
-of the `PathLike` type class.
+of the `TrailLike` type class.
 
-The `PathLike` type class has only a single method, `pathLike`:
+The `TrailLike` type class, defined in `Diagrams.TrailLike`:mod:, has
+only a single method, `trailLike`:
 
 .. class:: lhs
 
 ::
 
-> pathLike :: Point (V p)
->          -> Bool
->          -> [Segment (V p)]
->          -> p
+> trailLike :: Located (Trail (V t)) -> t
 
-* The first argument is a starting point for the path-like thing;
-  path-like things which are translationally invariant (such as
-  `Trail`\s) simply ignore this argument.
+That is, a trail-like thing is anything which can be constructed from
+a `Located Trail`.
 
-* The second argument indicates whether the path-like thing should be
-  closed.
+There are quite a few instances of `TrailLike`:
 
-* The third argument specifies the segments of the path-like thing.
-
-Currently, there are four instances of `PathLike`:
-
-* `Trail`: as noted before, the implementation of `pathLike` for
-  `Trail`\s ignores the first argument, since `Trail`\s have no inherent
-  starting location.
-* `Path`: of course, `pathLike` can only construct paths of a single
-  component.
+* `Trail`: this instance simply throws away the location.
+* `Trail' Line`: throw away the location, and perform `cutLoop` if
+  necessary.  For example, `circle 3 :: Trail' Line R2` is an open `360^\circ`:math:
+  circular arc.
+* `Trail' Loop`: throw away the location, and perform `glueLine` if
+  necessary.
+* `Path`: construct a path with a single component.
 * `Diagram b R2`: as long as the backend `b` knows how to render 2D
-  paths, `pathLike` can construct a diagram by stroking the generated
+  paths, `trailLike` can construct a diagram by stroking the generated
   single-component path.
-* `[Point v]`: this instance generates the vertices of the path.
+* `[Point v]`: this instance generates the vertices of the trail.
+* `Located (Trail v)`, of course, has an instance which amounts to the
+  identity function.  More generally, however, `Located a` is an
+  instance of `TrailLike` for *any* type `a` which is also an
+  instance.  In particular, the resulting `Located a` has the location
+  of the input `Located Trail`, and a value of type `a` generated by
+  another call to `trailLike`.  This is most useful for generating
+  values of type `Located (Trail' Line v)` and `Located (Trail' Loop
+  v)`.  For example, `circle 3 # translateX 2 :: Located (Trail' Line
+  R2)` is an open `360^\circ`:math: circular arc centered at
+  `(2,0)`:math:.
 
 It is quite convenient to be able to use, say, `square 2` as a
-diagram, path, trail, or list of vertices, whichever suits one's
-needs.  Otherwise, either four different functions would be needed for
-each primitive (like ``square``, ``squarePath``, ``squareTrail``, and
-``squareVertices``, ugh), or else explicit conversion functions would
-have to be inserted when you wanted something other than what the
-`square` function gave you by default.
+diagram, path, trail, list of vertices, *etc.*, whichever suits one's
+needs.  Otherwise, either a long list of functions would be needed for
+each primitive (like ``square``, ``squarePath``, ``squareTrail``,
+``squareVertices``, ``squareLine``, ``squareLocatedLine``, ... ugh!),
+or else explicit conversion functions would have to be inserted when
+you wanted something other than what the `square` function gave you by
+default.
 
 As an (admittedly contrived) example, the following diagram defines
-`s` as an alias for `square 2` and then uses it at all four instances of
-`PathLike`:
+`s` as an alias for `square 2` and then uses it at four different
+instances of `TrailLike`:
 
 .. class:: dia-lhs
 
 ::
 
-> s = square 2  -- a squarish thing.
+> s = square 2  -- a squarish thingy.
 >
 > blueSquares = decoratePath s {- 1 -}
 >                 (replicate 4 (s {- 2 -} # scale 0.5) # fc blue)
 > paths       = lc purple . stroke $ star (StarSkip 2) s {- 3 -}
-> aster       = centerXY . lc green . strokeT
+> aster       = centerXY . lc green . strokeLine
 >             . mconcat . take 5 . iterate (rotateBy (1/5))
+>             . onLineSegments init
 >             $ s {- 4 -}
 > example = (blueSquares <> aster <> paths) # lw 0.05
 
@@ -2043,35 +2080,34 @@ semantics depending on which type is inferred.
 ::
 
 > ts = mconcat . take 3 . iterate (rotateBy (1/9)) $ triangle 1
-> example = (ts ||| stroke ts ||| strokeT ts ||| fromVertices ts) # fc red
+> example = (ts ||| stroke ts ||| strokeLine ts ||| fromVertices ts) # fc red
 
 The above example defines `ts` by generating three equilateral
 triangles offset by 1/9 rotations, then combining them with `mconcat`.
 The sneaky thing about this is that `ts` can have the type of any
-`PathLike` instance, and it has completely different meanings
+`TrailLike` instance, and it has completely different meanings
 depending on which type is chosen.  The example uses `ts` at each of
-the four `PathLike` types:
+four different monoidal `TrailLike` types:
 
 * Since `example` is a diagram, the first `ts`, used by itself, is
   also a diagram; hence it is interpreted as three equilateral
   triangle diagrams superimposed on one another with `atop`.
 
 * `stroke` turns `Path`\s into diagrams, so the second `ts` has type
-  `Path R2`.  Hence it is interpreted as three triangular paths
+  `Path R2`.  Hence it is interpreted as three closed triangular paths
   superimposed into one three-component path, which is then stroked.
 
-* `strokeT` turns `Trail`\s into diagrams, so the third occurrence of
-  `ts` has type `Trail R2`.  It is thus interpreted as three
-  triangular trails (*without* the implicit closing segments)
-  sequenced end-to-end into one long trail.
+* `strokeLine` turns `Trail' Line`\s into diagrams, so the third
+  occurrence of `ts` has type `Trail' Line R2`.  It is thus
+  interpreted as three open triangular trails sequenced end-to-end
+  into one long open trail.  As a line (*i.e.* an open trail), it is
+  not filled (in order to make it filled we could replace `strokeLine
+  ts` with `strokeLoop (glueLine ts)`).
 
 * The last occurrence of `ts` is a list of points, namely, the
   concatenation of the vertices of the three triangles.  Turning this
   into a diagram with `fromVertices` generates a single-component,
-  open path that visits each of the points in turn.  The generated
-  diagram looks passingly similar to the one from the second
-  occurrence of `ts`, but a careful look reveals that they are quite
-  different.
+  open trail that visits each of the points in turn.
 
 Of course, one way to avoid all this would be to give `ts` a specific
 type signature, if you know which type you would like it to be.  Then
@@ -2083,7 +2119,7 @@ Answers to the `square 2` type inference challenge:
 #. `Path R2`
 #. `Diagram b R2`
 #. `[P2]`
-#. `Trail R2`
+#. `Trail' Line R2`
 
 Splines
 ~~~~~~~
@@ -2359,10 +2395,6 @@ image, blank space will be left in one of the two dimensions to
 compensate.  If you wish to alter an image's aspect ratio, you can do
 so by scaling nonuniformly with `scaleX`, `scaleY`, or something
 similar.
-
-.. container:: todo
-
-  check if the postscript backend supports images
 
 Currently, the cairo backend can only include images in ``.png``
 format, but hopefully this will be expanded in the future.  Other
@@ -3461,48 +3493,62 @@ Instances:
 Further reading: `Named subdiagrams`_; `Subdiagrams`_; `Qualifying
 names`_.
 
-Classes for paths
-~~~~~~~~~~~~~~~~~
+Classes for trails and paths
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-PathLike
-++++++++
+TrailLike
++++++++++
 
-The `PathLike` class, defined in `Diagrams.Path`:mod:, abstracts over
-things that are "path-like", so that functions such as `square` can be
-used to construct a diagram, a path, a trail, *etc.*.
+The `TrailLike` class, defined in `Diagrams.TrailLike`:mod:, abstracts
+over things that are "trail-like", so that functions such as `square`
+can be used to construct a diagram, a path, a trail, *etc.*.
 
 .. class:: lhs
 
 ::
 
-> class (Monoid' p, VectorSpace (V p)) => PathLike p where
+> class (InnerSpace (V t), OrderedField (Scalar (V t))) => TrailLike t where
 >
->   pathLike :: Point (V p)      -- ^ The starting point of the
->                                --   path.  Some path-like things
->                                --   (e.g. 'Trail's) may ignore this.
->            -> Bool             -- ^ Should the path be closed?
->            -> [Segment (V p)]  -- ^ Segments of the path.
->            -> p
+>   trailLike
+>     :: Located (Trail (V t))  -- ^ The concretely located trail.  Note
+>                               --   that some trail-like things
+>                               --   (e.g. 'Trail's) may ignore the
+>                               --   location.
+>     -> t
 
-The `pathLike` method provides a generic way to build a "path-like"
-thing by specifying the low-level path data.  Note that there should
-usually not be any need for end users to call `pathLike` directly
+The `trailLike` method provides a generic way to build a "trail-like"
+thing by specifying the low-level trail data.  Note that there should
+usually not be any need for end users to call `trailLike` directly
 (though there certainly may be some use cases).
 
 Instances:
-  * `Trail`: this is the most "direct" instance (in some sense the
-    class probably should have been named "TrailLike" instead of
-    "PathLike").  However, the starting point is ignored.
-  * `Path`: this instance creates a `Path` with a single `Trail`,
-    beginning at the given starting point.
-  * `QDiagram b R2 Any`: the diagram obtained by stroking the given
-    path.
-  * `[Point v]`: a list of the path's vertices.
-  * `Active p` (for any `PathLike p`): creates a constant `Active`
-    value.
 
-Further reading: `Working with trails and paths`_; `Trails`_; `Paths`_; `The
-PathLike class`_.
+* `Trail`: this instance simply throws away the location.
+* `Trail' Line`: throw away the location, and perform `cutLoop` if
+  necessary.  For example, `circle 3 :: Trail' Line R2` is an open `360^\circ`:math:
+  circular arc.
+* `Trail' Loop`: throw away the location, and perform `glueLine` if
+  necessary.
+* `Path`: construct a path with a single component.
+* `Diagram b R2`: as long as the backend `b` knows how to render 2D
+  paths, `trailLike` can construct a diagram by stroking the generated
+  single-component path.
+* `[Point v]`: this instance generates the vertices of the trail.
+* `Located (Trail v)`, of course, has an instance which amounts to the
+  identity function.  More generally, however, `Located a` is an
+  instance of `TrailLike` for *any* type `a` which is also an
+  instance.  In particular, the resulting `Located a` has the location
+  of the input `Located Trail`, and a value of type `a` generated by
+  another call to `trailLike`.  This is most useful for generating
+  values of type `Located (Trail' Line v)` and `Located (Trail' Loop
+  v)`.  For example, `circle 3 # translateX 2 :: Located (Trail' Line
+  R2)` is an open `360^\circ`:math: circular arc centered at
+  `(2,0)`:math:.
+* `Active t` (for any `TrailLike p`): creates a constant `Active`
+  value.
+
+Further reading: `Working with trails and paths`_; `Trails`_;
+`Paths`_; `TrailLike`_.
 
 Classes for backends
 ~~~~~~~~~~~~~~~~~~~~
@@ -3750,10 +3796,10 @@ Naming vertices
 
 Most functions that create some sort of shape (*e.g.* `square`,
 `pentagon`, `polygon`...) can in fact create any instance of the
-`PathLike` class (see `The PathLike class`_).  You can often
+`TrailLike` class (see `TrailLike`_).  You can often
 take advantage of this to do some custom processing of shapes by
-creating a *path* instead of a diagram, doing some processing, and
-then turning the path into a diagram.
+creating a *trail* instead of a diagram, doing some processing, and
+then turning the trail into a diagram.
 
 In particular, assigning names to the vertices of a shape can be
 accomplished as follows. Instead of writing just (say) `pentagon`, write
@@ -3903,12 +3949,15 @@ type.
 Animation
 =========
 
-As of version 0.5, diagrams has experimental support for the creation of
-*animations*.  It is by no means complete, so bug reports and feature
-requests are especially welcome.
+As of version 0.5, diagrams has experimental support for the creation
+of *animations*.  Animations are created with the help of a generic
+`Active` abstraction, defined in the `active`:pkg: package.
 
-Animations are created with the help of a generic `Active`
-abstraction, defined in the `active`:pkg: package.
+.. container:: warning
+
+  The `active`:pkg: package is being completely rewritten based on
+  a much improved semantics.  The rewritten version is slated for
+  integration with version 0.8 of diagrams.
 
 Active
 ------
