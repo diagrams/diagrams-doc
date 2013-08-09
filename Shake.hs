@@ -89,11 +89,11 @@ main = do
       copyFiles "doc/static"
 
       dist "web/gallery/*.big.png" *> \out -> do
-        need [dropExtension out -<.> "lhs"]
+        need [dropExtension (un out) -<.> "lhs"]
         compilePng False out
 
       dist "web/gallery/*.thumb.png" *> \out -> do
-        need [dropExtension out -<.> "lhs"]
+        need [dropExtension (un out) -<.> "lhs"]
         compilePng True out
 
       addOracle $ \(GhcPkg _) -> do
