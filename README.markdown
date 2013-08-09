@@ -21,7 +21,8 @@ tutorials), you will need:
 * GHC 7.4 or 7.6
 * the diagrams framework itself (including the
   [contrib package](http://github.com/diagrams/diagrams-contrib),
-  [cairo backend](http://github.com/diagrams/diagrams-cairo), and
+  [cairo backend](http://github.com/diagrams/diagrams-cairo),
+  [SVGFonts package](http://github.com/diagrams/SVGFonts), and
   [diagrams-builder package](http://github.com/diagrams/diagrams-builder)).
 * the python [docutils suite](http://docutils.sourceforge.net/) (in
   particular `rst2xml` should be on your PATH),
@@ -53,7 +54,7 @@ cabal install hsenv
 hsenv --name=dia
 .hsenv_dia/bin/activate
 cabal install gtk2hs-buildtools shake hakyll
-cabal install diagrams-core/ diagrams-lib/ diagrams-cairo/ diagrams-contrib/ diagrams-builder/ docutils/
+cabal install diagrams-core/ diagrams-lib/ diagrams-cairo/ diagrams-contrib/ diagrams-builder/ SVGFonts/ docutils/
 cd diagrams-doc
 ghc --make Shake -threaded
 ./Shake +RTS -N4 -RTS preview
