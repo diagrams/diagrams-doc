@@ -88,9 +88,13 @@ main = do
 
       copyFiles "doc/static"
 
-      dist "web/gallery/*.big.png" *> compilePng False
+      dist "web/gallery/*.big.png" *> \out -> do
+        need [dropExtension out -<.> "lhs"]
+        compilePng False out
 
-      dist "web/gallery/*.thumb.png" *> compilePng True
+      dist "web/gallery/*.thumb.png" *> \out -> do
+        need [dropExtension out -<.> "lhs"]
+        compilePng True out
 
       addOracle $ \(GhcPkg _) -> do
         (out,_) <- systemOutput "ghc-pkg" ["dump"]
