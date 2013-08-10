@@ -35317,3 +35317,65 @@
 2013-08-09 04:14:02 UTC <cmears> byorgey, don't worry about my strange errors; I rebooted the computer and they went away (:
 2013-08-09 04:35:56 UTC <cmears> ugh, they are back again :|
 2013-08-09 06:35:35 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 148982e73 http://travis-ci.org/diagrams/diagrams-doc/builds/10015381 The build has errored.
+2013-08-09 14:28:27 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14b9e1a8a http://travis-ci.org/diagrams/diagrams-doc/builds/10027589 The build has errored.
+2013-08-09 15:20:53 UTC <byorgey> here we goooooo
+2013-08-09 15:26:06 UTC <byorgey> and... released!!
+2013-08-09 15:26:11 UTC <luite> \o/
+2013-08-09 15:26:57 UTC <byorgey> note I'm not planning to advertise it yet, since there's still documentation that should be cleaned up and finished, etc. etc.
+2013-08-09 15:27:20 UTC <luite> ok
+2013-08-09 15:27:21 UTC <byorgey> but I wanted to get it out there for jbracker and notdan to depend on
+2013-08-09 15:27:33 UTC <byorgey> not that we need to keep it a secret or anything =)
+2013-08-09 15:27:48 UTC <luite> yeah i need to get some stuff out for notdan as well :)
+2013-08-09 15:28:02 UTC <byorgey> =)
+2013-08-09 15:28:11 UTC <luite> having some trouble with the dynamic ghci in 7.8, but i think it almost works now
+2013-08-09 15:28:18 UTC <byorgey> ACTION waits with bated breath for the hackagebot announcements
+2013-08-09 15:28:29 UTC <byorgey> here they come!
+2013-08-09 15:29:00 UTC <byorgey> luite: cool
+2013-08-09 15:29:41 UTC <notdan> yay updates
+2013-08-09 15:34:20 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 143e83bf1 http://travis-ci.org/diagrams/diagrams-doc/builds/10030438 The build has errored.
+2013-08-09 15:34:50 UTC <byorgey> WHATEVER travis.
+2013-08-09 15:35:14 UTC <luite> notdan: looks like you've already passed according to gwern's gsoc criterion :)
+2013-08-09 15:35:17 UTC <luite> http://predictionbook.com/predictions/20627
+2013-08-09 15:36:20 UTC <notdan> phoooof :)
+2013-08-09 15:36:40 UTC <notdan> still  lot of work to do tho
+2013-08-09 15:38:05 UTC <luite> that's true, but it's hard to deny that there's there's a working pastebin... the only disputable thing is the exact meaning of the word 'live' (he didn't say interactive)
+2013-08-09 15:39:21 UTC <notdan> I think he's unaware of the site (like many people). I plan to post it on reddit once I get all the old code sorted and >80% haddock coverage
+2013-08-09 15:39:44 UTC <notdan> I plan on releasing one of the libraries on hackage this week, I just need to write a tutorial
+2013-08-09 15:39:51 UTC <notdan> https://github.com/co-dan/interactive-diagrams/tree/master/workers
+2013-08-09 15:39:57 UTC <luite> cool
+2013-08-09 15:40:10 UTC <notdan> oh, and think of the namespace
+2013-08-09 15:40:10 UTC <luite> i'll try to scrutinize the code for possible remaining security issues
+2013-08-09 15:40:56 UTC <notdan> It's the library that deals with workers running in restricted environment. Right now I have all the modules in the Worker namespace. I thought I should change it to Control.Worker or something?
+2013-08-09 15:41:40 UTC <luite> hmm, the Control prefix is a tad meaningless though
+2013-08-09 15:42:34 UTC <ClaudiusMaximus> System might be better?  also "Worker" is a bit vague, the important bit is the restrictions
+2013-08-09 15:42:39 UTC <luite> right
+2013-08-09 15:46:05 UTC <byorgey> "System.Restrictions" then?  That's not vague in the slightest. ;-)
+2013-08-09 15:49:02 UTC <notdan> System.Restrictions for 'LimitSettings' datatype & friends and System.Restrictions.Worker for actual workers?
+2013-08-09 15:50:15 UTC <ClaudiusMaximus> maybe Restricted would be better for both, then System.Restricted.Worker has a nicer ring to it?
+2013-08-09 15:50:43 UTC <ClaudiusMaximus> but i suck at naming, maybe check where other similar things put their things
+2013-08-09 15:52:27 UTC <byorgey> System.Restricted.Worker sounds nice to me
+2013-08-09 15:58:26 UTC <luite> yep to me too
+2013-08-09 16:21:50 UTC <notdan> can I set/define CPP macros with cabal flags?
+2013-08-09 16:22:09 UTC <notdan> The restricted-workers library depends on selinux, and I want to make it in a flag
+2013-08-09 16:24:25 UTC <notdan> oh, it's Cpp-options
+2013-08-09 16:45:18 UTC <notdan> Does anybody know if that's an acceptable way of handling situations like that? https://github.com/co-dan/interactive-diagrams/commit/df09423f6c79e7d612ec99980d56cc6eecabfe0a
+2013-08-09 16:45:35 UTC <notdan> I basically want to be able to use that package without selinux
+2013-08-09 17:34:09 UTC <luite> notdan: yeah, the api shouldn't depend on the flags, dependencies can
+2013-08-09 17:34:43 UTC <luite> but it's not possible for other packages to say that they depend on restricted-workers with selinux enabled
+2013-08-09 17:35:09 UTC <luite> so for that it'd be better to split the selinux thigns out to a separate restricted-workers-selinux package
+2013-08-09 17:35:14 UTC <notdan> hm
+2013-08-09 17:36:07 UTC <notdan> I am not sure how would I even do this
+2013-08-09 17:36:50 UTC <notdan> selinux configuration is basically a string in the LimitSettings record
+2013-08-09 17:43:14 UTC <notdan> I guess I'll just abandon that idea and depend on selinux for now
+2013-08-09 17:44:12 UTC <luite> you could replace it with an IO action to run or something like that
+2013-08-09 18:13:45 UTC <notdan> luite: I thought about this but it sounds hacky and I couldn't serialize the resulting data structure. 
+2013-08-09 18:14:26 UTC <notdan> I have to investigate in which place of the program do I actually have to change the security context
+2013-08-09 18:19:03 UTC <notdan> I also wrote two examples: https://github.com/co-dan/interactive-diagrams/blob/master/restricted-workers/examples/EchoWorker.lhs https://github.com/co-dan/interactive-diagrams/blob/master/restricted-workers/examples/EchoPool.lhs
+2013-08-09 18:20:15 UTC <notdan> In order to finish the documentation I am going to have to write an example about creating custom worker types and the introduction
+2013-08-09 18:24:57 UTC <luite> ah cool :)
+2013-08-09 23:15:36 UTC <fryguybob> byorgey: You didn't reserve the room for ICFP yet right?  I'm going to be gone next week so I can do that now if that works for you.
+2013-08-10 00:37:18 UTC <carter> byorgey: diagrams new version!
+2013-08-10 03:20:33 UTC <byorgey> fryguybob: right, I haven't, and sure, that's fine
+2013-08-10 03:21:31 UTC <byorgey> carter: \o/
+2013-08-10 03:21:38 UTC <carter> congrats ;)
+2013-08-10 03:45:54 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 1480c728e http://travis-ci.org/diagrams/diagrams-doc/builds/10050090 The build failed.
