@@ -22,9 +22,8 @@
     + [X] convert tutorial to ReST format (like user manual)
   + [X] describe postscript backend in diagrams package docs (README, .cabal...)
   + [X] close other tickets with 0.7 milestone
-  + [-] don't fill lines
+  + [X] don't fill lines
     + [X] SVG
-    + [ ] postscript
   + [X] bump versions and deps to 0.7
     + [X] diagrams-core
     + [X] diagrams-lib
@@ -38,9 +37,6 @@
     + [X] diagrams-haddock
     + [X] BlogLiterately-diagrams
     + [X] SVGFonts
-  + [ ] build API docs
-    + [ ] get standalone-haddock to build?
-    + [ ] use old path, with hproj etc.?
   + [X] update CHANGES files and release info on website
     + [X] diagrams-core
     + [X] diagrams-lib
@@ -56,16 +52,10 @@
   + [X] make sure wiki is up to date
     + [X] installation instructions
     + [X] contributing instructions
-  + [-] test build:
+  + [X] test build:
     - [X] ghc 7.4.2
     - [X] ghc 7.6.1
-    - [ ] ghc HEAD
     - [X] update tested-with fields
-  + [ ] write announcement for blog + email
-    + [ ] list major new features since 0.6
-    + [ ] link to gallery (email)
-    + [ ] include some examples (blog)
-    + [ ] say where/how to get involved
   + [X] update LICENSE files/lists of contributors
   + [X] add release date to all CHANGES files
     + [X] core
@@ -94,6 +84,24 @@
     + [X] diagrams-haddock
     + [X] SVGFonts
     + [X] BlogLiterately-diagrams
+** put off
+  + [ ] more improvements to user manual
+    + [ ] new diagrams-lib modules?
+    + [ ] split core stuff into a separate document?
+    + [ ] write about diagrams-builder
+    + [ ] write about diagrams-haddock
+  + [ ] write trail + path tutorial
+  + [ ] add -core and -lib examples with diagrams-haddock
+  + [ ] postscript -- don't fill lines
+  + [ ] build API docs
+    + [ ] get standalone-haddock to build?
+    + [ ] use old path, with hproj etc.?
+  + [ ] more testing with GHC HEAD
+  + [ ] write announcement for blog + email
+    + [ ] list major new features since 0.6
+    + [ ] link to gallery (email)
+    + [ ] include some examples (blog)
+    + [ ] say where/how to get involved
   + [ ] upload/send announcement
     + [ ] blog
     + [ ] email
@@ -102,10 +110,6 @@
       - [ ] haskell-cafe
       - [ ] haskell-art
       - [ ] plclub
-** put off
-  + [ ] more improvements to user manual
-  + [ ] write trail + path tutorial
-  + [ ] add -core and -lib examples with diagrams-haddock
 * Planning for release of version 0.6
 ** RELEASE TARGET DATE: December 11
 ** finished uploads
