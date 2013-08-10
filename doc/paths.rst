@@ -14,8 +14,8 @@ Trails and paths
 Introduction
 ============
 
-XXX a tutorial on trails and paths, presented as a series of
-exercises, with links to relevant documentation?
+Coming soon!  A tutorial on trails and paths, presented as a series of
+exercises, with links to relevant documentation...
 
 Lines
 =====

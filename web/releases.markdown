@@ -2,8 +2,8 @@
 title: Releases
 ---
 
-diagrams 0.7: XXX
-=================
+diagrams 0.7: 9 August 2013
+===========================
 
 [diagrams-core 0.7](http://hackage.haskell.org/package/diagrams%2Dcore-0.7)
 ----------------
@@ -277,6 +277,12 @@ diagrams in Haddock documentation.  It has been released for a while,
 but `0.1.1.1` is the first version officially included in a major
 diagrams release.
 
+[SVGFonts 1.3](http://hackage.haskell.org/package/SVGFonts)
+----------------
+
+First release as an officially supported diagrams package, adding nice
+support to diagrams for text using fonts in SVG format.
+.
 diagrams 0.6: 11 December 2012
 ==============================
 

@@ -34978,3 +34978,342 @@
 2013-08-01 19:25:24 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 149b0db22 http://travis-ci.org/diagrams/diagrams-haddock/builds/9748506 The build passed.
 2013-08-01 19:26:08 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06dia-haddock-0.1 142098cd2 http://travis-ci.org/diagrams/diagrams-haddock/builds/9748508 The build passed.
 2013-08-01 19:28:57 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 1414eee30 http://travis-ci.org/diagrams/diagrams-haddock/builds/9748666 The build passed.
+2013-08-01 19:33:46 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06dia-haddock-0.1 14f5c5502 http://travis-ci.org/diagrams/diagrams-haddock/builds/9748664 The build passed.
+2013-08-01 19:53:52 UTC <fryguybob> mmmmmmm gouda
+2013-08-01 19:54:28 UTC <ClaudiusMaximus> cubicSpline gives weird results when the first point is the same as the last point (though it seems duplicated points in the middle don't matter)
+2013-08-01 19:55:03 UTC <fryguybob> ClaudiusMaximus: Humm
+2013-08-01 19:55:30 UTC <ClaudiusMaximus> maybe it was just coincidence, i'm using randomness...
+2013-08-01 19:55:43 UTC <fryguybob> ClaudiusMaximus: Checking now...
+2013-08-01 19:56:36 UTC <ClaudiusMaximus> by weird i mean it gives a blob/point/loop (can't tell in my actual code) instead of a smooth curve
+2013-08-01 20:00:33 UTC <ClaudiusMaximus> and when that happens the bool "should be closed" flag has no visible effect
+2013-08-01 20:05:54 UTC <fryguybob> ClaudiusMaximus: I don't see anything fishy with a simple test.  You can get loops between segments when points are close together followed by points that are not close together.
+2013-08-01 20:08:35 UTC <ClaudiusMaximus> fryguybob: ok - makes sense
+2013-08-01 20:09:26 UTC <fryguybob> Oh, when first and last match, oops, I was looking at something else.
+2013-08-01 20:14:33 UTC <ClaudiusMaximus> with the obvious workaround (dropping the duplicates) the splines look a lot better than the earlier test http://mathr.co.uk/misc/2013-08-01_diagrams_wobble_spline.png  (and renders much quicker too)
+2013-08-01 20:14:53 UTC <luite> ok looks cool :)
+2013-08-01 20:16:03 UTC <ClaudiusMaximus> :)
+2013-08-01 20:16:22 UTC <ClaudiusMaximus> byorgey: thanks for the cubicSpline tip
+2013-08-01 20:20:21 UTC <fryguybob> ClaudiusMaximus: So smooth :D
+2013-08-01 22:07:37 UTC <luite> fryguybob / byorgey : you need anything from me for the otel reservation?
+2013-08-01 23:32:44 UTC <byorgey> ClaudiusMaximus: cool, looks nice!
+2013-08-01 23:33:35 UTC <byorgey> luite: probably not, we'll let you know if so
+2013-08-01 23:34:19 UTC <luite> ok great, so you're both arriving the 21st, leaving the 28th in the evening?
+2013-08-01 23:41:01 UTC <byorgey> yes
+2013-08-01 23:41:02 UTC <byorgey> at least, I am
+2013-08-01 23:41:27 UTC <luite> ok, i'll take the train to NYC the 28th then
+2013-08-01 23:41:36 UTC <byorgey> OK, sounds good
+2013-08-01 23:41:56 UTC <luite> don't want to miss the FARM workshop :)
+2013-08-01 23:42:00 UTC <byorgey> =)
+2013-08-01 23:43:19 UTC <luite> hm, do you know if demo proposals for the haskell symposium will be published anywhere? i tried to update mine last week but easychair didn't allow me. then mailed the haskell symposium chair, but no response
+2013-08-01 23:43:59 UTC <luite> i clarified some of the examples and updated the API a bit
+2013-08-01 23:44:30 UTC <luite> even if not in formal proceedings, if there's a pdf link anywhere it would be bettr to have the latest version
+2013-08-01 23:45:13 UTC <byorgey> good question, I don't know
+2013-08-01 23:45:38 UTC <luite> is conal the one who suggested VLSI layouts as possible outputs? :)
+2013-08-01 23:45:58 UTC <byorgey> possible outputs of what?
+2013-08-01 23:46:15 UTC <byorgey> oh, for FARM?  I don't know, maybe =)
+2013-08-01 23:46:18 UTC <luite> of beautiful programs that generate beautiful artefacts
+2013-08-01 23:46:48 UTC <byorgey> right
+2013-08-01 23:47:24 UTC <luite> i briefly met him in SF last year, but didn't get the chance to talk to him about work. but he asked some questions pointing in that direction on some mailing list
+2013-08-01 23:47:37 UTC <luite> synthesizing stuff from external core
+2013-08-01 23:47:49 UTC <luite> oh not only mailing list, he was in #ghc
+2013-08-01 23:51:30 UTC <luite> anyway it seemed interesting :)
+2013-08-02 00:22:59 UTC <luite> oh hm Rochester is almost as far from NYC as from Boston... i thought it was much closer to NYC :)
+2013-08-02 00:29:37 UTC <byorgey> yes, NY is a very wide state
+2013-08-02 01:07:36 UTC <fryguybob> I've never been to NYC, well, I was at the airport once.
+2013-08-02 01:08:49 UTC <luite> oh really :)
+2013-08-02 01:09:06 UTC <luite> that explains your suggestion to go to montana instead
+2013-08-02 01:09:44 UTC <fryguybob> ICFP 2010 was when I flew through NYC
+2013-08-02 01:11:03 UTC <luite> is there a list of papers from this year already? and what day will be the exam to check if we have read and understood them all?
+2013-08-02 01:13:21 UTC <fryguybob> luite: I already took the first practice exam
+2013-08-02 01:14:29 UTC <luite> oh noes i'm behind
+2013-08-02 01:15:40 UTC <luite> i hope doing well in the programming contest gets you extra credit this year
+2013-08-02 01:16:02 UTC <fryguybob> oh yeah, that's being run by the MSR people right?
+2013-08-02 01:17:54 UTC <luite> ah apparently it is
+2013-08-02 01:17:56 UTC <luite> next week
+2013-08-02 01:18:07 UTC <luite> you going to participate?
+2013-08-02 01:24:16 UTC <fryguybob> luite: I don't have time too, unfortunately.  I find the topic very interesting though, I'll be interested in seeing the problem and what people come up with.
+2013-08-02 01:26:50 UTC <luite> you mean program synthesis?
+2013-08-02 01:29:18 UTC <luite> i don't have time either :(
+2013-08-02 02:14:34 UTC <fryguybob> luite: Yeah program synthesis.
+2013-08-02 12:06:25 UTC <ClaudiusMaximus> 99.99% finished the code part of my project... needs documenting and splitting up though (i have 1 module with 550 lines of code and almost 0 comments...)  sample output: http://mathr.co.uk/misc/2013-08-02_wedged.png
+2013-08-02 12:08:36 UTC <luite> i have about 11000 lines with almost no comments ;p
+2013-08-02 12:10:48 UTC <luite> oh i forgot the rts, that's only the haskell
+2013-08-02 12:11:15 UTC <ClaudiusMaximus> wow
+2013-08-02 12:12:09 UTC <luite> hehe that's ghcjs
+2013-08-02 12:12:17 UTC <luite> there are soem comments but i should definitely improve
+2013-08-02 12:12:28 UTC <luite> also there can probably some code be deleted or redone more efficiently
+2013-08-02 12:12:50 UTC <luite> hm, someone from fpcomplete said that they have 270k loc or so
+2013-08-02 12:13:03 UTC <luite> looks like they're a lot more productive coders than i am :p
+2013-08-02 12:13:07 UTC <ClaudiusMaximus> yeah i like having 1 module for all the things so that ghc -Wall can tell me which bits i can remove
+2013-08-02 12:13:43 UTC <luite> unless they counted yesod and other libs
+2013-08-02 12:41:06 UTC <ClaudiusMaximus> hm, seems to be slow to render though - took around 3m40s when i was outputting 55x79 ppm images, but with the more beautiful diagrams output it takes around 35m - that's around 10s per image...  but i suppose it's not so bad considering each image has ~3500 circles...
+2013-08-02 12:41:44 UTC <luite> whoah :)
+2013-08-02 12:41:50 UTC <ClaudiusMaximus> *10s longer per image
+2013-08-02 12:42:02 UTC <luite> is that svg output?
+2013-08-02 12:42:06 UTC <ClaudiusMaximus> png
+2013-08-02 12:42:11 UTC <ClaudiusMaximus> with cairo
+2013-08-02 12:42:40 UTC <ClaudiusMaximus> i suspect some of the badness is calling   centerXY  on the whole collection of circles
+2013-08-02 12:43:37 UTC <ClaudiusMaximus> which is a bug in itself because i know exactly where i want everything, and centerXY moves them slightly out of alignment (due to the wobbles)
+2013-08-02 12:44:25 UTC <ClaudiusMaximus> so maybe i can give it a simpler envelope so that it doesn't need to care about all the envelopes of all the circles
+2013-08-02 13:06:20 UTC <ClaudiusMaximus> yep simpler envelope fixes the slight misalignment issue, and now it takes around 16m30s instead of 35m :D
+2013-08-02 13:06:38 UTC <luite> lol
+2013-08-02 13:06:55 UTC <luite> you could render half of toy story in that time ;)
+2013-08-02 13:43:01 UTC <ClaudiusMaximus> http://mathr.co.uk/misc/2013-08-02_wedged.gif
+2013-08-02 13:48:49 UTC <luite> hm, what's the goal, just wobbly lines?
+2013-08-02 13:52:14 UTC <ClaudiusMaximus> there's a long list of restrictions in the depth first search i wrote to generate them - things like "no adjacent tiles of same colour", "no complete rows/columns", "no tile can be moved", "fair distribution of colours", etc
+2013-08-02 13:56:15 UTC <luite> yeah complete rows would obviously be removed ;)
+2013-08-02 16:34:48 UTC <byorgey> ClaudiusMaximus: very cool!
+2013-08-02 16:35:30 UTC <byorgey> ClaudiusMaximus: when you're done, if you are able to send me a nice self-contained version I could use as a benchmark (to attempt some more profiling/optimization) that would be great
+2013-08-02 16:39:25 UTC <ClaudiusMaximus> byorgey: will push a repository later today - but how self-contained do you need?
+2013-08-02 16:40:22 UTC <byorgey> ClaudiusMaximus: well, never mind, forget about the "self-contained" part.  How about I just send you a message if I trouble building it. =)
+2013-08-02 16:40:24 UTC <luite> no big dependencies like diagrams-core ;)
+2013-08-02 16:40:26 UTC <ClaudiusMaximus> oh joy.  i just got a cairo internal error/abort after making my thingy use more cores
+2013-08-02 16:40:31 UTC <byorgey> eek
+2013-08-02 16:40:40 UTC <ClaudiusMaximus> i guess cairo not thread safe?
+2013-08-02 16:40:51 UTC <byorgey> ah, yes, parallelizing diagrams was something I was discussing offhandedly with bergey
+2013-08-02 16:41:07 UTC <byorgey> didn't know cairo wasn't threadsafe but it wouldn't surprise me.
+2013-08-02 16:41:54 UTC <ClaudiusMaximus> http://lists.cairographics.org/archives/cairo/2009-February/016648.html
+2013-08-02 16:42:09 UTC <ClaudiusMaximus> it's supposed to be threadsafe but maybe it doesn't like haskell's threads jumping around
+2013-08-02 16:42:55 UTC <byorgey> hmm, maybe not
+2013-08-02 16:43:19 UTC <ClaudiusMaximus> Wedged: /tmp/buildd/cairo-1.12.2/src/cairo-hash.c:506: _cairo_hash_table_lookup_exact_key: Assertion `!"reached"' failed.
+2013-08-02 16:43:21 UTC <byorgey> maybe you need forkOS?  (disclaimer: I actually don't understand the distinction between forkIO and forkOS at all)
+2013-08-02 16:43:22 UTC <ClaudiusMaximus> Aborted
+2013-08-02 16:43:23 UTC <ClaudiusMaximus> is the error i got
+2013-08-02 16:43:37 UTC <byorgey> anyway, I'm off to school.  I hope to finish getting the diagrams website ported to hakyll 4 this afternoon.
+2013-08-02 16:43:42 UTC <ClaudiusMaximus> mm, yes - or runInBoundThread or something
+2013-08-02 16:43:49 UTC <ClaudiusMaximus> cool!
+2013-08-02 16:44:03 UTC <luite> forkOS runs in a bound thread indeed, but if it's threadsafe that shouldn't be necessary
+2013-08-02 17:02:30 UTC <ClaudiusMaximus> luite: mm, true - anyway forkOS fixed the abort but it didn't scale too well (11m30s wall clock time with 2 cores instead of 16m30s)
+2013-08-02 17:04:05 UTC <gabor> forkOS is expensive when done often, I assume you have tried forkIO?
+2013-08-02 17:04:43 UTC <ClaudiusMaximus> gabor: yes => cairo internal error
+2013-08-02 17:05:37 UTC <ClaudiusMaximus> gabor: i have a pool of workers (1 per core) and feed them jobs via a TBQueue
+2013-08-02 18:32:20 UTC <ClaudiusMaximus> huh, seems forkOS doesn't eliminate the crash entirely (but makes it rare) - guess it must be a cairo bug...
+2013-08-02 18:34:55 UTC <byorgey> =(
+2013-08-02 18:39:11 UTC <ClaudiusMaximus> probably fixed by now, cairo 1.12.2 is old
+2013-08-02 18:39:19 UTC <ClaudiusMaximus> they're up to 1.12.14 noe
+2013-08-02 18:39:55 UTC <ClaudiusMaximus> .2 is april 2012
+2013-08-02 18:41:07 UTC <luite> did that come with your OS?
+2013-08-02 18:41:38 UTC <ClaudiusMaximus> yes, debian wheezy
+2013-08-02 18:42:13 UTC <luite> ah hmm, must sounds not easily upgradable
+2013-08-02 18:45:22 UTC <ClaudiusMaximus> luite: yep.  wants to remove 279 packages
+2013-08-02 18:47:03 UTC <ClaudiusMaximus> oh hm, seconds alternative is better - just libwayland0 to remove and some x/mesa stuff to upgrade
+2013-08-02 18:49:11 UTC <luite> oh does wheezy run on wayland now?
+2013-08-02 18:49:25 UTC <ClaudiusMaximus> don't think so
+2013-08-02 18:49:36 UTC <ClaudiusMaximus> not sure where it comes from :)
+2013-08-02 18:50:13 UTC <ClaudiusMaximus> oh, mplayer has it as a dependency (presumably to support all possible backends)
+2013-08-02 18:52:05 UTC <luite> ah i see
+2013-08-02 18:52:33 UTC <luite> it did sound a bit unlikely for debian to be one of the first to switch to something new ;)
+2013-08-02 18:52:51 UTC <ClaudiusMaximus> (and libwayland0 is split to 2 packages for client and server now it seems)
+2013-08-02 18:56:16 UTC <luite> but at least debian didn't mess up the selinux policy like ubuntu
+2013-08-02 19:57:44 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14d80e79d http://travis-ci.org/diagrams/diagrams-doc/builds/9788277 The build has errored.
+2013-08-02 20:00:05 UTC <ClaudiusMaximus> woe, still crashes with cairo 1.12.14 :'(
+2013-08-02 20:01:43 UTC <byorgey> sad =(
+2013-08-02 20:04:02 UTC <ClaudiusMaximus> i guess i'll stick to "5 mins slower, but doesn't randomly abort"
+2013-08-02 20:15:21 UTC <travis-ci> [travis-ci] 13diagrams-doc/06hakyll4 14d80e79d http://travis-ci.org/diagrams/diagrams-doc/builds/9788267 The build has errored.
+2013-08-02 20:34:15 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14d80e79d http://travis-ci.org/diagrams/diagrams-doc/builds/9788277 The build has errored.
+2013-08-02 22:08:46 UTC <ClaudiusMaximus> byorgey: pushed https://gitorious.org/maximus/postcards (might be too big for benchmark/profiling?  takes 16m30s on my laptop and 14m on my desktop, generates 38MB of output.  also note the Free Art License.  need to write a blog post about it next week, the code is undocumented so far..)
+2013-08-02 22:10:43 UTC <luite> hah gitorious, how nonconformist ;)
+2013-08-02 22:11:16 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14d80e79d http://travis-ci.org/diagrams/diagrams-doc/builds/9788277 The build was broken.
+2013-08-02 22:39:03 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 147dae3c3 http://travis-ci.org/diagrams/diagrams-doc/builds/9792406 The build has errored.
+2013-08-03 01:40:39 UTC <ClaudiusMaximus> seems that cairo crash is during cleanup of the toy font cache - it tries to remove something from a hash table, which requires looking up the entry - the lookup fails because the item to be removed wasn't in the hash table in the first place...
+2013-08-03 01:41:03 UTC <ClaudiusMaximus> but zzz time
+2013-08-03 02:25:32 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 1491e7fda http://travis-ci.org/diagrams/diagrams-doc/builds/9796470 The build has errored.
+2013-08-03 02:48:54 UTC <byorgey> gah, it keeps failing because of connection timeouts while downloading packages from Hackage---a different package every time
+2013-08-03 02:51:19 UTC <luite> use hdiff temporarily instead
+2013-08-03 03:03:22 UTC <byorgey> oh, good idea
+2013-08-03 03:25:37 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 1491e7fda http://travis-ci.org/diagrams/diagrams-doc/builds/9796470 The build passed.
+2013-08-03 05:46:03 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14adf32de http://travis-ci.org/diagrams/diagrams-doc/builds/9799096 The build has errored.
+2013-08-03 06:11:31 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14f078ad4 http://travis-ci.org/diagrams/diagrams-doc/builds/9799244 The build has errored.
+2013-08-03 06:25:26 UTC <travis-ci> [travis-ci] 13backend-tests/06master 14fb8ecfa http://travis-ci.org/diagrams/diagrams-backend-tests/builds/9799735 The build passed.
+2013-08-03 14:47:51 UTC <ClaudiusMaximus> ugh, withArgs is incredibly thread-unsafe :-/
+2013-08-03 14:55:51 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14e97edb9 http://travis-ci.org/diagrams/diagrams-doc/builds/9807792 The build has errored.
+2013-08-03 14:56:27 UTC <luite> hehe yeah it stores the args in a global var, right?
+2013-08-03 14:58:15 UTC <ClaudiusMaximus> worse - it calls an foreign import unsafe c function to store the args somewhere, without any locking afaict...
+2013-08-03 15:04:37 UTC <luite> ah
+2013-08-03 15:04:52 UTC <luite> i think i had to implement that in the ghcjs runtime, fortunately that's single threaded :)
+2013-08-03 15:11:30 UTC <ClaudiusMaximus> http://lpaste.net/91477 is my progress in debugging this crash, also mentioned it in #cairo where someone suggested it was reference counting going wrong...
+2013-08-03 16:03:51 UTC <ClaudiusMaximus> ah, i think i figured it out:  haskell cairo bindings use finalizers, which don't necessarily run in the same thread :(
+2013-08-03 16:34:16 UTC <luite> cairo requires that something is released in the same thread that allocated it?
+2013-08-03 16:37:41 UTC <ClaudiusMaximus> apparently not, according to #cairo
+2013-08-03 16:37:49 UTC <ClaudiusMaximus> so my search for the cause goes on...
+2013-08-03 18:45:14 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14c1cd58b http://travis-ci.org/diagrams/diagrams-doc/builds/9812272 The build has errored.
+2013-08-03 20:44:42 UTC <travis-ci> [travis-ci] 13diagrams/06master 148f0266b http://travis-ci.org/diagrams/diagrams/builds/9815199 The build has errored.
+2013-08-03 21:13:33 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 146fd62e0 http://travis-ci.org/diagrams/diagrams-doc/builds/9815006 The build has errored.
+2013-08-04 01:35:47 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 14f5d84ae http://travis-ci.org/diagrams/diagrams-lib/builds/9820282 The build passed.
+2013-08-04 02:30:09 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 144ea7251 http://travis-ci.org/diagrams/diagrams-doc/builds/9820689 The build passed.
+2013-08-04 17:35:56 UTC <ClaudiusMaximus> byorgey: combine spawn and process packages on hackage?
+2013-08-04 17:37:24 UTC <byorgey> well, the problem is that it happens in the context of rewriting an XML tree
+2013-08-04 17:37:39 UTC <ClaudiusMaximus> oh.
+2013-08-04 17:38:16 UTC <byorgey> I don't know how to replace the diagrams code in the XML tree with placeholders for future results and
+2013-08-04 17:38:21 UTC <byorgey> s/and//
+2013-08-04 17:39:10 UTC <ClaudiusMaximus> if you can extract the code, surely you can replace it?
+2013-08-04 17:39:22 UTC <ClaudiusMaximus> or is it some xsltproc hell
+2013-08-04 17:41:03 UTC <byorgey> it's hxt
+2013-08-04 17:41:45 UTC <byorgey> I mean, maybe I have to extract all the code *first*, compile them all in parallel, and then generate the new tree
+2013-08-04 17:42:00 UTC <byorgey> right now it just does a single pass over the tree, compiling each diagram and replacing it with its output.
+2013-08-04 17:42:21 UTC <ClaudiusMaximus> hm, ok
+2013-08-04 17:43:08 UTC <ClaudiusMaximus> what about generating a unique id while saving the code somewhere, then use defaultMain -o uniqueid to the right image file?
+2013-08-04 17:43:31 UTC <ClaudiusMaximus> or am i missing something important?
+2013-08-04 17:44:48 UTC <byorgey> the image files are named based on a hash of the code, which is important because it means we can avoid recompiling things that haven't changed
+2013-08-04 17:45:01 UTC <ClaudiusMaximus> right, that makes sense
+2013-08-04 17:45:25 UTC <byorgey> but that might work---just generate the hash + fork off a process to compile it
+2013-08-04 17:45:29 UTC <ClaudiusMaximus> yeah
+2013-08-04 17:45:35 UTC <byorgey> instead of waiting until the whole thing is compiled to return the hash
+2013-08-04 17:46:25 UTC <ClaudiusMaximus> but then you might have that old issue of "when main exits, all the other threads vanish"
+2013-08-04 17:46:43 UTC <byorgey> right, we'd have to be careful to wait for all the threads to finish at the end
+2013-08-04 17:47:36 UTC <byorgey> which complicates matters since we have to accumulate thread id's while doing the traversal, in addition to replacing the code with links to images
+2013-08-04 17:48:24 UTC <byorgey> maybe I'll first try the simpler approach of doing two passes -- one to extract all the code, and another to replace
+2013-08-04 17:49:26 UTC <ClaudiusMaximus> nah, just write an IO (IO () -> IO (), IO()) that returns a wrapped forkIO and a wait for all threads
+2013-08-04 17:50:48 UTC <ClaudiusMaximus> then perhaps main = do{  (forkSafe, waitForThreads) <- threadManager; ignoreExceptionsFrom realMain ; waitForThreads }
+2013-08-04 17:52:29 UTC <ClaudiusMaximus> (where realMain is really passsed forkSafe to use instead of forkIO)
+2013-08-04 17:55:26 UTC <byorgey> oh, brilliant =)
+2013-08-04 17:55:57 UTC <ClaudiusMaximus> and forkSafe could keep track of how many threads have been launched to avoid dos'ing the host
+2013-08-04 17:56:59 UTC <byorgey> I doubt that will be a problem, we're only talking about ~100 threads here, and they are lightweight threads managed by the Haskell RTS
+2013-08-04 17:57:39 UTC <ClaudiusMaximus> oh - i thought each of those would call a system ghc process
+2013-08-04 17:57:48 UTC <byorgey> OH
+2013-08-04 17:57:48 UTC <byorgey> true =)
+2013-08-04 17:58:13 UTC <ClaudiusMaximus> spawn package has a pool thing using qsem
+2013-08-04 17:58:36 UTC <ClaudiusMaximus> http://hackage.haskell.org/packages/archive/spawn/0.3/doc/html/Control-Concurrent-Spawn.html
+2013-08-04 18:00:58 UTC <byorgey> nice
+2013-08-04 18:02:36 UTC <ClaudiusMaximus> you could probably use spawn and pool almost as is, the forkSafe could writeChan c . Just =<< spawn . yourPool, and waitForThreads would writeChan c Nothing then readChan repeatedly and wait for each Just thread and quit on Nothing
+2013-08-04 18:24:38 UTC <ClaudiusMaximus> byorgey: actually something like withManagedThreads :: ((IO () -> IO ()) {- ^ managed fork -} -> IO ()) {- ^ wrapped main -} -> IO () might be cleaner, automagically cleaning up when the wrapped main finishes (and not before)
+2013-08-04 20:18:52 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14479727b http://travis-ci.org/diagrams/diagrams-doc/builds/9837516 The build passed.
+2013-08-04 23:55:22 UTC <cmears> I just saw byorgey's call for gallery examples
+2013-08-04 23:55:28 UTC <cmears> I recently made this pretty chart:
+2013-08-04 23:55:34 UTC <cmears> http://www.cmears.id.au/files/concert-plot-input_order.pdf
+2013-08-04 23:55:36 UTC <fryguybob> byorgey: I got a factorization poster for Rebekah for her birthday.  I haven't looked at it all, but the bottom edge looks nice :D
+2013-08-04 23:55:45 UTC <carter> cmears awesome
+2013-08-04 23:55:54 UTC <cmears> But if there are already charty-things perhaps there's no need for such an example?
+2013-08-05 00:01:59 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 146a8afb3 http://travis-ci.org/diagrams/diagrams-doc/builds/9842300 The build has errored.
+2013-08-05 00:03:37 UTC <carter> is the charts-diagrams stuff ready for use?
+2013-08-05 00:43:43 UTC <travis-ci> [travis-ci] 13backend-tests/06master 14f029fe3 http://travis-ci.org/diagrams/diagrams-backend-tests/builds/9843425 The build passed.
+2013-08-05 01:03:08 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 14d8d6006 http://travis-ci.org/diagrams/diagrams-lib/builds/9843720 The build passed.
+2013-08-05 01:07:08 UTC <travis-ci> [travis-ci] 13diagrams-cairo/06master 14bfa5f89 http://travis-ci.org/diagrams/diagrams-cairo/builds/9843768 The build passed.
+2013-08-05 02:11:10 UTC <byorgey> cmears: oh, that would be great for the gallery!  We don't already have charty things.
+2013-08-05 02:11:40 UTC <byorgey> carter: it is ready or very close to it. I think Jan just needs to do some cleanup and merging and releasing and such.
+2013-08-05 02:11:56 UTC <byorgey> fryguybob: fun =)
+2013-08-05 02:12:17 UTC <byorgey> fryguybob: I am not 100% happy with the way the colors look, but I don't think that is imagekind's fault
+2013-08-05 02:17:30 UTC <carter> cool
+2013-08-05 02:17:48 UTC <carter> at the current rate i'll have time to play with it late september or someting :)
+2013-08-05 02:18:05 UTC <carter> i've been following the dev gsoc emails, but not following it closely
+2013-08-05 02:18:25 UTC <travis-ci> [travis-ci] 13backend-tests/06master 14370afc9 http://travis-ci.org/diagrams/diagrams-backend-tests/builds/9844823 The build passed.
+2013-08-05 02:41:16 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14b89d1d1 http://travis-ci.org/diagrams/diagrams-doc/builds/9844738 The build has errored.
+2013-08-05 03:00:05 UTC <fryguybob> byorgey: I guess that means it is time to include fancy CMYK stuff :P
+2013-08-05 03:39:07 UTC <cmears> byorgey, I'll try to tidy the code a bit and add it to the gallery
+2013-08-08 14:41:48 UTC <byorgey> cmears: currently, no
+2013-08-08 14:42:44 UTC <byorgey> cmears: I am not sure that is even possible
+2013-08-08 14:43:45 UTC <byorgey> oh, hmm, maybe it is
+2013-08-08 14:47:34 UTC <byorgey> we could change Trace to something like  Point v -> (NegInf (Scalar v), v -> PosInf (Scalar v))
+2013-08-08 14:47:40 UTC <byorgey> with the derived Monoid semantics
+2013-08-08 14:48:50 UTC <byorgey> cmears: note, however, that 'radius' is based on the envelope, not the trace
+2013-08-08 18:19:30 UTC <fryguybob> ACTION registers for FARM
+2013-08-08 19:04:41 UTC <byorgey> =D
+2013-08-08 19:09:11 UTC <fryguybob> Strange... they want proof of enrollment so I found the page at my university that produces this sort of information and they list my Anticipated Graduation Date per term.
+2013-08-08 19:10:04 UTC <fryguybob> At this point they anticipate Dec 2017!  But when I started they had May 2019.  Somebody is not optimistic, but it appears I'm getting better.
+2013-08-08 19:13:05 UTC <byorgey> haha
+2013-08-08 19:18:15 UTC <luite> or optimistic about years of cheap student labour
+2013-08-08 19:22:14 UTC <byorgey> fryguybob: maybe your conditional probability of actually graduating increases the longer you stay in the program, and they are factoring that into the anticipated graduation date
+2013-08-08 19:23:13 UTC <luite> that doesn't quite sound right... :)
+2013-08-08 19:23:20 UTC <byorgey> =)
+2013-08-08 19:23:34 UTC <fryguybob> byorgey: I didn't know they had such a sophisticated system :D
+2013-08-08 19:24:10 UTC <byorgey> never attribute to sophistication that which can be explained by bugs, eh?
+2013-08-08 19:24:57 UTC <fryguybob> Sophistication is just how well you hide the bugs.
+2013-08-08 19:25:19 UTC <byorgey> heh, that sounds about right.
+2013-08-08 19:27:33 UTC <fryguybob> Oh, they also list me as withdrawn last December then back in Feb.
+2013-08-08 19:27:45 UTC <byorgey> haha, what
+2013-08-08 19:27:46 UTC <fryguybob> So much drama and I never knew.
+2013-08-08 19:28:31 UTC <fryguybob> ACTION makes a note to buy the Graduate Coordinator some chocolate.
+2013-08-08 19:29:31 UTC <fryguybob> (I susspect something automatic happened when they gave me a masters degree.)
+2013-08-08 19:33:20 UTC <byorgey> ooh, you got a masters degree?
+2013-08-08 19:33:29 UTC <byorgey> I didn't even get one of those
+2013-08-08 19:33:40 UTC <byorgey> though I guess they'd probably give me one if I asked?  I dunno.
+2013-08-08 19:44:14 UTC <fryguybob> byorgey: Yeah it kind of just showed up in my mailbox
+2013-08-08 19:48:21 UTC <byorgey> You have been PRE-APPROVED for a Masters Degree!  Just fill out your name, email address, and bank account info
+2013-08-08 23:41:04 UTC <cmears> byorgey, I ended up doing my "maximum radius" calculation by brute force:
+2013-08-08 23:41:21 UTC <cmears> maximum (map (\a -> envelopeS (rotateBy a unitX) diagram) [0,0.01..1])
+2013-08-09 00:47:10 UTC <byorgey> cmears: heh, yes, that works =)
+2013-08-09 00:49:47 UTC <byorgey> hmm, ICFP contest looks fun this year
+2013-08-09 00:49:57 UTC <fryguybob> Oh, are there more detail now
+2013-08-09 00:50:06 UTC <byorgey> http://icfpc2013.cloudapp.net/
+2013-08-09 01:01:51 UTC <luite> hmm interesting
+2013-08-09 01:02:03 UTC <cmears> Is this any use for the gallery too?  It demonstrates SVGFonts, envelopes, arrowheads and named diagrams.  http://www.cmears.id.au/files/cube.pdf
+2013-08-09 01:24:32 UTC <byorgey> cmears: sure!
+2013-08-09 01:24:57 UTC <byorgey> cmears: and once we get real arrows in (soon) you can update it to use that instead of constructing them manually
+2013-08-09 01:28:16 UTC <cmears> cool (:
+2013-08-09 01:29:22 UTC <byorgey> yes, I'm especially interested in these sorts of "real-world" examples
+2013-08-09 01:29:30 UTC <byorgey> we have lots of fractally, mathy sorts of examples
+2013-08-09 01:29:43 UTC <byorgey> because that's the kind of thing I like to make =)
+2013-08-09 01:30:03 UTC <cmears> Yeah, I know (:
+2013-08-09 01:30:11 UTC <cmears> text is particularly useful in a real diagram
+2013-08-09 01:31:28 UTC <cmears> I had one more little problem with building the gallery:
+2013-08-09 01:31:46 UTC <cmears> when I updated a .lhs file in the gallery directory, shake wouldn't rebuild its pictures
+2013-08-09 01:32:02 UTC <cmears> (as though it hadn't recognised there was any change)
+2013-08-09 01:32:43 UTC <byorgey> hmm
+2013-08-09 01:33:11 UTC <cmears> if it works right for you, it must be something I mucked up
+2013-08-09 01:33:22 UTC <cmears> if so I will try it again and figure it out
+2013-08-09 01:33:53 UTC <byorgey> ahh, no, you're right
+2013-08-09 01:34:26 UTC <byorgey> I hadn't edited the gallery since I ported the gallery building to shake
+2013-08-09 01:34:42 UTC <byorgey> looks like I didn't properly encode the dependence of the pngs on the .lhs files
+2013-08-09 01:34:50 UTC <cmears> ah
+2013-08-09 01:35:05 UTC <cmears> I tried to read the Shake file but I've never used it before
+2013-08-09 01:37:07 UTC <byorgey> cmears: try it now
+2013-08-09 01:38:25 UTC <byorgey> cmears: before I had rules like  "web/gallery/*.thumb.png" *> compilePng False
+2013-08-09 01:38:44 UTC <byorgey> which basically said "if you need to build this file, call this shell command"
+2013-08-09 01:38:59 UTC <byorgey> but I neglected to call the 'need' function to tell it what the inputs to that shell command are
+2013-08-09 01:39:09 UTC <byorgey> which is how it tracks dependencies
+2013-08-09 01:39:21 UTC <cmears> I see
+2013-08-09 01:39:48 UTC <cmears> have you noticed that if the build errors, shake will keep printing "OOOOO" even after the shell prompt has come back?
+2013-08-09 01:40:16 UTC <byorgey> heh, really?  I hadn't noticed that.
+2013-08-09 01:40:37 UTC <cmears> now it is complaining:
+2013-08-09 01:40:42 UTC <cmears> Error, file does not exist and no rule available:
+2013-08-09 01:40:42 UTC <cmears>   dist/web/gallery/Hilbert.lhs
+2013-08-09 01:40:51 UTC <byorgey> oops
+2013-08-09 01:41:16 UTC <cmears> ah
+2013-08-09 01:41:20 UTC <cmears> you need to drop the "dist" too
+2013-08-09 01:41:32 UTC <cmears> (I guess)
+2013-08-09 01:41:37 UTC <byorgey> exactly
+2013-08-09 01:41:48 UTC <byorgey> that's what I get for pushing a fix without testing it =P
+2013-08-09 01:41:59 UTC <cmears> just call it "agile"
+2013-08-09 01:42:02 UTC <byorgey> hehe
+2013-08-09 01:47:07 UTC <byorgey> cmears: does it work now?
+2013-08-09 01:47:28 UTC <cmears> it's better, but now it complains about something else
+2013-08-09 01:47:34 UTC <byorgey> =(
+2013-08-09 01:47:50 UTC <cmears> /tmp/Diagram10720.hs:17:59:
+2013-08-09 01:47:50 UTC <cmears>     Not in scope: `onLineSegments'
+2013-08-09 01:47:50 UTC <cmears>     Perhaps you meant `lineSegments' (imported from Diagrams.Prelude)
+2013-08-09 01:48:14 UTC <cmears> hmm, but I don't see where it gets that from
+2013-08-09 01:48:15 UTC <byorgey> cmears: oh, you need to pull in the latest changes in diagrams-lib and rebuild
+2013-08-09 01:48:32 UTC <cmears> okie dokie
+2013-08-09 01:48:37 UTC <byorgey> I just added it a few days ago to Diagrams.Trail
+2013-08-09 01:51:42 UTC <cmears> seems to be working now...
+2013-08-09 01:53:04 UTC <cmears> poor Quasifuchsian didn't make it
+2013-08-09 01:53:14 UTC <cmears> it's just blank
+2013-08-09 01:53:30 UTC <byorgey> that's strange
+2013-08-09 01:54:00 UTC <byorgey> huh, you're right, it's blank for me too =(
+2013-08-09 01:54:39 UTC <cmears> I occasionally get weird errors when it's trying to delete a /tmp/ file that doesn't exist
+2013-08-09 01:55:21 UTC <byorgey> strange
+2013-08-09 01:55:24 UTC <byorgey> I don't get any of those
+2013-08-09 01:55:47 UTC <cmears> it always works the second time
+2013-08-09 01:55:56 UTC <cmears> and I can confirm that rebuilding the gallery images is working
+2013-08-09 01:56:29 UTC <cmears> (I should run "./Shake buildh" to rebuild, right?)
+2013-08-09 01:57:39 UTC <byorgey> if you have preview running, then run ./Shake buildh to rebuild, yes
+2013-08-09 01:57:46 UTC <cmears> cool
+2013-08-09 01:57:47 UTC <byorgey> great, thanks
+2013-08-09 02:02:19 UTC <cmears> that strange deletion error is consistent for me
+2013-08-09 02:02:24 UTC <cmears> build-gallery.hs.exe: /tmp/3155266344099327941: removeLink: does not exist (No such file or directory)
+2013-08-09 02:05:24 UTC <byorgey> huh
+2013-08-09 02:07:09 UTC <byorgey> it just calls openTempFile and later removeFile
+2013-08-09 02:07:34 UTC <byorgey> maybe there's some bug with the way System.IO.openTempFile works on OS X  (you're on OS X, right?)
+2013-08-09 02:09:12 UTC <byorgey> I figured out that if I do a whole bunch of pushes all at once, it doesn't spam the channel as much because of rate-limiting or something =)
+2013-08-09 02:09:53 UTC <byorgey> ok, bedtime.  release tomorrow!!
+2013-08-09 02:10:14 UTC <fryguybob> woohoo!
+2013-08-09 02:12:05 UTC <cmears> actually this problem is on linux
+2013-08-09 02:12:09 UTC <cmears> I'll see if I can figure it out
+2013-08-09 02:12:37 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14ec355fc http://travis-ci.org/diagrams/diagrams-doc/builds/10011150 The build passed.
+2013-08-09 02:15:57 UTC <travis-ci> [travis-ci] 13SVGFonts/06master 14a2c2b61 http://travis-ci.org/diagrams/SVGFonts/builds/10011666 The build passed.
+2013-08-09 02:25:32 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14bda6ecd http://travis-ci.org/diagrams/diagrams-doc/builds/10011417 The build has errored.
+2013-08-09 03:48:15 UTC <cmears> byorgey, I was able to narrow down the "removeLink" error to "interpretDiagram" in Builder.hs
+2013-08-09 03:48:18 UTC <cmears> but no further
+2013-08-09 04:14:02 UTC <cmears> byorgey, don't worry about my strange errors; I rebooted the computer and they went away (:
+2013-08-09 04:35:56 UTC <cmears> ugh, they are back again :|
+2013-08-09 06:35:35 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 148982e73 http://travis-ci.org/diagrams/diagrams-doc/builds/10015381 The build has errored.

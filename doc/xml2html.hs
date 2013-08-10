@@ -113,6 +113,7 @@ compileDiagram outDir src = do
                -- GHC 7.2 bug?  need  V (Point R2) = R2  (see #65)
            , "Diagrams.Backend.Cairo"
            , "Diagrams.Backend.Cairo.Internal"
+           , "Graphics.SVGFonts"
            , "Data.Typeable"
            ]
            (hashedRegenerate

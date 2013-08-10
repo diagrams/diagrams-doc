@@ -2279,6 +2279,14 @@ Trail and path implementation details
 Text
 ----
 
+.. container:: warning
+
+  Note: this section describes the basic text support built into
+  ``diagrams``, which suffices for simple applications.  However, for
+  much nicer text support (with a tradeoff in complexity), see the
+  `SVGFonts`:pkg: package, described in the section `Native font
+  support`_ below.
+
 Text objects, defined in `Diagrams.TwoD.Text`:mod:, can be created
 most simply with the `text` function, which turns a `String` into a
 diagram with (centered) text:
@@ -2359,18 +2367,26 @@ generally, `fontWeight`), `italic`, and `oblique` (or, more generally,
 Native font support
 ~~~~~~~~~~~~~~~~~~~
 
-The `SVGFonts package`_
-implements native SVG font support for diagrams.  Among other things,
-it provides its own `textSVG` function which can be used to convert
-text into a *path* tracing the outline of the text.  This may
-eventually be merged into the main diagrams codebase; for now, you can
-just import it if you need fancier font support.
-
-.. container:: todo
-
-  write more here, with an example or two
+The `SVGFonts package`_ implements native text support for diagrams,
+using fonts in the SVG format (note that it can be used with *any*
+backend, not just the SVG backend). Among other things, it provides
+its own `textSVG` function which can be used to convert text into a
+*path* tracing the outline of the text.  Here is a simple example:
 
 .. _`SVGFonts package`: http://hackage.haskell.org/package/SVGFonts
+
+.. class:: dia-lhs
+
+::
+
+> text' d s = (stroke $ textSVG' (TextOpts s lin2 INSIDE_H KERN False d d))
+>           # lw 0
+>
+> example = text' 5 "Hello" # fc blue ||| text' 3 "world" # fc green
+
+For more details and examples, see the `Haddock documentation`__.
+
+__ http://hackage.haskell.org/package/SVGFonts
 
 Images
 ------
