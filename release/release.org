@@ -78,21 +78,21 @@
     + [X] builder
     + [X] haddock
     + [X] SVGFonts
-  + [ ] add release date to releases.markdown
-  + [ ] tag all with release version
-  + [ ] publish new website
-  + [-] upload
-    + [ ] diagrams-core
-    + [ ] diagrams-lib
-    + [ ] diagrams-contrib
-    + [ ] diagrams-svg
-    + [ ] diagrams-cairo
+  + [X] add release date to releases.markdown
+  + [X] tag all with release version
+  + [X] publish new website
+  + [X] upload
+    + [X] diagrams-core
+    + [X] diagrams-lib
+    + [X] diagrams-contrib
+    + [X] diagrams-svg
+    + [X] diagrams-cairo
     + [X] diagrams-gtk
-    + [ ] diagrams-postscript
-    + [ ] diagrams
-    + [ ] diagrams-builder
+    + [X] diagrams-postscript
+    + [X] diagrams
+    + [X] diagrams-builder
     + [X] diagrams-haddock
-    + [ ] SVGFonts
+    + [X] SVGFonts
     + [X] BlogLiterately-diagrams
   + [ ] upload/send announcement
     + [ ] blog
