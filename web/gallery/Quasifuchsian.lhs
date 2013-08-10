@@ -184,5 +184,6 @@ Actual drawing
 > diagram eps ta tb
 >     = fc darkred $ lw 0 $ pad 1.1
 >     $ strokeT
+>     $ closeTrail
 >     $ fromVertices [origin .+^ r2 (x,y) | x :+ y <- limitPoints eps a b]
 >     where (a,b) = grandma ta tb

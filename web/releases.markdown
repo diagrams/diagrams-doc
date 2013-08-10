@@ -20,8 +20,8 @@ diagrams 0.7: 9 August 2013
     - new `IsPrim` class, containing `transformWithFreeze` function.
         This is primarily intended to support scale-invariant primitives
         (*e.g.* arrowheads) but may be useful for other stuff as well.
-	The default implementation of `renderDia` now uses
-	`transformWithFreeze`.
+        The default implementation of `renderDia` now uses
+        `transformWithFreeze`.
 
     - optimized `Transformable` instance for `TransInv`
 
@@ -215,6 +215,7 @@ diagrams 0.7: 9 August 2013
     - `Show` instance for `Options SVG R2`
 
 * **Dependency/version changes**
+
     - allow `base-4.7` and `unix-2.7`
     - Upgrade to `monoid-extras-0.3`
 
@@ -253,12 +254,12 @@ The `diagrams-gtk` package continues to work with no changes;
     * Add `hsenv` compatibility.
 
     * Big improvements in the way rebuilding is handled:
-	- Strip comments before deciding whether to rebuild, so
-	  changing only comments does not trigger a rebuild
-	- Take local imports into account: if a diagram has an import
-	  which corresponds to a local file, rebuild if that file has
-	  changed
-	- Rebuild when options (*e.g.* size) change
+        - Strip comments before deciding whether to rebuild, so
+          changing only comments does not trigger a rebuild
+        - Take local imports into account: if a diagram has an import
+          which corresponds to a local file, rebuild if that file has
+          changed
+        - Rebuild when options (*e.g.* size) change
 
     * new `diagrams-builder-postscript` tool
 
@@ -282,7 +283,7 @@ diagrams release.
 
 First release as an officially supported diagrams package, adding nice
 support to diagrams for text using fonts in SVG format.
-.
+
 diagrams 0.6: 11 December 2012
 ==============================
 
@@ -347,7 +348,7 @@ diagrams 0.6: 11 December 2012
     - New functions `envelopeS` and `envelopeSMay`
 
         Like `envelope[VP](May)`, but returning a scalar multiple of
-		the input vector.
+                the input vector.
 
     - The `Graphics.Rendering.Diagrams.Util` module has been removed,
       along with the `withLength` function.  Calls to `withLength` can
@@ -361,11 +362,11 @@ diagrams 0.6: 11 December 2012
 
     - Generalized `Transformable` instances for pairs and tuples
 
-		Previously, the components of the tuples were required to have
-		the same type; but everything still works as long as they all
-		share the same vector space.  This is actually useful in
-		practice: say, if we wanted to pair a diagram with a path and
-		then apply the same transformation to both.
+                Previously, the components of the tuples were required to have
+                the same type; but everything still works as long as they all
+                share the same vector space.  This is actually useful in
+                practice: say, if we wanted to pair a diagram with a path and
+                then apply the same transformation to both.
 
 * **Improvements**
 
@@ -510,12 +511,12 @@ Version bumped to 0.6 to match other diagrams packages.
 
     - `Diagrams.TwoD.Layout.Tree`:
 
-	- New `renderTree'` function which gives
-	  the edge-drawing function access to the values stored at the
-	  nodes instead of just the node positions.
+        - New `renderTree'` function which gives
+          the edge-drawing function access to the values stored at the
+          nodes instead of just the node positions.
 
-	- The type of `renderTree` is generalized to work with any
-	  `QDiagram b R2 m`.
+        - The type of `renderTree` is generalized to work with any
+          `QDiagram b R2 m`.
 
 * **Bug fixes**
 
@@ -551,16 +552,16 @@ Version bumped to 0.6 to match other diagrams packages.
 
     - GTK rendering has been split out into a new package, diagrams-gtk.
 
-	+ The `Diagrams.Backend.Cairo.Gtk` module is now
-	  `Diagrams.Backend.Gtk` in the `diagrams-gtk` package.
+        + The `Diagrams.Backend.Cairo.Gtk` module is now
+          `Diagrams.Backend.Gtk` in the `diagrams-gtk` package.
 
-	+ The `CairoOptions` record has a new boolean `cairoBypassAdjust`
-	  option; when set, the backend should bypass calling `adjustDia2D`.
+        + The `CairoOptions` record has a new boolean `cairoBypassAdjust`
+          option; when set, the backend should bypass calling `adjustDia2D`.
 
-	+ The GTK output type is gone.
+        + The GTK output type is gone.
 
-	+ There is a new `RenderOnly` output type, for when you don't
-	  care about the `IO` action but only want the cairo `Render` action.
+        + There is a new `RenderOnly` output type, for when you don't
+          care about the `IO` action but only want the cairo `Render` action.
 
 * **Dependency/version changes**
 
