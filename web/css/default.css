@@ -113,6 +113,18 @@ div.warning {
     background-color: #ffffdd;
 }
 
+div.exercises:before {
+    content: url(../doc/icons/Exercises.png);
+    float: right;
+}
+
+div.exercises {
+    padding: 20px;
+    border-style: solid;
+    border-width: thin;
+    background-color: #ddffdd;
+}
+
 div.contents ul {
     list-style-type: none;
     line-height: 50%;
