@@ -38,7 +38,7 @@ In addition to the below notes, you can refer to the `quick
 reference`_ for more details.
 
 * *Italics* can be produced with ``*asterisks*``.
-* Make bulleted lists by precededing the items with ``*``.
+* Make bulleted lists by preceding the items with ``*``.
 * Everything can be nested; you simply have to be careful with
   indentation (as in Haskell, indentation is used to determine the
   extent of each scope).
@@ -81,6 +81,42 @@ some text in backquotes, followed by a tag surrounded by colons, like
   `diagrams-lib`:repo:.
 
 .. _MathJax: http://www.mathjax.org/
+
+Special containers
+==================
+
+Currently, there are three special types of "containers" defined,
+which are introduced with the syntax
+
+::
+
+  .. container:: <type>
+
+    Indented
+    content
+
+In place of ``<type>`` you can put ``todo``, ``warning``, or
+``exercises``, which produce boxes like the following. 
+
+``todo``:
+
+.. container:: todo
+
+  Some stuff to do.  This tutorial is not finished yet!
+
+``warning``:
+
+.. container:: warning
+
+  Careful! The first three errors you encounter will be due to the
+  fact that you do not understand this warning!
+
+``exercises``:
+
+.. container:: exercises
+
+  1. Do 100 jumping jacks.
+  #. Now do it again, this time using diagrams.
 
 Code blocks
 ===========
