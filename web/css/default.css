@@ -92,6 +92,8 @@ code a {
 div.todo:before {
     content: url(../doc/icons/ToWrite.png);
     float: right;
+    padding-left: 20px;
+    padding-bottom: 20px;
 }
 
 div.todo {
@@ -104,6 +106,8 @@ div.todo {
 div.warning:before {
     content: url(../doc/icons/Warning.png);
     float: right;
+    padding-left: 20px;
+    padding-bottom: 20px;
 }
 
 div.warning {
@@ -116,6 +120,8 @@ div.warning {
 div.exercises:before {
     content: url(../doc/icons/Exercises.png);
     float: right;
+    padding-left: 20px;
+    padding-bottom: 20px;
 }
 
 div.exercises {
