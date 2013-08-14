@@ -117,6 +117,7 @@ In place of ``<type>`` you can put ``todo``, ``warning``, or
 
   1. Do 100 jumping jacks.
   #. Now do it again, this time using diagrams.
+  #. Generalize this result.
 
 Code blocks
 ===========
