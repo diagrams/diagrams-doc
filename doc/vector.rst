@@ -27,12 +27,18 @@ take lists of vectors and lists of points, respectively;
 
   Add reference(s) to this tutorial from the user manual
 
+Most of the functionality discussed in this tutorial can be found in
+the `vector-space`:pkg: package and the `Diagrams.TwoD.Vector`:mod:
+module.
+
 Vectors
 =======
 
 Vectors in ``diagrams`` are based on the `vector-space`:pkg: package.
 In two dimensions, you can think of a vector as a pair of coordinates,
-representing *displacements* in the `x`:math: and `y`:math: directions.
+representing *displacements* in the `x`:math: and `y`:math:
+directions. Alternatively, you can think of a vector as consisting of
+a *magnitude* (length) and a *direction* (angle).
 
 .. class:: dia
 
@@ -40,21 +46,24 @@ representing *displacements* in the `x`:math: and `y`:math: directions.
 
 > import Diagrams.Coordinates
 >
-> drawV v = (    hrule (magnitude v) # alignR
+> drawV v = (    beside unitY (hrule (magnitude v))
+>                             (text' 0.5 "r" === strutY 0.2)
+>                # alignR
 >             <> triangle 0.3 # rotateBy (-1/4) # scaleY (1/2)
 >                # fc black # alignR
 >           )
 >           # alignL
 >           # rotateBy (direction v)
 >
-> vPic v = drawV v <> xComponent <> yComponent
+> vPic v = drawV v <> xComponent <> yComponent <> theta
 >   where
 >     component u = fromOffsets [project u v]
 >                 # dashing [0.05,0.05] 0
 >     xComponent = component unitX
 >     yComponent = component unitY # translate (project unitX v)
+>     theta = text' 0.5 "θ" # translate (0.7 & 0.2)
 >
-> text' d s = (stroke $ textSVG' (TextOpts s lin2 INSIDE_H KERN False d d))
+> text' d s = (stroke $ textSVG' (TextOpts s lin INSIDE_H KERN False d d))
 >           # lw 0 # fc black
 >
 > example = ( (vPic ((4 & 0) # rotateBy (1/12)) # centerXY)
@@ -62,8 +71,7 @@ representing *displacements* in the `x`:math: and `y`:math: directions.
 >           )
 >           === strutY 0.2 === text' 0.5 "x"
 
-Alternatively, you can think of a vector as consisting of a
-*magnitude* (length) and a *direction* (angle).  One of the most
+One of the most
 important things to understand about vectors is that they are
 *translation-invariant*: that is, they have no specific location in
 space, and are unaffected by translations (though they are affected by
@@ -79,22 +87,8 @@ see this for yourself at a ``ghci`` prompt:
   >>> rotateBy (1/4) (3 & 6) :: R2
   (-6.0) & 3.0000000000000004
 
-.. container:: todo
-
-  Where to put this?
-
-  (In particular,
-  `vector-space`:pkg: provides sophisticated representation of linear
-  transformations---used in the internal representation of
-  `Transformation` values---but you don't need to know anything about
-  that to work with vectors and points.)
-
 Constructing vectors
 --------------------
-
-.. container:: todo
-
-  see `Diagrams.TwoD.Vector`:mod:
 
 Vectors in two dimensions have the type `R2`.  (One can also work with
 other vector spaces with any number of dimensions; in this tutorial
@@ -179,6 +173,26 @@ The first thing to learn is how to *create* values of type
 
   > example = lw 0.05 . mconcat . map (fromOffsets . (:[]))
   >         $ [ r *^ e (Rad r) | r <- [33 * tau/32, 34 * tau/32 .. 2 * tau] ]
+
+.. container:: exercises
+
+  Construct each of the following images.
+
+  1. .. class:: dia
+
+     ::
+
+     > vs = take 10 $ cycle [unitX # rotateBy (1/8), unitX # rotateBy (-1/8)]
+     > example = fromOffsets vs # centerXY
+
+  #. .. class:: dia
+
+     ::
+
+     > vs = [ e (r :: Turn) | r <- [-1/4, -1/4 + 1/12 .. 1/4] ]
+     > example = mconcat (map (\v -> circle 0.2 # translate v) vs)
+     >         # fc blue
+     >         # centerXY
 
 Destructing vectors
 -------------------

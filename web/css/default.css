@@ -68,6 +68,10 @@ div.exampleimg {
     text-align: center;
 }
 
+div.exampleimg img {
+    vertical-align: text-top;
+}
+
 div.dia-lhs {
     padding: 20px;
     border-style: solid;
