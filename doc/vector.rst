@@ -17,19 +17,17 @@ Introduction
 After working with ``diagrams`` for a while, you very quickly end up
 needing to manipulate points and vectors in order to position and
 describe your diagrams.  For example, `fromOffsets` and `fromVertices`
-take lists of vectors and lists of points, respectively;
+take lists of vectors and lists of points, respectively; `beside` and
+`translate` each take a vector as an argument; `position` expects
+objects paired with points; and so on.
 
-.. container:: todo
+This tutorial will walk you through everything you need to know about
+creating and working with vectors and points, with examples and
+exercises to deepen your understanding.  If you notice any typos or
+bugs, are confused, or have an idea for extending or enhancing this
+tutorial, please `open a ticket`__!
 
-  Other examples
-
-.. container:: todo
-
-  Add reference(s) to this tutorial from the user manual
-
-Most of the functionality discussed in this tutorial can be found in
-the `vector-space`:pkg: package and the `Diagrams.TwoD.Vector`:mod:
-module.
+__ https://github.com/diagrams/diagrams-doc/issues
 
 Vectors
 =======
@@ -284,7 +282,15 @@ are open to adding more!).
   v ^* (1/s)`.
 
 * Finally, `R2` is an instance of the `InnerSpace` class (also in
-  `Data.VectorSpace`:mod:).
+  `Data.VectorSpace`:mod:), which provides the *inner product* (also
+  called *dot product*) operator, `(<.>)`.
+
+  .. container:: todo
+
+     Link to more info on dot product, unfortunately this can't be a
+     full linear algebra tutorial.  Also mention 'project'
+
+     Implement 'angleBetween' function
 
 .. container:: todo
 

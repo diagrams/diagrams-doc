@@ -439,7 +439,10 @@ operations on vectors and scalars include:
   * Finding the `magnitude` (length) of a vector
   * Projecting one vector onto another with `project`.
 
-See `Data.VectorSpace`:mod: for other useful functions and operators.
+See `this tutorial for a more in-depth introduction to working with vectors
+and points`__.
+
+__ vector.html
 
 One might think we could also identify *points* in a space with
 vectors having one end at the origin.  However, this turns out to be a
@@ -660,6 +663,11 @@ two-dimensional space:
   from `Diagrams.Prelude`:mod: (to avoid clashing with `lens`:pkg:),
   so to use it you must explicitly import it.
 
+  For more in-depth information on working with `R2`, `see this
+  tutorial`__.
+
+  __ vector.html
+
 * `P2` is the type of points in two-dimensional space. It is a synonym
   for `Point R2`.  The distinction between points and vectors is
   important; see `Vectors and points`_.
@@ -668,6 +676,11 @@ two-dimensional space:
   converted back using `unp2`. They can also be constructed and
   destructed using the same syntax as for vectors, as defined in
   `Diagrams.Coordinates`:mod:.
+
+  For more in-depth information on working with `P2`, `see this
+  tutorial`__.
+
+  __ vector.html
 
 * `T2` is the type of two-dimensional affine transformations.  It is a
   synonym for `Transformation R2`.
