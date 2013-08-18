@@ -14,8 +14,10 @@ Trails and paths
 Introduction
 ============
 
-Coming soon!  A tutorial on trails and paths, presented as a series of
-exercises, with links to relevant documentation...
+.. container:: todo
+
+  Coming soon!  A tutorial on trails and paths, presented as a series
+  of exercises, with links to relevant documentation...
 
 Lines
 =====

@@ -110,7 +110,7 @@ The first thing to learn is how to *create* values of type
   like `unitX # scale 3` or `3 *^ unitX` (see `Vector operations`_).
 
   Also, `unit_X` and `unit_Y` are like `unitX` and `unitY` but point
-  in the corresponding negative direction.
+  in the corresponding negative directions.
 
   .. class:: dia-lhs
 
@@ -197,25 +197,96 @@ The first thing to learn is how to *create* values of type
 Destructing vectors
 -------------------
 
-.. container:: todo
+To take apart a vector into its `x`:math: and `y`:math: components,
+use `unr2 :: R2 -> (Double, Double)`, or more generally you can use
+`coords` (from `Diagrams.Coordinates`:mod:) and pattern-match on
+`(:&)`.  Both these methods work well in conjunction with the
+``ViewPatterns`` `GHC extension`__, as in
 
-  * `unr2`, `coords`
-  * `direction`
-  * `magnitude`
-  * `magnitudeSq`
+__ http://ghc.haskell.org/trac/ghc/wiki/ViewPatterns
+
+.. class:: lhs
+
+::
+
+> foo :: R2 -> ...
+> foo (unr2 -> (x,y)) = ... x ... y ...
+
+Note, however, that you will probably need this less often than you
+think.  Using the vector operations presented in the next section, you
+should strive to work on the level of vectors, and only "stoop" to the
+level of working with explicit coordinates when absolutely necessary.
+
+To get the magnitude and direction of a vector, you can use the
+`magnitude` and `direction` functions.  Additionally, `magnitudeSq`
+gives the *squared* magnitude of a vector, and is more efficient than
+squaring the result of `magnitude`, since it avoids a `sqrt` call.
 
 Vector operations
 -----------------
 
+There is a rich set of combinators for operating on vectors (and we
+are open to adding more!).
+
+* Vectors can be transformed with all the usual transformation
+  functions like `rotate`, `scale`, and so on.  However, recall that
+  although it is possible to apply `translate` to a vector, it has no
+  effect.
+
+  .. class:: dia-lhs
+
+  ::
+
+  > example = mconcat $ map (fromOffsets . (:[])) vs
+  >   where
+  >     vs = take 33 . iterate (scale (2**(1/32)) . rotateBy (1/32)) $ unitX
+
+* `R2` is an instance of the `AdditiveGroup` class (see
+  `Data.AdditiveGroup`:mod: from the `vector-space`:pkg: package),
+  which is for types with an (additive) group structure.  This means:
+
+  * Vectors can be added with `(^+^)`.
+
+    .. container:: todo
+
+       Explain and illustrate
+
+  * There is a zero vector `zeroV` (mentioned previously), which is
+    the identity for `(^+^)`.
+  * Vectors can be negated with `negateV`.  The negation of a vector
+    ``v`` is the vector with the same magnitude which points in the
+    opposite direction, and is the additive inverse of ``v``: that is,
+    `v ^+^ negateV v == zeroV`.
+
+  `Data.AdditiveGroup`:mod: also defines a few other methods which can
+  be used on vectors, including `(^-^)` (vector subtraction) and
+  `sumV` (summing an entire list or other `Foldable` container of
+  vectors).
+
+* `R2` is also an instance of the `VectorSpace` class (see
+  `Data.VectorSpace`:mod: from the `vector-space`:pkg: package).
+  Significantly, this class defines an associated type family called
+  `Scalar`; the `Scalar` type associated to a `VectorSpace` can be
+  thought of as representing *distances* or *scaling
+  factors*. In particular `Scalar R2` is defined to be `Double`.
+
+  You can multiply (scale) a vector by a `Scalar` using `(*^)` (which
+  takes a `Scalar` on the left and a vector on the right) or `(^*)`
+  (which is `(*^)` with the arguments reversed).  (Note that
+  `vector-space`:pkg: operators always use ``^`` in their names to
+  indicate a vector argument, as in `(*^)` (scalar times vector) and
+  `(^+^)` (vector plus vector) and `(.+^)` (point plus vector, as we
+  will see later.)
+
+  Note that using `(*^)` is equivalent to using `scale`; that is, `s
+  *^ v == v # scale s`.  There is also a `(^/)` operator provided for
+  convenience which divides a vector by a scalar; of course `v ^/ s ==
+  v ^* (1/s)`.
+
+* Finally, `R2` is an instance of the `InnerSpace` class (also in
+  `Data.VectorSpace`:mod:).
+
 .. container:: todo
-
-  * Apply transformations etc.
-
-  * `AdditiveGroup` (note this is where `zeroV` comes from)
-      * adding and subtracting vectors
-
-  * `VectorSpace`
-      * scalars & scaling
 
   * `InnerSpace`
 
@@ -243,8 +314,6 @@ Vector operations
      > example = vTriangle unitX (unitX # rotateBy (1/8))
      >         # centerXY # pad 1.1
 
-  #. Bar
-
 Points
 ======
 
@@ -270,13 +339,15 @@ Constructing points
 Destructing points
 ------------------
 
-.. container::
+.. container:: todo
 
   * `unp2`, `coords`
   * Do we have a `distance` function?
 
 Point operations
 ----------------
+
+.. container:: todo
 
   * `AffineSpace`.
       * `Diff` type function
