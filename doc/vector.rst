@@ -243,12 +243,10 @@ are open to adding more!).
   `Data.AdditiveGroup`:mod: from the `vector-space`:pkg: package),
   which is for types with an (additive) group structure.  This means:
 
-  * Vectors can be added with `(^+^)`.
-
-    .. container:: todo
-
-       Explain and illustrate
-
+  * Vectors can be added with `(^+^)`.  To add two vectors, think of
+    placing them head-to-tail; the result of the addition is the
+    vector from the tail of the first vector to the head of the
+    second.
   * There is a zero vector `zeroV` (mentioned previously), which is
     the identity for `(^+^)`.
   * Vectors can be negated with `negateV`.  The negation of a vector
@@ -283,24 +281,48 @@ are open to adding more!).
 
 * Finally, `R2` is an instance of the `InnerSpace` class (also in
   `Data.VectorSpace`:mod:), which provides the *inner product* (also
-  called *dot product*) operator, `(<.>)`.
+  called *dot product*) operator, `(<.>)`.  The definition and
+  properties of the dot product are beyond the scope of this tutorial;
+  you can `read about it on Wikipedia`__.  However, note that several
+  common uses of the dot product are already encapsulated in other
+  functions, such as `project` and `leftTurn`.
 
-  .. container:: todo
+__ http://en.wikipedia.org/wiki/Dot_product
 
-     Link to more info on dot product, unfortunately this can't be a
-     full linear algebra tutorial.  Also mention 'project'
+* The `normalized` function changes the magnitude of a vector to
+  `1`:math:, while keeping the direction fixed.
 
-     Implement 'angleBetween' function
+* `perp` yields a vector perpendicular to (and of the same magnitude
+  as) its input.
 
-.. container:: todo
+* `lerp` linearly interpolates between two vectors as the given
+  parameter varies from `0`:math: to `1`:math:.
 
-  * `InnerSpace`
+* `leftTurn v1 v2` tests whether the direction of `v2` is a "left
+  turn" from `v1` (that is, if the direction of `v2` can be obtained
+  from that of `v1` by rotating up to one-half turn in the positive
+  direction).
 
-  * `normalized`
-  * `lerp`
-  * `project`
-  * `perp`
-  * `leftTurn`
+* `project u v` computes the *projection* of `v` onto `u`.  In the
+  illustration below, the green line shows the projection of the red
+  vector onto the blue vector.
+
+  .. class:: dia-lhs
+
+  ::
+
+  > u = r2 (1,2)
+  > v = 2 *^ (unitY # rotateBy (1/19))
+  > p = project u v
+  >
+  > drawV v = fromOffsets [v]
+  >
+  > example = mconcat
+  >   [ drawV p # lc green # lw 0.03
+  >   , drawV u # lc blue
+  >   , drawV v # lc red
+  >   , drawV (p ^-^ v) # translate v # dashing [0.1,0.1] 0
+  >   ]
 
 .. container:: exercises
 
