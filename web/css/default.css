@@ -79,6 +79,10 @@ div.dia-lhs {
     overflow: auto;
 }
 
+div.dia-lhs code.sourceCode {
+    margin-right: 20px;
+}
+
 code a {
     color: #330099;
     text-decoration: none;
