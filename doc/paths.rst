@@ -16,8 +16,8 @@ Introduction
 
 .. container:: todo
 
-  Coming soon!  A tutorial on trails and paths, presented as a series
-  of exercises, with links to relevant documentation...
+  Coming soon!  A tutorial on segments, trails and paths, complete with
+  exercises and links to relevant documentation...
 
 Lines
 =====
