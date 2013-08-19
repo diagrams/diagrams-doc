@@ -76,6 +76,7 @@ div.dia-lhs {
     padding: 20px;
     border-style: solid;
     border-width: thin;
+    overflow: auto;
 }
 
 code a {
