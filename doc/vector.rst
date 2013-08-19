@@ -29,6 +29,10 @@ tutorial, please `open a ticket`__!
 
 __ https://github.com/diagrams/diagrams-doc/issues
 
+Solutions to the exercises can be found in the source code for this
+tutorial, in the `diagrams-doc`:repo: repository.  Note, however, that
+many of the exercises have multiple good solutions.
+
 Vectors
 =======
 
@@ -183,12 +187,15 @@ The first thing to learn is how to *create* values of type
      > vs = take 10 $ cycle [unitX # rotateBy (1/8), unitX # rotateBy (-1/8)]
      > example = fromOffsets vs # centerXY
 
-  #. .. class:: dia
+  #. The circles have radius 1, and are arranged in the shape of a
+     radius-5 semicircle.
+
+     .. class:: dia
 
      ::
 
-     > vs = [ e (r :: Turn) | r <- [-1/4, -1/4 + 1/12 .. 1/4] ]
-     > example = mconcat (map (\v -> circle 0.2 # translate v) vs)
+     > vs = [ 5 *^ e (r :: Turn) | r <- [-1/4, -1/4 + 1/12 .. 1/4] ]
+     > example = mconcat (map (\v -> unitCircle # translate v) vs)
      >         # fc blue
      >         # centerXY
 
@@ -345,40 +352,185 @@ __ http://en.wikipedia.org/wiki/Dot_product
 Points
 ======
 
-.. container:: todo
+A *point* is a location in space.  In ``diagrams``, points are based
+on the `vector-space-points`:pkg: package, and in the case of 2D are
+represented by the type `P2`. In 2D, points are usually thought of as
+a pair of `x`:math: and `y`:math: coordinates (though other coordinate
+systems could be used as well, *e.g.* polar coordinates).
 
-  General remarks about points.  `vector-space-points`:pkg: package.
-  They *are* affected by translation.
+Points and vectors are closely related, and are sometimes conflated
+since both can be concretely represented by tuples of coordinates.
+However, they are distinct concepts which support different sets of
+operations. For example, points are affected by translation whereas
+vectors are not; vectors can be added but adding points does not make
+sense; and so on.  Hence, they are represented by distinct types in
+``diagrams``.
 
 Constructing points
 -------------------
 
-.. container:: todo
+There are several ways to construct points.
 
-  * `&` as before
-  * `p2`
-  * (Intentionally) no way to directly convert a vector into a point.
-    You probably don't want to do that anyway. (If you want, see
-    below; also note `unsafe` function(s) from vsp package??)
+* `origin` is the name of the distinguished point at the origin of
+    the vector space (note this works in any dimension).
 
-  * Advanced: use any function returning `TrailLike` to get a list of
-    vertices!  Turn this into an exercise...?
+* To create a point with given :math:`x`- and :math:`y`- components,
+  you can use the function `p2 :: (Double,Double) -> P2`:
+
+  .. class:: dia-lhs
+
+  ::
+
+  > example
+  >   = position . flip zip (repeat (circle 0.2 # fc green))
+  >   . map p2 $ [(1,1), (0,3), (-2,1), (-1,-4), (2,0)]
+
+  As with `r2`, `p2` is especially useful if you already have pairs
+  representing point coordinates.
+
+* The `&` operator can be used to construct literal points (`P2`
+  values) as well as vectors (`R2` values).  The proper type is chosen
+  via type inference: if the expression `(3 & 5)` is used in a context
+  where its type is inferred to be `P2`, it is the point at
+  `(3,5)`:math:; if its type is inferred to be `R2`, it is the vector
+  with `x`:math:-component `3`:math: and `y`:math:-component
+  `5`:math:.
+
+  Again, in order to use `&` you must import
+  `Diagrams.Coordinates`:mod:.
+
+* There is no way to directly convert a vector into a point---this is
+  intentional!  If you have a vector `v` and you want to refer to the
+  point located at the vector's head (when the vector tail is placed
+  at, say, the origin) you can write `origin .+^ v` (see below for a
+  discussion of `.+^`).
+
+* An advanced method of generating points is to use any function
+  returning a `TrailLike` result, since `[P2]` is an instace of
+  `TrailLike`. Using a function returning any `TrailLike` at the
+  result type `[P2]` will result in the list of vertices of the trail.
+  For example, here we obtain the list of vertices of a regular
+  nonagon:
+
+  .. class:: dia-lhs
+
+  ::
+
+  > example = position . map (\p -> (p, circle 0.2 # fc green)) $ nonagon 1
 
 Destructing points
 ------------------
 
-.. container:: todo
+For taking a point apart into its components you can use the `unp2`
+function, or, more generally, `coords` (just as with vectors).  There
+is currently no way to get a polar representation of a point, but it
+would be easy to add: if you want it, holler (or `submit a pull
+request`__!).
 
-  * `unp2`, `coords`
-  * Do we have a `distance` function?
+__ http://www.haskell.org/haskellwiki/Diagrams/Contributing
+
+You can compute the distance between two points with the `distance`
+function (or `distanceSq` to get the square of the distance, which
+avoids a square root).
+
+.. container:: exercises
+
+  Construct each of the following images.
+
+  1. A `31 \times 31`:math: grid of circles, each colored according to
+     the distance of its center from the origin.
+
+     .. class:: dia
+
+     ::
+
+     > example
+     >   = pts
+     >   # map (hcat . map mkSquare)
+     >   # vcat
+     >   # centerXY
+     >
+     > r = 15
+     >
+     > pts = [ [p2 (x,y) | x <- [-r .. r]] | y <- [-r .. r]]
+     > mkSquare p = circle 0.5 # fc c # moveTo p
+     >   where
+     >     c | distanceSq p origin <= (r*r) = yellow
+     >       | otherwise                    = purple
 
 Point operations
 ----------------
 
-.. container:: todo
+You can transform points arbitrarily: unlike vectors, points are
+affected by translation.  Rotation and scaling act on points with
+respect to the origin (for example, scaling the point `(1,1)`:math: by
+`2`:math: results in the point `(2,2)`:math:).
 
-  * `AffineSpace`.
-      * `Diff` type function
-      * subtract two points to get a vector
-      * point + vector.
-  * Apply transformations etc.
+.. class:: dia-lhs
+
+::
+
+> sqPts = square 1
+>
+> drawPts pts c = pts # map (\p -> (p,dot c)) # position
+> dot c = circle 0.2 # fc c
+>
+> example = drawPts sqPts blue
+>        <> drawPts (sqPts # scale 2 # rotateBy(1/10)) red
+
+Abstractly, points and vectors together form what is termed an `affine
+space`__. It's not important to understand the formal mathematical
+definition of an affine space; it's enough to understand the sorts of
+operations which this enables on points and vectors.
+
+__ http://en.wikipedia.org/wiki/Affine_space
+
+In particular, `P2` is an instance of the `AffineSpace` type class
+(defined in `Data.AffineSpace`:mod: from the `vector-space`:pkg:
+package).  This class also has an associated type family called
+`Diff`, which for `P2` is defined to be `R2`: roughly, this says that
+the *difference* or "offset" between two points is given by a vector.
+
+Note how the operators below are named: a period indicates a point
+argument, and a carat (`^`) indicates a vector argument.  So, for
+example, `(.+^)` takes a point as its first argument and a vector as
+its second.
+
+* You can "subtract" one point from another to get the vector between
+  them, using `(.-.)`.  In particular `b .-. a` is the vector
+  pointing from `a` to `b`.
+
+* Using `(.+^)`, you can add a vector to a point, resulting in another
+  point which is offset from the first point by the given vector.  If
+  `p .+^ v == p'`, then `p' .-. p == v`.  You can also use `(.-^)` to
+  subtract a vector from a point.
+
+* Although it does not make sense to "add" two points, it does make
+  sense to *linearly interpolate* between them using the `alerp`
+  function, for example, to find the point which is 25% of the way
+  from the first point to the second.
+
+  .. class:: dia-lhs
+
+  ::
+
+  > pt1 = origin
+  > pt2 = p2 (5,3)
+  >
+  > example = position $
+  >   [ (p, circle 0.2 # fc c) 
+  >   | a <- [0, 0.1 .. 1]
+  >   , let p = alerp pt1 pt2 a
+  >   , let c = blend a blue green
+  >   ]
+
+* You can find the *centroid* (the "average" or "center of mass") of a
+  list of points using the `centroid` function (defined in
+  `Diagrams.Points`:mod:).
+
+.. container:: exercises
+
+  1. Implement the `Graham scan algorithm`__ and generate diagrams
+     illustrating the intermediate steps.
+
+  __ http://en.wikipedia.org/wiki/Graham_scan
