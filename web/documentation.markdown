@@ -29,6 +29,8 @@ Reference
 Blog posts/other
 ----------------
 
+* [Cellular Automata](https://www.fpcomplete.com/user/edwardk/cellular-automata)
+  (Edward Kmett, 17 August 2013)
 * [Butterfly Variations](http://mathr.co.uk/blog/2013-01-11_butterfly_variations.html)
   (Claude Heiland-Allen, 11 January 2013)
 * [Creating documents with embedded diagrams](http://byorgey.wordpress.com/2012/08/28/creating-documents-with-embedded-diagrams/)
