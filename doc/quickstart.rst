@@ -495,6 +495,10 @@ tutorial are trails, paths, splines, text, traces, a wide array of
 predefined shapes, named subdiagrams, animation...  Here are pointers
 to some resources for learning more:
 
+* There are `other tutorials on more specific topics`_ available.  For
+  example, there is a tutorial on `working with vectors and points`_,
+  and one on `segments, trails, and paths`_.
+
 * The diagrams `user manual`_ goes into much more depth on all the
   topics covered in this tutorial, plus many others, and includes lots
   of illustrative examples.  If there is anything in the manual that
@@ -511,6 +515,9 @@ to some resources for learning more:
   ``#diagrams`` IRC channel on freenode.org, or the `diagrams-discuss
   mailing list`_.
 
+.. _`other tutorials on more specific topics`: /documentation.html
+.. _`working with vectors and points`: vector.html
+.. _`segments, trails, and paths`: paths.html
 .. _`report it as a bug`: http://github.com/diagrams/diagrams-doc/issues
 .. _`report it as a bug as well`: http://github.com/diagrams/diagrams/issues
 .. _`diagrams-discuss mailing list`: http://groups.google.com/group/diagrams-discuss
