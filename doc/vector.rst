@@ -387,6 +387,17 @@ __ http://en.wikipedia.org/wiki/Dot_product
      >
      > example = vAddVis (r2 (0.5,1)) (r2 (2,0.5)) # lw 0.02
 
+Using vectors
+-------------
+
+.. container:: todo
+
+  Stuff you can do with vectors.
+
+  * `fromOffsets`
+  * `translate`, `moveOriginBy`
+  * ?
+
 Points
 ======
 
@@ -586,3 +597,14 @@ its second.
      illustrating the intermediate steps.
 
   __ http://en.wikipedia.org/wiki/Graham_scan
+
+Using points
+------------
+
+.. container:: todo
+
+  Stuff you can do with points.
+
+  * `position`
+  * `~~`
+  * `moveTo`, `place`, `moveOriginTo`
