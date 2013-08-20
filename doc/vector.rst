@@ -201,6 +201,16 @@ The first thing to learn is how to *create* values of type
      >         # fc blue
      >         # centerXY
 
+  #. 30 spokes with lengths 1, 2, and 3.
+
+     .. class:: dia
+
+     ::
+
+     > vs = zipWith mkV (cycle [1,2,3]) [ 1/30, 2/30 .. 1 :: Turn ]
+     >   where mkV r th = r *^ e th
+     > example = lw 0.02 . mconcat . map (fromOffsets . (:[])) $ vs
+
 Destructing vectors
 -------------------
 
@@ -356,6 +366,26 @@ __ http://en.wikipedia.org/wiki/Dot_product
      >
      > example = vTriangle unitX (unitX # rotateBy (1/8))
      >         # centerXY # pad 1.1
+
+  #. Write a function which takes two vectors as input and constructs
+     a classic illustration of vector addition using a parallelogram,
+     as in the following example:
+
+     .. class:: dia
+
+     ::
+
+     > drawV = fromOffsets . (:[])
+     > vAddVis v1 v2
+     >   = mconcat
+     >     [ drawV v1 # lc red
+     >     , drawV v2 # lc blue
+     >	   , drawV v1 # lc red  # dashing [0.1,0.1] 0 # translate v2
+     >     , drawV v2 # lc blue # dashing [0.1,0.1] 0 # translate v1
+     >     , drawV (v1 ^+^ v2) # lc purple
+     >     ]
+     >
+     > example = vAddVis (r2 (0.5,1)) (r2 (2,0.5)) # lw 0.02
 
 Points
 ======
