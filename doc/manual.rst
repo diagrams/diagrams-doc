@@ -1384,10 +1384,16 @@ Any diagram can be transformed by applying arbitrary affine
 transformations to it. *Affine* transformations include *linear*
 transformations (rotation, scaling, reflection, shears---anything
 which leaves the origin fixed and sends lines to lines) as well as
-translations.  `Diagrams.TwoD.Transform`:mod: defines a number of
-common affine transformations in two-dimensional space. (To construct
-transformations more directly, see
-`Diagrams.Core.Transform`:mod:.)
+translations.  In the simplified case of the real line, an affine
+transformation is any function of the form `f(x) = mx + b`:math:.
+Generalizing to `d`:math: dimensions, an affine transformation is
+a vector function of the form `f(\mathbf{v}) = \mathbf{M}\mathbf{v} +
+\mathbf{B}`:math:, where `\mathbf{M}`:math: and `\mathbf{B}`:math: are
+`d \times d`:math: matrices.
+
+`Diagrams.TwoD.Transform`:mod: defines a number of common affine
+transformations in two-dimensional space. (To construct
+transformations more directly, see `Diagrams.Core.Transform`:mod:.)
 
 Every transformation comes in two variants, a noun form and a verb
 form.  For example, there are two functions for scaling along the
