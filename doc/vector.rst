@@ -173,8 +173,10 @@ The first thing to learn is how to *create* values of type
 
   ::
 
-  > example = lw 0.05 . mconcat . map (fromOffsets . (:[]))
-  >         $ [ r *^ e (Rad r) | r <- [33 * tau/32, 34 * tau/32 .. 2 * tau] ]
+  > example = lw 0.05 . mconcat . map fromOffsets
+  >         $ [ [r *^ e (Rad r)]
+  >           | r <- [33 * tau/32, 34 * tau/32 .. 2 * tau]
+  >           ]
 
 .. container:: exercises
 
@@ -226,6 +228,10 @@ To get the magnitude and direction of a vector, you can use the
 `magnitude` and `direction` functions.  Additionally, `magnitudeSq`
 gives the *squared* magnitude of a vector, and is more efficient than
 squaring the result of `magnitude`, since it avoids a `sqrt` call.
+For example, if you want to test which of two vectors is longer, you
+can compare the results of `magnitudeSq` instead of `magnitude` (since
+`a < b \iff a^2 < b^2`:math: as long as `a`:math: and
+`b`:math: are nonnegative).
 
 Vector operations
 -----------------
@@ -242,9 +248,11 @@ are open to adding more!).
 
   ::
 
-  > example = mconcat $ map (fromOffsets . (:[])) vs
+  > example = mconcat $ map fromOffsets ls
   >   where
-  >     vs = take 33 . iterate (scale (2**(1/32)) . rotateBy (1/32)) $ unitX
+  >     vs = take 33 . iterate (scale (2**(1/32)) . rotateBy (1/32))
+  >        $ unitX
+  >     ls = [[x] | x <- vs]
 
 * `R2` is an instance of the `AdditiveGroup` class (see
   `Data.AdditiveGroup`:mod: from the `vector-space`:pkg: package),
@@ -416,7 +424,21 @@ There are several ways to construct points.
 
   ::
 
+  > pts :: [P2]
+  > pts = nonagon 1
+  > example = position . map (\p -> (p, circle 0.2 # fc green)) $ pts
+
+  Note that we could also inline `pts` in the above example to obtain
+
+  .. class:: lhs
+
+  ::
+
   > example = position . map (\p -> (p, circle 0.2 # fc green)) $ nonagon 1
+
+  In this case, the type of `nonagon 1` would be inferred as `[P2]`
+  (since `position` expects a list of paired points and diagrams),
+  causing the appropriate `TrailLike` instance to be chosen.
 
 Destructing points
 ------------------
@@ -518,7 +540,7 @@ its second.
   > pt2 = p2 (5,3)
   >
   > example = position $
-  >   [ (p, circle 0.2 # fc c) 
+  >   [ (p, circle 0.2 # fc c)
   >   | a <- [0, 0.1 .. 1]
   >   , let p = alerp pt1 pt2 a
   >   , let c = blend a blue green
