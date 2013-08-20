@@ -35379,3 +35379,1403 @@
 2013-08-10 03:21:31 UTC <byorgey> carter: \o/
 2013-08-10 03:21:38 UTC <carter> congrats ;)
 2013-08-10 03:45:54 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 1480c728e http://travis-ci.org/diagrams/diagrams-doc/builds/10050090 The build failed.
+2013-08-10 04:28:03 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 1474a86d4 http://travis-ci.org/diagrams/diagrams-doc/builds/10050636 The build has errored.
+2013-08-10 08:40:58 UTC <notdan> Is it a bad idea to implement MonadBase Ghc IO instance?
+2013-08-10 11:27:22 UTC <luite> hmm, there are the usual caveats of orphan instances, and perhaps that it's a state monad where part of the state lives in iorefs
+2013-08-10 11:27:48 UTC <luite> do you need to stack more transformers or is it for things like eception handling?
+2013-08-10 12:24:54 UTC <notdan> no, this is for abstracting the Pool. I think I am doing something wrong
+2013-08-10 13:26:56 UTC <notdan> woot, I think I generalized it a bit with monad-control. Still, there are some restrictions I want to get rid off, but I'll postpone it for later. 
+2013-08-10 19:47:26 UTC <notdan> https://github.com/co-dan/interactive-diagrams/blob/master/restricted-workers/examples/NewWorkerType.lhs can somebody check my tutorial/example if it makes sense at all etc?
+2013-08-10 19:47:53 UTC <notdan> Ok it probably wouldn't make much sense if you didn't read the previous examples :S
+2013-08-10 23:49:38 UTC <fryguybob> I'm going to be away for almost a week.  Have fun everyone!
+2013-08-10 23:51:23 UTC <luite> have fun you too :)
+2013-08-11 00:29:28 UTC <byorgey> bye fryguybob, have fun!
+2013-08-11 00:30:07 UTC <byorgey> ACTION just purchased plane tickets to Boston =D
+2013-08-11 00:30:12 UTC <byorgey> for only $150 round trip!!
+2013-08-11 00:41:32 UTC <fryguybob> byorgey: Nice!
+2013-08-11 00:44:54 UTC <byorgey> only problem is there were no flights late enough Saturday night, so I'll be flying back Sunday morning
+2013-08-11 00:45:05 UTC <byorgey> but I will find someone to stay with Saturday night, e.g. my sister and brother-in-law
+2013-08-11 00:47:38 UTC <fryguybob> byorgey: Ah.
+2013-08-11 06:03:33 UTC <notdan> byorgey: cool :D
+2013-08-11 06:03:41 UTC <notdan> fryguybob: have a good week off :)
+2013-08-11 11:16:16 UTC <notdan> hastache commits have been merged and released on hackage
+2013-08-11 15:24:45 UTC <martingale> tangent :: (VectorSpace v, Num (Scalar v)) => Segment v -> v
+2013-08-11 15:24:45 UTC <martingale> tangent (Cubic c1 c2 x2) = - (normalized c2)
+2013-08-11 15:24:45 UTC <martingale> tangent (Linear x1) = normalized x1
+2013-08-11 15:25:06 UTC <martingale> Expecting one more argument to `Segment v'
+2013-08-11 15:25:06 UTC <martingale>     In the type signature for `tangent':
+2013-08-11 15:25:07 UTC <martingale>       tangent :: (VectorSpace v, Num (Scalar v)) => Segment v -> v
+2013-08-11 15:25:15 UTC <martingale> Please help with type signature?
+2013-08-11 15:37:34 UTC <luite> byorgey: how bad is customs when you have a stop in PHL or IAD?
+2013-08-11 15:37:45 UTC <luite> as a european
+2013-08-11 15:38:38 UTC <luite> cheapest flights have a stop there, somewhat more expensive is stop at heathrow, frankfurt, direct flight is expensivest
+2013-08-11 15:40:01 UTC <luite> do you go once through the really long customs line and then depart/arrive from a non-international terminal for the second leg?
+2013-08-11 15:42:46 UTC <martingale> Nevermind, I was looking at old source code for Diagrams.Segment
+2013-08-11 19:08:56 UTC <byorgey> luite: yes, you probably go through customs once and then take a domestic flight
+2013-08-11 19:09:16 UTC <luite> is 3h enough for that?
+2013-08-11 19:09:20 UTC <byorgey> luite: but I have never gone through customs as a European so I have no idea what it is like =)
+2013-08-11 19:09:57 UTC <byorgey> I am 70% confident that 3h is enough.
+2013-08-11 19:12:10 UTC <luite> is IAD or PHL better for transit? also just for getting there (return flight would be directly from there), PHL has regional rail service, IAD doesn't?
+2013-08-11 19:14:36 UTC <byorgey> luite: yeah, getting to and from IAD is really annoying
+2013-08-11 19:14:54 UTC <byorgey> it's in the middle of nowhere and there's no rail that goes to it, you have to get a taxi or bus etc.
+2013-08-11 19:15:27 UTC <byorgey> they are building an extension of the DC subway to go all the way out there which is scheduled to be finished in 2037 or something like that =P
+2013-08-11 19:17:06 UTC <byorgey> luite: PHL is nice for transit, there is regional rail service that goes right to the Amtrak station, and from there you can get trains up and down the east coast and the Philly subway
+2013-08-11 19:20:00 UTC <luite> ok, us airways over PHL is almost as cheap as united over IAD, and 100 euro cheaper than delta which has direct flights both ways :)
+2013-08-11 19:21:42 UTC <byorgey> cool
+2013-08-11 19:21:53 UTC <byorgey> yeah, I just got very cheap flights to boston on US airways
+2013-08-11 19:22:00 UTC <luite> which one do you have?
+2013-08-11 19:23:01 UTC <byorgey> #729 (5:15-6:33) PHL-BOS
+2013-08-11 19:23:05 UTC <luite> mine would probably be US Airways 729  5:15-6:33
+2013-08-11 19:23:05 UTC <byorgey> on the 21st
+2013-08-11 19:23:07 UTC <luite> oh
+2013-08-11 19:23:11 UTC <byorgey> haha =)
+2013-08-11 19:23:54 UTC <luite> i can get one flight earlier, but then it would be 1h45 layover instead of 2h45, that would be a bit short
+2013-08-11 19:24:43 UTC <byorgey> yeah, 1h45 might be too short
+2013-08-11 19:24:43 UTC <byorgey> anyway, you should totally join me on my flight
+2013-08-11 19:24:43 UTC <byorgey> I am in seat 17A =)
+2013-08-11 19:25:11 UTC <luite> hehe i'll book immediately, and i prefer an aisle seat anyway ;)
+2013-08-11 19:25:35 UTC <byorgey> if you want to sit next to me that would be fun, and I will also not be offended if you want to sit by an aisle or sleep or whatever
+2013-08-11 19:25:42 UTC <byorgey> we will have plenty of time to hang out in Boston =)
+2013-08-11 19:25:47 UTC <luite> my return flight would be from PHL again then, about a week after my talk at icfp haskell, so i'll hae a few days to explore
+2013-08-11 19:26:02 UTC <byorgey> cool, sounds great
+2013-08-11 19:26:07 UTC <luite> oh i'm not sure what plane it is, is it 3-3 setup?
+2013-08-11 19:26:11 UTC <byorgey> yes, 3-3
+2013-08-11 19:29:03 UTC <luite> hm, only 17F is available in row 17
+2013-08-11 19:29:58 UTC <byorgey> heh, ok, whatever
+2013-08-11 19:30:29 UTC <byorgey> as I said, we will have plenty of time to hang out before and after the flight, so just pick whatever seat you want
+2013-08-11 19:30:58 UTC <luite> sure, it's only a short flight anyway, and it says it has wifi, so we can just talk on irc ;)
+2013-08-11 19:31:43 UTC <luite> hmm, i hope there's not a $25 checked luggage fee, if it counts as one transatlantic trip there shouldn't be
+2013-08-11 19:37:04 UTC <byorgey> luite: the wifi isn't free though, I won't be using it =)
+2013-08-11 19:37:55 UTC <byorgey> luite: I am not sure how they work out the luggage fees.  Probably you're right, there's no fee
+2013-08-11 19:38:10 UTC <luite> oh right, i guess i can do 1:45 without internet. otherwise we can set up an ad hoc wifi network :p
+2013-08-11 19:38:17 UTC <byorgey> hehe
+2013-08-11 19:44:31 UTC <luite> oh all 17 is actually unavailable, and i guess 16A / 18A wouldn't make for very comfortable talking
+2013-08-11 19:45:10 UTC <luite> oh no wait, frong flgiht
+2013-08-11 19:52:03 UTC <luite> ok i have 16C
+2013-08-11 19:54:10 UTC <luite> AMS - PHL 799 21 Sept 10:50am-1:30PM
+2013-08-11 19:54:45 UTC <luite> oh crap
+2013-08-11 19:55:56 UTC <luite> hehe oops i have the 4:15 723 now
+2013-08-11 19:58:43 UTC <luite> (it does have the 2:45 time, the earlier one was a really small plane)
+2013-08-11 19:59:38 UTC <luite> perhaps i can still chnge it
+2013-08-11 20:01:59 UTC <luite> on that flight 17B is available =)
+2013-08-11 20:02:42 UTC <luite> change is $199, i'll see you in Boston then :)
+2013-08-11 20:14:54 UTC <luite> bleh stupid me, /me hides in a corner
+2013-08-11 20:16:08 UTC <luite> ayway 2h45 should be enough, and if the flight is delayed too much they'll put me on your flight
+2013-08-11 20:47:19 UTC <notdan> About to upload my first package on hackage, excited :D
+2013-08-11 20:50:16 UTC <notdan> 20:40:16 * hackagebot restricted-workers 0.1.0 - Running worker processes under system resource restrictions  http://hackage.haskell.org/package/restricted-workers-0.1.0 (DaniilFrumin) 
+2013-08-11 20:50:44 UTC <notdan> Hm, there is no haddock documentation.. weird
+2013-08-11 20:50:51 UTC <luite> takes a while to generate
+2013-08-11 20:50:55 UTC <notdan> oh, right
+2013-08-11 20:51:23 UTC <luite> although it might fail because of selinux
+2013-08-11 23:14:12 UTC <byorgey> notdan: congrats!!
+2013-08-11 23:14:28 UTC <byorgey> luite: hehe, oops.  oh well, see you in Boston =)
+2013-08-11 23:33:16 UTC <cmears> did my chart and cube examples work?
+2013-08-12 01:02:58 UTC <travis-ci> [travis-ci] 13diagrams-povray/06master 144f0962f http://travis-ci.org/diagrams/diagrams-povray/builds/10098685 The build passed.
+2013-08-12 01:09:41 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06master 14e5ea701 http://travis-ci.org/diagrams/diagrams-contrib/builds/10098732 The build passed.
+2013-08-12 01:47:58 UTC <byorgey> cmears: yep!  They are now live at http://projects.haskell.org/diagrams/gallery.html
+2013-08-12 01:48:38 UTC <byorgey> mgsloan: heh, RankNTypes was all it needed, eh?
+2013-08-12 01:49:12 UTC <byorgey> mgsloan: happy to release diagrams-contrib-0.7.1 with the Lens module whenever you think it's ready
+2013-08-12 01:50:25 UTC <cmears> great (:
+2013-08-12 01:54:23 UTC <carter> sweet!
+2013-08-12 01:55:16 UTC <byorgey> oh man, did you guys see the poster that tkvogt sent to the mailing list?
+2013-08-12 01:55:18 UTC <byorgey> crazy cool
+2013-08-12 01:56:05 UTC <byorgey> ACTION -> bed
+2013-08-12 01:58:53 UTC <carter> the unix bed?
+2013-08-12 01:58:55 UTC <carter> *poster
+2013-08-12 01:58:58 UTC <carter> *unix poster
+2013-08-12 01:59:29 UTC <carter> woahhhhh
+2013-08-12 01:59:55 UTC <carter> huhhhh, would the poster pdf render faster if the text were text ?
+2013-08-12 02:17:37 UTC <luite> is it all regular curves?
+2013-08-12 02:17:43 UTC <luite> it's really slow yeah
+2013-08-12 02:20:44 UTC <carter> yeahhh, reallyyyyy slow
+2013-08-12 02:22:19 UTC <luite> rendered glyphs would usually be cached so i'd expect it to b efaster
+2013-08-12 02:27:47 UTC <carter> are they as glyphs?
+2013-08-12 02:31:38 UTC <luite> hm acrobat thinks it doesn't have text
+2013-08-12 02:33:25 UTC <carter> yup
+2013-08-12 02:33:28 UTC <carter> nor does preview
+2013-08-12 02:33:29 UTC <carter> i think it doesn
+2013-08-12 02:34:02 UTC <carter> which backend does he use
+2013-08-12 02:34:08 UTC <carter>  / which backends have fonts?
+2013-08-12 02:34:32 UTC <carter> https://github.com/tkvogt/unixPoster/blob/master/poster.hs
+2013-08-12 02:37:12 UTC <mgsloan> byorgey: No rush!  I can't say that I've really put most of this lens stuff through its paces yet
+2013-08-12 02:37:20 UTC <luite> hmm it uses svgFonts, that inserts outlines directly i presume?
+2013-08-12 02:37:40 UTC <mgsloan> Not sure how it could be wrong, but there's always the possibility that the type system didn't save me from something stupid
+2013-08-12 02:38:39 UTC <carter> idk, just linked you to the source, didn't read it :)
+2013-08-12 13:25:34 UTC <byorgey> re: the unix poster, yeah, it uses SVGFonts which reads the font file and converts the glyphs into paths
+2013-08-12 13:26:52 UTC <byorgey> which lets us have very precise & correct envelopes for text
+2013-08-12 13:27:01 UTC <byorgey> but is also slower, as you observe
+2013-08-12 13:27:36 UTC <byorgey> anyway, it's also another nice test case for when I next try to do some profiling
+2013-08-12 13:28:45 UTC <luite> not only generating the image, the file is also very slow to load (at least in acrobat and preview)
+2013-08-12 13:29:32 UTC <byorgey> right
+2013-08-12 13:31:32 UTC <luite> but jbracker's project should give us approximate envelopes for 'real' text, right?
+2013-08-12 13:33:06 UTC <jbracker> luite: nope
+2013-08-12 13:33:10 UTC <luite> oh
+2013-08-12 13:33:12 UTC <luite> :(
+2013-08-12 13:33:15 UTC <jbracker> I am working on the SVG font stuff
+2013-08-12 13:33:50 UTC <jbracker> I think right now there is now effort for font metric support in diagrams, or is there byorgey
+2013-08-12 13:33:51 UTC <jbracker> ?
+2013-08-12 13:34:17 UTC <byorgey> right, no one is working on that
+2013-08-12 13:34:27 UTC <byorgey> I am not even sure how it would work
+2013-08-12 13:40:29 UTC <luite> ah ok, i thought there would just be some specialized envelope thing that'd quickly extract the data from the glyph widths in the font data, instead of the paths
+2013-08-12 13:44:34 UTC <jbracker> luite: It's not that easy, because each backend handles fonts differently, e.g. cairo offers specific functions for doing so, postscript may offer some way to script it, but how would you do it for SVGs, which are purly descriptional?
+2013-08-12 13:48:02 UTC <luite> jbracker: the SVG font description has a width for each glyph and a list of kerning pairs
+2013-08-12 13:48:45 UTC <jbracker> If you have a SVG font for the font you want use. But I am not sure what happens if you just use generic or installed font
+2013-08-12 13:48:45 UTC <luite> presumably you already read that info to convert the font to a path?
+2013-08-12 13:48:53 UTC <jbracker> luite: Yes
+2013-08-12 13:49:05 UTC <luite> oh yeah it would only be supported for fonts where you have that info
+2013-08-12 18:25:49 UTC <enthropy> are there pre-existing ways to work with graphviz and diagrams?
+2013-08-12 18:27:19 UTC <carter> pretty print dot files?
+2013-08-12 18:27:44 UTC <enthropy> given a layout calculated by dot, render it
+2013-08-12 18:29:30 UTC <enthropy> mostly because it's pretty awkward to figure out which item was clicked if you render a svg generated by dot
+2013-08-12 18:51:11 UTC <enthropy> is there a way to express that one thing that can be rendered should be scaled to fit another?
+2013-08-12 18:54:03 UTC <enthropy> ah the manual says "computing the size of some text in a given font is rather complicated, and diagrams cannot (yet) do it natively"
+2013-08-12 18:54:05 UTC <enthropy> too bad
+2013-08-12 19:10:33 UTC <byorgey> enthropy: (1) there are not pre-existing ways to work with graphviz and diagrams, but I hope someone will code up such a thing at some point
+2013-08-12 19:11:09 UTC <byorgey> enthropy: (2) yes, using the 'sized' and 'sizedAs' functions from Diagrams.TwoD.Size
+2013-08-12 19:12:17 UTC <byorgey> enthropy: (3) true; if you want to know the size of some text your current options are to either use Diagrams.Backend.Cairo.Text (though it is buggy) or to use the SVGFonts package
+2013-08-12 19:46:27 UTC <enthropy> byorgey: do you have an example of the cairo backend working at all?
+2013-08-12 19:46:43 UTC <enthropy> in this code it's quite far off http://code.haskell.org/~aavogt/module-management-gtk/
+2013-08-12 19:48:38 UTC <byorgey> huh, cool, I didn't know aavogt was using diagrams =)
+2013-08-12 19:48:43 UTC <enthropy> http://i.imgur.com/AnNQJtT.png
+2013-08-12 19:48:57 UTC <enthropy> is what it renders as
+2013-08-12 19:49:13 UTC <enthropy> the longer strings are smaller as they should be
+2013-08-12 19:49:30 UTC <enthropy> but even the "??" seems like it should be bigger
+2013-08-12 19:51:30 UTC <hpaste> byorgey pasted âexample of using Diagrams.Backend.Cairo.Textâ at http://lpaste.net/91789
+2013-08-12 19:51:46 UTC <byorgey> enthropy: that's one example, though as you can see the text is off in that example too
+2013-08-12 19:51:58 UTC <byorgey> maybe mgsloan has more examples
+2013-08-12 19:53:36 UTC <enthropy> and what about SVGFonts?
+2013-08-12 19:53:38 UTC <mgsloan> https://github.com/mgsloan/toy-gtk-diagrams/blob/master/src/Graphics/UI/Toy/Gtk/Text.hs#L25 - not a very good example
+2013-08-12 19:53:46 UTC <enthropy> is it worth using that one instead?
+2013-08-12 19:53:57 UTC <mgsloan> In particular "monoStyle" comes from one of my other modules
+2013-08-12 19:57:42 UTC <notdan> I think SVGFonts works correctly but it's quite slow
+2013-08-12 20:13:38 UTC <byorgey> enthropy: SVGFonts is quite nice.  as notdan mentions, it has some speed issues, but I don't know how much that matters to you.
+2013-08-12 20:14:23 UTC <byorgey> the only other drawback is that it only works with fonts in the SVG font format.  The package comes pre-loaded with one or two nice fonts but if you want to use another font you will have to convert it to SVG format yourself.
+2013-08-12 20:15:25 UTC <notdan> but it's not that hard, isn't it?
+2013-08-12 20:15:31 UTC <notdan> i think it's like one command in the shell
+2013-08-12 20:18:30 UTC <byorgey> notdan: which command?
+2013-08-12 20:21:55 UTC <notdan> ttf2svg http://xmlgraphics.apache.org/batik/tools/font-converter.html
+2013-08-12 20:22:30 UTC <byorgey> cool, thanks =)
+2013-08-12 20:22:43 UTC <byorgey> we should probably add that to the SVGFonts documentation 
+2013-08-12 20:23:44 UTC <notdan> I am not sure thought, I haven't tested it with SVGFonts package
+2013-08-12 20:36:13 UTC <travis-ci> [travis-ci] 13active/06new-semantics 1498914d0 http://travis-ci.org/diagrams/active/builds/10130389 The build failed.
+2013-08-12 20:48:27 UTC <notdan> Hm, panning the images works, because I figured how to use a proper library, but now the whole canvas can be dragged, even if the image is not overflowing
+2013-08-12 20:49:17 UTC <luite> what lib?
+2013-08-12 20:50:53 UTC <notdan> jquery-svgpan https://github.com/talos/jquery-svgpan
+2013-08-12 20:51:04 UTC <notdan> it's not very fancy but the other ones i found didn't work
+2013-08-12 20:53:26 UTC <luite> ah the demo looks nice
+2013-08-12 20:55:08 UTC <notdan> I'll try to hack it a little bit tomorrow, going to bed for now :]
+2013-08-12 20:55:38 UTC <luite> i'm going to wait a bit to see if the vagrant build succeeds :)
+2013-08-12 21:10:15 UTC <enthropy> https://github.com/diagrams/SVGFonts/blob/master/SVGFonts.cabal line 53 points to a repo that isn't accessible
+2013-08-13 00:20:40 UTC <byorgey> enthropy: ah, thanks
+2013-08-13 00:20:50 UTC <byorgey> enthropy: the new location is github.com/diagrams/SVGFonts
+2013-08-13 00:29:27 UTC <travis-ci> [travis-ci] 13SVGFonts/06SVGFonts-1.3 14f85582e http://travis-ci.org/diagrams/SVGFonts/builds/10137947 The build passed.
+2013-08-13 00:30:52 UTC <travis-ci> [travis-ci] 13SVGFonts/06master 147c080d9 http://travis-ci.org/diagrams/SVGFonts/builds/10137952 The build passed.
+2013-08-13 00:37:07 UTC <travis-ci> [travis-ci] 13SVGFonts/06master 14568e463 http://travis-ci.org/diagrams/SVGFonts/builds/10138098 The build passed.
+2013-08-13 00:37:58 UTC <travis-ci> [travis-ci] 13SVGFonts/06SVGFonts-1.3 14fbf24ef http://travis-ci.org/diagrams/SVGFonts/builds/10138096 The build passed.
+2013-08-13 01:08:02 UTC <travis-ci> [travis-ci] 13active/06new-semantics 140e3fba0 http://travis-ci.org/diagrams/active/builds/10138640 The build is still failing.
+2013-08-13 01:56:44 UTC <travis-ci> [travis-ci] 13active/06new-semantics 1453f9d94 http://travis-ci.org/diagrams/active/builds/10139414 The build is still failing.
+2013-08-13 06:26:11 UTC <raymank26> hi all. What's wrong with my code? http://pastebin.com/e2RQPQab
+2013-08-13 06:32:05 UTC <raymank26> any ideas?)
+2013-08-13 06:49:27 UTC <raymank26> oh, i fix that
+2013-08-13 07:53:30 UTC <raymank26> is there some way to use hoogle for diagrams?
+2013-08-13 08:00:35 UTC <mgsloan> raymank26: You can install hoogle locally: https://github.com/ndmitchell/hoogle/blob/master/docs/Local-Install.md
+2013-08-13 08:02:23 UTC <raymank26> ok, i will try this
+2013-08-13 09:26:44 UTC <raymank26> Is there some in-depth tutorial about paths and trails in diagrams? I read the manual but understand nothing =(
+2013-08-13 11:39:29 UTC <notdan> https://files.app.net/h2jcV0J8.png got literate haskell support in the editor
+2013-08-13 11:39:54 UTC <notdan> but i need to fix the way hscolour renders comments in literal haskell code
+2013-08-13 11:48:20 UTC <luite> cool. did it already support it or did you have to make new combined mode?
+2013-08-13 11:51:25 UTC <notdan> I made a new mode, but it was easier than I expected. Certainly easier than my adventures with SVG last morning :) The codemirror codebase looks clean
+2013-08-13 11:51:42 UTC <notdan> and language mode is basically a state machine parser
+2013-08-13 11:55:42 UTC <luite> hehe
+2013-08-13 11:57:13 UTC <notdan> I wish hscolour library would export more internal functions :(
+2013-08-13 11:57:29 UTC <notdan> Also, are the calls to Data.Text.Lazy.pack/unpack very expensive?
+2013-08-13 11:59:05 UTC <luite> about as expencive as using String in the first place i think (unless you kill some fusion by converting to Text)
+2013-08-13 12:02:56 UTC <notdan> Text does not support stream fusion?
+2013-08-13 12:08:36 UTC <luite> it supports stream fusion but that's probably killed if you go through string, unless everything can be optimzied away to pack . unpack
+2013-08-13 12:10:30 UTC <luite> fusion only works if you do succesive operations on streams and the superfluous unstream/stream pairs can be removed by rewrite rules
+2013-08-13 12:13:35 UTC <notdan> Hm, so here's the problem. The input is split into chunks. I need to run a function over some of the chunks, but the function accepts and returns String. Should I be packing/unpacking those individual chunks or the whole thing instead?
+2013-08-13 12:13:55 UTC <notdan> Sorry, I still kinda suck and reasoning about complexity and speed of the haskell code
+2013-08-13 12:17:53 UTC <luite> notdan: hmm, well this is rather library-specific :)
+2013-08-13 12:18:18 UTC <luite> is everything run through that function, or just some specific chunks?
+2013-08-13 12:18:49 UTC <notdan> Some chunks (code) are run through hscolour, some chunks (comments) are left as they are
+2013-08-13 12:19:18 UTC <notdan> maybe later I can slap on some filter on the comments so it could render markdown or something, but it would be a different function
+2013-08-13 12:20:07 UTC <luite> oh hmm, it's only a few kilobytes of code usually, right? i'd just convert to String first probably
+2013-08-13 12:23:42 UTC <notdan> ok
+2013-08-13 12:24:01 UTC <notdan> maybe i should talk to malcom wallace about patching the library but can't even find his email
+2013-08-13 13:00:26 UTC <notdan> Uh, well it kinda works https://files.app.net/h20tQdIA.png but the formatting is off... I wonder if I can make text appear preformatted in bootstrap without those dumb wells
+2013-08-13 13:00:35 UTC <notdan> wells/boxes w/e
+2013-08-13 13:05:55 UTC <notdan> https://files.app.net/h20vJaSP.png vs https://files.app.net/h2120nj-.png which one looks better?
+2013-08-13 13:07:59 UTC <luite> first
+2013-08-13 13:10:51 UTC <notdan> k
+2013-08-13 14:42:49 UTC <notdan> So I kinda added an ability to run the examples from the diagrams website in the pastebin with one click: https://files.app.net/h2dmUW93.png
+2013-08-13 14:43:14 UTC <notdan> but it's very hacky right now (uses unsafeperformio) and requires to make some changes in the examples itself
+2013-08-13 15:31:50 UTC <luite> notdan: perhaps it's a fun idea to make it run code from any site in one click?
+2013-08-13 15:32:22 UTC <luite> with some special URL, where either you do a POST request that already includes the whole source, or a GET request where the server retrieves the code
+2013-08-13 16:45:57 UTC <byorgey> raymank26: sorry about that!  I am working on one.  I haven't publically announced the new release for exactly this reason.
+2013-08-13 16:47:04 UTC <byorgey> notdan: ooh, nice =)
+2013-08-13 16:47:20 UTC <byorgey> notdan: what changes does it require in the examples?
+2013-08-13 16:47:26 UTC <raymank26> byorgey: hi! I will wait it =)
+2013-08-13 16:47:46 UTC <byorgey> raymank26: are there any particular parts you are confused about?  Or you are just generally confused?
+2013-08-13 16:48:41 UTC <raymank26> Hm.. Haskell advanced type system confuses me. Type families, multi-param type classes.
+2013-08-13 16:53:46 UTC <luite> multi-param typeclasses are simple by themselves, just add parameters. the complexity comes from dependencies between them and instance resolution
+2013-08-13 16:54:13 UTC <byorgey> raymank26: you shouldn't have to know too much about that stuff to be able to use diagrams.
+2013-08-13 16:54:40 UTC <byorgey> but in any case, the ways that diagrams uses those features is not very complex, so we are happy to explain it if you have particular questions
+2013-08-13 16:56:20 UTC <raymank26> But this knowledge is desirable for search over api, doesn't it?
+2013-08-13 16:57:33 UTC <byorgey> I don't know! =)
+2013-08-13 16:58:08 UTC <byorgey> If you can tell us specific things that confuse you when you are searching over the API, that would be very helpful so we can improve the documentation
+2013-08-13 16:58:39 UTC <byorgey> It is hard for me to know what you need to understand to use diagrams, because I already understand it =)
+2013-08-13 16:59:01 UTC <raymank26> =)
+2013-08-13 16:59:54 UTC <luite> raymank26: some superficial knowledge of type families is useful i think
+2013-08-13 17:00:18 UTC <luite> raymank26: so you can read the type signatures with type functions
+2013-08-13 17:00:31 UTC <byorgey> are there any type families we use other than V ?
+2013-08-13 17:00:39 UTC <raymank26> oh.. they is so complicate =(
+2013-08-13 17:00:56 UTC <luite> raymank26: no it's not really complicated. do you know vector spaces from math?
+2013-08-13 17:00:57 UTC <martingale> byorgey: I sent you an email about a problem I'm having with Parametric - If you have a chance to look at it I would really appreciate, I'm going crazy trying to figure out what I'm doing wrong.
+2013-08-13 17:01:09 UTC <byorgey> raymank26: you may find http://projects.haskell.org/diagrams/doc/manual.html#type-reference  helpful
+2013-08-13 17:01:19 UTC <raymank26> luite: yes. This is no problem
+2013-08-13 17:01:23 UTC <byorgey> martingale: yep, I'm looking at it now
+2013-08-13 17:01:33 UTC <martingale> byorgey: thanks!
+2013-08-13 17:03:30 UTC <raymank26> byorgey: I read this article today but it isn't exhaustive for me. What about AffineSpace or VectorSpace for example?
+2013-08-13 17:03:36 UTC <luite> raymank26: right, so vector spaces are defined over a scalar field (usually R or C), the vector-space uses an associated type to get from vectors of some type to the underlying scalar type
+2013-08-13 17:04:06 UTC <byorgey> raymank26: ah, good point, we should add those
+2013-08-13 17:04:29 UTC <byorgey> raymank26: those are defined in the vector-space library so I didn't think to add them, but you're right that you need to understand them to read diagrams types
+2013-08-13 17:04:40 UTC <raymank26> yep
+2013-08-13 17:05:11 UTC <raymank26> and. Tutorial should say something about operations on vectors and points
+2013-08-13 17:05:25 UTC <luite> raymank26: and similarly, from diagrams things, you get a function from some diagrams element to the underlying vector space
+2013-08-13 17:05:33 UTC <raymank26> but now it contains only information about construction
+2013-08-13 17:05:59 UTC <luite> raymank26: i should've said the type of
+2013-08-13 17:06:07 UTC <byorgey> raymank26: good idea
+2013-08-13 17:06:36 UTC <raymank26> luite: give me one minute to understand this =)
+2013-08-13 17:07:22 UTC <raymank26> byorgey: .-. ^* and others
+2013-08-13 17:07:49 UTC <byorgey> raymank26: right
+2013-08-13 17:07:58 UTC <byorgey> martingale: hmm, looks like a bug
+2013-08-13 17:08:43 UTC <martingale> byorgey: yours or mine?
+2013-08-13 17:09:46 UTC <byorgey> martingale: mine, I assume.  From what I can see, paramTest.hs is not producing the output I would expect
+2013-08-13 17:10:09 UTC <byorgey> and it's simple enough, I don't see much room in paramTest.hs for silly mistakes
+2013-08-13 17:10:12 UTC <luite> raymank26: the example says V a ~ R2, V is a type family, `V a` says that our `a` has to be an instance of that family, and its value is a type
+2013-08-13 17:10:37 UTC <luite> raymank26: for example to define one: type instance V MyCrazyType = R2
+2013-08-13 17:11:09 UTC <luite> raymank26: in that case, if a would be MyCrazyType, then V a is equal to R2
+2013-08-13 17:11:11 UTC <martingale> byorgey: Would in be in the Sectionable instance for Trail?
+2013-08-13 17:12:00 UTC <raymank26> luite: my brain is exploded =)
+2013-08-13 17:12:16 UTC <byorgey> martingale: probably.  Does it work for single Segments?
+2013-08-13 17:12:33 UTC <luite> raymank26: ok sorry :)
+2013-08-13 17:12:35 UTC <byorgey> I mean if you call adjust on a Segment, and then use the result in a trail, does it do what you expect?
+2013-08-13 17:12:55 UTC <luite> raymank26: you can read `V a` as "the underlying vector space of a"
+2013-08-13 17:13:10 UTC <luite> raymank26: and `~ R2` as is equal to R2
+2013-08-13 17:13:12 UTC <byorgey> raymank26: think of V as a function from types to types
+2013-08-13 17:13:33 UTC <martingale> byorgey: yes it seems to work for single segments
+2013-08-13 17:13:48 UTC <byorgey> martingale: ok, then the bug is likely in the Sectionable instance for Trail, yes
+2013-08-13 17:13:53 UTC <raymank26> luite: I think that king of abstractions make simple things more complicated..
+2013-08-13 17:14:08 UTC <luite> raymank26: but complicated things more simple ;)
+2013-08-13 17:14:27 UTC <raymank26> luite: sometimes..)
+2013-08-13 17:14:29 UTC <luite> it's true that it steepens the learning curve though
+2013-08-13 17:14:52 UTC <raymank26> function from type to type? O_o
+2013-08-13 17:15:11 UTC <byorgey> raymank26: yes, it takes a type as input and gives another type as output.
+2013-08-13 17:15:19 UTC <raymank26> oh, yes
+2013-08-13 17:15:25 UTC <raymank26> i understand that
+2013-08-13 17:15:32 UTC <byorgey> just like   succ 3 = 4,  we have e.g.   V (Path R2) = R2
+2013-08-13 17:16:23 UTC <martingale> byorgey: I'm not sure if I should try to fix it or if I should leave it to you. It might take me a while to understand your code.
+2013-08-13 17:17:20 UTC <raymank26> byorgey: I don't understand this. Can you explain?
+2013-08-13 17:17:41 UTC <raymank26> byorgey: what is V (Path R2) = R2? Equality? Why?
+2013-08-13 17:21:06 UTC <luite> raymank26: V (Path R2) = R2, just the result of applying V to Path R2, when you have V a ~ R2 in a constraint, then Path R2 would be an acceptable value for a
+2013-08-13 17:21:12 UTC <byorgey> martingale: it's up to you.  Yes, it would probably take you longer than me to fix.  But you would probably learn a lot in the process.  If you want to try to fix it go ahead, or I can take a look, either way is fine with me!
+2013-08-13 17:21:48 UTC <byorgey> raymank26: that is just the definition of V on the input (Path R2)
+2013-08-13 17:22:17 UTC <byorgey> raymank26: in fact more generally  V (Path v) = v,  which is defined here: https://github.com/diagrams/diagrams-lib/blob/master/src/Diagrams/Path.hs#L92
+2013-08-13 17:22:38 UTC <martingale> byorgey: Let me see if I can figure it out, I'll probably have lots of questions along the way
+2013-08-13 17:22:44 UTC <byorgey> martingale: sure
+2013-08-13 17:23:28 UTC <byorgey> martingale: note I opened an issue for it (see above), as you figure things out, gain more info, rule things out, etc. you can add comments to the issue
+2013-08-13 17:23:39 UTC <raymank26> I need the book "Haskell for dummies" =(
+2013-08-13 17:24:01 UTC <luite> raymank26: just play with diagrams a bit more and when you see difficult type errors ask here
+2013-08-13 17:24:31 UTC <martingale> byorgey: First question, what's the best way to test it - if I import a local copy of Trail will it override the one in the ghc pkg
+2013-08-13 17:25:20 UTC <byorgey> martingale: no, that won't work
+2013-08-13 17:25:50 UTC <raymank26> luite: oh, thank you. I would like to make this fractal http://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Koch_curve_construction.svg/250px-Koch_curve_construction.svg.png What primitives should I use? Paths?
+2013-08-13 17:26:18 UTC <luite> i think there's an example that does that thing :)
+2013-08-13 17:26:29 UTC <byorgey> martingale: when I'm doing this sort of thing I would usually just edit Trail.hs directly and 'cabal install' (in a sandbox of course)
+2013-08-13 17:27:28 UTC <luite> raymank26: hm can't find it, byorgey might know
+2013-08-13 17:27:43 UTC <luite> raymank26: but you have two cases, the base case is just a line
+2013-08-13 17:27:44 UTC <byorgey> raymank26: http://hackage.haskell.org/packages/archive/diagrams-contrib/0.7/doc/html/Diagrams-TwoD-Path-IteratedSubset.html
+2013-08-13 17:27:59 UTC <luite> hah :)
+2013-08-13 17:28:05 UTC <byorgey> raymank26: that is somewhat more general though, you still might learn more just by trying to write the code yourself =)
+2013-08-13 17:28:22 UTC <raymank26> :D
+2013-08-13 17:28:40 UTC <byorgey> raymank26: for that I would work with 'lines' (i.e. things of type  Trail' Line R2)
+2013-08-13 17:29:06 UTC <raymank26> what about coordinates for lines?
+2013-08-13 17:29:27 UTC <byorgey> raymank26: you can apply transformations such as rotations to a line, and you can concatenate them in sequence using (<>)  (the Monoid combining operation)
+2013-08-13 17:29:40 UTC <byorgey> raymank26: what do you mean?
+2013-08-13 17:30:14 UTC <byorgey> raymank26: you should not have to think about coordinates at all
+2013-08-13 17:30:25 UTC <raymank26> hm
+2013-08-13 17:31:00 UTC <byorgey> raymank26: try writing a function koch :: Int -> Trail' Line R2  so that  koch n  produces an order-n koch curve
+2013-08-13 17:31:15 UTC <byorgey> in the base case (n = 0) you can use  fromOffsets  to create a straight line
+2013-08-13 17:31:40 UTC <byorgey> in the recursive case, take four copies of the order-(n-1) curve, rotate some of them, and concatenate them all with 'mconcat'
+2013-08-13 17:32:02 UTC <byorgey> if you want them all to be the same size you can also shrink down the result using 'sized'
+2013-08-13 17:32:09 UTC <raymank26> base case is simple, I know. But How can I "devide" line into three in case of deep 1?
+2013-08-13 17:32:34 UTC <byorgey> raymank26: don't think in terms of dividing a line, think in terms of putting together four copies
+2013-08-13 17:32:50 UTC <raymank26> hm. looks good
+2013-08-13 17:33:46 UTC <raymank26> hm. much simpler now
+2013-08-13 17:33:55 UTC <raymank26> i will try this now =)
+2013-08-13 17:34:29 UTC <byorgey> raymank26: great, let us know how it goes =)
+2013-08-13 17:34:37 UTC <raymank26> ok :D
+2013-08-13 18:05:05 UTC <raymank26> how to move origin to the right side of diagram?
+2013-08-13 18:08:03 UTC <raymank26> alignR
+2013-08-13 18:08:06 UTC <raymank26> =)
+2013-08-13 18:09:00 UTC <raymank26> I make this!! =)
+2013-08-13 18:09:10 UTC <martingale> byorgey: where is :< defined?
+2013-08-13 18:13:20 UTC <martingale> byorgey: never mind, is see it's in fingertree
+2013-08-13 20:23:13 UTC <travis-ci> [travis-ci] 13active/06new-semantics 1442ee00a http://travis-ci.org/diagrams/active/builds/10170691 The build is still failing.
+2013-08-14 00:59:32 UTC <cmears> re named subdiagrams: does it make sense to have a function with type "IsName n => n -> QDiagram b v m -> Subdiagram b v m" ?
+2013-08-14 00:59:47 UTC <cmears> That is, just lookup a subdiagram by its name
+2013-08-14 01:00:17 UTC <cmears> (I guess it would actually return "Maybe (Subdiagram b v m)"
+2013-08-14 01:02:00 UTC <byorgey> cmears: yes!
+2013-08-14 01:02:20 UTC <cmears> oh good
+2013-08-14 01:02:20 UTC <byorgey> I keep meaning to add such a function but I've never gotten a properly sized round tuit
+2013-08-14 01:02:42 UTC <cmears> I thought I had misunderstood the design or something
+2013-08-14 01:03:14 UTC <cmears> Regular "withName" could be implemented in terms of it
+2013-08-14 01:04:42 UTC <byorgey> indeed
+2013-08-14 01:05:17 UTC <cmears> oh, it's basically "lookupSub"
+2013-08-14 01:06:07 UTC <cmears> + subMap
+2013-08-14 01:06:44 UTC <byorgey> yes, but with a nicer API
+2013-08-14 01:06:48 UTC <byorgey> =)
+2013-08-14 01:07:00 UTC <byorgey> I beg you to add it.
+2013-08-14 01:07:04 UTC <cmears> so basically you've already written it, I just need to give it a type and export it (:
+2013-08-14 01:07:09 UTC <byorgey> sure =)
+2013-08-14 01:25:45 UTC <martingale> byorgey: Since you asked nicely I returned your gitignore
+2013-08-14 01:26:02 UTC <martingale> byorgey: By the way, I don't think it works for segments either - your have reversDomain = reveseSegment
+2013-08-14 12:56:11 UTC <byorgey> martingale: yeah, you might be right.  Probably we should just remove that default implementation.
+2013-08-14 13:01:14 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 14d36aae4 http://travis-ci.org/diagrams/diagrams-lib/builds/10197114 The build passed.
+2013-08-14 13:02:52 UTC <martingale> Fun with arrow heads - a vectorfield: https://github.com/jeffreyrosenbluth/arrowheads/blob/master/vectorfield.png
+2013-08-14 13:03:47 UTC <byorgey> oooh, nice =)
+2013-08-14 13:04:46 UTC <martingale> byorgey: Thanks, I think it would be a good idea to remove the default implementation, easier find bugs.
+2013-08-14 13:06:05 UTC <byorgey> martingale: sure.  do you want to do that?
+2013-08-14 13:07:23 UTC <martingale> Sure, can you think of any other instance thay may use the default, so that i can fix those as well?
+2013-08-14 13:08:26 UTC <byorgey> martingale: I have no idea.  Just remove it and see what breaks. =)
+2013-08-14 13:08:37 UTC <martingale> byorgey: will do
+2013-08-14 13:08:48 UTC <byorgey> if you remove the default implementation, then any instances which do not override it will generate warnings
+2013-08-14 13:09:01 UTC <byorgey> so they should be easy to find.
+2013-08-14 13:12:51 UTC <martingale> byorgey: got it
+2013-08-14 13:16:16 UTC <byorgey> martingale: btw, I gave you push access to diagrams-lib. see http://www.haskell.org/haskellwiki/Diagrams/Dev/ReviewingAndMerging
+2013-08-14 13:25:36 UTC <martingale> byorgey: thanks
+2013-08-14 13:33:26 UTC <byorgey> can anyone think of a nice design for an icon to go with sections of "exercises" in tutorials on the diagrams site
+2013-08-14 13:33:35 UTC <byorgey> just like "warning" and "todo" sections have little icons
+2013-08-14 13:34:33 UTC <byorgey> for the moment I will just use a big 'E'
+2013-08-14 13:59:44 UTC <martingale> A dumbell
+2013-08-14 15:05:54 UTC <byorgey> martingale: oh, good idea
+2013-08-14 15:06:46 UTC <byorgey> how's this: http://www.cis.upenn.edu/~byorgey/hosted/Exercises.png
+2013-08-14 15:07:23 UTC <martingale> perfect!
+2013-08-14 15:07:39 UTC <byorgey> great =)
+2013-08-14 15:09:14 UTC <byorgey> http://www.cis.upenn.edu/~byorgey/hosted/diagrams-exercises.png
+2013-08-14 15:12:21 UTC <luite> 3. generalize this result
+2013-08-14 15:12:57 UTC <martingale> That looks great
+2013-08-14 15:14:10 UTC <byorgey> luite: hehe, added =)
+2013-08-14 15:16:15 UTC <luite> grmblz how do i insert a foreign call in core without it making a let binding
+2013-08-14 15:23:32 UTC <martingale> byorgey: Just submitted a pull request removing the default implementation of reverseDomain. I know I have push access, but I would prefer If someone takes a look before megring.
+2013-08-14 15:31:24 UTC <byorgey> martingale: sure, sounds good
+2013-08-14 15:49:23 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14965ffe1 http://travis-ci.org/diagrams/diagrams-doc/builds/10202257 The build failed.
+2013-08-14 16:19:45 UTC <travis-ci> [travis-ci] 13SVGFonts/06master 14e708b1f http://travis-ci.org/diagrams/SVGFonts/builds/10204636 The build passed.
+2013-08-14 16:20:42 UTC <travis-ci> [travis-ci] 13SVGFonts/06SVGFonts-1.3 146e603f6 http://travis-ci.org/diagrams/SVGFonts/builds/10204634 The build passed.
+2013-08-14 16:44:14 UTC <notdan> luite: I thought about it, but it requires more than a quick hack, in order to avoid DoS with big files, etc. I think I might use a streaming library for that?
+2013-08-14 16:44:27 UTC <notdan> luite: (that's about GET request. POST request is how it works right now)
+2013-08-14 16:45:13 UTC <notdan> byorgey: I had to add 'main = return example' and 'main :: IO (Diagram SVG R2)', but this is a shortcoming in my code, as I've discovered
+2013-08-14 16:45:37 UTC <notdan> byorgey: and I also changed Cairo -> SVG, because that's the backend I am using
+2013-08-14 16:46:02 UTC <luite> notdan: i think you can just limit the POST body size to 64kB or so, compiling very large hs files is probably not something that should be allowed :)
+2013-08-14 16:46:46 UTC <luite> oh, get, yeah, use http-conduit or so, i think you can abort the connection with an exception if it's too big
+2013-08-14 16:47:01 UTC <luite> hmm, perhaps POST is enough
+2013-08-14 16:47:49 UTC <notdan> byorgey: do you know, by any change, is there a way to get a raw body of the .lhs file in hakyll? $body$ is already formated one
+2013-08-14 16:47:54 UTC <notdan> luite: yeah that's a good idea
+2013-08-14 16:50:13 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 149eaff96 http://travis-ci.org/diagrams/diagrams-doc/builds/10204732 The build is still failing.
+2013-08-14 17:15:45 UTC <byorgey> notdan: yes, it is possible.  $body$ will only be formatted if you call pandocCompiler.  Take a look at the diagrams hakyll.hs and see how we compile the .lhs files in multiple ways---in particular the "raw" version does not do any formatting
+2013-08-14 19:22:40 UTC <ClaudiusMaximus> anyone know any nice conformally invariant* curve representations?  *by which I mean   given  f :: Curve -> R -> RÂ²  and a conformal  g :: RÂ² -> RÂ²  there exists  h :: (RÂ² -> RÂ²) -> Curve -> Curve  such that  f (h g c) t = g (f c t)
+2013-08-14 19:28:07 UTC <ClaudiusMaximus> actually, maybe changing the space would be a way to get there too...  http://www2.eng.cam.ac.uk/~rjw57/pdf/r_wareham_pdh_thesis.pdf "Computer Graphics Using Conformal Geometric Algebra" R Wareham 2006  (which also describes a hyperbolic mandelbrot set variant, though I'm not sure what properties it has)
+2013-08-14 19:33:01 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 142653221 http://travis-ci.org/diagrams/diagrams-doc/builds/10211079 The build is still failing.
+2013-08-14 23:50:51 UTC <cmears> wow, github is clever
+2013-08-14 23:51:26 UTC <cmears> I did a forced-update to my master, and it updated the pull request to match
+2013-08-14 23:51:38 UTC <cmears> it's a good thing that's actually what I wanted (:
+2013-08-14 23:56:58 UTC <travis-ci> [travis-ci] 13diagrams-core/06master 147a71314 http://travis-ci.org/diagrams/diagrams-core/builds/10221728 The build passed.
+2013-08-15 00:13:08 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 14c7802a7 http://travis-ci.org/diagrams/diagrams-lib/builds/10222440 The build passed.
+2013-08-15 02:26:29 UTC <byorgey> martingale: looks great, thanks!
+2013-08-15 02:30:30 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 14c10448a http://travis-ci.org/diagrams/diagrams-lib/builds/10225771 The build passed.
+2013-08-15 02:41:17 UTC <martingale> byorgey: my pleasure
+2013-08-15 03:31:36 UTC <cmears> byorgey, I merged the lookupName stuff without the CHANGES changes
+2013-08-15 03:31:51 UTC <cmears> (and exported it in diagrams-lib)
+2013-08-15 10:57:18 UTC <byorgey> cmears: yep, I saw that, thanks!
+2013-08-15 10:58:06 UTC <travis-ci> [travis-ci] 13monoid-extras/06master 141a31438 http://travis-ci.org/diagrams/monoid-extras/builds/10236225 The build passed.
+2013-08-15 11:01:48 UTC <byorgey> wow, so many pull requests all of a sudden.  This is great. =)
+2013-08-15 11:04:30 UTC <travis-ci> [travis-ci] 13SVGFonts/06master 14e4237f2 http://travis-ci.org/diagrams/SVGFonts/builds/10236283 The build passed.
+2013-08-15 13:19:58 UTC <martingale> byorgey: I'm having trouble using Style R2 -> Style R2, if headStyle is of this type (say fc red . opacity 0.50 )how do I apply the style to a head diagram?
+2013-08-15 15:50:09 UTC <notdan> https://files.app.net/h72hH41t.png RSS feed for the pastebin
+2013-08-15 16:55:38 UTC <luite> rss is pull-only isn't it?
+2013-08-15 17:26:45 UTC <notdan> what do you mean?
+2013-08-15 19:25:32 UTC <luite> notdan: oh i thought it might be nice to use the rss as input for an irc bot
+2013-08-15 19:25:42 UTC <luite> if the feed could include some category or channel tag
+2013-08-15 19:28:41 UTC <notdan> oh yeah I forgot that I had an irc bot
+2013-08-15 19:28:49 UTC <notdan> well I can just push updates to it directly
+2013-08-15 19:44:52 UTC <raymank26> http://82.196.11.44/screens/1376595836.png
+2013-08-15 19:45:02 UTC <raymank26> =)
+2013-08-15 19:45:28 UTC <raymank26> great lib
+2013-08-15 19:45:55 UTC <notdan> yay sierpinski triangles :)
+2013-08-15 19:47:38 UTC <raymank26> and Kosh curve :)
+2013-08-15 19:47:38 UTC <luite> raymank26: cool :) got used to the type errors already?
+2013-08-15 19:47:42 UTC <edwardk> heya
+2013-08-15 19:47:48 UTC <luite> oh hi
+2013-08-15 19:47:53 UTC <edwardk> byorgey/anyone: can diagrams generate an animated gif?
+2013-08-15 19:47:54 UTC <raymank26> luite: :D yep
+2013-08-15 19:48:10 UTC <luite> edwardk: it can spit out multiple images that you can combine into one
+2013-08-15 19:48:22 UTC <edwardk> i'm trying to do a nice post on cellular automata using lenses and comonads on the school of haskell
+2013-08-15 19:48:26 UTC <raymank26> luite: But now I'm stucking at Dragon curve =( Some strange error...
+2013-08-15 19:48:29 UTC <ClaudiusMaximus> edwardk: gifsicle is a cool tool
+2013-08-15 19:48:32 UTC <edwardk> so i'm kind of limited to what i can do within their site
+2013-08-15 19:48:52 UTC <edwardk> hence my inquiry about getting diagrams itself to do the heavy lifting
+2013-08-15 19:49:02 UTC <ClaudiusMaximus> ah
+2013-08-15 19:49:07 UTC <luite> clearly you should convince them to buy ghcjs
+2013-08-15 19:49:22 UTC <edwardk> because it'd be really sexy to be able to spit out an animated gif of say a game of life evolving
+2013-08-15 19:51:54 UTC <luite> hmm i don't think diagrams can do it without special tools yet
+2013-08-15 19:52:13 UTC <luite> and diagrams-cairo would probably not run there anyway
+2013-08-15 19:53:25 UTC <luite> edwardk: does SoH support svg?
+2013-08-15 19:53:54 UTC <raymank26> luite: I read material about type families and understood it =)
+2013-08-15 19:55:43 UTC <luite> http://hdiff.luite.com/tmp/life/ =)
+2013-08-15 19:56:28 UTC <raymank26> wow
+2013-08-15 19:57:42 UTC <raymank26> I would like to view haskell code for this
+2013-08-15 19:58:06 UTC <edwardk> luite: there is some web based back end support for the active haskell stuff, so i was  going to try to use that
+2013-08-15 19:59:53 UTC <luite> raymank26: sorry that's not diagrams, it's gloss i think
+2013-08-15 20:01:32 UTC <luite> edwardk: if you can somehow serve an svg with that, it should be doable. diagrams-svg doesn't have foreign deps.
+2013-08-15 20:02:00 UTC <edwardk> i can render the svg i think. if not i'll harass johnw until i can
+2013-08-15 20:03:01 UTC <luite> i was a bit confused when you said 'active haskell' though, since the package name for animations is also 'active'
+2013-08-15 20:03:33 UTC <luite> i think byorgey is doing some major rewriting with that though
+2013-08-15 20:04:20 UTC <luite> but at least you can get out a list of diagrams, do some hackery to combine those in an animated svg
+2013-08-15 20:04:42 UTC <edwardk> well i was hoping to do so in a convincingly short haskell snippet ;)
+2013-08-15 20:06:43 UTC <luite> hehe, i don't know that :( perhaps byorgey has been working on something
+2013-08-15 20:14:11 UTC <edwardk> what is the easiest way to get the svg writer to spew out an svg document as a bytestring?
+2013-08-15 20:14:16 UTC <edwardk> i suck at diagrams
+2013-08-15 20:16:25 UTC <luite> renderDia SVG something i should've installed the hoogle docs
+2013-08-15 20:17:07 UTC <luite> http://hackage.haskell.org/packages/archive/diagrams-svg/0.7/doc/html/Diagrams-Backend-SVG.html ah see here
+2013-08-15 20:17:30 UTC <notdan> renderSvg . renderDia SVG options diagrams
+2013-08-15 20:17:35 UTC <notdan> oh too alte
+2013-08-15 20:17:35 UTC <edwardk> shit it wants to spit out a file
+2013-08-15 20:17:46 UTC <notdan> that's renderSVG
+2013-08-15 20:17:47 UTC <luite> nah just an Svg
+2013-08-15 20:18:05 UTC <notdan> renderSVG wants to split out a file, renderSvg just converts Svg to Text 
+2013-08-15 20:18:06 UTC <luite> which is some builder thing that you can render to a ByteString
+2013-08-15 20:18:15 UTC <edwardk> ah
+2013-08-15 20:18:17 UTC <edwardk> blaze.svg
+2013-08-15 20:18:25 UTC <notdan> yea
+2013-08-15 20:18:40 UTC <notdan> https://github.com/diagrams/diagrams-svg/blob/master/src/Diagrams/Backend/SVG.hs#L30
+2013-08-15 20:19:23 UTC <luite> notdan: where is this renderSVG you're talking about?
+2013-08-15 20:19:39 UTC <notdan> luite: https://github.com/diagrams/diagrams-svg/blob/master/src/Diagrams/Backend/SVG.hs#L228
+2013-08-15 20:20:18 UTC <luite> oh must be newer than the version i have installed
+2013-08-15 20:20:18 UTC <notdan> btw, it's definition is exactly what edwardk wants except for the BS.writeFile part :)
+2013-08-15 20:20:19 UTC <mgsloan> edwardk: Doing diagrams on SoH has been on my backburner for /waaay/ too long
+2013-08-15 20:20:31 UTC <mgsloan> I'll be curious to hear about any headway on that
+2013-08-15 20:20:49 UTC <mgsloan> It really shouldn't be much harder than serving up an svg
+2013-08-15 20:21:32 UTC <mgsloan> A gif would be neat too!  Theoretically svg could also be used for animations, though it'd be a bit heavyweight if it was done frame by frame
+2013-08-15 20:22:22 UTC <mgsloan> edwardk: Also, check this out: https://github.com/diagrams/diagrams-contrib/tree/master/src/Diagrams/Lens.hs
+2013-08-15 20:23:06 UTC <edwardk> well, i confess this side of the code is the kind of thing that causes my interest to rapidly taper off
+2013-08-15 20:23:06 UTC <luite> mgsloan: does SoH support cairo?
+2013-08-15 20:23:16 UTC <mgsloan> I'll bet some of these lens have unlawful corner cases, but hey, what can you do
+2013-08-15 20:23:17 UTC <edwardk> so i'm hoping to get something done before i burn out and go back to the matrix posts ;)
+2013-08-15 20:23:42 UTC <luite> do another matrix post, the last one was fun :)
+2013-08-15 20:24:03 UTC <mgsloan> edwardk: :D  Well, if you need to ask someone about stuff, feel free to ask me
+2013-08-15 20:24:39 UTC <mgsloan> luite: Nope :/
+2013-08-15 20:24:40 UTC <edwardk> will do
+2013-08-15 20:25:00 UTC <edwardk> i'm going to write up the next one, but i want someone to win No-Prize #2 first
+2013-08-15 20:25:47 UTC <mgsloan> luite: It shouldn't be too hard to add it to stackage, but it does have unfortunate implications for ease of building on multiple platforms
+2013-08-15 20:26:05 UTC <mgsloan> Well, maybe not so bad.  I'm not sure if people end up in gtk hell due to a libcairo dependency
+2013-08-15 20:28:19 UTC <luite> mgsloan: perhaps doing it through svg is easier. just need someone to spend some time figuring out how to munge the separate frames into one file with the correct animate tags
+2013-08-15 20:30:16 UTC <mgsloan> luite: Yup.  Could also spit out some javascript that hide/shows the svgs appropriately
+2013-08-15 20:30:59 UTC <luite> yeah but allowing js is a bit risky, do you serve those files in an iframe form a different domain?
+2013-08-15 20:31:42 UTC <mgsloan> Yup
+2013-08-15 20:32:24 UTC <mgsloan> Essentially, nothing is disallowed because everything is sandboxed on both the server and webpage
+2013-08-15 20:33:12 UTC <mgsloan> luite: If at some point ghcjs can make it into stackage, we could conceivably serve ghcjs output
+2013-08-15 20:33:30 UTC <mgsloan> (I realize that's a little problematic what with ghc versions etc etc)
+2013-08-15 20:34:06 UTC <luite> it requires a bit of setup though...
+2013-08-15 20:34:56 UTC <luite> but i hope i can sneak my patches past the ghc maintainers, so it will build on a stock ghc 7.8 :)
+2013-08-15 20:35:06 UTC <mgsloan> Awesome :D
+2013-08-15 20:35:19 UTC <luite> mgsloan: i finally did the desugaring and typechecking customizations i had been planning for a long time
+2013-08-15 20:36:08 UTC <luite> so we can add extra allowed ffi types in ghcjs (without patching ghc), and customize how they're marshalled
+2013-08-15 20:36:33 UTC <mgsloan> luite: Cool!  I can't wait for such stuff to be the defacto approach for Haskell UI
+2013-08-15 20:36:38 UTC <luite> first thing i did was removing the 0# / 1# marshalling of Bool (since both a tthe GHCJS and JavaScript side, booleans are just javascript bool values)
+2013-08-15 20:37:17 UTC <mgsloan> ahh
+2013-08-15 20:40:36 UTC <luite> mgsloan: but if you have ideas about great things that are possible with Fay's FFI, but not with GHC's, plz tell. we could automatically convert String back and forth for example, but i'm not sure that's a good idea :)
+2013-08-15 20:41:12 UTC <mgsloan> luite: Marshalling 'Text' would be nice
+2013-08-15 20:41:52 UTC <luite> yeah that should be possible
+2013-08-15 20:42:00 UTC <mgsloan> https://github.com/fpco/yesod-fay/blob/master/Language/Fay/Yesod.hs
+2013-08-15 20:42:59 UTC <luite> well that is another option, type Text = JSString
+2013-08-15 20:43:10 UTC <mgsloan> Ah, right!
+2013-08-15 20:43:25 UTC <luite> and lock someone in the basement to rebuild the Text API for you based on JSString
+2013-08-15 20:43:34 UTC <mgsloan> Haha
+2013-08-15 20:43:54 UTC <mgsloan> Yeah, currently there isn't very much proper "Text" manipulation
+2013-08-15 20:44:00 UTC <mgsloan> But its nice to be able to pass them around
+2013-08-15 20:44:30 UTC <luite> we use JSRef a for javascript references of some kind, phantom type similar to Ptr
+2013-08-15 20:44:43 UTC <luite> so JSString = JSRef JSString_ or something
+2013-08-15 20:45:07 UTC <luite> JSRef a = JSRef ByteArray#
+2013-08-15 20:45:13 UTC <mgsloan> luite: Can ghcjs's ffi pass in polymorphic types (such that javascript can do the type tag discrimination)?
+2013-08-15 20:45:20 UTC <luite> but that's just because ByteArray# is a convenient primitive type
+2013-08-15 20:45:23 UTC <mgsloan> I suppose at that point the types have been erased, so that'd be rather tricky
+2013-08-15 20:45:33 UTC <mgsloan> Maybe with a Typeable constraint!
+2013-08-15 20:45:57 UTC <luite> Typeable could work yeah, but why do you want it?
+2013-08-15 20:47:00 UTC <mgsloan> It's just kindofa neat hack - turns out that you can use empty typeclasses with Fay - as long as you do the dispatch in javascript
+2013-08-15 20:47:13 UTC <mgsloan> So, closed-world typeclasses :)
+2013-08-15 20:47:28 UTC <mgsloan> But when you have proper typeclasses I'm not sure how useful it is
+2013-08-15 20:48:24 UTC <luite> how do you get the type from a value?
+2013-08-15 20:49:21 UTC <luite> in GHCJS that's quite unpossible in general.... for example the js value `false' can be the first constructor of any enumeration ADT
+2013-08-15 20:49:52 UTC <luite> and a JavaScript Number can be Char#, Int#, Word#
+2013-08-15 20:50:11 UTC <luite> and every one-constructor type with exactly one of thise primitives
+2013-08-15 21:47:24 UTC <mgsloan> luite: sorry, got distracted.  type is gotten via "instanceOf"
+2013-08-15 21:47:50 UTC <mgsloan> luite: Clearly this only works for the topmost type constructor
+2013-08-15 21:48:01 UTC <mgsloan> err "instanceof"
+2013-08-15 21:51:46 UTC <luite> ah right
+2013-08-15 22:19:48 UTC <luite> ClaudiusMaximus: if you come up with some industrial application for these conformal maps you could win $1000 from pfcomplete :p
+2013-08-15 22:20:35 UTC <luite> actually i shouldn't have said that because now i want to do it ;)
+2013-08-15 22:21:18 UTC <ClaudiusMaximus> luite: heh, go for it - i just want something to use :)
+2013-08-15 22:25:00 UTC <luite> so they're used in electrodynamics, and in engineering in fluid dynamics, electrical engineering, must be possible to come up with a convincing example
+2013-08-15 22:25:09 UTC <ClaudiusMaximus> yep..
+2013-08-15 22:28:02 UTC <ClaudiusMaximus> saw one paper about using it for motion/trajectory planning in AI
+2013-08-15 22:28:18 UTC <luite> oh cool
+2013-08-15 22:28:42 UTC <ClaudiusMaximus> though i didn't read it properly, was looking more for things to make things like http://www.bugman123.com/Hyperbolic/SquareSpheres-large.jpg
+2013-08-15 22:29:08 UTC <ClaudiusMaximus> to transform poincare disk into a square or rectangle or whichever other shape
+2013-08-15 22:29:14 UTC <luite> but actually i just like them for the pictures :)
+2013-08-15 22:30:28 UTC <ClaudiusMaximus> more here http://www.bugman123.com/Hyperbolic/#ConformalMapping
+2013-08-15 22:31:40 UTC <pr> is there a tikz backend for diagrams?
+2013-08-15 22:33:34 UTC <luite> ClaudiusMaximus: hmm, kinda cute, but i prefer them less shiny :)
+2013-08-15 22:36:34 UTC <ClaudiusMaximus> pr: http://hackage.haskell.org/package/diagrams-tikz (never tried it)
+2013-08-15 22:42:30 UTC <pr> neat
+2013-08-15 22:42:44 UTC <pr> oh wow, just seeing you guys had a 'major' release just a week ago or so
+2013-08-15 22:42:49 UTC <pr> congrats on that =)
+2013-08-15 23:24:43 UTC <luite> putStrLn ('a':undefined) -- should this print the 'a' if the output is buffered?
+2013-08-16 01:16:36 UTC <travis-ci> [travis-ci] 13diagrams-postscript/06master 14492c9b5 http://travis-ci.org/diagrams/diagrams-postscript/builds/10262807 The build passed.
+2013-08-16 01:36:25 UTC <byorgey> bergey: ooh, happy to see you working on the metafont stuff =)
+2013-08-16 01:50:10 UTC <travis-ci> [travis-ci] 13diagrams-postscript/06ps-0.7 14fdf79e5 http://travis-ci.org/diagrams/diagrams-postscript/builds/10263509 The build passed.
+2013-08-16 01:50:59 UTC <travis-ci> [travis-ci] 13diagrams-postscript/06master 14647584c http://travis-ci.org/diagrams/diagrams-postscript/builds/10263507 The build passed.
+2013-08-16 02:29:21 UTC <bergey> The metafont code correctly renders the first example from the MF book.  It makes a huge hash of the second, though. :/
+2013-08-16 02:32:34 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 147a2ef30 http://travis-ci.org/diagrams/diagrams-doc/builds/10263835 The build has errored.
+2013-08-16 04:04:36 UTC <cmears> it would be nice if travis-ci didn't complain if it's just a timeout
+2013-08-16 04:04:36 UTC <cmears> (why does it timeout anyway?)
+2013-08-16 09:07:48 UTC <notdan> I am having some troubles compiling the 'active-0.1.0.6' package
+2013-08-16 09:08:12 UTC <notdan> http://pastebin.com/qrExH6YQ
+2013-08-16 09:16:00 UTC <notdan> I gues the vector space (with inner product) for Rational is just a field of rational numbers?
+2013-08-16 09:17:53 UTC <notdan> Maybe somebody has broke GeneralizedNewtypeDeriving in GHC HEAD
+2013-08-16 09:37:19 UTC <notdan> Also automatically deriving Transformable instance for SegTree is not longer working
+2013-08-16 09:37:24 UTC <mgsloan> notdan: probably related to http://typesandkinds.wordpress.com/2013/08/15/roles-a-new-feature-of-ghc/
+2013-08-16 09:38:23 UTC <notdan> Oh, I've heard of roles but didn't read anything about them
+2013-08-16 09:38:23 UTC <mgsloan> (which overall is pretty awesome)
+2013-08-16 09:38:43 UTC <notdan> yeah i bet, eir know his shit
+2013-08-16 09:38:57 UTC <notdan> I saw his presentation on singletons once
+2013-08-16 09:39:05 UTC <mgsloan> I hope that the fix to those errors isn't too huge
+2013-08-16 09:39:22 UTC <mgsloan> me too, at OPLSS!
+2013-08-16 09:39:58 UTC <notdan> yeah, last year :) 
+2013-08-16 09:40:05 UTC <notdan> have you been to this year's OPLSS?
+2013-08-16 09:40:12 UTC <mgsloan> Nope
+2013-08-16 09:40:22 UTC <mgsloan> I bet it was a good one, though!
+2013-08-16 09:40:59 UTC <notdan> yeah it's a shame that they haven't sorted the videos, I wanted to re-watch the Amal Ahmed's lectures
+2013-08-16 09:45:13 UTC <mgsloan> notdan: It looks like they have sorted out the videos!
+2013-08-16 09:45:15 UTC <mgsloan> http://www.cs.uoregon.edu/research/summerschool/summer12/curriculum.html
+2013-08-16 09:48:17 UTC <mgsloan> You could also watch Amal's course from this year - it's got an additional lecture
+2013-08-16 09:48:41 UTC <notdan> oh, that's interesting, I'll try that
+2013-08-16 09:49:35 UTC <mgsloan> Yup, might as well go for variety! :D
+2013-08-16 09:51:51 UTC <mgsloan> ACTION downloads Stephanie Wierich's lectures
+2013-08-16 09:52:12 UTC <notdan> are they all multiple gigabytes each?
+2013-08-16 09:52:28 UTC <mgsloan> 1.4 or so
+2013-08-16 09:53:32 UTC <notdan> I see
+2013-08-16 11:08:30 UTC <byorgey> notdan: yeah, those errors look definitely related to the new roles stuff.  Can you file a ticket on the active issue tracker?  I want to remember to look into it more carefully
+2013-08-17 01:15:04 UTC <edwardk> so cairo would be painful, svg is slow, postscript is file only
+2013-08-17 01:15:22 UTC <edwardk> is the html canvas stuff usable?
+2013-08-17 01:15:47 UTC <edwardk> btw- i'm not nearly as negative as that line sounded, just ticking off possible worlds
+2013-08-17 01:16:50 UTC <byorgey> sure, understood
+2013-08-17 01:17:00 UTC <byorgey> edwardk: maybe check out https://github.com/jbracker/diagrams-sunroof
+2013-08-17 01:17:08 UTC <byorgey> not sure what the status is, but I know jbracker was hacking on it recently
+2013-08-17 01:17:14 UTC <byorgey> so it might actually work
+2013-08-17 01:17:34 UTC <edwardk> hrmm wonder if it is on SoH
+2013-08-17 01:18:17 UTC <byorgey> oh, well, it's not even released on Hackage
+2013-08-17 01:18:32 UTC <edwardk> shucks
+2013-08-17 01:18:55 UTC <byorgey> however!
+2013-08-17 01:19:30 UTC <byorgey> I have  https://github.com/byorgey/diagrams-canvas .  I could probably get it to work pretty quickly and upload it to Hackage
+2013-08-17 01:19:43 UTC <byorgey> if you could convince the SoH people to install it
+2013-08-17 01:20:15 UTC <edwardk> =)
+2013-08-17 01:20:22 UTC <edwardk> you'd just have to get it into stackage
+2013-08-17 01:20:29 UTC <edwardk> and then it'd be in their supported packages list
+2013-08-17 01:20:33 UTC <edwardk> probably up in a day or so
+2013-08-17 01:20:52 UTC <edwardk> adding to stackage is just patching that fil
+2013-08-17 01:20:53 UTC <edwardk> er file
+2013-08-17 01:21:14 UTC <byorgey> yeah, I've added stuff to stackage before
+2013-08-17 01:21:24 UTC <byorgey> I can probably do that, assuming none of the dependencies have rotted
+2013-08-17 01:22:00 UTC <byorgey> OK, let me try =)
+2013-08-17 01:22:03 UTC <edwardk> sweet. i can either release this stuff today/tomorrow or i can wait. i'd rather have it run stupidly fast because then the eyeballs i get you see diagrams in its best light
+2013-08-17 01:22:39 UTC <byorgey> yeah, wait a bit and see if we can pull off this diagrams-canvas thing
+2013-08-17 01:22:45 UTC <edwardk> sounds good
+2013-08-17 01:22:53 UTC <edwardk> i'll let rein know i'm going to delay a bit
+2013-08-17 01:23:17 UTC <edwardk> i have enough other stuff to write up that having this one stalled at 90% isn't bad
+2013-08-17 01:23:52 UTC <fryguybob> There might be enough in canvas to avoid the transform problem as it tracks transforms in the backend and can tell if there is a difference and just not emit the transform when it would be the same.  The problem is getting rid of save/restore pairs.
+2013-08-17 01:24:37 UTC <edwardk> i suppose you could do the same in the svg backend for that matter
+2013-08-17 01:24:53 UTC <edwardk> just throw all the primitives with the same transform/etc into an extra structure
+2013-08-17 01:25:24 UTC <edwardk> that could cut the document size down dramatically, even if you just do it for neighboring constructs
+2013-08-17 01:25:33 UTC <fryguybob> Right
+2013-08-17 01:26:03 UTC <fryguybob> SVG needs a little structure to do that, with canvas or postscript it is implicit render state for whoever is doing the rendering.
+2013-08-17 01:26:05 UTC <edwardk> with only comparing the new thing to the last thing it still takes constant memory
+2013-08-17 01:26:19 UTC <edwardk> *nods*
+2013-08-17 01:36:07 UTC <byorgey> now installing 7 million packages in an hsenv sandbox...
+2013-08-17 01:40:25 UTC <byorgey> edwardk: hmm, I still think this ought to work somehow, but I am not sure of the right way to hook it up.  By default blank-canvas (which diagrams-canvas is built on) actually creates and runs a little web server
+2013-08-17 01:40:40 UTC <byorgey> but you want to somehow just send commands to an embedded HTML5 canvas
+2013-08-17 01:40:57 UTC <edwardk> let me get it tweaked a little and send you the code i'm using
+2013-08-17 01:41:11 UTC <byorgey> OK
+2013-08-17 01:41:12 UTC <edwardk> i can run a whole web server in here
+2013-08-17 01:41:17 UTC <byorgey> cool
+2013-08-17 01:41:18 UTC <edwardk> in fact it does
+2013-08-17 01:41:30 UTC <edwardk> so if you need interactivity you can have it, via snap, yesod, warp, whatever
+2013-08-17 01:41:37 UTC <edwardk> doesn't change my code much
+2013-08-17 01:41:51 UTC <edwardk> yesod was just because its the fewest # of lines to something that looks real
+2013-08-17 01:49:35 UTC <byorgey> OK.  So I'm sure it will be possible, just not sure how.  Maybe you can figure out how to glue it in (I hope).
+2013-08-17 01:50:36 UTC <hpaste> edwardk pasted âcellular automatorâ at http://lpaste.net/91908
+2013-08-17 01:50:47 UTC <edwardk> that is the version i have now
+2013-08-17 01:50:57 UTC <edwardk> that will draw rule 110
+2013-08-17 01:52:01 UTC <edwardk> actually i guess i can remove the 'home' page
+2013-08-17 01:52:21 UTC <edwardk> then it draws faster
+2013-08-17 01:53:55 UTC <edwardk> hrmm, hcat wants to draw the image from bottom to top when the svg renders
+2013-08-17 01:54:17 UTC <edwardk> can i get it emit my primitives in the opposite order so it looks like its progressively scanning out the automaton? ;)
+2013-08-17 01:55:04 UTC <byorgey> try using   cat unit_Y . reverse
+2013-08-17 01:56:06 UTC <edwardk> now how do i flip it over?
+2013-08-17 01:56:48 UTC <byorgey> flip it over?
+2013-08-17 01:57:29 UTC <edwardk> that caused my diagram to flip over
+2013-08-17 01:57:38 UTC <byorgey> oh, sorry, use  unitY  instead of  unit_Y
+2013-08-17 01:57:41 UTC <edwardk> k
+2013-08-17 01:57:49 UTC <byorgey> up is positive =)
+2013-08-17 01:58:13 UTC <edwardk> perfect!
+2013-08-17 01:58:17 UTC <byorgey> great =)
+2013-08-17 02:08:22 UTC <byorgey> got diagrams-canvas working, now I'm testing it with your automaton example
+2013-08-17 02:08:53 UTC <byorgey> edwardk: which package is Data.Bits.Lens from?
+2013-08-17 02:08:59 UTC <edwardk> lens
+2013-08-17 02:09:12 UTC <edwardk> 3.8 or 3.9
+2013-08-17 02:09:32 UTC <byorgey> ah
+2013-08-17 02:10:05 UTC <byorgey> heh, I thought I had lens already, but not in this sandbox
+2013-08-17 02:11:15 UTC <hpaste> edwardk revised âcellular automatorâ: âNo titleâ at http://lpaste.net/91908
+2013-08-17 02:11:27 UTC <edwardk> down to 63 lines
+2013-08-17 02:16:03 UTC <byorgey> arggh, diagrams-canvas seems to be even slower than the SVG version =(
+2013-08-17 02:18:34 UTC <luite> how fast is diagrams-ghcjs?
+2013-08-17 02:18:59 UTC <byorgey> good question, want to test it?
+2013-08-17 02:19:21 UTC <byorgey> though given edwardk's stated goals I don't think he would use that
+2013-08-17 02:19:52 UTC <luite> yeah it doesn't fit the stackage guidelines :(
+2013-08-17 02:20:09 UTC <byorgey> a bit
+2013-08-17 02:21:03 UTC <luite> i have some test failures in my current build and i'm working on the optimizer, but i'll try to compile diagrams again tomorrow or sunday then
+2013-08-17 02:22:08 UTC <byorgey> edwardk: well, it looks like diagrams-canvas is a failure too.  I do have high hopes for jbracker's diagrams-sunroof, but that probably won't be ready for a while
+2013-08-17 02:22:13 UTC <edwardk> shucks
+2013-08-17 02:22:41 UTC <edwardk> should i just publish it? it actually does look quite good and runs at a reasonable _enough_ speed to act as a proof of concept
+2013-08-17 02:22:59 UTC <byorgey> in the meantime I'll put optimizing the SVG backend at the front of my queue, but I can't make any promises about how long that will take.
+2013-08-17 02:23:26 UTC <byorgey> Yeah, just go ahead and publish it.  And if you don't mind, just mention the fact that the size/performance of the generated SVGs is being actively worked on.
+2013-08-17 02:23:28 UTC <edwardk> if we don't think there'll be a much better solution in the next few days then it'd probably be better to publish this way and then showcase improvments magically when they happen via stackage or in a followup
+2013-08-17 02:23:33 UTC <edwardk> Will do
+2013-08-17 02:23:36 UTC <byorgey> right
+2013-08-17 02:28:00 UTC <byorgey> bergey: ping
+2013-08-17 02:40:44 UTC <byorgey> bergey: I seem to recall you were at one point thinking about/hacking on ttps://github.com/diagrams/diagrams-core/issues/19 (tree structure in backends), just wondering what the status is
+2013-08-17 02:41:11 UTC <byorgey> ACTION -> bed, night all
+2013-08-17 02:54:53 UTC <edwardk> so close to being done. just wanting to polish it before i put it up
+2013-08-17 02:56:59 UTC <bergey> I looked enough at tree structure in backends to understand why it's hard, not enough to have insight.
+2013-08-17 02:59:48 UTC <bergey> I'd be game to take another look at it in September.  Or to help convert the Backends, if someone else figures out the design. 
+2013-08-17 03:13:07 UTC <bergey> Incidentally, I think the MetaFont paths are working now.  I'm adding tests, aiming for a pull request in a couple of days.  The interface is not good, though.
+2013-08-17 03:52:26 UTC <mgsloan> edwardk: awesome!
+2013-08-17 03:54:46 UTC <edwardk> https://www.fpcomplete.com/user/edwardk/cellular-automata is posted
+2013-08-17 03:55:16 UTC <mgsloan> (which is what I was "awesome!"-ing about) :D
+2013-08-17 03:55:21 UTC <edwardk> =)
+2013-08-17 03:55:29 UTC <edwardk> yeah but i figured i'd share the links
+2013-08-17 03:55:35 UTC <edwardk> thanks everyone for your help =)
+2013-08-17 03:56:19 UTC <mgsloan> Might be cool to package that up in a little "diagrams-soh" library
+2013-08-17 03:57:17 UTC <mgsloan> Hmm, no reason to make it soh specific, though.  Could just be "diagrams-server"
+2013-08-17 04:04:05 UTC <edwardk> i was planning on trying to render some sparse boolean matrices in later posts, so i wanted a way to draw grids like that
+2013-08-17 04:04:11 UTC <edwardk> this served as a good test case
+2013-08-17 04:06:02 UTC <mgsloan> Yup, very cool.  It's fun to change the rule number in the code and re run
+2013-08-17 04:08:05 UTC <mgsloan> I look forward to such illustrated maths tutorials!  It's really a perfect application for diagrams
+2013-08-17 04:08:40 UTC <bergey> edwardk: Is there a word missing in this part of your tutorial? "where have some ambient current configuration that is known we could run the experiment with."
+2013-08-17 04:08:45 UTC <edwardk> fixed
+2013-08-17 04:09:51 UTC <bergey> So it is, thanks!  The first appearance of grid still has [[Bool] (no second ]) in the type.  Unless that's my Firefox.
+2013-08-17 04:10:42 UTC <edwardk> will fix
+2013-08-17 04:11:18 UTC <edwardk> updated
+2013-08-17 04:11:39 UTC <bergey> thanks
+2013-08-17 16:41:49 UTC <byorgey> bergey: re: the Metafont interface, I was thinking of maybe making a little quasiquoter so you can directly write Metafont syntax
+2013-08-17 16:42:02 UTC <byorgey> or maybe we can come up with a nice little combinator interface
+2013-08-17 17:24:35 UTC <byorgey> edwardk: very cool SoH post!
+2013-08-17 17:26:13 UTC <edwardk> byorgey: thanks =)
+2013-08-17 17:26:36 UTC <edwardk> i'm sure i could have said 'diagrams' a few more times in that last paragraph or so but it would have been hard ;)
+2013-08-17 17:28:00 UTC <byorgey> hehehe
+2013-08-17 18:36:02 UTC <notdan> luite: what do you think of my plan for getting the interactive widgets to work: https://github.com/co-dan/interactive-diagrams/wiki/Interactive-widgets ?
+2013-08-17 18:46:34 UTC <luite> notdan: hmm, the problem is that linking in the whole of diagrams and all of its dependencies is huge
+2013-08-17 18:46:54 UTC <luite> normally you'd only link the functions you use
+2013-08-17 18:50:06 UTC <luite> unless you link each function to a separate file (like split-objs), but then you'd have thousands of requests
+2013-08-17 18:54:20 UTC <notdan> Oh, I see. Yeah that is problematic
+2013-08-17 18:55:05 UTC <notdan> although I had the impression that GHC itself links modules, not functions. So even if you use one function from a module, the linker adds the whole module to your binary
+2013-08-17 18:55:22 UTC <notdan> that's why binaries produced with ghc can be quite big
+2013-08-17 18:55:33 UTC <luite> it usually uses splits-objs, so it has lots of tiny object files in a lib
+2013-08-17 18:55:39 UTC <luite> multiple per module
+2013-08-17 19:00:26 UTC <luite> what's perhaps possible is make a few base bundles manually, with dependencies
+2013-08-17 19:00:44 UTC <luite> for example a program that just uses some putStrLn or simple stuff
+2013-08-17 19:00:57 UTC <luite> one that draws a few diagrams
+2013-08-17 19:01:17 UTC <luite> then based on the package deps of the current module, it selects the base bundles
+2013-08-17 19:01:32 UTC <luite> and links in all the extra things required that are not there yet in out.js
+2013-08-17 19:02:23 UTC <luite> that would require some mod to the linker, to omit some set of symbols
+2013-08-17 19:05:11 UTC <luite> hmm i'm not yet convince that that's the ideal solution
+2013-08-17 19:05:15 UTC <notdan> I see, that's a nice idea. Also in case lib.js, lib1.js and rts.js we can "link" them during runtime, right?
+2013-08-17 19:05:39 UTC <luite> rts.js is always the same, so you can load that statically
+2013-08-17 19:05:46 UTC <notdan> Well I'll start with linking everything then and we will come up with something
+2013-08-17 19:06:09 UTC <luite> lib.js / lib1.js just contain the shims, so you only need to figure out package dependencies for those
+2013-08-17 19:06:10 UTC <notdan> yeah and lib*.js contains shims (and user provided js code, but we won't have it)
+2013-08-17 19:06:19 UTC <notdan> yea
+2013-08-17 19:06:58 UTC <luite> we only have a few shims files, i think it's possible to bundle most of them in a static lib.js
+2013-08-17 19:07:31 UTC <luite> the out.js is really the tricky one...
+2013-08-17 21:24:09 UTC <luite> notdan: can you build a version that just spits out a new out.js for ever request first? i'll think about the linker changes required
+2013-08-17 21:36:56 UTC <notdan> luite: yeah, definetely, I am working on a prototype
+2013-08-18 01:18:33 UTC <travis-ci> [travis-ci] 13active/06new-semantics 1436afd74 http://travis-ci.org/diagrams/active/builds/10322191 The build is still failing.
+2013-08-18 01:19:51 UTC <carter> notdan: you've had a pretty productive gsoc!
+2013-08-18 01:19:57 UTC <carter> look forward to playing with the final result
+2013-08-18 01:20:45 UTC <mgsloan> ACTION too
+2013-08-18 01:25:53 UTC <byorgey> ACTION too
+2013-08-18 01:26:45 UTC <luite> :)
+2013-08-18 01:46:58 UTC <travis-ci> [travis-ci] 13active/06new-semantics 1438eaa50 http://travis-ci.org/diagrams/active/builds/10322419 The build is still failing.
+2013-08-18 02:38:21 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14bae30b0 http://travis-ci.org/diagrams/diagrams-doc/builds/10322791 The build failed.
+2013-08-18 02:42:41 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14a8c6675 http://travis-ci.org/diagrams/diagrams-doc/builds/10322914 The build has errored.
+2013-08-18 04:41:19 UTC <bergey> byorgey: I was picturing a quasiquoter; glad to hear you were too.  I've written a parser, which works for point literals.  I don't think it will be hard to add syntax to refer to haskell variables.
+2013-08-18 04:42:49 UTC <bergey> A combinator interface would be interesting, but I think it may be less clear to people who know metafont or have read the metafont docs, because .. is so overloaded.
+2013-08-18 04:48:23 UTC <carter> byorgey what are you talking about?
+2013-08-18 04:48:24 UTC <carter> :)
+2013-08-18 07:41:39 UTC <notdan> carter: heh, thanks, but I think it's too early to say that
+2013-08-18 07:43:41 UTC <notdan> Man, I fail to see how 'Roles' in GHC are a good idea. It seems like existing code might start having runtime errors because of the abscence of Role annotations. Also I don't understand why role inference is decidable, since type families are open
+2013-08-18 07:44:21 UTC <notdan> so in some cases all type families might point to one type (hence it's safe to assume that the role of the parameter under that family is R) and once you include another module...
+2013-08-18 07:45:33 UTC <notdan> oh, all type family parameters have roles N, I see
+2013-08-18 07:45:58 UTC <notdan> that might be the reason deriving some instances in diagrams-lib and active has failed
+2013-08-18 07:55:18 UTC <mgsloan> Yeah, as far as I know roles only make things safer
+2013-08-18 07:55:52 UTC <mgsloan> It'll be interesting to see whether people will need the escape hatch of disabling it
+2013-08-18 07:57:21 UTC <notdan> Yeah, it's because of the usage of (V t) in Transformable: https://gist.github.com/co-dan/6260479
+2013-08-18 07:58:28 UTC <notdan> well *we* knew, actually, that the instances were co-inciding https://github.com/co-dan/diagrams-lib/blob/34b8929083da850f6060370853e89d1ca7c5eeb3/src/Diagrams/Trail.hs#L144 but I guess there is no way in general for compiler to know that with open type families
+2013-08-18 07:59:48 UTC <notdan> mgsloan: I am a little bit afraid of the 'P'hantom role, becase it seems to me that a lot of code that uses it might become less type-safe actually
+2013-08-18 07:59:53 UTC <notdan> but i really should read the full paper
+2013-08-18 08:00:22 UTC <mgsloan> Oh, huh!  Well I be they're being careful with it
+2013-08-18 08:00:40 UTC <mgsloan> Who knows, I haven't looked into it too thoroughly myself
+2013-08-18 08:02:48 UTC <notdan> well i was talking abut this mostly http://typesandkinds.wordpress.com/2013/08/15/roles-a-new-feature-of-ghc/#role-annotations
+2013-08-18 08:16:52 UTC <mgsloan> I don't think that's talking about making "Ptr Int" and "Ptr (Bool -> Bool)" unify
+2013-08-18 08:17:21 UTC <mgsloan> instead it's about whether you want to be able to safely and cheaply cast between them
+2013-08-18 08:17:48 UTC <mgsloan> I could be wrong, though
+2013-08-18 08:18:42 UTC <mgsloan> Hmm, nah, I think that's right.
+2013-08-18 11:13:13 UTC <byorgey> yes, that's right.  None of this Role stuff will hurt type safety in any way.  Any program which did not type check before will still not type check.
+2013-08-18 11:13:37 UTC <byorgey> and it will definitely not cause any runtime errors.
+2013-08-18 11:14:28 UTC <byorgey> the interaction of roles with diagrams-lib is a bit annoying, but in another way I'm glad, because it makes evident the hidden assumption which was there before
+2013-08-18 11:15:09 UTC <byorgey> I hadn't explicitly realized that we were depending for type safety on the coincidence of Scalar and/or V results
+2013-08-18 11:15:59 UTC <byorgey> notdan: I know Richard personally and I have a lot of faith in his ability to think through all of this carefully, so I am not as worried as you =)
+2013-08-18 11:36:22 UTC <byorgey> kuribas: welcome =)  Anything which advances the state of the art in Haskell-native graphics/font support/etc. is a win for diagrams.
+2013-08-18 11:36:33 UTC <kuribas> https://github.com/kuribas/cubicbezier
+2013-08-18 11:37:19 UTC <byorgey> oooh, nice =)
+2013-08-18 11:37:35 UTC <kuribas> I just finished the Bezier Clipping algorithm.
+2013-08-18 11:38:32 UTC <kuribas> If I could make it _fit_ within the diagram API, that would be nice.
+2013-08-18 11:40:01 UTC <kuribas> The real hard things left are closed path arithmetic and finding out how the metafont paths are calculated.
+2013-08-18 11:41:24 UTC <byorgey> kuribas: bergey and I have actually already done a bunch of work on calculating metafont paths, see https://github.com/diagrams/diagrams-contrib/tree/metafont
+2013-08-18 11:41:58 UTC <byorgey> kuribas: I think it makes the most sense for your library to remain separate (i.e. not tied to the diagrams API) so it will be most generally useful
+2013-08-18 11:42:27 UTC <byorgey> however, there is a lot of overlap and I would be very interested to look into outsourcing our bezier stuff to your library
+2013-08-18 11:42:38 UTC <byorgey> and contributing the stuff we've done
+2013-08-18 11:43:34 UTC <byorgey> fryguybob has done most of the work re: bezier stuff in diagrams
+2013-08-18 11:44:41 UTC <kuribas> Ah, I'll check your metafont work out.
+2013-08-18 11:45:41 UTC <byorgey> hmm, what do you use hmatrix for?
+2013-08-18 11:46:31 UTC <byorgey> kuribas: we have been interested in implementing the metafont path syntax + spline generation algorithm, as a way to construct diagrams paths
+2013-08-18 11:47:56 UTC <kuribas> byorgey: For finding a specific radius of curvature on a curve.  It uses the root finding function of hmatrix.
+2013-08-18 11:48:22 UTC <kuribas> I need this to approximate an outline in bezier curves.
+2013-08-18 11:48:39 UTC <byorgey> I ask just becuase hmatrix is a pretty heavy dependency (since it uses the FFI and requires having certain C libraries installed, etc.)
+2013-08-18 11:48:59 UTC <kuribas> Yes, I have been thinking about that.
+2013-08-18 11:49:26 UTC <byorgey> fryguybob has implemented curvature for cubic beziers in diagrams
+2013-08-18 11:49:30 UTC <kuribas> Maybe I should use this: http://hackage.haskell.org/packages/archive/roots/0.1.1.2/doc/html/Math-Root-Finder-Brent.html
+2013-08-18 11:50:13 UTC <kuribas> byorgey: I need to find for which points on a cubic bezier, the curvature is equal to a value.  Can diagrams do this?
+2013-08-18 11:50:41 UTC <byorgey> ah, no, we don't have that implemented
+2013-08-18 11:50:46 UTC <byorgey> just finding the curvature at a given point
+2013-08-18 11:51:01 UTC <byorgey> what is the degree of the equation you need to solve?
+2013-08-18 11:51:32 UTC <byorgey> but yes, the roots package is probably a good option
+2013-08-18 11:52:05 UTC <kuribas> byorgey: I think a 12 degree polynomial.
+2013-08-18 11:52:12 UTC <byorgey> haha, yikes =)
+2013-08-18 11:56:10 UTC <notdan> byorgey: sorry, I didn't try to question Richards efforts, I know his other work which still doesn't sease to amaze me (like the singletons library), I was just stating my lack of understanding of some aspects of the ROle changes
+2013-08-18 11:56:58 UTC <byorgey> notdan: oh, no worries, I didn't interpret it that way
+2013-08-18 11:57:30 UTC <byorgey> I have also been sort-of involved in thinking about this Role stuff going back several years so it already all makes perfect sense to me ;)
+2013-08-18 11:57:52 UTC <notdan> heh
+2013-08-18 12:00:05 UTC <raymank26> hi guys. I have this simple fractal http://www.ad.ntust.edu.tw/grad/think/2paper/WEN1/BASICF~1/Image5.gif If I have solution to (n - 1)  then how to compose them to achieve solution for n?
+2013-08-18 12:00:12 UTC <byorgey> kuribas: anyway, I'm quite excited by the work you're doing.  Let us know if there are particular ways we can help.  I think mgsloan and fryguybob may be particularly interested to take a look at what you're doing, when they are around later
+2013-08-18 12:00:34 UTC <kuribas> ok, great!
+2013-08-18 12:01:12 UTC <byorgey> raymank26: see http://hackage.haskell.org/packages/archive/diagrams-contrib/0.7/doc/html/Diagrams-TwoD-Path-IteratedSubset.html
+2013-08-18 12:01:37 UTC <byorgey> raymank26: in particular you can use the 'iterTrail' function to do that
+2013-08-18 12:01:53 UTC <byorgey> and you can take a look at how it is implemented if you want to see how it is done
+2013-08-18 12:02:37 UTC <raymank26> byorgey: thank you!
+2013-08-18 12:02:57 UTC <kuribas> byorgey: Well, I am interested in the metafont implementation, if I could use it somehow.
+2013-08-18 12:03:30 UTC <byorgey> kuribas: right, you should talk to bergey about that, he has been hacking on it recently
+2013-08-18 12:03:51 UTC <kuribas> ok
+2013-08-18 12:05:17 UTC <byorgey> notdan: thanks!
+2013-08-18 12:07:06 UTC <travis-ci> [travis-ci] 13active/06active-0.1 1451c1dcd http://travis-ci.org/diagrams/active/builds/10330552 The build passed.
+2013-08-18 12:08:58 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 14e1f0223 http://travis-ci.org/diagrams/diagrams-lib/builds/10330554 The build passed.
+2013-08-18 12:15:09 UTC <notdan> np, thank you:)
+2013-08-18 12:22:36 UTC <byorgey> I just sent an email to Richard linking to your pull request
+2013-08-18 12:22:43 UTC <byorgey> just to give him one more example to think about
+2013-08-18 13:13:44 UTC <raymank26> what is envelope of line?
+2013-08-18 13:14:37 UTC <raymank26> I'm trying to do this http://82.196.11.44/screens/1376831632.png
+2013-08-18 13:14:46 UTC <raymank26> but i've no luck =(
+2013-08-18 13:20:56 UTC <ClaudiusMaximus> raymank26: define no luck - ambiguous type?  maybe try using:   withEnvelope' e d = withEnvelope (e `asTypeOf` d) d
+2013-08-18 13:22:02 UTC <raymank26> I'm new in haskell and types of diagrams explode my brain. It is hard to define types by hand
+2013-08-18 13:23:48 UTC <ClaudiusMaximus> i'm not so new and i have problems defining types - i tend to leave them out, and use  asTypeOf  when i get ambiguity
+2013-08-18 13:27:41 UTC <notdan> what is the type error?
+2013-08-18 13:30:01 UTC <raymank26> i fixed that, thank you, ClaudiusMaximus =)
+2013-08-18 13:30:38 UTC <ClaudiusMaximus> withEnvelope needs an Enveloped, fromVertices gives a Pathlike, there might be more than one type that's both Enveloped and Pathlike
+2013-08-18 13:31:44 UTC <raymank26> how to connect list of paths end-to-end?
+2013-08-18 13:34:20 UTC <ClaudiusMaximus> maybe something using   pathTrails, trailSegments, fromSegments, pathFromTrailAt
+2013-08-18 13:36:51 UTC <raymank26> hmmmm
+2013-08-18 13:37:33 UTC <ClaudiusMaximus> or  pathTrails, monoid instance for Trail, and pathFromTrailAt
+2013-08-18 13:38:41 UTC <raymank26> Segments, Paths, Trails..
+2013-08-18 13:38:47 UTC <raymank26> some many abstractions(
+2013-08-18 14:04:04 UTC <notdan> https://github.com/colah/ImplicitCAD this is pretty cool, although not based on diagrams
+2013-08-18 14:11:13 UTC <byorgey> raymank26: I'm working on a tutorial for vectors and points: http://projects.haskell.org/diagrams/doc/vector.html
+2013-08-18 14:11:23 UTC <byorgey> raymank26: paths and trails are next!
+2013-08-18 14:11:44 UTC <raymank26> wow1
+2013-08-18 14:12:18 UTC <raymank26> great
+2013-08-18 14:15:58 UTC <byorgey> raymank26: you can connect Trails end-to-end using the Monoid instance
+2013-08-18 14:16:26 UTC <byorgey> if you have a specific example of some code + something you are trying to do I could take a look and tell you how I would do it
+2013-08-18 14:17:19 UTC <byorgey> notdan: yeah, that's very cool indeed
+2013-08-18 14:17:40 UTC <byorgey> maybe someone will hook it up to diagrams, especially once we get a real functioning 3D backend
+2013-08-18 14:18:04 UTC <byorgey> it would be super cool to be able to describe objects using ImplicitCAD and then import them into diagrams
+2013-08-18 14:22:49 UTC <luite> i wonder if it can output parametric surfaces, all images seem tessellated, but that may be just for rendering
+2013-08-18 14:26:47 UTC <luite> though he could've spent a few minutes calculating vertex normals and adding gouraud shading ;)
+2013-08-18 14:26:58 UTC <byorgey> I don't know, I haven't looked into it in any detail
+2013-08-18 14:27:48 UTC <byorgey> but ISTR the reason it's called *Implicit*CAD is that everything is represented implicitly, i.e. as solutions to equations and/or parametric functions
+2013-08-18 14:28:03 UTC <byorgey> so I think the tessellation is just for rendering
+2013-08-18 14:35:56 UTC <luite> hmm, i'm not sure if it can represent arbitrary surfaces: https://github.com/colah/ImplicitCAD/blob/master/Graphics/Implicit/Definitions.hs#L117
+2013-08-18 14:38:30 UTC <luite> oh the Object class adds implicit functions
+2013-08-18 14:39:27 UTC <luite> but those look like haskell functions that might not be outputable
+2013-08-18 15:17:58 UTC <raymank26> http://82.196.11.44/screens/1376839047.png
+2013-08-18 15:18:00 UTC <raymank26> =)
+2013-08-18 15:19:17 UTC <luite> cool :)
+2013-08-18 15:20:17 UTC <raymank26> I append mincowski curve to my collection =)
+2013-08-18 15:22:22 UTC <notdan> did you use Paths/Trails to build that?
+2013-08-18 15:22:29 UTC <notdan> looks cool, btw :)
+2013-08-18 15:23:06 UTC <raymank26> http://82.196.11.44/screens/1376839354.png
+2013-08-18 15:23:25 UTC <luite> hehe different spelling every time :p
+2013-08-18 15:23:42 UTC <notdan> hah 
+2013-08-18 15:23:47 UTC <raymank26> i don't understand theory about trails/path and use points =)
+2013-08-18 15:24:09 UTC <raymank26> luite: different spelling?)
+2013-08-18 15:24:35 UTC <luite> raymank26: different transliteration of minkowski
+2013-08-18 15:24:41 UTC <notdan> mincowski vs mincovski vs minkowski
+2013-08-18 15:24:51 UTC <raymank26> oh, my mistake =(
+2013-08-18 15:26:46 UTC <notdan> what's the type of the TrailLike thingie in the result of 'fromOffset' in that case?
+2013-08-18 15:27:19 UTC <raymank26> http://82.196.11.44/screens/1376839613.png
+2013-08-18 15:27:20 UTC <notdan> I guess I am wondering what is the monoid instance for it. Does it connect the trails into one big trail?
+2013-08-18 15:27:35 UTC <raymank26> yep, something like this
+2013-08-18 15:27:43 UTC <notdan> I see, cool
+2013-08-18 15:28:03 UTC <luite> yeah connecting the endpoints of trails makes writing these fractals really easy
+2013-08-18 15:28:06 UTC <raymank26> i write some vim function for import type declaration from ghci =)
+2013-08-18 15:29:08 UTC <notdan> nice
+2013-08-18 15:29:14 UTC <notdan> there are a bunch of scripts like that for vim, I suppose, like https://github.com/scrooloose/syntastic
+2013-08-18 15:29:30 UTC <raymank26> yes, but it's only for type checking
+2013-08-18 15:31:24 UTC <raymank26> luite: are you a developer of diagrams?
+2013-08-18 15:32:55 UTC <luite> no, more an interested observer :)
+2013-08-18 15:33:15 UTC <raymank26> :)
+2013-08-18 15:34:24 UTC <luite> i've been intending to do some diagrams hacking for a long time but i keep coming up with distractions
+2013-08-18 16:42:35 UTC <bergey> kuribas: It should be easy to use the MetaFont parser & solver outside of Diagrams.  Take a look at the last two definitions in https://github.com/diagrams/diagrams-contrib/blob/metafont/src/Diagrams/TwoD/Path/Metafont.hs  You'll need a function like importSegment that converts to your CubicBezier type.
+2013-08-18 16:43:20 UTC <bergey> You'll also need to convert Diagrams points to your points.  I could try generalizing the types over vector-space, if that would help.
+2013-08-18 16:48:43 UTC <bergey> Right now making a path requires something like: "importTrail . map computeControls . interpolateDirs $ parse metafont "" "(0,0)..(1,1)..(2,0)", which is a bit of a mouthful.  I'm need to define a more sucinct name that goes straight from ByteString -> Trail, and I'll probably move a bunch of code to Metafont.Internals when that happens.
+2013-08-18 17:19:54 UTC <ibab> Hey, is there any standard way to get the rotation of an r2 vector? (i.e. the angle between the vector and the x-axis)
+2013-08-18 17:21:04 UTC <ibab> So far I've been using: getRotation (unr2 -> (x, y)) = Rad (atan2 y x)
+2013-08-18 17:21:30 UTC <fryguybob> ibab: There is, I'm looking up the name now
+2013-08-18 17:22:31 UTC <fryguybob> http://projects.haskell.org/diagrams/haddock/Diagrams-TwoD-Vector.html#v:direction
+2013-08-18 17:23:05 UTC <fryguybob> ibab: The name is direction and the documentation is in the link I just gave.
+2013-08-18 17:24:50 UTC <ibab> Ah, of course, thanks. I somehow forgot about that function.
+2013-08-18 17:27:31 UTC <fryguybob> ibab: I always forget.  But somewhere in my head is the phrase "a vector has a magnitude and direction" and eventually I remember that and try that name.
+2013-08-18 17:38:30 UTC <byorgey> bergey: I don't think kuribas was logged in
+2013-08-18 17:43:41 UTC <byorgey> oh my goodness, Diagrams.TwoD.Shapes defines 'septagon', an ugly admixture of Latin and Greek, instead of the usual (and thoroughly Greek) 'heptagon'
+2013-08-18 17:43:45 UTC <byorgey> why did no one tell me!?!?!
+2013-08-18 17:57:21 UTC <fryguybob> I would have complained if you had called it 'sevengon'
+2013-08-18 18:37:29 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 14507fc8c http://travis-ci.org/diagrams/diagrams-lib/builds/10338991 The build was broken.
+2013-08-18 18:38:29 UTC <byorgey> whoops, I thought I had compiled that
+2013-08-18 18:38:34 UTC <byorgey> hooray for travis!
+2013-08-18 18:44:20 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 1431118ff http://travis-ci.org/diagrams/diagrams-lib/builds/10339179 The build was fixed.
+2013-08-18 18:49:39 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 14a7ba66b http://travis-ci.org/diagrams/diagrams-lib/builds/10339309 The build passed.
+2013-08-18 19:03:10 UTC <fryguybob> byorgey: Any tips on getting the raw JS from diagrams-canvas as it is now?
+2013-08-18 19:03:29 UTC <byorgey> yeah, no idea
+2013-08-18 19:03:55 UTC <byorgey> ask jbracker, he has been working on a diagrams-sunroof backend which compiles directly to JS
+2013-08-18 19:04:39 UTC <fryguybob> Ok.  I don't have a real webbrowser and wget and links can only get you so far...
+2013-08-18 19:06:11 UTC <byorgey> hehe, right
+2013-08-18 19:07:18 UTC <byorgey> I was just messing with diagrams-canvas the other night (to try to make it work for edwardk) and it really, really wants to run a webserver.
+2013-08-18 19:07:45 UTC <byorgey> I have no idea how to do anything else with it other than run a little webserver and look at the output in my browser on port 3000.
+2013-08-18 19:07:48 UTC <fryguybob> Humm, maybe raw telnet will get me there.
+2013-08-18 19:07:59 UTC <byorgey> hah, I doubt it
+2013-08-18 19:08:05 UTC <byorgey> you will have to emulate a web browser!
+2013-08-18 19:08:18 UTC <fryguybob> It needs a post response to get a session then a get with the session id.
+2013-08-18 19:08:27 UTC <byorgey> oh, maybe that's not so bad
+2013-08-18 19:08:39 UTC <byorgey> well, have fun =)
+2013-08-18 19:09:43 UTC <fryguybob> byorgey: I would just add another main but I don't know how to turn a blank canvas into text.
+2013-08-18 19:10:33 UTC <byorgey> yeah, there's probably a way but you'd have to dig into the blank-canvas source code I guess
+2013-08-18 19:11:05 UTC <fryguybob> byorgey: Anyway, once I figure it out I'm going to try to elide save/restore pairs with state.
+2013-08-18 19:11:21 UTC <byorgey> ah, cool
+2013-08-18 19:19:05 UTC <fryguybob> Any guess on what $.toJSON([w,h]) turns into (w is width and h is height)?
+2013-08-18 19:21:17 UTC <byorgey> My guess is something like  [5.6,4.8]
+2013-08-18 19:21:33 UTC <byorgey> which should be valid JSON syntax
+2013-08-18 19:22:05 UTC <byorgey> at least that's what I get from calling  Data.Aeson.encode on the Haskell value with the same syntax
+2013-08-18 19:23:01 UTC <fryguybob> Humm, doesn't like it.  I could have something else wrong.
+2013-08-18 19:23:09 UTC <byorgey> dunno then.
+2013-08-18 19:46:37 UTC <duplode> Hello! Two questions about types:
+2013-08-18 19:47:07 UTC <duplode> (1) My application has grown to the point I'd like to add type signatures to the key diagram-making functions.
+2013-08-18 19:47:37 UTC <duplode> Thing is, Diagrams types are rather complex, and I would rather not specialize the signatures more than needed. How do I cope?
+2013-08-18 19:48:14 UTC <duplode> I'm thinking about defining a bunch of synonyms to make things easier. Are there any other/better strategies?
+2013-08-18 19:51:17 UTC <duplode> (2) Having just found out about queries, I will probably find an use for them at some point.
+2013-08-18 19:52:22 UTC <duplode> However, I noticed that one of the relevant diagram-making functions I use is getting specialized to QDiagram b R2 Any as result type  
+2013-08-18 19:53:25 UTC <duplode> I suspect some of the 30-odd pattern matching cases in it is constraining the inferred type.
+2013-08-18 19:53:51 UTC <duplode> Will that be a problem when I get to use queries? If so, how do I deal with it?
+2013-08-18 20:31:23 UTC <notdan> depends on the type of query you want to use?
+2013-08-18 20:32:29 UTC <notdan> but you can use value function to convert between type of queries
+2013-08-18 20:33:21 UTC <notdan> value :: Monoid m => m -> QDiagram b v Any -> QDiagram b v m
+2013-08-18 20:34:09 UTC <duplode> Let us see if I can clarify what my use case might be...
+2013-08-18 20:34:41 UTC <duplode> My diagram is essentialy a grid of tiles, each being its own diagram.
+2013-08-18 20:35:20 UTC <duplode> A query on Any, if I understood it, would allow me to find whether a point lies within a tile or not...
+2013-08-18 20:38:12 UTC <duplode> ...but if I wanted something more sophisticates (e.g. identifying regions within the tiles) I would need the more general type. Is that right?
+2013-08-18 20:43:20 UTC <notdan> Hm, I am not sure you can do regions of diagrams just like that, but if the region you are talking about is an intersection of diagrams then yes, it is possible
+2013-08-18 20:43:37 UTC <notdan> you can do that with the sum monoid, like in the manual
+2013-08-18 20:43:43 UTC <notdan> 1 sec, I can find the link 
+2013-08-18 20:44:09 UTC <notdan> http://projects.haskell.org/diagrams/doc/manual.html#using-other-monoids
+2013-08-18 20:44:33 UTC <notdan> and you can interchange between QDiagram b R2 Any and QDiagram b R2 Sum
+2013-08-18 20:44:36 UTC <notdan> using the value function
+2013-08-18 20:46:56 UTC <duplode> I guess that applies to my case, as I mostly compose the tiles by overlaying the (would-be) regions.
+2013-08-18 20:47:43 UTC <duplode> So when the time comes I can make up a monoid with the relevant semantics, and use value in the different parts/regions of a tile.
+2013-08-18 20:48:15 UTC <duplode> The only extra thing I might need would be adjusting some of the QDiagrams b R2 Any signatures. 
+2013-08-18 20:54:45 UTC <duplode> BTW I think I found ot what was restricting the monoid type
+2013-08-18 20:55:12 UTC <duplode> stroke and text. Both return a Diagram instead of a QDiagram.
+2013-08-18 21:02:32 UTC <duplode> Anyway that monoid constraining does not seem much of a problem now. Thank you!
+2013-08-18 21:34:20 UTC <luite> notdan: the codemirror manual has an example of a keymap to make tab produce spaces instead, although copypasting haskell code into the editor might still sneak some in
+2013-08-18 23:52:19 UTC <byorgey> duplode: your question re: types is a good question.  I don't have any very good answers for you.
+2013-08-18 23:57:01 UTC <byorgey> Personally, when I am adding type signatures, I look at the inferred type and specialize it if it is "too polymorphic".
+2013-08-18 23:58:13 UTC <duplode> "Too polymorphic" as in "I am never going to use the other possibilities", I guess...
+2013-08-18 23:58:19 UTC <byorgey> right.
+2013-08-18 23:58:36 UTC <byorgey> Generally, I find that just specializing everything is not that bad.
+2013-08-18 23:58:58 UTC <byorgey> There are really not very many times that I have written something and I end up wanting it to work, say, for all Enveloped things
+2013-08-18 23:59:15 UTC <byorgey> if you really do come up with such a thing then maybe we should add it to diagrams-lib =)
+2013-08-19 00:00:34 UTC <duplode> Looking at it pragmatically, I probably should just specialize, as what is making the class constraints unwiedly are Backend and Renderable
+2013-08-19 00:01:02 UTC <duplode> I would like to leave the choice of backend open, but I will need PNG rendering anyway so I can't avoid Cairo for now.
+2013-08-19 00:05:26 UTC <byorgey> yeah.  sometimes I wish that the backend wasn't part of the type of a diagram... but we made the choice explicitly so that different backends can support different primitives
+2013-08-19 00:05:35 UTC <byorgey> rather than baking into the definition of diagrams what all backends must support
+2013-08-19 00:05:44 UTC <byorgey> it's a tradeoff.
+2013-08-19 00:06:35 UTC <fryguybob> byorgey: Yeah, I think that tradeoff will payoff more later.
+2013-08-19 00:12:33 UTC <carter> byorgey: huh, i'm doing a similar multibackend thing in what i'm doing!
+2013-08-19 00:12:43 UTC <carter> well, the having a "backend type parameter"
+2013-08-19 00:13:00 UTC <carter> i wonder if i got the idea from diagrams
+2013-08-19 00:15:21 UTC <byorgey> who knows, ideas are funny that way =)
+2013-08-19 00:15:37 UTC <carter> I suspect i never noticed that diagrams trick
+2013-08-19 00:15:57 UTC <carter> and that embarrasses me, because it would have saved me time had i known of it earlier
+2013-08-19 00:16:11 UTC <carter> though I hadn't needed it till i realized i wanted mutliple easy to swap backends
+2013-08-19 00:18:49 UTC <byorgey> you never notice things before you know you are going to need them.
+2013-08-19 00:19:15 UTC <carter> fact
+2013-08-19 00:19:26 UTC <duplode> indeed
+2013-08-19 00:19:36 UTC <carter> a lot of the past year has also been me learning how to prioritize and resist yak shaving
+2013-08-19 00:20:33 UTC <byorgey> duplode: out of curiosity, what are you working on?
+2013-08-19 00:22:21 UTC <duplode> A hobby project; namely a vectorial map viewer for an old game.
+2013-08-19 00:22:24 UTC <duplode> https://sourceforge.net/projects/stunts-cartography/
+2013-08-19 00:23:21 UTC <fryguybob> ACTION may have played that game waaaay too much as a child.
+2013-08-19 00:23:51 UTC <duplode> :)
+2013-08-19 00:24:32 UTC <byorgey> cool =)
+2013-08-19 00:24:47 UTC <duplode> ultimate goals are (1) making annotated maps without needing gimp etc.; and 
+2013-08-19 00:25:09 UTC <duplode> (2) animated diagrams from game data
+2013-08-19 00:26:01 UTC <duplode> As for (2), this is a tech demo I made a while ago: http://youtu.be/Dwnej8PUsjg 
+2013-08-19 00:29:53 UTC <byorgey> cool!
+2013-08-19 00:33:04 UTC <duplode> Thank you :) It is starting to get useable now, as Apfelmus' Threepenny allowed me to have an interface for the Windows users without too much trouble. 
+2013-08-19 00:33:06 UTC <luite> i have to admit that it took me about two days to find the moving thing in that video ;)
+2013-08-19 00:33:48 UTC <carter> same here
+2013-08-19 00:35:51 UTC <duplode> luite / carter: indeed. I wasn't pragmatic about it back then as I wanted to give a sense of scale.  
+2013-08-19 00:36:02 UTC <carter> thats fine
+2013-08-19 00:36:05 UTC <carter> neat project!
+2013-08-19 00:36:20 UTC <carter> wait, you're hosting on svn/source forge?
+2013-08-19 00:36:33 UTC <carter> i can never figure out how to navigate source forge
+2013-08-19 00:36:58 UTC <duplode> Mercurial / sourceforge.
+2013-08-19 00:38:17 UTC <carter> bitbucket >>> source forge :)
+2013-08-19 00:38:22 UTC <carter> :ish
+2013-08-19 00:41:22 UTC <duplode> I may end up moving it. In fact, I first went to googlecode, only to realize they don't allow uploading binary packages anymore.
+2013-08-19 00:42:46 UTC <carter> not sure what bitbucket does on that side
+2013-08-19 00:42:51 UTC <carter> but i really like it overall
+2013-08-19 00:57:46 UTC <duplode> Bitbucket does allow for project downloads. Good :)
+2013-08-19 01:08:27 UTC <duplode> Taking up the opportunity, one more question:
+2013-08-19 01:09:05 UTC <duplode> In diagrams 0.6, arc and wedge used to be fillable. That changed in 0.7 due to the Path --> Trail change.
+2013-08-19 01:09:50 UTC <duplode> That means i need something like: # closeLine # wrapTrail # pathFromTrail # stroke
+2013-08-19 01:09:57 UTC <duplode> or: # closeLine # wrapTrail # flip at (p2 (0, 0)) # trailLike
+2013-08-19 01:10:30 UTC <duplode> before styling them to get similar results. Is there an easier way I am not noticing?
+2013-08-19 01:11:37 UTC <byorgey> oh, is wedge not closed?
+2013-08-19 01:11:46 UTC <byorgey> sure enough, it isn't.  That's a bug.
+2013-08-19 01:13:10 UTC <duplode> arc shouldn't be closed, though, I gather? (I mean, I used to fill them, but that never felt quite right)
+2013-08-19 01:13:49 UTC <byorgey> right, it shouldn't.
+2013-08-19 01:14:10 UTC <byorgey> if you want a filled arc shape you have to use closeLine first.
+2013-08-19 01:15:01 UTC <byorgey> duplode: by the way, instead of   # closeLine # wrapTrail # pathFromTrail # stroke   you can just   # closeLine # strokeLoop
+2013-08-19 01:16:35 UTC <duplode> strokeLoop :: Renderable (Path R2) b => Trail' Loop R2 -> Diagram b R2
+2013-08-19 01:16:42 UTC <duplode> that's it! Much better now.
+2013-08-19 01:22:09 UTC <duplode> Well, gotta go now. Thanks Brent, good night everyone.
+2013-08-19 01:22:42 UTC <byorgey> night duplode 
+2013-08-19 01:40:27 UTC <byorgey> vector tutorial is done!  http://projects.haskell.org/diagrams/doc/vector.html
+2013-08-19 01:40:42 UTC <byorgey> suggestions for improvements, especially additional exercises, welcome
+2013-08-19 01:48:43 UTC <martingale> byorgey: I've only had a chance to skim it, but it looks really nice!!! I noticed that some of the literate haskell extends past the rectangle on my browser (chrome)
+2013-08-19 01:49:03 UTC <carter> neat!
+2013-08-19 01:49:08 UTC <byorgey> martingale: ah, which ones?
+2013-08-19 01:49:52 UTC <martingale> byorgey:  e.g. the first box under Constructing vectors, the line starting > example = fromOffsets [UnitX, UnitY, 2 *^ ...
+2013-08-19 01:50:20 UTC <martingale> > example = lw 0.05 . mconcat . map (fromOffsets . (:[]))
+2013-08-19 01:50:20 UTC <martingale> >         $ [ r *^ e (Rad r) | r <- [33 * tau/32, 34 * tau/32 .. 2 * tau] ]
+2013-08-19 01:50:21 UTC <lambdabot>   <hint>:1:9: parse error on input `='
+2013-08-19 01:50:21 UTC <lambdabot>   can't find file: L.hs
+2013-08-19 01:50:48 UTC <martingale> > example = mconcat $ map (fromOffsets . (:[])) vs
+2013-08-19 01:50:48 UTC <martingale> >   where
+2013-08-19 01:50:48 UTC <martingale> >     vs = take 33 . iterate (scale (2**(1/32)) . rotateBy (1/32)) $ unitX
+2013-08-19 01:50:49 UTC <lambdabot>   <hint>:1:9: parse error on input `='
+2013-08-19 01:50:49 UTC <lambdabot>   can't find file: L.hs
+2013-08-19 01:50:49 UTC <lambdabot>   can't find file: L.hs
+2013-08-19 01:51:13 UTC <martingale> byorgey: and
+2013-08-19 01:51:23 UTC <martingale> > example = position . map (\p -> (p, circle 0.2 # fc green)) $ nonagon 1
+2013-08-19 01:51:24 UTC <lambdabot>   <hint>:1:9: parse error on input `='
+2013-08-19 01:57:52 UTC <byorgey> ok, thanks.
+2013-08-19 01:58:42 UTC <byorgey> how do you tell a browser to use a L-R scrolly bar if the content doesn't fit?
+2013-08-19 02:00:49 UTC <martingale> byorgey:  I think your problem is that the content does fit, because it includes all of the space on the left. You can see this if you shrink your browser window to a reallly thin width. then the L-R scrolly bar apperas
+2013-08-19 02:01:27 UTC <luite> byorgey: overflow: auto
+2013-08-19 02:05:08 UTC <byorgey> luite: thanks, that seems to work
+2013-08-19 02:06:38 UTC <byorgey> martingale: better now?
+2013-08-19 02:09:20 UTC <martingale> byorgey: Yes, that worked. You might want to inset the bounding box inside the drawn rectangle so that the lhs doesn't go from edge to edge
+2013-08-19 02:10:02 UTC <martingale> byorgey: probable just a space or two on the right marging
+2013-08-19 02:10:07 UTC <martingale> *margin
+2013-08-19 02:11:14 UTC <byorgey> how do I do that?
+2013-08-19 02:11:23 UTC <byorgey> I already have  padding: 20px
+2013-08-19 02:11:37 UTC <byorgey> do I need to make a separate div for the content inside the div with the border?
+2013-08-19 02:12:08 UTC <martingale> byorgey: I'm not an html expert buy I think that is what you need to do.
+2013-08-19 02:12:38 UTC <martingale> byorgey: If you stuck I can ask my son, who will probably know.
+2013-08-19 02:12:48 UTC <byorgey> well, that's sufficiently annoying that I will put it off.  Patches welcome. =)
+2013-08-19 02:12:54 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 1485d283e http://travis-ci.org/diagrams/diagrams-doc/builds/10348564 The build failed.
+2013-08-19 02:13:07 UTC <byorgey> martingale: haha, sure
+2013-08-19 02:15:07 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14fa0ec2b http://travis-ci.org/diagrams/diagrams-doc/builds/10348794 The build failed.
+2013-08-19 02:21:19 UTC <martingale> byorgey: I asked my son and he said to style the sourceCode class with a "margin-right" of about 20px
+2013-08-19 02:23:01 UTC <martingale> byorgey: By the way my son's name is Reed and he will be a freshman at Penn engineering this fall majoring in CS
+2013-08-19 02:23:47 UTC <byorgey> hmm, that doesn't seem to have any effect
+2013-08-19 02:23:59 UTC <byorgey> martingale: oh, awesome!
+2013-08-19 02:24:12 UTC <martingale> byorgey: So it worked?
+2013-08-19 02:24:51 UTC <byorgey> no, it didn't work, I was saying "awesome" re: your son =)
+2013-08-19 02:25:05 UTC <byorgey> I would love to meet him
+2013-08-19 02:25:29 UTC <byorgey> will you be around to drop him off?
+2013-08-19 02:25:51 UTC <martingale> byorgey: Yes, we are coming up on Wednesday and moving him in on Thursday
+2013-08-19 02:26:56 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14c56051a http://travis-ci.org/diagrams/diagrams-doc/builds/10349155 The build has errored.
+2013-08-19 11:55:24 UTC <kuribas> bergey: I got your mail.
+2013-08-19 11:55:43 UTC <kuribas> Can't I use a datatype to describe metafont paths?
+2013-08-19 11:56:15 UTC <kuribas> I don't like the idea of using Strings to create a datatype...
+2013-08-19 11:56:57 UTC <kuribas> A datatype would be more robust.
+2013-08-19 12:27:35 UTC <fryguybob> kuribas: I've looked some at your cubicbezier package.  Nice work!  You might be interested in our offset segment function:  https://github.com/diagrams/diagrams-lib/blob/master/src/Diagrams/TwoD/Offset.hs
+2013-08-19 12:28:31 UTC <kuribas> fryguybob: great, thanks!
+2013-08-19 12:31:46 UTC <kuribas> Interesting, you use the radius of curvature to approximate the new bezier.
+2013-08-19 12:32:03 UTC <kuribas> May original idea was to use a least squares approximation, but this maybe better.
+2013-08-19 12:33:54 UTC <kuribas> fryguybob: How do you calculate the handles based on curvature?
+2013-08-19 12:34:58 UTC <fryguybob> kuribas: I place the handles at the offsets then scale the handles by the expected curvature change (factor).
+2013-08-19 12:35:42 UTC <fryguybob> kuribas: The idea is take a bezier that approximates an arc.  It's best offset will be an exact scaling about the arc center.
+2013-08-19 12:35:56 UTC <kuribas> yes
+2013-08-19 12:36:01 UTC <kuribas> Is it an approximation?
+2013-08-19 12:36:18 UTC <fryguybob> As you subdivide eventually subsections will be close to an arc, so this will be close to the best approximation.
+2013-08-19 12:36:27 UTC <kuribas> Maybe you can calculate it exactly using this: http://en.wikiversity.org/wiki/CAGD/B%C3%A9zier_Curves#Curvature_of_a_B.C3.A9zier_Curve
+2013-08-19 12:36:41 UTC <fryguybob> kuribas: You cannot exactly represent the offset curve, so yes it is approximate.
+2013-08-19 12:37:06 UTC <kuribas> But it the curvature exact at the endpoints?
+2013-08-19 12:37:28 UTC <fryguybob> kuribas: Yes
+2013-08-19 12:37:50 UTC <fryguybob> the handles are scaled along the vector from the nearest end.
+2013-08-19 12:38:27 UTC <kuribas> Ah, I see!
+2013-08-19 12:38:46 UTC <kuribas> Where do you subdivide?
+2013-08-19 12:40:23 UTC <fryguybob> kuribas: I blindly try to fit and if it doesn't fit within some epsilon, I subdivide in the middle.
+2013-08-19 12:40:41 UTC <fryguybob> kuribas: Some examples: http://www.cs.rochester.edu/u/ryates/temp/offsetSeg.pdf
+2013-08-19 12:40:59 UTC <fryguybob> (at least I think that's what I do.  Where to split could be improved)
+2013-08-19 12:41:36 UTC <kuribas> I was thinking to split at the place with the largest error (as returned by my least squares approximation).
+2013-08-19 12:41:37 UTC <fryguybob> kuribas: Blue is the original curve and the offset alternates green and red
+2013-08-19 12:42:04 UTC <kuribas> For my purpose (typography) I'd like as few subsegments as possible.
+2013-08-19 12:42:12 UTC <fryguybob> kuribas: Right
+2013-08-19 12:42:23 UTC <kuribas> It doesn't really need to be very exact.
+2013-08-19 12:43:42 UTC <fryguybob> kuribas: Yeah, we have uses in mind where we want to be fairly exact and we also want to be able to quickly corrilate t-values for things like annimations that move along the curve and the offset.
+2013-08-19 12:44:13 UTC <fryguybob> But fewer curves with the same precision is always desired :D
+2013-08-19 12:46:51 UTC <kuribas> I'll try my least squares solution, and then we can compare the algorithms.
+2013-08-19 12:49:10 UTC <kuribas> fryguybob: But you have two radiuses of curvature, on on each endpoint.  Which one do you use?
+2013-08-19 12:53:50 UTC <fryguybob> kuribas: I use the curvature from t = 0.5
+2013-08-19 12:54:06 UTC <kuribas> I see.
+2013-08-19 12:54:13 UTC <fryguybob> kuribas: If I used the ends I would probably scale differently for each handle.
+2013-08-19 12:54:19 UTC <kuribas> yes
+2013-08-19 12:55:01 UTC <fryguybob> Lots of room to explore more options :D
+2013-08-19 12:55:36 UTC <fryguybob> kuribas: If you want to do a direct compairson to the example, the code for it is here: http://www.cs.rochester.edu/u/ryates/files/offsetCubicSegment.hs
+2013-08-19 12:56:33 UTC <kuribas> thanks!
+2013-08-19 13:05:25 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14d8fecfd http://travis-ci.org/diagrams/diagrams-doc/builds/10361827 The build has errored.
+2013-08-19 16:15:58 UTC <travis-ci> [travis-ci] 13active/06new-semantics 146b1ddbe http://travis-ci.org/diagrams/active/builds/10370245 The build is still failing.
+2013-08-19 17:11:10 UTC <fryguybob> Humm, trying to get rid of the save/restore's is not going so well.
+2013-08-19 17:11:39 UTC <byorgey> fryguybob: it sounds like blank-canvas is deprecated/no longer supported in favor of sunroof anyway.
+2013-08-19 17:12:05 UTC <fryguybob> byorgey: Yeah I gave up and was trying to do it for postscript.
+2013-08-19 17:12:13 UTC <byorgey> oh, I see.
+2013-08-19 17:12:51 UTC <byorgey> well, it was worth a try.  But I think we just need to buckle down and figure out the Right way to do it.
+2013-08-19 17:13:19 UTC <fryguybob> The transform is emitted for transforming the stroke so I suppose that the best optimization there would be to get rid of things with zero line width.
+2013-08-19 17:13:31 UTC <fryguybob> Or strokes for empty primatives.
+2013-08-19 17:14:51 UTC <byorgey> what I'm thinking at the moment goes something like this: we first convert from DUALTrees to some simpler sort of tree (not sure what)
+2013-08-19 17:15:01 UTC <fryguybob> byorgey: Yeah, I was hoping for a quick change by tracking a bit more state, but I think I would have to transform each primative to be relative to the previous state but that can accumulate error.
+2013-08-19 17:15:35 UTC <byorgey> ah, right, that doesn't sound good, especially for diagrams with lots of primitives.
+2013-08-19 17:16:20 UTC <fryguybob> With postscript (and any JS backend) there is the option of just naming things that happen often and "calling" the name instead of reproducing it all over.
+2013-08-19 17:16:46 UTC <byorgey> yes, with SVG too I think
+2013-08-19 17:16:48 UTC <fryguybob> Anyway, we hope with the tree to capture the structure of shared transformation.
+2013-08-19 17:17:04 UTC <byorgey> not just shared transformation but also shared attributes.
+2013-08-19 17:17:32 UTC <fryguybob> Right for the tree.
+2013-08-19 17:17:34 UTC <byorgey> so then we have an optimization pass over these simpler trees which does things like prune stuff with zero line width, coalesce transforms and attributes, maybe even pull shared attributes up in the tree, and even CSE (to be able to generate those "named" things)
+2013-08-19 17:18:01 UTC <byorgey> then we hand off the resulting optimized tree to the backends.
+2013-08-19 17:18:28 UTC <fryguybob> Yeah with a tree that should all be pretty straight forward.
+2013-08-19 17:18:32 UTC <byorgey> and of course we can have a function to compile a tree down to a list of primitives which will preserve the status quo.
+2013-08-19 17:23:34 UTC <fryguybob> byorgey: So to be more specific, this optimization and supsequent reflattening could be a drop in replacement for `prims` right?
+2013-08-19 17:26:14 UTC <byorgey> fryguybob: right
+2013-08-19 17:27:32 UTC <byorgey> so "all" we have to do is figure out what these simpler trees should look like, and what sorts of transformations/optimizations we can do on them
+2013-08-19 17:27:58 UTC <byorgey> with 'freeze' being the giant monkey-wrench-shaped elephant in the tree, to mix metaphors somewhat
+2013-08-19 17:30:47 UTC <fryguybob> Yeah, the strange part is that freeze brings a transformation on the stroke into play so somethings that might seem to be commutative are not if the freeze is non-symetric
+2013-08-19 17:31:47 UTC <fryguybob> As in, you can just apply a uniform scaling to the line width, but for a non-uniform scaling you have to transform the primatives and the stroke.
+2013-08-19 17:31:56 UTC <fryguybob> (depending on the semantics of the backend)
+2013-08-19 17:34:58 UTC <fryguybob> It seems reasonable to leave that up to the backend to figure out (maybe that's what we do right now).
+2013-08-19 17:35:58 UTC <fryguybob> As in, just give the primatives where they should end up and give a transform that should be applied to the stroke.
+2013-08-19 18:15:21 UTC <byorgey> fryguybob: yeah, that makes sense, and that's indeed what we do now
+2013-08-19 18:15:45 UTC <byorgey> I think the real problem is that the transformation to be appled to the stroke currently gets duplicated for each primitive
+2013-08-19 18:17:33 UTC <byorgey> well, that's one problem at least.  edwardk's automaton SVG had the same transformation repeated a zillion times, and I think that's what it was
+2013-08-19 18:21:44 UTC <fryguybob> byorgey: I think I can git rid of that one when it is not needed.
+2013-08-19 18:49:24 UTC <fryguybob> byorgey: I'm making some progess now (on the state side of things), I don't think this will make it faster or get rid of most save/restores, but it should improve things significantly.
+2013-08-19 18:49:57 UTC <byorgey> fryguybob: if it doesn't make it faster or get rid of most save/restores, then in what sense will it improve significantly?
+2013-08-19 18:58:43 UTC <fryguybob> The output file will be less then half the size
+2013-08-19 19:33:20 UTC <carter> woot: HPDF is going to become BSD :)
+2013-08-19 19:33:36 UTC <carter> this means a pdf backend for diagrams thats bsd + pure haskell ish
+2013-08-19 20:14:46 UTC <notdan> hey, sup carter 
+2013-08-19 20:14:50 UTC <carter> hey
+2013-08-19 20:14:51 UTC <notdan> that's good news
+2013-08-19 20:14:53 UTC <carter> yes
+2013-08-19 20:15:00 UTC <carter> its so easy to ask peple "could you bsd please"
+2013-08-19 20:15:04 UTC <carter> and sometimes they meant to but forget
+2013-08-19 20:15:27 UTC <notdan> actually that email from alephcar has reminded me that i have to add more backends to interactive-diagrams
+2013-08-19 20:15:56 UTC <notdan> hm i have to check if i depend on any packages that are GPL
+2013-08-19 20:16:24 UTC <notdan> i guess it actually makes more sense to release libraries as LGPL than as GPL
+2013-08-19 20:17:54 UTC <carter> he's changing it to BSD :)
+2013-08-19 20:18:50 UTC <notdan> speaking about licensing: http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=692613
+2013-08-19 20:19:47 UTC <carter> notdan: unrelatedly: i have a sad problem building head
+2013-08-19 20:20:58 UTC <notdan> yeah I saw :( I haven't encountered such an error
+2013-08-19 20:22:11 UTC <carter> hence why i'm confused
+2013-08-19 20:24:00 UTC <notdan> yeah weird error, I'd think it is a happy/alex bug, but it's unlikely
+2013-08-19 20:26:38 UTC <carter> this is the part where I binary search through the commit history 
+2013-08-19 20:26:45 UTC <carter> to see if i can dumbly pin it down
+2013-08-19 20:28:35 UTC <notdan> heh
+2013-08-19 20:29:50 UTC <carter> yay, raceconditions :)
+2013-08-19 20:29:53 UTC <notdan> I am using 94c35ddf31aef28de84661860f77a94229f60cb4
+2013-08-19 20:30:51 UTC <carter> i think i foudn what date is that?
+2013-08-19 20:33:49 UTC <notdan> aug 14
+2013-08-19 20:33:55 UTC <carter> k
+2013-08-19 20:49:52 UTC <byorgey> fryguybob: ah, I see, nice
+2013-08-19 20:51:28 UTC <carter> notdan: CPP 
+2013-08-19 20:51:28 UTC <carter> i think i fixed it
+2013-08-19 20:51:31 UTC <carter> testing a build
+2013-08-19 20:59:48 UTC <notdan> oh
+2013-08-19 21:03:24 UTC <fryguybob> byorgey: 75% the size at this point.
+2013-08-19 21:07:01 UTC <byorgey> nice!
+2013-08-19 21:07:54 UTC <fryguybob> But not any faster.   I should profile :D
+2013-08-19 21:33:56 UTC <travis-ci> [travis-ci] 13active/06new-semantics 14349ef19 http://travis-ci.org/diagrams/active/builds/10382933 The build has errored.
+2013-08-20 01:06:48 UTC <fryguybob> byorgey: http://heap.ezyang.com/view/8042ed8fd2bd38b09f159e15c55c7d678407d79b#form
+2013-08-20 01:10:25 UTC <byorgey> fryguybob: hmm, main/Main.CAF does not tell me very much
+2013-08-20 01:12:10 UTC <fryguybob> I know.  I'm not sure where to break it up, but I think the blue part is the diagrams side of things (this is the Mandelbrot example).
+2013-08-20 01:14:55 UTC <byorgey> fryguybob: ah, when I did this at Hac Phi I realized that just compiling profiling versions of libraries is not enough.  If you want to actually generate cost centers within those libraries you have to compile the libraries with something like -auto-all
+2013-08-20 01:15:38 UTC <byorgey> otherwise the cost of all calls into the library get lumped into the cost of the caller.
+2013-08-20 01:15:48 UTC <fryguybob> Ah, ok, I'll try that.
+2013-08-20 01:16:14 UTC <fryguybob> -auto-all as a ghc argument or a cabal argument?
+2013-08-20 01:16:24 UTC <byorgey> but anyway, I think the fact that there is a big spike is not a good sign.  Seems like perhaps a bunch of thunks building up and then all getting forced at once
+2013-08-20 01:17:05 UTC <fryguybob> byorgey: Yeah, it might just be the DList thing with postscript
+2013-08-20 01:17:06 UTC <byorgey> fryguybob: as a ghc argument, so you have to give cabal the argument  --ghc-options='-prof -auto-all' or something along those lines
+2013-08-20 01:19:23 UTC <fryguybob> http://heap.ezyang.com/view/b4bce4cd621176447739394ca6a2e417c25a3378#form
+2013-08-20 01:19:49 UTC <fryguybob> We have upgraded from Main to OTHER
+2013-08-20 01:20:03 UTC <byorgey> wait, is that the same program as before?
+2013-08-20 01:20:33 UTC <fryguybob> Yeah
+2013-08-20 01:22:00 UTC <byorgey> it seems to spend a lot of time in <> and *^ (if I am interpreting this correctly)
+2013-08-20 01:22:50 UTC <fryguybob> I'll paste a -p
+2013-08-20 01:23:05 UTC <byorgey> oh, this is memory usage, not time
+2013-08-20 01:23:26 UTC <byorgey> but the observation stands.  it doesn't seem like <> and *^ should use a lot of memory.
+2013-08-20 01:25:42 UTC <byorgey> I wonder if we should make DUALTrees spine-strict
+2013-08-20 01:25:50 UTC <fryguybob> Humm, the -p is quite large.  There is a <> from  Diagrams.Core.Transform  with 1.3% of time.
+2013-08-20 01:26:09 UTC <byorgey> yeah, I remember the -p being humongous
+2013-08-20 01:26:33 UTC <fryguybob> renderWith form postscript 2.1%
+2013-08-20 01:27:19 UTC <fryguybob> Oh, I think I remember this part: toRGBAUsingSpace.c  Diagrams.Attributes  5.6%
+2013-08-20 01:27:30 UTC <byorgey> haha, yikes
+2013-08-20 01:27:57 UTC <fryguybob> (These are individual numbers)
+2013-08-20 01:28:08 UTC <byorgey> well, that's probably because it's calling toRGBAUsingSpace once or twice for each and every primitive
+2013-08-20 01:28:09 UTC <fryguybob> Collectively renderDia.renderOne is 40%
+2013-08-20 01:28:27 UTC <byorgey> if we are able to factor out shared attributes that should go down
+2013-08-20 01:28:41 UTC <fryguybob> Yeah
+2013-08-20 01:29:16 UTC <byorgey> hmm, I really do want to try making DUALTrees spine-strict as an experiment
+2013-08-20 01:29:17 UTC <fryguybob> Only 4225 entries for toRGBAUsingSpace.c
+2013-08-20 01:29:36 UTC <fryguybob> Where do I make the change? I'll try it.
+2013-08-20 01:30:10 UTC <byorgey> the only problem is that most of the nontrivial recursive structure is farmed out to NonEmpty lists from the semigroups package, which are not spine-strict
+2013-08-20 01:30:22 UTC <fryguybob> (further down toRGBAUsingSpace.c under strokeColor 12675 entries 16% time.
+2013-08-20 01:30:38 UTC <byorgey> hehe, yup
+2013-08-20 01:31:35 UTC <byorgey> well, it would entail putting bangs in front of all the (mutually)-recursive occurrences inside the definitions of DUALTree, DUALTreeU, and DUALTreeNE
+2013-08-20 01:31:53 UTC <byorgey> but also making our own spine-strict variant of NonEmpty
+2013-08-20 01:32:45 UTC <byorgey> but it looks like we only use toList, fromList, and map, so that shouldn't be too bad
+2013-08-20 01:32:53 UTC <byorgey> from Data.List.NonEmpty I mean
+2013-08-20 01:33:10 UTC <fryguybob> Ok
+2013-08-20 02:03:06 UTC <martingale> Where do I find the source code/documentation for functions in Diagrams.Prelude, e.g. alerp?
+2013-08-20 02:06:24 UTC <fryguybob> martingale: I go to here and Ctrl+F: http://projects.haskell.org/diagrams/haddock/doc-index-All.html
+2013-08-20 02:11:07 UTC <byorgey> martingale: alerp is from Data.AffineSpace in the vector-space package
+2013-08-20 02:11:44 UTC <byorgey> WARNING, http://projects.haskell.org/diagrams/haddock/doc-index-All.html  is still the 0.6 documentation =(
+2013-08-20 02:11:55 UTC <byorgey> I have to rebuild the Haddock docs yet
+2013-08-20 02:12:01 UTC <byorgey> it's super annoying so I keep putting it off.
+2013-08-20 02:13:38 UTC <fryguybob> ACTION slowly shakes his head in horror at colour.
+2013-08-20 02:16:38 UTC <fryguybob> byorgey: It is no lie, 16% of the time is converting blue to 0,0,255
+2013-08-20 02:16:52 UTC <byorgey> haha, what
+2013-08-20 02:17:07 UTC <byorgey> well, blue is a very difficult colour to deal with properly, you know
+2013-08-20 02:17:48 UTC <fryguybob> It does a full 3x3 matrix inverse.
+2013-08-20 02:18:10 UTC <fryguybob> Using lists.
+2013-08-20 02:23:54 UTC <byorgey> hahahaha
+2013-08-20 02:24:36 UTC <byorgey> so you're saying maybe we should contribute some improvements back to colour.
+2013-08-20 02:25:03 UTC <fryguybob> I think so
+2013-08-20 02:25:20 UTC <fryguybob> Or memoize the rainbow.
+2013-08-20 02:25:45 UTC <fryguybob> Perhaps the #haskell-game people will want to do it.
+2013-08-20 02:27:54 UTC <byorgey> hehe
+2013-08-20 02:28:04 UTC <fryguybob> byorgey: I don't think that is our space problem though: http://heap.ezyang.com/view/6d491b995afbd590c1a09516def7a1c6d5853891#form
+2013-08-20 02:28:19 UTC <fryguybob> That is where you can have any color as long as it is blue.
+2013-08-20 02:28:28 UTC <fryguybob> http://heap.ezyang.com/view/64bd6f0c688e1466bf7a605c84fc3291a89c71fd  Is before
+2013-08-20 02:28:28 UTC <byorgey> hehehe
+2013-08-20 02:28:41 UTC <byorgey> yeah, I wouldn't think that was our space problem
+2013-08-20 02:28:56 UTC <byorgey> my current hunch is that our space problem is because of DUALTree being too lazy.
+2013-08-20 02:29:05 UTC <byorgey> which is why we see a lot of memory being eaten by <> .
+2013-08-20 02:29:16 UTC <byorgey> (because <> constructs DUALTrees)
+2013-08-20 02:30:33 UTC <fryguybob> Yeah, I added a few !'s but I'm out of time to do anything more extensive.  For the newtypes would those have to change to a data type strict in the DUALTree part?
+2013-08-20 02:31:58 UTC <byorgey> right, DUALTree needs to be strict in DUALTreeU, which needs to be strict in DUALTreeNE, which needs to be... etc.
+2013-08-20 02:32:37 UTC <byorgey> and our copy of the NonEmpty type needs to be strict in everything, I guess
+2013-08-20 02:32:44 UTC <byorgey> anyway, I'm off to bed, goodnight
+2013-08-20 02:33:50 UTC <fryguybob> Goodnight!
+2013-08-20 04:13:13 UTC <martingale> fryguybob: Ah, thanks
+2013-08-20 04:14:03 UTC <martingale> fryguybob: But that does not have a link to the source code
+2013-08-20 04:15:26 UTC <martingale> byorgey: shouldn't there be a link from alerp in the index to Data.AffineSpace? and similar for other functions in the prelude?
+2013-08-20 04:16:12 UTC <martingale> byorgey: I assume this must be difficult to do in haddoc
+2013-08-20 09:36:45 UTC <kuribas> Is there a lower limit on the wanted accuracy for an outline of a bezier curve?
+2013-08-20 09:37:36 UTC <kuribas> I use a least squares algorithm to approximate the outline, but it has finite accuracy.
+2013-08-20 11:32:45 UTC <fryguybob> kuribas: Well if the bezier segment has a loop then there exists an offset curve with two cusps which a bezier curve cannot represent, so the worst case could be quite bad.
+2013-08-20 11:38:20 UTC <kuribas> Well, I calculate all points where the radius of curvature is the same as the distance.
+2013-08-20 11:39:01 UTC <kuribas> But currently it can only find them if there aren't more than two such values.
+2013-08-20 11:39:50 UTC <kuribas> I use the derivative of the the square of the curvature to find the roots, but the numerical solver needs two points with opposite signs.
+2013-08-20 11:42:17 UTC <kuribas> But if I can split the curve into "well behaving" curves, this may still work.
+2013-08-20 11:43:37 UTC <kuribas> I approximate bezier curves between these singular points.
+2013-08-20 11:43:40 UTC <fryguybob> Yeah, wikipedia mentions a method that decomposes the curve into well behaved sections.
+2013-08-20 11:44:09 UTC <kuribas> I only hope my formula is numerically stable.
+2013-08-20 11:45:31 UTC <fryguybob> Right, I was concerned with the points that the wikipedia method needed to find.  As in, I think you might be able to find them, but can you do so with reasonable error bounds?
+2013-08-20 11:46:22 UTC <fryguybob> kuribas: The method is described here: http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.43.1724
+2013-08-20 11:47:27 UTC <kuribas> fryguybob: I use a numerical root finder.
+2013-08-20 11:48:11 UTC <kuribas> You can give it the wanted accuracy.  I used a hardwired 1e-8.
+2013-08-20 11:48:49 UTC <fryguybob> kuribas: Sure, but is that accuracy in the domain or the codomain?
+2013-08-20 11:49:20 UTC <fryguybob> kuribas: And how do you relate error from one of those to maximal error in the subsequent approximation?
+2013-08-20 11:50:15 UTC <fryguybob> Due to these sort of questions, I punted and made my algorithm error bound driven.
+2013-08-20 11:50:22 UTC <fryguybob> (at the cost of adding more segments)
+2013-08-20 11:51:15 UTC <fryguybob> kuribas: I'm not trying to discourage you, but just pointing out questions that I don't know the answer to.
+2013-08-20 11:51:15 UTC <kuribas> In the domain.
+2013-08-20 11:51:24 UTC <kuribas> right.
+2013-08-20 11:53:13 UTC <kuribas> I had a formula for the maximal error, but it wasn't very usefull.
+2013-08-20 11:53:34 UTC <kuribas> It depends on the coordinates from the bezier (logically).
+2013-08-20 11:55:39 UTC <kuribas> I guess, the large the second derivative, the greater the error.
+2013-08-20 11:55:48 UTC <kuribas> first derivative.
+2013-08-20 11:56:45 UTC <kuribas> fryguybob: How do you find those points then?
+2013-08-20 11:58:55 UTC <kuribas> hm, you could find the where the first derivative is the largest, and the take an approximation of the error.
+2013-08-20 11:59:54 UTC <kuribas> It would be accurate for small errors.
+2013-08-20 12:12:09 UTC <kuribas> Instead of the derivate a upper bound could be estimated.
+2013-08-20 12:16:44 UTC <rayman_> byorgey: are you here?
+2013-08-20 12:17:32 UTC <rayman_> OK
+2013-08-20 12:20:49 UTC <kuribas> fryguybob: So if you divide by the longest line in the convex hull, you should be safe.
+2013-08-20 12:20:59 UTC <kuribas> Maybe add some margin.
+2013-08-20 12:30:55 UTC <Taneb> I wrote a program that uses diagrams to render the dragon curve (because I was bored)
+2013-08-20 12:33:58 UTC <Taneb> It's not very memory efficient, though :(
+2013-08-20 12:36:27 UTC <Taneb> http://www.vandoorn.talktalk.net/Nathan's_Stuff/d.svg is as detailed as it can render it
+2013-08-20 12:38:14 UTC <rayman_> very cool :)
+2013-08-20 12:40:59 UTC <Taneb> Now to delve into GHC profiling to see if I can get a more intricate rendering
+2013-08-20 12:50:11 UTC <fryguybob> kuribas: I don't completely follow.  Finding where the first derivative is largest comes with some error.  I'm off for now.
+2013-08-20 12:51:06 UTC <kuribas> fryguybob: You can take the maximum of the convex hull of the derivative.  The tangent will always be smaller than that.
+2013-08-20 12:52:07 UTC <kuribas> And I half it because it is only true for infinitesimal errors.
+2013-08-20 12:52:17 UTC <kuribas> That should cover most cases.
+2013-08-20 13:05:34 UTC <byorgey> Taneb: cool!
+2013-08-20 13:05:37 UTC <byorgey> Taneb: I'm guessing it's diagrams rather than your program which is to blame.  It's not very optimized/efficient.  fryguybob and I are currently looking into it.
+2013-08-20 13:06:01 UTC <Taneb> byorgey, going to double-check, I haven't really thought about the algorithm in too much detail
+2013-08-20 13:06:10 UTC <Taneb> There's a lot of sharing I could do but I'm not
+2013-08-20 13:06:22 UTC <byorgey> Taneb: did you draw it with squares or with one continuous path?
+2013-08-20 13:06:27 UTC <Taneb> One continuous path
+2013-08-20 13:06:48 UTC <byorgey> Taneb: 50 lines sounds WAY too long then =)
+2013-08-20 13:07:28 UTC <Taneb> byorgey, I'm re-installing all my libraries with profiling enabled (figured I'd have to bite the bullet eventually), I'll mess with it after that
+2013-08-20 13:07:31 UTC <byorgey> I drew the dragon curve once with a much older version of diagrams, using an iterated string rewriting system, it was probably only about 20 lines or so
+2013-08-20 13:07:39 UTC <byorgey> Taneb: ok, sounds good =)
+2013-08-20 13:07:49 UTC <Taneb> (and I'm really kind of new to diagrams)
+2013-08-20 13:08:00 UTC <byorgey> sure, no worries
+2013-08-20 13:08:18 UTC <byorgey> ACTION -> school, back in 15 mins or so
+2013-08-20 13:08:25 UTC <Taneb> I define my own direction type, which I can cut out completely probably
+2013-08-20 13:08:26 UTC <Taneb> Bye!
+2013-08-20 13:21:45 UTC <Taneb> It looks like the slowness is me
+2013-08-20 13:23:06 UTC <ClaudiusMaximus> Taneb: http://hackage.haskell.org/packages/archive/diagrams-contrib/0.7/doc/html/Diagrams-TwoD-Path-IteratedSubset.html might be useful (not tried it myself)
+2013-08-20 13:24:00 UTC <byorgey> I don't think the dragon curve is the image of an iterated subset construction
+2013-08-20 13:24:13 UTC <Taneb> ...I think it may be
+2013-08-20 13:24:14 UTC <ClaudiusMaximus> oh heh
+2013-08-20 13:24:26 UTC <ClaudiusMaximus> anyway, gotta dash
+2013-08-20 13:24:43 UTC <Taneb> Me too
+2013-08-20 13:24:44 UTC <Taneb> Bye
+2013-08-20 13:24:46 UTC <byorgey> bye
+2013-08-20 13:25:38 UTC <byorgey> martingale: re: link to alerp documentation, yes, there should be... and there WILL be, once I get around to rebuilding the Haddocks for 0.7
+2013-08-20 13:31:41 UTC <byorgey> rayman_: what's up?
+2013-08-20 13:32:12 UTC <rayman_> byorgey: I read the tutorial about vectors. It's a very cool. :)
+2013-08-20 13:33:29 UTC <rayman_> byorgey: I will wait before you complete tutorials and thereafter I will make a russian translation of them. :)
+2013-08-20 13:34:13 UTC <byorgey> ooh, awesome =D
+2013-08-20 13:34:46 UTC <rayman_> yep :)
+2013-08-20 13:34:59 UTC <byorgey> rayman_: the tutorials will never be done, there are always more tutorials to write =)
+2013-08-20 13:35:33 UTC <byorgey> but I just have a few more changes to make to the vector one and it will be done
+2013-08-20 13:35:36 UTC <luite> cool, so i can learn some russian when i read the english one first ;)
+2013-08-20 13:35:36 UTC <rayman_> yes, but someone should complete basic of them
+2013-08-20 13:35:41 UTC <byorgey> sure.
+2013-08-20 13:36:01 UTC <rayman_> luite: some russian about beer and vodka? =D
+2013-08-20 13:36:03 UTC <byorgey> if you translate them into Russian we should figure out a way to host them on the diagrams site too
+2013-08-20 13:36:19 UTC <byorgey> so you can click a little flag at the top of the tutorial and switch languages maybe
+2013-08-20 13:36:20 UTC <rayman_> *bear
+2013-08-20 13:36:20 UTC <luite> rayman_: will your translated tutorial invole beer and vodka?
+2013-08-20 13:36:30 UTC <luite> involve
+2013-08-20 13:36:34 UTC <byorgey> bears and vodka, even better
+2013-08-20 13:36:38 UTC <rayman_> yep
+2013-08-20 13:36:45 UTC <luite> oh bears, yeah much more russian
+2013-08-20 13:36:47 UTC <rayman_> luite: nope =)
+2013-08-20 13:37:59 UTC <rayman_> byorgey: I can create site for this stuff
+2013-08-20 13:38:02 UTC <luite> perhaps some vodka to ease the headache from all the new typeclasses
+2013-08-20 13:38:11 UTC <rayman_> :D
+2013-08-20 13:38:11 UTC <byorgey> rayman_: sure, we could have it on separate site too
+2013-08-20 13:38:17 UTC <byorgey> hahaha
+2013-08-20 13:39:01 UTC <byorgey> ACTION prefers a dram of scotch for that, but the diagrams typeclasses definitely require some form of alcohol ;)
+2013-08-20 13:39:34 UTC <rayman_> yes especially about trails and paths =)
+2013-08-20 13:40:09 UTC <byorgey> indeed =)
+2013-08-20 13:42:18 UTC <fryguybob> I think trails and paths could be a nice continuation of the vector tutorial
+2013-08-20 13:44:14 UTC <kuribas> fryguybob: The nice thing is that it is easy to calculate an upper bound of the tangent vector.
+2013-08-20 13:44:34 UTC <kuribas> fryguybob: Using the fact that the derivative of a bezier is a bezier itself.
+2013-08-20 13:45:01 UTC <kuribas> You can simply take the maximum of the convex hull of the derivative.
+2013-08-20 13:52:29 UTC <fryguybob> kuribas: Ah, with lower degree?
+2013-08-20 13:53:34 UTC <kuribas> fryguybob: I just take the maximum of magnitude of the three control points.
+2013-08-20 13:55:08 UTC <kuribas> Which are simply 2*(C[i] - C[i-1]).
+2013-08-20 13:56:37 UTC <kuribas> And then I double it to have some room.
+2013-08-20 13:59:39 UTC <fryguybob> So what is the maximal derivative giving you?
+2013-08-20 13:59:59 UTC <fryguybob> (I guess I should say an upper bound on the magnitude of the derivative?)
+2013-08-20 14:02:14 UTC <kuribas> http://paste.lisp.org/display/138538
+2013-08-20 14:08:36 UTC <martingale> how do i locate a trail?
+2013-08-20 14:09:10 UTC <byorgey> martingale: use  at :: a -> Point (V a) -> Located a
+2013-08-20 14:09:30 UTC <martingale> byorgey: ah yes, i forgot
+2013-08-20 14:09:41 UTC <byorgey> so e.g.     someTrail `at` p2 (3,1)
+2013-08-20 14:15:08 UTC <kuribas> fryguybob: It gives the magnification of the tolerance from the domain to the codomain.
+2013-08-20 14:15:31 UTC <kuribas> fryguybob: For infinitesimal values.
+2013-08-20 14:20:28 UTC <rayman_> why explodeTrail function works only on Located things?
+2013-08-20 14:21:16 UTC <fryguybob> kuribas: Oh, ok.  That makes sense.
+2013-08-20 14:21:31 UTC <fryguybob> kuribas: Sorry, I'm a bit distracted at the moment.
+2013-08-20 14:22:19 UTC <kuribas> no problem
+2013-08-20 14:25:14 UTC <byorgey> rayman_: because you might want to get paths out of it, or Located trails, etc.
+2013-08-20 14:25:21 UTC <byorgey> so it needs to know a position.
+2013-08-20 14:25:37 UTC <rayman_> hmm
+2013-08-20 14:25:38 UTC <rayman_> but
+2013-08-20 14:25:42 UTC <byorgey> rayman_: if you have a Trail  you can just do   `at` origin   to turn it into a Located Trail
+2013-08-20 14:25:52 UTC <rayman_> yes, I know it
+2013-08-20 14:26:48 UTC <byorgey> rayman_: what would you expect, say   explodeTrail :: Trail v -> [Path v]   to do?  Which paths would I get as output?
+2013-08-20 14:27:01 UTC <rayman_> but If I want to make some square with different colors of lines using trails, what should I do?
+2013-08-20 14:33:42 UTC <byorgey> rayman_: http://paste.hskll.org/get/334
+2013-08-20 14:34:29 UTC <rayman_> hmm
+2013-08-20 14:41:25 UTC <byorgey> rayman_: does that code make sense?
+2013-08-20 14:41:56 UTC <rayman_> yes. I'm trying to understand why you should make path for applying some style
+2013-08-20 14:42:25 UTC <byorgey> it doesn't really matter whether you make a path or a located trail or whatever.
+2013-08-20 14:42:31 UTC <byorgey> you can only apply styles to diagrams.
+2013-08-20 14:42:51 UTC <byorgey> paths and trails are just abstract geometric objects, they do not have styles.
+2013-08-20 14:43:24 UTC <rayman_> okey, then we should to turn each side to diagram, yes?
+2013-08-20 14:43:28 UTC <byorgey> right
+2013-08-20 14:43:31 UTC <rayman_> hmm
+2013-08-20 14:43:31 UTC <rayman_> ok
+2013-08-20 14:43:33 UTC <byorgey> that is what 'map stroke' does
+2013-08-20 14:43:50 UTC <rayman_> and map stroke works only on located things
+2013-08-20 14:43:59 UTC <byorgey> in fact as the comment says, the 'map stroke' is unnecessary.  The call to explodeTrail can already generate a list of diagrams.
+2013-08-20 14:44:17 UTC <byorgey> rayman_: stroke turns a Path into a diagram
+2013-08-20 14:44:34 UTC <rayman_> but Path it's a located thing
+2013-08-20 14:44:46 UTC <byorgey> yes, paths have concrete locations
+2013-08-20 14:44:53 UTC <byorgey> trails do not.
+2013-08-20 14:44:53 UTC <rayman_> hm
+2013-08-20 14:45:05 UTC <rayman_> yes, I understand this
+2013-08-20 14:45:31 UTC <rayman_> soo.. we can convert only located things to diagrams?
+2013-08-20 14:46:03 UTC <byorgey> rayman_: you can also convert a Trail to a diagram, using  strokeT.  But it will pick a default location for the trail (it will start at the origin)
+2013-08-20 14:46:15 UTC <byorgey> rayman_: try changing 'stroke' to 'strokeT' (which turns a Trail into a diagram) and see if you can explain why the output picture changes.
+2013-08-20 14:46:44 UTC <rayman_> but, if some object has origin then it's located or not?
+2013-08-20 14:47:17 UTC <byorgey> sorry, I don't think I understand your question
+2013-08-20 14:49:44 UTC <byorgey> of course, this is why I need to write a tutorial on all of this =)
+2013-08-20 14:58:32 UTC <rayman_> hm.. Ok. I understand this :)
