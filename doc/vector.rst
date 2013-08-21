@@ -541,12 +541,24 @@ respect to the origin (for example, scaling the point `(1,1)`:math: by
 > example = drawPts sqPts blue
 >        <> drawPts (sqPts # scale 2 # rotateBy(1/10)) red
 
-Abstractly, points and vectors together form what is termed an `affine
-space`__. It's not important to understand the formal mathematical
-definition of an affine space; it's enough to understand the sorts of
-operations which this enables on points and vectors.
+Abstractly, points and vectors together form what is termed an "affine
+space". Here is a nice intuitive description of affine spaces, stolen
+from `the wikipedia page`__:
 
 __ http://en.wikipedia.org/wiki/Affine_space
+
+    An affine space is what is left of a `vector space`_ after you've
+    forgotten which point is the origin (or, in the words of the
+    French mathematician `Marcel Berger`_, "An affine space is nothing
+    more than a vector space whose origin we try to forget about, by
+    adding translations to the linear maps").
+
+.. _`vector space`: http://en.wikipedia.org/wiki/Vector_space
+.. _`Marcel Berger`: http://en.wikipedia.org/wiki/Marcel_Berger
+
+It's not important to understand the formal mathematical
+definition of an affine space; it's enough to understand the sorts of
+operations which this enables on points and vectors.
 
 In particular, `P2` is an instance of the `AffineSpace` type class
 (defined in `Data.AffineSpace`:mod: from the `vector-space`:pkg:
@@ -570,8 +582,9 @@ its second.
 
 * Although it does not make sense to "add" two points, it does make
   sense to *linearly interpolate* between them using the `alerp`
-  function, for example, to find the point which is 25% of the way
-  from the first point to the second.
+  function (defined in `Data.AffineSpace`:mod:), for example, to find
+  the point which is 25% of the way from the first point to the
+  second.
 
   .. class:: dia-lhs
 
