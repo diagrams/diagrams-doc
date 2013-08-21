@@ -1,5 +1,5 @@
 ---
-title: Simple Chart
+title: Square Limit
 author: Jeremy Gibbons
 authorurl: https://www.cs.ox.ac.uk/people/jeremy.gibbons/
 date: 2013-08-15
