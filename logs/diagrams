@@ -36779,3 +36779,375 @@
 2013-08-20 14:47:17 UTC <byorgey> sorry, I don't think I understand your question
 2013-08-20 14:49:44 UTC <byorgey> of course, this is why I need to write a tutorial on all of this =)
 2013-08-20 14:58:32 UTC <rayman_> hm.. Ok. I understand this :)
+2013-08-20 15:30:35 UTC <notdan> hey rayman_ :) 
+2013-08-20 15:30:42 UTC <notdan> any new fractals?
+2013-08-20 15:34:48 UTC <rayman_> no :) now I make some program for maze generation with render using Diagrams. Really fun
+2013-08-20 15:35:16 UTC <rayman_> but I stuck on mutable vectors =(
+2013-08-20 15:36:36 UTC <notdan> yikes
+2013-08-20 15:37:25 UTC <rayman_> :)
+2013-08-20 15:40:44 UTC <ClaudiusMaximus> rayman_: i was playing with making mazes the other day... http://mathr.co.uk/misc/2013-08-17_mazing-3-3.png
+2013-08-20 15:41:11 UTC <ClaudiusMaximus> using list monad and backtracking search to build a tree
+2013-08-20 15:41:19 UTC <ClaudiusMaximus> *all trees
+2013-08-20 15:41:31 UTC <rayman_> hmm
+2013-08-20 15:41:35 UTC <rayman_> looks good
+2013-08-20 15:41:37 UTC <byorgey> nice, looks like some weird alien language
+2013-08-20 15:41:42 UTC <rayman_> +1
+2013-08-20 15:42:17 UTC <rayman_> it there some tutorial for using ST monad for dummers? :)
+2013-08-20 15:42:20 UTC <ClaudiusMaximus> then i added some symmetry analysis http://mathr.co.uk/misc/2013-08-17_mazing_3-3_symmetries.png  but i tried it on 4x4 grid and my code is too naive to run in an acceptable amount of time
+2013-08-20 15:43:38 UTC <ClaudiusMaximus> so if i feel like revisiting that project i'll make it generate mazes (well, trees on a grid) using randomized choice for each step
+2013-08-20 15:44:41 UTC <ClaudiusMaximus> rayman_: st mutable arrays are a bit awkward, maybe try using plain immutable arrays first, unless they're huge the cost of updates isn't that high
+2013-08-20 15:45:30 UTC <luite> rayman_: it really works very much like IO, but with more annoying type errors
+2013-08-20 15:45:38 UTC <rayman_> hm
+2013-08-20 15:45:40 UTC <byorgey> ACTION suggests trying it without arrays at all =)
+2013-08-20 15:45:50 UTC <byorgey> well, without mutable arrays that is
+2013-08-20 15:45:59 UTC <luite> but yeah, often you can avoid them
+2013-08-20 15:46:00 UTC <rayman_> type Maze = V.Vector (V.Vector Cell)
+2013-08-20 15:46:22 UTC <rayman_> i already have this type
+2013-08-20 15:46:23 UTC <ClaudiusMaximus> i used Set (SortedPair (Int,Int)) to store my maze as a list of edges
+2013-08-20 15:46:29 UTC <luite> i wonder how much work byorgey's idea of a rasterizer with repa and gpipe would be
+2013-08-20 15:46:29 UTC <Taneb> Is there an easy way to multiply an R2 by a matrix/
+2013-08-20 15:46:36 UTC <rayman_> but it's pain to update this
+2013-08-20 15:47:26 UTC <luite> does repa already support gpipe as a backend for some computations?
+2013-08-20 15:48:13 UTC <byorgey> luite: oh, interesting idea
+2013-08-20 15:48:22 UTC <ClaudiusMaximus> i think there's a repa backend for Cuda, afaik gpipe was some unsafePerformIO-heavy dsl for shaders
+2013-08-20 15:49:12 UTC <notdan> do backends need to provide renderable instances only for closed segments?
+2013-08-20 15:49:16 UTC <byorgey> Taneb: sadly, no. No one has yet written a function to convert arbitrary matrices into Transformations
+2013-08-20 15:49:29 UTC <byorgey> see https://github.com/diagrams/diagrams-core/issues/40
+2013-08-20 15:49:56 UTC <byorgey> Taneb: where did your matrix come from?
+2013-08-20 15:49:59 UTC <Taneb> This is probably way overkill for what I want (efficient rotation of a unit vector by 90 degrees)
+2013-08-20 15:50:28 UTC <byorgey> just use  rotateBy (1/4)/
+2013-08-20 15:50:31 UTC <byorgey> uh, without the final stray /
+2013-08-20 15:51:12 UTC <byorgey> Taneb: or use 'perp'
+2013-08-20 15:51:25 UTC <notdan> 'data Segment c v = ... | Cubic v v (Offset c v)' <- what are those variables supposed to mean?
+2013-08-20 15:51:29 UTC <notdan> Why not three offsets?
+2013-08-20 15:51:52 UTC <byorgey> Taneb: in fact, perp will be more efficient than multiplying by a matrix anyway
+2013-08-20 15:52:24 UTC <byorgey> notdan: there are three offsets, the first two are plain vectors, and the third is of type  Offset c v
+2013-08-20 15:52:37 UTC <byorgey> the point is that if  c ~ Open  then there is no third offset
+2013-08-20 15:52:54 UTC <byorgey> because the final offset is determined by the context somehow, e.g. this is the final segment in a Loop
+2013-08-20 15:53:18 UTC <Taneb> Thank you :)
+2013-08-20 15:53:59 UTC <Taneb> That's just vastly diminished the last remaining expensive bit in my program that I could do anything about
+2013-08-20 15:55:29 UTC <Taneb> Now my program spends 70% of its time in "lw 0.5 . strokeLine . lineFromOffsets"
+2013-08-20 15:56:09 UTC <notdan> Oh, I see
+2013-08-20 15:57:50 UTC <notdan> hm, it seems that trails representation has changed quite drastically
+2013-08-20 15:59:46 UTC <byorgey> yes indeed
+2013-08-20 16:04:01 UTC <Taneb> Still runs out of memory, but I realised that I'm asking it to remember where over 2^17 lines go, so I think it may deserve to
+2013-08-20 16:13:57 UTC <byorgey> that is a lot of lines, yes.
+2013-08-20 16:15:25 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 149578ddc http://travis-ci.org/diagrams/diagrams-doc/builds/10413315 The build failed.
+2013-08-20 16:16:55 UTC <rayman_> byorgey: http://www.cis.upenn.edu/~byorgey/pub/monad_tutorial.jpg lol :D
+2013-08-20 16:17:07 UTC <byorgey> =)
+2013-08-20 16:21:07 UTC <byorgey> ACTION has some gouda for lunch, yum!
+2013-08-20 16:22:34 UTC <luite> but can you pronounce it correctly? :p
+2013-08-20 16:23:28 UTC <byorgey> it's something like "khowda"
+2013-08-20 16:23:45 UTC <byorgey> I think
+2013-08-20 16:24:14 UTC <luite> yeah
+2013-08-20 16:24:28 UTC <luite> although i'm not sure about the pronunciation of "kh" :)
+2013-08-20 16:24:55 UTC <rayman_> :D
+2013-08-20 16:25:23 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14df2fde5 http://travis-ci.org/diagrams/diagrams-doc/builds/10414018 The build has errored.
+2013-08-20 16:26:17 UTC <rayman_> Russian language is simpler in case of pronunciation =)
+2013-08-20 16:27:29 UTC <byorgey> luite: is it a voiceless velar fricative?
+2013-08-20 16:28:48 UTC <byorgey> or is it more like the English pronunciation for 'g'?
+2013-08-20 16:29:43 UTC <luite> oh yeah it's a bit like the 'ch' in 'Bach'
+2013-08-20 16:29:55 UTC <byorgey> ok, right, that's what I thought
+2013-08-20 16:35:28 UTC <rayman_> http://82.196.11.44/screens/1377016489.png
+2013-08-20 16:35:37 UTC <rayman_> how pipe (|) works in patterns?
+2013-08-20 16:35:59 UTC <byorgey> rayman_: those are guards
+2013-08-20 16:36:00 UTC <rayman_> it's hack for implementing guards inside a let expression
+2013-08-20 16:36:00 UTC <byorgey> they work the same way as guards in function definitions
+2013-08-20 16:36:16 UTC <rayman_> hm..
+2013-08-20 16:36:44 UTC <byorgey> that code does a pattern match on () against the pattern _, which always matches, and then the guards are tried in order from top to bottom
+2013-08-20 16:36:49 UTC <rayman_> so I can use guards in pattern matching?
+2013-08-20 16:36:50 UTC <byorgey> the first one which evalutes to True is chosen
+2013-08-20 16:37:11 UTC <byorgey> yes
+2013-08-20 16:37:44 UTC <rayman_> I see this at the first time
+2013-08-20 16:50:11 UTC <rayman_> http://82.196.11.44/screens/1377017384.png
+2013-08-20 16:50:26 UTC <rayman_> :D how to replace elem in vector of vectors
+2013-08-20 16:52:26 UTC <byorgey> nice =)
+2013-08-20 17:13:55 UTC <arkeet> sounds like a job for lens!
+2013-08-20 17:15:29 UTC <arkeet> [[0,0,0],[0,0,0],[0,0,0]] & ix 1 . ix 2 .~ 3
+2013-08-20 17:15:35 UTC <arkeet> > [[0,0,0],[0,0,0],[0,0,0]] & ix 1 . ix 2 .~ 3
+2013-08-20 17:15:35 UTC <lambdabot>   [[0,0,0],[0,0,3],[0,0,0]]
+2013-08-20 17:31:49 UTC <rayman_> wow
+2013-08-20 17:33:15 UTC <rayman_> so, I make a bug in my recursive function and program runs forever =(
+2013-08-20 17:47:55 UTC <travis-ci> [travis-ci] 13monoid-extras/06master 14e4b9b4e http://travis-ci.org/diagrams/monoid-extras/builds/10418859 The build passed.
+2013-08-20 17:48:22 UTC <travis-ci> [travis-ci] 13monoid-extras/06master 14c280bd4 http://travis-ci.org/diagrams/monoid-extras/builds/10418884 The build passed.
+2013-08-20 18:09:07 UTC <travis-ci> [travis-ci] 13backend-tests/06master 149b4fd39 http://travis-ci.org/diagrams/diagrams-backend-tests/builds/10419545 The build was broken.
+2013-08-20 18:22:00 UTC <hpaste_> Taneb pasted âDragon Curveâ at http://lpaste.net/92009
+2013-08-20 18:22:10 UTC <Taneb> How can I make that more space-efficient?
+2013-08-20 18:23:54 UTC <travis-ci> [travis-ci] 13backend-tests/06master 14ca0f06d http://travis-ci.org/diagrams/diagrams-backend-tests/builds/10420195 The build is still failing.
+2013-08-20 18:28:27 UTC <byorgey> Taneb: no idea, though I am currently trying to squash some apparent space leaks
+2013-08-20 18:28:33 UTC <Taneb> :D
+2013-08-20 18:28:56 UTC <byorgey> ACTION steals Taneb's program to use as a benchmark
+2013-08-20 18:28:59 UTC <Taneb> :O
+2013-08-20 18:29:22 UTC <Taneb> byorgey, the number on line 28 is what controls how details it is
+2013-08-20 18:29:30 UTC <Taneb> Above 16 and I run out of memory
+2013-08-20 18:29:47 UTC <byorgey> OK
+2013-08-20 18:31:04 UTC <travis-ci> [travis-ci] 13backend-tests/06master 14b3736ca http://travis-ci.org/diagrams/diagrams-backend-tests/builds/10420559 The build has errored.
+2013-08-20 18:53:30 UTC <fryguybob> byorgey: Are you doing the spine-strict conversion now?
+2013-08-20 18:55:09 UTC <byorgey> fryguybob: I got as far as compiling everything with profiling and generating a few test profiles, but I haven't actually done any conversion yet.
+2013-08-20 18:55:20 UTC <byorgey> and I'm not going to have any more time to work on it today.
+2013-08-20 18:55:40 UTC <byorgey> so if you want to take a shot at it, go ahead.
+2013-08-20 18:55:42 UTC <fryguybob> byorgey: Ok, I'll take another crack at it.
+2013-08-20 18:56:19 UTC <fryguybob> There are a couple other RTS options I'll try to see if they are insightful first.
+2013-08-20 18:59:09 UTC <luite> oh what is your general strategy? ghcjs has a leak and i have to find it :)
+2013-08-20 19:01:40 UTC <byorgey> my general strategy is "flail around trying random things until it gets faster"
+2013-08-20 19:03:11 UTC <fryguybob> luite: My first step is to figure out how to do it.  Second step is doing it.
+2013-08-20 19:04:13 UTC <fryguybob> http://heap.ezyang.com/view/e1975225238e653ee699e918e7c50010621e0b8f#form
+2013-08-20 19:06:17 UTC <fryguybob> Diagrams.TwoD.Types.sat_... <- luite, byorgey any idea what that closure is connected to?
+2013-08-20 19:06:55 UTC <Taneb> byorgey, don't use my dragon curve as a benchmark!
+2013-08-20 19:07:06 UTC <Taneb> I don't think the problem is diagram-related!
+2013-08-20 19:09:29 UTC <byorgey> Taneb: well, I think it is.
+2013-08-20 19:09:37 UTC <byorgey> there's only one way to find out!
+2013-08-20 19:10:57 UTC <Taneb> fiiiiiiiight?
+2013-08-20 19:11:33 UTC <luite> fryguybob: sat* stuff is all kinds of local led bindings
+2013-08-20 19:11:37 UTC <luite> let
+2013-08-20 19:12:08 UTC <byorgey> Taneb: http://www.googlefight.com/index.php?lang=en_GB&word1=the+problem+is+diagram-related&word2=the+problem+is+not+diagram-related
+2013-08-20 19:12:34 UTC <byorgey> looks like I was right, but only by a hair!
+2013-08-20 19:12:52 UTC <fryguybob> luite: Ok
+2013-08-20 19:13:17 UTC <luite> fryguybob: you might want to recompile with some flag that automatically adds CAFs
+2013-08-20 19:14:08 UTC <Taneb> Okay, that was almost certainly the wrong way to find out
+2013-08-20 19:14:18 UTC <byorgey> =)
+2013-08-20 19:14:52 UTC <fryguybob> luite: I'll try -caf-all on lib
+2013-08-20 19:15:15 UTC <fryguybob> luite: Any clues on what OTHER is?
+2013-08-20 19:15:53 UTC <fryguybob> \me hopes it is something the Simon's put in to slow down haskell programs so other things don't look bad.
+2013-08-20 19:16:34 UTC <luite> not really :)
+2013-08-20 19:19:15 UTC <byorgey> "your program is too fast, don't be such a jerk."
+2013-08-20 19:20:26 UTC <fryguybob> Humm -caf-all didn't help that I can see.
+2013-08-20 19:20:33 UTC <fryguybob> http://heap.ezyang.com/view/6b7c91dd24bb5fc0761b658ab19d7f5c68ec2e90#form
+2013-08-20 19:22:13 UTC <fryguybob> byorgey: My guess is that the (,) there is the tuple from the dual tree
+2013-08-20 19:22:27 UTC <byorgey> fryguybob: yeah, those look identical
+2013-08-20 19:22:55 UTC <byorgey> yes, you might be right
+2013-08-20 19:23:44 UTC <fryguybob> Since the sat_ things decrease as we render, perhaps they are Prim's.  Those are in Diagrams.TwoD.Types right?
+2013-08-20 19:23:53 UTC <byorgey> no
+2013-08-20 19:24:07 UTC <byorgey> Diagrams.TwoD.Types is from diagrams-lib, it defines things like R2 and P2
+2013-08-20 19:24:16 UTC <fryguybob> Ah, ok.
+2013-08-20 19:24:40 UTC <byorgey> it could just be vectors or something.
+2013-08-22 02:01:38 UTC <travis-ci> [travis-ci] 13dual-tree/06master 143f6f11a http://travis-ci.org/diagrams/dual-tree/builds/10478189 The build passed.
+2013-08-22 02:04:26 UTC <travis-ci> [travis-ci] 13dual-tree/06internal-d 14a3ab95c http://travis-ci.org/diagrams/dual-tree/builds/10478214 The build passed.
+2013-08-22 02:35:40 UTC <luite> byorgey: i'm not going to ICFP/FARM sorry
+2013-08-22 02:39:08 UTC <fryguybob> :(
+2013-08-22 02:39:23 UTC <luite> fryguybob: not cancelling haskell symposium
+2013-08-22 02:39:42 UTC <fryguybob> :)  but still :(
+2013-08-22 06:17:43 UTC <raymank26> http://82.196.11.44/screens/1377152235.png
+2013-08-22 06:18:16 UTC <raymank26> I make it :)
+2013-08-22 06:27:52 UTC <raymank26> okey :(
+2013-08-22 06:29:46 UTC <johnw> nice, from what code?
+2013-08-22 10:09:12 UTC <jbracker> What is the default fill rule?
+2013-08-22 10:51:40 UTC <byorgey> jbracker: the default fill is transparent
+2013-08-22 10:52:55 UTC <fryguybob> jbracker: Postscript backend defaults to Winding.
+2013-08-22 10:53:09 UTC <byorgey> ohhh, fill RULE
+2013-08-22 10:53:19 UTC <fryguybob> :D
+2013-08-22 10:53:34 UTC <byorgey> uh, good question, I am not sure
+2013-08-22 10:53:40 UTC <byorgey> probably Winding
+2013-08-22 10:54:08 UTC <byorgey> if you find a backend that does something different, file a bug
+2013-08-22 10:55:05 UTC <fryguybob> I should add a test to the backend tests that probs each default.
+2013-08-22 10:56:02 UTC <fryguybob> *probes
+2013-08-22 10:56:31 UTC <byorgey> yes, sounds like a good idea
+2013-08-22 10:57:01 UTC <byorgey> fryguybob: speaking of backend tests, I should have mentioned earlier that there is a failing test for the postscript backend =)
+2013-08-22 10:57:14 UTC <byorgey> to be fair, ALL the backends were failing it, and I fixed the other ones
+2013-08-22 10:59:16 UTC <Taneb> How's the backend improvement going?
+2013-08-22 10:59:30 UTC <byorgey> in particular the "fill-line" test (and "line-loop", but it's the same issue).  Lines should not be filled, which requires a bit of work because you have to notice whether you're drawing lines or loops and explicitly NOT fill when you are drawing lines
+2013-08-22 11:00:53 UTC <fryguybob> byorgey: Ah, ok.  I'll take a look.
+2013-08-22 11:00:59 UTC <byorgey> Taneb: going well, though it's mostly still in my head =)   See https://github.com/diagrams/dual-tree/tree/internal-d , and I have a bit of code I've written here for diagrams-core which I haven't pushed yet
+2013-08-22 11:01:31 UTC <byorgey> fryguybob: it may mean you have to add a StateT to your rendering monad =(
+2013-08-22 11:02:16 UTC <fryguybob> byorgey: It is already there.
+2013-08-22 11:02:37 UTC <fryguybob> I have to track fonts and fill rule
+2013-08-22 11:02:59 UTC <fryguybob> (or emit those on each primative)
+2013-08-22 11:03:59 UTC <jbracker> byorgey: How about a defoult instance for FillRule and FillRuleA then?
+2013-08-22 11:05:20 UTC <byorgey> fryguybob: ah, I must have missed that
+2013-08-22 11:05:45 UTC <byorgey> jbracker: oh, you mean a Data.Default instance?  sure!
+2013-08-22 11:06:37 UTC <jbracker> should I add one and push it?
+2013-08-22 11:08:43 UTC <byorgey> jbracker: sure
+2013-08-22 12:21:29 UTC <notdan> Do you guys think it makes sense at all to expose the tests from diagrams-backend-tests as a libriary module?
+2013-08-22 13:50:44 UTC <byorgey> notdan: sure, why not
+2013-08-22 13:53:09 UTC <notdan> OK. I was just thinking how would I test diagrams-ghcjs. And right now I just copy the tests code :)
+2013-08-22 13:55:00 UTC <notdan> Man, I spent like two days chasing this bug: https://github.com/ghcjs/ghcjs-canvas/blob/c548e1dcc2a2cdbd46a32b43870c276d4567273e/JavaScript/Canvas.hs#L93 :D
+2013-08-22 13:55:25 UTC <notdan> But at least now I (almost fully) understand how to implement diagrams backends
+2013-08-22 13:55:34 UTC <fryguybob> hehe
+2013-08-22 13:55:52 UTC <byorgey> haha, whoops
+2013-08-22 13:55:56 UTC <fryguybob> line 97 too
+2013-08-22 13:56:04 UTC <byorgey> those definitions look... not very useful
+2013-08-22 13:56:16 UTC <byorgey> notdan: excellent =)
+2013-08-22 13:56:21 UTC <fryguybob> Is there a warning for functions defined that way?  Seems like GHC could do that.
+2013-08-22 13:56:31 UTC <byorgey> ACTION was just wondering the same thing.
+2013-08-22 13:57:08 UTC <byorgey> survey says... nope.
+2013-08-22 13:58:01 UTC <byorgey> even undefined isn't defined that way, so it seems to me a warning would be entirely legitimate.
+2013-08-22 13:58:15 UTC <fryguybob> -fwarn-dodgy-extra-tight-loop
+2013-08-22 13:58:22 UTC <byorgey> hehe
+2013-08-22 13:58:29 UTC <byorgey> are there any warnings not enabled by -Wall ?
+2013-08-22 13:58:40 UTC <byorgey> ACTION hopes that is a silly question
+2013-08-22 13:58:46 UTC <fryguybob> byorgey: I think I remember hearing that there are
+2013-08-22 13:58:55 UTC <byorgey> ugh
+2013-08-22 13:59:23 UTC <byorgey> -Wall-I-mean-it
+2013-08-22 13:59:30 UTC <fryguybob> The docs list the ones that are not: http://www.haskell.org/ghc/docs/7.6.3/html/users_guide/options-sanity.html
+2013-08-22 13:59:41 UTC <fryguybob> -fwarn-tabs <-- boo!
+2013-08-22 14:00:05 UTC <byorgey> I know right?
+2013-08-22 14:00:13 UTC <fryguybob> warn-tabs isn't potentially suspicious, it *is* suspicious :D
+2013-08-22 14:05:58 UTC <fryguybob> ACTION adds tabs to the list of things to erase from the world if he happens upon a time machine at some point.
+2013-08-22 14:06:08 UTC <fryguybob> Don't worry, it is pretty far down the list.
+2013-08-22 14:15:26 UTC <byorgey> hey raymank26, nice maze =)
+2013-08-22 14:16:14 UTC <raymank26> byorgey: thanks! =)
+2013-08-22 14:16:24 UTC <raymank26> i will show you some magic
+2013-08-22 14:17:03 UTC <byorgey> =O
+2013-08-22 14:17:14 UTC <byorgey> yes please
+2013-08-22 14:17:37 UTC <raymank26> http://82.196.11.44/screens/1377181011.png it's how to replace Cell in a maze using Control.Lens as L
+2013-08-22 14:17:41 UTC <raymank26> =)
+2013-08-22 14:17:55 UTC <raymank26> beautiful
+2013-08-22 14:18:14 UTC <byorgey> nice =D
+2013-08-22 14:18:20 UTC <byorgey> ACTION <3 lens
+2013-08-22 14:18:40 UTC <raymank26> it there some in-depth tutorial for lenses?
+2013-08-22 14:19:59 UTC <raymank26> api references is so difficult :(
+2013-08-22 14:20:12 UTC <byorgey> I recommend reading https://github.com/ekmett/lens#lens-lenses-folds-and-traversals and watching http://youtu.be/cefnmjtAolY?hd=1
+2013-08-22 14:20:23 UTC <byorgey> and ask questions in #lens
+2013-08-22 14:20:34 UTC <byorgey> I don't think there's really an in-depth tutorial
+2013-08-22 14:21:11 UTC <byorgey> oh, and follow along the video with the slides http://comonad.com/haskell/Lenses-Folds-and-Traversals-NYC.pdf
+2013-08-22 14:21:15 UTC <raymank26> purple links =)
+2013-08-22 14:21:20 UTC <byorgey> hehe
+2013-08-22 14:21:22 UTC <byorgey> ok
+2013-08-22 14:21:51 UTC <raymank26> hm. Channel for lenses in freenode? Wow
+2013-08-22 14:21:59 UTC <raymank26> thanks :)
+2013-08-22 14:22:11 UTC <byorgey> I agree there is some missing documentation to fill in the gap between understanding the basics and being a lens ninja
+2013-08-22 14:22:30 UTC <byorgey> I am currently struggling through that phase as well
+2013-08-22 14:23:23 UTC <raymank26> Libs like lens is for haskell type ninja.
+2013-08-22 14:23:28 UTC <notdan> I think it's #haskell-lens though
+2013-08-22 14:23:30 UTC <luite> hehe i think everyone is somewhere in that gap
+2013-08-22 14:24:19 UTC <raymank26> but not lens developer :D
+2013-08-22 14:25:15 UTC <byorgey> oh, right, #haskell-lens
+2013-08-22 14:25:17 UTC <luite> well, even edwardk said that he tends to forget how they work, and many of them were originally built with lots of help from ghci
+2013-08-22 14:25:39 UTC <notdan> just play around until the types match
+2013-08-22 14:25:48 UTC <raymank26> hard way :D
+2013-08-22 14:25:50 UTC <byorgey> right, but the error messages are usually impossible to understand
+2013-08-22 14:26:18 UTC <raymank26> yes, haskell error messages is the most confusing part of the ghc
+2013-08-22 14:26:35 UTC <byorgey> no, GHC's error messages are actually quite nice!
+2013-08-22 14:26:38 UTC <luite> yeah i guess he's seen so many of them that he can pattern match a bit more efficienlty :)
+2013-08-22 14:27:03 UTC <byorgey> the problem is with EDSLs like diagrams and lens, the type error messages rarely tell you much about what is actually wrong
+2013-08-22 14:27:15 UTC <byorgey> but that's not really GHC's fault.
+2013-08-22 14:27:31 UTC <raymank26> okey :(
+2013-08-22 14:27:49 UTC <byorgey> at some point in the future (read: after I finish my PhD) I may pick up scriptable error messages for EDSLs as a research topic
+2013-08-22 14:27:56 UTC <raymank26> hm.. today all links to github either 404 or 500.
+2013-08-22 14:28:09 UTC <byorgey> works ok for me
+2013-08-22 14:28:25 UTC <raymank26> http://comonad.com/haskell/Lenses-Folds-and-Traversals-NYC.pdf i get 404
+2013-08-22 14:29:17 UTC <byorgey> oh, comonad.com has been down for a while I think
+2013-08-22 14:29:40 UTC <raymank26> "There isn't a GitHub Page here." hmm
+2013-08-22 14:29:41 UTC <byorgey> try kmett.com in place of comonad.com
+2013-08-22 14:30:03 UTC <raymank26> yep, it works
+2013-08-22 14:30:19 UTC <raymank26> wow, slides from lecture
+2013-08-22 14:31:02 UTC <fryguybob> byorgey: Scriptable error messages for EDSLs is a very interesting topic.
+2013-08-22 14:32:00 UTC <raymank26> byorgey: I read your tutorials at fpcomplete. They are really good and understandable :)
+2013-08-22 14:32:05 UTC <byorgey> fryguybob: indeed. There is one paper on it ("scripting the type inference process") about Helium, but of course Helium is dead and I haven't seen anything else on the topic since.
+2013-08-22 14:32:09 UTC <byorgey> raymank26: great! thanks =)
+2013-08-22 14:32:18 UTC <luite> there was a PhD position in utrecht for that earlier this year
+2013-08-22 14:32:25 UTC <byorgey> oh? nice!
+2013-08-22 14:32:57 UTC <fryguybob> byorgey: Ah, yeah Helium would be an interesting use.
+2013-08-22 14:33:16 UTC <luite> https://www.academictransfer.com/employer/UU/vacancy/18688/lang/en/
+2013-08-22 14:34:38 UTC <byorgey> oh, that's perfect
+2013-08-22 14:34:42 UTC <byorgey> I hope they got someone good
+2013-08-22 14:34:51 UTC <luite> be too, that's why i didn't apply ;)
+2013-08-22 14:34:54 UTC <luite> me too
+2013-08-22 14:35:00 UTC <byorgey> hehe
+2013-08-22 14:36:06 UTC <byorgey> Jurriaan's home page says "this position has been filled"
+2013-08-22 14:36:59 UTC <byorgey> I wonder if he will be at ICFP
+2013-08-22 14:37:12 UTC <luite> ah
+2013-08-22 14:37:30 UTC <luite> i have to admit that i don't really know anyone at the functional programming group in utrecht
+2013-08-22 14:38:47 UTC <byorgey> oh, TFP will be in Utrecht next year
+2013-08-22 14:39:25 UTC <byorgey> maybe I will see if I can go
+2013-08-22 14:39:50 UTC <luite> oh cool
+2013-08-22 14:40:36 UTC <luite> have you been to utrecht before?
+2013-08-22 14:40:46 UTC <byorgey> nope
+2013-08-22 14:41:02 UTC <byorgey> I have been to Amsterdam, Leiden, and Delft, but not Utrecht
+2013-08-22 14:43:25 UTC <luite> ah it will still look somewhat familiar then (but the university is not in the historic city center)
+2013-08-22 14:44:19 UTC <byorgey> right
+2013-08-22 14:44:37 UTC <byorgey> but if I make it all the way to Utrecht I will spend some time in the historic city center whether the university is there or not =)
+2013-08-22 14:47:57 UTC <luite> sure, the bus connection is good :)
+2013-08-22 14:48:20 UTC <luite> (although a bit overloaded, there have been plans to construct a tram line instead, but those things take ages)
+2013-08-22 14:49:04 UTC <luite> apparently it should be operational in 2018 now
+2013-08-22 14:54:57 UTC <byorgey> hehe, of course =)
+2013-08-22 14:58:53 UTC <fryguybob> California will have the hyperloop by then :P
+2013-08-22 15:00:52 UTC <luite> hehe, we have a semi-highspeed railway in nl, that should've started operation early this year (actually a few years earlier), but it appeared that the cheaper (unproven) italian trains they bought are extremely unreliable, so they've only run them for a week or so
+2013-08-22 15:03:14 UTC <luite> they've already lost so much now that they could've bought the expensive siemens or alstom high speed trains instead... and they knew about the problems all along
+2013-08-22 15:04:10 UTC <luite> so i guess public transport projects fail everywhere :)
+2013-08-22 15:06:54 UTC <fryguybob> Hardware is too hard.  I'll stick with software.
+2013-08-22 15:07:29 UTC <fryguybob> At least with software you sometimes have the illusion that it isn't hard.
+2013-08-22 15:07:34 UTC <luite> well software projects also fail all the time, and it puzzles me why :)
+2013-08-22 15:08:44 UTC <luite> some police document management system here that cost $20M was scrapped here because it's a failuer... and it wasn't even that complex (of course they find ways to make simple projects complex, especially the large government contractors)
+2013-08-22 15:09:09 UTC <luite> still a lot cheaper than the $200M for the trains i guess :)
+2013-08-22 15:09:52 UTC <luite> (and they still have no high speed service, so i guess this is not the end of those losses)
+2013-08-22 15:09:59 UTC <fryguybob> Yeah.  Even existing software that works is too much for some people.  Rebekah is having a hard time getting people to use a shared google drive to colaborate on a document.
+2013-08-22 15:10:16 UTC <fryguybob> She keeps getting emails "Attached is a pdf of my changes"...
+2013-08-22 15:12:43 UTC <luite> hmm
+2013-08-22 15:19:28 UTC <notdan> http://co-dan.github.io/ghcjs/diagrams-ghcjs-tests/Main.jsexe/ diagrams-ghcjs progress so far
+2013-08-22 15:19:37 UTC <luite> i have to admit that i've never used google docs very seriously for collaboration so far :)
+2013-08-22 15:19:50 UTC <luite> latex + git seems to work, but might be a hard sell to some people ;)
+2013-08-22 15:19:58 UTC <notdan> It looks like I broke the path rendering thought
+2013-08-22 15:27:51 UTC <byorgey> notdan: excellent progress!  looks like you are only missing (1) dashing (2) EvenOdd fill rule (3) clipping and (4) avoid setting a fill attribute when stroking lines (not loops)
+2013-08-22 15:28:44 UTC <luite> notdan: cool work :) looks like the optimizer does a reasonable job too, although diagrams is still lots of functions
+2013-08-22 15:33:24 UTC <notdan> hm, is FillRule an attribute?
+2013-08-22 15:36:07 UTC <notdan> e.g. am I supposed to update it in the Backend.withStyle function?
+2013-08-22 15:42:19 UTC <notdan> Is there a comprehensive list of attributes that backend should implement?
+2013-08-22 15:42:40 UTC <luite> oh hmm, i originally adapted it from the canvas backend i think
+2013-08-22 15:42:51 UTC <luite> perhaps you can use the svg backend as reference for the missing things
+2013-08-22 15:44:50 UTC <byorgey> notdan: FillRule is an attribute, yes
+2013-08-22 15:47:15 UTC <notdan> luite: oh, good idea
+2013-08-22 16:04:25 UTC <travis-ci> [travis-ci] 13diagrams-builder/06builder-0.4 14215f2d3 http://travis-ci.org/diagrams/diagrams-builder/builds/10500722 The build passed.
+2013-08-22 16:04:57 UTC <travis-ci> [travis-ci] 13diagrams-builder/06master 14d4d94f2 http://travis-ci.org/diagrams/diagrams-builder/builds/10500724 The build passed.
+2013-08-22 16:35:42 UTC <travis-ci> [travis-ci] 13diagrams-builder/06master 14ae7dc5f http://travis-ci.org/diagrams/diagrams-builder/builds/10502071 The build passed.
+2013-08-22 16:44:25 UTC <kuribas> Is there a good package to calculate the inverse of a transformation?
+2013-08-22 16:44:37 UTC <kuribas> (An affine transformation)
+2013-08-22 16:46:49 UTC <byorgey> kuribas: you might be able to use  http://hackage.haskell.org/package/bed-and-breakfast
+2013-08-22 16:46:54 UTC <byorgey> I haven't used it but it looks nice
+2013-08-22 16:47:23 UTC <kuribas> ok
+2013-08-22 16:47:27 UTC <byorgey> I don't think it does affine transformations explicitly but really the crux of the matter is finding inverse matrices
+2013-08-22 16:47:36 UTC <kuribas> yes
+2013-08-22 16:48:18 UTC <carter> byorgey kuribas  don't like the bed and breakfast design 
+2013-08-22 16:48:19 UTC <carter> :)
+2013-08-22 16:48:33 UTC <carter> kuribas: rationals or floats or doubles?
+2013-08-22 16:48:47 UTC <kuribas> doubles
+2013-08-22 16:48:57 UTC <carter> what size?
+2013-08-22 16:49:04 UTC <kuribas> 2D
+2013-08-22 16:49:08 UTC <carter> kuribas: also, linear is perhaps worth checking out then :)
+2013-08-22 16:49:14 UTC <kuribas> 3x3
+2013-08-22 16:49:18 UTC <carter> linear is optimized for 2/3d
+2013-08-22 16:49:24 UTC <carter> @hackage linear
+2013-08-22 16:49:24 UTC <lambdabot> http://hackage.haskell.org/package/linear
+2013-08-22 16:49:34 UTC <byorgey> ah, didn't realize linear does matrix inverse
+2013-08-22 16:49:35 UTC <byorgey> nice
+2013-08-22 16:49:37 UTC <carter> http://hackage.haskell.org/packages/archive/linear/1.2/doc/html/Linear-Matrix.html
+2013-08-22 16:49:40 UTC <carter> yeah
+2013-08-22 16:49:57 UTC <carter> bed and breakfast is meant for general purpose
+2013-08-22 16:50:05 UTC <byorgey> right
+2013-08-22 16:50:20 UTC <carter> but it has weird design decisions that make it bad for general purpose
+2013-08-22 16:50:41 UTC <carter> like, the memory layout for matrices it uses will result in ~ 1000x slow down 
+2013-08-22 16:50:44 UTC <carter> or worse
+2013-08-22 16:51:06 UTC <carter> or at least thats the gap between c that uses the bad layouts and C or haskell with the good layouts
+2013-08-22 16:52:57 UTC <kuribas> It's a large depency...  Maybe it's better if I code something up myself?
+2013-08-22 16:53:14 UTC <carter> kuribas what are you working on?
+2013-08-22 16:53:17 UTC <byorgey> if you're just inverting 2x2 matrices it's easy enough to code yourself
+2013-08-22 16:53:20 UTC <carter> yeah
+2013-08-22 16:53:27 UTC <carter> but any more
+2013-08-22 16:53:57 UTC <kuribas> carter: https://github.com/kuribas/cubicbezier
+2013-08-22 17:14:56 UTC <ClaudiusMaximus> @hackage Vec is what i use for small matrices
+2013-08-22 17:14:56 UTC <lambdabot> http://hackage.haskell.org/package/Vec is what i use for small matrices
+2013-08-22 17:18:21 UTC <kuribas> hm, I already hardcoded it.
+2013-08-22 17:47:05 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06dia-haddock-0.1 149695c37 http://travis-ci.org/diagrams/diagrams-haddock/builds/10504987 The build has errored.
+2013-08-22 17:47:20 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 14967b0e2 http://travis-ci.org/diagrams/diagrams-haddock/builds/10504989 The build has errored.
+2013-08-22 18:00:09 UTC <kuribas> Any criticism of my geometry base?  https://github.com/kuribas/cubicbezier/blob/master/Geom2D.hs
+2013-08-22 18:00:40 UTC <byorgey> kuribas: just headed out now, but I can take a look at it in an hour or so
+2013-08-22 18:01:40 UTC <kuribas> ok :)
+2013-08-22 18:02:31 UTC <kuribas> I have been wondering if they are not too general for my bezier library...  Or not general enough for a 2D geometry library.
+2013-08-22 18:17:52 UTC <bergey> Why did you decide not to use vector-space?
+2013-08-22 18:36:46 UTC <notdan> Hm, so, if I understand this AttributeClass thing correctly, there is no way for me two get two parameters simultaneously, right?
+2013-08-22 18:39:35 UTC <fryguybob> notdan: That sounds right, but you can make multiple appeals to getAttr
+2013-08-22 18:48:02 UTC <notdan> fryguybob: oh, I'll try that
+2013-08-22 18:48:06 UTC <notdan> thx
+2013-08-22 19:18:21 UTC <byorgey> bergey: presumably becayse vector-space doesn't do inverses.
+2013-08-22 19:18:24 UTC <byorgey> *because
+2013-08-22 19:25:18 UTC <bergey> Good point.  I think it's very reasonable to use explicit matrices for transforms.  I was surprised that vector-space instances aren't defined on Point, especially since the operators have the same names as those in vector-space.
+2013-08-22 19:25:39 UTC <carter> inverses aren't always stable....
+2013-08-22 19:27:01 UTC <bergey> I assume the answer is "Complicated types are deterring new users", but I was curious.
+2013-08-22 19:57:53 UTC <byorgey> oh dang, cubicSpline was implicitly depending on that Num R2 instance
+2013-08-22 19:58:06 UTC <byorgey> it *compiles* fine without the instance, you just can't *use* it at all =P
+2013-08-22 19:58:22 UTC <byorgey> welp, I guess I'll add the instance back for now
+2013-08-22 20:11:18 UTC <luite> yuck :p
+2013-08-22 20:12:25 UTC <byorgey> currently trying to build the Haddock docs to put on the website
+2013-08-22 20:13:21 UTC <byorgey> it's so annoying.  All versions of everything used to build everything else must match up just so, otherwise you get various incompatibilities
+2013-08-22 20:14:54 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 1458a2d65 http://travis-ci.org/diagrams/diagrams-lib/builds/10510428 The build passed.
+2013-08-22 20:16:47 UTC <byorgey> there, I think it's finally building properly
