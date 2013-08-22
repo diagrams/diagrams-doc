@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Diagrams.Backend.Postscript.CmdLine</title><link href="ocean.css" rel="stylesheet" type="text/css" title="Ocean" /><script src="haddock-util.js" type="text/javascript"></script><script type="text/javascript">//<![CDATA[
+window.onload = function () {pageLoad();setSynopsis("mini_Diagrams-Backend-Postscript-CmdLine.html");};
+//]]>
+</script></head><body><div id="package-header"><ul class="links" id="page-menu"><li><a href="src/Diagrams-Backend-Postscript-CmdLine.html">Source</a></li><li><a href="http://www.haskell.org/haskellwiki/Diagrams/Comments/Diagrams.Backend.Postscript.CmdLine">User Comments</a></li><li><a href="index.html">Contents</a></li><li><a href="doc-index.html">Index</a></li></ul><p class="caption">diagrams-postscript-0.7: Postscript backend for diagrams drawing EDSL</p></div><div id="content"><div id="module-header"><table class="info"><tr><th>Maintainer</th><td>diagrams-discuss@googlegroups.com</td></tr><tr><th>Safe Haskell</th><td>None</td></tr></table><p class="caption">Diagrams.Backend.Postscript.CmdLine</p></div><div id="description"><p class="caption">Description</p><div class="doc"><p>Convenient creation of command-line-driven executables for
+ rendering diagrams using the Postscript backend.
+</p><ul><li> <code><a href="Diagrams-Backend-Postscript-CmdLine.html#v:defaultMain">defaultMain</a></code> creates an executable which can render a single
+   diagram at various options.
+</li><li> <code><a href="Diagrams-Backend-Postscript-CmdLine.html#v:multiMain">multiMain</a></code> is like <code><a href="Diagrams-Backend-Postscript-CmdLine.html#v:defaultMain">defaultMain</a></code> but allows for a list of
+   diagrams from which the user can choose one to render.
+</li><li> <code><a href="Diagrams-Backend-Postscript-CmdLine.html#v:pagesMain">pagesMain</a></code> is like <code><a href="Diagrams-Backend-Postscript-CmdLine.html#v:defaultMain">defaultMain</a></code> but renders a list of
+   diagrams as pages in a single file.
+</li></ul><p>If you want to generate diagrams programmatically---<em>i.e.</em> if you
+ want to do anything more complex than what the below functions
+ provide---you have several options.
+</p><ul><li> A simple but somewhat inflexible approach is to wrap up
+   <code><a href="Diagrams-Backend-Postscript-CmdLine.html#v:defaultMain">defaultMain</a></code> (or <code><a href="Diagrams-Backend-Postscript-CmdLine.html#v:multiMain">multiMain</a></code>, or <code><a href="Diagrams-Backend-Postscript-CmdLine.html#v:pagesMain">pagesMain</a></code>) in a call to
+   <code><a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/System-Environment.html#t:withArgs">withArgs</a></code>.
+</li><li> A more flexible approach is to directly call <code><a href="Diagrams-Core-Types.html#v:renderDia">renderDia</a></code>; see
+   <a href="Diagrams-Backend-Postscript.html">Diagrams.Backend.Postscript</a> for more information.
+</li></ul></div></div><div id="synopsis"><p id="control.syn" class="caption expander" onclick="toggleSection('syn')">Synopsis</p><ul id="section.syn" class="hide" onclick="toggleSection('syn')"><li class="src short"><a href="#v:defaultMain">defaultMain</a> :: <a href="Diagrams-Core-Types.html#t:Diagram">Diagram</a> <a href="Diagrams-Backend-Postscript-CmdLine.html#t:Postscript">Postscript</a> <a href="Diagrams-TwoD-Types.html#t:R2">R2</a> -&gt; <a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/System-IO.html#t:IO">IO</a> ()</li><li class="src short"><a href="#v:multiMain">multiMain</a> :: [(<a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Data-String.html#t:String">String</a>, <a href="Diagrams-Core-Types.html#t:Diagram">Diagram</a> <a href="Diagrams-Backend-Postscript-CmdLine.html#t:Postscript">Postscript</a> <a href="Diagrams-TwoD-Types.html#t:R2">R2</a>)] -&gt; <a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/System-IO.html#t:IO">IO</a> ()</li><li class="src short"><a href="#v:pagesMain">pagesMain</a> :: [<a href="Diagrams-Core-Types.html#t:Diagram">Diagram</a> <a href="Diagrams-Backend-Postscript-CmdLine.html#t:Postscript">Postscript</a> <a href="Diagrams-TwoD-Types.html#t:R2">R2</a>] -&gt; <a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/System-IO.html#t:IO">IO</a> ()</li><li class="src short"><a href="#v:animMain">animMain</a> :: <a href="Diagrams-Animation.html#t:Animation">Animation</a> <a href="Diagrams-Backend-Postscript-CmdLine.html#t:Postscript">Postscript</a> <a href="Diagrams-TwoD-Types.html#t:R2">R2</a> -&gt; <a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/System-IO.html#t:IO">IO</a> ()</li><li class="src short"><span class="keyword">data</span>  <a href="#t:Postscript">Postscript</a> </li></ul></div><div id="interface"><h1>Documentation</h1><div class="top"><p class="src"><a name="v:defaultMain" class="def">defaultMain</a> :: <a href="Diagrams-Core-Types.html#t:Diagram">Diagram</a> <a href="Diagrams-Backend-Postscript-CmdLine.html#t:Postscript">Postscript</a> <a href="Diagrams-TwoD-Types.html#t:R2">R2</a> -&gt; <a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/System-IO.html#t:IO">IO</a> ()<a href="src/Diagrams-Backend-Postscript-CmdLine.html#defaultMain" class="link">Source</a></p><div class="doc"><p>This is the simplest way to render diagrams, and is intended to
+   be used like so:
+</p><pre> ... other definitions ...
+ myDiagram = ...
+
+ main = defaultMain myDiagram
+</pre><p>Compiling a source file like the above example will result in an
+   executable which takes command-line options for setting the size,
+   output file, and so on, and renders <code>myDiagram</code> with the
+   specified options.
+</p><p>Pass <code>--help</code> to the generated executable to see all available
+   options.  Currently it looks something like
+</p><pre>
+ Command-line diagram generation.
+
+Foo [OPTIONS]
+
+Common flags:
+   -w --width=INT         Desired width of the output image
+   -h --height=INT        Desired height of the output image
+   -o --output=FILE       Output file
+   -f --fpu=FLOAT         Frames per unit time (for animations)
+   -? --help              Display help message
+   -V --version           Print version information
+</pre><p>For example, a couple common scenarios include
+</p><pre>
+ $ ghc --make MyDiagram
+
+# output image.eps with a width of 400pt (and auto-determined height)
+ $ ./MyDiagram -o image.eps -w 400
+</pre></div></div><div class="top"><p class="src"><a name="v:multiMain" class="def">multiMain</a> :: [(<a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Data-String.html#t:String">String</a>, <a href="Diagrams-Core-Types.html#t:Diagram">Diagram</a> <a href="Diagrams-Backend-Postscript-CmdLine.html#t:Postscript">Postscript</a> <a href="Diagrams-TwoD-Types.html#t:R2">R2</a>)] -&gt; <a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/System-IO.html#t:IO">IO</a> ()<a href="src/Diagrams-Backend-Postscript-CmdLine.html#multiMain" class="link">Source</a></p><div class="doc"><p><code>multiMain</code> is like <code><a href="Diagrams-Backend-Postscript-CmdLine.html#v:defaultMain">defaultMain</a></code>, except instead of a single
+   diagram it takes a list of diagrams paired with names as input.
+   The generated executable then takes a <code>--selection</code> option
+   specifying the name of the diagram that should be rendered.  The
+   list of available diagrams may also be printed by passing the
+   option <code>--list</code>.
+</p><p>Example usage:
+</p><pre>
+ $ ghc --make MultiTest
+ [1 of 1] Compiling Main             ( MultiTest.hs, MultiTest.o )
+ Linking MultiTest ...
+ $ ./MultiTest --list
+ Available diagrams:
+   foo bar
+ $ ./MultiTest --selection bar -o Bar.eps -w 200
+</pre></div></div><div class="top"><p class="src"><a name="v:pagesMain" class="def">pagesMain</a> :: [<a href="Diagrams-Core-Types.html#t:Diagram">Diagram</a> <a href="Diagrams-Backend-Postscript-CmdLine.html#t:Postscript">Postscript</a> <a href="Diagrams-TwoD-Types.html#t:R2">R2</a>] -&gt; <a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/System-IO.html#t:IO">IO</a> ()<a href="src/Diagrams-Backend-Postscript-CmdLine.html#pagesMain" class="link">Source</a></p><div class="doc"><p><code>pagesMain</code> is like <code><a href="Diagrams-Backend-Postscript-CmdLine.html#v:defaultMain">defaultMain</a></code>, except instead of a single
+   diagram it takes a list of diagrams and each wil be rendered as a page
+   in the Postscript file.
+</p><p>Example usage:
+</p><pre>
+ $ ghc --make MultiPage
+ [1 of 1] Compiling Main             ( MultiPage.hs, MultiPage.o )
+ Linking MultiPage ...
+ $ ./MultiPage -o Pages.ps -w 200
+</pre></div></div><div class="top"><p class="src"><a name="v:animMain" class="def">animMain</a> :: <a href="Diagrams-Animation.html#t:Animation">Animation</a> <a href="Diagrams-Backend-Postscript-CmdLine.html#t:Postscript">Postscript</a> <a href="Diagrams-TwoD-Types.html#t:R2">R2</a> -&gt; <a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/System-IO.html#t:IO">IO</a> ()<a href="src/Diagrams-Backend-Postscript-CmdLine.html#animMain" class="link">Source</a></p><div class="doc"><p><code>animMain</code> is like <code><a href="Diagrams-Backend-Postscript-CmdLine.html#v:defaultMain">defaultMain</a></code>, but renders an animation
+ instead of a diagram.  It takes as input an animation and produces
+ a command-line program which will crudely &quot;render&quot; the animation
+ by rendering one image for each frame, named by extending the given
+ output file name by consecutive integers.  For example if the given
+ output file name is <code>foo/blah.eps</code>, the frames will be saved in
+ <code>foo/blah001.eps</code>, <code>foo/blah002.eps</code>, and so on (the number of
+ padding digits used depends on the total number of frames).  It is
+ up to the user to take these images and stitch them together into
+ an actual animation format (using, <em>e.g.</em> <code>ffmpeg</code>).
+</p><p>Of course, this is a rather crude method of rendering animations;
+   more sophisticated methods will likely be added in the future.
+</p><p>The <code>--fpu</code> option can be used to control how many frames will be
+ output for each second (unit time) of animation.
+</p></div></div><div class="top"><p class="src"><span class="keyword">data</span>  <a name="t:Postscript" class="def">Postscript</a>  <a href="src/Diagrams-Backend-Postscript.html#Postscript" class="link">Source</a></p><div class="doc"><p>This data declaration is simply used as a token to distinguish this rendering engine.
+</p></div><div class="subs instances"><p id="control.i:Postscript" class="caption collapser" onclick="toggleSection('i:Postscript')">Instances</p><div id="section.i:Postscript" class="show"><table><tr><td class="src"><a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Data-Eq.html#t:Eq">Eq</a> <a href="Diagrams-Backend-Postscript-CmdLine.html#t:Postscript">Postscript</a></td><td class="doc empty">&nbsp;</td></tr><tr><td class="src"><a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Data-Ord.html#t:Ord">Ord</a> <a href="Diagrams-Backend-Postscript-CmdLine.html#t:Postscript">Postscript</a></td><td class="doc empty">&nbsp;</td></tr><tr><td class="src"><a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Text-Read.html#t:Read">Read</a> <a href="Diagrams-Backend-Postscript-CmdLine.html#t:Postscript">Postscript</a></td><td class="doc empty">&nbsp;</td></tr><tr><td class="src"><a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Text-Show.html#t:Show">Show</a> <a href="Diagrams-Backend-Postscript-CmdLine.html#t:Postscript">Postscript</a></td><td class="doc empty">&nbsp;</td></tr><tr><td class="src"><a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Data-Typeable-Internal.html#t:Typeable">Typeable</a> <a href="Diagrams-Backend-Postscript-CmdLine.html#t:Postscript">Postscript</a></td><td class="doc empty">&nbsp;</td></tr><tr><td class="src"><a href="Diagrams-Core-Types.html#t:Backend">Backend</a> <a href="Diagrams-Backend-Postscript-CmdLine.html#t:Postscript">Postscript</a> <a href="Diagrams-TwoD-Types.html#t:R2">R2</a></td><td class="doc empty">&nbsp;</td></tr><tr><td class="src"><a href="Diagrams-Core-Types.html#t:MultiBackend">MultiBackend</a> <a href="Diagrams-Backend-Postscript-CmdLine.html#t:Postscript">Postscript</a> <a href="Diagrams-TwoD-Types.html#t:R2">R2</a></td><td class="doc empty">&nbsp;</td></tr><tr><td class="src"><a href="Diagrams-Core-Types.html#t:Renderable">Renderable</a> <a href="Diagrams-TwoD-Text.html#t:Text">Text</a> <a href="Diagrams-Backend-Postscript-CmdLine.html#t:Postscript">Postscript</a></td><td class="doc empty">&nbsp;</td></tr><tr><td class="src"><a href="Diagrams-Core-Types.html#t:Renderable">Renderable</a> (<a href="Diagrams-Path.html#t:Path">Path</a> <a href="Diagrams-TwoD-Types.html#t:R2">R2</a>) <a href="Diagrams-Backend-Postscript-CmdLine.html#t:Postscript">Postscript</a></td><td class="doc empty">&nbsp;</td></tr><tr><td class="src"><a href="Diagrams-Core-Types.html#t:Renderable">Renderable</a> (<a href="Diagrams-Trail.html#t:Trail">Trail</a> <a href="Diagrams-TwoD-Types.html#t:R2">R2</a>) <a href="Diagrams-Backend-Postscript-CmdLine.html#t:Postscript">Postscript</a></td><td class="doc empty">&nbsp;</td></tr><tr><td class="src"><a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Text-Show.html#t:Show">Show</a> (<a href="Diagrams-Backend-Postscript.html#t:Options">Options</a> <a href="Diagrams-Backend-Postscript-CmdLine.html#t:Postscript">Postscript</a> <a href="Diagrams-TwoD-Types.html#t:R2">R2</a>)</td><td class="doc empty">&nbsp;</td></tr><tr><td class="src"><a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Data-Monoid.html#t:Monoid">Monoid</a> (<a href="Diagrams-Core-Types.html#t:Render">Render</a> <a href="Diagrams-Backend-Postscript-CmdLine.html#t:Postscript">Postscript</a> <a href="Diagrams-TwoD-Types.html#t:R2">R2</a>)</td><td class="doc empty">&nbsp;</td></tr><tr><td class="src"><a href="Diagrams-Core-Types.html#t:Renderable">Renderable</a> (<a href="Diagrams-Segment.html#t:Segment">Segment</a> <a href="Diagrams-Segment.html#t:Closed">Closed</a> <a href="Diagrams-TwoD-Types.html#t:R2">R2</a>) <a href="Diagrams-Backend-Postscript-CmdLine.html#t:Postscript">Postscript</a></td><td class="doc empty">&nbsp;</td></tr></table></div></div></div></div></div><div id="footer"><p>Produced by <a href="http://www.haskell.org/haddock/">Haddock</a> version 2.13.2</p></div></body></html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Diagrams.TwoD.Offset</title><link href="ocean.css" rel="stylesheet" type="text/css" title="Ocean" /><script src="haddock-util.js" type="text/javascript"></script><script type="text/javascript">//<![CDATA[
+window.onload = function () {pageLoad();setSynopsis("mini_Diagrams-TwoD-Offset.html");};
+//]]>
+</script></head><body><div id="package-header"><ul class="links" id="page-menu"><li><a href="src/Diagrams-TwoD-Offset.html">Source</a></li><li><a href="http://www.haskell.org/haskellwiki/Diagrams/Comments/Diagrams.TwoD.Offset">User Comments</a></li><li><a href="index.html">Contents</a></li><li><a href="doc-index.html">Index</a></li></ul><p class="caption">diagrams-lib-0.7: Embedded domain-specific language for declarative graphics</p></div><div id="content"><div id="module-header"><table class="info"><tr><th>Maintainer</th><td>diagrams-discuss@googlegroups.com</td></tr><tr><th>Safe Haskell</th><td>None</td></tr></table><p class="caption">Diagrams.TwoD.Offset</p></div><div id="description"><p class="caption">Description</p><div class="doc"><p>Compute offsets to segments in two dimensions.
+</p></div></div><div id="synopsis"><p id="control.syn" class="caption expander" onclick="toggleSection('syn')">Synopsis</p><ul id="section.syn" class="hide" onclick="toggleSection('syn')"><li class="src short"><a href="#v:offsetSegment">offsetSegment</a> :: <a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Prelude.html#t:Double">Double</a> -&gt; <a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Prelude.html#t:Double">Double</a> -&gt; <a href="Diagrams-Segment.html#t:Segment">Segment</a> <a href="Diagrams-Segment.html#t:Closed">Closed</a> <a href="Diagrams-TwoD-Types.html#t:R2">R2</a> -&gt; (<a href="Diagrams-Points.html#t:Point">Point</a> <a href="Diagrams-TwoD-Types.html#t:R2">R2</a>, <a href="Diagrams-Trail.html#t:Trail">Trail</a> <a href="Diagrams-TwoD-Types.html#t:R2">R2</a>)</li></ul></div><div id="interface"><h1>Documentation</h1><div class="top"><p class="src"><a name="v:offsetSegment" class="def">offsetSegment</a><a href="src/Diagrams-TwoD-Offset.html#offsetSegment" class="link">Source</a></p><div class="subs arguments"><p class="caption">Arguments</p><table><tr><td class="src">:: <a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Prelude.html#t:Double">Double</a></td><td class="doc"><p>Epsilon value that represents the maximum 
+   allowed deviation from the true offset.  In
+   the current implementation each result segment
+   should be bounded by arcs that are plus or
+   minus epsilon from the radius of curvature of
+   the offset.
+</p></td></tr><tr><td class="src">-&gt; <a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Prelude.html#t:Double">Double</a></td><td class="doc"><p>Offset from the original segment, positive is
+   on the right of the curve, negative is on the
+   left.
+</p></td></tr><tr><td class="src">-&gt; <a href="Diagrams-Segment.html#t:Segment">Segment</a> <a href="Diagrams-Segment.html#t:Closed">Closed</a> <a href="Diagrams-TwoD-Types.html#t:R2">R2</a></td><td class="doc"><p>Original segment
+</p></td></tr><tr><td class="src">-&gt; (<a href="Diagrams-Points.html#t:Point">Point</a> <a href="Diagrams-TwoD-Types.html#t:R2">R2</a>, <a href="Diagrams-Trail.html#t:Trail">Trail</a> <a href="Diagrams-TwoD-Types.html#t:R2">R2</a>)</td><td class="doc"><p>Resulting offset point and trail.
+</p></td></tr></table></div><div class="doc"><p>Compute the offset of a segment.  Given a segment compute the offset
+   curve that is a fixed distance from the original curve.  For linear
+   segments nothing special happens, the same linear segment is returned
+   with a point that is offset by a perpendicular vector of the given offset
+   length.
+</p><p>Cubic segments require a search for a subdivision of cubic segments that
+   gives an approximation of the offset within the given epsilon tolerance.
+   We must do this because the offset of a cubic is not a cubic itself (the
+   degree of the curve increases).  Cubics do, however, approach constant
+   curvature as we subdivide.  In light of this we scale the handles of
+   the offset cubic segment in proportion to the radius of curvature difference
+   between the original subsegment and the offset which will have a radius
+   increased by the offset parameter.
+</p><p>In the following example the blue lines are the original segments and
+   the alternating green and red lines are the resulting offset trail segments.
+</p><p><img src="diagrams/cubicOffsetExample.svg#diagram=cubicOffsetExample&amp;width=600" />
+</p><p>Note that when the original curve has a cusp, the offset curve forms a
+   radius around the cusp, and when there is a loop in the original curve,
+   there can be two cusps in the offset curve.
+</p></div></div></div></div><div id="footer"><p>Produced by <a href="http://www.haskell.org/haddock/">Haddock</a> version 2.13.2</p></div></body></html>

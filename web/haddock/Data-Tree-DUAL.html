@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Data.Tree.DUAL</title><link href="ocean.css" rel="stylesheet" type="text/css" title="Ocean" /><script src="haddock-util.js" type="text/javascript"></script><script type="text/javascript">//<![CDATA[
+window.onload = function () {pageLoad();setSynopsis("mini_Data-Tree-DUAL.html");};
+//]]>
+</script></head><body><div id="package-header"><ul class="links" id="page-menu"><li><a href="src/Data-Tree-DUAL.html">Source</a></li><li><a href="http://www.haskell.org/haskellwiki/Diagrams/Comments/Data.Tree.DUAL">User Comments</a></li><li><a href="index.html">Contents</a></li><li><a href="doc-index.html">Index</a></li></ul><p class="caption">dual-tree-0.1.0.1: Rose trees with cached and accumulating monoidal annotations</p></div><div id="content"><div id="module-header"><table class="info"><tr><th>Maintainer</th><td>diagrams-discuss@googlegroups.com</td></tr><tr><th>Safe Haskell</th><td>None</td></tr></table><p class="caption">Data.Tree.DUAL</p></div><div id="table-of-contents"><p class="caption">Contents</p><ul><li><a href="#g:1">DUAL-trees
+</a></li><li><a href="#g:2">Constructing DUAL-trees
+</a></li><li><a href="#g:3">Modifying DUAL-trees
+</a></li><li><a href="#g:4">Accessors and eliminators
+</a></li></ul></div><div id="description"><p class="caption">Description</p><div class="doc"><p>Rose (n-ary) trees with both upwards- (<em>i.e.</em> cached) and
+ downwards-traveling (<em>i.e.</em> accumulating) monoidal annotations.
+ This is used as the core data structure underlying the <code>diagrams</code>
+ framework (<a href="http://projects.haskell.org/diagrams">http://projects.haskell.org/diagrams</a>), but potentially
+ has other applications as well.
+</p><p>Abstractly, a DUALTree is a rose (n-ary) tree with data (of type
+ <code>l</code>) at leaves, data (of type <code>a</code>) at internal nodes, and two types
+ of monoidal annotations, one (of type <code>u</code>) travelling &quot;up&quot; the
+ tree and one (of type <code>d</code>) traveling &quot;down&quot;.
+</p><p>Specifically, there are five types of nodes:
+</p><ul><li> Leaf nodes which contain a data value of type <code>l</code> and an
+     annotation of type <code>u</code>.  The annotation represents information
+     about a tree that should be accumulated (<em>e.g.</em> number of
+     leaves, some sort of &quot;weight&quot;, <em>etc.</em>).  If you are familiar
+     with finger trees
+     (<a href="http://www.soi.city.ac.uk/~ross/papers/FingerTree.html">http://www.soi.city.ac.uk/~ross/papers/FingerTree.html</a>,
+     <a href="http://hackage.haskell.org/package/fingertree">http://hackage.haskell.org/package/fingertree</a>), it is the
+     same idea.
+</li><li> There is also a special type of leaf node which contains only a
+     <code>u</code> value, and no data. This allows cached <code>u</code> values to be
+     &quot;modified&quot; by inserting extra annotations.
+</li><li> Branch nodes, containing a list of subtrees.
+</li><li> Internal nodes with a value of type <code>d</code>.  <code>d</code> may have an
+     <em>action</em> on <code>u</code> (see the <code>Action</code> type class, defined in
+     <a href="Data-Monoid-Action.html">Data.Monoid.Action</a> from the <code>monoid-extras</code> package).
+     Semantically speaking, applying a <code>d</code> annotation to a tree
+     transforms all the <code>u</code> annotations below it by acting on them.
+     Operationally, however, since the action must be a monoid
+     homomorphism, applying a <code>d</code> annotation can actually be done in
+     constant time.
+</li><li> Internal nodes with data values of type <code>a</code>, possibly of a
+     different type than those in the leaves.  These are just &quot;along
+     for the ride&quot; and are unaffected by <code>u</code> and <code>d</code> annotations.
+</li></ul><p>There are two critical points to note about <code>u</code> and <code>d</code> annotations:
+</p><ul><li> The combined <code>u</code> annotation for an entire tree is always cached
+     at the root and available in constant (amortized) time.
+</li><li> The <code>mconcat</code> of all the <code>d</code> annotations along the path from
+     the root to each leaf is available along with the leaf during a
+     fold operation.
+</li></ul><p>A fold over a <code>DUALTree</code> is given access to the internal and leaf
+ data, and the accumulated <code>d</code> values at each leaf.  It is also
+ allowed to replace &quot;<code>u</code>-only&quot; leaves with a constant value.  In
+ particular, however, it is <em>not</em> given access to any of the <code>u</code>
+ annotations, the idea being that those are used only for
+ <em>constructing</em> trees.  It is also not given access to <code>d</code> values as
+ they occur in the tree, only as they accumulate at leaves.  If you
+ do need access to <code>u</code> or <code>d</code> values, you can duplicate the values
+ you need in the internal data nodes.
+</p></div></div><div id="synopsis"><p id="control.syn" class="caption expander" onclick="toggleSection('syn')">Synopsis</p><ul id="section.syn" class="hide" onclick="toggleSection('syn')"><li class="src short"><span class="keyword">data</span>  <a href="#t:DUALTree">DUALTree</a> d u a l</li><li class="src short"><a href="#v:empty">empty</a> ::  <a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u a l</li><li class="src short"><a href="#v:leaf">leaf</a> ::  u -&gt; l -&gt; <a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u a l</li><li class="src short"><a href="#v:leafU">leafU</a> ::  u -&gt; <a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u a l</li><li class="src short"><a href="#v:annot">annot</a> :: (<a href="http://hackage.haskell.org/packages/archive/semigroups/0.9.2/doc/html/Data-Semigroup.html#t:Semigroup">Semigroup</a> u, <a href="Data-Monoid-Action.html#t:Action">Action</a> d u) =&gt; a -&gt; <a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u a l -&gt; <a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u a l</li><li class="src short"><a href="#v:applyD">applyD</a> :: (<a href="http://hackage.haskell.org/packages/archive/semigroups/0.9.2/doc/html/Data-Semigroup.html#t:Semigroup">Semigroup</a> d, <a href="http://hackage.haskell.org/packages/archive/semigroups/0.9.2/doc/html/Data-Semigroup.html#t:Semigroup">Semigroup</a> u, <a href="Data-Monoid-Action.html#t:Action">Action</a> d u) =&gt; d -&gt; <a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u a l -&gt; <a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u a l</li><li class="src short"><a href="#v:applyUpre">applyUpre</a> :: (<a href="http://hackage.haskell.org/packages/archive/semigroups/0.9.2/doc/html/Data-Semigroup.html#t:Semigroup">Semigroup</a> u, <a href="Data-Monoid-Action.html#t:Action">Action</a> d u) =&gt; u -&gt; <a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u a l -&gt; <a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u a l</li><li class="src short"><a href="#v:applyUpost">applyUpost</a> :: (<a href="http://hackage.haskell.org/packages/archive/semigroups/0.9.2/doc/html/Data-Semigroup.html#t:Semigroup">Semigroup</a> u, <a href="Data-Monoid-Action.html#t:Action">Action</a> d u) =&gt; u -&gt; <a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u a l -&gt; <a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u a l</li><li class="src short"><a href="#v:mapU">mapU</a> ::  (u -&gt; u') -&gt; <a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u a l -&gt; <a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u' a l</li><li class="src short"><a href="#v:getU">getU</a> ::  <a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u a l -&gt; <a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Data-Maybe.html#t:Maybe">Maybe</a> u</li><li class="src short"><a href="#v:foldDUAL">foldDUAL</a> :: (<a href="http://hackage.haskell.org/packages/archive/semigroups/0.9.2/doc/html/Data-Semigroup.html#t:Semigroup">Semigroup</a> d, <a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Data-Monoid.html#t:Monoid">Monoid</a> d) =&gt; (d -&gt; l -&gt; r) -&gt; r -&gt; (<a href="http://hackage.haskell.org/packages/archive/semigroups/0.9.2/doc/html/Data-List-NonEmpty.html#t:NonEmpty">NonEmpty</a> r -&gt; r) -&gt; (a -&gt; r -&gt; r) -&gt; <a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u a l -&gt; <a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Data-Maybe.html#t:Maybe">Maybe</a> r</li><li class="src short"><a href="#v:flatten">flatten</a> :: (<a href="http://hackage.haskell.org/packages/archive/semigroups/0.9.2/doc/html/Data-Semigroup.html#t:Semigroup">Semigroup</a> d, <a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Data-Monoid.html#t:Monoid">Monoid</a> d) =&gt; <a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u a l -&gt; [(l, d)]</li></ul></div><div id="interface"><h1 id="g:1">DUAL-trees
+</h1><div class="top"><p class="src"><span class="keyword">data</span>  <a name="t:DUALTree" class="def">DUALTree</a> d u a l <a href="src/Data-Tree-DUAL-Internal.html#DUALTree" class="link">Source</a></p><div class="doc"><p>Rose (n-ary) trees with both upwards- (<em>i.e.</em> cached) and
+   downwards-traveling (<em>i.e.</em> accumulating) monoidal annotations.
+   Abstractly, a DUALTree is a rose (n-ary) tree with data (of type
+   <code>l</code>) at leaves, data (of type <code>a</code>) at internal nodes, and two
+   types of monoidal annotations, one (of type <code>u</code>) travelling
+   &quot;up&quot; the tree and one (of type <code>d</code>) traveling &quot;down&quot;.  See
+   the documentation at the top of this file for full details.
+</p><p><code>DUALTree</code> comes with some instances:
+</p><ul><li> <code><a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Control-Monad.html#t:Functor">Functor</a></code>, for modifying leaf data.  Note that <code><a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Control-Monad.html#v:fmap">fmap</a></code> of course
+     cannot alter any <code>u</code> annotations.
+</li><li> <code><a href="http://hackage.haskell.org/packages/archive/semigroups/0.9.2/doc/html/Data-Semigroup.html#t:Semigroup">Semigroup</a></code>. <code>DUALTreeNE</code>s form a semigroup where <code>(&lt;&gt;)</code>
+     corresponds to adjoining two trees under a common parent root,
+     with <code>sconcat</code> specialized to put all the trees under a single
+     parent.  Note that this does not satisfy associativity up to
+     structural equality, but only up to observational equivalence
+     under <code><a href="Data-Tree-DUAL.html#v:flatten">flatten</a></code>.  Technically using <code><a href="Data-Tree-DUAL.html#v:foldDUAL">foldDUAL</a></code> directly enables
+     one to observe the difference, but it is understood that
+     <code><a href="Data-Tree-DUAL.html#v:foldDUAL">foldDUAL</a></code> should be used only in ways such that reassociation
+     of subtrees &quot;does not matter&quot;.
+</li><li> <code><a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Data-Monoid.html#t:Monoid">Monoid</a></code>. The identity is the empty tree.
+</li></ul></div><div class="subs instances"><p id="control.i:DUALTree" class="caption collapser" onclick="toggleSection('i:DUALTree')">Instances</p><div id="section.i:DUALTree" class="show"><table><tr><td class="src"><a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Data-Typeable-Internal.html#t:Typeable4">Typeable4</a> <a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a></td><td class="doc empty">&nbsp;</td></tr><tr><td class="src"><a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Control-Monad.html#t:Functor">Functor</a> (<a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u a)</td><td class="doc empty">&nbsp;</td></tr><tr><td class="src">(<a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Data-Eq.html#t:Eq">Eq</a> d, <a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Data-Eq.html#t:Eq">Eq</a> u, <a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Data-Eq.html#t:Eq">Eq</a> a, <a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Data-Eq.html#t:Eq">Eq</a> l) =&gt; <a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Data-Eq.html#t:Eq">Eq</a> (<a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u a l)</td><td class="doc empty">&nbsp;</td></tr><tr><td class="src">(<a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Text-Show.html#t:Show">Show</a> d, <a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Text-Show.html#t:Show">Show</a> u, <a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Text-Show.html#t:Show">Show</a> a, <a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Text-Show.html#t:Show">Show</a> l) =&gt; <a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Text-Show.html#t:Show">Show</a> (<a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u a l)</td><td class="doc empty">&nbsp;</td></tr><tr><td class="src">(<a href="http://hackage.haskell.org/packages/archive/semigroups/0.9.2/doc/html/Data-Semigroup.html#t:Semigroup">Semigroup</a> u, <a href="Data-Monoid-Action.html#t:Action">Action</a> d u) =&gt; <a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Data-Monoid.html#t:Monoid">Monoid</a> (<a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u a l)</td><td class="doc empty">&nbsp;</td></tr><tr><td class="src">(<a href="http://hackage.haskell.org/packages/archive/semigroups/0.9.2/doc/html/Data-Semigroup.html#t:Semigroup">Semigroup</a> u, <a href="Data-Monoid-Action.html#t:Action">Action</a> d u) =&gt; <a href="http://hackage.haskell.org/packages/archive/semigroups/0.9.2/doc/html/Data-Semigroup.html#t:Semigroup">Semigroup</a> (<a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u a l)</td><td class="doc empty">&nbsp;</td></tr><tr><td class="src"><a href="http://hackage.haskell.org/packages/archive/newtype/0.2/doc/html/Control-Newtype.html#t:Newtype">Newtype</a> (<a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u a l) (<a href="http://hackage.haskell.org/packages/archive/semigroups/0.9.2/doc/html/Data-Semigroup.html#t:Option">Option</a> (<a href="Data-Tree-DUAL-Internal.html#t:DUALTreeU">DUALTreeU</a> d u a l))</td><td class="doc empty">&nbsp;</td></tr></table></div></div></div><h1 id="g:2">Constructing DUAL-trees
+</h1><div class="top"><p class="src"><a name="v:empty" class="def">empty</a> ::  <a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u a l<a href="src/Data-Tree-DUAL-Internal.html#empty" class="link">Source</a></p><div class="doc"><p>The empty DUAL-tree.  This is a synonym for <code><a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Data-Monoid.html#v:mempty">mempty</a></code>, but with a
+   more general type.
+</p></div></div><div class="top"><p class="src"><a name="v:leaf" class="def">leaf</a> ::  u -&gt; l -&gt; <a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u a l<a href="src/Data-Tree-DUAL-Internal.html#leaf" class="link">Source</a></p><div class="doc"><p>Construct a leaf node from a <code>u</code> annotation along with a leaf
+   datum.
+</p></div></div><div class="top"><p class="src"><a name="v:leafU" class="def">leafU</a> ::  u -&gt; <a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u a l<a href="src/Data-Tree-DUAL-Internal.html#leafU" class="link">Source</a></p><div class="doc"><p>Construct a leaf node from a <code>u</code> annotation.
+</p></div></div><div class="top"><p class="src"><a name="v:annot" class="def">annot</a> :: (<a href="http://hackage.haskell.org/packages/archive/semigroups/0.9.2/doc/html/Data-Semigroup.html#t:Semigroup">Semigroup</a> u, <a href="Data-Monoid-Action.html#t:Action">Action</a> d u) =&gt; a -&gt; <a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u a l -&gt; <a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u a l<a href="src/Data-Tree-DUAL-Internal.html#annot" class="link">Source</a></p><div class="doc"><p>Add an internal data value at the root of a tree.  Note that this
+   only works on <em>non-empty</em> trees; on empty trees this function is
+   the identity.
+</p></div></div><div class="top"><p class="src"><a name="v:applyD" class="def">applyD</a> :: (<a href="http://hackage.haskell.org/packages/archive/semigroups/0.9.2/doc/html/Data-Semigroup.html#t:Semigroup">Semigroup</a> d, <a href="http://hackage.haskell.org/packages/archive/semigroups/0.9.2/doc/html/Data-Semigroup.html#t:Semigroup">Semigroup</a> u, <a href="Data-Monoid-Action.html#t:Action">Action</a> d u) =&gt; d -&gt; <a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u a l -&gt; <a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u a l<a href="src/Data-Tree-DUAL-Internal.html#applyD" class="link">Source</a></p><div class="doc"><p>Apply a <code>d</code> annotation at the root of a tree, transforming all
+   <code>u</code> annotations by the action of <code>d</code>.
+</p></div></div><h1 id="g:3">Modifying DUAL-trees
+</h1><div class="top"><p class="src"><a name="v:applyUpre" class="def">applyUpre</a> :: (<a href="http://hackage.haskell.org/packages/archive/semigroups/0.9.2/doc/html/Data-Semigroup.html#t:Semigroup">Semigroup</a> u, <a href="Data-Monoid-Action.html#t:Action">Action</a> d u) =&gt; u -&gt; <a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u a l -&gt; <a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u a l<a href="src/Data-Tree-DUAL-Internal.html#applyUpre" class="link">Source</a></p><div class="doc"><p>Add a <code>u</code> annotation to the root, combining it (on the left) with
+   the existing cached <code>u</code> annotation.  This function is provided
+   just for convenience; <code>applyUpre u t = <code><a href="Data-Tree-DUAL.html#v:leafU">leafU</a></code> u &lt;&gt; t</code>.
+</p></div></div><div class="top"><p class="src"><a name="v:applyUpost" class="def">applyUpost</a> :: (<a href="http://hackage.haskell.org/packages/archive/semigroups/0.9.2/doc/html/Data-Semigroup.html#t:Semigroup">Semigroup</a> u, <a href="Data-Monoid-Action.html#t:Action">Action</a> d u) =&gt; u -&gt; <a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u a l -&gt; <a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u a l<a href="src/Data-Tree-DUAL-Internal.html#applyUpost" class="link">Source</a></p><div class="doc"><p>Add a <code>u</code> annotation to the root, combining it (on the right) with
+   the existing cached <code>u</code> annotation.  This function is provided
+   just for convenience; <code>applyUpost u t = t &lt;&gt; <code><a href="Data-Tree-DUAL.html#v:leafU">leafU</a></code> u</code>.
+</p></div></div><div class="top"><p class="src"><a name="v:mapU" class="def">mapU</a> ::  (u -&gt; u') -&gt; <a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u a l -&gt; <a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u' a l<a href="src/Data-Tree-DUAL-Internal.html#mapU" class="link">Source</a></p><div class="doc"><p>Map a function over all the <code>u</code> annotations in a DUAL-tree.  The
+   function must be a monoid homomorphism, and must commute with the
+   action of <code>d</code> on <code>u</code>.  That is, to use <code>mapU f</code> safely it must be
+   the case that
+</p><ul><li><pre>f mempty == mempty</pre></li><li><pre>f (u1 &lt;&gt; u2) == f u1 &lt;&gt; f u2</pre></li><li><pre>f (act d u) == act d (f u)</pre></li></ul></div></div><h1 id="g:4">Accessors and eliminators
+</h1><div class="top"><p class="src"><a name="v:getU" class="def">getU</a> ::  <a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u a l -&gt; <a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Data-Maybe.html#t:Maybe">Maybe</a> u<a href="src/Data-Tree-DUAL-Internal.html#getU" class="link">Source</a></p><div class="doc"><p>Get the <code>u</code> annotation at the root, or <code>Nothing</code> if the tree is
+   empty.
+</p></div></div><div class="top"><p class="src"><a name="v:foldDUAL" class="def">foldDUAL</a><a href="src/Data-Tree-DUAL-Internal.html#foldDUAL" class="link">Source</a></p><div class="subs arguments"><p class="caption">Arguments</p><table><tr><td class="src">:: (<a href="http://hackage.haskell.org/packages/archive/semigroups/0.9.2/doc/html/Data-Semigroup.html#t:Semigroup">Semigroup</a> d, <a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Data-Monoid.html#t:Monoid">Monoid</a> d)</td><td class="doc empty">&nbsp;</td></tr><tr><td class="src">=&gt; (d -&gt; l -&gt; r)</td><td class="doc"><p>Process a leaf datum along with the
+   accumulation of <code>d</code> values along the
+   path from the root
+</p></td></tr><tr><td class="src">-&gt; r</td><td class="doc"><p>Replace <code>u</code>-only nodes
+</p></td></tr><tr><td class="src">-&gt; (<a href="http://hackage.haskell.org/packages/archive/semigroups/0.9.2/doc/html/Data-List-NonEmpty.html#t:NonEmpty">NonEmpty</a> r -&gt; r)</td><td class="doc"><p>Combine results at a branch node
+</p></td></tr><tr><td class="src">-&gt; (a -&gt; r -&gt; r)</td><td class="doc"><p>Process an internal datum
+</p></td></tr><tr><td class="src">-&gt; <a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u a l</td><td class="doc empty">&nbsp;</td></tr><tr><td class="src">-&gt; <a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Data-Maybe.html#t:Maybe">Maybe</a> r</td><td class="doc empty">&nbsp;</td></tr></table></div><div class="doc"><p>Fold for DUAL-trees. It is given access to the internal and leaf
+   data, and the accumulated <code>d</code> values at each leaf.  It is also
+   allowed to replace &quot;<code>u</code>-only&quot; leaves with a constant value.  In
+   particular, however, it is <em>not</em> given access to any of the <code>u</code>
+   annotations, the idea being that those are used only for
+   <em>constructing</em> trees.  It is also not given access to <code>d</code> values
+   as they occur in the tree, only as they accumulate at leaves.  If
+   you do need access to <code>u</code> or <code>d</code> values, you can duplicate the
+   values you need in the internal data nodes.
+</p><p>The result is <code>Nothing</code> if and only if the tree is empty.
+</p></div></div><div class="top"><p class="src"><a name="v:flatten" class="def">flatten</a> :: (<a href="http://hackage.haskell.org/packages/archive/semigroups/0.9.2/doc/html/Data-Semigroup.html#t:Semigroup">Semigroup</a> d, <a href="http://hackage.haskell.org/packages/archive/base/4.6.0.1/doc/html/Data-Monoid.html#t:Monoid">Monoid</a> d) =&gt; <a href="Data-Tree-DUAL.html#t:DUALTree">DUALTree</a> d u a l -&gt; [(l, d)]<a href="src/Data-Tree-DUAL-Internal.html#flatten" class="link">Source</a></p><div class="doc"><p>A specialized fold provided for convenience: flatten a tree into
+   a list of leaves along with their <code>d</code> annotations, ignoring
+   internal data values.
+</p></div></div></div></div><div id="footer"><p>Produced by <a href="http://www.haskell.org/haddock/">Haddock</a> version 2.13.2</p></div></body></html>
