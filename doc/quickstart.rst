@@ -128,7 +128,7 @@ section for now---but you might want to come back and read it later!)
 Your first diagram
 ==================
 
-Create a file called `DiagramsTutorial.hs`
+Create a file called `DiagramsTutorial.lhs`
 with the following contents:
 
 .. class:: lhs
