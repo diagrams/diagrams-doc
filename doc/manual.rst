@@ -4241,7 +4241,10 @@ The GTK backend, `diagrams-gtk`:pkg:, used to be part of the cairo
 backend (and is still built on top of it), but has been split out into
 a separate package in order to reduce the dependencies of the cairo
 backend, hence making it easier to install for those who don't need
-GTK support.
+GTK support.  You can install it at the same time as the rest of the
+diagrams framework by passing the `-fgtk` flag: ``cabal install -fgtk
+diagrams``, or it can be installed separately later with ``cabal
+install diagrams-gtk``.
 
 The GTK backend allows rendering diagrams directly to GTK windows
 instead of to a file.  Note that it is possible to receive mouse
