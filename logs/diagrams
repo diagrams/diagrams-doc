@@ -37151,3 +37151,624 @@
 2013-08-22 20:13:21 UTC <byorgey> it's so annoying.  All versions of everything used to build everything else must match up just so, otherwise you get various incompatibilities
 2013-08-22 20:14:54 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 1458a2d65 http://travis-ci.org/diagrams/diagrams-lib/builds/10510428 The build passed.
 2013-08-22 20:16:47 UTC <byorgey> there, I think it's finally building properly
+2013-08-22 20:29:52 UTC <fryguybob> byorgey: my fault again :(
+2013-08-22 20:30:50 UTC <byorgey> fryguybob: don't worry about it, I don't think it's worth it at this point =)
+2013-08-22 20:31:08 UTC <byorgey> also: http://projects.haskell.org/diagrams/haddock/index.html  \o/
+2013-08-22 20:32:32 UTC <fryguybob> byorgey: Excellent!
+2013-08-22 20:44:52 UTC <byorgey> http://www.cis.upenn.edu/~byorgey/hosted/diagrams-graph.svg  -- a graph of diagrams packages and their dependencies
+2013-08-22 20:45:25 UTC <luite> i prefer the arrows the other way :)
+2013-08-22 20:46:40 UTC <carter> cool diagram of diagrams!
+2013-08-22 20:46:40 UTC <notdan> byorgey: soon you will able to add diagrams-pdf and diagrams-ghcjs to that list :D (hopefully)
+2013-08-22 20:46:42 UTC <carter> its a metadiagram
+2013-08-22 20:46:49 UTC <byorgey> notdan: yes!
+2013-08-22 20:46:52 UTC <carter> notdan: 'cause hpdf will be bsd'd soon?
+2013-08-22 20:47:10 UTC <byorgey> carter: unfortunately, I did not make it with diagrams
+2013-08-22 20:47:17 UTC <carter> oh
+2013-08-22 20:47:18 UTC <carter> darn
+2013-08-22 20:47:26 UTC <carter> @hackage diagrams-pdf
+2013-08-22 20:47:26 UTC <lambdabot> http://hackage.haskell.org/package/diagrams-pdf
+2013-08-22 20:47:34 UTC <byorgey> because we still suck at drawing arrows (but martingale is working on that =)
+2013-08-22 20:47:44 UTC <carter> right now http://hackage.haskell.org/package/HPDF-1.4.5 is LGPL
+2013-08-22 20:47:53 UTC <carter> but the author is going to fix that
+2013-08-22 20:47:54 UTC <carter> :)
+2013-08-22 20:49:02 UTC <byorgey> I feel like I should put this graph on the website somewhere, but I'm not sure where it should go
+2013-08-22 20:49:05 UTC <byorgey> suggestions welcome
+2013-08-22 20:49:21 UTC <byorgey> maybe I should just stick it on the developer wiki
+2013-08-22 20:49:35 UTC <fryguybob> byorgey: I still need to fix my curvature digrams-haddock.
+2013-08-22 20:49:59 UTC <byorgey> oh, is it broken?
+2013-08-22 20:50:44 UTC <byorgey> http://projects.haskell.org/diagrams/haddock/Diagrams-TwoD-Curvature.html  -- looks OK to me
+2013-08-22 21:02:35 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 144e47bc1 http://travis-ci.org/diagrams/diagrams-doc/builds/10511034 The build has errored.
+2013-08-22 21:18:10 UTC <fryguybob> byorgey: The "approaches zero curvature" is passed zero...
+2013-08-22 21:18:33 UTC <byorgey> oh =)
+2013-08-22 21:32:15 UTC <notdan> http://co-dan.github.io/ghcjs/interactive/example1/Test.jsexe/ my first interactive mock-up
+2013-08-22 21:32:36 UTC <notdan> the code is very messy though
+2013-08-22 21:32:53 UTC <notdan> and to implement full-featured "wizards" I'd probably need something like continuations
+2013-08-22 21:33:41 UTC <notdan> currrently diagrams-ghcjs renders those factorizations diagrams OK, I still haven't figured how to render text and do clipping properly though
+2013-08-22 21:34:16 UTC <notdan> oh, and OddEven fill style is currently supported only for Firefox's Canvas, if I understood everything correctly
+2013-08-22 21:36:06 UTC <luite> oh it seems a bit flaky, took me a few tries to get it working
+2013-08-22 21:36:31 UTC <luite> oh wait, no, just 2 args :)
+2013-08-22 21:37:12 UTC <luite> so eh, not a speed demon ;)
+2013-08-22 21:38:08 UTC <notdan> heh :] As you can see in Test.hs, you can 'render' any functions, which result I can output and which argument you can enter (only Integers and Strings atm)
+2013-08-22 21:38:30 UTC <byorgey> what am I supposed to do for the factorDiagram thing?
+2013-08-22 21:38:42 UTC <byorgey> I entered f 2 3 into the box and clicked Next but nothing happend
+2013-08-22 21:38:46 UTC <notdan> Input two numbers, x and y
+2013-08-22 21:38:58 UTC <notdan> ah
+2013-08-22 21:38:58 UTC <byorgey> oh, just the numbers
+2013-08-22 21:39:13 UTC <notdan> you have to enter the first number, then press "next", then input another number
+2013-08-22 21:39:17 UTC <byorgey> ohhh
+2013-08-22 21:39:21 UTC <byorgey> I see =)
+2013-08-22 21:39:37 UTC <notdan> sorry, it's not user-friendly, it's just a very alpha prototype :)
+2013-08-22 21:39:40 UTC <luite> chrome is a bit faster it seems :)
+2013-08-22 21:39:49 UTC <luite> it's cool that it works though
+2013-08-22 21:39:54 UTC <byorgey> notdan: yeah, no worries, I just wanted to try it out =)
+2013-08-22 21:40:06 UTC <byorgey> nifty =)
+2013-08-22 21:40:11 UTC <luite> i'll try to help optimize it a bit later
+2013-08-22 21:40:25 UTC <notdan> If you enter '0' and '1' thought it is almost instant
+2013-08-22 21:40:30 UTC <luite> currently a bit stressed because suddenly the ghc and cabal patches need to be merged really soon now
+2013-08-22 21:40:51 UTC <luite> cabal is probably already too late and spj is not keen on the hooks thing i submitted :(
+2013-08-22 21:41:27 UTC <notdan> oh :( he doesn't want to merge your hooks into the ghc tree?
+2013-08-22 21:42:05 UTC <luite> dunno, i've uploaded a new example, indicating that they also implement Edsko's and Thomas' things
+2013-08-22 21:42:49 UTC <luite> would be rather bad if it wasn't merged
+2013-08-22 21:50:28 UTC <notdan> i hope it will be merged in. maybe spj just didn't read/replied to your proposal
+2013-08-22 22:01:55 UTC <luite> notdan: yeah he hadn't read it, because he thought that there were 3 different proposals
+2013-08-22 22:03:14 UTC <luite> but nominolo's is not really a concrete one
+2013-08-22 22:03:30 UTC <luite> more a wish for some features, and Edsko's can be done more generally with this
+2013-08-22 22:03:51 UTC <luite> but my priority is cabal now
+2013-08-22 22:03:55 UTC <luite> just talked to tibbe
+2013-08-22 22:04:02 UTC <luite> who wants to release 1.18 asap
+2013-08-22 22:04:24 UTC <luite> when Mikhail gives green light he will branch from master again
+2013-08-22 22:04:32 UTC <luite> and not hold up the release for GHCJS
+2013-08-22 22:05:07 UTC <luite> which is a tad annoying, but i think his vacation is coming to an end and he wants to release before being swamped in real work again
+2013-08-22 22:06:04 UTC <luite> so i'm going to perpare two patches now, hopefully ready tomorrow, one only adds GHCJS to the public API, without implementation, so it breaks nothing, and we can add real support in 1.18.1 without changing anything, perhaps get that shipped with GHC
+2013-08-22 22:06:18 UTC <luite> the other one is the full patch and hopefully someone has time to review
+2013-08-22 22:06:44 UTC <luite> so, busy night coming up, i't better make a few pots of coffee
+2013-08-22 22:11:11 UTC <luite> only thing is that i'm not sure how we're going to install executables with ghcjs
+2013-08-22 22:11:20 UTC <luite> and it needs to be in the patch by tomorrow of course
+2013-08-22 22:11:33 UTC <luite> so i'm thing to just let cabal call ghcjs with --install-executable
+2013-08-22 22:11:42 UTC <luite> so we can decide later how to do it
+2013-08-22 22:12:01 UTC <luite> libraries seem fine, have been working stable for a while now
+2013-08-22 23:00:52 UTC <fryguybob> luite: Good luck!
+2013-08-22 23:00:58 UTC <luite> :)
+2013-08-23 00:38:22 UTC <byorgey> go ghcjs go!
+2013-08-23 00:40:59 UTC <byorgey> ACTION hacks on active
+2013-08-23 01:47:54 UTC <travis-ci> [travis-ci] 13active/06new-semantics 141499aa6 http://travis-ci.org/diagrams/active/builds/10520053 The build has errored.
+2013-08-23 06:53:48 UTC <notdan> ACTION brews some coffee with milk for luite and other hackers
+2013-08-23 08:54:39 UTC <jbracker> If I use fixPath it delivers a list of trails right?
+2013-08-23 10:50:53 UTC <kuribas> Is a non-invertable affine transformation always a projection on a line or point?
+2013-08-23 10:53:06 UTC <kuribas> I can use the offset curve to stroke a path with a unit circle.  So for stroking elipses I would apply the inverse transformation on the bezier, stroke with a circle, and transform again.  If the transformation is non-invertible, I could use a polygon?
+2013-08-23 10:54:32 UTC <kuribas> I also think that stroking a path using a general closed path might not be much different than stroking with a polygon.
+2013-08-23 10:55:22 UTC <kuribas> (If that's useful at all)
+2013-08-23 11:12:04 UTC <byorgey> kuribas: yes, I think a non-invertible affine transformation is always a projection
+2013-08-23 11:12:16 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 1416511d8 http://travis-ci.org/diagrams/diagrams-lib/builds/10532654 The build passed.
+2013-08-23 11:12:17 UTC <kuribas> ok
+2013-08-23 11:12:34 UTC <kuribas> Then my algorihm should work.
+2013-08-23 11:12:47 UTC <byorgey> great =)
+2013-08-23 11:13:47 UTC <byorgey> last night while I was trying to go to sleep I had a crazy idea which is either super dumb or super awesome.
+2013-08-23 11:14:37 UTC <kuribas> All great ideas start like that :Ã 
+2013-08-23 11:14:47 UTC <kuribas> :)
+2013-08-23 11:15:08 UTC <kuribas> The ones that aren't proven wrong.
+2013-08-23 11:15:12 UTC <byorgey> the basic idea is to incrementally hash diagram contents (using hash values from some semiring so we get a monoid + monoid action of hashes on hashes) so we can later do CSE
+2013-08-23 11:15:16 UTC <byorgey> kuribas: indeed =)
+2013-08-23 11:16:25 UTC <byorgey> It was so exciting that I had to get up and write it all down.  I will try to type it up soon so the rest of you can tell me how crazy it is.
+2013-08-23 11:16:27 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06master 1483d5b8e http://travis-ci.org/diagrams/diagrams-contrib/builds/10532673 The build passed.
+2013-08-23 11:42:02 UTC <kuribas> Wow, bezier clipping for finding an intersection from a line with a bezier is really fast!
+2013-08-23 11:42:15 UTC <kuribas> And it can be used for polynomial root finding too.
+2013-08-23 11:44:11 UTC <byorgey> kuribas: nice!
+2013-08-23 11:45:50 UTC <kuribas> http://citeseerx.ist.psu.edu/viewdoc/download;jsessionid=854A88855B3F84884BA389036F6CE32A?doi=10.1.1.111.7872&rep=rep1&type=pdf
+2013-08-23 11:46:53 UTC <kuribas> I found 14 digits of accuracy with 4 iterations. 
+2013-08-23 11:49:01 UTC <byorgey> wow, nice
+2013-08-23 11:49:14 UTC <byorgey> both the link and the accuracy.
+2013-08-23 12:17:22 UTC <notdan> http://co-dan.github.io/ghcjs/diagrams-ghcjs-tests/Main.jsexe/ ok, almost everything works now
+2013-08-23 12:17:25 UTC <notdan> except for text
+2013-08-23 12:45:28 UTC <byorgey> =D
+2013-08-23 12:45:37 UTC <byorgey> and really, who cares about text
+2013-08-23 12:46:09 UTC <byorgey> text is a crutch for when you can't think of a good way to express yourself using a diagram ;)
+2013-08-23 13:02:51 UTC <fryguybob> haha -- good morning/afternoon/evening all
+2013-08-23 13:24:16 UTC <byorgey> good morning fryguybob!
+2013-08-23 13:26:16 UTC <fryguybob> kuribas: What is the title of that paper, the link isn't working for me right now.
+2013-08-23 13:33:55 UTC <fryguybob> ACTION attempts to use Chart-diagrams
+2013-08-23 13:47:45 UTC <kuribas> fryguybob: computer aided geometric design by Sederberg
+2013-08-23 13:59:50 UTC <fryguybob> kuribas: Thanks, found it.
+2013-08-23 14:02:45 UTC <luite> bleh looks like i missed the deadline for cabal already
+2013-08-23 14:04:51 UTC <fryguybob> :(
+2013-08-23 14:05:46 UTC <luite> well there was no real deadline, but Mikhail already committed some stuff that allows them to release and they don't want to wait
+2013-08-23 14:06:05 UTC <luite> grmblz
+2013-08-23 14:24:36 UTC <fryguybob> http://www.cs.rochester.edu/u/ryates/temp/plot100.pdf
+2013-08-23 14:25:17 UTC <fryguybob> @tell jbracker Chart-diagrams is fun! http://www.cs.rochester.edu/u/ryates/temp/plot100.pdf
+2013-08-23 14:25:17 UTC <lambdabot> Consider it noted.
+2013-08-23 14:47:22 UTC <fryguybob> fryguybob: I see why you were confused about having state in the Postscript backend.  It is one level down, in the Render type.  So this fix isn't the cleanest, but it works.  It might be better when I finish some code that avoids emitting unneeded code.
+2013-08-23 14:49:34 UTC <luite> luite: ah i see
+2013-08-23 14:54:07 UTC <travis-ci> [travis-ci] 13diagrams-postscript/06master 141847a2c http://travis-ci.org/diagrams/diagrams-postscript/builds/10539351 The build passed.
+2013-08-23 14:55:19 UTC <fryguybob> luite: :D that was of course supposed to be byorgey.  For a second I thought lack of sleep was getting to you, but it appears that it was getting to me!
+2013-08-23 17:00:30 UTC <byorgey> luite: what about the GHC patches?
+2013-08-23 17:01:08 UTC <byorgey> luite: they will apparently be putting out Cabal releases much more frequently now
+2013-08-23 17:01:25 UTC <luite> yeah they also said that about GHC half a year ago
+2013-08-23 17:01:48 UTC <byorgey> no, I think there was just a very long *discussion* about it for GHC.
+2013-08-23 17:01:55 UTC <byorgey> I actually believe it for Cabal.
+2013-08-23 17:04:44 UTC <alpounet> i've seen what byorgey's talking about mentionned a couple of times too
+2013-08-23 17:04:54 UTC <luite> it is easier to upgrade Cabal, but it still requires upgrading cabal-install, not ideal for haskell platform users
+2013-08-23 17:04:57 UTC <alpounet> don't remember exactly where but that's going to happen, most likely
+2013-08-23 17:05:16 UTC <byorgey> luite: true, but it's still an order of magnitude easier than building GHC HEAD =)
+2013-08-23 17:05:34 UTC <alpounet> for GHC well the GHC dev team has to settle a bit before major changes like that can happen, I think
+2013-08-23 17:05:55 UTC <luite> byorgey: for the GHC patch i'm still waiting for feedback from nominolo and edsko
+2013-08-23 17:06:03 UTC <byorgey> OK
+2013-08-23 17:10:49 UTC <luite> but i don't want to let it sit for a week without responses
+2013-08-23 18:06:19 UTC <notdan> luite: that sucks, but I guess it wouldn't be awful if you can get necessary changes into the next cabal version. Updating cabal-install is just 'cabal install cabal-install ghcjs'
+2013-08-23 18:07:04 UTC <notdan> and about GHC, I think SPJ mentioned that your case is exceptional and I got the idea that he wants to merge your stuff
+2013-08-23 18:13:35 UTC <luite> notdan: yeah but he doesn't know yet that it depends on hooks, and that there are not really multiple conflicting proposals for those
+2013-08-23 18:22:20 UTC <haasn> byorgey: would it be possible to place a diagram at every point where two other diagrams intersect?
+2013-08-23 18:22:38 UTC <haasn> say I have two circles that intersect eachother, and I want a square at both intersections
+2013-08-23 18:23:00 UTC <byorgey> haasn: we don't yet have any way to compute intersections of paths
+2013-08-23 18:23:17 UTC <byorgey> however, there is no reason we can't, and I hope we will soon, especially given the work kuribas has been doing
+2013-08-23 18:28:03 UTC <haasn> oh, okay
+2013-08-23 18:30:53 UTC <haasn> any workaround I could use in the meantime? I'm trying to generate a diagram that's based on iterating a transformation; the initial state is two overlapping circles and the transformation places a new circle at every intersection
+2013-08-23 18:31:56 UTC <fryguybob> byorgey: Do you want heptagon exported from Diagrams.TwoD?  Right now only septagon is so Diagrams.Prelude doesn't export it.
+2013-08-23 18:32:08 UTC <byorgey> fryguybob: whoops, yes
+2013-08-23 18:32:14 UTC <fryguybob> ok, I'll change it
+2013-08-23 18:32:18 UTC <byorgey> thanks
+2013-08-23 18:32:20 UTC <fryguybob> (add it)
+2013-08-23 18:32:36 UTC <byorgey> haasn: the workaround is to work out some trig on a piece of paper and hard code it into your program =P
+2013-08-23 18:32:40 UTC <ClaudiusMaximus> haasn: i have some compass-and-straightedge stuff that i could push somewhere if you need it, not very clean yet though - used it for this http://mathr.co.uk/blog/2013-04-26_fish_variations.html
+2013-08-23 18:33:02 UTC <haasn> ClaudiusMaximus: that might come in handy
+2013-08-23 18:34:43 UTC <byorgey> haasn: given the distance between circle centers and the two radii, you can use the Law of Sines to work out the angles, and hence the positions of the intersection points
+2013-08-23 18:35:23 UTC <byorgey> wait, actually, I guess the Law of Cosines is more appropriate
+2013-08-23 18:35:26 UTC <haasn> byorgey: I'm mainly looking for a beautiful declarative approach. I don't really care about the problem itself, just wanted to see if this was possibly in an elegant way using diagrams
+2013-08-23 18:35:41 UTC <byorgey> haasn: ok, fair enough. =)
+2013-08-23 18:35:48 UTC <carter> notdan i chimed in agreeing with you
+2013-08-23 18:35:50 UTC <carter> :)
+2013-08-23 18:35:55 UTC <haasn> ClaudiusMaximus: oh, but this is 2d only yes?
+2013-08-23 18:36:05 UTC <byorgey> haasn: so to reiterate, the answer is that it *should* be possible, and *will* be, but *isn't* yet =)
+2013-08-23 18:37:20 UTC <haasn> oh, come to think of it, that's not quite the problem I wanted to solve, either
+2013-08-23 18:37:33 UTC <byorgey> ah =)
+2013-08-23 18:37:39 UTC <byorgey> so what IS the problem you wanted to solve?
+2013-08-23 18:37:59 UTC <haasn> I only want to add new circles on the *outermost* intersections; the whole pattern grows outwards with each iteration
+2013-08-23 18:38:03 UTC <haasn> http://sadpanda.us/images/1810656-BXBI8VX.jpg
+2013-08-23 18:38:06 UTC <haasn> think something like this
+2013-08-23 18:38:46 UTC <haasn> that would be after 4-5 iterations
+2013-08-23 18:39:16 UTC <haasn> I think..
+2013-08-23 18:39:22 UTC <byorgey> oh, I see
+2013-08-23 18:39:25 UTC <ClaudiusMaximus> haasn: https://gitorious.org/maximus/compass
+2013-08-23 18:39:44 UTC <haasn> upon yet further inspection it seems that every intersection already has a circle around it either way
+2013-08-23 18:40:04 UTC <byorgey> haasn: that looks to me like a bunch of circles all of the same size, arranged at the points of a triangular grid
+2013-08-23 18:40:06 UTC <haasn> oh yes, this makes sense
+2013-08-23 18:40:22 UTC <byorgey> so there's no need to compute intersection points
+2013-08-23 18:40:22 UTC <haasn> byorgey: yeah that makes sense too
+2013-08-23 18:42:33 UTC <haasn> I wonder though how this generalizes into n dimensions
+2013-08-23 18:42:40 UTC <haasn> the ultimate goal is to move from a 2d solution to a 3d solution
+2013-08-23 18:43:07 UTC <haasn> some kind of pyramid-like arrangement?
+2013-08-23 18:44:04 UTC <notdan> carter: awesome :]
+2013-08-23 18:44:33 UTC <byorgey> haasn: well, regular tetrahedra do not tile 3D space, so there is no direct analogue
+2013-08-23 18:44:55 UTC <haasn> oh
+2013-08-23 18:44:57 UTC <ClaudiusMaximus> *flat 3D space
+2013-08-23 18:45:48 UTC <ClaudiusMaximus> though, not sure if they tile curved spaces either - Coxeter probably has a book about it
+2013-08-23 18:45:55 UTC <byorgey> ClaudiusMaximus: can it in hyperbolic space? ... ok
+2013-08-23 18:46:14 UTC <byorgey> haasn: http://mathworld.wolfram.com/Space-FillingPolyhedron.html
+2013-08-23 18:46:27 UTC <byorgey> arrange the sphere circles at the vertices of one of those =)
+2013-08-23 18:46:40 UTC <ClaudiusMaximus> haasn: crystallography seems relevant too
+2013-08-23 18:48:18 UTC <haasn> byorgey: neat
+2013-08-23 18:49:26 UTC <notdan> ClaudiusMaximus: the video link is this post is broken: http://mathr.co.uk/blog/2012-01-12_gearbox.html
+2013-08-23 18:50:13 UTC <haasn> ClaudiusMaximus: ah, saw your project source now. neat!
+2013-08-23 18:52:47 UTC <notdan> So, I've updated the interactive facilities for the interactive-diagrams. http://co-dan.github.io/ghcjs/interactive/example1/Test.jsexe/ it should be faster and it also features a wizard-like interface, where you can go back and forth, powered by the ContT monad
+2013-08-23 18:53:00 UTC <ClaudiusMaximus> notdan: ah, yes - need to reupload some stuff since my blog switched domain and server...
+2013-08-23 18:53:19 UTC <notdan> I tried to do it with delimited continuations, but failed miserably..
+2013-08-23 18:53:34 UTC <notdan> you have to be Oleg to understand this stuff I guess
+2013-08-23 18:53:50 UTC <byorgey> haasn: http://paste.hskll.org/get/336  =)
+2013-08-23 18:54:42 UTC <notdan> @ty position
+2013-08-23 18:54:43 UTC <lambdabot> Not in scope: `position'
+2013-08-23 18:55:13 UTC <haasn> ooh, is that the pretty diagrams pastebin from gsoc
+2013-08-23 18:55:28 UTC <byorgey> notdan: cool!
+2013-08-23 18:55:33 UTC <byorgey> haasn: yep, notdan made it =)
+2013-08-23 18:55:39 UTC <ClaudiusMaximus> byorgey: so you can tile spherical space, not sure about hyperbolic though  http://www.math.niu.edu/~rusin/known-math/99/600cell
+2013-08-23 18:56:05 UTC <byorgey> ClaudiusMaximus: oh, nice
+2013-08-23 18:56:28 UTC <byorgey> notdan: position :: (Monoid a, Semigroup a, HasOrigin a) => [(Point (V a), a)] -> a
+2013-08-23 18:56:50 UTC <byorgey> hmm, someone should get a version of lambdabot running in here with diagrams stuff in scope
+2013-08-23 18:58:16 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 14c988c5d http://travis-ci.org/diagrams/diagrams-lib/builds/10548903 The build passed.
+2013-08-23 18:58:48 UTC <byorgey> notdan: the link to the diagrams tutorial at the bottom of paste.hskell.org is out of date, it should be http://projects.haskell.org/diagrams/doc/quickstart.html
+2013-08-23 19:00:08 UTC <ClaudiusMaximus> byorgey: how about filling the whole thing with even/odd fill rule?
+2013-08-23 19:00:25 UTC <notdan> oh I haven't updated the version on the server for a while
+2013-08-23 19:01:49 UTC <byorgey> ClaudiusMaximus: http://paste.hskll.org/get/338
+2013-08-23 19:01:56 UTC <byorgey> cool =)
+2013-08-23 19:02:52 UTC <notdan> updated
+2013-08-23 19:05:06 UTC <byorgey> great, thanks =)
+2013-08-23 19:07:59 UTC <ClaudiusMaximus> nice :)
+2013-08-23 19:11:24 UTC <byorgey> notdan: also, I really think the picture ought to be *above* the code.  When I visit http://paste.hskll.org/get/nnn  I want to *first* see the diagram, and *then* see how it is implemented.
+2013-08-23 19:11:30 UTC <byorgey> though perhaps others will disagree with me.
+2013-08-23 19:15:49 UTC <notdan> I thought about this for a while. It makes sense for diagrams, but I am not so sure about other code.
+2013-08-23 19:16:06 UTC <byorgey> oh, that's true
+2013-08-23 19:16:32 UTC <martingale> I'd like to be able to align diagrams et al by trace if it exists and default back to envelope if it doesn't. Do I need to create a new module and class say "snug" or can I add the functionality to Align with an optional parameter (trace or envelope)
+2013-08-23 19:17:06 UTC <martingale> i.e is there a way to test if an object is Traced?
+2013-08-23 19:17:15 UTC <byorgey> notdan: I forgot it can show results of more general evaluations
+2013-08-23 19:17:54 UTC <byorgey> martingale: what do you mean, if the trace doesn't exist?  Every diagram has a trace.  Or do you mean if the trace is empty?
+2013-08-23 19:19:01 UTC <martingale> I mean not only diagrams, other things that are Alignable
+2013-08-23 19:19:39 UTC <byorgey> martingale: ah.  No, there is no way to branch on the presence or absence of instances.
+2013-08-23 19:20:14 UTC <martingale> So do you think a Snug  and TwoD.Snug would be useful?
+2013-08-23 19:20:46 UTC <byorgey> martingale: It sounds reasonable.  I don't have a good sense of whether it would be useful.
+2013-08-23 19:21:30 UTC <byorgey> martingale: e.g. we do something similar for Juxtaposable, where there is a function called 'juxtaposeDefault' which can be used to implement juxtapose for Enveloped things
+2013-08-23 19:21:48 UTC <byorgey> but for non-Enveloped things you can just implement juxtapose directly
+2013-08-23 19:22:26 UTC <byorgey> martingale: which things are Enveloped but not Traced?
+2013-08-23 19:25:36 UTC <martingale> byorgey: I don't know, but I've needed to align arrow heads and tails which are not convex and wanted to have alignL and alingR that worked with the trace
+2013-08-23 19:26:15 UTC <martingale> byorgey: Of course it's not hard to do with the existing tools but I thought maybe we should generalize
+2013-08-23 19:26:50 UTC <byorgey> wanting versions of alignL and alignR that work with trace instead of envelope makes sense
+2013-08-23 19:27:21 UTC <byorgey> maybe we should just add some generic tools like that, but specific to Traced?
+2013-08-23 19:27:37 UTC <martingale> byorgey: Yes, that's what I had in mind
+2013-08-23 19:27:40 UTC <byorgey> I don't (yet) see the value of generalizing as far as using Traced and falling back to Enveloped
+2013-08-23 19:28:11 UTC <martingale> byorgey: That's fine I can skip the "falling back to envelope part" and just build the tools for Traced
+2013-08-23 19:28:21 UTC <byorgey> ok, let's do that for now
+2013-08-23 19:28:35 UTC <martingale> byorgey: can you think of a better name to parallel align than snug?
+2013-08-23 19:28:35 UTC <byorgey> we can always generalize further if it turns out to be useful later
+2013-08-23 19:28:54 UTC <byorgey> snug sounds like a good name to me.
+2013-08-23 19:29:14 UTC <martingale> byorgey: Snug it is.
+2013-08-23 19:29:55 UTC <martingale> byorgey: when you have some time play with arrowtest.hs. I linked it in the email
+2013-08-23 19:30:05 UTC <byorgey> martingale: will do!
+2013-08-23 20:12:40 UTC <luite> notdan: i think it should only display the diagram above the code if it's prettier than the code ;)
+2013-08-23 20:13:46 UTC <byorgey> hmm, is prettiness a monoid?  We could cache a prettiness value for each diagram... ;)
+2013-08-23 20:17:31 UTC <haasn> the prettiness of a combination of diagrams is only as great as the ugliest element
+2013-08-23 20:17:47 UTC <notdan> heh :)
+2013-08-23 20:17:55 UTC <haasn> this being a monoid implies having some diagrams that is infinitely pretty :)
+2013-08-23 20:18:03 UTC <byorgey> =D
+2013-08-23 20:29:14 UTC <luite> haasn: not necessarily, it's possible of course to have the empty diagram be infinitely pretty, but in practice we only work with diagrams of bounded prettiness
+2013-08-23 22:11:53 UTC <martingale> alignR / alignL vs snugR / snugL
+2013-08-23 22:16:49 UTC <martingale> https://github.com/jeffreyrosenbluth/arrowheads/blob/master/snugtest.png
+2013-08-23 22:37:23 UTC <fryguybob> martingale: Nice!
+2013-08-23 22:51:31 UTC <martingale> fryguybob: Thanks, It's almost  carbon copy of Align replace envelopeP with traceP, I'll organize the code an send a Pull request later
+2013-08-23 23:29:26 UTC <byorgey> martingale: cool =)
+2013-08-24 00:09:53 UTC <martingale> byorgey: Right now I have two modules that Snug and TwoD.Snug, do you think i'm better of modifying Align to take an AlignOpts record where the default is envelope and the option is trace?
+2013-08-24 00:11:56 UTC <byorgey> martingale: ah, maybe that is a good idea
+2013-08-24 00:12:06 UTC <byorgey> martingale: so change the type of alignBy to take an AlignOpts
+2013-08-24 00:12:30 UTC <martingale> byorgey: will do
+2013-08-24 00:12:33 UTC <byorgey> leave all the functions like  alignL, alignR etc. with the same behavior as currently
+2013-08-24 00:12:47 UTC <byorgey> and add new functions  snugL, snugR  which are implemented in terms of alignBy ?
+2013-08-24 00:13:26 UTC <byorgey> I don't want to change *all* the functions  alignL, alignR, etc. to take an AlignOpts  (not sure if you were suggesting that)
+2013-08-24 00:13:45 UTC <byorgey> but changing the type of a general function like alignBy (which probably no one uses directly anyway) is totally fine
+2013-08-24 00:24:52 UTC <travis-ci> [travis-ci] 13diagrams/06master 14b3ae3d5 http://travis-ci.org/diagrams/diagrams/builds/10558120 The build failed.
+2013-08-24 00:39:56 UTC <travis-ci> [travis-ci] 13active/06new-semantics 14b9eb867 http://travis-ci.org/diagrams/active/builds/10558409 The build has errored.
+2013-08-24 00:40:10 UTC <travis-ci> [travis-ci] 13diagrams/06master 14be1f387 http://travis-ci.org/diagrams/diagrams/builds/10558287 The build was fixed.
+2013-08-24 00:49:22 UTC <fryguybob> Oh, whoops.  I used  flip at  instead of just  Loc...
+2013-08-24 00:50:23 UTC <fryguybob> byorgey: Now that we have Located, I should just change offset to result in a located segment.
+2013-08-24 00:51:55 UTC <byorgey> fryguybob: using flip at is probably preferable
+2013-08-24 00:52:10 UTC <byorgey> fryguybob: since presumably 'at' will stay the same even if we change the representation
+2013-08-24 00:52:22 UTC <byorgey> fryguybob: what does offset result in now?
+2013-08-24 00:52:40 UTC <fryguybob> byorgey: Ok.  Offset gives a tuple with a point and segment.
+2013-08-24 00:53:07 UTC <byorgey> ok, yes, in that case giving a Located Segment sounds like a good idea indeed
+2013-08-24 00:54:12 UTC <byorgey> since we now have a lot of tools that make working with Located nicer (IMO) than working with a pair
+2013-08-24 00:54:50 UTC <fryguybob> byorgey: Right, that should be useful for doing offsets of more then segments.
+2013-08-24 00:55:01 UTC <byorgey> right
+2013-08-24 00:58:05 UTC <travis-ci> [travis-ci] 13active/06new-semantics 14257b6ab http://travis-ci.org/diagrams/active/builds/10558639 The build has errored.
+2013-08-24 01:06:07 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 148d8d705 http://travis-ci.org/diagrams/diagrams-lib/builds/10558822 The build passed.
+2013-08-24 01:07:52 UTC <martingale> byorgey: I was planning on adding functions like alignL' and letting alignL be alignL' def ?
+2013-08-24 01:10:57 UTC <martingale> byorgey: but I could do it the way you suggested above if you prefer
+2013-08-24 01:14:56 UTC <byorgey> martingale: oh, that works too
+2013-08-24 01:15:37 UTC <byorgey> yeah, that's probably the best way
+2013-08-24 01:21:22 UTC <martingale> byorgey: Good, I'll get to it.
+2013-08-24 01:21:28 UTC <byorgey> =)
+2013-08-24 01:21:41 UTC <byorgey> martingale: also, I just replied to your email
+2013-08-24 01:22:22 UTC <martingale> byorgey: Good I'll have a look
+2013-08-24 01:37:52 UTC <byorgey> BTW, the diagrams-0.7.1 package I just uploaded adds a flag to enable the gtk backend (and has improved travis testing)
+2013-08-24 01:38:38 UTC <luite> yay, i think :)
+2013-08-24 01:39:09 UTC <luite> i'm tying to compile edwardk's automaton with diagrams-ghcjs now :)
+2013-08-24 01:39:31 UTC <luite> that stuff has so many dependencies that it makes an excellent test for my cabal update
+2013-08-24 01:39:45 UTC <byorgey> sweet!
+2013-08-24 01:40:38 UTC <luite> i hope tibbe has too much fun on his vacation to branch cabal 1.18 today :p
+2013-08-24 01:40:59 UTC <byorgey> hehe
+2013-08-24 01:41:48 UTC <fryguybob> ACTION looks for where he put that file with trail offsets...
+2013-08-24 01:47:56 UTC <byorgey> sounds like it got... offset?
+2013-08-24 01:48:52 UTC <martingale> byorgey: I have some git confusion: do i have to fork your arrows branch seperately or should I push my arrows stuff into the master
+2013-08-24 01:49:19 UTC <carter> i wonder how long till someone makes a haskell ios app that lets you construct neat diagrams with diagrams now that we've a working ios target?
+2013-08-24 01:49:24 UTC <byorgey> martingale: you should do neither! =)
+2013-08-24 01:49:42 UTC <martingale> byorgey:  OK what then?
+2013-08-24 01:49:57 UTC <byorgey> martingale: just a second, let me figure out the right commands
+2013-08-24 01:50:49 UTC <byorgey> martingale: git clone https://github.com/diagrams/diagrams-lib.git ; git checkout arrows
+2013-08-24 01:51:08 UTC <byorgey> then add your stuff, commit, and push
+2013-08-24 01:51:13 UTC <martingale> byorgey: got it
+2013-08-24 01:51:28 UTC <byorgey> martingale: oh, wait, sorry
+2013-08-24 01:51:45 UTC <byorgey> martingale: you should  git clone git@github.com:diagrams/diagrams-lib.git   instead of the https:// thing
+2013-08-24 01:51:58 UTC <byorgey> if you clone via HTTP it won't let you push
+2013-08-24 01:52:05 UTC <martingale> byorgey:  OK
+2013-08-24 01:52:24 UTC <fryguybob> Oh, I bet the file is on my laptop.  Who keeps files in windows?
+2013-08-24 01:52:50 UTC <byorgey> In windows or in Windows?
+2013-08-24 01:52:59 UTC <byorgey> I have my files in windows all the time
+2013-08-24 01:54:01 UTC <fryguybob> Windows, you know the thing that runs chrome and putty.
+2013-08-24 01:54:25 UTC <byorgey> hahaha
+2013-08-24 01:58:48 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 140a61063 http://travis-ci.org/diagrams/diagrams-doc/builds/10559059 The build failed.
+2013-08-24 02:19:50 UTC <luite> yay my cabal patch works
+2013-08-24 02:20:00 UTC <luite> i can even compile the Cabal lib itself with GHCJS now
+2013-08-24 02:21:07 UTC <fryguybob> luite: \o/  next stop cabal install ... in the browser!
+2013-08-24 02:22:05 UTC <luite> everyone distract tibbe until this is murged :p
+2013-08-24 02:22:06 UTC <luite> merged
+2013-08-24 02:22:10 UTC <luite> beh it's late
+2013-08-24 02:23:13 UTC <fryguybob> Tag cat videos with his twitter name!
+2013-08-24 02:24:42 UTC <luite> hmm lens still breaks :/
+2013-08-24 02:24:46 UTC <martingale> byorgey: I pushed but it [Errored] I'm wondering if this is becasue the Arrows branch is not up to data with 0.7?
+2013-08-24 02:25:55 UTC <martingale> byorgey: *date
+2013-08-24 03:00:40 UTC <travis-ci> [travis-ci] 13diagrams-lib/06arrows 1446a1ee1 http://travis-ci.org/diagrams/diagrams-lib/builds/10559886 The build failed.
+2013-08-24 03:14:50 UTC <travis-ci> [travis-ci] 13diagrams-lib/06arrows 143408d10 http://travis-ci.org/diagrams/diagrams-lib/builds/10560047 The build is still failing.
+2013-08-24 03:27:41 UTC <travis-ci> [travis-ci] 13diagrams-lib/06arrows 140b371bd http://travis-ci.org/diagrams/diagrams-lib/builds/10560234 The build is still failing.
+2013-08-24 03:44:29 UTC <travis-ci> [travis-ci] 13diagrams-lib/06arrows 143ec7e48 http://travis-ci.org/diagrams/diagrams-lib/builds/10560394 The build is still failing.
+2013-08-24 03:50:22 UTC <travis-ci> [travis-ci] 13diagrams-lib/06arrows 1433089cf http://travis-ci.org/diagrams/diagrams-lib/builds/10560422 The build is still failing.
+2013-08-24 03:54:50 UTC <travis-ci> [travis-ci] 13diagrams-lib/06arrows 142b7754d http://travis-ci.org/diagrams/diagrams-lib/builds/10560459 The build is still failing.
+2013-08-24 03:57:04 UTC <travis-ci> [travis-ci] 13diagrams-lib/06arrows 14d35e035 http://travis-ci.org/diagrams/diagrams-lib/builds/10560474 The build was fixed.
+2013-08-24 03:57:28 UTC <martingale> Finally!! I can go to bed now
+2013-08-24 04:03:18 UTC <luite> :)
+2013-08-24 08:55:48 UTC <haasn> byorgey: is there something like âvacuumâ for diagrams? An ability to just type âview $ someDiagramâ and have it show up in a new window
+2013-08-24 08:56:07 UTC <haasn> ie. directly from GHCi
+2013-08-24 08:57:07 UTC <Taneb> There's the GTK backend, that's almost there
+2013-08-24 09:27:14 UTC <haasn> http://paste.hskll.org/get/346 <- better way to do this? :)
+2013-08-24 09:29:50 UTC <Taneb> Have you seen the dragon curve code I pasted the other day?
+2013-08-24 09:30:02 UTC <haasn> nope!
+2013-08-24 09:30:11 UTC <Taneb> http://lpaste.net/92030
+2013-08-24 09:30:36 UTC <Taneb> We use different algorithms to generate the curve, though
+2013-08-24 09:30:39 UTC <haasn> ah, based on rewriting
+2013-08-24 09:30:45 UTC <haasn> yeah I just overlay the diagram on itself, like folding a paper in half
+2013-08-24 09:30:56 UTC <Taneb> I just like L-systems
+2013-08-24 09:31:05 UTC <haasn> mine probably isn't awfully efficient, with reverse and stuff :)
+2013-08-24 09:31:47 UTC <haasn> I was going for simplicity
+2013-08-24 09:32:12 UTC <mgsloan> haasn: https://github.com/mgsloan/diagrams-ghci
+2013-08-24 09:32:22 UTC <Taneb> I was going for "Right, I've worked out how to generate this, now how to write it" :P
+2013-08-24 09:32:35 UTC <haasn> mgsloan: oh, right, that's what I was remembering! thanks
+2013-08-24 09:32:40 UTC <mgsloan> This is a gtk window that updates whenever you save a ".hse" (haskell expression file) in the directory that it's running in
+2013-08-24 09:32:58 UTC <mgsloan> I need to polish it, though - there's no real good reason to not have proper .hs files
+2013-08-24 09:32:59 UTC <haasn> simple enough; I think I'd still rather have it in GHCi itself though
+2013-08-24 09:33:15 UTC <mgsloan> Ah, I've got that too actually
+2013-08-24 09:33:17 UTC <haasn> it would be cool if you could make it work the way paste.hskll.org does
+2013-08-24 09:33:43 UTC <Taneb> haasn, by the way, my code renders: http://www.vandoorn.talktalk.net/Nathan's_Stuff/d.svg
+2013-08-24 09:33:45 UTC <mgsloan> Right, having a non IO main value
+2013-08-24 09:35:13 UTC <mgsloan> haasn: https://github.com/mgsloan/toy-gtk-diagrams/blob/master/src/Graphics/UI/Toy/Gtk/Dict.hs#L57
+2013-08-24 09:35:39 UTC <mgsloan> I guess for some reason I overlooked the use case where it's not an interactive diagram
+2013-08-24 09:35:50 UTC <mgsloan> however, if you just ignore the mouse position :)
+2013-08-24 09:37:40 UTC <Taneb> (is it weird that I prefer the dragon curve rendered with quite thick lines?)
+2013-08-24 09:38:34 UTC <mgsloan> I hope to finally put this toy-* stuff on hackage soon, it's been laying around for years, and I think it's quite fun to mess with
+2013-08-24 09:42:16 UTC <haasn> Taneb: http://sadpanda.us/images/1811986-4GVP960.png
+2013-08-24 09:42:24 UTC <haasn> looks like ours are upside down :)
+2013-08-24 09:44:19 UTC <Taneb> :O
+2013-08-24 09:44:25 UTC <Taneb> Blashphemy
+2013-08-24 09:44:50 UTC <Taneb> Oh dear I've gone all Sean Connery
+2013-08-24 09:44:51 UTC <haasn> I can produce either version by swapping the sides of (++) and/or moving the reverse to the other side
+2013-08-24 09:45:06 UTC <haasn> I went with the combination that seemed most aesthetically pleasing :)
+2013-08-24 09:45:50 UTC <Taneb> I just have to add an underscore in line 17
+2013-08-24 09:46:10 UTC <Taneb> So it starts facing West rather than East
+2013-08-24 09:46:40 UTC <haasn> # rotateBy (1/2) -- the only obviously correct solution
+2013-08-24 09:46:57 UTC <Taneb> :P
+2013-08-24 10:00:22 UTC <notdan> mgsloan: that's very interesting
+2013-08-24 10:00:38 UTC <notdan> mgsloan: what is the Manipulabe class for? https://github.com/mgsloan/toy-diagrams/blob/master/src/Graphics/UI/Toy/Demo.hs#L23
+2013-08-24 10:01:20 UTC <mgsloan> I wanted to be to turn datatypes into interfaces for manipulating them
+2013-08-24 10:01:51 UTC <mgsloan> Eventually scaling all the way up to code, but it didn't quite get that far :D
+2013-08-24 10:02:24 UTC <mgsloan> Other than that little formatting tweak I haven't worked on that module in ages
+2013-08-24 10:35:08 UTC <kuribas> Right now I can find one extremum of the curvature, because the root finder needs an interval.  Any idea how I can find more extrema?
+2013-08-24 10:35:37 UTC <kuribas> I need this to find singularities in the offset curve.
+2013-08-24 10:55:35 UTC <travis-ci> [travis-ci] 13diagrams-core/06backend-tree 14576a4fa http://travis-ci.org/diagrams/diagrams-core/builds/10565745 The build has errored.
+2013-08-24 12:15:53 UTC <travis-ci> [travis-ci] 13diagrams-core/06backend-tree 1426602fd http://travis-ci.org/diagrams/diagrams-core/builds/10566946 The build passed.
+2013-08-24 12:41:08 UTC <martingale> byorgey: If I create instances Alignable (Envelope v) and Alignable (Trace v) won't this cause problems for the compiler to deduce the right type?
+2013-08-24 12:52:00 UTC <byorgey> martingale: Problems to deduce the right type in what situation?
+2013-08-24 12:52:56 UTC <byorgey> martingale: also, what is your proposed definition of AlignOpts?
+2013-08-24 12:55:05 UTC <martingale> byorgey: Since most things that are enveloped are traced I was wondering if the user would have to specify the type of v
+2013-08-24 12:56:15 UTC <martingale> byorgey: the definition of AlignOpts is tricky, I would like to make it a function, but alignBy and snugBy have different type signatures and I'm not sure I can or if it makes sense to unify them.
+2013-08-24 12:56:56 UTC <martingale> I was think of a (gasp!) of type Boundry = EnvB | TrcB
+2013-08-24 12:58:07 UTC <martingale> to use as a flag (This is ugly, but i'm not sure there is a better way
+2013-08-24 12:59:15 UTC <byorgey> martingale: sorry, back later, I have Noah duty =)
+2013-08-24 12:59:53 UTC <martingale> byorgey: OK, I have to head out myself for a couple of hours
+2013-08-24 15:50:09 UTC <byorgey> I think I just leveled up.  I wanted a certain type synonym, so I wrote out   type Foo = ... , scratched my head over the resulting error, and then realized that I actually want a *kind* synonym not a type synonym.
+2013-08-24 15:50:19 UTC <byorgey> either I leveled up or I am very confused.  Sometimes they are the same.
+2013-08-24 15:50:39 UTC <byorgey> also, now I am sad that Haskell does not have kind synonyms.
+2013-08-24 16:02:20 UTC <martingale> byorgey: I'm having second thoughts about creating  AlignOpts since there are only two choices Envelope and Trace, it might be better to have two function names, align and snug.
+2013-08-24 16:02:59 UTC <martingale> byorgey: Unless we plan on adding other "boundries" e.g bounding box later.
+2013-08-24 16:04:41 UTC <byorgey> martingale: ok, what I was going to say earlier: first, making type Boundry = EnvB | TrcB  as a field of AlignOpts cannot possibly work, because when 'alignBy' is called there's no guarantee that you can get an Envelope or Trace for the thing you're aligning
+2013-08-24 16:05:22 UTC <byorgey> martingale: can't AlignOpts just contain a function like   (v -> Scalar v) ?
+2013-08-24 16:05:44 UTC <byorgey> or even  (Point v -> v -> Scalar v), where the version for envelopes ignores the input Point
+2013-08-24 16:06:34 UTC <byorgey> martingale: can you elaborate on what you mean when you say alignBy and snugBy have different type signatures?  what is the type of snugBy?
+2013-08-24 16:07:40 UTC <martingale> byorgey: Ah, of course you are right, I was looking at the signatures for snugByDefault which is
+2013-08-24 16:07:43 UTC <martingale> (HasOrigin a, Traced a, Fractional (Scalar (V a)), Num (Scalar (V a)))
+2013-08-24 16:07:44 UTC <martingale>   => V a -> Scalar (V a) -> a -> a
+2013-08-24 16:08:28 UTC <martingale> byorgey: I think (v -> Scalar v) will work.
+2013-08-24 16:09:08 UTC <byorgey> OK.  If that works out then it's nice because of course you can come up with other ways to align things.
+2013-08-24 16:09:19 UTC <byorgey> you can just pass an arbitrary function.
+2013-08-24 16:09:37 UTC <martingale> byorgey: make that: V a -> Scalar (V a) -> a -> a
+2013-08-24 16:09:51 UTC <martingale> byorgey: as is the current signature of alignBy
+2013-08-24 16:10:59 UTC <byorgey> no, I really do mean having   V a -> Scalar (V a)   as a field of AlignOpts, not  V a -> Scalar (V a) -> a -> a
+2013-08-24 16:11:31 UTC <byorgey> alignBy will call that function with the given vector, to determine how far away the "edge" is
+2013-08-24 16:11:41 UTC <byorgey> and then translate accordingly
+2013-08-24 16:12:44 UTC <byorgey> does that make sense?
+2013-08-24 16:13:16 UTC <martingale> byorgey: I think so, I'll try to code it up and let you know if I run into any problems
+2013-08-24 16:13:19 UTC <byorgey> ok
+2013-08-24 16:14:15 UTC <byorgey> ACTION comes to the sudden realization that *scalars* and *distances* ideally ought to have different types
+2013-08-24 16:14:35 UTC <byorgey> a scalar is a scaling factor.  e.g.  (*^) :: scalar -> vector -> vector
+2013-08-24 16:15:09 UTC <byorgey> oh, never mind, I guess they are the same thing.
+2013-08-24 16:15:33 UTC <byorgey> hmmm
+2013-08-24 16:15:54 UTC <martingale> byorgey: Can AlignOpts be a type synonym then or do I need a data type
+2013-08-24 16:17:24 UTC <byorgey> martingale: I would make it a data type, so that people can use the same syntax that's used elsewhere, like   alignBy v with { foo = blah }
+2013-08-24 16:17:43 UTC <byorgey> that will also make it easier to upgrade if we ever decide to add more alignment options
+2013-08-24 16:17:55 UTC <martingale> byorgey: OK
+2013-08-24 16:18:53 UTC <martingale> byorgey: By the way I made the arrow post to the google group, make you can send some traffic so it.
+2013-08-24 16:19:00 UTC <martingale> *maybe
+2013-08-24 16:19:45 UTC <fryguybob> byorgey: You could make comparable distances opaque.
+2013-08-24 16:28:36 UTC <kuribas> Is a R tree a good structure for finding intersections?
+2013-08-24 16:30:02 UTC <kuribas> If I check against all curves, it would be 0(n^2).
+2013-08-24 16:31:14 UTC <byorgey> sounds like a good idea to me
+2013-08-24 16:31:28 UTC <kuribas> What does diagrams use?
+2013-08-24 16:32:38 UTC <byorgey> kuribas: we don't use anything at all at the moment, we haven't needed anything like that yet
+2013-08-24 16:33:02 UTC <byorgey> but you could get an R-tree out of diagrams almost for free just by adding bounding boxes as a u-annotation
+2013-08-24 16:37:15 UTC <kuribas> I see.
+2013-08-24 16:43:02 UTC <kuribas> So to find points with a certain radius of curvature I want to convert the curvature to a 12 degree bezier curve, and use the bezier clipping algorithm on that curve.
+2013-08-24 16:43:39 UTC <kuribas> It should be more robust than the general root solver and give all solutions.
+2013-08-24 16:44:05 UTC <kuribas> But calculating the 12 degree bezier curve may be a bit expensive.
+2013-08-24 16:44:57 UTC <kuribas> (about 100 multiplications)
+2013-08-24 17:01:34 UTC <kuribas> But I am probably underestimating the power of modern computers...
+2013-08-24 17:15:10 UTC <ClaudiusMaximus> is that 100x slower or a one-off cost?
+2013-08-24 17:15:34 UTC <kuribas> one of
+2013-08-24 17:16:08 UTC <kuribas> bezier clipping should be reasonably fast.
+2013-08-24 17:18:18 UTC <ClaudiusMaximus> then i wouldn't worry about additive time costs, it's the multiplicative or polynomial or exponential ones that are concerning..
+2013-08-24 17:19:15 UTC <kuribas> ok
+2013-08-24 18:02:47 UTC <travis-ci> [travis-ci] 13active/06new-semantics 14b6581ab http://travis-ci.org/diagrams/active/builds/10573848 The build has errored.
+2013-08-24 18:16:14 UTC <martingale_> byorgey: I guess I don't really understand what you mean by having alignOpts be V a -> Scalar (V a), what would this look like for the default case of alignBy
+2013-08-24 18:18:08 UTC <byorgey> martingale_: I was thinking of having it be the same sort of thing as what you get out of appEnvelope
+2013-08-24 18:18:30 UTC <byorgey> but on second thought, perhaps that's a bit too low-level.  Looking at the current implementation of alignByDefault, I see it uses envelopeP
+2013-08-24 18:19:36 UTC <byorgey> oh, and I guess in any case it really has to take an a, doesn't it?
+2013-08-24 18:19:42 UTC <byorgey> heh, sorry for confusing you =P
+2013-08-24 18:20:08 UTC <byorgey> so how about let's have an option of type  V a -> a -> Point (V a)
+2013-08-24 18:20:41 UTC <byorgey> for Enveloped, you can drop in envelopeP; for Traced, you can drop in something related to traceP
+2013-08-24 18:20:41 UTC <martingale_> byorgey: so what i originally said was correct? that is use: V a -> Scalar (V a) -> a -> a 
+2013-08-24 18:21:07 UTC <byorgey> no, thte option should not be the function which actually does the alignment
+2013-08-24 18:21:10 UTC <byorgey> that is alignBy's job
+2013-08-24 18:21:22 UTC <byorgey> the option merely computes something about the thing being aligned
+2013-08-24 18:21:46 UTC <martingale_> byorgey: So the something related to traceP would extract it from the maybe with a default of say origin
+2013-08-24 18:22:10 UTC <byorgey> right. Though I am not sure what to do in the case of traceP returning Nothing.
+2013-08-24 18:22:18 UTC <byorgey> what did you do in e.g. snugL?
+2013-08-24 18:22:33 UTC <martingale_> byorgey: I returned the local origin
+2013-08-24 18:22:49 UTC <byorgey> ok, that sounds sensible
+2013-08-24 18:23:13 UTC <martingale_> byorgey: sounds like a plan
+2013-08-24 18:23:28 UTC <byorgey> great =)  sorry for making this more complicated than necessary.
+2013-08-24 18:24:04 UTC <martingale_> byorgey: no worries, just glad I wasn't missing something silly
+2013-08-24 20:14:29 UTC <travis-ci> [travis-ci] 13active/06new-semantics 148d7f914 http://travis-ci.org/diagrams/active/builds/10576628 The build has errored.
+2013-08-24 20:42:28 UTC <travis-ci> [travis-ci] 13active/06new-semantics 14ef84eda http://travis-ci.org/diagrams/active/builds/10577176 The build has errored.
+2013-08-24 20:53:00 UTC <travis-ci> [travis-ci] 13active/06new-semantics 14d6619d1 http://travis-ci.org/diagrams/active/builds/10577441 The build has errored.
+2013-08-24 21:18:14 UTC <travis-ci> [travis-ci] 13active/06new-semantics 14201d992 http://travis-ci.org/diagrams/active/builds/10578006 The build has errored.
+2013-08-24 21:23:47 UTC <travis-ci> [travis-ci] 13active/06new-semantics 145349833 http://travis-ci.org/diagrams/active/builds/10578088 The build has errored.
+2013-08-24 21:31:26 UTC <travis-ci> [travis-ci] 13active/06new-semantics 141393964 http://travis-ci.org/diagrams/active/builds/10578229 The build has errored.
+2013-08-24 22:09:19 UTC <martinga_> there has to be a more haskelly way to right this: alignTL' opts = alignT' opts . alignL' opts
+2013-08-24 22:11:51 UTC <martinga_> It seems to be working https://github.com/jeffreyrosenbluth/align/blob/master/snugtest.svg
+2013-08-24 23:10:10 UTC <fryguybob> @pl \a -> f a . g a
+2013-08-24 23:10:10 UTC <lambdabot> liftM2 (.) f g
+2013-08-24 23:16:03 UTC <fryguybob> @type \f g -> liftA2 (.) f g
+2013-08-24 23:16:04 UTC <lambdabot> Applicative f => f (b -> c) -> f (a -> b) -> f (a -> c)
+2013-08-24 23:16:10 UTC <fryguybob> @type \f g -> (.) <$> f <*> g
+2013-08-24 23:16:11 UTC <lambdabot> Applicative f => f (b -> c) -> f (a -> b) -> f (a -> c)
+2013-08-25 00:44:10 UTC <martingale> Wow, lots of good choices
+2013-08-25 00:46:49 UTC <martingale> fryguybob: thanks
+2013-08-25 01:51:24 UTC <fryguybob> byorgey: Is Located a Functor?
+2013-08-25 01:53:33 UTC <fryguybob> Oh, there is mapLoc
+2013-08-25 01:54:20 UTC <byorgey> fryguybob: it is a little-f functor (from an appropriate category) but not a Functor
+2013-08-25 01:55:16 UTC <fryguybob> byorgey: Is there something similar to join?
+2013-08-25 01:55:40 UTC <byorgey> fryguybob: you mean like   Located (Located a) -> Located a  ?
+2013-08-25 01:55:44 UTC <fryguybob> Yeah
+2013-08-25 01:55:48 UTC <byorgey> what would it do?
+2013-08-25 01:56:35 UTC <byorgey> of course you could write a function of that type just by throwing away one of the locations
+2013-08-25 01:56:39 UTC <byorgey> but that seems uninteresting
+2013-08-25 01:57:17 UTC <fryguybob> Humm, yeah.  I want + but perhaps that means one of my steps isn't really Located.
+2013-08-25 01:57:58 UTC <byorgey> + does not really make sense on points, so yes, I would say one of them is actually  (V a, a)  instead of  (Point (V a), a)
+2013-08-25 01:58:11 UTC <byorgey> then you can use  .+^
+2013-08-25 01:58:17 UTC <fryguybob> Yeah.
+2013-08-25 02:11:59 UTC <fryguybob> byorgey: In particular I have a Path and a function from Trail to Located Trail and I want to apply that to each of the trails in the path.
+2013-08-25 02:12:47 UTC <martingale> byorgey: I'll have a look, it built fine in my hsenv sandbox. Problem seems to be in Path.hs
+2013-08-25 02:14:02 UTC <byorgey> martingale: ok, thanks
+2013-08-25 02:14:05 UTC <fryguybob> (???) . mapLoc f . pathTrails  Has ??? as Located (Located Trail) -> Located Trail
+2013-08-25 02:14:37 UTC <byorgey> fryguybob: hmm, I see.
+2013-08-25 02:15:05 UTC <byorgey> huh, perhaps + does make sense
+2013-08-25 02:15:56 UTC <byorgey> that is a very compelling example .
+2013-08-25 02:17:00 UTC <byorgey> fryguybob: well, feel free to add a function which collapses Located with + like that.  The hard part is coming up with a good name.
+2013-08-25 02:17:24 UTC <byorgey> I don't think it should be called 'joinLocated' or something like that, because although I'm convinced it's useful I'm not convinced it's canonical.
+2013-08-25 02:17:34 UTC <fryguybob> byorgey: hehe
+2013-08-25 02:18:18 UTC <byorgey> anyway, bedtime for me, see you all later
+2013-08-25 02:18:47 UTC <fryguybob> I suppose another way to view it is to make  f :: Trail -> Offset Trail  and  (???) :: Located (Offset Trail) -> Located Trail
+2013-08-25 02:19:01 UTC <fryguybob> But I will have to think if that makes more sense or less.
+2013-08-25 02:19:07 UTC <fryguybob> byorgey: Good night!
+2013-08-25 02:23:18 UTC <fryguybob> ACTION uses the name  nonCanonicalJoin = (???)  while byorgey isn't looking.
+2013-08-25 02:30:15 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14826a787 http://travis-ci.org/diagrams/diagrams-doc/builds/10583017 The build has errored.
+2013-08-25 02:45:57 UTC <martingale> How do I re-export an imported instance of Default?
+2013-08-26 02:38:50 UTC <fryguybob> byorgey: When I finish with this offset trail stuff we would be able convert any stroked line into a path that could be filled.  This would give us a slow renderer.
+2013-08-26 02:40:59 UTC <luite> a slow renderer, just what we need!
+2013-08-26 02:41:40 UTC <luite> why slow?
+2013-08-26 02:41:43 UTC <fryguybob> :D
+2013-08-26 02:43:31 UTC <fryguybob> luite: Containment test per pixel was what I had in mind.
+2013-08-26 02:45:50 UTC <luite> using diagrams' raytracer?
+2013-08-26 02:46:58 UTC <fryguybob> luite: Right, the point is something slow but obviously correct could be useful for things like the diagrams backend tests.
+2013-08-26 02:58:05 UTC <luite> yeah could be a nice reference target for the fast rasterizer Tillmann's going to write
+2013-08-26 03:00:26 UTC <fryguybob> I suppose if we have trace instances for segments we can do a bit better without much work.  Anyway, good night.
+2013-08-26 03:01:10 UTC <luite> :)
+2013-08-26 04:06:53 UTC <luite> http://hdiff.luite.com/ghcjs/automaton/
+2013-08-26 05:15:30 UTC <Twey> What's the best way to fill a shape with a repeated pattern?
+2013-08-26 05:16:30 UTC <Twey> I'm leery of drawing the pattern and then clipping it with the shape because there doesn't seem to be anything for making infinite patterns, so if the shape were resized the pattern could break
+2013-08-26 08:17:13 UTC <notdan> luite: cool :)
+2013-08-26 08:17:19 UTC <notdan> it works faster on reload
+2013-08-26 11:57:28 UTC <byorgey> Twey: good question, we don't really have a good way of doing that right now
+2013-08-26 11:59:13 UTC <byorgey> luite: what am I supposed to see at http://hdiff.luite.com/ghcjs/automaton/ ?
+2013-08-26 11:59:16 UTC <byorgey> I just get a blank window
+2013-08-26 11:59:23 UTC <notdan> Beh, I wonder why ghc library does not provide the TypeRep module. I assume they want to hide the representation of types. But if they introduce a breaking change to the type representation chances are they'll have to add/remove splitTyConApp/splitFunTy/splitBla functions too
+2013-08-26 11:59:31 UTC <notdan> byorgey: you will see a cellular automata
+2013-08-26 11:59:34 UTC <notdan> just give it a minute
+2013-08-26 11:59:38 UTC <notdan> :)
+2013-08-26 11:59:43 UTC <notdan> it's faster in Chrome though
+2013-08-26 12:00:16 UTC <notdan> and it's pretty fast on each consecutive reload
+2013-08-26 12:00:35 UTC <byorgey> notdan: ok, still waiting... =)
+2013-08-26 12:47:47 UTC <byorgey> ah, it's working now, I didn't realize it only runs when it has the focus =)
+2013-08-26 12:48:07 UTC <byorgey> so that's running edwardk's code through diagrams-ghcjs ?
+2013-08-26 12:59:06 UTC <martingale> byorgey: I think i need to re-exprot all of the Arrowhead.hs fucntions from Arrow.hs, is the a one line way to do this or do I have to list all of the functions?
+2013-08-26 13:00:40 UTC <martingale> byorgey: I played around with your knights tour, to use arrows - a possible option to showcase arrows in the gallery once it's mereged.
+2013-08-26 13:01:41 UTC <martingale> byorgey:  https://raw.github.com/jeffreyrosenbluth/arrowheads/master/knightstour.png
+2013-08-26 13:02:20 UTC <martingale> byorgey: I didn't bother with the knight image
+2013-08-26 13:07:26 UTC <byorgey> martingale: nice =)
+2013-08-26 13:07:46 UTC <byorgey> martingale: if you want to export an entire module you can just put  'module Foo'  in the export list
+2013-08-26 13:08:57 UTC <martingale> byorgey: thanks will do and re push the fork
+2013-08-26 13:09:35 UTC <martingale> byorgey: Also, I finally got the enhanced Align module to pass Travis ci
+2013-08-26 13:11:21 UTC <byorgey> martingale: yes, I saw that, thanks =)
+2013-08-26 13:16:46 UTC <fryguybob> martingale: Nice, arrows are looking good :D
+2013-08-26 13:17:38 UTC <martingale> fryguybob: thanks
+2013-08-26 13:18:47 UTC <martingale> fryguybob: If you get a chance play with the arrows branch?
+2013-08-26 13:19:16 UTC <fryguybob> martingale: I haven't had a chance yet, but I certainly have plenty of backburner projects that would need them.
+2013-08-26 13:20:10 UTC <martingale> fryguybob: great, I look forward to hearing any suggestions you may have
+2013-08-26 13:21:31 UTC <travis-ci> [travis-ci] 13diagrams-lib/06arrows 145d730dd http://travis-ci.org/diagrams/diagrams-lib/builds/10623174 The build was broken.
+2013-08-26 13:22:14 UTC <byorgey> martingale: ah, you have to export  module Diagrams.TwoD.Arrowheads, not just  module Arrowheads
+2013-08-26 13:22:30 UTC <martingale> byorgey: yes, i just realized that
+2013-08-26 13:22:35 UTC <byorgey> =)
+2013-08-26 13:27:57 UTC <travis-ci> [travis-ci] 13diagrams-lib/06arrows 14187a229 http://travis-ci.org/diagrams/diagrams-lib/builds/10623423 The build was fixed.
+2013-08-26 13:49:24 UTC <fryguybob> byorgey: Any opposition to adding  locatedTrailSegments :: ... => Trail v -> [Located (Segment Closed v)]  ?
+2013-08-26 13:50:16 UTC <fryguybob> byorgey: I'm using  Located (Segment Closed v)  as a replacement for  FixedSegment v.
+2013-08-26 14:08:23 UTC <byorgey> fryguybob: I think it might be slightly more general/correct to have   Located (Trail v) -> [Located (Segment Closed v)]
+2013-08-26 14:08:54 UTC <byorgey> from which you can recover the type you proposed by composing with (`at` origin)
+2013-08-26 14:08:59 UTC <fryguybob> byorgey: Yeah
+2013-08-26 14:10:53 UTC <fryguybob> byorgey: Even makes it simpler :D
+2013-08-26 14:10:59 UTC <byorgey> great =)
+2013-08-26 14:18:52 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 143fcd71e http://travis-ci.org/diagrams/diagrams-lib/builds/10625275 The build passed.
+2013-08-26 14:29:22 UTC <martingale> byorgey: should diagrams-cairo work for cairo 12.14, the cabal script has < .13?
+2013-08-26 14:31:42 UTC <byorgey> martingale: the latest release of the Haskell cairo package is 0.12.4 which is < 0.13.  The latest release of the cairo C library is 1.12.14, but that version number has nothing to do with what is in diagrams-cairo.cabal
+2013-08-26 14:32:59 UTC <martingale> byorgey: hmm not sure why I'm having trouble installing the cairo backend. any suggestions on installing the Haskell cairo package
+2013-08-26 14:33:09 UTC <martingale> byorgey: OSX
+2013-08-26 14:33:42 UTC <martingale> byorgey: I know I have done it before but that was in a different hsenv
+2013-08-26 14:34:01 UTC <byorgey> installing cairo is notoriously difficult on OSX.  there are some instructions here: http://www.haskell.org/haskellwiki/Diagrams/Install#Installing_on_Mac_OS_X
+2013-08-26 14:34:07 UTC <byorgey> no idea how up to date those instructions are
+2013-08-26 14:34:21 UTC <byorgey> martingale: what error(s) are you getting?
+2013-08-26 14:34:47 UTC <byorgey> or are you saying you already have the cairo C library installed, and you are just having trouble installing the Haskell package?
+2013-08-26 14:35:07 UTC <martingale> byorgey: yes, the c library is installed
+2013-08-26 14:35:14 UTC <byorgey> OK, ignore that link then
+2013-08-26 14:35:55 UTC <martingale> abal: Error: some packages failed to install:
+2013-08-26 14:35:55 UTC <martingale> cairo-0.12.4 failed during the configure step. The exception was:
+2013-08-26 14:35:55 UTC <martingale> ExitFailure 1
+2013-08-26 14:35:57 UTC <martingale> diagrams-0.7.1 depends on cairo-0.12.4 which failed to install.
+2013-08-26 14:35:59 UTC <martingale> diagrams-cairo-0.7 depends on cairo-0.12.4 which failed to install.
+2013-08-26 14:36:40 UTC <byorgey> martingale: you will have to scroll up to find the actual error that happened during the installation of the cairo package
+2013-08-26 14:37:53 UTC <byorgey> or if you were building using -jN you can look at the log in .hsenv_foo/cabal/logs/cairo-0.12.4.log
+2013-08-26 14:40:30 UTC <martingale> onfiguring cairo-0.12.4...
+2013-08-26 14:40:30 UTC <martingale> setup: Package xcb-shm was not found in the pkg-config search path.
+2013-08-26 14:40:30 UTC <martingale> Perhaps you should add the directory containing `xcb-shm.pc'
+2013-08-26 14:40:31 UTC <martingale> to the PKG_CONFIG_PATH environment variable
+2013-08-26 14:40:33 UTC <martingale> Package 'xcb-shm', required by 'cairo', not found
+2013-08-26 14:40:35 UTC <martingale> Failed to install cairo-0.12.4
+2013-08-26 14:40:37 UTC <martingale> cabal: Error: some packages failed to install:
+2013-08-26 14:40:39 UTC <martingale> cairo-0.12.4 failed during the configure step. The exception was:
+2013-08-26 14:40:41 UTC <martingale> ExitFailure 1
+2013-08-26 14:41:40 UTC <byorgey> ah, well, apparently you need to install some library called something like xcb-shm from macports or homebrew or whatever you use
+2013-08-26 14:42:21 UTC <fryguybob> martingale: Or perhaps you do not have paths set up correctly for pkg-config.
+2013-08-26 14:42:38 UTC <fryguybob> (I know on windows this can be tricky)
+2013-08-26 14:43:17 UTC <martingale> yeah, i had this problem before, it's a path thing i have to find where xcb-sbm is installed on my directory and fix my path
+2013-08-26 15:09:12 UTC <fryguybob> ACTION reads up on the new parametric stuff.
+2013-08-26 15:40:41 UTC <martingale> how do i append to : PKG_CONFIG_PATH
+2013-08-26 15:44:13 UTC <fryguybob> martingale: No idea, is this in a standard shell?
+2013-08-26 15:44:33 UTC <martingale> fryguybob: nevermind, i got it
+2013-08-26 15:57:56 UTC <martingale> For anyone else having trouble installing the haskell cairo package: export PKG_CONFIG_PATH=/usr/X11/lib/pkgconfig
+2013-08-26 16:00:45 UTC <fryguybob> martingale: You could add details to the wiki page byorgey linked to.
+2013-08-26 16:01:23 UTC <martingale> fryguybob: sure
+2013-08-26 16:04:37 UTC <martingale> fryguybob: I don't have a login to the haskellwiki - seems like it takes a while to get one?
+2013-08-26 16:23:28 UTC <fryguybob> humm.  I don't remember.  No worries, I can add to it for you.
+2013-08-26 16:24:15 UTC <notdan> yeah you have to mail somebody for a login
+2013-08-26 16:24:30 UTC <notdan> i got a very quick reply though
+2013-08-26 16:25:32 UTC <martingale> fryguybob: Thanks, What happens is that xcb-shm.pc is needed to install cairo and for some strange reason on OSX it is in /urs/X11/lib/pkgconfig
+2013-08-26 16:25:42 UTC <martingale> notdan: who do you email?
+2013-08-26 16:26:40 UTC <martingale> fryguybob: */usr
+2013-08-26 16:26:53 UTC <fryguybob> martingale: nominolo,  There is a note on the login page.
+2013-08-26 16:27:02 UTC <fryguybob> (at gmail)
+2013-08-26 16:27:17 UTC <martingale> thanks
+2013-08-26 16:27:36 UTC <notdan> oops, forgot that this chjannel is logged D:
+2013-08-26 16:27:40 UTC <notdan> sorry nominolo :(
+2013-08-26 16:30:46 UTC <byorgey> ACTION scrubs nominolo's email address from the log
+2013-08-26 16:31:30 UTC <byorgey> the log is only made public occasionally, when I remember to commit
+2013-08-26 16:32:01 UTC <fryguybob> ACTION looks for other ways byorgey has "corrected" the record.
+2013-08-26 16:34:17 UTC <notdan> heh
+2013-08-26 16:34:19 UTC <notdan> thanks byorgey 
