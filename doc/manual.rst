@@ -3747,13 +3747,86 @@ compared for ordering.
 Type family reference
 ---------------------
 
+*Type families* are a GHC extension to Haskell enabling "type-level
+functions".  You can `read about them in detail here`__, but
+understanding them enough to use them as they arise in diagrams is not
+anywhere near as complicated as that page might suggest.  Simply put,
+type families are functions which can take types as input and produce
+other types as output.  Of course, in one sense any polymorphic type
+constructor already does this: for example, `Maybe` takes types as
+input (say, `Int`) and produces types as output (say, `Maybe Int`).
+The difference is that `Maybe` works *uniformly* for all input types
+(it does not, indeed cannot, do anything "different" for `Char` than
+it does for `Int`).  Type families, on the other hand, can have a
+specific definition for each input type (much as type class methods
+can have a different implementation for each instance type).  For
+example, the following (admittedly contrived) example declares a type
+family named `Foo`, with two definition clauses.
+
+.. class:: lhs
+
+::
+
+> type family Foo a :: *
+> type instance Foo Int  = Int
+> type instance Foo Char = [String]
+
+__ http://www.haskell.org/haskellwiki/GHC/Type_families
+
+Diagrams only makes use of a few type families, though two of them
+(`V` and `Scalar`) are used quite extensively.  The following sections
+list each of the type families employed by diagrams
+
 V
 ~
 
 The `V` type family is defined in `Diagrams.Core.V`.  The idea is that
 many types have an "associated" vector space, *i.e.* the vector space
 in which they "live".  `V` simply maps from types to their associated
-vector space.
+vector space.  For example, `V (Path R2) = R2` (two-dimensional paths
+live in `R2`), and `V [a] = V a` (lists of `a`\'s live in whatever
+vector space `a`\'s themselves live in).
+
+Often, `V` shows up in a constraint on the left hand side of `=>`, as
+in
+
+.. class:: lhs
+
+::
+
+> alignT :: (Alignable a, V a ~ R2) => a -> a
+
+This type says that `alignT` can be applied to values of any type `a`,
+*as long as* `a` is an instance of `Alignable`, and `a` lives in the
+vector space `R2`, that is, `V a ~ R2` (the tilde expresses a *type
+equality constraint*).
+
+Other times, `V` can show up on the right-hand side of `=>`, as in
+
+.. class:: lhs
+
+::
+
+> decorateTrail :: (...) => Trail (V a) -> [a] -> a
+
+This says that `decorateTrail` takes two arguments: a `Trail` and a
+list of values of some type `a`.  However, `Trail`\s are parameterized
+by a vector space; `Trail (V a)` means that the vector space of the
+trail is the vector space associated to `a`.
+
+Scalar
+~~~~~~
+
+.. container:: todo
+
+  Write about `Scalar`
+
+Diff
+~~~~
+
+.. container:: todo
+
+  Write about `Diff`
 
 Render
 ~~~~~~
