@@ -50,6 +50,8 @@ main = hakyll $ do
                 "manual"     -> "User manual"
                 "quickstart" -> "Quick start tutorial"
                 "tutorials"  -> "How to write tutorials"
+                "core"       -> "Core reference"
+                "vector"     -> "Vectors and points"
                 _            -> baseName
         compile (getResourceBody >>= mainCompiler (docCtx <> defaultContext))
 
