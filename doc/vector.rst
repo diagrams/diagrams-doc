@@ -604,6 +604,9 @@ its second.
   list of points using the `centroid` function (defined in
   `Diagrams.Points`:mod:).
 
+* Finally, you can scale a point using the `(*.)` operator (though, as
+  mentioned earlier, you can also use `scale`).
+
 .. container:: exercises
 
   1. Implement the `Graham scan algorithm`__ and generate diagrams
