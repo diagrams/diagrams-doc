@@ -2316,8 +2316,10 @@ diagram with (centered) text:
 
 > example = text "Hello world!" <> rect 8 1
 
-Text with different alignments can be created using `topLeftText`,
-`baselineText`, or, more generally, `alignedText`:
+Text with different alignments can be created using `topLeftText` or
+`baselineText` (or, more generally, `alignedText`, though it is not
+supported by all backends---the SVG backend in particular only
+supports an approximation to `alignedText`):
 
 .. class:: dia-lhs
 

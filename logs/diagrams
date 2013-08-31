@@ -37772,3 +37772,811 @@
 2013-08-26 16:32:01 UTC <fryguybob> ACTION looks for other ways byorgey has "corrected" the record.
 2013-08-26 16:34:17 UTC <notdan> heh
 2013-08-26 16:34:19 UTC <notdan> thanks byorgey 
+2013-08-26 16:36:58 UTC <byorgey> I go through and correct all my typos, and remove any mention of ideas I had which didn't work
+2013-08-26 16:38:10 UTC <fryguybob> Ah, that's why I couldn't find that idea about the robot cockroach with a paintbrush backend.
+2013-08-26 16:39:24 UTC <byorgey> apparently the original LOGO turtle was a physical turtle robot with an actual pen, that drew on a giant piece of paper
+2013-08-26 16:39:44 UTC <fryguybob> Sweet
+2013-08-26 17:32:44 UTC <travis-ci> [travis-ci] 13active/06new-semantics 142f408a3 http://travis-ci.org/diagrams/active/builds/10632555 The build has errored.
+2013-08-26 17:38:17 UTC <fryguybob> byorgey: I'm finding it hard to use the instance: type instance Codomain (Located a) = Located (Codomain a)
+2013-08-26 17:40:55 UTC <byorgey> fryguybob: how so, precisely?
+2013-08-26 17:41:03 UTC <byorgey> I agree that instance seems a bit fishy
+2013-08-26 17:42:47 UTC <fryguybob> byorgey: I have to use my nonCanonicalJoin when I use it.
+2013-08-26 17:43:51 UTC <fryguybob> byorgey: I guess it fells like I want something like  type instance ... => Codomain (Located a) = Codomain a
+2013-08-26 17:43:59 UTC <fryguybob> byorgey: But I'm not sure that makes sense.
+2013-08-26 17:45:37 UTC <ClaudiusMaximus> what's the best (ie, least coding for me) way to go from CSG (intersection of half spaces) to a net that i could cut out and assemble?
+2013-08-26 17:50:10 UTC <fryguybob> ClaudiusMaximus: 2D? And cuting out by hand?
+2013-08-26 17:50:26 UTC <byorgey> fryguybob: I don't think  Codomain (Located a) = Codomain a  makes sense, since that means e.g. that calling atParam on a Located Trail would give you a vector, just like a Trail, when what you really expect is a Point
+2013-08-26 17:51:09 UTC <byorgey> so the current instance gives you a Located Vector, which you have to collapse to a point if you want, using .+^
+2013-08-26 17:51:11 UTC <fryguybob> byorgey: Humm, yeah
+2013-08-26 17:51:21 UTC <ClaudiusMaximus> fryguybob: 3D model -> 2D net -> cut out by machine
+2013-08-26 17:51:35 UTC <byorgey> fryguybob: so in some sense I'm not that surprised that you need the nonCanonicalJoin
+2013-08-26 17:51:42 UTC <ClaudiusMaximus> fryguybob: looks like Mecha -> OpenSCAD -> Blender -> some blender plugin might work...
+2013-08-26 17:51:45 UTC <fryguybob> ClaudiusMaximus: So cuting out the surface to be glued together at the eges?
+2013-08-26 17:51:55 UTC <byorgey> maybe it is canonical after all =)
+2013-08-26 17:52:01 UTC <fryguybob> :D
+2013-08-26 17:52:16 UTC <ClaudiusMaximus> fryguybob: right, http://en.wikipedia.org/wiki/Net_%28polyhedron%29
+2013-08-26 17:52:51 UTC <fryguybob> ClaudiusMaximus: I know that Rhino had a plugin for flattening developable surfaces.
+2013-08-26 17:54:42 UTC <fryguybob> ClaudiusMaximus: I think deciding if unfolding without overlapping is a hard problem.
+2013-08-26 17:55:14 UTC <ClaudiusMaximus> fryguybob: sure, it's easier for convex shapes like the one i have in mind though - gonna try mecha / openscad, bbl
+2013-08-26 17:55:17 UTC <ClaudiusMaximus> :)
+2013-08-26 17:56:14 UTC <ClaudiusMaximus> huh, mecha doesn't have a half-space primitive :(
+2013-08-26 17:57:19 UTC <kuribas> What's the best source for the metafont path interpolation algorithm?  I have the metafontbook and the metafont program book, but I don't quite grasp the math yet.
+2013-08-26 17:57:25 UTC <fryguybob> ClaudiusMaximus: It shouldn't be too hard to get the shape that each half surface contributes and at the same time record which pair of half spaces contribute to each edge.
+2013-08-26 17:58:03 UTC <fryguybob> Then some spanning tree of that graph would be the flattened shape
+2013-08-26 17:58:09 UTC <byorgey> kuribas: there's the Metafont book, and the original paper by Hobby (which I think the Metafont book references).  I haven't looked at the Hobby paper so I don't know what it's like.
+2013-08-26 17:59:36 UTC <byorgey> Presumably it actually derives the formulas (whereas the Metafont book just reproduces the formulas without going into why).
+2013-08-26 17:59:38 UTC <kuribas> I looked at the Metafont book, but I couldn't yet make a full algorithm out of it.  Maybe my complex math is too rusty.
+2013-08-26 18:00:08 UTC <kuribas> I don't need the derivation, just an algorithm that works :)
+2013-08-26 18:00:27 UTC <ClaudiusMaximus> fryguybob: sure, i guess i'll have to bite that snake..
+2013-08-26 18:01:07 UTC <kuribas> fryguybob: I can now find all points with a certain radius of curvature, using the bezier clipping algortih
+2013-08-26 18:01:13 UTC <kuribas> algorithm.
+2013-08-26 18:01:21 UTC <fryguybob> kuribas: Cool
+2013-08-26 18:01:31 UTC <kuribas> It's reasonably fast, and converges really fast.
+2013-08-26 18:01:45 UTC <byorgey> yay =D
+2013-08-26 18:01:53 UTC <kuribas> And it's more robust than the numeric root solver.
+2013-08-26 18:02:16 UTC <kuribas> But if you feed it a colinear bezier, it might produce an huge list of points...
+2013-08-26 18:02:24 UTC <fryguybob> hehe
+2013-08-26 18:02:59 UTC <kuribas> Maybe I should check for it...
+2013-08-26 18:04:09 UTC <fryguybob> ClaudiusMaximus: If you know that each half space contributes to exactly one face that should make things easier.
+2013-08-26 18:04:37 UTC <fryguybob> ClaudiusMaximus: And with some information about the shape there might be a heristic that works for picking the right spanning tree.
+2013-08-26 18:39:36 UTC <kuribas> Can the DUALtree be used to make a hilbert R-tree?
+2013-08-26 18:40:48 UTC <travis-ci> [travis-ci] 13active/06new-semantics 146f3eded http://travis-ci.org/diagrams/active/builds/10634715 The build has errored.
+2013-08-26 18:43:49 UTC <byorgey> kuribas: only if hilbert R-trees have a useful monoid structure.
+2013-08-26 18:44:16 UTC <byorgey> kuribas: looking at the definition of hilbert R-trees, that seems doubtful.
+2013-08-26 18:45:51 UTC <kuribas> Oh well, it wouldn't be so difficult to code a hilbert R-tree.
+2013-08-26 18:46:18 UTC <byorgey> sure
+2013-08-26 19:30:13 UTC <travis-ci> [travis-ci] 13active/06new-semantics 14f74c763 http://travis-ci.org/diagrams/active/builds/10636364 The build has errored.
+2013-08-26 20:46:00 UTC <fryguybob> byorgey: Concrete example:  straight (nonCanonicalJoin (atStart b) ^-^ (e .-. origin))  where b :: Located (Trail R2)  and  e :: P2
+2013-08-26 20:46:12 UTC <fryguybob> I'm not sure how to make that more elegant.
+2013-08-26 21:01:57 UTC <fryguybob> byorgey: It looks like the only uses I'm getting for nonCanonicalJoin are with mapLoc and when I really want a point, not a vector.  So I'll make something special for both those cases and use those.
+2013-08-26 22:25:46 UTC <martingale> byorgey: I think I'm going to need some help here. I'm not sure how to fix all the types in Align.hs, and somehting is awry with hsenv I'm working in so I can't even test locally. I've been using travis to debug which I know is a horrible idea.
+2013-08-27 00:12:44 UTC <byorgey> hehe
+2013-08-27 00:13:49 UTC <byorgey> at least I got rid of the travis email notification so you aren't spamming the mailing list with the build failures =)
+2013-08-27 00:14:38 UTC <carter> it does email the list more than people do
+2013-08-27 00:15:56 UTC <byorgey> it used to.  I am disabling the email notifications for all the repositories because I realized it was probably annoying, and we get notifications in here anyway
+2013-08-27 00:16:07 UTC <byorgey> so pretty soon there should be no more travis traffic on the mailing list
+2013-08-27 00:19:03 UTC <fryguybob> ACTION gets closer: http://www.cs.rochester.edu/u/ryates/temp/exampleC.pdf
+2013-08-27 00:19:03 UTC <carter> soon?
+2013-08-27 00:19:16 UTC <carter> ooo, what are you trying to do?
+2013-08-27 00:19:32 UTC <fryguybob> Offset trails
+2013-08-27 00:19:39 UTC <carter> what are those?
+2013-08-27 00:20:22 UTC <fryguybob> Given a trail, find the extent that is radius r from the trail.
+2013-08-27 00:22:00 UTC <fryguybob> carter: I had it working before but not for bezier segments.  Now I can do bezier segments, but I have to stitch the code back together to do it in a trail.
+2013-08-27 00:22:17 UTC <fryguybob> I used the wrong representation before and things changed anyway on top of that.
+2013-08-27 00:23:25 UTC <carter> ah
+2013-08-27 00:23:53 UTC <byorgey> yay, offset trails =D
+2013-08-27 00:24:28 UTC <fryguybob> byorgey: I ended up calling my two uses of non-join bindLoc and atStartL/atEndL
+2013-08-27 00:24:48 UTC <byorgey> sounds good
+2013-08-27 00:25:32 UTC <byorgey> man, martingale seems to have a knack for picking the complicated stuff to work on =)
+2013-08-27 00:25:39 UTC <fryguybob> ha
+2013-08-27 00:26:19 UTC <carter> whats he working on?
+2013-08-27 00:26:36 UTC <carter> is that all the pull request activity?
+2013-08-27 00:26:48 UTC <fryguybob> At my old work we had one guy that could break anything.  We thought we had tested every corner case and he goes and touches the machine and loud clunking noises would start happening.
+2013-08-27 00:26:59 UTC <carter> oh?
+2013-08-27 00:27:17 UTC <fryguybob> He was always just trying to use it like normal.
+2013-08-27 00:27:46 UTC <martingale> I'm glad your all having a good laugh, I'm pulling my hair out trying to get my code to compile :D
+2013-08-27 00:28:08 UTC <carter> martingale what are you hacking on?
+2013-08-27 00:28:51 UTC <fryguybob> martingale: Merging align and snug sensibly right?
+2013-08-27 00:29:06 UTC <martingale> Yes
+2013-08-27 00:29:27 UTC <fryguybob> (I like the name snug by the way)
+2013-08-27 00:29:31 UTC <martingale> carter: Snut is like align but uses the Trace instead of the envelope
+2013-08-27 00:29:45 UTC <carter> what will this do?
+2013-08-27 00:29:48 UTC <carter> or mean
+2013-08-27 00:29:55 UTC <martingale> fryguybob: I't took a lot a hoping around the thesaurus 
+2013-08-27 00:30:39 UTC <martingale> carter: It means you can snug a convex shape into a concave one without any space inbetween
+2013-08-27 00:31:28 UTC <martingale> carter: Like putting the pieces of a jigsaw puzzle together
+2013-08-27 00:31:31 UTC <carter> ok
+2013-08-27 00:31:32 UTC <carter> cool
+2013-08-27 00:32:20 UTC <carter> so "snug" is apt
+2013-08-27 00:32:27 UTC <martingale> carter: yeah I needed something like it to attach my arrowheads to their shafts, and did it by hand so I thought it would be nice to generalize
+2013-08-27 00:32:33 UTC <carter> cool!
+2013-08-27 00:32:41 UTC <carter> also means you can think about rendering nicely
+2013-08-27 00:32:49 UTC <carter> you just add padding around stuff to space it out
+2013-08-27 00:33:02 UTC <carter> you don't need to remove space
+2013-08-27 00:33:07 UTC <carter> or do layer tricks...
+2013-08-27 00:33:15 UTC <carter> ish
+2013-08-27 00:33:41 UTC <carter> anyways, cool
+2013-08-27 00:33:41 UTC <martingale> carter: I created a module called snug that did the job, but I feel that modifying Align to take an AlignOpt is cleaner
+2013-08-27 00:34:39 UTC <byorgey> martingale: I left a comment.  I'm happy to continue discussing it in here.  The short verion is that this is rather tricky and I don't blame you for pulling your hair out.
+2013-08-27 00:34:51 UTC <byorgey> and it's not just you being silly or missing something obvious.
+2013-08-27 00:36:35 UTC <martingale> byorgey: That makes me fell better, I'll read your comments and see if I grok them. Let's both think about it some more and pick it up then : )
+2013-08-27 00:36:44 UTC <byorgey> sounds good =)
+2013-08-27 00:38:58 UTC <martingale> byorgey: By the way, does there exist anything in Diagrams which is Enveloped but not Traced or vice versa?
+2013-08-27 00:39:45 UTC <byorgey> martingale: yes, Envelopes are not Traced and vice versa =)
+2013-08-27 00:40:12 UTC <byorgey> martingale: also, animations (i.e. Active Diagrams) are neither Enveloped nor Traced, but they are Alignable
+2013-08-27 00:40:34 UTC <byorgey> that was actually the original motivating example that led me to split out Alignable into a separate class from Enveloped
+2013-08-27 00:40:44 UTC <martingale> byorgey: Ah
+2013-08-27 00:40:53 UTC <byorgey> originally all the alignX methods were just implemented directly in terms of Enveloped
+2013-08-27 00:41:49 UTC <byorgey> this is why ideally the instance for  Alignable [b]  should only require  Alignable b, and not something like  Enveloped b
+2013-08-27 00:41:58 UTC <byorgey> because if you have a list of animations...
+2013-08-27 00:42:29 UTC <byorgey> apparently no one ever tried to align a list of animations so no one ever noticed
+2013-08-27 00:42:56 UTC <martingale> byorgey: interesting
+2013-08-27 00:42:56 UTC <byorgey> but aligning a list of animations is a perfectly reasonable thing to do.
+2013-08-27 00:43:41 UTC <martingale> byorgey: I guess you could even alignBy bounding rect, although that's not very diagrams like.
+2013-08-27 00:46:30 UTC <martingale> byorgey: Side Question: The semantics for traceP seem unnatural to me. If I say  traceP origin  (unitX # rotate 30 degrees) I would expect the point in the first quadrant. Wondering why you choose to do it the way you did?
+2013-08-27 00:46:38 UTC <byorgey> yes, you could.  whether it's "diagrams like" is neither here nor there -- if that's what you want to do, diagrams should let you.
+2013-08-27 00:47:32 UTC <byorgey> martingale: it's because I'm thinking of it like a ray tracer.  Usually with a ray tracer you're shooting a ray from somewhere outside an object and seeing the first place where it hits.
+2013-08-27 00:48:22 UTC <byorgey> but if you shoot a ray starting from *inside* the object, the "first place it hits" is actually behind you.
+2013-08-27 00:48:43 UTC <byorgey> (yes, I know you could make an argument for "the first place it hits" being in front of you no matter what, but mathematically things work out much nicer this way).
+2013-08-27 00:49:04 UTC <martingale> byorgey: Ah, I see. But the consequence is that every time I want to replace envelopeP with traceP I have to negateV
+2013-08-27 00:49:16 UTC <byorgey> right.
+2013-08-27 00:49:57 UTC <byorgey> didn't we just add another function for doing something like that?  I seem to remember something along those lines... just a second..
+2013-08-27 00:51:01 UTC <byorgey> martingale: ah, yes, use 'maxTraceP' instead of traceP
+2013-08-27 00:51:05 UTC <byorgey> it does the negation for you
+2013-08-27 00:52:50 UTC <martingale> byorgey: Seems like an odd name for it, I'll have to look at the source. Is that all maxTraceP does i.e. is it identical to traceP negateV?
+2013-08-27 00:53:20 UTC <byorgey> martingale: it is so named because what it does is return the *furthest* (maximum) point in the given direction
+2013-08-27 00:53:34 UTC <byorgey> but yes, it is defined as  maxTraceP = traceP . negateV
+2013-08-27 00:54:02 UTC <martingale> byorgey: perfect!
+2013-08-27 02:24:10 UTC <martingale> More things to do with arrows, a DFA accepting real numbers: https://raw.github.com/jeffreyrosenbluth/arrowheads/master/dfa.png
+2013-08-27 02:33:29 UTC <fryguybob> martingale: Nice!
+2013-08-27 02:34:38 UTC <fryguybob> Offsets are now working, I'll package it up tomorrow: http://www.cs.rochester.edu/u/ryates/temp/exampleC.pdf
+2013-08-27 02:34:39 UTC <martingale> fryguybob: thanks, good night
+2013-08-27 02:34:46 UTC <fryguybob> good night!
+2013-08-27 02:34:52 UTC <carter> oooooo
+2013-08-27 02:34:57 UTC <carter> those both look cool
+2013-08-27 02:35:03 UTC <carter> whats the source for the dfa nodes?
+2013-08-27 02:35:23 UTC <carter> fryguybob is theres source for your stuff?
+2013-08-27 02:36:24 UTC <fryguybob> carter: It is based on this: https://gist.github.com/fryguybob/3969759 but updated for the latest stuff.  I'll have a pull request tomorrow.
+2013-08-27 02:36:45 UTC <carter> huh
+2013-08-27 11:09:06 UTC <yitz> i just created my first diagram. yay!
+2013-08-27 11:09:25 UTC <yitz> but it contains a string of text, and the letters are very poorly spaced - they run into each other.
+2013-08-27 11:09:54 UTC <yitz> i just used text "foobar" and then the usual primitives for scaling things, composing things, etc. and rendered as an svg
+2013-08-27 11:10:26 UTC <yitz> in fact, it was this: square 10 # scaleY 0.4 # lw 1 `atop` text "Missing image"
+2013-08-27 11:10:40 UTC <yitz> as an svg, this looks really awful
+2013-08-27 11:10:45 UTC <yitz> what am i doing wrong?
+2013-08-27 11:11:46 UTC <yitz> another question: what i really want is for the rectangle to be a border around the text. how do i say that?
+2013-08-27 11:12:40 UTC <yitz> i tried using let t = text "blah" in square 1 # scaleX (width t + 2) # scaleY (height t + 2) but the types got really angry at me for that.
+2013-08-27 11:13:26 UTC <ClaudiusMaximus> text support is a bit suboptimal (so far at least) as i understand it - http://projects.haskell.org/diagrams/manual/diagrams-manual.html#text
+2013-08-27 11:13:55 UTC <ClaudiusMaximus> when types get angry i use `asTypeOf` to ensure things i'm getting properties from have unambiguous types
+2013-08-27 11:14:24 UTC <yitz> ClaudiusMaximus: can you show me how to do that in my example?
+2013-08-27 11:14:48 UTC <ClaudiusMaximus> let t = text "blah" in .... `asTypeOf` t
+2013-08-27 11:15:30 UTC <yitz> ClaudiusMaximus: so the whole diagram must have the same type as just the text in order for that to work?
+2013-08-27 11:16:01 UTC <ClaudiusMaximus> yitz: yes, otherwise the text might be ambiguous if you're just getting its width and height
+2013-08-27 11:16:15 UTC <yitz> ok. i'll try it. thanks!
+2013-08-27 11:16:28 UTC <ClaudiusMaximus> yitz: so you're constraining the type of t to be the same as the rest of the diagram
+2013-08-27 11:16:45 UTC <yitz> so if I really want that text to look better, i guess i'll just have to lay it out letter by letter by hand :(
+2013-08-27 11:16:58 UTC <ClaudiusMaximus> which backend are you using?
+2013-08-27 11:17:03 UTC <yitz> svg
+2013-08-27 11:17:39 UTC <ClaudiusMaximus> maybe this will help too http://hackage.haskell.org/package/SVGFonts 
+2013-08-27 11:17:57 UTC <yitz> ah ok thanks!
+2013-08-27 11:24:15 UTC <byorgey> yitz: cool!
+2013-08-27 11:24:19 UTC <byorgey> yitz: yes, use SVGFonts for nice text
+2013-08-27 11:25:17 UTC <byorgey> yitz: built-in text objects actually take up no space, so  height (text "blah") == 0  etc.
+2013-08-27 11:25:32 UTC <ClaudiusMaximus> heh, it only uses IO for something that could probably be pure?
+2013-08-27 11:25:42 UTC <byorgey> ClaudiusMaximus: hmm?
+2013-08-27 11:26:13 UTC <ClaudiusMaximus> http://hackage.haskell.org/packages/archive/SVGFonts/1.3.0.2/doc/html/src/Graphics-SVGFonts-ReadPath.html#pathFromString
+2013-08-27 11:26:48 UTC <byorgey> oh, heh, yeah, that is strange
+2013-08-27 11:26:57 UTC <byorgey> jbracker might have fixed that, I'm not sure
+2013-08-27 11:27:02 UTC <yitz> oh hi byorgey. up late or up early?
+2013-08-27 11:27:13 UTC <byorgey> there are some pending improvements to SVGFonts that we haven't released yet
+2013-08-27 11:27:39 UTC <byorgey> yitz: early, though this is not even that early for me (I have a two-year-old =)
+2013-08-27 11:27:53 UTC <jbracker> byorgey: ClaudiusMaximus: Yes I fixed that up
+2013-08-27 11:28:05 UTC <jbracker> pathFromString is pure, at least in my repo
+2013-08-27 11:28:08 UTC <byorgey> awesome, I thought so
+2013-08-27 11:28:09 UTC <yitz> byorgey: ha! i know the feeling. in the end, you'll look back on this and understand that you enjoyed it.
+2013-08-27 11:28:15 UTC <jbracker> though I only moved the IO up one layer
+2013-08-27 11:28:23 UTC <byorgey> yitz: oh, don't get me wrong, I am thoroughly enjoying it =)
+2013-08-27 11:29:09 UTC <yitz> where is the origin of textSVG x? and is the bounding box good by default?
+2013-08-27 11:29:32 UTC <yitz> (the docs don't make either of those things clear, and they probably should.)
+2013-08-27 11:29:43 UTC <yitz> docs = haddock
+2013-08-27 11:30:26 UTC <ClaudiusMaximus> jbracker: cool
+2013-08-27 11:30:26 UTC <jbracker> the change should get into SVGFonts as soon as I submit the font embedding code
+2013-08-27 11:30:35 UTC <byorgey> yitz: ah, you're right, we could make those things clearer.  Can you file a feature request at https://github.com/diagrams/SVGFonts/issues ?
+2013-08-27 11:31:01 UTC <jbracker> THe bounding box is from the top border to the bottom border of the text
+2013-08-27 11:31:05 UTC <byorgey> and any other things you notice.  I want diagrams to have awesome documentation.
+2013-08-27 11:31:22 UTC <byorgey> I'm guessing for textSVG the origin is centered?
+2013-08-27 11:31:33 UTC <jbracker> if you write down what is missing I can add that stuff
+2013-08-27 11:31:52 UTC <jbracker> actually I think its basline left oriented
+2013-08-27 11:31:53 UTC <yitz> ah i see yes the origin part is clear - i missed that textSVG is a version of textSVG', not textSVG_.
+2013-08-27 11:32:09 UTC <byorgey> yitz: if you didn't see it at first, then it isn't clear =)
+2013-08-27 11:32:39 UTC <yitz> so i should hope that the origin is at the center like textSVG'
+2013-08-27 11:32:59 UTC <jbracker> wait I can check on that.
+2013-08-27 11:33:36 UTC <jbracker> textSVG_ is basline left oriented
+2013-08-27 11:33:56 UTC <yitz> byorgey: i guess. maybe the issue here is that textSVG' and textSVG_ are not exactly the most mnemonic names
+2013-08-27 11:34:06 UTC <byorgey> they aren't, it's true
+2013-08-27 11:34:45 UTC <byorgey> I'm happy to rename them.
+2013-08-27 11:34:54 UTC <jbracker> textSVG' is centered and textSVG is defined in terms of textSVG'
+2013-08-27 11:35:12 UTC <yitz> jbracker: right, i see that now. thanks.
+2013-08-27 11:36:10 UTC <byorgey> ACTION is off for a bit, back in 2hrs or so
+2013-08-27 11:37:07 UTC <yitz> the nicest interface would be similar to built-in text - just text "blah" to get some text with all the defaults, then transformations to specify more, like most things in diagrams.
+2013-08-27 11:37:14 UTC <jbracker> byorgey: Then you will miss the weekly meetup in 20 minutes
+2013-08-27 11:37:31 UTC <yitz> it's weird that the simplest interface, textSVG, requires you to stroke it.
+2013-08-27 11:38:44 UTC <jbracker> yitz: Well, it's not that big of a burden ;)
+2013-08-27 11:38:53 UTC <yitz> agreed
+2013-08-27 11:39:50 UTC <yitz> jbracker: looks to me that this library should probably become the default at some point and replace what is now "built-in text".
+2013-08-27 11:41:03 UTC <jbracker> yitz: It has a lot of potential but there are major donwsides.
+2013-08-27 11:41:30 UTC <jbracker> 1. It not very performant. Rendering paths of strings is magnitudes slower then rendering text natively
+2013-08-27 11:41:57 UTC <jbracker> 2. You loose text support in output. e.g. you can't select text in PDFs or SVGs anymore
+2013-08-27 11:42:24 UTC <jbracker> 3. The output is huge, because every character path is embedded
+2013-08-27 11:43:56 UTC <yitz> jbracker: i see. otoh, at least in the svg backend, "built-in text" seems totally useless, so you're not really losing any of those 3.
+2013-08-27 11:44:53 UTC <jbracker> Why does it seem totally useless? I still see all three problems present in the SVG backend
+2013-08-27 11:46:02 UTC <jbracker> in PNG 2 and 3 are not a concern anymore, but 1 is still a major breakdown
+2013-08-27 11:46:03 UTC <yitz> when i just say text "blah" and render it to svg, the glyphs are so badly spaced to make the text almost illegible, and certainly nothing close to good enough to usable for anything
+2013-08-27 11:46:38 UTC <jbracker> yitz: Really? I did not notice things like that yet
+2013-08-27 11:46:45 UTC <jbracker> yitz: What viewer are you using?
+2013-08-27 11:47:11 UTC <yitz> so unless there's something obvious i'm doing wrong (i'm a complete diagrams newbie), there is in practice no text in svg diagrams without SVGFonts.
+2013-08-27 11:47:26 UTC <yitz> jbracker: imagemagick
+2013-08-27 11:47:36 UTC <jbracker> well there is the text primitive
+2013-08-27 11:47:45 UTC <jbracker> but there are no metrics for that
+2013-08-27 11:48:06 UTC <jbracker> I you chromium, I did not notice that kind of issue before
+2013-08-27 11:48:13 UTC <jbracker> use
+2013-08-27 11:48:23 UTC <yitz> so maybe it's an imagemagick issue then
+2013-08-27 11:48:23 UTC <ClaudiusMaximus> i had misc bad issues with imagemagick and svg, if i want to be sure what it looks like i'll use a browser or rsvg
+2013-08-27 11:48:32 UTC <yitz> rsvg?
+2013-08-27 11:48:44 UTC <ClaudiusMaximus> commnad line svg -> png
+2013-08-27 11:49:02 UTC <martingale> carter: dfa code: It's kind of ugly because I do a lot of positioning by hand. It also uses the Arrow stuff in the same repo: https://github.com/jeffreyrosenbluth/arrowheads/blob/master/FiniteAutomata.hs
+2013-08-27 11:49:05 UTC <jbracker> I would use chromium or opera both have fairly good svg support
+2013-08-27 11:49:05 UTC <ClaudiusMaximus> which kinda misses the point, but it's handy for testing compatibility
+2013-08-27 11:49:14 UTC <yitz> aha. ok i'll try that. i assumed that imagemagick would do something reasonable, because it does for most things.
+2013-08-27 11:50:19 UTC <yitz> jbracker: i actually can't use an svg for what i'm doing at the moment. i just assumed that the svg backend is the most natural way to render a diagram, and then i can easily go from that to anything else i need.
+2013-08-27 11:50:51 UTC <jbracker> yitz: As natural as the cairo or pdf backend
+2013-08-27 11:52:26 UTC <yitz> forget cairo, too messy a dependency. pdf is very specialized - usually won't be useful either. PostScript could be OK, but it's based on a page, which most often isn't what you want.
+2013-08-27 11:53:03 UTC <yitz> svg seems to have the exact semantics of what diagrams is trying to do, and it's a very generally useful format.
+2013-08-27 11:54:08 UTC <yitz> but yeah, a shame that imagemagick's support for text in svg is so bad.
+2013-08-27 11:54:15 UTC <jbracker> well SVG is the standard backend afaik.
+2013-08-27 11:56:24 UTC <jbracker> I think there are some good pdf/eps to png converters around
+2013-08-27 11:59:13 UTC <yitz> eps is one of those formats with a long and checkered history to it.
+2013-08-27 12:00:12 UTC <yitz> and pdf is usually a document with pages, so renerers would tend to be designed around that model, not as a format for just an image.
+2013-08-27 12:00:25 UTC <fryguybob> yitz: With great power comes great responsibility.
+2013-08-27 12:00:30 UTC <yitz> svg is the way to g imho
+2013-08-27 12:00:35 UTC <yitz> fryguybob: :)
+2013-08-27 12:00:43 UTC <yitz> *go
+2013-08-27 12:01:16 UTC <fryguybob> yitz: EPS does not support transparency also.
+2013-08-27 12:19:29 UTC <yitz> hmm imagemagick *is* using rsvg. i installed the rsvg binary, and it give the exact same poor result.
+2013-08-27 12:19:57 UTC <yitz> must be some problem with the default font for rsvg on ubuntu.
+2013-08-27 12:22:00 UTC <yitz> jbracker: anyway, even with those 3 disadvantages for SVGFonts, i think the lack of any meaningful bounding box is also a huge disadvantage for built-in text.
+2013-08-27 12:22:48 UTC <jbracker> yitz: No arguments about that. That is exactly why I use it
+2013-08-27 12:25:24 UTC <yitz> jbracker: and as we have seen, with built-in text you are at the mercy of all kinds of font defaults and configurations for your platform.
+2013-08-27 12:25:30 UTC <yitz> jbracker: overall i'm ready to vote for using SVGFonts as a default and provide a hopefully improved interface to native fonts as an alternative.
+2013-08-27 12:27:20 UTC <jbracker> In general I like it a lot too but I still see the issues and that makes me hesistant
+2013-08-27 12:29:43 UTC <jbracker> just to give you a feel for the performance issues we are talking about: I am working on charts backends. Charts usually do not contain much text but still: pure cairo 3 seconds, diagrams with SVGFonts 1 minute for rendering 20 charts
+2013-08-27 12:32:55 UTC <yitz> jbracker: yeah i noticed the performance issue too.
+2013-08-27 12:34:10 UTC <yitz> jbracker: if my problem with native fonts is rare, then i agree. but if it's common - bad performance still beats not usable at all, especially when you also get a lot of other advantages for the price.
+2013-08-27 12:36:01 UTC <jbracker> yitz: Yes, indeed. Thats why I use it ;)
+2013-08-27 14:06:38 UTC <fryguybob> I think I'm going to go with the name offsetTrail for building a trail offset to the right.  I need a name for the function that takes a trail and builds the loop as though it had been stroked.  Any ideas?
+2013-08-27 14:15:01 UTC <fryguybob> I would like to use  strokeTrail  but I don't want to add confusion with stroke.
+2013-08-27 14:30:21 UTC <byorgey> fryguybob: yeah, strokeTrail does not seem like a good name for that
+2013-08-27 14:30:52 UTC <byorgey> since at the moment we are using the term "stroke" to refer to turning some trail-like thing into a diagram.
+2013-08-27 15:28:50 UTC <travis-ci> [travis-ci] 13active/06new-semantics 14cb9a1d3 http://travis-ci.org/diagrams/active/builds/10672512 The build has errored.
+2013-08-27 16:20:12 UTC <travis-ci> [travis-ci] 13active/06new-semantics 14a38c940 http://travis-ci.org/diagrams/active/builds/10674835 The build has errored.
+2013-08-27 16:26:04 UTC <travis-ci> [travis-ci] 13active/06new-semantics 14e60ecdb http://travis-ci.org/diagrams/active/builds/10675155 The build has errored.
+2013-08-27 16:46:01 UTC <travis-ci> [travis-ci] 13active/06new-semantics 14b112aa2 http://travis-ci.org/diagrams/active/builds/10676001 The build has errored.
+2013-08-27 16:47:41 UTC <travis-ci> [travis-ci] 13active/06new-semantics 14000e8bc http://travis-ci.org/diagrams/active/builds/10676140 The build has errored.
+2013-08-27 17:20:58 UTC <carter> martingale thanks!
+2013-08-27 17:35:26 UTC <travis-ci> [travis-ci] 13diagrams-lib/06expand 145731ac5 http://travis-ci.org/diagrams/diagrams-lib/builds/10678347 The build passed.
+2013-08-27 17:42:28 UTC <fryguybob> ACTION re-learns haddock for the nth time.
+2013-08-27 17:42:58 UTC <fryguybob> Perhaps I should say "learns enough haddock to barely get by for the nth time."
+2013-08-27 17:58:58 UTC <fryguybob> byorgey: Nice summary!
+2013-08-27 18:59:54 UTC <byorgey> fryguybob: hehe (re: Haddock)
+2013-08-27 19:02:10 UTC <fryguybob> byorgey: Speaking of haddock, I'm not sure why, but diagrams-haddock doesn't like my latest and was asking for TypeFamilies.  I added that as an enabled extension and it is happy for now.
+2013-08-27 19:02:59 UTC <byorgey> fryguybob: I have relearned Haddock enough times that it has mostly stuck by now, so let me know if you run into trouble
+2013-08-27 19:03:25 UTC <byorgey> fryguybob: ah, there are a few cases where haskell-src-exts is strict about extensions in ways that GHC is lax
+2013-08-27 19:03:57 UTC <byorgey> i.e. technically syntax X is not valid Haskell 2010 but GHC allows it without enabling an extension because it's unambiguous and convenient
+2013-08-27 19:04:03 UTC <fryguybob> byorgey: Ok, nothing else in lib broke, should I just push a change with that added?
+2013-08-27 19:04:09 UTC <byorgey> sure
+2013-08-27 19:41:18 UTC <fryguybob> docs: http://www.cs.rochester.edu/u/ryates/temp/dl/html/diagrams-lib/Diagrams-TwoD-Offset.html
+2013-08-27 19:43:46 UTC <carter> oooooo
+2013-08-27 19:43:57 UTC <carter> pretty
+2013-08-27 19:44:37 UTC <ClaudiusMaximus> nice!  could have done with that a few weeks ago, when i instead used loads of circles along a path :) Maybe i'll rewrite the code to use shiny new features
+2013-08-27 19:45:48 UTC <fryguybob> ClaudiusMaximus: Great! Still a few details to finish, but it should be merged pretty soon.
+2013-08-27 19:54:32 UTC <luite> fryguybob: you say that the degree of an offset curve increases, but is it even polynomial? i thought it wouldn't be since the offset of a point is a circle
+2013-08-27 19:55:28 UTC <carter> fryguybob:  wikipedia (and luite) say a miter joint is something different http://en.wikipedia.org/wiki/Miter_joint 
+2013-08-27 19:55:30 UTC <fryguybob> luite: I'm not sure if it is or not.  I mean that it can have more roots.
+2013-08-27 19:55:48 UTC <fryguybob> carter: Yes.  Miter is not implemented yet, that is a place holder :D
+2013-08-27 19:56:17 UTC <carter> though having a hing joint would be cool too!
+2013-08-27 19:56:21 UTC <carter> *hinge
+2013-08-27 19:59:45 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 14c554e67 http://travis-ci.org/diagrams/diagrams-haddock/builds/10684138 The build has errored.
+2013-08-27 20:01:34 UTC <fryguybob> :(
+2013-08-27 20:11:15 UTC <carter> oh, thats at travis not at me
+2013-08-27 20:11:16 UTC <carter> :)
+2013-08-27 20:12:08 UTC <fryguybob> carter: oh, ha.  Yes, travis :(, always travis :(.
+2013-08-27 20:12:22 UTC <carter> yeahâ¦ i'm on the fence about travis for what i'm doing
+2013-08-27 20:20:37 UTC <byorgey> fryguybob: does offsetTrail give you a trail on the other side if you specify a negative radius?
+2013-08-27 20:21:10 UTC <fryguybob> byorgey: Yeah, I forgot to  mention that in the docs.
+2013-08-27 20:21:13 UTC <byorgey> ok
+2013-08-27 20:21:54 UTC <byorgey> fryguybob: looks awesome, by the way =)
+2013-08-27 20:21:57 UTC <fryguybob> negative radius in expand has no meaning (that I can think of) and probably does something strange.
+2013-08-27 20:23:03 UTC <fryguybob> I also haven't done anything special when given a loop.  I've assumed lines for the input.  That will have to change and be documented.
+2013-08-27 20:23:23 UTC <byorgey> hehe, might as well just take the absolute value of the radius for expand
+2013-08-27 20:23:44 UTC <byorgey> ah, right, I was going to ask about loops too but then I forgot =)
+2013-08-27 20:23:46 UTC <fryguybob> Yeah.  Though it might make some sense for loops.
+2013-08-27 20:23:59 UTC <fryguybob> (a negative value in expand that is)
+2013-08-27 20:24:21 UTC <byorgey> hmm, what would it mean for loops?
+2013-08-27 20:24:52 UTC <fryguybob> Humm, for a loop you should get a path.
+2013-08-27 20:25:05 UTC <byorgey> so offsetTrail on loops makes sense.  However, for expandTrail ... right, exactly =)
+2013-08-27 20:26:04 UTC <byorgey> so maybe there should be separate functions expandLine and expandLoop?
+2013-08-27 20:26:20 UTC <byorgey> or maybe we should just make the type  expandTrail :: ... Located (Trail R2) -> Path R2
+2013-08-27 20:27:04 UTC <byorgey> not sure which is best
+2013-08-27 20:36:16 UTC <fryguybob> byorgey: Yeah.  The only reason for a path is to get a hole.  We could fill the whole region and have -r be the hole
+2013-08-27 20:55:23 UTC <byorgey> ah, I see.  Yes, I guess that's another option.  But then we lose the nice explanation that expandTrail is like stroking.
+2013-08-27 20:55:48 UTC <byorgey> "it's like stroking... well, unless you stroke a loop, in which case you have to call this twice with different arguments and then stick the results together yourself"
+2013-08-27 21:08:23 UTC <fryguybob> byorgey: Right.  I'll explore a bit and see if I find something that makes the most sense.
+2013-08-27 21:08:53 UTC <fryguybob> byorgey: I'll probably end up adding a backend test for negative space fills in paths too.
+2013-08-27 21:10:37 UTC <byorgey> fryguybob: don't we already have one?  The purple ring?
+2013-08-27 21:11:39 UTC <byorgey> or did you mean something else?
+2013-08-27 21:12:57 UTC <notdan> byorgey: awesome diagrams dispatch letter
+2013-08-27 21:13:04 UTC <byorgey> notdan: thanks =)
+2013-08-27 21:13:59 UTC <notdan> are you going to post it on your blog?
+2013-08-27 21:17:52 UTC <byorgey> notdan: I don't know, I wasn't planning on it
+2013-08-27 21:18:28 UTC <byorgey> what I need to post on my blog is an 0.7 announcement!
+2013-08-27 21:32:31 UTC <fryguybob> byorgey: Oh, right, that one slipped my mind.
+2013-08-27 21:39:06 UTC <byorgey> more tests are always good though
+2013-08-28 00:31:49 UTC <byorgey> fryguybob: oh, I didn't realize you meant adding TypeFamilies to the enabled extensions in diagrams-haddock
+2013-08-28 00:32:13 UTC <byorgey> you should just be able to enable TypeFamilies individually for whatever code it couldn't parse, can't you?
+2013-08-28 00:42:56 UTC <fryguybob> byorgey: I tried that, but perhaps I didn't do it right.
+2013-08-28 00:43:16 UTC <byorgey> OK, no worries
+2013-08-28 00:43:17 UTC <fryguybob> byorgey: Does it have to be the first line in the code block?
+2013-08-28 00:43:51 UTC <byorgey> yeah, LANGUAGE pragmas have to be at the beginning of any module
+2013-08-28 00:43:54 UTC <byorgey> otherwise they are just comments
+2013-08-28 00:44:23 UTC <byorgey> I'm off to watch a movie
+2013-08-28 00:44:32 UTC <fryguybob> byorgey: Ok, I'll try again.  It could be that I just had some other parse error and it was just triggering HSE to think I was doing type family syntax.
+2013-08-28 00:44:45 UTC <fryguybob> byorgey: What movie?
+2013-08-28 01:23:00 UTC <fryguybob> byorgey: OOOooh, it was complaining about parsing the whole source file, not my code in the comments... sometimes I'm a little slow.
+2013-08-28 01:31:50 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 14c9cd2fc http://travis-ci.org/diagrams/diagrams-haddock/builds/10694764 The build has errored.
+2013-08-28 02:34:17 UTC <fryguybob> Now with more miter: http://www.cs.rochester.edu/u/ryates/temp/dl/html/diagrams-lib/Diagrams-TwoD-Offset.html
+2013-08-28 02:39:23 UTC <carter> no hinged version?
+2013-08-28 02:40:26 UTC <fryguybob> carter: Not at the moment.  We will have to extend the options to allow for custom joins and include that one there.  This matches the joins that all backend renderers support.
+2013-08-28 02:40:37 UTC <carter> oh ok
+2013-08-28 02:40:39 UTC <carter> still, awesome
+2013-08-28 02:41:37 UTC <fryguybob> In the pattern making world we had a couple other joins that we cared about too, but they are too complicated for me to make without someone paying me :P
+2013-08-28 02:41:59 UTC <carter> touche!
+2013-08-28 02:42:04 UTC <carter> pattern making?
+2013-08-28 02:42:24 UTC <fryguybob> CAD for things made out of fabric
+2013-08-28 02:43:45 UTC <carter> links?
+2013-08-28 02:43:47 UTC <carter> exmaples?
+2013-08-28 02:45:42 UTC <fryguybob> Clothing, inflatables, bicycles, cars, airplanes, boats...
+2013-08-28 02:45:56 UTC <carter> ok
+2013-08-28 02:47:34 UTC <fryguybob> carter: http://en.wikipedia.org/wiki/File:Bundesarchiv_Bild_183-1987-0310-011,_Rostock,_Zuschnitt_per_Mikroelektronik.jpg
+2013-08-28 02:48:00 UTC <carter> cool
+2013-08-28 02:48:01 UTC <carter> thanks
+2013-08-28 02:48:22 UTC <fryguybob> :P  The company I worked for was http://autometrix.com/
+2013-08-28 02:50:30 UTC <fryguybob> carter: There is a cheesy marketing video of an early version of a product that I made here: http://www.youtube.com/watch?v=wdmV83RaGzs
+2013-08-28 03:03:31 UTC <carter> watching now
+2013-08-28 03:04:21 UTC <travis-ci> [travis-ci] 13diagrams-lib/06expand 14e331852 http://travis-ci.org/diagrams/diagrams-lib/builds/10696461 The build passed.
+2013-08-28 12:57:14 UTC <byorgey> fryguybob: re: diagrams-haddock, ah, no worries
+2013-08-28 12:57:27 UTC <byorgey> it is a bit confusing since we do multiple passes with haskell-src-exts
+2013-08-28 12:58:14 UTC <byorgey> fryguybob: the movie was Rain Man ... we only watched part of it, will finish it some other time.
+2013-08-28 13:04:08 UTC <byorgey> *** hackagebot Chart-diagrams 1.0 - Diagrams backend for Charts.   =D
+2013-08-28 13:16:26 UTC <fryguybob> Nice!
+2013-08-28 13:17:29 UTC <fryguybob> byorgey: I figured there was an instance, I couldn't find the import for it though.  I think haddock should have an instances index that covers everything in the package.
+2013-08-28 13:20:18 UTC <martingale> Is there a way to recover say a fill color (fc) from an object, or from a function hasStyle c => c -> c?
+2013-08-28 13:26:22 UTC <fryguybob> martingale: Humm, I'll have to poke around a bit to figure that out.
+2013-08-28 13:34:38 UTC <byorgey> martingale: first, you can recover a fill color from a Style using the 'getAttr' and 'getFillColor' functions:   fmap getFillColor . getAttr :: Style v -> Maybe SomeColor
+2013-08-28 13:35:08 UTC <byorgey> martingale: second, if you have a function  f :: HasStyle c => c -> c, you can turn it into a Style by applying it to the empty style:  fmap getFillColor . getAttr $ f mempty
+2013-08-28 13:35:57 UTC <byorgey> martingale: you cannot in general recover a fill color from objects which are instances of HasStyle.
+2013-08-28 13:38:04 UTC <martingale> byorgey: I discovered an inconvenience in Arrows, the shaftStyle opt has type hasStyle c => c-> c and I need to get the shaft line color to use as the joint fill color.
+2013-08-28 13:38:42 UTC <byorgey> martingale: why is that inconvenient?
+2013-08-28 13:39:52 UTC <byorgey> makes sense to me
+2013-08-28 13:39:59 UTC <martingale> byorgey: because I apply shaftStyle to the joint
+2013-08-28 13:40:50 UTC <martingale> byorgey: and as is not shaftStyle need to include say # lc black # fc black even though the shaft is not filled
+2013-08-28 13:41:18 UTC <martingale> *shaftStyle needs
+2013-08-28 13:42:03 UTC <byorgey> martingale: that doesn't sound like a problem to me.  Extract a color from the  HasStyle c => c -> c  as I explained above, and then just apply it to the joint *before* the shaftStyle
+2013-08-28 13:42:42 UTC <byorgey> attributes applied earlier override those applied later
+2013-08-28 13:43:35 UTC <martingale> byorgey: Sorry I mis-read you response , I see that I can just grab the line color from f :: HasStyle ...
+2013-08-28 13:44:41 UTC <byorgey> right, my first two comments were a positive answer to your second question, and my third was a negative answer to your first =)
+2013-08-28 13:46:44 UTC <martingale> byorgey: great, thanks
+2013-08-28 14:14:57 UTC <fryguybob> byorgey: For offsetTrail to be as useful as possible it should be clipping inside corners.  This can get tricky, but I think we can compromise and do something simple with a few assumptions.
+2013-08-28 14:16:12 UTC <fryguybob> byorgey: The question is the timing of when we want to implement clipping?
+2013-08-28 14:17:09 UTC <fryguybob> For the simple option we need bezier bezier intersection and trimming to a t-value
+2013-08-28 14:21:12 UTC <fryguybob> We could make clipping an option in the OffsetOpts and not implement it now, but it should probably be the default.  So is it better to add a feature later or change a default (it doesn't make much sense for the default option to be a "not implemented yet" error).
+2013-08-28 14:36:17 UTC <byorgey> haha, "you can use this new feature, but by default it is not implemented yet!" =)
+2013-08-28 14:37:27 UTC <fryguybob> :D
+2013-08-28 14:37:36 UTC <byorgey> I'd rather get this released and then turn to focus on clipping later
+2013-08-28 14:37:51 UTC <byorgey> e.g. we may be able to use kuribas's work, etc.
+2013-08-28 14:37:56 UTC <fryguybob> byorgey: Right
+2013-08-28 14:38:07 UTC <byorgey> but it seems like that will be a nontrivial undertaking
+2013-08-28 14:38:35 UTC <fryguybob> I was thinking that we might be able to avoid changing the join code and do a separate pass that when it comes to a self intersection "goes right".
+2013-08-28 14:39:08 UTC <fryguybob> But that gives a different meaning to trails where the original trail self intersects.
+2013-08-28 14:39:44 UTC <byorgey> oh, now that is an interesting issue as well =)
+2013-08-28 14:40:45 UTC <fryguybob> I suppose if we can't find a "this works for everything option" we can provide several clipping methods.
+2013-08-28 14:40:54 UTC <byorgey> e.g. if you have a trail that intersects itself a bunch and you call expandTrail, do you get a path with a bunch of components (one for each loop that is "inside") or just one?
+2013-08-28 14:40:58 UTC <byorgey> I guess that should be an option.
+2013-08-28 14:41:19 UTC <byorgey> yes, providing several methods seems to be "the diagrams way" =)
+2013-08-28 14:41:25 UTC <fryguybob> byorgey: Yeah, it gets complicated rather quickly :D
+2013-08-28 14:42:02 UTC <byorgey> Well, I will defer to you on this.  Do whatever you think is best.  I don't think it matters too much if the API ends up changing later, as long as we document it
+2013-08-28 14:42:22 UTC <fryguybob> byorgey: I think you can phrase some sort of "niceness" criteria as how continuous the offset is as you grow r
+2013-08-28 14:42:35 UTC <fryguybob> byorgey: Ok
+2013-08-28 14:42:39 UTC <byorgey> makes sense
+2013-08-28 14:45:16 UTC <fryguybob> byorgey: Also the example you gave might look the same filled with even/odd if it is clipped locally.
+2013-08-28 14:47:51 UTC <byorgey> fryguybob: fair enough.  So it might not make a huge difference if you only want to draw it.  But it does make a difference if you want to compute with it.
+2013-08-28 14:48:08 UTC <fryguybob> byorgey: Right.  I'll write up some ideas for different clipping options and think a little about loops as it is right now then make a pull request.
+2013-08-28 14:48:29 UTC <byorgey> great!
+2013-08-28 14:48:42 UTC <fryguybob> byorgey: When it gets complicated enough you probably want full "CGS" support anyway.
+2013-08-28 14:48:54 UTC <byorgey> right.
+2013-08-28 14:49:43 UTC <fryguybob> I don't know if you looked at the video that I linked to for carter, but there is a part where they are marking regions on patterns and on the hide.  For that we punted and just did CGS for everything.
+2013-08-28 15:21:44 UTC <travis-ci> [travis-ci] 13diagrams-lib/06arrows 14be24e33 http://travis-ci.org/diagrams/diagrams-lib/builds/10716843 The build was broken.
+2013-08-28 15:37:09 UTC <travis-ci> [travis-ci] 13diagrams-lib/06arrows 141932d19 http://travis-ci.org/diagrams/diagrams-lib/builds/10717396 The build is still failing.
+2013-08-28 15:45:30 UTC <travis-ci> [travis-ci] 13diagrams-lib/06arrows 14d27d3ed http://travis-ci.org/diagrams/diagrams-lib/builds/10717768 The build was fixed.
+2013-08-28 16:00:47 UTC <martingale> byorgey: I want to start with a fresh environment, is there a way I can revoke my pull request and then issue a new one once I have coded up the align stuff?
+2013-08-28 16:03:11 UTC <byorgey> martingale: yes, you can just click the "close" button on the bottom of the pull request page
+2013-08-28 16:05:04 UTC <byorgey> martingale: incidentally, this sort of thing is one reason why it's usually a good idea to work on new features in a separate branch rather than in 'master'
+2013-08-28 16:05:10 UTC <byorgey> much easier to throw away and start over =)
+2013-08-28 16:06:06 UTC <martingale> byorgey: will that delete our discussion on the github page. I don't want to lose it?
+2013-08-28 16:06:37 UTC <byorgey> martingale: no, it will not delete the discussion.  It will just mark the pull request as closed, not delete it
+2013-08-28 16:07:30 UTC <byorgey> you can even link to the old discussion from your new pull request just by mentioning '#101' somewhere in the pull request
+2013-08-28 16:07:36 UTC <martingale> byorgey: Great, I'll branch this time.
+2013-08-28 16:08:39 UTC <byorgey> we used to use darcs which is SO much easier to work with than git.  But we switched to git because github is so fantastic.
+2013-08-28 16:40:45 UTC <martingale> byorgey: Should I start with a fork or a clone?
+2013-08-28 16:44:56 UTC <byorgey> martingale: doesn't really matter.  Since you have commit access you're welcome to just work on a branch in the main diagrams-lib repo instead of in your own fork
+2013-08-28 16:45:15 UTC <byorgey> ah, it looks like that's what you are doing
+2013-08-28 16:45:47 UTC <byorgey> you can open pull requests from one branch to another just the same as you can from a fork
+2013-08-28 16:46:39 UTC <martingale> byorgey: I didn't know that. I need to refresh my git skills for the nth time : P
+2013-08-28 16:49:39 UTC <martingale> byorgey: when I test should I also use local copies of Diagrams.Core and Diagrams.SVG or should I let cabal get them from the package list?
+2013-08-28 16:50:25 UTC <byorgey> I don't think there have been any changes to those since the release so at the moment it's fine to just let cabal get them
+2013-08-28 17:23:49 UTC <martingale> byorgey: actually, a lookupName function was added to core.
+2013-08-28 17:30:06 UTC <byorgey> ah, so it was
+2013-08-28 17:30:22 UTC <byorgey> sorry, I guess you have to use a local clone of diagrams-core then =)
+2013-08-28 17:46:53 UTC <martingale> byorgey: when I push diagrams-lib from my local clone of the snug branch is there anything I need to do to make sure it pushes to the remote snug branch
+2013-08-28 17:47:28 UTC <martingale> byorgey: sorry for all the git questions, I just don't want to screw anything up.
+2013-08-28 18:11:22 UTC <byorgey> martingale: no worries, git is confusing, all git questions are welcome =)
+2013-08-28 18:11:22 UTC <fryguybob> martingale: I'm not particularly well versed in git, but when I push to a branch that I am locally on I do   git push origin thebranchname
+2013-08-28 18:11:58 UTC <byorgey> martingale: yes, git push origin snug   will push from your local snug branch to the remote snug branch (in particular, to the remote named 'origin')
+2013-08-28 18:14:28 UTC <ClaudiusMaximus> i'm sure there are ways to get into hells with local branches named differently from remote branches, but generally i do "git checkout mybranch && git push myremote mybranch"
+2013-08-28 18:15:08 UTC <byorgey> yep
+2013-08-28 18:16:46 UTC <ClaudiusMaximus> (in particular i'm not sure whether  git push myremote mybranch  pushes the current branch or the named branch, the manual probably has some info)
+2013-08-28 18:17:56 UTC <ClaudiusMaximus> you can set up remote tracking, which makes it easier, but i always forget the details
+2013-08-28 18:19:12 UTC <byorgey> to set up remote tracking you pass -u the first time you push
+2013-08-28 18:20:13 UTC <byorgey> according to the documentation, in 'git push myremote mybranch',  mybranch is the name of a *local* branch, and it will push to a remote branch of the same name
+2013-08-28 18:20:32 UTC <ClaudiusMaximus> thanks, the -u should be useful :)
+2013-08-28 18:20:36 UTC <fryguybob> Looks like the syntax for picking a source branch is "blah:..." so  git push origin localbranch:remotebranch
+2013-08-28 18:20:47 UTC <byorgey> fryguybob: right.
+2013-08-28 18:21:18 UTC <fryguybob> Which leads to  git push origin :blah  as the command to *delete* blah from the remote repo.
+2013-08-28 18:21:24 UTC <byorgey> naturally.
+2013-08-28 18:23:13 UTC <byorgey> so be careful with those stray colons.
+2013-08-28 18:24:20 UTC <fryguybob> ACTION adds two factor authentication to his : key.
+2013-08-28 18:25:06 UTC <ClaudiusMaximus> that could get annoying when processing lists in haskel
+2013-08-28 18:25:08 UTC <ClaudiusMaximus> l
+2013-08-28 18:26:00 UTC <fryguybob> Only when the command line starts with git :D
+2013-08-28 18:26:49 UTC <ClaudiusMaximus> nice
+2013-08-28 20:00:57 UTC <martingale> So: git push -u origin snug?
+2013-08-28 20:01:31 UTC <martingale> and from then on just git push?
+2013-08-28 20:21:08 UTC <byorgey> martingale: yes
+2013-08-28 20:21:32 UTC <byorgey> martingale: with the latter you just have to be careful that you have the right branch currently checked out
+2013-08-28 20:21:51 UTC <byorgey> which you can check with 'git branch'
+2013-08-28 20:35:58 UTC <luite> bluh really tired
+2013-08-28 20:38:58 UTC <luite> but talk far from donw
+2013-08-28 20:39:00 UTC <luite> done
+2013-08-28 20:42:15 UTC <luite> grmblz
+2013-08-28 20:43:10 UTC <byorgey> you can do it =)
+2013-08-28 20:43:52 UTC <byorgey> the trick is to intentionally work on the talk in order of most to least embarassing
+2013-08-28 20:44:06 UTC <byorgey> i.e. "which is the part that would be most embarrassing if I didn't finish/fix it"
+2013-08-28 20:44:25 UTC <byorgey> then finish/fix it.  lather, rinse, repeat.
+2013-08-28 20:44:37 UTC <byorgey> I find it is way too easy to get caught up fixing the kerning or whatever
+2013-08-28 22:05:31 UTC <carter> fryguybob whats CGS?
+2013-08-28 23:13:49 UTC <fryguybob> carter: Constructive Solid Geometry.  In 2d that translates to being able to do union and intersection of 2d regions.
+2013-08-28 23:13:57 UTC <carter> oh cool
+2013-08-28 23:14:07 UTC <carter> speaking of cool: acowley is giving a fun talk right now!
+2013-08-28 23:14:11 UTC <carter> you should watch the video later
+2013-08-28 23:14:21 UTC <fryguybob> It sounded like it was going to be interesting.
+2013-08-28 23:14:22 UTC <carter> once its avalable
+2013-08-28 23:14:32 UTC <fryguybob> I'm glad to hear it will be in video
+2013-08-28 23:22:13 UTC <carter> every nyc haskell event has a video
+2013-08-28 23:22:17 UTC <carter> even my terrible talk :)
+2013-08-28 23:22:23 UTC <carter> g2g
+2013-08-28 23:22:25 UTC <carter> :)
+2013-08-28 23:48:46 UTC <byorgey> fryguybob: I was going to suggest you should come to the NY Haskell users' group on Nov 20 when I will talk about diagrams.  But once again my grasp of geography has failed me.
+2013-08-28 23:49:01 UTC <byorgey> it appears that New York City may be even farther from you than Philadelphia.
+2013-08-29 00:08:51 UTC <fryguybob> byorgey: Yeah, it is pretty far away.  But we do actually have a reason to go to NYC (beyond seeing you talk at NY Haskell) MoMath!
+2013-08-29 00:29:13 UTC <byorgey> oh, right!  I would love to visit MoMath
+2013-08-29 00:29:29 UTC <byorgey> maybe I'll see if I can work in a visit in the afternoon before my talk.
+2013-08-29 00:31:16 UTC <fryguybob> byorgey: I hear you might be coming a bit closer to us in Houghton too?
+2013-08-29 00:31:33 UTC <byorgey> yes! =)  Not sure when yet
+2013-08-29 00:32:01 UTC <byorgey> sadly it looks like it will just be me
+2013-08-29 00:32:14 UTC <fryguybob> :( we will take what we can get :D
+2013-08-29 01:39:10 UTC <byorgey> ACTION just accidentally called cubicSpline on an infinite list of points
+2013-08-29 01:39:15 UTC <byorgey> had to hard reboot =(
+2013-08-29 01:54:55 UTC <fryguybob> byorgey: woww
+2013-08-29 01:55:58 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14b0a34f3 http://travis-ci.org/diagrams/diagrams-doc/builds/10736672 The build has errored.
+2013-08-29 02:36:14 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 147cf57ca http://travis-ci.org/diagrams/diagrams-doc/builds/10737399 The build has errored.
+2013-08-29 02:46:21 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 142452b8a http://travis-ci.org/diagrams/diagrams-doc/builds/10737452 The build has errored.
+2013-08-29 03:40:54 UTC <martingale> byorgey: fryguybob: Let me know if you want to visit MoMath the day of the nyc haskell event, I know the president Glen Whitney and perhaps i can set something up.
+2013-08-29 10:10:48 UTC <jbracker> byorgey: You there?
+2013-08-29 10:16:10 UTC <jbracker> or anybody that worked on diagrams-svg
+2013-08-29 10:16:11 UTC <jbracker> ?
+2013-08-29 10:18:59 UTC <fryguybob> jbracker: I know a little about it.
+2013-08-29 10:22:30 UTC <jbracker> fryguybob: I am working on embedding SVG fonts in the SVG output of diagrams. For that to work I need to write custom stuff to the "defs" element. I altered it to insert the defs element with custom content, but now I am unsure where I should supply the stuff I want to write. The obvious location would be in the Options but if I add it there everybody who uses the backend would have to alter their code by supplying something they will 
+2013-08-29 10:22:30 UTC <jbracker> probably never use
+2013-08-29 10:24:53 UTC <jbracker> afk for an hour, happy to hear suggestions anyway
+2013-08-29 10:25:05 UTC <fryguybob> jbracker: Ok
+2013-08-29 10:44:55 UTC <fryguybob> jbracker: Where is this thing that needs to be supplied generated?
+2013-08-29 10:57:30 UTC <travis-ci> [travis-ci] 13monoid-extras/06master 147a3072d http://travis-ci.org/diagrams/monoid-extras/builds/10749093 The build passed.
+2013-08-29 11:24:19 UTC <jbracker> fryguybob: In svg fonts
+2013-08-29 11:24:49 UTC <jbracker> If I would generate it in the SVG backend I would need to add SVGFonts as a dependency
+2013-08-29 11:27:01 UTC <byorgey> for what it's worth, I am OK with adding SVGFonts as a dependency of diagrams-svg, if that ends up being the best way to do it
+2013-08-29 11:28:22 UTC <byorgey> jbracker: I don't have any time this morning, but I might be able to take a look this afternoon
+2013-08-29 11:28:38 UTC <byorgey> martingale: cool, thanks for the offer!  I'll let you know.
+2013-08-29 11:29:38 UTC <byorgey> jbracker: are you talking about the Options record of diagrams-svg?
+2013-08-29 11:29:44 UTC <jbracker> yes
+2013-08-29 11:30:16 UTC <jbracker> that would be the best way in my optinion, but it would mean people would have to adept their code to that change
+2013-08-29 11:30:22 UTC <byorgey> actually I doubt very many people directly use Options
+2013-08-29 11:30:28 UTC <byorgey> so most people would not have to change their code
+2013-08-29 11:30:40 UTC <jbracker> so then I will just add an entry and use it that way?
+2013-08-29 11:30:47 UTC <byorgey> most people will be using defaultMain or renderSVG
+2013-08-29 11:30:54 UTC <byorgey> sure, I think that is fine
+2013-08-29 11:31:04 UTC <jbracker> then I will do it like that
+2013-08-29 11:31:36 UTC <byorgey> sounds good to me.
+2013-08-29 11:32:41 UTC <jbracker> ok, thanks!
+2013-08-29 11:46:57 UTC <luite> byorgey: oh the kerning is totally wrong yes!
+2013-08-29 11:47:24 UTC <luite> simonm is giving a talk atm
+2013-08-29 11:51:01 UTC <luite> lots of sad animals
+2013-08-29 11:58:43 UTC <fryguybob> Sad animals?
+2013-08-29 12:02:59 UTC <luite> pictures of sad animals, because the original idea wasn't very good
+2013-08-29 12:03:09 UTC <luite> and he's explaining some concurrency monad now
+2013-08-29 12:03:23 UTC <luite> which is better, since there haven't been sad animals for more than 5 mins now
+2013-08-29 12:09:38 UTC <fryguybob> Oh, good :D
+2013-08-29 12:10:45 UTC <luite> he's talking about how Applicative and this Monad work at facebook to get parallel data queries
+2013-08-29 12:29:13 UTC <notdan> :D
+2013-08-29 12:29:14 UTC <notdan> have you gave your talk alredy luite?
+2013-08-29 13:00:58 UTC <jbracker> byorgey: fryguybob: I just discovered that text alignment is ignored by the SVG backend. Should I fix this along the way or hand in a separate patch now?
+2013-08-29 13:08:55 UTC <fryguybob> jbracker: I thought that got fixed, but I'm probably not remembering correctly.
+2013-08-29 13:11:30 UTC <jbracker> I'll push a separate patch for this
+2013-08-29 13:12:16 UTC <fryguybob> jbracker: Ok
+2013-08-29 13:13:16 UTC <fryguybob> jbracker: Ah, the ticket is still open: https://github.com/diagrams/diagrams-svg/issues/17
+2013-08-29 13:13:41 UTC <jbracker> I'll fix that ;)
+2013-08-29 13:15:16 UTC <jbracker> fryguybob: The alignments given in BoxAlignedText have what kind of scale?
+2013-08-29 13:15:37 UTC <jbracker> left [0,1] right or left [-1, 1] right ?
+2013-08-29 13:20:34 UTC <jbracker> I found it
+2013-08-29 14:35:55 UTC <haasn> byorgey: Hey; Deg/Turn really shouldn't derive a Floating instance
+2013-08-29 14:36:05 UTC <haasn> instead you should implement sin/cos/tan/pi properly imo
+2013-08-29 14:46:17 UTC <fryguybob> haasn: It came up before, the result of trig functions should not be an angle.
+2013-08-29 14:47:18 UTC <haasn> oh, yeah; I see where you're coming from, the output is a Deg too in that model
+2013-08-29 14:47:57 UTC <haasn> nvm then :)
+2013-08-29 14:48:06 UTC <fryguybob> Really it took a while for this to even come up because you do not generally use trig with diagrams and instead use things like rotateBy
+2013-08-29 14:48:58 UTC <fryguybob> But perhaps there isn't anything in Floating that makes sense on angles.
+2013-08-29 15:37:54 UTC <martingale> Argh! I screwed up git again, I meant to push to the snug branch
+2013-08-29 15:38:04 UTC <fryguybob> :D
+2013-08-29 15:38:21 UTC <martingale> fryguybob: how do I undo this?
+2013-08-29 15:40:40 UTC <martingale> Here is what I did: 1. created a snug branch on github. 2. cloned to local machine. 3. made changes. But on my local machine I only had a master branch so i just pushed it. Not sure how to tell it to push to snug remote branch
+2013-08-29 15:41:01 UTC <carter> i'm getting some crazy linker errors from builiding lens and its deps, so i can't play with the new chart lib yet :(
+2013-08-29 15:43:51 UTC <martingale> Is it - git push origin/snug?
+2013-08-29 15:43:56 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 1486a1df6 http://travis-ci.org/diagrams/diagrams-lib/builds/10759768 The build passed.
+2013-08-29 15:46:03 UTC <fryguybob> martingale: I'm not sure :( But the build passed :D.  I don't have time now, but I can look into it in a bit.
+2013-08-29 15:46:30 UTC <martingale> fryguybob: should i try pushing it to origin/snug as well?
+2013-08-29 15:48:04 UTC <notdan> martingale: it's git push origin snug
+2013-08-29 15:48:31 UTC <martingale> notdan: I have not local branch called snug
+2013-08-29 15:48:36 UTC <martingale> *no
+2013-08-29 15:48:48 UTC <notdan> and you can undo the pushing to master branch thing by either reverting the commits and pushing the change or by rebasing
+2013-08-29 15:48:59 UTC <notdan> well, you can make one 'git checkout -b snug'
+2013-08-29 15:50:26 UTC <martingale> notdan: I'll try to checkout -b snug and push it. maybe I'll wait for byorgey to see if he wants to revert 
+2013-08-29 15:55:33 UTC <fryguybob> martingale: to push from local master to origin snug you do  git push origin master:snug
+2013-08-29 15:56:01 UTC <martingale> fryguybob: thx
+2013-08-29 16:02:32 UTC <travis-ci> [travis-ci] 13diagrams-lib/06snug 1423d44e5 http://travis-ci.org/diagrams/diagrams-lib/builds/10760521 The build passed.
+2013-08-29 16:21:00 UTC <carter>  yay, diagram-charts is installed!
+2013-08-29 16:22:40 UTC <fryguybob> martingale: I think that put master back to where it should be.
+2013-08-29 16:23:07 UTC <martingale> fryguybob: Thanks, if you get a chance check out the snug branch
+2013-08-29 16:24:00 UTC <fryguybob> martingale: Snug is at "added back align.hs to TwoD" is that right?
+2013-08-29 16:59:04 UTC <byorgey> martingale: hehe, oops, no worries =)
+2013-08-29 16:59:07 UTC <martingale> fryguybob: yes, it's Align, TwoD.Align and Test/Snugtest
+2013-08-29 16:59:36 UTC <martingale> byorgey: yeah, fryguybob fixed it. Are you still seeing comments to closed pull request 101
+2013-08-29 16:59:40 UTC <byorgey> martingale: in the future, what I usually do is create a local branch first (with checkout -b) and then do  git push -u origin localbranch
+2013-08-29 16:59:45 UTC <byorgey> martingale: yes
+2013-08-29 17:00:00 UTC <byorgey> martingale: that automatically creates a corresponding branch on the remote repo
+2013-08-29 17:00:24 UTC <martingale> byorgey: OK, I'll follow that workflow in the future
+2013-08-29 17:00:37 UTC <martingale> byorgey: checkout the snug branch when you have some time
+2013-08-29 17:00:41 UTC <byorgey> will do.
+2013-08-29 17:01:02 UTC <byorgey> I hope to have some time tonight.  But I might not have time until Saturday.
+2013-08-29 17:01:23 UTC <byorgey> this has been a busy week.
+2013-08-29 17:01:52 UTC <byorgey> haasn: hmm, you're totally right about the Floating instances for Deg and Turn
+2013-08-29 17:01:59 UTC <byorgey> what do we lose if we just get rid of them?
+2013-08-29 17:02:05 UTC <haasn> (**)
+2013-08-29 17:02:31 UTC <haasn> then again
+2013-08-29 17:02:50 UTC <byorgey> why would you want to use (**) on an angle
+2013-08-29 17:02:51 UTC <haasn> I'm not sure that even makes sense, for the same reasons as sin/cos
+2013-08-29 17:02:54 UTC <haasn> yeah
+2013-08-29 17:02:55 UTC <byorgey> right.
+2013-08-29 17:02:59 UTC <haasn> âsqrtâ maybe? no idea
+2013-08-29 17:03:03 UTC <byorgey> OK, let's kill those instances dead
+2013-08-29 17:03:05 UTC <haasn> try it, check for build failures
+2013-08-29 17:03:09 UTC <byorgey> right
+2013-08-29 17:03:29 UTC <martingale> byorgey: I'll be away next Monday through Satrudary with limit internet access
+2013-08-29 17:03:42 UTC <byorgey> martingale: OK
+2013-08-29 17:06:07 UTC <martingale> byorgey: By the way at what point do we either merge in Arrow or revise it?
+2013-08-29 17:06:25 UTC <byorgey> martingale: soon, I just haven't had a chance to look at it yet
+2013-08-29 17:06:52 UTC <martingale> byorgey: No worries, I realize you busy. Are you teaching this semester?
+2013-08-29 17:06:59 UTC <byorgey> martingale: most likely we will just merge it and then continue to refine it in the master branch
+2013-08-29 17:07:25 UTC <martingale> byorgey: great : )
+2013-08-29 17:07:44 UTC <byorgey> martingale: no, no teaching this semester, just trying to finish a PhD and take care of a 2-year-old =)
+2013-08-29 17:08:40 UTC <martingale> byorgey: I've been there, I get it =)
+2013-08-29 17:08:58 UTC <byorgey> right =)
+2013-08-29 17:11:06 UTC <byorgey> haasn: looks like we should remove RealFloat as well.  What's your opinion on Real and RealFrac ?
+2013-08-29 17:11:30 UTC <haasn> Real is benign, only has -> Rational
+2013-08-29 17:11:45 UTC <haasn> tbh though I see calculations happening in Double
+2013-08-29 17:11:48 UTC <haasn> eg. Deg $ sin x)
+2013-08-29 17:12:22 UTC <byorgey> hmm?  Deg $ sin x  doesn't make much sense to me
+2013-08-29 17:12:30 UTC <haasn> it was a nonsensical example
+2013-08-29 17:12:34 UTC <haasn> sorry
+2013-08-29 17:12:38 UTC <byorgey> ok =)
+2013-08-29 17:13:00 UTC <haasn> but this shows why those instances aren't as important as they would be even if we needed sin etc.
+2013-08-29 17:13:30 UTC <byorgey> right.  Well, I will leave them in, I don't think there's anything wrong with them
+2013-08-29 17:13:59 UTC <byorgey> currently building everything including the user manual + gallery etc. to make sure we don't have any code which depends on those instances
+2013-08-29 17:15:21 UTC <byorgey> I guess even the Floating instance for Rad is a bit bogus, because it returns an answer of type Rad
+2013-08-29 17:16:28 UTC <byorgey> you know what, the FLOATING CLASS ITSELF IS BOGUS
+2013-08-29 17:16:32 UTC <byorgey> =(
+2013-08-29 17:21:47 UTC <fryguybob> byorgey: Yeah
+2013-08-29 17:23:26 UTC <byorgey> so should I leave in the Floating instance for Rad, or take it out?
+2013-08-29 17:23:35 UTC <byorgey> oh, but I guess we really do want pi
+2013-08-29 17:23:52 UTC <byorgey> we just don't want all the trig functions
+2013-08-29 17:24:33 UTC <fryguybob> We could make HasTau
+2013-08-29 17:24:54 UTC <byorgey> hehe
+2013-08-29 17:43:14 UTC <byorgey> SLOCCount says diagrams is worth half a million dollars!!
+2013-08-29 17:43:59 UTC <fryguybob> Imagine what it will be worth when arrows hits master :D
+2013-08-29 17:44:57 UTC <byorgey> you bet =)
+2013-08-29 17:46:10 UTC <haasn> byorgey: put that on your resume!!!
+2013-08-29 17:46:38 UTC <haasn> I wonder what the hell that metric is derived from
+2013-08-29 17:46:50 UTC <haasn> (and I guess it's based on C/Java SLOCs, which are worth much less than Haskell SLOCs ;)
+2013-08-29 17:47:22 UTC <byorgey> yeah, it tells you what model it's using, but you're right that it probably doesn't really apply =)
+2013-08-29 17:48:12 UTC <byorgey> it estimates 4.1 person-years, which is about how long we've been working on this, but nowhere near full time.
+2013-08-29 17:55:18 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 14527403b http://travis-ci.org/diagrams/diagrams-lib/builds/10764727 The build passed.
+2013-08-29 18:11:08 UTC <haasn> byorgey: doesn't matter as long as you get paid full-time :))
+2013-08-29 18:20:58 UTC <carter> byorgey: i've a bit of rage about the numerical classes myself
+2013-08-29 18:21:24 UTC <carter> some of the code i'll be releasing soon will have lots of comments on this
+2013-08-29 18:58:25 UTC <byorgey> haasn: haha, oh man, do I ever wish I could get paid full-time to work on diagrams =)
+2013-08-29 18:59:05 UTC <haasn> it doesn't seem too far off that a company could find use in this
+2013-08-29 18:59:11 UTC <haasn> perhaps for educational purposes
+2013-08-29 18:59:25 UTC <haasn> just build a pretty DSL on top of it so they don't have to use scary H
+2013-08-29 19:00:16 UTC <byorgey> true, though I also don't really want to have a company telling me what to do with it =P
+2013-08-29 19:13:04 UTC <carter> byorgey you could be like the luajit guy
+2013-08-29 19:13:07 UTC <carter> but with pretty pictures!
+2013-08-29 19:13:42 UTC <carter> wrangling the initial "sponsor shit"
+2013-08-29 19:13:44 UTC <carter> *ship
+2013-08-29 19:13:56 UTC <carter> might be a bit of work
+2013-08-29 19:13:57 UTC <carter> but
+2013-08-29 19:19:51 UTC <martingale> byorgey: At least a million
+2013-08-29 19:22:14 UTC <carter> BIG DAATA DIAGRAMS
+2013-08-29 19:22:15 UTC <carter> :)
+2013-08-29 19:24:10 UTC <martingale> Talking about educational uses, at some point I want to write a package for use in illustrating high school geometry texts (paper and online)
+2013-08-29 19:24:52 UTC <carter> ooo
+2013-08-29 19:24:54 UTC <carter> that'd be cool
+2013-08-29 19:25:09 UTC <carter> I was planning to use diagrams for some stuff a while ago, but then I got a bit side trackedâ¦ :(
+2013-08-29 19:25:12 UTC <haasn> byorgey: you could work on proper 3d/4d backends already
+2013-08-29 19:25:17 UTC <martingale> When my son was taking geometry I wrote an iPhone app for him listing all of the definitions and theorems he needed for proofs, but I never got around to making the diagrams because it was so time consuming.
+2013-08-29 19:25:17 UTC <haasn> or 3d-to-2d projection
+2013-08-29 19:25:23 UTC <haasn> equivalently, 4d-to-3d or 4d-to-2d
+2013-08-29 19:25:24 UTC <carter> byorgey: btw: looks like i may be at ICFP!
+2013-08-29 19:25:37 UTC <carter> martingale we now have ghci-ios too
+2013-08-29 19:25:52 UTC <carter> that plus hpdf + webview might be a nice combo...
+2013-08-29 19:26:05 UTC <martingale> carter: really, what is ghci-ios?
+2013-08-29 19:26:10 UTC <carter> unless diagrams or one of its deps needs template haskell
+2013-08-29 19:26:31 UTC <carter> www.reddit.com/r/haskell/comments/1lboh4/announcing_ghc_ios/
+2013-08-29 19:26:44 UTC <martingale> carter: thanks, i'll  have a look
+2013-08-29 19:26:59 UTC <carter> basically luke ianni + stepen Blackheath have gotten the GHC os x 2 ios cross compiler working reliably enough that
+2013-08-29 19:27:05 UTC <carter> you can just use it
+2013-08-29 19:27:13 UTC <carter> shoudl work with currently head
+2013-08-29 19:27:21 UTC <carter> and definitely once 7.8 is tagged
+2013-08-29 19:27:34 UTC <martingale> carter: wow! that's incredible.
+2013-08-29 19:27:49 UTC <carter> you'll still need to ffi wrapp any IOS sdk stuff you want to use
+2013-08-29 19:27:59 UTC <carter> and currently theres no Template haskell support
+2013-08-29 19:28:05 UTC <martingale> carter: of course
+2013-08-29 19:28:07 UTC <carter> brb in a bit
+2013-08-29 19:28:15 UTC <martingale> carter: bye
+2013-08-29 19:37:39 UTC <carter> back
+2013-08-29 19:38:43 UTC <carter> martingale: lukexi hangs out on #haskell-mac if you want to ask him any questions
+2013-08-29 19:38:47 UTC <carter> or ask on the reddit
+2013-08-29 19:40:07 UTC <martingale> carter: good to know, I'm not quite ready to dust off Xcode. To many interesting things to learn about haskell
+2013-08-29 19:40:31 UTC <carter> yeah, i think the xcode load for getting things to work is pretty simple now with luke's directions though
+2013-08-29 19:41:58 UTC <martingale> It's too bad this wasn't available this past winter, I wrote a natural language parser for my son's calendar app in objective-c, it would have been so much nicer in haskell
+2013-08-29 19:42:40 UTC <byorgey> carter: we do use TH
+2013-08-29 19:42:46 UTC <carter> ach
+2013-08-29 19:42:46 UTC <byorgey> via lens
+2013-08-29 19:42:46 UTC <carter> ok
+2013-08-29 19:43:41 UTC <byorgey> it would probably be not too bad to write all the lenses manually (or use TH once and then paste in the generated code)
+2013-08-29 19:43:54 UTC <byorgey> if it ever becomes important/worth it.  But I'm not going to worry about it right now.
+2013-08-29 19:44:16 UTC <martingale> What's the best place to start learning about TH
+2013-08-29 19:44:30 UTC <carter> hrmm
+2013-08-29 19:44:33 UTC <carter> well
+2013-08-29 19:44:42 UTC <carter> TH also changes to be a bit awesomer in 7.8
+2013-08-29 19:44:57 UTC <byorgey> martingale: generating diagrams for geometry (or any other sorts of math) sounds really cool
+2013-08-29 19:44:58 UTC <carter> so there's actually two parts to "CURRENT" TH
+2013-08-29 19:45:18 UTC <carter> theres template haskell, which lets you generate an AST and splice it in
+2013-08-29 19:45:29 UTC <carter> and theres quasiquoters, which may generate an AST that you splice in
+2013-08-29 19:45:49 UTC <martingale> byorgey: yeah, i've been thinking about it for a while. so many cool things to work on
+2013-08-29 19:45:55 UTC <carter> heres some notes on the new TH stuff http://ghc.haskell.org/trac/ghc/wiki/TemplateHaskell/BlogPostChanges
+2013-08-29 19:45:59 UTC <byorgey> martingale: indeed =)
+2013-08-29 19:46:07 UTC <martingale> carter: thanks
+2013-08-29 19:46:26 UTC <carter> 7.8 will have "typed expressions" macros
+2013-08-29 19:46:40 UTC <carter> where you know the "type" of the expression that the generated AST will do
+2013-08-29 19:46:47 UTC <carter> which is kinda like MetaML and stuff
+2013-08-29 19:47:18 UTC <martingale> carter: Sounds like Paul Graham is involved
+2013-08-29 19:47:20 UTC <carter> and then theres "LISP MACROS" style TH, which is current TH, but unlike current TH, will only check AST terms that actually get spliced in
+2013-08-29 19:47:21 UTC <carter> nope
+2013-08-29 19:47:31 UTC <carter> PG aint got nutting on this
+2013-08-29 19:47:39 UTC <carter> i'm over simpliflying
+2013-08-29 19:47:41 UTC <martingale> carter: just kidding :D
+2013-08-29 19:48:08 UTC <carter> basically with TH in 7.6 and earlier, if i write an expression in a quasiquoter, it needs to refer to valid binders, even if I never splice that quoted ast in
+2013-08-29 19:48:43 UTC <carter> so heres an example where I hit that problem
+2013-08-29 19:49:05 UTC <carter> to make the llvm-base lib work with cabal 1.17 and newer while stilll being backwards compatible with older cabal
+2013-08-29 19:49:06 UTC <carter> https://github.com/bos/llvm/blob/master/base/Setup.hs#L116-L144
+2013-08-29 19:49:28 UTC <carter> the commented out part: https://github.com/bos/llvm/blob/master/base/Setup.hs#L116-L144 
+2013-08-29 19:49:34 UTC <carter> is how the code would look with quasiquoters
+2013-08-29 19:49:44 UTC <martingale> carter: Seems like that is a lot to TH
+2013-08-29 19:49:46 UTC <carter> nope
+2013-08-29 19:49:51 UTC <carter> this is tiny
+2013-08-29 19:50:03 UTC <carter> but in 7.6 and older, quasiquoters check before they splice
+2013-08-29 19:50:08 UTC <carter> so i couldn't use quasi quoters
+2013-08-29 19:50:29 UTC <carter> so i had to instaed have the AST nodes constructed (and those aren't checked by GHC unless they get spliced in)
+2013-08-29 19:50:29 UTC <martingale> carter: when will 7.8 come out
+2013-08-29 19:50:39 UTC <carter> october
+2013-08-29 19:50:45 UTC <carter> there may be an RC sooner
+2013-08-29 19:50:47 UTC <carter> hopefully note
+2013-08-29 19:50:50 UTC <carter> *not
+2013-08-29 19:51:09 UTC <martingale> carter: awesome
+2013-08-29 19:51:11 UTC <carter> theres a bunch of things that still need to get merged in and stuff that will help make the 7.8 release nice
+2013-08-29 19:51:41 UTC <carter> and theres a lot of really really nice work thats pretty mature, but for  a variety of reasons wont land till 7.10 at the soonest
+2013-08-29 19:52:15 UTC <carter> its really really easy to help out with ghc dev
+2013-08-29 19:52:33 UTC <carter> when you hit a GHC bug, figure out how to reproduce it and report it 
+2013-08-29 19:52:50 UTC <carter> sometimes its also good for people to randomly try and build ghc source for fun, 
+2013-08-29 19:53:01 UTC <carter> because theres not that many configurations that the build servers test
+2013-08-29 19:53:23 UTC <martingale> carter: Do you work, on ghc?
+2013-08-29 19:53:42 UTC <carter> becuse someone has to, yes :)
+2013-08-29 19:53:55 UTC <carter> i'm allegedly trying to do a wee haskell business, allegedly
+2013-08-29 19:54:16 UTC <carter> i'm helping out with ghc because so few people do, and it makes a huge difference, even if you're only doing a teeny bit
+2013-08-29 19:54:30 UTC <martingale> carter: that's great, hopefully when i'm a little less busy in a few months I'll get involved in ghc
+2013-08-29 19:54:40 UTC <carter> theres some really really awesome people hacking on ghc
+2013-08-29 19:54:45 UTC <martingale> carter: can i ask what your wee business is
+2013-08-29 19:54:49 UTC <carter> wellposed.com
+2013-08-29 19:55:04 UTC <carter> allegedly i have libraries i'm writing that i want to do a version zero release really really really soon for
+2013-08-29 19:55:09 UTC <carter> ideally before ICFP
+2013-08-29 19:56:28 UTC <martingale> carter: that looks really cool, will it include an analog of numpy/scipy/pandas
+2013-08-29 19:56:38 UTC <carter> thats the idea
+2013-08-29 19:56:44 UTC <carter> the initial release won't have that much stuff
+2013-08-29 19:56:55 UTC <carter> but a starter subset that gives a path towards that
+2013-08-29 19:56:56 UTC <carter> but nicer 
+2013-08-29 19:57:00 UTC <carter> and hopefully faster
+2013-08-29 19:57:22 UTC <carter> it all started with me wanting to write a ggplot2 analogue in haskell using diagrams
+2013-08-29 19:57:35 UTC <carter> but then I realized i needed a good data frame (sort of like pandas)
+2013-08-29 19:57:43 UTC <byorgey> carter: how many yaks down are you at the moment?
+2013-08-29 19:57:46 UTC <byorgey> =)
+2013-08-29 19:57:50 UTC <carter> then i realized that I also needed a good numerical computing latyer
+2013-08-29 19:58:01 UTC <carter> well, i'm at the platonic base case yak
+2013-08-29 19:58:04 UTC <martingale> carter: that sounds great, i'll put myself on the mailing list, i've used those python libraries quite a bit if you ever want to get another perspective
+2013-08-29 19:58:09 UTC <byorgey> carter: awesome =)
+2013-08-29 19:58:15 UTC <carter> martingale thanks!
+2013-08-29 19:58:30 UTC <carter> i did a "i'm going to do a release soon" email a few weeks ago
+2013-08-29 19:58:36 UTC <carter> martingale awesome
+2013-08-29 19:59:04 UTC <carter> martingale: honestly just having lots of people trying things out, trying to write out examples and help with documentation and identify pain points in the api 
+2013-08-29 19:59:05 UTC <carter> will be huge
+2013-08-29 19:59:22 UTC <martingale> carter: I'm in
+2013-08-29 19:59:54 UTC <carter> also the initial api will only be a sort of "power users" api, theres still going to need to be a "simpler, but less aweesome"  api later
+2013-08-29 20:00:10 UTC <martingale> carter: understood
+2013-08-29 20:00:12 UTC <carter> you can also lurk on #haskell-llvm and #haskell-numerics to hear about stuff as i say it
+2013-08-29 20:00:23 UTC <martingale> ok
+2013-08-29 20:00:31 UTC <carter> so i dont' spam diagrams too much :)
+2013-08-29 20:00:53 UTC <carter> (i'm not using llvm yet, but that the path i'll be taking at some point after the initial release)
+2013-08-29 20:02:17 UTC <carter> but yeah: basically haskell should have a nice "good default" numerical substrate
+2013-08-29 20:03:45 UTC <martingale> carter: yes, I'm interested in seeing how you deal with the trade offs of using immutable data structures
+2013-08-29 20:03:51 UTC <carter> oh
+2013-08-29 20:03:52 UTC <carter> hehe
+2013-08-29 20:03:56 UTC <carter> BOTH is the answer
+2013-08-29 20:04:15 UTC <carter> it winds up being possible to support both mutable and immutable ops
+2013-08-29 20:04:46 UTC <martingale> carter: I guess I'll have to see it, to understand how it works, i look forward to it.
+2013-08-29 20:04:52 UTC <carter> and in some backendsyeah
+2013-08-29 20:04:57 UTC <carter> theres some complicated bits
+2013-08-29 20:05:08 UTC <carter> so one design novelty
+2013-08-29 20:05:15 UTC <carter> is making it possible to reason about memory locality
+2013-08-29 20:05:21 UTC <carter> explicitly
+2013-08-29 20:05:24 UTC <carter> with the types to hlep
+2013-08-29 20:05:34 UTC <martingale> carter: hmm
+2013-08-29 20:05:50 UTC <carter> because normally you have "heres the voodoo fast code"
+2013-08-29 20:05:56 UTC <carter> which does all sorts of crazy shuffling
+2013-08-29 20:06:01 UTC <carter> and you can't understand why
+2013-08-29 20:06:22 UTC <carter> unless you have the locality (contigious vs not) and layout (row major, column major, blocked, etc) explicit
+2013-08-29 20:06:23 UTC <martingale> carter: yes, i've seen some of that type of code
+2013-08-29 20:07:37 UTC <carter> we can switch this to #haskell-llvm or #haskell-numerics if you want to ask more
+2013-08-29 20:07:48 UTC <carter> i don't want to spam diagrams too much :)
+2013-08-29 20:08:20 UTC <carter> (and i'm happy to try to explain more)
+2013-08-29 20:08:23 UTC <martingale> carter: yeah we have already taken up a few pages of posts :)
+2013-08-29 20:08:37 UTC <carter> ping me on #haskell-llvm 
+2013-08-29 20:08:39 UTC <carter> and i'll explain more there
+2013-08-29 20:09:04 UTC <carter> (because its sort of on topic there)
+2013-08-29 20:09:21 UTC <martingale> carter: I need go for a bit now but, i definitely will when I get a chance
+2013-08-29 20:09:26 UTC <carter> k
+2013-08-29 20:59:42 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 1429bd416 http://travis-ci.org/diagrams/diagrams-lib/builds/10771640 The build passed.
+2013-08-29 21:06:38 UTC <Taneb> byorgey, I was surprised you accepted my diagrams pull request adding the Group instance for Endomorphism
+2013-08-29 21:07:03 UTC <Taneb> monoid-extras pull request, rather
+2013-08-30 04:27:23 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 146993de0 http://travis-ci.org/diagrams/diagrams-lib/builds/10784358 The build passed.
+2013-08-30 08:08:49 UTC <notdan> martingale: Love the snug alignment :)
+2013-08-30 13:48:44 UTC <martingale> byorgey: You may be better at answering notdan's questions on arrows, I'm sure you have a deeper understanding of scaleInvPrim issues than i do
+2013-08-30 14:54:34 UTC <byorgey> martingale: yeah, I just responded.  The short answer is that with ScaleInv in the mix we have no hope of producing anything more general than QDiagrams.
+2013-08-30 14:55:46 UTC <byorgey> but I don't really see the benefit of implementing (~~) in terms of some arrow functions anyway... maybe notdan can elaborate on what he had in mind and why it would be useful.
+2013-08-30 15:17:31 UTC <notdan> I see
+2013-08-30 15:17:34 UTC <notdan> nah I was just wondering
