@@ -157,7 +157,7 @@ runWeb m = do
   system' "rm" ["-f", "dist/doc/doc"]
   system' "rm" ["-f", "dist/web/gallery/gallery"]
 
-  systemCwdNorm "web" (".." </> obj "web/hakyll.hs.exe")
+  systemCwdNorm "web" (obj "web/hakyll.hs.exe")
     [ case m of
         BuildH  -> "build"
         Preview -> "preview"
