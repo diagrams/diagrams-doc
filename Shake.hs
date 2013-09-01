@@ -105,7 +105,7 @@ main = do
 
 compilePng :: Bool -> FilePath -> Action ()
 compilePng isThumb outPath = do
-    systemCwdNorm "web/gallery" ("../.." </> obj "web/gallery/build-gallery.hs.exe")
+    systemCwdNorm "web/gallery" (obj "web/gallery/build-gallery.hs.exe")
       ( (if isThumb then [ "--thumb", "175" ] else [])
         ++ [(takeBaseName . takeBaseName) outPath, "../.." </> outPath]
       )
