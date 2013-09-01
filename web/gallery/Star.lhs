@@ -24,17 +24,17 @@ we can refer to later.  Names can be almost any type; here we choose
 To connect two named points using index `i`, we request the points
 corresponding to those names, and superimpose a line between the points:
 
-> connect n i = withNames [("x",i), ("y", n - i)]
+> attach n i = withNames [("x",i), ("y", n - i)]
 >               $ atop . fromVertices . map location
 
 Finish creating one quarter of the diagram by connecting corresponding
 points.
 
-> pic n = applyAll (map (connect n) [0..n]) (axes n) # centerXY # lw 0.05
+> pic n = applyAll (map (attach n) [0..n]) (axes n) # centerXY # lw 0.05
 
 The final diagram is created by assembling four copies of the above.
- 
+
 > d n = half === rotateBy (1/2) half
 >   where half = (rotateBy (1/4) (pic n) ||| pic n) # centerX
->         
+>
 > example = pad 1.1 $ d 20 # lc blue

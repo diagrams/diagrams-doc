@@ -2862,15 +2862,15 @@ the centers of two subdiagrams.
 >
 > instance IsName Foo
 >
-> connect n1 n2
+> attach n1 n2
 >   = withName n1 $ \b1 ->
 >     withName n2 $ \b2 ->
 >       atop ((location b1 ~~ location b2) # lc red # lw 0.03)
 >
 > example = (square 3 # named Baz ||| circle 2.3 # named Bar)
->         # connect Baz Bar
+>         # attach Baz Bar
 
-The `connect` function takes two names and returns a *function* from
+The `attach` function takes two names and returns a *function* from
 diagrams to diagrams, which adds a red line connecting the locations
 denoted by the two names.  Note how the two calls to `withName` are
 chained, and how we have written the second arguments to `withName`
@@ -2878,9 +2878,9 @@ using lambda expressions (this is a common style).  Finally, we draw a
 line between the two points (using the `location` function to access
 the locations of the subdiagrams within the parent diagram), give it a
 style, and specify that it should be layered on top of the diagram
-given as the third argument to `connect`.
+given as the third argument to `attach`.
 
-We then draw a square and a circle, give them names, and use `connect`
+We then draw a square and a circle, give them names, and use `attach`
 to draw a line between their centers.  Of course, in this example, it
 would not be too hard to manually compute the endpoints of the line
 (this is left as an exercise for the reader); but in more complex
@@ -2902,7 +2902,7 @@ examples such manual calculation can be quite out of the question.
 
   ::
 
-  > connect n1 n2
+  > attach n1 n2
   >   = withNames [n1,n2] $ \[b1,b2] ->
   >       ...
 
@@ -2976,7 +2976,7 @@ a qualified name explicitly, separate the components with `(.>)`.
 >   deriving (Typeable, Eq, Ord, Show)
 > instance IsName Corner
 >
-> connect n1 n2
+> attach n1 n2
 >   = withName n1 $ \b1 ->
 >     withName n2 $ \b2 ->
 >       atop ((location b1 ~~ location b2) # lc red # lw 0.03)
@@ -2994,7 +2994,7 @@ a qualified name explicitly, separate the components with `(.>)`.
 >         , ((0::Int) .> SE, (1::Int) .> NW)
 >         ]
 >
-> example = d # applyAll (map (uncurry connect) pairs)
+> example = d # applyAll (map (uncurry attach) pairs)
 
 We create a four-paned square with a name for each of its panes; we
 then make five copies of it.  At this point, each of the copies has
