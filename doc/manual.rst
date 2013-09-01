@@ -3181,7 +3181,7 @@ Scale-invariance
 The `ScaleInv` wrapper can be used to create "scale-invariant"
 objects. (Note that `ScaleInv` is not exported from
 `Diagrams.Prelude`:mod:; to use it, import
-`Diagrams.TwoD.Transform`:mod:.)  In the diagram below, the same
+`Diagrams.TwoD.Transform.ScaleInv`:mod:.)  In the diagram below, the same
 transformation is applied to each pair of arrows; the arrowheads on
 the right are wrapped in `ScaleInv` but the ones on the left are not.
 
@@ -3191,7 +3191,7 @@ the right are wrapped in `ScaleInv` but the ones on the left are not.
 
 > {-# LANGUAGE TypeSynonymInstances, FlexibleInstances #-}
 >
-> import Diagrams.TwoD.Transform
+> import Diagrams.TwoD.Transform.ScaleInv
 > import Diagrams.Coordinates ((&))
 >
 > class Drawable d where
