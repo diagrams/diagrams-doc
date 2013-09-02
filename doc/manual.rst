@@ -3195,10 +3195,6 @@ selected by the user after receiving the coordinates of a mouse click.
 Bounding boxes
 --------------
 
-.. container:: todo
-
-  Expand on this section, based on Michael Sloan's recent refactoring.
-
 Envelopes (see `Working with envelopes`_) are more flexible and
 compositional than bounding boxes for the purposes of combining
 diagrams.  However, occasionally it is useful for certain applications
@@ -3859,16 +3855,20 @@ trail is the vector space associated to `a`.
 Scalar
 ~~~~~~
 
-.. container:: todo
-
-  Write about `Scalar`
+The `Scalar` type family is defined in the `vector-space`:pkg:.  It
+associates a scalar type to each instance of `VectorSpace`. A "scalar"
+can be thought of as a distance, or scaling factor.  For example, you
+can scale a vector by a scalar (using `(*^)`), and the `magnitude`
+function takes a vector and returns a scalar.
 
 Diff
 ~~~~
 
-.. container:: todo
-
-  Write about `Diff`
+`Diff` is another associated type family from `vector-space`:pkg:,
+which associates to each instance of `AffineSpace` a vector space
+which is the type of the "difference" between two affine values (as
+given by `(.-.)`).  For example, `Diff P2 ~ R2`, that is, the
+difference between two points is a vector.
 
 Render
 ~~~~~~
@@ -4408,16 +4408,29 @@ Tools for backends
 Other tools
 ===========
 
+There are several "extra" packages which are officially maintained but
+do not automatically come bundled with the `diagrams` package.
+
 diagrams-builder
 ----------------
 
-.. container:: todo
-
-  Write about `diagrams-builder`
+The `diagrams-builder`:pkg: package provides a service for *dynamic*
+rendering of diagrams---that is, you hand it a `String` at runtime
+representing some diagrams code, and you get back the result of
+rendering the code using whatever backend you like.  This could be
+useful, for example, as part of a preprocessor tool for interpreting
+diagrams code embedded in some other document.  Currently it is used
+by the `BlogLiterately-diagrams`:pkg: package (for rendering diagrams
+embedded in blog posts) as well as `diagrams-haddock`:pkg: (for
+rendering diagrams embedded in Haddock comments).
 
 diagrams-haddock
 ----------------
 
-.. container:: todo
+`diagrams-haddock`:pkg: is a tool for embedding diagrams in Haddock
+documentation.  The idea is that you can add images (worth 1000+
+words, of course) to your documentation simply by embedding diagrams
+code in a special format, and then running `diagrams-haddock`:pkg:.
+See the `README`__ for instructions on using it.
 
-  Write about `diagrams-haddock`
+__ https://github.com/diagrams/diagrams-haddock/blob/master/README.md
