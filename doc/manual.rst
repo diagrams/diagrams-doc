@@ -1567,8 +1567,9 @@ whichever one corresponds to the most natural point of view in a given
 situation, without having to worry about inserting calls to `negateV`.
 
 Often, however, one wishes to move a diagram's origin with respect to
-its envelope.  To this end, some general tools are provided
-in `Diagrams.Align`:mod:, and specialized 2D-specific ones by
+its "boundary".  Here, boundary usually refers to the diagram's envelope
+or trace; envelope being the default. To this end, some general tools
+are provided in `Diagrams.Align`:mod:, and specialized 2D-specific ones by
 `Diagrams.TwoD.Align`:mod:.
 
 Functions like `alignT` (align Top) and `alignBR` (align Bottom Right)
@@ -1601,6 +1602,45 @@ interpolating between the bottom and top of the square:
 > s = square 1 # fc yellow
 > example = hcat . map showOrigin
 >         $ zipWith alignY [-1, -0.8 .. 1] (repeat s)
+
+The align funcitons have sister functions like `snugL` and `snugX`
+that work the same way as `alignL` and `alignX` the only differecne being
+that they use the trace as the boundary instead of the envelope. Here we
+want to snug a convex shape (the orange triangle) next to a concave shape
+(the blue polygon).
+
+.. class:: dia-lhs
+
+::
+
+> import Diagrams.TwoD.Align
+>
+> concave = polygon with {polyType = PolyPolar [a, b, b, b]
+>                [0.25,1,1,1,1] ,polyOrient = NoOrient}
+>                # fc blue # lw 0
+>   where
+>     a = 1/8 :: Turn
+>     b = 1/4 :: Turn
+>
+> convex = polygon with { polyType = PolyPolar [a,b] [0.25, 1, 1]
+>                       , polyOrient = NoOrient}
+>                       # fc orange # lw 0
+>   where
+>     a = 1/8 :: Turn
+>     b = 3/4 :: Turn
+>
+> aligned = (concave # centerXY # alignR # showOrigin)
+>        <> (convex # centerXY # alignL # showOrigin)
+>
+> snugged = (concave # centerXY # snugR # showOrigin)
+>        <> (convex # centerXY # snugL # showOrigin)
+>
+> example = aligned ||| strutX 0.5 ||| snugged
+
+The `snugR` function moves the origin of the blue polygon to the
+rightmost edge of it's trace in the diagram on the right. Whereas
+in the leftmost diagram the `alignR` function puts it at the edge of
+the envelope.
 
 Working with trails and paths
 -----------------------------

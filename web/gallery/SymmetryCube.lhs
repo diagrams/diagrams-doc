@@ -15,7 +15,7 @@ width: 600
 > import Diagrams.BoundingBox
 > import Diagrams.Core.Envelope
 > import Diagrams.Coordinates
-> import Diagrams.Prelude
+> import Diagrams.Prelude hiding (connect, arrow)
 > import Graphics.SVGFonts
 
 The diagram is the boxes (the "cube") and the lines between the boxes.
@@ -87,7 +87,7 @@ For each pair (a,b) of names, draw an arrow from diagram "a" to
 diagram "b".
 
 > drawLines :: Diagram Cairo R2 -> Diagram Cairo R2
-> drawLines cube = foldr (.) id (map (uncurry attach) pairs) cube
+> drawLines cube = foldr (.) id (map (uncurry connect) pairs) cube
 >   where pairs = [ ("perm","permgroup")
 >                 , ("perm","sym")
 >                 , ("perm","paramperm")
@@ -107,18 +107,18 @@ arrow lies on the line between the centres of the diagrams, but is
 drawn so that it stops at the boundaries of the diagrams, using traces
 to find the intersection points.
 
-> attach n1 n2 = withName n1 $ \b1 ->
+> connect n1 n2 = withName n1 $ \b1 ->
 >                 withName n2 $ \b2 ->
 >                   let v = location b2 .-. location b1
 >                       midpoint = location b1 .+^ (v/2)
 >                       p1 = fromJust $ traceP midpoint (-v) b1
 >                       p2 = fromJust $ traceP midpoint v b2
->                   in atop (makeArrow p1 p2)
+>                   in atop (arrow p1 p2)
 
 Draw an arrow from point p1 to point p2.  An arrow is just a line with
 a triangle at the head.
 
-> makeArrow p1 p2 = (p1 ~~ p2) <> arrowhead
+> arrow p1 p2 = (p1 ~~ p2) <> arrowhead
 >   where v = p2 .-. p1
 >         arrowhead = eqTriangle 0.5
 >                     # alignT
