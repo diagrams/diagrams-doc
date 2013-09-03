@@ -1604,10 +1604,11 @@ interpolating between the bottom and top of the square:
 >         $ zipWith alignY [-1, -0.8 .. 1] (repeat s)
 
 The align funcitons have sister functions like `snugL` and `snugX`
-that work the same way as `alignL` and `alignX` the only differecne being
-that they use the trace as the boundary instead of the envelope. Here we
-want to snug a convex shape (the orange triangle) next to a concave shape
-(the blue polygon).
+that work the same way as `alignL` and `alignX`. The difference is
+that the `snug` class of functions use the trace as the boundary
+instead of the envelope. For example, here we want to snug a convex
+shape (the orange triangle) next to a concave shape (the blue
+polygon):
 
 .. class:: dia-lhs
 
@@ -1638,9 +1639,9 @@ want to snug a convex shape (the orange triangle) next to a concave shape
 > example = aligned ||| strutX 0.5 ||| snugged
 
 The `snugR` function moves the origin of the blue polygon to the
-rightmost edge of it's trace in the diagram on the right. Whereas
-in the leftmost diagram the `alignR` function puts it at the edge of
-the envelope.
+rightmost edge of its trace in the diagram on the right, whereas in
+the left diagram the `alignR` function puts it at the edge of the
+envelope.
 
 Working with trails and paths
 -----------------------------
