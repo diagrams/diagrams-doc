@@ -2186,9 +2186,58 @@ Answers to the `square 2` type inference challenge:
 Segments and trails as parametric objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Both segments and trails, semantically, can be seen as *parametric
+functions*: that is, for each value of a parameter within some given
+range (usually `[0,1]`:math:, there is a corresponding vector value
+(or point, for `Located` segments and trails).  The entire collection
+of such vectors or points makes up the segment or trail.
+
+The `Diagrams.Parametric`:mod: module provides tools for working with
+segments and trails as parametric functions.
+
+Parametric
+++++++++++
+
+As explained above, parametric objects can be viewed semantically as
+functions.  In particular, parametric objects of type `p` can be seen
+as functions of type `Scalar (V p) -> Codomain p`, where the type
+family `Codomain` is defined in such a way as to make this true.  For
+example, `Codomain (Trail R2) ~ R2`, because a trail can be thought of
+as a function `Double -> R2`.
+
+The `Parametric` class defines the single method `atParam` which
+yields this parametric view of an object:
+
+.. class:: lhs
+
+::
+
+> atParam :: Parametric p => p -> Scalar (V p) -> Codomain p
+
+(Note that it is not possible to convert in the other
+direction---every function of type `Scalar (V p) -> Codomain p` need
+not correspond to something of type `p`.  For example, to convert from
+a function to a trail one would need at the very least a guarantee of
+continuity; segments are even more restricted.)
+
 .. container:: todo
 
-  `Diagrams.Parametric`:mod:.
+  Finish
+
+DomainBounds
+++++++++++++
+
+EndValues
++++++++++
+
+Sectionable
++++++++++++
+
+HasArcLength
+++++++++++++
+
+Adjusting length
+++++++++++++++++
 
 Splines
 ~~~~~~~
@@ -3671,6 +3720,16 @@ Instances:
 Further reading: `Working with trails and paths`_; `Trails`_;
 `Paths`_; `TrailLike`_.
 
+Classes for parametric objects
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+`Diagrams.Parametric`:mod: provides a set of classes for working with
+objects which can be viewed as parametric functions, such as segments
+and trails: `Parametric`, `DomainBounds`, `EndValues`, `Sectionable`,
+and `HasArcLength`.  These classes are fairly specialized and do not
+really show up anywhere else; see the section on `Segments and trails
+as parametric objects`_ for more information.
+
 Classes for backends
 ~~~~~~~~~~~~~~~~~~~~
 
@@ -3892,6 +3951,14 @@ Options
 `Options` is an associated data family of the `Backend` class.  It
 determines the type of options which can be passed to the backend when
 initiating a rendering operation.  For more information, see `Backends`_.
+
+Codomain
+~~~~~~~~
+
+`Codomain` is a type family defined in `Diagrams.Parametric`:mod:.
+Parametric objects of type `a` can be viewed as functions of type
+`Scalar (V a) -> Codomain a`.  For more information, see `Segments and
+trails as parametric objects`_.
 
 Tips and tricks
 ===============
