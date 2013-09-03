@@ -38580,3 +38580,454 @@
 2013-08-30 14:55:46 UTC <byorgey> but I don't really see the benefit of implementing (~~) in terms of some arrow functions anyway... maybe notdan can elaborate on what he had in mind and why it would be useful.
 2013-08-30 15:17:31 UTC <notdan> I see
 2013-08-30 15:17:34 UTC <notdan> nah I was just wondering
+2013-08-30 15:44:38 UTC <travis-ci> [travis-ci] 13diagrams-svg/06master 14671f8ba http://travis-ci.org/diagrams/diagrams-svg/builds/10804997 The build passed.
+2013-08-30 15:45:03 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06master 14cb6e3cf http://travis-ci.org/diagrams/diagrams-contrib/builds/10804801 The build passed.
+2013-08-30 15:53:30 UTC <byorgey> ACTION checks out the snug branch
+2013-08-30 16:04:44 UTC <martingale> byorgey: how do you do that: "dot" byorget checks out the snug branc in irc?
+2013-08-30 16:14:41 UTC <ClaudiusMaximus> martingale: /me stuff
+2013-08-30 16:20:02 UTC <byorgey> martingale: the Alignable/snug stuff looks good.  Though we still will need to add some examples to the documentation and update the user manual.
+2013-08-30 16:20:29 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14f9f93c2 http://travis-ci.org/diagrams/diagrams-doc/builds/10805225 The build has errored.
+2013-08-30 16:20:35 UTC <byorgey> I'm just making sure the user manual + gallery still build, and then I'll merge it in after lunch, and also start loking at arrows
+2013-08-30 16:41:38 UTC <martingale> byorgey: awesome, I'm working on Parametric - I'm hoping to have the concept ready to show you later on
+2013-08-30 16:42:12 UTC <martingale> ClaudiusMaximus: thanks : )
+2013-08-30 16:43:53 UTC <martingale> byorgey: The examples I have in snugtest may be a start for the docs, but I agree we definitely need some more.
+2013-08-30 17:27:12 UTC <byorgey> martingale: cool, not sure what you mean re: parametric, look forward to hearing more about it
+2013-08-30 17:55:58 UTC <fryguybob> On the arrow stuff.  Perhaps something like this would be nice:  a ~~ b ~~ c ~~> pointy  where it would be a line from a to be to c and end with a "pointy" style arrow.
+2013-08-30 18:08:32 UTC <byorgey> fryguybob: hmm, yes, something like that would be nice
+2013-08-30 18:11:00 UTC <fryguybob> byorgey: And   roundy >~~ a ~~ b ~~> pointy  but you don't want to go too far with it.
+2013-08-30 18:11:44 UTC <byorgey> fryguybob: down that road lies a DSL embedding of Metafont paths.
+2013-08-30 18:11:53 UTC <fryguybob> byorgey: Right
+2013-08-30 18:12:19 UTC <byorgey> roundy >~~ (a `withCurvature` 0.6) ~..~ (b `withTangent` unitY) ~~> pointy
+2013-08-30 18:15:42 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 148f1bc45 http://travis-ci.org/diagrams/diagrams-lib/builds/10810851 The build passed.
+2013-08-30 19:58:42 UTC <travis-ci> [travis-ci] 13monoid-extras/06master 148d8e096 http://travis-ci.org/diagrams/monoid-extras/builds/10814496 The build passed.
+2013-08-31 14:51:56 UTC <martingale> byorgey:  I wonder if the problem has something to do with .exe, It seems to be looking for files with this extension but there are none in my directory,
+2013-08-31 14:52:27 UTC <martingale> i.e I have hakyll.hs now hakyll.hs.exe?
+2013-08-31 15:12:57 UTC <martingale> byorgey: hmm - that doesn't seem to be the problem
+2013-08-31 15:52:08 UTC <travis-ci> [travis-ci] 13diagrams-builder/06builder-0.4 1434f97b9 http://travis-ci.org/diagrams/diagrams-builder/builds/10835450 The build passed.
+2013-08-31 15:52:17 UTC <travis-ci> [travis-ci] 13diagrams-builder/06master 14ec3ca0a http://travis-ci.org/diagrams/diagrams-builder/builds/10835449 The build passed.
+2013-08-31 17:11:22 UTC <byorgey> martingale: I just pushed (what I hope is) a workaround for the build system problems, can you pull and give it another try?
+2013-08-31 17:33:56 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14874917a http://travis-ci.org/diagrams/diagrams-doc/builds/10837263 The build has errored.
+2013-08-31 18:35:03 UTC <notdan> Hi
+2013-08-31 18:35:22 UTC <byorgey> hi notdan 
+2013-08-31 18:36:02 UTC <notdan> how is it going? :]
+2013-08-31 18:37:06 UTC <byorgey> I seem to be coming down with a cold or something, but otherwise good =)  going to do a bit of diagrams hacking this afternoon.
+2013-08-31 18:37:09 UTC <byorgey> how are you?
+2013-08-31 18:39:22 UTC <notdan> I am good. I am in the process of moving so got a little bit tired because of that, but otherwise it's ok, gonna update the pastebin to match 'master' now I think
+2013-08-31 18:39:47 UTC <notdan> my ghc patch got accepted so I am happy because of that even though it's a silly patch, just an applicative instance for the Ghc monad
+2013-08-31 18:43:47 UTC <byorgey> notdan: yeah, moving is rough
+2013-08-31 18:44:01 UTC <byorgey> notdan: congrats! (re: GHC patch =)
+2013-08-31 18:50:20 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 145487b29 http://travis-ci.org/diagrams/diagrams-doc/builds/10838356 The build has errored.
+2013-08-31 19:08:01 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 14b1b9382 http://travis-ci.org/diagrams/diagrams-lib/builds/10839009 The build passed.
+2013-08-31 19:09:49 UTC <byorgey> martingale: why not make the Trail used for the shaft be a field of ArrowOpts?
+2013-08-31 19:10:12 UTC <byorgey> It seems then we would not need connectTrail at all, we could just use connect
+2013-08-31 19:12:11 UTC <byorgey> anyway: arrows are merged!  and there was much rejoicing
+2013-08-31 19:13:31 UTC <fryguybob> \o/
+2013-08-31 19:23:03 UTC <notdan> woot
+2013-08-31 19:25:51 UTC <notdan> https://github.com/diagrams/diagrams-lib/blob/master/src/Diagrams/TwoD/Arrow.hs#L87 this should be changed to black IMO :)
+2013-08-31 19:26:11 UTC <notdan> so the defult arrowhead color matches the default arrow body color
+2013-08-31 19:29:50 UTC <byorgey> yes, it will =)
+2013-08-31 19:30:03 UTC <byorgey> those were just for testing I think
+2013-08-31 20:01:29 UTC <notdan> Ok I think the new versino of interactive-diagrams is up, featuring zooming & panning
+2013-08-31 20:01:55 UTC <notdan> still (ugh) no interactive widgets, yet. But I promise they will be ready this month
+2013-08-31 20:45:07 UTC <martingale> Yippee: Arrows are in!
+2013-08-31 20:45:47 UTC <martingale> byorgey: good idea, about putting trail in ArrowOpts!
+2013-08-31 21:06:35 UTC <byorgey> martingale: OK, great!  I was hoping there wasn't some complicated reason why it couldn't be or something like that
+2013-08-31 21:22:02 UTC <martingale> notdan: yes, those were just for testing, I will change them to black.
+2013-08-31 21:42:22 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 14345e0b3 http://travis-ci.org/diagrams/diagrams-lib/builds/10842397 The build passed.
+2013-08-31 21:43:51 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 142d56315 http://travis-ci.org/diagrams/diagrams-lib/builds/10842423 The build passed.
+2013-09-01 00:04:59 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 14e47f8d5 http://travis-ci.org/diagrams/diagrams-lib/builds/10845163 The build passed.
+2013-09-01 00:20:36 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 14160316a http://travis-ci.org/diagrams/diagrams-lib/builds/10845378 The build passed.
+2013-09-01 00:47:22 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 144853a0f http://travis-ci.org/diagrams/diagrams-lib/builds/10845802 The build passed.
+2013-09-01 00:51:42 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 1411029c5 http://travis-ci.org/diagrams/diagrams-doc/builds/10845390 The build has errored.
+2013-09-01 01:01:54 UTC <byorgey> yessssssss I made it faster!!!!
+2013-09-01 01:02:40 UTC <fryguybob> Ohh what did you do?
+2013-09-01 01:02:56 UTC <byorgey> changing from  R2 = R2 (Double, Double)  to  R2 = R2 {-# UNPACK #-} !Double  {-# UNPACK #-} !Double   brought the time to compile my factorization diagrams poster down from 24s to 17s
+2013-09-01 01:03:27 UTC <fryguybob> Ah, I should see what changes on my heap graphs with that.
+2013-09-01 01:04:09 UTC <byorgey> I will check it in, just a second
+2013-09-01 01:04:45 UTC <carter> cool!
+2013-09-01 01:04:53 UTC <fryguybob> byorgey: Any opinion on just making all the results for offset/expand/trail/path be Path R2?
+2013-09-01 01:05:43 UTC <byorgey> fryguybob: I think that's fine.
+2013-09-01 01:17:29 UTC <fryguybob> byorgey: I don't know where my brain is, just expandTrail.
+2013-09-01 01:18:06 UTC <byorgey> hehe, OK, sure =)
+2013-09-01 01:20:11 UTC <byorgey> ACTION goes looking for other things to strictify and/or UNPACK
+2013-09-01 01:23:01 UTC <byorgey> ACTION tries Transformations
+2013-09-01 01:23:20 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 144086f99 http://travis-ci.org/diagrams/diagrams-lib/builds/10846285 The build passed.
+2013-09-01 01:24:51 UTC <byorgey> fryguybob: remember when you had some profiling report that showed a bunch of (,) nodes?
+2013-09-01 01:25:04 UTC <byorgey> I wonder if those were all from R2, not DUALTree
+2013-09-01 01:25:15 UTC <fryguybob> byorgey: Yeah that might be.
+2013-09-01 01:25:33 UTC <fryguybob> byorgey: We should see soon :D
+2013-09-01 01:25:42 UTC <byorgey> =D
+2013-09-01 01:25:55 UTC <byorgey> hmm, strictifying Transformation didn't seem to make a difference
+2013-09-01 01:26:33 UTC <fryguybob> Looks like I'm still the only one giving ezyang's heap site work :D
+2013-09-01 01:26:42 UTC <byorgey> hehe
+2013-09-01 01:27:20 UTC <byorgey> on the one hand that's too bad since it's a nice site.  On the other hand, I don't mind having it all to ourselves =)
+2013-09-01 01:28:24 UTC <byorgey> fryguybob: can you think of any scenario in which making Transformations stricter would be bad?
+2013-09-01 01:29:32 UTC <fryguybob> byorgey: I suppose if you built a bunch of small things that you want to position "absolutely" and just replace all their envelops directly.  Not sure if that made sense.
+2013-09-01 01:31:35 UTC <byorgey> ah, hmm
+2013-09-01 01:37:36 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 14d16213e http://travis-ci.org/diagrams/diagrams-lib/builds/10846492 The build passed.
+2013-09-01 01:43:12 UTC <fryguybob> :( -- Internal Server Error: permission denied (Disk quota exceeded)
+2013-09-01 01:46:54 UTC <fryguybob> http://www.cs.rochester.edu/u/ryates/temp/Mandelbrot-ps.pdf
+2013-09-01 01:50:24 UTC <byorgey> aww =(
+2013-09-01 01:50:48 UTC <fryguybob> @tell ezyang It appears I killed your heap site.  "Disk quota exceeded", sorry :(
+2013-09-01 01:50:48 UTC <lambdabot> Consider it noted.
+2013-09-01 01:51:14 UTC <fryguybob> byorgey: It is hard to do a side by side comparison, but it looks like that make a significant difference.
+2013-09-01 01:52:01 UTC <fryguybob> Oh, I can download the old one form ezyang's site and do hp2ps on it.
+2013-09-01 01:52:09 UTC <byorgey> oh, good idea
+2013-09-01 01:53:45 UTC <byorgey> huh, how come there are so many pairs (,) and their number stays constant over the last 4 seconds?
+2013-09-01 01:54:15 UTC <byorgey> also, why are we building so many cons cells
+2013-09-01 01:54:28 UTC <byorgey> it's also possible that I am completely misreading this.
+2013-09-01 01:55:12 UTC <fryguybob> byorgey: I think the cons cells are the DList accumulating as we output postscript
+2013-09-01 01:55:31 UTC <byorgey> ahh, right
+2013-09-01 01:55:36 UTC <fryguybob> byorgey: That should be straight forward to fix, but isn't general to diagrams.
+2013-09-01 01:55:38 UTC <byorgey> but why do they all stay in memory?
+2013-09-01 01:55:43 UTC <byorgey> right, OK.
+2013-09-01 01:55:48 UTC <fryguybob> byorgey: But you should see that they shoot up at the end.
+2013-09-01 01:56:09 UTC <fryguybob> So the http://www.cs.rochester.edu/u/ryates/temp/Mandelbrot-ps-13.pdf
+2013-09-01 01:56:29 UTC <fryguybob> So the new one does much better on memory, but it looks like it is taking more time.
+2013-09-01 01:57:44 UTC <byorgey> hmm
+2013-09-01 01:58:29 UTC <fryguybob> Gaaah, what we need is hp diff...
+2013-09-01 01:59:23 UTC <byorgey> yeah, the R2 changes clearly helped with memory.  Note there are less (,) as well as no thunks listed from Diagrams.TwoD.Types
+2013-09-01 01:59:40 UTC <fryguybob> Yeah
+2013-09-01 02:00:07 UTC <byorgey> I don't understand why it would be slower though.
+2013-09-01 02:00:43 UTC <fryguybob> Maybe I'm doing something silly like converting from R2 to (Double,Double) when I render.
+2013-09-01 02:01:05 UTC <fryguybob> Before that would be just unwrapping, now it allocates.
+2013-09-01 02:02:05 UTC <byorgey> well, if you use  unr2 or coords  that's what you're doing indeed
+2013-09-01 02:02:19 UTC <byorgey> if you import Diagrams.TwoD.Types you can pattern match directly on R2
+2013-09-01 02:02:38 UTC <fryguybob> byorgey: I'll see if that makes a difference.
+2013-09-01 02:08:49 UTC <byorgey> It would be nice to set up a profiling/benchmarking framework that compiles a bunch of examples with all the backends
+2013-09-01 02:09:39 UTC <byorgey> maybe with a script that takes some local git commits as arguments and automatically checks out, builds, and tests both versions so you can compare the performance
+2013-09-01 02:09:48 UTC <byorgey> anyway, I'm off to bed
+2013-09-01 02:15:28 UTC <fryguybob> byorgey: Yeah.  I wonder if the intermediate (,)'s (if that is the issue) go away with -O2.
+2013-09-01 02:25:43 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14ab1ce8b http://travis-ci.org/diagrams/diagrams-doc/builds/10847086 The build has errored.
+2013-09-01 02:58:49 UTC <carter> oo
+2013-09-01 02:58:52 UTC <carter> that would be nice
+2013-09-01 03:00:53 UTC <fryguybob> carter: Sadly that doesn't seem to be the issue.
+2013-09-01 03:01:10 UTC <carter> i meant the "benchmark at certain commits"
+2013-09-01 03:01:35 UTC <carter> i'm giong to need to figure out a systematic way of benchmarking
+2013-09-01 03:01:53 UTC <carter> and tracking perf regressions
+2013-09-01 03:05:35 UTC <fryguybob> carter: Ah yes, automated perf tests would be nice.
+2013-09-01 03:05:45 UTC <carter> yeah
+2013-09-01 03:10:54 UTC <carter> theres some subtleties to doing that right
+2013-09-01 03:11:10 UTC <carter> but its something i'll need to have for myself soon one way or anotehr
+2013-09-01 12:10:18 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 143c56d3e http://travis-ci.org/diagrams/diagrams-doc/builds/10858273 The build has errored.
+2013-09-01 14:29:21 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 145bade10 http://travis-ci.org/diagrams/diagrams-doc/builds/10860884 The build has errored.
+2013-09-01 15:13:35 UTC <martingale> byorgey: To use snugL / snugR in the manual I need to import TwoD.Align explicitly in the lhs, but you don't to use alignL etc. What do I have to due to make the snug functions visible?
+2013-09-01 15:45:21 UTC <martingale> byorgey: Also, can i get the snug functions to appear in the API reference?
+2013-09-01 17:27:18 UTC <kuribas> What's a good datatype for a path?  I am thinking either a list of lines and cubic beziers, or a list of points with line joins or (bezier) control points.
+2013-09-01 17:27:34 UTC <kuribas> The advantage of the latter that there are no duplicate points.
+2013-09-01 17:41:03 UTC <fryguybob> kuribas: The way that Diagrams does it now is somewhat complicated but I think it is the right way to do it.
+2013-09-01 17:41:57 UTC <fryguybob> We have three "levels" of path data, first is a segment, then a trail is a list of segments, finally a path is a list of located trails
+2013-09-01 17:45:18 UTC <fryguybob> Segments can either have their last offset (Closed) or describe some curve but still need an ending offset (Open).
+2013-09-01 17:46:22 UTC <fryguybob> Closed segments are sort of like a generalized vector.  They have a magnitude, direction, *and* some squiggle.
+2013-09-01 17:48:21 UTC <fryguybob> Trails (specifically Trail') can be either a Line or a Loop.  A Line is a sequence of closed segments and a loop is a sequence of closed segments and a final open segment.
+2013-09-01 17:48:51 UTC <fryguybob> Loops can be filled.
+2013-09-01 17:50:20 UTC <fryguybob> Paths are a sequence of Located trails (any mix of lines and loops).
+2013-09-01 17:51:45 UTC <fryguybob> Located fixes a location for something, so while a closed segment is like a vector, a located closed segment is some segment of a curve somewhere in your space.
+2013-09-01 19:20:54 UTC <kuribas> Ok, I understand.
+2013-09-01 19:42:02 UTC <kuribas> It's a good abstraction, but it probably would make my path algorithms more difficult.
+2013-09-01 19:42:31 UTC <kuribas> For example removing overlap.
+2013-09-01 19:45:21 UTC <kuribas> I mean, my library is more low level, so I don't know of relative path's make sense.
+2013-09-01 19:48:25 UTC <byorgey> martingale: ah, you need to explicitly re-export the snug functions from Diagrams.TwoD
+2013-09-01 19:48:47 UTC <byorgey> martingale: I will rebuild the API reference next time we make a release.
+2013-09-01 19:59:26 UTC <byorgey> fryguybob: looks like I'll be coming October 29
+2013-09-01 20:28:17 UTC <luite> so that was zurihac :)
+2013-09-01 20:28:41 UTC <byorgey> luite: how was it?
+2013-09-01 20:29:16 UTC <luite> oh met lots of interesting people
+2013-09-01 20:29:48 UTC <luite> found out at the last minute that the http://idontgetoutmuch.wordpress.com/ guy was there
+2013-09-01 20:31:41 UTC <luite> i didn't get his name though, and i don't see it on that site
+2013-09-01 20:34:12 UTC <byorgey> luite: Dominic Steinitz
+2013-09-01 20:34:33 UTC <luite> ah tnx
+2013-09-01 20:34:55 UTC <luite> he promised he'd send me a good book (pdf) on numerical methods :)
+2013-09-01 20:35:10 UTC <byorgey> cool =)
+2013-09-01 20:35:16 UTC <byorgey> yeah, he seems to know a lot about that
+2013-09-01 20:35:22 UTC <byorgey> oops, Noah's awake, better go get him
+2013-09-01 20:35:50 UTC <luite> yeah i think he worked in finance and now does these things for hobby or something :)
+2013-09-01 21:40:25 UTC <fryguybob> byorgey: Woohoo!
+2013-09-01 21:42:36 UTC <luite> hm i wonder if hostels got les social in the past decade
+2013-09-01 21:42:55 UTC <luite> i'm still in the lobby and 90% here is looking at their smartphone or laptop screen
+2013-09-01 21:43:08 UTC <fryguybob> :(
+2013-09-01 21:43:23 UTC <luite> well no prob, i'm not very social either :p
+2013-09-01 21:52:23 UTC <luite> but wavewave (Ian-Woo Kim) said i should visit him at CERN and he'd explain what he's doing. it involved making some lagrangian with a polynomial where the terms correspond with particle interactions, and some monte carlo method for calculating some probabilities in a simulated detector, and then hoping that they'd match the measurements :)
+2013-09-01 21:53:47 UTC <luite> (i probably got it all backward because i was too impressed by his hoodle note-taking setup to be listening properly :)
+2013-09-01 22:08:21 UTC <fryguybob> luite: I got to meet him at hacphi a couple years ago.  In need to get some hoodle going on my laptop.
+2013-09-01 22:08:51 UTC <luite> yeah i guess he will be more at european hackathons now :)
+2013-09-01 22:14:19 UTC <fryguybob> You have to go where the exciting physics is happening.
+2013-09-01 22:14:54 UTC <luite> they're certainly exciting those particles, up to 7TeV when it starts again!
+2013-09-01 22:15:50 UTC <luite> i'm not sure if it's really useful to do the theoretical modelling and verification work there, but i guess it's like a hackathon, lots of interesting people at the same place makes it better :p
+2013-09-01 22:20:37 UTC <luite> fryguybob: did he have the realtime cloud and phone synchronizing already back then?
+2013-09-01 22:39:33 UTC <fryguybob> luite: No, I don't think there was much at that point.
+2013-09-01 23:20:39 UTC <byorgey> man, I'm having real trouble doing profiling builds
+2013-09-01 23:21:03 UTC <byorgey> I keep getting weird linker errors, ".hi file type does not match", and all sorts of strange stuff =P
+2013-09-01 23:21:52 UTC <fryguybob> byorgey: Strange
+2013-09-01 23:22:09 UTC <fryguybob> Which GHC?
+2013-09-01 23:22:26 UTC <byorgey> 7.6.3
+2013-09-01 23:22:50 UTC <fryguybob> That's what I have working here.  But I did sort of start clean slate with profiling this time.
+2013-09-01 23:23:08 UTC <byorgey> I am starting clean slate too, in a fresh hsenv environment
+2013-09-01 23:23:32 UTC <byorgey> ACTION tries something different
+2013-09-01 23:23:42 UTC <fryguybob> Maybe hsenv misses something with regard to profiling?
+2013-09-01 23:23:50 UTC <byorgey> I wanted to compile more packages than I have previously with -prof -fprof-auto
+2013-09-01 23:23:53 UTC <byorgey> e.g. including dual-tree
+2013-09-01 23:24:19 UTC <byorgey> I am not sure the best way to compile one set of packages with --enable-library-profiling and the rest with -prof -fprof-auto
+2013-09-01 23:24:38 UTC <byorgey> OK, I have to go, Noah is standing here requesting that I tickle him =)
+2013-09-01 23:24:46 UTC <fryguybob> :D
+2013-09-02 00:18:34 UTC <byorgey> /home/brent/src/diagrams/.hsenv_profile/cabal/lib/dual-tree-0.1.0.1/ghc-7.6.3/HSdual-tree-0.1.0.1.o: unknown symbol `CC_LIST'
+2013-09-02 00:19:05 UTC <byorgey> luite: does this error message look familiar to you?  ISTR someone talking about CC_LIST recently
+2013-09-02 00:19:07 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 1410e24b3 http://travis-ci.org/diagrams/diagrams-lib/builds/10876553 The build passed.
+2013-09-02 00:20:45 UTC <byorgey> hmm, it's possible this might be related: http://ghc.haskell.org/trac/ghc/ticket/7746
+2013-09-02 00:20:55 UTC <byorgey> but I have no idea what that ticket is about
+2013-09-02 00:21:07 UTC <byorgey> "For example, if you load an un-profiled object file into a profiled binary, GHC will eat all your puppies."
+2013-09-02 00:21:27 UTC <byorgey> sounds serious
+2013-09-02 00:21:42 UTC <fryguybob> Good thing I don't have any puppies
+2013-09-02 00:24:03 UTC <martingale> Lens.hs is causing diagrams-contrib to fail when building docs? 
+2013-09-02 00:24:08 UTC <martingale> rc/Diagrams/Lens.hs:70:3:
+2013-09-02 00:24:08 UTC <martingale>     makeWrappedInstance: Constructor must have a single field
+2013-09-02 00:24:34 UTC <byorgey> oh, yeah, that's because it was deriving lenses for R2 but R2 isn't a newtype anymore
+2013-09-02 00:24:54 UTC <byorgey> just a second
+2013-09-02 00:26:42 UTC <byorgey> martingale: ^^^ fixed
+2013-09-02 00:27:28 UTC <martingale> byorgey: thanks I want to push a version of the docs with snug. Arrows will take a bit more time
+2013-09-02 00:27:43 UTC <byorgey> awesome, push away
+2013-09-02 00:27:55 UTC <byorgey> martingale: did I give you push access to the diagrams-doc repo?
+2013-09-02 00:28:25 UTC <martingale> byorgey: yes, I pushed earlier but travis failed it due to the above problem
+2013-09-02 00:28:38 UTC <byorgey> ah, ok
+2013-09-02 00:29:10 UTC <byorgey> oh, right, I saw that commit, you changed e.g. 'connect' to 'attach' etc.
+2013-09-02 00:29:42 UTC <martingale> byorgey: yes but I undid that and just hid connect, etc for now and added snug
+2013-09-02 00:30:08 UTC <byorgey> oh, ok
+2013-09-02 00:33:34 UTC <martingale> I"m heading to southern Utah for a week of hiking with my wife and some friends. So I won't have much time to hack on diagrams : (
+2013-09-02 00:34:04 UTC <martingale> but : ) for the vacation !
+2013-09-02 00:35:23 UTC <byorgey> martingale: woohoo!  sounds great!  (the vacation that is)
+2013-09-02 00:36:41 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06master 14d0c063f http://travis-ci.org/diagrams/diagrams-contrib/builds/10876738 The build passed.
+2013-09-02 00:36:51 UTC <martingale> byorgey: Yeah, we realized we haven't been away without the kids since they were born, 18 years!
+2013-09-02 00:37:14 UTC <martingale> byorgey: I know that seems crazy
+2013-09-02 00:37:21 UTC <byorgey> hah, wow!  well, sounds like it is well deserved -- enjoy!
+2013-09-02 00:37:34 UTC <martingale> byorgey: thanks
+2013-09-02 00:37:46 UTC <byorgey> we'll miss you, but I'm guessing there will still be plenty of diagrams stuff to hack on when you return =)
+2013-09-02 00:38:30 UTC <martingale> byorgey: Yes, there are lots of great ideas in the community, I'm really enjoying being involved =)
+2013-09-02 00:39:19 UTC <fryguybob> martingale: :D
+2013-09-02 00:52:16 UTC <martingale> good night all
+2013-09-02 00:56:12 UTC <fryguybob> I was about to add another comment to that but then I realized that I had already made the exact comment I was going to make.
+2013-09-02 01:00:30 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14d5261f4 http://travis-ci.org/diagrams/diagrams-doc/builds/10876836 The build has errored.
+2013-09-02 01:00:39 UTC <byorgey> fryguybob: hehe
+2013-09-02 01:01:20 UTC <byorgey> martingale: good night martingale, we're enjoying having you involved too =)
+2013-09-02 01:26:05 UTC <fryguybob> byorgey: There is enough in the adjust stuff to make an arrow function to modify a trail and add arrows inplace right? 
+2013-09-02 01:26:33 UTC <byorgey> fryguybob: I am having trouble parsing your question.
+2013-09-02 01:27:06 UTC <fryguybob> Looking at the functions in arrow they all scale a path to match some placement of the arrow right?
+2013-09-02 01:27:20 UTC <byorgey> right, I think so
+2013-09-02 01:27:48 UTC <fryguybob> I'm wondering if there is anything missing from being able to take a trail as is, and add an arrow to the end so the arrow ends where the trail used to.
+2013-09-02 01:27:59 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 142862755 http://travis-ci.org/diagrams/diagrams-lib/builds/10878055 The build passed.
+2013-09-02 01:28:22 UTC <fryguybob> (I know this is a harder thing to do)
+2013-09-02 01:28:47 UTC <byorgey> ohh, I think I understand your question now.
+2013-09-02 01:28:56 UTC <byorgey> I though that's what the arrow code was already doing.
+2013-09-02 01:29:16 UTC <fryguybob> byorgey: Ok.  I was confused by the parameters if that is the case.
+2013-09-02 01:29:18 UTC <byorgey> But I guess it's not because I just moved the adjust stuff into another module and I didn't have to change the arrows code at all =)
+2013-09-02 01:30:08 UTC <fryguybob> Ok.  Well both options are useful.
+2013-09-02 01:30:08 UTC <byorgey> I still haven't looked super carefully at the arrows code.  Just close enough to see that it was definitely in a good state to merge, and continue working on it in master
+2013-09-02 01:48:14 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 14126bb89 http://travis-ci.org/diagrams/diagrams-haddock/builds/10878487 The build has errored.
+2013-09-02 01:50:13 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 14e74b250 http://travis-ci.org/diagrams/diagrams-haddock/builds/10878537 The build has errored.
+2013-09-02 01:50:20 UTC <byorgey> silly travis.
+2013-09-02 01:50:37 UTC <byorgey> I might try this: http://www.gergely.risko.hu/fpafternoon-zurich-20130829/ceh.html#(13)
+2013-09-02 01:53:21 UTC <fryguybob> byorgey: What does that give you?
+2013-09-02 01:54:37 UTC <byorgey> fryguybob: you basically start by cloning a complete up-to-date Haskell environment, built using something based on nix (I don't quite understand the details)
+2013-09-02 01:54:56 UTC <byorgey> and then run your tests.  It completely ignores the Haskell environment provided by Travis.
+2013-09-02 01:55:33 UTC <fryguybob> byorgey: Ah, yeah the travis one is a moving target right?
+2013-09-02 01:56:00 UTC <byorgey> no, it's not moving at all.  That's the problem.
+2013-09-02 01:56:15 UTC <byorgey> It's stuck in 2010 or something like that.
+2013-09-02 01:56:23 UTC <fryguybob> byorgey: Oh, that sort of problem
+2013-09-02 01:57:10 UTC <byorgey> fryguybob: e.g. the reason the diagrams-haddock build just failed is because it has transformers-0.2 and refuses to install stuff which depends on transformers-0.3
+2013-09-02 02:01:57 UTC <fryguybob> byorgey: Off hand do you know how to get from a Trail' Loop R2 to a Path R2?
+2013-09-02 02:03:35 UTC <byorgey> hmm, not offhand
+2013-09-02 02:03:45 UTC <fryguybob> ok I'll find it :D
+2013-09-02 02:04:13 UTC <byorgey> perhaps we should have functions like   singletonPath :: Trail v -> Path v   and  singletonPath' :: Trail' c v -> Path v
+2013-09-02 02:04:56 UTC <byorgey> Path . (`at` origin) . wrapLoop    or something like that
+2013-09-02 02:05:17 UTC <byorgey> I mean   Path . (:[]) . (`at` origin) . wrapLoop
+2013-09-02 02:06:06 UTC <byorgey> well, more likely  singletonPath :: Located (Trail v) -> Path v
+2013-09-02 02:06:23 UTC <fryguybob> Right, in my case they are located.
+2013-09-02 02:07:01 UTC <byorgey> oh!  I forget, we have  pathFromTrail, and pathFromLocTrail
+2013-09-02 02:07:01 UTC <fryguybob> I wrote a withTrailL which lifts withTrail through a Located.
+2013-09-02 02:07:10 UTC <fryguybob> Ah, that would do it.
+2013-09-02 02:07:30 UTC <byorgey> so  pathFromLocTrail . mapLoc wrapLoop ?
+2013-09-02 02:08:13 UTC <fryguybob> byorgey: That type checks.
+2013-09-02 02:09:39 UTC <byorgey> then it must be correct! ;-)
+2013-09-02 02:16:40 UTC <fryguybob> I'll have to clean it up more later, but I should have loops working now.
+2013-09-02 02:22:52 UTC <travis-ci> [travis-ci] 13diagrams-lib/06expand 148f1bc17 http://travis-ci.org/diagrams/diagrams-lib/builds/10879045 The build passed.
+2013-09-02 02:24:01 UTC <byorgey> fryguybob: awesome! =D
+2013-09-02 02:28:23 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 140514bfa http://travis-ci.org/diagrams/diagrams-lib/builds/10879114 The build passed.
+2013-09-02 02:40:35 UTC <fryguybob> byorgey: I'll try to add some examples and see if it actually works tomorrow :D
+2013-09-02 02:40:43 UTC <fryguybob> Have a good night!
+2013-09-02 02:44:36 UTC <travis-ci> [travis-ci] 13diagrams-lib/06expand 1408387d7 http://travis-ci.org/diagrams/diagrams-lib/builds/10879374 The build passed.
+2013-09-02 11:32:17 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 140eec075 http://travis-ci.org/diagrams/diagrams-lib/builds/10889994 The build passed.
+2013-09-02 12:27:45 UTC <jbracker> There is an issue with clipping in the SVG backend
+2013-09-02 12:28:54 UTC <jbracker> Currently all paths in the clip stack are inserted into one big clipPath element but that ORs them otgether in SVG instead of intersecting them
+2013-09-02 13:17:23 UTC <fryguybob> jbracker: We should add an issue and a test to backend-tests.
+2013-09-02 13:27:50 UTC <jbracker> I just finished a fix for this issue
+2013-09-02 13:28:02 UTC <jbracker> commit it now and adjusting pull request
+2013-09-02 13:28:24 UTC <jbracker> the problem occures when several clipBy calls are nested in each other
+2013-09-02 13:28:59 UTC <jbracker> fryguybob: A test could be based on my clipping test from Charts
+2013-09-02 13:29:14 UTC <jbracker> that should be easy to convert
+2013-09-02 13:29:19 UTC <fryguybob> jbracker: Ok
+2013-09-02 13:32:41 UTC <fryguybob> jbracker: I think postscript's default miterlimit is 10, I'm not sure if cairo follows suit or not.  We should probably be consistent.  SVG does use the same definition as postscript.
+2013-09-02 14:00:51 UTC <jbracker> fryguybob: I think as long as you can't set the miter limit yourself it should be a very high value, because that would be what I expect. You can't change it so there is none
+2013-09-02 14:08:09 UTC <fryguybob> jbracker: Ah, well miter limit should be an attribute.  The problem with a high value is if you are trying to model something like a graph that has sharp spikes, the spikes get quite exagerated.
+2013-09-02 14:08:43 UTC <jbracker> fryguybob: At the same time that behaviour is to be expected if you don't have tools to control it
+2013-09-02 14:09:42 UTC <fryguybob> jbracker: Well I disagree.  I don't know of a situation where I would want a high miter limit intentionally.
+2013-09-02 14:10:43 UTC <fryguybob> And there are a lot of places where you get accidental sharp corners.
+2013-09-02 14:12:28 UTC <fryguybob> jbracker: I see what you are saying (and the solution is just to add miter limit attribute which we can do).  Having a high limit gives a capability that cannot really be emulated otherwise, but I don't know of legitimate uses of that cabability and know a lot of circumstances where you accidentally would trigger the high value.
+2013-09-02 14:15:10 UTC <fryguybob> jbracker: I can add a miter limit attribute right now if you want.
+2013-09-02 14:22:44 UTC <byorgey> yes, adding a miter limit attribute sounds like the right way to go
+2013-09-02 14:23:14 UTC <fryguybob> byorgey: Name LineMiterLimit or MiterLimit?
+2013-09-02 14:24:02 UTC <byorgey> meh
+2013-09-02 14:33:49 UTC <fryguybob> byorgey: I'm adding Default instances now, I already have some on the expand branch, but I'll look at setDefault2dAttributes too.
+2013-09-02 14:34:00 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 147be5cdf http://travis-ci.org/diagrams/diagrams-lib/builds/10896222 The build passed.
+2013-09-02 14:34:02 UTC <byorgey> ok
+2013-09-02 14:36:52 UTC <jbracker> Well, this is going fast :)
+2013-09-02 14:37:54 UTC <fryguybob> byorgey: LineCap and LineJoin are not in setDefault2dAttributes should I add those also?
+2013-09-02 14:39:32 UTC <byorgey> fryguybob: yes, we probably should
+2013-09-02 14:39:37 UTC <fryguybob> ok, done
+2013-09-02 14:39:56 UTC <jbracker> About the spec: Cairo say:  miter limit = 1/sin(angle/2), svg says: miterLength / stroke-width = 1 / sin ( theta / 2 ), so I think miter limit = 1/sin(angle/2) is a good semantic
+2013-09-02 14:39:57 UTC <byorgey> if some attribute is not set in setDefault2DAttributes it means we are just relying on the backends to all have the same default, which is dangerous
+2013-09-02 14:42:01 UTC <byorgey> jbracker: agreed
+2013-09-02 14:47:07 UTC <jbracker> what about the test for stacked clippings? Where should that go?
+2013-09-02 14:49:14 UTC <fryguybob> Humm, I'm not sure the Default instance for miter limit is actually useful.
+2013-09-02 14:49:44 UTC <jbracker> fryguybob: Just wanted to say, if you define it you should use it in setDefault2DAttribute
+2013-09-02 14:50:07 UTC <fryguybob> jbracker: Yeah, line width has the same problem we just need to come up with some convention that makes sense.
+2013-09-02 14:51:35 UTC <fryguybob> like lineMiterLimitA :: HasStyle a => LineMiterLimit -> a -> a.  But that is just applyAttr.
+2013-09-02 14:51:51 UTC <fryguybob> So I should just use applyAttr in setDefault2DAttribute :D
+2013-09-02 14:52:00 UTC <jbracker> :D
+2013-09-02 14:53:03 UTC <fryguybob> Ah, then I would need a type assertion, so perhasp the lineMiterLimitA convention is useful.
+2013-09-02 14:54:21 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 14b0db882 http://travis-ci.org/diagrams/diagrams-lib/builds/10896812 The build passed.
+2013-09-02 14:58:21 UTC <Taneb> Do animated SVGs exist?
+2013-09-02 14:59:02 UTC <fryguybob> Taneb: I think you can include javascript in an SVG to do animation, but I don't know who supports that and I don't think anyone has done that with diagrams.
+2013-09-02 15:01:52 UTC <byorgey> jbracker: so can you update your pull request to set the miter limit attribute?
+2013-09-02 15:03:06 UTC <byorgey> as for the clip path stuff, I don't know much about it so I trust you.  Though if you have a ready test case you could add to backend-tests which shows the bug that would be great.
+2013-09-02 15:14:08 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 143ffa7be http://travis-ci.org/diagrams/diagrams-lib/builds/10897680 The build passed.
+2013-09-02 15:27:37 UTC <jbracker> byorgey: Will do so (in both cases)
+2013-09-02 15:30:23 UTC <luite> you can also do animation in svg without js
+2013-09-02 15:30:38 UTC <luite> with paths and interpolation
+2013-09-02 15:31:20 UTC <fryguybob> luite: Ah, nice.
+2013-09-02 15:31:44 UTC <luite> i don't think anyone has done that with diagrams either though :)
+2013-09-02 15:40:48 UTC <fryguybob> It is kind of hard to make a nice visual test for miter limit :(
+2013-09-02 15:41:47 UTC <luite> bleh i got distracted, reading those books that dominic sent me the whole afternoon, so i still didn't get to see zurich :p
+2013-09-02 15:42:17 UTC <fryguybob> http://www.cs.rochester.edu/u/ryates/temp/limits.pdf
+2013-09-02 15:43:41 UTC <luite> oh cool, proper miters :)
+2013-09-02 15:44:04 UTC <jbracker> byorgey: diagrams-svg does not use setDefault2DAttributes yet. Should I just add it?
+2013-09-02 15:44:50 UTC <luite> uh oh, google found me on github and now they want to talk
+2013-09-02 15:45:03 UTC <jbracker> luite: ?
+2013-09-02 15:46:01 UTC <luite> jbracker: oh recruiting email spam :p
+2013-09-02 15:48:30 UTC <travis-ci> [travis-ci] 13diagrams-postscript/06master 14cc39d27 http://travis-ci.org/diagrams/diagrams-postscript/builds/10899127 The build passed.
+2013-09-02 16:05:49 UTC <byorgey> jbracker: does diagrams-svg call adjustDia2D?  That calls setDefault2DAttributes
+2013-09-02 16:05:57 UTC <byorgey> it probably shouldn't though =P
+2013-09-02 16:06:42 UTC <byorgey> oh, never mind, we have adjustDiaSize2D, so you can use that if you don't want the attributes
+2013-09-02 16:06:57 UTC <byorgey> adjustDia2D is probably a bad name though
+2013-09-02 16:31:46 UTC <jbracker> byorgey: I will just remove the call again
+2013-09-02 16:43:44 UTC <luite> hmm need to find some food, wonder if i can find something cheaper than a $25 pizza today
+2013-09-02 16:50:31 UTC <mr-> 3â¬ DÃ¶ner? ;-P
+2013-09-02 16:50:54 UTC <luite> i'm sure that'd be 15 here
+2013-09-02 16:51:43 UTC <mr-> which would be cheaper!
+2013-09-02 16:52:48 UTC <luite> yeah
+2013-09-02 17:46:51 UTC <notdan> Zuric is that expensive?
+2013-09-02 17:46:53 UTC <notdan> Also, hi
+2013-09-02 18:33:30 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 14f1140bd http://travis-ci.org/diagrams/diagrams-haddock/builds/10904840 The build has errored.
+2013-09-02 19:19:55 UTC <fryguybob> byorgey: Nice.  I'm trying to fix expandTrail.  It is broken now :(
+2013-09-02 19:20:55 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 1439ad3b0 http://travis-ci.org/diagrams/diagrams-haddock/builds/10906374 The build has errored.
+2013-09-02 19:37:18 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 14268886b http://travis-ci.org/diagrams/diagrams-haddock/builds/10906881 The build has errored.
+2013-09-02 19:38:08 UTC <byorgey> fryguybob: aww =(
+2013-09-02 19:39:40 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 141efcb09 http://travis-ci.org/diagrams/diagrams-haddock/builds/10906990 The build has errored.
+2013-09-02 19:40:03 UTC <byorgey> there, diagrams-haddock has zero open tickets =D
+2013-09-02 19:42:20 UTC <byorgey> ACTION makes a todo to write a blog post about it
+2013-09-02 19:43:36 UTC <fryguybob> byorgey: Nice
+2013-09-02 19:45:11 UTC <byorgey> I guess now I have to make some big patches to diagrams-lib and -contrib etc. since the filename format for diagrams-haddock has changed
+2013-09-02 19:49:21 UTC <fryguybob> Ah, I fixed lines, loops are still crazy: http://www.cs.rochester.edu/u/ryates/temp/dl/html/diagrams-lib/Diagrams-TwoD-Offset.html
+2013-09-02 19:49:52 UTC <byorgey> hahahaha, awesome
+2013-09-02 19:50:13 UTC <byorgey> I kinda like it that way ;-)
+2013-09-02 19:51:03 UTC <fryguybob> We do need a Picasso backend
+2013-09-02 19:52:01 UTC <fryguybob> I'll be back later to sort out loops.
+2013-09-02 19:52:57 UTC <byorgey> hehe, a Picasso backends sounds fun =)
+2013-09-02 19:55:06 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 14b8e4870 http://travis-ci.org/diagrams/diagrams-lib/builds/10907277 The build passed.
+2013-09-02 20:02:26 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06master 146df4d72 http://travis-ci.org/diagrams/diagrams-contrib/builds/10907441 The build passed.
+2013-09-02 23:08:45 UTC <fryguybob> getting close: http://www.cs.rochester.edu/u/ryates/temp/dl/html/diagrams-lib/Diagrams-TwoD-Offset.html
+2013-09-02 23:33:34 UTC <fryguybob> Humm, we need diagrams-haddock -j8
+2013-09-02 23:35:35 UTC <luite> -j085
+2013-09-02 23:35:59 UTC <fryguybob> :D
+2013-09-02 23:36:45 UTC <luite> finally people are going to sleep, i can hack a bit more undisturbed
+2013-09-02 23:43:14 UTC <fryguybob> blah.  Elegance is escaping me right now...
+2013-09-02 23:45:57 UTC <luite> hmmmmmm sleepy
+2013-09-02 23:46:42 UTC <luite> perhaps more beer wil help
+2013-09-02 23:48:03 UTC <fryguybob> woohoo! http://www.cs.rochester.edu/u/ryates/temp/dl/html/diagrams-lib/Diagrams-TwoD-Offset.html
+2013-09-02 23:48:32 UTC <byorgey> =D
+2013-09-02 23:48:50 UTC <byorgey> fryguybob: oh, good idea re: diagrams-haddock -j8
+2013-09-02 23:49:02 UTC <byorgey> should be pretty easy, really
+2013-09-02 23:49:40 UTC <fryguybob> byorgey: Yeah.  Saddly I want it because I keep blowing away the cache because I'm working on lib which it needs to build the diagrams in lib.  The diagrams don't change but lib does.
+2013-09-02 23:50:11 UTC <byorgey> ohhh.  Well, we should fix that too.
+2013-09-02 23:50:31 UTC <fryguybob> And sadly the working version of expand includes (\(a:as) -> as ++ [a]) Just doesn't feel nice.
+2013-09-02 23:50:47 UTC <byorgey> fryguybob: well, getting something that works is the first step =)
+2013-09-02 23:51:33 UTC <fryguybob> byorgey: Yeah.  The moments where I want to hug Haskell the most are when I finally get something working then spend a few minutes and it magically works and is nice.
+2013-09-02 23:51:43 UTC <byorgey> hehe, indeed =)
+2013-09-02 23:52:56 UTC <luite> i'm a bit scared going to my room, so far every time there was a new guest he snored louder than the old one, and this night there are two...
+2013-09-02 23:53:10 UTC <byorgey> luite: hehe
+2013-09-02 23:53:12 UTC <byorgey> luite: good luck
+2013-09-02 23:53:16 UTC <luite> although the one last night is pretty hard to beat
+2013-09-02 23:53:52 UTC <fryguybob> We once had to get a separate room from my parents at like 3 am because we couldn't take it anymore.
+2013-09-02 23:53:53 UTC <luite> byorgey: no internet there and i'm still compiling etc, so i'm forced to sit with people downstairs
+2013-09-02 23:54:16 UTC <luite> some are playing d&d or something
+2013-09-02 23:54:28 UTC <luite> or a drinking game variant of it
+2013-09-02 23:54:30 UTC <byorgey> sounds like quite the place
+2013-09-02 23:54:40 UTC <byorgey> haha
+2013-09-02 23:55:33 UTC <luite> hehe it's kinda fun, but i didn't find zurich itself all that interesting i have to admit
+2013-09-02 23:56:03 UTC <luite> and it's rather expensive too, cost of living here is quite a bit higher than nyc
+2013-09-02 23:58:51 UTC <luite> perhaps it's more interesting if you like expensive watches, banks and designer clothes
+2013-09-02 23:59:29 UTC <byorgey> hehe
+2013-09-02 23:59:44 UTC <byorgey> sounds like I would love it =P
+2013-09-03 00:00:22 UTC <byorgey> what's the state of the art in running a bunch of actions concurrently using a thread pool (e.g. so no more than N are running at once)?
+2013-09-03 00:00:46 UTC <fryguybob> byorgey: async?
+2013-09-03 00:01:37 UTC <fryguybob> byorgey: Oh, didn't fully read that.  Perhaps async has something for that.
+2013-09-03 00:01:55 UTC <byorgey> I looked at async, it looks really nice, but I don't see anything for limiting to at most N concurrent actions
+2013-09-03 00:02:24 UTC <byorgey> async is a bit higher-level than raw MVars or whatever but it's still pretty low-level.
+2013-09-03 00:02:35 UTC <byorgey> I'll ask in #haskell
+2013-09-03 00:03:57 UTC <luite> newQSem n >>= \qs -> async (map (bracket (waitQSem qs) (signalQSem qs)) actions)
+2013-09-03 00:04:20 UTC <fryguybob> byorgey: If you ... yeah what luite wrote.
+2013-09-03 00:04:36 UTC <luite> still spawns the lightweight threads though
+2013-09-03 00:04:48 UTC <byorgey> luite: as opposed to what?
+2013-09-03 00:04:48 UTC <luite> but that should scale reasonably well :)
+2013-09-03 00:04:56 UTC <luite> byorgey: doing it in n lightweight threads
+2013-09-03 00:05:02 UTC <fryguybob> byorgey: You could have a queue of tasks then just async n workers that dequeue.
+2013-09-03 00:05:30 UTC <luite> right, but i didn't know how to code golf that to something that short :)
+2013-09-03 00:05:48 UTC <byorgey> makes sense
+2013-09-03 00:06:05 UTC <byorgey> and how does one have a threadsafe shared mutable queue?
+2013-09-03 00:06:13 UTC <luite> Chan
+2013-09-03 00:06:22 UTC <fryguybob> byorgey: STM of course :D
+2013-09-03 00:06:28 UTC <byorgey> hehe
+2013-09-03 00:06:41 UTC <fryguybob> Oh you want fast :P
+2013-09-03 00:06:55 UTC <luite> well with the STM chan you can check if it's empty
+2013-09-03 00:07:26 UTC <luite> supposedly the actions are quite a bit higher than the STM overhead, otherwise you wouldn't have to pool them :)
+2013-09-03 00:09:37 UTC <byorgey> well I will certainly need to check if the chan is empty.  So Control.Concurrent.STM.TChan it is.
+2013-09-03 00:12:02 UTC <fryguybob> worker c = join $ atomically (readTChan c >>= return . (>> worker c) <|> return ())
+2013-09-03 00:13:08 UTC <byorgey> what does that do?
+2013-09-03 00:14:03 UTC <fryguybob> I could be completely off, but I'm trying to read an IO action from a channel, if there was one, perform it, then loop.  Otherwise finish.
+2013-09-03 00:14:39 UTC <byorgey> fryguybob: oh, I get it
+2013-09-03 00:15:43 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06master 14bfc9505 http://travis-ci.org/diagrams/diagrams-haddock/builds/10914589 The build has errored.
+2013-09-03 00:16:02 UTC <byorgey> OK, goodnight all
+2013-09-03 00:16:18 UTC <fryguybob> Goodnight!
+2013-09-03 00:16:52 UTC <luite> good night
+2013-09-03 00:34:48 UTC <travis-ci> [travis-ci] 13diagrams-lib/06expand 145b9fed4 http://travis-ci.org/diagrams/diagrams-lib/builds/10914853 The build passed.
+2013-09-03 00:38:11 UTC <luite> bluh
+2013-09-03 00:52:37 UTC <travis-ci> [travis-ci] 13diagrams-lib/06expand 148766c24 http://travis-ci.org/diagrams/diagrams-lib/builds/10915226 The build passed.
+2013-09-03 00:53:16 UTC <fryguybob> luite: Was that bluh at my ugly code :P
+2013-09-03 00:54:04 UTC <luite> no at being tired and still wanting to finish the ghc patch etc
+2013-09-03 00:54:14 UTC <luite> that hackathon got me out of the flow of getting things done :(
+2013-09-03 00:54:29 UTC <fryguybob> Ah.
+2013-09-03 00:55:02 UTC <luite> i think i'll drive south tomorrow and do some hiking, find a hotel/hostel outside the city
+2013-09-03 00:55:36 UTC <fryguybob> luite: Sounds like a good plan.
+2013-09-03 00:56:14 UTC <fryguybob> ACTION has been away from mountains for too long.
+2013-09-03 00:56:27 UTC <luite> yeah would be a shame to be in switzerland and only see city...
+2013-09-03 02:18:40 UTC <fryguybob> Boo! "This version of GHC is not thread-safe,can't safely run two instances of the interpreter simultaneously"
+2013-09-03 02:19:31 UTC <fryguybob> So un-haskelly of GHC.
+2013-09-03 02:22:12 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06parallel 141d5bc08 http://travis-ci.org/diagrams/diagrams-haddock/builds/10917033 The build has errored.
+2013-09-03 09:13:03 UTC <luite> bleh gotta run, parking was only valid until 11
+2013-09-03 09:52:54 UTC <mr-> Oh.. that's expensive
+2013-09-03 12:52:59 UTC <luite> bluh finally found a hotel :)
+2013-09-03 13:27:04 UTC <lemao> luite: were are you now? Zurich still?
+2013-09-03 13:27:11 UTC <luite> no chur
+2013-09-03 13:32:49 UTC <lemao> :-) well, you are heading south ... 
+2013-09-03 13:32:57 UTC <lemao> ok, southeast
+2013-09-03 15:58:26 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06parallel 14e7458b7 http://travis-ci.org/diagrams/diagrams-haddock/builds/10939929 The build has errored.
+2013-09-03 18:42:52 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 1411bb952 http://travis-ci.org/diagrams/diagrams-doc/builds/10944592 The build failed.
+2013-09-03 19:10:01 UTC <travis-ci> [travis-ci] 13active/06new-semantics 1420f446e http://travis-ci.org/diagrams/active/builds/10946747 The build has errored.
