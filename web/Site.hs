@@ -1,6 +1,8 @@
 {-# LANGUAGE NoMonomorphismRestriction #-}
 {-# LANGUAGE OverloadedStrings         #-}
 
+module Site where
+
 import           Control.Monad        (forM_, (>=>))
 import           Data.Char            (isAlphaNum)
 import           Data.Functor         ((<$>))

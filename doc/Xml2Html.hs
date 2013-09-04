@@ -1,5 +1,7 @@
 {-# LANGUAGE Arrows #-}
 
+module Xml2Html where
+
 import           Control.Arrow
 import           Control.Monad                      (when)
 import           System.Directory                   (createDirectory,

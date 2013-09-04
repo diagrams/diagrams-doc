@@ -59,6 +59,8 @@ main = do
       ]
 
     _ -> shake shakeOptions { shakeThreads = 2 `max` (n - 1) } $ do
+      disk <- newResource "Disk" 4
+
       action $ requireDoc
       action $ requireIcons
       action $ requireStatic
@@ -68,7 +70,7 @@ main = do
 
       dist "doc/*.html" *> \out -> do
         let xml = obj . un $ out -<.> "xml"
-            exe = obj "doc/xml2html.hs.exe"
+            exe = obj "doc/Xml2Html.hs.exe"
         need [xml, exe]
         system' exe [xml, "-o", dist "doc/images", out]
 
@@ -77,10 +79,16 @@ main = do
         need [rst]
         system' "rst2xml" ["--input-encoding=utf8", rst, out]
 
-      obj "//*.hs.exe" *> \out -> do
+      obj "//*.hs.o" *> \out -> do
         let hs = un $ dropExtension out
         need [hs]
-        ghc out hs
+        ghc Compile out hs
+
+      obj "//*.hs.exe" *> \out -> do
+        let o  = out -<.> "o"
+            hs = un $ dropExtension out
+        need [hs,o]
+        withResource disk 1 $ ghc Link out hs
 
       dist "doc/icons/*.png" *> \out -> do
         let exe = obj . un $ out -<.> ".hs.exe"
@@ -105,7 +113,7 @@ main = do
 
 compilePng :: Bool -> FilePath -> Action ()
 compilePng isThumb outPath = do
-    systemCwdNorm "web/gallery" (obj "web/gallery/build-gallery.hs.exe")
+    systemCwdNorm "web/gallery" (obj "web/gallery/BuildGallery.hs.exe")
       ( (if isThumb then [ "--thumb", "175" ] else [])
         ++ [(takeBaseName . takeBaseName) outPath, "../.." </> outPath]
       )
@@ -157,7 +165,7 @@ runWeb m = do
   system' "rm" ["-f", "dist/doc/doc"]
   system' "rm" ["-f", "dist/web/gallery/gallery"]
 
-  systemCwdNorm "web" (obj "web/hakyll.hs.exe")
+  systemCwdNorm "web" (obj "web/Site.hs.exe")
     [ case m of
         BuildH  -> "build"
         Preview -> "preview"
@@ -167,22 +175,30 @@ needWeb :: Action ()
 needWeb = do
   need [ "web/doc"
        , "web/gallery/images"
-       , obj "web/hakyll.hs.exe"
-       , obj "web/gallery/build-gallery.hs.exe"
+       , obj "web/Site.hs.exe"
+       , obj "web/gallery/BuildGallery.hs.exe"
        ]
   requireIcons
   requireStatic
   requireGallery
   requireDoc
 
-ghc :: String -> String -> Action ()
-ghc out hs = do
+data GhcMode = Compile | Link
+  deriving Eq
+
+ghc :: GhcMode -> String -> String -> Action ()
+ghc mode out hs = do
   askOracleWith (GhcPkg ()) [""]
   let odir = takeDirectory out
       base = (takeBaseName . takeBaseName) out
       mainIs | head base `elem` ['A'..'Z'] = ["-main-is", base]
              | otherwise                   = []
-  system' "ghc" (["--make", "-O2", "-outputdir", odir, "-o", out, hs] ++ mainIs)
+  system' "ghc" $
+    concat
+    [ ["--make", "-O2", "-outputdir", odir, "-o", out, "-osuf", "hs.o", hs]
+    , mainIs
+    , ["-c" | mode == Compile ]
+    ]
 
 systemCwdNorm :: FilePath -> FilePath -> [String] -> Action ()
 systemCwdNorm path exe as = do

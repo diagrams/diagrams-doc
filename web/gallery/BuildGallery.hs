@@ -1,21 +1,24 @@
-{-# LANGUAGE StandaloneDeriving, DeriveDataTypeable #-}
+{-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE StandaloneDeriving #-}
 
-import Diagrams.Prelude
-import Diagrams.Backend.Cairo
-import Diagrams.Backend.Cairo.Internal -- due to GHC export bug in 7.4
+module BuildGallery where
 
-import Diagrams.Builder hiding (Build(..))
+import           Diagrams.Backend.Cairo
+import           Diagrams.Backend.Cairo.Internal
+import           Diagrams.Prelude
 
-import Data.List.Split
+import           Diagrams.Builder                hiding (Build (..))
 
-import qualified System.FilePath as FP
+import           Data.List.Split
 
-import Control.Arrow (second)
-import Control.Monad (mplus)
+import qualified System.FilePath                 as FP
 
-import qualified Data.Map as M
+import           Control.Arrow                   (second)
+import           Control.Monad                   (mplus)
 
-import System.Console.CmdArgs hiding (name)
+import qualified Data.Map                        as M
+
+import           System.Console.CmdArgs          hiding (name)
 
 -- If the first argument is 'Just', we're making a thumbnail, so use
 -- that as the width and height, and use the 'view' parameters from
