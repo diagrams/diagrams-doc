@@ -39031,3 +39031,40 @@
 2013-09-03 15:58:26 UTC <travis-ci> [travis-ci] 13diagrams-haddock/06parallel 14e7458b7 http://travis-ci.org/diagrams/diagrams-haddock/builds/10939929 The build has errored.
 2013-09-03 18:42:52 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 1411bb952 http://travis-ci.org/diagrams/diagrams-doc/builds/10944592 The build failed.
 2013-09-03 19:10:01 UTC <travis-ci> [travis-ci] 13active/06new-semantics 1420f446e http://travis-ci.org/diagrams/active/builds/10946747 The build has errored.
+2013-09-04 01:53:26 UTC <travis-ci> [travis-ci] 13active/06new-semantics 14253c73e http://travis-ci.org/diagrams/active/builds/10958045 The build has errored.
+2013-09-04 01:57:57 UTC <travis-ci> [travis-ci] 13active/06new-semantics 149df2e5d http://travis-ci.org/diagrams/active/builds/10958156 The build has errored.
+2013-09-04 02:08:44 UTC <travis-ci> [travis-ci] 13active/06new-semantics 14e09c29e http://travis-ci.org/diagrams/active/builds/10958376 The build has errored.
+2013-09-04 02:15:15 UTC <travis-ci> [travis-ci] 13diagrams-lib/06new-active 1444bd7cf http://travis-ci.org/diagrams/diagrams-lib/builds/10958557 The build has errored.
+2013-09-04 02:20:10 UTC <travis-ci> [travis-ci] 13active/06new-semantics 14fab6f86 http://travis-ci.org/diagrams/active/builds/10958536 The build has errored.
+2013-09-04 14:26:15 UTC <fryguybob> byorgey: I see now that the "GHC isn't thread-safe" message we git is from hint, not GHC.  It checks for multiple calls with an MVar (I'm not really sure why they don't just use that as a lock, but anyway).
+2013-09-04 14:26:54 UTC <fryguybob> byorgey: So I suppose that GHC could be ok now, but hint doesn't know it.
+2013-09-04 14:31:33 UTC <byorgey> fryguybob: interesting.  I kind of doubt it though, because that GHC trac ticket is still open.
+2013-09-04 14:32:19 UTC <fryguybob> byorgey: Yeah, but it could have been missed I suppose.  I'll try and see what the structures mentioned in the ticket are like now.
+2013-09-04 14:32:27 UTC <byorgey> OK.
+2013-09-04 14:32:47 UTC <byorgey> I guess the recent work on parallelizing GHC builds could be relevant.
+2013-09-04 14:32:57 UTC <fryguybob> byorgey: Right
+2013-09-04 14:33:31 UTC <fryguybob> byorgey: I suppose I could just build hint without the check and see if the wheels fall off.
+2013-09-04 14:34:35 UTC <byorgey> right =)
+2013-09-04 15:24:12 UTC <fryguybob> byorgey: The wheels do fall off most of the time.  When they don't speedup is still fairly small.  4.02s -j8 vs 6.91s -- speedup 1.7
+2013-09-04 16:26:24 UTC <haasn> byorgey: diagrams-html
+2013-09-04 16:26:26 UTC <haasn> fund it
+2013-09-04 16:33:02 UTC <fryguybob> haasn: ?
+2013-09-04 16:33:17 UTC <haasn> fryguybob: rendering HTML via digrams
+2013-09-04 16:33:19 UTC <haasn> somehow
+2013-09-04 16:33:26 UTC <haasn> it would be super interesting
+2013-09-04 16:33:30 UTC <fryguybob> haasn: There is the diagrams-canvas backend which I initially wrote.
+2013-09-04 16:33:38 UTC <haasn> no no rendering HTML itself
+2013-09-04 16:33:40 UTC <haasn> as a diagram
+2013-09-04 16:33:43 UTC <haasn> not rendering diagrams in HTML :)
+2013-09-04 16:34:04 UTC <fryguybob> Ah, no thanks :P
+2013-09-04 16:34:59 UTC <haasn> do you think it could be done? I mean, layout in r2 with margins, paddings and stuff should be easily doable this way
+2013-09-04 16:35:03 UTC <haasn> superimposing things too
+2013-09-04 16:35:18 UTC <haasn> text would be trickiest, though
+2013-09-04 16:36:09 UTC <fryguybob> haasn: I just mean HTML is a mess.  So is CSS.
+2013-09-04 16:38:27 UTC <fryguybob> haasn: I'm in no way trying to discourage you though :D
+2013-09-04 16:38:51 UTC <haasn> I think this project would be out of the scope of an individual programmer, personally
+2013-09-04 16:39:02 UTC <haasn> especially if you want to do *all* of CSS3
+2013-09-04 16:39:08 UTC <haasn> animations and whatnot, maybe via FRP
+2013-09-04 16:39:36 UTC <haasn> ..and interactivity would be a nightmare, though possible, with the various monoid probing stuff diagrams exposes
+2013-09-04 16:39:59 UTC <haasn> if you could throw a nonexistant high-profile Haskell company at it..
+2013-09-04 16:40:01 UTC <haasn> ACTION stops dreaming
