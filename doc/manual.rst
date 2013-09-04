@@ -708,6 +708,17 @@ value of some `Angle` type, you can write something like `(3 :: Deg)`
 or `(3 :: Rad)`.  The `convertAngle` function is also provided for
 converting between different angle representations.
 
+The functions `asTurn`, `asRad`, and `asDeg` are provided for
+convenience. They are all the identity function, but with restricted
+types (for example, `asTurn :: Turn -> Turn`).  Occasionally this can
+be useful to help resolve ambiguity.  For example, `rotation . asTurn
+. fromRational` is a function of type `Rational -> T2` which converts
+a rational number `r`:math: into a rotation of `r`:math: turns.  The
+expression becomes ambiguous if the call to `asTurn` is omitted, since
+`fromRational` can output any instance of `Fractional`, and `rotation`
+accepts any instance of `Angle`.  Inserting `asTurn` fixes the
+intermediate type and resolves the ambiguity.
+
 The `direction` function computes the angle of a vector, measured
 clockwise from the positive `x`:math:\-axis.
 
