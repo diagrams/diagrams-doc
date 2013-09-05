@@ -2254,14 +2254,46 @@ continuity; segments are even more restricted.)
 >
 > example = mconcat (map (place dot) pts) <> strokeLocTrail spline
 
+Instances of `Parametric` include:
+
+* `Segment Closed`: The codomain is the type of vectors.  Note there
+  is no instance for `Segment Open`, since additional context is
+  needed to determine the endpoint, and hence the parametrization, of
+  an open segment.
+* `FixedSegment`: The codomain is the type of points.
+* `Trail'`: The codomain is the vector space. Note that there is no
+  difference between `Line` and `Loop`.
+* `Trail`: same as the instance for `Trail'`.
+* `Located a`: as long as `a` is also `Parametric` and the codomain of
+  `a` is a vector space, `Located a` is parametric with points as the
+  codomain.  For example, calling `atParam` on a `Located (Trail R2)`
+  returns a `P2`.
+
+`Path`\s are *not* `Parametric`, since they may have multiple trail
+components and there is no canonical way to assign them a
+parametrization.
+
 DomainBounds
 ++++++++++++
+
+The `domainLower` and `domainUpper` functions simply return the lower
+and upper bounds for the parameter.  By default, these will be `0`:math: and
+`1`:math:, respectively.  However, it is possible to have objects
+parameterized over some interval other than `[0,1]`:math:.
 
 EndValues
 +++++++++
 
+The `EndValues` class provides the functions `atStart` and `atEnd`,
+which return the value at the start and end of the parameter interval,
+respectively.  In other words, semantically we have `atStart x = x
+\`atParam\` domainLower x`, but certain types may have more efficient
+or accurate ways of computing their start and end values.
+
 Sectionable
 +++++++++++
+
+.. container:: todo
 
 HasArcLength
 ++++++++++++
