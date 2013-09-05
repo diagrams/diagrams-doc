@@ -1927,7 +1927,7 @@ the edges individually:
 > example = lw 0.1
 >         . mconcat
 >         . zipWith lc colors
->         . map strokeLocT . explodeTrail
+>         . map strokeLocTrail . explodeTrail
 >         $ burst `at` origin
 
 (If we wanted to fill the starburst with yellow as before, we would
