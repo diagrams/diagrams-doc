@@ -1095,9 +1095,11 @@ implemented as a call to `juxtapose` followed by a call to `(<>)`.)
 >   where circles = mconcat [d1, d2, d3]
 
 See `envelopes and local vector spaces`_ for more information on what
-"next to" means, `Working with envelopes`_ for information on
-functions available for manipulating envelopes, or the section on
-`Diagrams.Core.Envelope`_ for precise details.
+"next to" means, and `Working with envelopes`_ for information on
+functions available for manipulating envelopes.  To learn about how
+envelopes are implemented, see the `core library reference`__.
+
+__ core.html
 
 Concatenating diagrams
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -1186,7 +1188,9 @@ Every diagram has a *style* which is an arbitrary collection of
 *attributes*.  This section will describe some of the default
 attributes which are provided by the ``diagrams`` library and
 recognized by most backends.  However, you can easily create your own
-attributes as well; for details, see the section on `Diagrams.Core.Style`_.
+attributes as well; for details, see the `core library reference`__.
+
+__ core.html
 
 In many examples, you will see attributes applied to diagrams using
 the `(#)` operator.  Keep in mind that there is nothing special about
@@ -1198,8 +1202,10 @@ modifications to its attributes.  See `Postfix transformation`_.
 In general, inner attributes (that is, attributes applied earlier)
 override outer ones.  Note, however, that this is not a requirement.
 Each attribute may define its own specific method for combining
-multiple values.  See the section on `Diagrams.Core.Style`_ for more
+multiple values.  Again, see the `core library reference`__ for more
 details.
+
+__ core.html
 
 Most of the attributes discussed in this section are defined in
 `Diagrams.Attributes`:mod:.
@@ -1423,11 +1429,13 @@ Transformations in general
 
 Before looking at specific two-dimensional transformations, it's worth
 saying a bit about transformations in general (a fuller treatment can
-be found in the section on `Diagrams.Core.Transform`_).  The
-`Transformation` type is defined in `Diagrams.Core.Transform`:mod:,
-from the `diagrams-core`:pkg: package.  `Transformation` is
-parameterized by the vector space over which it acts; recall that `T2`
-is provided as a synonym for `Transformation R2`.
+be found in the `core library reference`_).  The `Transformation`
+type is defined in `Diagrams.Core.Transform`:mod:, from the
+`diagrams-core`:pkg: package.  `Transformation` is parameterized by
+the vector space over which it acts; recall that `T2` is provided as a
+synonym for `Transformation R2`.
+
+.. _`core library reference`: core.html
 
 `Transformation v` is a `Monoid` for any vector space `v`:
 
@@ -1449,7 +1457,7 @@ about the origin.  Since `rotate` takes an angle, you must specify an
 angle type, such as `rotate (80 :: Deg)`.  In the common case that you
 wish to rotate by an angle specified as a certain fraction of a
 circle, like `rotate (1/8 :: Turn)`, you can use `rotateBy`
-instead. `rotateBy` is specialized to only accept `Turn`s, so in this
+instead. `rotateBy` is specialized to only accept `Turn`\s, so in this
 example you would only have to write `rotateBy (1/8)`.
 
 You can also use `rotateAbout` in the case that you want to rotate
@@ -1494,7 +1502,7 @@ the `x`:math:\- and `y`:math:\-axes, respectively.  Their names can be
 confusing (does `reflectX` reflect *along* the `x`:math:\-axis or
 *across* the `x`:math:\-axis?) but you can just remember that
 `reflectX = scaleX (-1)`, and similarly for `reflectY`; that is,
-``reflectQ`` acts on ``Q``-coordinates.
+``reflectQ`` affects ``Q``-coordinates.
 
 To reflect in some line other than an axis, use `reflectAbout`.
 
@@ -1522,9 +1530,11 @@ conjugation: `conjugate t1 t2 == inv t1 <> t2 <> t1`, that is,
 performs `t1`, then `t2`, then undoes `t1`.
 
 `under` performs a transformation using conjugation.  It takes as
-arguments a function to perform some transformation as well as a
-transformation to conjugate by.  For example, scaling by a factor of 2
-along the diagonal line `y = x`:math: can be accomplished thus:
+arguments a function `f` as well as a transformation to conjugate by,
+and produces a function which performs the transformation, then `f`,
+then the inverse of the transformation.  For example, scaling by a
+factor of 2 along the diagonal line `y = x`:math: can be accomplished
+thus:
 
 .. class:: dia-lhs
 
@@ -3542,7 +3552,7 @@ Instances:
     `Map`.
 
 Further reading: `Envelopes and local vector spaces`_; `Working with
-envelopes`_; `Diagrams.Core.Envelope`_.
+envelopes`_.
 
 Traced
 ++++++
@@ -3589,7 +3599,7 @@ used as an attribute must be made a member of this class.
 Instances: many; see `Diagrams.Attributes`:mod: and
 `Diagrams.TwoD.Path`:mod:.
 
-Further reading: `Attributes and styles`_; `Text`_; `Diagrams.Core.Style`_.
+Further reading: `Attributes and styles`_; `Text`_.
 
 HasStyle
 ++++++++
@@ -3618,8 +3628,7 @@ Instances:
   * Of course, `QDiagram b v m` is an instance, given a few
     restrictions on `v` and `m`.
 
-Further reading: `Attributes and styles`_; `Text`_;
-`Diagrams.Core.Style`_.
+Further reading: `Attributes and styles`_; `Text`_.
 
 Classes for names
 ~~~~~~~~~~~~~~~~~
@@ -3750,7 +3759,9 @@ Backend
 The `Backend` class, defined in `Diagrams.Core.Types`:mod:, defines
 the primary interface for any diagrams rendering backend.  Unlike many
 of the other type classes in diagrams, it is quite large.  For a full
-discussion, see `Backends`_.
+discussion, see the `core library reference`__.
+
+__ core.html
 
 MultiBackend
 ++++++++++++
@@ -3772,7 +3783,7 @@ meaning of this function depends on the backend.
 So far, the only backend which supports multi-diagram rendering is
 the `postscript backend`_.
 
-Further reading: `Rendering backends`_; `Backends`_.
+Further reading: `Rendering backends`_.
 
 Renderable
 ++++++++++
@@ -3946,7 +3957,9 @@ Render
 
 `Render` is an associated data family of the `Backend` class.  It
 determines the type of rendering operations for a given backend.  For
-more information, see `Backends`_.
+more information, see the `core library reference`__.
+
+__ core.html
 
 Result
 ~~~~~~
@@ -3954,14 +3967,19 @@ Result
 `Result` is an associated type family of the `Backend` class.  It
 determines the type of the final result obtained from the backend
 after rendering a complete diagram.  For more information, see
-`Backends`_.
+the `core library reference`__.
+
+__ core.html
 
 Options
 ~~~~~~~
 
 `Options` is an associated data family of the `Backend` class.  It
 determines the type of options which can be passed to the backend when
-initiating a rendering operation.  For more information, see `Backends`_.
+initiating a rendering operation.  For more information, see the `core
+library reference`__.
+
+__ core.html
 
 Codomain
 ~~~~~~~~
@@ -4372,10 +4390,12 @@ Rendering backends
 Diagrams has a system for "pluggable" rendering backends, so new
 backends can be added by implementing instances of some type classes.
 There are currently four "officially supported" backends, described
-below, and several other experimental backends.  New backends are
-welcome!  To get started, take a look at the existing backends for
-examples, and read the sections below on `Tools for backends`_ and
-`Backends`_.
+below, and several other unofficial or experimental backends.  New
+backends are welcome!  To get started, take a look at the existing
+backends for examples, read the section below on `Tools for
+backends`_, and consult the `core library reference`__.
+
+__ core.html
 
 The SVG backend
 ---------------
