@@ -1832,7 +1832,7 @@ path by concatenating a number of rotated copies.  Note how we call
 `glueLine` to turn the starburst into a closed loop, so that we can
 fill it (lines cannot be filled).  `strokeLoop` turns a loop into a
 diagram, with the start of the loop at the local origin. (There are
-also analogous functions `strokeLine` and `strokeT`.)
+also analogous functions `strokeLine` and `strokeTrail`.)
 
 .. class:: dia-lhs
 
@@ -1996,8 +1996,8 @@ holes:
 (See `Fill rules`_ for an explanation of the call to `fillRule
 EvenOdd`.)
 
-`stroke` turns a path into a diagram, just as `strokeT` turns a trail
-into a diagram. (In fact, `strokeT` really works by first turning the
+`stroke` turns a path into a diagram, just as `strokeTrail` turns a trail
+into a diagram. (In fact, `strokeTrail` really works by first turning the
 trail into a path and then calling `stroke` on the result.)
 
 `explodePath`, similar to `explodeTrail`, turns the segments of a path
@@ -2013,17 +2013,17 @@ For information on other path manipulation functions such as
 Stroking trails and paths
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The `strokeT` and `stroke` functions, which turn trails and paths into
+The `strokeTrail` and `stroke` functions, which turn trails and paths into
 diagrams respectively, have already been mentioned; they are defined
 in `Diagrams.TwoD.Path`:mod:.  Both also have primed variants,
-`strokeT'` and `stroke'`, which take a record of `StrokeOpts`.
+`strokeTrail'` and `stroke'`, which take a record of `StrokeOpts`.
 Currently, `StrokeOpts` has two fields:
 
 * `vertexNames` takes a list of lists of names, and zips each list
   with a component of the path, creating point subdiagrams (using
   `pointDiagram`) associated with the names.  This means that the
   names can be used to later refer to the locations of the path
-  vertices (see `Named subdiagrams`_).  In the case of `strokeT'`,
+  vertices (see `Named subdiagrams`_).  In the case of `strokeTrail'`,
   only the first list is used.
 
   By default, `vertexNames` is an empty list.
@@ -2241,9 +2241,18 @@ not correspond to something of type `p`.  For example, to convert from
 a function to a trail one would need at the very least a guarantee of
 continuity; segments are even more restricted.)
 
-.. container:: todo
+.. class:: dia-lhs
 
-  Finish
+::
+
+> import Diagrams.Coordinates
+>
+> spline :: Located (Trail R2)
+> spline = cubicSpline False [origin, 0&1, 1&1, 1&0] # scale 3
+> pts = map (spline `atParam`) [0, 0.1 .. 1]
+> dot = circle 0.2 # fc blue
+>
+> example = mconcat (map (place dot) pts) <> strokeLocTrail spline
 
 DomainBounds
 ++++++++++++
@@ -2623,7 +2632,7 @@ Envelope-related functions
   > surround d = c === (c ||| d ||| c) # centerXY === c
   >   where c = circle 0.5
   >
-  > p = strokeT (square 1)
+  > p = strokeTrail (square 1)
   >
   > example = surround (pad 1.2 $ p # showOrigin) ||| strutX 1
   >       ||| surround (pad 1.2 $ p # centerXY # showOrigin)
