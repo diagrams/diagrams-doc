@@ -1827,7 +1827,7 @@ is how to convert between them.
     a gratuitous length-zero segment.
 
 Lines form a monoid under concatenation. For example, below we create
-a two-segment line called ``spike`` and then construct a starburst
+a two-segment line called ``spoke`` and then construct a starburst
 path by concatenating a number of rotated copies.  Note how we call
 `glueLine` to turn the starburst into a closed loop, so that we can
 fill it (lines cannot be filled).  `strokeLoop` turns a loop into a
@@ -1838,11 +1838,11 @@ also analogous functions `strokeLine` and `strokeTrail`.)
 
 ::
 
-> spike :: Trail' Line R2
-> spike = fromOffsets . map r2 $ [(1,3), (1,-3)]
+> spoke :: Trail' Line R2
+> spoke = fromOffsets . map r2 $ [(1,3), (1,-3)]
 >
 > burst :: Trail' Loop R2
-> burst = glueLine . mconcat . take 13 . iterate (rotateBy (-1/13)) $ spike
+> burst = glueLine . mconcat . take 13 . iterate (rotateBy (-1/13)) $ spoke
 >
 > example = strokeLoop burst # fc yellow # lw 0.1 # lc orange
 
@@ -1917,10 +1917,10 @@ the edges individually:
 
 ::
 
-> spike :: Trail R2
-> spike = fromOffsets . map r2 $ [(1,3), (1,-3)]
+> spoke :: Trail R2
+> spoke = fromOffsets . map r2 $ [(1,3), (1,-3)]
 >
-> burst = mconcat . take 13 . iterate (rotateBy (-1/13)) $ spike
+> burst = mconcat . take 13 . iterate (rotateBy (-1/13)) $ spoke
 >
 > colors = cycle [aqua, orange, deeppink, blueviolet, crimson, darkgreen]
 >
