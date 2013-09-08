@@ -2288,18 +2288,55 @@ The `EndValues` class provides the functions `atStart` and `atEnd`,
 which return the value at the start and end of the parameter interval,
 respectively.  In other words, semantically we have `atStart x = x
 \`atParam\` domainLower x`, but certain types may have more efficient
-or accurate ways of computing their start and end values.
+or accurate ways of computing their start and end values (for example,
+Bézier segments explicitly store their endpoints, so there is no need
+to evaluate the generic parametric form).
 
 Sectionable
 +++++++++++
 
-.. container:: todo
+The `Sectionable` class abstracts over parametric things which can be
+split into multiple sections (for example, a trail can be split into
+two trails laid end-to-end).  It provides three methods:
+
+* `splitAtParam :: p -> Scalar (V p) -> (p, p)` splits something of
+  type `p` at the given parameter into two things of type `p`.
+  The resulting values will be linearly reparameterized to cover the
+  same parameter space as the parent value.  For example, a segment
+  with parameter values in `[0,1]`:math: will be split into two
+  shorter segments which are also parameterized over `[0,1]`:math:.
+* `section :: p -> Scalar (V p) -> Scalar (V p) -> p` extracts the
+  subpart of the original lying between the given parameters, linearly
+  reparameterized to the same domain as the original.
+* `reverseDomain :: p -> p` reverses the parameterization.  It
+  probably should not be in this class and is likely to move elsewhere
+  in future versions.
 
 HasArcLength
 ++++++++++++
 
+`HasArcLength` abstracts over parametric things with a notion of arc
+length.  It provides five methods:
+
+* `arcLengthBounded` approximates the arc length of an object to
+  within a given tolerance, returning an interval which is guaranteed
+  to contain the true arc length.
+* `arcLength` is similar to `arcLengthBounded`, but returns a single
+  length value instead of an interval.
+* `stdArcLength` approximates the arc length up to a standard
+  accuracy of `\pm 10^{-6}`:math:.
+
+* `arcLengthToParam` converts an arc length to a parameter, up to a
+  given tolernace
+* `stdArcLengthToParam` is like `arcLengthToParam`, but using a
+  standard accuracy of `\pm 10^{-6}`:math:.
+
 Adjusting length
 ++++++++++++++++
+
+Anything which is an instance of `DomainBounds`, `Sectionable`, and
+`HasArcLength` can be "adjusted" using the `adjust` function, which
+provides a number of options for changing the length and extent.
 
 Splines
 ~~~~~~~
