@@ -235,13 +235,14 @@ should strive to work on the level of vectors, and only "stoop" to the
 level of working with explicit coordinates when absolutely necessary.
 
 To get the magnitude and direction of a vector, you can use the
-`magnitude` and `direction` functions.  Additionally, `magnitudeSq`
-gives the *squared* magnitude of a vector, and is more efficient than
+`magnitude` and `direction` functions.  To get the angle between two
+given vectors, use `angleBetween`.  Additionally, `magnitudeSq` gives
+the *squared* magnitude of a vector, and is more efficient than
 squaring the result of `magnitude`, since it avoids a `sqrt` call.
 For example, if you want to test which of two vectors is longer, you
 can compare the results of `magnitudeSq` instead of `magnitude` (since
-`a < b \iff a^2 < b^2`:math: as long as `a`:math: and
-`b`:math: are nonnegative).
+`a < b \iff a^2 < b^2`:math: as long as `a`:math: and `b`:math: are
+nonnegative).
 
 Vector operations
 -----------------
