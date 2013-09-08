@@ -3011,15 +3011,26 @@ have a `Show` instance.
 Accessing names
 ~~~~~~~~~~~~~~~
 
-.. container:: todo
-
-  Create better tools for extracting subdiagrams directly and write
-  about them here.  Should also write about the low-level interface
-  here, I suppose.
-
 Once we have given names to one or more diagrams, what can we do with
-them?  The primary tool for working with names is `withName`, which
-has the (admittedly scary-looking!) type
+them?  The simplest tool for working with names is `lookupName`, which
+has the type
+
+.. class:: lhs
+
+::
+
+  lookupName :: IsName n
+             => n -> QDiagram b v m -> Maybe (Subdiagram b v m)
+
+This function takes a name and a diagram, and returns the first
+subdiagram associated to that name if any are found, and `Nothing`
+otherwise.  (Note that `lookupName` is implemented in terms of the
+lower-level lookup functions `lookupSub` and `subMap`; occasionally it
+may be useful to directly access these lower-level functions, but the
+hope is that you shouldn't need to.)
+
+A more sophisticated tool is `withName`, which has the (admittedly
+scary-looking!) type
 
 .. class:: lhs
 
