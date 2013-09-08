@@ -2478,11 +2478,32 @@ viewed portion would be exactly that specified in the call to `view`.
 Trail and path implementation details
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. container:: todo
+Trails are implemented using `finger trees`_: in particular, lines are
+finger trees of closed segments, while loops consist of a finger tree
+of closed segments plus a single final open segment.
 
-  * fingertree of closed segments, + optional open segment
-  * segment measures
-  * segregate lines and loops into different primitives
+.. _`finger trees`: http://apfelmus.nfshost.com/articles/monoid-fingertree.html
+
+The benefit of using a finger tree (instead of just, say, a list, or
+even a `Seq` structure from `Data.Sequence`:mod:) is that it allows us
+to cache monoidal "measures" of the entire trail.  In particular, we
+cache
+
+* the number of segments
+* the total arc length (up to a standard error tolerance)
+* the total offset (vector from start to end)
+* the envelope
+
+For more details, see the `Diagrams.Segment`:mod: and
+`Diagrams.Trail`:mod: modules.
+
+Another interesting aspect of the implementation is that upon stroking
+a path to form a diagram, instead of simply putting the entire path
+into a primitive, we separate out the lines and loops into two path
+primitives.  This is helpful for backends because they often have to
+do some active work to *avoid* filling lines, and if
+`diagrams-lib`:pkg: did not do this separation, they would essentially
+have to end up doing it themselves.
 
 Text
 ----
