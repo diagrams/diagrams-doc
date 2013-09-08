@@ -2955,13 +2955,6 @@ it with some others, and then later be able to refer back to the the
 subdiagram by name. Any diagram can be given a name with the `named`
 function.
 
-.. container:: warning
-
-   The name mechanism described in this section should be considered
-   experimental; it is quite likely to change (in both small and large
-   ways) in future versions of diagrams.  Your feedback on the current
-   design is greatly appreciated!
-
 User-defined names
 ~~~~~~~~~~~~~~~~~~
 
@@ -3237,6 +3230,18 @@ constructor name that wraps an `Int`.)
 Note how we also made use of `applyAll`, which takes a list of
 functions as an argument and composes them into one; that is,
 `applyAll [f, g, h] === f . g . h`.
+
+Localizing names
+~~~~~~~~~~~~~~~~
+
+In some situations, giving globally unique names to everything (even
+with the qualification mechanism) is a big pain.  The `localize`
+function "localizes" the scope of names: any names within a call of
+`localize` are not visible outside the call.
+
+.. container:: todo
+
+  Needs an example.
 
 Using queries
 -------------
