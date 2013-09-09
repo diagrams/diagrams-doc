@@ -1,0 +1,603 @@
+.. role:: pkg(literal)
+.. role:: hs(literal)
+.. role:: mod(literal)
+.. role:: repo(literal)
+
+.. default-role:: hs
+
+=============================
+Arrow Tutorial
+=============================
+
+.. contents::
+
+Introduction
+============
+
+Arrows come in many shapes and sizes and ``diagrams`` provides a wide variety
+of flexible and extensible tools for creating and using arrows. The diagram
+below gives a small taste of some of the diffent arrows that can be created
+easily with ``diagrams``.
+
+.. class:: dia
+
+::
+
+> example = d # connect' with { arrowHead=dart, headSize=1, arrowTail=quill
+>                                  , tailSize=1, shaftWidth=0.1, arrowShaft=s
+>                                  , tailGap=0.1, headGap=0.1
+>                                  , headStyle = fc blue, tailStyle = fc orange }
+>                             "1" "2"
+>             # connect' with { arrowHead=missile, headSize=0.8, arrowTail=missile'
+>                                   , tailSize=0.8, shaftWidth=0.05, arrowShaft=s1
+>                                   , headGap=0, tailGap=0.1 }
+>                             "4" "3"
+>             # connect' with { arrowHead=thorn, headSize=0.8, arrowShaft=a1
+>                                   , arrowTail=noTail, shaftWidth=0.03
+>                                   , tailGap=0, headGap=0}
+>                             "1" "6"
+>             # connect' with { arrowHead=dart, tailSize=1, arrowTail=dart'
+>                                  , headSize=1, shaftWidth=0.1, arrowShaft=s2
+>                                  , headStyle = fc green, tailStyle=fc green
+>                                  , shaftStyle=lc green }
+>                             "4" "7"
+>             # connect' with { arrowTail=dart', tailSize=1, arrowShaft=a
+>                             , arrowHead=spike, headSize=1, headStyle=fc red
+>                             , shaftWidth=0.2, tailGap=0.1, tailStyle=fc red
+>                             , shaftStyle=lc blue }
+>                             "9" "5"
+>             # connect' with { arrowHead=tri, arrowTail=block, shaftWidth=0.06
+>                             , headSize=1, tailSize=0.6, headGap=0.5
+>                             , headStyle=fc black # opacity 0.5
+>                             , tailStyle=fc black # opacity 0.5
+>                             , shaftStyle = dashing [0.1,0.2,0.3,0.1] 0} "8" "9"
+>             # scale 0.75
+>   where
+>     c = circle 1 # showOrigin # lw 0.04
+>     a = arc (5/12 :: Turn) (11/12 :: Turn)
+>     a1 = arc (1/2 :: Turn) (3/4 :: Turn)
+>     t = bezier3 (r2 (1,1)) (r2 (1,1)) (r2 (0,2))
+>     t' = reflectX t
+>     l = straight unitX
+>     l' = straight (unitX # rotateBy (1/6))
+>     s = trailFromSegments [t, l, t', l, t]
+>     s1 = cubicSpline False (trailVertices (s `at` origin))
+>     s2 = cubicSpline False (map p2 [(0,0), (1,0), (0.8, 0.2),(2,0.2)])
+>     x |-| y = x ||| strutX 12 ||| y
+>     row1 = (c # named "1") |-| (c # named "2") |-| (c # named "3")
+>     row2 = (c # named "4") |-| (c # named "5") |-| (c # named "6")
+>     row3 = (c # named "7") |-| (c # named "8") |-| (c # named "9")
+>     d = row1
+>         ===
+>         strutY 4
+>         ===
+>         row2
+>         ===
+>         strutY 4
+>         ===
+>         row3
+
+Scale invariance
+----------------
+
+Arrows are the canonical example of scale invariant objects.  The
+scale-invariance section of the user manual has a good example showing
+why scale-invariance__ is necessary for the creation of arrows so we wont
+repeat that here. The detailed documentation for the scale invariance type
+class is in `Diagrams.TwoD.Transform`:mod:.
+
+__ http://projects.haskell.org/diagrams/doc/manual.html#scale-invariance
+
+The Arrow
+package in `Diagrams.TwoD.Arrow`:mod:, along with the Arrowheads package
+`Diagrams.TwD.Arrowheads`:mod: provides a
+collection of functions and options used to make arrows.
+
+Optional and named parameters
+-----------------------------
+
+Most of the arrow functions take an `opts` pararameter (see `Faking
+optional named parameters`__) of type ArrowOpts, these functions typically
+have companion funcions that use a default set of ArrowOpts. For example
+the functions `arrow'` and `arrow`. The former takes and `opts` parameter and
+the latter does not. In this tutorial whenever we mention a function with
+a single quote (`'`) at the end, there is a sister function without the quote that
+uses a default set of options.
+
+__ http://projects.haskell.org/diagrams/doc/manual.html#faking-optional-named-arguments
+
+Connecting Points
+=================
+
+A typical use case for an arrow is two connect two points,
+having an arrow pointing from one to the other. The function `arrowBetween'`
+connects two points.
+
+.. class:: dia-lhs
+
+::
+
+> import Diagrams.Coordinates
+>
+> sPt = 0.20 & 0.20
+> ePt = 2.85 & 0.85
+>
+> -- We use small blue and red circles to mark the start and end points.
+> dot  = circle 0.02 # lw 0
+> sDot = dot # fc blue # moveTo sPt
+> eDot = dot # fc red  # moveTo ePt
+>
+> example = ( sDot <> eDot <> arrowBetween sPt ePt)
+>           # centerXY # pad 1.1
+
+
+An important consequence of the scale invariance of arrows is that they have
+an empty envelope, so in the above example without the dots
+the entire
+arrow diagram would not show up at all. This is almost never a problem in
+practice since arrows are designed to connect diagrams or parts of diagrams.
+
+.. container:: exercises
+
+  Creat a diagram which contains a circle of radius 1 with an arrow conneting
+  the points on the circumference at 45 degrees and 180 degress. Starting at
+  the 45 degree point.
+
+ArrowOpts
+=========
+
+Notice that in the previous example we used the function `arrow` as
+opposed to the  `arrow'` version which takes
+the additional `opts` parameter of type ArrowOpts. The `opts` record is our
+primary means of customizing the look of the arrow. It contains a substantial
+collection of options to control all of
+the aspects of an arrow. Here is the definition for reference:
+
+.. class:: lhs
+
+::
+
+  data ArrowOpts = ArrowOpts
+      { arrowHead  :: ArrowHT
+      , arrowTail  :: ArrowHT
+      , arrowShaft :: Trail R2
+      , headSize   :: Double
+      , tailSize   :: Double
+      , headGap    :: Double -- amount of space to leave after arrowhead
+      , tailGap    :: Double -- amount of space ot leave before arrowtail
+      , shaftWidth :: Double
+      , headStyle  :: HasStyle c => c -> c
+      , tailStyle  :: HasStyle c => c -> c
+      , shaftStyle :: HasStyle c => c -> c }
+
+
+Don't worry if some of the field types in this record are not yet clear,
+we will walk through each field
+and occasionally point to the API reference for material that we don't
+cover in this tutorial.
+
+The head and tail shape
+-----------------------
+
+The arrowHead and arrowTail fields contain information needed to construct the
+head and tail of the arrow. The most important aspect being the shape of the
+head and tail. So for example if we set `arrowHead=spike` and
+`arrowTail=quill`,
+
+.. class:: lhs
+
+::
+
+> arrowBetween' with { arrowHead=spike, arrowTail=quill} sPt ePt
+
+then arrow in the above example looks like:
+
+.. class:: dia
+
+::
+
+> import Diagrams.Coordinates
+>
+> sPt = 0.20 & 0.20
+> ePt = 2.85 & 0.85
+>
+> dot = circle 0.02 # lw 0
+> sDot = dot # fc blue # moveTo sPt
+> eDot = dot # fc red # moveTo ePt
+>
+> example = (sDot <> eDot <> arrowBetween' with { arrowHead=spike
+>                                               , arrowTail=quill} sPt ePt)
+>          # centerXY # pad 1.1
+
+The Arrowheads package exports a number of standard arrowheads
+including, `tri`, `dart`, `spike`, `thorn`, `missile`, and `noHead`
+with `dart` being
+the default. Also available are compainion functions like `arrowheadDart`
+that allow finer control over the shape of a dart style head. For tails,
+in addition to `quill` are `block` and `noTail`. Again for more controll
+are functions like, `arrowtailQuill`. Finally, any of the standard arrowheads
+can be used as tails by appending a single quote, so for example:
+
+.. container:: todo
+
+  Add a reference to the `arrowheadDart` functions
+
+.. class:: lhs
+
+::
+
+> arrowBetween' with { arrowHead=thorn, arrowTail=thorn'} sPt ePt
+
+yields:
+
+.. class:: dia
+
+::
+
+> import Diagrams.Coordinates
+>
+> sPt = 0.20 & 0.20
+> ePt = 2.85 & 0.85
+>
+> dot = circle 0.02 # lw 0
+> sDot = dot # fc blue # moveTo sPt
+> eDot = dot # fc red # moveTo ePt
+>
+> example = ( sDot <> eDot <>arrowBetween' with { arrowHead=thorn
+>                                               , arrowTail=thorn'} sPt ePt)
+>           # centerXY # pad 1.1
+
+
+The shaft
+----------
+
+The shaft of an arrow to be any aribtrary `Trail R2` in addition
+to a simple straight line. For example an arc will work makes a perfectly
+good shaft. The
+length of the trail is irrelevant, as the arrow is scaled to connect the
+starting point and ending point regardless of the length of the shaft.
+Modifying our example with the following code will make the arrow shaft into an arc.
+
+.. class:: lhs
+
+::
+
+> shaft = arc 0 (1/2 :: Turn)
+>
+> example = ( sDot <> eDot
+>          <> arrowBetween' with { arrowHead=spike, arrowTail=spike'
+>                                , arrowShaft=shaft} sPt ePt)
+>           # centerXY # pad 1.1
+
+.. class:: dia
+
+::
+
+> import Diagrams.Coordinates
+>
+> sPt = 0.20 & 0.40
+> ePt = 2.80 & 0.40
+>
+> dot = circle 0.02 # lw 0
+> sDot = dot # fc blue # moveTo sPt
+> eDot = dot # fc red # moveTo ePt
+>
+> shaft = arc 0 (1/2 :: Turn)
+>
+> example = ( sDot <> eDot
+>          <> arrowBetween' with { arrowHead=spike, arrowTail=spike'
+>                                , arrowShaft=shaft} sPt ePt)
+>           # centerXY # pad 1.1
+
+Arrows with curved shafts don't always render the way our intuition may
+lead us to expect. One could reasonably have thought that the arc in the
+above example would produce a concave arrow, not the convex one we see.
+To understand what's going on Let's imaging that the arc is `located`
+even though it is not. Suppose the arc
+goes from the point `(0,0)`:math: to `(-1,0)`:math:. This is indeed a concave arc
+with origin at `(0,0)`:math:. Now suppose we want to connect points
+`(0,0)`:math: and `(1,0)`:math:
+we attach  the arrow head and tail and rotate the arrow about it's origin at
+`(0,0)`:math: unitl the tip of the head is touching `(1,0)`:math:.
+This rotation flips the
+arrow making it convex.
+
+In order to get the arrow to be concave we might initially
+think we could create the shaft reversing the order of the angles, using
+`arc (1/2 :: Turn) 0`, but this won't
+work either as it creates a convex arc from say `(0,0)`:math:
+to `(1,0)`:math: that does
+not need to be rotated. The only way to achieve the desired result of making
+the arrow pointing from `(0,0)`:math: to `(1,0)`:math: concave
+is to move the origin of the arrow
+using `reverseTrail` as we can see in the next example. By altering one
+line of code.
+
+.. class:: lhs
+
+::
+
+> shaft = arc 0 (1/2 :: Turn) # reverseTrail
+
+.. class:: dia
+
+::
+
+> import Diagrams.Coordinates
+>
+> sPt = 0.20 & 0.40
+> ePt = 2.80 & 0.40
+> dot = circle 0.02 # lw 0
+> sDot = dot # fc blue # moveTo sPt
+> eDot = dot # fc red # moveTo ePt
+> shaft = arc 0 (1/2 :: Turn) # reverseTrail
+> example = ( sDot <> eDot
+>          <> arrowBetween' with { arrowHead=spike, arrowTail=spike'
+>                                , arrowShaft=shaft} sPt ePt)
+>           # centerXY # pad 1.1
+
+.. container:: warning
+
+  If an arrow shaft does not appear as you expect, then try using `reverseTrail`.
+
+Try it out;
+
+.. container:: exercises
+
+  Construct each of the following arrows pointing from `(1,1)`:math: to
+  `(3,3)`:math: inside a square with side `4`:math:.
+
+  1. A straight arrow with no head and a spike shaped tail.
+
+  #. An arrow with a `45`:math: degree arc for a shaft, triangles for both head
+     and tail that is convex.
+
+  #. The same as above, only now make it concave.
+
+Size, width and gaps
+--------------------
+
+The fields `headSize`, and `tailSize` are for setting the size of the head and
+tail. The head and tail size are specified as the diameter of an imaginary circle
+that would circumscribe the head or tail. The defaul value is 0.30.
+The `strokeWidth`
+option, as one would expect, sets the width of the shaft. The default is 0.03.
+The `headGap` and `tailGap` options are also fairly self explanatory,
+they leave space at the end or begininng of the arrow. Take a look
+at their effect in the following example. The default gaps are 0.
+
+.. class:: dia-lhs
+
+::
+
+> import Diagrams.Coordinates
+>
+> sPt = 0.20 & 0.50
+> mPt = 1.50 & 0.50
+> ePt = 2.80 & 0.50
+>
+> dot  = circle 0.02 # lw 0
+> sDot = dot # fc blue  # moveTo sPt
+> mDot = dot # fc green # moveTo mPt
+> eDot = dot # fc red   # moveTo ePt
+>
+>
+> leftArrow  = arrowBetween' with { arrowHead=missile, arrowTail=spike'
+>                                 , headSize = 0.15, tailSize=0.1
+>                                 , shaftWidth=0.015
+>                                 , headGap=0.05} sPt mPt
+> rightArrow = arrowBetween' with { arrowHead=tri, arrowTail=dart'
+>                                 , headSize = 0.25, tailSize=0.2
+>                                 , shaftWidth=0.015
+>                                 , tailGap=0.1} mPt ePt
+>
+> example = ( sDot <> mDot <> eDot <> leftArrow <> rightArrow)
+>           # centerXY # pad 1.1
+
+
+The style options
+-----------------
+
+The syles of the head, tail and shaft are manipulated using `headStyle`,
+`tailStyle`, and `shaftStyle`.
+We change the attributes of the arrow parts by setting one of these
+parameters equal
+to a function that applies the attributes, e.g.  `headStyle=fc blue`
+or `tailStyle=fc orange # opacity 0.50`.
+
+.. class:: lhs
+
+::
+
+> dashedArrow = arrowBetween' with { arrowHead=dart, arrowTail=spike'
+>                                  , headStyle=fc blue, tailStyle=fc orange
+>                                  , shaftStyle=dashing [0.04, 0.02] 0
+>                                  , shaftWidth=0.01} sPt ePt
+>
+
+.. class:: dia
+
+::
+
+> import Diagrams.Coordinates
+>
+> sPt = 0.20 & 0.20
+> ePt = 2.95 & 0.85
+>
+> dot = circle 0.025 # lw 0
+> sDot = dot # fc blue # moveTo sPt
+> eDot = dot # fc red # moveTo ePt
+>
+> arrow1 = arrowBetween' with { arrowHead=dart, arrowTail=spike'
+>                          , headStyle=fc blue, tailStyle=fc orange
+>                          , shaftStyle=dashing [0.04, 0.02] 0
+>                          , shaftWidth=0.01} sPt ePt
+>
+> example = (sDot <> eDot <> arrow1) # centerXY # pad 1.1
+
+The default `headStyle` and `tailStyle` is `fc black # opacity 1` and the
+default `shaftStyle` is `lc black # opacity 1`.
+
+.. container:: warning
+
+  When setting the color of the head or tail use fillColor or fc. When setting
+  the color of the shaft use lineColor or lc.
+
+Placing an arrow at a point
+===========================
+
+Sometimes we prefer to specify a starting point and vector from which the arrow
+takes it's magnitude and direction. the `arrowAt'` and
+`arrowAt` functions are useful in this regard. The example below demonstrates
+how we might create a vector field using the `arrowAt'` function.
+
+.. class:: dia-lhs
+
+::
+
+> import Diagrams.Coordinates
+>
+> locs   = [(x, y) | x <- [0.1, 0.3 .. 3.25], y <- [0.1, 0.3 .. 3.25]]
+>
+> -- create a list of points where the vectors will be place.
+> points = map p2 locs
+>
+> -- The function to use to create the vector field.
+> vectorField (x, y) = r2 (sin (y + 1), sin (x + 1))
+>
+> arrows = map arrowAtPoint locs
+>
+> arrowAtPoint (x, y) = arrowAt' opts (p2 (x, y)) (sL *^ vf) # alignTL
+>   where
+>     vf   = vectorField (x, y)
+>     m    = magnitude $ vectorField (x, y)
+>
+>     -- Head size is a function of the length of the vector
+>     -- as are tail size and shaft length.
+>     hs   = 0.08 * m
+>     sW   = 0.01 * m
+>     sL   = 0.01 + 0.1 * m
+>     opts = with {arrowHead=spike, headSize=hs, shaftWidth=sW}
+>
+> field   = position $ zip points arrows
+> example = ( field # translateY 0.05
+>        <> ( square 3.5 # fc whitesmoke # lw 0.02 # alignBL))
+
+Your turn;
+
+.. container:: exercises
+
+  Try using the above code to plot some other interesting vector fields.
+
+Connecting diagrams with arrows
+===============================
+
+The workhorse of the Arrow package is the `connect'` function. `connect'`
+takes an opts record and the names
+of two diagrams and places an arrow starting at the origin of the first
+diagram and ending at the origin of the second (unless gaps are specified).
+
+.. class:: dia-lhs
+
+::
+
+> import Diagrams.Coordinates
+>
+> s  = square 2 # showOrigin # lw 0.02
+> ds = (s # named "1") ||| strutX 3 ||| (s # named "2")
+> t  = cubicSpline False [(0 & 0), (1 & 0), (1 & 0.2), (2 & 0.2)]
+>
+> example = ds # connect' with { arrowHead=dart, headSize=0.6
+>                              , tailSize=0.6, arrowTail=dart'
+>                              , shaftWidth=0.03, arrowShaft=t} "1" "2"
+
+Connecting points on the trace of diagrams
+==========================================
+
+It is often convenient to be able to connect the points on the `trace` of a
+diagram with arrows, whether the points are on the same or different diagrams
+should not matter. The `connectPerim'` function is used for this purpose.
+We pass `connectPerim` two names and two angles, the arrow points from the
+point on the trace of the first diagram using the vector
+starting at the local origin in the direction of
+the first angle and likewise for the second. If the names are the same then
+the arrow connects to two points on the same diagram.
+
+.. class:: lhs
+
+::
+
+> connectPerim "diagram1" "diagram2" (5/12 :: Turn) (1/12 :: Turn)
+> connectPerim "diagram" "diagram" (2/12 :: Turn) (4/12 :: Turn)
+
+
+Here is an example of a finite automata that accepts real numbers.
+The full code can be found at ...
+
+.. container:: todo
+
+  Add a link to the finite state automata code. Or add a simpler demonstration
+  of `connectPerim` and move the finite state automata to the gallery.
+
+.. class:: dia
+
+::
+
+> import Data.Maybe (fromMaybe)
+>
+> state = circle 1 # lw 0.05 # fc silver
+> fState = circle 0.85 # lw 0.05 # fc lightblue <> state
+>
+> label txt size dx dy = text txt # fontSize size # translateX dx # translateY dy
+>
+> row1 = hcat' with {sep = 3} [ (text "1" <> state)  # named "1"
+>                   , label "0-9" 0.5 (-0.5) 1.25
+>                   , (text "2" <> state)  # named "2"
+>                   , label "0-9" 0.5 (-2) 2
+>                   , label "." 1 0.5 1.5
+>                   , (text "3" <> fState) # named "3"
+>                   , label "0-9" 0.5 1 2 ]
+> row2 = hcat' with {sep = 3} [ (text "4" <> state)  # named "4"
+>                   , label "." 1 (-4) 2
+>                   , label "0-9" 0.5 0.5 0
+>                   , (text "5" <> fState) # named "5"
+>                   , label "0-9" 0.5 5 0 ]
+>
+> states = (row1 # centerX) === strutY 1 === (row2 # centerX)
+>
+> shaft = arc 0 (1/6 :: Turn)
+> shaft' = arc 0 (1/2 :: Turn) # scaleX 0.33
+> line = trailFromOffsets [unitX]
+>
+> arrowStyle1 = with { arrowHead=noHead, tailSize=0.3, arrowShaft=shaft
+>                    , arrowTail=spike', shaftWidth=0.03
+>                    , tailStyle = fc black . opacity 1}
+>
+> arrowStyle2 = with { arrowHead=noHead, tailSize=0.3, arrowShaft=shaft'
+>                    , arrowTail=spike', shaftWidth=0.03
+>                    , tailStyle = fc black . opacity 1}
+>
+> arrowStyle3 = with { arrowHead=noHead, tailSize=0.3, arrowShaft=line
+>                    , arrowTail=spike', shaftWidth=0.03
+>                    , tailStyle = fc black . opacity 1}
+>
+> example = states # connectPerim' arrowStyle1
+>                    "2" "1" (5/12 :: Turn) (1/12 :: Turn)
+>                  # connectPerim' arrowStyle3
+>                    "4" "1" (2/6 :: Turn) (5/6 :: Turn)
+>                  # connectPerim' arrowStyle2
+>                    "2" "2" (2/12 :: Turn) (4/12 :: Turn)
+>                  # connectPerim' arrowStyle1
+>                    "3" "2" (5/12 :: Turn) (1/12 :: Turn)
+>                  # connectPerim' arrowStyle2
+>                    "3" "3" (2/12 :: Turn) (4/12 :: Turn)
+>                  # connectPerim' arrowStyle1
+>                    "5" "4" (5/12 :: Turn) (1/12 :: Turn)
+>                  # connectPerim' arrowStyle2
+>                    "5" "5" (-1/12 :: Turn) (1/12 :: Turn)
+
+.. container:: exercises
+
+  Create a torus (donut) with `12`:math: arrows pointing from the outer ring to the
+  inner ring at the same angle at every `(1/12) :: Turn`. Use a variety of
+  different `ArrowOpts` for the arrows.
