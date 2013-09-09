@@ -28,8 +28,13 @@ manual and other tutorials for examples, and copy and paste one to get
 started (for example, there is some routine boilerplate that must go
 at the top).  Tutorials go in the `diagrams-doc`:repo: repository, in the
 ``doc`` subdirectory.  For example, the user manual is ``doc/manual.rst``;
-the source for this tutorial is ``doc/tutorials.rst``.  Just copy one
-of those into ``doc/your-tutorial-name.rst``, and off you go!
+the source for this tutorial is ``doc/tutorials.rst``.  Copy one
+of those into ``doc/your-tutorial-name.rst``, and off you go! To get your
+tutorial linked on the main `diagrams` web page edit the file
+``web/documentation.markdown`` by adding a line to the *Tutorials* section
+that looks like
+
+``* [Name of your tutorial] (/doc/your-tutorial-name.html) --- description``
 
 Basic formatting
 ================
@@ -96,7 +101,7 @@ which are introduced with the syntax
     content
 
 In place of ``<type>`` you can put ``todo``, ``warning``, or
-``exercises``, which produce boxes like the following. 
+``exercises``, which produce boxes like the following.
 
 ``todo``:
 

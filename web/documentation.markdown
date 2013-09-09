@@ -7,10 +7,10 @@ Tutorials
 
 * [Quick start tutorial](/doc/quickstart.html) --- get
   started making simple diagrams quickly.
-* [Vectors and points](/doc/vector.html) -- learn how to work with
+* [Vectors and points](/doc/vector.html) --- learn how to work with
   vectors and points.
 * [Segments, trails, and paths](/doc/paths.html)
-* [Arrows](/doc/arrow.html) -- Draft of how to use arrows.
+* [Arrows](/doc/arrow.html) --- Draft of how to use arrows.
 * [How to write diagrams tutorials](/doc/tutorials.html) --- how to
   write one of these here things, and have it included in this list!
 
