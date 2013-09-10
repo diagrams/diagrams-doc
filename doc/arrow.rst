@@ -475,13 +475,14 @@ how we might create a vector field using the `arrowAt'` function.
 >     -- Head size is a function of the length of the vector
 >     -- as are tail size and shaft length.
 >     hs   = 0.08 * m
->     sW   = 0.01 * m
+>     sW   = 0.015 * m
 >     sL   = 0.01 + 0.1 * m
 >     opts = with {arrowHead=spike, headSize=hs, shaftWidth=sW}
 >
 > field   = position $ zip points arrows
 > example = ( field # translateY 0.05
 >        <> ( square 3.5 # fc whitesmoke # lw 0.02 # alignBL))
+>         # scaleX 2
 
 Your turn;
 
@@ -531,15 +532,11 @@ the arrow connects to two points on the same diagram.
 > connectPerim "diagram" "diagram" (2/12 :: Turn) (4/12 :: Turn)
 
 
-Here is an example of a finite automata that accepts real numbers.
-The full code can be found at ...
+Here is an example of a finite state automata that accepts real numbers.
+The code is a bit longer than what we have seen so far, but still very
+straightforward.
 
-.. container:: todo
-
-  Add a link to the finite state automata code. Or add a simpler demonstration
-  of `connectPerim` and move the finite state automata to the gallery.
-
-.. class:: dia
+.. class:: dia-lhs
 
 ::
 
@@ -548,56 +545,87 @@ The full code can be found at ...
 > state = circle 1 # lw 0.05 # fc silver
 > fState = circle 0.85 # lw 0.05 # fc lightblue <> state
 >
-> label txt size dx dy = text txt # fontSize size # translateX dx # translateY dy
+> label txt size dx dy = text txt # fontSize size
+>                                 # translateX dx
+>                                 # translateY dy
 >
-> row1 = hcat' with {sep = 3} [ (text "1" <> state)  # named "1"
+> states123 = hcat' with {sep = 3} [ (text "1" <> state)  # named "1"
 >                   , label "0-9" 0.5 (-0.5) 1.25
 >                   , (text "2" <> state)  # named "2"
 >                   , label "0-9" 0.5 (-2) 2
 >                   , label "." 1 0.5 1.5
 >                   , (text "3" <> fState) # named "3"
 >                   , label "0-9" 0.5 1 2 ]
-> row2 = hcat' with {sep = 3} [ (text "4" <> state)  # named "4"
+> states45 = hcat' with {sep = 3} [ (text "4" <> state)  # named "4"
 >                   , label "." 1 (-4) 2
 >                   , label "0-9" 0.5 0.5 0
 >                   , (text "5" <> fState) # named "5"
 >                   , label "0-9" 0.5 5 0 ]
 >
-> states = (row1 # centerX) === strutY 1 === (row2 # centerX)
+> states = (states123 # centerX) === strutY 1 === (states45 # centerX)
 >
-> shaft = arc 0 (1/6 :: Turn)
-> shaft' = arc 0 (1/2 :: Turn) # scaleX 0.33
-> line = trailFromOffsets [unitX]
+> shaft60  = arc 0 (1/6 :: Turn)
+> shaft180 = arc 0 (1/2 :: Turn) # scaleX 0.33
+> line     = trailFromOffsets [unitX]
 >
-> arrowStyle1 = with { arrowHead=noHead, tailSize=0.3, arrowShaft=shaft
+> arrow60 = with { arrowHead=noHead, tailSize=0.3, arrowShaft=shaft60
 >                    , arrowTail=spike', shaftWidth=0.03
 >                    , tailStyle = fc black . opacity 1}
 >
-> arrowStyle2 = with { arrowHead=noHead, tailSize=0.3, arrowShaft=shaft'
+> arrow180 = with { arrowHead=noHead, tailSize=0.3, arrowShaft=shaft180
 >                    , arrowTail=spike', shaftWidth=0.03
 >                    , tailStyle = fc black . opacity 1}
 >
-> arrowStyle3 = with { arrowHead=noHead, tailSize=0.3, arrowShaft=line
+> arrowLine = with { arrowHead=noHead, tailSize=0.3, arrowShaft=line
 >                    , arrowTail=spike', shaftWidth=0.03
 >                    , tailStyle = fc black . opacity 1}
 >
-> example = states # connectPerim' arrowStyle1
+> example = states # connectPerim' arrow60
 >                    "2" "1" (5/12 :: Turn) (1/12 :: Turn)
->                  # connectPerim' arrowStyle3
+>                  # connectPerim' arrowLine
 >                    "4" "1" (2/6 :: Turn) (5/6 :: Turn)
->                  # connectPerim' arrowStyle2
+>                  # connectPerim' arrow180
 >                    "2" "2" (2/12 :: Turn) (4/12 :: Turn)
->                  # connectPerim' arrowStyle1
+>                  # connectPerim' arrow60
 >                    "3" "2" (5/12 :: Turn) (1/12 :: Turn)
->                  # connectPerim' arrowStyle2
+>                  # connectPerim' arrow180
 >                    "3" "3" (2/12 :: Turn) (4/12 :: Turn)
->                  # connectPerim' arrowStyle1
+>                  # connectPerim' arrow60
 >                    "5" "4" (5/12 :: Turn) (1/12 :: Turn)
->                  # connectPerim' arrowStyle2
+>                  # connectPerim' arrow180
 >                    "5" "5" (-1/12 :: Turn) (1/12 :: Turn)
+
+In the following exercise you can try `connectPerim'` for yourself.
 
 .. container:: exercises
 
-  Create a torus (donut) with `12`:math: arrows pointing from the outer ring to the
-  inner ring at the same angle at every `(1/12) :: Turn`. Use a variety of
-  different `ArrowOpts` for the arrows.
+  Create a torus (donut) with `16`:math: curved arrows pointing from the
+  outer ring to the inner ring at the same angle every `(1/16) :: Turn`.
+
+    .. class:: dia
+
+    ::
+
+    > {-# LANGUAGE MultiParamTypeClasses          #-}
+    > {-# LANGUAGE FlexibleContexts #-}
+    > bullseye = circle 0.2 # fc orangered
+    >                       # lw 0
+    >                       # named "bullseye"
+    >
+    > target = circle 1 # fc gold # named "target"
+    >
+    > d = bullseye <> target
+    >
+    > shaft = arc 0 (1/6 :: Turn)
+    >
+    > connectTarget :: (Angle a, Renderable (Path R2) b)
+    >               =>  a -> (Diagram b R2 -> Diagram b R2)
+    > connectTarget a = connectPerim' with { arrowHead=thorn, shaftWidth=0.01
+    >                                      , arrowShaft=shaft, headSize=0.18
+    >                                      , arrowTail=thorn'
+    >                                      } "target" "bullseye" a a
+    >
+    > angles :: [Turn]
+    > angles = [0, 1/16 .. 15/16]
+    >
+    > example = foldr connectTarget d angles

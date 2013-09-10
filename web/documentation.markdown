@@ -10,7 +10,7 @@ Tutorials
 * [Vectors and points](/doc/vector.html) --- learn how to work with
   vectors and points.
 * [Segments, trails, and paths](/doc/paths.html)
-* [Arrows](/doc/arrow.html) --- Draft of how to use arrows.
+* [Arrows](/doc/arrow.html) --- using the arrow API.
 * [How to write diagrams tutorials](/doc/tutorials.html) --- how to
   write one of these here things, and have it included in this list!
 

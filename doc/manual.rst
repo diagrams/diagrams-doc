@@ -4,12 +4,13 @@
 .. role:: repo(literal)
 
 .. default-role:: hs
+.. sectnum:: :depth: 2
 
 ======================
  Diagrams User Manual
 ======================
 
-.. contents::
+.. contents:: :depth: 2
 
 Preliminaries
 =============
