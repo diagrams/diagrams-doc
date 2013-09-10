@@ -16,7 +16,7 @@ Introduction
 
 Arrows come in many shapes and sizes and ``diagrams`` provides a wide variety
 of flexible and extensible tools for creating and using arrows. The diagram
-below gives a small taste of some of the diffent arrows that can be created
+below gives a small taste of some of the different arrows that can be created
 easily with ``diagrams``.
 
 .. class:: dia
@@ -96,9 +96,9 @@ collection of functions and options used to make arrows.
 Optional and named parameters
 -----------------------------
 
-Most of the arrow functions take an `opts` pararameter (see `Faking
-optional named parameters`__) of type ArrowOpts, these functions typically
-have companion funcions that use a default set of ArrowOpts. For example
+Most of the arrow functions take an `opts` parameter (see `Faking
+optional named parameters`__) of type `ArrowOpts`, these functions typically
+have companion functions that use a default set of `ArrowOpts`. For example
 the functions `arrow'` and `arrow`. The former takes and `opts` parameter and
 the latter does not. In this tutorial whenever we mention a function with
 a single quote (`'`) at the end, there is a sister function without the quote that
@@ -109,7 +109,7 @@ __ http://projects.haskell.org/diagrams/doc/manual.html#faking-optional-named-ar
 Connecting Points
 =================
 
-A typical use case for an arrow is two connect two points,
+A typical use case for an arrow is to connect two points,
 having an arrow pointing from one to the other. The function `arrowBetween'`
 connects two points.
 
@@ -139,8 +139,8 @@ practice since arrows are designed to connect diagrams or parts of diagrams.
 
 .. container:: exercises
 
-  Creat a diagram which contains a circle of radius 1 with an arrow conneting
-  the points on the circumference at 45 degrees and 180 degress. Starting at
+  Create a diagram which contains a circle of radius 1 with an arrow connecting
+  the points on the circumference at 45 degrees and 180 degrees. Starting at
   the 45 degree point.
 
 ArrowOpts
@@ -148,7 +148,7 @@ ArrowOpts
 
 Notice that in the previous example we used the function `arrow` as
 opposed to the  `arrow'` version which takes
-the additional `opts` parameter of type ArrowOpts. The `opts` record is our
+the additional `opts` parameter of type `ArrowOpts`. The `opts` record is our
 primary means of customizing the look of the arrow. It contains a substantial
 collection of options to control all of
 the aspects of an arrow. Here is the definition for reference:
@@ -179,7 +179,7 @@ cover in this tutorial.
 The head and tail shape
 -----------------------
 
-The arrowHead and arrowTail fields contain information needed to construct the
+The `arrowHead` and `arrowTail` fields contain information needed to construct the
 head and tail of the arrow. The most important aspect being the shape of the
 head and tail. So for example if we set `arrowHead=spike` and
 `arrowTail=quill`,
@@ -209,12 +209,12 @@ then arrow in the above example looks like:
 >                                               , arrowTail=quill} sPt ePt)
 >          # centerXY # pad 1.1
 
-The Arrowheads package exports a number of standard arrowheads
+The `Arrowheads` package exports a number of standard arrowheads
 including, `tri`, `dart`, `spike`, `thorn`, `missile`, and `noHead`
 with `dart` being
-the default. Also available are compainion functions like `arrowheadDart`
+the default. Also available are companion functions like `arrowheadDart`
 that allow finer control over the shape of a dart style head. For tails,
-in addition to `quill` are `block` and `noTail`. Again for more controll
+in addition to `quill` are `block` and `noTail`. Again for more control
 are functions like, `arrowtailQuill`. Finally, any of the standard arrowheads
 can be used as tails by appending a single quote, so for example:
 
@@ -251,7 +251,7 @@ yields:
 The shaft
 ----------
 
-The shaft of an arrow to be any aribtrary `Trail R2` in addition
+The shaft of an arrow to be any arbitrary `Trail R2` in addition
 to a simple straight line. For example an arc will work makes a perfectly
 good shaft. The
 length of the trail is irrelevant, as the arrow is scaled to connect the
@@ -297,8 +297,8 @@ even though it is not. Suppose the arc
 goes from the point `(0,0)`:math: to `(-1,0)`:math:. This is indeed a concave arc
 with origin at `(0,0)`:math:. Now suppose we want to connect points
 `(0,0)`:math: and `(1,0)`:math:
-we attach  the arrow head and tail and rotate the arrow about it's origin at
-`(0,0)`:math: unitl the tip of the head is touching `(1,0)`:math:.
+we attach the arrow head and tail and rotate the arrow about its origin at
+`(0,0)`:math: until the tip of the head is touching `(1,0)`:math:.
 This rotation flips the
 arrow making it convex.
 
@@ -359,11 +359,11 @@ Size, width and gaps
 
 The fields `headSize`, and `tailSize` are for setting the size of the head and
 tail. The head and tail size are specified as the diameter of an imaginary circle
-that would circumscribe the head or tail. The defaul value is 0.30.
+that would circumscribe the head or tail. The default value is 0.30.
 The `strokeWidth`
 option, as one would expect, sets the width of the shaft. The default is 0.03.
 The `headGap` and `tailGap` options are also fairly self explanatory,
-they leave space at the end or begininng of the arrow. Take a look
+they leave space at the end or beginning of the arrow. Take a look
 at their effect in the following example. The default gaps are 0.
 
 .. class:: dia-lhs
@@ -398,7 +398,7 @@ at their effect in the following example. The default gaps are 0.
 The style options
 -----------------
 
-The syles of the head, tail and shaft are manipulated using `headStyle`,
+The styles of the head, tail and shaft are manipulated using `headStyle`,
 `tailStyle`, and `shaftStyle`.
 We change the attributes of the arrow parts by setting one of these
 parameters equal
@@ -440,14 +440,14 @@ default `shaftStyle` is `lc black # opacity 1`.
 
 .. container:: warning
 
-  When setting the color of the head or tail use fillColor or fc. When setting
-  the color of the shaft use lineColor or lc.
+  When setting the color of the head or tail use `fillColor` or `fc`. When setting
+  the color of the shaft use `lineColor` or `lc`.
 
 Placing an arrow at a point
 ===========================
 
 Sometimes we prefer to specify a starting point and vector from which the arrow
-takes it's magnitude and direction. the `arrowAt'` and
+takes its magnitude and direction. the `arrowAt'` and
 `arrowAt` functions are useful in this regard. The example below demonstrates
 how we might create a vector field using the `arrowAt'` function.
 
