@@ -404,10 +404,6 @@ collecting a list here in one place.
 * You can translate things by a vector using `translate` or
   `moveOriginBy`.
 
-.. container:: todo
-
-  Anything else?
-
 Points
 ======
 
@@ -639,7 +635,3 @@ or computed them:
   or `moveOriginTo`.
 
 * You can position an entire collection of objects using `position`.
-
-.. container:: todo
-
-  Other stuff?
