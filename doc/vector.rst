@@ -391,13 +391,22 @@ __ http://en.wikipedia.org/wiki/Dot_product
 Using vectors
 -------------
 
+Once you have a vector, what can you do with it?  A few of the things
+have already been seen in the examples above, but it's worth
+collecting a list here in one place.
+
+* You can create a trail, path, or diagram (in fact, any `TrailLike`
+  thing---see the `trails and paths tutorial`__) from a list of
+  vectors using `fromOffsets`.
+
+  __ paths.html
+
+* You can translate things by a vector using `translate` or
+  `moveOriginBy`.
+
 .. container:: todo
 
-  Stuff you can do with vectors.
-
-  * `fromOffsets`
-  * `translate`, `moveOriginBy`
-  * ?
+  Anything else?
 
 Points
 ======
@@ -618,10 +627,19 @@ its second.
 Using points
 ------------
 
+Here are some things you can do with points, once you have constructed
+or computed them:
+
+* You can create a straight line between two points with `(~~)`.
+
+* You can construct any `TrailLike` instance (like trails, paths, or
+  diagrams) from a list of points using `fromVertices`.
+
+* You can translate objects to a given point using `moveTo`, `place`,
+  or `moveOriginTo`.
+
+* You can position an entire collection of objects using `position`.
+
 .. container:: todo
 
-  Stuff you can do with points.
-
-  * `position`
-  * `~~`
-  * `moveTo`, `place`, `moveOriginTo`
+  Other stuff?
