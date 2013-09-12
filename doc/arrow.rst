@@ -14,10 +14,13 @@ Arrow Tutorial
 Introduction
 ============
 
-Arrows come in many shapes and sizes and ``diagrams`` provides a wide variety
-of flexible and extensible tools for creating and using arrows. The diagram
-below gives a small taste of some of the different arrows that can be created
-easily with ``diagrams``.
+Arrows come in many shapes and sizes and ``diagrams`` provides a wide
+variety of flexible and extensible tools for creating and using
+arrows. The diagram below gives a small taste of some of the different
+arrows that can be created easily with ``diagrams``. The
+`Diagrams.TwoD.Arrow`:mod: module, along with
+`Diagrams.TwD.Arrowheads`:mod:, provides a collection of functions and
+options used to make arrows.
 
 .. class:: dia
 
@@ -34,7 +37,7 @@ easily with ``diagrams``.
 >                             "4" "3"
 >             # connect' with { arrowHead=thorn, headSize=0.8, arrowShaft=a1
 >                                   , arrowTail=noTail, shaftWidth=0.03
->                                   , tailGap=0, headGap=0}
+>                                   , tailGap=2, headGap=2}
 >                             "1" "6"
 >             # connect' with { arrowHead=dart, tailSize=1, arrowTail=dart'
 >                                  , headSize=1, shaftWidth=0.1, arrowShaft=s2
@@ -77,22 +80,6 @@ easily with ``diagrams``.
 >         ===
 >         row3
 
-Scale invariance
-----------------
-
-Arrows are the canonical example of scale invariant objects.  The
-scale-invariance section of the user manual has a good example showing
-why scale-invariance__ is necessary for the creation of arrows so we wont
-repeat that here. The detailed documentation for the scale invariance type
-class is in `Diagrams.TwoD.Transform`:mod:.
-
-__ http://projects.haskell.org/diagrams/doc/manual.html#scale-invariance
-
-The Arrow
-package in `Diagrams.TwoD.Arrow`:mod:, along with the Arrowheads package
-`Diagrams.TwD.Arrowheads`:mod: provides a
-collection of functions and options used to make arrows.
-
 Optional and named parameters
 -----------------------------
 
@@ -106,12 +93,28 @@ uses a default set of options.
 
 __ http://projects.haskell.org/diagrams/doc/manual.html#faking-optional-named-arguments
 
+Scale invariance
+----------------
+
+Arrowheads and -tails are the canonical example of *scale invariant*
+objects: they are not affected by scaling (though they are affected by
+other transformations such as rotation and translation). The
+`scale-invariance section of the user manual`__ has a good example
+showing why scale-invariance is necessary for the creation of
+arrowheads; detailed documentation explaining scale invariant objects
+is in `Diagrams.TwoD.Transform.ScaleInv`:mod:.  The most important
+consequence for day-to-day diagramming with arrows is that arrowheads
+and -tails do not contribute to the envelope of an arrow (arrow
+shafts, on the other hand, do).
+
+__ http://projects.haskell.org/diagrams/doc/manual.html#scale-invariance
+
 Connecting Points
 =================
 
-A typical use case for an arrow is to connect two points,
-having an arrow pointing from one to the other. The function `arrowBetween'`
-connects two points.
+A typical use case for an arrow is to connect two points, having an
+arrow pointing from one to the other. The function `arrowBetween` (and
+its cousin `arrowBetween'`) connects two points.
 
 .. class:: dia-lhs
 
@@ -130,18 +133,10 @@ connects two points.
 > example = ( sDot <> eDot <> arrowBetween sPt ePt)
 >           # centerXY # pad 1.1
 
-
-An important consequence of the scale invariance of arrows is that they have
-an empty envelope, so in the above example without the dots
-the entire
-arrow diagram would not show up at all. This is almost never a problem in
-practice since arrows are designed to connect diagrams or parts of diagrams.
-
 .. container:: exercises
 
-  Create a diagram which contains a circle of radius 1 with an arrow connecting
-  the points on the circumference at 45 degrees and 180 degrees. Starting at
-  the 45 degree point.
+  1. Create a diagram which contains a circle of radius 1 with an arrow connecting
+  the points on the circumference at 45 degrees and 180 degrees.
 
 ArrowOpts
 =========
