@@ -109,6 +109,10 @@ shafts, on the other hand, do).
 
 __ http://projects.haskell.org/diagrams/doc/manual.html#scale-invariance
 
+.. container:: warning
+
+  Arrowheads and tails do not contribute to the envelope of an arrow!
+
 Connecting Points
 =================
 
@@ -141,12 +145,12 @@ its cousin `arrowBetween'`) connects two points.
 ArrowOpts
 =========
 
-Notice that in the previous example we used the function `arrow` as
-opposed to the  `arrow'` version which takes
-the additional `opts` parameter of type `ArrowOpts`. The `opts` record is our
-primary means of customizing the look of the arrow. It contains a substantial
-collection of options to control all of
-the aspects of an arrow. Here is the definition for reference:
+All of the arrow creation functions have a primed variant (*e.g.*
+`arrowBetween` and `arrowBetween'`) which takes an additional `opts`
+parameter of type `ArrowOpts`. The `opts` record is the primary means
+of customizing the look of the arrow. It contains a substantial
+collection of options to control all of the aspects of an arrow. Here
+is the definition for reference:
 
 .. class:: lhs
 
@@ -174,9 +178,9 @@ cover in this tutorial.
 The head and tail shape
 -----------------------
 
-The `arrowHead` and `arrowTail` fields contain information needed to construct the
-head and tail of the arrow. The most important aspect being the shape of the
-head and tail. So for example if we set `arrowHead=spike` and
+The `arrowHead` and `arrowTail` fields contain information needed to
+construct the head and tail of the arrow, the most important aspect
+being the shape. So, for example, if we set `arrowHead=spike` and
 `arrowTail=quill`,
 
 .. class:: lhs
@@ -185,7 +189,7 @@ head and tail. So for example if we set `arrowHead=spike` and
 
 > arrowBetween' with { arrowHead=spike, arrowTail=quill} sPt ePt
 
-then arrow in the above example looks like:
+then the arrow from the previous example looks like this:
 
 .. class:: dia
 
@@ -205,17 +209,13 @@ then arrow in the above example looks like:
 >          # centerXY # pad 1.1
 
 The `Arrowheads` package exports a number of standard arrowheads
-including, `tri`, `dart`, `spike`, `thorn`, `missile`, and `noHead`
+including, `tri`, `dart`, `spike`, `thorn`, `missile`, and `noHead`,
 with `dart` being
 the default. Also available are companion functions like `arrowheadDart`
 that allow finer control over the shape of a dart style head. For tails,
 in addition to `quill` are `block` and `noTail`. Again for more control
 are functions like, `arrowtailQuill`. Finally, any of the standard arrowheads
 can be used as tails by appending a single quote, so for example:
-
-.. container:: todo
-
-  Add a reference to the `arrowheadDart` functions
 
 .. class:: lhs
 
@@ -246,12 +246,12 @@ yields:
 The shaft
 ----------
 
-The shaft of an arrow to be any arbitrary `Trail R2` in addition
-to a simple straight line. For example an arc will work makes a perfectly
-good shaft. The
-length of the trail is irrelevant, as the arrow is scaled to connect the
-starting point and ending point regardless of the length of the shaft.
-Modifying our example with the following code will make the arrow shaft into an arc.
+The shaft of an arrow can be any arbitrary `Trail R2` in addition to a
+simple straight line. For example, an arc makes a perfectly good
+shaft. The length of the trail is irrelevant, as the arrow is scaled
+to connect the starting point and ending point regardless of the
+length of the shaft.  Modifying our example with the following code
+will make the arrow shaft into an arc:
 
 .. class:: lhs
 
@@ -284,29 +284,26 @@ Modifying our example with the following code will make the arrow shaft into an 
 >                                , arrowShaft=shaft} sPt ePt)
 >           # centerXY # pad 1.1
 
-Arrows with curved shafts don't always render the way our intuition may
-lead us to expect. One could reasonably have thought that the arc in the
-above example would produce a concave arrow, not the convex one we see.
-To understand what's going on Let's imaging that the arc is `located`
-even though it is not. Suppose the arc
-goes from the point `(0,0)`:math: to `(-1,0)`:math:. This is indeed a concave arc
+Arrows with curved shafts don't always render the way our intuition
+may lead us to expect. One could reasonably expect that the arc in the
+above example would produce an arrow curving upwards, not the
+downwards-curving one we see.  To understand what's going on, imagine
+that the arc is `Located`. Suppose the arc goes from the point
+`(0,0)`:math: to `(-1,0)`:math:. This is indeed an upwards curving arc
 with origin at `(0,0)`:math:. Now suppose we want to connect points
-`(0,0)`:math: and `(1,0)`:math:
-we attach the arrow head and tail and rotate the arrow about its origin at
-`(0,0)`:math: until the tip of the head is touching `(1,0)`:math:.
-This rotation flips the
-arrow making it convex.
+`(0,0)`:math: and `(1,0)`:math:. We attach the arrow head and tail and
+rotate the arrow about its origin at `(0,0)`:math: until the tip of
+the head is touching `(1,0)`:math:.  This rotation flips the arrow
+vertically.
 
-In order to get the arrow to be concave we might initially
-think we could create the shaft reversing the order of the angles, using
-`arc (1/2 :: Turn) 0`, but this won't
-work either as it creates a convex arc from say `(0,0)`:math:
-to `(1,0)`:math: that does
-not need to be rotated. The only way to achieve the desired result of making
-the arrow pointing from `(0,0)`:math: to `(1,0)`:math: concave
-is to move the origin of the arrow
-using `reverseTrail` as we can see in the next example. By altering one
-line of code.
+In order to get the arrow to be concave we might initially think we
+could create the shaft reversing the order of the angles, using `arc
+(1/2 :: Turn) 0`, but this won't work either, as it creates a
+downwards curving arc from, say, `(0,0)`:math: to `(1,0)`:math: that
+does not need to be rotated. The only way to achieve the desired
+result of making the arrow pointing from `(0,0)`:math: to
+`(1,0)`:math: curve upwards is to move the origin of the arrow using
+`reverseTrail`:
 
 .. class:: lhs
 
