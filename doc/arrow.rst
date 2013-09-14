@@ -296,14 +296,13 @@ rotate the arrow about its origin at `(0,0)`:math: until the tip of
 the head is touching `(1,0)`:math:.  This rotation flips the arrow
 vertically.
 
-In order to get the arrow to be concave we might initially think we
+In order to get the arrow to curve upwards we might initially think we
 could create the shaft reversing the order of the angles, using `arc
 (1/2 :: Turn) 0`, but this won't work either, as it creates a
 downwards curving arc from, say, `(0,0)`:math: to `(1,0)`:math: that
 does not need to be rotated. The only way to achieve the desired
 result of making the arrow pointing from `(0,0)`:math: to
-`(1,0)`:math: curve upwards is to move the origin of the arrow using
-`reverseTrail`:
+`(1,0)`:math: curve upwards is to reverse the trail:
 
 .. class:: lhs
 
@@ -332,7 +331,7 @@ result of making the arrow pointing from `(0,0)`:math: to
 
   If an arrow shaft does not appear as you expect, then try using `reverseTrail`.
 
-Try it out;
+Here are some exercises to try.
 
 .. container:: exercises
 
@@ -342,21 +341,21 @@ Try it out;
   1. A straight arrow with no head and a spike shaped tail.
 
   #. An arrow with a `45`:math: degree arc for a shaft, triangles for both head
-     and tail that is convex.
+     and tail, curving downwards.
 
-  #. The same as above, only now make it concave.
+  #. The same as above, only now make it curve upwards.
 
 Size, width and gaps
 --------------------
 
-The fields `headSize`, and `tailSize` are for setting the size of the head and
-tail. The head and tail size are specified as the diameter of an imaginary circle
-that would circumscribe the head or tail. The default value is 0.30.
-The `strokeWidth`
-option, as one would expect, sets the width of the shaft. The default is 0.03.
-The `headGap` and `tailGap` options are also fairly self explanatory,
-they leave space at the end or beginning of the arrow. Take a look
-at their effect in the following example. The default gaps are 0.
+The fields `headSize` and `tailSize` are for setting the size of the
+head and tail. The head and tail size are specified as the diameter of
+an imaginary circle that would circumscribe the head or tail. The
+default value is 0.3.  The `shaftWidth` option, as one would expect,
+sets the width of the shaft. The default is 0.03.  The `headGap` and
+`tailGap` options are also fairly self explanatory: they leave space
+at the end or beginning of the arrow. Take a look at their effect in
+the following example. The default gaps are 0.
 
 .. class:: dia-lhs
 
@@ -376,7 +375,7 @@ at their effect in the following example. The default gaps are 0.
 >
 > leftArrow  = arrowBetween' with { arrowHead=missile, arrowTail=spike'
 >                                 , headSize = 0.15, tailSize=0.1
->                                 , shaftWidth=0.015
+>                                 , shaftWidth=0.04
 >                                 , headGap=0.05} sPt mPt
 > rightArrow = arrowBetween' with { arrowHead=tri, arrowTail=dart'
 >                                 , headSize = 0.25, tailSize=0.2
@@ -390,12 +389,11 @@ at their effect in the following example. The default gaps are 0.
 The style options
 -----------------
 
-The styles of the head, tail and shaft are manipulated using `headStyle`,
-`tailStyle`, and `shaftStyle`.
-We change the attributes of the arrow parts by setting one of these
-parameters equal
-to a function that applies the attributes, e.g.  `headStyle=fc blue`
-or `tailStyle=fc orange # opacity 0.50`.
+The styles of the head, tail and shaft are manipulated using
+`headStyle`, `tailStyle`, and `shaftStyle`.  We change the attributes
+of the arrow parts by setting one of these parameters equal to a
+function that applies the attributes, *e.g.* `headStyle = fc blue` or
+`tailStyle = fc orange . opacity 0.5`.
 
 .. class:: lhs
 
@@ -421,25 +419,23 @@ or `tailStyle=fc orange # opacity 0.50`.
 > eDot = dot # fc red # moveTo ePt
 >
 > arrow1 = arrowBetween' with { arrowHead=dart, arrowTail=spike'
->                          , headStyle=fc blue, tailStyle=fc orange
->                          , shaftStyle=dashing [0.04, 0.02] 0
->                          , shaftWidth=0.01} sPt ePt
+>                             , headStyle=fc blue, tailStyle=fc orange
+>                             , shaftStyle=dashing [0.04, 0.02] 0
+>                             , shaftWidth=0.01} sPt ePt
 >
 > example = (sDot <> eDot <> arrow1) # centerXY # pad 1.1
 
-The default `headStyle` and `tailStyle` is `fc black # opacity 1` and the
-default `shaftStyle` is `lc black # opacity 1`.
-
 .. container:: warning
 
-  When setting the color of the head or tail use `fillColor` or `fc`. When setting
-  the color of the shaft use `lineColor` or `lc`.
+  When setting the color of the head or tail use `fillColor`, `fc`, or
+  `fcA`.. When setting the color of the shaft use `lineColor`, `lc`,
+  or `lcA`.
 
 Placing an arrow at a point
 ===========================
 
 Sometimes we prefer to specify a starting point and vector from which the arrow
-takes its magnitude and direction. the `arrowAt'` and
+takes its magnitude and direction. The `arrowAt'` and
 `arrowAt` functions are useful in this regard. The example below demonstrates
 how we might create a vector field using the `arrowAt'` function.
 
@@ -476,7 +472,7 @@ how we might create a vector field using the `arrowAt'` function.
 >        <> ( square 3.5 # fc whitesmoke # lw 0.02 # alignBL))
 >         # scaleX 2
 
-Your turn;
+Your turn:
 
 .. container:: exercises
 
@@ -485,10 +481,11 @@ Your turn;
 Connecting diagrams with arrows
 ===============================
 
-The workhorse of the Arrow package is the `connect'` function. `connect'`
-takes an opts record and the names
-of two diagrams and places an arrow starting at the origin of the first
-diagram and ending at the origin of the second (unless gaps are specified).
+The workhorse of the Arrow package is the `connect'`
+function. `connect'` takes an opts record and the names of two
+diagrams, and places an arrow starting at the origin of the first
+diagram and ending at the origin of the second (unless gaps are
+specified).
 
 .. class:: dia-lhs
 
@@ -507,14 +504,15 @@ diagram and ending at the origin of the second (unless gaps are specified).
 Connecting points on the trace of diagrams
 ==========================================
 
-It is often convenient to be able to connect the points on the `trace` of a
-diagram with arrows, whether the points are on the same or different diagrams
-should not matter. The `connectPerim'` function is used for this purpose.
-We pass `connectPerim` two names and two angles, the arrow points from the
-point on the trace of the first diagram using the vector
-starting at the local origin in the direction of
-the first angle and likewise for the second. If the names are the same then
-the arrow connects to two points on the same diagram.
+It is often convenient to be able to connect the points on the `Trace`
+of diagrams with arrows. The `connectPerim` and `connectPerim'`
+functions are used for this purpose.  We pass `connectPerim` two names
+and two angles. The angles are used to determine points on the traces
+of the two diagrams, determined by shooting a ray from the local
+origin of each diagram in the direction of the given angle.  The
+generated arrow stretches between these two points. Note that if the
+names are the same then the arrow connects two points on the same
+diagram.
 
 .. class:: lhs
 
@@ -522,7 +520,6 @@ the arrow connects to two points on the same diagram.
 
 > connectPerim "diagram1" "diagram2" (5/12 :: Turn) (1/12 :: Turn)
 > connectPerim "diagram" "diagram" (2/12 :: Turn) (4/12 :: Turn)
-
 
 Here is an example of a finite state automata that accepts real numbers.
 The code is a bit longer than what we have seen so far, but still very
