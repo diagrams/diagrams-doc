@@ -2506,6 +2506,126 @@ do some active work to *avoid* filling lines, and if
 `diagrams-lib`:pkg: did not do this separation, they would essentially
 have to end up doing it themselves.
 
+Arrows
+------
+
+`Diagrams.Arrow`:mod: and `Diagrams.Arrowheads`:mod: provide
+functions and options that support the use of arrows in `Diagrams`. An arrow
+is a diagram with a scale-invariant head and tail (see `Scale-invariance`_).
+Arrows can be used to connect: points, diagrams, and trails of diagrams.
+Or they can simply be placed at specific points. We use the fucntions:
+
+* `arrowBetween` to connect points.
+
+* `connect` to connect diagrams.
+
+* `connectPerim` to connect points on the trails of diagrams.
+
+* `arrowAt` to place an arrow at a point.
+
+.. class:: dia-lhs
+
+::
+
+> import Diagrams.Coordinates ((&))
+>
+> sPt = 0.50 & 0.50
+> ePt = 5.2 & 0.50
+>
+> -- Connect two points.
+> ex1 = arrowBetween sPt ePt
+>
+> d = octagon 1 # lc blue # lw 0.10 # showOrigin
+> ds = d # named "1" ||| strut 3 ||| d # named "2"
+>
+> -- Connect two diagrams and two points on their trails.
+> ex23 = ds # connect "1" "2"
+>           # connectPerim "1" "2" (15/16 :: Turn) (9/16 :: Turn)
+>
+> -- Place an arrow at (0,0) the size and direction of (0,1).
+> ex4 = arrowAt (0 & 0) unit_Y
+>
+> example = (ex1
+>           ===
+>           strutY 0.5
+>           ===
+>           (ex23 <> ex4)) # centerXY
+
+Notice that the arrows in the above diagram all have the same dart shaped
+head, no tail and straight shaft. All of these aspects and many others can
+be customized by using companion functions to the ones above and an `opts`
+parameter of type `ArrowOpts`. For example the companion to `connect`  is
+`connect'`. The fields of `ArrowOpts` are:
+
+* `arrowHead` and `arrowTail` to specify the shape of the head and tail. For
+  arrowheads  the `Arrowheads` module exports the values `tri`, `dart`, `spike`,
+  `thorn`, `missile`, and `noHead`, the default is `dart`. For tails we have
+  `quill`, `block` and `noTail`, here `noTail` is the default. Addtionally, any
+  head can be used as a tail by appending a `'` (e.g. `dart'`). There are also
+  functions that can be used to create custom heads and tails (see `Arrow`).
+
+* `arrowShaft` is any `Trail R2`, it will be sized automatically to fit between
+  its connection points.
+
+* `headSize` and `tailSize` specify the size of the head and tail. The default
+  value is 0.3, the units are defined so that 1 represents an arrow head the
+  fits in a circle of diameter 1.
+
+* `headGap` and `tailGap` both default to 0 and are used to indicate the
+  amount of space between the end of the arrow and the location it is pointing
+  at.
+
+* `shaftWidth` is the stroke width of the shaft, default is 0.03.
+
+* `headStyle`, `tailStyle` and `shaftStyle` are used to pass in style functions
+  like `fc blue # opacity 0.75` to customize parts of the arrow
+  (see `ArrowOpts`).
+
+The following example demonstrates the use of various `ArrowOpts`.
+
+.. class:: dia-lhs
+
+::
+
+> import Diagrams.Coordinates ((&))
+>
+> c = circle 2 # fc lightgray # lw 0 # showOrigin
+>
+> x |-| y = x ||| strutX 3 ||| y
+>
+> row1 = (c # named "1") |-| (c # named "3")
+>    |-| (c # named "5") |-| (c # named "7")
+> row2 = (c # named "2") |-| (c # named "4")
+>    |-| (c # named "6") |-| (c # named "8")
+>
+> d = row1 === strutY 5 === row2
+>
+> shaft1 = trailFromVertices [(0 & 0), (1 & 0), (1 & 0.2), (2 & 0.2)]
+> shaft2 = cubicSpline False [(0 & 0), (1 & 0), (1 & 0.2), (2 & 0.2)]
+> shaft3 = arc 0 (1/6 :: Turn)
+>
+> example = d
+>    # connect' with { arrowTail=quill, tailSize=1.5
+>                    , tailStyle=fc orange, headStyle = fc orange
+>                    , arrowHead=spike, headSize =1.5
+>                    , shaftWidth=0.3 } "1" "2"
+>    # connect' with { arrowTail=thorn', tailSize=1.5
+>                    , arrowHead=thorn, headSize=1.5
+>                    , arrowShaft=shaft1, shaftWidth=0.15 } "3" "4"
+>    # connect' with { arrowTail=block, tailSize=1, tailGap=0.4
+>                    , arrowHead=missile, headSize=1.5, headGap=0.4
+>                    , arrowShaft=shaft2, shaftWidth=0.15
+>                    , headStyle=fc blue, tailStyle=fc blue
+>                    , shaftStyle=lc blue } "5" "6"
+>    # connect' with { arrowShaft=shaft3, shaftWidth=0.2
+>                    , arrowHead=tri, headSize=1.5
+>                    , headStyle=fc red # opacity 0.5
+>                    , shaftStyle=lc black # opacity 0.5} "7" "8"
+
+For more detailed information see the `Arrows tutorial`__.
+
+__ arrow.html
+
 Text
 ----
 
@@ -3405,8 +3525,15 @@ The `ScaleInv` wrapper can be used to create "scale-invariant"
 objects. (Note that `ScaleInv` is not exported from
 `Diagrams.Prelude`:mod:; to use it, import
 `Diagrams.TwoD.Transform.ScaleInv`:mod:.)  In the diagram below, the same
-transformation is applied to each pair of arrows; the arrowheads on
-the right are wrapped in `ScaleInv` but the ones on the left are not.
+transformation is applied to each pair of arrows.
+
+.. container:: warning
+
+  Diagrams contains native support for drawing arrows (see `Arrows`_),
+  we only create the arrows in the example below by hand to demonstrate
+  scale-invariance.
+
+The arrows on the right are wrapped in `ScaleInv` but the ones on the left are not.
 
 .. class:: dia-lhs
 
