@@ -489,13 +489,7 @@ if you are just reading this manual for the first time!)
 
 > illustrateEnvelope v d
 >   = mconcat
->     [ origin ~~ (origin .+^ v)
->       # lc black # lw 0.03
->     , polygon with { polyType   = PolyRegular 3 0.1
->                    , polyOrient = OrientTo (negateV v)
->                    }
->       # fc black
->       # translate v
+>     [arrowAt' with {arrowHead=tri, headSize=0.2} origin v
 >     , origin ~~ b
 >       # lc green # lw 0.05
 >     , p1 ~~ p2
@@ -2993,12 +2987,8 @@ Normally, a trace is accessed using one of the four functions
   > import Data.Maybe (fromMaybe)
   > import Diagrams.Coordinates ((&))
   >
-  > drawV v = (arrowHead <> shaft) # fc black
-  >   where
-  >     shaft     = origin ~~ (origin .+^ v)
-  >     arrowHead = triangle 0.1
-  >               # rotateBy (direction v - 1/4)
-  >               # translate v
+  > drawV v = arrowAt' with {headSize=0.2} origin v
+  >
   > drawTraceV v d
   >   = lc green $
   >     fromMaybe mempty
