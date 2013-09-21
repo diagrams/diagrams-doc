@@ -2517,6 +2517,11 @@ Or they can simply be placed at specific points. We use the fucntions:
 
 * `arrowAt` to place an arrow at a point.
 
+.. container:: todo
+
+  Add a paragraph about connectOutside and refrence the Symmetry cube in
+  the gallery.
+
 .. class:: dia-lhs
 
 ::
@@ -2569,8 +2574,6 @@ parameter of type `ArrowOpts`. For example the companion to `connect`  is
   amount of space between the end of the arrow and the location it is pointing
   at.
 
-* `shaftWidth` is the stroke width of the shaft, default is 0.03.
-
 * `headStyle`, `tailStyle` and `shaftStyle` are used to pass in style functions
   like `fc blue # opacity 0.75` to customize parts of the arrow
   (see `ArrowOpts`).
@@ -2602,19 +2605,19 @@ The following example demonstrates the use of various `ArrowOpts`.
 >    # connect' with { arrowTail=quill, tailSize=1.5
 >                    , tailStyle=fc orange, headStyle = fc orange
 >                    , arrowHead=spike, headSize =1.5
->                    , shaftWidth=0.3 } "1" "2"
+>                    , shaftStyle=lw 0.3 } "1" "2"
 >    # connect' with { arrowTail=thorn', tailSize=1.5
 >                    , arrowHead=thorn, headSize=1.5
->                    , arrowShaft=shaft1, shaftWidth=0.15 } "3" "4"
+>                    , arrowShaft=shaft1, shaftStyle=lw 0.15 } "3" "4"
 >    # connect' with { arrowTail=block, tailSize=1, tailGap=0.4
 >                    , arrowHead=missile, headSize=1.5, headGap=0.4
->                    , arrowShaft=shaft2, shaftWidth=0.15
+>                    , arrowShaft=shaft2
 >                    , headStyle=fc blue, tailStyle=fc blue
->                    , shaftStyle=lc blue } "5" "6"
->    # connect' with { arrowShaft=shaft3, shaftWidth=0.2
+>                    , shaftStyle=lw 0.15 # lc blue } "5" "6"
+>    # connect' with { arrowShaft=shaft3
 >                    , arrowHead=tri, headSize=1.5
 >                    , headStyle=fc red # opacity 0.5
->                    , shaftStyle=lc black # opacity 0.5} "7" "8"
+>                    , shaftStyle=lw 0.2 # lc black # opacity 0.5} "7" "8"
 
 For more detailed information see the `Arrows tutorial`__.
 
