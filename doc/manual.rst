@@ -2503,17 +2503,17 @@ have to end up doing it themselves.
 Arrows
 ------
 
-`Diagrams.Arrow`:mod: and `Diagrams.Arrowheads`:mod: provide
-functions and options that support the use of arrows in `Diagrams`. An arrow
-is a diagram with a scale-invariant head and tail (see `Scale-invariance`_).
-Arrows can be used to connect: points, diagrams, and trails of diagrams.
-Or they can simply be placed at specific points. We use the fucntions:
+`Diagrams.TwoD.Arrow`:mod: and `Diagrams.TwoD.Arrowheads`:mod: provide
+specialized functionality for drawing arrows. Note that arrows are
+drawn with scale-invariant heads and tails (see `Scale-invariance`_).
+Arrows can be used to connect various things including literal points,
+named subdiagrams, or their traces. One may use the functions:
 
-* `arrowBetween` to connect points.
+* `arrowBetween` to connect points;
 
-* `connect` to connect diagrams.
+* `connect` to connect diagrams;
 
-* `connectPerim` to connect points on the trails of diagrams.
+* `connectPerim` to connect points on the traces of diagrams;
 
 * `arrowAt` to place an arrow at a point.
 
@@ -2545,35 +2545,43 @@ Or they can simply be placed at specific points. We use the fucntions:
 >           ===
 >           (ex23 <> ex4)) # centerXY
 
-Notice that the arrows in the above diagram all have the same dart shaped
-head, no tail and straight shaft. All of these aspects and many others can
-be customized by using companion functions to the ones above and an `opts`
-parameter of type `ArrowOpts`. For example the companion to `connect`  is
-`connect'`. The fields of `ArrowOpts` are:
+Notice that the arrows in the above diagram all have the same dart
+shaped head, no tail, and a straight shaft. All of these aspects, and
+many others, can be customized using companion functions to the ones
+above, whose names end with an apostrophe.  For example, the companion
+to `connect` is `connect'`. These companion functions take an extra
+`ArrowOpts` record, whose fields are:
 
-* `arrowHead` and `arrowTail` to specify the shape of the head and tail. For
-  arrowheads  the `Arrowheads` module exports the values `tri`, `dart`, `spike`,
-  `thorn`, `missile`, and `noHead`, the default is `dart`. For tails we have
-  `quill`, `block` and `noTail`, here `noTail` is the default. Addtionally, any
-  head can be used as a tail by appending a `'` (e.g. `dart'`). There are also
-  functions that can be used to create custom heads and tails (see `Arrow`).
+* `arrowHead` and `arrowTail`, to specify the shape of the head and
+  tail. The `Diagrams.TwoD.Arrowheads`:mod: module exports the
+  arrowheads `tri`, `dart`, `spike`, `thorn`, `missile`, and `noHead`;
+  the default is `dart`. For tails we have `quill`, `block` and
+  `noTail`; `noTail` is the default. Addtionally, any head can be used
+  as a tail by appending a `'` (e.g. `dart'`). There are also
+  functions that can be used to create custom heads and tails (see
+  `Diagrams.TwoD.Arrow`:mod:).
 
-* `arrowShaft` is any `Trail R2`, it will be sized automatically to fit between
-  its connection points.
+* `arrowShaft` is any `Trail R2`; it will be sized automatically to
+  fit between the endpoints of the arrow.
 
-* `headSize` and `tailSize` specify the size of the head and tail. The default
-  value is 0.3, the units are defined so that 1 represents an arrow head the
-  fits in a circle of diameter 1.
+* `headSize` and `tailSize` specify the size of the head and tail,
+  defined as the diameter of an enclosing circle. The default value is
+  0.3.  Note that arrowheads and tails are scale-invariant, so the
+  these sizes are relative to the *final* vector space of the rendered
+  diagram (see also the section on `Line width`_ and `freeze`).
 
-* `headGap` and `tailGap` both default to 0 and are used to indicate the
-  amount of space between the end of the arrow and the location it is pointing
-  at.
+* `headGap` and `tailGap` both default to 0 and are used to indicate
+  the amount of space between the end of the arrow and the location it
+  is pointing at.  Unlike `headSize` and `tailSize`, these values are
+  relative to the *local* vector space (*i.e.* they are affected
+  normally by scaling).
 
-* `shaftWidth` is the stroke width of the shaft, default is 0.03.
+* `shaftWidth` is the stroke width of the arrow shaft; the default is
+  0.03. See also `Line width`_.
 
-* `headStyle`, `tailStyle` and `shaftStyle` are used to pass in style functions
-  like `fc blue # opacity 0.75` to customize parts of the arrow
-  (see `ArrowOpts`).
+* `headStyle`, `tailStyle` and `shaftStyle` are used to pass in style
+  functions like `fc blue . opacity 0.75` to customize parts of the
+  arrow.
 
 The following example demonstrates the use of various `ArrowOpts`.
 
