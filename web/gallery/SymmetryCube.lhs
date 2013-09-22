@@ -87,7 +87,10 @@ For each pair (a,b) of names, draw an arrow from diagram "a" to
 diagram "b".
 
 > drawLines :: Diagram Cairo R2 -> Diagram Cairo R2
-> drawLines cube = foldr (.) id (map (uncurry connectBox) pairs) cube
+> drawLines cube = foldr (.) id (map (uncurry
+>                        (connectOutside' with
+>                        {headSize=0.8
+>                        ,shaftStyle=lw 0.01})) pairs) cube
 >   where pairs = [ ("perm","permgroup")
 >                 , ("perm","sym")
 >                 , ("perm","paramperm")
@@ -102,16 +105,3 @@ diagram "b".
 >                 , ("parampermgroup","paramsymgroup")
 >                 ]
 
-Draw an arrow from diagram named "n1" to diagram named "n2".  The
-arrow lies on the line between the centres of the diagrams, but is
-drawn so that it stops at the boundaries of the diagrams, using traces
-to find the intersection points.
-
-> connectBox n1 n2 = withName n1 $ \b1 ->
->                 withName n2 $ \b2 ->
->                   let v = location b2 .-. location b1
->                       midpoint = location b1 .+^ (v/2)
->                       p1 = fromJust $ traceP midpoint (-v) b1
->                       p2 = fromJust $ traceP midpoint v b2
->                   in atop (arrowBetween' with { headSize=0.8
->                                               , shaftWidth=0.01} p1 p2)

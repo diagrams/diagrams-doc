@@ -27,33 +27,34 @@ options used to make arrows.
 ::
 
 > example = d # connect' with { arrowHead=dart, headSize=1, arrowTail=quill
->                                  , tailSize=1, shaftWidth=0.1, arrowShaft=s
->                                  , tailGap=0.1, headGap=0.1
->                                  , headStyle = fc blue, tailStyle = fc orange }
+>                             , tailSize=1, shaftStyle=lw 0.1 # lc black, arrowShaft=s
+>                             , tailGap=0.1, headGap=0.1
+>                             , headStyle = fc blue, tailStyle = fc orange }
 >                             "1" "2"
 >             # connect' with { arrowHead=missile, headSize=0.8, arrowTail=missile'
->                                   , tailSize=0.8, shaftWidth=0.05, arrowShaft=s1
->                                   , headGap=0, tailGap=0.1 }
+>                             , tailSize=0.8, shaftStyle=lw 0.05, arrowShaft=s1
+>                             , headGap=0, tailGap=0.1 }
 >                             "4" "3"
 >             # connect' with { arrowHead=thorn, headSize=0.8, arrowShaft=a1
->                                   , arrowTail=noTail, shaftWidth=0.03
->                                   , tailGap=2, headGap=2}
+>                             , arrowTail=noTail, shaftStyle=lw 0.03
+>                             , tailGap=1, headGap=1 }
 >                             "1" "6"
 >             # connect' with { arrowHead=dart, tailSize=1, arrowTail=dart'
->                                  , headSize=1, shaftWidth=0.1, arrowShaft=s2
->                                  , headStyle = fc green, tailStyle=fc green
->                                  , shaftStyle=lc green }
+>                              , headSize=1, arrowShaft=s2
+>                              , headStyle = fc green, tailStyle=fc green
+>                              , shaftStyle=lw 0.1 # lc green }
 >                             "4" "7"
 >             # connect' with { arrowTail=dart', tailSize=1, arrowShaft=a
 >                             , arrowHead=spike, headSize=1, headStyle=fc red
->                             , shaftWidth=0.2, tailGap=0.1, tailStyle=fc red
->                             , shaftStyle=lc blue }
+>                             , tailGap=0.1, tailStyle=fc red
+>                             , shaftStyle=lw 0.2 # lc blue }
 >                             "9" "5"
->             # connect' with { arrowHead=tri, arrowTail=block, shaftWidth=0.06
+>             # connect' with { arrowHead=tri, arrowTail=block
 >                             , headSize=1, tailSize=0.6, headGap=0.5
 >                             , headStyle=fc black # opacity 0.5
 >                             , tailStyle=fc black # opacity 0.5
->                             , shaftStyle = dashing [0.1,0.2,0.3,0.1] 0} "8" "9"
+>                             , shaftStyle=lw 0.06 # dashing [0.1,0.2,0.3,0.1] 0}
+>                             "8" "9"
 >             # scale 0.75
 >   where
 >     c = circle 1 # showOrigin # lw 0.04
@@ -164,7 +165,6 @@ is the definition for reference:
       , tailSize   :: Double
       , headGap    :: Double -- amount of space to leave after arrowhead
       , tailGap    :: Double -- amount of space ot leave before arrowtail
-      , shaftWidth :: Double
       , headStyle  :: HasStyle c => c -> c
       , tailStyle  :: HasStyle c => c -> c
       , shaftStyle :: HasStyle c => c -> c }
@@ -345,14 +345,13 @@ Here are some exercises to try.
 
   #. The same as above, only now make it curve upwards.
 
-Size, width and gaps
---------------------
+Size, and gaps
+--------------
 
 The fields `headSize` and `tailSize` are for setting the size of the
 head and tail. The head and tail size are specified as the diameter of
 an imaginary circle that would circumscribe the head or tail. The
-default value is 0.3.  The `shaftWidth` option, as one would expect,
-sets the width of the shaft. The default is 0.03.  The `headGap` and
+default value is 0.3. The `headGap` and
 `tailGap` options are also fairly self explanatory: they leave space
 at the end or beginning of the arrow. Take a look at their effect in
 the following example. The default gaps are 0.
@@ -375,11 +374,11 @@ the following example. The default gaps are 0.
 >
 > leftArrow  = arrowBetween' with { arrowHead=missile, arrowTail=spike'
 >                                 , headSize = 0.15, tailSize=0.1
->                                 , shaftWidth=0.04
+>                                 , shaftStyle=lw 0.02
 >                                 , headGap=0.05} sPt mPt
 > rightArrow = arrowBetween' with { arrowHead=tri, arrowTail=dart'
 >                                 , headSize = 0.25, tailSize=0.2
->                                 , shaftWidth=0.015
+>                                 , shaftStyle=lw 0.015
 >                                 , tailGap=0.1} mPt ePt
 >
 > example = ( sDot <> mDot <> eDot <> leftArrow <> rightArrow)
@@ -402,7 +401,7 @@ function that applies the attributes, *e.g.* `headStyle = fc blue` or
 > dashedArrow = arrowBetween' with { arrowHead=dart, arrowTail=spike'
 >                                  , headStyle=fc blue, tailStyle=fc orange
 >                                  , shaftStyle=dashing [0.04, 0.02] 0
->                                  , shaftWidth=0.01} sPt ePt
+>                                  # lw 0.01} sPt ePt
 >
 
 .. class:: dia
@@ -420,8 +419,8 @@ function that applies the attributes, *e.g.* `headStyle = fc blue` or
 >
 > arrow1 = arrowBetween' with { arrowHead=dart, arrowTail=spike'
 >                             , headStyle=fc blue, tailStyle=fc orange
->                             , shaftStyle=dashing [0.04, 0.02] 0
->                             , shaftWidth=0.01} sPt ePt
+>                             , shaftStyle=dashing [0.04, 0.02] 0 # lw 0.01
+>                             } sPt ePt
 >
 > example = (sDot <> eDot <> arrow1) # centerXY # pad 1.1
 
@@ -465,7 +464,7 @@ how we might create a vector field using the `arrowAt'` function.
 >     hs   = 0.08 * m
 >     sW   = 0.015 * m
 >     sL   = 0.01 + 0.1 * m
->     opts = with {arrowHead=spike, headSize=hs, shaftWidth=sW}
+>     opts = with {arrowHead=spike, headSize=hs, shaftStyle=lw sW}
 >
 > field   = position $ zip points arrows
 > example = ( field # translateY 0.05
@@ -499,7 +498,7 @@ specified).
 >
 > example = ds # connect' with { arrowHead=dart, headSize=0.6
 >                              , tailSize=0.6, arrowTail=dart'
->                              , shaftWidth=0.03, arrowShaft=t} "1" "2"
+>                              , shaftStyle=lw 0.03, arrowShaft=t} "1" "2"
 
 Connecting points on the trace of diagrams
 ==========================================
@@ -558,15 +557,15 @@ straightforward.
 > line     = trailFromOffsets [unitX]
 >
 > arrow60 = with { arrowHead=noHead, tailSize=0.3, arrowShaft=shaft60
->                    , arrowTail=spike', shaftWidth=0.03
+>                    , arrowTail=spike', shaftStyle=lw 0.03
 >                    , tailStyle = fc black . opacity 1}
 >
 > arrow180 = with { arrowHead=noHead, tailSize=0.3, arrowShaft=shaft180
->                    , arrowTail=spike', shaftWidth=0.03
+>                    , arrowTail=spike', shaftStyle=lw 0.03
 >                    , tailStyle = fc black . opacity 1}
 >
 > arrowLine = with { arrowHead=noHead, tailSize=0.3, arrowShaft=line
->                    , arrowTail=spike', shaftWidth=0.03
+>                    , arrowTail=spike', shaftStyle=lw 0.03
 >                    , tailStyle = fc black . opacity 1}
 >
 > example = states # connectPerim' arrow60
@@ -609,7 +608,7 @@ In the following exercise you can try `connectPerim'` for yourself.
     >
     > connectTarget :: (Angle a, Renderable (Path R2) b)
     >               =>  a -> (Diagram b R2 -> Diagram b R2)
-    > connectTarget a = connectPerim' with { arrowHead=thorn, shaftWidth=0.01
+    > connectTarget a = connectPerim' with { arrowHead=thorn, shaftStyle= lw 0.01
     >                                      , arrowShaft=shaft, headSize=0.18
     >                                      , arrowTail=thorn'
     >                                      } "target" "bullseye" a a
@@ -618,3 +617,8 @@ In the following exercise you can try `connectPerim'` for yourself.
     > angles = [0, 1/16 .. 15/16]
     >
     > example = foldr connectTarget d angles
+
+.. container:: todo
+
+  Add a paragraph about connectOutside and refrence the Symmetry cube in
+  the gallery.
