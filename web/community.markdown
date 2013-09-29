@@ -26,6 +26,13 @@ project at a wide range of difficulty levels.
   frequently asked questions, tips and tricks, discussion, projects,
   and information on how to contribute.
 
+* See the
+  [projects page](http://www.haskell.org/haskellwiki/Diagrams/Projects#Potential_projects)
+  for a list of ideas to work on.
+
+* See the [Trello board](https://trello.com/b/pL6YdKgz) for even more
+  project ideas, things that need doing, and so on.
+
 * Help improve or expand the
   [documentation](http://github.com/diagrams/diagrams-doc).
 
