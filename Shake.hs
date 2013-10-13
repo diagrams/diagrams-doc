@@ -88,6 +88,7 @@ main = do
         let o  = out -<.> "o"
             hs = un $ dropExtension out
         need [hs,o]
+        askOracleWith (GhcPkg ()) [""]
         withResource disk 1 $ ghc Link out hs
 
       dist "doc/icons/*.png" *> \out -> do
@@ -188,7 +189,6 @@ data GhcMode = Compile | Link
 
 ghc :: GhcMode -> String -> String -> Action ()
 ghc mode out hs = do
-  askOracleWith (GhcPkg ()) [""]
   let odir = takeDirectory out
       base = (takeBaseName . takeBaseName) out
       mainIs | head base `elem` ['A'..'Z'] = ["-main-is", base]
