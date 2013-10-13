@@ -199,12 +199,14 @@ at each end.  The `tension` function sets them to the same value.  The
 Putting it All Together
 ==============================
 
-Most of the time one of the above functions is enough to describe the
-join.  If you need to specify both direction and tension, you can
-write the PathJoin value directly, or use the provided lenses to
-modify the result of the functions above.  See
-`Diagrams.TwoD.Path.Metafont.Types`:mod: and
-`Diagrams.TwoD.Path.Metafont.Combinators`:mod: for examples.
+If you want to specify tensions and a direction, or both directions
+for a given segment, joins can be combined using `<>`.  For example:
+
+.. class:: lhs
+
+::
+
+   example = metafont $ z4 .--. z1.- tension 1.5 <> arriving unitX -.z2.--.endpt z6
 
 Explicit Control Points
 ==============================
