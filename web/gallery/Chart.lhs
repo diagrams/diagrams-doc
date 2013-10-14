@@ -13,6 +13,8 @@ width: 600
 > import Diagrams.Coordinates
 > import Diagrams.Prelude
 > import Graphics.SVGFonts.ReadFont
+>
+> import Diagrams.Core.Points -- needed to work around bug in GHC 7.4
 
 Each series is a label and a list of points (x-y pairs).  Each series
 will be drawn as a separate line, with its own combination of colour,
