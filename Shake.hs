@@ -82,14 +82,13 @@ main = do
       obj "//*.hs.o" *> \out -> do
         let hs = un $ dropExtension out
         need [hs]
-        ghc Compile out hs
+        ghc Compile disk out hs
 
       obj "//*.hs.exe" *> \out -> do
         let o  = out -<.> "o"
             hs = un $ dropExtension out
         need [hs,o]
-        askOracleWith (GhcPkg ()) [""]
-        withResource disk 1 $ ghc Link out hs
+        ghc Link disk out hs
 
       dist "doc/icons/*.png" *> \out -> do
         let exe = obj . un $ out -<.> ".hs.exe"
@@ -187,18 +186,23 @@ needWeb = do
 data GhcMode = Compile | Link
   deriving Eq
 
-ghc :: GhcMode -> String -> String -> Action ()
-ghc mode out hs = do
+ghc :: GhcMode -> Resource -> String -> String -> Action ()
+ghc mode r out hs = do
   let odir = takeDirectory out
       base = (takeBaseName . takeBaseName) out
       mainIs | head base `elem` ['A'..'Z'] = ["-main-is", base]
              | otherwise                   = []
-  system' "ghc" $
+  askOracleWith (GhcPkg ()) [""]
+  resourced mode $ system' "ghc" $
     concat
     [ ["--make", "-O2", "-outputdir", odir, "-o", out, "-osuf", "hs.o", hs]
     , mainIs
     , ["-c" | mode == Compile ]
     ]
+  where
+    resourced Link = withResource r 1
+    resourced _    = id
+
 
 systemCwdNorm :: FilePath -> FilePath -> [String] -> Action ()
 systemCwdNorm path exe as = do
