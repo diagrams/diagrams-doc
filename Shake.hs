@@ -10,11 +10,12 @@ import           Development.Shake
 import           Development.Shake.Classes   (Binary, Hashable)
 import           Development.Shake.FilePath  (dropDirectory1, dropExtension,
                                               takeBaseName, takeDirectory,
-                                              (-<.>), (</>))
-import           System.Cmd                  (system)
+                                              (-<.>), (<.>), (</>))
 import           System.Console.CmdArgs
 import           System.Directory            (canonicalizePath,
                                               createDirectoryIfMissing)
+import           System.Process              (readProcess, system)
+
 
 obj, un, dist :: FilePath -> FilePath
 obj = (".make" </>)
@@ -44,6 +45,13 @@ main :: IO ()
 main = do
   m <- cmdArgs mkModes
   n <- getNumCapabilities
+
+  -- Check for diagrams-cairo
+  cairoPkg <- readProcess "ghc-pkg" ["list", "--simple-output", "diagrams-cairo"] ""
+  let useSVG = null cairoPkg
+      imgExt | useSVG    = "svg"
+             | otherwise = "png"
+
   case m of
     Clean -> mapM_ system
       [ "rm -rf web/_site"
@@ -62,11 +70,11 @@ main = do
       disk <- newResource "Disk" 4
 
       action $ requireDoc
-      action $ requireIcons
+      action $ requireIcons imgExt
       action $ requireStatic
 
       webRules
-      when (m /= Build) (action $ runWeb m)
+      when (m /= Build) (action $ runWeb m imgExt)
 
       dist "doc/*.html" *> \out -> do
         let xml = obj . un $ out -<.> "xml"
@@ -82,28 +90,28 @@ main = do
       obj "//*.hs.o" *> \out -> do
         let hs = un $ dropExtension out
         need [hs]
-        ghc Compile disk out hs
+        ghc Compile useSVG disk out hs
 
       obj "//*.hs.exe" *> \out -> do
         let o  = out -<.> "o"
             hs = un $ dropExtension out
         need [hs,o]
-        ghc Link disk out hs
+        ghc Link useSVG disk out hs
 
-      dist "doc/icons/*.png" *> \out -> do
+      dist ("doc/icons/*" <.> imgExt) *> \out -> do
         let exe = obj . un $ out -<.> ".hs.exe"
         need [exe]
         system' exe ["-w", "40", "-h", "40", "-o", out]
 
       copyFiles "doc/static"
 
-      dist "web/gallery/*.big.png" *> \out -> do
+      dist ("web/gallery/*.big" <.> imgExt) *> \out -> do
         need [dropExtension (un out) -<.> "lhs"]
-        compilePng False out
+        compileImg False out
 
-      dist "web/gallery/*.thumb.png" *> \out -> do
+      dist ("web/gallery/*.thumb" <.> imgExt) *> \out -> do
         need [dropExtension (un out) -<.> "lhs"]
-        compilePng True out
+        compileImg True out
 
       addOracle $ \(GhcPkg _) -> do
         (out,_) <- systemOutput "ghc-pkg" ["dump"]
@@ -111,8 +119,8 @@ main = do
 
       return ()
 
-compilePng :: Bool -> FilePath -> Action ()
-compilePng isThumb outPath = do
+compileImg :: Bool -> FilePath -> Action ()
+compileImg isThumb outPath = do
     systemCwdNorm "web/gallery" (obj "web/gallery/BuildGallery.hs.exe")
       ( (if isThumb then [ "--thumb", "175" ] else [])
         ++ [(takeBaseName . takeBaseName) outPath, "../.." </> outPath]
@@ -121,10 +129,10 @@ compilePng isThumb outPath = do
 copyFiles :: String -> Rules ()
 copyFiles dir = dist (dir ++ "/*") *> \out -> copyFile' (un out) out
 
-requireIcons :: Action ()
-requireIcons = do
+requireIcons :: String -> Action ()
+requireIcons imgExt = do
   hsIcons <- getDirectoryFiles "doc/icons" ["*.hs"]
-  let icons = map (\i -> dist $ "doc/icons" </> i -<.> "png") hsIcons
+  let icons = map (\i -> dist $ "doc/icons" </> i -<.> imgExt) hsIcons
   need icons
 
 requireStatic :: Action ()
@@ -133,13 +141,13 @@ requireStatic = do
   let static = map (dist . ("doc/static" </>)) staticSrc
   need static
 
-requireGallery :: Action ()
-requireGallery = do
+requireGallery :: String -> Action ()
+requireGallery imgExt = do
   gallerySrc <- filter (not . (".#" `isPrefixOf`))
                 <$> getDirectoryFiles "web/gallery" ["*.lhs"]
-  let pngs   = map (dist . ("web/gallery" </>) . (-<.> "big.png")) gallerySrc
-      thumbs = map (dist . ("web/gallery" </>) . (-<.> "thumb.png")) gallerySrc
-  need (pngs ++ thumbs)
+  let imgs   = map (dist . ("web/gallery" </>) . (-<.> ("big" <.> imgExt))) gallerySrc
+      thumbs = map (dist . ("web/gallery" </>) . (-<.> ("thumb" <.> imgExt))) gallerySrc
+  need (imgs ++ thumbs)
 
 requireDoc :: Action ()
 requireDoc = do
@@ -156,10 +164,10 @@ webRules = do
     liftIO $ createDirectoryIfMissing True "dist/web/gallery"
     system' "ln" ["-s", "-f", "../../dist/web/gallery", out]
 
-runWeb :: MkMode -> Action ()
-runWeb m = do
+runWeb :: MkMode -> String -> Action ()
+runWeb m imgExt = do
   alwaysRerun
-  needWeb
+  needWeb imgExt
 
   -- work around weird bug(?)
   system' "rm" ["-f", "dist/doc/doc"]
@@ -171,38 +179,42 @@ runWeb m = do
         Preview -> "preview"
     ]
 
-needWeb :: Action ()
-needWeb = do
+needWeb :: String -> Action ()
+needWeb imgExt = do
   need [ "web/doc"
        , "web/gallery/images"
        , obj "web/Site.hs.exe"
        , obj "web/gallery/BuildGallery.hs.exe"
        ]
-  requireIcons
+  requireIcons imgExt
   requireStatic
-  requireGallery
+  requireGallery imgExt
   requireDoc
 
 data GhcMode = Compile | Link
   deriving Eq
 
-ghc :: GhcMode -> Resource -> String -> String -> Action ()
-ghc mode r out hs = do
+ghc :: GhcMode -> Bool -> Resource -> String -> String -> Action ()
+ghc mode useSVG r out hs = do
   let odir = takeDirectory out
       base = (takeBaseName . takeBaseName) out
       mainIs | head base `elem` ['A'..'Z'] = ["-main-is", base]
              | otherwise                   = []
+
+  -- Rebuild when the package database has changed
   askOracleWith (GhcPkg ()) [""]
+
+  -- Run GHC, limiting to four linking invocations at a time
   resourced mode $ system' "ghc" $
     concat
     [ ["--make", "-O2", "-outputdir", odir, "-o", out, "-osuf", "hs.o", hs]
     , mainIs
     , ["-c" | mode == Compile ]
+    , ["-DUSE_SVG" | useSVG ]
     ]
   where
     resourced Link = withResource r 1
     resourced _    = id
-
 
 systemCwdNorm :: FilePath -> FilePath -> [String] -> Action ()
 systemCwdNorm path exe as = do

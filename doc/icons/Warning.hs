@@ -1,8 +1,13 @@
+{-# LANGUAGE CPP                       #-}
 {-# LANGUAGE NoMonomorphismRestriction #-}
 
 module Warning where
 
+#ifdef USE_SVG
+import           Diagrams.Backend.SVG.CmdLine
+#else
 import           Diagrams.Backend.Cairo.CmdLine
+#endif
 import           Diagrams.Prelude
 
 signSide = hrule 1 <> arc (-1/4 :: CircleFrac) ((-1/4) + 1/3) # scale 0.3

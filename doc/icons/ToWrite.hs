@@ -1,8 +1,14 @@
+{-# LANGUAGE CPP                       #-}
 {-# LANGUAGE NoMonomorphismRestriction #-}
 
 module ToWrite where
 
+#ifdef USE_SVG
+import           Diagrams.Backend.SVG.CmdLine
+#else
 import           Diagrams.Backend.Cairo.CmdLine
+#endif
+
 import           Diagrams.Prelude
 
 frame = rect 8.5 11

@@ -1,10 +1,18 @@
+{-# LANGUAGE CPP                #-}
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE StandaloneDeriving #-}
 
 module BuildGallery where
 
+#ifdef USE_SVG
+import qualified Data.ByteString.Lazy            as BS
+import           Diagrams.Backend.SVG
+import           Text.Blaze.Svg.Renderer.Utf8    (renderSvg)
+#else
 import           Diagrams.Backend.Cairo
 import           Diagrams.Backend.Cairo.Internal
+#endif
+
 import           Diagrams.Prelude
 
 import           Diagrams.Builder                hiding (Build (..))
@@ -27,12 +35,15 @@ import           System.Console.CmdArgs          hiding (name)
 -- build the entire diagram.
 compileExample :: Maybe Double -> String -> String -> IO ()
 compileExample mThumb lhs out = do
+#ifdef USE_SVG
+#else
   let fmt = case FP.takeExtension out of
               ".png" -> PNG
               ".svg" -> SVG
               ".ps"  -> PS
               ".pdf" -> PDF
-              _     -> PNG
+              _      -> PNG
+#endif
 
   f   <- readFile lhs
   let (fields, f') = parseFields f
@@ -51,20 +62,37 @@ compileExample mThumb lhs out = do
             _ -> "example"
 
   res <- buildDiagram
+#ifdef USE_SVG
+           SVG
+#else
            Cairo
+#endif
            zeroV
+#ifdef USE_SVG
+           (SVGOptions (mkSizeSpec w h) Nothing)
+#else
            (CairoOptions out (mkSizeSpec w h) fmt False)
+#endif
            [f']
            toBuild
            []
+#ifdef USE_SVG
+           [ "Diagrams.Backend.SVG" ]
+#else
            [ "Diagrams.Backend.Cairo" ]
+#endif
            alwaysRegenerate  -- XXX use hashedRegenerate?
   case res of
     ParseErr err    -> putStrLn ("Parse error in " ++ lhs) >> putStrLn err
     InterpErr err   -> putStrLn ("Error while compiling " ++ lhs) >>
                        putStrLn (ppInterpError err)
     Skipped _       -> return ()
-    OK _ (act,_)    -> act
+    OK _ build      ->
+#ifdef USE_SVG
+      BS.writeFile out (renderSvg build)
+#else
+      fst build
+#endif
 
 parseFields :: String -> (M.Map String String, String)
 parseFields s = (fieldMap, unlines $ tail rest)

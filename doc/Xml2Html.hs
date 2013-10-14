@@ -1,9 +1,11 @@
 {-# LANGUAGE Arrows #-}
+{-# LANGUAGE CPP    #-}
 
 module Xml2Html where
 
 import           Control.Arrow
 import           Control.Monad                      (when)
+import           Data.Char                          (toLower)
 import           System.Directory                   (createDirectory,
                                                      doesDirectoryExist)
 import           System.Exit
@@ -12,8 +14,6 @@ import           System.FilePath                    (joinPath, splitPath, (<.>),
 import           System.IO
 
 import           Data.VectorSpace                   (zeroV)
-import           Diagrams.Backend.Cairo
-import           Diagrams.Backend.Cairo.Internal
 import           Diagrams.Builder                   (BuildResult (..),
                                                      buildDiagram,
                                                      hashedRegenerate,
@@ -25,13 +25,27 @@ import           Text.Docutils.Util
 import           Text.Docutils.Writers.HTML
 import           Text.XML.HXT.Core                  hiding (when)
 
+#ifdef USE_SVG
+import qualified Data.ByteString.Lazy               as BS
+import           Diagrams.Backend.SVG
+import           Text.Blaze.Svg.Renderer.Utf8       (renderSvg)
+#else
+import           Diagrams.Backend.Cairo
+import           Diagrams.Backend.Cairo.Internal
+#endif
+
+#ifdef USE_SVG
+backendExt = "svg"
+#else
+backendExt = "png"
+#endif
+
 main :: IO ()
 main = do
   (modMap, nameMap) <- buildPackageMaps
                        [ "diagrams-core"
                        , "active"
                        , "diagrams-lib"
-                       , "diagrams-cairo"
                        , "diagrams-contrib"
                        , "vector-space"
                        , "vector-space-points"
@@ -104,22 +118,38 @@ compileDiagram :: FilePath -> String -> IO (Either String String)
 compileDiagram outDir src = do
   ensureDir outDir
   res <- buildDiagram
+#ifdef USE_SVG
+           SVG
+#else
            Cairo
+#endif
            zeroV
+#ifdef USE_SVG
+           (SVGOptions (Dims 500 200) Nothing)
+#else
            (CairoOptions "default.png" (Dims 500 200) PNG False)
+#endif
            [src]
            "pad 1.1 example"
            ["DeriveDataTypeable"]
            [ "Diagrams.TwoD.Types"      -- WHY IS THIS NECESSARY =(
            , "Diagrams.Core.Points"
                -- GHC 7.2 bug?  need  V (Point R2) = R2  (see #65)
+#ifdef USE_SVG
+           , "Diagrams.Backend.SVG"
+#else
            , "Diagrams.Backend.Cairo"
            , "Diagrams.Backend.Cairo.Internal"
+#endif
            , "Graphics.SVGFonts"
            , "Data.Typeable"
            ]
            (hashedRegenerate
+#ifdef USE_SVG
+             (\_ opts -> opts)
+#else
              (\hash opts -> opts { cairoFileName = mkFile hash })
+#endif
              outDir
            )
   case res of
@@ -138,14 +168,18 @@ compileDiagram outDir src = do
       hFlush stdout
       return $ Right (mkFile hash)
 
-    OK hash (act,_) -> do
+    OK hash out -> do
       putStr "O"
       hFlush stdout
-      act
+#ifdef USE_SVG
+      BS.writeFile (mkFile hash) (renderSvg out)
+#else
+      fst out
+#endif
       return $ Right (mkFile hash)
 
  where
-  mkFile base = outDir </> base <.> "png"
+  mkFile base = outDir </> base <.> backendExt
   ensureDir dir = do
     b <- doesDirectoryExist dir
     when (not b) $ createDirectory dir
