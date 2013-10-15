@@ -26,35 +26,37 @@ options used to make arrows.
 
 ::
 
-> example = d # connect' with { arrowHead=dart, headSize=1, arrowTail=quill
->                             , tailSize=1, shaftStyle=lw 0.1 # lc black, arrowShaft=s
->                             , tailGap=0.1, headGap=0.1
->                             , headStyle = fc blue, tailStyle = fc orange }
->                             "1" "2"
->             # connect' with { arrowHead=missile, headSize=0.8, arrowTail=missile'
->                             , tailSize=0.8, shaftStyle=lw 0.05, arrowShaft=s1
->                             , headGap=0, tailGap=0.1 }
->                             "4" "3"
->             # connect' with { arrowHead=thorn, headSize=0.8, arrowShaft=a1
->                             , arrowTail=noTail, shaftStyle=lw 0.03
->                             , tailGap=1, headGap=1 }
->                             "1" "6"
->             # connect' with { arrowHead=dart, tailSize=1, arrowTail=dart'
->                              , headSize=1, arrowShaft=s2
->                              , headStyle = fc green, tailStyle=fc green
->                              , shaftStyle=lw 0.1 # lc green }
->                             "4" "7"
->             # connect' with { arrowTail=dart', tailSize=1, arrowShaft=a
->                             , arrowHead=spike, headSize=1, headStyle=fc red
->                             , tailGap=0.1, tailStyle=fc red
->                             , shaftStyle=lw 0.2 # lc blue }
->                             "9" "5"
->             # connect' with { arrowHead=tri, arrowTail=block
->                             , headSize=1, tailSize=0.6, headGap=0.5
->                             , headStyle=fc black # opacity 0.5
->                             , tailStyle=fc black # opacity 0.5
->                             , shaftStyle=lw 0.06 # dashing [0.1,0.2,0.3,0.1] 0}
->                             "8" "9"
+> import Control.Lens ((&), (.~), (%~))
+>
+> example = d # connect' (with & arrowHead .~ dart & headSize .~ 1 & arrowTail .~ quill
+>                              & tailSize .~ 1 & shaftStyle %~ lw 0.1 . lc black & arrowShaft .~ s
+>                              & tailGap .~ 0.1 & headGap .~ 0.1
+>                              & headStyle %~ fc blue & tailStyle %~ fc orange)
+>                              "1" "2"
+>             # connect' (with & arrowHead .~ missile & headSize .~ 0.8 & arrowTail .~ missile'
+>                              & tailSize .~ 0.8 & shaftStyle %~ lw 0.05 & arrowShaft .~ s1
+>                              & headGap .~ 0 & tailGap .~ 0.1)
+>                              "4" "3"
+>             # connect' (with & arrowHead .~ thorn & headSize .~ 0.8 & arrowShaft .~ a1
+>                              & arrowTail .~ noTail & shaftStyle %~ lw 0.03
+>                              & tailGap .~ 1 & headGap .~ 1 )
+>                              "1" "6"
+>             # connect' (with & arrowHead .~ dart & tailSize .~ 1 & arrowTail .~ dart'
+>                              & headSize .~ 1 & arrowShaft .~ s2
+>                              & headStyle %~  fc green & tailStyle %~ fc green
+>                              & shaftStyle %~ lw 0.1 . lc green )
+>                              "4" "7"
+>             # connect' (with & arrowTail .~ dart' & tailSize .~ 1 & arrowShaft .~ a
+>                              & arrowHead .~ spike & headSize .~ 1 & headStyle %~ fc red
+>                              & tailGap .~ 0.1 & tailStyle %~ fc red
+>                              & shaftStyle %~ lw 0.2 . lc blue )
+>                              "9" "5"
+>             # connect' (with & arrowHead .~ tri & arrowTail .~ block
+>                              & headSize .~ 1 & tailSize .~ 0.6 & headGap .~ 0.5
+>                              & headStyle %~ fc black . opacity 0.5
+>                              & tailStyle %~ fc black . opacity 0.5
+>                              & shaftStyle %~ lw 0.06 . dashing [0.1,0.2,0.3,0.1] 0)
+>                              "8" "9"
 >             # scale 0.75
 >   where
 >     c = circle 1 # showOrigin # lw 0.04
@@ -125,10 +127,8 @@ its cousin `arrowBetween'`) connects two points.
 
 ::
 
-> import Diagrams.Coordinates
->
-> sPt = 0.20 & 0.20
-> ePt = 2.85 & 0.85
+> sPt = p2 (0.20, 0.20)
+> ePt = p2 (2.85,  0.85)
 >
 > -- We use small blue and red circles to mark the start and end points.
 > dot  = circle 0.02 # lw 0
@@ -187,7 +187,7 @@ being the shape. So, for example, if we set `arrowHead=spike` and
 
 ::
 
-> arrowBetween' with { arrowHead=spike, arrowTail=quill} sPt ePt
+> arrowBetween' (with & arrowHead .~ spike & arrowTail .~ quill) sPt ePt
 
 then the arrow from the previous example looks like this:
 
@@ -195,17 +195,15 @@ then the arrow from the previous example looks like this:
 
 ::
 
-> import Diagrams.Coordinates
->
-> sPt = 0.20 & 0.20
-> ePt = 2.85 & 0.85
+> sPt = p2 (0.20, 0.20)
+> ePt = p2 (2.85,  0.85)
 >
 > dot = circle 0.02 # lw 0
 > sDot = dot # fc blue # moveTo sPt
 > eDot = dot # fc red # moveTo ePt
 >
-> example = (sDot <> eDot <> arrowBetween' with { arrowHead=spike
->                                               , arrowTail=quill} sPt ePt)
+> example = (sDot <> eDot <> arrowBetween' (with & arrowHead .~ spike
+>                                                & arrowTail .~ quill) sPt ePt)
 >          # centerXY # pad 1.1
 
 The `Arrowheads` package exports a number of standard arrowheads
@@ -221,7 +219,7 @@ can be used as tails by appending a single quote, so for example:
 
 ::
 
-> arrowBetween' with { arrowHead=thorn, arrowTail=thorn'} sPt ePt
+> arrowBetween' (with & arrowHead .~ thorn & arrowTail .~ thorn'} sPt ePt
 
 yields:
 
@@ -229,17 +227,15 @@ yields:
 
 ::
 
-> import Diagrams.Coordinates
->
-> sPt = 0.20 & 0.20
-> ePt = 2.85 & 0.85
+> sPt = p2 (0.20, 0.20)
+> ePt = p2 (2.85, 0.85)
 >
 > dot = circle 0.02 # lw 0
 > sDot = dot # fc blue # moveTo sPt
 > eDot = dot # fc red # moveTo ePt
 >
-> example = ( sDot <> eDot <>arrowBetween' with { arrowHead=thorn
->                                               , arrowTail=thorn'} sPt ePt)
+> example = ( sDot <> eDot <>arrowBetween' (with & arrowHead .~ thorn
+>                                                & arrowTail .~ thorn'} sPt ePt)
 >           # centerXY # pad 1.1
 
 
@@ -260,18 +256,16 @@ will make the arrow shaft into an arc:
 > shaft = arc 0 (1/2 :: Turn)
 >
 > example = ( sDot <> eDot
->          <> arrowBetween' with { arrowHead=spike, arrowTail=spike'
->                                , arrowShaft=shaft} sPt ePt)
+>          <> arrowBetween' (with & arrowHead .~ spike & arrowTail .~ spike'
+>                                 & arrowShaft .~shaft) sPt ePt)
 >           # centerXY # pad 1.1
 
 .. class:: dia
 
 ::
 
-> import Diagrams.Coordinates
->
-> sPt = 0.20 & 0.40
-> ePt = 2.80 & 0.40
+> sPt = p2 (0.20, 0.40)
+> ePt = p2 (2.80,  0.40)
 >
 > dot = circle 0.02 # lw 0
 > sDot = dot # fc blue # moveTo sPt
@@ -280,8 +274,8 @@ will make the arrow shaft into an arc:
 > shaft = arc 0 (1/2 :: Turn)
 >
 > example = ( sDot <> eDot
->          <> arrowBetween' with { arrowHead=spike, arrowTail=spike'
->                                , arrowShaft=shaft} sPt ePt)
+>          <> arrowBetween' (with & arrowHead .~ spike & arrowTail .~ spike'
+>                                 & arrowShaft .~ shaft) sPt ePt)
 >           # centerXY # pad 1.1
 
 Arrows with curved shafts don't always render the way our intuition
@@ -314,17 +308,15 @@ result of making the arrow pointing from `(0,0)`:math: to
 
 ::
 
-> import Diagrams.Coordinates
->
-> sPt = 0.20 & 0.40
-> ePt = 2.80 & 0.40
+> sPt = p2 (0.20, 0.40)
+> ePt = p2 (2.80, 0.40)
 > dot = circle 0.02 # lw 0
 > sDot = dot # fc blue # moveTo sPt
 > eDot = dot # fc red # moveTo ePt
 > shaft = arc 0 (1/2 :: Turn) # reverseTrail
 > example = ( sDot <> eDot
->          <> arrowBetween' with { arrowHead=spike, arrowTail=spike'
->                                , arrowShaft=shaft} sPt ePt)
+>          <> arrowBetween' (with & arrowHead .~ spike & arrowTail .~ spike'
+>                                 & arrowShaft .~ shaft) sPt ePt)
 >           # centerXY # pad 1.1
 
 .. container:: warning
@@ -360,11 +352,9 @@ the following example. The default gaps are 0.
 
 ::
 
-> import Diagrams.Coordinates
->
-> sPt = 0.20 & 0.50
-> mPt = 1.50 & 0.50
-> ePt = 2.80 & 0.50
+> sPt = p2 (0.20, 0.50)
+> mPt = p2 (1.50, 0.50)
+> ePt = p2 (2.80, 0.50)
 >
 > dot  = circle 0.02 # lw 0
 > sDot = dot # fc blue  # moveTo sPt
@@ -372,14 +362,14 @@ the following example. The default gaps are 0.
 > eDot = dot # fc red   # moveTo ePt
 >
 >
-> leftArrow  = arrowBetween' with { arrowHead=missile, arrowTail=spike'
->                                 , headSize = 0.15, tailSize=0.1
->                                 , shaftStyle=lw 0.02
->                                 , headGap=0.05} sPt mPt
-> rightArrow = arrowBetween' with { arrowHead=tri, arrowTail=dart'
->                                 , headSize = 0.25, tailSize=0.2
->                                 , shaftStyle=lw 0.015
->                                 , tailGap=0.1} mPt ePt
+> leftArrow  = arrowBetween' (with & arrowHead .~ missile & arrowTail .~ spike'
+>                                  & headSize .~ 0.15 & tailSize .~ 0.1
+>                                  & shaftStyle %~ lw 0.02
+>                                  & headGap .~ 0.05) sPt mPt
+> rightArrow = arrowBetween' (with & arrowHead .~ tri & arrowTail .~ dart'
+>                                  & headSize .~ 0.25 & tailSize .~ 0.2
+>                                  & shaftStyle %~ lw 0.015
+>                                  & tailGap .~ 0.1) mPt ePt
 >
 > example = ( sDot <> mDot <> eDot <> leftArrow <> rightArrow)
 >           # centerXY # pad 1.1
@@ -398,29 +388,27 @@ function that applies the attributes, *e.g.* `headStyle = fc blue` or
 
 ::
 
-> dashedArrow = arrowBetween' with { arrowHead=dart, arrowTail=spike'
->                                  , headStyle=fc blue, tailStyle=fc orange
->                                  , shaftStyle=dashing [0.04, 0.02] 0
->                                  # lw 0.01} sPt ePt
+> dashedArrow = arrowBetween' (with & arrowHead .~ dart & arrowTail .~ spike'
+>                                   & headStyle %~ fc blue & tailStyle %~ fc orange
+>                                   & shaftStyle %~ dashing [0.04, 0.02] 0
+>                                   . lw 0.01} sPt ePt
 >
 
 .. class:: dia
 
 ::
 
-> import Diagrams.Coordinates
->
-> sPt = 0.20 & 0.20
-> ePt = 2.95 & 0.85
+> sPt = p2 (0.20, 0.20)
+> ePt = p2 (2.95, 0.85)
 >
 > dot = circle 0.025 # lw 0
 > sDot = dot # fc blue # moveTo sPt
 > eDot = dot # fc red # moveTo ePt
 >
-> arrow1 = arrowBetween' with { arrowHead=dart, arrowTail=spike'
->                             , headStyle=fc blue, tailStyle=fc orange
->                             , shaftStyle=dashing [0.04, 0.02] 0 # lw 0.01
->                             } sPt ePt
+> arrow1 = arrowBetween' (with & arrowHead .~ dart & arrowTail .~ spike'
+>                              & headStyle %~ fc blue & tailStyle %~ fc orange
+>                              & shaftStyle %~ dashing [0.04, 0.02] 0 . lw 0.01
+>                              ) sPt ePt
 >
 > example = (sDot <> eDot <> arrow1) # centerXY # pad 1.1
 
@@ -464,7 +452,7 @@ how we might create a vector field using the `arrowAt'` function.
 >     hs   = 0.08 * m
 >     sW   = 0.015 * m
 >     sL   = 0.01 + 0.1 * m
->     opts = with {arrowHead=spike, headSize=hs, shaftStyle=lw sW}
+>     opts = (with  & arrowHead .~ spike &  headSize .~ hs & shaftStyle %~ lw sW)
 >
 > field   = position $ zip points arrows
 > example = ( field # translateY 0.05
@@ -496,9 +484,9 @@ specified).
 > ds = (s # named "1") ||| strutX 3 ||| (s # named "2")
 > t  = cubicSpline False [(0 & 0), (1 & 0), (1 & 0.2), (2 & 0.2)]
 >
-> example = ds # connect' with { arrowHead=dart, headSize=0.6
->                              , tailSize=0.6, arrowTail=dart'
->                              , shaftStyle=lw 0.03, arrowShaft=t} "1" "2"
+> example = ds # connect' (with & arrowHead .~ dart & headSize .~ 0.6
+>                               & tailSize .~ 0.6 & arrowTail .~ dart'
+>                               & shaftStyle %~ lw 0.03 & arrowShaft .~ t} "1" "2"
 
 Connecting points on the trace of diagrams
 ==========================================
@@ -537,18 +525,18 @@ straightforward.
 >                                 # translateX dx
 >                                 # translateY dy
 >
-> states123 = hcat' with {sep = 3} [ (text "1" <> state)  # named "1"
+> states123 = hcat' ( with & sep .~ 3) [ (text "1" <> state)  # named "1"
 >                   , label "0-9" 0.5 (-0.5) 1.25
 >                   , (text "2" <> state)  # named "2"
 >                   , label "0-9" 0.5 (-2) 2
 >                   , label "." 1 0.5 1.5
 >                   , (text "3" <> fState) # named "3"
 >                   , label "0-9" 0.5 1 2 ]
-> states45 = hcat' with {sep = 3} [ (text "4" <> state)  # named "4"
->                   , label "." 1 (-4) 2
->                   , label "0-9" 0.5 0.5 0
->                   , (text "5" <> fState) # named "5"
->                   , label "0-9" 0.5 5 0 ]
+> states45 = hcat' ( with & sep .~ 3) [ (text "4" <> state)  # named "4"
+>                  , label "." 1 (-4) 2
+>                  , label "0-9" 0.5 0.5 0
+>                  , (text "5" <> fState) # named "5"
+>                  , label "0-9" 0.5 5 0 ]
 >
 > states = (states123 # centerX) === strutY 1 === (states45 # centerX)
 >
@@ -556,17 +544,17 @@ straightforward.
 > shaft180 = arc 0 (1/2 :: Turn) # scaleX 0.33
 > line     = trailFromOffsets [unitX]
 >
-> arrow60 = with { arrowHead=noHead, tailSize=0.3, arrowShaft=shaft60
->                    , arrowTail=spike', shaftStyle=lw 0.03
->                    , tailStyle = fc black . opacity 1}
+> arrow60 = ( with & arrowHead .~ noHead & tailSize .~ 0.3 & arrowShaft .~ shaft60
+>                   & arrowTail .~ spike' & shaftStyle %~ lw 0.03
+>                   & tailStyle  %~  fc black . opacity )
 >
-> arrow180 = with { arrowHead=noHead, tailSize=0.3, arrowShaft=shaft180
->                    , arrowTail=spike', shaftStyle=lw 0.03
->                    , tailStyle = fc black . opacity 1}
+> arrow180 = ( with & arrowHead .~ noHead & tailSize .~ 0.3 & arrowShaft .~ shaft180
+>                   & arrowTail .~ spike' & shaftStyle %~ lw 0.03
+>                   & tailStyle %~  fc black . opacity 1 )
 >
-> arrowLine = with { arrowHead=noHead, tailSize=0.3, arrowShaft=line
->                    , arrowTail=spike', shaftStyle=lw 0.03
->                    , tailStyle = fc black . opacity 1}
+> arrowLine = ( with & arrowHead .~ noHead & tailSize .~ 0.3 & arrowShaft .~ line
+>                    & arrowTail .~ spike' & shaftStyle %~ lw 0.03
+>                    & tailStyle %~  fc black . opacity 1 )
 >
 > example = states # connectPerim' arrow60
 >                    "2" "1" (5/12 :: Turn) (1/12 :: Turn)
@@ -608,9 +596,9 @@ In the following exercise you can try `connectPerim'` for yourself.
     >
     > connectTarget :: (Angle a, Renderable (Path R2) b)
     >               =>  a -> (Diagram b R2 -> Diagram b R2)
-    > connectTarget a = connectPerim' with { arrowHead=thorn, shaftStyle= lw 0.01
-    >                                      , arrowShaft=shaft, headSize=0.18
-    >                                      , arrowTail=thorn'
+    > connectTarget a = connectPerim' (with & arrowHead .~ thorn & shaftStyle %~  lw 0.01
+    >                                       & arrowShaft .~ shaft & headSize .~ 0.18
+    >                                      , arrowTail .~ thorn'
     >                                      } "target" "bullseye" a a
     >
     > angles :: [Turn]

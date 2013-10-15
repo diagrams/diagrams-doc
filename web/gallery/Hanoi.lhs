@@ -13,6 +13,7 @@ view: -10,1.5,20,20
 > import Diagrams.Prelude
 > import Diagrams.Backend.Cairo
 > import Data.List
+> import Control.Lens ((&), (.~))
 >
 > type DC = Diagram Cairo R2
 
@@ -53,7 +54,7 @@ horizontally, using the `Distrib` method so the pegs end up spaced
 evenly no matter the width of the disks on any particular peg.
 
 > renderHanoi :: Hanoi -> DC
-> renderHanoi = hcat' with {catMethod = Distrib, sep = 7} . map renderStack
+> renderHanoi = hcat' (with & catMethod .~ Distrib & sep .~ 7) . map renderStack
 
 Now some code to actually solve the puzzle, generating a list of moves
 which are then used to simulate the solution and generate a list of
@@ -81,6 +82,6 @@ Finally, we render a sequence of configurations representing a
 solution by laying them out vertically.
 
 > renderHanoiSeq :: [Hanoi] -> DC
-> renderHanoiSeq = vcat' with { sep = 2 } . map renderHanoi
+> renderHanoiSeq = vcat' (with & sep .~2) . map renderHanoi
 >
 > example = pad 1.1 $ renderHanoiSeq (hanoiSequence 4) # centerXY

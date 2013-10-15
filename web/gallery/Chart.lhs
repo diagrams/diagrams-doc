@@ -34,7 +34,7 @@ dashing pattern and shape.
 > type DC = Diagram Cairo R2
 
 The final diagram is the chart with the legend next to it.
- 
+
 > example :: DC
 > example = pad 1.1 . centerXY $
 >     (centerY (chart (map snd dataSeries) plotStyles [0,2,4,6,8,10] [0,2,4,6,8,10])
@@ -95,7 +95,7 @@ how the line looks in the chart.
 
 > legend :: [(DC, DC -> DC)] -> [String] -> DC
 > legend styles labels = centerXY $
->     vcat' with {sep=0.15} $
+>     vcat' with {_sep=0.15} $
 >       map (\(l,s) -> littleLine s ||| strutX 0.4 ||| text' l # alignL)
 >         (zip labels (styles ++ plotStyles))
 >   where littleLine (d,l) = (stroke $ fromVertices [ 0&0, 1&0 ]) # l
@@ -136,10 +136,10 @@ colour style is just a colour.  These three combined give a "style".
 > type Shape = DC
 > type DotStyle = (Shape, Fill)
 > type LineStyle = DC -> DC
-> 
+>
 > plotStyles :: [ (Shape, LineStyle) ]
 > plotStyles = zipWith3 combineStyles dotStyles colourStyles lineStyles
-> 
+>
 > combineStyles :: DotStyle -> Colour Double -> LineStyle -> (Shape, LineStyle)
 > combineStyles (d,Fill f) c l =
 >   ( d # (if f then fcA (c `withOpacity` 0.5) else id) # lc c, lc c . l )
@@ -164,7 +164,7 @@ Some custom shapes.
 > cross :: Double -> Path R2
 > cross x = fromVertices [ x&(-x) , ((-x)&x) ]
 >           <> fromVertices [ x&x , ((-x)&(-x)) ]
-> 
+>
 > plus :: Double -> Path R2
 > plus x = cross x # rotate (45::Deg)
 
