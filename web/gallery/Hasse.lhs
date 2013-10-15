@@ -68,7 +68,7 @@ for a more in-depth explanation of how names are used to connect subsets.
 > hasseRow = centerX . hcat' (with & sep .~ 2) . map drawSet
 >
 > hasseDiagram n = setsD # drawConnections # centerXY
->   where setsD = vcat' (with & sep .~ fromIntegral n}
+>   where setsD = vcat' (with & sep .~ fromIntegral n)
 >               . map hasseRow
 >               . reverse
 >               $ subsets

@@ -94,7 +94,7 @@ the latter does not. In this tutorial whenever we mention a function with
 a single quote (`'`) at the end, there is a sister function without the quote that
 uses a default set of options.
 
-__ http://projects.haskell.org/diagrams/doc/manual.html#faking-optional-named-arguments
+__http://projects.haskell.org/diagrams/doc/manual.html#faking-optional-named-arguments
 
 Scale invariance
 ----------------
@@ -110,7 +110,7 @@ consequence for day-to-day diagramming with arrows is that arrowheads
 and -tails do not contribute to the envelope of an arrow (arrow
 shafts, on the other hand, do).
 
-__ http://projects.haskell.org/diagrams/doc/manual.html#scale-invariance
+__http://projects.haskell.org/diagrams/doc/manual.html#scale-invariance
 
 .. container:: warning
 
@@ -127,8 +127,10 @@ its cousin `arrowBetween'`) connects two points.
 
 ::
 
+> import Control.Lens ((&), (.~), (%~))
+>
 > sPt = p2 (0.20, 0.20)
-> ePt = p2 (2.85,  0.85)
+> ePt = p2 (2.85, 0.85)
 >
 > -- We use small blue and red circles to mark the start and end points.
 > dot  = circle 0.02 # lw 0
@@ -195,6 +197,8 @@ then the arrow from the previous example looks like this:
 
 ::
 
+> import Control.Lens ((&), (.~), (%~))
+>
 > sPt = p2 (0.20, 0.20)
 > ePt = p2 (2.85,  0.85)
 >
@@ -219,7 +223,7 @@ can be used as tails by appending a single quote, so for example:
 
 ::
 
-> arrowBetween' (with & arrowHead .~ thorn & arrowTail .~ thorn'} sPt ePt
+> arrowBetween' (with & arrowHead .~ thorn & arrowTail .~ thorn') sPt ePt
 
 yields:
 
@@ -227,6 +231,8 @@ yields:
 
 ::
 
+> import Control.Lens ((&), (.~), (%~))
+>
 > sPt = p2 (0.20, 0.20)
 > ePt = p2 (2.85, 0.85)
 >
@@ -235,7 +241,7 @@ yields:
 > eDot = dot # fc red # moveTo ePt
 >
 > example = ( sDot <> eDot <>arrowBetween' (with & arrowHead .~ thorn
->                                                & arrowTail .~ thorn'} sPt ePt)
+>                                                & arrowTail .~ thorn') sPt ePt)
 >           # centerXY # pad 1.1
 
 
@@ -253,6 +259,8 @@ will make the arrow shaft into an arc:
 
 ::
 
+> import Control.Lens ((&), (.~), (%~))
+>
 > shaft = arc 0 (1/2 :: Turn)
 >
 > example = ( sDot <> eDot
@@ -264,8 +272,10 @@ will make the arrow shaft into an arc:
 
 ::
 
+> import Control.Lens ((&), (.~), (%~))
+>
 > sPt = p2 (0.20, 0.40)
-> ePt = p2 (2.80,  0.40)
+> ePt = p2 (2.80, 0.40)
 >
 > dot = circle 0.02 # lw 0
 > sDot = dot # fc blue # moveTo sPt
@@ -308,6 +318,8 @@ result of making the arrow pointing from `(0,0)`:math: to
 
 ::
 
+> import Control.Lens ((&), (.~), (%~))
+>
 > sPt = p2 (0.20, 0.40)
 > ePt = p2 (2.80, 0.40)
 > dot = circle 0.02 # lw 0
@@ -352,6 +364,8 @@ the following example. The default gaps are 0.
 
 ::
 
+> import Control.Lens ((&), (.~), (%~))
+>
 > sPt = p2 (0.20, 0.50)
 > mPt = p2 (1.50, 0.50)
 > ePt = p2 (2.80, 0.50)
@@ -391,13 +405,15 @@ function that applies the attributes, *e.g.* `headStyle = fc blue` or
 > dashedArrow = arrowBetween' (with & arrowHead .~ dart & arrowTail .~ spike'
 >                                   & headStyle %~ fc blue & tailStyle %~ fc orange
 >                                   & shaftStyle %~ dashing [0.04, 0.02] 0
->                                   . lw 0.01} sPt ePt
+>                                   . lw 0.01) sPt ePt
 >
 
 .. class:: dia
 
 ::
 
+> import Control.Lens ((&), (.~), (%~))
+>
 > sPt = p2 (0.20, 0.20)
 > ePt = p2 (2.95, 0.85)
 >
@@ -430,7 +446,7 @@ how we might create a vector field using the `arrowAt'` function.
 
 ::
 
-> import Diagrams.Coordinates
+> import Control.Lens ((&), (.~), (%~))
 >
 > locs   = [(x, y) | x <- [0.1, 0.3 .. 3.25], y <- [0.1, 0.3 .. 3.25]]
 >
@@ -452,7 +468,7 @@ how we might create a vector field using the `arrowAt'` function.
 >     hs   = 0.08 * m
 >     sW   = 0.015 * m
 >     sL   = 0.01 + 0.1 * m
->     opts = (with  & arrowHead .~ spike &  headSize .~ hs & shaftStyle %~ lw sW)
+>     opts = (with & arrowHead .~ spike & headSize .~ hs & shaftStyle %~ lw sW)
 >
 > field   = position $ zip points arrows
 > example = ( field # translateY 0.05
@@ -478,15 +494,15 @@ specified).
 
 ::
 
-> import Diagrams.Coordinates
+> import Control.Lens ((&), (.~), (%~))
 >
 > s  = square 2 # showOrigin # lw 0.02
 > ds = (s # named "1") ||| strutX 3 ||| (s # named "2")
-> t  = cubicSpline False [(0 & 0), (1 & 0), (1 & 0.2), (2 & 0.2)]
+> t  = cubicSpline False (map p2 [(0, 0), (1, 0), (1, 0.2), (2, 0.2)])
 >
 > example = ds # connect' (with & arrowHead .~ dart & headSize .~ 0.6
 >                               & tailSize .~ 0.6 & arrowTail .~ dart'
->                               & shaftStyle %~ lw 0.03 & arrowShaft .~ t} "1" "2"
+>                               & shaftStyle %~ lw 0.03 & arrowShaft .~ t) "1" "2"
 
 Connecting points on the trace of diagrams
 ==========================================
@@ -516,6 +532,7 @@ straightforward.
 
 ::
 
+> import Control.Lens ((&), (.~), (%~))
 > import Data.Maybe (fromMaybe)
 >
 > state = circle 1 # lw 0.05 # fc silver
@@ -545,8 +562,8 @@ straightforward.
 > line     = trailFromOffsets [unitX]
 >
 > arrow60 = ( with & arrowHead .~ noHead & tailSize .~ 0.3 & arrowShaft .~ shaft60
->                   & arrowTail .~ spike' & shaftStyle %~ lw 0.03
->                   & tailStyle  %~  fc black . opacity )
+>                  & arrowTail .~ spike' & shaftStyle %~ lw 0.03
+>                  & tailStyle  %~  fc black . opacity 1)
 >
 > arrow180 = ( with & arrowHead .~ noHead & tailSize .~ 0.3 & arrowShaft .~ shaft180
 >                   & arrowTail .~ spike' & shaftStyle %~ lw 0.03
@@ -583,7 +600,10 @@ In the following exercise you can try `connectPerim'` for yourself.
     ::
 
     > {-# LANGUAGE MultiParamTypeClasses          #-}
-    > {-# LANGUAGE FlexibleContexts #-}
+    > {-# LANGUAGE FlexibleContexts               #-}
+    >
+    > import Control.Lens ((&), (.~), (%~))
+    >
     > bullseye = circle 0.2 # fc orangered
     >                       # lw 0
     >                       # named "bullseye"
@@ -598,8 +618,8 @@ In the following exercise you can try `connectPerim'` for yourself.
     >               =>  a -> (Diagram b R2 -> Diagram b R2)
     > connectTarget a = connectPerim' (with & arrowHead .~ thorn & shaftStyle %~  lw 0.01
     >                                       & arrowShaft .~ shaft & headSize .~ 0.18
-    >                                      , arrowTail .~ thorn'
-    >                                      } "target" "bullseye" a a
+    >                                       & arrowTail .~ thorn'
+    >                                      ) "target" "bullseye" a a
     >
     > angles :: [Turn]
     > angles = [0, 1/16 .. 15/16]
