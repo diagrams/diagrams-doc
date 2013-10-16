@@ -16,7 +16,6 @@ width: 600
 > import Diagrams.Core.Envelope
 > import Diagrams.Prelude
 > import Graphics.SVGFonts
-> import Control.Lens ((&), (.~), (%~))
 
 The diagram is the boxes (the "cube") and the lines between the boxes.
 

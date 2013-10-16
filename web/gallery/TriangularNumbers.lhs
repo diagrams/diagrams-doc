@@ -12,7 +12,6 @@ width: 400
 > import Diagrams.Prelude
 >
 > import Data.Colour
-> import Control.Lens ((&), (.~))
 
 Draw a group of dots in a triangular array, all with the same color
 and backed by a solid-colored triangle to visually group them.  Note

@@ -13,7 +13,6 @@ view: -10,1.5,20,20
 > import Diagrams.Prelude
 > import Diagrams.Backend.Cairo
 > import Data.List
-> import Control.Lens ((&), (.~))
 >
 > type DC = Diagram Cairo R2
 

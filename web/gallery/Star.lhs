@@ -10,7 +10,6 @@ width: 400
 
 > {-# LANGUAGE NoMonomorphismRestriction, TupleSections #-}
 > import Diagrams.Prelude hiding (connect)
-> import Control.Lens ((&), (.~))
 
 To create one quarter of the diagram, we first create some "axes"
 which are just lines with evenly spaced named points along them which

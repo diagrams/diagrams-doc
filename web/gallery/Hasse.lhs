@@ -15,7 +15,6 @@ view: -10,-5,15,15
 > import Data.Ord (comparing)
 > import Data.Function (on)
 > import Data.Maybe (fromMaybe)
-> import Control.Lens ((&), (.~))
 >
 > colors = [black, blue, red, yellow, green, orange, purple, brown]
 
