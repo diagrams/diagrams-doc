@@ -26,8 +26,6 @@ options used to make arrows.
 
 ::
 
-> import Control.Lens ((&), (.~), (%~))
->
 > example = d # connect' (with & arrowHead .~ dart & headSize .~ 1 & arrowTail .~ quill
 >                              & tailSize .~ 1 & shaftStyle %~ lw 0.1 . lc black & arrowShaft .~ s
 >                              & tailGap .~ 0.1 & headGap .~ 0.1
@@ -127,8 +125,6 @@ its cousin `arrowBetween'`) connects two points.
 
 ::
 
-> import Control.Lens ((&), (.~), (%~))
->
 > sPt = p2 (0.20, 0.20)
 > ePt = p2 (2.85, 0.85)
 >
@@ -197,8 +193,6 @@ then the arrow from the previous example looks like this:
 
 ::
 
-> import Control.Lens ((&), (.~), (%~))
->
 > sPt = p2 (0.20, 0.20)
 > ePt = p2 (2.85,  0.85)
 >
@@ -231,8 +225,6 @@ yields:
 
 ::
 
-> import Control.Lens ((&), (.~), (%~))
->
 > sPt = p2 (0.20, 0.20)
 > ePt = p2 (2.85, 0.85)
 >
@@ -259,8 +251,6 @@ will make the arrow shaft into an arc:
 
 ::
 
-> import Control.Lens ((&), (.~), (%~))
->
 > shaft = arc 0 (1/2 :: Turn)
 >
 > example = ( sDot <> eDot
@@ -272,8 +262,6 @@ will make the arrow shaft into an arc:
 
 ::
 
-> import Control.Lens ((&), (.~), (%~))
->
 > sPt = p2 (0.20, 0.40)
 > ePt = p2 (2.80, 0.40)
 >
@@ -318,8 +306,6 @@ result of making the arrow pointing from `(0,0)`:math: to
 
 ::
 
-> import Control.Lens ((&), (.~), (%~))
->
 > sPt = p2 (0.20, 0.40)
 > ePt = p2 (2.80, 0.40)
 > dot = circle 0.02 # lw 0
@@ -364,8 +350,6 @@ the following example. The default gaps are 0.
 
 ::
 
-> import Control.Lens ((&), (.~), (%~))
->
 > sPt = p2 (0.20, 0.50)
 > mPt = p2 (1.50, 0.50)
 > ePt = p2 (2.80, 0.50)
@@ -412,8 +396,6 @@ function that applies the attributes, *e.g.* `headStyle = fc blue` or
 
 ::
 
-> import Control.Lens ((&), (.~), (%~))
->
 > sPt = p2 (0.20, 0.20)
 > ePt = p2 (2.95, 0.85)
 >
@@ -446,8 +428,6 @@ how we might create a vector field using the `arrowAt'` function.
 
 ::
 
-> import Control.Lens ((&), (.~), (%~))
->
 > locs   = [(x, y) | x <- [0.1, 0.3 .. 3.25], y <- [0.1, 0.3 .. 3.25]]
 >
 > -- create a list of points where the vectors will be place.
@@ -494,8 +474,6 @@ specified).
 
 ::
 
-> import Control.Lens ((&), (.~), (%~))
->
 > s  = square 2 # showOrigin # lw 0.02
 > ds = (s # named "1") ||| strutX 3 ||| (s # named "2")
 > t  = cubicSpline False (map p2 [(0, 0), (1, 0), (1, 0.2), (2, 0.2)])
@@ -532,61 +510,61 @@ straightforward.
 
 ::
 
-> import Control.Lens ((&), (.~), (%~))
 > import Data.Maybe (fromMaybe)
 >
 > state = circle 1 # lw 0.05 # fc silver
 > fState = circle 0.85 # lw 0.05 # fc lightblue <> state
 >
-> label txt size dx dy = text txt # fontSize size
->                                 # translateX dx
->                                 # translateY dy
+> points = map p2 [ (0, 3), (3, 3.4), (6, 3), (5.75, 5.75), (9, 3.75), (12, 3)
+>                 , (11.75, 5.75), (3, 0), (2,2), (6, 0.5), (9, 0), (12.25, 0.25)]
 >
-> states123 = hcat' ( with & sep .~ 3) [ (text "1" <> state)  # named "1"
->                   , label "0-9" 0.5 (-0.5) 1.25
->                   , (text "2" <> state)  # named "2"
->                   , label "0-9" 0.5 (-2) 2
->                   , label "." 1 0.5 1.5
->                   , (text "3" <> fState) # named "3"
->                   , label "0-9" 0.5 1 2 ]
-> states45 = hcat' ( with & sep .~ 3) [ (text "4" <> state)  # named "4"
->                  , label "." 1 (-4) 2
->                  , label "0-9" 0.5 0.5 0
->                  , (text "5" <> fState) # named "5"
->                  , label "0-9" 0.5 5 0 ]
+> ds = [ (text "1" <> state)  # named "1"
+>        , label "0-9" 0.5
+>        , (text "2" <> state)  # named "2"
+>        , label "0-9" 0.5
+>        , label "." 1
+>        , (text "3" <> fState) # named "3"
+>        , label "0-9" 0.5
+>        , (text "4" <> state)  # named "4"
+>        , label "." 1
+>        , label "0-9" 0.5
+>        , (text "5" <> fState) # named "5"
+>        , label "0-9" 0.5]
 >
-> states = (states123 # centerX) === strutY 1 === (states45 # centerX)
+> label txt size = text txt # fontSize size
 >
-> shaft60  = arc 0 (1/6 :: Turn)
-> shaft180 = arc 0 (1/2 :: Turn) # scaleX 0.33
-> line     = trailFromOffsets [unitX]
+> states = position (zip points ds)
 >
-> arrow60 = ( with & arrowHead .~ noHead & tailSize .~ 0.3 & arrowShaft .~ shaft60
->                  & arrowTail .~ spike' & shaftStyle %~ lw 0.03
->                  & tailStyle  %~  fc black . opacity 1)
+> shaft = arc 0 (1/6 :: Turn)
+> shaft' = arc 0 (1/2 :: Turn) # scaleX 0.33
+> line = trailFromOffsets [unitX]
 >
-> arrow180 = ( with & arrowHead .~ noHead & tailSize .~ 0.3 & arrowShaft .~ shaft180
->                   & arrowTail .~ spike' & shaftStyle %~ lw 0.03
->                   & tailStyle %~  fc black . opacity 1 )
+> arrowStyle1 = (with  & arrowHead  .~ noHead & tailSize .~ 0.3
+>                      & arrowShaft .~ shaft  & arrowTail .~ spike'
+>                      & tailStyle  %~ fc black . opacity 1)
 >
-> arrowLine = ( with & arrowHead .~ noHead & tailSize .~ 0.3 & arrowShaft .~ line
->                    & arrowTail .~ spike' & shaftStyle %~ lw 0.03
->                    & tailStyle %~  fc black . opacity 1 )
+> arrowStyle2  = (with  & arrowHead  .~ noHead &  tailSize .~ 0.3
+>                       & arrowShaft .~ shaft' & arrowTail .~ spike'
+>                       & tailStyle  %~ fc black . opacity 1)
 >
-> example = states # connectPerim' arrow60
->                    "2" "1" (5/12 :: Turn) (1/12 :: Turn)
->                  # connectPerim' arrowLine
->                    "4" "1" (2/6 :: Turn) (5/6 :: Turn)
->                  # connectPerim' arrow180
->                    "2" "2" (2/12 :: Turn) (4/12 :: Turn)
->                  # connectPerim' arrow60
->                    "3" "2" (5/12 :: Turn) (1/12 :: Turn)
->                  # connectPerim' arrow180
->                    "3" "3" (2/12 :: Turn) (4/12 :: Turn)
->                  # connectPerim' arrow60
->                    "5" "4" (5/12 :: Turn) (1/12 :: Turn)
->                  # connectPerim' arrow180
->                    "5" "5" (-1/12 :: Turn) (1/12 :: Turn)
+> arrowStyle3  = (with  & arrowHead  .~ noHead & tailSize .~ 0.3
+>                       & arrowShaft .~ line & arrowTail .~ spike'
+>                       & tailStyle  %~ fc black . opacity 1)
+>
+> example = states # connectPerim' arrowStyle1
+>                                  "2" "1" (5/12 :: Turn) (1/12 :: Turn)
+>                  # connectPerim' arrowStyle3
+>                                  "4" "1" (2/6 :: Turn) (5/6 :: Turn)
+>                  # connectPerim' arrowStyle2
+>                                  "2" "2" (2/12 :: Turn) (4/12 :: Turn)
+>                  # connectPerim' arrowStyle1
+>                                  "3" "2" (5/12 :: Turn) (1/12 :: Turn)
+>                  # connectPerim' arrowStyle2
+>                                  "3" "3" (2/12 :: Turn) (4/12 :: Turn)
+>                  # connectPerim' arrowStyle1
+>                                  "5" "4" (5/12 :: Turn) (1/12 :: Turn)
+>                  # connectPerim' arrowStyle2
+>                                  "5" "5" (-1/12 :: Turn) (1/12 :: Turn)
 
 In the following exercise you can try `connectPerim'` for yourself.
 
@@ -601,8 +579,6 @@ In the following exercise you can try `connectPerim'` for yourself.
 
     > {-# LANGUAGE MultiParamTypeClasses          #-}
     > {-# LANGUAGE FlexibleContexts               #-}
-    >
-    > import Control.Lens ((&), (.~), (%~))
     >
     > bullseye = circle 0.2 # fc orangered
     >                       # lw 0
