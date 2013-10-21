@@ -61,12 +61,12 @@ a *magnitude* (length) and a *direction* (angle).
 >                 # dashing [0.05,0.05] 0
 >     xComponent = component unitX
 >     yComponent = component unitY # translate (project unitX v)
->     theta = text' 0.5 "θ" # translate (0.7 @@ 0.2)
+>     theta = text' 0.5 "θ" # translate (0.7 ^& 0.2)
 >
 > text' d s = (stroke $ textSVG' (TextOpts s lin INSIDE_H KERN False d d))
 >           # lw 0 # fc black
 >
-> example = ( (vPic ((4 @@ 0) # rotateBy (1/12)) # centerXY)
+> example = ( (vPic ((4 ^& 0) # rotateBy (1/12)) # centerXY)
 >             ||| strutX 0.2 ||| text' 0.5 "y"
 >           )
 >           === strutY 0.2 === text' 0.5 "x"
@@ -80,12 +80,12 @@ see this for yourself at a ``ghci`` prompt:
 
 ::
 
-  >>> (3 @@ 6) :: R2
-  3.0 @@ 6.0
-  >>> translateX 19 (3 @@ 6) :: R2
-  3.0 @@ 6.0
-  >>> rotateBy (1/4) (3 @@ 6) :: R2
-  (-6.0) @@ 3.0000000000000004
+  >>> (3 ^& 6) :: R2
+  3.0 ^& 6.0
+  >>> translateX 19 (3 ^& 6) :: R2
+  3.0 ^& 6.0
+  >>> rotateBy (1/4) (3 ^& 6) :: R2
+  (-6.0) ^& 3.0000000000000004
 
 Constructing vectors
 --------------------
@@ -131,22 +131,22 @@ The first thing to learn is how to *create* values of type
   representing vector components (which is not uncommon if the
   components are coming from some other data source).
 
-* You can also use `(@@)` to construct vector literals, like so:
+* You can also use `(^&)` to construct vector literals, like so:
 
   .. class:: dia-lhs
 
   ::
 
-  > example = fromOffsets [1 @@ 1, 0 @@ 3, (-2) @@ 1, (-1) @@ (-4)]
+  > example = fromOffsets [1 ^& 1, 0 ^& 3, (-2) ^& 1, (-1) ^& (-4)]
 
   This can make for convenient and pleasant notation. However, it does
   have some drawbacks, namely:
 
-  * `(@@)` is extremely general so its type is unhelpful.
-  * Related to the above, literal vector expressions like `1 @@ 2` must
+  * `(^&)` is extremely general so its type is unhelpful.
+  * Related to the above, literal vector expressions like `1 ^& 2` must
     be used in a context where the type can be inferred (or else a
     type annotation must be added).  This is because (as we will see
-    later) `(@@)` can also be used to construct points as well as
+    later) `(^&)` can also be used to construct points as well as
     higher-dimensional vectors.
 
   Only you can decide whether the tradeoffs are worth it in a given
@@ -212,7 +212,7 @@ Destructing vectors
 To take apart a vector into its `x`:math: and `y`:math: components,
 use `unr2 :: R2 -> (Double, Double)`, or more generally you can use
 `coords` (from `Diagrams.Coordinates`:mod:) and pattern-match on
-`(:@@)`.  Both these methods work well in conjunction with the
+`(:^&)`.  Both these methods work well in conjunction with the
 ``ViewPatterns`` `GHC extension`__, as in
 
 __ http://ghc.haskell.org/trac/ghc/wiki/ViewPatterns
@@ -438,9 +438,9 @@ There are several ways to construct points.
   As with `r2`, `p2` is especially useful if you already have pairs
   representing point coordinates.
 
-* The `@@` operator can be used to construct literal points (`P2`
+* The `^&` operator can be used to construct literal points (`P2`
   values) as well as vectors (`R2` values).  The proper type is chosen
-  via type inference: if the expression `(3 @@ 5)` is used in a context
+  via type inference: if the expression `(3 ^& 5)` is used in a context
   where its type is inferred to be `P2`, it is the point at
   `(3,5)`:math:; if its type is inferred to be `R2`, it is the vector
   with `x`:math:-component `3`:math: and `y`:math:-component

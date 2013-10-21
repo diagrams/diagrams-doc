@@ -652,7 +652,7 @@ two-dimensional space:
   Vectors can also be constructed and pattern-matched using the
   utilities defined in `Diagrams.Coordinates`:mod:, which provides a
   uniform interface for constructing points and vectors of any
-  dimension.  Vectors can be created using the syntax `(x @@ y)` and
+  dimension.  Vectors can be created using the syntax `(x ^& y)` and
   pattern-matched by calling `coords` and then matching on the pattern
   `(x :& y)`.
 
@@ -1756,7 +1756,7 @@ There are two types of trail:
 
   ::
 
-  > example = fromOffsets [1 @@ 1, 2 @@ (-1), (-1) @@ (-1), (-3) @@ 1]
+  > example = fromOffsets [1 ^& 1, 2 ^& (-1), (-1) ^& (-1), (-3) ^& 1]
   >         # closeLine # strokeLoop # fc blue
 
   Loops in 2D can be filled, as in the example above.
@@ -1769,7 +1769,7 @@ There are two types of trail:
 
   ::
 
-  > example = fromOffsets [1 @@ 1, 2 @@ (-1), (-1) @@ (-1), (-3) @@ 1]
+  > example = fromOffsets [1 ^& 1, 2 ^& (-1), (-1) ^& (-1), (-3) ^& 1]
   >         # strokeLine
 
   Actually, a line can in fact happen to end in the same place where
@@ -2235,7 +2235,7 @@ continuity; segments are even more restricted.)
 ::
 
 > spline :: Located (Trail R2)
-> spline = cubicSpline False [origin, 0 @@ 1, 1 @@ 1, 1 @@ 0] # scale 3
+> spline = cubicSpline False [origin, 0 ^& 1, 1 ^& 1, 1 ^& 0] # scale 3
 > pts = map (spline `atParam`) [0, 0.1 .. 1]
 > dot = circle 0.2 # fc blue
 >
@@ -2518,8 +2518,8 @@ named subdiagrams, or their traces. One may use the functions:
 
 ::
 
-> sPt = 0.50 @@ 0.50
-> ePt = 5.2 @@ 0.50
+> sPt = 0.50 ^& 0.50
+> ePt = 5.2 ^& 0.50
 >
 > -- Connect two points.
 > ex1 = arrowBetween sPt ePt
@@ -2532,7 +2532,7 @@ named subdiagrams, or their traces. One may use the functions:
 >           # connectPerim "1" "2" (15/16 :: Turn) (9/16 :: Turn)
 >
 > -- Place an arrow at (0,0) the size and direction of (0,1).
-> ex4 = arrowAt (0 @@ 0) unit_Y
+> ex4 = arrowAt (0 ^& 0) unit_Y
 >
 > example = (ex1
 >           ===
@@ -2867,7 +2867,7 @@ Envelope-related functions
   >
   > example
   >   = square 2
-  >   # extrudeEnvelope (2 @@ 1)
+  >   # extrudeEnvelope (2 ^& 1)
   >   # sampleEnvelope2D 100
   >   # lw 0.05
   >   # centerXY # pad 1.1
@@ -3101,7 +3101,7 @@ more information, see `No instances for Backend b0 R2 ...`_.
 ::
 
     ghci> names (circle 1 # named "joe" ||| circle 2 # named "bob" :: D R2)
-    [("bob",[P (2.9999999999999996 @@ 0.0)]),("joe",[P (0.0 @@ 0.0)])]
+    [("bob",[P (2.9999999999999996 ^& 0.0)]),("joe",[P (0.0 ^& 0.0)])]
 
 Of course, there is in fact an entire subdiagram (or subdiagrams)
 associated with each name, not just a point; but subdiagrams do not
