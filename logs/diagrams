@@ -41038,3 +41038,602 @@
 2013-10-07 06:12:57 UTC <travis-ci> [travis-ci] 13diagrams-lib/06lens 145e6bd03 http://travis-ci.org/diagrams/diagrams-lib/builds/12217584 The build passed.
 2013-10-07 06:27:02 UTC <travis-ci> [travis-ci] 13diagrams-lib/06lens 1406382eb http://travis-ci.org/diagrams/diagrams-lib/builds/12217823 The build passed.
 2013-10-15 15:31:17 UTC <martingale> byorgey: By the way I think we should re-export (&), (.~), and (%~) from the prelude, at a minimum. And probably what ever we rename & to in Coordingates
+2013-10-15 15:31:24 UTC <byorgey> yes, agreed
+2013-10-15 15:31:41 UTC <byorgey> do it!
+2013-10-15 15:31:53 UTC <byorgey> =)
+2013-10-15 15:31:56 UTC <martingale> byorgey: Ok should I use @@ for &
+2013-10-15 15:32:18 UTC <byorgey> sure, for now at least
+2013-10-15 15:32:23 UTC <martingale> byorgey: we can always change our minds before 1.0
+2013-10-15 15:32:26 UTC <byorgey> right
+2013-10-15 15:32:37 UTC <martingale> byorgey: @@ is easy to search for.
+2013-10-15 15:33:12 UTC <martingale> byorgey: which linux distro do you use?
+2013-10-15 15:33:55 UTC <byorgey> martingale: I use arch linux.  I don't particularly recommend it for people just starting out with linux.
+2013-10-15 15:34:11 UTC <byorgey> it's a very bare-bones/DIY sort of distro
+2013-10-15 15:34:45 UTC <byorgey> I also like Ubuntu, that's what I used to use and it's what my wife uses
+2013-10-15 15:37:38 UTC <martingale> byorgey: I don't want any fancy gui, just need to run a browser, and Sublime Text (I should probably switch to emacs) mostly. And a good terminal of course.
+2013-10-15 15:37:43 UTC <byorgey> martingale: well, Ubuntu comes with a fancy gui by default, but it's very easy to swap it out for whatever you want.
+2013-10-15 15:38:03 UTC <byorgey> arch linux by default comes with no graphical interface at all =)
+2013-10-15 15:38:42 UTC <martingale> byorgey: Thanks, I'll give it a try :)
+2013-10-15 15:44:16 UTC <byorgey> martingale: try checkout out the lens branch of diagrams-builder and reinstalling -- I hope it makes the ambiguous infix errors go away
+2013-10-15 15:44:49 UTC <martingale> byorgey: will do
+2013-10-15 15:45:24 UTC <byorgey> martingale: do you make use of any operators from lens other than &, .~, %~ ?
+2013-10-15 15:46:03 UTC <martingale> byorgey: I don't think so, I'm not sure about bergey's metafont tutorial but that doesn't seem to be the problem.
+2013-10-15 15:46:25 UTC <byorgey> ok.
+2013-10-15 15:48:06 UTC <kuribas> Which metafont tutorial?
+2013-10-15 15:48:10 UTC <bergey> I think the metafont tutorial only uses the metafont combinators, no lens operators.
+2013-10-15 15:48:45 UTC <bergey> I think it's fine to export those three, and let people who want +~ and others import them directly.
+2013-10-15 15:49:23 UTC <bergey> kuribas: https://github.com/diagrams/diagrams-doc/blob/master/doc/metafont.rst
+2013-10-15 15:49:24 UTC <martingale> byorgey: Ah, thanks - it finds all my syntax errors now. yippee
+2013-10-15 15:49:47 UTC <byorgey> progress!
+2013-10-15 15:51:56 UTC <kuribas> bergey: ok, thanks.
+2013-10-15 15:55:37 UTC <kuribas> You haven't implemented curl?
+2013-10-15 15:56:31 UTC <bergey> I've implemented it but not documented it.
+2013-10-15 15:58:00 UTC <bergey> Basically because I haven't come up with an explanation that I think is sufficiently clear.
+2013-10-15 16:04:15 UTC <kuribas> Curl is how much corner points "curl", kind of the inverse of straightness.
+2013-10-15 16:06:23 UTC <bergey> It's clearly related to the curvature at the ends, or to the second derivatives.  I think I need to stare at the math some more so I can write down /how/ it's related, though.
+2013-10-15 16:07:21 UTC <kuribas> Untuitively, it is a way to specify corner points, without giving explit directions.  I think a low value gives a low curvature, and a high value a high curvature.
+2013-10-15 16:08:10 UTC <kuribas> But the metafontbook also says that at some point the curvature doesn't increase, but it affects the other points.
+2013-10-15 16:08:53 UTC <kuribas> I don't really think it matter what it means in a mathematical exact way.
+2013-10-15 16:12:54 UTC <travis-ci> [travis-ci] 13diagrams-builder/06lens 1477d8960 http://travis-ci.org/diagrams/diagrams-builder/builds/12575383 The build passed.
+2013-10-15 17:21:56 UTC <3JTAAHHF5> [travis-ci] 13diagrams-doc/06lens 14a31a1a3 http://travis-ci.org/diagrams/diagrams-doc/builds/12578151 The build has errored.
+2013-10-15 18:52:51 UTC <travis-ci> [travis-ci] 13diagrams-doc/06lens 14a31a1a3 http://travis-ci.org/diagrams/diagrams-doc/builds/12578151 The build is still failing.
+2013-10-15 19:36:35 UTC <byorgey> I wonder if we should set up some machinery for travis so that it detects what branch it is building and tries to check out branches of the same name from dependencies, if they exist
+2013-10-15 19:36:55 UTC <byorgey> so e.g. building the lens branch of diagrams-doc would automatically check out the lens branches of core, lib, etc.
+2013-10-15 19:37:05 UTC <byorgey> (that's why the diagrams-doc/lens build failed)
+2013-10-15 19:41:12 UTC <byorgey> should be possible in theory but will probably require some trial and error to get it to work right
+2013-10-15 19:41:56 UTC <byorgey> also, it might be nice to factor out a bunch of our travis infrastructure into scripts which live in a separate repo
+2013-10-15 19:42:33 UTC <byorgey> then all the travis configs for all the diagrams repos can just clone that repo and run the scripts, instead of having to duplicate functionality
+2013-10-15 19:59:43 UTC <fryguybob> byorgey: Good ideas.
+2013-10-15 20:08:06 UTC <luite> what do you use to write the diagrams user manual?
+2013-10-15 20:11:47 UTC <byorgey> luite: it's ReStructuredText which then gets processed by a scary chain of munging apparatuses
+2013-10-15 20:12:25 UTC <byorgey> mostly written by me two years ago and hastily hacked back into shape every time the GHC API changes
+2013-10-15 20:13:12 UTC <luite> ah, hmm, i think i can do without inline images though
+2013-10-15 20:16:05 UTC <byorgey> luite: what is this for?
+2013-10-15 20:16:13 UTC <luite> writing the user manual for ghcjs
+2013-10-15 20:17:41 UTC <byorgey> right.  Unfortunately I have done just enough work to make the toolchain useful for diagrams.
+2013-10-15 20:17:55 UTC <byorgey> there would be a bunch more work needed to turn it into something more generally useful
+2013-10-15 20:18:12 UTC <byorgey> ...which I may do someday.  But not anytime soon.
+2013-10-15 20:18:47 UTC <byorgey> luite: is markdown+lhs & pandoc good enough for you?
+2013-10-15 20:19:03 UTC <luite> yeah it might be
+2013-10-15 20:19:08 UTC <byorgey> it actually supports quite a lot
+2013-10-15 20:19:37 UTC <byorgey> and you can easily stick in your own custom Pandoc -> Pandoc passes in the middle
+2013-10-15 20:19:38 UTC <luite> can that do table of contents, multiple pages and footnoots?
+2013-10-15 20:20:01 UTC <luite> margin nodes?
+2013-10-15 20:20:02 UTC <luite> notes
+2013-10-15 20:20:34 UTC <byorgey> it can do TOC and footnotes.  I don't think it can do multiple pages or margin notes.
+2013-10-15 20:22:05 UTC <byorgey> though apparently you can maybe do things like generate docbook from markdown using pandoc, then use docbook tools to generate stuff
+2013-10-15 20:23:01 UTC <luite> ah
+2013-10-15 20:23:12 UTC <luite> perhaps with some custom pass it's not too hard :)
+2013-10-15 20:37:15 UTC <bergey> -contrib/lens is also failing because it doesn't check out the lens branch of -lib.  -lib/lens only builds because we patched the travis config, but we'll need to revert that patch before merging the branch.
+2013-10-15 20:37:50 UTC <bergey> I like the idea of looking for branches of the same name.
+2013-10-15 20:55:28 UTC <bergey> Best ghc error message to date:
+2013-10-15 20:55:40 UTC <bergey>     My brain just exploded
+2013-10-15 20:55:40 UTC <bergey>     I can't handle pattern bindings for existential or GADT data constructors.
+2013-10-15 20:55:40 UTC <bergey>     Instead, use a case-expression, or do-notation, to unpack the constructor.
+2013-10-15 20:55:40 UTC <bergey>  
+2013-10-15 21:02:37 UTC <ReinH> Is there a built-in or easy way to define a custom composition monoid such that you can vertically compose two diagrams with some known vertical offset rather than checking the envelope?
+2013-10-15 21:03:07 UTC <ReinH> Like say I have a lego brick in isometric view diagram and I want to stack them on top of each other
+2013-10-15 21:06:10 UTC <bergey> vcat' will do the offset.
+2013-10-15 21:06:32 UTC <bergey> I think you may need to write the monoid instance by hand.
+2013-10-15 21:06:57 UTC <bergey> Does that help?
+2013-10-15 21:08:56 UTC <ReinH> bergey: checking vcat', but I want to specify the offset "by hand" relative to the size of the diagram or so
+2013-10-15 21:10:05 UTC <bergey> ReinH: I don't understand.  Do you want the offset the same for every pair of Diagrams, or does it depend on the particular Diagrams?
+2013-10-15 21:10:46 UTC <ReinH> bergey: say I have a diagram that looks like http://upload.wikimedia.org/wikipedia/commons/6/6b/Plastic_brick%2C_red.svg
+2013-10-15 21:11:26 UTC <ReinH> I want the bricks appear to stack visually when composed vertically. Am happy to wrap that diagram in a newtype wrapper so I can give it a special monoid instance or w/e.
+2013-10-15 21:14:01 UTC <martingale> re travis: I also patched travis config for -SVG/lens, -Cairo/lens and -Postscript/lens. So we need to remember to revert those as well
+2013-10-15 21:14:23 UTC <martingale> great idea to to look for branches of the same name !
+2013-10-15 21:15:05 UTC <martingale> I'm going to fix the syntax errors arising from renaming & to @@ and clean up the docs a little more. What else needs to be done before we merge lens?
+2013-10-15 21:15:47 UTC <bergey> ReinH: With the newtype wrapper, and <> as stacking vertical, you'll lose other ways of aligning / composing.  Is that OK?  Or do you need to interleave stacking with ||| and such?
+2013-10-15 21:16:21 UTC <bergey> It seems doable, but awkward.  And I'm tempted to tell you to try the 3D part of Diagrams instead. :)
+2013-10-15 21:17:05 UTC <bergey> martingale: How's the manual?  Did you have time to check the non-compiled parts, as well?
+2013-10-15 21:17:55 UTC <ReinH> bergey: well, I can wrap and unwrap easily with a newtype iso and ala Stacked foldMap bricks, giving me the resulting diagram that can then play nicely with others via ||| and such right?
+2013-10-15 21:18:18 UTC <bergey> ReinH: That sounds right.
+2013-10-15 21:18:21 UTC <ReinH> let stack = ala Stacked foldMap in stacked bricks ||| stacked bricks2 or whatever
+2013-10-15 21:18:43 UTC <ReinH> bergey: ok, seems worth trying :) thanks
+2013-10-15 21:18:50 UTC <ReinH> s/stack/stacked
+2013-10-15 21:19:04 UTC <martingale> bergey: It's pretty good. Obviously we need to rewrite the section on faking named parameters. Also I changed a lot of (x & y) to (r2 (x, y)). I might want to change it back to (x @@Y) what do you think?
+2013-10-15 21:19:07 UTC <bergey> Sounds cool.
+2013-10-15 21:19:27 UTC <martingale> bergey: All of the gallery is working as are the tutorials as well.
+2013-10-15 21:20:14 UTC <bergey> martingale: Awesome.  Thank you.  I like (r2 (x, y)), but really, whatever byorgey says.
+2013-10-15 21:20:46 UTC <ReinH> bergey: I'm trying to generate some illustrations programmatically. The legos represent a free trace monoid for nondeterministic parallelism. So monoidal composition of the brick diagrams lines up nicely with the actual problemspace :)
+2013-10-15 21:20:58 UTC <martingale> bergey: No problem. There is something wrong with text placement (it least it's different than before) I'll try to post an example later. I don't have time right now.
+2013-10-15 21:21:39 UTC <bergey> martingale: I saw your comment on trello.  I look forward to seeing the example.
+2013-10-15 21:22:38 UTC <martingale> ReinH: Did you look at the snug family of functions in TwoD/Align. Perhaps those help. I'm not really sure what your after. 
+2013-10-15 21:22:52 UTC <bergey> ReinH: I believe you about the problemspace.  So much for pointing you at the 3D stuff. :)
+2013-10-15 21:23:16 UTC <ReinH> martingale: well, I need to compose in a custom way, not via the diagram envelope. I'll check those out.
+2013-10-15 21:23:40 UTC <martingale> ReinH: Those compose using the Trace instead of the envelope
+2013-10-15 21:23:52 UTC <ReinH> martingale: neither work for me iinm :)
+2013-10-15 21:27:01 UTC <martingale> ReinH: The function alignBy' takes a boundary function (currently we provide defaults of envelopeBoundary and traceBoundary) I don't know if this will help either.
+2013-10-15 21:27:54 UTC <martingale> ReinH: I have to run but take a look at the Alignable class in Diagrams/Align
+2013-10-15 21:30:40 UTC <ReinH> martingale: I'll check it out thanks :)
+2013-10-15 22:02:05 UTC <fryguybob> ReinH: You can replace the envelope of a diagram with your own.
+2013-10-15 22:02:45 UTC <fryguybob> ReinH: See withEnvelope
+2013-10-15 22:06:33 UTC <ReinH> fryguybob: oh that might help :) thanks
+2013-10-16 01:43:35 UTC <fryguybob> Rebekah is laughing at me because she says I'm not good at the phone.
+2013-10-16 02:28:17 UTC <martingale> bergey: byorgey: I'm now thinking there is nothing wrong with text placement, just the fonts look different with using more up to date SVGFonts.
+2013-10-16 02:30:27 UTC <bergey> That's good news.  Thank you.
+2013-10-16 04:31:57 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06metafont 14f88d695 http://travis-ci.org/diagrams/diagrams-contrib/builds/12602086 The build passed.
+2013-10-16 09:36:47 UTC <haskey> Hi, quick question regarding the diagrams: is there a way to attach http link to a part of the diagram?
+2013-10-16 09:37:30 UTC <haskey> E.g. I'd like a node on the graph to be clickable in SVG.
+2013-10-16 13:37:39 UTC <bergey> I think this came up on the mailing list a few months back, but I can't find the message.
+2013-10-16 13:38:44 UTC <bergey> IIRC, the conclusion was "not yet".  There's been a lot of work recently on the prereqs, at least.
+2013-10-16 13:39:12 UTC <bergey> I hope someone else will chime in with a better answer.
+2013-10-16 14:11:41 UTC <byorgey> that was a good answer.
+2013-10-16 14:11:47 UTC <byorgey> unfortunately haskey left before you gave it.
+2013-10-16 14:12:12 UTC <byorgey> the backend tree stuff is a prerequisite for being able to attach extra stuff to particular nodes
+2013-10-16 14:12:34 UTC <byorgey> but once we have that it should be easy.  We have these Annot nodes just sitting there waiting to be used.  Right now they are storing ().
+2013-10-16 14:13:37 UTC <byorgey> fryguybob: hehe
+2013-10-16 14:14:19 UTC <byorgey> fryguybob: I'm not good at phone either.  Normally I would have asked you via IRC but my laptop is dead and Joyia's laptop wasn't letting me ssh to Penn for some reason.
+2013-10-16 14:20:43 UTC <fryguybob> byorgey: I read somewhere that you might want to try compressed air in the vents to unjam the fan.
+2013-10-16 14:23:53 UTC <byorgey> yes, I read that too.  I already tried blowing in it really hard, which didn't help.  But some actual compressed air from a can is probably much more forceful so I will try that too.
+2013-10-16 14:24:00 UTC <byorgey> if that doesn't work I will try ordering a new fan.
+2013-10-16 14:24:07 UTC <byorgey> if that doesn't work then I don't have a plan C.
+2013-10-16 14:25:09 UTC <byorgey> ACTION gets ready to lecture about building a GUI framework in OCaml
+2013-10-16 14:30:57 UTC <fryguybob> byorgey: Sounds interesting, have fun.
+2013-10-16 19:01:23 UTC <bergey> laser cut Diagrams: https://secure.flickr.com/photos/dmbergey/10315214035/
+2013-10-16 19:01:28 UTC <bergey> https://bergey.s3.amazonaws.com/diagrams/Boxen.hs
+2013-10-16 19:16:24 UTC <fryguybob> bergey: Nice!
+2013-10-16 19:18:53 UTC <byorgey> =D
+2013-10-16 19:20:09 UTC <bergey> I'm hoping to make some larger ones on a CNC router soon :)
+2013-10-16 19:23:31 UTC <byorgey> bergey: very cool!  what's this for, if I may ask?
+2013-10-16 19:24:42 UTC <bergey> I want the full size ones for storage around the house and in at least one of the shops where I help out.
+2013-10-16 19:25:14 UTC <bergey> The shop where Christalee teaches has a CNC router, so this will do double duty as a demonstration project.
+2013-10-16 19:25:28 UTC <bergey> (Triple duty if you count "fun things with Diagrams".)
+2013-10-16 19:26:07 UTC <byorgey> sounds great =)
+2013-10-16 19:26:25 UTC <byorgey> this may be the first actual instance I know of someone using diagrams to make physical objects.
+2013-10-16 19:26:38 UTC <byorgey> though there are probably others I don't know about.
+2013-10-16 19:26:38 UTC <bergey> I was wondering if there were prior examples.
+2013-10-16 19:27:15 UTC <byorgey> I've heard several people mention that they *wanted* to.
+2013-10-16 19:28:22 UTC <bergey> =)
+2013-10-16 20:33:10 UTC <carter> bergey: thats relly really really cool
+2013-10-16 20:34:39 UTC <bergey> Thank you
+2013-10-16 20:35:12 UTC <bergey> (Thank you also for preventing me from needlessly downloading XCode the other day.)
+2013-10-16 20:36:06 UTC <carter> bergey: i have a work around that plays nice with having xcode 5, but glad the simple one works :)
+2013-10-16 20:36:32 UTC <carter> granted i'd use my work around anyways because i don't like the GCC xcode 4.6 provides
+2013-10-16 20:36:36 UTC <carter> its too damn old
+2013-10-16 20:37:29 UTC <bergey> At the moment, I'm just trying to run Hakyll / pandoc on the mac.  Nothing complex like you're into.
+2013-10-16 20:37:30 UTC <martingale> byorgey: I use a straw with one end tapered to a small opening using scotch tape when I run  out of compressed air.
+2013-10-16 20:40:20 UTC <carter> bergey: most of the stuff i wind up doing is pretty darn simple
+2013-10-16 20:41:45 UTC <bergey> [shrug]  I'm glad someone cares about numerical performance in Haskell, but mostly glad that I don't. :)
+2013-10-16 20:42:03 UTC <carter> bergey: the only reason i understand this CPP / compiler settings stuff is because i wnted to compile stuff using SIMD C code on my mac
+2013-10-16 20:42:12 UTC <carter> and the old xcode gcc would barf :)
+2013-10-16 20:42:28 UTC <carter> bergey: i'm actually wanting to get back to just playing with math in the next year
+2013-10-16 20:42:41 UTC <carter> just need to finish this base case of the recursive yak
+2013-10-16 20:42:53 UTC <bergey> hehehe.  Indeed.
+2013-10-16 20:43:08 UTC <carter> please send help / interventions if i start designing my own silicon in the near future 
+2013-10-16 20:43:51 UTC <carter> bergey: i've actually hit some stuff where i *have to* have my own numerical type classes prelude ysterday
+2013-10-16 20:43:55 UTC <carter> i'm annoyed
+2013-10-16 20:43:58 UTC <carter> i wanted to punt on that
+2013-10-16 20:44:01 UTC <carter> but noooooo
+2013-10-16 20:44:21 UTC <bergey> I set out a year ago to make physical objects in Haskell, and here I am adding code to Diagrams.
+2013-10-16 20:44:32 UTC <bergey> Ooh, numerical preludes.
+2013-10-16 20:44:33 UTC <carter> makes sense to me :)
+2013-10-16 20:44:49 UTC <carter> bergey: basically, Integral is "a PID / Integral ring"
+2013-10-16 20:45:05 UTC <carter> but it has this Enum constraint and toInteger stuff
+2013-10-16 20:45:23 UTC <carter> so i can't use it for defining divMod on staticly sized Int Vectors
+2013-10-16 20:46:05 UTC <carter> and i want to have that stuff be nice so i can sanely do address arithematic without going insane
+2013-10-16 20:46:10 UTC <bergey> That mostly makes sense.  Thanks.
+2013-10-16 20:46:12 UTC <bergey> Heh
+2013-10-16 20:47:10 UTC <carter> yeah
+2013-10-16 20:47:37 UTC <carter> and while i have ways of mapping between these short vectors and Integers
+2013-10-16 20:47:47 UTC <carter> i need a richer api than Enum in prelude to describe it correctly
+2013-10-16 20:48:54 UTC <bergey> I've been reading about CGAL, which uses integral domains (without multiplication, roots) for some of its calculations.  So I've been thinking a little about the prelude numeric classes.
+2013-10-16 20:49:36 UTC <carter> bergey: neat
+2013-10-16 20:49:45 UTC <carter> i think i want to start with just the classes i need
+2013-10-16 20:50:02 UTC <carter> and refine it (and deal with induced breakages) in a demand driven way
+2013-10-16 20:50:13 UTC <carter> bergey: relatedly, henning's numeric-prelude is now BSD
+2013-10-16 20:50:18 UTC <carter> so its safe to steal ideas from it
+2013-10-16 20:50:31 UTC <carter> http://llama.freegeek.org/~wren/resources/cartography-of-math has some helpful diagrams too
+2013-10-16 20:50:38 UTC <carter> diagrams / cheat sheets
+2013-10-16 20:51:27 UTC <carter> bergey: i also have push powers on edwardk's algebra lib
+2013-10-16 20:51:35 UTC <carter> though i've not yet taken hackage powers too
+2013-10-16 20:51:53 UTC <carter> i first want to play with my own private in project version before hackagifying it as its own thing
+2013-10-16 20:51:58 UTC <bergey> I hadn't realized numeric-prelude wasn't BSD before.
+2013-10-16 20:52:18 UTC <bergey> Those two are the numeric preludes I'd seen.
+2013-10-16 20:52:20 UTC <carter> shockingly, emailing ALL the authors and getting back a "yes, please do" took only < 1 week
+2013-10-16 20:52:59 UTC <carter> bergey: the human readable text of hennings, and the human readable class / type names of kmetts
+2013-10-16 20:53:05 UTC <carter> but start with a simpler core maybe
+2013-10-16 20:53:17 UTC <carter> and then refine the Digraph of classes in a demand driven way
+2013-10-16 20:53:22 UTC <carter> to evade too much yack shaving
+2013-10-16 20:53:25 UTC <bergey> Ha!  Let me know when it's in a sharable state.
+2013-10-16 20:53:29 UTC <carter> sure
+2013-10-16 20:53:39 UTC <carter> i'm kinda buried with consulting and slightly job hunting right now
+2013-10-16 20:53:51 UTC <carter> when it rains money it pours
+2013-10-16 20:54:15 UTC <bergey> It's a hard life you've got there.
+2013-10-16 20:54:33 UTC <carter> i had a bit of a dry spell of consulting income this summer
+2013-10-16 20:54:36 UTC <carter> wasn't pleasant
+2013-10-16 20:55:00 UTC <carter> i was kinda worried about cash flow for a month or two ago at a panic attack level
+2013-10-16 20:57:20 UTC <carter> bergey: anywho
+2013-10-16 20:59:35 UTC <carter> theres a few other ones out there too
+2013-10-16 20:59:36 UTC <carter> hrmmm
+2013-10-16 21:02:06 UTC <carter> theres also a few others
+2013-10-16 21:02:13 UTC <carter> i can't find the one conal elliot wrote
+2013-10-16 21:02:19 UTC <carter> though i remember looking at it
+2013-10-16 21:04:05 UTC <bergey> Two is already more than I have time to understand, really :)
+2013-10-16 21:18:11 UTC <carter> bergey: indeed
+2013-10-16 22:31:06 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06lens 14be82e40 http://travis-ci.org/diagrams/diagrams-contrib/builds/12642016 The build was fixed.
+2013-10-16 22:37:31 UTC <travis-ci> [travis-ci] 13diagrams-doc/06lens 1401a1214 http://travis-ci.org/diagrams/diagrams-doc/builds/12641125 The build is still failing.
+2013-10-17 00:11:46 UTC <travis-ci> [travis-ci] 13diagrams-lib/06lens 143502f8c http://travis-ci.org/diagrams/diagrams-lib/builds/12645590 The build is still failing.
+2013-10-17 00:27:41 UTC <travis-ci> [travis-ci] 13diagrams-lib/06lens-travis 147f1ee28 http://travis-ci.org/diagrams/diagrams-lib/builds/12646186 The build failed.
+2013-10-17 00:35:39 UTC <fryguybob> Humm, seems like travis would be much easier if we could do a single call to cabal install listing all the other packages that we pull from github.
+2013-10-17 00:38:53 UTC <bergey> I'm pretty sure that's possible.  I haven't thought about it.
+2013-10-17 01:33:34 UTC <travis-ci> [travis-ci] 13active/06active-0.1-semigroupoids 14820b7d6 http://travis-ci.org/diagrams/active/builds/12647781 The build passed.
+2013-10-17 01:35:40 UTC <travis-ci> [travis-ci] 13active/06active-0.1-semigroupoids 14224ea1d http://travis-ci.org/diagrams/active/builds/12647853 The build passed.
+2013-10-17 03:36:39 UTC <travis-ci> [travis-ci] 13diagrams-core/06backend-tree 14c95f285 http://travis-ci.org/diagrams/diagrams-core/builds/12650391 The build passed.
+2013-10-17 14:23:55 UTC <travis-ci> [travis-ci] 13diagrams-lib/063D-util 145d67c6e http://travis-ci.org/diagrams/diagrams-lib/builds/12670843 The build passed.
+2013-10-17 16:26:44 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 145df233d http://travis-ci.org/diagrams/diagrams-lib/builds/12676757 The build has errored.
+2013-10-17 17:47:19 UTC <martingale> Anyone know if Cairo has something analogous to an SVG group element <g>
+2013-10-17 17:47:43 UTC <notdan> https://github.com/sordina/Diagrams-AST hm is this project still relevant?
+2013-10-17 17:47:53 UTC <notdan> probably not, hasn't been uypdated in two years
+2013-10-17 17:48:46 UTC <byorgey> martingale: I think so, I am not sure though
+2013-10-17 17:48:49 UTC <byorgey> notdan: no
+2013-10-17 17:49:57 UTC <martingale> byorgey: I'm trying to make the Cairo backend use an RTree and I think I'm in need of something like <g>. I'll try to find it in the Cairo documentation.
+2013-10-17 17:55:13 UTC <byorgey> martingale: oh, I don't think you need that.
+2013-10-17 17:56:22 UTC <byorgey> martingale: instead you can use save/restore pairs around each node.
+2013-10-17 17:56:41 UTC <byorgey> cairo is imperative but it maintains a stack of transformation+attribute states
+2013-10-17 17:57:06 UTC <byorgey> so basically the stack will correspond to the current path into the RTree.
+2013-10-17 17:57:21 UTC <fryguybob> martingale: There is a "cairo_push_group" in the cairo API, I don't know what it is on the Haskell side.
+2013-10-17 17:57:32 UTC <fryguybob> (and "cairo_pop_group").
+2013-10-17 17:57:37 UTC <martingale> byorgey: hmmm, that's what I'm doing I must have a bug elsewhere, maybe I'll push the code to github
+2013-10-17 17:58:00 UTC <martingale> fryguybob: thanks, I'll check that out too.
+2013-10-17 17:58:33 UTC <byorgey> the push_group/pop_group stuff I think only matters when grouping things for transparency
+2013-10-17 17:58:38 UTC <fryguybob> For some reason I've always had a hard time finding things in Haskell's cairo package, so I find them in the cairo API, then grep for them in the source.
+2013-10-17 17:58:58 UTC <fryguybob> byorgey: You are probably right.
+2013-10-17 17:59:01 UTC <byorgey> it shouldn't be necessary just for porting the existing cairo backend features to RTree (I'm 95% sure)
+2013-10-17 17:59:22 UTC <byorgey> though once we have the RTree stuff we will want to expose grouping to the user so they can have more control over that.
+2013-10-17 18:02:21 UTC <martingale> byorgey: Yes, I believe you are right as well. We shouldn't need grouping if we have save/restore.
+2013-10-17 18:14:56 UTC <travis-ci> [travis-ci] 13diagrams-cairo/06optimize 1487de631 http://travis-ci.org/diagrams/diagrams-cairo/builds/12680995 The build passed.
+2013-10-17 18:48:46 UTC <travis-ci> [travis-ci] 13monoid-extras/06upper-bounds 1493dcd2b http://travis-ci.org/diagrams/monoid-extras/builds/12682503 The build passed.
+2013-10-18 11:49:47 UTC <martingale> fryguybob: What pdf backend?
+2013-10-18 13:06:14 UTC <notdan> Good day/evening/morning
+2013-10-18 13:06:33 UTC <Taneb> Hi
+2013-10-18 13:27:53 UTC <fryguybob> martingale: http://hackage.haskell.org/package/diagrams-pdf-0.3.1
+2013-10-18 13:29:22 UTC <martingale> fryguybob: Thanks, do you know of any other backends not in the diagrams repo?
+2013-10-18 13:40:37 UTC <fryguybob> martingale: There is the sunroof one from KU, I don't know what state it is in though (formerly diagrams-canvas)
+2013-10-18 13:41:38 UTC <martingale> fryguybob: how would one use gradients (shading) in the pdf backend, given we dont have an attribute in diagrams?
+2013-10-18 13:42:43 UTC <fryguybob> martingale: You can have primatives defined for specific backends, the Renderable instance is all that is needed.
+2013-10-18 13:44:08 UTC <martingale> fryguybob: so a diagrams program would have to implement a gradient primitive?
+2013-10-18 13:48:29 UTC <martingale> fryguybob: Or can you just use PdfShading as an attribute?
+2013-10-18 13:49:27 UTC <martingale> fryguybob: I think I see, PdfShading is an instance of AttribueClass
+2013-10-18 13:52:51 UTC <martingale> fryguybob: but I don't see a Renderable instance - so technically PdfShading is an attribute not a primitive?
+2013-10-18 14:07:11 UTC <fryguybob> martingale: I'm back, looking at the code now.
+2013-10-18 14:07:56 UTC <martingale> fryguybob: Thanks - it seems like backends can define their own attributes as well as primiitvies. or am i confused?
+2013-10-18 14:08:43 UTC <fryguybob> martingale: Right, this is done as a style.
+2013-10-18 14:09:25 UTC <fryguybob> So in pdfMiscStyle it finds a shading and adds that to the internal drawing state.
+2013-10-18 14:09:50 UTC <martingale> fryguybob: OK, do you know how he handles the case when both a fill color and shading are applied?
+2013-10-18 14:09:57 UTC <notdan> There is also diagrams-ghcjs https://github.com/ghcjs/diagrams-ghcjs & http://co-dan.github.io/ghcjs/diagrams-ghcjs-tests/Main.jsexe/
+2013-10-18 14:10:24 UTC <martingale> fryguybob: In SVG you can have either a fill colore or a gradient.
+2013-10-18 14:10:26 UTC <fryguybob> notdan: Yes, I forgot about that one.
+2013-10-18 14:10:36 UTC <notdan> diagrams-canvas has not been updated and IIRC it doesn't work with diagrams 0.7
+2013-10-18 14:11:19 UTC <fryguybob> notdan: I think all future work on that happens here: https://github.com/jbracker/diagrams-sunroof
+2013-10-18 14:11:54 UTC <notdan> Oh
+2013-10-18 14:11:56 UTC <fryguybob> martingale: Makes sense.
+2013-10-18 14:12:27 UTC <notdan> thanks fryguybob 
+2013-10-18 14:12:50 UTC <martingale> fryguybob: In any event, I think we want something much more general for diagrams as a whole, like more than two stops.
+2013-10-18 14:13:11 UTC <fryguybob> martingale: Right, I'm just pointing out prior work.
+2013-10-18 14:14:12 UTC <fryguybob> I wonder how much support there is for just filling with a texture.
+2013-10-18 14:14:28 UTC <fryguybob> Perhaps that is the right generalization of gradiant.
+2013-10-18 14:14:34 UTC <martingale> fryguybob: I know and I apprciate it, My main question is should it be up to the backend to sort out fc vs gradient or should this be handled by the attribute type
+2013-10-18 14:15:00 UTC <martingale> fryguybob: my initial thought was to extend the Color type to include a gradient option.
+2013-10-18 14:15:16 UTC <fryguybob> martingale: I think there are going to be all sorts of backend specific supporting for graidants as I don't think there is much uniformity there.
+2013-10-18 14:18:07 UTC <fryguybob> martingale: I'm not sure what that would mean.  Oh, never mind, I think I know what you mean.
+2013-10-18 14:19:26 UTC <martingale> fryguybob: The other option is to create a new attribute for gradient. But then we can't us the Last semigroup to make sure fill color lower in the tree overrides gradient.
+2013-10-18 14:20:30 UTC <martingale> fryguybob: Either way we are going to need a Gradient data structure so maybe I'll start with that and post it to the discussion.
+2013-10-18 14:20:37 UTC <fryguybob> We could think of fc and lc as taking some function f :: (Something v) => v -> Color
+2013-10-18 14:21:25 UTC <martingale> fryguybob: Where Color could be a gradient?
+2013-10-18 14:21:27 UTC <fryguybob> In the case of fc it makes sense to have v be the vector space of the diagram, but it will only be "sampled" inside some path.
+2013-10-18 14:21:57 UTC <fryguybob> martingale: No.  In the case of a solid red f would be  const red
+2013-10-18 14:22:32 UTC <fryguybob> For a gradient f would be the color value at that coordinate.
+2013-10-18 14:23:20 UTC <martingale> fryguybob: hmmm. I need to think about this a bit.
+2013-10-18 14:23:21 UTC <fryguybob> We want to be able to use the backend's definition of gradient, so having a function is only one option there.
+2013-10-18 14:23:47 UTC <fryguybob> I'm just saying it would be nice to set the level of abstraction so that we could support more things in this area.
+2013-10-18 14:24:05 UTC <martingale> fryguybob: Like textures?
+2013-10-18 14:24:08 UTC <fryguybob> And many backends could happly support general textures.
+2013-10-18 14:24:32 UTC <fryguybob> martingale: Or use a diagram to fill for things like hashing.
+2013-10-18 14:24:43 UTC <fryguybob> (hatching)
+2013-10-18 14:25:35 UTC <martingale> fryguybob: Thanks, that helps, let me think about it for a while and see what I can come up with.
+2013-10-18 14:27:27 UTC <fryguybob> martingale: Ok.  One last thought, I think there are two steps, first find some description of gradients that we can target for multiple backends nicely (the vector ones are the problematic ones) and second, find a way to generalize fc (and possible lc) to include functional image representation for filling.
+2013-10-18 14:28:03 UTC <martingale> fryguybob: got it
+2013-10-18 14:28:33 UTC <fryguybob> For lc a different vector space may make more sense, specifically the parameter space.
+2013-10-18 14:28:38 UTC <fryguybob> But not always :(
+2013-10-18 14:29:36 UTC <martingale> fryguybob: Lot's of issues to sort out. Nothing is a simple as it seems at first glance.
+2013-10-18 16:30:42 UTC <travis-ci> [travis-ci] 13diagrams-doc/06lens 14c1df33a http://travis-ci.org/diagrams/diagrams-doc/builds/12724211 The build is still failing.
+2013-10-18 16:41:16 UTC <fryguybob> Humm, doing a sweep layout is tricky: http://www.cs.rochester.edu/u/ryates/temp/sweep.svg
+2013-10-18 17:24:10 UTC <cinimod> I am plotting a circle: circle 0.001 # fc green
+2013-10-18 17:24:27 UTC <cinimod> But I get a black annulus surrounding it
+2013-10-18 17:24:42 UTC <cinimod> I assume this is some sort of outline
+2013-10-18 17:26:25 UTC <cinimod> How do I turn it off?
+2013-10-18 17:26:36 UTC <cinimod> The manual mentions outline once
+2013-10-18 17:27:41 UTC <cinimod> The quickstart tutorial says you can make it dashed
+2013-10-18 17:27:48 UTC <cinimod> But I don't want it at all
+2013-10-18 17:31:50 UTC <martingale> cinimod: # lw 0
+2013-10-18 17:36:18 UTC <cinimod> lol
+2013-10-18 17:36:21 UTC <cinimod> thanks
+2013-10-18 17:37:58 UTC <cinimod> I would expect the lw to somehow be tied to the size of the object it surrounds
+2013-10-18 17:38:43 UTC <cinimod> With a circle 0.001, visually I get a very big black annulus then some white space then my circle
+2013-10-18 17:43:43 UTC <martingale> cinimod: If you want to draw two circles for example of different sizes, with the same line width, it would be difficult using the semantics you suggest.
+2013-10-18 17:45:26 UTC <cinimod> martingale: Hmm - it would be better if I could show you what I am getting
+2013-10-18 17:45:44 UTC <cinimod> martingale: do we have that pastebin thingy that was part of the GSoC?
+2013-10-18 17:46:07 UTC <fryguybob> cinimod: In the topic.
+2013-10-18 17:46:07 UTC <cinimod> martingale: actually I don't have time right now but I will do it tomorrow
+2013-10-18 17:46:25 UTC <martingale> cinimod: OK
+2013-10-18 17:46:40 UTC <cinimod> fryguybob: thanks
+2013-10-18 17:46:56 UTC <cinimod> martingale: sadly it will have to wait until tomorrow
+2013-10-18 17:47:18 UTC <martingale> cinimod: no worries
+2013-10-18 18:05:12 UTC <martingale> cinimod: by the way could could achieve what you are looking for with freeze.
+2013-10-18 18:07:47 UTC <martingale> e.g. circle 1 # freeze # fc green # scale 0.001
+2013-10-18 18:08:12 UTC <carter> oh, dominic is gone already
+2013-10-18 18:13:37 UTC <martingale> carter: I know, maybe hell see it when he comes back
+2013-10-18 18:13:46 UTC <carter> hell indeed
+2013-10-18 18:13:48 UTC <carter> :)
+2013-10-18 18:21:30 UTC <notdan> oh, it's 'domonic'
+2013-10-18 18:21:32 UTC <notdan> dominic*
+2013-10-18 18:21:34 UTC <notdan> now I get it
+2013-10-18 18:21:54 UTC <carter> notdan: yeah
+2013-10-18 18:21:59 UTC <carter> i'm bad at handles that aren't names
+2013-10-18 18:22:11 UTC <notdan> :]
+2013-10-18 18:22:36 UTC <carter> notdan: your handle is a lie!
+2013-10-18 18:24:07 UTC <notdan> yep :P
+2013-10-18 18:24:15 UTC <notdan> that's how i roll
+2013-10-18 18:35:04 UTC <notdan> carter: how is your website doing btw?
+2013-10-18 18:42:06 UTC <byorgey> http://byorgey.wordpress.com/?p=1108&shareadraft=526180c2f203b  -- draft blog post on interaction between drawing and coding (AKA diagrams GUI manifesto), feedback welcome!
+2013-10-18 18:48:39 UTC <alpounet> interesting
+2013-10-18 18:49:53 UTC <alpounet> make you could show some diagrams code that illustrates the expressiveness, or, if you prefer, how it's possible to make the code speak, thus improving option (3) as depicted by B. Victor
+2013-10-18 18:50:00 UTC <alpounet> s/make/maybe/
+2013-10-18 18:55:20 UTC <byorgey> hmm, yes, that sounds like a good idea, except it would probably take me a lot of time to craft some good examples and explain them.
+2013-10-18 19:00:04 UTC <alpounet> byorgey, that would help people not familiar with diagrams or even Haskell EDSLs and whatnot understand the points you're making
+2013-10-18 19:00:21 UTC <byorgey> yes, that's true.
+2013-10-18 19:00:54 UTC <byorgey> ok, maybe I will try to add some small examples.
+2013-10-18 19:18:34 UTC <carter> notdan: its on the infinite tody list
+2013-10-18 19:18:37 UTC <carter> todo list
+2013-10-18 19:18:43 UTC <carter> albeit on the back burner
+2013-10-18 21:45:51 UTC <fryguybob> byorgey: Nice post :D.  I don't have anything to add beyond what we talked about at ICFP.  Well I guess that was before FARM.  I think there has been more work for coding music and making connections there and I think a lot of the tools in that area carry over.
+2013-10-18 21:49:34 UTC <byorgey> fryguybob: IIRC we talked about it *during* FARM, at lunch
+2013-10-18 21:50:21 UTC <byorgey> I know of stuff that lets you code music, and stuff that lets you make music using some sort of graphical interface, but nothing that gives you a smooth connection between the two.
+2013-10-18 21:50:23 UTC <fryguybob> byorgey: It is all a blur to me :D.  But yes, because we did the braiding thing after that.
+2013-10-18 21:50:39 UTC <byorgey> hehe, indeed =)
+2013-10-18 21:50:49 UTC <byorgey> but if there is anything like that I would love to see it of course.
+2013-10-18 21:51:03 UTC <fryguybob> byorgey: I think the racket based demo was close to that.
+2013-10-18 21:51:22 UTC <fryguybob> Oh, humm
+2013-10-18 21:51:39 UTC <byorgey> which demo are you talking about?
+2013-10-18 21:53:53 UTC <fryguybob> byorgey: I can't find the one I'm thinking of on the program.
+2013-10-18 21:54:19 UTC <fryguybob> byorgey: But it was all in a lisp or scheme.
+2013-10-18 21:54:57 UTC <fryguybob> ACTION has to go.
+2013-10-18 21:55:30 UTC <byorgey> ok, talk to you later
+2013-10-19 01:24:07 UTC <travis-ci> [travis-ci] 13monoid-extras/06master 149ea4235 http://travis-ci.org/diagrams/monoid-extras/builds/12744739 The build passed.
+2013-10-19 08:44:36 UTC <notdan> uh ghc api is hard :S
+2013-10-19 16:19:06 UTC <martingale> byorgey: you around?
+2013-10-19 23:55:44 UTC <carter> cscheid: you should ask martingale  or byorgey  or bergey  or  (maybe) mgsloan 
+2013-10-20 16:01:19 UTC <notdan> Hi folks
+2013-10-20 16:01:26 UTC <notdan> what is the status on lensifying the diagrams?
+2013-10-20 16:14:06 UTC <martingale> notdan: I think it's pretty much ready to be merged in, just waiting to see if byorgey agrees
+2013-10-20 16:17:15 UTC <notdan> cool
+2013-10-20 17:10:46 UTC <notdan> I'll be working on the tikz backend meanwhile
+2013-10-20 17:37:04 UTC <luite> \o/
+2013-10-20 17:37:34 UTC <luite> notdan: can you get decent text metrics with that
+2013-10-20 17:37:35 UTC <luite> ?
+2013-10-20 17:49:45 UTC <notdan> Hm, metrics as in what?
+2013-10-20 17:50:36 UTC <luite> size of some rendered text
+2013-10-20 17:54:28 UTC <notdan> Oh, well I am not sure, I haven't done much text rendering with TikZ tbh
+2013-10-20 17:54:42 UTC <notdan> I mostly drew different forms of automatas and commutative diagrams with labels :
+2013-10-20 17:55:17 UTC <luite> even without metrics it would be a huge help to be able to do it with diagrams
+2013-10-20 17:55:37 UTC <luite> instead of browsing the 600 page manual or examples to find just the right bit of code to copy/pate
+2013-10-20 18:12:42 UTC <notdan> yeah I agree
+2013-10-20 18:13:38 UTC <notdan> hm, 'square 1' gives me 4 linear segments [(0,-14), (-14, 0), (0,14), (14,0)]
+2013-10-20 18:13:55 UTC <notdan> so it's a square turned by 45 degrees
+2013-10-20 18:14:28 UTC <notdan> that's lineSegments of a square
+2013-10-20 18:15:29 UTC <notdan> oh wait, those are not the absolute coordinates
+2013-10-20 18:15:31 UTC <notdan> sorry , nvm
+2013-10-20 18:30:08 UTC <notdan> Ok, I am being really stupid right now.. Isn't the sum of vectors just concatenation of vectors together?
+2013-10-20 18:33:41 UTC <notdan> sorry, nvm it's a bug in my code :S
+2013-10-20 18:45:48 UTC <luite> hehe you might need a break, or some coffee, or both :)
+2013-10-20 18:46:31 UTC <martingale> byorgey: did you get the 76 working?
+2013-10-20 20:00:32 UTC <notdan> OK, it was an error in the example, not in my code :)
+2013-10-20 20:08:12 UTC <notdan> http://me.hskll.org/stuff/tmp/diagrams-tikz.pdf yay
+2013-10-20 20:45:40 UTC <byorgey> =D
+2013-10-20 20:45:51 UTC <byorgey> martingale: yes, works great! thanks again!
+2013-10-20 20:45:56 UTC <byorgey> (I'm using it at this very moment)
+2013-10-20 20:52:10 UTC <martingale> byorgey: excellent, have you thought about merging the lens branch?
+2013-10-20 21:03:20 UTC <carter> notdan: a tikz backend would be AMAZING
+2013-10-20 22:08:31 UTC <travis-ci> [travis-ci] 13diagrams-lib/06gradient 145df233d http://travis-ci.org/diagrams/diagrams-lib/builds/12801297 The build passed.
+2013-10-21 00:12:27 UTC <byorgey> martingale: I didn't know it was ready, is it?
+2013-10-21 00:12:34 UTC <byorgey> (re: lens branch)
+2013-10-21 00:12:44 UTC <byorgey> it's easiest if you open pull requests
+2013-10-21 00:14:05 UTC <martingale> byorgey: I think so, -core, -lib, -svg, -cairo, -svg, -postscripts, -contrilb are done. The website runs, and the haddock docs work.
+2013-10-21 00:14:18 UTC <byorgey> awesome
+2013-10-21 00:14:21 UTC <martingale> byorgey: Of course some rewriting is necessary in the docs.
+2013-10-21 00:14:27 UTC <byorgey> sure, that's fine
+2013-10-21 00:14:40 UTC <martingale> byorgey: So I'll send pull requests
+2013-10-21 00:15:18 UTC <luite> hm lots of updates needed?
+2013-10-21 00:15:32 UTC <luite> in backend
+2013-10-21 00:15:42 UTC <byorgey> great
+2013-10-21 00:15:54 UTC <byorgey> luite: no, not a lot I don't think
+2013-10-21 00:16:42 UTC <martingale> byorgey: We have to remember to fix the Travis.yml files
+2013-10-21 00:17:06 UTC <byorgey> ah, right
+2013-10-21 00:17:20 UTC <luite> ok
+2013-10-21 00:17:25 UTC <byorgey> martingale: let's fix them before merging
+2013-10-21 00:17:29 UTC <bergey> martingale: I made changes to -lib/lens travis.yml that I think will work without change.
+2013-10-21 00:17:44 UTC <bergey> By looking for same-named branch in -core.
+2013-10-21 00:18:06 UTC <martingale> bergey: Great, glad your hear. Can you make the same changes to the other lens branches?
+2013-10-21 00:18:10 UTC <bergey> I think if we copy that code to other branches, it will work there.
+2013-10-21 00:18:28 UTC <bergey> Yeah, sure.  Tonight, but not right this minute.
+2013-10-21 00:19:12 UTC <byorgey> better yet, I'm inclined to do an overhaul of our travis stuff -- factor out all the common stuff into some scripts in a diagrams-travis repo
+2013-10-21 00:19:38 UTC <martingale> byorgey: so should I hold off on the other pull requests?
+2013-10-21 00:19:51 UTC <byorgey> including (17:50)                -!- martinga_ [~martingal@pool-74-108-33-95.nycmny.fios.verizon.net] has quit [Ping timeout: 245 seconds]
+2013-10-21 00:19:54 UTC <byorgey> (18:01) -diagramsbot:#diagrams- [diagrams-lib] jeffreyrosenbluth created gradient from master (+0 new commits): http://git.io/DeGTTg
+2013-10-21 00:19:57 UTC <byorgey> (18:08) < travis-ci> [travis-ci] diagrams-lib/gradient 5df233d http://travis-ci.org/diagrams/diagrams-lib/builds/12801297 The build passed.
+2013-10-21 00:20:00 UTC <byorgey> (18:22)                -!- Claudius1aximus [~claude@unaffiliated/claudiusmaximus] has joined #diagrams
+2013-10-21 00:20:03 UTC <byorgey> (18:25)                -!- ClaudiusMaximus [~claude@unaffiliated/claudiusmaximus] has quit [Ping timeout: 272 seconds]
+2013-10-21 00:20:06 UTC <byorgey> (18:29)                -!- isomorphic [~isomorphi@gateway/tor-sasl/isomorphic] has quit [Ping timeout: 240 seconds]
+2013-10-21 00:20:09 UTC <byorgey> (18:30)                -!- isomorphic [~isomorphi@gateway/tor-sasl/isomorphic] has joined #diagrams
+2013-10-21 00:20:12 UTC <byorgey> (18:38)                -!- isomorphic [~isomorphi@gateway/tor-sasl/isomorphic] has quit [Ping timeout: 240 seconds]
+2013-10-21 00:20:15 UTC <byorgey> (18:38)                -!- isomorphic [~isomorphi@gateway/tor-sasl/isomorphic] has joined #diagrams
+2013-10-21 00:20:18 UTC <byorgey> (18:44)                -!- Taneb [~Taneb@5.151.64.127] has quit [Quit: Leaving]
+2013-10-21 00:20:21 UTC <byorgey> (18:50)                -!- joelb [~textual@162-235-122-34.lightspeed.sntcca.sbcglobal.net] has joined #diagrams
+2013-10-21 00:20:22 UTC <fryguybob> D:
+2013-10-21 00:20:24 UTC <byorgey> (20:12) <   byorgey> martingale: I didn't know it was ready, is it?
+2013-10-21 00:20:26 UTC <byorgey> (20:12) <   byorgey> (re: lens branch)
+2013-10-21 00:20:29 UTC <byorgey> (20:12) <   byorgey> it's easiest if you open pull requests
+2013-10-21 00:20:31 UTC <byorgey> (20:14) < martingal> byorgey: I think so, -core, -lib, -svg, -cairo, -svg, -postscripts, -contrilb are done. The website runs, and the haddock docs work.
+2013-10-21 00:20:34 UTC <byorgey> (20:14) <   byorgey> awesome
+2013-10-21 00:20:37 UTC <byorgey> (20:14) < martingal> byorgey: Of course some rewriting is necessary in the docs.
+2013-10-21 00:20:44 UTC <byorgey> (20:14) <   byorgey> sure, that's fine
+2013-10-21 00:20:44 UTC <byorgey> (20:14) < martingal> byorgey: So I'll send pull requests
+2013-10-21 00:20:45 UTC <byorgey> (20:15) <     luite> hm lots of updates needed?
+2013-10-21 00:20:47 UTC <byorgey> (20:15) <     luite> in backend
+2013-10-21 00:20:50 UTC <byorgey> (20:15) <   byorgey> great
+2013-10-21 00:20:52 UTC <byorgey> (20:15) <   byorgey> luite: no, not a lot I don't think
+2013-10-21 00:20:55 UTC <byorgey> (20:16) -diagramsbot:#diagrams- [diagrams-cairo] jeffreyrosenbluth opened pull request #35: Lens (master...lens)  http://git.io/oUKYoQ
+2013-10-21 00:20:58 UTC <byorgey> (20:16) < martingal> byorgey: We have to remember to fix the Travis.yml files
+2013-10-21 00:21:00 UTC <byorgey> (20:17) <   byorgey> ah, right
+2013-10-21 00:21:03 UTC <byorgey> argh, whoops
+2013-10-21 00:21:05 UTC <byorgey> sorry
+2013-10-21 00:21:08 UTC <byorgey> what I meant to say was: including http://permalink.gmane.org/gmane.comp.lang.haskell.libraries/20634
+2013-10-21 00:21:11 UTC <byorgey> we can finally have support for GHC 7.6 and HEAD in travis!
+2013-10-21 00:21:11 UTC <byorgey> martingale: no, go ahead
+2013-10-21 00:21:23 UTC <martingale> byorgey: OK
+2013-10-21 00:21:34 UTC <byorgey> it's not worth holding things up
+2013-10-21 00:22:08 UTC <byorgey> I just meant instead of copying the look-for-a-similar-branch code to all the .travis.yml files we can factor it out
+2013-10-21 00:25:48 UTC <martingale> I think that does it!
+2013-10-21 00:27:27 UTC <byorgey> sweet, thanks =)
+2013-10-21 00:28:41 UTC <martingale> byorgey: I hope it works, but I think running the manual, all tutorials, and haddock docs is a pretty good test
+2013-10-21 00:29:02 UTC <byorgey> Yeah, I am fully confident that it works.
+2013-10-21 00:29:34 UTC <byorgey> I'm going to be looking more at things like code style.
+2013-10-21 00:29:56 UTC <martingale> byorgey: I look forward to any comments you may have.
+2013-10-21 00:31:25 UTC <martingale> I think bergey and I used slightly different styles - my default was to use lens functions below the splice, whereas I believe bergey  stayed with underscores
+2013-10-21 00:32:58 UTC <martingale> byorgey:  Next thing I hope you look at is the backend-tree stuff. I reworked the backend instance so it can work for both trees and list, but it's probably only a temporary fix.
+2013-10-21 00:33:27 UTC <bergey> That sounds right; I don't think I was 100% consistent.
+2013-10-21 00:33:34 UTC <byorgey> different styles is not a big problem.
+2013-10-21 00:33:49 UTC <byorgey> as long as the style of the exposed API/documentation is consistent.
+2013-10-21 00:33:58 UTC <martingale> byorgey: I also tried to make a tree based version of the Cairo backend, but since I know almost nothing about Cairo, I was not able to get it working.
+2013-10-21 00:34:24 UTC <byorgey> martingale: yup, that's on my short list of things to look at soon.  I should actually have a good amount of time for diagrams this week.
+2013-10-21 00:34:29 UTC <martingale> byorgey: I think the docs are consistent - but there so many files were changed we will have to see.
+2013-10-21 00:35:45 UTC <martingale> byorgey: That's good, I want to start working on Gradients but there are a number of issues. If it has to wait until after 1.0 - not a problem.
+2013-10-21 00:39:18 UTC <byorgey> martingale: it seems to me like we have plenty of stuff to go in 1.0, I think we should probably not plan for gradients to go in
+2013-10-21 00:39:30 UTC <byorgey> martingale: but you are welcome to start working on them of course.
+2013-10-21 00:40:37 UTC <martingale> byorgey: Yeah, thats what I'm thinking as well. It would for you to look at the thread bergey, ryan and I started on issue #9 and see what direction you think I should go.
+2013-10-21 00:44:33 UTC <martingale> byorgey: @bergey worked on -core
+2013-10-21 00:48:57 UTC <byorgey> martingale: ok
+2013-10-21 01:32:14 UTC <travis-ci> [travis-ci] 13diagrams-lib/06lens 14a35c416 http://travis-ci.org/diagrams/diagrams-lib/builds/12806099 The build is still failing.
+2013-10-21 01:39:23 UTC <travis-ci> [travis-ci] 13diagrams-lib/06lens 14caf79c8 http://travis-ci.org/diagrams/diagrams-lib/builds/12806275 The build is still failing.
+2013-10-21 01:48:20 UTC <travis-ci> [travis-ci] 13diagrams-svg/06lens 14cf30e51 http://travis-ci.org/diagrams/diagrams-svg/builds/12806570 The build passed.
+2013-10-21 01:49:53 UTC <byorgey> ACTION -> bed.  You can expect lots more comments tomorrow =)
+2013-10-21 01:52:38 UTC <bergey> Thanks!
+2013-10-21 01:55:32 UTC <martingale> \me bed as well
+2013-10-21 02:18:20 UTC <travis-ci> [travis-ci] 13diagrams-postscript/06lens 14b4dec30 http://travis-ci.org/diagrams/diagrams-postscript/builds/12807279 The build passed.
+2013-10-21 12:38:44 UTC <notdan> So should the backend options datatypes also use lenses?
+2013-10-21 12:45:54 UTC <martingale> notdan: Yes
+2013-10-21 12:46:17 UTC <martingale> notdan: take a look at the lens branch for SVG or Cairo or Postscript
+2013-10-21 12:46:43 UTC <notdan> What is the rational behind this? I've read the discussion in the first pull request, but I still don't get it. The option datatypes are rather plain (not nested)
+2013-10-21 12:47:49 UTC <martingale> notdan: here it is mostly for consistency, in Render.SVG I believe there is a place with a 3 deep nested record.
+2013-10-21 12:48:34 UTC <notdan> I see
+2013-10-21 12:48:42 UTC <notdan> I'll use lenses for tikz backend too then
+2013-10-21 12:48:44 UTC <notdan> thanks
+2013-10-21 12:49:09 UTC <martingale> notdan: great, if you have any questions, I'll be around for a bit
+2013-10-21 12:55:18 UTC <martingale> I think that does it!
+2013-10-21 12:56:50 UTC <notdan> Is that a type?  "& to ^&"? 
+2013-10-21 12:56:52 UTC <notdan> :p
+2013-10-21 12:58:19 UTC <martingale> notdan: No, we had to rename & from diagrams.coordinates because it is heavily used by lens (it's like our # with a lower fixity) so we choose ^&
+2013-10-21 13:00:10 UTC <travis-ci> [travis-ci] 13diagrams-lib/06lens 1431f9c1e http://travis-ci.org/diagrams/diagrams-lib/builds/12824739 The build is still failing.
+2013-10-21 13:04:30 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06lens 146fa4fb0 http://travis-ci.org/diagrams/diagrams-contrib/builds/12824816 The build passed.
+2013-10-21 13:12:38 UTC <travis-ci> [travis-ci] 13diagrams-lib/06lens 14b2b05bf http://travis-ci.org/diagrams/diagrams-lib/builds/12825236 The build was fixed.
+2013-10-21 13:21:54 UTC <martingale> notdan: Is there a reason that tikz is not in the diagrams repo?
+2013-10-21 13:28:00 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06lens 14eb7b448 http://travis-ci.org/diagrams/diagrams-contrib/builds/12825787 The build was broken.
+2013-10-21 13:31:37 UTC <travis-ci> [travis-ci] 13diagrams-doc/06lens 14eab819a http://travis-ci.org/diagrams/diagrams-doc/builds/12824718 The build is still failing.
+2013-10-21 13:44:36 UTC <martingale> I don't know why -contrib is still failing - .~ is exported from Diagrams.Prelude
+2013-10-21 13:48:53 UTC <martingale> Travis must be using the wrong -lib but I thought @bergey fixed this?
+2013-10-21 13:51:52 UTC <bergey> The error refers to `over`, which is defined in colour.  It used to be re-exported from Diagrams.Prelude, but somewhere in the lens branch I changed that.
+2013-10-21 13:52:17 UTC <martingale> bergey: I fixed that, look at travis 129
+2013-10-21 13:52:20 UTC <bergey> See discussion: https://github.com/diagrams/diagrams-lib/issues/110
+2013-10-21 13:52:42 UTC <martingale> bergey: where the error refers to .~
+2013-10-21 13:52:51 UTC <bergey> Ah.  129 wasn't loading.  I see it now.
+2013-10-21 14:01:09 UTC <bergey> Looks as though it's building -contrib against the -lib on Hackage, 0.7.2.
+2013-10-21 14:01:39 UTC <martingale> bergey: what line in the travis file do you see that
+2013-10-21 14:01:57 UTC <bergey> It's got the new versions of monoid-extras and active, though, so I'm not sure what's causing that.
+2013-10-21 14:02:01 UTC <bergey> 1188
+2013-10-21 14:02:05 UTC <martingale> thanks
+2013-10-21 14:21:39 UTC <bergey> As you've no doubt noticed, my explanation above is wrong; 0.7.2 is from git, not from Hackage.
+2013-10-21 14:23:06 UTC <martingale> bergey: yes, but I don't know why it's happening either
+2013-10-21 14:26:14 UTC <bergey> Is travis #129 somehow trying to build what would happen if we merged the lens branch now?
+2013-10-21 14:26:55 UTC <bergey> If so, I think this result just means that merging -contrib/lens before -core/lens and -lib/lens would fail.
+2013-10-21 14:27:31 UTC <bergey> In particular, if the -contrib branch is called master, travis builds against -lib/master.
+2013-10-21 14:28:35 UTC <bergey> The "hide over form prelude" commit seems to have caused 2 travis builds, 5b0df52 (master) and  	eb7b448 (lens)
+2013-10-21 14:30:23 UTC <bergey> I guess this is what travis does when there's an open pull request?
+2013-10-21 14:30:44 UTC <byorgey> yes, when there's a pull request, travis tries to build what the result of the merge would be
+2013-10-21 14:31:08 UTC <byorgey> so yes, this kind of thing is always going to happen when thereare multiple dependent pull requests
+2013-10-21 14:31:12 UTC <martingale> bergey: Ah, Ok so we should be fine
+2013-10-21 14:31:23 UTC <bergey> byorgey: OK.  Then I feel better.  Thanks.
+2013-10-21 14:32:03 UTC <martingale> Although I'm not sure, why it doesn't happen for -lib which depends on -core?
+2013-10-21 14:32:18 UTC <byorgey> I'm not sure
+2013-10-21 14:32:42 UTC <byorgey> but if it ain't broke, don't fix it I guess =)
+2013-10-21 14:33:31 UTC <notdan> martingale: erm, sorry, I ment to write "^*". It's in your commit message for diagrams-lib/lens
+2013-10-21 14:33:47 UTC <martingale> notdan: that is a typo
+2013-10-21 14:33:56 UTC <notdan> martingale: as for tikz, well it hasn't been updated for a year
+2013-10-21 14:34:09 UTC <notdan> I want to put my fork in the diagrams org on github if byorgey is up to that
+2013-10-21 14:34:39 UTC <martingale> byorgey: we may have a lot of merge conflicts in Arrow.hs, I changed some names and moved add some comments. It's probably best to just take the lens version verbatim.
+2013-10-21 14:35:11 UTC <martingale> \moved add\added
+2013-10-21 14:37:59 UTC <fryguybob> martingale: The repos in the diagrams org are ones we are committed to maintaining.  So far noone has been familiar enough with tikz to do that, but if notdan is I see no reason not to included it when it is ready.
+2013-10-21 14:42:16 UTC <byorgey> right.
+2013-10-21 14:42:20 UTC <martingale> fryguybob: Thanks, got it
+2013-10-21 14:46:40 UTC <martingale> notdan: Will I be able to just insert the output of the tikz backend into a latex file?
+2013-10-21 14:49:20 UTC <byorgey> that's the idea.
+2013-10-21 14:49:55 UTC <byorgey> we already have a framework for embedding diagrams in LaTeX files using other backends.
+2013-10-21 14:50:13 UTC <byorgey> including diagrams-tikz in the framework should work without much modification.
+2013-10-21 14:51:01 UTC <byorgey> The big benefit of using diagrams-tikz is that you can include equations in the diagrams which are later typeset by LaTeX.
+2013-10-21 14:51:44 UTC <byorgey> (writing a tutorial on using diagrams+latex is on my list of things to do...)
+2013-10-21 14:55:00 UTC <notdan> byorgey: hm, what's that framework you are talking about?
+2013-10-21 14:56:18 UTC <notdan> I am asking because I was day-dreaming about writing a lhs-like thingy that would render \begin{diagram}...\end{diagram} as images
+2013-10-21 14:56:32 UTC <notdan> might be cool for writing presentations
+2013-10-21 14:56:43 UTC <byorgey> we already have that!
+2013-10-21 14:56:48 UTC <byorgey> https://github.com/diagrams/diagrams-builder/blob/master/latex/diagrams-latex.sty
+2013-10-21 14:56:51 UTC <byorgey> =)
+2013-10-21 14:56:55 UTC <byorgey> you can thank fryguybob 
+2013-10-21 14:57:13 UTC <byorgey> it *is* cool for writing presentations.  I do it all the time =)
+2013-10-21 14:57:30 UTC <byorgey> see, and this is why I need to write a tutorial. No one knows about it.
+2013-10-21 14:57:58 UTC <fryguybob> I'm excited about a tikz backend having good text labels in an embedded latex diagram.
+2013-10-21 14:58:05 UTC <byorgey> yeah, me too
+2013-10-21 14:58:42 UTC <notdan> Oh, awesome! I didn't look into diagrams-builder too deeply
+2013-10-21 14:59:00 UTC <notdan> I am totally gonna (ab)use it
+2013-10-21 15:00:04 UTC <byorgey> notdan: the 5-second tutorial: (1) make sure you install diagrams-builder with -fcairo or -fps (whichever backend you want to use with diagrams-latex) so it will install the "diagrams-builder-cairo/diagrams-builder-postscript" command-line tool (which is used by diagrams-latex)
+2013-10-21 15:00:27 UTC <byorgey> (2) copy diagrams-latex.sty somewhere latex can find it
+2013-10-21 15:00:34 UTC <notdan> :)
+2013-10-21 15:01:35 UTC <byorgey> (3) \usepackage[backend=postscript,extension=eps,outputdir=diagrams/]{diagrams-latex}  or something like that
+2013-10-21 15:01:50 UTC <byorgey> (4) run latex or pdflatex with the --enable-write18 flag
+2013-10-21 15:02:12 UTC <byorgey> let us know how it works
+2013-10-21 15:03:14 UTC <byorgey> we will need to update it a bit for diagrams-tikz, since right now it assumes that the backend will be generating an image.
+2013-10-21 15:05:29 UTC <travis-ci> [travis-ci] 13diagrams-lib/06lens 14b33b498 http://travis-ci.org/diagrams/diagrams-lib/builds/12830616 The build passed.
+2013-10-21 17:53:14 UTC <notdan> I get so much wisdom from reading pull requests :)
+2013-10-21 17:57:47 UTC <notdan> http://me.hskll.org/stuff/tmp/diagrams-tikz/tikz-index.html :( there is still so much to do for the TikZ backend, more than I thought
+2013-10-21 17:58:06 UTC <notdan> I might not make it in time for the 1.0 release
+2013-10-21 18:16:12 UTC <byorgey> notdan: don't worry about the 1.0 release.  There will be many more releases after that. =)
+2013-10-21 18:16:27 UTC <byorgey> notdan: after all, we have to save at least SOME exciting features for other releases =)
+2013-10-21 18:16:44 UTC <martingale> byorgey: did you see my comment re: `arcLength`
+2013-10-21 18:16:52 UTC <byorgey> martingale: looking now
+2013-10-21 18:39:03 UTC <martingale> What is Diagrams.Lens/contrib for?
+2013-10-21 18:40:07 UTC <byorgey> Well, the purpose was to provide some lenses for diagrams. I'm hoping we can eventually phase it out by moving all of those lenses into -core and -lib.
+2013-10-21 18:40:19 UTC <byorgey> though I haven't looked at it too carefully so I don't really know what's in there.
+2013-10-21 18:40:44 UTC <byorgey> ask mgsloan.
+2013-10-21 18:41:09 UTC <martingale> just curious if i should keep it up to date with the lens changes?
+2013-10-21 18:42:17 UTC <byorgey> well, we need to make sure it still compiles.
+2013-10-21 18:42:30 UTC <byorgey> but if you can "keep it up to date" by getting rid of things that we now provide, great.
+2013-10-21 18:42:37 UTC <byorgey> i.e. there is no need to keep its API the same.
+2013-10-21 18:42:51 UTC <byorgey> I'm sure mgsloan would be perfectly happy to see it go away if its functionality is superseded.
+2013-10-21 18:43:27 UTC <martingale> byorgey: I'll have a more careful look later, for now I'll just get it to compile.
+2013-10-21 18:43:30 UTC <byorgey> ok.
+2013-10-21 18:43:33 UTC <mgsloan> Yup, feel free to refactor it into the libs / etc
+2013-10-21 18:44:20 UTC <mgsloan> I think I had pretty reasonable coverage of wrapping diagrams with lenses, but certainly not complete!
+2013-10-21 18:44:49 UTC <mgsloan> Sounds like y'all are going all-out with the lenses - cool!
+2013-10-21 18:45:43 UTC <byorgey> do it right or go home, that's my philosophy ;-)
+2013-10-21 18:46:05 UTC <byorgey> (this gets me in trouble sometimes---"do it right or just do it anyway" is probably a better philosophy)
+2013-10-21 18:50:09 UTC <martingale> so for example could we drop `_polyType` from Lens/contrib?
+2013-10-21 18:50:30 UTC <martingale> since it's being imported from the Prelude
+2013-10-21 18:53:05 UTC <byorgey> yes
+2013-10-21 18:53:35 UTC <martingale> Ok, start removing any redundancies
+2013-10-21 18:53:43 UTC <martingale> *I'll start
+2013-10-21 18:53:57 UTC <byorgey> actually, re-exporting _polyType is now wrong since _polyType is a field label
+2013-10-21 18:54:08 UTC <byorgey> I think the idea was that _polyType used to be a lens
+2013-10-21 18:54:15 UTC <byorgey> (in Diagrams.Lens I mean)
+2013-10-21 18:54:29 UTC <byorgey> so if anything we would re-export what we now call polyType.
+2013-10-21 18:54:38 UTC <byorgey> but it doesn't matter, we should just get rid of it.
+2013-10-21 18:56:51 UTC <martingale> Yes, it looks like that is what happened. I'll get rid of it.
+2013-10-21 19:10:07 UTC <travis-ci> [travis-ci] 13diagrams-lib/06lens 1473493dd http://travis-ci.org/diagrams/diagrams-lib/builds/12842305 The build was broken.
