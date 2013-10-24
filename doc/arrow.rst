@@ -92,7 +92,7 @@ the latter does not. In this tutorial whenever we mention a function with
 a single quote (`'`) at the end, there is a sister function without the quote that
 uses a default set of options.
 
-__http://projects.haskell.org/diagrams/doc/manual.html#faking-optional-named-arguments
+__ http://projects.haskell.org/diagrams/doc/manual.html#faking-optional-named-arguments
 
 Scale invariance
 ----------------
@@ -108,7 +108,7 @@ consequence for day-to-day diagramming with arrows is that arrowheads
 and -tails do not contribute to the envelope of an arrow (arrow
 shafts, on the other hand, do).
 
-__http://projects.haskell.org/diagrams/doc/manual.html#scale-invariance
+__ http://projects.haskell.org/diagrams/doc/manual.html#scale-invariance
 
 .. container:: warning
 
