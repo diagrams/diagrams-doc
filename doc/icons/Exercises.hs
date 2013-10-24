@@ -9,13 +9,14 @@ import           Diagrams.Backend.SVG.CmdLine
 import           Diagrams.Backend.Cairo.CmdLine
 #endif
 import           Diagrams.Prelude
+import           Control.Lens ((&), (.~))
 
 weights hs
   = hs
   # map (\h -> roundedRect 1 h 0.2)
-  # hcat' with {sep = 0.3}
+  # hcat' (with & sep .~ 0.3)
 
-dumbbell w hs = hcat' with {sep = 0.5} [cap, wts, bar, wts # reflectX, cap]
+dumbbell w hs = hcat' (with & sep .~ 0.5) [cap, wts, bar, wts # reflectX, cap]
   where
     wts = weights hs
     cap = rect 0.8 1

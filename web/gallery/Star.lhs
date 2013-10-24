@@ -18,8 +18,8 @@ we can refer to later.  Names can be almost any type; here we choose
 
 > axes n = h <> v
 >   where p = fromOffsets . replicate n
->         h = stroke' with {vertexNames = [map ("x",) [0..n]]} (p unitX)
->         v = stroke' with {vertexNames = [map ("y",) [0..n]]} (p unitY)
+>         h = stroke' (with & vertexNames .~ [map ("x",) [0..n]]) (p unitX)
+>         v = stroke' (with & vertexNames .~ [map ("y",) [0..n]]) (p unitY)
 
 To connect two named points using index `i`, we request the points
 corresponding to those names, and superimpose a line between the points:

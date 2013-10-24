@@ -15,7 +15,7 @@ view: -10,-5,15,15
 > import Data.Ord (comparing)
 > import Data.Function (on)
 > import Data.Maybe (fromMaybe)
-> 
+>
 > colors = [black, blue, red, yellow, green, orange, purple, brown]
 
 A subset is represented by the size of the parent set paired with the
@@ -24,7 +24,7 @@ subset of another; `subsetsBySize` lists all the subsets of a set of
 size `n`, grouped according to size.
 
 > data Subset = Subset Int [Int]
-> 
+>
 > (Subset _ elts1) `isSubset` (Subset _ elts2) = all (`elem` elts2) elts1
 >
 > subsetsBySize :: Int -> [[Subset]]
@@ -37,11 +37,11 @@ size `n`, grouped according to size.
 Draw the elements of a subset, by drawing a colored square for each
 element present, and leaving a blank space for absent elements.
 
-> drawElts n elts = hcat 
->                 . map (\i -> if i `elem` elts 
->                                then drawElt i 
+> drawElts n elts = hcat
+>                 . map (\i -> if i `elem` elts
+>                                then drawElt i
 >                                else strutX 1
->                       ) 
+>                       )
 >                 $ [1..n]
 >
 > drawElt e = unitSquare # fc (colors !! e) # lw 0.05 # freeze
@@ -64,12 +64,12 @@ connecting each set to its subsets in the row below.  [See the user
 manual](http://projects.haskell.org/diagrams/manual/diagrams-manual.html#named-subdiagrams)
 for a more in-depth explanation of how names are used to connect subsets.
 
-> hasseRow = centerX . hcat' with {sep = 2} . map drawSet
-> 
+> hasseRow = centerX . hcat' (with & sep .~ 2) . map drawSet
+>
 > hasseDiagram n = setsD # drawConnections # centerXY
->   where setsD = vcat' with {sep = fromIntegral n} 
->               . map hasseRow 
->               . reverse 
+>   where setsD = vcat' (with & sep .~ fromIntegral n)
+>               . map hasseRow
+>               . reverse
 >               $ subsets
 >         subsets = subsetsBySize n
 >         drawConnections = applyAll connections
@@ -90,5 +90,5 @@ lower boundary of the other.
 >         connect (Subset _ elts1) (Subset _ elts2) =
 >           withNames [elts1, elts2] $ \[b1, b2] ->
 >             (<> (fromMaybe origin (traceP (location b1) unit_Y b1) ~~ fromMaybe origin (traceP (location b2) unitY b2)) # lw 0.03)
-> 
+>
 > example = pad 1.1 $ hasseDiagram 4

@@ -10,7 +10,6 @@ width: 600
 ---
 
 > import Diagrams.Backend.Cairo
-> import Diagrams.Coordinates
 > import Diagrams.Prelude
 > import Graphics.SVGFonts.ReadFont
 >
@@ -34,7 +33,7 @@ dashing pattern and shape.
 > type DC = Diagram Cairo R2
 
 The final diagram is the chart with the legend next to it.
- 
+
 > example :: DC
 > example = pad 1.1 . centerXY $
 >     (centerY (chart (map snd dataSeries) plotStyles [0,2,4,6,8,10] [0,2,4,6,8,10])
@@ -95,16 +94,16 @@ how the line looks in the chart.
 
 > legend :: [(DC, DC -> DC)] -> [String] -> DC
 > legend styles labels = centerXY $
->     vcat' with {sep=0.15} $
+>     vcat' with {_sep=0.15} $
 >       map (\(l,s) -> littleLine s ||| strutX 0.4 ||| text' l # alignL)
 >         (zip labels (styles ++ plotStyles))
->   where littleLine (d,l) = (stroke $ fromVertices [ 0&0, 1&0 ]) # l
->                            <> d # moveTo (0.5&0)
+>   where littleLine (d,l) = (stroke $ fromVertices [ 0^&0, 1^&0 ]) # l
+>                            <> d # moveTo (0.5^&0)
 
 The outer box is just a rectangle.
 
 > box :: DC
-> box = strokeLoop . closeLine . fromVertices $ [ 0&0, 0&h, w&h, w&0 ]
+> box = strokeLoop . closeLine . fromVertices $ [ 0^&0, 0^&h, w^&h, w^&0 ]
 
 Each tick on the vertical axis has a text part, a solid line on the
 left, a solid line on the right, and a long dashed line from left to
@@ -112,20 +111,20 @@ right.
 
 > vertticks :: [(Double,String)] -> DC
 > vertticks pairs =
->     let textBits = mconcat [ text' t # alignR # moveTo ((-0.2)&(y*h)) | (y,t) <- pairs ]
->         tickBits =    mconcat [ fromVertices [ 0&(y*h), 0.1    &(y*h) ] | (y,_) <- pairs ]
->                    <> mconcat [ fromVertices [ w&(y*h), (w-0.1)&(y*h) ] | (y,_) <- pairs ]
->                    <> mconcat [ fromVertices [ 0&(y*h), w&(y*h)       ] # lc gray # dashing [ 0.1, 0.1 ] 0 | (y,_) <- pairs ]
+>     let textBits = mconcat [ text' t # alignR # moveTo ((-0.2)^&(y*h)) | (y,t) <- pairs ]
+>         tickBits =    mconcat [ fromVertices [ 0^&(y*h), 0.1    ^&(y*h) ] | (y,_) <- pairs ]
+>                    <> mconcat [ fromVertices [ w^&(y*h), (w-0.1)^&(y*h) ] | (y,_) <- pairs ]
+>                    <> mconcat [ fromVertices [ 0^&(y*h), w^&(y*h)       ] # lc gray # dashing [ 0.1, 0.1 ] 0 | (y,_) <- pairs ]
 >     in textBits <> tickBits
 
 (Similar for the horizontal axis.)
 
 > horizticks :: [(Double,String)] -> DC
 > horizticks pairs =
->     let textBits = mconcat [ text' t # moveTo ((x*w)&(-0.3)) | (x,t) <- pairs ]
->         tickBits =    mconcat [ fromVertices [ (x*w)&0, (x*w)&0.1     ] | (x,_) <- pairs ]
->                    <> mconcat [ fromVertices [ (x*w)&h, (x*w)&(h-0.1) ] | (x,_) <- pairs ]
->                    <> mconcat [ fromVertices [ (x*w)&0, (x*w)&h       ] # lc gray # dashing [ 0.1, 0.1 ] 0 | (x,_) <- pairs ]
+>     let textBits = mconcat [ text' t # moveTo ((x*w)^&(-0.3)) | (x,t) <- pairs ]
+>         tickBits =    mconcat [ fromVertices [ (x*w)^&0, (x*w)^&0.1     ] | (x,_) <- pairs ]
+>                    <> mconcat [ fromVertices [ (x*w)^&h, (x*w)^&(h-0.1) ] | (x,_) <- pairs ]
+>                    <> mconcat [ fromVertices [ (x*w)^&0, (x*w)^&h       ] # lc gray # dashing [ 0.1, 0.1 ] 0 | (x,_) <- pairs ]
 >     in textBits <> tickBits
 
 A dot style is a shape (any diagram) and a boolean indicating whether
@@ -136,10 +135,10 @@ colour style is just a colour.  These three combined give a "style".
 > type Shape = DC
 > type DotStyle = (Shape, Fill)
 > type LineStyle = DC -> DC
-> 
+>
 > plotStyles :: [ (Shape, LineStyle) ]
 > plotStyles = zipWith3 combineStyles dotStyles colourStyles lineStyles
-> 
+>
 > combineStyles :: DotStyle -> Colour Double -> LineStyle -> (Shape, LineStyle)
 > combineStyles (d,Fill f) c l =
 >   ( d # (if f then fcA (c `withOpacity` 0.5) else id) # lc c, lc c . l )
@@ -162,9 +161,9 @@ The dot styles.
 Some custom shapes.
 
 > cross :: Double -> Path R2
-> cross x = fromVertices [ x&(-x) , ((-x)&x) ]
->           <> fromVertices [ x&x , ((-x)&(-x)) ]
-> 
+> cross x = fromVertices [ x^&(-x) , ((-x)^&x) ]
+>           <> fromVertices [ x^&x , ((-x)^&(-x)) ]
+>
 > plus :: Double -> Path R2
 > plus x = cross x # rotate (45::Deg)
 
