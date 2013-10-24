@@ -2853,7 +2853,7 @@ Envelope-related functions
   > import Data.Maybe (fromJust)
   >
   > sampleEnvelope2D n d = foldr (flip atop) (d # lc red) bs
-  >   where b  = fromJust $ appEnvelope (envelope d)
+  >   where b  = fromJust $ appEnvelope (getEnvelope d)
   >         bs = [stroke $ mkLine (origin .+^ (s *^ v))
   >                               (5 *^ normalized (perp v))
   >              | v <- vs, let s = b v
@@ -3520,43 +3520,44 @@ transformation is applied to each pair of arrows.
 
 The arrows on the right are wrapped in `ScaleInv` but the ones on the left are not.
 
-.. .. class:: dia-lhs
+.. class:: dia-lhs
 
-.. ::
+::
 
-.. > {-# LANGUAGE TypeSynonymInstances, FlexibleInstances #-}
-.. >
-.. > import Diagrams.TwoD.Transform.ScaleInv
-.. >
-.. > class Drawable d where
-.. >   draw :: d -> Diagram Cairo R2
-.. >
-.. > instance Drawable (Diagram Cairo R2) where
-.. >   draw = id
-.. >
-.. > instance Drawable a => Drawable (ScaleInv a) where
-.. >   draw = draw . unScaleInv
-.. >
-.. > instance (Drawable a, Drawable b) => Drawable (a,b) where
-.. >   draw (x,y) = draw x <> draw y
-.. >
-.. > arrowhead, shaft :: Diagram Cairo R2
-.. > arrowhead = triangle 0.5 # fc black # rotateBy (-1/4)
-.. > shaft = origin ~~ p2 (3, 0)
-.. >
-.. > arrow1 = (shaft,          arrowhead       # translateX 3)
-.. > arrow2 = (shaft, scaleInv arrowhead unitX # translateX 3)
-.. >
-.. > showT tr = draw (arrow1 # transform tr)
-.. >        ||| strutX 1
-.. >        ||| draw (arrow2 # transform tr)
-.. >
-.. > example = vcat' (with & sep .~ 0.5)
-.. >             (map (centerX . showT)
-.. >               [ scalingX (1/2)
-.. >               , scalingY 2
-.. >               , scalingX (1/2) <> rotation (-1/12 :: Turn)
-.. >               ])
+> {-# LANGUAGE TypeSynonymInstances, FlexibleInstances #-}
+>
+> import Diagrams.TwoD.Transform.ScaleInv
+> import Control.Lens ((^.))
+>
+> class Drawable d where
+>   draw :: d -> Diagram Cairo R2
+>
+> instance Drawable (Diagram Cairo R2) where
+>   draw = id
+>
+> instance Drawable a => Drawable (ScaleInv a) where
+>   draw = draw . (^. scaleInvObj)
+>
+> instance (Drawable a, Drawable b) => Drawable (a,b) where
+>   draw (x,y) = draw x <> draw y
+>
+> arrowhead, shaft :: Diagram Cairo R2
+> arrowhead = triangle 0.5 # fc black # rotateBy (-1/4)
+> shaft = origin ~~ p2 (3, 0)
+>
+> arrow1 = (shaft,          arrowhead       # translateX 3)
+> arrow2 = (shaft, scaleInv arrowhead unitX # translateX 3)
+>
+> showT tr = draw (arrow1 # transform tr)
+>        ||| strutX 1
+>        ||| draw (arrow2 # transform tr)
+>
+> example = vcat' (with & sep .~ 0.5)
+>             (map (centerX . showT)
+>               [ scalingX (1/2)
+>               , scalingY 2
+>               , scalingX (1/2) <> rotation (-1/12 :: Turn)
+>               ])
 
 In addition, the `scaleInvPrim` function creates a scale-invariant
 diagram from a primitive (such as a path).  At the moment it is not
