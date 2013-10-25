@@ -80,7 +80,8 @@ main = do
         let xml = obj . un $ out -<.> "xml"
             exe = obj "doc/Xml2Html.hs.exe"
         need [xml, exe]
-        system' exe [xml, "-o", dist "doc/images", out]
+        system' exe
+          ([xml, "-o", dist "doc/images", out] ++ ["--keepgoing" | useSVG])
 
       obj "//*.xml" *> \out -> do
         let rst = un $ out -<.> "rst"

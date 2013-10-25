@@ -15,7 +15,7 @@ import           Data.String
 
 import qualified Data.ByteString.Lazy as LB
 import           System.FilePath
-import           System.Process       (system)
+import           System.Process       (readProcess, system)
 
 import           Text.Pandoc
 
@@ -31,7 +31,13 @@ pages = map (fromString . (++".markdown"))
   ]
 
 main :: IO ()
-main = hakyll $ do
+main = do
+  cairoPkg <- readProcess "ghc-pkg" ["list", "--simple-output", "diagrams-cairo"] ""
+  let useSVG = null cairoPkg
+      imgExt | useSVG    = "svg"
+             | otherwise = "png"
+
+  hakyll $ do
     -- CSS, templates, JavaScript -----------------
     match "css/*" $ do
         route   idRoute
@@ -89,13 +95,17 @@ main = hakyll $ do
         route idRoute
         compile copyFileCompiler
 
+    match "gallery/images/*.svg" $ do
+        route idRoute
+        compile copyFileCompiler
+
     match "gallery.markdown" $ do
         route $ setExtension "html"
 
         compile $ do
           galleryContent <- pandocCompiler
           lhss <- loadAll ("gallery/*.lhs" .&&. hasVersion "gallery")
-          gallery <- buildGallery galleryContent lhss
+          gallery <- buildGallery imgExt galleryContent lhss
           mainCompiler defaultContext gallery
 
       -- build syntax-highlighted source code for examples
@@ -104,8 +114,8 @@ main = hakyll $ do
         compile $ withMathJax
             >>= loadAndApplyTemplate "templates/exampleHi.html"
                   ( mconcat
-                    [ setImgURL
-                    , setHtmlURL
+                    [ setImgURL imgExt
+                    , setHtmlURL imgExt
                     , markdownFieldsCtx ["description"]
                     , defaultContext
                     ]
@@ -133,14 +143,14 @@ mainCompiler :: Context String -> Item String -> Compiler (Item String)
 mainCompiler ctx = loadAndApplyTemplate "templates/default.html" ctx
                >=> relativizeUrls
 
-setThumbURL, setImgURL, setHtmlURL :: Context String
-setThumbURL  = setURL "images" "thumb.png"
-setImgURL    = setURL "images" "big.png"
-setHtmlURL   = setURL "" "html"
+setThumbURL, setImgURL, setHtmlURL :: String -> Context String
+setThumbURL  imgExt = setURL "images" ("thumb." ++ imgExt)
+setImgURL    imgExt = setURL "images" ("big." ++ imgExt)
+setHtmlURL  _imgExt = setURL "" "html"
 
 setURL :: FilePath -> String -> Context String
 setURL dir ext = field (extNm ++ "url") fieldVal
-  where extNm = filter isAlphaNum ext
+  where extNm = takeWhile (/= '.') ext
         fieldVal i = do
           u <- fmap (maybe "" toUrl) . getRoute . itemIdentifier $ i
           let (path,f) = splitFileName u
@@ -159,8 +169,8 @@ markdownFieldCtx f = field f $ \i -> do
     . readMarkdown defaultHakyllReaderOptions
     $ markdown
 
-buildGallery :: Item String -> [Item String] -> Compiler (Item String)
-buildGallery content lhss = do
+buildGallery :: String -> Item String -> [Item String] -> Compiler (Item String)
+buildGallery imgExt content lhss = do
   -- reverse sort by date (most recent first)
   lhss' <- mapM addDate lhss
   let exs = reverse . map snd . sortBy (comparing fst) $ lhss'
@@ -170,8 +180,8 @@ buildGallery content lhss = do
         , defaultContext
         ]
       exampleCtx = mconcat
-        [ setHtmlURL
-        , setThumbURL
+        [ setHtmlURL imgExt
+        , setThumbURL imgExt
         , defaultContext
         ]
 
