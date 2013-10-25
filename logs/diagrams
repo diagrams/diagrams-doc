@@ -41637,3 +41637,1069 @@
 2013-10-21 18:54:38 UTC <byorgey> but it doesn't matter, we should just get rid of it.
 2013-10-21 18:56:51 UTC <martingale> Yes, it looks like that is what happened. I'll get rid of it.
 2013-10-21 19:10:07 UTC <travis-ci> [travis-ci] 13diagrams-lib/06lens 1473493dd http://travis-ci.org/diagrams/diagrams-lib/builds/12842305 The build was broken.
+2013-10-21 19:33:24 UTC <martingale> Is the something like cabal install -Warn -Werror ...
+2013-10-21 19:34:40 UTC <travis-ci> [travis-ci] 13diagrams-lib/06lens 1474020be http://travis-ci.org/diagrams/diagrams-lib/builds/12843357 The build was fixed.
+2013-10-21 19:36:19 UTC <carter> byorgey: i'm super exicted for your talk next month :)
+2013-10-21 19:36:23 UTC <carter> martingale: will you be there?
+2013-10-21 19:37:13 UTC <carter> btw: whens the lensification going to land in head?
+2013-10-21 19:38:14 UTC <byorgey> martingale: cabal install --ghc-options='-Wall -Werror'
+2013-10-21 19:38:32 UTC <byorgey> carter: soon, we're doing some final cleanup before the merge
+2013-10-21 19:38:35 UTC <carter> ok
+2013-10-21 19:38:57 UTC <carter> i'll try it out for the oft delayed project :)
+2013-10-21 19:39:06 UTC <carter> also need to learn lens anyways
+2013-10-21 19:39:21 UTC <martingale> carter: yes, i'll definitely be there this time.
+2013-10-21 19:39:27 UTC <carter> woo
+2013-10-21 19:39:30 UTC <carter> don't injure yourself again
+2013-10-21 19:39:31 UTC <martingale> byorgey: thanks
+2013-10-21 19:39:50 UTC <martingale> carter: that's what i mean be definitely
+2013-10-21 19:39:55 UTC <carter> :)
+2013-10-21 19:40:13 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06lens 14fc815f4 http://travis-ci.org/diagrams/diagrams-contrib/builds/12843457 The build is still failing.
+2013-10-21 19:52:03 UTC <carter> oh well, i guess i shouldn't name a lib "diaplotical"
+2013-10-21 19:52:08 UTC <carter> :P
+2013-10-21 19:56:40 UTC <ryantrinkle1> is there an existing stub for displaying diagrams cross-platform?
+2013-10-21 19:56:52 UTC <ryantrinkle1> just, like, a bare minimum 'main' function that'll show a diagram in a window
+2013-10-21 19:57:22 UTC <carter> ryantrinkle1: using which backend?
+2013-10-21 19:57:26 UTC <carter> svg or pdf?
+2013-10-21 19:57:29 UTC <carter> or cairo/gtk?
+2013-10-21 19:57:31 UTC <ryantrinkle1> any; i don't really care
+2013-10-21 19:57:33 UTC <carter> latter might be more painful
+2013-10-21 19:57:34 UTC <carter> hrmm
+2013-10-21 19:57:43 UTC <ryantrinkle1> i just want it to be quick and easy for beginners
+2013-10-21 19:57:50 UTC <carter> is there an analogue to the OS X "open" command on other platforms?
+2013-10-21 19:57:59 UTC <ryantrinkle1> sort of
+2013-10-21 19:58:13 UTC <ryantrinkle1> does gtk work on osx/windows?
+2013-10-21 19:58:31 UTC <carter> the issue with GTK is it doesn't like ghci
+2013-10-21 19:58:38 UTC <ryantrinkle1> ah
+2013-10-21 19:58:39 UTC <carter> unless your'e using HEAD / 7.8
+2013-10-21 19:58:53 UTC <ryantrinkle1> yeah, definitely not
+2013-10-21 19:59:07 UTC <carter> ryantrinkle1: also you'll have that xcode 5 triague right?
+2013-10-21 19:59:15 UTC <ryantrinkle1> yeah
+2013-10-21 19:59:21 UTC <martingale> ryantrinkle1: do you mind viewing the diagram in a browser?
+2013-10-21 19:59:41 UTC <carter> martingale: i think the question is "whats a portable way of launching the browser + opening the doc?"
+2013-10-21 19:59:44 UTC <ryantrinkle1> martingale: well, it's not ideal, but it might be an option
+2013-10-21 20:00:03 UTC <ryantrinkle1> well, it's not just the opening/viewing thing
+2013-10-21 20:00:16 UTC <ryantrinkle1> i'm trying to get people excited about haskell and such in general
+2013-10-21 20:00:29 UTC <ryantrinkle1> if you say "look, you can generate pdfs"
+2013-10-21 20:00:42 UTC <ryantrinkle1> that's not as exciting as showing someone how to display something potentially in a larger context
+2013-10-21 20:00:48 UTC <ryantrinkle1> like a video game or something
+2013-10-21 20:00:50 UTC <carter> ryantrinkle1: three-penny gui
+2013-10-21 20:00:51 UTC <carter> :)
+2013-10-21 20:00:52 UTC <fryguybob> ryantrinkle1: There is a GTK thing, but I've never used it as I can't get GTK to work correctly on Windows :(
+2013-10-21 20:00:53 UTC <carter> or gloss
+2013-10-21 20:01:02 UTC <ryantrinkle1> yeah, that makes sense
+2013-10-21 20:01:05 UTC <carter> three-penny may be more portable
+2013-10-21 20:01:12 UTC <carter> because it doesn't have any c ffi stuff
+2013-10-21 20:01:15 UTC <carter> for ghci experimentation
+2013-10-21 20:01:25 UTC <ryantrinkle1> what about opengl? is there decent opengl stuff for diagrams?
+2013-10-21 20:01:31 UTC <carter> not yet
+2013-10-21 20:01:35 UTC <carter> (afaict)
+2013-10-21 20:01:39 UTC <carter> there could be
+2013-10-21 20:01:41 UTC <carter> just isn't yet
+2013-10-21 20:01:46 UTC <ryantrinkle1> hmm
+2013-10-21 20:02:31 UTC <carter> to add an open gl backend, think you just need to have an open gl interpreter for the tree rep diagrams outputs...
+2013-10-21 20:02:39 UTC <carter> i could be wrong though, i've not looked at this stuff in a while
+2013-10-21 20:02:51 UTC <ryantrinkle1> well, i've got maybe 8 hours to spend on this, max
+2013-10-21 20:02:56 UTC <byorgey> bergey was working on an opengl backend, I think it's on the backburner at the moment
+2013-10-21 20:03:00 UTC <ryantrinkle1> so i don't think that's happening :P
+2013-10-21 20:03:28 UTC <carter> you could do http://hackage.haskell.org/package/threepenny-gui + svg assets generated by diagrams? :)
+2013-10-21 20:03:40 UTC <carter> i actually need to learn gui programming at some point myself 
+2013-10-21 20:03:42 UTC <byorgey> ryantrinkle1: to be honest, if your goal is to show off something quick and easy for beginners, you should use gloss.
+2013-10-21 20:03:52 UTC <carter> byorgey: does gloss play nice with ghci?
+2013-10-21 20:03:58 UTC <carter> but yeah, gloss is nice
+2013-10-21 20:04:00 UTC <ryantrinkle1> byorgey: hm, ok; i'll take a look at that
+2013-10-21 20:04:13 UTC <carter> http://hackage.haskell.org/package/gloss
+2013-10-21 20:04:20 UTC <ryantrinkle1> byorgey: it's focused totally on beginners - this is for a haskell beginners workshop
+2013-10-21 20:04:21 UTC <byorgey> I don't know, but it has being quick and easy for beginners as one of its explicit design goals.  diagrams does not.
+2013-10-21 20:04:27 UTC <ryantrinkle1> right
+2013-10-21 20:04:52 UTC <carter> unless you want them to learn / master lens too 
+2013-10-21 20:04:53 UTC <carter> :)
+2013-10-21 20:05:01 UTC <byorgey> gloss has some cool animation/interactivity stuff which would probably be fun to show off
+2013-10-21 20:05:06 UTC <ryantrinkle1> ok, cool
+2013-10-21 20:05:24 UTC <martingale> we really should write a simple version of prelude
+2013-10-21 20:05:40 UTC <carter> which prelude?
+2013-10-21 20:05:46 UTC <martingale> carter: diagrams
+2013-10-21 20:05:48 UTC <carter> ah
+2013-10-21 20:06:08 UTC <byorgey> martingale: indeed.  What I would really like is a tool for automatically generating a simplified version of Diagrams.Prelude from the real thing.
+2013-10-21 20:06:09 UTC <carter> heeh, i really really want a better numerical prelude
+2013-10-21 20:06:20 UTC <byorgey> because I don't want to be stuck maintaining two parallel preludes.
+2013-10-21 20:06:41 UTC <martingale> Ah, yes that would be excellent.
+2013-10-21 20:10:27 UTC <byorgey> I have a few vague ideas how to do it.  But it's not entirely obvious.
+2013-10-21 20:11:21 UTC <martingale> No, not at all. Would it limit the user to R2?
+2013-10-21 20:14:49 UTC <byorgey> yes, I imagine it would e.g. instantiate all vector space arguments to R2, instantiate all Alignable/Juxtaposable/Enveloped things to Diagram, etc.
+2013-10-21 20:38:09 UTC <byorgey> hmm, I am updating the documentation to build under any backend, and it's really annoying because whenever you want to give type signatures, you do something like  type DC = Diagram Cairo R2  and then use that everywhere
+2013-10-21 20:38:14 UTC <byorgey> which ties it to the Cairo backend
+2013-10-21 20:38:36 UTC <carter> urk....
+2013-10-21 20:38:47 UTC <byorgey> and generalizing all the type signatures to   (Backend b R2, Renderable (Path R2) b) => ... Diagram b R2 ...   is a pain in the butt
+2013-10-21 20:38:56 UTC <carter> and you can't do smething like type DC a = blah?
+2013-10-21 20:39:11 UTC <carter> search replase?
+2013-10-21 20:39:36 UTC <byorgey> you still need all the class constraints then
+2013-10-21 20:40:07 UTC <byorgey> but then it occurred to me, why not have all backends export an identifier named Backend?
+2013-10-21 20:40:13 UTC <notdan> Re: simplier / monomorphic prelude, what would be the type of "circle 1" for example?
+2013-10-21 20:40:15 UTC <notdan> Trail?
+2013-10-21 20:40:24 UTC <byorgey> then you can write  Diagram Backend R2, and it will work no matter what backend you import
+2013-10-21 20:40:38 UTC <byorgey> maybe we want a different name than Backend, but that's the idea
+2013-10-21 20:40:46 UTC <byorgey> notdan: Diagram
+2013-10-21 20:41:12 UTC <notdan> Well then I couldn't apply fill rules to it, can it?
+2013-10-21 20:41:35 UTC <byorgey> notdan: you apply fill rules to diagrams, not paths.
+2013-10-21 20:42:11 UTC <byorgey> notdan: however, this raises an interesting point.  Perhaps from a single function like 'circle' we would want to generate several functions 'circle', 'circleTrail', 'circlePath' with the appropriate monomorphic types
+2013-10-21 20:44:37 UTC <notdan> oh yeah, for fill rules it's the opposite.. 
+2013-10-21 20:44:46 UTC <notdan> sorry for that
+2013-10-21 20:45:41 UTC <byorgey> your general point stands, however: using the simple prelude it would be much more difficult to construct trails and paths since you couldn't use functions like circle.
+2013-10-21 20:54:04 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14ec939f8 http://travis-ci.org/diagrams/diagrams-doc/builds/12845078 The build passed.
+2013-10-21 21:00:13 UTC <martingale> byorgey: If you are using the simple prelude to learn haskell you may want to leave in the polymorphic types in some cases. Haskell user will encounter polymorphic types pretty early on.
+2013-10-21 21:13:07 UTC <martingale> In my opinion it's not necessarily the polymorphism that's a problem. It's the amount of work it takes to understand types like `circle :: (TrailLike t, V t ~ R2, Transformable t) => Double -> t`
+2013-10-21 21:15:00 UTC <martingale> If we could have something like `circle::Graphic t => Double -> t` I think that would be OK.
+2013-10-21 23:13:13 UTC <martingale> byorgey: re: Diagram Backend R2, I like this idea very much. How about Engine instead of Backend?
+2013-10-22 02:14:22 UTC <byorgey> Martingale: yeah, Engine might work.  I might also just go with something very short like B
+2013-10-22 02:14:25 UTC <byorgey> Diagram B R2
+2013-10-22 02:14:53 UTC <byorgey> the point is, the name doesn't really need to tell you anything.  You just have to remember what name you're supposed to put there.
+2013-10-22 11:42:46 UTC <travis-ci> [travis-ci] 13diagrams-lib/06lens 1453cbd54 http://travis-ci.org/diagrams/diagrams-lib/builds/12874550 The build passed.
+2013-10-22 11:55:40 UTC <Martingale> byorgey: I'm not sure I understand `Wrapped` yet, but it looks like it might be an option to help with our naming problem - e.g. getArcLength?
+2013-10-22 11:56:17 UTC <byorgey> oh?  I'll take a look.  I am not familiar with Wrapped.
+2013-10-22 11:56:46 UTC <Martingale> byorgey: mgsloan uses it extensively in Lens/contrib
+2013-10-22 11:57:42 UTC <mgsloan> Wrapped should only be used for newtype-ey things, or things that are really only reasonably isomorphic to one thing
+2013-10-22 11:58:10 UTC <mgsloan> It's the lens version of "Control.Newtype"
+2013-10-22 11:59:09 UTC <mr-> Hence the name? Because you are only allowed to use it on things that are wrapped in something?
+2013-10-22 11:59:31 UTC <byorgey> Martingale: OK, I looked at the documentation and I think I understand it.  How do you think it would help with our naming problem?
+2013-10-22 12:00:34 UTC <byorgey> oh, you're saying instead of making an explicit Iso for getArcLength (for which we have to choose a name), just make it an instance of Wrapped?
+2013-10-22 12:00:50 UTC <notdan> mgsloan: is there  reason to choose Wrapped over Iso?
+2013-10-22 12:00:51 UTC <Martingale> byorgey yes
+2013-10-22 12:00:57 UTC <byorgey> aha, I see
+2013-10-22 12:01:16 UTC <byorgey> hmm, yes, that sounds like a good idea
+2013-10-22 12:01:38 UTC <byorgey> we can do that for a bunch of things --- Query, QDiagram, Envelope, Trace, ...
+2013-10-22 12:01:46 UTC <Martingale> byorgey exactly
+2013-10-22 12:01:47 UTC <byorgey> then we don't have to worry about renming those field labels
+2013-10-22 12:01:54 UTC <Martingale> by bingo
+2013-10-22 12:01:56 UTC <byorgey> I like it!
+2013-10-22 12:01:59 UTC <Martingale> byorgey bingo
+2013-10-22 12:02:19 UTC <Martingale> by I have some free time this afternoon, I'll test it out
+2013-10-22 12:02:35 UTC <Martingale> byorgey sorry, trying a new irc client. 
+2013-10-22 12:03:16 UTC <byorgey> hehe, no worries
+2013-10-22 12:04:04 UTC <Martingale> byorgey I'm have to head out now, maybe you should let bergey know to save him the trouble of renaming in -core.
+2013-10-22 12:04:23 UTC <byorgey> bergey`: see above
+2013-10-22 12:04:55 UTC <mgsloan> mr-: Yup!
+2013-10-22 12:05:08 UTC <mgsloan> byorgey: Yup!
+2013-10-22 12:05:15 UTC <mgsloan> notdan: Wrapped is an Iso!
+2013-10-22 12:05:50 UTC <mgsloan> notdan: Just you don't have a special name for it
+2013-10-22 12:06:13 UTC <luite> hm
+2013-10-22 12:06:29 UTC <mgsloan> notdan: Wrapped has the advantage that all of the functions in Control.Lens.Wrapped are available
+2013-10-22 12:06:53 UTC <mgsloan> it has the disadvantage that it can make your code harder to read because the wrapped instance is implicit
+2013-10-22 12:07:00 UTC <byorgey> OK, I made a note on the lens clean-up Trello card, so bergey` will see thatI hope
+2013-10-22 12:07:37 UTC <mgsloan> However, the "wrapping" utility can make your code easier to read, because it lets you use the constructor to constrain which wrapped instance you're talking about
+2013-10-22 12:07:52 UTC <notdan> aha, I see
+2013-10-22 12:08:10 UTC <mgsloan> The alternative to wrapped is a style where you prefix your iso with a "_", like "_Const"
+2013-10-22 12:10:54 UTC <mgsloan> I kinda caused Wrapped to exist.  I think it's mostly a good idea, but there are some tradeoffs with the "_Blah" style
+2013-10-22 12:11:44 UTC <luite> bluh i don't feel like fixing the integer-gmp build on windows
+2013-10-22 12:15:24 UTC <notdan> luite: I think that's understandable :)
+2013-10-22 12:17:22 UTC <luite> you want to do it? :p
+2013-10-22 12:18:04 UTC <notdan> nah I wouldn't want to rob you of the pleasure of developing something on windows
+2013-10-22 12:18:32 UTC <luite> it took me quite a bit of time to even 'activate' the virtual machine that i downloaded from ms
+2013-10-22 12:19:07 UTC <luite> it was expired and rebooted every hour, at first slmgr /rearm (as administrator) didn't work, but after a few reboots it's now activated for 90 days
+2013-10-22 12:19:15 UTC <notdan> yesterday for our database class we were given a task to play with hadoop. we ended up spending all the seminar setting up hadoop, cygwin and java on windows, didn't even get to start a cluster :P
+2013-10-22 12:19:16 UTC <bergey`> Catching up now, yes, using wrapped makes sense to me.
+2013-10-22 12:19:44 UTC <luite> annoyingly they don't offer a properly licensed/activated windows 8 enterprise vm
+2013-10-22 12:20:06 UTC <notdan> were you building ghcjs on windows?
+2013-10-22 12:20:20 UTC <luite> yeah
+2013-10-22 12:20:28 UTC <luite> on the ie10 test vm
+2013-10-22 12:20:32 UTC <luite> windows 8.0
+2013-10-22 12:20:41 UTC <luite> (apparently the windows 8.1 update is not available for that)
+2013-10-22 13:46:21 UTC <cinimod> I have a quantity which I wish to plot on a map
+2013-10-22 13:46:34 UTC <cinimod> I am representing the position as a green circle
+2013-10-22 13:46:50 UTC <cinimod> I'd like the darkness of the green to represent the quantity
+2013-10-22 13:47:03 UTC <cinimod> My quantity is between 0 and 1
+2013-10-22 13:47:36 UTC <cinimod> How do I create colours of varying darknesses?
+2013-10-22 13:48:52 UTC <bergey`> cinimod: take a look at Data.Colour.blend
+2013-10-22 13:48:54 UTC <bergey`> http://hackage.haskell.org/package/colour-2.3.3/docs/Data-Colour.html#v:blend
+2013-10-22 13:49:31 UTC <cinimod> bergey`: that will do nicely
+2013-10-22 13:49:59 UTC <cinimod> I should have a good diagram for gallery "real soon now"
+2013-10-22 13:52:45 UTC <cinimod> Hmmm do I blend green and white?
+2013-10-22 13:53:03 UTC <cinimod> I.e. is blend 0.5 green white a light green?
+2013-10-22 14:12:33 UTC <byorgey> cinimod: yes
+2013-10-22 14:12:43 UTC <byorgey> cinimod: or you can blend green and black to get a darker green
+2013-10-22 16:25:13 UTC <notdan>  /w 28
+2013-10-22 16:25:17 UTC <notdan> Sorry
+2013-10-22 16:27:03 UTC <travis-ci> [travis-ci] 13diagrams-core/06lens 140be3cdd http://travis-ci.org/diagrams/diagrams-core/builds/12888341 The build was broken.
+2013-10-22 16:28:05 UTC <byorgey> that's a lot of /w's
+2013-10-22 16:30:50 UTC <bergey`> byorgey: What's the plan for things like appTrace?
+2013-10-22 16:31:01 UTC <bergey`> Shall we keep _appTrace, or rename it?
+2013-10-22 16:31:17 UTC <bergey`> Shall we export a lens (iso) called appTrace, or just the Wrapped instance?
+2013-10-22 16:32:17 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06lens 14193f298 http://travis-ci.org/diagrams/diagrams-contrib/builds/12888404 The build has errored.
+2013-10-22 16:32:58 UTC <byorgey> bergey`: my idea was to rename the field back to appTrace, and define a Wrapped instance
+2013-10-22 16:33:21 UTC <notdan> I quick question on style. I am writing a backend and I need to store a boolean (whether or not I should ignore filling). I have my Render monad (justlike in -svg) which is used for emitting code and stuff. I can modify it so it stores the information on whether or not it is necessary to fill the diagram, but it feels kinda quirky. Should I store it in the data family Render Backend R2?
+2013-10-22 16:33:37 UTC <bergey`> And not use makeLenses.  Sounds good, thanks.
+2013-10-22 16:33:43 UTC <notdan> The only place where I am setting this value to true, btw, is when I am rendering lines (as opposed to loops)
+2013-10-22 16:34:40 UTC <byorgey> notdan: I don't think it will work to store it in Render Backend R2
+2013-10-22 16:34:57 UTC <byorgey> because those have to be combined according to a monoid
+2013-10-22 16:35:19 UTC <byorgey> if you have a True and a False, how do you combine them?
+2013-10-22 16:35:42 UTC <byorgey> notdan: why do you think it is quirky to store the boolean in your render monad?
+2013-10-22 16:35:50 UTC <notdan> Oh, right. 
+2013-10-22 16:35:56 UTC <byorgey> notdan: just use  StateT Bool MyRenderMonad
+2013-10-22 16:36:16 UTC <notdan> Yeah, that's what I am going to do
+2013-10-22 16:36:19 UTC <byorgey> ok.
+2013-10-22 16:36:42 UTC <notdan> It just feels werid because to store it in the base render monad because I will never use it in the same module
+2013-10-22 16:37:58 UTC <byorgey> bergey`: did my comment on Trello (re: Wrapped instance for SubMap) make sense?
+2013-10-22 16:38:06 UTC <byorgey> It's possible I haven't fully understood the problem.
+2013-10-22 16:38:52 UTC <bergey`> I haven't tested it yet, but what you say makes sense, and I expect it will work.
+2013-10-22 16:38:56 UTC <bergey`> Thank you.
+2013-10-22 16:39:00 UTC <byorgey> ok. sure.
+2013-10-22 16:44:22 UTC <travis-ci> [travis-ci] 13diagrams-core/06lens 142f3a81b http://travis-ci.org/diagrams/diagrams-core/builds/12888973 The build was fixed.
+2013-10-22 17:13:06 UTC <notdan> Hm, so you guys are not deprecating '#' in favour of '&'?
+2013-10-22 17:13:29 UTC <notdan> Lens also exports '#' and it's some prismatic type
+2013-10-22 17:14:58 UTC <byorgey> no, they are entirely different
+2013-10-22 17:15:04 UTC <byorgey> # is infixl 8 and & is infixl 1
+2013-10-22 17:15:59 UTC <notdan> Oh, I see
+2013-10-22 17:18:52 UTC <byorgey> though I am no longer sure how important the distinction is.  It's important if you use lots of ||| and === and <> and so on
+2013-10-22 17:19:15 UTC <byorgey> but my own personal style tends much more to using 'hcat', 'vcat', and 'mconcat' these days (even for two-element lists).
+2013-10-22 17:19:30 UTC <byorgey> in which case it doesn't matter too much what the fixity of # is.
+2013-10-22 17:20:02 UTC <byorgey> to be concrete: in   foo # bar ||| baz # quux  it is important that # has a high precedence
+2013-10-22 17:20:16 UTC <byorgey> but in  hcat [ foo # bar, baz # quux ]  it doesn't
+2013-10-22 17:56:26 UTC <Martingale> bergey` and export appTrace ?
+2013-10-22 17:57:50 UTC <travis-ci> [travis-ci] 13diagrams-lib/06lens 14d407ff1 http://travis-ci.org/diagrams/diagrams-lib/builds/12891793 The build passed.
+2013-10-22 17:58:21 UTC <bergey`> Yes, export appTrace
+2013-10-22 18:09:00 UTC <notdan> I am curious to know how should opacity work with alpha-channels in lineColor and fillColor attributes
+2013-10-22 18:09:25 UTC <notdan> eg, if I have set up an opacity of 0.4, should it "override" the opacity of fill and line colours?
+2013-10-22 18:14:20 UTC <Martingale> notdan right now i believe we multiply them
+2013-10-22 18:15:44 UTC <Martingale> notdan I think i misunderstood your question, nevermind
+2013-10-22 18:39:41 UTC <byorgey> notdan: no, the opacity should not override the alpha channels of fill and line colors
+2013-10-22 18:40:35 UTC <byorgey> notdan: I think right now we just depend on whatever the default behavior of backends is when you apply an opacity.  I suspect it is multiplicative.
+2013-10-22 18:40:49 UTC <byorgey> though it's possible there's some weird non-linear stuff going on, I don't know for sure.
+2013-10-22 18:55:44 UTC <notdan> OK, I'll implement multiplicative opacity yhen
+2013-10-22 19:41:09 UTC <notdan> http://me.hskll.org/stuff/tmp/diagrams-tikz/alpha.pdf I suspect this looks alright
+2013-10-22 19:44:36 UTC <byorgey> notdan: those look significantly lighter than the examples in the backend test suite.
+2013-10-22 19:45:17 UTC <byorgey> but that could be happening at many different levels.  Dealing with color & transparency properly is Hard (tm).
+2013-10-22 19:54:39 UTC <notdan> byorgey: well, the colors look similar to me when I look at them side-to-side: http://me.hskll.org/stuff/tmp/diagrams-tikz/tikz-index.html
+2013-10-22 19:54:55 UTC <notdan> there is, however, a problem with artifacts on lines
+2013-10-22 19:55:09 UTC <notdan> I think that is caused by imagemagic, since there are no artifacts in the .pdf
+2013-10-22 20:12:22 UTC <notdan> Ok, will try to figure somethin tomorrow, gotta catch some sleep
+2013-10-22 20:35:02 UTC <byorgey> yes, looks fine to me
+2013-10-22 20:35:05 UTC <byorgey> sleep well!
+2013-10-22 21:23:52 UTC <fryguybob> ACTION tries to build irssi...
+2013-10-22 21:36:11 UTC <byorgey> whee
+2013-10-22 21:36:53 UTC <fryguybob> Our systems got redone so they are now in glorious 64-bit!
+2013-10-22 21:37:28 UTC <fryguybob> ACTION was happy with smaller pointers.
+2013-10-22 21:37:58 UTC <byorgey> http://www.cis.upenn.edu/~byorgey/hosted/trees-by-size.pdf
+2013-10-22 21:42:09 UTC <fryguybob> byorgey: Nice
+2013-10-22 21:42:32 UTC <byorgey> that will be on the slides for my talk
+2013-10-22 21:43:19 UTC <byorgey> wasted too much time reading about heuristics for 2D bin packing =(
+2013-10-22 21:43:27 UTC <byorgey> a simple greedy algorithm looks just fine.
+2013-10-22 21:43:59 UTC <fryguybob> hehe
+2013-10-22 22:05:58 UTC <fryguybo1> success!
+2013-10-22 22:17:10 UTC <byorgey> =D
+2013-10-22 22:18:00 UTC <fryguybob> Now to build a modern GHC...
+2013-10-22 23:48:34 UTC <cscheid> is there a reason there's no 'instance Alignable a => Alignable (b -> a)' ?
+2013-10-22 23:49:09 UTC <cscheid> I ask because I can lift functions a -> Diagram to be monoids
+2013-10-22 23:49:20 UTC <cscheid> so (f <> g) does the right thing and that's awesome
+2013-10-22 23:49:26 UTC <cscheid> but (f <> g) # centerY doesn't
+2013-10-22 23:49:33 UTC <cscheid> or at least it seems not to
+2013-10-22 23:49:49 UTC <cscheid> very possible I'm doing something stupid
+2013-10-22 23:49:59 UTC <cscheid> the instance seems to be
+2013-10-22 23:50:07 UTC <cscheid> instance Alignable a => Alignable (b -> a) where
+2013-10-22 23:50:18 UTC <cscheid>   alignBy v d f b = alignBy v d (f b)
+2013-10-23 00:05:16 UTC <cscheid> so it seems the above works, and you can also do
+2013-10-23 00:05:23 UTC <cscheid> instance Juxtaposable a => Juxtaposable (b -> a) where
+2013-10-23 00:05:54 UTC <cscheid>   juxtapose v f1 f2 b = juxtapose v (f1 b) (f2 b)
+2013-10-23 00:06:15 UTC <cscheid> which then lets you do (f ||| g) in addition to (f <> g)
+2013-10-23 00:20:02 UTC <cscheid> and, incidentally, is there a similar trick that would make '(f ||| g) # pad k' work?
+2013-10-23 01:43:56 UTC <carter> cscheid: you still on?
+2013-10-23 02:05:36 UTC <travis-ci> [travis-ci] 13diagrams-core/06lens 140728228 http://travis-ci.org/diagrams/diagrams-core/builds/12911659 The build passed.
+2013-10-23 02:43:32 UTC <travis-ci> [travis-ci] 13diagrams-lib/06lens 14a3067e1 http://travis-ci.org/diagrams/diagrams-lib/builds/12912539 The build passed.
+2013-10-23 03:13:18 UTC <travis-ci> [travis-ci] 13diagrams-lib/06lens 141533b6f http://travis-ci.org/diagrams/diagrams-lib/builds/12913254 The build passed.
+2013-10-23 03:13:57 UTC <carter> Martingale: is HEAD lensy?
+2013-10-23 03:15:51 UTC <travis-ci> [travis-ci] 13diagrams-cairo/06lens 14e195d55 http://travis-ci.org/diagrams/diagrams-cairo/builds/12913311 The build passed.
+2013-10-23 03:17:20 UTC <Martingale> carter not yet
+2013-10-23 03:17:39 UTC <carter> ok
+2013-10-23 03:17:51 UTC <carter> how stable is the lensy branch?
+2013-10-23 03:18:21 UTC <Martingale> carter it should be pretty good. I just built the docs with it as a test and ran fine
+2013-10-23 03:18:26 UTC <carter> ok
+2013-10-23 03:18:35 UTC <carter> may go lens mad this weekend or next
+2013-10-23 03:19:11 UTC <Martingale> carter it's very elegant, there is still a lot I don't grok yet.
+2013-10-23 03:20:05 UTC <Martingale> carter I'm going to rewatch Edwards NY haskell group talk at some point.
+2013-10-23 03:20:11 UTC <carter> i should tooo.....
+2013-10-23 03:20:26 UTC <cscheid> carter, here now.
+2013-10-23 03:20:35 UTC <carter> cscheid: you should ask Martingale  your question
+2013-10-23 03:20:37 UTC <travis-ci> [travis-ci] 13diagrams-postscript/06lens 14a1c8c43 http://travis-ci.org/diagrams/diagrams-postscript/builds/12913324 The build passed.
+2013-10-23 03:20:46 UTC <carter> realizing that lens could let me outsource having a good data query dsl to edwardk :)
+2013-10-23 03:21:36 UTC <cscheid> Martingale, is there a reason there's no "instance Alignable a => Alignable b -> a"?
+2013-10-23 03:22:26 UTC <cscheid> having one lets me, eg, center lifted (a -> Diagram) monoid instances
+2013-10-23 03:22:28 UTC <carter> i can't parts that
+2013-10-23 03:22:32 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06lens 14a941466 http://travis-ci.org/diagrams/diagrams-contrib/builds/12913360 The build passed.
+2013-10-23 03:22:41 UTC <carter> do you mean Alignable (b->a)?
+2013-10-23 03:22:43 UTC <cscheid> instance Alignable a => Alignable (b -> a)
+2013-10-23 03:23:05 UTC <cscheid>   alignBy v d f b = alignBy v d (f b)
+2013-10-23 03:23:49 UTC <cscheid> then if you have f, g :: a -> Diagram, ((f <> g) # centerY) works as expected
+2013-10-23 03:24:01 UTC <cscheid> same goes for juxtaposable and (|||) and (===)
+2013-10-23 03:24:10 UTC <cscheid> instance Juxtaposable a => Juxtaposable (b -> a)
+2013-10-23 03:24:22 UTC <cscheid>   juxtapose v f1 f2 b = juxtapose v (f1 b) (f2 b)
+2013-10-23 03:24:26 UTC <carter> huh
+2013-10-23 03:24:27 UTC <carter> no clue
+2013-10-23 03:24:33 UTC <carter> Martingale: byorgey  ?
+2013-10-23 03:24:59 UTC <cscheid> f <> g works because of instance Monoid a => Monoid (b -> a)
+2013-10-23 03:25:09 UTC <cscheid> or maybe semigroup?
+2013-10-23 03:25:29 UTC <Martingale> cscheid I don't see a good reason we don't have one. Alignable was added to allow boundary functions other than envelope.
+2013-10-23 03:25:53 UTC <cscheid> but the idea is that the (b->) trick is ubiquitous and super-handy for building abstractions
+2013-10-23 03:26:06 UTC <carter> cscheid: pull request!
+2013-10-23 03:26:07 UTC <carter> :)
+2013-10-23 03:26:29 UTC <Martingale> cscheid What happens if you do:  f, g :: a -> Diagram, ((f <> g) # centerY) now?
+2013-10-23 03:26:38 UTC <cscheid> it fails to typecheck
+2013-10-23 03:26:47 UTC <cscheid> let me give you the error in 1 sec
+2013-10-23 03:29:29 UTC <cscheid> in the simple example it typechecks, but gets a goofy type:
+2013-10-23 03:29:40 UTC <cscheid> t x = square x 
+2013-10-23 03:29:45 UTC <cscheid> test = (t <> t) # centerY
+2013-10-23 03:30:00 UTC <cscheid> :t test
+2013-10-23 03:30:00 UTC <cscheid> test
+2013-10-23 03:30:00 UTC <cscheid>   :: (TrailLike t, Transformable t, Semigroup t,
+2013-10-23 03:30:00 UTC <cscheid>       Alignable (Double -> t), V t ~ R2) =>
+2013-10-23 03:30:01 UTC <lambdabot>     Not in scope: `test'
+2013-10-23 03:30:01 UTC <lambdabot>     Perhaps you meant one of these:
+2013-10-23 03:30:01 UTC <lambdabot>       `nest' (imported from Text.PrettyPrint.HughesPJ),
+2013-10-23 03:30:04 UTC <cscheid>      Double -> t
+2013-10-23 03:30:10 UTC <cscheid> sorry lambdabot
+2013-10-23 03:31:01 UTC <cscheid> hmm wait, this seems ok. I swear the full example didn't typecheck without the instance above. Give me some more time
+2013-10-23 03:31:13 UTC <Martingale> OK
+2013-10-23 03:33:57 UTC <Martingale> cscheid Actually, what i said is wrong, Alignable was always there, I just modified it when adding alignBy'
+2013-10-23 03:34:53 UTC <Martingale> cscheid so i just kept the existing instances. I never new about the (b->) trick
+2013-10-23 03:35:48 UTC <cscheid> it is really nice for getting abstractions for free
+2013-10-23 03:36:21 UTC <carter> what is?
+2013-10-23 03:39:00 UTC <cscheid> the (b->) trick for getting functions that spit concatenated monoid values
+2013-10-23 03:39:24 UTC <cscheid> generally, instance m a => instance m (b->a)
+2013-10-23 03:39:49 UTC <cscheid> there's often only one way of doing it
+2013-10-23 03:40:51 UTC <carter> whats the usual instance for the monoid?
+2013-10-23 03:40:56 UTC <carter> humor me
+2013-10-23 03:40:58 UTC <carter> (long day)
+2013-10-23 03:41:17 UTC <cscheid> (f <> g) x = f x <> g x
+2013-10-23 03:41:19 UTC <carter> ok
+2013-10-23 03:41:22 UTC <carter> good answer
+2013-10-23 03:41:30 UTC <Martingale> yes long day for me too, i think i'm going to hit the sack.
+2013-10-23 03:42:20 UTC <cscheid> I'll come back some other day with the full story, Martingale. my bad that i can't get a minimal example that doesn't typecheck
+2013-10-23 03:43:12 UTC <Martingale> cscheid OK, I look forward to it. In the meantime I'll try to understand what you have said so far.
+2013-10-23 03:43:16 UTC <Martingale> ACTION bed
+2013-10-23 04:00:10 UTC <cscheid> ah, ok, got it
+2013-10-23 04:00:12 UTC <cscheid> ha
+2013-10-23 04:00:35 UTC <cscheid> t :: Integer -> (Diagram SVG R2)
+2013-10-23 04:00:39 UTC <cscheid> t = undefined
+2013-10-23 04:00:54 UTC <cscheid> test = (t <> t) # centerY
+2013-10-23 04:01:07 UTC <cscheid>     No instance for (Alignable (Integer -> Diagram SVG R2))
+2013-10-23 04:01:08 UTC <cscheid>       arising from a use of `centerY'
+2013-10-23 04:01:08 UTC <cscheid>     Possible fix:
+2013-10-23 04:01:08 UTC <cscheid>       add an instance declaration for
+2013-10-23 04:01:13 UTC <cscheid>       (Alignable (Integer -> Diagram SVG R2))
+2013-10-23 04:02:45 UTC <cscheid> :t (t <> t)
+2013-10-23 04:02:46 UTC <lambdabot> Expr
+2013-10-23 04:02:47 UTC <cscheid> (t <> t) :: Integer -> Diagram SVG R2
+2013-10-23 04:03:16 UTC <cscheid> so (<>) works, but (# centerY) doesn't
+2013-10-23 04:03:21 UTC <cscheid> that seems like a shame
+2013-10-23 06:10:24 UTC <carter> notdan: i'm terrible at it
+2013-10-23 06:19:39 UTC <notdan> at what? :)
+2013-10-23 06:21:03 UTC <carter> reading things to completion
+2013-10-23 06:21:09 UTC <carter> at least in the past year or so
+2013-10-23 06:21:19 UTC <carter> i swear i was better at some point in the pst
+2013-10-23 06:21:24 UTC <carter> but its all hearse
+2013-10-23 06:21:24 UTC <notdan> oh
+2013-10-23 06:21:26 UTC <carter> *heresay
+2013-10-23 06:21:44 UTC <carter> (replying to you adn remark in a way that doesn't make my cell phone vibrate)
+2013-10-23 06:21:57 UTC <notdan> :]
+2013-10-23 06:32:30 UTC <ClaudiusMaximus> centerXY . (t <> t)
+2013-10-23 06:33:13 UTC <ClaudiusMaximus> (#) = flip ($)   afaik
+2013-10-23 06:33:29 UTC <ClaudiusMaximus> so maybe there should be a
+2013-10-23 06:33:37 UTC <ClaudiusMaximus> (##) = flip (.)
+2013-10-23 06:35:13 UTC <ClaudiusMaximus> actually (>>>) seems to exist already in Control.Category
+2013-10-23 07:38:04 UTC <notdan> http://paste.hskll.org/get/206 is there a better way to write this?
+2013-10-23 10:50:33 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06master 14d877921 http://travis-ci.org/diagrams/diagrams-contrib/builds/12924993 The build passed.
+2013-10-23 10:59:48 UTC <byorgey> cscheid: good idea, we should definitely add  Alignable (b -> a)  and  Juxtaposable (b -> a)  instances
+2013-10-23 10:59:54 UTC <byorgey> cscheid: their absence was just an oversight
+2013-10-23 11:00:47 UTC <byorgey> notdan: nope, not yet
+2013-10-23 11:01:03 UTC <byorgey> notdan: ultimately I hope to have operations like intersection, union, etc. on paths
+2013-10-23 11:02:45 UTC <byorgey> cscheid: would you like to make a pull request?
+2013-10-23 11:18:21 UTC <notdan> byorgey: thx, while you are at it, is there a reason not to export HasBasis?
+2013-10-23 11:18:41 UTC <notdan> I am trying to write something like 'instance (HasBasis r) => Backend TikZ r where ..'
+2013-10-23 11:19:01 UTC <byorgey> notdan: HasBasis is from vector-space
+2013-10-23 11:19:25 UTC <notdan> o, duh
+2013-10-23 11:19:27 UTC <notdan> thanks
+2013-10-23 11:19:29 UTC <byorgey> you can get it by importing  Data.Basis
+2013-10-23 11:19:31 UTC <byorgey> sure =)
+2013-10-23 11:20:06 UTC <byorgey> HasBasis r => Backend TikZ r  sounds slightly too general
+2013-10-23 11:20:14 UTC <byorgey> can TikZ really handle (say) 5-dimensional diagrams?
+2013-10-23 11:21:49 UTC <notdan> Not really
+2013-10-23 11:22:08 UTC <notdan> but I thought it might be nice to use the same datatypes for 3D and 2D
+2013-10-23 11:23:44 UTC <travis-ci> [travis-ci] 13diagrams-builder/06master 145608b4a http://travis-ci.org/diagrams/diagrams-builder/builds/12925987 The build has errored.
+2013-10-23 12:29:19 UTC <cscheid> byorgey: I'll make a pull request. It'll just take a while, I need to get to and compile the dev version of diagrams
+2013-10-23 12:29:45 UTC <cscheid> first time haskelling since 2002, so i'm still catching up on the dev. env.
+2013-10-23 12:35:34 UTC <cscheid> incidentally, do you see how to make a similar trick work for (# pad k) ? pad's type is more complicated
+2013-10-23 13:14:26 UTC <byorgey> cscheid: not without generalizing pad somehow.  The type currently is (a bunch of constraints ...) => Scalar v -> QDiagram -> QDiagram
+2013-10-23 13:14:37 UTC <byorgey> a function is definitely not a QDiagram
+2013-10-23 13:15:43 UTC <byorgey> looking at the code, the reason seems to be that pad needs to *set* the envelope
+2013-10-23 13:16:27 UTC <byorgey> so while we have a class Enveloped for things which you can *get* an envelope for, we have no class for things whose envelope you can *set*
+2013-10-23 13:16:46 UTC <byorgey> but we could certainly add such a class, generalize the type of pad, and make an instance for QDiagram and for functions
+2013-10-23 13:17:13 UTC <travis-ci> [travis-ci] 13diagrams-core/06master 14656af78 http://travis-ci.org/diagrams/diagrams-core/builds/12930220 The build passed.
+2013-10-23 13:17:31 UTC <cscheid> travis-ci, whew :)
+2013-10-23 13:18:08 UTC <cscheid> it's just really convenient to have b->a instances throughout
+2013-10-23 13:18:23 UTC <cscheid> so a lot of the EDSL just pushes through
+2013-10-23 13:18:30 UTC <byorgey> I totally agree!
+2013-10-23 13:19:58 UTC <cscheid> and is it worth it for me to try and hack a bunch on the master branch, given the lens plans?
+2013-10-23 13:20:24 UTC <byorgey> oh, right, I knew I was forgetting something
+2013-10-23 13:20:31 UTC <byorgey> yes, hack away on the master branch, and don't worry about lens
+2013-10-23 13:20:36 UTC <cscheid> ok
+2013-10-23 13:20:36 UTC <byorgey> it is going to get merged soon
+2013-10-23 13:20:58 UTC <byorgey> and if there are any conflicts we'll figure them out, it's not your problem
+2013-10-23 13:20:58 UTC <cscheid> (off to rm -rf .hsenv once more :p)
+2013-10-23 13:21:02 UTC <byorgey> that's what git is for =)
+2013-10-23 13:21:25 UTC <cscheid> well I don't want to cause more trouble if it can be avoided, but thanks.
+2013-10-23 13:21:39 UTC <byorgey> sure, appreciated =)
+2013-10-23 13:22:25 UTC <byorgey> cscheid: did my comments above re: generalizing pad make sense?
+2013-10-23 13:22:55 UTC <cscheid> yeah, they did. my haskell is rusty enough that I won't try it right away
+2013-10-23 13:23:13 UTC <byorgey> ok, no worries.
+2013-10-23 13:24:37 UTC <byorgey> made a card for it in trello: https://trello.com/c/ZLlhAjFo
+2013-10-23 13:28:53 UTC <cscheid> ACTION daydreams about an EC2 equivalent of distcc for the haskell ecosystem
+2013-10-23 13:29:13 UTC <byorgey> sounds nice =)
+2013-10-23 13:29:31 UTC <cscheid> a man can dream
+2013-10-23 13:29:33 UTC <byorgey> we're definitely heading in that direction, with new support for parallel builds by both cabal and ghc
+2013-10-23 13:30:03 UTC <byorgey> and there's been some cool work on distributed computation in Haskell
+2013-10-23 13:30:16 UTC <byorgey> someone just needs to put the pieces together =)
+2013-10-23 13:48:17 UTC <travis-ci> [travis-ci] 13diagrams-core/06lens 14b0e9f1f http://travis-ci.org/diagrams/diagrams-core/builds/12931479 The build passed.
+2013-10-23 15:04:39 UTC <cscheid> byorgey, the instance of Alignable I can make is not very satisfying:
+2013-10-23 15:04:43 UTC <cscheid> instance (HasOrigin a, Alignable a) => Alignable (b -> a) where
+2013-10-23 15:04:43 UTC <cscheid>   alignBy v d f b = alignBy v d (f b)
+2013-10-23 15:05:06 UTC <cscheid> the main issue is
+2013-10-23 15:05:06 UTC <cscheid> src/Diagrams/Align.hs:119:10: Warning:
+2013-10-23 15:05:07 UTC <cscheid>     No explicit method or default declaration for `defaultBoundary'
+2013-10-23 15:05:08 UTC <cscheid>     In the instance declaration for `Alignable (b -> a)'
+2013-10-23 15:05:39 UTC <cscheid> because all Alignable instances seem to be defined through defaultBoundary
+2013-10-23 15:07:27 UTC <cscheid> and I couldn't make a good defaultBoundary method because of the V (b -> a) things, etc that I think pop up
+2013-10-23 15:07:51 UTC <cscheid> I'll make the PR, but I think this will take some massaging
+2013-10-23 15:08:41 UTC <cscheid> src/Diagrams/Align.hs:119:10: Warning:
+2013-10-23 15:08:41 UTC <cscheid>     No explicit method or default declaration for `defaultBoundary'
+2013-10-23 15:08:51 UTC <cscheid> ugh, sorryy
+2013-10-23 15:50:09 UTC <travis-ci> [travis-ci] 13diagrams-lib/06lens 14eefb797 http://travis-ci.org/diagrams/diagrams-lib/builds/12937712 The build passed.
+2013-10-23 16:57:10 UTC <byorgey> cscheid: yeah, it won't do to have a missing method
+2013-10-23 16:57:24 UTC <byorgey> cscheid: I'll have to think about it more carefully, I forget how Alignable is supposed to work
+2013-10-23 17:02:53 UTC <fryguybob> Humm, do we support any infinite diagrams right now?  For instance, build an infinite grid then clip to the size you care about?
+2013-10-23 17:08:41 UTC <mr-> If not, you should!
+2013-10-23 17:09:49 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 14d09585d http://travis-ci.org/diagrams/diagrams-lib/builds/12941671 The build passed.
+2013-10-23 17:16:36 UTC <byorgey> no, but we should!
+2013-10-23 17:21:25 UTC <mr-> lazy diagrams ftw
+2013-10-23 17:22:29 UTC <byorgey> though note we used to support infinite paths and now we don't anymore =(
+2013-10-23 17:28:18 UTC <fryguybob> byorgey: I was just wondering relative to the strict envelope.
+2013-10-23 17:32:35 UTC <byorgey> sure, but I don't think we want to sacrifice performance in the common (finite) case to support infinite diagrams
+2013-10-23 17:32:47 UTC <byorgey> and anyway, I think we would have to add special support for infinite diagrams
+2013-10-23 17:35:32 UTC <fryguybob> byorgey: As a systems person, I'm legally obliged to care about performance ;D.  I just wanted to confirm that this isn't taking away something we already have.
+2013-10-23 17:40:00 UTC <byorgey> =) fair enough.
+2013-10-23 17:41:47 UTC <fryguybob> A nice use case (by the way) would be for using diagrams as textures to fill some loop.
+2013-10-23 17:42:07 UTC <byorgey> indeed.
+2013-10-23 17:42:25 UTC <cinimod> I am using BlogLiteratelyD and I am creating a diagram in the IO monad since it depends on the data in a file
+2013-10-23 17:43:05 UTC <cinimod> So I think I have to do unsafePerformIO
+2013-10-23 17:44:29 UTC <cinimod> Hmmm now I get Couldn't match type `Diagrams.Backend.SVG.SVG' `Diagrams.Backend.Cairo.Internal.Cairo'
+2013-10-23 17:44:47 UTC <cinimod> Does that mean BlogLiteratelyD only understands Cairo and not SVG?
+2013-10-23 17:44:48 UTC <byorgey> cinimod: urgh, yes, BlogLiteratelyD ought to support IO
+2013-10-23 17:45:23 UTC <byorgey> cinimod: unfortunately, yes, I think BlogLiteratelyD is tied to cairo
+2013-10-23 17:45:35 UTC <byorgey> cinimod: though as far as I know there is no good reason it has to be.
+2013-10-23 17:45:45 UTC <byorgey> I think at the time I wrote it, cairo was the only backend.
+2013-10-23 17:45:55 UTC <cinimod> byorgey: Ok if I get time I might take a look
+2013-10-23 17:46:45 UTC <cinimod> byorgey: Out of interest do you know how many people use BlogLiteratelyD?
+2013-10-23 17:47:49 UTC <byorgey> cinimod: No, I don't know. More than two, less than 100.
+2013-10-23 17:48:51 UTC <cinimod> byorgey: I don't know how people blog without it
+2013-10-23 17:48:59 UTC <byorgey> hehe
+2013-10-23 17:49:46 UTC <cinimod> Well I do because I used to do it - it was a lot of repetitive work
+2013-10-23 17:51:08 UTC <byorgey> yup, me too
+2013-10-23 17:52:49 UTC <byorgey> cinimod: https://github.com/byorgey/BlogLiterately-diagrams/issues/1
+2013-10-23 17:53:14 UTC <cinimod> byorgey: :-)
+2013-10-23 17:53:36 UTC <byorgey> https://github.com/byorgey/BlogLiterately-diagrams/issues/2
+2013-10-23 17:53:39 UTC <byorgey> =)
+2013-10-23 17:53:49 UTC <cinimod> lol
+2013-10-23 17:53:54 UTC <byorgey> can't promise I'll get to them anytime soon, but at least I won't forget!
+2013-10-23 17:54:23 UTC <cinimod> Well I ought to have a go at them since I want them
+2013-10-23 17:55:55 UTC <byorgey> sure, by all means!
+2013-10-23 17:57:53 UTC <cinimod> byorgey: how does BlogLiteratelyD call ghc? The program I am trying to blog has a spaceleak unless I use -O2 so I m 
+2013-10-23 17:58:09 UTC <cinimod> I am beginning to worry a bit
+2013-10-23 17:58:44 UTC <byorgey> cinimod: BlogLiteratelyD calls diagrams-builder, which writes the code to a temporary file and loads it via the GHC API
+2013-10-23 17:58:56 UTC <byorgey> cinimod: you can always put  {-# OPTIONS_GHC -O2 #-} at the top of the code
+2013-10-23 17:59:09 UTC <cinimod> Excellent - thank you
+2013-10-23 17:59:33 UTC <cinimod> Surprisingly I think it is ok inside BlogLiteratelyD
+2013-10-23 17:59:45 UTC <cinimod> I can see it has finished reading the 1.3G file
+2013-10-23 18:00:31 UTC <cinimod> Yes it just finished
+2013-10-23 18:01:56 UTC <byorgey> haha, wow
+2013-10-23 18:10:05 UTC <cinimod>  It turns out you can't use that pragma
+2013-10-23 18:10:08 UTC <cinimod> UnknownError: GHC returned a result but said: [GhcError {errMsg = "WardsOfLondon.lhs:38:18:\n    -O conflicts with --interactive; -O ignored."}]
+2013-10-23 18:10:08 UTC <cinimod>  
+2013-10-23 18:10:17 UTC <cinimod> Fortunately it doesn't matter
+2013-10-23 18:12:40 UTC <byorgey> hmm, interesting
+2013-10-23 18:12:46 UTC <byorgey> but OK, glad it doesn't matter =)
+2013-10-23 18:28:37 UTC <cinimod> Finally a map using Haskell and diagrams: http://idontgetoutmuch.files.wordpress.com/2013/10/ea96038188164ec3b2469ad88756b3a1.png?w=1280
+2013-10-23 18:29:11 UTC <cinimod> In case anyone is remotely interested that is the borough of Westminster
+2013-10-23 18:29:21 UTC <fryguybob> cinimod: Nice!
+2013-10-23 18:29:29 UTC <cinimod> You can see the river Thames, Hyde Park, Regent's Park
+2013-10-23 18:29:41 UTC <cinimod> Also Buckingham Palace and Green Park
+2013-10-23 18:29:50 UTC <cinimod> The green dots are parking lots
+2013-10-23 18:30:01 UTC <cinimod> The darkness represents how heavily utilised they are
+2013-10-23 18:30:09 UTC <cinimod> fryguybob: thanks
+2013-10-23 18:30:33 UTC <cinimod> Of course there is far more one can do but a thousand mile journey begins with one step
+2013-10-23 18:31:58 UTC <bergey> cinimod: very cool!
+2013-10-23 18:32:33 UTC <notdan> wow, that is pretty
+2013-10-23 18:32:35 UTC <notdan> and cool
+2013-10-23 18:35:02 UTC <luite> cinimod: finally? fryguybob had them before!
+2013-10-23 18:35:44 UTC <luite> or was that what you used to draw this?
+2013-10-23 18:36:02 UTC <cinimod> Oh apologies
+2013-10-23 18:36:07 UTC <cinimod> I meant finally for me
+2013-10-23 18:36:45 UTC <fryguybob> cinimod: No apologies needed :D.  I only made one map and it was ugly.
+2013-10-23 18:36:52 UTC <cinimod> fryguybob: can you post a link?
+2013-10-23 18:37:01 UTC <luite> hehe okay :) it is pretty though. was the performance okay for a drawing like this?
+2013-10-23 18:37:14 UTC <cinimod> Under a minute
+2013-10-23 18:37:21 UTC <luite> ouch
+2013-10-23 18:37:27 UTC <luite> not quite realtime eh
+2013-10-23 18:37:31 UTC <cinimod> More time is spent crunching the data
+2013-10-23 18:37:36 UTC <cinimod> :)
+2013-10-23 18:37:49 UTC <cinimod> No but there are a lot of roads in London
+2013-10-23 18:37:57 UTC <cinimod> There are about 1300 parking lots
+2013-10-23 18:38:08 UTC <cinimod> Oh that is in Westminster
+2013-10-23 18:38:15 UTC <cinimod> Of course there are far more in London
+2013-10-23 18:38:52 UTC <luite> hm are there many haskell shops in london btw?
+2013-10-23 18:39:12 UTC <cinimod> I think there are a few
+2013-10-23 18:39:30 UTC <cinimod> There's Barclays and I think I read about a start up
+2013-10-23 18:39:48 UTC <fryguybob> cinimod: I don't know where my map went.
+2013-10-23 18:39:54 UTC <cinimod> :-(
+2013-10-23 18:40:50 UTC <luite> oh i think i saw some startup post on -cafe or something
+2013-10-23 18:41:30 UTC <byorgey> cinimod: ooooh, nice =D
+2013-10-23 18:42:25 UTC <carter> cinimod: WOOOOOOOO
+2013-10-23 18:43:12 UTC <carter> byorgey: Martingale  is the lens branch looking stablish etc? 
+2013-10-23 18:43:13 UTC <fryguybob> cinimod: Where did your map data come from?
+2013-10-23 18:43:33 UTC <carter> (ie if i start using it, will i have code that is friends with the next major release?)
+2013-10-23 18:44:34 UTC <cinimod> fryguybob: If you look here http://idontgetoutmuch.wordpress.com/2013/10/23/parking-in-westminter-an-analysis-in-haskell/ I've listed my sources
+2013-10-23 18:44:51 UTC <cinimod> fryguybob: Sadly the parking data isn't publicly available
+2013-10-23 18:44:56 UTC <luite> are there some side by side examples somewhere? perhaps a commit that updates some docs/samples from the old version to lensified?
+2013-10-23 18:45:14 UTC <cinimod> fryguybob: But I will see if it can be made public
+2013-10-23 18:45:26 UTC <cinimod> fryguybob: after all it isn't secret
+2013-10-23 18:46:06 UTC <fryguybob> cinimod: Cool
+2013-10-23 18:46:39 UTC <bergey> carter: I think so
+2013-10-23 18:46:42 UTC <luite> does the data get updated often?
+2013-10-23 18:46:47 UTC <carter> bergey: ok cool
+2013-10-23 18:46:53 UTC <bergey> I think we're more likely to add some functions / lenses than take more out at this point.
+2013-10-23 18:47:04 UTC <carter> cinimod: lens is kinda the generalized pandas for haskell
+2013-10-23 18:47:13 UTC <carter> though it doesn't provide a query data table thingy
+2013-10-23 18:47:46 UTC <carter> i may hack on one sometime next year at the current rateâ¦ or never :)
+2013-10-23 18:49:06 UTC <luite> better focus on the things that really need to be done
+2013-10-23 18:49:57 UTC <carter> luite: i'm getting better
+2013-10-23 18:50:08 UTC <carter> also helps that now the OS X stuff is everyones problem :)
+2013-10-23 18:50:36 UTC <cinimod> carter: that's interesting
+2013-10-23 18:50:57 UTC <luite> carter: i'm waiting with the mavericks upgrade so others can fix this first :)
+2013-10-23 18:50:57 UTC <carter> cinimod: i'm embarrased that i only realized that in my head properly recently 
+2013-10-23 18:51:02 UTC <cinimod> carter: I am now motivated to look at lens
+2013-10-23 18:51:03 UTC <carter> luite: same here
+2013-10-23 18:51:07 UTC <carter> cinimod: i am too
+2013-10-23 18:51:34 UTC <carter> cinimod: it means i can outsource worrying about data query / munching DSLs to edwardk :)
+2013-10-23 18:51:39 UTC <carter> and all the contributors
+2013-10-23 18:52:01 UTC <cinimod> :)
+2013-10-23 18:52:55 UTC <travis-ci> [travis-ci] 13diagrams-cairo/06lens 14f51ddf2 http://travis-ci.org/diagrams/diagrams-cairo/builds/12946890 The build passed.
+2013-10-23 18:52:56 UTC <carter> and focus on other thigns 
+2013-10-23 18:52:57 UTC <carter> :)
+2013-10-23 18:53:06 UTC <luite> lens doesn't really feel like it's pandas? perhaps combined with analytics?
+2013-10-23 18:53:23 UTC <carter> luite: analytics doesn't have any public stuff reight now
+2013-10-23 18:53:32 UTC <carter> allegedly theres some private code kmett has
+2013-10-23 18:53:38 UTC <cinimod> fryguybob: I have asked the organiser of the hackathon if the data can be made available: http://www.meetup.com/Data-Science-London/events/141070122/
+2013-10-23 18:53:40 UTC <luite> ok, i haven't looked at analytics yet
+2013-10-23 18:54:03 UTC <carter> luite: right now that something that is going to dep on structures assuming structures moves forwards
+2013-10-23 18:55:12 UTC <luite> but analytics does have efficient storage of indexed stuff, right? or is all that wavelet tree code private?
+2013-10-23 18:55:17 UTC <carter> it will
+2013-10-23 18:55:23 UTC <carter> its not really existing yet
+2013-10-23 18:55:27 UTC <luite> hehe okay
+2013-10-23 18:55:49 UTC <carter> but theres a lot of tricks that are nearly as handy you can do even without that machinery
+2013-10-23 18:58:17 UTC <carter> luite: but the price for the approach edward is doing is you can't do pointwise updates
+2013-10-23 19:01:04 UTC <luite> right but that's quite expected with packed indices like this. in practice you can probably write-ahead log this and batch updates in chunks processing the log
+2013-10-23 19:01:47 UTC <carter> yeah
+2013-10-23 19:01:50 UTC <carter> which is what he's doing
+2013-10-23 19:01:55 UTC <luite> ok
+2013-10-23 19:02:12 UTC <carter> luite: though what makes sense does depend on your workload  / work flow etc
+2013-10-23 19:02:32 UTC <luite> sure, updating one field in all rows isn't going to scale with this
+2013-10-23 19:03:43 UTC <carter> yeah
+2013-10-23 19:03:59 UTC <carter> and depending on the types of calculations, locality might suffer
+2013-10-23 19:04:01 UTC <carter> it all depends
+2013-10-23 19:05:00 UTC <luite> the goal was that everything would magically ('adaptively' is the technical term eh? ;p) do the right thing wasn't it?
+2013-10-23 19:05:28 UTC <carter> robustly  more like
+2013-10-23 19:05:28 UTC <carter> idk
+2013-10-23 19:05:31 UTC <carter> g2g
+2013-10-23 19:05:31 UTC <carter> :)
+2013-10-23 19:05:50 UTC <luite> k
+2013-10-23 20:55:34 UTC <Martingale> carter what do you mean OS X stuff is everyones problem, is upgrading to Mavericks at this point a bad idea?
+2013-10-23 20:55:56 UTC <carter> Martingale: i mean i don't have to be the only one trying to push things to get resolved :)
+2013-10-23 20:56:05 UTC <carter> 'cause you can screaming 2 irc channels over now
+2013-10-23 20:56:07 UTC <carter> :)
+2013-10-23 20:56:35 UTC <Martingale> Ah is that #haskell-osx
+2013-10-23 20:56:39 UTC <luite> although in practice carter is going to have to do it of course
+2013-10-23 20:57:20 UTC <carter> Martingale: i mean #haskell and #ghc and reddit and such
+2013-10-23 20:58:50 UTC <carter> ie enoughpeople are having problems that 1) other people know how to help now
+2013-10-23 20:59:06 UTC <carter> 2) everyone who's a haskell platform / ghc maintainer hacker / heavy os x user feels the pains
+2013-10-23 20:59:40 UTC <luite> carter: are you going to get one of those mac pro's now that prices and more specs have been revealed?
+2013-10-23 20:59:53 UTC <carter> luite: depends on how rich i am in 2-4 months
+2013-10-23 20:59:53 UTC <luite> or perhaps a buch!
+2013-10-23 21:00:05 UTC <luite> they look a bit like trashcans though
+2013-10-23 21:00:25 UTC <carter> honest answer: idk
+2013-10-23 21:00:37 UTC <carter> depends on if i get to doing the math compiler by then or not :)
+2013-10-23 21:01:03 UTC <luite> :)
+2013-10-23 21:01:03 UTC <Martingale> I nice looking trash can, though :D
+2013-10-23 21:01:13 UTC <luite> Martingale: yeah
+2013-10-23 21:02:46 UTC <carter> ok, playing with ipython + python for some quick dat vis hacks
+2013-10-23 21:02:48 UTC <carter> don't judge me!
+2013-10-23 21:03:59 UTC <luite> Martingale: like the nyc subway trash cans without the text
+2013-10-23 21:04:12 UTC <Martingale> carter I wrote whole system in Python/Pandas for fund and they decided to stick with an excel spreadsheet, because they had no one to maintain the code.
+2013-10-23 21:04:13 UTC <luite> http://queenscourier.com/2012/more-subway-stations-take-out-the-trash/ <- mac pro
+2013-10-23 21:04:13 UTC <carter> and less smelly
+2013-10-23 21:04:31 UTC <carter> ACTION Martingale: heh
+2013-10-23 21:04:32 UTC <carter> Martingale: heh
+2013-10-23 21:04:37 UTC <Martingale> luite yes exactly, only smaller and more expensive
+2013-10-23 21:05:35 UTC <Martingale> going to be hard to resist though - it looks so cool http://www.apple.com/mac-pro/performance/
+2013-10-23 21:05:38 UTC <carter> don't some cities have bomb proof trash cans?
+2013-10-23 21:05:43 UTC <carter> Martingale: yeah
+2013-10-23 21:05:49 UTC <carter> shame its not nvidia cards :(
+2013-10-23 21:06:09 UTC <carter> does mean if i'm getting serious about GPU stuff + supporting folks using whichever, ill need another meachine prolly
+2013-10-23 21:06:13 UTC <carter> or at least the mbpro ret
+2013-10-23 21:06:31 UTC <Martingale> carter yeah
+2013-10-23 21:06:44 UTC <carter> plus testing on vms occasionally
+2013-10-23 21:06:54 UTC <carter> but benching on dedicated hardware is the only way to stay honest
+2013-10-23 21:07:07 UTC <Martingale> it's going to be pretty expensive, by the time you add the monitor and all the other goodies
+2013-10-23 21:07:10 UTC <carter> well
+2013-10-23 21:07:14 UTC <carter> yeah....
+2013-10-23 21:07:21 UTC <carter> remains to be seen if i spring for it
+2013-10-23 21:07:49 UTC <Martingale> I do already have one thunderbolt display, but two would be off the charts
+2013-10-23 21:08:23 UTC <Martingale> I sold like 5 old macs back to apple and got less then 1k for the whole lot
+2013-10-23 21:09:22 UTC <carter> huh
+2013-10-23 21:09:37 UTC <Martingale> carter I might have an mbpro ret for sale if i buy the garbage can
+2013-10-23 21:09:44 UTC <carter> huh
+2013-10-23 21:10:04 UTC <carter> lets see how my secret job hunting goes over the next few weks
+2013-10-23 21:10:06 UTC <carter> but noted!
+2013-10-23 21:10:12 UTC <luite> secret eh
+2013-10-23 21:10:18 UTC <Martingale> yeah, i use it as my desk top, i prefer old air for travel
+2013-10-23 21:10:35 UTC <carter> the 11 air with 8gb + haswell sounds magic
+2013-10-23 21:10:38 UTC <luite> i might upgrade to the new mbp 15"
+2013-10-23 21:10:42 UTC <carter> i have a 2011 air with 4gb 
+2013-10-23 21:10:47 UTC <luite> with 16gb
+2013-10-23 21:10:53 UTC <Martingale> ACTION wife opens bottle of wine
+2013-10-23 21:10:57 UTC <Martingale> time to go
+2013-10-23 21:10:57 UTC <carter> enjoy :)
+2013-10-23 21:11:26 UTC <luite> :)
+2013-10-23 21:11:43 UTC <luite> 11" seems too small for me
+2013-10-23 21:12:07 UTC <luite> but i've never really tried using it
+2013-10-23 21:13:11 UTC <carter> for just having a travel machine seems like it'd be awesome
+2013-10-23 21:14:10 UTC <luite> 15" is travel machine!
+2013-10-23 21:14:22 UTC <carter> if you carry NOTHING else
+2013-10-23 21:14:44 UTC <luite> what else is there to carry?
+2013-10-23 21:15:11 UTC <carter> math books
+2013-10-23 21:15:13 UTC <carter> and watter
+2013-10-23 21:15:14 UTC <carter> *water
+2013-10-23 21:15:28 UTC <luite> math books are stored on your computer or ipad of course
+2013-10-23 21:15:38 UTC <carter> you'd think
+2013-10-23 21:16:31 UTC <luite> on a similar note, i don't really understand those 'game changer' sentiments of the new ipad, i mean come on, it's 150g lighter and 1.5mm thinner, that's it, books are 3x heavier than that!
+2013-10-23 21:17:00 UTC <luite> having a pdf reader that doesn't crash would be a bigger win for me :)
+2013-10-23 21:17:16 UTC <luite> also the macbook air is going to get a retina display in 2014 of course
+2013-10-23 21:17:30 UTC <luite> just to make you regret your current gen purchase :p
+2013-10-23 21:19:52 UTC <luite> hmm, is current gen displayport fast enough to output 5120x2880 pixels at decent framerate? say they updated their 27" screen, would a new mbp be able to drive it?
+2013-10-23 21:21:12 UTC <luite> hm apparently it's not
+2013-10-23 21:23:17 UTC <carter> it'd have to have thunderbolt right?
+2013-10-23 21:23:46 UTC <luite> under 40fps (at 10 bit per channel) if you ignore blanking, probably ~30fps realistically
+2013-10-23 21:24:13 UTC <carter> urk
+2013-10-23 21:24:16 UTC <carter> thunderbolt it is
+2013-10-23 21:24:40 UTC <luite> nah that's not faster
+2013-10-23 21:24:44 UTC <carter> oh?
+2013-10-23 21:24:53 UTC <luite> thunderbolt 2 = 20Gbps for a channel
+2013-10-23 21:24:54 UTC <carter> how the heck do they plan to drive the 4k displays then?
+2013-10-23 21:25:08 UTC <luite> and it can run a displayport 1.2 channel, max ~17Gbps
+2013-10-23 21:25:40 UTC <luite> quadrupling the 27" screen (to make it 'retina') is higher than 4k
+2013-10-23 21:25:44 UTC <carter> huh http://www.apple.com/mac-pro/specs/ 
+2013-10-23 21:26:08 UTC <carter> luite: i'm guess they're paring!
+2013-10-23 21:26:11 UTC <carter> *paring
+2013-10-23 21:26:17 UTC <carter> *pairing 
+2013-10-23 21:26:25 UTC <carter> "3 4k displays or 6 display port displays"
+2013-10-23 21:26:35 UTC <luite> normal 4k is ~4096x2160, ~8MP, this would be 15MP
+2013-10-23 21:26:44 UTC <luite> hmm
+2013-10-23 21:27:34 UTC <luite> can't unsee nyc trash can now :/
+2013-10-23 21:28:18 UTC <luite> carter: hmm, perhaps on separate ports
+2013-10-23 21:28:35 UTC <luite> or do you think it'd require two connectors?
+2013-10-23 21:28:39 UTC <luite> to get a 40Gbps link?
+2013-10-23 21:29:26 UTC <luite> hdmi 2.0 is also too slow
+2013-10-23 21:30:12 UTC <luite> so no retina 27" with quadrupled resolution any time soon
+2013-10-23 21:32:07 UTC <luite> (unless using two connectors for a single monitor actually works)
+2013-10-23 21:32:19 UTC <carter> ok
+2013-10-23 21:32:23 UTC <carter> progress on matplot lib
+2013-10-23 21:32:26 UTC <carter> ttyl! :) 
+2013-10-23 21:32:38 UTC <luite> hehe
+2013-10-23 21:32:55 UTC <luite> <- chatty when waiting for ghcjs base libraries rebuild :p
+2013-10-23 21:32:56 UTC <carter> i'm going to be ipython + matplotlib + numpy for the next few days
+2013-10-23 21:33:12 UTC <luite> therefore i need a faster pc
+2013-10-23 21:33:17 UTC <carter> and and my rage and motivation will be renewed like a drunk phoenix
+2013-10-23 21:34:01 UTC <carter> ttyl 
+2013-10-23 21:34:04 UTC <carter> diner beckons soon
+2013-10-23 21:35:01 UTC <luite> i think incremental linking for ghcjs works now :)
+2013-10-23 21:35:13 UTC <carter> congrats
+2013-10-23 21:35:14 UTC <carter> ok
+2013-10-23 21:35:18 UTC <carter> i'm going to try out dinner
+2013-10-23 21:35:19 UTC <carter> ttyl
+2013-10-23 21:35:23 UTC <luite> so you can build against a base bunch of stuff that you expect lots of code will use
+2013-10-23 21:35:28 UTC <luite> and leave that out of later results
+2013-10-23 21:35:36 UTC <luite> good for pastebin + hsfiddle
+2013-10-23 21:36:11 UTC <luite> only refresh 1kB of code for new results instead of half of base :)
+2013-10-24 00:15:49 UTC <carter> ohh
+2013-10-24 00:16:02 UTC <carter> so partial rebuilds can be sane
+2013-10-24 00:36:50 UTC <luite> yeah hsfiddle depends on user editing some bit of code, pressing 'refresh'
+2013-10-24 00:36:54 UTC <luite> that refresh needs to be fast
+2013-10-24 00:37:02 UTC <carter> ok
+2013-10-24 00:37:03 UTC <luite> for good experience
+2013-10-24 00:37:19 UTC <carter> notdan: http://paste.hskll.org/gallery is slow to load
+2013-10-24 00:37:24 UTC <luite> same for paste.hskll.org, editing the code a few times
+2013-10-24 00:37:45 UTC <luite> i promised this a long time ago :)
+2013-10-24 00:38:04 UTC <luite> carter: i think there are two problems
+2013-10-24 00:38:18 UTC <luite> carter: the big results in postgresql is slow
+2013-10-24 00:38:23 UTC <luite> and the results are big
+2013-10-24 00:38:29 UTC <carter> so compression ! :)
+2013-10-24 00:39:09 UTC <luite> well i think there are a few things: wait until the diagrams-svg backend uses teh hierarchical structure to generate smaller files and re-render everything
+2013-10-24 00:39:36 UTC <luite> generate static gzipped files from outside postgresql (can't get much more efficient than the sendfile syscall)
+2013-10-24 00:39:44 UTC <luite> and probably a size limit for things in the gallery
+2013-10-24 00:40:43 UTC <luite> now that you know what to do i expect a pull request from you in notdan's repository by monday ;)
+2013-10-24 00:43:50 UTC <carter> luite: sorry, i'm getting around to writing docs for prefetch this weekdnd
+2013-10-24 00:44:11 UTC <luite> kay
+2013-10-24 00:44:17 UTC <luite> tuesday then
+2013-10-24 00:47:01 UTC <carter> pr for what?
+2013-10-24 00:47:12 UTC <carter> also diagrams is going lensy and i need to learn lenss first
+2013-10-24 00:47:20 UTC <carter> we both know notdan  is a better engineer than i too
+2013-10-24 00:47:59 UTC <luite> now is your chance to prove your worth ;)
+2013-10-24 00:51:50 UTC <byorgey> win 17
+2013-10-24 00:51:54 UTC <byorgey> oops =)
+2013-10-24 00:56:50 UTC <luite> :)
+2013-10-24 00:57:10 UTC <luite> pretty great diagrams progress recently btw :)
+2013-10-24 00:59:57 UTC <carter> luite: i made my evil asInt uncrashable! :)
+2013-10-24 01:00:52 UTC <luite> very productive ;)
+2013-10-24 01:27:29 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06master 147cbbe8d http://travis-ci.org/diagrams/diagrams-contrib/builds/12962943 The build passed.
+2013-10-24 01:28:41 UTC <carter> luite: is ghci  bus erroring, but GHC giving me numbers, a bug in ghci? :)
+2013-10-24 01:29:55 UTC <luite> i doubt it...
+2013-10-24 01:30:28 UTC <luite> if you do evil things like that, you deserve to get hit by a bus error :p
+2013-10-24 01:40:27 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06master 1414cb858 http://travis-ci.org/diagrams/diagrams-contrib/builds/12963348 The build passed.
+2013-10-24 01:49:39 UTC <travis-ci> [travis-ci] 13diagrams-lib/06lens 14193bffd http://travis-ci.org/diagrams/diagrams-lib/builds/12963477 The build passed.
+2013-10-24 02:06:28 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06lens 1483da443 http://travis-ci.org/diagrams/diagrams-contrib/builds/12963867 The build passed.
+2013-10-24 02:31:47 UTC <byorgey> getting really close!
+2013-10-24 02:32:02 UTC <byorgey> just a few things left to clean up in diagrams-doc
+2013-10-24 02:32:17 UTC <byorgey> I expect to merge all the lens branches tomorrow morning
+2013-10-24 02:32:31 UTC <byorgey> but now I'm going to bed =)
+2013-10-24 02:33:23 UTC <fryguybob> byorgey: Good night!
+2013-10-24 02:34:48 UTC <carter> oooooo
+2013-10-24 02:38:48 UTC <bergey> Great!  g'night.
+2013-10-24 02:50:40 UTC <Martingale> byorgey That's great, I cant' wait to see lens merged it :D
+2013-10-24 02:51:20 UTC <carter> Martingale: that will make me learning lens and diagrams easier
+2013-10-24 02:51:24 UTC <carter> 1.5 things intead of 2!
+2013-10-24 02:52:04 UTC <Martingale> carter Goodnight, i'm off to bed too
+2013-10-24 02:52:12 UTC <carter> i should try that some point
+2013-10-24 04:21:47 UTC <notdan> carter: I know, sorry :( I'll work on it
+2013-10-24 04:21:54 UTC <carter> notdan:? :)
+2013-10-24 04:21:56 UTC <carter> soke
+2013-10-24 04:21:58 UTC <carter> you're doing grat work
+2013-10-24 10:37:20 UTC <cinimod> To use trello does someone have to add me?
+2013-10-24 11:09:39 UTC <byorgey> yes, what's your trello username?
+2013-10-24 11:10:01 UTC <byorgey> it is publically readable but you have to be added to have write access
+2013-10-24 14:19:22 UTC <Martingale> byorgey Suppose I have a couple of product types (in this case records) ARec, BRec with lenses and a sum type data S = A ARect | B BRec I C Int
+2013-10-24 14:20:00 UTC <Martingale> byorgey How do i use lenses to drill down to the record filelds, do i need a prism?
+2013-10-24 14:21:18 UTC <mgsloan> Martingale: Yup!
+2013-10-24 14:21:43 UTC <mgsloan> Prisms are related to sum types just as lenses are related to product types
+2013-10-24 14:22:44 UTC <Martingale> mgsloan how would i create the prism?
+2013-10-24 14:23:29 UTC <mgsloan> You could either use Control.Lens.TH.makePrisms, or write them yourself
+2013-10-24 14:23:46 UTC <Martingale> mgsloan thanks I have a look at the docs
+2013-10-24 14:24:16 UTC <mgsloan> Martingale: Welcome!  To write them yourself, you'll probably want to use the prism' function
+2013-10-24 14:24:30 UTC <Martingale> OK
+2013-10-24 14:44:50 UTC <Martingale> mgsloan what are the prism names created by makePrisms? 
+2013-10-24 14:45:39 UTC <Martingale> mgsloan first letter lowercase?
+2013-10-24 14:45:59 UTC <byorgey> Martingale: I think they are the constructor names with underscores in front
+2013-10-24 14:46:06 UTC <byorgey> like _A _B _C
+2013-10-24 14:46:20 UTC <mgsloan> Yup
+2013-10-24 14:46:21 UTC <Martingale> byorgey thanks
+2013-10-24 14:46:52 UTC <byorgey> Martingale: also, note to access a prism you can use e.g. (^?) instead of (^.)
+2013-10-24 14:47:15 UTC <Martingale> byorgey can i apply a function to a record field with %~
+2013-10-24 14:48:15 UTC <Martingale> byorgey in this case i'm trying to transform a vector that is part of a gradient record that is part of a texture which can be a color, linear gradient, or radial gradient
+2013-10-24 14:48:52 UTC <mgsloan> Martingale: You can!
+2013-10-24 14:48:53 UTC <byorgey> Martingale: you mean something like  (_SomePrism . someLens . _SomeOtherPrism) %~ f  ?  yes, I think that works
+2013-10-24 14:49:04 UTC <byorgey> if the prism fails it is just the identity function
+2013-10-24 14:49:24 UTC <Martingale> byorgey yes that's exactly what i'm trying to do, i'll see if it works
+2013-10-24 14:49:36 UTC <byorgey> > Just (3,4) & (_Just . _1) %~ succ
+2013-10-24 14:49:37 UTC <lambdabot>   Just (4,4)
+2013-10-24 14:49:47 UTC <byorgey> > Nothing & (_Just . _1) %~ succ
+2013-10-24 14:49:48 UTC <lambdabot>   No instance for (Control.Lens.Tuple.Field1 s0 t0 a0 a0)
+2013-10-24 14:49:48 UTC <lambdabot>    arising from a u...
+2013-10-24 14:49:54 UTC <byorgey> wat
+2013-10-24 14:50:09 UTC <byorgey> > (Nothing :: Maybe (Int,Int)) & (_Just . _1) %~ succ
+2013-10-24 14:50:11 UTC <lambdabot>   Nothing
+2013-10-24 14:50:15 UTC <byorgey> works =)
+2013-10-24 14:50:23 UTC <Martingale> byorgey great!
+2013-10-24 14:50:35 UTC <bergey> Another helpful error message from lens. :)
+2013-10-24 14:51:01 UTC <mgsloan> Hahah
+2013-10-24 14:51:02 UTC <byorgey> bergey: people in glass houses shouldn't throw stones =)
+2013-10-24 14:51:43 UTC <byorgey> (referring to diagrams' error messages in general, not anything specific to bergey)
+2013-10-24 14:51:52 UTC <bergey> Yeah, fair enough.
+2013-10-24 14:52:50 UTC <byorgey> I'm really hopeful about the work at Utrecht on domain-specific type error messages
+2013-10-24 14:53:01 UTC <bergey> Ooh!
+2013-10-24 14:53:25 UTC <byorgey> Martingale: this is a nice article on the motivation + mechanics of prisms: https://www.fpcomplete.com/user/tel/lens-aeson-traversals-prisms
+2013-10-24 14:54:26 UTC <Martingale> byorgey Thanks, funny I had just finished reading it. He has another nice tutorial on basic lenses that we may want to reference in our docs
+2013-10-24 14:55:23 UTC <byorgey> hahaha
+2013-10-24 14:55:29 UTC <byorgey> ok, sounds good
+2013-10-24 14:56:18 UTC <Martingale> wow this is so cool: texture & _LG . lGradStart %~ (transform t ), actually works :)
+2013-10-24 15:18:24 UTC <byorgey> Martingale: nice =)
+2013-10-24 15:29:51 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06lens 1404023df http://travis-ci.org/diagrams/diagrams-contrib/builds/12990590 The build passed.
+2013-10-24 16:31:48 UTC <notdan> Traversals sounds very similar to filters/arrows in HXT
+2013-10-24 16:32:10 UTC <notdan> I've also heard about a similar XML parser using traversals
+2013-10-24 16:32:41 UTC <notdan> I am still figuring out what to do with this knowledge though :)
+2013-10-24 16:35:09 UTC <byorgey> OK, hold onto your hats, it's lens branch merging time!
+2013-10-24 16:41:37 UTC <notdan> :D
+2013-10-24 16:45:33 UTC <byorgey> ugh, merge conflicts in -lib
+2013-10-24 16:45:35 UTC <byorgey> wheee
+2013-10-24 16:46:57 UTC <travis-ci> [travis-ci] 13diagrams-lib/06lens 14e6b17be http://travis-ci.org/diagrams/diagrams-lib/builds/12994788 The build passed.
+2013-10-24 16:50:05 UTC <travis-ci> [travis-ci] 13diagrams-core/06master 14fff5211 http://travis-ci.org/diagrams/diagrams-core/builds/12994889 The build passed.
+2013-10-24 17:08:18 UTC <byorgey> aaaand done!!
+2013-10-24 17:08:51 UTC <byorgey> now it's lunch time
+2013-10-24 17:13:51 UTC <Martingale> byorgey congratulations, we are lensified!!!
+2013-10-24 17:15:21 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 14f715bc2 http://travis-ci.org/diagrams/diagrams-lib/builds/12995970 The build passed.
+2013-10-24 17:18:13 UTC <byorgey> oh good, the -lib build passed
+2013-10-24 17:18:27 UTC <byorgey> I was slightly worried that I messed something up when resolving the merge conflicts
+2013-10-24 17:18:51 UTC <byorgey> Martingale: yep, thanks to you and bergey!
+2013-10-24 17:20:06 UTC <travis-ci> [travis-ci] 13diagrams-svg/06master 14a3987ec http://travis-ci.org/diagrams/diagrams-svg/builds/12996255 The build passed.
+2013-10-24 17:21:14 UTC <travis-ci> [travis-ci] 13diagrams-postscript/06master 144d4f673 http://travis-ci.org/diagrams/diagrams-postscript/builds/12996322 The build passed.
+2013-10-24 17:21:32 UTC <byorgey> Martingale: just curious, after doing all the lens work, how well do you feel you know your way around the diagrams codebase now?
+2013-10-24 17:22:12 UTC <travis-ci> [travis-ci] 13diagrams-contrib/06master 14bdd4e49 http://travis-ci.org/diagrams/diagrams-contrib/builds/12996360 The build was broken.
+2013-10-24 17:22:55 UTC <travis-ci> [travis-ci] 13diagrams-doc/06lens 14ca2087c http://travis-ci.org/diagrams/diagrams-doc/builds/12996421 The build has errored.
+2013-10-24 17:23:47 UTC <byorgey> ah, some of the Metafont stuff happened in parallel with lens, so it needs some fixes to work with the new lens stuff
+2013-10-24 17:26:42 UTC <byorgey> cinimod: I added you to the trello board, assuming your Trello username is also cinimod
+2013-10-24 17:26:59 UTC <byorgey> otherwise, I added some random other person to the trello board.
+2013-10-24 17:27:53 UTC <Martingale> byorgey Doing that work really helped me, I feel like I know my way around the code base quite well, of course there is always more to learn
+2013-10-24 17:28:27 UTC <byorgey> great, that's what I hoped.  And yes, of course there's always more to learn. =)
+2013-10-24 17:30:01 UTC <cinimod> byorgey: sadly cinimod is a random person on trello
+2013-10-24 17:30:49 UTC <Martingale> byorgey + all that I learned about the lens library :)
+2013-10-24 17:31:39 UTC <cinimod> byorgey: I have registered as idontgetoutmuch
+2013-10-24 17:32:11 UTC <byorgey> cinimod: ah, ok, hehe
+2013-10-24 17:32:18 UTC <byorgey> they are going to be confused why I added them =)
+2013-10-24 17:32:29 UTC <cinimod> I'd like to know who they are
+2013-10-24 17:33:37 UTC <byorgey> ok, I added you
+2013-10-24 17:33:42 UTC <cinimod> I am now added thanks
+2013-10-24 17:35:03 UTC <cinimod> I'd like 3d charts - I think that is what trello is for
+2013-10-24 17:35:25 UTC <carter> ooo, trello
+2013-10-24 17:35:33 UTC <carter> i'm liking using it for my own stuff
+2013-10-24 17:40:32 UTC <carter> cinimod: don't we need a 3d backend first?
+2013-10-24 17:40:52 UTC <carter> byorgey: can i join the board too? :)
+2013-10-24 17:40:58 UTC <carter> hrmm
+2013-10-24 17:41:04 UTC <carter> i should first play with head and such
+2013-10-24 17:41:28 UTC <byorgey> carter: of course, what's your trello username?
+2013-10-24 17:41:29 UTC <carter> cinimod: trello understands markdown [descirption](http://stackoverflow.com/questions/1896419/plotting-a-3d-surface-plot-with-contour-map-overlay-using-r)
+2013-10-24 17:41:40 UTC <carter> i think its carter
+2013-10-24 17:42:08 UTC <carter> yup, carter
+2013-10-24 17:42:19 UTC <carter> github and twitter are the only things where i don't have carter
+2013-10-24 17:42:19 UTC <byorgey> annoyingly, it seems trello does not interpret Markdown in card titles, only in comments
+2013-10-24 17:42:23 UTC <carter> yes
+2013-10-24 17:43:44 UTC <carter> ok
+2013-10-24 17:43:53 UTC <notdan> Now that lens branch is merged maybe bergey has some free time he will spend working on his 3d opengl backend, because I want to discuss with him some 3d-utils changes
+2013-10-24 17:43:57 UTC <notdan> ^ hope he sees that :)
+2013-10-24 17:43:59 UTC <carter> woot
+2013-10-24 17:44:21 UTC <carter> neat
+2013-10-24 17:44:55 UTC <cinimod> carter: what about http://projects.haskell.org/diagrams/haddock/Diagrams-ThreeD-Shapes.html
+2013-10-24 17:45:18 UTC <carter> cinimod:i mean theres not yet a live 3d *backend*
+2013-10-24 17:45:24 UTC <cinimod> I have never tried drawing a 3d shape though
+2013-10-24 17:45:40 UTC <notdan> I guess you can make a 3D diagram but you can't render it :)
+2013-10-24 17:45:48 UTC <cinimod> Oh does that mean one cannot render it?
+2013-10-24 17:45:49 UTC <cinimod> Ah
+2013-10-24 17:46:36 UTC <carter> byorgey: what notion of determinant do you mean?
+2013-10-24 17:47:10 UTC <byorgey> carter: where?
+2013-10-24 17:47:18 UTC <carter> https://trello.com/c/tBNVkx5E/77-implement-determinants
+2013-10-24 17:47:35 UTC <cinimod> http://www.axler.net/DwD.html
+2013-10-24 17:47:48 UTC <carter> cinimod: :) 
+2013-10-24 17:47:49 UTC <cinimod> Why do you need determinants?
+2013-10-24 17:47:52 UTC <carter> no clue
+2013-10-24 17:49:07 UTC <carter> byorgey: whats the use case?
+2013-10-24 17:49:54 UTC <byorgey> carter: https://github.com/diagrams/diagrams-lib/blob/f715bc27b9b392733618e9a6b21cb83372dea0db/src/Diagrams/TwoD/Transform.hs#L269
+2013-10-24 17:50:10 UTC <carter> ahh
+2013-10-24 17:50:17 UTC <carter> so a decrufter / factoring
+2013-10-24 17:50:19 UTC <byorgey> so far we really only need 2x2 determinants
+2013-10-24 17:50:23 UTC <carter> ok
+2013-10-24 17:50:32 UTC <carter> i'm distractable today
+2013-10-24 17:50:45 UTC <carter> i'll find spend 20 minutes doing that 5 minute thing :) 
+2013-10-24 17:51:30 UTC <carter> T2 ==  Transformation R2 right?
+2013-10-24 17:51:47 UTC <byorgey> yes
+2013-10-24 17:52:14 UTC <carter> ok
+2013-10-24 17:52:19 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 14b24b11e http://travis-ci.org/diagrams/diagrams-doc/builds/12996451 The build has errored.
+2013-10-24 17:52:24 UTC <carter> i'll have many simple questions like that soon :)
+2013-10-24 17:52:30 UTC <byorgey> great =)
+2013-10-24 17:53:05 UTC <notdan> Would be cool to connect Trello to IRC
+2013-10-24 17:54:21 UTC <carter> notdan: i'm getting my phone vibrating every comment
+2013-10-24 17:54:53 UTC <notdan> oh I turned push notifications off as the keep waking me up at night heh
+2013-10-24 17:55:13 UTC <carter> notdan: ios 7 and 6 have a pretty good do not disturb
+2013-10-24 17:55:40 UTC <notdan> yeah but then I wouldn't hear calls
+2013-10-24 17:55:46 UTC <carter> at 1am?
+2013-10-24 17:55:50 UTC <notdan> not that I usually recieve many calls during the nighttime..
+2013-10-24 17:55:50 UTC <notdan> yeah
+2013-10-24 17:55:55 UTC <notdan> you are right :)
+2013-10-24 17:56:04 UTC <carter> if its an emergency, its hosed either way
+2013-10-24 17:56:11 UTC <carter> i think if theyc all twice it'll go through
+2013-10-24 17:56:35 UTC <carter> byorgey: will do
+2013-10-24 17:56:43 UTC <carter> byorgey: for a few hackge server bugs
+2013-10-24 17:56:59 UTC <carter> basically had to bug dcoutts to explain where to look / what to do
+2013-10-24 17:57:05 UTC <carter> and copy and paste that onto a github ticket
+2013-10-24 17:57:30 UTC <carter> in order for there to be any bread crumbs for a third party to do anything at all
+2013-10-24 17:57:44 UTC <carter> (because he couldn't be bothered to explain uness someone is saying "tell me!" on irc)
+2013-10-24 17:58:18 UTC <carter> :)
+2013-10-24 17:59:20 UTC <byorgey> carter: no, that's precisely it, he *could* be bothered to explain.  It required bothering.
+2013-10-24 17:59:25 UTC <carter> yeah
+2013-10-24 17:59:32 UTC <carter> thats what I meant
+2013-10-24 17:59:34 UTC <byorgey> he is just busy =)
+2013-10-24 17:59:38 UTC <carter> yeah
+2013-10-24 18:00:23 UTC <carter> but i guess I mean "front load the work now so he has to do less later"
+2013-10-24 18:05:03 UTC <carter> byorgey: if all I do is leave enough bread crumbs so other people can more easily figure out how to write various patches, i've done somehting handy :)
+2013-10-24 18:11:39 UTC <byorgey> carter: indeed =)
+2013-10-24 18:16:43 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 14f0788fc http://travis-ci.org/diagrams/diagrams-lib/builds/12998773 The build passed.
+2013-10-24 18:17:32 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 1448a9e3a http://travis-ci.org/diagrams/diagrams-lib/builds/12998866 The build passed.
+2013-10-24 18:56:57 UTC <fryguybob> I decided to look at the Communications of the ACM for once and what do I find but an article by ndm on space leaks.
+2013-10-24 19:01:02 UTC <carter> WAT
+2013-10-24 19:01:03 UTC <carter> really?
+2013-10-24 19:01:04 UTC <carter> cool
+2013-10-24 19:01:06 UTC <carter> link?
+2013-10-24 19:01:21 UTC <carter> they've started to be about CS rather than "IT boring thigns" in the past year or so
+2013-10-24 19:02:18 UTC <cscheid>  three or four years ago, when moshe vardi took over
+2013-10-24 19:02:29 UTC <carter> yes
+2013-10-24 19:02:30 UTC <carter> that
+2013-10-24 19:02:33 UTC <cscheid> they used to be cool way back too, circa 1985
+2013-10-24 19:02:36 UTC <carter> i heard
+2013-10-24 19:02:44 UTC <carter> now they have a mustachiod master
+2013-10-24 19:02:47 UTC <carter> i've never met him IRL
+2013-10-24 19:02:57 UTC <carter> jsut seen the picture of him on his twitter profile
+2013-10-24 19:03:11 UTC <carter> https://twitter.com/vardi
+2013-10-24 19:03:12 UTC <fryguybob> carter: I think it is paywalled :(
+2013-10-24 19:03:24 UTC <carter> fryguybob: good thing I *think* i have an acm membership
+2013-10-24 19:03:26 UTC <carter> i should check
+2013-10-24 19:19:23 UTC <carter> fryguybob: byorgey  whats the oldest ghc you try to support in diagrams lensy?
+2013-10-24 19:19:31 UTC <carter> *aiming to
+2013-10-24 19:27:16 UTC <fryguybob> carter: I can't remember if lens does the last two platforms?  But I imagine we would just match that.
+2013-10-24 19:27:29 UTC <carter> so 7.4 and newer is the aim?
+2013-10-24 19:27:44 UTC <carter> and in another 2 months, 7.6 onwards only?
+2013-10-24 19:28:00 UTC <carter> *another few weeks, 7.6 onwards only?
+2013-10-24 19:28:06 UTC <carter> 'cause data kinds is kinda nice :)
+2013-10-24 19:28:59 UTC <carter> ok, cool
+2013-10-24 19:29:00 UTC <carter> :)
+2013-10-24 19:31:14 UTC <luite> hm bleh i need the types to generate the foreign stubs but ghc wants me to generate them during desugaring :(
+2013-10-24 19:45:59 UTC <luite> oh
+2013-10-24 19:46:05 UTC <luite> need coffee
+2013-10-24 19:46:16 UTC <luite> desugaring is after typechecking
+2013-10-24 20:01:38 UTC <carter> hehe
+2013-10-24 20:06:37 UTC <byorgey> carter: we officially support the most recent two Haskell Platform release
+2013-10-24 20:06:40 UTC <byorgey> *releases
+2013-10-24 20:07:02 UTC <byorgey> which currently means 7.4 and 7.6
+2013-10-24 20:07:26 UTC <byorgey> of course we also support the most recent GHC release even when it is not included in an HP release
+2013-10-24 20:07:39 UTC <byorgey> so when 7.8 comes out we will support 7.4, 7.6, and 7.8
+2013-10-24 20:07:56 UTC <carter> ok
+2013-10-24 20:07:57 UTC <byorgey> we won't drop 7.4 support until after the next HP release
+2013-10-24 20:08:11 UTC <carter> and when the HP release comes out next month, 7.4 will be dropped?
+2013-10-24 20:08:33 UTC <byorgey> it could be
+2013-10-24 20:08:36 UTC <carter> ok
+2013-10-24 20:08:41 UTC <byorgey> we won't necessarily drop it immediately
+2013-10-24 20:08:44 UTC <carter> ok
+2013-10-24 20:08:54 UTC <carter> 7.4 is pre data families right?
+2013-10-24 20:09:03 UTC <byorgey> no
+2013-10-24 20:09:13 UTC <carter> i mean data kinds
+2013-10-24 20:09:17 UTC <byorgey> ah, yes
+2013-10-24 20:09:36 UTC <byorgey> I think there are a couple places in the source with comments like "eventually we should do this with DataKinds"
+2013-10-24 20:09:42 UTC <carter> http://www.haskell.org/ghc/docs/7.6.1/html/users_guide/release-7-6-1.html 
+2013-10-24 20:09:58 UTC <carter> i've some stuff in my array api's where it'd be kinda weird to not use data kinds
+2013-10-24 20:11:41 UTC <carter> i'm just kinda glad theres nothing in 7.8 that makes me want to only support 7.8 in my own stuf
+2013-10-24 20:11:42 UTC <carter> http://ghc.haskell.org/trac/ghc/wiki/Status/Oct13
+2013-10-24 22:32:46 UTC <ClaudiusMaximus> made some moons http://paste.hskll.org/get/211
+2013-10-24 22:38:51 UTC <luite> next step, do it with 3d diagrams and a diffuse phong shader with some threshold reflection model
+2013-10-24 22:39:28 UTC <luite> oh that's not enough to get the outline
+2013-10-24 22:39:30 UTC <luite> :(
+2013-10-24 22:45:25 UTC <luite> hm does the povray backend have some ways to specify materials?
+2013-10-24 23:01:18 UTC <fryguybob> ClaudiusMaximus: Those are some pretty moons :D
+2013-10-24 23:05:59 UTC <travis-ci> [travis-ci] 13diagrams-lib/06gradient 1448a9e3a http://travis-ci.org/diagrams/diagrams-lib/builds/13012947 The build passed.
+2013-10-24 23:56:22 UTC <Martingale> Is clipping the only transformable attribute we have so far?
+2013-10-25 00:17:07 UTC <travis-ci> [travis-ci] 13diagrams-lib/06gradient 143be8bdf http://travis-ci.org/diagrams/diagrams-lib/builds/13015454 The build was broken.
+2013-10-25 00:52:22 UTC <Martingale> What is the purpose of using the Recommend monoid for the FillColor attribute?
+2013-10-25 01:07:23 UTC <fryguybob> Martingale: https://github.com/diagrams/diagrams-lib/blob/def0058acf4e6c8b1d65785b32762be9ee1e53a1/src/Diagrams/TwoD/Text.hs#L84
+2013-10-25 01:09:37 UTC <Martingale> fryguybob thx
+2013-10-25 01:13:33 UTC <Martingale> fryguybob Aha, that makes sense
+2013-10-25 04:01:35 UTC <carter> ClaudiusMaximus: neat
+2013-10-25 04:27:54 UTC <ClaudiusMaximus> :)  i should neaten it up into something for -contrib, perhaps
+2013-10-25 04:28:29 UTC <carter> ClaudiusMaximus: you have those other really neat visuals right?
+2013-10-25 04:28:53 UTC <ClaudiusMaximus> err, can you be more specific?
+2013-10-25 04:29:36 UTC <carter> fractal / dynamic systems things?
+2013-10-25 04:29:42 UTC <carter> or am I thinking of someone else?
+2013-10-25 04:30:23 UTC <ClaudiusMaximus> (btw, thinking about 'rounded' - patching mpfr the way its done now will probably break horribly any foreign libraries that keep mpfr things between calls from haskell... so gc hooks are probably the best way?)
+2013-10-25 04:30:31 UTC <ClaudiusMaximus> yeah done quite a few fractal things...
+2013-10-25 04:30:58 UTC <carter> ClaudiusMaximus:hrmmmmm
+2013-10-25 04:31:06 UTC <ClaudiusMaximus> http://mathr.co.uk/blog/2013-10-02_islands_in_the_hairs.html but that used C/cairo instead of diagrams
+2013-10-25 04:31:51 UTC <carter> ah
+2013-10-25 04:32:33 UTC <carter> ClaudiusMaximus: http://mathr.co.uk/lyapunov-fm/ PRETTTY
+2013-10-25 04:33:09 UTC <ClaudiusMaximus> :)
+2013-10-25 04:34:38 UTC <carter> ClaudiusMaximus: skiming the paper ---- so if I get my numerical stuff working, you'll be stress testing it and telling me how i'm too slow? :)
+2013-10-25 04:34:50 UTC <carter> while also creating pretty pictures? :)
+2013-10-25 04:35:03 UTC <ClaudiusMaximus> maybe!
+2013-10-25 04:35:26 UTC <carter> ok
+2013-10-25 04:35:30 UTC <carter> i shall strive!
+2013-10-25 04:35:32 UTC <carter> for that
+2013-10-25 04:35:41 UTC <ClaudiusMaximus> are you targetting GPU?
+2013-10-25 04:36:07 UTC <carter> not for the version 0.1 release
+2013-10-25 04:37:00 UTC <carter> but sometime after i get the basic stuff working, i'll be making some breaking changes to support deep embedding in the ~ 0.2 series
+2013-10-25 04:37:06 UTC <carter> well
+2013-10-25 04:37:17 UTC <carter> whatever the 2nd major version winds up being
+2013-10-25 04:37:29 UTC <carter> but i have a road map to supporing gpu via LLVM code gen
+2013-10-25 04:37:34 UTC <ClaudiusMaximus> cool
+2013-10-25 04:38:00 UTC <carter> first step: make sure its easy to write mathy code with really really good locality
+2013-10-25 04:38:04 UTC <carter> and understand how to fix bad locality
+2013-10-25 04:39:17 UTC <ClaudiusMaximus> http://mathr.co.uk/mandelbrot/perturbation.pdf is (one of) my current procrastination project(s)..
+2013-10-25 04:39:57 UTC <ClaudiusMaximus> by locality you mean cpu cache?
+2013-10-25 04:40:24 UTC <carter> yes
+2013-10-25 04:40:25 UTC <carter> memory
+2013-10-25 04:40:29 UTC <carter> throughput
+2013-10-25 04:40:31 UTC <carter> wiz 
+2013-10-25 04:40:32 UTC <carter> bang 
+2013-10-25 04:40:33 UTC <carter> fast
+2013-10-25 04:41:02 UTC <carter> i want to make writing BLAS quality performance code (or a small constant away from that) easy
+2013-10-25 04:41:49 UTC <ClaudiusMaximus> cool - that's one of the things i get fed up with most often doing gpu stuff - somethings can be blazingly fast but add an extra few bytes of state per pixel and woeful speed
+2013-10-25 04:42:16 UTC <carter> well, it be more accurate that i want to make it "explainable" why code is slow or fast
+2013-10-25 04:42:25 UTC <carter> but easier explainability makes many things easier
+2013-10-25 04:42:28 UTC <carter> like making slow code fast
+2013-10-25 04:42:31 UTC <carter> first i'm dealing with cpu
+2013-10-25 04:42:33 UTC <carter> then gpu
+2013-10-25 04:42:37 UTC <ClaudiusMaximus> one posterize effect i did was realtime with 10 colours but about 2fps with 11...
+2013-10-25 04:42:52 UTC <carter> huh
+2013-10-25 04:43:06 UTC <carter> on what sort of gpu?
+2013-10-25 04:44:11 UTC <ClaudiusMaximus> it pushed that part of the state over 128 bytes, and the access patterns were sufficiently nonlinear to make it cache miss many times (i presume)
+2013-10-25 04:44:17 UTC <ClaudiusMaximus> nvidia gtx 550 ti
+2013-10-25 04:44:27 UTC <carter> yeah
+2013-10-25 04:44:33 UTC <carter> one part of what i've spent a LOT of time thinking about 
+2013-10-25 04:44:54 UTC <carter> is how to make writing code with good access patterns be the pretty code :)
+2013-10-25 04:45:45 UTC <ClaudiusMaximus> when i put the palette into a texture (1 byte per channel) instead of hardcoded constants (1 float per channel) it was still fast with many more colours..
+2013-10-25 04:45:59 UTC <carter> cool
+2013-10-25 04:46:07 UTC <carter> that make sense
+2013-10-25 04:46:17 UTC <carter> cachelines and all that
+2013-10-25 04:46:18 UTC <carter> for gpu
+2013-10-25 04:47:26 UTC <carter> ok
+2013-10-25 04:47:28 UTC <carter> i'm off
+2013-10-25 04:47:29 UTC <carter> night all
+2013-10-25 04:47:36 UTC <ClaudiusMaximus> g'night
+2013-10-25 10:30:21 UTC <ClaudiusMaximus> http://mathr.co.uk/misc/2013-10-25_box_of_stars_and_rain.jpg (made the net with diagrams' turtle)
+2013-10-25 10:34:56 UTC <ClaudiusMaximus> http://www.mathematische-basteleien.de/magiccube.htm shows the principle
+2013-10-25 11:07:57 UTC <byorgey> =D
+2013-10-25 11:08:14 UTC <byorgey> aha, you're the other person who has made physical objects with diagrams
+2013-10-25 11:08:26 UTC <byorgey> bergey wasn't the first after all =)
+2013-10-25 11:08:49 UTC <byorgey> I remember you made some sort of woven paper torus
+2013-10-25 11:08:53 UTC <ClaudiusMaximus> yep
+2013-10-25 11:09:10 UTC <ClaudiusMaximus> http://mathr.co.uk/blog/2013-04-05_weaving_a_torus.html
+2013-10-25 11:11:11 UTC <notdan> ClaudiusMaximus: woah, I haven't seen that one, impressive
+2013-10-25 11:11:55 UTC <ClaudiusMaximus> i seem to remember making one from a kit in the mid-late '90s, or maybe that was a ring of tetrahedra
+2013-10-25 11:14:33 UTC <ClaudiusMaximus> (it's a bit annoying that Diagrams.Prelude exports e)
+2013-10-25 11:18:37 UTC <ClaudiusMaximus> but i suppose it's not that often i want a top level e of my own, and it's more annoying to hoogle for the correct module...
+2013-10-25 11:46:17 UTC <byorgey> yeah, maybe we should stop exporting it from Prelude
+2013-10-25 11:46:34 UTC <byorgey> it's cute when you want it but otherwise it's not worth the annoyance
+2013-10-25 11:46:52 UTC <byorgey> the other thing I often end up clashing with are things like p2 and r2
+2013-10-25 11:46:59 UTC <Martingale> I agree, I don't thin we should export e
+2013-10-25 11:47:26 UTC <Martingale> I also clash with radius a bit
+2013-10-25 11:48:12 UTC <ClaudiusMaximus> the magic cube net generator has 10 toplevel identifiers with single-character names
+2013-10-25 11:49:28 UTC <ClaudiusMaximus> and the rest is pretty much write-only code - i realized too late that some of the folds are coloured wrong (to indicate which way to fold) and it'll take ages to work out what i need to change...
+2013-10-25 12:30:13 UTC <Taneb> What units does the Cairo CmdLine use?
+2013-10-25 12:30:52 UTC <byorgey> Taneb: it depends on which file format you are generating
+2013-10-25 12:31:00 UTC <Taneb> pdf
+2013-10-25 12:31:14 UTC <byorgey> in that case, I am not actually sure.
+2013-10-25 12:31:24 UTC <byorgey> whatever the default units are when creating a PDF surface in cairo.
+2013-10-25 12:31:52 UTC <Taneb> Well, it's not millimetres
+2013-10-25 12:32:02 UTC <Taneb> (it seems to be smaller)
+2013-10-25 12:32:48 UTC <byorgey> I have found something suggesting it is points
+2013-10-25 12:33:07 UTC <byorgey> 1 point ~ 0.3527 mm
+2013-10-25 12:33:30 UTC <byorgey> we should document this better =)
+2013-10-25 12:33:52 UTC <byorgey> (pull requests welcome of course)
+2013-10-25 12:34:23 UTC <byorgey> we should document it in the user manual, the Haddocks for diagrams-cairo, and also in the --help text for CmdLine
+2013-10-25 17:51:31 UTC <travis-ci> [travis-ci] 13diagrams-svg/06gradient 14acde69f http://travis-ci.org/diagrams/diagrams-svg/builds/13052215 The build was broken.
+2013-10-25 17:55:15 UTC <travis-ci> [travis-ci] 13diagrams-lib/06gradient 147c38e90 http://travis-ci.org/diagrams/diagrams-lib/builds/13052180 The build was fixed.
