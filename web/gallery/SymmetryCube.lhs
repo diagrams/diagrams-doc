@@ -14,7 +14,6 @@ width: 600
 > import Diagrams.Backend.Cairo
 > import Diagrams.BoundingBox
 > import Diagrams.Core.Envelope
-> import Diagrams.Coordinates
 > import Diagrams.Prelude
 > import Graphics.SVGFonts
 
@@ -47,7 +46,7 @@ A single string of text.
 
 Several lines of text stacked vertically.
 
-> centredText ls n = vcat' with { catMethod = Distrib, sep = (n) }
+> centredText ls n = vcat' (with & catMethod .~ Distrib & sep .~ (n))
 >                      (map (\l -> centerX (text' l n)) ls)
 > centredText' s = centredText (splitOn "\n" s)
 
@@ -55,14 +54,11 @@ Diagram-specific parameters, including the positioning vectors.
 
 > padAmount = 0.5
 >
-> down :: R2
-> down = (0& (-10))
+> down = r2 (0, -10)
 >
-> upright :: R2
-> upright = (7&5)
+> upright = r2 (7, 5)
 >
-> right :: R2
-> right = (15&0)
+> right = r2 (15, 0)
 
 A box with some interior text and a name.
 
@@ -88,9 +84,9 @@ diagram "b".
 
 > drawLines :: Diagram Cairo R2 -> Diagram Cairo R2
 > drawLines cube = foldr (.) id (map (uncurry
->                        (connectOutside' with
->                        {headSize=0.8
->                        ,shaftStyle=lw 0.01})) pairs) cube
+>                        (connectOutside' (with
+>                        & headSize .~ 0.8
+>                        & shaftStyle %~ lw 0.01))) pairs) cube
 >   where pairs = [ ("perm","permgroup")
 >                 , ("perm","sym")
 >                 , ("perm","paramperm")

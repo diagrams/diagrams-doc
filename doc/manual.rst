@@ -489,7 +489,7 @@ if you are just reading this manual for the first time!)
 
 > illustrateEnvelope v d
 >   = mconcat
->     [arrowAt' with {arrowHead=tri, headSize=0.2} origin v
+>     [arrowAt' (with & arrowHead .~ tri & headSize .~ 0.2) origin v
 >     , origin ~~ b
 >       # lc green # lw 0.05
 >     , p1 ~~ p2
@@ -652,11 +652,9 @@ two-dimensional space:
   Vectors can also be constructed and pattern-matched using the
   utilities defined in `Diagrams.Coordinates`:mod:, which provides a
   uniform interface for constructing points and vectors of any
-  dimension.  Vectors can be created using the syntax `(x & y)` and
+  dimension.  Vectors can be created using the syntax `(x ^& y)` and
   pattern-matched by calling `coords` and then matching on the pattern
-  `(x :& y)`.  Note that `Diagrams.Coordinates`:mod: is not exported
-  from `Diagrams.Prelude`:mod: (to avoid clashing with `lens`:pkg:),
-  so to use it you must explicitly import it.
+  `(x :& y)`.
 
   For more in-depth information on working with `R2`, `see this
   tutorial`__.
@@ -805,9 +803,9 @@ polygons and other path-based shapes.  For example:
 >       ||| triangle 1
 >       ||| roundedRect  0.5 0.4 0.1
 >       ||| roundedRect  0.5 0.4 (-0.1)
->       ||| roundedRect' 0.7 0.4 with { radiusTL = 0.2
->                                     , radiusTR = -0.2
->                                     , radiusBR = 0.1 }
+>       ||| roundedRect' 0.7 0.4 (with & radiusTL .~ 0.2
+>                                      & radiusTR .~ -0.2
+>                                      & radiusBR .~ 0.1)
 
 Completing the hodgepodge in `Diagrams.TwoD.Shapes`:mod: for now, the
 functions `hrule` and `vrule` create horizontal and vertical lines,
@@ -838,8 +836,8 @@ optional parameters that control the generated polygon:
       ::
 
       > example = strutX 1 ||| p 6 ||| p 24 ||| strutX 1
-      >   where p n = polygon with
-      >                 { polyType = PolyRegular n 1 }
+      >   where p n = polygon (with
+      >                 & polyType .~ PolyRegular n 1 )
 
     * `PolySides` specifies the vertices using a list of angles
       between edges, and a list of edge lengths.
@@ -848,11 +846,11 @@ optional parameters that control the generated polygon:
 
       ::
 
-      > example = polygon with
-      >   { polyType = PolySides
+      > example = polygon ( with
+      >   & polyType .~ PolySides
       >       [ 20 :: Deg, 90 :: Deg, 40 :: Deg, 100 :: Deg ]
       >       [ 1        , 5        , 2        , 4          ]
-      >   }
+      >   )
 
     * `PolyPolar` specifies the vertices using polar coordinates: a
       list of central angles between vertices, and a list of vertex
@@ -872,10 +870,10 @@ optional parameters that control the generated polygon:
 
 ::
 
-> poly1 = polygon with { polyType   = PolyRegular 13 5
->                      , polyOrient = OrientV }
-> poly2 = polygon with { polyType   = PolyPolar (repeat (1/40 :: Turn))
->                                               (take 40 $ cycle [2,7,4,6]) }
+> poly1 = polygon ( with & polyType  .~ PolyRegular 13 5
+>                        & polyOrient .~ OrientV )
+> poly2 = polygon ( with & polyType  .~ PolyPolar (repeat (1/40 :: Turn))
+>                                                 (take 40 $ cycle [2,7,4,6]) )
 > example = (poly1 ||| strutX 1 ||| poly2) # lw 0.05
 
 Notice the idiom of using `with` to construct a record of default
@@ -938,14 +936,14 @@ which there are two possibilities:
   ::
 
   > funs          = map (flip (^)) [2..6]
-  > visualize f	  = stroke' with { vertexNames = [[0 .. 6 :: Int]] }
+  > visualize f	  = stroke' (with & vertexNames .~ [[0 .. 6 :: Int]] )
   >                     (regPoly 7 1)
   >                   # lw 0
   >                   # showLabels
   >                   # fontSize 0.6
   >              <> star (StarFun f) (regPoly 7 1)
   >                   # stroke # lw 0.05 # lc red
-  > example       = centerXY . hcat' with {sep = 0.5} $ map visualize funs
+  > example       = centerXY . hcat' (with & sep .~ 0.5) $ map visualize funs
 
 You may notice that all the above examples need to call `stroke` (or
 `stroke'`), which converts a path into a diagram.  Many functions
@@ -1030,7 +1028,7 @@ right identity for `beside v`, as can be seen in the example below:
 
 ::
 
-> example = hcat' with {sep = 1} . map showOrigin
+> example = hcat' (with & sep .~ 1) . map showOrigin
 >         $ [ d, mempty ||| d, d ||| mempty ]
 >   where d = square 1
 
@@ -1126,7 +1124,7 @@ local origin of the final result.
 
 ::
 
-> example = cat (r2 (2,-1)) (map p [3..8]) # showOrigin
+> example = cat (r2 (2, -1)) (map p [3..8]) # showOrigin
 >   where p n = regPoly n 1 # lw 0.03
 
 Semantically, `cat v === foldr (beside v) mempty`, although the actual
@@ -1141,7 +1139,7 @@ possibilities.
 
 ::
 
-> example = cat' (r2 (2,-1)) with { catMethod = Distrib, sep = 2 } (map p [3..8])
+> example = cat' (r2 (2,-1)) (with & catMethod .~ Distrib & sep .~ 2 ) (map p [3..8])
 >   where p n = regPoly n 1 # lw 0.03
 >                           # scale (1 + fromIntegral n/4)
 >                           # showOrigin
@@ -1236,7 +1234,7 @@ transparent colors you can use `lcA` and `fcA`.
 > import Data.Colour (withOpacity)
 >
 > colors  = map (blue `withOpacity`) [0.1, 0.2 .. 1.0]
-> example = hcat' with { catMethod = Distrib, sep = 1 }
+> example = hcat' (with & catMethod .~ Distrib & sep .~ 1 )
 >                 (zipWith fcA colors (repeat (circle 1)))
 
 Transparency can also be tweaked with the `Opacity` attribute, which
@@ -1250,7 +1248,7 @@ results in a diagram `p` times as opaque.
 
 > s c     = square 1 # fc c
 > reds    = (s darkred ||| s red) === (s pink ||| s indianred)
-> example = hcat' with { sep = 1 } . take 4 . iterate (opacity 0.7) $ reds
+> example = hcat' (with & sep .~ 1 ) . take 4 . iterate (opacity 0.7) $ reds
 
 To "set the background color" of a diagram, use the `bg`
 function---which does not actually set any attributes, but simply
@@ -1331,7 +1329,7 @@ for three aspects of line drawing:
 ::
 
 > path = fromVertices (map p2 [(0,0), (1,0.3), (2,0), (2.2,0.3)]) # lw 0.1
-> example = centerXY . vcat' with { sep = 0.1 }
+> example = centerXY . vcat' (with & sep .~ 0.1 )
 >           $ map (path #)
 >             [ lineCap LineCapButt   . lineJoin LineJoinMiter
 >             , lineCap LineCapRound  . lineJoin LineJoinRound
@@ -1632,16 +1630,16 @@ polygon):
 
 > import Diagrams.TwoD.Align
 >
-> concave = polygon with {polyType = PolyPolar [a, b, b, b]
->                [0.25,1,1,1,1] ,polyOrient = NoOrient}
->                # fc blue # lw 0
+> concave = polygon ( with & polyType .~ PolyPolar [a, b, b, b]
+>                   [ 0.25,1,1,1,1] & polyOrient .~ NoOrient )
+>                   # fc blue # lw 0
 >   where
 >     a = 1/8 :: Turn
 >     b = 1/4 :: Turn
 >
-> convex = polygon with { polyType = PolyPolar [a,b] [0.25, 1, 1]
->                       , polyOrient = NoOrient}
->                       # fc orange # lw 0
+> convex = polygon (with & polyType .~ PolyPolar [a,b] [0.25, 1, 1]
+>                        & polyOrient .~ NoOrient)
+>                        # fc orange # lw 0
 >   where
 >     a = 1/8 :: Turn
 >     b = 3/4 :: Turn
@@ -1758,8 +1756,7 @@ There are two types of trail:
 
   ::
 
-  > import Diagrams.Coordinates
-  > example = fromOffsets [1 & 1, 2 & (-1), (-1) & (-1), (-3) & 1]
+  > example = fromOffsets [1 ^& 1, 2 ^& (-1), (-1) ^& (-1), (-3) ^& 1]
   >         # closeLine # strokeLoop # fc blue
 
   Loops in 2D can be filled, as in the example above.
@@ -1772,8 +1769,7 @@ There are two types of trail:
 
   ::
 
-  > import Diagrams.Coordinates
-  > example = fromOffsets [1 & 1, 2 & (-1), (-1) & (-1), (-3) & 1]
+  > example = fromOffsets [1 ^& 1, 2 ^& (-1), (-1) ^& (-1), (-3) ^& 1]
   >         # strokeLine
 
   Actually, a line can in fact happen to end in the same place where
@@ -1804,13 +1800,11 @@ is how to convert between them.
 
     ::
 
-    > import Diagrams.Coordinates
-    >
     > almostClosed :: Trail' Line R2
-    > almostClosed = fromOffsets
-    >   [2 & (-1), (-3) & (-0.5), (-2) & 1, 1 & 0.5]
+    > almostClosed = fromOffsets $ (map r2
+    >   [(2, -1), (-3, -0.5), (-2, 1), (1, 0.5)])
     >
-    > example = pad 1.1 . centerXY . fc orange . hcat' with {sep = 1}
+    > example = pad 1.1 . centerXY . fc orange . hcat' (with & sep .~ 1)
     >   $ [ almostClosed # strokeLine
     >     , almostClosed # closeLine # strokeLoop
     >     ]
@@ -2062,7 +2056,7 @@ rotation), and then decorate it with the rows.
 > dot       = circle 1 # fc black
 > dotSep    = 0.5
 > dotOffset = (width (dot :: D R2) + dotSep) *^ unitX
-> mkRow n   = hcat' with {sep = dotSep} (replicate n dot)
+> mkRow n   = hcat' (with & sep .~ dotSep) (replicate n dot)
 > mkTri n   = decoratePath
 >               (fromOffsets (replicate (n-1) dotOffset) # rotateBy (-1/3))
 >               (map mkRow [1..n])
@@ -2240,10 +2234,8 @@ continuity; segments are even more restricted.)
 
 ::
 
-> import Diagrams.Coordinates
->
 > spline :: Located (Trail R2)
-> spline = cubicSpline False [origin, 0&1, 1&1, 1&0] # scale 3
+> spline = cubicSpline False [origin, 0 ^& 1, 1 ^& 1, 1 ^& 0] # scale 3
 > pts = map (spline `atParam`) [0, 0.1 .. 1]
 > dot = circle 0.2 # fc blue
 >
@@ -2526,10 +2518,8 @@ named subdiagrams, or their traces. One may use the functions:
 
 ::
 
-> import Diagrams.Coordinates ((&))
->
-> sPt = 0.50 & 0.50
-> ePt = 5.2 & 0.50
+> sPt = 0.50 ^& 0.50
+> ePt = 5.2 ^& 0.50
 >
 > -- Connect two points.
 > ex1 = arrowBetween sPt ePt
@@ -2542,7 +2532,7 @@ named subdiagrams, or their traces. One may use the functions:
 >           # connectPerim "1" "2" (15/16 :: Turn) (9/16 :: Turn)
 >
 > -- Place an arrow at (0,0) the size and direction of (0,1).
-> ex4 = arrowAt (0 & 0) unit_Y
+> ex4 = arrowAt (0 ^& 0) unit_Y
 >
 > example = (ex1
 >           ===
@@ -2591,8 +2581,6 @@ The following example demonstrates the use of various `ArrowOpts`.
 
 ::
 
-> import Diagrams.Coordinates ((&))
->
 > c = circle 2 # fc lightgray # lw 0 # showOrigin
 >
 > x |-| y = x ||| strutX 3 ||| y
@@ -2604,27 +2592,27 @@ The following example demonstrates the use of various `ArrowOpts`.
 >
 > d = row1 === strutY 5 === row2
 >
-> shaft1 = trailFromVertices [(0 & 0), (1 & 0), (1 & 0.2), (2 & 0.2)]
-> shaft2 = cubicSpline False [(0 & 0), (1 & 0), (1 & 0.2), (2 & 0.2)]
+> shaft1 = trailFromVertices (map p2 [(0, 0), (1, 0), (1, 0.2), (2, 0.2)])
+> shaft2 = cubicSpline False (map p2 [(0, 0), (1, 0), (1, 0.2), (2, 0.2)])
 > shaft3 = arc 0 (1/6 :: Turn)
 >
 > example = d
->    # connect' with { arrowTail=quill, tailSize=1.5
->                    , tailStyle=fc orange, headStyle = fc orange
->                    , arrowHead=spike, headSize =1.5
->                    , shaftStyle=lw 0.3 } "1" "2"
->    # connect' with { arrowTail=thorn', tailSize=1.5
->                    , arrowHead=thorn, headSize=1.5
->                    , arrowShaft=shaft1, shaftStyle=lw 0.15 } "3" "4"
->    # connect' with { arrowTail=block, tailSize=1, tailGap=0.4
->                    , arrowHead=missile, headSize=1.5, headGap=0.4
->                    , arrowShaft=shaft2
->                    , headStyle=fc blue, tailStyle=fc blue
->                    , shaftStyle=lw 0.15 # lc blue } "5" "6"
->    # connect' with { arrowShaft=shaft3
->                    , arrowHead=tri, headSize=1.5
->                    , headStyle=fc red # opacity 0.5
->                    , shaftStyle=lw 0.2 # lc black # opacity 0.5} "7" "8"
+>    # connect' (with & arrowTail .~ quill& tailSize .~ 1.5
+>                     & tailStyle %~ fc orange & headStyle  %~  fc orange
+>                     & arrowHead .~ spike& headSize  .~ 1.5
+>                     & shaftStyle %~ lw 0.3 ) "1" "2"
+>    # connect' (with & arrowTail .~ thorn'& tailSize .~ 1.5
+>                     & arrowHead .~ thorn & headSize .~ 1.5
+>                     & arrowShaft .~ shaft1 & shaftStyle %~ lw 0.15 ) "3" "4"
+>    # connect' (with & arrowTail .~ block & tailSize .~ 1& tailGap .~ 0.4
+>                     & arrowHead .~ missile & headSize .~ 1.5& headGap .~ 0.4
+>                     & arrowShaft .~ shaft2
+>                     & headStyle %~ fc blue & tailStyle %~ fc blue
+>                     & shaftStyle %~ lw 0.15 . lc blue ) "5" "6"
+>    # connect' (with & arrowShaft .~ shaft3
+>                     & arrowHead .~ tri & headSize .~ 1.5
+>                     & headStyle %~ fc red . opacity 0.5
+>                     & shaftStyle %~ lw 0.2 . lc black . opacity 0.5 ) "7" "8"
 
 For more detailed information see the `Arrows tutorial`__.
 
@@ -2862,11 +2850,10 @@ Envelope-related functions
 
   > {-# LANGUAGE ViewPatterns #-}
   > import Diagrams.TwoD.Vector
-  > import Diagrams.Coordinates
   > import Data.Maybe (fromJust)
   >
   > sampleEnvelope2D n d = foldr (flip atop) (d # lc red) bs
-  >   where b  = fromJust $ appEnvelope (envelope d)
+  >   where b  = fromJust $ appEnvelope (getEnvelope d)
   >         bs = [stroke $ mkLine (origin .+^ (s *^ v))
   >                               (5 *^ normalized (perp v))
   >              | v <- vs, let s = b v
@@ -2880,7 +2867,7 @@ Envelope-related functions
   >
   > example
   >   = square 2
-  >   # extrudeEnvelope (2 & 1)
+  >   # extrudeEnvelope (2 ^& 1)
   >   # sampleEnvelope2D 100
   >   # lw 0.05
   >   # centerXY # pad 1.1
@@ -2995,9 +2982,8 @@ Normally, a trace is accessed using one of the four functions
   ::
 
   > import Data.Maybe (fromMaybe)
-  > import Diagrams.Coordinates ((&))
   >
-  > drawV v = arrowAt' with {headSize=0.2} origin v
+  > drawV v = arrowAt' (with & headSize .~ 0.2) origin v
   >
   > drawTraceV v d
   >   = lc green $
@@ -3005,12 +2991,12 @@ Normally, a trace is accessed using one of the four functions
   >       ((origin ~~) <$> traceP origin v d)
   > illustrateTraceV v d = (d <> drawV v <> drawTraceV v d) # showOrigin
   >
-  > example = hcat' with {sep = 1}
+  > example = hcat' (with & sep .~ 1)
   >         . lw 0.03
-  >         . map (illustrateTraceV (0.5 *^ (1 & 1)))
-  >         $ [ circle 1 # translate ((-1.5) & (-1.5))
+  >         . map (illustrateTraceV (0.5 *^ (r2 (1, 1))))
+  >         $ [ circle 1 # translate (r2 (-1.5, -1.5))
   >           , circle 1
-  >           , circle 1 # translate (1.5 & 1.5)
+  >           , circle 1 # translate (r2 (1.5, 1.5))
   >           ]
 
 * `traceP` works similarly, except that it returns the point of
@@ -3041,7 +3027,6 @@ identify points on the boundaries of several diagrams.
 ::
 
 > import Data.Maybe (mapMaybe)
-> import Diagrams.Coordinates ((&))
 >
 > illustrateTrace d = d <> traceLines
 >   where
@@ -3050,10 +3035,10 @@ identify points on the boundaries of several diagrams.
 >                 . iterateN 30 (rotateBy (1/60))
 >                 $ unitX
 >     traceLine v = (basePt ~~) <$> traceP basePt v d
->     basePt = 0 & (-2)
+>     basePt = p2 (0, -2)
 >
 > example
->   = hcat' with {sep = 1}
+>   = hcat' (with & sep .~ 1)
 >   . map illustrateTrace
 >   $ [ square 1
 >     , circle 1
@@ -3116,7 +3101,7 @@ more information, see `No instances for Backend b0 R2 ...`_.
 ::
 
     ghci> names (circle 1 # named "joe" ||| circle 2 # named "bob" :: D R2)
-    [("bob",[P (2.9999999999999996 & 0.0)]),("joe",[P (0.0 & 0.0)])]
+    [("bob",[P (2.9999999999999996 ^& 0.0)]),("joe",[P (0.0 ^& 0.0)])]
 
 Of course, there is in fact an entire subdiagram (or subdiagrams)
 associated with each name, not just a point; but subdiagrams do not
@@ -3275,7 +3260,7 @@ below code draws a tree of circles, using subdiagram traces (see
 >
 > root   = circle 1 # named "root"
 > leaves = centerXY
->        . hcat' with {sep = 0.5}
+>        . hcat' (with & sep .~ 0.5)
 >        $ map (\c -> circle 1 # named c) "abcde"
 >
 > parentToChild child
@@ -3320,7 +3305,7 @@ a qualified name explicitly, separate the components with `(.>)`.
 >        === (s # named SW ||| s # named SE)
 >   where s = square 1
 >
-> d = hcat' with {sep = 0.5} (zipWith (|>) [0::Int ..] (replicate 5 squares))
+> d = hcat' (with & sep .~ 0.5) (zipWith (|>) [0::Int ..] (replicate 5 squares))
 >
 > pairs :: [(Name, Name)]
 > pairs = [ ((0::Int) .> NE, (2::Int) .> SW)
@@ -3542,7 +3527,7 @@ The arrows on the right are wrapped in `ScaleInv` but the ones on the left are n
 > {-# LANGUAGE TypeSynonymInstances, FlexibleInstances #-}
 >
 > import Diagrams.TwoD.Transform.ScaleInv
-> import Diagrams.Coordinates ((&))
+> import Control.Lens ((^.))
 >
 > class Drawable d where
 >   draw :: d -> Diagram Cairo R2
@@ -3551,14 +3536,14 @@ The arrows on the right are wrapped in `ScaleInv` but the ones on the left are n
 >   draw = id
 >
 > instance Drawable a => Drawable (ScaleInv a) where
->   draw = draw . unScaleInv
+>   draw = draw . (^. scaleInvObj)
 >
 > instance (Drawable a, Drawable b) => Drawable (a,b) where
 >   draw (x,y) = draw x <> draw y
 >
 > arrowhead, shaft :: Diagram Cairo R2
 > arrowhead = triangle 0.5 # fc black # rotateBy (-1/4)
-> shaft = origin ~~ (3 & 0)
+> shaft = origin ~~ p2 (3, 0)
 >
 > arrow1 = (shaft,          arrowhead       # translateX 3)
 > arrow2 = (shaft, scaleInv arrowhead unitX # translateX 3)
@@ -3567,7 +3552,7 @@ The arrows on the right are wrapped in `ScaleInv` but the ones on the left are n
 >        ||| strutX 1
 >        ||| draw (arrow2 # transform tr)
 >
-> example = vcat' with {sep = 0.5}
+> example = vcat' (with & sep .~ 0.5)
 >             (map (centerX . showT)
 >               [ scalingX (1/2)
 >               , scalingY 2
@@ -4345,7 +4330,7 @@ accomplished as follows. Instead of writing just (say) `pentagon`, write
 
 ::
 
-> stroke' with { vertexNames = [[0..]] } pentagon
+> stroke' ( with & vertexNames .~ [[0..]] ) pentagon
 
 which assigns consecutive numbers to the vertices of the pentagon.
 
@@ -4454,7 +4439,7 @@ the section on `Qualifying names`_:
 
 ::
 
-> hcat' with {sep = 0.5} (zipWith (|>) [0 .. ] (replicate 5 squares))
+> hcat' ( with & sep .~ 0.5 ) (zipWith (|>) [0 .. ] (replicate 5 squares))
 
 It is an attempt to qualify the names in five copies of `squares` with
 the numbers `0`, `1`, `2`, ...  However, it generates the error shown below:
@@ -4473,7 +4458,7 @@ the numbers `0`, `1`, `2`, ...  However, it generates the error shown below:
       `(zipWith (|>) [0 .. ] (replicate 5 squares))'
     In the expression:
       hcat'
-        (with {sep = 0.5}) (zipWith (|>) [0 .. ] (replicate 5 squares))
+        (with & sep .~ 0.5)) (zipWith (|>) [0 .. ] (replicate 5 squares))
 
 The problem, again, is that GHC does not know what type to choose for
 some polymorphic value.  Here, the polymorphic values in question are

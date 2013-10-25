@@ -148,7 +148,7 @@ compileDiagram outDir src = do
 #ifdef USE_SVG
              (\_ opts -> opts)
 #else
-             (\hash opts -> opts { cairoFileName = mkFile hash })
+             (\hash opts -> opts { _cairoFileName = mkFile hash })
 #endif
              outDir
            )
