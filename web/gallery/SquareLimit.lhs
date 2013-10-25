@@ -29,10 +29,10 @@ The diagram is constructed from five basic tiles: four with specific
 markings on, and a fifth which is blank, all $16 \times 16$. The actual
 markings are defined at the end of the file.
 
-> blank :: Diagram Cairo R2
+> blank :: Diagram B R2
 > blank = lw 0 $ square 16
 
-> makeTile :: [[P2]] -> Diagram Cairo R2
+> makeTile :: [[P2]] -> Diagram B R2
 > makeTile = showOrigin . lw 0.05 . centerXY . mconcat . map fromVertices where
 
 > markingsP, markingsQ, markingsR, markingsS :: [[P2]]
@@ -73,7 +73,7 @@ pictures are the same size.
 
 Folding with these operators draws a whole picture.
 
-> drawPicture :: Picture -> Diagram Cairo R2
+> drawPicture :: Picture -> Diagram B R2
 > drawPicture Blank = blank
 > drawPicture (Single m) = makeTile m
 > drawPicture (Rot p) = rot (drawPicture p)

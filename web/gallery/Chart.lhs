@@ -9,7 +9,6 @@ height: 400
 width: 600
 ---
 
-> import Diagrams.Backend.Cairo
 > import Diagrams.Prelude
 > import Graphics.SVGFonts.ReadFont
 >
@@ -30,11 +29,11 @@ dashing pattern and shape.
 >   , ("sin",      map (\x -> (x, 8+sin x)) [0.0, 0.5 .. 10.0])
 >   ]
 >
-> type DC = Diagram Cairo R2
+> type Dia = Diagram B R2
 
 The final diagram is the chart with the legend next to it.
 
-> example :: DC
+> example :: Dia
 > example = pad 1.1 . centerXY $
 >     (centerY (chart (map snd dataSeries) plotStyles [0,2,4,6,8,10] [0,2,4,6,8,10])
 >      ||| strutX 1
@@ -52,7 +51,7 @@ horizontal and vertical axes markings.
 "dataToFrac" converts points from the "data" space [0..10] into the
 [0..1] range.
 
-> chart :: [Points] -> [(DC, DC -> DC)] -> [Double] -> [Double] -> DC
+> chart :: [Points] -> [(Dia, Dia -> Dia)] -> [Double] -> [Double] -> Dia
 > chart series styles xs ys = mconcat
 >   [ plotMany styles series dataToFrac
 >   , horizticks (map (\x -> ((x-minx)/xrange, showFloor x)) xs)
@@ -71,7 +70,7 @@ horizontal and vertical axes markings.
 Plot a single data series.  A "shape" is drawn at every data point,
 and straight lines are drawn between points.
 
-> plot :: ((Double,Double) -> (Double,Double)) -> DC -> (DC -> DC) -> [(Double,Double)] -> DC
+> plot :: ((Double,Double) -> (Double,Double)) -> Dia -> (Dia -> Dia) -> [(Double,Double)] -> Dia
 > plot dataToFrac shape lineStyle ps =
 >     let scalify (x,y) = (x*w,y*h)
 >         ps' = map (p2 . scalify . dataToFrac) ps
@@ -80,19 +79,19 @@ and straight lines are drawn between points.
 
 Plot many data series using the given list of styles.
 
-> plotMany :: [(DC, DC -> DC)] -> [[(Double, Double)]] -> ((Double, Double) -> (Double, Double)) -> DC
+> plotMany :: [(Dia, Dia -> Dia)] -> [[(Double, Double)]] -> ((Double, Double) -> (Double, Double)) -> Dia
 > plotMany styles seriesList dataToFrac =
 >     mconcat $ zipWith (uncurry (plot dataToFrac)) (styles ++ plotStyles) seriesList
 
 A string of text, converted to a path and filled.
 
-> text' :: String -> DC
+> text' :: String -> Dia
 > text' s = (stroke $ textSVG' (TextOpts s lin2 INSIDE_H KERN False 0.4 0.4)) # fc black # lw 0
 
 The chart's legend.  Each label is drawn next to a little example of
 how the line looks in the chart.
 
-> legend :: [(DC, DC -> DC)] -> [String] -> DC
+> legend :: [(Dia, Dia -> Dia)] -> [String] -> Dia
 > legend styles labels = centerXY $
 >     vcat' with {_sep=0.15} $
 >       map (\(l,s) -> littleLine s ||| strutX 0.4 ||| text' l # alignL)
@@ -102,14 +101,14 @@ how the line looks in the chart.
 
 The outer box is just a rectangle.
 
-> box :: DC
+> box :: Dia
 > box = strokeLoop . closeLine . fromVertices $ [ 0^&0, 0^&h, w^&h, w^&0 ]
 
 Each tick on the vertical axis has a text part, a solid line on the
 left, a solid line on the right, and a long dashed line from left to
 right.
 
-> vertticks :: [(Double,String)] -> DC
+> vertticks :: [(Double,String)] -> Dia
 > vertticks pairs =
 >     let textBits = mconcat [ text' t # alignR # moveTo ((-0.2)^&(y*h)) | (y,t) <- pairs ]
 >         tickBits =    mconcat [ fromVertices [ 0^&(y*h), 0.1    ^&(y*h) ] | (y,_) <- pairs ]
@@ -119,7 +118,7 @@ right.
 
 (Similar for the horizontal axis.)
 
-> horizticks :: [(Double,String)] -> DC
+> horizticks :: [(Double,String)] -> Dia
 > horizticks pairs =
 >     let textBits = mconcat [ text' t # moveTo ((x*w)^&(-0.3)) | (x,t) <- pairs ]
 >         tickBits =    mconcat [ fromVertices [ (x*w)^&0, (x*w)^&0.1     ] | (x,_) <- pairs ]
@@ -132,9 +131,9 @@ the shape should be filled, a line style is a dashing pattern, and a
 colour style is just a colour.  These three combined give a "style".
 
 > newtype Fill = Fill Bool
-> type Shape = DC
+> type Shape = Dia
 > type DotStyle = (Shape, Fill)
-> type LineStyle = DC -> DC
+> type LineStyle = Dia -> Dia
 >
 > plotStyles :: [ (Shape, LineStyle) ]
 > plotStyles = zipWith3 combineStyles dotStyles colourStyles lineStyles
@@ -174,7 +173,7 @@ The colour styles.
 
 The line styles.
 
-> lineStyles :: [DC -> DC]
+> lineStyles :: [Dia -> Dia]
 > lineStyles = cycle . map (. lw 0.03) $
 >                [ id, dashing [0.1,0.1] 0, dashing [0.02,0.02] 0
 >                , dashing [0.1,0.1,0.03,0.1] 0, dashing [0.1,0.1,0.02,0.02,0.02,0.1] 0 ]

@@ -11,7 +11,6 @@ width: 600
 
 > import Data.List.Split
 > import Data.Maybe
-> import Diagrams.Backend.Cairo
 > import Diagrams.BoundingBox
 > import Diagrams.Core.Envelope
 > import Diagrams.Prelude
@@ -41,7 +40,7 @@ rectangle.
 
 A single string of text.
 
-> text' :: String -> Double -> Diagram Cairo R2
+> text' :: String -> Double -> Diagram B R2
 > text' s n = textSVG_ (textOpts s n) # fc black # lw 0
 
 Several lines of text stacked vertically.
@@ -67,7 +66,7 @@ A box with some interior text and a name.
 The cube is just several boxes superimposed, positioned by adding
 together some positioning vectors.
 
-> cube :: Diagram Cairo R2
+> cube :: Diagram B R2
 > cube = mconcat
 >   [ mybox "Permutation" "perm"
 >   , mybox "Permutation\ngroup" "permgroup"                     # translate right
@@ -82,7 +81,7 @@ together some positioning vectors.
 For each pair (a,b) of names, draw an arrow from diagram "a" to
 diagram "b".
 
-> drawLines :: Diagram Cairo R2 -> Diagram Cairo R2
+> drawLines :: Diagram B R2 -> Diagram B R2
 > drawLines cube = foldr (.) id (map (uncurry
 >                        (connectOutside' (with
 >                        & headSize .~ 0.8

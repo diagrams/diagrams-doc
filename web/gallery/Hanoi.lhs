@@ -11,10 +11,9 @@ view: -10,1.5,20,20
 
 > {-# LANGUAGE NoMonomorphismRestriction #-}
 > import Diagrams.Prelude
-> import Diagrams.Backend.Cairo
 > import Data.List
 >
-> type DC = Diagram Cairo R2
+> type Dia = Diagram B R2
 
 First, some colors for our disks, and types to represent the data
 structures involved.
@@ -29,7 +28,7 @@ structures involved.
 To render a single disk, draw a rectangle with width proportional to
 its disk number, using a color selected from the `colors` list.
 
-> renderDisk :: Disk -> DC
+> renderDisk :: Disk -> Dia
 > renderDisk n = rect (fromIntegral n + 2) 1
 >                # lc black
 >                # fc (colors !! n)
@@ -39,7 +38,7 @@ To render a stack of disks, just stack their renderings on top of a
 drawing of a peg.  We use `alignB` to place stack of disks at the
 bottom of the peg.
 
-> renderStack :: Stack -> DC
+> renderStack :: Stack -> Dia
 > renderStack s = disks `atop` post
 >   where disks = (vcat . map renderDisk $ s)
 >                 # alignB
@@ -52,7 +51,7 @@ Finally, to render a collection of stacks, lay them out
 horizontally, using the `Distrib` method so the pegs end up spaced
 evenly no matter the width of the disks on any particular peg.
 
-> renderHanoi :: Hanoi -> DC
+> renderHanoi :: Hanoi -> Dia
 > renderHanoi = hcat' (with & catMethod .~ Distrib & sep .~ 7) . map renderStack
 
 Now some code to actually solve the puzzle, generating a list of moves
@@ -80,7 +79,7 @@ configurations.
 Finally, we render a sequence of configurations representing a
 solution by laying them out vertically.
 
-> renderHanoiSeq :: [Hanoi] -> DC
+> renderHanoiSeq :: [Hanoi] -> Dia
 > renderHanoiSeq = vcat' (with & sep .~2) . map renderHanoi
 >
 > example = pad 1.1 $ renderHanoiSeq (hanoiSequence 4) # centerXY
