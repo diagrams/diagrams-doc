@@ -5,7 +5,7 @@ import           Control.Concurrent          (getNumCapabilities)
 import           Control.Monad               (when)
 import           Control.Parallel.Strategies (NFData)
 import           Data.Functor                ((<$>))
-import           Data.List                   (isPrefixOf)
+import           Data.List                   (isPrefixOf, (\\))
 import           Development.Shake
 import           Development.Shake.Classes   (Binary, Hashable)
 import           Development.Shake.FilePath  (dropDirectory1, dropExtension,
@@ -142,9 +142,16 @@ requireStatic = do
   let static = map (dist . ("doc/static" </>)) staticSrc
   need static
 
+-- A list of gallery examples which only build with cairo, to be
+-- excluded when building with SVG.
+cairoOnly :: [FilePath]
+cairoOnly = ["KnightTour.lhs"]
+
 requireGallery :: String -> Action ()
 requireGallery imgExt = do
-  gallerySrc <- filter (not . (".#" `isPrefixOf`))
+  gallerySrc <- ( filter (not . (".#" `isPrefixOf`))
+                . if imgExt == "svg" then (\\ cairoOnly) else id
+                )
                 <$> getDirectoryFiles "web/gallery" ["*.lhs"]
   let imgs   = map (dist . ("web/gallery" </>) . (-<.> ("big" <.> imgExt))) gallerySrc
       thumbs = map (dist . ("web/gallery" </>) . (-<.> ("thumb" <.> imgExt))) gallerySrc

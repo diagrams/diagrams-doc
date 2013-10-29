@@ -21,14 +21,21 @@ tutorials), you will need:
 * GHC 7.4 or 7.6
 * the diagrams framework itself (including the
   [contrib package](http://github.com/diagrams/diagrams-contrib),
-  [cairo backend](http://github.com/diagrams/diagrams-cairo),
   [SVGFonts package](http://github.com/diagrams/SVGFonts), and
   [diagrams-builder package](http://github.com/diagrams/diagrams-builder)).
+* *Either* the [cairo
+  backend](http://github.com/diagrams/diagrams-cairo) (recommended)
+  *or* the [SVG backend](http://github.com/diagrams/diagrams-svg) (if
+  you cannot build the cairo backend).  See below for more
+  information re: using the SVG backend.
 * the python [docutils suite](http://docutils.sourceforge.net/) (in
-  particular `rst2xml` should be on your PATH),
-* the Haskell [docutils package](http://github.com/diagrams/docutils), and
+  particular `rst2xml` should be on your PATH).
+* the Haskell [docutils package](http://github.com/diagrams/docutils)
+  (note it is not on Hackage; just clone the `master` branch from
+  github and `cabal install` it).
 * the latest version of [shake](http://hackage.haskell.org/package/shake).
 * [hakyll](http://hackage.haskell.org/package/hakyll)-4.x.
+* [hxt](http://hackage.haskell.org/package/hxt).
 
 Once you have all the dependencies, simply do
 
@@ -46,16 +53,40 @@ change.
 
 For example, on a four-core Ubuntu machine, assuming you already have
 the Haskell Platform installed, and have cloned the relevant diagrams
-repositories from github, you could issue the commands
+repositories from github, and want to use the cairo backend, you could
+issue the commands
 
 ```
 sudo apt-get install libgtk-3-dev libcairo2-dev python-docutils
 cabal install hsenv
 hsenv --name=dia
 .hsenv_dia/bin/activate
-cabal install gtk2hs-buildtools shake hakyll
-cabal install diagrams-core/ diagrams-lib/ diagrams-cairo/ diagrams-contrib/ diagrams-builder/ SVGFonts/ docutils/
+cabal install gtk2hs-buildtools
+cabal install diagrams-core/ diagrams-lib/ diagrams-cairo/ diagrams-contrib/ diagrams-builder/ SVGFonts/ docutils/ shake hakyll hxt
 cd diagrams-doc
 ghc --make Shake -threaded
 ./Shake +RTS -N4 -RTS preview
 ```
+
+## Building with `diagrams-svg`
+
+The build system will first check for an installed `diagrams-cairo`
+package.  If none is found, it will fall back to using the
+`diagrams-svg` package.  This almost works, except for a few small
+issues:
+
+* There are a few examples in the user manual and other tutorials
+  which cannot build with `diagrams-svg`, because they use embedded
+  images, which `diagrams-svg` cannot yet handle.  As a workaround,
+  the build system passes a `--keepgoing` flag to the utility that
+  builds diagrams embedded in the user manual and tutorials, causing
+  it to report success even when an example fails.
+
+* There is also an explicit list of gallery examples which are
+  excluded from the build when using `diagrams-svg`, since they only
+  build with `diagrams-cairo`.
+
+These issues should not cause too much trouble but are simply good to
+be aware of.  Using `diagrams-svg` should be perfectly adequate for
+ensuring that your contributions to the documentation compile properly
+and look the way you expect.
