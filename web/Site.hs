@@ -41,7 +41,8 @@ main = do
     -- CSS, templates, JavaScript -----------------
     match "css/*" $ do
         route   idRoute
-        compile compressCssCompiler
+        let cssCtx = constField "ext" imgExt
+        compile (compressCssCompiler >>= applyAsTemplate cssCtx)
 
     match "templates/*" $ compile templateCompiler
 
