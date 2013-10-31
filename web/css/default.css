@@ -99,7 +99,7 @@ code a {
 }
 
 div.todo:before {
-    content: url(../doc/icons/ToWrite.png);
+    content: url(../doc/icons/ToWrite.$ext$);
     float: right;
     padding-left: 20px;
     padding-bottom: 20px;
@@ -113,7 +113,7 @@ div.todo {
 }
 
 div.warning:before {
-    content: url(../doc/icons/Warning.png);
+    content: url(../doc/icons/Warning.$ext$);
     float: right;
     padding-left: 20px;
     padding-bottom: 20px;
@@ -127,7 +127,7 @@ div.warning {
 }
 
 div.exercises:before {
-    content: url(../doc/icons/Exercises.png);
+    content: url(../doc/icons/Exercises.$ext$);
     float: right;
     padding-left: 20px;
     padding-bottom: 20px;
