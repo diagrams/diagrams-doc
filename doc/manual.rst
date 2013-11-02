@@ -2202,9 +2202,9 @@ parameters:
 ::
 
 > data OffsetOpts = OffsetOpts
->     { _offsetJoin      :: LineJoin
->     , _offsetMiterJoin :: Double
->     , _offsetEpsilon   :: Double
+>     { _offsetJoin       :: LineJoin
+>     , _offsetMiterLimit :: Double
+>     , _offsetEpsilon    :: Double
 >     }
 
 And the type for `offsetTrail'` is (`offsetTrail` simply uses the `Default`
@@ -2214,7 +2214,7 @@ instance for `OffsetOpts`):
 
 ::
 
-> offestTrail  ::               Double -> Located (Trail R2) -> Located (Trail R2)
+> offsetTrail  ::               Double -> Located (Trail R2) -> Located (Trail R2)
 > offsetTrail' :: OffsetOpts -> Double -> Located (Trail R2) -> Located (Trail R2)
 >
 > offsetPath  ::               Double -> Path R2 -> Path R2
