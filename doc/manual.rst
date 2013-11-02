@@ -2062,6 +2062,238 @@ rotation), and then decorate it with the rows.
 >               (map mkRow [1..n])
 > example   = mkTri 5
 
+Offsets of segments, trails, and paths
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Given a segment and an offset radius `r`:math: we can make an *offset segment*
+that is the distance `r`:math: from the original segment.  More specifically,
+you can think of the offset as the curve traced by the end of a vector of
+length `r`:math: perpendicular to the original curve.  This vector goes on the
+right of the curve for a positive radius and on the left for a negative radius.
+
+.. class:: dia-lhs
+
+::
+
+> import Diagrams.TwoD.Offset
+>
+> example :: Diagram B R2
+> example = hcat' (with & sep .~ 1) $ map f 
+>         [ straight p
+>         , bézier3 (r2 (0,0.5)) (r2 (1,0.5)) p
+>         ]
+>   where
+>     p = r2 (1,1)
+>     f :: Segment Closed R2 -> Diagram B R2
+>     f s =  fromSegments [s]
+>         <> offsetSegment 0.1 0.2 s # strokeLocTrail # lc blue
+
+.. container:: todo
+
+    Animate tracing an offset?
+
+For a straight segment this will clearly be a parallel straight line with
+`r`:math: as the distance between the lines.  For an counter-clockwise arc of
+radius `R`:math: the offset will be an arc with the same center, start and end
+angles, and radius `r+R`:math:.  Cubic segments present a problem, however.
+The offset of a cubic Bézier curve could be a higher degree curve.  To
+accommodate this we approximate the offset with a sequence of segments.  We
+now have enough details to write the type for `offsetSegment`.
+
+.. class:: lhs
+
+::
+
+> offsetSegment :: Double -> Double -> Segment Closed R2 -> Located (Trail R2)
+
+The first parameter to `offsetSegment` is an epsilon factor `\epsilon`:math:.
+When the radius is multiplied by `\epsilon`:math: we get the maximum allowed
+distance a point on the approximate offset can differ from the true offset.
+The final parameters are the radius and the segment.  The result is a located
+trail.  It is located because the offset's start will be distance `r`:math:
+away from the segment start which is the origin.
+
+If we can offset a segment we naturally will want to extend this to offset a
+trail.  A first approach might be to simply map `offsetSegment` over the
+segments of a trail.  But we quickly notice that if the trail has any sharp
+corners, the offset will be disconnected!
+
+.. class:: dia-lhs
+
+::
+
+> import Diagrams.TwoD.Offset
+> 
+> locatedTrailSegments t = zipWith at (trailSegments (unLoc t)) (trailVertices t)
+>
+> bindLoc f = join' . mapLoc f
+>   where
+>     join' x = let (p,a) = viewLoc x in translate (p .-. origin) a
+>
+> offsetTrailNaive :: Double -> Double -> Trail R2 -> Path R2
+> offsetTrailNaive e r = mconcat . map (pathFromLocTrail . bindLoc (offsetSegment e r)) 
+>                      . locatedTrailSegments . (`at` origin)
+>
+> example :: Diagram B R2
+> example = (p # strokeTrail <> offsetTrailNaive 0.1 0.3 p # stroke # lc blue)
+>         # lw 0.01
+>   where p = fromVertices . map p2 $ [(0,0), (1,0.3), (2,0), (2.2,0.3)]
+
+First let's consider the outside corner where the adjacent offset segments do
+not cross.  If we consider sweeping a perpendicular vector along the original
+trail we have a problem when we get to a corner.  It is not clear what
+*perpendicular* means for that point.  One solution is to take all points
+distance `r`:math: from the corner point.  This puts a circle around the corner
+of radius `r`:math:.  Better is to just take the portion of that circle that
+transitions from what is perpendicular at the end of the first segment to what
+is perpendicular at the start of the next.  We could also choose to join together
+offset segments in other sensible ways.  For the choice of join we have the
+`_offsetJoin` field in the `OffsetOpts` record.
+
+.. class:: dia-lhs
+
+::
+
+> import Diagrams.TwoD.Offset
+>
+> example :: Diagram B R2
+> example = (p # strokeTrail <> o # strokeLocTrail # lc blue)
+>         # lw 0.01
+>   where
+>     p = fromVertices . map p2 $ [(0,0), (1,0.3), (2,0), (2.2,0.3)]
+>     o = offsetTrail' (with & offsetJoin .~ LineJoinRound) 0.3 p
+
+Inside corners are handled in a way that is consistent with outside corners, but
+this yields a result that is most likely undesirable.  Future versions of Diagrams
+will include the ability to clip inside corners with several options for how to 
+do the clipping.
+
+.. container:: todo
+
+    Update after implementing clipping.
+
+There are other interesting ways we can join segments.  We implement the standard
+line join styles and will also in the future provide the ability to specify a custom
+join.
+
+.. class:: dia-lhs
+
+::
+
+> import Diagrams.TwoD.Offset
+> 
+> example :: Diagram B R2
+> example = hcat' (with & sep .~ 0.5) $ map f [LineJoinMiter, LineJoinRound, LineJoinBevel]
+>   where
+>     f s = p # strokeTrail <> (offsetTrail' (with & offsetJoin .~ s) 0.3 p # strokeLocTrail # lc blue)
+>     p = fromVertices . map p2 $ [(0,0), (1,0), (0.5,0.7)]
+      
+The `LineJoinMiter` style in particular can use more information to dictate how
+long a miter join can extend.  A sharp corner can have a miter join that is an
+unbounded distance from the original corner.  Usually, however, this long join
+is not desired.  Diagrams follows the practice of most graphics software and
+provides a `_offsetMiterLimit` field in the `OffsetOpts` record.  When the join
+would be beyond the miter limit, the join is instead done with a straight line
+as in the `LineJoinBevel` style.  The `OffsetOpts` record then has three
+parameters:
+
+.. class:: lhs
+
+::
+
+> data OffsetOpts = OffsetOpts
+>     { _offsetJoin      :: LineJoin
+>     , _offsetMiterJoin :: Double
+>     , _offsetEpsilon   :: Double
+>     }
+
+And the type for `offsetTrail'` is (`offsetTrail` simply uses the `Default`
+instance for `OffsetOpts`):
+
+.. class:: lhs
+
+::
+
+> offestTrail  ::               Double -> Located (Trail R2) -> Located (Trail R2)
+> offsetTrail' :: OffsetOpts -> Double -> Located (Trail R2) -> Located (Trail R2)
+>
+> offsetPath  ::               Double -> Path R2 -> Path R2
+> offsetPath' :: OffsetOpts -> Double -> Path R2 -> Path R2
+
+Notice this takes a `Trail R2` which means it works for both `Trail' Line R2`
+and `Trail' Loop R2`.  The second parameter is the radius for the offset.  A
+negative radius gives a `Line` on the right of the curve, or a `Loop` inside a
+counter-clockwise `Loop`.  For `offsetPath` we can simply map `offsetTrail`
+over the trails in the path in the most natural way.
+
+Expand segments, trails, and paths
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Expanding is just like the offset, but instead of producing a curve that
+follows one side we follow both sides and produce a `Loop` that can be filled
+representing all the area within a radius `r`:math: of the original curve.
+
+In addition to specifying how segments are joined, we now have to specify the
+transition from the offset on one side of a curve to the other side of a curve.
+This is given by the `LineCap`.  
+
+.. class:: lhs
+
+::
+
+> data ExpandOpts = ExpandOpts
+>     { _expandJoin       :: LineJoin
+>     , _expandMiterLimit :: Double
+>     , _expandCap        :: LineCap
+>     , _expandEpsilon    :: Double
+>     }
+>
+> expandTrail  ::               Double -> Located (Trail R2) -> Path R2
+> expandTrail' :: ExpandOpts -> Double -> Located (Trail R2) -> Path R2
+>
+> expandPath  ::               Double -> Path R2 -> Path R2
+> expandPath' :: ExpandOpts -> Double -> Path R2 -> Path R2
+
+The functionality follows closely to the offset functions, but notice that
+the result of `expandTrail` is a `Path R2` where `offsetTrail` resulted in
+a `Located (Trail R2)`.  This is because an expanded `Loop` will be a pair
+of loops, one inside and one outside.  To express this we need a `Path`.
+
+.. class:: dia-lhs
+
+::
+
+> import Diagrams.TwoD.Offset
+>
+> example :: Diagram B R2
+> example = (p # strokeTrail # lw 0.02 # lc white <> e # stroke # lw 0 # fc blue)
+>   where
+>     p = fromVertices . map p2 $ [(0,0), (1,0.3), (2,0), (2.2,0.3)]
+>     e = expandTrail' opts 0.3 p
+>     opts = with & expandJoin .~ LineJoinRound
+>                 & expandCap  .~ LineCapRound
+
+As long as the expanded path is filled with the winding fill rule we do not
+need to worry about having clipping for inside corners.  It works out that the
+extra loop in the rounded line join will match with the outside corner.  We
+currently all the implement `LineCap` styles and in future versions should
+support custom styles.
+
+.. class:: dia-lhs
+
+::
+
+> import Diagrams.TwoD.Offset
+> 
+> example :: Diagram B R2
+> example = hcat' (with & sep .~ 0.5) $ map f [LineCapButt, LineCapRound, LineCapSquare]
+>   where
+>     f s =  p # strokeTrail # lw 0.02 # lc white
+>         <> expandTrail' (opts s) 0.3 p # stroke # lw 0 # fc blue
+>     p = fromVertices . map p2 $ [(0,0), (1,0), (0.5,0.7)]
+>     opts s = with & expandJoin .~ LineJoinRound 
+>                   & expandCap  .~ s
+
 .. _TrailLike:
 
 The ``TrailLike`` class
