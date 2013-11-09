@@ -23,7 +23,7 @@ before_install:
   - source travis/scripts/set_env.sh
   - ./travis/scripts/before_install.sh
 
-install: ./travis/scripts/install.sh
+install: ./travis/scripts/install-deps.sh
 
 before_script: ghc --make Shake
 
