@@ -1,0 +1,42 @@
+Abstract
+--------
+
+Diagrams is an declarative, embedded, domain-specific language for
+describing vector graphics.  It has a vibrant and growing community of
+users and developers, and is rapidly gaining new features and
+extensions.  The goal is for it to serve as a viable replacement for
+other declarative drawing systems like TikZ---with the advantage of
+being embedded in Haskell, and hence able to easily interoperate with
+any other Haskell code.
+
+In the first half of the talk, I will demonstrate diagrams by
+example---both prepared and coded-on-the-fly---showing off various
+features of the library as well as how easy it is to embed diagrams in
+other media such as LaTeX documents, blog posts, and even emacs
+org-mode files.  The goal is to give you all the tools you need to get
+started expressing your ideas visually with diagrams.  Also, if you
+are not already convinced of the value of embedded domain-specific
+languages in Haskell, this will convince you or nothing will!
+
+In the second half of the talk, I will delve into the design and
+implementation of diagrams, with an emphasis on take-away lessons for
+design and implementation of other embedded domain-specific
+languages. In a way, diagrams has been a five-year-long domain
+analysis: what exactly *is* a "diagram", semantically speaking?  A
+"path"? How can these ideas be expressed in Haskell, in a way that is
+both correct and convenient to program with?  I will conclude by
+explaining some current projects and longer-term goals, and presenting
+some project ideas for anyone interested in contributing.
+
+
+Bio
+---
+
+Brent Yorgey is a PhD student in the Programming Languages group at
+the University of Pennsylvania.  Since learning Haskell in 2005, he
+has enthusiastically embraced the community, writing the well-known
+Typeclassopedia, contributing many packages, editing the Haskell
+Weekly News and Monad.Reader, and serving on the haskell.org and core
+libraries committees.  When not writing Haskell, you can usually find
+him hanging out with his two-year-old son, playing classical piano, or
+thinking about writing Haskell.
