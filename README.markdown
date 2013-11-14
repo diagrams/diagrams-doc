@@ -3,9 +3,9 @@
 This repository holds all documentation for the
 [diagrams framework](http://projects.haskell.org/diagrams), including
 
-* the [website](http://projects.haskell.org) source
-* tutorials
-* user manual
+* the [website](http://projects.haskell.org/diagrams) source
+* [tutorials](http://projects.haskell.org/diagrams/documentation.html)
+* [user manual](http://projects.haskell.org/diagrams/doc/manual.html)
 * IRC logs
 * blog posts
 * related papers
