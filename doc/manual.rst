@@ -1657,8 +1657,8 @@ rightmost edge of its trace in the diagram on the right, whereas in
 the left diagram the `alignR` function puts it at the edge of the
 envelope.
 
-Working with trails and paths
------------------------------
+Trails and paths
+----------------
 
 Trails and paths are some of the most fundamental tools in
 ``diagrams``.  They can be used not only directly to draw things, but
@@ -4198,7 +4198,7 @@ Instances:
 * `Active t` (for any `TrailLike p`): creates a constant `Active`
   value.
 
-Further reading: `Working with trails and paths`_; `Trails`_;
+Further reading: `Trails and paths`_; `Trails`_;
 `Paths`_; `TrailLike`_.
 
 Classes for parametric objects
