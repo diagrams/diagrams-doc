@@ -31,8 +31,14 @@ Reference
 Blog posts/other
 ----------------
 
+* [Magicube](http://mathr.co.uk/blog/2013-11-03_magicube.html) (Claude
+  Heiland-Allen, 3 November 2013)
+* [Parking in Westminster: An Analysis in Haskell](http://idontgetoutmuch.wordpress.com/2013/10/23/parking-in-westminter-an-analysis-in-haskell/)
+  (Dominic Steinitz, 23 October 2013)
 * [Cellular Automata](https://www.fpcomplete.com/user/edwardk/cellular-automata)
   (Edward Kmett, 17 August 2013)
+* [Weaving a torus](http://mathr.co.uk/blog/2013-04-05_weaving_a_torus.html)
+  (Claude Heiland-Allen, 5 April 2013)
 * [Butterfly Variations](http://mathr.co.uk/blog/2013-01-11_butterfly_variations.html)
   (Claude Heiland-Allen, 11 January 2013)
 * [Creating documents with embedded diagrams](http://byorgey.wordpress.com/2012/08/28/creating-documents-with-embedded-diagrams/)
