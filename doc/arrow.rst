@@ -156,17 +156,17 @@ is the definition for reference:
 ::
 
   data ArrowOpts = ArrowOpts
-      { arrowHead  :: ArrowHT
-      , arrowTail  :: ArrowHT
-      , arrowShaft :: Trail R2
-      , headSize   :: Double
-      , tailSize   :: Double
-      , headGap    :: Double -- amount of space to leave after arrowhead
-      , tailGap    :: Double -- amount of space ot leave before arrowtail
-      , headStyle  :: HasStyle c => c -> c
-      , tailStyle  :: HasStyle c => c -> c
-      , shaftStyle :: HasStyle c => c -> c }
-
+    { _arrowHead  :: ArrowHT
+    , _arrowTail  :: ArrowHT
+    , _arrowShaft :: Trail R2
+    , _headSize   :: Double
+    , _tailSize   :: Double
+    , _headGap    :: Double
+    , _tailGap    :: Double
+    , _headStyle  :: Style R2
+    , _tailStyle  :: Style R2
+    , _shaftStyle :: Style R2
+    }
 
 Don't worry if some of the field types in this record are not yet clear,
 we will walk through each field
@@ -376,11 +376,20 @@ the following example. The default gaps are 0.
 The style options
 -----------------
 
-The styles of the head, tail and shaft are manipulated using
-`headStyle`, `tailStyle`, and `shaftStyle`.  We change the attributes
-of the arrow parts by setting one of these parameters equal to a
-function that applies the attributes, *e.g.* `headStyle = fc blue` or
-`tailStyle = fc orange . opacity 0.5`.
+By default, arrows are drawn using the current line color (including
+the head and tail).  For example:
+
+.. class:: dia-lhs
+
+::
+
+> example = square 1 <> arrowAt origin unitX # lc blue # centerXY
+
+The styles of the head, tail and shaft may be individually overridden
+using `headStyle`, `tailStyle`, and `shaftStyle`.  We change the
+attributes of the arrow parts by setting one of these parameters equal
+to a function that applies the attributes, *e.g.* `headStyle = fc
+blue` or `tailStyle = fc orange . opacity 0.5`.
 
 .. class:: lhs
 

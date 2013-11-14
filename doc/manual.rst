@@ -2805,7 +2805,8 @@ to `connect` is `connect'`. These companion functions take an extra
 
 * `headStyle`, `tailStyle` and `shaftStyle` are used to pass in style
   functions like `fc blue . opacity 0.75` to customize parts of the
-  arrow.
+  arrow.  (By default, the entire arrow, including head and tail, is
+  drawn using the current line color.)
 
 The following example demonstrates the use of various `ArrowOpts`.
 
