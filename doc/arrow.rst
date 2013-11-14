@@ -383,7 +383,7 @@ the head and tail).  For example:
 
 ::
 
-> dia = square 1 <> arrowAt origin unitX # lc blue # centerXY
+> example = square 1 <> arrowAt origin unitX # lc blue # centerXY
 
 The styles of the head, tail and shaft may be individually overridden
 using `headStyle`, `tailStyle`, and `shaftStyle`.  We change the
