@@ -12,6 +12,7 @@ Tutorials
 * [Segments, trails, and paths](/doc/paths.html)
 * [Arrows](/doc/arrow.html) --- using the arrow API.
 * [Diagrams and LaTeX](/doc/latex.html) --- including diagrams in your LaTeX documents.
+* [Command-line Diagram Creation](/doc/cmdline.html) --- build programs that produce diagrams controlled by command-line.
 * [How to write diagrams tutorials](/doc/tutorials.html) --- how to
   write one of these here things, and have it included in this list!
 
