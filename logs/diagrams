@@ -42703,3 +42703,167 @@
 2013-10-25 12:34:23 UTC <byorgey> we should document it in the user manual, the Haddocks for diagrams-cairo, and also in the --help text for CmdLine
 2013-10-25 17:51:31 UTC <travis-ci> [travis-ci] 13diagrams-svg/06gradient 14acde69f http://travis-ci.org/diagrams/diagrams-svg/builds/13052215 The build was broken.
 2013-10-25 17:55:15 UTC <travis-ci> [travis-ci] 13diagrams-lib/06gradient 147c38e90 http://travis-ci.org/diagrams/diagrams-lib/builds/13052180 The build was fixed.
+2013-11-12 02:16:28 UTC <fryguybob> byorgey: It just works too strangely to not have that kind of feedback.  I was trying to write "#fc4" blah blah "#ffcc44" but you certainly can't just write that.
+2013-11-12 02:16:54 UTC <fryguybob> In the end the #'s just wouldn't work so I switched to 0x :(
+2013-11-12 02:36:58 UTC <travis-ci> [travis-ci] 13diagrams-svg/06optparse 14bfc16f7 http://travis-ci.org/diagrams/diagrams-svg/builds/13837794 The build failed.
+2013-11-12 02:37:25 UTC <fryguybob> Oh, I should push the lib changes...
+2013-11-12 02:38:04 UTC <byorgey> fryguybob: aww
+2013-11-12 02:39:19 UTC <byorgey> fryguybob: you could still make the parser handle # as an easter egg even if you can't document it =)
+2013-11-12 02:40:15 UTC <fryguybob> byorgey: hehe, I could get Haddock to accept @\"#\"@, but not the other things.
+2013-11-12 02:40:28 UTC <byorgey> hehe, strange
+2013-11-12 02:40:37 UTC <byorgey> I don't know why # would be special to Haddock
+2013-11-12 02:41:09 UTC <fryguybob> byorgey: Perhaps it is actually a problem with the HTML.
+2013-11-12 02:42:03 UTC <byorgey> ah, that's possible
+2013-11-12 02:42:18 UTC <byorgey> I wonder if you can embed entity codes directly in Haddock
+2013-11-12 02:45:51 UTC <fryguybob> Ah, so haddock is turning it into an anchor.
+2013-11-12 02:46:58 UTC <fryguybob> But there doesn't seem to be an option for escaping them.
+2013-11-12 02:47:22 UTC <fryguybob> Anchors are supposed to have the syntax #label#
+2013-11-12 02:50:05 UTC <travis-ci> [travis-ci] 13diagrams-postscript/06optparse 1400dafdc http://travis-ci.org/diagrams/diagrams-postscript/builds/13837809 The build passed.
+2013-11-12 02:54:20 UTC <travis-ci> [travis-ci] 13active/06new-new-semantics 147400c13 http://travis-ci.org/diagrams/active/builds/13838011 The build has errored.
+2013-11-12 03:02:06 UTC <byorgey> ah, an anchor, I see
+2013-11-12 03:02:32 UTC <byorgey> I'm hopeful that this sort of inconsistency got ironed out with Fuuzetsu's GSoC project improving Haddock
+2013-11-12 03:02:36 UTC <byorgey> we'll see
+2013-11-12 03:03:52 UTC <fryguybob> byorgey: Yeah, it is a hard problem.
+2013-11-12 03:06:02 UTC <travis-ci> [travis-ci] 13diagrams-lib/06optparse 14fb95f27 http://travis-ci.org/diagrams/diagrams-lib/builds/13838063 The build passed.
+2013-11-12 15:24:47 UTC <Martingale> ACTION internet will be down for several hours :(
+2013-11-12 16:41:10 UTC <fryguybob> http://gallery.bridgesmathart.org/exhibitions/2014-joint-mathematics-meetings/ryates
+2013-11-12 16:45:28 UTC <byorgey> \o/ =D
+2013-11-12 17:57:45 UTC <fryguybob> byorgey: Now I have to figure out how to get it printed with reasonable colors.
+2013-11-12 17:58:06 UTC <fryguybob> And clean up the code to go on the site linked.
+2013-11-12 22:16:33 UTC <byorgey> fryguybob: imagekind.com did a great job printing my factorization diagram poster.
+2013-11-12 22:17:03 UTC <byorgey> though you have to leave enough time for shipping.  And matching color between screens and paper is hard.
+2013-11-12 22:36:04 UTC <byorgey> testing bergey's changes to make pull requests build properly against unmerged dependencies...
+2013-11-12 22:41:18 UTC <byorgey> it works! =D
+2013-11-12 23:04:31 UTC <fryguybob> byorgey: Ok, I got the factorization diagram for Rebekah.  The printing is nice, but as you noted, the yellow isn't particularly strong.  I'm afraid that I might need a couple of passes at printing to get it right.
+2013-11-12 23:04:51 UTC <fryguybob> byorgey: I will probably use my contacts at the art department...
+2013-11-13 01:15:12 UTC <Martingale> byorgey I wonder if RTree should be and instance of Transformable, it can make the SVG slightly smaller for diagrams with a lot of freezes?
+2013-11-13 01:33:38 UTC <Martingale> Drab colors - 3 images in the gallery use (red, green, blue, & yellow) and 3 plain blue. Any thoughts on picking some nice color schemes from adobe kuler?
+2013-11-13 01:33:55 UTC <Martingale> I would be happy to do it and re-color some of the gallery
+2013-11-13 01:42:21 UTC <fryguybob> Martingale: Just make a diagrams-kuler and have it do it automatically ;D
+2013-11-13 01:43:50 UTC <Martingale> fryguybob very funny, Our website looks bad enough already.
+2013-11-13 01:45:50 UTC <bergey> Isn't that https://github.com/diagrams/diagrams-lib/issues/77
+2013-11-13 01:46:35 UTC <Martingale> Ah so it is 
+2013-11-13 01:47:49 UTC <Martingale> but in the meantime, why not make the gallery look better?
+2013-11-13 01:49:22 UTC <bergey> I was just building on fryguybob's joke, not actually making a constructive suggestion. :\
+2013-11-13 01:50:16 UTC <Martingale> I guess i have d3 envy
+2013-11-13 01:50:46 UTC <byorgey> Martingale: I'm sure we could make RTree Transformable.  But I think for making SVGs smaller we should just focus on tree transformations in the DTree -> RTree function
+2013-11-13 01:50:59 UTC <byorgey> well, and the SVG backend itself of course
+2013-11-13 01:51:10 UTC <byorgey> but perhaps I just don't understand what you have in mind.
+2013-11-13 01:51:40 UTC <byorgey> Martingale: sprucing up gallery examples with better color schemes sounds like a great idea
+2013-11-13 01:52:09 UTC <Martingale> byorgey The suggestion was more for a matter of consistnecy then optimization. Only frozen transforms get <transfrom .../>
+2013-11-13 01:52:26 UTC <Martingale> I'll spruce up the gallery then.
+2013-11-13 01:59:06 UTC <fryguybob> Martingale: The D3 gallery does have a nice consistent colors.  It would be nice to not have to "deal" with colors directly in general and instead do something higher level.
+2013-11-13 01:59:56 UTC <Martingale> fryguybob It would be, what ever happened to issue #77 looks like carter was going to work on it?
+2013-11-13 02:00:04 UTC <carter> whats that?
+2013-11-13 02:00:13 UTC <carter> oh yeah
+2013-11-13 02:00:15 UTC <carter> hrmmm
+2013-11-13 02:00:38 UTC <carter> Martingale: its on my infinite list
+2013-11-13 02:00:48 UTC <carter> but life has kept me from it
+2013-11-13 02:01:04 UTC <Martingale> carter i see, as long as your list is countable your OK
+2013-11-13 02:01:11 UTC <carter> it is
+2013-11-13 02:01:13 UTC <carter> i can enumerate the list
+2013-11-13 02:01:18 UTC <byorgey> carter's problem is that he has too many interesting ideas
+2013-11-13 02:01:22 UTC <carter> yes
+2013-11-13 02:01:27 UTC <carter> i get some done
+2013-11-13 02:01:35 UTC <carter> but they outpace my doing powers
+2013-11-13 02:01:46 UTC <carter> "too many interesting ideas, but finite time"
+2013-11-13 02:01:55 UTC <Martingale> so your an idea man?
+2013-11-13 02:01:56 UTC <byorgey> I am the same way, actually =)
+2013-11-13 02:02:06 UTC <byorgey> but maybe not as bad =)
+2013-11-13 02:02:36 UTC <carter> i've gotten better
+2013-11-13 02:02:44 UTC <carter> the array layer should be done end of this month
+2013-11-13 02:02:47 UTC <carter> i hope......
+2013-11-13 02:03:02 UTC <carter> life will intervene though: apt moving coming up over the next few weeks
+2013-11-13 02:03:17 UTC <Martingale> speaking of other websites - i like the way processing.js has lots of small examples each demonstrating how to do one thing.
+2013-11-13 02:03:38 UTC <Martingale> carter staying in the city though?
+2013-11-13 02:03:48 UTC <carter> yeah
+2013-11-13 02:30:28 UTC <carter> well
+2013-11-13 02:30:30 UTC <carter> mostly likely
+2013-11-13 02:30:48 UTC <carter> byorgey: Martingale  i'll be much more productive with my own projects / ideas once i get this day job interviewing sorted
+2013-11-13 02:30:54 UTC <carter> real income!
+2013-11-13 02:31:25 UTC <carter> byorgey: btw, one of Ozgun's new hires is going to be playing with haskell color modelling mebe
+2013-11-13 02:31:26 UTC <carter> :)
+2013-11-13 02:31:39 UTC <carter> she's stil learning haskell thogh
+2013-11-13 08:57:52 UTC <notdan> http://www.haskell.org/haskellwiki/Diagrams/GHC7.6 is this page still relevant?
+2013-11-13 11:54:14 UTC <byorgey> notdan: nope
+2013-11-13 11:54:24 UTC <byorgey> though the general principle is still relevant I suppose
+2013-11-13 14:39:32 UTC <Martingale> is `sRGB24read` from Data.Colour.SRGB the best way to convert a hex string to a color for diagrams fucntions?
+2013-11-13 14:40:38 UTC <fryguybob> Martingale: I just wrote my own, I didn't see that one.  I'll look at it and see if I should switch :D
+2013-11-13 14:41:14 UTC <Martingale> fryguybob where is yours?
+2013-11-13 14:41:36 UTC <Martingale> sRGB24read seems to work fine for me
+2013-11-13 14:42:12 UTC <Martingale> i wonder if we should rename and re-export it from the prelude, since i would like to use it in many gallery examples?
+2013-11-13 14:42:13 UTC <fryguybob> Martingale: In the optparse branch.  I'll switch to sRGB24reads.
+2013-11-13 14:42:27 UTC <fryguybob> I'll also unwrap a string that starts with "0x"
+2013-11-13 14:42:52 UTC <fryguybob> Oh, it doesn't support alpha color.
+2013-11-13 14:43:38 UTC <Martingale> fryguybob maybe we should use yours, I didn't see it in the optparse branch, which file?
+2013-11-13 14:44:25 UTC <fryguybob> sRGB24read doesn't support short form either: "#fed"
+2013-11-13 14:45:33 UTC <Martingale> fryguybob my task is simpler than yours, I'm just converting colors i get from kuler to be used in diagrams
+2013-11-13 14:45:37 UTC <fryguybob> Martingale: https://github.com/diagrams/diagrams-lib/blob/optparse/src/Diagrams/Backend/CmdLine.hs#L262
+2013-11-13 14:46:30 UTC <Martingale> fryguybob I think it might be a good idea for your `readHexColor` to be in the prelude
+2013-11-13 14:47:21 UTC <bergey> Or pushed upstream to `colour`, eventually?
+2013-11-13 14:49:05 UTC <fryguybob> Well colour could use some performance enhancements...
+2013-11-13 14:49:30 UTC <bergey> Oh?
+2013-11-13 14:51:29 UTC <byorgey> we need a Color Czar
+2013-11-13 14:51:38 UTC <fryguybob> bergey: There is a 3x3 matrix invertion using nested lists that happens for each color that we render to a backend.
+2013-11-13 14:51:43 UTC <byorgey> (only half joking =)
+2013-11-13 14:52:00 UTC <bergey> fryguybob: Oh, awesome.
+2013-11-13 14:52:09 UTC <byorgey> and aren't many of them the identity matrix anyway?
+2013-11-13 14:52:12 UTC <byorgey> I forget the details
+2013-11-13 14:53:13 UTC <bergey> We need one linear algebra package to rule them all. :)
+2013-11-13 14:53:24 UTC <byorgey> that too.
+2013-11-13 14:53:56 UTC <fryguybob> byorgey: Probably.  For one benchmark (with a lot of elements) it was by far the dominant use of time.  When I patched postscript so you could have any color as long as it was blue it took seconds instead of minutes.
+2013-11-13 14:58:20 UTC <fryguybob> Anyway, I'm happy to put `readHexColor` where it would best be.
+2013-11-13 15:25:16 UTC <fryguybob> hehe, too many comments at once :D
+2013-11-13 15:25:32 UTC <bergey> :D
+2013-11-13 15:26:36 UTC <byorgey> bergey: look up "pigment" in the POVRay documentation, I think
+2013-11-13 15:27:02 UTC <fryguybob> bergey: An example of the texture's being 3D is something like wood that when rendered looks like its carved out of wood.  The texture is the grain in 3d.
+2013-11-13 15:34:38 UTC <bergey> OK, POVRay calls them color_map and pigment_map.  It looks as though gradients are easy and wood grain &c are possible.
+2013-11-13 18:56:26 UTC <travis-ci> [travis-ci] 13diagrams-core/06delayed-subtrees 141659468 http://travis-ci.org/diagrams/diagrams-core/builds/13928579 The build passed.
+2013-11-13 19:11:14 UTC <travis-ci> [travis-ci] 13diagrams-lib/06gradient 14019990d http://travis-ci.org/diagrams/diagrams-lib/builds/13929262 The build was broken.
+2013-11-13 19:35:59 UTC <travis-ci> [travis-ci] 13diagrams-core/06delayed-subtrees 14149a2e2 http://travis-ci.org/diagrams/diagrams-core/builds/13929433 The build passed.
+2013-11-13 19:36:49 UTC <travis-ci> [travis-ci] 13diagrams-lib/06gradient 14f7226b4 http://travis-ci.org/diagrams/diagrams-lib/builds/13929940 The build was fixed.
+2013-11-13 20:16:30 UTC <travis-ci> [travis-ci] 13diagrams-core/06delayed-subtrees 14e8c5265 http://travis-ci.org/diagrams/diagrams-core/builds/13932172 The build passed.
+2013-11-13 20:26:13 UTC <travis-ci> [travis-ci] 13diagrams-lib/06delayed-subtrees 14c355559 http://travis-ci.org/diagrams/diagrams-lib/builds/13932320 The build failed.
+2013-11-13 20:33:52 UTC <travis-ci> [travis-ci] 13diagrams-lib/06delayed-subtrees 140348a75 http://travis-ci.org/diagrams/diagrams-lib/builds/13932650 The build passed.
+2013-11-13 20:50:20 UTC <travis-ci> [travis-ci] 13diagrams-lib/06delayed-subtrees 140f58998 http://travis-ci.org/diagrams/diagrams-lib/builds/13933698 The build passed.
+2013-11-13 20:55:22 UTC <byorgey> ^^^ this latest patch is super cool (IMO =)
+2013-11-13 20:55:43 UTC <byorgey> you can now get a completely blue arrow (including head and tail) just by doing   arrow .... # lc blue
+2013-11-13 20:55:46 UTC <byorgey> magic!
+2013-11-13 20:55:53 UTC <fryguybob> :D
+2013-11-13 20:56:16 UTC <Martingale> byorgey Wow !!!! that's awesome
+2013-11-13 20:56:21 UTC <byorgey> and you can still set the head, tail, and shaft colors individually using headStyle, tailStyle, and shaftStyle as before
+2013-11-13 20:58:56 UTC <byorgey> oh, and I fixed diagrams-lib#112, i.e. arrows now scale correctly =)
+2013-11-13 20:59:25 UTC <Martingale> beautiful
+2013-11-13 20:59:56 UTC <Martingale> byorgey Now, maybe you can jump in to the gradient discussion ;)
+2013-11-13 21:00:20 UTC <byorgey> Martingale: I will, once I finish off the documentation and open a pull request for -lib
+2013-11-13 21:00:53 UTC <Martingale> byorgey maybe we can even get gradients into 1.0
+2013-11-13 21:04:12 UTC <byorgey> yes, based on the little bit I've been following it the prospects seem pretty good for that
+2013-11-13 21:04:17 UTC <travis-ci> [travis-ci] 13diagrams-lib/06delayed-subtrees 1426a38f9 http://travis-ci.org/diagrams/diagrams-lib/builds/13934515 The build passed.
+2013-11-13 21:46:33 UTC <travis-ci> [travis-ci] 13diagrams-doc/06delayed-subtrees 14c558ed3 http://travis-ci.org/diagrams/diagrams-doc/builds/13935445 The build failed.
+2013-11-14 01:37:21 UTC <travis-ci> [travis-ci] 13diagrams-lib/06delayed-subtrees 14f4ec8d0 http://travis-ci.org/diagrams/diagrams-lib/builds/13946636 The build passed.
+2013-11-14 02:13:56 UTC <byorgey> aha! I think I figured it out.
+2013-11-14 02:16:51 UTC <Martingale> byorgey what is it, the suspense is killing me
+2013-11-14 02:17:30 UTC <byorgey> Martingale: the short version is, arrow' is now supposed to completely take into account any non-frozen transformations it sees, but it doesn't.
+2013-11-14 02:18:05 UTC <byorgey> Martingale: basically I just took the tranformation and applied it to the points  origin  and  (len,0),  and then draw an arrow between where those points end up.
+2013-11-14 02:18:28 UTC <byorgey> but the transformation might also be doing some flipping or shearing which that wouldn't show you
+2013-11-14 02:18:50 UTC <byorgey> affine transformations are not determined by their action on two points.
+2013-11-14 02:19:09 UTC <Martingale> byorgey Ah, i see
+2013-11-14 02:19:47 UTC <byorgey> Martingale: the reason the shafts come out flipped is that the SVG backend does a reflectY as the last thing before freezing.  So a reflect was getting passed down to the arrows and they were ignoring it.
+2013-11-14 02:20:30 UTC <Martingale> byorgey the SVG reflectY has got me several times!
+2013-11-14 02:20:43 UTC <byorgey> yep, cairo does it too
+2013-11-14 02:20:53 UTC <byorgey> it's gotten me too.
+2013-11-14 02:21:15 UTC <byorgey> better us than users I guess!
+2013-11-14 02:21:47 UTC <Martingale> definitely :)
+2013-11-14 02:23:13 UTC <Martingale> byorgey slightly off topic - do you know if I import a Diagrams generated SVG into inkscape and then save it, if it saves it as if I had drawn it, or just modifies my SVG
+2013-11-14 02:23:37 UTC <Martingale> Ofcourse I can test this myself, just thought you might know
+2013-11-14 02:23:39 UTC <byorgey> Martingale: I don't know.  But my guess is the former
+2013-11-14 02:23:59 UTC <Martingale> byorgey that could be a help in optimizing
+2013-11-14 02:24:31 UTC <Martingale> byorgey I'll let you get back to arrows :)
+2013-11-14 02:24:36 UTC <byorgey> oh, as in, generate an SVG, run it through inkscape, look for differences, and try to change the SVG backend to match?
+2013-11-14 02:24:44 UTC <byorgey> yes, that sounds like a good idea
+2013-11-14 02:25:45 UTC <Martingale> byorgey that's what i had in mind, i'll look into it
+2013-11-14 03:00:29 UTC <travis-ci> [travis-ci] 13diagrams-lib/06delayed-subtrees 148550d63 http://travis-ci.org/diagrams/diagrams-lib/builds/13948947 The build passed.
+2013-11-14 03:09:48 UTC <travis-ci> [travis-ci] 13diagrams-core/06master 14f3551f7 http://travis-ci.org/diagrams/diagrams-core/builds/13949531 The build passed.
+2013-11-14 03:18:33 UTC <travis-ci> [travis-ci] 13diagrams-lib/06master 147383eff http://travis-ci.org/diagrams/diagrams-lib/builds/13949560 The build passed.
+2013-11-14 04:09:21 UTC <travis-ci> [travis-ci] 13diagrams-doc/06delayed-subtrees 147f9fb28 http://travis-ci.org/diagrams/diagrams-doc/builds/13949747 The build was fixed.
+2013-11-14 04:43:06 UTC <travis-ci> [travis-ci] 13diagrams-doc/06master 1405d9dfb http://travis-ci.org/diagrams/diagrams-doc/builds/13951746 The build was broken.
