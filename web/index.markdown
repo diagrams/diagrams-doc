@@ -9,15 +9,19 @@ for creating vector graphics, using the
 Try it out!
 -----------
 
-First, get the
-[Haskell Platform](http://hackage.haskell.org/platform/).  Then, issue
-the command:
+You can:
 
-<div style="text-align: center">
-`cabal install diagrams`
-</div>
+* [Try diagrams in your browser](http://paste.hskll.org/)!
 
-More detailed installation instructions [can be found on the diagrams wiki](http://www.haskell.org/haskellwiki/Diagrams/Install).
+* Or, to install it locally, get the
+  [Haskell Platform](http://hackage.haskell.org/platform/), then
+  issue the command:
+
+    <div style="text-align: center">
+    `cabal install diagrams`
+    </div>
+
+    More detailed installation instructions [can be found on the diagrams wiki](http://www.haskell.org/haskellwiki/Diagrams/Install).
 
 Next, read the [quick start tutorial](/doc/quickstart.html) and the
 [user manual](http://projects.haskell.org/diagrams/manual/diagrams-manual.html),
