@@ -390,6 +390,7 @@ current line styling attributes.  For example:
 >     # lc blue
 >   ]
 >   # dashing [0.05, 0.05] 0
+>   # lw 0.03
 
 The colors of the head, tail, and shaft may be individually overridden
 using `headColor`, `tailColor`, and `shaftColor`.  More generally, the
