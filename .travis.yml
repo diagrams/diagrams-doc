@@ -25,9 +25,9 @@ before_install:
 
 install: ./travis/scripts/install-deps.sh
 
-before_script: ghc --make Shake
+before_script: ghc --make Shake -threaded
 
-script: ./Shake buildh
+script: ./Shake +RTS -N2 -RTS buildh
 
 notifications:
   email: false
