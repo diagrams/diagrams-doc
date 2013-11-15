@@ -18,6 +18,7 @@ The fractals presented here are a good example why declarative image generation 
 > {-# LANGUAGE NoMonomorphismRestriction #-}
 > import Diagrams.Prelude
 > import qualified Data.Colour as C
+> import Data.Colour.SRGB (sRGB24read)
 >
 > import Data.Complex as Complex
 > import Data.Array
@@ -173,7 +174,7 @@ Grandma's special recipe to make two Moebius tranformations from two complex par
 Actual drawing
 ==============
 
-> example = bg gray $
+> example =
 >     (    diagram 0.01 2.5 2.5
 >      ||| diagram 0.01 (2.09) (2.09)
 >     ) ===
@@ -182,7 +183,7 @@ Actual drawing
 >     )
 
 > diagram eps ta tb
->     = fc darkmagenta $ lw 0 $ pad 1.1
+>     = fc (sRGB24read "#DB4105") $ lw 0 $ pad 1.1
 >     $ strokeT
 >     $ closeTrail
 >     $ fromVertices [origin .+^ r2 (x,y) | x :+ y <- limitPoints eps a b]
