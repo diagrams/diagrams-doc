@@ -35,7 +35,7 @@ tutorials), you will need:
   github and `cabal install` it).
 * the latest version of [shake](http://hackage.haskell.org/package/shake).
 * [hakyll](http://hackage.haskell.org/package/hakyll)-4.x.
-* [hxt](http://hackage.haskell.org/package/hxt).
+* [safe](http://hackage.haskell.org/package/safe).
 
 Once you have all the dependencies, simply do
 
@@ -43,13 +43,17 @@ Once you have all the dependencies, simply do
     ./Shake +RTS -N4 -RTS preview
 
 which will build the user manual and website, and run a web server on
-port 8000 serving a preview of the webiste. (In place of `-N4` you
-should use `-NX` where X is the number of cores you have.)  Point your
-browser at `localhost:8000` to view it.  It works well to leave this
-invocation of `Shake preview` running, and then start another process
-calling `Shake +RTS -NX -RTS build` repeatedly in a loop.  The
-website will now automatically be rebuilt any time any source files
-change.
+port 8000 serving a preview of the webiste. In place of `-N4` you
+should use `-NX` where X is the number of cores you have. By default,
+the build system will use all but one of your available cores; if you
+wish to set the number to something else, set the `DIA_DOC_THREADS`
+environment variable.
+
+Point your browser at `localhost:8000` to view it.  It works well to
+leave this invocation of `Shake preview` running, and then start
+another process calling `Shake +RTS -NX -RTS build` repeatedly in a
+loop.  The website will now automatically be rebuilt any time any
+source files change.
 
 For example, on a four-core Ubuntu machine, assuming you already have
 the Haskell Platform installed, and have cloned the relevant diagrams
@@ -62,7 +66,7 @@ cabal install hsenv
 hsenv --name=dia
 .hsenv_dia/bin/activate
 cabal install gtk2hs-buildtools
-cabal install diagrams-core/ diagrams-lib/ diagrams-cairo/ diagrams-contrib/ diagrams-builder/ SVGFonts/ docutils/ shake hakyll hxt
+cabal install diagrams-core/ diagrams-lib/ diagrams-cairo/ diagrams-contrib/ diagrams-builder/ SVGFonts/ docutils/ shake hakyll safe
 cd diagrams-doc
 ghc --make Shake -threaded
 ./Shake +RTS -N4 -RTS preview

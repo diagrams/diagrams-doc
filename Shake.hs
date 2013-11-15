@@ -2,7 +2,7 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
 import           Control.Concurrent          (getNumCapabilities)
-import           Control.Monad               (when)
+import           Control.Monad               (mplus, when)
 import           Control.Parallel.Strategies (NFData)
 import           Data.Functor                ((<$>))
 import           Data.List                   (isPrefixOf, (\\))
@@ -11,9 +11,11 @@ import           Development.Shake.Classes   (Binary, Hashable)
 import           Development.Shake.FilePath  (dropDirectory1, dropExtension,
                                               takeBaseName, takeDirectory,
                                               (-<.>), (<.>), (</>))
+import           Safe                        (readMay)
 import           System.Console.CmdArgs
 import           System.Directory            (canonicalizePath,
                                               createDirectoryIfMissing)
+import           System.Environment          (lookupEnv)
 import           System.Process              (readProcess, system)
 
 
@@ -46,11 +48,21 @@ main = do
   m <- cmdArgs mkModes
   n <- getNumCapabilities
 
+  threadsStr <- lookupEnv "DIA_DOC_THREADS"
+
+  let Just numThreads = (threadsStr >>= readMay) `mplus` (Just $ max 2 (n - 1))
+
+  putStrLn $ "Using " ++ show numThreads ++ " threads."
+
   -- Check for diagrams-cairo
   cairoPkg <- readProcess "ghc-pkg" ["list", "--simple-output", "diagrams-cairo"] ""
   let useSVG = null cairoPkg
       imgExt | useSVG    = "svg"
              | otherwise = "png"
+
+  case useSVG of
+    True  -> putStrLn $ "Falling back to SVG backend."
+    False -> putStrLn $ "Using cairo backend."
 
   case m of
     Clean -> mapM_ system
@@ -66,7 +78,7 @@ main = do
       , "rm -f .shake.database"
       ]
 
-    _ -> shake shakeOptions { shakeThreads = 2 `max` (n - 1) } $ do
+    _ -> shake shakeOptions { shakeThreads = numThreads } $ do
       disk <- newResource "Disk" 4
 
       action $ requireDoc
