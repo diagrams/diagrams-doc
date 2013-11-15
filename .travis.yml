@@ -12,7 +12,7 @@ env:
     - UBUNTU_PKGS="libgtk-3-dev libcairo2-dev python-docutils"
     - EXTRA_DEPS_PRE="gtk2hs-buildtools"
     - HEAD_DEPS="diagrams-core diagrams-lib diagrams-cairo diagrams-contrib diagrams-builder docutils"
-    - EXTRA_DEPS="SVGFonts shake hakyll"
+    - EXTRA_DEPS="SVGFonts shake hakyll safe"
     - secure: "GvSd0Muvr60TAaiBKHuGwFcuGAy4j2gaIV0IK4f9O8rJNyJSRdEpwW9i1MUvY7bSLT0pIx9A7WHHjDPUrtyxRs9uHQ3DcQG8ZF2Nmwf0Mgdd5ehdYcO6EVWRDJsBwk6JqloD7t3tiKJTE7APVbzLiuxxskpddiOb1+q2NQPsSuc="
 
 matrix:
