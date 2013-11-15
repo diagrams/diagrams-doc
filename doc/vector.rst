@@ -162,14 +162,16 @@ The first thing to learn is how to *create* values of type
   pun: in the same way that a complex number with magnitude `r`:math:
   and angle `\theta`:math: can be constructed as `r
   e^{i\theta}`:math:, a vector with given magnitude and direction can
-  be constructed as `r *^ e theta`.
+  be constructed as `r *^ e theta`. (Note that `e` is not exported
+  from `Diagrams.Prelude`:mod:; if you wish to use it you must import
+  it from `Diagrams.TwoD.Vector`:mod:.)
 
   .. class:: dia-lhs
 
   ::
 
   > example = lw 0.05 . mconcat . map fromOffsets
-  >         $ [ [r *^ e (Rad r)]
+  >         $ [ [r *^ fromDirection (Rad r)]
   >           | r <- [33 * tau/32, 34 * tau/32 .. 2 * tau]
   >           ]
 
@@ -203,7 +205,7 @@ The first thing to learn is how to *create* values of type
      ::
 
      > vs = zipWith mkV (cycle [1,2,3]) [ 1/30, 2/30 .. 1 :: Turn ]
-     >   where mkV r th = r *^ e th
+     >   where mkV r th = r *^ fromDirection th
      > example = lw 0.02 . mconcat . map (fromOffsets . (:[])) $ vs
 
 Destructing vectors
