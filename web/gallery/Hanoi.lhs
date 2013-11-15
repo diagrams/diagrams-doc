@@ -12,13 +12,14 @@ view: -10,1.5,20,20
 > {-# LANGUAGE NoMonomorphismRestriction #-}
 > import Diagrams.Prelude
 > import Data.List
+> import Data.Colour.SRGB (sRGB24read)
 >
 > type Dia = Diagram B R2
 
 First, some colors for our disks, and types to represent the data
 structures involved.
 
-> colors = [blue, green, red, yellow, purple]
+> colors = map sRGB24read [ "#9FB4CC", "#CCCC9F", "#DB4105", "#FFF8E3", "#33332D"]
 >
 > type Disk  = Int
 > type Stack = [Disk]
@@ -44,7 +45,7 @@ bottom of the peg.
 >                 # alignB
 >         post  = rect 0.8 6
 >                 # lw 0
->                 # fc saddlebrown
+>                 # fc black
 >                 # alignB
 
 Finally, to render a collection of stacks, lay them out

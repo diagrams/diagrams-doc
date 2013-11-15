@@ -11,6 +11,7 @@ width: 400
 
 > {-# LANGUAGE NoMonomorphismRestriction #-}
 > import Diagrams.Prelude hiding (tri)
+> import Data.Colour.SRGB (sRGB24read)
 
 The standard infinite list of Fibonacci numbers.
 
@@ -36,18 +37,20 @@ Fibonacci numbers.
 
 Draw the paradox diagram based on the nth Fibonacci number.
 
-> paradox n drawDiags = (sq ||| strutX s2 ||| rect) # centerXY
+> paradox n drawDiags = (sq # rotateBy (1/4)
+>                    ||| strutX (s2 / 2)
+>                    ||| rect # rotateBy (1/4)) # centerXY
 >   where f1 = fibs !! n
 >         f2 = fibs !! (n+1)
 >         s1 = fromIntegral f1
 >         s2 = fromIntegral f2
 >
->         trap1 = trap s1 s2 # fc yellow
->         trap2 = trap s1 s2 # fc green
+>         trap1 = trap s1 s2 # fc (sRGB24read "#BEC3C7")
+>         trap2 = trap s1 s2 # fc (sRGB24read "#1ABC9C")
 >                            # rotateBy (1/2)
 >
->         tri1  = tri s1 s2  # fc red
->         tri2  = tri s1 s2  # fc blue
+>         tri1  = tri s1 s2  # fc (sRGB24read "#FF6666")
+>         tri2  = tri s1 s2  # fc (sRGB24read "#37485D")
 
 The four shapes assembled into a square.
 

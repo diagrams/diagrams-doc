@@ -27,12 +27,12 @@ the central one.
 >            . (if odd n then negateV else id)
 >            $ unitY
 >         pCenter  = pentaflake' (n-1)
->         pOutside = pCenter # opacity 0.8
+>         pOutside = pCenter # opacity (1.7 / fromIntegral n)
 >
-> pentaflake n = pentaflake' n # fc blue # bg white
+> pentaflake n = pentaflake' n # fc navy # bg silver
 
 A $4$-pentaflake looks nice.  Of course there's an exponential
 blowup in the number of primitives, so generating higher-order
 pentaflakes can take a long time!
 
-> example = pad 1.1 $ pentaflake 4
+> example = pentaflake 4

@@ -109,7 +109,7 @@ Now for the function that enumerates points in the limit set
 >     where
 
 First, we need to map letters to actual group elements
- 
+
 >     generators   = array (A,B1) [(A,a),(B,b),(A1,inverse a),(B1,inverse b)]
 >     fromLetter x = generators ! x
 >     fromWord     = mconcat . map fromLetter
@@ -172,8 +172,8 @@ Grandma's special recipe to make two Moebius tranformations from two complex par
 
 Actual drawing
 ==============
- 
-> example =
+
+> example = bg gray $
 >     (    diagram 0.01 2.5 2.5
 >      ||| diagram 0.01 (2.09) (2.09)
 >     ) ===
@@ -182,7 +182,7 @@ Actual drawing
 >     )
 
 > diagram eps ta tb
->     = fc darkred $ lw 0 $ pad 1.1
+>     = fc darkmagenta $ lw 0 $ pad 1.1
 >     $ strokeT
 >     $ closeTrail
 >     $ fromVertices [origin .+^ r2 (x,y) | x :+ y <- limitPoints eps a b]
