@@ -24,6 +24,98 @@ diagram that are relatively independent of the image being made.  With the
 backends) we provide easy creation of a command-line interface that supports
 standard options as well as easy customization for additional parameters.
 
+To give a concrete example of what we will see, the following are examples
+of programs we will be able to write and their interaction on the command-line.
+First is the simplest case of generating a single diagram:
+
+.. class:: lhs
+
+::
+
+> -- Simple
+>
+> d :: Diagram SVG R2
+> d = ...
+>
+> main = mainWith d
+
+Here we just have a diagram and the standard options.  We can invoke
+with just a width and the height is made to match the diagram.
+
+.. code-block:: sh
+
+    $ ./Simple -o simple.svg -w 100
+
+If we have multiple diagrams with names we can use `mainWith` to give an
+interface that allows the selection of a particular diagram by name.
+
+.. class:: lhs
+
+::
+
+> -- Multiple
+>
+> d1, d2, d3 :: Diagram SVG R2
+> ...
+>
+> main = mainWith [("First", d1),("Second", d2),("Third", d3)]
+
+The ``--list`` option just lists the available diagrams to render and
+the ``-s`` selection option takes a name and renders the associated
+diagram with the standard options.
+
+.. code-block:: sh
+
+    $ ./Multiple --list
+    Available diagrams:
+      one two three
+    $ ./Multiple -o d1.svg -w 100 -s First
+
+In backends that support multiple pages we can list all the diagrams and 
+have each render on its own page.
+
+.. class:: lhs
+
+::
+
+> -- Pages
+>
+> d1, d2, d3 :: Diagram Postscript R2
+> ...
+>
+> main = mainWith [d1,d2,d3]
+
+We only need the default options here and the interface is the same as a
+single diagram.
+
+.. code-block:: sh
+
+    $ ./Pages -o pages.ps -w 400
+
+To make things more interesting we could require additional arguments to
+build a diagram.  We can take a function to build a diagram from some
+parameters and build an interface that fills those parameters with 
+arguments from the command-line.
+
+.. class:: lhs
+
+::
+
+> -- Function
+>
+> f :: Colour Double -> Double -> Diagram SVG R2
+> f c x = ...
+>
+> main = mainWith f
+
+In addition to the standard arguments we have ``blue`` and ``42.0`` which
+will be applied to ``f``.
+
+.. code-block:: sh
+
+    $ ./Function -o pages.ps -w 400 blue 42.0
+
+
 Standard Options
 ================
 
