@@ -32,6 +32,7 @@ script: ./Shake +RTS -N2 -RTS buildh
 
 after_success:
   - export RSYNC_PASSWORD=$ENIAC_PASSWORD
+  - ssh-keyscan eniac.seas.upenn.edu >> ~/.ssh/known_hosts
   - rsync -r web/_site/* byorgey@eniac.seas.upenn.edu:public_html/diagrams-doc-HEAD/
 
 notifications:
