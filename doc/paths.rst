@@ -70,7 +70,11 @@ to see its type, its documentation, and other nearby functions):
 `square`, `pentagon`, `rect`, `roundedRect`, `polygon`, and
 `cubicSpline`.
 
-A line can be turned into a diagram with `strokeLine`.
+A line can be turned into a diagram with `strokeLine`. Since lines are
+*translation-invariant*, they have no definite location in space, and
+`strokeLine` must arbitrarily pick a location; by default, the origin
+is chosen as the starting location of the line. (Of course, in many
+situations this does not matter.)
 
 .. container:: warning
 
@@ -187,8 +191,56 @@ and concatenation of lines as `mappend` (aka `<>`).
 Loops
 =====
 
+A *loop* is another kind of trail, with type `Trail' Loop R2`.  Loops
+are like lines, except for the fact that they are "closed": they end
+in the same place where they start, and have an "inside" and an
+"outside".
+
+Constructing loops
+------------------
+
+Loops are also an instance of `TrailLike`, so many of the same
+functions mentioned in the previous section for constructing lines can
+also be used to construct loops.
+
+Loops can be turned into diagrams with `strokeLoop`.
+
+.. container:: exercises
+
+  #. `strokeLoop`
+
+     .. class:: dia
+
+     ::
+
+     > example = pentagon 1 # strokeLine # fc blue # centerXY # pad 1.1
+
+  #. Change `strokeLoop` to `strokeLine` in your solution to the
+     previous exercise.  Explain the difference in the output.
+
+  #. XXX more exercises here
+
 Converting between lines and loops
 ----------------------------------
+
+* `glueLine`
+* `closeLine`
+* `cutLoop`
+
+Note that unlike lines, loops *do not* have a `Monoid` instance.
+
+.. container:: exercises
+
+  #. `glueLine`
+
+     .. class:: dia
+
+     ::
+
+     > p = pentagon 1 # onLineSegments init
+     > example = iterateN 5 (rotateBy (1/5)) p
+     >    # mconcat # glueLine # strokeLoop
+     >    # fc green # centerXY # pad 1.1 # sized (Width 2)
 
 Trails
 ======
