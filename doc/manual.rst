@@ -1953,7 +1953,8 @@ lies in the type class instances we can give to `Located`:
 * `HasOrigin`: translating a `Located a` simply translates the
   associated point, leaving the value of type `a` unaffected.
 * `Transformable`: only the linear component of transformations are
-  applied to the wrapped value.
+  applied to the wrapped value (whereas the entire transformation is
+  applied to the location).
 * `Enveloped`: the envelope of a `Located a` is the envelope of the
   contained `a`, translated to the stored location (and similarly for
   `Traced`).
