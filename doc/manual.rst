@@ -2805,8 +2805,10 @@ to `connect` is `connect'`. These companion functions take an extra
 
 * `headStyle`, `tailStyle` and `shaftStyle` are used to pass in style
   functions like `fc blue . opacity 0.75` to customize parts of the
-  arrow.  (By default, the entire arrow, including head and tail, is
-  drawn using the current line color.)
+  arrow. `headColor`, `tailColor` and `shaftColor` can be used for the
+  common case of setting just the color. (By default, the entire
+  arrow, including head and tail, is drawn using the current line
+  color.)
 
 The following example demonstrates the use of various `ArrowOpts`.
 
@@ -2831,8 +2833,8 @@ The following example demonstrates the use of various `ArrowOpts`.
 >
 > example = d
 >    # connect' (with & arrowTail .~ quill& tailSize .~ 1.5
->                     & tailStyle %~ fc orange & headStyle  %~  fc orange
->                     & arrowHead .~ spike& headSize  .~ 1.5
+>                     & tailColor .~ orange & headColor .~ orange
+>                     & arrowHead .~ spike & headSize  .~ 1.5
 >                     & shaftStyle %~ lw 0.3 ) "1" "2"
 >    # connect' (with & arrowTail .~ thorn'& tailSize .~ 1.5
 >                     & arrowHead .~ thorn & headSize .~ 1.5
@@ -2840,7 +2842,7 @@ The following example demonstrates the use of various `ArrowOpts`.
 >    # connect' (with & arrowTail .~ block & tailSize .~ 1& tailGap .~ 0.4
 >                     & arrowHead .~ missile & headSize .~ 1.5& headGap .~ 0.4
 >                     & arrowShaft .~ shaft2
->                     & headStyle %~ fc blue & tailStyle %~ fc blue
+>                     & headColor .~ blue & tailColor .~ blue
 >                     & shaftStyle %~ lw 0.15 . lc blue ) "5" "6"
 >    # connect' (with & arrowShaft .~ shaft3
 >                     & arrowHead .~ tri & headSize .~ 1.5

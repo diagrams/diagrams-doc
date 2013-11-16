@@ -29,7 +29,7 @@ options used to make arrows.
 > example = d # connect' (with & arrowHead .~ dart & headSize .~ 1 & arrowTail .~ quill
 >                              & tailSize .~ 1 & shaftStyle %~ lw 0.1 . lc black & arrowShaft .~ s
 >                              & tailGap .~ 0.1 & headGap .~ 0.1
->                              & headStyle %~ fc blue & tailStyle %~ fc orange)
+>                              & headColor .~ blue & tailColor .~ orange)
 >                              "1" "2"
 >             # connect' (with & arrowHead .~ missile & headSize .~ 0.8 & arrowTail .~ missile'
 >                              & tailSize .~ 0.8 & shaftStyle %~ lw 0.05 & arrowShaft .~ s1
@@ -41,12 +41,12 @@ options used to make arrows.
 >                              "1" "6"
 >             # connect' (with & arrowHead .~ dart & tailSize .~ 1 & arrowTail .~ dart'
 >                              & headSize .~ 1 & arrowShaft .~ s2
->                              & headStyle %~  fc green & tailStyle %~ fc green
+>                              & headColor .~ green & tailColor .~ green
 >                              & shaftStyle %~ lw 0.1 . lc green )
 >                              "4" "7"
 >             # connect' (with & arrowTail .~ dart' & tailSize .~ 1 & arrowShaft .~ a
->                              & arrowHead .~ spike & headSize .~ 1 & headStyle %~ fc red
->                              & tailGap .~ 0.1 & tailStyle %~ fc red
+>                              & arrowHead .~ spike & headSize .~ 1 & headColor .~ red
+>                              & tailGap .~ 0.1 & tailColor .~ red
 >                              & shaftStyle %~ lw 0.2 . lc blue )
 >                              "9" "5"
 >             # connect' (with & arrowHead .~ tri & arrowTail .~ block
@@ -377,26 +377,32 @@ The style options
 -----------------
 
 By default, arrows are drawn using the current line color (including
-the head and tail).  For example:
+the head and tail).  In addition, the shaft styling is taken from the
+current line styling attributes.  For example:
 
 .. class:: dia-lhs
 
 ::
 
-> example = square 1 <> arrowAt origin unitX # lc blue # centerXY
+> example = mconcat
+>   [ square 2
+>   , arrowAt origin unitX
+>     # lc blue
+>   ]
+>   # dashing [0.05, 0.05] 0
+>   # lw 0.03
 
-The styles of the head, tail and shaft may be individually overridden
-using `headStyle`, `tailStyle`, and `shaftStyle`.  We change the
-attributes of the arrow parts by setting one of these parameters equal
-to a function that applies the attributes, *e.g.* `headStyle = fc
-blue` or `tailStyle = fc orange . opacity 0.5`.
+The colors of the head, tail, and shaft may be individually overridden
+using `headColor`, `tailColor`, and `shaftColor`.  More generally, the
+styles are controlled using `headStyle`, `tailStyle`, and
+`shaftStyle`. For example:
 
 .. class:: lhs
 
 ::
 
 > dashedArrow = arrowBetween' (with & arrowHead .~ dart & arrowTail .~ spike'
->                                   & headStyle %~ fc blue & tailStyle %~ fc orange
+>                                   & headColor .~ blue & tailColor .~ orange
 >                                   & shaftStyle %~ dashing [0.04, 0.02] 0
 >                                   . lw 0.01) sPt ePt
 >
@@ -413,17 +419,24 @@ blue` or `tailStyle = fc orange . opacity 0.5`.
 > eDot = dot # fc red # moveTo ePt
 >
 > arrow1 = arrowBetween' (with & arrowHead .~ dart & arrowTail .~ spike'
->                              & headStyle %~ fc blue & tailStyle %~ fc orange
+>                              & headColor .~ blue & tailColor .~ orange
 >                              & shaftStyle %~ dashing [0.04, 0.02] 0 . lw 0.01
 >                              ) sPt ePt
 >
 > example = (sDot <> eDot <> arrow1) # centerXY # pad 1.1
 
+Note that when setting a style, one must generally use the `%~`
+operator in order to apply something like `dashing [0.04, 0.02] 0`
+which is a *function* that changes the style.
+
 .. container:: warning
 
-  When setting the color of the head or tail use `fillColor`, `fc`, or
-  `fcA`.. When setting the color of the shaft use `lineColor`, `lc`,
-  or `lcA`.
+  By default, the ambient line color is used for the head, tail, and
+  shaft of an arrow.  However, when setting the styles individually,
+  the fill color should be used for the head and tail, and line color
+  for the shaft.  This issue can be avoided entirely by using, for
+  example, `headColor .~ blue` to set the color instead of `headStyle
+  %~ fc blue`.
 
 Placing an arrow at a point
 ===========================
@@ -550,15 +563,15 @@ straightforward.
 >
 > arrowStyle1 = (with  & arrowHead  .~ noHead & tailSize .~ 0.3
 >                      & arrowShaft .~ shaft  & arrowTail .~ spike'
->                      & tailStyle  %~ fc black . opacity 1)
+>                      & tailColor  .~ black)
 >
 > arrowStyle2  = (with  & arrowHead  .~ noHead &  tailSize .~ 0.3
 >                       & arrowShaft .~ shaft' & arrowTail .~ spike'
->                       & tailStyle  %~ fc black . opacity 1)
+>                       & tailColor  .~ black)
 >
 > arrowStyle3  = (with  & arrowHead  .~ noHead & tailSize .~ 0.3
 >                       & arrowShaft .~ line & arrowTail .~ spike'
->                       & tailStyle  %~ fc black . opacity 1)
+>                       & tailColor  .~ black)
 >
 > example = states # connectPerim' arrowStyle1
 >                                  "2" "1" (5/12 :: Turn) (1/12 :: Turn)
