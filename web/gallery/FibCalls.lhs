@@ -10,7 +10,7 @@ view: -10,-5,10,10
 ---
 
 > {-# LANGUAGE NoMonomorphismRestriction #-}
-> 
+>
 > import Diagrams.Prelude
 
 We make use of a tree layout module from the `diagrams-contrib` package:
@@ -28,10 +28,13 @@ Lay out the tree and render it by providing a function to render nodes
 and a function to render edges.
 
 > Just t = uniqueXLayout 2 2 (fibCalls 5)
->       
-> example = pad 1.1 . lw 0.03 . centerXY 
->         $ renderTree 
+>
+> example = pad 1.1 . lw 0.05 . centerXY
+>         $ renderTree
 >             (\n -> (text ("fib " ++ show n)
->                     <> roundedRect 3 1.3 0.3 # fc white)
+>                     <> roundedRect 3 1.3 0.3 # fc gold)
 >             )
 >             (~~) t
+>         `atop` square 1 # scaleY 12 # translateY (-5)
+>                         # scaleX 34
+>                         # lw 0 # fc whitesmoke

@@ -19,7 +19,11 @@ width: 600
 The diagram is the boxes (the "cube") and the lines between the boxes.
 
 > example = let c = cube
->           in pad 1.1 . centerXY $ c <> drawLines c
+>           in pad 1.1 . centerXY $ c <> drawLines c <> square 30
+>                                 # fc whitesmoke
+>                                 # scaleY 0.94
+>                                 # translateX 11
+>                                 # translateY (-3)
 
 A "box" is a diagram (the "innards") surrounded by a rounded
 rectangle.  First the innards are padded by a fixed amount, then we
@@ -41,7 +45,7 @@ rectangle.
 A single string of text.
 
 > text' :: String -> Double -> Diagram B R2
-> text' s n = textSVG_ (textOpts s n) # fc black # lw 0
+> text' s n = textSVG_ (textOpts s n) # fc white # lw 0
 
 Several lines of text stacked vertically.
 
@@ -67,7 +71,7 @@ The cube is just several boxes superimposed, positioned by adding
 together some positioning vectors.
 
 > cube :: Diagram B R2
-> cube = mconcat
+> cube = fc navy $ mconcat
 >   [ mybox "Permutation" "perm"
 >   , mybox "Permutation\ngroup" "permgroup"                     # translate right
 >   , mybox "Symmetry" "sym"                                     # translate upright
@@ -85,7 +89,7 @@ diagram "b".
 > drawLines cube = foldr (.) id (map (uncurry
 >                        (connectOutside' (with
 >                        & headSize .~ 0.8
->                        & shaftStyle %~ lw 0.01))) pairs) cube
+>                        & shaftStyle %~ lw 0.04))) pairs) cube
 >   where pairs = [ ("perm","permgroup")
 >                 , ("perm","sym")
 >                 , ("perm","paramperm")

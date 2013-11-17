@@ -26,8 +26,8 @@ For aesthetics, let the leaves have circles instead of squares.
 
 > tree 1 = circle 1   # translate (r2 (0, 1/2)) # colourise green
 > tree n =
->   square 1          # translate (r2 (0, 1/2)) # colourise burlywood
->   `atop` triangle   # translate (r2 (0,1))    # colourise brown
+>   square 1          # translate (r2 (0, 1/2)) # colourise saddlebrown
+>   `atop` triangle   # translate (r2 (0,1))    # colourise sienna
 >   `atop` tree (n-1) # rotate (-asin 0.8 :: Rad) # scale 0.6 # translate (r2 ( 0.32,1.24)) # fade
 >   `atop` tree (n-1) # rotate ( asin 0.6 :: Rad) # scale 0.8 # translate (r2 (-0.18,1.24)) # fade
 >   where
@@ -39,4 +39,7 @@ For aesthetics, let the leaves have circles instead of squares.
 
 Draw the order 10 tree.
 
-> example = tree 10
+> example = tree 10 `atop` square 6.5 # fc skyblue # opacity 0.4
+>                                     # lw 0
+>                                     # translateY 2
+>                                     # translateX (-0.5)

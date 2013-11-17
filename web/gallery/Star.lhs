@@ -10,6 +10,7 @@ width: 400
 
 > {-# LANGUAGE NoMonomorphismRestriction, TupleSections #-}
 > import Diagrams.Prelude hiding (connect)
+> import Data.Colour.SRGB (sRGB24read)
 
 To create one quarter of the diagram, we first create some "axes"
 which are just lines with evenly spaced named points along them which
@@ -21,11 +22,14 @@ we can refer to later.  Names can be almost any type; here we choose
 >         h = stroke' (with & vertexNames .~ [map ("x",) [0..n]]) (p unitX)
 >         v = stroke' (with & vertexNames .~ [map ("y",) [0..n]]) (p unitY)
 
+> colors = map sRGB24read ["#5E0042", "#00856A"]
+
 To connect two named points using index `i`, we request the points
 corresponding to those names, and superimpose a line between the points:
 
-> connect n i = withNames [("x",i), ("y", n - i)]
->               $ atop . fromVertices . map location
+> connect n i = lc (colors !! (i `mod` 2))
+>                 $ withNames [("x",i), ("y", n - i)]
+>                 $ atop . fromVertices . map location
 
 Finish creating one quarter of the diagram by connecting corresponding
 points.
@@ -37,4 +41,4 @@ The final diagram is created by assembling four copies of the above.
 > d n = half === rotateBy (1/2) half
 >   where half = (rotateBy (1/4) (pic n) ||| pic n) # centerX
 >
-> example = pad 1.1 $ d 20 # lc blue
+> example = pad 1.1 $ d 20 # centerXY `atop` square 50 # fc whitesmoke

@@ -135,7 +135,9 @@ The final picture is a cycle of these corners.
 
 > squarelimit = Cycle corner
 >
-> example = drawPicture (prune 24 squarelimit)
+> example = drawPicture (prune 24 squarelimit) `atop` square 14.5
+>         # fc darkseagreen
+>         # opacity 0.5
 
 The markings on the four basic tiles are taken from [a note by Frank
 Buss](http://www.frank-buss.de/lisp/functional.html).

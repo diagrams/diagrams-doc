@@ -34,10 +34,11 @@ dashing pattern and shape.
 The final diagram is the chart with the legend next to it.
 
 > example :: Dia
-> example = pad 1.1 . centerXY $
+> example = centerXY $
 >     (centerY (chart (map snd dataSeries) plotStyles [0,2,4,6,8,10] [0,2,4,6,8,10])
 >      ||| strutX 1
 >      ||| centerY (legend plotStyles (map fst dataSeries)))
+>      `atop` square 12 # translateX 5 # scaleY 0.85 -- border
 
 The size of the chart, in logical units.
 
