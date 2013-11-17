@@ -9,7 +9,7 @@ Tutorials
   started making simple diagrams quickly.
 * [Vectors and points](/doc/vector.html) --- learn how to work with
   vectors and points.
-* [Segments, trails, and paths](/doc/paths.html)
+* [Trails, and paths](/doc/paths.html)
 * [Arrows](/doc/arrow.html) --- using the arrow API.
 * [Diagrams and LaTeX](/doc/latex.html) --- including diagrams in your LaTeX documents.
 * [How to write diagrams tutorials](/doc/tutorials.html) --- how to

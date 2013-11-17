@@ -23,8 +23,7 @@ concept of a "path" has quite a few inherent subtleties!
 
 The goal of this tutorial, therefore, is to give you proficiency in
 working with trails and paths via practice on numerous
-exercises. Along the way, we will also motivate some of the design
-decisions. This tutorial is not intended to be a comprehensive
+exercises. This tutorial is not intended to be a comprehensive
 reference; for that, consult the `user manual`_.  As a prerequisite,
 you should already be familiar with the material in the `tutorial on
 vectors and points`__.
@@ -64,11 +63,11 @@ Constructing lines
 
 Lines are an instance of the `TrailLike` class, so to construct a
 line, you can use any function with a return type like `TrailLike t =>
-... -> t`. Examples of such functions include (click a function name
-to see its type, its documentation, and other nearby functions):
-`fromOffsets`, `fromVertices`, `fromSegments`, `(~~)`, `triangle`,
-`square`, `pentagon`, `rect`, `roundedRect`, `polygon`, and
-`cubicSpline`.
+... -> t`. Examples of such functions include `fromOffsets`,
+`fromVertices`, `fromSegments`, `(~~)`, `circle`, `arc`, `triangle`,
+`square`, `pentagon`, `rect`, `roundedRect`, `polygon`, `arc`, and
+`cubicSpline`, among many others (click a function name to see its
+type, its documentation, and other nearby functions).
 
 A line can be turned into a diagram with `strokeLine`. Since lines are
 *translation-invariant*, they have no definite location in space, and
@@ -213,21 +212,23 @@ Loops can be turned into diagrams with `strokeLoop`.
 
      ::
 
-     > example = pentagon 1 # strokeLine # fc blue # centerXY # pad 1.1
+     > example = pentagon 1 # strokeLoop # fc blue # centerXY # pad 1.1
 
   #. Change `strokeLoop` to `strokeLine` in your solution to the
      previous exercise.  Explain the difference in the output.
 
-  #. XXX more exercises here
-
 Converting between lines and loops
 ----------------------------------
 
-* `glueLine`
-* `closeLine`
-* `cutLoop`
+There are two functions which allow converting a line into a loop.
+The first is `glueLine`.  It simply assumes that the line ends in the
+same place that it starts, and "glues" the line closed. (If the line
+does not end in the same place that it starts, the final segment will
+be altered so that it does.)
 
-Note that unlike lines, loops *do not* have a `Monoid` instance.
+Note that unlike lines, loops *do not* have a `Monoid` instance.  One
+common pattern for constructing complicated loops is to concatenate
+some lines and then call `glueLine` on the result.  You try:
 
 .. container:: exercises
 
@@ -242,15 +243,193 @@ Note that unlike lines, loops *do not* have a `Monoid` instance.
      >    # mconcat # glueLine # strokeLoop
      >    # fc green # centerXY # pad 1.1 # sized (Width 2)
 
+  #. .. class:: dia
+
+     ::
+
+     > step = fromOffsets [unitY, unitX]
+     > steps n = mconcat (replicate n step)
+     >        <> step # rotateBy (1/2) # scale (fromIntegral n)
+     > example = steps 5 # glueLine # strokeLoop # fc red
+     >   # centerXY # pad 1.1 # sized (Width 2)
+
+  #. .. class:: dia
+
+     ::
+
+     > andThen t1 t2 = t1 <> t2 # rotate (d1 - d2)
+     >   where
+     >     d1, d2 :: Rad
+     >     d1 = direction (tangentAtEnd t1)
+     >     d2 = direction (tangentAtStart t2)
+     >
+     > str = fromOffsets [unitX]
+     > cap = arc 0 (1/2 :: Turn)
+     > arm = str `andThen` cap `andThen` str
+     >
+     > armUnit = arm `andThen` (arc 0 (3/10 :: Turn) # reflectX)
+     >
+     > example = foldr andThen mempty (replicate 5 armUnit)
+     >   # glueLine # strokeLoop # fc blue
+     >   # rotateBy (1/20)
+     >   # centerXY # pad 1.1 # sized (Width 2)
+
+     You may find this function useful:
+
+     .. class:: lhs
+
+     ::
+
+     > andThen t1 t2 = t1 <> t2 # rotate (d1 - d2)
+     >   where
+     >     d1, d2 :: Rad
+     >     d1 = direction (tangentAtEnd t1)
+     >     d2 = direction (tangentAtStart t2)
+
+The second function for converting from lines to loops, `closeLine`,
+adds an extra (linear) segment from the end of the line to the
+beginning.  This
+
+.. container:: exercises
+
+  #. `closeLine`
+
+     .. class:: dia
+
+     ::
+
+     > trap = fromOffsets
+     >          [ unitY # rotateBy (-1/15)
+     >          , unitX
+     >          , unit_Y # rotateBy (1/15)
+     >          ]
+     >        # closeLine
+     > example = trap # strokeLoop # centerXY # pad 1.1
+
+  #. .. class:: dia
+
+     ::
+
+     > s = fromOffsets [unitY # rotateBy (-1/30)]
+     > tine = s <> s # reflectX # reverseLine
+     > tines = mconcat . replicate 10 $ tine
+     > comb = s <> tines <> s # reflectX # reverseLine
+     > example = comb # closeLine # strokeLoop # fc yellow
+     >   # centerXY # pad 1.1 # sized (Width 2)
+
+Finally, to convert from a loop to a line, use `cutLoop`, which "cuts"
+a loop at its shared start/end point, resulting in a line which "just
+happens" to end where it starts.  It is harder to come up with
+exercises requiring the use of `cutLoop`; in most cases where you
+might think of using it, you could simply construct a line in the
+first place.  For example,
+
+.. class:: lhs
+
+::
+
+  (square 1 :: Trail' Loop R2) # cutLoop :: Trail' Line R2
+
+is exactly the same as `square 1 :: Trail' Line R2`.  So there are no
+exercises here; it's simply useful to be aware that in any situation
+where something that is naturally a loop is interpreted as a line (for
+example, `square 1 :: Trail' Line R2`), `cutLoop` is being used under
+the hood.
+
 Trails
 ======
+
+We have now seen both types of trails.  The `Trail` type is simply a
+wrapper around both lines and loops.  That is, something of type
+`Trail R2` is either a line or a loop, wrapped up so the type does not
+tell you which it is (though it is possible to recover the information
+dynamically, using functions like `withTrail`).  To make a line or
+loop into a `Trail`, use `wrapLine` or `wrapLoop`, respectively.  Many
+of the functions we have seen on lines and loops have corresponding
+versions that operate on `Trail`\s, such as `strokeTrail`, `glueTrail`,
+`closeTrail`, `reverseTrail`, and `cutTrail`.
 
 Located
 =======
 
+The `Located` wrapper associates a point location with an object,
+turning translation-invariant things into located things.
+
+To give a location to something, use `at :: a -> Point (V a) ->
+Located a`.  Located lines, loops, and trails can be turned into
+diagrams with `strokeLocLine`, `strokeLocLoop`, and `strokeLocTrail`
+respectively.
+
+One reason you may sometimes want to work with `Located` trails is
+when using `explodeTrail` to turn a trail into a collection of
+`Located` trails, one for each individual segment.  Using `Located` in
+this way remembers the locations of the segments relative to one
+another.
+
+.. container:: exercises
+
+  #. `explodeTrail`, `mapLoc`
+
+     .. class:: dia
+
+     ::
+
+     > example
+     >   = explodeTrail (heptagon 1)
+     >   # map (strokeLocTrail . mapLoc (rotateBy (1/20)))
+     >   # mconcat
+     >   # centerXY # pad 1.1 # sized (Width 2)
+
+  #. .. class:: dia
+
+     ::
+
+     > sqTrail :: Trail' Line R2
+     > sqTrail = iterateN 4 (rotateBy (1/4))
+     >             (fromOffsets (replicate 4 unitX))
+     >           # mconcat
+     > example
+     >   = sqTrail
+     >   # wrapLine # (`at` origin)
+     >   # explodeTrail
+     >   # map strokeLocTrail
+     >   # zipWith lc (cycle [red, blue])
+     >   # mconcat
+     >   # lw 0.05
+     >   # centerXY # pad 1.1 # sized (Width 2)
+
 Paths
 =====
 
-Hints
-=====
+A *path* is simply a collection of located trails.
 
+.. container:: exercises
+
+  #. `star`, `pathTrails`
+
+     .. class:: dia
+
+     ::
+
+     > s :: Path R2
+     > s = star (StarSkip 5) (regPoly 30 1)
+     >
+     > example
+     >   = s
+     >   # pathTrails
+     >   # map strokeLocTrail
+     >   # zipWith lc [red,orange,yellow,blue,green,purple]
+     >   # mconcat
+     >   # lw 0.03
+     >   # centerXY # pad 1.1 # sized (Width 2)
+
+  #. `decorateLocatedTrail`, `fillRule`
+
+     .. class:: dia
+
+     ::
+
+     > innerCircles :: Path R2
+     > innerCircles = decorateLocatedTrail (hexagon 2) (repeat (circle 1)) <> circle 1
+     >
+     > example = (innerCircles <> circle 3) # stroke # fc blue # fillRule EvenOdd
