@@ -71,6 +71,29 @@ diagram with the standard options.
       one two three
     $ ./Multiple -o d1.svg -w 100 -s First
 
+Some backends support rendering animations (typically as individually indexed
+files of frames).
+
+.. class:: lhs
+
+::
+
+> -- Animation
+>
+> a :: Animation Cairo R2
+> a = ...
+>
+> main = mainWith a
+
+The default options are expected, but the output file has an index appended
+to the name for each frame.  The ``--fpu`` option indicates the desired number
+of frames per unit of time.  If the ``a`` animation above is one second long
+then the following will create files ``a01.png`` through ``a24.png``.
+
+.. code-block:: sh
+
+   $ ./Animation -o a.png -w 100 --fpu 24
+
 In backends that support multiple pages we can list all the diagrams and 
 have each render on its own page.
 
@@ -113,7 +136,7 @@ will be applied to ``f``.
 
 .. code-block:: sh
 
-    $ ./Function -o pages.ps -w 400 blue 42.0
+    $ ./Function -o blue.svg -w 400 blue 42.0
 
 
 Standard Options
