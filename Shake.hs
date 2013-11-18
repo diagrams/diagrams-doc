@@ -86,7 +86,6 @@ main = do
       action $ requireStatic
 
       webRules
-      when (m /= Build) (action $ runWeb m imgExt)
 
       dist "doc/*.html" *> \out -> do
         let xml = obj . un $ out -<.> "xml"
@@ -129,6 +128,8 @@ main = do
       addOracle $ \(GhcPkg _) -> do
         (out,_) <- systemOutput "ghc-pkg" ["dump"]
         return $ words out
+
+      when (m /= Build) (action $ runWeb m imgExt)
 
       return ()
 
