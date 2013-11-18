@@ -50,9 +50,10 @@ and aligned instances of `row`.
 Finally, create a row of diagrams showing the proof at different
 sizes.
 
-> exampleRow f = hcat' (with & sep .~ 4) . map (alignB . f)
+> exampleRow f = hcat' (with & sep .~ 4) . map f --(alignB . f)
 >
 > law4Dia = exampleRow law4' [2..4]
 >   where law4' k = law4 k 3 purple gold
 >
 > example = pad 1.1 $ law4Dia # centerXY
+>        <> square 90 # lw 0.1 # fc beige

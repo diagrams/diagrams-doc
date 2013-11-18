@@ -50,7 +50,7 @@ Now we can go about visualizing a tour.  First, let's draw a chessboard:
 > chessBoard n
 >   = vcat . map hcat . map (map boardSq)
 >   . take n . map (take n) . tails
->   $ cycle [sandybrown, brown]
+>   $ cycle [saddlebrown, antiquewhite]
 
 Now, we need a way to convert `Square` coordinates (a pair of numbers
 in the range 0-7) into actual coordinates on the chessboard.  Since
@@ -74,7 +74,7 @@ and decorate the vertices with dots.
 >   where
 >     tourPath   = fromVertices . map squareToPoint $ tour
 >     tourPoints = decoratePath tourPath (repeat dot)
->     dot = circle 0.1 # fc black
+>     dot = circle 0.05 # fc black
 
 Putting it all together:
 

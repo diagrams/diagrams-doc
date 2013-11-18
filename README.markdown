@@ -18,7 +18,7 @@ and more.
 To build the website (which includes the gallery, user manual, and
 tutorials), you will need:
 
-* GHC 7.4 or 7.6
+* GHC 7.6
 * the diagrams framework itself (including the
   [contrib package](http://github.com/diagrams/diagrams-contrib),
   [SVGFonts package](http://github.com/diagrams/SVGFonts), and

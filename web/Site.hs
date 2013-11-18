@@ -3,19 +3,17 @@
 
 module Site where
 
-import           Control.Monad        (forM_, (>=>))
-import           Data.Char            (isAlphaNum)
-import           Data.Functor         ((<$>))
-import           Data.List            (sortBy)
-import           Data.Maybe           (fromMaybe)
+import           Control.Monad   (forM_, (>=>))
+import           Data.Functor    ((<$>))
+import           Data.List       (sortBy)
+import           Data.Maybe      (fromMaybe)
 import           Data.Monoid
-import           Data.Ord             (comparing)
+import           Data.Ord        (comparing)
 
 import           Data.String
 
-import qualified Data.ByteString.Lazy as LB
 import           System.FilePath
-import           System.Process       (readProcess, system)
+import           System.Process  (readProcess)
 
 import           Text.Pandoc
 

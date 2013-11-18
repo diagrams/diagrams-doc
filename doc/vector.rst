@@ -193,7 +193,7 @@ The first thing to learn is how to *create* values of type
 
      ::
 
-     > vs = [ 5 *^ e (r :: Turn) | r <- [-1/4, -1/4 + 1/12 .. 1/4] ]
+     > vs = [ 5 *^ fromDirection (r :: Turn) | r <- [-1/4, -1/4 + 1/12 .. 1/4] ]
      > example = mconcat (map (\v -> unitCircle # translate v) vs)
      >         # fc blue
      >         # centerXY

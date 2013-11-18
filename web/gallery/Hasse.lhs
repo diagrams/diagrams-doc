@@ -15,8 +15,9 @@ view: -10,-5,15,15
 > import Data.Ord (comparing)
 > import Data.Function (on)
 > import Data.Maybe (fromMaybe)
+> import Data.Colour.SRGB (sRGB24read)
 >
-> colors = [black, blue, red, yellow, green, orange, purple, brown]
+> colors = map sRGB24read["#000000", "#D1DBBD", "#91AA9D", "#3E606F", "#193441", "#000000"]
 
 A subset is represented by the size of the parent set paired with the
 list of elements in the subset.  `isSubset` tests whether one set is a

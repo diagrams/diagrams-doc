@@ -9,7 +9,7 @@ width: 400
 ---
 
 > {-# LANGUAGE NoMonomorphismRestriction #-}
-> 
+>
 > import Diagrams.Prelude
 
 This code demonstrates the circle-packing layout from the `diagrams-contrib`
@@ -23,8 +23,9 @@ to be single shapes but can be arbitrary complex diagrams, as demonstrated by
 including some Spierpinsky triangles among them.
 
 > colorize = zipWith fc $
->    cycle [red,blue,yellow,magenta,cyan,bisque,firebrick,indigo]
-> 
+>    cycle [ lightcoral, lightseagreen, paleturquoise
+>          , lightsteelblue, plum, violet, coral, honeydew]
+>
 > sierpinski 1 = eqTriangle 1
 > sierpinski n = (s === (s ||| s) # centerX) # alignY (-1/3)
 >   where s = sierpinski (n-1)
@@ -38,4 +39,4 @@ including some Spierpinsky triangles among them.
 
 And now we can leave the layouting to `diagrams-contrib`:
 
-> example = pad 1.1 $ renderCirclePacking (approxRadius 6) objects
+> example = renderCirclePacking (approxRadius 6) objects
