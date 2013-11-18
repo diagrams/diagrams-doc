@@ -301,13 +301,13 @@ name `Mainable`.
 >    mainWith   :: Parseable (MainOpts d) => d -> IO ()
 
 There is one associated type and three class methods.  Lets consider the
-instance of `Mainable` for a simple diagram with type `Diagram SVG R2`:
+instance of `Mainable` for a simple diagram with type `Diagram Cairo R2`:
 
 .. class:: lhs
 
 ::
 
-> instance Mainable (Diagram SVG R2) where
+> instance Mainable (Diagram Cairo R2) where
 
 The associated type indicates what options we will want to be parsed
 from the command-line.  In this case we will just use the standard
@@ -317,7 +317,7 @@ options:
 
 ::
 
->     type MainOpts (Diagram SVG R2) = DiagramOpts
+>     type MainOpts (Diagram Cairo R2) = DiagramOpts
 
 The `mainArgs` method is nearly what we had before.  In this case there isn't
 anything backend specific, so instead of an instance implementation we will
@@ -334,8 +334,7 @@ only to fix the type so we can use our associated type function `MainOpts`.
 
 ::
 
->     mainArgs :: (Parseable a, Parseable (MainOpts d))
->              => d -> IO (MainOpts d, a)
+>     mainArgs :: Parseable (MainOpts d) => d -> IO (MainOpts d)
 >     mainArgs _ = do
 >       prog <- getProgName
 >       let p = info (helper' <*> parser)
@@ -352,12 +351,12 @@ interpretation of the standard arguments.
 
 ::
 
->     mainRender :: DiagramOpts -> Diagram SVG R2 -> IO ()
+>     mainRender :: DiagramOpts -> Diagram Cairo R2 -> IO ()
 >     mainRender = chooseRender
 
 Finally we have `mainWith` which joins the previous parts to make an entry point
 for users of the backend to build their programs.  In this example we take as an
-argument the `Diagram SVG R2` and result in a complete program.  Again, we can
+argument the `Diagram Cairo R2` and result in a complete program.  Again, we can
 get away with the default implementation.
 
 .. class:: lhs
@@ -369,9 +368,9 @@ get away with the default implementation.
 >         opts <- mainArgs d
 >         mainRender opts d
 
-.. container:: exercise
+.. container:: exercises
 
-     Write an instance for `Mainable [(String,Diagram SVG R2)]` that takes an
+  #. Write an instance for `Mainable [(String,Diagram Cairo R2)]` that takes an
      an additional option `-s` taking a name for the diagram from the association
      to render.  You can use the existing `DiagramMultiOpts` and its `Parseable`
      instance for the additional option.
@@ -437,9 +436,9 @@ of `Mainable` that we want.
 > instance (Parseable a, Parseable (Args d), ToResult d, Mainable (ResultOf d))
 >         => Mainable (a -> d) where
 
-.. container:: exercise
+.. container:: exercises
 
-    Think about this type for a bit.
+  #. Think about this type for a bit.
 
 Now we need a type for `MainOpts (a -> d)` and at least an implementation for
 `mainRender`.  Remember the purpose of `MainOpts` is to give a type for all
@@ -462,6 +461,6 @@ instance along with its required options.
 
 ::
 
->     mainRender (opts, a) f  = mainRender opts (toResult f a)
+>     mainRender (opts, a) f = mainRender opts (toResult f a)
 
 Now we compile and cross our fingers!
