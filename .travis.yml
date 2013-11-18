@@ -23,9 +23,9 @@ before_install:
 
 install: ./travis/scripts/install-deps.sh
 
-before_script: ghc --make Shake -threaded
+before_script: ghc --make Shake
 
-script: ./Shake +RTS -N2 -RTS buildh
+script: ./Shake buildh
 
 # after_success:
 #   - $ENIAC_PASSWORD
