@@ -186,8 +186,74 @@ command-line parsing and the parser for the standard options is the following:
 This is written in applicative form, `Constructor <$> ... <*> ... <*> ...`,
 where the values we fill in are the parsers for the fields of the record.  The
 parsers in `optparse-applicative`:pkg: take as an argument a collection of
-parameters.  We provide a type class called `Parseable` for associating a
-parser with the type that it parses:
+parameters.
+
+Abstracting Main
+================
+
+What work does the backend need to do to render a diagram?  It depends on the
+backend but there are several common tasks given the standard options.  To
+start with we need to parse the command-line arguments.  The `optparse-applicative`:pkg:
+provides all the tools we need for this.  Next we will need to translate the
+standard arguments in to something backend specific.  Typically the extension
+on the output filename will drive the format of the output and some combination
+of the supplied width and height will dictate the final scale of the diagram.
+Lets look at a full example of a backend doing this work and try to see what
+parts we can abstract out for general use (we will use the `Cairo` backend
+for this example).
+
+.. class:: lhs
+
+::
+
+> defaultMain :: Diagram Cairo R2 -> IO ()
+> defaultMain d = do
+>   prog <- getProgName
+>   let p = info (helper' <*> diagramOpts)
+>               ( fullDesc
+>              <> progDesc "Command-line diagram generation."
+>              <> header prog)
+>   opts <- execParser p
+>   chooseRender opts d
+> 
+> chooseRender :: DiagramOpts -> Diagram Cairo R2 -> IO ()
+> chooseRender opts d =
+>   case splitOn "." (output opts) of
+>     [""] -> putStrLn "No output file given."
+>     ps | last ps `elem` ["png", "ps", "pdf", "svg"] -> do
+>            let outTy = case last ps of
+>                  "png" -> PNG
+>                  "ps"  -> PS
+>                  "pdf" -> PDF
+>                  "svg" -> SVG
+>                  _     -> PDF
+>            fst $ renderDia
+>                    Cairo
+>                    ( CairoOptions
+>                      (output opts)
+>                      (mkSizeSpec
+>                        (fromIntegral <$> width opts)
+>                        (fromIntegral <$> height opts)
+>                      )
+>                      outTy
+>                      False
+>                    )
+>                    d
+>        | otherwise -> putStrLn $ "Unknown file type: " ++ last ps
+
+There are several things that make this structuring of the program inflexible.
+Lets consider building a `main` where we accept a function that can produce a
+diagram.
+
+.. class:: lhs
+
+::
+
+> functionMain :: (a -> Diagram Cairo R2) -> IO ()
+
+Clearly we cannot use the given function as we have no way to produce an `a`.
+Lets provide a type class called `Parseable` for associating a parser with the
+type that it parses:
 
 .. class:: lhs
 
@@ -196,8 +262,32 @@ parser with the type that it parses:
 > class Parseable a where
 >    parser :: Parser a
 
-And a type class `Mainable` for associating a type with a command-line
-behavior:
+Now we can make more progress.
+
+.. class:: lhs
+
+::
+
+> functionMain :: Parseable a => (a -> Diagram Cairo R2) -> IO ()
+> functionMain f = do
+>   prog <- getProgName
+>   let p = info (helper' <*> ((,) <$> diagramOpts <*> parser))
+>               ( fullDesc
+>              <> progDesc "Command-line diagram generation."
+>              <> header prog)
+>   (opts,a) <- execParser p
+>   chooseRender opts (f a)
+
+The only parts so far that are backend specific are the type of the final
+diagram and `chooseRender`, though we may want other parts may be subject to
+customization.  We will split this into four parts, the type of the options
+needed, the action of parsing the command-line, the backend specific rendering,
+and an entry point for the library consumer.  We will give this the brilliant
+name `Mainable`.
+
+.. class:: todo
+
+   Come up with a better name then `Mainable`.
 
 .. class:: lhs
 
@@ -206,8 +296,7 @@ behavior:
 > class Mainable d where
 >    type MainOpts d :: *
 >
->    mainArgs   :: (Parseable a, Parseable (MainOpts d)) 
->               => d -> IO (MainOpts d, a)
+>    mainArgs   :: Parseable (MainOpts d) => d -> IO (MainOpts d)
 >    mainRender :: MainOpts d -> d -> IO ()
 >    mainWith   :: Parseable (MainOpts d) => d -> IO ()
 
@@ -230,19 +319,16 @@ options:
 
 >     type MainOpts (Diagram SVG R2) = DiagramOpts
 
-Now we need to actually parse the arguments.  The `mainArgs` method
-has a default implementation that covers our use here.  Specifically
-it looks for `Parseable` instances for the associated type (`Parseable (MainOpts d)`)
-and for some other value (`Parseable a`) and pairs the two together
-and runs that parser with some additional standard configuration for 
-the program name and kind of help message in `defaultOpts`.  Running
-the `mainArgs` IO action results in either the program quiting with
-a parse error or help message, or the program continuing with the
-parsed value for the associated type and any additional command-line
-options parsed to the value of type `a`.  It may become clearer later
-why we want this additional value.  Also note that we need the 
-diagram to be passed to `mainArgs` only to fix the type so we can
-use our associated type function `MainOpts`.
+The `mainArgs` method is nearly what we had before.  In this case there isn't
+anything backend specific, so instead of an instance implementation we will
+show the default implementation for `mainArgs`.  Instead of a specific parser
+`diagramOpts` we have a constraint `Parseable (MainOpts d)` allowing us to use
+`parser` where we had `diagramsOpts`.  The parser from the constraint is combined with some
+additional standard configuration for the program name and the right kind of
+help message.  Running the `mainArgs` IO action results in either the program
+quiting with a parse error or help message, or the program continuing with the
+parsed value.  Also note that we need the diagram to be passed to `mainArgs`
+only to fix the type so we can use our associated type function `MainOpts`.
 
 .. class:: lhs
 
@@ -250,18 +336,132 @@ use our associated type function `MainOpts`.
 
 >     mainArgs :: (Parseable a, Parseable (MainOpts d))
 >              => d -> IO (MainOpts d, a)
->     mainArgs _ = defaultOpts ((,) <$> parser <*> parser)
+>     mainArgs _ = do
+>       prog <- getProgName
+>       let p = info (helper' <*> parser)
+>                   ( fullDesc
+>                  <> progDesc "Command-line diagram generation."
+>                  <> header prog)
+>       execParser p
 
-The next method to implement is the `mainRender` method.  This
-method takes some already parsed options and a diagram and does
-the work of rendering the diagram to the specified file.  This
-is where the backend specific work will happen.  In our case we
-have a function `chooseRender` that will do all this work for
-us given a diagram and the standard options:
+The next method to implement is the `mainRender` method.  Here we can just use
+the `chooseRender` function we had before, handling all the backend specific
+interpretation of the standard arguments.
 
 .. class:: lhs
 
 ::
 
-> mainRender :: MainOpts d -> d -> IO ()
-> mainRender opts d = chooseRender opts d
+>     mainRender :: DiagramOpts -> Diagram SVG R2 -> IO ()
+>     mainRender = chooseRender
+
+Finally we have `mainWith` which joins the previous parts to make an entry point
+for users of the backend to build their programs.  In this example we take as an
+argument the `Diagram SVG R2` and result in a complete program.  Again, we can
+get away with the default implementation.
+
+.. class:: lhs
+
+::
+
+>     mainWith :: Parseable (MainOpts d) => d -> IO ()
+>     mainWith d = do
+>         opts <- mainArgs d
+>         mainRender opts d
+
+.. container:: exercise
+
+     Write an instance for `Mainable [(String,Diagram SVG R2)]` that takes an
+     an additional option `-s` taking a name for the diagram from the association
+     to render.  You can use the existing `DiagramMultiOpts` and its `Parseable`
+     instance for the additional option.
+
+Now lets try a much harder instance.  We want to be able to handle functions
+whose final result has a `Mainable` instance, but require some `Parseable` arguments
+first.  The tricky part of this instance is we need to know up front what *all* our
+arguments are going to be in order to be able to parse all the arguments.  We might
+be tempted to peal off one argument at a time, parse, apply, and recurse with one
+less argument.  But as we said we need all the arguments first.  To facilitate that
+we will make a new type class that has associated types for all the arguments of
+the type and the final result of the type.  It will also contain a function to
+perform the application of all the arguments and give the final result.
+
+.. class:: lhs
+
+::
+
+> class ToResult d where
+>     type Args d :: *
+>     type ResultOf d :: *
+> 
+>     toResult :: d -> Args d -> ResultOf d
+
+We will need a base case for when we have reached the final result.  It needs
+no arguments so we use the unit type for `Args` and the final result is just
+the diagram itself.
+
+.. class:: lhs
+
+::
+
+> instance ToResult (Diagram b v) where
+>     type Args (Diagram b v) = ()
+>     type ResultOf (Diagram b v) = Diagram b v
+> 
+>     toResult d _ = d
+
+Now we can write the inductive case of a function resulting in something with
+a `ToResult` instance.
+
+.. class:: lhs
+
+::
+
+> instance ToResult d => ToResult (a -> d) where
+>     type Args (a -> d) = (a, Args d)
+>     type ResultOf (a -> d) = ResultOf d
+> 
+>     toResult f (a,args) = toResult (f a) args
+
+Here `Args` is the product of the argument and any arguments that `d` demands.
+The final result is the final result of `d` and to produce a result we apply
+one argument and recurse to `d`'s `ToResult` instance.
+
+Now that we have `ToResult` to work with we can write the type for the instance
+of `Mainable` that we want.
+
+.. class:: lhs
+
+::
+
+> instance (Parseable a, Parseable (Args d), ToResult d, Mainable (ResultOf d))
+>         => Mainable (a -> d) where
+
+.. container:: exercise
+
+    Think about this type for a bit.
+
+Now we need a type for `MainOpts (a -> d)` and at least an implementation for
+`mainRender`.  Remember the purpose of `MainOpts` is to give a type for all
+the arguments needed.  We will need the `MainOpts` from the final result and
+some structure containing all the function arguments.  Note that we rely on
+having a `Parseable` instance for products.
+
+.. class:: lhs
+
+::
+
+>     type MainOpts (a -> d) = (MainOpts (ResultOf (a -> d)), Args (a -> d))
+
+Our `mainRender` will be handed a value of this type and a function of our
+instance type.  We can use `toResult` to apply the second part of the pair
+to the function and hand the final result off to the final result's `Mainable`
+instance along with its required options.
+
+.. class:: lhs
+
+::
+
+>     mainRender (opts, a) f  = mainRender opts (toResult f a)
+
+Now we compile and cross our fingers!
