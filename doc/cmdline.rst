@@ -132,7 +132,7 @@ arguments from the command-line.
 > main = mainWith f
 
 In addition to the standard arguments we have ``blue`` and ``42.0`` which
-will be applied to ``f``.
+will be provided as arguments to ``f``.
 
 .. code-block:: sh
 
@@ -143,8 +143,8 @@ Standard Options
 ================
 
 The standard options for diagram creation are found in the
-`Diagrams.Backend.CmdLine`:mod: of the `diagrams-lib`:pkg: and are represented
-with the following record:
+`Diagrams.Backend.CmdLine`:mod: module of `diagrams-lib`:pkg: and are
+represented with the following record:
 
 .. class:: lhs
 
@@ -191,14 +191,20 @@ parameters.
 Abstracting Main
 ================
 
+.. container:: todo
+
+  Add a short paragraph here giving an overview of what this section
+  is about.  Below, when introducing each type class and so on,
+  link to the module containing the definition.
+
 What work does the backend need to do to render a diagram?  It depends on the
 backend but there are several common tasks given the standard options.  To
 start with we need to parse the command-line arguments.  The `optparse-applicative`:pkg:
-provides all the tools we need for this.  Next we will need to translate the
-standard arguments in to something backend specific.  Typically the extension
+package provides all the tools we need for this.  Next we will need to translate the
+standard arguments into something backend specific.  Typically the extension
 on the output filename will drive the format of the output and some combination
 of the supplied width and height will dictate the final scale of the diagram.
-Lets look at a full example of a backend doing this work and try to see what
+Let's look at a full example of a backend doing this work and try to see what
 parts we can abstract out for general use (we will use the `Cairo` backend
 for this example).
 
@@ -215,7 +221,7 @@ for this example).
 >              <> header prog)
 >   opts <- execParser p
 >   chooseRender opts d
-> 
+>
 > chooseRender :: DiagramOpts -> Diagram Cairo R2 -> IO ()
 > chooseRender opts d =
 >   case splitOn "." (output opts) of
@@ -242,7 +248,7 @@ for this example).
 >        | otherwise -> putStrLn $ "Unknown file type: " ++ last ps
 
 There are several things that make this structuring of the program inflexible.
-Lets consider building a `main` where we accept a function that can produce a
+Let's consider building a `main` where we accept a function that can produce a
 diagram.
 
 .. class:: lhs
@@ -252,7 +258,7 @@ diagram.
 > functionMain :: (a -> Diagram Cairo R2) -> IO ()
 
 Clearly we cannot use the given function as we have no way to produce an `a`.
-Lets provide a type class called `Parseable` for associating a parser with the
+So we provide a type class called `Parseable` for associating a parser with the
 type that it parses:
 
 .. class:: lhs
@@ -285,10 +291,6 @@ needed, the action of parsing the command-line, the backend specific rendering,
 and an entry point for the library consumer.  We will give this the brilliant
 name `Mainable`.
 
-.. class:: todo
-
-   Come up with a better name then `Mainable`.
-
 .. class:: lhs
 
 ::
@@ -300,7 +302,7 @@ name `Mainable`.
 >    mainRender :: MainOpts d -> d -> IO ()
 >    mainWith   :: Parseable (MainOpts d) => d -> IO ()
 
-There is one associated type and three class methods.  Lets consider the
+There is one associated type and three class methods.  Let's consider the
 instance of `Mainable` for a simple diagram with type `Diagram Cairo R2`:
 
 .. class:: lhs
@@ -326,7 +328,7 @@ show the default implementation for `mainArgs`.  Instead of a specific parser
 `parser` where we had `diagramsOpts`.  The parser from the constraint is combined with some
 additional standard configuration for the program name and the right kind of
 help message.  Running the `mainArgs` IO action results in either the program
-quiting with a parse error or help message, or the program continuing with the
+quitting with a parse error or help message, or the program continuing with the
 parsed value.  Also note that we need the diagram to be passed to `mainArgs`
 only to fix the type so we can use our associated type function `MainOpts`.
 
@@ -368,22 +370,17 @@ get away with the default implementation.
 >         opts <- mainArgs d
 >         mainRender opts d
 
-.. container:: exercises
-
-  #. Write an instance for `Mainable [(String,Diagram Cairo R2)]` that takes an
-     an additional option `-s` taking a name for the diagram from the association
-     to render.  You can use the existing `DiagramMultiOpts` and its `Parseable`
-     instance for the additional option.
-
-Now lets try a much harder instance.  We want to be able to handle functions
-whose final result has a `Mainable` instance, but require some `Parseable` arguments
-first.  The tricky part of this instance is we need to know up front what *all* our
-arguments are going to be in order to be able to parse all the arguments.  We might
-be tempted to peal off one argument at a time, parse, apply, and recurse with one
-less argument.  But as we said we need all the arguments first.  To facilitate that
-we will make a new type class that has associated types for all the arguments of
-the type and the final result of the type.  It will also contain a function to
-perform the application of all the arguments and give the final result.
+Now let's try a much harder instance.  We want to be able to handle
+functions whose final result has a `Mainable` instance, but require
+some `Parseable` arguments first.  The tricky part of this instance is
+that we need to know up front what *all* our arguments are going to be
+in order to be able to parse them.  It sounds tempting to peel off one
+argument at a time, parse, apply, and recurse with one less argument;
+but this does not work.  To facilitate collecting the arguments, we
+make a new type class that has associated types for all the
+arguments of the type and the final result of the type.  It will also
+contain a function to perform the application of all the arguments and
+give the final result.
 
 .. class:: lhs
 
@@ -426,8 +423,8 @@ Here `Args` is the product of the argument and any arguments that `d` demands.
 The final result is the final result of `d` and to produce a result we apply
 one argument and recurse to `d`'s `ToResult` instance.
 
-Now that we have `ToResult` to work with we can write the type for the instance
-of `Mainable` that we want.
+Now that we have `ToResult` to work with, we can write the type for the instance
+of `Mainable` that we want:
 
 .. class:: lhs
 
@@ -464,3 +461,19 @@ instance along with its required options.
 >     mainRender (opts, a) f = mainRender opts (toResult f a)
 
 Now we compile and cross our fingers!
+
+User Extensions
+===============
+
+You can easily build on top of this framework to create your own
+executables taking your own custom command-line flags.  This section
+walks through a simple example.  Although unrealistic, it should
+provide you with a template for more realistic extensions.
+
+.. container:: todo
+
+  Consider a newtype wrapper `newtype Flippable a = Flippable a`.
+  Write an instance for `Mainable (Flippable (Diagram Cairo R2))` that
+  takes an an additional flag ``--flip`` which specifies that the
+  diagram should be flipped horizontally (or drawn normally if the
+  ``--flip`` flag is not given).
