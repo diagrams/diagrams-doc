@@ -498,6 +498,38 @@ instance along with its required options.
 
 Now we compile and cross our fingers!
 
+We can also handle IO with a couple more instances.  First we will need a
+`ToResult` instance that handles IO actions:
+
+.. class:: lhs
+
+::
+
+> instance ToResult d => ToResult (IO d) where
+>    type Args (IO d) = Args d
+>    type ResultOf (IO d) = IO (ResultOf d)
+> 
+>    toResult d args = flip toResult args <$> d
+
+This states that the needed arguments are not affected by this being
+an IO action and the final result is an IO action producing the final
+result of the action's result type.  Our `Mainable` instance can now
+be written:
+
+.. class:: lhs
+
+::
+
+> instance Mainable d => Mainable (IO d) where
+>     type MainOpts (IO d) = MainOpts d
+> 
+>     mainRender opts dio = dio >>= mainRender opts
+
+Here we merely perform the diagram creating action and bind its value
+to the `Mainable` instance that can handle it.  For an example of using
+these instances see the `Clock Example`_ section below. 
+
+
 User Extensions
 ===============
 
@@ -718,7 +750,7 @@ this instance, writing instead:
 
 This instance is quite convenient, however, especially when we want our IO action
 to depend on some command-line option.  The following exercises should be helpful
-in gaining practice working with IO and options by modifing the clock example into
+in gaining practice working with IO and options by modifying the clock example into
 a useful clock making program.
 
 .. container:: exercises
