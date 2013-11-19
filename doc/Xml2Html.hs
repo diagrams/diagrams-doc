@@ -130,7 +130,7 @@ compileDiagram outDir src = do
            (CairoOptions "default.png" (Dims 500 200) PNG False)
 #endif
            [src]
-           "pad 1.1 example"
+           "(pad 1.1 . centerXY) example"
            ["DeriveDataTypeable"]
            [ "Diagrams.TwoD.Types"      -- WHY IS THIS NECESSARY =(
            , "Diagrams.Core.Points"
