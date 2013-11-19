@@ -401,8 +401,11 @@ general as one might hope:
 >   where ell = circle 1 # scaleX 0.5 # rotateBy (1/6)
 
 The `snug` class of functions use diagrams' *trace* (something like an
-embedded raytracer) rather than their envelope.  For more information,
-see `Diagrams.TwoD.Align`:mod:.
+embedded raytracer) rather than their envelope.  (For more information,
+see `Diagrams.TwoD.Align`:mod and the `user manual section on
+traces`__.)
+
+__ manual.html#traces
 
 Transforming diagrams
 =====================
@@ -505,19 +508,210 @@ Quite a few other things in the diagrams standard library are also
 monoids (transformations, trails, paths, styles, colors, envelopes,
 traces...).
 
+A worked example
+================
+
+As a way of exhibing a complete example and introducing some
+additional features of diagrams, consider trying to draw the following
+picture:
+
+.. class:: dia
+
+::
+
+> opts = with & headGap .~ 0.05 & tailGap .~ 0.05 & headSize .~ 0.15
+>
+> tournament :: Int -> Diagram B R2
+> tournament n = decorateTrail (regPoly n 1) (map mkNode [1..n])
+>     # applyAll [connectOutside' opts j k | j <- [1 .. n-1], k <- [j+1 .. n]]
+>     # sized (Width 2)
+>   where
+>     mkNode n = text (show n) # scale 0.2 # fc white <> circle 0.2 # fc green # named n
+>
+> example = tournament 6
+
+This features a hexagonal arrangement of numbered nodes, with an arrow
+from node `i`:math: to node `j`:math: whenever `i < j`:math:.  While
+we're at it, we might as well make our program generic in the number
+of nodes, so it generates a whole family of similar diagrams.
+
+The first thing to do is place the nodes.  We can use the `regPoly`
+function to produce a regular polygon with sides of a given length. (In
+this case we want to hold the side length constant, rather than the
+radius, so that we can simply make the nodes a fixed size.  To create
+polygons with a fixed radius as well as many other types of polygons,
+use the `polygon` function.)
+
+.. class:: dia-lhs
+
+::
+
+> example = regPoly 6 1
+
+However, `regPoly` (and most other functions for describing shapes)
+can be used to produce not just a diagram, but also a *trail* or
+*path*.  Loosely speaking, trails are purely geometric,
+one-dimensional tracks through space, and paths are collections of
+trails; see the `tutorial on trails and paths`__ for a more detailed
+account.  Trails and paths can be explicitly manipulated and computed
+with, and used, for example, to describe and position other
+diagrams. In this case, we can use the `decorateTrail` function to
+place nodes at the vertices of the trail produced by `regPoly`:
+
+.. class:: dia-lhs
+
+::
+
+> node    = circle 0.2 # fc green
+> example = decorateTrail (regPoly 6 1) (repeat node)
+
+__ paths.html
+
+As a next step, we can add text labels to the nodes.  For quick and
+dirty text, we can use the `text` function provided by
+`diagrams-lib`:pkg:. (For more sophisticated text support, see the
+`SVGFonts`:pkg: package.) While we are at it, we also abstract over
+the number of nodes:
+
+.. class:: dia-lhs
+
+::
+
+> node :: Int -> Diagram B R2
+> node n = text (show n) # scale 0.2 # fc white <> circle 0.2 # fc green
+>
+> tournament :: Int -> Diagram B R2
+> tournament n = decorateTrail (regPoly n 1) (map node [1..n])
+>
+> example = tournament 5
+
+Note the use of the type `B`, which is exported by every backend as a
+synonym for its particular backend type tag.  This makes it easier to
+switch between backends while still giving explicit type signatures for
+your code: in contrast to a type like `Diagram SVG R2` which is
+explicitly tied to a particular backend and would have to be changed
+when switchin to a different backend, the `B` in `Diagram B R2` will
+get instantiated to whichever backend happens to be in scope.
+
+Our final task is to connect the nodes with arrows.  First, in order
+to specify the parts of the diagram between which arrows should be
+drawn, we need to give *names* to the nodes, using the `named`
+function:
+
+.. class:: lhs
+
+::
+
+> node :: Int -> Diagram B R2
+> node n = text (show n) # scale 0.2 # fc white
+>       <> circle 0.2 # fc green # named n
+>
+> tournament :: Int -> Diagram B R2
+> tournament n = decorateTrail (regPoly n 1) (map node [1..n])
+
+Note the addition of `... # named n` to the circles making up the nodes.
+This doesn't yet change the picture in any way, but it sets us up to
+describe arrows between the nodes.  We can use values of arbitrary
+type (subject to a few restrictions) as names; in this case the
+obvious choice is the `Int` values corresponding to the nodes
+themselves.  (See the `user manual section on named subdiagrams`__ for
+more.)
+
+__ manual.html#named-subdiagrams
+
+The `Diagrams.TwoD.Arrow`:mod: module provides a number of tools for
+drawing arrows (see also the `user manual section on arrows`_ and the
+`arrow tutorial`_). In this case, we can use the `connectOutside`
+function to draw an arrow between the outer edges of two named
+objects.  Here we connect nodes 1 and 2 with the standard options:
+
+.. _`user manual section on arrows`: manual.html#arrows
+.. _`arrow tutorial`: arrow.html
+
+.. class:: dia-lhs
+
+::
+
+> node :: Int -> Diagram B R2
+> node n = text (show n) # scale 0.2 # fc white
+>       <> circle 0.2 # fc green # named n
+>
+> tournament :: Int -> Diagram B R2
+> tournament n = decorateTrail (regPoly n 1) (map node [1..n])
+>
+> example = tournament 6 # connectOutside (1 :: Int) (2 :: Int)
+
+(The type annotations on `1` and `2` are necessary since numeric
+literals are polymorphic and we can use names of any type.)
+
+This won't do; we want to leave some space between the nodes and the
+ends of the arrow, and to use a slightly smaller arrowhead.  Fortunately, the
+arrow-drawing code is highly configurable.  Instead of
+`connectOutside` we can use its sibling function `connectOutside'`
+(note the prime) which takes an extra record of options controlling the way
+arrows are drawn.  We want to override the default arrowhead size as
+well as the gaps at the beginning and end of the arrow, which we do as
+follows:
+
+.. class:: dia-lhs
+
+::
+
+> node :: Int -> Diagram B R2
+> node n = text (show n) # scale 0.2 # fc white
+>       <> circle 0.2 # fc green # named n
+>
+> tournament :: Int -> Diagram B R2
+> tournament n = decorateTrail (regPoly n 1) (map node [1..n])
+>
+> example = tournament 6
+>   # connectOutside' (with & headGap  .~ 0.07
+>                           & tailGap  .~ 0.07
+>                           & headSize .~ 0.2
+>                     )
+>     (1 :: Int) (2 :: Int)
+
+`with` is a convenient name for the default arguments record, and we
+update it using the `lens`:pkg: library.  (This pattern is common
+throughout diagrams; See `the user manual section on optional named
+arguments`__.)
+
+__ manual.html#faking-optional-named-arguments
+
+Now we simply need to call `connectOutside'` for each pair of nodes.
+`applyAll`, which applies a list of function, is useful in this sort
+of situation.
+
+.. class:: dia-lhs
+
+::
+
+> node :: Int -> Diagram B R2
+> node n = text (show n) # scale 0.2 # fc white
+>       <> circle 0.2 # fc green # named n
+>
+> arrowOpts = with & headGap  .~ 0.07
+>                  & tailGap  .~ 0.07
+>                  & headSize .~ 0.2
+>
+> tournament :: Int -> Diagram B R2
+> tournament n = decorateTrail (regPoly n 1) (map node [1..n])
+>   # applyAll [connectOutside' arrowOpts j k | j <- [1 .. n-1], k <- [j+1 .. n]]
+>
+> example = tournament 6
+
+Voilá!
+
 Next steps
 ==========
 
 This tutorial has really only scratched the surface of what is
-possible! Included among the many things *not* covered by this
-tutorial are trails, paths, splines, text, traces, a wide array of
-predefined shapes, named subdiagrams, animation...  Here are pointers
-to some resources for learning more:
+possible! Here are pointers to some resources for learning more:
 
 * There are `other tutorials on more specific topics`_ available.  For
   example, there is a tutorial on `working with vectors and points`_,
   one on `trails and paths`_, one on drawing `arrows`_ between things,
-  and others.
+  one on construting `command-line driven interfaces`_, and others.
 
 * The diagrams `user manual`_ goes into much more depth on all the
   topics covered in this tutorial, plus many others, and includes lots
@@ -539,6 +733,7 @@ to some resources for learning more:
 .. _`working with vectors and points`: vector.html
 .. _`trails and paths`: paths.html
 .. _`arrows`: arrows.html
+.. _`command-line driven interfaces`: cmdline.html
 .. _`report it as a bug`: http://github.com/diagrams/diagrams-doc/issues
 .. _`report it as a bug as well`: http://github.com/diagrams/diagrams/issues
 .. _`diagrams-discuss mailing list`: http://groups.google.com/group/diagrams-discuss
