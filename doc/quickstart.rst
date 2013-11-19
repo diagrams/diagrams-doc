@@ -402,7 +402,7 @@ general as one might hope:
 
 The `snug` class of functions use diagrams' *trace* (something like an
 embedded raytracer) rather than their envelope.  (For more information,
-see `Diagrams.TwoD.Align`:mod and the `user manual section on
+see `Diagrams.TwoD.Align`:mod: and the `user manual section on
 traces`__.)
 
 __ manual.html#traces
@@ -623,7 +623,7 @@ The `Diagrams.TwoD.Arrow`:mod: module provides a number of tools for
 drawing arrows (see also the `user manual section on arrows`_ and the
 `arrow tutorial`_). In this case, we can use the `connectOutside`
 function to draw an arrow between the outer edges of two named
-objects.  Here we connect nodes 1 and 2 with the standard options:
+objects.  Here we connect nodes 1 and 2:
 
 .. _`user manual section on arrows`: manual.html#arrows
 .. _`arrow tutorial`: arrow.html
@@ -644,13 +644,13 @@ objects.  Here we connect nodes 1 and 2 with the standard options:
 (The type annotations on `1` and `2` are necessary since numeric
 literals are polymorphic and we can use names of any type.)
 
-This won't do; we want to leave some space between the nodes and the
-ends of the arrow, and to use a slightly smaller arrowhead.  Fortunately, the
+This won't do, however; we want to leave some space between the nodes and the
+ends of the arrows, and to use a slightly smaller arrowhead.  Fortunately, the
 arrow-drawing code is highly configurable.  Instead of
 `connectOutside` we can use its sibling function `connectOutside'`
 (note the prime) which takes an extra record of options controlling the way
 arrows are drawn.  We want to override the default arrowhead size as
-well as the gaps at the beginning and end of the arrow, which we do as
+well as specify gaps before and after the arrow, which we do as
 follows:
 
 .. class:: dia-lhs
@@ -679,7 +679,7 @@ arguments`__.)
 __ manual.html#faking-optional-named-arguments
 
 Now we simply need to call `connectOutside'` for each pair of nodes.
-`applyAll`, which applies a list of function, is useful in this sort
+`applyAll`, which applies a list of functions, is useful in this sort
 of situation.
 
 .. class:: dia-lhs
