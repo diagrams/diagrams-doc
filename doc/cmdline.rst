@@ -146,6 +146,33 @@ provided for `Int`, `String`, and `AlphaColour` arguments.  You can
 also easily define your own parsers for additional argument types; see
 the `User Extensions`_ section below.
 
+Diagrams that are the result of executing an IO action can also be handled
+by `mainWith`.  This can be useful for reading input files or doing other
+IO that the diagram depends on.
+
+.. class:: lhs
+
+::
+
+> -- IO-diagram
+>
+> d :: FilePath -> IO (Diagram SVG R2)
+> d file = do 
+>     f <- readFile file
+>     ...
+>
+> main = mainWith d
+
+The program will expect a file name on the command-line which it reads to
+generate a diagram.
+
+.. code-block:: sh
+
+    $ ./IO-diagram -o file.svg -w 400 ~/data.log
+
+See the `Clock Example`_ section below.
+
+
 Standard Options
 ================
 
