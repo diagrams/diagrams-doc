@@ -7,7 +7,7 @@
 .. sectnum:: :depth: 2
 
 ===============================
- Command-line Diagram Creation
+ Command-line diagram creation
 ===============================
 
 .. contents:: :depth: 2
@@ -24,8 +24,11 @@ diagram that are relatively independent of the image being made.  With the
 backends) we provide easy creation of a command-line interface that supports
 standard options as well as easy customization for additional parameters.
 
-To give a concrete example of what we will see, the following are examples
-of programs we will be able to write and their interaction on the command-line.
+To give some concrete examples, the following are programs one can
+write using the tools already provided, and their interaction on the
+command-line.  For an example of a custom extension to this framework,
+see the `User Extensions`_ section below.
+
 First is the simplest case of generating a single diagram:
 
 .. class:: lhs
@@ -68,7 +71,7 @@ diagram with the standard options.
 
     $ ./Multiple --list
     Available diagrams:
-      one two three
+      First Second Third
     $ ./Multiple -o d1.svg -w 100 -s First
 
 Some backends support rendering animations (typically as individually indexed
@@ -117,7 +120,7 @@ single diagram.
 
 To make things more interesting we could require additional arguments to
 build a diagram.  We can take a function to build a diagram from some
-parameters and build an interface that fills those parameters with
+parameters and create an interface that fills those parameters with
 arguments from the command-line.
 
 .. class:: lhs
@@ -131,13 +134,17 @@ arguments from the command-line.
 >
 > main = mainWith f
 
-In addition to the standard arguments we have ``blue`` and ``42.0`` which
-will be provided as arguments to ``f``.
+In addition to the standard flags, we can provide arguments ``blue`` and ``42.0`` which
+will be passed along to ``f``.
 
 .. code-block:: sh
 
     $ ./Function -o blue.svg -w 400 blue 42.0
 
+In addition to `Colour`\s and `Double`\s, default command-line parsers are
+provided for `Int`, `String`, and `AlphaColour` arguments.  You can
+also easily define your own parsers for additional argument types; see
+the `User Extensions`_ section below.
 
 Standard Options
 ================
@@ -191,22 +198,24 @@ parameters.
 Abstracting Main
 ================
 
-.. container:: todo
+This section walks through and motivates the design of the abstraction
+mechanisms that make possible the examples shown above.  If you want
+to create your own custom command-line-driven diagram generation
+executables, you will likely find it helpful to understand this
+section.  The truly impatient, however, may wish to skip directly to
+`User Extensions`_ and return to this section as necessary.
 
-  Add a short paragraph here giving an overview of what this section
-  is about.  Below, when introducing each type class and so on,
-  link to the module containing the definition.
-
-What work does the backend need to do to render a diagram?  It depends on the
-backend but there are several common tasks given the standard options.  To
-start with we need to parse the command-line arguments.  The `optparse-applicative`:pkg:
-package provides all the tools we need for this.  Next we will need to translate the
-standard arguments into something backend specific.  Typically the extension
-on the output filename will drive the format of the output and some combination
-of the supplied width and height will dictate the final scale of the diagram.
-Let's look at a full example of a backend doing this work and try to see what
-parts we can abstract out for general use (we will use the `Cairo` backend
-for this example).
+What work does the backend need to do to render a diagram?  It depends
+on the backend, of course, but there are several common tasks given
+the standard options.  To start with we need to parse the command-line
+arguments.  The `optparse-applicative`:pkg: package provides all the
+tools we need for this.  Next we will need to translate the standard
+arguments into something backend specific.  Typically the extension on
+the output filename will drive the format of the output and some
+combination of the supplied width and height will dictate the final
+scale of the diagram.  Let's look at a full example of a backend doing
+this work and try to see what parts we can abstract out for general
+use (we will use the `Cairo` backend for this example).
 
 .. class:: lhs
 
@@ -467,8 +476,7 @@ User Extensions
 
 You can easily build on top of this framework to create executables
 taking your own custom command-line flags.  This section walks through
-a simple example.  Although unrealistic, it should provide you with a
-template for more realistic extensions.
+a simple example.
 
 Suppose we want to make "flippable" diagrams: a single executable that
 can render either a diagram or its mirror image, depending on a
@@ -509,8 +517,9 @@ We need a newtype since we need to make a `Mainable` instance which is
 different than the default instance for `Diagram SVG R2`.
 
 We create a data structure to contain our new command-line options,
-along with a `Parseable` instance.  In this case we just want a single
-`Bool` value:
+along with a `Parseable` instance for it.  In this case we just want a
+single `Bool` value, corresponding to a new command-line switch
+``--flipped`` along with an appropriate help message
 
 .. class:: lhs
 
@@ -521,11 +530,9 @@ along with a `Parseable` instance.  In this case we just want a single
 > instance Parseable FlipOpts where
 >   parser = FlipOpts <$> switch (long "flipped" <> help "Flip the diagram L-R")
 
-In this case, we make a boolean switch out of the option
-``--flipped``.  For help on constructing such command-line parsers,
-see the documentation for the `optparse-applicative`:pkg: package; you
-can also look at the source code of `Diagrams.Backend.CmdLine`:mod:
-for some examples.
+For help on constructing command-line parsers, see the documentation
+for the `optparse-applicative`:pkg: package; you can also look at the
+source code of `Diagrams.Backend.CmdLine`:mod: for some examples.
 
 Finally, we create a `Mainable` instance for flippable diagrams.  The
 `MainOpts` for flippable diagrams consists of a pair of our new
@@ -539,9 +546,9 @@ diagrams, flipping the diagram appropriately.
 ::
 
 > instance Mainable (Flippable (Diagram SVG R2)) where
->   type MainOpts (Flippable (Diagram SVG R2)) = (FlipOpts, MainOpts (Diagram SVG R2))
+>   type MainOpts (Flippable (Diagram SVG R2)) = (MainOpts (Diagram SVG R2), FlipOpts)
 >
->   mainRender (FlipOpts f, opts) (Flippable d) = mainRender opts ((if f then reflectX else id) d)
+>   mainRender (opts, FlipOpts f) (Flippable d) = mainRender opts ((if f then reflectX else id) d)
 
 Let's try it out!
 
@@ -562,24 +569,24 @@ Note the ``--flipped`` option in the help message:
 
   Flippable
 
-  Usage: Flippable [--flipped] [-w|--width WIDTH] [-h|--height HEIGHT] [-o|--output OUTPUT] [-l|--loop] [-s|--src ARG] [-i|--interval INTERVAL]
+  Usage: Flippable [-w|--width WIDTH] [-h|--height HEIGHT] [-o|--output OUTPUT] [-l|--loop] [-s|--src ARG] [-i|--interval INTERVAL] [--flipped]
     Command-line diagram generation.
 
   Available options:
     -?,--help                Show this help text
-    --flipped                Flip the diagram L-R
     -w,--width WIDTH         Desired WIDTH of the output image (default 400)
     -h,--height HEIGHT       Desired HEIGHT of the output image (default 400)
     -o,--output OUTPUT       OUTPUT file
     -l,--loop                Run in a self-recompiling loop
     -s,--src ARG             Source file to watch
     -i,--interval INTERVAL   When running in a loop, check for changes every INTERVAL seconds.
+    --flipped                Flip the diagram L-R
 
 And running it yields:
 
-::
+.. code-block:: sh
 
-  $ ./Flippable -o Flippable.svg -w 400
+    $ ./Flippable -o Flippable.svg -w 400
 
 .. class:: dia
 
@@ -587,9 +594,9 @@ And running it yields:
 
 > example = square 1 # fc red ||| square 1 # fc blue
 
-::
+.. code-block:: sh
 
-  $ ./Flippable -o Flippable.svg -w 400 --flipped
+    $ ./Flippable -o Flippable.svg -w 400 --flipped
 
 .. class:: dia
 
@@ -598,3 +605,19 @@ And running it yields:
 > example = square 1 # fc blue ||| square 1 # fc red
 
 It works!
+
+It is also worth noting that for this simple example, *we actually did
+not need the* `Flippable` *wrapper or* `Mainable` *instance at all*!
+Given only the `FlipOpts` type and its `Parseable` instance, we can
+simply write
+
+.. class:: lhs
+
+::
+
+> main = mainWith (\(FlipOpts f) -> (if f then reflectX else id) d)
+
+which gives us *exactly the same program*!  Indeed, if you squint at
+the function instance for `Mainable` and the instance we wrote for
+`Flippable`, you can see that our instance is a direct specialization
+of the more general one.
