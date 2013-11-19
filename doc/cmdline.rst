@@ -698,15 +698,17 @@ know what time it is.  Consider the following program.
 > import Data.Time
 > 
 > clock :: UTCTime -> Diagram B R2
-> clock t = circle 11 # lw 2 <> bigHand # f 12 h <> littleHand # f 60 m
+> clock t = circle 0.35 # fc silver # lw 0
+>        <> bigHand # f 12 h <> littleHand # f 60 m
 >        <> circle 1  # fc black # lw 0
+>        <> circle 11 # lw 1.5 # lc slategray # fc lightsteelblue
 >   where
 >     s = realToFrac $ utctDayTime t :: Double
 >     m = s / 60
 >     h = m / 60
-> 
->     bigHand    = (0 ^& (-1.5)) ~~ (0 ^&  8) # lw 0.5
->     littleHand = (0 ^& (-2))   ~~ (0 ^& 10) # lw 0.2
+>
+>     bigHand    = (0 ^& (-1.5)) ~~ (0 ^& 7.5) # lw 0.5
+>     littleHand = (0 ^& (-2))   ~~ (0 ^& 9.5) # lw 0.2
 >     f n v = rotate (Turn (- v / n))
 > 
 > main = mainWith (clock <$> getCurrentTime)
@@ -722,16 +724,17 @@ Running we get:
 > import Diagrams.Coordinates
 > import Data.Time
 > 
+> clock :: UTCTime -> Diagram B R2
 > clock t = circle 0.35 # fc silver # lw 0
 >        <> bigHand # f 12 h <> littleHand # f 60 m
 >        <> circle 1  # fc black # lw 0
->        <> (circle 11 # lw 1.5 # lc slategray # fc lightsteelblue)
+>        <> circle 11 # lw 1.5 # lc slategray # fc lightsteelblue
 >   where
 >     s = realToFrac $ utctDayTime t :: Double
 >     m = s / 60
 >     h = m / 60
 >
->     bigHand    = (0 ^& (-1.5)) ~~ (0 ^&  7.5) # lw 0.5
+>     bigHand    = (0 ^& (-1.5)) ~~ (0 ^& 7.5) # lw 0.5
 >     littleHand = (0 ^& (-2))   ~~ (0 ^& 9.5) # lw 0.2
 >     f n v = rotate (Turn (- v / n))
 >
