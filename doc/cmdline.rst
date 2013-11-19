@@ -94,7 +94,7 @@ then the following will create files ``a01.png`` through ``a24.png``.
 
    $ ./Animation -o a.png -w 100 --fpu 24
 
-In backends that support multiple pages we can list all the diagrams and 
+In backends that support multiple pages we can list all the diagrams and
 have each render on its own page.
 
 .. class:: lhs
@@ -117,7 +117,7 @@ single diagram.
 
 To make things more interesting we could require additional arguments to
 build a diagram.  We can take a function to build a diagram from some
-parameters and build an interface that fills those parameters with 
+parameters and build an interface that fills those parameters with
 arguments from the command-line.
 
 .. class:: lhs
@@ -389,7 +389,7 @@ give the final result.
 > class ToResult d where
 >     type Args d :: *
 >     type ResultOf d :: *
-> 
+>
 >     toResult :: d -> Args d -> ResultOf d
 
 We will need a base case for when we have reached the final result.  It needs
@@ -403,7 +403,7 @@ the diagram itself.
 > instance ToResult (Diagram b v) where
 >     type Args (Diagram b v) = ()
 >     type ResultOf (Diagram b v) = Diagram b v
-> 
+>
 >     toResult d _ = d
 
 Now we can write the inductive case of a function resulting in something with
@@ -416,7 +416,7 @@ a `ToResult` instance.
 > instance ToResult d => ToResult (a -> d) where
 >     type Args (a -> d) = (a, Args d)
 >     type ResultOf (a -> d) = ResultOf d
-> 
+>
 >     toResult f (a,args) = toResult (f a) args
 
 Here `Args` is the product of the argument and any arguments that `d` demands.
@@ -465,15 +465,136 @@ Now we compile and cross our fingers!
 User Extensions
 ===============
 
-You can easily build on top of this framework to create your own
-executables taking your own custom command-line flags.  This section
-walks through a simple example.  Although unrealistic, it should
-provide you with a template for more realistic extensions.
+You can easily build on top of this framework to create executables
+taking your own custom command-line flags.  This section walks through
+a simple example.  Although unrealistic, it should provide you with a
+template for more realistic extensions.
 
-.. container:: todo
+Suppose we want to make "flippable" diagrams: a single executable that
+can render either a diagram or its mirror image, depending on a
+command-line flag.  Of course we also want to support all the usual
+command-line options like ``--width``, ``--height``, ``--output``, and
+so on.  The framework described above---together with the
+composability of `optparse-applicative`:pkg:\-based command-line
+parsers---makes this very easy to do.
 
-  Consider a newtype wrapper `newtype Flippable a = Flippable a`.
-  Write an instance for `Mainable (Flippable (Diagram Cairo R2))` that
-  takes an an additional flag ``--flip`` which specifies that the
-  diagram should be flipped horizontally (or drawn normally if the
-  ``--flip`` flag is not given).
+First, some pragmas and imports:
+
+.. class:: lhs
+
+::
+
+> {-# LANGUAGE FlexibleInstances         #-}
+> {-# LANGUAGE NoMonomorphismRestriction #-}
+> {-# LANGUAGE TypeFamilies              #-}
+>
+> import           Diagrams.Backend.CmdLine
+> import           Diagrams.Backend.SVG.CmdLine
+> import           Diagrams.Prelude             hiding ((<>))
+> import           Options.Applicative
+
+(Unfortunately, `Options.Applicative`:mod: re-exports the `(<>)` from
+``Data.Monoid``, whereas `Diagrams.Prelude`:mod: re-exports the one
+from ``Data.Semigroup``.)
+
+We now create a newtype for "flippable" things:
+
+.. class:: lhs
+
+::
+
+> newtype Flippable a = Flippable a
+
+We need a newtype since we need to make a `Mainable` instance which is
+different than the default instance for `Diagram SVG R2`.
+
+We create a data structure to contain our new command-line options,
+along with a `Parseable` instance.  In this case we just want a single
+`Bool` value:
+
+.. class:: lhs
+
+::
+
+> data FlipOpts = FlipOpts Bool
+>
+> instance Parseable FlipOpts where
+>   parser = FlipOpts <$> switch (long "flipped" <> help "Flip the diagram L-R")
+
+In this case, we make a boolean switch out of the option
+``--flipped``.  For help on constructing such command-line parsers,
+see the documentation for the `optparse-applicative`:pkg: package; you
+can also look at the source code of `Diagrams.Backend.CmdLine`:mod:
+for some examples.
+
+Finally, we create a `Mainable` instance for flippable diagrams.  The
+`MainOpts` for flippable diagrams consists of a pair of our new
+`FlipOpts` along with the `MainOpts` for diagrams.  To implement
+`mainRender`, we take in our options and a flippable diagram, and pass
+the diagram-specific options along to the `mainRender` method for
+diagrams, flipping the diagram appropriately.
+
+.. class:: lhs
+
+::
+
+> instance Mainable (Flippable (Diagram SVG R2)) where
+>   type MainOpts (Flippable (Diagram SVG R2)) = (FlipOpts, MainOpts (Diagram SVG R2))
+>
+>   mainRender (FlipOpts f, opts) (Flippable d) = mainRender opts ((if f then reflectX else id) d)
+
+Let's try it out!
+
+.. class:: lhs
+
+::
+
+> d :: Diagram SVG R2
+> d = square 1 # fc red ||| square 1 # fc blue
+>
+> main = mainWith (Flippable d)
+
+Note the ``--flipped`` option in the help message:
+
+::
+
+  $ ./Flippable --help
+
+  Flippable
+
+  Usage: Flippable [--flipped] [-w|--width WIDTH] [-h|--height HEIGHT] [-o|--output OUTPUT] [-l|--loop] [-s|--src ARG] [-i|--interval INTERVAL]
+    Command-line diagram generation.
+
+  Available options:
+    -?,--help                Show this help text
+    --flipped                Flip the diagram L-R
+    -w,--width WIDTH         Desired WIDTH of the output image (default 400)
+    -h,--height HEIGHT       Desired HEIGHT of the output image (default 400)
+    -o,--output OUTPUT       OUTPUT file
+    -l,--loop                Run in a self-recompiling loop
+    -s,--src ARG             Source file to watch
+    -i,--interval INTERVAL   When running in a loop, check for changes every INTERVAL seconds.
+
+And running it yields:
+
+::
+
+  $ ./Flippable -o Flippable.svg -w 400
+
+.. class:: dia
+
+::
+
+> example = square 1 # fc red ||| square 1 # fc blue
+
+::
+
+  $ ./Flippable -o Flippable.svg -w 400 --flipped
+
+.. class:: dia
+
+::
+
+> example = square 1 # fc blue ||| square 1 # fc red
+
+It works!
