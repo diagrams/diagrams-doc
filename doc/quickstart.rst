@@ -19,7 +19,7 @@ DSL to create graphics in a powerful, modular, and declarative way.
 There's enough here to get you started quickly; for more in-depth
 information, see the `user manual`_.
 
-.. _`user manual`: /doc/manual.html
+.. _`user manual`: manual.html
 
 This is not a Haskell tutorial (although a
 Haskell-tutorial-via-diagrams is a fun idea and may happen in the
@@ -140,7 +140,7 @@ with the following contents:
 > import Diagrams.Prelude
 > import Diagrams.Backend.SVG.CmdLine
 >
-> main = defaultMain (circle 1)
+> main = mainWith (circle 1)
 
 Turning off the Dreaded Monomorphism Restriction is quite important:
 if you don't, you will almost certainly run into it (and be very
@@ -149,7 +149,7 @@ confused by the resulting error messages).
 The first `import` statement brings into scope the entire diagrams DSL
 and standard library.  The second `import` is so that we can use the
 SVG backend for rendering diagrams.  Among other things, it provides
-the function `defaultMain`, which takes a diagram as input (in this
+the function `mainWith`, which takes a diagram as input (in this
 case, a circle of radius 1) and creates a command-line-driven
 application for rendering it.
 
@@ -164,7 +164,7 @@ Let's compile and run it:
 
 If you now view `circle.svg` in your favorite web browser, you should
 see an unfilled black circle on a white background (actually, it's on
-a transparent background, but most browsers I know of use white):
+a transparent background, but most browsers use white):
 
 .. class:: dia
 
@@ -183,7 +183,14 @@ scale of the diagram itself will be used, which in this case would be
 rather tiny---only 2x2.
 
 There are several more options besides `-o`, `-w`, and `-h`; you can
-see what they are by typing `./DiagramsTutorial --help`.
+see what they are by typing `./DiagramsTutorial --help`.  The
+`mainWith` function is also quite a bit more general than accepting
+just a diagram: it can accept animations, lists of diagrams,
+association lists of names and diagrams, or functions producing any of
+the above.  For more information, see the `diagrams command-line
+creation tutorial`__.
+
+__ cmdline.html
 
 Attributes
 ==========
@@ -336,7 +343,9 @@ local origin of the first diagram to the local origin of the second.
 > example = hcat [circleSqV1, strutX 1, circleSqV2]
 
 Notice how we use the `r2` function to create a 2D vector from a pair
-of coordinates.
+of coordinates; see the `vectors and points tutorial`__ for more.
+
+__ vector.html
 
 Envelopes
 ---------
@@ -367,11 +376,6 @@ line between them with `vrule` and you will see why.)
 > example = ell ||| ell
 >   where ell = circle 1 # scaleX 0.5 # rotateBy (1/6)
 
-If we want to position these ellipses next to each other horizontally
-so that they are tangent, it is not clear how to accomplish this.
-(However, it should be possible to create higher-level modules for
-automatically accomplishing this in certain cases.)
-
 However:
 
 * This rule is very *simple*, in that it is easy to predict what will
@@ -384,6 +388,21 @@ However:
   pointwise maximum of their envelopes; to place two diagrams
   next to each other we use their envelopes to decide how to
   reposition their local origins before composing them with `atop`.
+
+Happily, in this particular case, it *is* possible to place the
+ellipses tangent to one another, though this solution is not quite as
+general as one might hope:
+
+.. class:: dia-lhs
+
+::
+
+> example = ell # snugR <> ell # snugL
+>   where ell = circle 1 # scaleX 0.5 # rotateBy (1/6)
+
+The `snug` class of functions use diagrams' *trace* (something like an
+embedded raytracer) rather than their envelope.  For more information,
+see `Diagrams.TwoD.Align`:mod:.
 
 Transforming diagrams
 =====================
@@ -497,7 +516,8 @@ to some resources for learning more:
 
 * There are `other tutorials on more specific topics`_ available.  For
   example, there is a tutorial on `working with vectors and points`_,
-  and one on `segments, trails, and paths`_.
+  one on `trails and paths`_, one on drawing `arrows`_ between things,
+  and others.
 
 * The diagrams `user manual`_ goes into much more depth on all the
   topics covered in this tutorial, plus many others, and includes lots
@@ -517,7 +537,8 @@ to some resources for learning more:
 
 .. _`other tutorials on more specific topics`: /documentation.html
 .. _`working with vectors and points`: vector.html
-.. _`segments, trails, and paths`: paths.html
+.. _`trails and paths`: paths.html
+.. _`arrows`: arrows.html
 .. _`report it as a bug`: http://github.com/diagrams/diagrams-doc/issues
 .. _`report it as a bug as well`: http://github.com/diagrams/diagrams/issues
 .. _`diagrams-discuss mailing list`: http://groups.google.com/group/diagrams-discuss
