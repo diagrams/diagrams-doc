@@ -693,7 +693,6 @@ know what time it is.  Consider the following program.
 ::
 
 > import Diagrams.Prelude
-> import Diagrams.Backend.SVG.CmdLine
 > import Diagrams.Coordinates
 > import Data.Time
 > 
@@ -720,7 +719,6 @@ Running we get:
 ::
 
 > import Diagrams.Prelude
-> import Diagrams.Backend.SVG.CmdLine
 > import Diagrams.Coordinates
 > import Data.Time
 > 
