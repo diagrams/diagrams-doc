@@ -4401,10 +4401,6 @@ __ https://github.com/diagrams/diagrams-haddock/blob/master/README.md
 Type reference
 ==============
 
-.. container:: todo
-
-  Are there more type classes or type functions to add now?
-
 This section serves as a reference in understanding the types used in
 the diagrams framework.
 
