@@ -399,24 +399,37 @@ That is, types which have a `Default` instance have some default value
 called `def`.  For option records, `def` is declared to be the record
 containing all the default arguments.  The idea is that you can pass
 `def` as an argument to a function which takes a record of options,
-and use record update syntax to override only the fields you want,
-like this:
+and override only the fields you want, like this:
+
+.. class:: lhs
 
 ::
 
-  foo (def { arg1 = someValue, arg6 = blah })
+> foo (def & arg1 .~ someValue & arg6 .~ blah)
 
-There are a couple more things to note.  First, record update actually
-binds *more tightly* than function application, so the parentheses
-above are actually not necessary (this is a strange corner of Haskell
-syntax but it works nicely for our purposes here).  Second,
-``diagrams`` also defines `with` as a synonym for `def`, which makes
-the syntax a bit more natural.  So, instead of the above, you could
-write
+This is using machinery from the `lens`:pkg:; but you don't have to
+understand `lens`:pkg:, or know anything beyond the above syntax in
+order to use diagrams (for convenience, diagrams re-exports the `(&)`
+and `(.~)` operators from `lens`:pkg:).  In fact, in most cases, you
+can also use record update syntax instead (note the underscores):
 
 ::
 
-  foo with { arg1 = someValue, arg6 = blah }
+  foo (def { _arg1 = someValue, _arg6 = blah })
+
+In some cases, however, the lens library is used to provide convenient
+"virtual" fields which do not correspond to real record fields; for
+example, `headColor` can be used to set the color of an arrowhead,
+even though the arrow options record actually contains a general style
+instead of just a color.
+
+Finally, note that ``diagrams`` also defines `with` as a synonym for
+`def`, which can read a bit more nicely.  So, instead of the above, you
+could write
+
+::
+
+  foo (with & arg1 .~ someValue & arg6 .~ blah)
 
 Vectors and points
 ------------------
@@ -4858,6 +4871,74 @@ it.
 Instances: There are many instances defined by each backend.
 
 Further reading: `Rendering backends`_.
+
+ToResult
+++++++++
+
+The `ToResult` class (from `Diagrams.Backend.CmdLine`:mod:)
+essentially defines a very generic form of uncurrying.  It is used to
+implement the general interface for building command-line-driven
+diagram generation programs, and in particular to enable building
+executables out of (curried) functions, which requires collecting up
+all their arguments at once.  See the `command-line tutorial`__ for more.
+
+__ cmdline.html
+
+.. class:: lhs
+
+::
+
+> class ToResult d where
+>     type Args d :: *
+>     type ResultOf d :: *
+>
+>     toResult :: d -> Args d -> ResultOf d
+
+The most interesting instance is the one for functions:
+
+.. class:: lhs
+
+::
+
+> instance ToResult d => ToResult (a -> d) where
+>     type Args (a -> d) = (a, Args d)
+>     type ResultOf (a -> d) = ResultOf d
+>
+>     toResult f (a,args) = toResult (f a) args
+
+Parseable
++++++++++
+
+The `Parseable` class (`Diagrams.Backend.CmdLine`:mod:) contains just
+one method, `parser :: Parser a`, which defines a command-line parser
+for a given type.  Things with `Parseable` instances can be used in
+conjunction with the command-line creation framework.  See the
+`command-line tutorial`__ for more.
+
+__ cmdline.html
+
+Mainable
+++++++++
+
+The `Mainable` class (`Diagrams.Backend.CmdLine`:mod:) governs types
+which can be used to build a command-line-driven diagram-generation
+program.  For example, a diagram; but also animations, lists of
+diagrams, association lists of strings and diagrams, and functions
+from parseable things to any of the above.  See the `command-line
+tutorial`__ for more.
+
+.. class:: lhs
+
+::
+
+> class Mainable d where
+>     type MainOpts d :: *
+>
+>     mainArgs   :: Parseable (MainOpts d) => d -> IO (MainOpts d)
+>     mainRender :: MainOpts d -> d -> IO ()
+>     mainWith   :: Parseable (MainOpts d) => d -> IO ()
+
+__ cmdline.html
 
 Poor man's type synonyms
 ~~~~~~~~~~~~~~~~~~~~~~~~
