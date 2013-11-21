@@ -1,0 +1,11 @@
++ user manual / tutorials
+  + make sure all examples build
+  + make sure documentation is up-to-date
+  + make sure all new features are described/mentioned in the manual
++ Haddock
+  + make sure all diagrams-haddock examples build
+  + rebuild all diagrams-haddock examples and check them in
++ testing
+  + check all travis tests
+  + run diagrams-backend-tests
+  + copy diagrams-backend-tests output to website
