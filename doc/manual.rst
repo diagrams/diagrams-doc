@@ -4291,6 +4291,19 @@ see `Diagrams.Backend.SVG`:mod:.
 The source code for the SVG backend can be found in the
 `diagrams-svg`:repo: repository.
 
+The postscript backend
+----------------------
+
+The postscript backend, `diagrams-postscript`:pkg:, like the SVG
+backend, is written purely in Haskell.  It outputs encapsulated
+PostScript (EPS) files.  Note that by nature, EPS does not support
+transparency.  The postscript backend also does not support embedded
+images.  However, it is fairly complete in its support for other
+features.
+
+The source code for the postscript backend can be found in the
+`diagrams-postscript`:repo: repository.
+
 The cairo backend
 -----------------
 
@@ -4342,19 +4355,6 @@ out which part the user clicked on (see `Using queries`_).
 
 The source code for the GTK backend can be found in the
 `diagrams-gtk`:repo: repository.
-
-The postscript backend
-----------------------
-
-The postscript backend, `diagrams-postscript`:pkg:, like the SVG
-backend, is written purely in Haskell.  It outputs encapsulated
-PostScript (EPS) files.  Note that by nature, EPS does not support
-transparency.  The postscript backend also does not support embedded
-images.  However, it is fairly complete in its support for other
-features.
-
-The source code for the postscript backend can be found in the
-`diagrams-postscript`:repo: repository.
 
 Other backends
 --------------
@@ -4408,6 +4408,12 @@ code in a special format, and then running `diagrams-haddock`:pkg:.
 See the `README`__ for instructions on using it.
 
 __ https://github.com/diagrams/diagrams-haddock/blob/master/README.md
+
+SVGFonts
+--------
+
+The `SVGFonts`:pkg: provides support for reading fonts in SVG format
+and rendering text to diagrams paths.  For more, see `Native font support`_.
 
 Type reference
 ==============
