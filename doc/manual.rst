@@ -225,9 +225,13 @@ the following contents:
   import Diagrams.Backend.SVG.CmdLine
   -- or:
   -- import Diagrams.Backend.Cairo.CmdLine
-  -- if using the Cairo backend
+  -- or:
+  -- import Diagrams.Backend.Postscript.CmdLine
 
-  main = defaultMain (circle 1)
+  myCircle :: Diagram B R2
+  myCircle = circle 1
+
+  main = mainWith myCircle
 
 The first line turns off the `dreaded monomorphism restriction`_, which is
 quite important when using ``diagrams``: otherwise you will probably
@@ -237,7 +241,14 @@ run into lots of crazy error messages.
 
 `Diagrams.Prelude`:mod: re-exports most everything from the standard
 library; `Diagrams.Backend.SVG.CmdLine`:mod: provides a command-line
-interface to the SVG rendering backend.
+interface to the SVG rendering backend.  We then declare `myCircle` to
+have the type `Diagram B R2`: the `R2` part means that it is a
+two-dimensional diagram; `B` is an alias for a tag representing the
+particular backend.  All the backends export `B` as an alias for
+themselves, so you can switch backends just by changing an import,
+without having to change type annotations on your diagrams; `B` simply
+refers to whichever backend is in scope.  Finally, `mainWith` takes a
+diagram and creates a command-line-driven executable for rendering it.
 
 To compile your program, type
 
@@ -261,10 +272,10 @@ The above will generate a 100x100 SVG that should look like this:
 
 > example = circle 1
 
-(If you are using the cairo backend you can also request a ``.png``,
-``.ps``, or ``.pdf`` file; the output type is automatically
-determined by the extension; the postscript backend can produce
-``.eps`` files.)
+If you are using the cairo backend you can also request a ``.png``,
+``.ps``, or ``.pdf`` file (the format is automatically determined by
+the extension), or an ``.eps`` file if using the postscript
+backend.
 
 Try typing
 
