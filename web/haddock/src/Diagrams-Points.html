@@ -28,28 +28,20 @@
 <a name="line-19"></a>
 <a name="line-20"></a>         <span class='hs-comment'>-- * Point-related utilities</span>
 <a name="line-21"></a>       <span class='hs-layout'>,</span> <span class='hs-varid'>centroid</span>
-<a name="line-22"></a>
-<a name="line-23"></a>       <span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
-<a name="line-24"></a>
-<a name="line-25"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Coordinates</span>
-<a name="line-26"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Core</span><span class='hs-varop'>.</span><span class='hs-conid'>Points</span>
-<a name="line-27"></a>
-<a name="line-28"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Control</span><span class='hs-varop'>.</span><span class='hs-conid'>Newtype</span>
-<a name="line-29"></a>
-<a name="line-30"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Control</span><span class='hs-varop'>.</span><span class='hs-conid'>Arrow</span>        <span class='hs-layout'>(</span><span class='hs-layout'>(</span><span class='hs-varop'>&amp;&amp;&amp;</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span>
-<a name="line-31"></a>
+<a name="line-22"></a>       <span class='hs-layout'>,</span> <span class='hs-varid'>pointDiagram</span>
+<a name="line-23"></a>
+<a name="line-24"></a>       <span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
+<a name="line-25"></a>
+<a name="line-26"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Core</span>          <span class='hs-layout'>(</span><span class='hs-varid'>pointDiagram</span><span class='hs-layout'>)</span>
+<a name="line-27"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Core</span><span class='hs-varop'>.</span><span class='hs-conid'>Points</span>
+<a name="line-28"></a>
+<a name="line-29"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Control</span><span class='hs-varop'>.</span><span class='hs-conid'>Arrow</span>          <span class='hs-layout'>(</span><span class='hs-layout'>(</span><span class='hs-varop'>&amp;&amp;&amp;</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span>
+<a name="line-30"></a>
+<a name="line-31"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Data</span><span class='hs-varop'>.</span><span class='hs-conid'>AffineSpace</span><span class='hs-varop'>.</span><span class='hs-conid'>Point</span>
 <a name="line-32"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Data</span><span class='hs-varop'>.</span><span class='hs-conid'>VectorSpace</span>
 <a name="line-33"></a>
 <a name="line-34"></a><a name="centroid"></a><span class='hs-comment'>-- | The centroid of a set of /n/ points is their sum divided by /n/.</span>
 <a name="line-35"></a><span class='hs-definition'>centroid</span> <span class='hs-keyglyph'>::</span> <span class='hs-layout'>(</span><span class='hs-conid'>VectorSpace</span> <span class='hs-varid'>v</span><span class='hs-layout'>,</span> <span class='hs-conid'>Fractional</span> <span class='hs-layout'>(</span><span class='hs-conid'>Scalar</span> <span class='hs-varid'>v</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-keyglyph'>[</span><span class='hs-conid'>Point</span> <span class='hs-varid'>v</span><span class='hs-keyglyph'>]</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Point</span> <span class='hs-varid'>v</span>
-<a name="line-36"></a><span class='hs-definition'>centroid</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>pack</span> <span class='hs-varop'>.</span> <span class='hs-varid'>uncurry</span> <span class='hs-layout'>(</span><span class='hs-varop'>^/</span><span class='hs-layout'>)</span> <span class='hs-varop'>.</span> <span class='hs-layout'>(</span><span class='hs-varid'>sumV</span> <span class='hs-varop'>&amp;&amp;&amp;</span> <span class='hs-layout'>(</span><span class='hs-varid'>fromIntegral</span> <span class='hs-varop'>.</span> <span class='hs-varid'>length</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span> <span class='hs-varop'>.</span> <span class='hs-varid'>map</span> <span class='hs-varid'>unpack</span>
-<a name="line-37"></a>
-<a name="line-38"></a><a name="instance%20Coordinates%20(Point%20v)"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Coordinates</span> <span class='hs-varid'>v</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>Coordinates</span> <span class='hs-layout'>(</span><span class='hs-conid'>Point</span> <span class='hs-varid'>v</span><span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
-<a name="line-39"></a>  <span class='hs-keyword'>type</span> <span class='hs-conid'>FinalCoord</span> <span class='hs-layout'>(</span><span class='hs-conid'>Point</span> <span class='hs-varid'>v</span><span class='hs-layout'>)</span>    <span class='hs-keyglyph'>=</span> <span class='hs-conid'>FinalCoord</span> <span class='hs-varid'>v</span>
-<a name="line-40"></a>  <span class='hs-keyword'>type</span> <span class='hs-conid'>PrevDim</span> <span class='hs-layout'>(</span><span class='hs-conid'>Point</span> <span class='hs-varid'>v</span><span class='hs-layout'>)</span>       <span class='hs-keyglyph'>=</span> <span class='hs-conid'>PrevDim</span> <span class='hs-varid'>v</span>
-<a name="line-41"></a>  <span class='hs-keyword'>type</span> <span class='hs-conid'>Decomposition</span> <span class='hs-layout'>(</span><span class='hs-conid'>Point</span> <span class='hs-varid'>v</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Decomposition</span> <span class='hs-varid'>v</span>
-<a name="line-42"></a>
-<a name="line-43"></a>  <span class='hs-varid'>x</span> <span class='hs-varop'>&amp;</span> <span class='hs-varid'>y</span>        <span class='hs-keyglyph'>=</span> <span class='hs-conid'>P</span> <span class='hs-layout'>(</span><span class='hs-varid'>x</span> <span class='hs-varop'>&amp;</span> <span class='hs-varid'>y</span><span class='hs-layout'>)</span>
-<a name="line-44"></a>  <span class='hs-varid'>coords</span> <span class='hs-layout'>(</span><span class='hs-conid'>P</span> <span class='hs-varid'>v</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>coords</span> <span class='hs-varid'>v</span>
+<a name="line-36"></a><span class='hs-definition'>centroid</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>P</span> <span class='hs-varop'>.</span> <span class='hs-varid'>uncurry</span> <span class='hs-layout'>(</span><span class='hs-varop'>^/</span><span class='hs-layout'>)</span> <span class='hs-varop'>.</span> <span class='hs-layout'>(</span><span class='hs-varid'>sumV</span> <span class='hs-varop'>&amp;&amp;&amp;</span> <span class='hs-layout'>(</span><span class='hs-varid'>fromIntegral</span> <span class='hs-varop'>.</span> <span class='hs-varid'>length</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span> <span class='hs-varop'>.</span> <span class='hs-varid'>map</span> <span class='hs-varid'>unPoint</span>
 </pre></body>
 </html>

@@ -19,89 +19,116 @@
 <a name="line-10"></a><span class='hs-comment'>-- Nice syntax for constructing and pattern-matching on literal</span>
 <a name="line-11"></a><span class='hs-comment'>-- points and vectors.</span>
 <a name="line-12"></a><span class='hs-comment'>--</span>
-<a name="line-13"></a><span class='hs-comment'>-- NOTE: to avoid clashing with the '(&amp;)' operator from the @lens@</span>
-<a name="line-14"></a><span class='hs-comment'>-- package, this module is not re-exported by "Diagrams.Prelude".  To</span>
-<a name="line-15"></a><span class='hs-comment'>-- make use of the contents of this module, you must explicitly import</span>
-<a name="line-16"></a><span class='hs-comment'>-- it.</span>
-<a name="line-17"></a><span class='hs-comment'>--</span>
-<a name="line-18"></a><span class='hs-comment'>-----------------------------------------------------------------------------</span>
-<a name="line-19"></a>
-<a name="line-20"></a><span class='hs-keyword'>module</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Coordinates</span>
-<a name="line-21"></a>    <span class='hs-layout'>(</span> <span class='hs-layout'>(</span><span class='hs-conop'>:&amp;</span><span class='hs-layout'>)</span><span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span><span class='hs-layout'>,</span> <span class='hs-conid'>Coordinates</span><span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span> <span class='hs-layout'>)</span>
-<a name="line-22"></a>    <span class='hs-keyword'>where</span>
-<a name="line-23"></a>
-<a name="line-24"></a><span class='hs-comment'>-- | A pair of values, with a convenient infix (left-associative)</span>
-<a name="line-25"></a><span class='hs-comment'>--   data constructor.</span>
-<a name="line-26"></a><span class='hs-keyword'>data</span> <span class='hs-varid'>a</span> <span class='hs-conop'>:&amp;</span> <span class='hs-varid'>b</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>a</span> <span class='hs-conop'>:&amp;</span> <span class='hs-varid'>b</span>
-<a name="line-27"></a>  <span class='hs-keyword'>deriving</span> <span class='hs-layout'>(</span><span class='hs-conid'>Eq</span><span class='hs-layout'>,</span> <span class='hs-conid'>Ord</span><span class='hs-layout'>,</span> <span class='hs-conid'>Show</span><span class='hs-layout'>)</span>
-<a name="line-28"></a>
-<a name="line-29"></a><span class='hs-keyword'>infixl</span> <span class='hs-num'>7</span> <span class='hs-conop'>:&amp;</span>
-<a name="line-30"></a>
+<a name="line-13"></a><span class='hs-comment'>-----------------------------------------------------------------------------</span>
+<a name="line-14"></a>
+<a name="line-15"></a><span class='hs-keyword'>module</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Coordinates</span>
+<a name="line-16"></a>    <span class='hs-layout'>(</span> <span class='hs-layout'>(</span><span class='hs-conop'>:&amp;</span><span class='hs-layout'>)</span><span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span><span class='hs-layout'>,</span> <span class='hs-conid'>Coordinates</span><span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span>
+<a name="line-17"></a>
+<a name="line-18"></a>    <span class='hs-comment'>-- * Lenses for particular axes</span>
+<a name="line-19"></a>    <span class='hs-layout'>,</span> <span class='hs-conid'>HasX</span><span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span><span class='hs-layout'>,</span> <span class='hs-conid'>HasY</span><span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span><span class='hs-layout'>,</span> <span class='hs-conid'>HasZ</span><span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span>
+<a name="line-20"></a>    <span class='hs-layout'>)</span>
+<a name="line-21"></a>    <span class='hs-keyword'>where</span>
+<a name="line-22"></a>
+<a name="line-23"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Control</span><span class='hs-varop'>.</span><span class='hs-conid'>Lens</span>          <span class='hs-layout'>(</span><span class='hs-conid'>Lens'</span><span class='hs-layout'>)</span>
+<a name="line-24"></a>
+<a name="line-25"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Core</span><span class='hs-varop'>.</span><span class='hs-conid'>Points</span>
+<a name="line-26"></a>
+<a name="line-27"></a><span class='hs-comment'>-- | A pair of values, with a convenient infix (left-associative)</span>
+<a name="line-28"></a><span class='hs-comment'>--   data constructor.</span>
+<a name="line-29"></a><span class='hs-keyword'>data</span> <span class='hs-varid'>a</span> <span class='hs-conop'>:&amp;</span> <span class='hs-varid'>b</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>a</span> <span class='hs-conop'>:&amp;</span> <span class='hs-varid'>b</span>
+<a name="line-30"></a>  <span class='hs-keyword'>deriving</span> <span class='hs-layout'>(</span><span class='hs-conid'>Eq</span><span class='hs-layout'>,</span> <span class='hs-conid'>Ord</span><span class='hs-layout'>,</span> <span class='hs-conid'>Show</span><span class='hs-layout'>)</span>
 <a name="line-31"></a>
-<a name="line-32"></a><a name="Coordinates"></a><span class='hs-comment'>-- | Types which are instances of the @Coordinates@ class can be</span>
-<a name="line-33"></a><a name="Coordinates"></a><span class='hs-comment'>--   constructed using '&amp;' (for example, a three-dimensional vector</span>
-<a name="line-34"></a><a name="Coordinates"></a><span class='hs-comment'>--   could be constructed by @1 &amp; 6 &amp; 3@), and deconstructed using</span>
-<a name="line-35"></a><a name="Coordinates"></a><span class='hs-comment'>--   'coords'.  A common pattern is to use 'coords' in conjunction</span>
-<a name="line-36"></a><a name="Coordinates"></a><span class='hs-comment'>--   with the @ViewPatterns@ extension, like so:</span>
-<a name="line-37"></a><a name="Coordinates"></a><span class='hs-comment'>--</span>
-<a name="line-38"></a><a name="Coordinates"></a><span class='hs-comment'>-- @</span>
-<a name="line-39"></a><a name="Coordinates"></a><span class='hs-comment'>-- foo :: Vector3 -&gt; ...</span>
-<a name="line-40"></a><a name="Coordinates"></a><span class='hs-comment'>-- foo (coords -&gt; x :&amp; y :&amp; z) = ...</span>
+<a name="line-32"></a><span class='hs-keyword'>infixl</span> <span class='hs-num'>7</span> <span class='hs-conop'>:&amp;</span>
+<a name="line-33"></a>
+<a name="line-34"></a>
+<a name="line-35"></a><a name="Coordinates"></a><span class='hs-comment'>-- | Types which are instances of the @Coordinates@ class can be</span>
+<a name="line-36"></a><a name="Coordinates"></a><span class='hs-comment'>--   constructed using '^&amp;' (for example, a three-dimensional vector</span>
+<a name="line-37"></a><a name="Coordinates"></a><span class='hs-comment'>--   could be constructed by @1 ^&amp; 6 ^&amp; 3@), and deconstructed using</span>
+<a name="line-38"></a><a name="Coordinates"></a><span class='hs-comment'>--   'coords'.  A common pattern is to use 'coords' in conjunction</span>
+<a name="line-39"></a><a name="Coordinates"></a><span class='hs-comment'>--   with the @ViewPatterns@ extension, like so:</span>
+<a name="line-40"></a><a name="Coordinates"></a><span class='hs-comment'>--</span>
 <a name="line-41"></a><a name="Coordinates"></a><span class='hs-comment'>-- @</span>
-<a name="line-42"></a><a name="Coordinates"></a><span class='hs-keyword'>class</span> <span class='hs-conid'>Coordinates</span> <span class='hs-varid'>c</span> <span class='hs-keyword'>where</span>
-<a name="line-43"></a>
-<a name="line-44"></a>  <span class='hs-comment'>-- | The type of the final coordinate.</span>
-<a name="line-45"></a>  <span class='hs-keyword'>type</span> <span class='hs-conid'>FinalCoord</span> <span class='hs-varid'>c</span>    <span class='hs-keyglyph'>::</span> <span class='hs-varop'>*</span>
+<a name="line-42"></a><a name="Coordinates"></a><span class='hs-comment'>-- foo :: Vector3 -&gt; ...</span>
+<a name="line-43"></a><a name="Coordinates"></a><span class='hs-comment'>-- foo (coords -&gt; x :&amp; y :&amp; z) = ...</span>
+<a name="line-44"></a><a name="Coordinates"></a><span class='hs-comment'>-- @</span>
+<a name="line-45"></a><a name="Coordinates"></a><span class='hs-keyword'>class</span> <span class='hs-conid'>Coordinates</span> <span class='hs-varid'>c</span> <span class='hs-keyword'>where</span>
 <a name="line-46"></a>
-<a name="line-47"></a>  <span class='hs-comment'>-- | The type of everything other than the final coordinate.</span>
-<a name="line-48"></a>  <span class='hs-keyword'>type</span> <span class='hs-conid'>PrevDim</span> <span class='hs-varid'>c</span>       <span class='hs-keyglyph'>::</span> <span class='hs-varop'>*</span>
+<a name="line-47"></a>  <span class='hs-comment'>-- | The type of the final coordinate.</span>
+<a name="line-48"></a>  <span class='hs-keyword'>type</span> <span class='hs-conid'>FinalCoord</span> <span class='hs-varid'>c</span>    <span class='hs-keyglyph'>::</span> <span class='hs-varop'>*</span>
 <a name="line-49"></a>
-<a name="line-50"></a>  <span class='hs-comment'>-- | Decomposition of @c@ into applications of ':&amp;'.</span>
-<a name="line-51"></a>  <span class='hs-keyword'>type</span> <span class='hs-conid'>Decomposition</span> <span class='hs-varid'>c</span> <span class='hs-keyglyph'>::</span> <span class='hs-varop'>*</span>
-<a name="line-52"></a>    <span class='hs-comment'>-- Decomposition c = Decomposition (PrevDim c) :&amp; FinalCoord c  (essentially)</span>
-<a name="line-53"></a>
-<a name="line-54"></a>  <span class='hs-comment'>-- | Construct a value of type @c@ by providing something of one</span>
-<a name="line-55"></a>  <span class='hs-comment'>--   less dimension (which is perhaps itself recursively constructed</span>
-<a name="line-56"></a>  <span class='hs-comment'>--   using @(&amp;)@) and a final coordinate.  For example,</span>
-<a name="line-57"></a>  <span class='hs-comment'>--</span>
-<a name="line-58"></a>  <span class='hs-comment'>-- @</span>
-<a name="line-59"></a>  <span class='hs-comment'>-- 2 &amp; 3 :: P2</span>
-<a name="line-60"></a>  <span class='hs-comment'>-- 3 &amp; 5 &amp; 6 :: R3</span>
+<a name="line-50"></a>  <span class='hs-comment'>-- | The type of everything other than the final coordinate.</span>
+<a name="line-51"></a>  <span class='hs-keyword'>type</span> <span class='hs-conid'>PrevDim</span> <span class='hs-varid'>c</span>       <span class='hs-keyglyph'>::</span> <span class='hs-varop'>*</span>
+<a name="line-52"></a>
+<a name="line-53"></a>  <span class='hs-comment'>-- | Decomposition of @c@ into applications of ':&amp;'.</span>
+<a name="line-54"></a>  <span class='hs-keyword'>type</span> <span class='hs-conid'>Decomposition</span> <span class='hs-varid'>c</span> <span class='hs-keyglyph'>::</span> <span class='hs-varop'>*</span>
+<a name="line-55"></a>    <span class='hs-comment'>-- Decomposition c = Decomposition (PrevDim c) :&amp; FinalCoord c  (essentially)</span>
+<a name="line-56"></a>
+<a name="line-57"></a>  <span class='hs-comment'>-- | Construct a value of type @c@ by providing something of one</span>
+<a name="line-58"></a>  <span class='hs-comment'>--   less dimension (which is perhaps itself recursively constructed</span>
+<a name="line-59"></a>  <span class='hs-comment'>--   using @(^&amp;)@) and a final coordinate.  For example,</span>
+<a name="line-60"></a>  <span class='hs-comment'>--</span>
 <a name="line-61"></a>  <span class='hs-comment'>-- @</span>
-<a name="line-62"></a>  <span class='hs-comment'>--</span>
-<a name="line-63"></a>  <span class='hs-comment'>--   Note that @&amp;@ is left-associative.</span>
-<a name="line-64"></a>  <span class='hs-layout'>(</span><span class='hs-varop'>&amp;</span><span class='hs-layout'>)</span>    <span class='hs-keyglyph'>::</span> <span class='hs-conid'>PrevDim</span> <span class='hs-varid'>c</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>FinalCoord</span> <span class='hs-varid'>c</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>c</span>
-<a name="line-65"></a>
-<a name="line-66"></a>  <span class='hs-comment'>-- | Decompose a value of type @c@ into its constituent coordinates,</span>
-<a name="line-67"></a>  <span class='hs-comment'>--   stored in a nested @(:&amp;)@ structure.</span>
-<a name="line-68"></a>  <span class='hs-varid'>coords</span> <span class='hs-keyglyph'>::</span> <span class='hs-varid'>c</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Decomposition</span> <span class='hs-varid'>c</span>
-<a name="line-69"></a>
-<a name="line-70"></a><span class='hs-keyword'>infixl</span> <span class='hs-num'>7</span> <span class='hs-varop'>&amp;</span>
-<a name="line-71"></a>
-<a name="line-72"></a><span class='hs-comment'>-- Some standard instances for plain old tuples</span>
-<a name="line-73"></a>
-<a name="line-74"></a><a name="instance%20Coordinates%20(a,b)"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Coordinates</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span><span class='hs-layout'>,</span><span class='hs-varid'>b</span><span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
-<a name="line-75"></a>  <span class='hs-keyword'>type</span> <span class='hs-conid'>FinalCoord</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span><span class='hs-layout'>,</span><span class='hs-varid'>b</span><span class='hs-layout'>)</span>    <span class='hs-keyglyph'>=</span> <span class='hs-varid'>b</span>
-<a name="line-76"></a>  <span class='hs-keyword'>type</span> <span class='hs-conid'>PrevDim</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span><span class='hs-layout'>,</span><span class='hs-varid'>b</span><span class='hs-layout'>)</span>       <span class='hs-keyglyph'>=</span> <span class='hs-varid'>a</span>
-<a name="line-77"></a>  <span class='hs-keyword'>type</span> <span class='hs-conid'>Decomposition</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span><span class='hs-layout'>,</span><span class='hs-varid'>b</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>a</span> <span class='hs-conop'>:&amp;</span> <span class='hs-varid'>b</span>
+<a name="line-62"></a>  <span class='hs-comment'>-- 2 ^&amp; 3 :: P2</span>
+<a name="line-63"></a>  <span class='hs-comment'>-- 3 ^&amp; 5 ^&amp; 6 :: R3</span>
+<a name="line-64"></a>  <span class='hs-comment'>-- @</span>
+<a name="line-65"></a>  <span class='hs-comment'>--</span>
+<a name="line-66"></a>  <span class='hs-comment'>--   Note that @^&amp;@ is left-associative.</span>
+<a name="line-67"></a>  <span class='hs-layout'>(</span><span class='hs-varop'>^&amp;</span><span class='hs-layout'>)</span>    <span class='hs-keyglyph'>::</span> <span class='hs-conid'>PrevDim</span> <span class='hs-varid'>c</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>FinalCoord</span> <span class='hs-varid'>c</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>c</span>
+<a name="line-68"></a>
+<a name="line-69"></a>  <span class='hs-comment'>-- | Prefix synonym for @^&amp;@. pr stands for pair of @PrevDim@, @FinalCoord@</span>
+<a name="line-70"></a>  <span class='hs-varid'>pr</span>      <span class='hs-keyglyph'>::</span> <span class='hs-conid'>PrevDim</span> <span class='hs-varid'>c</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>FinalCoord</span> <span class='hs-varid'>c</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>c</span>
+<a name="line-71"></a>  <span class='hs-varid'>pr</span> <span class='hs-keyglyph'>=</span> <span class='hs-layout'>(</span><span class='hs-varop'>^&amp;</span><span class='hs-layout'>)</span>
+<a name="line-72"></a>
+<a name="line-73"></a>  <span class='hs-comment'>-- | Decompose a value of type @c@ into its constituent coordinates,</span>
+<a name="line-74"></a>  <span class='hs-comment'>--   stored in a nested @(:&amp;)@ structure.</span>
+<a name="line-75"></a>  <span class='hs-varid'>coords</span> <span class='hs-keyglyph'>::</span> <span class='hs-varid'>c</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Decomposition</span> <span class='hs-varid'>c</span>
+<a name="line-76"></a>
+<a name="line-77"></a><span class='hs-keyword'>infixl</span> <span class='hs-num'>7</span> <span class='hs-varop'>^&amp;</span>
 <a name="line-78"></a>
-<a name="line-79"></a>  <span class='hs-varid'>x</span> <span class='hs-varop'>&amp;</span> <span class='hs-varid'>y</span>                    <span class='hs-keyglyph'>=</span> <span class='hs-layout'>(</span><span class='hs-varid'>x</span><span class='hs-layout'>,</span><span class='hs-varid'>y</span><span class='hs-layout'>)</span>
-<a name="line-80"></a>  <span class='hs-varid'>coords</span> <span class='hs-layout'>(</span><span class='hs-varid'>x</span><span class='hs-layout'>,</span><span class='hs-varid'>y</span><span class='hs-layout'>)</span>             <span class='hs-keyglyph'>=</span> <span class='hs-varid'>x</span> <span class='hs-conop'>:&amp;</span> <span class='hs-varid'>y</span>
-<a name="line-81"></a>
-<a name="line-82"></a><a name="instance%20Coordinates%20(a,b,c)"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Coordinates</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span><span class='hs-layout'>,</span><span class='hs-varid'>b</span><span class='hs-layout'>,</span><span class='hs-varid'>c</span><span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
-<a name="line-83"></a>  <span class='hs-keyword'>type</span> <span class='hs-conid'>FinalCoord</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span><span class='hs-layout'>,</span><span class='hs-varid'>b</span><span class='hs-layout'>,</span><span class='hs-varid'>c</span><span class='hs-layout'>)</span>    <span class='hs-keyglyph'>=</span> <span class='hs-varid'>c</span>
-<a name="line-84"></a>  <span class='hs-keyword'>type</span> <span class='hs-conid'>PrevDim</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span><span class='hs-layout'>,</span><span class='hs-varid'>b</span><span class='hs-layout'>,</span><span class='hs-varid'>c</span><span class='hs-layout'>)</span>       <span class='hs-keyglyph'>=</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span><span class='hs-layout'>,</span><span class='hs-varid'>b</span><span class='hs-layout'>)</span>
-<a name="line-85"></a>  <span class='hs-keyword'>type</span> <span class='hs-conid'>Decomposition</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span><span class='hs-layout'>,</span><span class='hs-varid'>b</span><span class='hs-layout'>,</span><span class='hs-varid'>c</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Decomposition</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span><span class='hs-layout'>,</span><span class='hs-varid'>b</span><span class='hs-layout'>)</span> <span class='hs-conop'>:&amp;</span> <span class='hs-varid'>c</span>
-<a name="line-86"></a>
-<a name="line-87"></a>  <span class='hs-layout'>(</span><span class='hs-varid'>x</span><span class='hs-layout'>,</span><span class='hs-varid'>y</span><span class='hs-layout'>)</span> <span class='hs-varop'>&amp;</span> <span class='hs-varid'>z</span>                  <span class='hs-keyglyph'>=</span> <span class='hs-layout'>(</span><span class='hs-varid'>x</span><span class='hs-layout'>,</span><span class='hs-varid'>y</span><span class='hs-layout'>,</span><span class='hs-varid'>z</span><span class='hs-layout'>)</span>
-<a name="line-88"></a>  <span class='hs-varid'>coords</span> <span class='hs-layout'>(</span><span class='hs-varid'>x</span><span class='hs-layout'>,</span><span class='hs-varid'>y</span><span class='hs-layout'>,</span><span class='hs-varid'>z</span><span class='hs-layout'>)</span>             <span class='hs-keyglyph'>=</span> <span class='hs-varid'>coords</span> <span class='hs-layout'>(</span><span class='hs-varid'>x</span><span class='hs-layout'>,</span><span class='hs-varid'>y</span><span class='hs-layout'>)</span> <span class='hs-conop'>:&amp;</span> <span class='hs-varid'>z</span>
-<a name="line-89"></a>
-<a name="line-90"></a><a name="instance%20Coordinates%20(a,b,c,d)"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Coordinates</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span><span class='hs-layout'>,</span><span class='hs-varid'>b</span><span class='hs-layout'>,</span><span class='hs-varid'>c</span><span class='hs-layout'>,</span><span class='hs-varid'>d</span><span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
-<a name="line-91"></a>  <span class='hs-keyword'>type</span> <span class='hs-conid'>FinalCoord</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span><span class='hs-layout'>,</span><span class='hs-varid'>b</span><span class='hs-layout'>,</span><span class='hs-varid'>c</span><span class='hs-layout'>,</span><span class='hs-varid'>d</span><span class='hs-layout'>)</span>    <span class='hs-keyglyph'>=</span> <span class='hs-varid'>d</span>
-<a name="line-92"></a>  <span class='hs-keyword'>type</span> <span class='hs-conid'>PrevDim</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span><span class='hs-layout'>,</span><span class='hs-varid'>b</span><span class='hs-layout'>,</span><span class='hs-varid'>c</span><span class='hs-layout'>,</span><span class='hs-varid'>d</span><span class='hs-layout'>)</span>       <span class='hs-keyglyph'>=</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span><span class='hs-layout'>,</span><span class='hs-varid'>b</span><span class='hs-layout'>,</span><span class='hs-varid'>c</span><span class='hs-layout'>)</span>
-<a name="line-93"></a>  <span class='hs-keyword'>type</span> <span class='hs-conid'>Decomposition</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span><span class='hs-layout'>,</span><span class='hs-varid'>b</span><span class='hs-layout'>,</span><span class='hs-varid'>c</span><span class='hs-layout'>,</span><span class='hs-varid'>d</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Decomposition</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span><span class='hs-layout'>,</span><span class='hs-varid'>b</span><span class='hs-layout'>,</span><span class='hs-varid'>c</span><span class='hs-layout'>)</span> <span class='hs-conop'>:&amp;</span> <span class='hs-varid'>d</span>
-<a name="line-94"></a>
-<a name="line-95"></a>  <span class='hs-layout'>(</span><span class='hs-varid'>w</span><span class='hs-layout'>,</span><span class='hs-varid'>x</span><span class='hs-layout'>,</span><span class='hs-varid'>y</span><span class='hs-layout'>)</span> <span class='hs-varop'>&amp;</span> <span class='hs-varid'>z</span>                  <span class='hs-keyglyph'>=</span> <span class='hs-layout'>(</span><span class='hs-varid'>w</span><span class='hs-layout'>,</span><span class='hs-varid'>x</span><span class='hs-layout'>,</span><span class='hs-varid'>y</span><span class='hs-layout'>,</span><span class='hs-varid'>z</span><span class='hs-layout'>)</span>
-<a name="line-96"></a>  <span class='hs-varid'>coords</span> <span class='hs-layout'>(</span><span class='hs-varid'>w</span><span class='hs-layout'>,</span><span class='hs-varid'>x</span><span class='hs-layout'>,</span><span class='hs-varid'>y</span><span class='hs-layout'>,</span><span class='hs-varid'>z</span><span class='hs-layout'>)</span>             <span class='hs-keyglyph'>=</span> <span class='hs-varid'>coords</span> <span class='hs-layout'>(</span><span class='hs-varid'>w</span><span class='hs-layout'>,</span><span class='hs-varid'>x</span><span class='hs-layout'>,</span><span class='hs-varid'>y</span><span class='hs-layout'>)</span> <span class='hs-conop'>:&amp;</span> <span class='hs-varid'>z</span>
+<a name="line-79"></a><span class='hs-comment'>-- Some standard instances for plain old tuples</span>
+<a name="line-80"></a>
+<a name="line-81"></a><a name="instance%20Coordinates%20(a,b)"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Coordinates</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span><span class='hs-layout'>,</span><span class='hs-varid'>b</span><span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
+<a name="line-82"></a>  <span class='hs-keyword'>type</span> <span class='hs-conid'>FinalCoord</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span><span class='hs-layout'>,</span><span class='hs-varid'>b</span><span class='hs-layout'>)</span>    <span class='hs-keyglyph'>=</span> <span class='hs-varid'>b</span>
+<a name="line-83"></a>  <span class='hs-keyword'>type</span> <span class='hs-conid'>PrevDim</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span><span class='hs-layout'>,</span><span class='hs-varid'>b</span><span class='hs-layout'>)</span>       <span class='hs-keyglyph'>=</span> <span class='hs-varid'>a</span>
+<a name="line-84"></a>  <span class='hs-keyword'>type</span> <span class='hs-conid'>Decomposition</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span><span class='hs-layout'>,</span><span class='hs-varid'>b</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>a</span> <span class='hs-conop'>:&amp;</span> <span class='hs-varid'>b</span>
+<a name="line-85"></a>
+<a name="line-86"></a>  <span class='hs-varid'>x</span> <span class='hs-varop'>^&amp;</span> <span class='hs-varid'>y</span>                    <span class='hs-keyglyph'>=</span> <span class='hs-layout'>(</span><span class='hs-varid'>x</span><span class='hs-layout'>,</span><span class='hs-varid'>y</span><span class='hs-layout'>)</span>
+<a name="line-87"></a>  <span class='hs-varid'>coords</span> <span class='hs-layout'>(</span><span class='hs-varid'>x</span><span class='hs-layout'>,</span><span class='hs-varid'>y</span><span class='hs-layout'>)</span>             <span class='hs-keyglyph'>=</span> <span class='hs-varid'>x</span> <span class='hs-conop'>:&amp;</span> <span class='hs-varid'>y</span>
+<a name="line-88"></a>
+<a name="line-89"></a><a name="instance%20Coordinates%20(a,b,c)"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Coordinates</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span><span class='hs-layout'>,</span><span class='hs-varid'>b</span><span class='hs-layout'>,</span><span class='hs-varid'>c</span><span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
+<a name="line-90"></a>  <span class='hs-keyword'>type</span> <span class='hs-conid'>FinalCoord</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span><span class='hs-layout'>,</span><span class='hs-varid'>b</span><span class='hs-layout'>,</span><span class='hs-varid'>c</span><span class='hs-layout'>)</span>    <span class='hs-keyglyph'>=</span> <span class='hs-varid'>c</span>
+<a name="line-91"></a>  <span class='hs-keyword'>type</span> <span class='hs-conid'>PrevDim</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span><span class='hs-layout'>,</span><span class='hs-varid'>b</span><span class='hs-layout'>,</span><span class='hs-varid'>c</span><span class='hs-layout'>)</span>       <span class='hs-keyglyph'>=</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span><span class='hs-layout'>,</span><span class='hs-varid'>b</span><span class='hs-layout'>)</span>
+<a name="line-92"></a>  <span class='hs-keyword'>type</span> <span class='hs-conid'>Decomposition</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span><span class='hs-layout'>,</span><span class='hs-varid'>b</span><span class='hs-layout'>,</span><span class='hs-varid'>c</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Decomposition</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span><span class='hs-layout'>,</span><span class='hs-varid'>b</span><span class='hs-layout'>)</span> <span class='hs-conop'>:&amp;</span> <span class='hs-varid'>c</span>
+<a name="line-93"></a>
+<a name="line-94"></a>  <span class='hs-layout'>(</span><span class='hs-varid'>x</span><span class='hs-layout'>,</span><span class='hs-varid'>y</span><span class='hs-layout'>)</span> <span class='hs-varop'>^&amp;</span> <span class='hs-varid'>z</span>                  <span class='hs-keyglyph'>=</span> <span class='hs-layout'>(</span><span class='hs-varid'>x</span><span class='hs-layout'>,</span><span class='hs-varid'>y</span><span class='hs-layout'>,</span><span class='hs-varid'>z</span><span class='hs-layout'>)</span>
+<a name="line-95"></a>  <span class='hs-varid'>coords</span> <span class='hs-layout'>(</span><span class='hs-varid'>x</span><span class='hs-layout'>,</span><span class='hs-varid'>y</span><span class='hs-layout'>,</span><span class='hs-varid'>z</span><span class='hs-layout'>)</span>             <span class='hs-keyglyph'>=</span> <span class='hs-varid'>coords</span> <span class='hs-layout'>(</span><span class='hs-varid'>x</span><span class='hs-layout'>,</span><span class='hs-varid'>y</span><span class='hs-layout'>)</span> <span class='hs-conop'>:&amp;</span> <span class='hs-varid'>z</span>
+<a name="line-96"></a>
+<a name="line-97"></a><a name="instance%20Coordinates%20(a,b,c,d)"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Coordinates</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span><span class='hs-layout'>,</span><span class='hs-varid'>b</span><span class='hs-layout'>,</span><span class='hs-varid'>c</span><span class='hs-layout'>,</span><span class='hs-varid'>d</span><span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
+<a name="line-98"></a>  <span class='hs-keyword'>type</span> <span class='hs-conid'>FinalCoord</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span><span class='hs-layout'>,</span><span class='hs-varid'>b</span><span class='hs-layout'>,</span><span class='hs-varid'>c</span><span class='hs-layout'>,</span><span class='hs-varid'>d</span><span class='hs-layout'>)</span>    <span class='hs-keyglyph'>=</span> <span class='hs-varid'>d</span>
+<a name="line-99"></a>  <span class='hs-keyword'>type</span> <span class='hs-conid'>PrevDim</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span><span class='hs-layout'>,</span><span class='hs-varid'>b</span><span class='hs-layout'>,</span><span class='hs-varid'>c</span><span class='hs-layout'>,</span><span class='hs-varid'>d</span><span class='hs-layout'>)</span>       <span class='hs-keyglyph'>=</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span><span class='hs-layout'>,</span><span class='hs-varid'>b</span><span class='hs-layout'>,</span><span class='hs-varid'>c</span><span class='hs-layout'>)</span>
+<a name="line-100"></a>  <span class='hs-keyword'>type</span> <span class='hs-conid'>Decomposition</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span><span class='hs-layout'>,</span><span class='hs-varid'>b</span><span class='hs-layout'>,</span><span class='hs-varid'>c</span><span class='hs-layout'>,</span><span class='hs-varid'>d</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Decomposition</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span><span class='hs-layout'>,</span><span class='hs-varid'>b</span><span class='hs-layout'>,</span><span class='hs-varid'>c</span><span class='hs-layout'>)</span> <span class='hs-conop'>:&amp;</span> <span class='hs-varid'>d</span>
+<a name="line-101"></a>
+<a name="line-102"></a>  <span class='hs-layout'>(</span><span class='hs-varid'>w</span><span class='hs-layout'>,</span><span class='hs-varid'>x</span><span class='hs-layout'>,</span><span class='hs-varid'>y</span><span class='hs-layout'>)</span>  <span class='hs-varop'>^&amp;</span> <span class='hs-varid'>z</span>                  <span class='hs-keyglyph'>=</span> <span class='hs-layout'>(</span><span class='hs-varid'>w</span><span class='hs-layout'>,</span><span class='hs-varid'>x</span><span class='hs-layout'>,</span><span class='hs-varid'>y</span><span class='hs-layout'>,</span><span class='hs-varid'>z</span><span class='hs-layout'>)</span>
+<a name="line-103"></a>  <span class='hs-varid'>coords</span> <span class='hs-layout'>(</span><span class='hs-varid'>w</span><span class='hs-layout'>,</span><span class='hs-varid'>x</span><span class='hs-layout'>,</span><span class='hs-varid'>y</span><span class='hs-layout'>,</span><span class='hs-varid'>z</span><span class='hs-layout'>)</span>             <span class='hs-keyglyph'>=</span> <span class='hs-varid'>coords</span> <span class='hs-layout'>(</span><span class='hs-varid'>w</span><span class='hs-layout'>,</span><span class='hs-varid'>x</span><span class='hs-layout'>,</span><span class='hs-varid'>y</span><span class='hs-layout'>)</span> <span class='hs-conop'>:&amp;</span> <span class='hs-varid'>z</span>
+<a name="line-104"></a>
+<a name="line-105"></a><a name="instance%20Coordinates%20(Point%20v)"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Coordinates</span> <span class='hs-varid'>v</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>Coordinates</span> <span class='hs-layout'>(</span><span class='hs-conid'>Point</span> <span class='hs-varid'>v</span><span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
+<a name="line-106"></a>  <span class='hs-keyword'>type</span> <span class='hs-conid'>FinalCoord</span> <span class='hs-layout'>(</span><span class='hs-conid'>Point</span> <span class='hs-varid'>v</span><span class='hs-layout'>)</span>    <span class='hs-keyglyph'>=</span> <span class='hs-conid'>FinalCoord</span> <span class='hs-varid'>v</span>
+<a name="line-107"></a>  <span class='hs-keyword'>type</span> <span class='hs-conid'>PrevDim</span> <span class='hs-layout'>(</span><span class='hs-conid'>Point</span> <span class='hs-varid'>v</span><span class='hs-layout'>)</span>       <span class='hs-keyglyph'>=</span> <span class='hs-conid'>PrevDim</span> <span class='hs-varid'>v</span>
+<a name="line-108"></a>  <span class='hs-keyword'>type</span> <span class='hs-conid'>Decomposition</span> <span class='hs-layout'>(</span><span class='hs-conid'>Point</span> <span class='hs-varid'>v</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Decomposition</span> <span class='hs-varid'>v</span>
+<a name="line-109"></a>
+<a name="line-110"></a>  <span class='hs-varid'>x</span> <span class='hs-varop'>^&amp;</span> <span class='hs-varid'>y</span>        <span class='hs-keyglyph'>=</span> <span class='hs-conid'>P</span> <span class='hs-layout'>(</span><span class='hs-varid'>x</span> <span class='hs-varop'>^&amp;</span> <span class='hs-varid'>y</span><span class='hs-layout'>)</span>
+<a name="line-111"></a>  <span class='hs-varid'>coords</span> <span class='hs-layout'>(</span><span class='hs-conid'>P</span> <span class='hs-varid'>v</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>coords</span> <span class='hs-varid'>v</span>
+<a name="line-112"></a>
+<a name="line-113"></a><span class='hs-comment'>-- | The class of types with at least one coordinate, called _x.</span>
+<a name="line-114"></a><span class='hs-keyword'>class</span> <span class='hs-conid'>HasX</span> <span class='hs-varid'>t</span> <span class='hs-keyword'>where</span>
+<a name="line-115"></a>    <span class='hs-sel'>_x</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Lens'</span> <span class='hs-varid'>t</span> <span class='hs-conid'>Double</span>
+<a name="line-116"></a>
+<a name="line-117"></a><span class='hs-comment'>-- | The class of types with at least two coordinates, the second called _y.</span>
+<a name="line-118"></a><span class='hs-keyword'>class</span> <span class='hs-conid'>HasY</span> <span class='hs-varid'>t</span> <span class='hs-keyword'>where</span>
+<a name="line-119"></a>    <span class='hs-sel'>_y</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Lens'</span> <span class='hs-varid'>t</span> <span class='hs-conid'>Double</span>
+<a name="line-120"></a>
+<a name="line-121"></a><span class='hs-comment'>-- | The class of types with at least three coordinates, the third called _z.</span>
+<a name="line-122"></a><span class='hs-keyword'>class</span> <span class='hs-conid'>HasZ</span> <span class='hs-varid'>t</span> <span class='hs-keyword'>where</span>
+<a name="line-123"></a>    <span class='hs-sel'>_z</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Lens'</span> <span class='hs-varid'>t</span> <span class='hs-conid'>Double</span>
 </pre></body>
 </html>

@@ -48,65 +48,63 @@
 <a name="line-39"></a>
 <a name="line-40"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Control</span><span class='hs-varop'>.</span><span class='hs-conid'>Applicative</span> <span class='hs-layout'>(</span><span class='hs-varid'>pure</span><span class='hs-layout'>,</span> <span class='hs-layout'>(</span><span class='hs-varop'>&lt;$&gt;</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span>
 <a name="line-41"></a>
-<a name="line-42"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Align</span>
-<a name="line-43"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Core</span>
-<a name="line-44"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Path</span>
-<a name="line-45"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>TrailLike</span>
+<a name="line-42"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Core</span>
+<a name="line-43"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>TrailLike</span>
+<a name="line-44"></a>
+<a name="line-45"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Data</span><span class='hs-varop'>.</span><span class='hs-conid'>Active</span>
 <a name="line-46"></a>
-<a name="line-47"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Data</span><span class='hs-varop'>.</span><span class='hs-conid'>Active</span>
+<a name="line-47"></a><span class='hs-keyword'>type</span> <span class='hs-keyword'>instance</span> <span class='hs-conid'>V</span> <span class='hs-layout'>(</span><span class='hs-conid'>Active</span> <span class='hs-varid'>a</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>V</span> <span class='hs-varid'>a</span>
 <a name="line-48"></a>
-<a name="line-49"></a><span class='hs-keyword'>type</span> <span class='hs-keyword'>instance</span> <span class='hs-conid'>V</span> <span class='hs-layout'>(</span><span class='hs-conid'>Active</span> <span class='hs-varid'>a</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>V</span> <span class='hs-varid'>a</span>
-<a name="line-50"></a>
-<a name="line-51"></a><span class='hs-comment'>-- Yes, these are all orphan instances. Get over it.  We don't want to</span>
-<a name="line-52"></a><span class='hs-comment'>-- put them in the 'active' package because 'active' is supposed to be</span>
-<a name="line-53"></a><span class='hs-comment'>-- generally useful and shouldn't depend on diagrams.  We'd also</span>
-<a name="line-54"></a><span class='hs-comment'>-- rather not put them in diagrams-core so that diagrams-core doesn't</span>
-<a name="line-55"></a><span class='hs-comment'>-- have to depend on active.</span>
-<a name="line-56"></a>
-<a name="line-57"></a><a name="instance%20HasOrigin%20(Active%20a)"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>HasOrigin</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>HasOrigin</span> <span class='hs-layout'>(</span><span class='hs-conid'>Active</span> <span class='hs-varid'>a</span><span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
-<a name="line-58"></a>  <span class='hs-varid'>moveOriginTo</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>fmap</span> <span class='hs-varop'>.</span> <span class='hs-varid'>moveOriginTo</span>
-<a name="line-59"></a>
-<a name="line-60"></a><a name="instance%20Transformable%20(Active%20a)"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Transformable</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>Transformable</span> <span class='hs-layout'>(</span><span class='hs-conid'>Active</span> <span class='hs-varid'>a</span><span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
-<a name="line-61"></a>  <span class='hs-varid'>transform</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>fmap</span> <span class='hs-varop'>.</span> <span class='hs-varid'>transform</span>
-<a name="line-62"></a>
-<a name="line-63"></a><a name="instance%20HasStyle%20(Active%20a)"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>HasStyle</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>HasStyle</span> <span class='hs-layout'>(</span><span class='hs-conid'>Active</span> <span class='hs-varid'>a</span><span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
-<a name="line-64"></a>  <span class='hs-varid'>applyStyle</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>fmap</span> <span class='hs-varop'>.</span> <span class='hs-varid'>applyStyle</span>
-<a name="line-65"></a>
-<a name="line-66"></a><a name="instance%20TrailLike%20(Active%20t)"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>TrailLike</span> <span class='hs-varid'>t</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>TrailLike</span> <span class='hs-layout'>(</span><span class='hs-conid'>Active</span> <span class='hs-varid'>t</span><span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
-<a name="line-67"></a>  <span class='hs-varid'>trailLike</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>pure</span> <span class='hs-varop'>.</span> <span class='hs-varid'>trailLike</span>
-<a name="line-68"></a>
-<a name="line-69"></a><a name="instance%20Juxtaposable%20(Active%20a)"></a><span class='hs-comment'>-- | An active value can be juxtaposed against another by doing the</span>
-<a name="line-70"></a><a name="instance%20Juxtaposable%20(Active%20a)"></a><span class='hs-comment'>--   juxtaposition pointwise over time.  The era of @juxtapose v a1</span>
-<a name="line-71"></a><a name="instance%20Juxtaposable%20(Active%20a)"></a><span class='hs-comment'>--   a2@ will be the same as the era of @a2@, unless @a2@ is constant,</span>
-<a name="line-72"></a><a name="instance%20Juxtaposable%20(Active%20a)"></a><span class='hs-comment'>--   in which case it will be the era of @a1@.  (Note that @juxtapose</span>
-<a name="line-73"></a><a name="instance%20Juxtaposable%20(Active%20a)"></a><span class='hs-comment'>--   v a1 a2@ and @liftA2 (juxtapose v) a1 a2@ therefore have</span>
-<a name="line-74"></a><a name="instance%20Juxtaposable%20(Active%20a)"></a><span class='hs-comment'>--   different semantics: the second is an active value whose era is</span>
-<a name="line-75"></a><a name="instance%20Juxtaposable%20(Active%20a)"></a><span class='hs-comment'>--   the /combination/ of the eras of @a1@ and @a2@).</span>
-<a name="line-76"></a><a name="instance%20Juxtaposable%20(Active%20a)"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Juxtaposable</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>Juxtaposable</span> <span class='hs-layout'>(</span><span class='hs-conid'>Active</span> <span class='hs-varid'>a</span><span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
-<a name="line-77"></a>
-<a name="line-78"></a>  <span class='hs-varid'>juxtapose</span> <span class='hs-varid'>v</span> <span class='hs-varid'>a1</span> <span class='hs-varid'>a2</span> <span class='hs-keyglyph'>=</span>
-<a name="line-79"></a>    <span class='hs-varid'>onActive</span>       <span class='hs-comment'>-- a1</span>
-<a name="line-80"></a>      <span class='hs-layout'>(</span><span class='hs-keyglyph'>\</span><span class='hs-varid'>c1</span> <span class='hs-keyglyph'>-&gt;</span>        <span class='hs-comment'>-- if a1 is constant, just juxtapose a2 pointwise with its value</span>
-<a name="line-81"></a>        <span class='hs-varid'>juxtapose</span> <span class='hs-varid'>v</span> <span class='hs-varid'>c1</span> <span class='hs-varop'>&lt;$&gt;</span> <span class='hs-varid'>a2</span>
-<a name="line-82"></a>      <span class='hs-layout'>)</span>
-<a name="line-83"></a>                     <span class='hs-comment'>-- if a1 is dynamic...</span>
-<a name="line-84"></a>      <span class='hs-layout'>(</span><span class='hs-varid'>onDynamic</span> <span class='hs-varop'>$</span> <span class='hs-keyglyph'>\</span><span class='hs-varid'>s1</span> <span class='hs-varid'>e1</span> <span class='hs-varid'>d1</span> <span class='hs-keyglyph'>-&gt;</span>
-<a name="line-85"></a>        <span class='hs-varid'>onActive</span>      <span class='hs-comment'>-- a2</span>
-<a name="line-86"></a>          <span class='hs-layout'>(</span><span class='hs-keyglyph'>\</span><span class='hs-varid'>c2</span> <span class='hs-keyglyph'>-&gt;</span>      <span class='hs-comment'>-- if a2 is constant, juxtapose pointwise with a1.  Since</span>
-<a name="line-87"></a>                       <span class='hs-comment'>--   the result will no longer be constant, the result</span>
-<a name="line-88"></a>                       <span class='hs-comment'>--   needs an era: we use a1's.</span>
-<a name="line-89"></a>            <span class='hs-varid'>mkActive</span> <span class='hs-varid'>s1</span> <span class='hs-varid'>e1</span> <span class='hs-layout'>(</span><span class='hs-keyglyph'>\</span><span class='hs-varid'>t</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>juxtapose</span> <span class='hs-varid'>v</span> <span class='hs-layout'>(</span><span class='hs-varid'>d1</span> <span class='hs-varid'>t</span><span class='hs-layout'>)</span> <span class='hs-varid'>c2</span><span class='hs-layout'>)</span>
-<a name="line-90"></a>          <span class='hs-layout'>)</span>
-<a name="line-91"></a>
-<a name="line-92"></a>                       <span class='hs-comment'>-- otherwise, juxtapose pointwise, without changing a2's era</span>
-<a name="line-93"></a>          <span class='hs-layout'>(</span><span class='hs-varid'>onDynamic</span> <span class='hs-varop'>$</span> <span class='hs-keyglyph'>\</span><span class='hs-varid'>s2</span> <span class='hs-varid'>e2</span> <span class='hs-varid'>d2</span> <span class='hs-keyglyph'>-&gt;</span>
-<a name="line-94"></a>            <span class='hs-varid'>mkActive</span> <span class='hs-varid'>s2</span> <span class='hs-varid'>e2</span> <span class='hs-layout'>(</span><span class='hs-keyglyph'>\</span><span class='hs-varid'>t</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>juxtapose</span> <span class='hs-varid'>v</span> <span class='hs-layout'>(</span><span class='hs-varid'>d1</span> <span class='hs-varid'>t</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-varid'>d2</span> <span class='hs-varid'>t</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span>
-<a name="line-95"></a>          <span class='hs-layout'>)</span>
-<a name="line-96"></a>          <span class='hs-varid'>a2</span>
-<a name="line-97"></a>      <span class='hs-layout'>)</span>
-<a name="line-98"></a>      <span class='hs-varid'>a1</span>
-<a name="line-99"></a>
-<a name="line-100"></a><a name="instance%20Alignable%20(Active%20a)"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Alignable</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>Alignable</span> <span class='hs-layout'>(</span><span class='hs-conid'>Active</span> <span class='hs-varid'>a</span><span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
-<a name="line-101"></a>  <span class='hs-varid'>alignBy</span> <span class='hs-varid'>v</span> <span class='hs-varid'>d</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>alignBy</span> <span class='hs-varid'>v</span> <span class='hs-varid'>d</span> <span class='hs-varop'>&lt;$&gt;</span> <span class='hs-varid'>a</span>
+<a name="line-49"></a><span class='hs-comment'>-- Yes, these are all orphan instances. Get over it.  We don't want to</span>
+<a name="line-50"></a><span class='hs-comment'>-- put them in the 'active' package because 'active' is supposed to be</span>
+<a name="line-51"></a><span class='hs-comment'>-- generally useful and shouldn't depend on diagrams.  We'd also</span>
+<a name="line-52"></a><span class='hs-comment'>-- rather not put them in diagrams-core so that diagrams-core doesn't</span>
+<a name="line-53"></a><span class='hs-comment'>-- have to depend on active.</span>
+<a name="line-54"></a>
+<a name="line-55"></a><a name="instance%20HasOrigin%20(Active%20a)"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>HasOrigin</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>HasOrigin</span> <span class='hs-layout'>(</span><span class='hs-conid'>Active</span> <span class='hs-varid'>a</span><span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
+<a name="line-56"></a>  <span class='hs-varid'>moveOriginTo</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>fmap</span> <span class='hs-varop'>.</span> <span class='hs-varid'>moveOriginTo</span>
+<a name="line-57"></a>
+<a name="line-58"></a><a name="instance%20Transformable%20(Active%20a)"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Transformable</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>Transformable</span> <span class='hs-layout'>(</span><span class='hs-conid'>Active</span> <span class='hs-varid'>a</span><span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
+<a name="line-59"></a>  <span class='hs-varid'>transform</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>fmap</span> <span class='hs-varop'>.</span> <span class='hs-varid'>transform</span>
+<a name="line-60"></a>
+<a name="line-61"></a><a name="instance%20HasStyle%20(Active%20a)"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>HasStyle</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>HasStyle</span> <span class='hs-layout'>(</span><span class='hs-conid'>Active</span> <span class='hs-varid'>a</span><span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
+<a name="line-62"></a>  <span class='hs-varid'>applyStyle</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>fmap</span> <span class='hs-varop'>.</span> <span class='hs-varid'>applyStyle</span>
+<a name="line-63"></a>
+<a name="line-64"></a><a name="instance%20TrailLike%20(Active%20t)"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>TrailLike</span> <span class='hs-varid'>t</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>TrailLike</span> <span class='hs-layout'>(</span><span class='hs-conid'>Active</span> <span class='hs-varid'>t</span><span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
+<a name="line-65"></a>  <span class='hs-varid'>trailLike</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>pure</span> <span class='hs-varop'>.</span> <span class='hs-varid'>trailLike</span>
+<a name="line-66"></a>
+<a name="line-67"></a><a name="instance%20Juxtaposable%20(Active%20a)"></a><span class='hs-comment'>-- | An active value can be juxtaposed against another by doing the</span>
+<a name="line-68"></a><a name="instance%20Juxtaposable%20(Active%20a)"></a><span class='hs-comment'>--   juxtaposition pointwise over time.  The era of @juxtapose v a1</span>
+<a name="line-69"></a><a name="instance%20Juxtaposable%20(Active%20a)"></a><span class='hs-comment'>--   a2@ will be the same as the era of @a2@, unless @a2@ is constant,</span>
+<a name="line-70"></a><a name="instance%20Juxtaposable%20(Active%20a)"></a><span class='hs-comment'>--   in which case it will be the era of @a1@.  (Note that @juxtapose</span>
+<a name="line-71"></a><a name="instance%20Juxtaposable%20(Active%20a)"></a><span class='hs-comment'>--   v a1 a2@ and @liftA2 (juxtapose v) a1 a2@ therefore have</span>
+<a name="line-72"></a><a name="instance%20Juxtaposable%20(Active%20a)"></a><span class='hs-comment'>--   different semantics: the second is an active value whose era is</span>
+<a name="line-73"></a><a name="instance%20Juxtaposable%20(Active%20a)"></a><span class='hs-comment'>--   the /combination/ of the eras of @a1@ and @a2@).</span>
+<a name="line-74"></a><a name="instance%20Juxtaposable%20(Active%20a)"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Juxtaposable</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>Juxtaposable</span> <span class='hs-layout'>(</span><span class='hs-conid'>Active</span> <span class='hs-varid'>a</span><span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
+<a name="line-75"></a>
+<a name="line-76"></a>  <span class='hs-varid'>juxtapose</span> <span class='hs-varid'>v</span> <span class='hs-varid'>a1</span> <span class='hs-varid'>a2</span> <span class='hs-keyglyph'>=</span>
+<a name="line-77"></a>    <span class='hs-varid'>onActive</span>       <span class='hs-comment'>-- a1</span>
+<a name="line-78"></a>      <span class='hs-layout'>(</span><span class='hs-keyglyph'>\</span><span class='hs-varid'>c1</span> <span class='hs-keyglyph'>-&gt;</span>        <span class='hs-comment'>-- if a1 is constant, just juxtapose a2 pointwise with its value</span>
+<a name="line-79"></a>        <span class='hs-varid'>juxtapose</span> <span class='hs-varid'>v</span> <span class='hs-varid'>c1</span> <span class='hs-varop'>&lt;$&gt;</span> <span class='hs-varid'>a2</span>
+<a name="line-80"></a>      <span class='hs-layout'>)</span>
+<a name="line-81"></a>                     <span class='hs-comment'>-- if a1 is dynamic...</span>
+<a name="line-82"></a>      <span class='hs-layout'>(</span><span class='hs-varid'>onDynamic</span> <span class='hs-varop'>$</span> <span class='hs-keyglyph'>\</span><span class='hs-varid'>s1</span> <span class='hs-varid'>e1</span> <span class='hs-varid'>d1</span> <span class='hs-keyglyph'>-&gt;</span>
+<a name="line-83"></a>        <span class='hs-varid'>onActive</span>      <span class='hs-comment'>-- a2</span>
+<a name="line-84"></a>          <span class='hs-layout'>(</span><span class='hs-keyglyph'>\</span><span class='hs-varid'>c2</span> <span class='hs-keyglyph'>-&gt;</span>      <span class='hs-comment'>-- if a2 is constant, juxtapose pointwise with a1.  Since</span>
+<a name="line-85"></a>                       <span class='hs-comment'>--   the result will no longer be constant, the result</span>
+<a name="line-86"></a>                       <span class='hs-comment'>--   needs an era: we use a1's.</span>
+<a name="line-87"></a>            <span class='hs-varid'>mkActive</span> <span class='hs-varid'>s1</span> <span class='hs-varid'>e1</span> <span class='hs-layout'>(</span><span class='hs-keyglyph'>\</span><span class='hs-varid'>t</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>juxtapose</span> <span class='hs-varid'>v</span> <span class='hs-layout'>(</span><span class='hs-varid'>d1</span> <span class='hs-varid'>t</span><span class='hs-layout'>)</span> <span class='hs-varid'>c2</span><span class='hs-layout'>)</span>
+<a name="line-88"></a>          <span class='hs-layout'>)</span>
+<a name="line-89"></a>
+<a name="line-90"></a>                       <span class='hs-comment'>-- otherwise, juxtapose pointwise, without changing a2's era</span>
+<a name="line-91"></a>          <span class='hs-layout'>(</span><span class='hs-varid'>onDynamic</span> <span class='hs-varop'>$</span> <span class='hs-keyglyph'>\</span><span class='hs-varid'>s2</span> <span class='hs-varid'>e2</span> <span class='hs-varid'>d2</span> <span class='hs-keyglyph'>-&gt;</span>
+<a name="line-92"></a>            <span class='hs-varid'>mkActive</span> <span class='hs-varid'>s2</span> <span class='hs-varid'>e2</span> <span class='hs-layout'>(</span><span class='hs-keyglyph'>\</span><span class='hs-varid'>t</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>juxtapose</span> <span class='hs-varid'>v</span> <span class='hs-layout'>(</span><span class='hs-varid'>d1</span> <span class='hs-varid'>t</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-varid'>d2</span> <span class='hs-varid'>t</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span>
+<a name="line-93"></a>          <span class='hs-layout'>)</span>
+<a name="line-94"></a>          <span class='hs-varid'>a2</span>
+<a name="line-95"></a>      <span class='hs-layout'>)</span>
+<a name="line-96"></a>      <span class='hs-varid'>a1</span>
+<a name="line-97"></a>
+<a name="line-98"></a><span class='hs-comment'>--instance Alignable a =&gt; Alignable (Active a) where</span>
+<a name="line-99"></a><span class='hs-comment'>--  alignBy v d a = alignBy v d &lt;$&gt; a</span>
 </pre></body>
 </html>

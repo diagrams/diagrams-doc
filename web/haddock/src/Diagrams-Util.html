@@ -30,91 +30,86 @@
 <a name="line-21"></a>       <span class='hs-layout'>,</span> <span class='hs-varid'>tau</span>
 <a name="line-22"></a>
 <a name="line-23"></a>         <span class='hs-comment'>-- * Internal utilities</span>
-<a name="line-24"></a>       <span class='hs-layout'>,</span> <span class='hs-conid'>Proxy</span><span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span>
-<a name="line-25"></a>       <span class='hs-layout'>,</span> <span class='hs-varid'>foldB</span>
-<a name="line-26"></a>
-<a name="line-27"></a>       <span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
-<a name="line-28"></a>
-<a name="line-29"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Data</span><span class='hs-varop'>.</span><span class='hs-conid'>Default</span><span class='hs-varop'>.</span><span class='hs-conid'>Class</span>
-<a name="line-30"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Data</span><span class='hs-varop'>.</span><span class='hs-conid'>Monoid</span>
-<a name="line-31"></a>
-<a name="line-32"></a><a name="with"></a><span class='hs-comment'>-- | Several functions exported by the diagrams library take a number</span>
-<a name="line-33"></a><span class='hs-comment'>--   of arguments giving the user control to \"tweak\" various aspects</span>
-<a name="line-34"></a><span class='hs-comment'>--   of their behavior.  Rather than give such functions a long list</span>
-<a name="line-35"></a><span class='hs-comment'>--   of arguments, and to make it possible for the user to selectively</span>
-<a name="line-36"></a><span class='hs-comment'>--   override only certain arguments and use default values for</span>
-<a name="line-37"></a><span class='hs-comment'>--   others, such sets of arguments are collected into a record with</span>
-<a name="line-38"></a><span class='hs-comment'>--   named fields (see 'PolygonOpts' in "Diagrams.TwoD.Shapes" for an</span>
-<a name="line-39"></a><span class='hs-comment'>--   example).  Such record types are made instances of the 'Default'</span>
-<a name="line-40"></a><span class='hs-comment'>--   class, which provides a single record structure ('def')</span>
-<a name="line-41"></a><span class='hs-comment'>--   collecting the \"default\" arguments to the function.  @with@ is</span>
-<a name="line-42"></a><span class='hs-comment'>--   a synonym for 'def', which provides nice-looking syntax for</span>
-<a name="line-43"></a><span class='hs-comment'>--   simulating optional, named arguments in Haskell.  For example,</span>
-<a name="line-44"></a><span class='hs-comment'>--</span>
-<a name="line-45"></a><span class='hs-comment'>--   @</span>
-<a name="line-46"></a><span class='hs-comment'>--   polygon with {sides = 7, edgeSkip = 2}</span>
-<a name="line-47"></a><span class='hs-comment'>--   @</span>
-<a name="line-48"></a><span class='hs-comment'>--</span>
-<a name="line-49"></a><span class='hs-comment'>--   calls the 'polygon' function with a single argument (note that</span>
-<a name="line-50"></a><span class='hs-comment'>--   record update binds more tightly than function application!),</span>
-<a name="line-51"></a><span class='hs-comment'>--   namely, 'with' (the record of default arguments) where the</span>
-<a name="line-52"></a><span class='hs-comment'>--   @sides@ and @edgeSkip@ fields have been updated.</span>
-<a name="line-53"></a><span class='hs-definition'>with</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Default</span> <span class='hs-varid'>d</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-varid'>d</span>
-<a name="line-54"></a><span class='hs-definition'>with</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>def</span>
-<a name="line-55"></a>
-<a name="line-56"></a><a name="applyAll"></a><span class='hs-comment'>-- | @applyAll@ takes a list of functions and applies them all to a</span>
-<a name="line-57"></a><span class='hs-comment'>--   value, in sequence from the last function in the list to the first.</span>
-<a name="line-58"></a><span class='hs-comment'>--   For example, @applyAll [f1, f2, f3] a == f1 . f2 . f3 $ a@.</span>
-<a name="line-59"></a><span class='hs-definition'>applyAll</span> <span class='hs-keyglyph'>::</span> <span class='hs-keyglyph'>[</span><span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span><span class='hs-keyglyph'>]</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span>
-<a name="line-60"></a><span class='hs-definition'>applyAll</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>appEndo</span> <span class='hs-varop'>.</span> <span class='hs-varid'>mconcat</span> <span class='hs-varop'>.</span> <span class='hs-varid'>map</span> <span class='hs-conid'>Endo</span>
-<a name="line-61"></a>
-<a name="line-62"></a><span class='hs-keyword'>infixl</span> <span class='hs-num'>8</span> <span class='hs-cpp'>#</span>
-<a name="line-63"></a>
-<a name="line-64"></a><span class='hs-comment'>-- | Postfix function application, for conveniently applying</span>
-<a name="line-65"></a><span class='hs-comment'>--   attributes.  Unlike @($)@, @(#)@ has a high precedence (8), so @d</span>
-<a name="line-66"></a><span class='hs-comment'>--   \# foo \# bar@ can be combined with other things using operators</span>
-<a name="line-67"></a><span class='hs-comment'>--   like @(|||)@ or @(\&lt;\&gt;)@ without needing parentheses.</span>
-<a name="line-68"></a><span class='hs-layout'>(</span><span class='hs-cpp'>#</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>::</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>b</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>b</span>
-<a name="line-69"></a><span class='hs-layout'>(</span><span class='hs-cpp'>#</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>flip</span> <span class='hs-layout'>(</span><span class='hs-varop'>$</span><span class='hs-layout'>)</span>
-<a name="line-70"></a>
-<a name="line-71"></a><a name="iterateN"></a><span class='hs-comment'>-- | @iterateN n f x@ returns the list of the first @n@ iterates of</span>
-<a name="line-72"></a><span class='hs-comment'>--   @f@ starting at @x@, that is, the list @[x, f x, f (f x), ...]@</span>
-<a name="line-73"></a><span class='hs-comment'>--   of length @n@. (Note that the last element of the list will be</span>
-<a name="line-74"></a><span class='hs-comment'>--   @f@ applied to @x@ @(n-1)@ times.)</span>
-<a name="line-75"></a><span class='hs-definition'>iterateN</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Int</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-keyglyph'>[</span><span class='hs-varid'>a</span><span class='hs-keyglyph'>]</span>
-<a name="line-76"></a><span class='hs-definition'>iterateN</span> <span class='hs-varid'>n</span> <span class='hs-varid'>f</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>take</span> <span class='hs-varid'>n</span> <span class='hs-varop'>.</span> <span class='hs-varid'>iterate</span> <span class='hs-varid'>f</span>
-<a name="line-77"></a>
-<a name="line-78"></a><a name="tau"></a><span class='hs-comment'>-- | The circle constant, the ratio of a circle's circumference to its</span>
-<a name="line-79"></a><span class='hs-comment'>--   /radius/.  Note that @pi = tau/2@.</span>
-<a name="line-80"></a><span class='hs-comment'>--</span>
-<a name="line-81"></a><span class='hs-comment'>--   For more information and a well-reasoned argument why we should</span>
-<a name="line-82"></a><span class='hs-comment'>--   all be using tau instead of pi, see /The Tau Manifesto/,</span>
-<a name="line-83"></a><span class='hs-comment'>--   &lt;<a href="http://tauday.com/">http://tauday.com/</a>&gt;.</span>
-<a name="line-84"></a><span class='hs-comment'>--</span>
-<a name="line-85"></a><span class='hs-comment'>--   To hear what it sounds like (and to easily memorize the first 30</span>
-<a name="line-86"></a><span class='hs-comment'>--   digits or so), try &lt;<a href="http://youtu.be/3174T-3-59Q">http://youtu.be/3174T-3-59Q</a>&gt;.</span>
-<a name="line-87"></a><span class='hs-definition'>tau</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Floating</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-varid'>a</span>
-<a name="line-88"></a><span class='hs-definition'>tau</span> <span class='hs-keyglyph'>=</span> <span class='hs-num'>2</span><span class='hs-varop'>*</span><span class='hs-varid'>pi</span>
-<a name="line-89"></a>
-<a name="line-90"></a><a name="Proxy"></a><span class='hs-comment'>-- | A value of @Proxy a@ carries no information; it's used only to</span>
-<a name="line-91"></a><a name="Proxy"></a><span class='hs-comment'>--   fix the type @a@.</span>
-<a name="line-92"></a><a name="Proxy"></a><span class='hs-keyword'>data</span> <span class='hs-conid'>Proxy</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Proxy</span>
-<a name="line-93"></a>
-<a name="line-94"></a><a name="foldB"></a><span class='hs-comment'>-- | Given an associative binary operation and a default value to use</span>
-<a name="line-95"></a><span class='hs-comment'>--   in the case of an empty list, perform a /balanced/ fold over a</span>
-<a name="line-96"></a><span class='hs-comment'>--   list.  For example,</span>
-<a name="line-97"></a><span class='hs-comment'>--</span>
-<a name="line-98"></a><span class='hs-comment'>--   @</span>
-<a name="line-99"></a><span class='hs-comment'>--   foldB (+) z [a,b,c,d,e,f] == ((a+b) + (c+d)) + (e+f)</span>
-<a name="line-100"></a><span class='hs-comment'>--   @</span>
-<a name="line-101"></a><span class='hs-comment'>--</span>
-<a name="line-102"></a><span class='hs-definition'>foldB</span> <span class='hs-keyglyph'>::</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-keyglyph'>[</span><span class='hs-varid'>a</span><span class='hs-keyglyph'>]</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span>
-<a name="line-103"></a><span class='hs-definition'>foldB</span> <span class='hs-keyword'>_</span> <span class='hs-varid'>z</span> <span class='hs-conid'>[]</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>z</span>
-<a name="line-104"></a><span class='hs-definition'>foldB</span> <span class='hs-varid'>f</span> <span class='hs-keyword'>_</span> <span class='hs-keyword'>as</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>foldB'</span> <span class='hs-keyword'>as</span>
-<a name="line-105"></a>  <span class='hs-keyword'>where</span> <span class='hs-varid'>foldB'</span> <span class='hs-keyglyph'>[</span><span class='hs-varid'>x</span><span class='hs-keyglyph'>]</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>x</span>
-<a name="line-106"></a>        <span class='hs-varid'>foldB'</span> <span class='hs-varid'>xs</span>  <span class='hs-keyglyph'>=</span> <span class='hs-varid'>foldB'</span> <span class='hs-layout'>(</span><span class='hs-varid'>go</span> <span class='hs-varid'>xs</span><span class='hs-layout'>)</span>
-<a name="line-107"></a>        <span class='hs-varid'>go</span> <span class='hs-conid'>[]</span>         <span class='hs-keyglyph'>=</span> <span class='hs-conid'>[]</span>
-<a name="line-108"></a>        <span class='hs-varid'>go</span> <span class='hs-keyglyph'>[</span><span class='hs-varid'>x</span><span class='hs-keyglyph'>]</span>        <span class='hs-keyglyph'>=</span> <span class='hs-keyglyph'>[</span><span class='hs-varid'>x</span><span class='hs-keyglyph'>]</span>
-<a name="line-109"></a>        <span class='hs-varid'>go</span> <span class='hs-layout'>(</span><span class='hs-varid'>x1</span><span class='hs-conop'>:</span><span class='hs-varid'>x2</span><span class='hs-conop'>:</span><span class='hs-varid'>xs</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>f</span> <span class='hs-varid'>x1</span> <span class='hs-varid'>x2</span> <span class='hs-conop'>:</span> <span class='hs-varid'>go</span> <span class='hs-varid'>xs</span>
+<a name="line-24"></a>       <span class='hs-layout'>,</span> <span class='hs-varid'>foldB</span>
+<a name="line-25"></a>
+<a name="line-26"></a>       <span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
+<a name="line-27"></a>
+<a name="line-28"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Data</span><span class='hs-varop'>.</span><span class='hs-conid'>Default</span><span class='hs-varop'>.</span><span class='hs-conid'>Class</span>
+<a name="line-29"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Data</span><span class='hs-varop'>.</span><span class='hs-conid'>Monoid</span>
+<a name="line-30"></a>
+<a name="line-31"></a><a name="with"></a><span class='hs-comment'>-- | Several functions exported by the diagrams library take a number</span>
+<a name="line-32"></a><span class='hs-comment'>--   of arguments giving the user control to \"tweak\" various aspects</span>
+<a name="line-33"></a><span class='hs-comment'>--   of their behavior.  Rather than give such functions a long list</span>
+<a name="line-34"></a><span class='hs-comment'>--   of arguments, and to make it possible for the user to selectively</span>
+<a name="line-35"></a><span class='hs-comment'>--   override only certain arguments and use default values for</span>
+<a name="line-36"></a><span class='hs-comment'>--   others, such sets of arguments are collected into a record with</span>
+<a name="line-37"></a><span class='hs-comment'>--   named fields (see 'PolygonOpts' in "Diagrams.TwoD.Shapes" for an</span>
+<a name="line-38"></a><span class='hs-comment'>--   example).  Such record types are made instances of the 'Default'</span>
+<a name="line-39"></a><span class='hs-comment'>--   class, which provides a single record structure ('def')</span>
+<a name="line-40"></a><span class='hs-comment'>--   collecting the \"default\" arguments to the function.  @with@ is</span>
+<a name="line-41"></a><span class='hs-comment'>--   a synonym for 'def', which provides nice-looking syntax for</span>
+<a name="line-42"></a><span class='hs-comment'>--   simulating optional, named arguments in Haskell.  For example,</span>
+<a name="line-43"></a><span class='hs-comment'>--</span>
+<a name="line-44"></a><span class='hs-comment'>--   @</span>
+<a name="line-45"></a><span class='hs-comment'>--   polygon with {sides = 7, edgeSkip = 2}</span>
+<a name="line-46"></a><span class='hs-comment'>--   @</span>
+<a name="line-47"></a><span class='hs-comment'>--</span>
+<a name="line-48"></a><span class='hs-comment'>--   calls the 'polygon' function with a single argument (note that</span>
+<a name="line-49"></a><span class='hs-comment'>--   record update binds more tightly than function application!),</span>
+<a name="line-50"></a><span class='hs-comment'>--   namely, 'with' (the record of default arguments) where the</span>
+<a name="line-51"></a><span class='hs-comment'>--   @sides@ and @edgeSkip@ fields have been updated.</span>
+<a name="line-52"></a><span class='hs-definition'>with</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Default</span> <span class='hs-varid'>d</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-varid'>d</span>
+<a name="line-53"></a><span class='hs-definition'>with</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>def</span>
+<a name="line-54"></a>
+<a name="line-55"></a><a name="applyAll"></a><span class='hs-comment'>-- | @applyAll@ takes a list of functions and applies them all to a</span>
+<a name="line-56"></a><span class='hs-comment'>--   value, in sequence from the last function in the list to the first.</span>
+<a name="line-57"></a><span class='hs-comment'>--   For example, @applyAll [f1, f2, f3] a == f1 . f2 . f3 $ a@.</span>
+<a name="line-58"></a><span class='hs-definition'>applyAll</span> <span class='hs-keyglyph'>::</span> <span class='hs-keyglyph'>[</span><span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span><span class='hs-keyglyph'>]</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span>
+<a name="line-59"></a><span class='hs-definition'>applyAll</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>appEndo</span> <span class='hs-varop'>.</span> <span class='hs-varid'>mconcat</span> <span class='hs-varop'>.</span> <span class='hs-varid'>map</span> <span class='hs-conid'>Endo</span>
+<a name="line-60"></a>
+<a name="line-61"></a><span class='hs-keyword'>infixl</span> <span class='hs-num'>8</span> <span class='hs-cpp'>#</span>
+<a name="line-62"></a>
+<a name="line-63"></a><span class='hs-comment'>-- | Postfix function application, for conveniently applying</span>
+<a name="line-64"></a><span class='hs-comment'>--   attributes.  Unlike @($)@, @(#)@ has a high precedence (8), so @d</span>
+<a name="line-65"></a><span class='hs-comment'>--   \# foo \# bar@ can be combined with other things using operators</span>
+<a name="line-66"></a><span class='hs-comment'>--   like @(|||)@ or @(\&lt;\&gt;)@ without needing parentheses.</span>
+<a name="line-67"></a><span class='hs-layout'>(</span><span class='hs-cpp'>#</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>::</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>b</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>b</span>
+<a name="line-68"></a><span class='hs-layout'>(</span><span class='hs-cpp'>#</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>flip</span> <span class='hs-layout'>(</span><span class='hs-varop'>$</span><span class='hs-layout'>)</span>
+<a name="line-69"></a>
+<a name="line-70"></a><a name="iterateN"></a><span class='hs-comment'>-- | @iterateN n f x@ returns the list of the first @n@ iterates of</span>
+<a name="line-71"></a><span class='hs-comment'>--   @f@ starting at @x@, that is, the list @[x, f x, f (f x), ...]@</span>
+<a name="line-72"></a><span class='hs-comment'>--   of length @n@. (Note that the last element of the list will be</span>
+<a name="line-73"></a><span class='hs-comment'>--   @f@ applied to @x@ @(n-1)@ times.)</span>
+<a name="line-74"></a><span class='hs-definition'>iterateN</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Int</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-keyglyph'>[</span><span class='hs-varid'>a</span><span class='hs-keyglyph'>]</span>
+<a name="line-75"></a><span class='hs-definition'>iterateN</span> <span class='hs-varid'>n</span> <span class='hs-varid'>f</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>take</span> <span class='hs-varid'>n</span> <span class='hs-varop'>.</span> <span class='hs-varid'>iterate</span> <span class='hs-varid'>f</span>
+<a name="line-76"></a>
+<a name="line-77"></a><a name="tau"></a><span class='hs-comment'>-- | The circle constant, the ratio of a circle's circumference to its</span>
+<a name="line-78"></a><span class='hs-comment'>--   /radius/.  Note that @pi = tau/2@.</span>
+<a name="line-79"></a><span class='hs-comment'>--</span>
+<a name="line-80"></a><span class='hs-comment'>--   For more information and a well-reasoned argument why we should</span>
+<a name="line-81"></a><span class='hs-comment'>--   all be using tau instead of pi, see /The Tau Manifesto/,</span>
+<a name="line-82"></a><span class='hs-comment'>--   &lt;<a href="http://tauday.com/">http://tauday.com/</a>&gt;.</span>
+<a name="line-83"></a><span class='hs-comment'>--</span>
+<a name="line-84"></a><span class='hs-comment'>--   To hear what it sounds like (and to easily memorize the first 30</span>
+<a name="line-85"></a><span class='hs-comment'>--   digits or so), try &lt;<a href="http://youtu.be/3174T-3-59Q">http://youtu.be/3174T-3-59Q</a>&gt;.</span>
+<a name="line-86"></a><span class='hs-definition'>tau</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Floating</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-varid'>a</span>
+<a name="line-87"></a><span class='hs-definition'>tau</span> <span class='hs-keyglyph'>=</span> <span class='hs-num'>2</span><span class='hs-varop'>*</span><span class='hs-varid'>pi</span>
+<a name="line-88"></a>
+<a name="line-89"></a><a name="foldB"></a><span class='hs-comment'>-- | Given an associative binary operation and a default value to use</span>
+<a name="line-90"></a><span class='hs-comment'>--   in the case of an empty list, perform a /balanced/ fold over a</span>
+<a name="line-91"></a><span class='hs-comment'>--   list.  For example,</span>
+<a name="line-92"></a><span class='hs-comment'>--</span>
+<a name="line-93"></a><span class='hs-comment'>--   @</span>
+<a name="line-94"></a><span class='hs-comment'>--   foldB (+) z [a,b,c,d,e,f] == ((a+b) + (c+d)) + (e+f)</span>
+<a name="line-95"></a><span class='hs-comment'>--   @</span>
+<a name="line-96"></a><span class='hs-comment'>--</span>
+<a name="line-97"></a><span class='hs-definition'>foldB</span> <span class='hs-keyglyph'>::</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-keyglyph'>[</span><span class='hs-varid'>a</span><span class='hs-keyglyph'>]</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span>
+<a name="line-98"></a><span class='hs-definition'>foldB</span> <span class='hs-keyword'>_</span> <span class='hs-varid'>z</span> <span class='hs-conid'>[]</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>z</span>
+<a name="line-99"></a><span class='hs-definition'>foldB</span> <span class='hs-varid'>f</span> <span class='hs-keyword'>_</span> <span class='hs-keyword'>as</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>foldB'</span> <span class='hs-keyword'>as</span>
+<a name="line-100"></a>  <span class='hs-keyword'>where</span> <span class='hs-varid'>foldB'</span> <span class='hs-keyglyph'>[</span><span class='hs-varid'>x</span><span class='hs-keyglyph'>]</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>x</span>
+<a name="line-101"></a>        <span class='hs-varid'>foldB'</span> <span class='hs-varid'>xs</span>  <span class='hs-keyglyph'>=</span> <span class='hs-varid'>foldB'</span> <span class='hs-layout'>(</span><span class='hs-varid'>go</span> <span class='hs-varid'>xs</span><span class='hs-layout'>)</span>
+<a name="line-102"></a>        <span class='hs-varid'>go</span> <span class='hs-conid'>[]</span>         <span class='hs-keyglyph'>=</span> <span class='hs-conid'>[]</span>
+<a name="line-103"></a>        <span class='hs-varid'>go</span> <span class='hs-keyglyph'>[</span><span class='hs-varid'>x</span><span class='hs-keyglyph'>]</span>        <span class='hs-keyglyph'>=</span> <span class='hs-keyglyph'>[</span><span class='hs-varid'>x</span><span class='hs-keyglyph'>]</span>
+<a name="line-104"></a>        <span class='hs-varid'>go</span> <span class='hs-layout'>(</span><span class='hs-varid'>x1</span><span class='hs-conop'>:</span><span class='hs-varid'>x2</span><span class='hs-conop'>:</span><span class='hs-varid'>xs</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>f</span> <span class='hs-varid'>x1</span> <span class='hs-varid'>x2</span> <span class='hs-conop'>:</span> <span class='hs-varid'>go</span> <span class='hs-varid'>xs</span>
 </pre></body>
 </html>

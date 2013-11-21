@@ -45,10 +45,10 @@
 <a name="line-36"></a><span class='hs-comment'>-- particular backend.  For @b ~ Cairo@ and @v ~ R2@, we have</span>
 <a name="line-37"></a><span class='hs-comment'>--</span>
 <a name="line-38"></a><span class='hs-comment'>-- &gt; data family Options Cairo R2 = CairoOptions</span>
-<a name="line-39"></a><span class='hs-comment'>-- &gt;          { cairoFileName     :: String     -- ^ The name of the file you want generated</span>
-<a name="line-40"></a><span class='hs-comment'>-- &gt;          , cairoSizeSpec     :: SizeSpec2D -- ^ The requested size of the output</span>
-<a name="line-41"></a><span class='hs-comment'>-- &gt;          , cairoOutputType   :: OutputType -- ^ the output format and associated options</span>
-<a name="line-42"></a><span class='hs-comment'>-- &gt;          , cairoBypassAdjust :: Bool       -- ^ Should the 'adjustDia' step be bypassed during rendering?</span>
+<a name="line-39"></a><span class='hs-comment'>-- &gt;          { _cairoFileName     :: String     -- ^ The name of the file you want generated</span>
+<a name="line-40"></a><span class='hs-comment'>-- &gt;          , _cairoSizeSpec     :: SizeSpec2D -- ^ The requested size of the output</span>
+<a name="line-41"></a><span class='hs-comment'>-- &gt;          , _cairoOutputType   :: OutputType -- ^ the output format and associated options</span>
+<a name="line-42"></a><span class='hs-comment'>-- &gt;          , _cairoBypassAdjust :: Bool       -- ^ Should the 'adjustDia' step be bypassed during rendering?</span>
 <a name="line-43"></a><span class='hs-comment'>-- &gt;          }</span>
 <a name="line-44"></a><span class='hs-comment'>--</span>
 <a name="line-45"></a><span class='hs-comment'>-- @</span>
@@ -101,52 +101,53 @@
 <a name="line-92"></a>
 <a name="line-93"></a>    <span class='hs-comment'>-- * Backend token</span>
 <a name="line-94"></a>  <span class='hs-layout'>,</span> <span class='hs-conid'>Cairo</span><span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span>
-<a name="line-95"></a>  <span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
-<a name="line-96"></a>
-<a name="line-97"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>System</span><span class='hs-varop'>.</span><span class='hs-conid'>FilePath</span> <span class='hs-layout'>(</span><span class='hs-varid'>takeExtension</span><span class='hs-layout'>)</span>
-<a name="line-98"></a>
-<a name="line-99"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Backend</span><span class='hs-varop'>.</span><span class='hs-conid'>Cairo</span><span class='hs-varop'>.</span><span class='hs-conid'>Internal</span>
-<a name="line-100"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Prelude</span>
-<a name="line-101"></a>
-<a name="line-102"></a><span class='hs-comment'>-- $CairoOptions</span>
-<a name="line-103"></a><span class='hs-comment'>--</span>
-<a name="line-104"></a><span class='hs-comment'>-- Unfortunately, Haddock does not yet support documentation for</span>
-<a name="line-105"></a><span class='hs-comment'>-- associated data families, so we must just provide it manually.</span>
-<a name="line-106"></a><span class='hs-comment'>-- This module defines</span>
-<a name="line-107"></a><span class='hs-comment'>--</span>
-<a name="line-108"></a><span class='hs-comment'>-- &gt; data family Options Cairo R2 = CairoOptions</span>
-<a name="line-109"></a><span class='hs-comment'>-- &gt;           { cairoFileName   :: String     -- ^ The name of the file you want generated</span>
-<a name="line-110"></a><span class='hs-comment'>-- &gt;           , cairoSizeSpec   :: SizeSpec2D -- ^ The requested size of the output</span>
-<a name="line-111"></a><span class='hs-comment'>-- &gt;           , cairoOutputType :: OutputType -- ^ the output format and associated options</span>
-<a name="line-112"></a><span class='hs-comment'>-- &gt;           }</span>
-<a name="line-113"></a><span class='hs-comment'>--</span>
-<a name="line-114"></a><span class='hs-comment'>-- See the documentation at the top of "Diagrams.Backend.Cairo" for</span>
-<a name="line-115"></a><span class='hs-comment'>-- information on how to make use of this.</span>
-<a name="line-116"></a><span class='hs-comment'>--</span>
-<a name="line-117"></a><span class='hs-comment'>-- /Important note/: a bug in GHC 7.0.x and 7.4.1 prevents</span>
-<a name="line-118"></a><span class='hs-comment'>-- re-exporting this data family.  (Strangely, this bug seems to be</span>
-<a name="line-119"></a><span class='hs-comment'>-- present in 7.0 and 7.4 but not 7.2.) To bring CairoOptions into</span>
-<a name="line-120"></a><span class='hs-comment'>-- scope when using GHC 7.0.x or 7.4 you must import</span>
-<a name="line-121"></a><span class='hs-comment'>-- "Diagrams.Backend.Cairo.Internal".</span>
-<a name="line-122"></a>
-<a name="line-123"></a><a name="renderCairo"></a><span class='hs-comment'>-- | Render a diagram using the cairo backend, writing to the given</span>
-<a name="line-124"></a><span class='hs-comment'>--   output file and using the requested size.  The output type (PNG,</span>
-<a name="line-125"></a><span class='hs-comment'>--   PS, PDF, or SVG) is determined automatically from the output file</span>
-<a name="line-126"></a><span class='hs-comment'>--   extension.</span>
-<a name="line-127"></a><span class='hs-comment'>--</span>
-<a name="line-128"></a><span class='hs-comment'>--   This function is provided as a convenience; if you need more</span>
-<a name="line-129"></a><span class='hs-comment'>--   flexibility than it provides, you can call 'renderDia' directly,</span>
-<a name="line-130"></a><span class='hs-comment'>--   as described above.</span>
-<a name="line-131"></a><span class='hs-definition'>renderCairo</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>FilePath</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>SizeSpec2D</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Diagram</span> <span class='hs-conid'>Cairo</span> <span class='hs-conid'>R2</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>IO</span> <span class='hs-conid'>()</span>
-<a name="line-132"></a><span class='hs-definition'>renderCairo</span> <span class='hs-varid'>outFile</span> <span class='hs-varid'>sizeSpec</span> <span class='hs-varid'>d</span>
-<a name="line-133"></a>  <span class='hs-keyglyph'>=</span> <span class='hs-varid'>fst</span> <span class='hs-layout'>(</span><span class='hs-varid'>renderDia</span> <span class='hs-conid'>Cairo</span> <span class='hs-layout'>(</span><span class='hs-conid'>CairoOptions</span> <span class='hs-varid'>outFile</span> <span class='hs-varid'>sizeSpec</span> <span class='hs-varid'>outTy</span> <span class='hs-conid'>False</span><span class='hs-layout'>)</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span>
-<a name="line-134"></a>  <span class='hs-keyword'>where</span>
-<a name="line-135"></a>    <span class='hs-varid'>outTy</span> <span class='hs-keyglyph'>=</span>
-<a name="line-136"></a>      <span class='hs-keyword'>case</span> <span class='hs-varid'>takeExtension</span> <span class='hs-varid'>outFile</span> <span class='hs-keyword'>of</span>
-<a name="line-137"></a>        <span class='hs-str'>".png"</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>PNG</span>
-<a name="line-138"></a>        <span class='hs-str'>".ps"</span>  <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>PS</span>
-<a name="line-139"></a>        <span class='hs-str'>".pdf"</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>PDF</span>
-<a name="line-140"></a>        <span class='hs-str'>".svg"</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>SVG</span>
-<a name="line-141"></a>        <span class='hs-keyword'>_</span>      <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>PNG</span>
+<a name="line-95"></a>  <span class='hs-layout'>,</span> <span class='hs-conid'>B</span>
+<a name="line-96"></a>  <span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
+<a name="line-97"></a>
+<a name="line-98"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>System</span><span class='hs-varop'>.</span><span class='hs-conid'>FilePath</span> <span class='hs-layout'>(</span><span class='hs-varid'>takeExtension</span><span class='hs-layout'>)</span>
+<a name="line-99"></a>
+<a name="line-100"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Backend</span><span class='hs-varop'>.</span><span class='hs-conid'>Cairo</span><span class='hs-varop'>.</span><span class='hs-conid'>Internal</span>
+<a name="line-101"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Prelude</span>
+<a name="line-102"></a>
+<a name="line-103"></a><span class='hs-comment'>-- $CairoOptions</span>
+<a name="line-104"></a><span class='hs-comment'>--</span>
+<a name="line-105"></a><span class='hs-comment'>-- Unfortunately, Haddock does not yet support documentation for</span>
+<a name="line-106"></a><span class='hs-comment'>-- associated data families, so we must just provide it manually.</span>
+<a name="line-107"></a><span class='hs-comment'>-- This module defines</span>
+<a name="line-108"></a><span class='hs-comment'>--</span>
+<a name="line-109"></a><span class='hs-comment'>-- &gt; data family Options Cairo R2 = CairoOptions</span>
+<a name="line-110"></a><span class='hs-comment'>-- &gt;           { _cairoFileName   :: String     -- ^ The name of the file you want generated</span>
+<a name="line-111"></a><span class='hs-comment'>-- &gt;           , _cairoSizeSpec   :: SizeSpec2D -- ^ The requested size of the output</span>
+<a name="line-112"></a><span class='hs-comment'>-- &gt;           , _cairoOutputType :: OutputType -- ^ the output format and associated options</span>
+<a name="line-113"></a><span class='hs-comment'>-- &gt;           }</span>
+<a name="line-114"></a><span class='hs-comment'>--</span>
+<a name="line-115"></a><span class='hs-comment'>-- See the documentation at the top of "Diagrams.Backend.Cairo" for</span>
+<a name="line-116"></a><span class='hs-comment'>-- information on how to make use of this.</span>
+<a name="line-117"></a><span class='hs-comment'>--</span>
+<a name="line-118"></a><span class='hs-comment'>-- /Important note/: a bug in GHC 7.0.x and 7.4.1 prevents</span>
+<a name="line-119"></a><span class='hs-comment'>-- re-exporting this data family.  (Strangely, this bug seems to be</span>
+<a name="line-120"></a><span class='hs-comment'>-- present in 7.0 and 7.4 but not 7.2.) To bring CairoOptions into</span>
+<a name="line-121"></a><span class='hs-comment'>-- scope when using GHC 7.0.x or 7.4 you must import</span>
+<a name="line-122"></a><span class='hs-comment'>-- "Diagrams.Backend.Cairo.Internal".</span>
+<a name="line-123"></a>
+<a name="line-124"></a><a name="renderCairo"></a><span class='hs-comment'>-- | Render a diagram using the cairo backend, writing to the given</span>
+<a name="line-125"></a><span class='hs-comment'>--   output file and using the requested size.  The output type (PNG,</span>
+<a name="line-126"></a><span class='hs-comment'>--   PS, PDF, or SVG) is determined automatically from the output file</span>
+<a name="line-127"></a><span class='hs-comment'>--   extension.</span>
+<a name="line-128"></a><span class='hs-comment'>--</span>
+<a name="line-129"></a><span class='hs-comment'>--   This function is provided as a convenience; if you need more</span>
+<a name="line-130"></a><span class='hs-comment'>--   flexibility than it provides, you can call 'renderDia' directly,</span>
+<a name="line-131"></a><span class='hs-comment'>--   as described above.</span>
+<a name="line-132"></a><span class='hs-definition'>renderCairo</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>FilePath</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>SizeSpec2D</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Diagram</span> <span class='hs-conid'>Cairo</span> <span class='hs-conid'>R2</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>IO</span> <span class='hs-conid'>()</span>
+<a name="line-133"></a><span class='hs-definition'>renderCairo</span> <span class='hs-varid'>outFile</span> <span class='hs-varid'>sizeSpec</span> <span class='hs-varid'>d</span>
+<a name="line-134"></a>  <span class='hs-keyglyph'>=</span> <span class='hs-varid'>fst</span> <span class='hs-layout'>(</span><span class='hs-varid'>renderDia</span> <span class='hs-conid'>Cairo</span> <span class='hs-layout'>(</span><span class='hs-conid'>CairoOptions</span> <span class='hs-varid'>outFile</span> <span class='hs-varid'>sizeSpec</span> <span class='hs-varid'>outTy</span> <span class='hs-conid'>False</span><span class='hs-layout'>)</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span>
+<a name="line-135"></a>  <span class='hs-keyword'>where</span>
+<a name="line-136"></a>    <span class='hs-varid'>outTy</span> <span class='hs-keyglyph'>=</span>
+<a name="line-137"></a>      <span class='hs-keyword'>case</span> <span class='hs-varid'>takeExtension</span> <span class='hs-varid'>outFile</span> <span class='hs-keyword'>of</span>
+<a name="line-138"></a>        <span class='hs-str'>".png"</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>PNG</span>
+<a name="line-139"></a>        <span class='hs-str'>".ps"</span>  <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>PS</span>
+<a name="line-140"></a>        <span class='hs-str'>".pdf"</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>PDF</span>
+<a name="line-141"></a>        <span class='hs-str'>".svg"</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>SVG</span>
+<a name="line-142"></a>        <span class='hs-keyword'>_</span>      <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>PNG</span>
 </pre></body>
 </html>
