@@ -402,10 +402,6 @@ is declared to be an instance of the `Default` type class:
 > class Default d where
 >   def :: d
 
-.. container:: todo
-
-  Switch to lens
-
 That is, types which have a `Default` instance have some default value
 called `def`.  For option records, `def` is declared to be the record
 containing all the default arguments.  The idea is that you can pass
