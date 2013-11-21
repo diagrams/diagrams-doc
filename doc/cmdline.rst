@@ -146,6 +146,33 @@ provided for `Int`, `String`, and `AlphaColour` arguments.  You can
 also easily define your own parsers for additional argument types; see
 the `User Extensions`_ section below.
 
+Diagrams that are the result of executing an IO action can also be handled
+by `mainWith`.  This can be useful for reading input files or doing other
+IO that the diagram depends on.
+
+.. class:: lhs
+
+::
+
+> -- IO-diagram
+>
+> d :: FilePath -> IO (Diagram SVG R2)
+> d file = do 
+>     f <- readFile file
+>     ...
+>
+> main = mainWith d
+
+The program will expect a file name on the command-line which it reads to
+generate a diagram.
+
+.. code-block:: sh
+
+    $ ./IO-diagram -o file.svg -w 400 ~/data.log
+
+See the `Clock Example`_ section below.
+
+
 Standard Options
 ================
 
@@ -471,6 +498,38 @@ instance along with its required options.
 
 Now we compile and cross our fingers!
 
+We can also handle IO with a couple more instances.  First we will need a
+`ToResult` instance that handles IO actions:
+
+.. class:: lhs
+
+::
+
+> instance ToResult d => ToResult (IO d) where
+>    type Args (IO d) = Args d
+>    type ResultOf (IO d) = IO (ResultOf d)
+> 
+>    toResult d args = flip toResult args <$> d
+
+This states that the needed arguments are not affected by this being
+an IO action and the final result is an IO action producing the final
+result of the action's result type.  Our `Mainable` instance can now
+be written:
+
+.. class:: lhs
+
+::
+
+> instance Mainable d => Mainable (IO d) where
+>     type MainOpts (IO d) = MainOpts d
+> 
+>     mainRender opts dio = dio >>= mainRender opts
+
+Here we merely perform the diagram creating action and bind its value
+to the `Mainable` instance that can handle it.  For an example of using
+these instances see the `Clock Example`_ section below. 
+
+
 User Extensions
 ===============
 
@@ -621,3 +680,87 @@ which gives us *exactly the same program*!  Indeed, if you squint at
 the function instance for `Mainable` and the instance we wrote for
 `Flippable`, you can see that our instance is a direct specialization
 of the more general one.
+
+Clock Example
+=============
+
+We may want to build diagrams based on the state of the world.  For
+instance, if we want to build a diagram of a clock we will want to
+know what time it is.  Consider the following program.
+
+.. class:: lhs
+
+::
+
+> import Diagrams.Prelude
+> import Diagrams.Coordinates
+> import Data.Time
+> 
+> clock :: UTCTime -> Diagram B R2
+> clock t = circle 0.35 # fc silver # lw 0
+>        <> bigHand # f 12 h <> littleHand # f 60 m
+>        <> circle 1  # fc black # lw 0
+>        <> circle 11 # lw 1.5 # lc slategray # fc lightsteelblue
+>   where
+>     s = realToFrac $ utctDayTime t :: Double
+>     m = s / 60
+>     h = m / 60
+>
+>     bigHand    = (0 ^& (-1.5)) ~~ (0 ^& 7.5) # lw 0.5
+>     littleHand = (0 ^& (-2))   ~~ (0 ^& 9.5) # lw 0.2
+>     f n v = rotate (Turn (- v / n))
+> 
+> main = mainWith (clock <$> getCurrentTime)
+
+Running we get:
+
+.. class:: dia
+
+::
+
+> import Diagrams.Prelude
+> import Diagrams.Coordinates
+> import Data.Time
+> 
+> clock :: UTCTime -> Diagram B R2
+> clock t = circle 0.35 # fc silver # lw 0
+>        <> bigHand # f 12 h <> littleHand # f 60 m
+>        <> circle 1  # fc black # lw 0
+>        <> circle 11 # lw 1.5 # lc slategray # fc lightsteelblue
+>   where
+>     s = realToFrac $ utctDayTime t :: Double
+>     m = s / 60
+>     h = m / 60
+>
+>     bigHand    = (0 ^& (-1.5)) ~~ (0 ^& 7.5) # lw 0.5
+>     littleHand = (0 ^& (-2))   ~~ (0 ^& 9.5) # lw 0.2
+>     f n v = rotate (Turn (- v / n))
+>
+> example = clock $ read "2013-11-19 03:14:15.926535 UTC" 
+
+This uses the `Mainable d => Mainable (IO d)` instance to allow our
+effectful clock generator.  However, we could have just as well avoided
+this instance, writing instead:
+
+.. class:: lhs
+
+::
+
+> main = do
+>     t <- getCurrentTime
+>     mainWith (clock t)
+
+This instance is quite convenient, however, especially when we want our IO action
+to depend on some command-line option.  The following exercises should be helpful
+in gaining practice working with IO and options by modifying the clock example into
+a useful clock making program.
+
+.. container:: exercises
+
+   #. Modify the example so it can take a time as a command-line
+      option, but if one is not given, it uses the current time.
+
+   #. Modify `clock` to take a `ClockStyle` argument that includes options for
+      various visual styles for the clock.  For instance `ClockStyle` could 
+      include a color for the clock background, a flag for turning on hour
+      marks, or a flag for including a second hand.
