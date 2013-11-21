@@ -74,9 +74,9 @@ zoom settings, and so on.
 
 .. _MathJax: http://www.mathjax.org/
 
-This user manual is still under construction.  Content that has yet to
-be written is noted by a light blue box with a "document" icon on the
-right hand side, like this:
+Occasionally content may be missing or incomplete; this iis noted by a
+light blue box with a "document" icon on the right hand side, like
+this:
 
 .. container:: todo
 
@@ -134,7 +134,8 @@ Installation
 
 Before installing ``diagrams``, you will need the following:
 
-  * The `Glasgow Haskell Compiler`_ (GHC), version 7.4.x or later.
+  * The `Glasgow Haskell Compiler`_ (GHC), version 7.4.x or later
+    (7.6.3 is recommended).
 
   * It is recommended (but not required) to have the latest release of
     the `Haskell Platform`_ (currently 2013.2.0.0).  At the very least
@@ -214,6 +215,8 @@ Getting started
 Create a file called ``TestDiagram.hs`` (or whatever you like) with
 the following contents:
 
+.. class:: lhs
+
 ::
 
   {-# LANGUAGE NoMonomorphismRestriction #-}
@@ -284,11 +287,13 @@ Contributing
 encouraged!  All diagrams-related repositories are in the `diagrams
 organization`_ on github.  The `Contributing page`_ on the
 diagrams wiki explains how to get the repositories and make
-contributions.
+contributions.  To find out about the latest developments, join the
+``#diagrams`` IRC channel on Freenode, and check out the `diagrams
+Trello board`_.
 
 .. _`diagrams organization`: http://github.com/diagrams
 .. _`Contributing page`: http://www.haskell.org/haskellwiki/Diagrams/Contributing
-
+.. _`diagrams Trello board`: https://trello.com/b/pL6YdKgz/diagrams
 
 Essential concepts
 ==================
@@ -368,7 +373,7 @@ Many diagram-related operations can be customized in a wide variety of
 ways.  For example, when creating a regular polygon, one can customize
 the number of sides, the radius, the orientation, and so on. However,
 to have a single function that takes all of these options as separate
-arguments is a real pain: it's hard to remember what the arguments are
+arguments would be a real pain: it's hard to remember what the arguments are
 and what order they should go in, and often one wants to use default
 values for many of the options and only override a few.  Some
 languages (such as Python) support *optional, named* function
@@ -385,6 +390,10 @@ is declared to be an instance of the `Default` type class:
 
 > class Default d where
 >   def :: d
+
+.. container:: todo
+
+  Switch to lens
 
 That is, types which have a `Default` instance have some default value
 called `def`.  For option records, `def` is declared to be the record
@@ -1263,28 +1272,31 @@ color.
 >
 > example = t ||| t # bg orange
 
-Line width
-++++++++++
+Line width, dashing, and freezing
++++++++++++++++++++++++++++++++++
 
 To alter the *width* of the lines used to stroke paths, use `lw`. The
 default line width is (arbitrarily) `0.01`.  You can also set the line
 width to zero if you do not want a path stroked at all.
 
-Line width actually more subtle than you might think.  Suppose you
+Line width is actually more subtle than you might think.  Suppose you
 create a diagram consisting of a square, and another square twice as
 large next to it (using `scale 2`).  How should they be drawn?  Should
 the lines be the same width, or should the larger square use a line
-twice as thick?
+twice as thick?  The same questions also come up when considering the
+dashing style used to draw some shapes---should the size of the dashes
+scale with transformations applied to the shapes, or not?
 
-In fact, in many situations the lines should actually be the *same*
-thickness, so a collection of shapes will be drawn in a uniform way.
-This is the default in ``diagrams``.  Specifically, the argument to
-`lw` is measured with respect to the *final* vector space of a
-complete, rendered diagram, *not* with respect to the local vector
-space at the time the `lw` function is applied.  Put another way,
-subsequent transformations do not affect the line width.  This is
-perhaps a bit confusing, but trying to get line widths to look
-reasonable would be a nightmare otherwise.
+In fact, in many situations the line thickness and dashing pattern
+should actually be the *same*, so a collection of shapes will be drawn
+in a uniform way.  This is the default in ``diagrams``.  Specifically,
+the arguments to `lw` and `dashing` are measured with respect to the
+*final* vector space of a complete, rendered diagram, *not* with
+respect to the local vector space at the time the functions are
+applied.  Put another way, subsequent transformations do not affect
+the line width and dashing pattern.  This is perhaps a bit confusing,
+but trying to get things to look reasonable would be a nightmare
+otherwise.
 
 .. class:: dia-lhs
 
@@ -1292,12 +1304,12 @@ reasonable would be a nightmare otherwise.
 
 > example = (square 1
 >       ||| square 1 # scale 2
->       ||| circle 1 # scaleX 3)   # lw 0.03
+>       ||| circle 1 # scaleX 3) # lw 0.03 # dashing [0.1,0.1] 0
 
 However, occasionally you *do* want subsequent transformations to
-affect line width.  The `freeze` function is supplied for this
+affect line width or dashing style.  The `freeze` function is supplied for this
 purpose.  Once `freeze` has been applied to a diagram, any subsequent
-transformations will affect the line width.
+transformations will affect the line width and dashing style.
 
 .. class:: dia-lhs
 
@@ -1305,12 +1317,13 @@ transformations will affect the line width.
 
 > example = (square 1
 >       ||| square 1 # freeze # scale 2
->       ||| circle 1 # freeze # scaleX 3)  # lw 0.03
+>       ||| circle 1 # freeze # scaleX 3) # lw 0.03 # dashing [0.1,0.1] 0
 
-Note that line width does not affect the envelope of diagrams
-at all.  Future versions of the standard library may provide a
-function to convert a stroked path into an actual region, which would
-allow line width to be taken into account.
+Note that line width does not affect the envelope of diagrams at all.
+To stroke a line "internally", turning it into a diagrams path
+enclosing the stroked area (which *does* contribute to the envelope),
+you can use one of the functions described in the section `Offsets of
+segments, trails, and paths`_.
 
 Other line parameters
 +++++++++++++++++++++
@@ -1663,6 +1676,11 @@ Trails and paths
 Trails and paths are some of the most fundamental tools in
 ``diagrams``.  They can be used not only directly to draw things, but
 also as guides to help create and position other diagrams.
+
+For additional practice and a more "hands-on" experience learning
+about trails and paths, see the `trails and paths tutorial`__.
+
+__ paths.html
 
 Segments
 ~~~~~~~~
@@ -2079,7 +2097,7 @@ right of the curve for a positive radius and on the left for a negative radius.
 > import Diagrams.TwoD.Offset
 >
 > example :: Diagram B R2
-> example = hcat' (with & sep .~ 1) $ map f 
+> example = hcat' (with & sep .~ 1) $ map f
 >         [ straight p
 >         , bézier3 (r2 (0,0.5)) (r2 (1,0.5)) p
 >         ]
@@ -2124,7 +2142,7 @@ corners, the offset will be disconnected!
 ::
 
 > import Diagrams.TwoD.Offset
-> 
+>
 > locatedTrailSegments t = zipWith at (trailSegments (unLoc t)) (trailVertices t)
 >
 > bindLoc f = join' . mapLoc f
@@ -2132,7 +2150,7 @@ corners, the offset will be disconnected!
 >     join' x = let (p,a) = viewLoc x in translate (p .-. origin) a
 >
 > offsetTrailNaive :: Double -> Double -> Trail R2 -> Path R2
-> offsetTrailNaive e r = mconcat . map (pathFromLocTrail . bindLoc (offsetSegment e r)) 
+> offsetTrailNaive e r = mconcat . map (pathFromLocTrail . bindLoc (offsetSegment e r))
 >                      . locatedTrailSegments . (`at` origin)
 >
 > example :: Diagram B R2
@@ -2166,7 +2184,7 @@ offset segments in other sensible ways.  For the choice of join we have the
 
 Inside corners are handled in a way that is consistent with outside corners, but
 this yields a result that is most likely undesirable.  Future versions of Diagrams
-will include the ability to clip inside corners with several options for how to 
+will include the ability to clip inside corners with several options for how to
 do the clipping.
 
 .. container:: todo
@@ -2182,13 +2200,13 @@ join.
 ::
 
 > import Diagrams.TwoD.Offset
-> 
+>
 > example :: Diagram B R2
 > example = hcat' (with & sep .~ 0.5) $ map f [LineJoinMiter, LineJoinRound, LineJoinBevel]
 >   where
 >     f s = p # strokeTrail <> (offsetTrail' (with & offsetJoin .~ s) 0.3 p # strokeLocTrail # lc blue)
 >     p = fromVertices . map p2 $ [(0,0), (1,0), (0.5,0.7)]
-      
+
 The `LineJoinMiter` style in particular can use more information to dictate how
 long a miter join can extend.  A sharp corner can have a miter join that is an
 unbounded distance from the original corner.  Usually, however, this long join
@@ -2236,7 +2254,7 @@ representing all the area within a radius `r`:math: of the original curve.
 
 In addition to specifying how segments are joined, we now have to specify the
 transition from the offset on one side of a curve to the other side of a curve.
-This is given by the `LineCap`.  
+This is given by the `LineCap`.
 
 .. class:: lhs
 
@@ -2274,25 +2292,25 @@ of loops, one inside and one outside.  To express this we need a `Path`.
 >     opts = with & expandJoin .~ LineJoinRound
 >                 & expandCap  .~ LineCapRound
 
-As long as the expanded path is filled with the winding fill rule we do not
-need to worry about having clipping for inside corners.  It works out that the
-extra loop in the rounded line join will match with the outside corner.  We
-currently all the implement `LineCap` styles and in future versions should
-support custom styles.
+As long as the expanded path is filled with the winding fill rule we
+do not need to worry about having clipping for inside corners.  It
+works out that the extra loop in the rounded line join will match with
+the outside corner.  We currently implement all the `LineCap` styles,
+and plan to support custom styles in future releases.
 
 .. class:: dia-lhs
 
 ::
 
 > import Diagrams.TwoD.Offset
-> 
+>
 > example :: Diagram B R2
 > example = hcat' (with & sep .~ 0.5) $ map f [LineCapButt, LineCapRound, LineCapSquare]
 >   where
 >     f s =  p # strokeTrail # lw 0.02 # lc white
 >         <> expandTrail' (opts s) 0.3 p # stroke # lw 0 # fc blue
 >     p = fromVertices . map p2 $ [(0,0), (1,0), (0.5,0.7)]
->     opts s = with & expandJoin .~ LineJoinRound 
+>     opts s = with & expandJoin .~ LineJoinRound
 >                   & expandCap  .~ s
 
 .. _TrailLike:
@@ -2384,7 +2402,7 @@ semantics depending on which type is inferred.
 
 ::
 
-> ts = mconcat . take 3 . iterate (rotateBy (1/9)) $ triangle 1
+> ts = mconcat . iterateN 3 (rotateBy (1/9)) $ triangle 1
 > example = (ts ||| stroke ts ||| strokeLine ts ||| fromVertices ts) # fc red
 
 The above example defines `ts` by generating three equilateral
@@ -2578,11 +2596,11 @@ closed.
 >              <> cubicSpline closed pts # lw 0.05
 > example = mkPath False ||| strutX 2 ||| mkPath True
 
-For more control over the generation of curved paths, see
-`diagrams-spiro`_, which provides an FFI binding to the ``spiro``
-library (the cubic spline library used by Inkscape).
+For more precise control over the generation of curved paths, see the
+`Diagrams.TwoD.Path.Metafont`:mod: module from
+`diagrams-contrib`:pkg:, which also has `its own tutorial`__.
 
-.. _diagrams-spiro: http://patch-tag.com/r/fryguybob/diagrams-spiro
+__ metafont.html
 
 Fill rules
 ~~~~~~~~~~
@@ -2615,7 +2633,7 @@ paths, they usually result in different regions being filled.
   with an even number of crossings are outside the path.  This rule is
   simple to implement and works perfectly well for
   non-self-intersecting paths.  For self-intersecting paths, however,
-  it results in a funny pattern of alternatingly filled and unfilled
+  it results in a pattern of alternating filled and unfilled
   regions, as seen in the above example.  Sometimes this pattern is
   desirable for its own sake.
 
@@ -2732,20 +2750,25 @@ Arrows
 specialized functionality for drawing arrows. Note that arrows are
 drawn with scale-invariant heads and tails (see `Scale-invariance`_).
 Arrows can be used to connect various things including literal points,
-named subdiagrams, or their traces. One may use the functions:
+named subdiagrams, or their traces. For more detailed information,
+examples, and exercises, see the `Arrows tutorial`__.
+
+To create arrows, one may use the functions:
 
 * `arrowBetween` to connect points;
 
 * `connect` to connect diagrams;
 
-* `connectPerim` to connect points on the traces of diagrams;
+* `connectOutside` to connect points on the boundary (trace) of
+  diagrams (for an example, see the `symmetry cube`__ example in the
+  gallery);
+
+__ /gallery/SymmetryCube.html
+
+* `connectPerim` to connect points on the traces of diagrams at
+  particular external angles;
 
 * `arrowAt` to place an arrow at a point.
-
-.. container:: todo
-
-  Add a paragraph about connectOutside and refrence the Symmetry cube in
-  the gallery.
 
 .. class:: dia-lhs
 
@@ -2796,7 +2819,8 @@ to `connect` is `connect'`. These companion functions take an extra
   defined as the diameter of an enclosing circle. The default value is
   0.3.  Note that arrowheads and tails are scale-invariant, so the
   these sizes are relative to the *final* vector space of the rendered
-  diagram (see also the section on `Line width`_ and `freeze`).
+  diagram (see also the section on `Line width, dashing, and
+  freezing`_ and the documentation for `freeze`).
 
 * `headGap` and `tailGap` both default to 0 and are used to indicate
   the amount of space between the end of the arrow and the location it
@@ -2812,6 +2836,8 @@ to `connect` is `connect'`. These companion functions take an extra
   color.)
 
 The following example demonstrates the use of various `ArrowOpts`.
+See `Named subdiagrams`_ for the use of names and the `named`
+function.
 
 .. class:: dia-lhs
 
@@ -2849,8 +2875,6 @@ The following example demonstrates the use of various `ArrowOpts`.
 >                     & arrowHead .~ tri & headSize .~ 1.5
 >                     & headStyle %~ fc red . opacity 0.5
 >                     & shaftStyle %~ lw 0.2 . lc black . opacity 0.5 ) "7" "8"
-
-For more detailed information see the `Arrows tutorial`__.
 
 __ arrow.html
 
@@ -2902,19 +2926,25 @@ above example, there would be no output.
 
    Text objects take up no space!
 
-There are two reasons for this.  First, computing the size of some
-text in a given font is rather complicated, and ``diagrams`` cannot
-(yet) do it natively.  The cairo backend can do it (see below) but we
-don't want to tie diagrams to a particular backend.
+The main reason for this is that computing the size of some text in a
+given font is rather complicated, and ``diagrams`` cannot (yet) do it
+natively.  The cairo backend can do it (see below) but we don't want
+to tie diagrams to a particular backend.
 
-The second reason is that font size is handled similarly to line
-width, so the size of a text object cannot be known at the time of its
-creation anyway!  (Future versions of ``diagrams`` may include some
-sort of constraint-solving engine to be able to handle this sort of
-situation, but don't hold your breath.)  Font size is treated
-similarly to line width for a similar reason: we often want disparate
-text elements to be the same size, but those text elements may be part
-of subdiagrams that have been transformed in various ways.
+..
+   The second reason is that font size is handled similarly to line
+   width, so the size of a text object cannot be known at the time of its
+   creation anyway!  (Future versions of ``diagrams`` may include some
+   sort of constraint-solving engine to be able to handle this sort of
+   situation, but don't hold your breath.)  Font size is treated
+   similarly to line width for a similar reason: we often want disparate
+   text elements to be the same size, but those text elements may be part
+   of subdiagrams that have been transformed in various ways.
+
+   Note: I wish this were true, but currently it isn't.  At some
+   future date when we do an overhaul of this stuff and introduce
+   units, perhaps users can choose which behavior they want. --
+   byorgey 20 Nov 2013
 
 Note, however, that the cairo backend includes a module
 `Diagrams.Backend.Cairo.Text`:mod: with functions for querying font
@@ -2925,9 +2955,12 @@ cairo backend and bringing `IO` into the picture (or being at peace
 with some probably-justified uses of `unsafePerformIO`).
 
 To set the font size, use the `fontSize` function; the default font
-size is (arbitrarily) 1.  Remember, however, that the font size is
-measured in the *final* vector space of the diagram, rather than in
-the local vector space in effect at the time of the text's creation.
+size is (arbitrarily) 1.
+
+..
+   Remember, however, that the font size is
+   measured in the *final* vector space of the diagram, rather than in
+   the local vector space in effect at the time of the text's creation.
 
 Other attributes of text can be set using `font`, `bold` (or, more
 generally, `fontWeight`), `italic`, and `oblique` (or, more generally,
@@ -2972,8 +3005,9 @@ Images
 ------
 
 The `Diagrams.TwoD.Image`:mod: module provides basic support for
-including external images in diagrams.  Simply use the `image`
-function and specify a file name and size for the image:
+including external images in diagrams (note, however, that only the
+cairo backend currently supports it).  Simply use the `image` function
+and specify a file name and size for the image:
 
 .. class:: dia-lhs
 
@@ -3002,8 +3036,8 @@ so by scaling nonuniformly with `scaleX`, `scaleY`, or something
 similar.
 
 Currently, the cairo backend can only include images in ``.png``
-format, but hopefully this will be expanded in the future.  Other
-backends may be able to handle other types of external images.
+format, but hopefully this will be expanded in the future, as well as
+adding support for embedding images to other backends.
 
 Advanced tools for diagram creation
 ===================================
@@ -3390,9 +3424,9 @@ function of type
   Subdiagram v -> QDiagram b v m -> QDiagram b v m
 
 We can see this function as a transformation on diagrams, except that
-it also gets to use some extra information---namely, a
-"`Subdiagram v`", which records the local origin and envelope
-associated with the name we pass as the first argument to `withName`.
+it also gets to use some extra information---namely, the `Subdiagram
+v` associated with the name we pass as the first argument to
+`withName`.
 
 Finally, the return type of `withName` is itself a transformation of
 diagrams.
@@ -3407,7 +3441,9 @@ it, and so on).  And what if there is no subdiagram named `n` in `d`?
 In that case `f` is ignored, and `d` is returned unmodified.
 
 Here's a simple example making use of names to draw a line connecting
-the centers of two subdiagrams.
+the centers of two subdiagrams (though for this particular task it is
+probably more convenient to use the provided `connect`
+function):
 
 .. class:: dia-lhs
 
@@ -3800,8 +3836,561 @@ diagram from a primitive (such as a path).  At the moment it is not
 possible to create a scale-invariant diagram from another *diagram*
 (since this would require nesting diagrams in a funny way).
 
+Tips and tricks
+===============
+
+Using absolute coordinates
+--------------------------
+
+Diagrams tries to make it easy to construct many types of graphics
+while thinking in only "relative" terms: put this to the right of
+that; lay these out in a row; draw this wherever that other thing
+ended up; and so on.  Sometimes, however, this is not enough, and one
+really wants to just think in absolute coordinates: draw this here,
+draw that there.  If you find yourself wanting this, here are some
+tips:
+
+  * If you have a list of diagrams which are already correctly
+    positioned, you can combine them with `mconcat`.
+  * The `position` function takes a list of diagrams associated with
+    positions and combines them while placing them at the indicated
+    absolute positions.
+  * `juxtapose` can be used to position a diagram relative to
+    something else without composing them; see `Juxtaposing without
+    composing`_.
+  * `moveTo` can be used to position a single diagram absolutely.
+  * `place` is a flipped version of `moveTo` which is sometimes
+    convenient.
+
+Delayed composition
+-------------------
+
+Suppose we have four diagrams that we want to lay out relative to one
+another.  For example:
+
+.. class:: dia-lhs
+
+::
+
+> t = triangle   5   # fc orange
+> s = square     3   # fc red
+> o = ellipseXY  2 3 # fc blue
+> c = circle     2   # fc green
+>
+> d = centerX (t ||| s ||| o ||| c)
+>
+> example = d
+
+(Instead of `(|||)` we could equivalently have used `hcat`.)  Now
+`d` is the diagram consisting of these four shapes laid out in a
+centered row.
+
+But what if we want to do further processing on the individual shapes?
+At this point, we are out of luck.  There is (currently) no way to
+break apart a diagram into subdiagrams once it has been composed
+together.  We could use `juxtapose` (which positions one diagram
+relative to another without actually doing any composition) but that
+would get ugly and unintuitive.
+
+Here is where the nifty trick comes in: simply enclose each shape in a
+list, like so:
+
+.. class:: lhs
+
+::
+
+> ds = centerX ([t] ||| [s] ||| [o] ||| [c])
+
+Now `ds` is a *list* of four diagrams, which are the same as the
+original `t`, `s`, `o`, `c` except that they have been positioned as
+they would be in `d`!  We can now go on to do other things with them
+individually.  For example, we could alter their positions slightly
+before composing them (*e.g.* this makes for an easy way to apply some
+random "jitter" to a layout):
+
+.. class:: dia-lhs
+
+::
+
+> t = triangle   5   # fc orange
+> s = square     3   # fc red
+> o = ellipseXY  2 3 # fc blue
+> c = circle     2   # fc green
+>
+> ds = centerX ([t] ||| [s] ||| [o] ||| [c])
+> d' = mconcat $ zipWith translateY [0.5, -0.6, 0, 0.4] ds
+>
+> example = d'
+
+In other words, enclosing diagrams in a list allows them to be
+positioned, aligned, *etc.* as they normally would, *except* that it
+delays actually composing them!
+
+This works because lists are instances of `Juxtaposable`, `Alignable`,
+`Enveloped`, `HasOrigin`, `HasStyle`, `Transformable`, and, of course,
+`Monoid`.  All these instances work in the "obvious" way---for
+example, the envelope for a list is the combination of the envelopes
+of the elements---so applying an operation to a list of diagrams has
+the same effect as applying the operation to the composition of those
+diagrams.  In other words, operations such as `centerX`, `scale`,
+`juxtapose`, *etc.* all commute with `mconcat`.
+
+Naming vertices
+---------------
+
+Most functions that create some sort of shape (*e.g.* `square`,
+`pentagon`, `polygon`...) can in fact create any instance of the
+`TrailLike` class (see `TrailLike`_).  You can often
+take advantage of this to do some custom processing of shapes by
+creating a *trail* instead of a diagram, doing some processing, and
+then turning the trail into a diagram.
+
+In particular, assigning names to the vertices of a shape can be
+accomplished as follows. Instead of writing just (say) `pentagon`, write
+
+.. class:: lhs
+
+::
+
+> stroke' ( with & vertexNames .~ [[0..]] ) pentagon
+
+which assigns consecutive numbers to the vertices of the pentagon.
+
+Deciphering error messages
+--------------------------
+
+Although making ``diagrams`` an *embedded* domain specific language
+has many benefits, it also has (at least) one major downside:
+difficult-to-understand error messages.  Interpreting error messages
+often requires understanding particular details about the internals of
+the ``diagrams`` framework as well as the particular behavior of GHC.
+This section attempts to make the situation a bit more palatable by
+explaining a few common types of error message you might get while
+using ``diagrams``, along with some suggestions as to their likely
+causes and solutions.
+
+This section is certainly incomplete; please send examples of other
+error messages to the `diagrams mailing list`_ for help interpreting
+them and/or so they can be added to this section.
+
+Couldn't match type `V P2` with `R2`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This error is due to what appears to be a bug in recent versions of
+GHC.  For some reason the definition of the `V` type family for points
+is not exported.  To solve this you can add an explicit import of the
+form `import Diagrams.Core.Points` to the top of your
+file.
+
+No instances for Backend b0 R2 ...
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+There will probably come a time when you get an error message such as
+
+::
+
+    <interactive>:1:8:
+        No instances for (Backend b0 R2,
+                          Renderable Diagrams.TwoD.Ellipse.Ellipse b0)
+          arising from a use of `circle'
+
+The problem really has nothing to do with missing instances, but with
+the fact that a concrete backend type has not been filled in for `b0`
+(or whatever type variable shows up in the error message).  Such
+errors arise when you pass a diagram to a function which is
+polymorphic in its input but monomorphic in its output, such as
+`width`, `height`, `phantom`, or `names`.  Such functions compute some
+property of the diagram, or use it to accomplish some other purpose,
+but do not result in the diagram being rendered.  If the diagram does
+not have a monomorphic type, GHC complains that it cannot determine
+the diagram's type.
+
+For example, here is the error we get if we try to compute the
+width of a radius-1 circle:
+
+::
+
+    ghci> width (circle 1)
+
+    <interactive>:1:8:
+        No instances for (Backend b0 R2,
+                          Renderable Diagrams.TwoD.Ellipse.Ellipse b0)
+          arising from a use of `circle'
+        Possible fix:
+          add instance declarations for
+          (Backend b0 R2, Renderable Diagrams.TwoD.Ellipse.Ellipse b0)
+        In the first argument of `width', namely `(circle 1)'
+        In the expression: width (circle 1)
+        In an equation for `it': it = width (circle 1)
+
+GHC complains that it cannot find an instance for "`Backend b0
+R2`"; what is really going on is that it does not have enough
+information to decide which backend to use for the circle (hence
+the type variable `b0`).  This is annoying because *we* know that
+the choice of backend cannot possibly affect the width of the
+circle; but there is no way for GHC to know that.
+
+The special type `D` is provided for exactly this situation, defined as
+
+.. class:: lhs
+
+::
+
+> type D v = Diagram NullBackend v
+
+`NullBackend` is a "backend" which simply does nothing: perfect
+for use in cases where GHC insists on knowing what backend to use but
+the backend really does not matter.
+
+For example, the solution to the problem with `width` is to annotate
+`circle 1` with the type `D R2`, like so:
+
+::
+
+    ghci> width (circle 1 :: D R2)
+    2.0
+
+More ambiguity
+~~~~~~~~~~~~~~
+
+You may also see error messages that directly complain about
+ambiguity. For example, the code below is taken from the example in
+the section on `Qualifying names`_:
+
+.. class:: lhs
+
+::
+
+> hcat' ( with & sep .~ 0.5 ) (zipWith (|>) [0 .. ] (replicate 5 squares))
+
+It is an attempt to qualify the names in five copies of `squares` with
+the numbers `0`, `1`, `2`, ...  However, it generates the error shown below:
+
+::
+
+    Ambiguous type variable `a0' in the constraints:
+      (IsName a0) arising from a use of `|>'
+                  at /tmp/Diagram2499.lhs:13:39-42
+      (Num a0) arising from the literal `0' at /tmp/Diagram2499.lhs:13:45
+      (Enum a0) arising from the arithmetic sequence `0 .. '
+                at /tmp/Diagram2499.lhs:13:44-49
+    Probable fix: add a type signature that fixes these type variable(s)
+    In the first argument of `zipWith', namely `(|>)'
+    In the second argument of `hcat'', namely
+      `(zipWith (|>) [0 .. ] (replicate 5 squares))'
+    In the expression:
+      hcat'
+        (with & sep .~ 0.5)) (zipWith (|>) [0 .. ] (replicate 5 squares))
+
+The problem, again, is that GHC does not know what type to choose for
+some polymorphic value.  Here, the polymorphic values in question are
+the numbers `0`, `1`, ... Numeric literals are polymorphic in Haskell,
+so GHC does not know whether they should be `Int`\s or `Integer`\s or
+`Double`\s or... The solution is to annotate the `0` with the desired
+type.
+
+
+Animation
+=========
+
+Diagrams has experimental support for the creation of *animations*.
+Animations are created with the help of a generic `Active`
+abstraction, defined in the `active`:pkg: package.
+
+.. container:: warning
+
+  The `active`:pkg: package is being completely rewritten based on a
+  much improved semantics.  The rewritten version is slated for
+  integration with an upcoming version of diagrams, Real Soon Now
+  (tm).
+
+Active
+------
+
+The `active`:pkg: package defines a simple abstraction for working
+with *time-varying values*. A value of type `Active a` is either a
+constant value of type `a`, or a time-varying value of type `a`
+(*i.e.* a function from time to `a`) with specific start and end
+times. Since active values have start and end times, they can be
+aligned, sequenced, stretched, or reversed. In a sense, this is sort
+of like a stripped-down version of functional reactive programming
+(FRP), without the reactivity.
+
+There are two basic ways to create an `Active` value. The first is to
+use `mkActive` to create one directly, by specifying a start and end
+time and a function of time. More indirectly, one can use the
+`Applicative` instance for `Active` together with the "unit interval"
+`ui`, which takes on values from the unit interval from time 0 to time
+1, or `interval`, which is like `ui` but over an arbitrary interval.
+
+For example, to create a value of type `Active Double` which represents
+one period of a sine wave starting at time 0 and ending at time 1, we
+could write
+
+.. class:: lhs
+
+::
+
+> mkActive 0 1 (\t -> sin (fromTime t * tau))
+
+or
+
+.. class:: lhs
+
+::
+
+> (sin . (*tau)) <$> ui
+
+`pure` can also be used to create `Active` values which are constant
+and have no start or end time. For example,
+
+.. class:: lhs
+
+::
+
+> mod <$> (floor <$> interval 0 100) <*> pure 7
+
+cycles repeatedly through the numbers 0-6.
+
+To take a "snapshot" of an active value at a particular point in time,
+the `runActive` function can be used to turn one into a function of
+time.  For example,
+
+::
+
+  > runActive ((sin . (*tau)) <$> ui) $ 0.2
+  0.9510565162951535
+
+.. container:: todo
+
+  Write more about using the active library.  For now, you can read
+  the `package documentation`_ for more information.
+
+  * Transforming active values
+  * Combining active values
+
+.. _`package documentation`: http://hackage.haskell.org/packages/archive/active/latest/doc/html/Data-Active.html
+
+
+Using Active with diagrams
+--------------------------
+
+An animation is defined, simply, as something of type
+`Active (Diagram b v)` for an appropriate backend type `b` and vector
+space `v`.  Hence it is possible to make an animation by using the
+`mkActive` function and specifying a function from time to diagrams.
+
+However, most often, animations are constructed using the
+`Applicative` interface.  For example, to create a moving circle we
+can write
+
+.. class:: lhs
+
+::
+
+> translateX <$> ui <*> circle 2
+
+`diagrams-cairo`:pkg: includes a very primitive animation rendering
+function, `animMain`, which takes an animation and spits out a bunch
+of image files, one for each frame.  You can then assemble the
+generated frames into an animation using, *e.g.*, ``ffmpeg``. (More
+sophisticated animation rendering will be added in future releases.)
+If you use `animMain` to visualize the above animation, however, you
+will find that all the generated frames look the same---the circle is
+not moving!
+
+Actually, it *is* moving, it's just that it gets centered in the
+output at each instant. It's as if the viewport is panning along at
+the same rate as the circle, with the result that it appears
+stationary.  The way to fix this is by placing the moving circle on
+top of something larger and stationary in order to "fix" the
+viewpoint.  Let's use an invisible square:
+
+.. class:: lhs
+
+::
+
+> (translateX <$> ui <*> circle 2) <> (pure (square 6 # lw 0))
+
+Notice that we composed two animations using `(<>)`, which does
+exactly what you would think: superimposes them at every instant in time.
+
+Since this is such a common thing to want, the
+`Diagrams.Animation`:mod: module provides a function `animEnvelope`
+for expanding the envelope of an animation to the union of all the
+envelopes over time (determined by sampling at a number of points).  That
+is, the animation will now use a constant envelope that encloses the
+entirety of the animation at all points in time.
+
+.. class:: lhs
+
+::
+
+> animEnvelope (translateX <$> ui <*> circle 2)
+
+Since `Active` is generic, it is also easy (and useful) to
+create active `Point`\s, `Path`\s, colors, or values of any other type.
+
+.. container:: todo
+
+  * Examples of animating things other than diagrams
+
+Rendering backends
+==================
+
+Diagrams has a system for "pluggable" rendering backends, so new
+backends can be added by implementing instances of some type classes.
+There are currently four "officially supported" backends, described
+below, and several other unofficial or experimental backends.  New
+backends are welcome!  To get started, take a look at the existing
+backends for examples, read the section below on `Tools for
+backends`_, and consult the `core library reference`__.
+
+__ core.html
+
+The SVG backend
+---------------
+
+The SVG backend, `diagrams-svg`:pkg:, outputs SVG files.  It is the
+default "out-of-the-box" backend, i.e. what one gets by typing just
+``cabal install diagrams``.  It is implemented purely in Haskell, with
+no dependencies on external libraries via the FFI.  This means that it
+should be easy to install on all platforms.
+
+Note that at the moment the SVG backend does not yet support embedding
+images, but this is planned for a future release.  Otherwise, the SVG
+backend is on a par with the cairo backend in terms of features
+(excluding a few special features specific to the cairo backend,
+described above).  For information on making use of the SVG backend,
+see `Diagrams.Backend.SVG`:mod:.
+
+The source code for the SVG backend can be found in the
+`diagrams-svg`:repo: repository.
+
+The cairo backend
+-----------------
+
+The cairo backend, `diagrams-cairo`:pkg:, is built on top of the
+`cairo`:pkg: package, which contains bindings to the `cairo 2D
+graphics library`_.  Although it is quite full-featured, the cairo
+library itself can be unfortunately difficult to install on some
+platforms, particularly OS X.
+
+.. _`cairo 2D graphics library`: http://www.cairographics.org/
+
+The cairo backend can produce PNG, SVG, PDF, and postscript output.
+For specific information on how to make use of it, see the
+documentation for the `Diagrams.Backend.Cairo`:mod: module.
+
+``diagrams-cairo`` was the first officially supported backend, and has
+quite a few advanced features that other backends do not have:
+
+* `Diagrams.Backend.Cairo.Text`:mod: has functions for working with
+  text and creating diagrams from text with proper bounding boxes
+  (though currently it seems a bit buggy).
+
+* `Diagrams.Backend.Cairo.List`:mod: exports the `renderToList`
+  function, which can convert a 2D diagram to a matrix of pixel color
+  values.
+
+* `Diagrams.Backend.Cairo.Ptr`:mod: exports functions for rendering
+  diagrams directly to buffers in memory.
+
+The source code for the cairo backend can be found in the
+`diagrams-cairo`:repo: repository.
+
+The GTK backend
+---------------
+
+The GTK backend, `diagrams-gtk`:pkg:, used to be part of the cairo
+backend (and is still built on top of it), but has been split out into
+a separate package in order to reduce the dependencies of the cairo
+backend, hence making it easier to install for those who don't need
+GTK support.  You can install it at the same time as the rest of the
+diagrams framework by passing the `-fgtk` flag: ``cabal install -fgtk
+diagrams``, or it can be installed separately later with ``cabal
+install diagrams-gtk``.
+
+The GTK backend allows rendering diagrams directly to GTK windows
+instead of to a file.  Note that it is possible to receive mouse
+clicks and then query the corresponding location in a diagram to find
+out which part the user clicked on (see `Using queries`_).
+
+The source code for the GTK backend can be found in the
+`diagrams-gtk`:repo: repository.
+
+The postscript backend
+----------------------
+
+The postscript backend, `diagrams-postscript`:pkg:, like the SVG
+backend, is written purely in Haskell.  It outputs encapsulated
+PostScript (EPS) files.  Note that by nature, EPS does not support
+transparency.  The postscript backend also does not support embedded
+images.  However, it is fairly complete in its support for other
+features.
+
+The source code for the postscript backend can be found in the
+`diagrams-postscript`:repo: repository.
+
+Other backends
+--------------
+
+For a list of other backends and their status, see `the diagrams
+wiki`_.
+
+.. _`the diagrams wiki`: http://www.haskell.org/haskellwiki/Diagrams/Projects#Backends
+
+Tools for backends
+------------------
+
+* `Diagrams.Segment`:mod: exports a `FixedSegment` type, representing
+  segments which *do* have an inherent starting location. Trails and
+  paths can be "compiled" into lists of `FixedSegment`\s with absolute
+  locations using `fixTrail` and `fixPath`.  This is of interest to
+  authors of rendering backends that do not support relative drawing
+  commands.
+
+* A test harness for comparing the outputs of different backends can be
+  found in the `diagrams-backend-tests`:repo: repo; the output of the
+  test harness for all officially supported backends is `kept up-to-date
+  here <http://projects.haskell.org/diagrams/backend-tests/all-index.html>`_.
+
+Other tools
+===========
+
+There are several "extra" packages which are officially maintained but
+do not automatically come bundled with the `diagrams` package.
+
+diagrams-builder
+----------------
+
+The `diagrams-builder`:pkg: package provides a service for *dynamic*
+rendering of diagrams---that is, you hand it a `String` at runtime
+representing some diagrams code, and you get back the result of
+rendering the code using whatever backend you like.  This could be
+useful, for example, as part of a preprocessor tool for interpreting
+diagrams code embedded in some other document.  Currently it is used
+by the `BlogLiterately-diagrams`:pkg: package (for rendering diagrams
+embedded in blog posts) as well as `diagrams-haddock`:pkg: (for
+rendering diagrams embedded in Haddock comments).
+
+diagrams-haddock
+----------------
+
+`diagrams-haddock`:pkg: is a tool for embedding diagrams in Haddock
+documentation.  The idea is that you can add images (worth 1000+
+words, of course) to your documentation simply by embedding diagrams
+code in a special format, and then running `diagrams-haddock`:pkg:.
+See the `README`__ for instructions on using it.
+
+__ https://github.com/diagrams/diagrams-haddock/blob/master/README.md
+
 Type reference
 ==============
+
+.. container:: todo
+
+  Are there more type classes or type functions to add now?
 
 This section serves as a reference in understanding the types used in
 the diagrams framework.
@@ -4452,548 +5041,3 @@ Codomain
 Parametric objects of type `a` can be viewed as functions of type
 `Scalar (V a) -> Codomain a`.  For more information, see `Segments and
 trails as parametric objects`_.
-
-Tips and tricks
-===============
-
-Using absolute coordinates
---------------------------
-
-Diagrams tries to make it easy to construct many types of graphics
-while thinking in only "relative" terms: put this to the right of
-that; lay these out in a row; draw this wherever that other thing
-ended up; and so on.  Sometimes, however, this is not enough, and one
-really wants to just think in absolute coordinates: draw this here,
-draw that there.  If you find yourself wanting this, here are some
-tips:
-
-  * If you have a list of diagrams which are already correctly
-    positioned, you can combine them with `mconcat`.
-  * The `position` function takes a list of diagrams associated with
-    positions and combines them while placing them at the indicated
-    absolute positions.
-  * `moveTo` can be used to position a single diagram absolutely.
-  * `place` is a flipped version of `moveTo` which is sometimes
-    convenient.
-
-Delayed composition
--------------------
-
-Suppose we have four diagrams that we want to lay out relative to one
-another.  For example:
-
-.. class:: dia-lhs
-
-::
-
-> t = triangle   5   # fc orange
-> s = square     3   # fc red
-> o = ellipseXY  2 3 # fc blue
-> c = circle     2   # fc green
->
-> d = centerX (t ||| s ||| o ||| c)
->
-> example = d
-
-(Instead of `(|||)` we could equivalently have used `hcat`.)  Now
-`d` is the diagram consisting of these four shapes laid out in a
-centered row.
-
-But what if we want to do further processing on the individual shapes?
-At this point, we are out of luck.  There is no way to break apart a
-diagram into subdiagrams once it has been composed together (for good
-reasons).  We could use `juxtapose` (which positions one diagram
-relative to another without actually doing any composition) but that
-would get ugly and unintuitive.
-
-Here is where the nifty trick comes in: simply enclose each shape in a
-list, like so:
-
-.. class:: lhs
-
-::
-
-> ds = centerX ([t] ||| [s] ||| [o] ||| [c])
-
-Now `ds` is a *list* of four diagrams, which are the same as the
-original `t`, `s`, `o`, `c` except that they have been positioned as
-they would be in `d`!  We can now go on to do other things with them
-individually.  For example, we could alter their positions slightly
-before composing them (*e.g.* this makes for an easy way to apply some
-random "jitter" to a layout):
-
-.. class:: dia-lhs
-
-::
-
-> t = triangle   5   # fc orange
-> s = square     3   # fc red
-> o = ellipseXY  2 3 # fc blue
-> c = circle     2   # fc green
->
-> ds = centerX ([t] ||| [s] ||| [o] ||| [c])
-> d' = mconcat $ zipWith translateY [0.5, -0.6, 0, 0.4] ds
->
-> example = d'
-
-In other words, enclosing diagrams in a list allows them to be
-positioned, aligned, *etc.* as they normally would, *except* that it
-delays actually composing them!
-
-This works because lists are instances of `Juxtaposable`, `Alignable`,
-`Enveloped`, `HasOrigin`, `HasStyle`, `Transformable`, and, of course,
-`Monoid`.  All these instances work in the "obvious" way---for
-example, the envelope for a list is the combination of the envelopes
-of the elements---so applying an operation to a list of diagrams has
-the same effect as applying the operation to the composition of those
-diagrams.  In other words, operations such as `centerX`, `scale`,
-`juxtapose`, *etc.* all commute with `mconcat`.
-
-Naming vertices
----------------
-
-Most functions that create some sort of shape (*e.g.* `square`,
-`pentagon`, `polygon`...) can in fact create any instance of the
-`TrailLike` class (see `TrailLike`_).  You can often
-take advantage of this to do some custom processing of shapes by
-creating a *trail* instead of a diagram, doing some processing, and
-then turning the trail into a diagram.
-
-In particular, assigning names to the vertices of a shape can be
-accomplished as follows. Instead of writing just (say) `pentagon`, write
-
-.. class:: lhs
-
-::
-
-> stroke' ( with & vertexNames .~ [[0..]] ) pentagon
-
-which assigns consecutive numbers to the vertices of the pentagon.
-
-Deciphering error messages
---------------------------
-
-Although making ``diagrams`` an *embedded* domain specific language
-has many benefits, it also has (at least) one major downside:
-difficult-to-understand error messages.  Interpreting error messages
-often requires understanding particular details about the internals of
-the ``diagrams`` framework as well as the particular behavior of GHC.
-This section attempts to make the situation a bit more palatable by
-explaining a few common types of error message you might get while
-using ``diagrams``, along with some suggestions as to their likely
-causes and solutions.
-
-This section is certainly incomplete; please send examples of other
-error messages to the `diagrams mailing list`_ for help interpreting
-them and/or so they can be added to this section.
-
-Couldn't match type `V P2` with `R2`
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-This error is due to what appears to be a bug in recent versions of
-GHC.  For some reason the definition of the `V` type family for points
-is not exported.  To solve this you can add an explicit import of the
-form `import Diagrams.Core.Points` to the top of your
-file.
-
-No instances for Backend b0 R2 ...
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-There will probably come a time when you get an error message such as
-
-::
-
-    <interactive>:1:8:
-        No instances for (Backend b0 R2,
-                          Renderable Diagrams.TwoD.Ellipse.Ellipse b0)
-          arising from a use of `circle'
-
-The problem really has nothing to do with missing instances, but with
-the fact that a concrete backend type has not been filled in for `b0`
-(or whatever type variable shows up in the error message).  Such
-errors arise when you pass a diagram to a function which is
-polymorphic in its input but monomorphic in its output, such as
-`width`, `height`, `phantom`, or `names`.  Such functions compute some
-property of the diagram, or use it to accomplish some other purpose,
-but do not result in the diagram being rendered.  If the diagram does
-not have a monomorphic type, GHC complains that it cannot determine
-the diagram's type.
-
-For example, here is the error we get if we try to compute the
-width of a radius-1 circle:
-
-::
-
-    ghci> width (circle 1)
-
-    <interactive>:1:8:
-        No instances for (Backend b0 R2,
-                          Renderable Diagrams.TwoD.Ellipse.Ellipse b0)
-          arising from a use of `circle'
-        Possible fix:
-          add instance declarations for
-          (Backend b0 R2, Renderable Diagrams.TwoD.Ellipse.Ellipse b0)
-        In the first argument of `width', namely `(circle 1)'
-        In the expression: width (circle 1)
-        In an equation for `it': it = width (circle 1)
-
-GHC complains that it cannot find an instance for "`Backend b0
-R2`"; what is really going on is that it does not have enough
-information to decide which backend to use for the circle (hence
-the type variable `b0`).  This is annoying because *we* know that
-the choice of backend cannot possibly affect the width of the
-circle; but there is no way for GHC to know that.
-
-The special type `D` is provided for exactly this situation, defined as
-
-.. class:: lhs
-
-::
-
-> type D v = Diagram NullBackend v
-
-`NullBackend` is a "backend" which simply does nothing: perfect
-for use in cases where GHC insists on knowing what backend to use but
-the backend really does not matter.
-
-For example, the solution to the problem with `width` is to annotate
-`circle 1` with the type `D R2`, like so:
-
-::
-
-    ghci> width (circle 1 :: D R2)
-    2.0
-
-More ambiguity
-~~~~~~~~~~~~~~
-
-You may also see error messages that directly complain about
-ambiguity. For example, the code below is taken from the example in
-the section on `Qualifying names`_:
-
-.. class:: lhs
-
-::
-
-> hcat' ( with & sep .~ 0.5 ) (zipWith (|>) [0 .. ] (replicate 5 squares))
-
-It is an attempt to qualify the names in five copies of `squares` with
-the numbers `0`, `1`, `2`, ...  However, it generates the error shown below:
-
-::
-
-    Ambiguous type variable `a0' in the constraints:
-      (IsName a0) arising from a use of `|>'
-                  at /tmp/Diagram2499.lhs:13:39-42
-      (Num a0) arising from the literal `0' at /tmp/Diagram2499.lhs:13:45
-      (Enum a0) arising from the arithmetic sequence `0 .. '
-                at /tmp/Diagram2499.lhs:13:44-49
-    Probable fix: add a type signature that fixes these type variable(s)
-    In the first argument of `zipWith', namely `(|>)'
-    In the second argument of `hcat'', namely
-      `(zipWith (|>) [0 .. ] (replicate 5 squares))'
-    In the expression:
-      hcat'
-        (with & sep .~ 0.5)) (zipWith (|>) [0 .. ] (replicate 5 squares))
-
-The problem, again, is that GHC does not know what type to choose for
-some polymorphic value.  Here, the polymorphic values in question are
-the numbers `0`, `1`, ... Numeric literals are polymorphic in Haskell,
-so GHC does not know whether they should be `Int`\s or `Integer`\s or
-`Double`\s or... The solution is to annotate the `0` with the desired
-type.
-
-
-Animation
-=========
-
-As of version 0.5, diagrams has experimental support for the creation
-of *animations*.  Animations are created with the help of a generic
-`Active` abstraction, defined in the `active`:pkg: package.
-
-.. container:: warning
-
-  The `active`:pkg: package is being completely rewritten based on
-  a much improved semantics.  The rewritten version is slated for
-  integration with version 0.8 of diagrams.
-
-Active
-------
-
-The `active`:pkg: package defines a simple abstraction for working
-with *time-varying values*. A value of type `Active a` is either a
-constant value of type `a`, or a time-varying value of type `a`
-(*i.e.* a function from time to `a`) with specific start and end
-times. Since active values have start and end times, they can be
-aligned, sequenced, stretched, or reversed. In a sense, this is sort
-of like a stripped-down version of functional reactive programming
-(FRP), without the reactivity.
-
-There are two basic ways to create an `Active` value. The first is to
-use `mkActive` to create one directly, by specifying a start and end
-time and a function of time. More indirectly, one can use the
-`Applicative` instance for `Active` together with the "unit interval"
-`ui`, which takes on values from the unit interval from time 0 to time
-1, or `interval`, which is like `ui` but over an arbitrary interval.
-
-For example, to create a value of type `Active Double` which represents
-one period of a sine wave starting at time 0 and ending at time 1, we
-could write
-
-.. class:: lhs
-
-::
-
-> mkActive 0 1 (\t -> sin (fromTime t * tau))
-
-or
-
-.. class:: lhs
-
-::
-
-> (sin . (*tau)) <$> ui
-
-`pure` can also be used to create `Active` values which are constant
-and have no start or end time. For example,
-
-.. class:: lhs
-
-::
-
-> mod <$> (floor <$> interval 0 100) <*> pure 7
-
-cycles repeatedly through the numbers 0-6.
-
-To take a "snapshot" of an active value at a particular point in time,
-the `runActive` function can be used to turn one into a function of
-time.  For example,
-
-::
-
-  > runActive ((sin . (*tau)) <$> ui) $ 0.2
-  0.9510565162951535
-
-.. container:: todo
-
-  Write more about using the active library.  For now, you can read
-  the `package documentation`_ for more information.
-
-  * Transforming active values
-  * Combining active values
-
-.. _`package documentation`: http://hackage.haskell.org/packages/archive/active/latest/doc/html/Data-Active.html
-
-
-Using Active with diagrams
---------------------------
-
-An animation is defined, simply, as something of type
-`Active (Diagram b v)` for an appropriate backend type `b` and vector
-space `v`.  Hence it is possible to make an animation by using the
-`mkActive` function and specifying a function from time to diagrams.
-
-However, most often, animations are constructed using the
-`Applicative` interface.  For example, to create a moving circle we
-can write
-
-.. class:: lhs
-
-::
-
-> translateX <$> ui <*> circle 2
-
-`diagrams-cairo`:pkg: includes a very primitive animation rendering
-function, `animMain`, which takes an animation and spits out a bunch
-of image files, one for each frame.  You can then assemble the
-generated frames into an animation using, *e.g.*, ``ffmpeg``. (More
-sophisticated animation rendering will be added in future releases.)
-If you use `animMain` to visualize the above animation, however, you
-will find that all the generated frames look the same---the circle is
-not moving!
-
-Actually, it *is* moving, it's just that it gets centered in the
-output at each instant. It's as if the viewport is panning along at
-the same rate as the circle, with the result that it appears
-stationary.  The way to fix this is by placing the moving circle on
-top of something larger and stationary in order to "fix" the
-viewpoint.  Let's use an invisible square:
-
-.. class:: lhs
-
-::
-
-> (translateX <$> ui <*> circle 2) <> (pure (square 6 # lw 0))
-
-Notice that we composed two animations using `(<>)`, which does
-exactly what you would think: superimposes them at every instant in time.
-
-Since this is such a common thing to want, the
-`Diagrams.Animation`:mod: module provides a function `animEnvelope`
-for expanding the envelope of an animation to the union of all the
-envelopes over time (determined by sampling at a number of points).  That
-is, the animation will now use a constant envelope that encloses the
-entirety of the animation at all points in time.
-
-.. class:: lhs
-
-::
-
-> animEnvelope (translateX <$> ui <*> circle 2)
-
-Since `Active` is generic, it is also easy (and useful) to
-create active `Point`\s, `Path`\s, colors, or values of any other type.
-
-.. container:: todo
-
-  * Examples of animating things other than diagrams
-
-Rendering backends
-==================
-
-Diagrams has a system for "pluggable" rendering backends, so new
-backends can be added by implementing instances of some type classes.
-There are currently four "officially supported" backends, described
-below, and several other unofficial or experimental backends.  New
-backends are welcome!  To get started, take a look at the existing
-backends for examples, read the section below on `Tools for
-backends`_, and consult the `core library reference`__.
-
-__ core.html
-
-The SVG backend
----------------
-
-The SVG backend, `diagrams-svg`:pkg:, outputs SVG files.  It is the
-default "out-of-the-box" backend, i.e. what one gets by typing just
-``cabal install diagrams``.  It is implemented purely in Haskell, with
-no dependencies on external libraries via the FFI.  This means that it
-should be easy to install on all platforms.
-
-Note that at the moment the SVG backend does not yet support embedding
-images, but this is planned for a future release.  Otherwise, the SVG
-backend is on a par with the cairo backend in terms of features
-(excluding a few special features specific to the cairo backend,
-described above).  For information on making use of the SVG backend,
-see `Diagrams.Backend.SVG`:mod:.
-
-The source code for the SVG backend can be found in the
-`diagrams-svg`:repo: repository.
-
-The cairo backend
------------------
-
-The cairo backend, `diagrams-cairo`:pkg:, is built on top of the
-`cairo`:pkg: package, which contains bindings to the `cairo 2D
-graphics library`_.  Although it is quite full-featured, the cairo
-library itself can be unfortunately difficult to install on some
-platforms, particularly OS X.
-
-.. _`cairo 2D graphics library`: http://www.cairographics.org/
-
-The cairo backend can produce PNG, SVG, PDF, and postscript output.
-For specific information on how to make use of it, see the
-documentation for the `Diagrams.Backend.Cairo`:mod: module.
-
-``diagrams-cairo`` was the first officially supported backend, and has
-quite a few advanced features that other backends do not have:
-
-* `Diagrams.Backend.Cairo.Text`:mod: has functions for working with
-  text and creating diagrams from text with proper bounding boxes
-  (though currently it seems a bit buggy).
-
-* `Diagrams.Backend.Cairo.List`:mod: exports the `renderToList`
-  function, which can convert a 2D diagram to a matrix of pixel color
-  values.
-
-* `Diagrams.Backend.Cairo.Ptr`:mod: exports functions for rendering
-  diagrams directly to buffers in memory.
-
-The source code for the cairo backend can be found in the
-`diagrams-cairo`:repo: repository.
-
-The GTK backend
----------------
-
-The GTK backend, `diagrams-gtk`:pkg:, used to be part of the cairo
-backend (and is still built on top of it), but has been split out into
-a separate package in order to reduce the dependencies of the cairo
-backend, hence making it easier to install for those who don't need
-GTK support.  You can install it at the same time as the rest of the
-diagrams framework by passing the `-fgtk` flag: ``cabal install -fgtk
-diagrams``, or it can be installed separately later with ``cabal
-install diagrams-gtk``.
-
-The GTK backend allows rendering diagrams directly to GTK windows
-instead of to a file.  Note that it is possible to receive mouse
-clicks and then query the corresponding location in a diagram to find
-out which part the user clicked on (see `Using queries`_).
-
-The source code for the GTK backend can be found in the
-`diagrams-gtk`:repo: repository.
-
-The postscript backend
-----------------------
-
-The postscript backend, `diagrams-postscript`:pkg:, like the SVG
-backend, is written purely in Haskell.  It outputs encapsulated
-PostScript (EPS) files.  Note that by nature, EPS does not support
-transparency.  The postscript backend also does not support embedded
-images.  However, it is fairly complete in its support for other
-features.
-
-The source code for the postscript backend can be found in the
-`diagrams-postscript`:repo: repository.
-
-Other backends
---------------
-
-For a list of other backends and their status, see `the diagrams
-wiki`_.
-
-.. _`the diagrams wiki`: http://www.haskell.org/haskellwiki/Diagrams/Projects#Backends
-
-Tools for backends
-------------------
-
-* `Diagrams.Segment`:mod: exports a `FixedSegment` type, representing
-  segments which *do* have an inherent starting location. Trails and
-  paths can be "compiled" into lists of `FixedSegment`\s with absolute
-  locations using `fixTrail` and `fixPath`.  This is of interest to
-  authors of rendering backends that do not support relative drawing
-  commands.
-
-* A test harness for comparing the outputs of different backends can be
-  found in the `diagrams-backend-tests`:repo: repo; the output of the
-  test harness for all officially supported backends is `kept up-to-date
-  here <http://projects.haskell.org/diagrams/backend-tests/all-index.html>`_.
-
-Other tools
-===========
-
-There are several "extra" packages which are officially maintained but
-do not automatically come bundled with the `diagrams` package.
-
-diagrams-builder
-----------------
-
-The `diagrams-builder`:pkg: package provides a service for *dynamic*
-rendering of diagrams---that is, you hand it a `String` at runtime
-representing some diagrams code, and you get back the result of
-rendering the code using whatever backend you like.  This could be
-useful, for example, as part of a preprocessor tool for interpreting
-diagrams code embedded in some other document.  Currently it is used
-by the `BlogLiterately-diagrams`:pkg: package (for rendering diagrams
-embedded in blog posts) as well as `diagrams-haddock`:pkg: (for
-rendering diagrams embedded in Haddock comments).
-
-diagrams-haddock
-----------------
-
-`diagrams-haddock`:pkg: is a tool for embedding diagrams in Haddock
-documentation.  The idea is that you can add images (worth 1000+
-words, of course) to your documentation simply by embedding diagrams
-code in a special format, and then running `diagrams-haddock`:pkg:.
-See the `README`__ for instructions on using it.
-
-__ https://github.com/diagrams/diagrams-haddock/blob/master/README.md
