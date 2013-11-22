@@ -5,10 +5,6 @@
 
 .. default-role:: hs
 
-================================
- Diagrams Core Library Reference
-================================
-
 .. contents::
 
 Introduction

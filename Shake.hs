@@ -69,6 +69,7 @@ main = do
       [ "rm -rf web/_site"
       , "rm -rf web/_cache"
       , "rm -f web/doc"
+      , "rm -f web/blog"
       , "rm -f web/gallery/images"
       , "rm -rf .make"
       , "rm -rf dist"
@@ -81,18 +82,22 @@ main = do
     _ -> shake shakeOptions { shakeThreads = numThreads } $ do
       disk <- newResource "Disk" 4
 
-      action $ requireDoc
+      action $ requireRst "doc"
+      action $ requireRst "blog"
       action $ requireIcons imgExt
       action $ requireStatic
 
       webRules
 
-      dist "doc/*.html" *> \out -> do
+      dist "//*.html" *> \out -> do
         let xml = obj . un $ out -<.> "xml"
             exe = obj "doc/Xml2Html.hs.exe"
         need [xml, exe]
         system' exe
-          ([xml, "-o", dist "doc/images", out] ++ ["--keepgoing" | useSVG])
+          ([xml, "-o", takeDirectory out </> "images", out] ++ ["--keepgoing" | useSVG])
+
+      dist "blog/*.metadata" *> \out -> copyFile' (un out) out
+      dist "doc/*.metadata"  *> \out -> copyFile' (un out) out
 
       obj "//*.xml" *> \out -> do
         let rst = un $ out -<.> "rst"
@@ -170,16 +175,20 @@ requireGallery imgExt = do
       thumbs = map (dist . ("web/gallery" </>) . (-<.> ("thumb" <.> imgExt))) gallerySrc
   need (imgs ++ thumbs)
 
-requireDoc :: Action ()
-requireDoc = do
-  docs <- filter (not . (".#" `isPrefixOf`))
-          <$> getDirectoryFiles "doc" ["*.rst"]
-  need (map (dist . ("doc" </>) . (-<.> "html")) docs)
+requireRst :: String -> Action ()
+requireRst dir = do
+  rsts <- filter (not . (".#" `isPrefixOf`))
+          <$> getDirectoryFiles dir ["*.rst"]
+  need (map (dist . (dir </>) . (-<.> "html")) rsts)
+  need (map (dist . (dir </>) . (-<.> "html.metadata")) rsts)
 
 webRules :: Rules ()
 webRules = do
   "web/doc" *> \out ->
     system' "ln" ["-s", "-f", "../dist/doc", out]
+
+  "web/blog" *> \out ->
+    system' "ln" ["-s", "-f", "../dist/blog", out]
 
   "web/gallery/images" *> \out -> do
     liftIO $ createDirectoryIfMissing True "dist/web/gallery"
@@ -193,6 +202,7 @@ runWeb m imgExt = do
   -- work around weird bug(?)
   system' "rm" ["-f", "dist/doc/doc"]
   system' "rm" ["-f", "dist/web/gallery/gallery"]
+  system' "rm" ["-f", "dist/blog/blog"]
 
   systemCwdNorm "web" (obj "web/Site.hs.exe")
     [ case m of
@@ -203,6 +213,7 @@ runWeb m imgExt = do
 needWeb :: String -> Action ()
 needWeb imgExt = do
   need [ "web/doc"
+       , "web/blog"
        , "web/gallery/images"
        , obj "web/Site.hs.exe"
        , obj "web/gallery/BuildGallery.hs.exe"
@@ -210,7 +221,8 @@ needWeb imgExt = do
   requireIcons imgExt
   requireStatic
   requireGallery imgExt
-  requireDoc
+  requireRst "doc"
+  requireRst "blog"
 
 data GhcMode = Compile | Link
   deriving Eq

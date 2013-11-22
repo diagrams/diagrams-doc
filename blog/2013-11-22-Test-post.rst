@@ -1,0 +1,7 @@
+This is a *test post*.  Have a circle:
+
+.. class:: dia-lhs
+
+::
+
+> example = circle 1 # fc purple

@@ -6,10 +6,6 @@
 .. default-role:: hs
 .. sectnum:: :depth: 2
 
-====================
- Diagrams and LaTeX
-====================
-
 .. contents:: :depth: 2
 
 Introduction

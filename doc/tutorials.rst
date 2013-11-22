@@ -5,10 +5,6 @@
 
 .. default-role:: hs
 
-===============================
-How to write diagrams tutorials
-===============================
-
 Know how to explain a certain technique?  Have a cool diagram which
 makes for a good, illustrative example but is too long to go in the
 gallery?  Write a tutorial!

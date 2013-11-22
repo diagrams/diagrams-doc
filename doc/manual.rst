@@ -6,10 +6,6 @@
 .. default-role:: hs
 .. sectnum:: :depth: 2
 
-======================
- Diagrams User Manual
-======================
-
 .. contents:: :depth: 2
 
 Preliminaries

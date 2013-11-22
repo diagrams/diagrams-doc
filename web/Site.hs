@@ -51,19 +51,18 @@ main = do
     -- User manual --------------------------------
     match "doc/*.html" $ do
         route idRoute
-        let docCtx = field "title" $ \i -> do
-              let baseName = takeBaseName . toFilePath . itemIdentifier $ i
-              return $ case baseName of
-                "manual"     -> "User manual"
-                "quickstart" -> "Quick start tutorial"
-                "tutorials"  -> "How to write tutorials"
-                "core"       -> "Core reference"
-                "vector"     -> "Vectors and points"
-                "paths"      -> "Trails and paths"
-                _            -> baseName
-        compile (getResourceBody >>= mainCompiler (docCtx <> defaultContext))
+        compile (getResourceBody >>= mainCompiler defaultContext)
 
     match ("doc/**" .&&. complement "doc/*.html") $ do
+        route idRoute
+        compile copyFileCompiler
+
+    -- Blog ---------------------------------------
+    match "blog/*.html" $ do
+        route idRoute
+        compile (getResourceBody >>= blogCompiler defaultContext >>= mainCompiler defaultContext)
+
+    match "blog/images/*" $ do
         route idRoute
         compile copyFileCompiler
 
@@ -141,6 +140,9 @@ withMathJax =
 mainCompiler :: Context String -> Item String -> Compiler (Item String)
 mainCompiler ctx = loadAndApplyTemplate "templates/default.html" ctx
                >=> relativizeUrls
+
+blogCompiler :: Context String -> Item String -> Compiler (Item String)
+blogCompiler ctx = loadAndApplyTemplate "templates/post.html" ctx
 
 setThumbURL, setImgURL, setHtmlURL :: String -> Context String
 setThumbURL  imgExt = setURL "images" ("thumb." ++ imgExt)
