@@ -31,50 +31,43 @@
         </div>
         <div class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+            <li><a href="/">Home</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Docs <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+		<li><a href="/download.html">Installation</a></li>
+ 		<li><a href="/documentation.html">Tutorials</a></li>
+		<li><a href="/doc/manual.html">User manual</a></li>
+		<li><a href="/haddock/index.html">API reference</a></li>
+		<li><a href="http://haskell.org/haskellwiki/Diagrams">Wiki</a></li>
+		<li><a href="http://www.haskell.org/haskellwiki/Diagrams/FAQ">FAQ</a></li>
+		<li><a href="/releases.html">Releases</a></li>
+              </ul>
+            </li>
+	    <li><a href="/gallery.html">Gallery</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Contact <b class="caret"></b></a>
+	      <ul class="dropdown-menu">
+		<li><a href="http://webchat.freenode.net?channels=diagrams">IRC channel</a></li>
+		<li><a href="http://groups.google.com/group/diagrams-discuss">Mailing
+		    list</a></li>
+		<li><a href="/community.html">Bug trackers</a></li>
+              </ul>
+            </li>
           </ul>
         </div>
       </div>
     </div>
 
-    <div class="container">
-      <div id="navigation">
-	<ul>
-          <li><a href="/">About</a></li>
-	  <li><a href="/download.html">Installation</a></li>
-          <li><a href="/documentation.html">Documentation</a>
-	    <ul>
-	      <li><a href="/documentation.html">Tutorials</a></li>
-	      <li><a href="/doc/manual.html">User manual</a></li>
-	      <li><a href="/haddock/index.html">API reference</a></li>
-	      <li><a href="http://haskell.org/haskellwiki/Diagrams">Wiki</a></li>
-	      <li><a href="http://www.haskell.org/haskellwiki/Diagrams/FAQ">FAQ</a></li>
-            </ul>
-	  </li>
-	  <li><a href="/gallery.html">Gallery</a></li>
-	  <li><a href="/community.html">Community</a>
-	    <ul>
-	      <li><a href="http://webchat.freenode.net?channels=diagrams">IRC channel</a></li>
-	      <li><a href="http://groups.google.com/group/diagrams-discuss">Mailing
-		  list</a></li>
-	      <li><a href="/community.html">Bug trackers</a></li>
-            </ul>
-	  </li>
-	  <li><a href="/releases.html">Releases</a></li>
-	</ul>
-      </div>
+    <div class="container" style="padding-top: 60px;">
+      <h3>$title$</h3>
+      <hr />
+      $body$
+    </div>
 
-      <div id="content">
-	<h3>$title$</h3>
-	<hr />
-        $body$
-      </div>
-
-      <div id="footer">
-	<div class="container">
-	  <p class="text-muted credit">Site generated
+    <div id="footer">
+      <div class="container">
+	<p class="text-muted credit">Site generated
 	  using <a href="http://hackage.haskell.org/package/shake">shake</a>, <a href="http://jaspervdj.be/hakyll/">hakyll</a>,
 	  and <a href="http://getbootstrap.com">bootstrap</a>.</p>
       </div>
