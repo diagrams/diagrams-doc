@@ -73,6 +73,8 @@ diagramsDoc modMap nameMap outDir =
                    -- , mkPanel "exampleimg" "default"
                    -- actually think it looks better not to wrap bare
                    -- example images in a panel
+
+                   , sidebarTOC
                    ]
 
 mkCallout :: ArrowXml a => String -> String -> XmlT a
@@ -91,6 +93,25 @@ mkPanel cls panelType =
             += attr "class" (txt "panel-body")
             += getChildren
          )
+
+sidebarTOC :: ArrowXml a => XmlT a
+sidebarTOC =
+  onElemA "div" [("class", "document")] $
+    eelem "div"
+      += attr "class" (txt "row")
+      += (eelem "div"
+            += attr "class" (txt "col-md-3")
+            += (eelem "div"
+                  += attr "class" (txt "bs-sidebar hidden-print")
+                  += attr "role" (txt "complementary")
+                  += (getChildren >>> isElem >>> hasAttrValue "class" (=="contents"))
+               )
+          )
+       += (eelem "div"
+             += attr "class" (txt "col-md-9")
+             += (getChildren >>> isElem >>> hasName "h1")
+             += (getChildren >>> isElem >>> hasAttrValue "class" (=="section"))
+          )
 
 linkifyGithub :: ArrowXml a => XmlT a
 linkifyGithub =
