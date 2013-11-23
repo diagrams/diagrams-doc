@@ -104,6 +104,8 @@ sidebarTOC =
             += (eelem "div"
                   += attr "class" (txt "bs-sidebar hidden-print")
                   += attr "role" (txt "complementary")
+                  += attr "data-spy" (txt "affix")
+                  += attr "data-offset-top" (txt "60")
                   += (getChildren >>> isElem >>> hasAttrValue "class" (=="contents"))
                )
           )
