@@ -23,3 +23,11 @@ Shake
 HCAR/*.pdf
 doc/icons/*.png
 HCAR/html
+*.nav
+*.out
+*.toc
+*.vrb
+*.snm
+talks/2013-nyhaskell/13-11-25-nyhaskell-diagrams.pdf
+talks/2013-nyhaskell/13-11-25-nyhaskell-diagrams.tex
+
