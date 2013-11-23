@@ -1,0 +1,18 @@
+
+div.todo:before {
+    content: url(../doc/icons/ToWrite.$ext$);
+    float: right;
+    padding: 20px;
+}
+
+div.warning:before {
+    content: url(../doc/icons/Warning.$ext$);
+    float: right;
+    padding: 20px;
+}
+
+div.exercises:before {
+    content: url(../doc/icons/Exercises.$ext$);
+    float: right;
+    padding: 20px;
+}

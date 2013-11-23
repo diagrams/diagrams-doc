@@ -66,7 +66,22 @@ diagramsDoc modMap nameMap outDir =
   >>> xml2html
   >>> doTransforms [ styleFile "css/default.css"
                    , styleFile "css/syntax.css"
+                   , mkPanel "todo" "info"
+                   , mkPanel "warning" "warning"
+                   , mkPanel "exercises" "success"
+                   , mkPanel "dia-lhs" "default"
+                   , mkPanel "exampleimg" "default"
                    ]
+
+mkPanel :: ArrowXml a => String -> String -> XmlT a
+mkPanel cls panelType =
+  onElemA "div" [("class", cls)] $
+    eelem "div"
+      += attr "class" (txt (cls ++ " panel panel-" ++ panelType))
+      += (eelem "div"
+            += attr "class" (txt "panel-body")
+            += getChildren
+         )
 
 linkifyGithub :: ArrowXml a => XmlT a
 linkifyGithub =
