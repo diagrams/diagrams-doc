@@ -2,13 +2,15 @@
 div.todo:before {
     content: url(../doc/icons/ToWrite.$ext$);
     float: right;
-    padding: 20px;
+    padding-left: 20px;
+    padding-bottom: 20px;
 }
 
 div.warning:before {
     content: url(../doc/icons/Warning.$ext$);
     float: right;
-    padding: 20px;
+    padding-left: 20px;
+    padding-bottom: 20px;
 }
 
 div.exercises:before {

@@ -11,6 +11,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="/css/bootstrap.min.css" rel="stylesheet" />
     <link href="/css/jumbotron-narrow.css" rel="stylesheet" />
+    <link href="/css/sticky-footer-navbar.css" rel="stylesheet" />
+    <link href="/css/callout.css" rel="stylesheet" />
     <link href="/css/doc.css" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="/css/syntax.css" />
@@ -20,6 +22,8 @@
 
   </head>
   <body>
+
+    <div id="wrap">
 
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
@@ -71,9 +75,11 @@
       $body$
     </div>
 
+    </div> <!-- #wrap -->
+
     <div id="footer">
       <div class="container">
-	<p class="text-muted credit">Site generated
+	<p class="text-muted credit">Site built with
 	  using <a href="http://hackage.haskell.org/package/shake">shake</a>, <a href="http://jaspervdj.be/hakyll/">hakyll</a>,
 	  and <a href="http://getbootstrap.com">bootstrap</a>.</p>
       </div>
