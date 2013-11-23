@@ -22,25 +22,25 @@ Introduction
 (EDSL) for creating vector graphics and animations.  The ``diagrams``
 framework is:
 
-  * **Declarative**: you specify *what* a diagram is, not *how* to
-    draw it.  ``diagrams`` takes care of the how.
+* **Declarative**: you specify *what* a diagram is, not *how* to
+  draw it.  ``diagrams`` takes care of the how.
 
-  * **Compositional**: diagrams can be easily *combined* in many ways to
-    produce more complex diagrams.
+* **Compositional**: diagrams can be easily *combined* in many ways to
+  produce more complex diagrams.
 
-  * **Embedded**: the full power of Haskell_, including every library
-    on Hackage_, is available to help construct and manipulate
-    graphics.
+* **Embedded**: the full power of Haskell_, including every library
+  on Hackage_, is available to help construct and manipulate
+  graphics.
 
 .. _Haskell: http://haskell.org/
 .. _Hackage: http://hackage.haskell.org/
 
-  * **Extensible**: extending diagrams with additional or higher-level
-    functionality is as simple as writing a Haskell module.
+* **Extensible**: extending diagrams with additional or higher-level
+  functionality is as simple as writing a Haskell module.
 
-  * **Flexible**: diagrams is designed from the ground up to be as
-    generic and flexible as possible, with support for pluggable
-    rendering backends and multiple vector spaces (2D, 3D, ...).
+* **Flexible**: diagrams is designed from the ground up to be as
+  generic and flexible as possible, with support for pluggable
+  rendering backends and multiple vector spaces (2D, 3D, ...).
 
 About this document
 -------------------
@@ -66,7 +66,7 @@ code examples to take you to its documentation.  Try it:
 
 Mathematical equations are typeset using MathJax_:
 
-  `\sum_{k=1}^\infty \frac{1}{k^2} = \frac{\pi^2}{6}`:math:
+`\sum_{k=1}^\infty \frac{1}{k^2} = \frac{\pi^2}{6}`:math:
 
 Right-click on any equation to access MathJax options, like displaying
 the LaTeX source, switching between MathML and HTML/CSS for display,

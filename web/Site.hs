@@ -23,6 +23,8 @@ pages :: IsString s => [s]
 pages = map (fromString . (++".markdown"))
   [ "index"
   , "download"
+  , "tutorials"
+  , "reference"
   , "documentation"
   , "community"
   , "releases"

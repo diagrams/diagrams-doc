@@ -2,37 +2,6 @@
 title: Documentation
 ---
 
-Tutorials
----------
-
-* [Quick start tutorial](/doc/quickstart.html) --- get
-  started making simple diagrams quickly.
-* [Vectors and points](/doc/vector.html) --- learn how to work with
-  vectors and points.
-* [Trails and paths](/doc/paths.html) --- learn about lines, loops, trails, and
-  paths the hard way.
-* [Arrows](/doc/arrow.html) --- using the arrow API.
-* [Metafont](/doc/metafont.html) --- describing curved paths using a
-  clone of the Metafont API.
-* [Diagrams and LaTeX](/doc/latex.html) --- including diagrams in your LaTeX documents.
-* [Command-line diagram creation](/doc/cmdline.html) --- build
-  programs that produce diagrams controlled by the command-line.
-* [How to write diagrams tutorials](/doc/tutorials.html) --- how to
-  write one of these here things, and have it included in this list!
-
-Reference
----------
-
-* [User manual](/doc/manual.html) --- (almost) everything
-  you ever wanted to know about using diagrams.
-* [API reference](/haddock/index.html) --- Haddock-generated reference
-  documentation, all in one place with a convenient comprehensive index.
-* [Core library reference](/doc/core.html) --- (almost) everything you
-  ever wanted to know about how diagrams works under the hood.
-* [Diagrams wiki](http://www.haskell.org/haskellwiki/Diagrams) ---
-  frequently asked questions, installation instructions, examples,
-  tips and tricks, links to related projects, *etc.*
-
 Blog posts/other
 ----------------
 
