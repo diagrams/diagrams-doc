@@ -98,24 +98,31 @@ sidebarTOC :: ArrowXml a => XmlT a
 sidebarTOC =
   onElemA "div" [("class", "document")] $
     eelem "div"
-      += attr "class" (txt "row")
+      += attr "class" (txt "container bs-docs-container")
       += (eelem "div"
-            += attr "class" (txt "col-md-3")
+            += attr "class" (txt "row")
             += (eelem "div"
-                  += attr "class" (txt "bs-sidebar hidden-print")
-                  += attr "role" (txt "complementary")
-                  += attr "data-spy" (txt "affix")
-                  += attr "data-offset-top" (txt "60")
-                  += (getChildren >>> isElem >>> hasAttrValue "class" (=="contents") >>>
-                      getChildren >>> (onElem "ul" $ addAttr "class" "nav bs-sidenav")
+                  += attr "class" (txt "col-md-3")
+                  += (eelem "div"
+                        += attr "class" (txt "bs-sidebar hidden-print")
+                        += attr "role" (txt "complementary")
+                        += attr "data-spy" (txt "affix")
+                        += (getChildren >>> isElem >>> hasAttrValue "class" (=="contents") >>>
+                            getChildren >>> isElem >>> hasName "ul" >>> addAttr "class" "nav bs-sidenav" >>>
+                              -- get rid of <h2>Contents</h2>
+                            doTransforms
+                              [ onElem "p" $ getChildren  -- get rid of <p> nodes
+                              , onElem "ul" $ addAttr "class" "nav"
+                              ]
+                           )
                      )
-               )
-          )
-       += (eelem "div"
-             += attr "class" (txt "col-md-9")
-             += (getChildren >>> isElem >>> hasName "h1")
-             += (getChildren >>> isElem >>> hasAttrValue "class" (=="section"))
-          )
+                )
+             += (eelem "div"
+                   += attr "class" (txt "col-md-9")
+                   += (getChildren >>> isElem >>> hasName "h1")
+                   += (getChildren >>> isElem >>> hasAttrValue "class" (=="section"))
+                )
+         )
 
 linkifyGithub :: ArrowXml a => XmlT a
 linkifyGithub =
