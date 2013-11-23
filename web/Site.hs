@@ -25,7 +25,7 @@ pages = map (fromString . (++".markdown"))
   , "download"
   , "tutorials"
   , "reference"
-  , "documentation"
+  , "sightings"
   , "community"
   , "releases"
   ]

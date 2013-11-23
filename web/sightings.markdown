@@ -1,9 +1,8 @@
 ---
-title: Documentation
+title: Sightings
 ---
 
-Blog posts/other
-----------------
+People using diagrams to do stuff.
 
 * [Magicube](http://mathr.co.uk/blog/2013-11-03_magicube.html) (Claude
   Heiland-Allen, 3 November 2013)
