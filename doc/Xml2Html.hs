@@ -106,7 +106,9 @@ sidebarTOC =
                   += attr "role" (txt "complementary")
                   += attr "data-spy" (txt "affix")
                   += attr "data-offset-top" (txt "60")
-                  += (getChildren >>> isElem >>> hasAttrValue "class" (=="contents"))
+                  += (getChildren >>> isElem >>> hasAttrValue "class" (=="contents") >>>
+                      getChildren >>> (onElem "ul" $ addAttr "class" "nav bs-sidenav")
+                     )
                )
           )
        += (eelem "div"
