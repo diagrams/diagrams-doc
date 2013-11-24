@@ -2938,9 +2938,13 @@ supports an approximation to `alignedText`):
 > example = t1 =/= t2 =/= t3
 
 The most important thing to keep in mind when working with text
-objects is that they *take up no space*; that is, the envelope for a
-text object is constantly zero.  If we omitted the rectangle from the
-above example, there would be no output.
+objects is that they *take up no space*: they have a *point envelope*
+at the origin, *i.e.* for the purposes of things like `beside`, they
+have a width and height of zero. (Note, however, this is not the same
+as having an *empty* envelope.  In particular, they still behave in an
+intuitive manner when included as arguments to things like `hcat`.)
+If we omitted the rectangle from the above example, there would be no
+output.
 
 .. container:: warning
 
