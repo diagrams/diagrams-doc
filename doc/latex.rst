@@ -160,4 +160,7 @@ making slide decks with embedded images.  However:
   Every ``frame`` containing a diagram *must* be marked as ``[fragile]``!
 
 Non-``[fragile]`` frames with diagrams in them cause `\TeX`:math: to
-choke with horrendous, inscrutable errors.
+choke with horrendous, inscrutable errors.  If you are using
+``pandoc`` to generate slides, you can "trick" ``pandoc`` into
+emitting ``[fragile]`` annotations by inserting an empty code block
+into each slide with a diagram.
