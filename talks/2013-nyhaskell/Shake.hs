@@ -17,6 +17,6 @@ main = shake shakeOptions $ do
 
     "*.pdf" *> \output -> do
         let input = replaceExtension output "tex"
-        need [input]
+        need [input, "Diagrams.hs"]
         system' pdflatex $ ["--enable-write18", input]
 --        system' pdflatex $ ["--enable-write18", input]

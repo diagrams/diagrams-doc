@@ -115,6 +115,57 @@
 \section{The birth of diagrams}
 \label{sec:birth}
 
+%% XXX draw a timeline.
 
+\begin{frame}
+  \begin{center}
+  April 2008.
+
+  Wanted: declarative, programmatic drawing.
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  Inkscape + scripts;  Gimp + scripts; Metapost; Asymptote; TikZ
+\end{frame}
+
+\begin{frame}
+  \begin{center}
+    ``How hard could it be?''
+
+    \onslide<2>(5 years later\dots)
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \begin{center}
+    After two weeks of feverish hacking, diagrams was born!
+
+    \onslide<2>{It sucked.}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  Used bounding boxes, had a terrible model for paths. Couldn't draw arrows.
+\end{frame}
+
+% Went off and thought for a year.
+
+%% XXX add path image to go on section title page.
+
+\section{Paths}
+\label{sec:paths}
+
+\begin{frame}
+  What is a \emph{path}?
+\end{frame}
+
+\begin{frame}[fragile]
+  \begin{diagram}[width=300]
+    import Diagrams
+
+    dia = showTrail (fromOffsets [1 ^& 1, 1 ^& (-0.5), 1 ^& 0.25, 0.25 ^& 1, 1 ^& 0])
+  \end{diagram}
+\end{frame}
 
 \end{document}
