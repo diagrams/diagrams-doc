@@ -149,3 +149,15 @@ its imports have changed.  In general, `diagrams-builder`:pkg: tries
 hard to avoid recompiling diagrams when recompilation is not
 necessary, in order to speed build times.
 
+Using ``diagrams-latex`` with Beamer
+====================================
+
+``diagrams-latex`` works well in conjunction with ``beamer`` for
+making slide decks with embedded images.  However:
+
+.. container:: warning
+
+  Every ``frame`` containing a diagram *must* be marked as ``[fragile]``!
+
+Non-``[fragile]`` frames with diagrams in them cause `\TeX`:math: to
+choke with horrendous, inscrutable errors.
