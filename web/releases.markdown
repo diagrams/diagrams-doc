@@ -145,14 +145,13 @@ diagrams 1.0: 25 November 2013
     - Depend on `intervals 0.3`, which allows diagrams to build on
       Windows, by evading a GHCi linker bug which affects the FFI use in
       previous versions of intervals ([diagrams-contrib#14](https://github.com/diagrams/diagrams-contrib/issues/14))
-
     - Use point envelope at the origin for text objects instead of an
       empty envelope
       ([#115](https://github.com/diagrams/diagrams-lib/issues/115),
       [#116](https://github.com/diagrams/diagrams-lib/issues/116)).
     - Adjusting the end of a trail now works correctly ([#95](https://github.com/diagrams/diagrams-lib/issues/95)).
     - Only look for miter join on corners in `Diagrams.TwoD.Offset` ([#118](https://github.com/diagrams/diagrams-lib/issues/118)).
-    - `wedge` from `Diagrams.TwoD.Arc` is now a Loop ([#99](https://github.com/diagrams/diagrams-lib/issues/99))
+    - `wedge` from `Diagrams.TwoD.Arc` is now a loop ([#99](https://github.com/diagrams/diagrams-lib/issues/99)).
 
 * **Performance improvements**
 
