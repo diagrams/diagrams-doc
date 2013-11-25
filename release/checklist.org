@@ -9,3 +9,6 @@
   + check all travis tests
   + run diagrams-backend-tests
   + copy diagrams-backend-tests output to website
++ update all CHANGES files
++ update release page on website
++ update LICENSE files
