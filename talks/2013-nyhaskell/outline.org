@@ -1,0 +1,113 @@
+* Part I
+** Intro
+   + thanks/welcome
+   + welcome questions: interactive!
+   + Just released 1.0!  A lot of cool new features.  A lot of hard
+     work by a lot of people (esp Jeff R., Ryan Yates, Daniel Bergey)
+   + If you want to follow along (live or at home watching the video),
+     cabal install diagrams.  Should Just Work.  If you have trouble,
+     see website, IRC channel.  (Can ask on IRC during talk?)
+   + let's get right to a demo!
+** Basic demo
+   + Diagrams is an embedded, domain-specific language.
+   + Basic shapes.
+     - Note executable, looping.
+   + Attributes (e.g. fc, lc, dashing)
+     - Note we can make executable that takes parameters! (Ryan)
+   + Transformations.
+     - Note output is automatically translated + scaled to fit.
+   + Combining
+     - atop (monoid)
+     - |||, ===, hcat, vcat
+   + Alignment
+** Worked examples
+   In each, highlight some aspect of why EDSL is excellent for this.
+   + Tournament
+     - DSL: easily parameterized on color, number of nodes,
+       connections, etc. etc.
+   + Train tracks
+     - make a circle, offset
+     - make some more interesting path?
+     - use metafont paths?
+* Part II
+
+  Lessons for EDSL design:
+
+  + Get attached to the *domain* rather than your approach.  Don't be
+    afraid to throw away code.  Be in it for the long haul.
+  + Look for equivalence classes; think about how to represent them.
+
+** History
+   + Monoids talk @ Haskell Symposium.  One drawback is that it makes
+     it look easy.  It's not!  Lots of blood, sweat, tears over
+     several years.
+   + This talk: give some history.  A more realistic view of EDSL
+     design.
+
+   + Born in March or April 2008.  Wanted to draw some diagrams.
+   + Talk about alternatives: Postscript, Metafont, Metapost,
+     Asymptote, TikZ.
+   + "How hard could it be?"
+   + Hacked something together in two weeks.  It was terrible.  But
+     kind of fun.
+     - Used bounding boxes
+     - Design boxed things in --- couldn't refer to named subparts /
+       draw arrows.
+   + We *finally* have arrows! (thanks to JR).
+   + After working on it a bit, basically took 1.5 years to rethink
+     design.  Probably went through 20 different designs.  Then
+     rewrote from scratch.
+   + But what we got wasn't perfect!  At least two major rewrites
+     since then.
+     - The way diagrams are stored, as trees.  Still working out
+       ramifications.  As of 1.0 release backends can see tree
+       structure.
+     - Paths.
+     - More being worked out/coming up.  More on this later.
+** Rewrite 2: paths.
+   + What is a path?
+   + Sequence of points?
+     + Problems:
+       + concatenation?  Discards information.  Strong indication this
+         is not quite the right
+       + can't accommodate curved paths.  Gets annoying --- where to
+         store extra info?  We really care about the paths *between*
+         vertices rather than the vertices themselves.
+     + Tangent: Affine spaces.
+       + Confusing points & vectors is a type error: (1) treating
+         offset between two points as a location, or adding two
+         points, is obviously wrong (2) translation applies to one but
+         not the other. (e.g. we want the law translate (p1 - p2) =
+         translate p1 - translate p2.  This was an actual bug in early
+         versions.
+     + What we really want are *equivalence classes* of such paths
+       under translation.
+     + Can represent by storing *offsets*.
+     + What about curved paths?
+     + Introduce a notion of *segment*.  Linear = offset vector.
+       cubic Bezier = offsets of control points + end point.
+     + Now curved + straight are natural; concatenation is just list
+       concat.
+     + Talk about mappend operation that does rotation.  Could make a
+       similar argument.  We can represent equiv. classes under
+       rotation as well... should we?
+   + Problem 2: want some notion of "closed".
+     + Solution? pair with boolean.
+       + Problems:
+         + What is mappend?
+	 + Closed has an implicit (straight) "closing segment".  (1)
+           what if we want curved?  Requires length-0 closing
+           seg... ugh. (2) Reversing generates a new segment every
+           time!
+     + Real solution:
+       - show Segment
+       - show Line and Loop types.
+
+     + Demo solution?
+** Rewrite 3?
+   + Freezing/units?
+** Stuff to work on.
+   + modifying subdiagrams with a dual-tree zipper
+   + automatic parallelization
+   + Haskell-native rasterizer
+   + 3D (Daniel Bergey)
