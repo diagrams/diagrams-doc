@@ -2596,6 +2596,17 @@ Anything which is an instance of `DomainBounds`, `Sectionable`, and
 `HasArcLength` can be "adjusted" using the `adjust` function, which
 provides a number of options for changing the length and extent.
 
+Computing tangents and normals
+++++++++++++++++++++++++++++++
+
+The `Diagrams.Tangent`:mod: module contains functions for computing
+tangent vectors and normal vectors to segments and trails, at an
+arbitrary parametmer (`tangentAtParam`, `normalAtParam`) or at the
+start or end (`tangentAtStart`, `tangentAtEnd`, `normalAtStart`,
+`normalAtEnd`). (The start/end functions are provided because such
+tangent and normal vectors may often be computed more quickly and
+precisely than using the general formula with a parameter of 0 or 1.)
+
 Splines
 ~~~~~~~
 
