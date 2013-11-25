@@ -4131,6 +4131,21 @@ so GHC does not know whether they should be `Int`\s or `Integer`\s or
 `Double`\s or... The solution is to annotate the `0` with the desired
 type.
 
+Creating 3D diagrams
+====================
+
+``diagrams``' support for three dimensions is growing: currently,
+modules `Diagrams.ThreeD.Align`:mod:, `Diagrams.ThreeD.Camera`:mod:,
+`Diagrams.ThreeD.Light`:mod:, `Diagrams.ThreeD.Shapes`:mod:,
+`Diagrams.ThreeD.Transform`:mod:, `Diagrams.ThreeD.Types`:mod:, and
+`Diagrams.ThreeD.Vector`:mod: are all included in `diagrams-lib`:pkg:
+(though they are not exported from `Diagrams.Prelude`:mod:).  This
+should still be considered a "feature preview"---in particular,
+appropriate 3D backends are still under construction (see
+`diagrams-povray`:repo: and `diagrams-opengl`_).  Look for fuller (and
+more fully documented) support for 3D diagrams in an upcoming release!
+
+.. _`diagrams-opengl`: https://github.com/bergey/diagrams-opengl
 
 Animation
 =========
