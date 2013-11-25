@@ -1345,6 +1345,13 @@ enclosing the stroked area (which *does* contribute to the envelope),
 you can use one of the functions described in the section `Offsets of
 segments, trails, and paths`_.
 
+Some backends may not fully support freezing line width.  In such
+cases, a backend may use the `avgScale` function to compute the
+*average* scale represented by a transformation, and use it to scale
+the line width uniformly.  This average scaling is well-behaved; for
+instance, it is the case that `avgScale (scale k) == k`, and `avgScale
+(t1 <> t2) == avgScale t1 * avgScale t2`.
+
 Other line parameters
 +++++++++++++++++++++
 
