@@ -12,3 +12,6 @@
 + update all CHANGES files
 + update release page on website
 + update LICENSE files
++ bump version numbers
++ upload packages
++ upload website
