@@ -1,6 +1,7 @@
 #!/bin/zsh
 
 # prerequisites:
+# - darcs, git, hub, hsenv installed.
 # - Release packages on Hackage.
 # - Have all the repos checked out at the release version.
 # - cd to the root, under which all the repo directories live.
