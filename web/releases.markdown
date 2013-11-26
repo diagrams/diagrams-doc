@@ -2,6 +2,14 @@
 title: Releases
 ---
 
+[diagrams-builder 0.4.2](http://hackage.haskell.org/package/diagrams-builder-0.4.2)
+----------------
+
+- Build expressions of type `Diagram b v` *or* `IO (Diagram b v)`.
+  This means that expressions interpreted by `diagrams-builder` (via
+  *e.g.* `diagrams-haddock` or `BlogLiterately-diagrams`) can do some
+  `IO` to build a diagram.
+
 diagrams 1.0: 25 November 2013
 ==============================
 
