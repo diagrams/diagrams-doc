@@ -78,7 +78,7 @@
 <a name="line-69"></a><span class='hs-comment'>-- &gt; import Data.Monoid.Inf</span>
 <a name="line-70"></a><span class='hs-comment'>-- &gt; import Diagrams.Coordinates</span>
 <a name="line-71"></a><span class='hs-comment'>-- &gt;</span>
-<a name="line-72"></a><span class='hs-comment'>-- &gt; segmentA = Cubic (12 &amp; 0) (8 &amp; 10) (OffsetClosed (20 &amp; 8))</span>
+<a name="line-72"></a><span class='hs-comment'>-- &gt; segmentA = Cubic (12 ^&amp; 0) (8 ^&amp; 10) (OffsetClosed (20 ^&amp; 8))</span>
 <a name="line-73"></a><span class='hs-comment'>-- &gt;</span>
 <a name="line-74"></a><span class='hs-comment'>-- &gt; curveA = lw 0.1 . stroke . fromSegments $ [segmentA]</span>
 <a name="line-75"></a><span class='hs-comment'>-- &gt;</span>
@@ -101,7 +101,7 @@
 <a name="line-92"></a><span class='hs-comment'>-- &gt;   | otherwise = go (radiusOfCurvature bez t)</span>
 <a name="line-93"></a><span class='hs-comment'>-- &gt;   where</span>
 <a name="line-94"></a><span class='hs-comment'>-- &gt;     v@(x,y) = unr2 $ firstDerivative b c d t</span>
-<a name="line-95"></a><span class='hs-comment'>-- &gt;     vp = (-y) &amp; x</span>
+<a name="line-95"></a><span class='hs-comment'>-- &gt;     vp = (-y) ^&amp; x</span>
 <a name="line-96"></a><span class='hs-comment'>-- &gt;</span>
 <a name="line-97"></a><span class='hs-comment'>-- &gt;     firstDerivative b c d t = let tt = t*t in (3*(3*tt-4*t+1))*^b + (3*(2-3*t)*t)*^c + (3*tt)*^d</span>
 <a name="line-98"></a><span class='hs-comment'>-- &gt;</span>
