@@ -26,6 +26,11 @@ Highlights of this release include:
   ([documentation](http://projects.haskell.org/diagrams/doc/manual.html#offsets-of-segments-trails-and-paths),
   [API](http://projects.haskell.org/diagrams/haddock/Diagrams-TwoD-Offset.html)).
 
+* A new API, based on Metafont, for constructing cubic splines with
+  control over things like tangents and "tension"
+  ([tutorial](http://projects.haskell.org/diagrams/doc/metafont.html),
+  [API](http://projects.haskell.org/diagrams/haddock/Diagrams-TwoD-Path-Metafont.html)).
+
 * Tangent and normal vectors of segments and trails ([API](http://projects.haskell.org/diagrams/haddock/Diagrams-Tangent.html)).
 
 * Alignment can now be done by trace in addition to envelope ([API](http://projects.haskell.org/diagrams/haddock/Diagrams-TwoD-Align.html)).
