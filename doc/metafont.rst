@@ -108,7 +108,7 @@ adjacent paths will curve around to remain smooth and continuous.
 
 ::
 
-   example = metafont $ z4 .- leaving unitY -. z1.--.z2.--.endpt z6
+   example = metafont $ z4.--.z1 .- leaving unitX -. z2.--.endpt z6
 
 .. class:: dia
 
@@ -215,6 +215,48 @@ If you need complete control over a particular segment, you can
 specify the control points directly using the function `controls`.
 This function takes two `P2` values, and goes between `.-` and `-.`,
 just like `leaving` or `tension`.
+
+Loops
+=====
+
+The Metafont algorithm can also build loops: wrapping a path
+description with the `cyclePath` function will connect the final point
+back to the first.
+
+.. class:: lhs
+
+::
+
+  example = metafont . cyclePath $ z4.--.z1.--.z2.--.endpt z6
+
+.. class:: dia
+
+::
+
+   import Diagrams.TwoD.Path.Metafont
+
+   --ptMark :: Diagram SVG R2
+   ptMark = circle 0.02 # lw 0
+
+   --illustrateSegment :: FixedSegment R2 -> Diagram SVG R2
+   illustrateSegment (FLinear from to) = position [
+     (from, ptMark # fc blue),
+     (to,   ptMark # fc blue)]
+   illustrateSegment (FCubic from c1 c2 to) = position [
+     (c1, ptMark # fc red),
+     (c2, ptMark # fc red)] <> illustrateSegment (FLinear from to)
+
+   --illustrateTrail :: Renderable (Path R2) b => Trail R2 -> Diagram b R2
+   illustrateTrail t = strokeTrail t <> (mconcat . map illustrateSegment . fixTrail . flip at origin $ t)
+
+   z1 = p2 (0,1)
+   z2 = p2 (1,1)
+   z3 = p2 (2,1)
+   z4 = p2 (0,0)
+   z5 = p2 (1,0)
+   z6 = p2 (2,0)
+
+   example = illustrateTrail . metafont . cyclePath $ z4.--.z1.--.z2.--.endpt z6
 
 String Parsing
 ================
