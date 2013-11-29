@@ -219,15 +219,17 @@ just like `leaving` or `tension`.
 Loops
 =====
 
-The Metafont algorithm can also build loops: wrapping a path
-description with the `cyclePath` function will connect the final point
-back to the first.
+The Metafont algorithm can also build loops: use `cyclePath` to
+terminate your path instead of `endPt p` to generate a loop with a
+final segment that cycles smoothly back to where the loop.  Of course,
+you can exercise control over the final segment in the same way as any
+other.
 
 .. class:: lhs
 
 ::
 
-  example = metafont . cyclePath $ z4.--.z1.--.z2.--.endpt z6
+  example = metafont $ z4.--.z1.--.z2.--.z6.- tension 1.5 -.cyclePath
 
 .. class:: dia
 
@@ -256,7 +258,7 @@ back to the first.
    z5 = p2 (1,0)
    z6 = p2 (2,0)
 
-   example = illustrateTrail . metafont . cyclePath $ z4.--.z1.--.z2.--.endpt z6
+   example = illustrateTrail . metafont $ z4.--.z1.--.z2.--.z6.- tension 1.5 -.cyclePath
 
 String Parsing
 ================
