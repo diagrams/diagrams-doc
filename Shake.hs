@@ -20,9 +20,14 @@ import           System.Process              (readProcess, system)
 
 
 obj, un, dist :: FilePath -> FilePath
-obj = (".make" </>)
+obj = (".make" <//>)
 un = dropDirectory1
-dist = ("dist" </>)
+dist = ("dist" <//>)
+
+-- Like </>, but retain the first argument when the second starts with
+-- a forward slash
+d <//> p@('/':_) = d ++ p
+d <//> p = d </> p
 
 data MkMode =
     Build    -- Build pre-Hakyll stuff only.  Works well to first run 'Shake preview',
