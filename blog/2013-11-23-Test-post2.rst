@@ -1,0 +1,7 @@
+This is a *test post*.  Have a square:
+
+.. class:: dia-lhs
+
+::
+
+> example = square 1 # fc yellow

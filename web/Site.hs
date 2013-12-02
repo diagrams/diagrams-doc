@@ -36,6 +36,9 @@ main = do
              | otherwise = "png"
 
   hakyll $ do
+    -- Build Tags
+    tags <- buildTags "blog/*" (fromCapture "tags/*.html")
+
     -- CSS, templates, JavaScript -----------------
     match "css/*" $ do
         route   idRoute
@@ -60,11 +63,48 @@ main = do
     -- Blog ---------------------------------------
     match "blog/*.html" $ do
         route idRoute
-        compile (getResourceBody >>= blogCompiler defaultContext >>= mainCompiler defaultContext)
+        compile (getResourceBody >>= blogCompiler (tagsCtx tags) >>= mainCompiler (tagsCtx tags))
 
     match "blog/images/*" $ do
         route idRoute
         compile copyFileCompiler
+
+    create ["posts.html"] $ do
+        route idRoute
+        compile $ do
+            posts <- loadAll "blog/*"
+            sorted <- recentFirst posts
+            itemTpl <- loadBody "templates/postitem.html"
+            list <- applyTemplateList itemTpl postCtx sorted
+            makeItem list
+                >>= loadAndApplyTemplate "templates/posts.html" allPostsCtx
+                >>= loadAndApplyTemplate "templates/default.html" allPostsCtx
+                >>= relativizeUrls
+
+    create ["blog.html"] $ do
+        route idRoute
+        compile $ do
+            posts <- loadAll "blog/*"
+            sorted <- take 3 <$> recentFirst posts
+            itemTpl <- loadBody "templates/postitem.html"
+            list <- applyTemplateList itemTpl postCtx sorted
+            makeItem list
+                >>= loadAndApplyTemplate "templates/blog.html" (blogCtx tags list)
+                >>= loadAndApplyTemplate "templates/default.html" (blogCtx tags list)
+                >>= relativizeUrls
+
+    -- Post tags
+    tagsRules tags $ \tag pattern -> do
+        let title = "Posts tagged '" ++ tag ++ "'"
+        route idRoute
+        compile $ do
+            list <- postList tags pattern recentFirst
+            makeItem ""
+                >>= loadAndApplyTemplate "templates/blog.html"
+                  ( constField "body" list `mappend` (blogCtx tags list))
+                >>= loadAndApplyTemplate "templates/default.html"
+                  ( constField "title" title `mappend` (blogCtx tags list))
+                >>= relativizeUrls
 
     -- API documentation --------------------------
 
@@ -192,3 +232,33 @@ buildGallery imgExt content lhss = do
     addDate lhs = do
       d <- fromMaybe "" <$> getMetadataField (itemIdentifier lhs) "date"
       return (d,lhs)
+
+--------------------------------------------------------------------------------
+postCtx :: Context String
+postCtx =
+    dateField "date" "%B %e, %Y" `mappend`
+    defaultContext
+
+allPostsCtx :: Context String
+allPostsCtx =
+    constField "title" "All posts" `mappend`
+    postCtx
+
+blogCtx :: Tags -> String -> Context String
+blogCtx tags list =
+    constField "posts" list `mappend`
+    constField "title" "Recent Posts" `mappend`
+    field "taglist" (\_ -> renderTagList tags) `mappend`
+    defaultContext
+
+tagsCtx :: Tags -> Context String
+tagsCtx tags =
+    tagsField "prettytags" tags `mappend`
+    postCtx
+
+postList :: Tags -> Pattern -> ([Item String] -> Compiler [Item String])
+         -> Compiler String
+postList tags pattern preprocess' = do
+    postItemTpl <- loadBody "templates/postitem.html"
+    posts <- preprocess' =<< loadAll pattern
+    applyTemplateList postItemTpl (tagsCtx tags) posts
