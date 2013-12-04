@@ -1,7 +1,0 @@
-This is a *test post*.  Have a triangle:
-
-.. class:: dia-lhs
-
-::
-
-> example = triangle 1 # fc red

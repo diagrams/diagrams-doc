@@ -86,7 +86,7 @@ main = do
         route idRoute
         compile $ do
             posts <- loadAll "blog/*"
-            sorted <- take 3 <$> recentFirst posts
+            sorted <- take 10 <$> recentFirst posts
             itemTpl <- loadBody "templates/postitem.html"
             list <- applyTemplateList itemTpl postCtx sorted
             makeItem list
@@ -192,9 +192,9 @@ mainCompiler ctx = loadAndApplyTemplate "templates/default.html" ctx
 
 blogCompiler :: Context String -> Item String -> Compiler (Item String)
 blogCompiler ctx = loadAndApplyTemplate "templates/post.html" ctx
-              >=> (externalizeUrls $ feedRoot feedConfiguration)
-              >=> saveSnapshot "content"
-              >=> (unExternalizeUrls $ feedRoot feedConfiguration)
+               >=> (externalizeUrls $ feedRoot feedConfiguration)
+               >=> saveSnapshot "content"
+               >=> (unExternalizeUrls $ feedRoot feedConfiguration)
 
 setThumbURL, setImgURL, setHtmlURL :: String -> Context String
 setThumbURL  imgExt = setURL "images" ("thumb." ++ imgExt)
