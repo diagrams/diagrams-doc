@@ -83,7 +83,7 @@ main = do
                 >>= relativizeUrls
 
     create ["blog.html"] $ do
-        route idRoute
+        route $ constRoute "blog/index.html"
         compile $ do
             posts <- loadAll "blog/*"
             sorted <- take 10 <$> recentFirst posts
