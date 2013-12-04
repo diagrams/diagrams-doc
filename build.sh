@@ -5,4 +5,5 @@
 
 cabal install shake hakyll parallel core/ lib/ cairo/ contrib/ SVGFonts/ builder/ docutils/ palette/ -j
 cd doc
-mk preview
+ghc --make Shake -threaded -rtsopts
+./Shake +RTS -N8 -RTS preview
