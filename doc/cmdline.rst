@@ -6,10 +6,6 @@
 .. default-role:: hs
 .. sectnum:: :depth: 2
 
-===============================
- Command-line diagram creation
-===============================
-
 .. contents:: :depth: 2
 
 Introduction

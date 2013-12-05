@@ -5,10 +5,6 @@
 
 .. default-role:: hs
 
-=========================================
-Defining Trails and Paths with Metafont
-=========================================
-
 `Diagrams.TwoD.Path.Metafont`:mod: has tools to define Diagrams Trails
 in the style of `Metafont`_.  This is a convenient way to draw smooth
 curves through a series of points, with finer control available on

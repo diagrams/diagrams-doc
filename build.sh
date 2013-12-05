@@ -3,6 +3,7 @@
 # any case, the idea is to run it from the parent directory of doc/ ,
 # in an hsenv environment or similar.
 
-cabal install shake hakyll parallel core/ lib/ cairo/ contrib/ SVGFonts/ builder/ docutils/ -j
+cabal install shake hakyll parallel core/ lib/ cairo/ contrib/ SVGFonts/ builder/ docutils/ palette/ -j
 cd doc
-mk preview
+ghc --make Shake -threaded -rtsopts
+./Shake +RTS -N8 -RTS preview
