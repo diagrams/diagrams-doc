@@ -176,6 +176,12 @@ produces
 > myCircle = circle 1 # fc purple
 > example = hcat (replicate 4 myCircle)
 
+When writing ``dia`` blocks you can add extra imports and ``LANGUAGE``
+pragmas as necessary.  However, you should not explicitly import
+`Diagrams.Prelude`:mod: or any diagrams backend.  These
+imports are added automatically when the documentation is built,
+depending on what backend is in use.
+
 Finally, using ``dia-lhs`` will produce a diagram *and* typeset the
 code below it.  For example, changing ``dia`` to ``dia-lhs`` above
 produces

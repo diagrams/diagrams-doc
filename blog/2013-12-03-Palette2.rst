@@ -44,10 +44,6 @@ Here is the RYB color wheel. Notice that colors we perceive as opposites, e.g. r
 
 ::
 
-> {-# LANGUAGE NoMonomorphismRestriction #-}
->
-> import Diagrams.Prelude
-> import Diagrams.Backend.SVG.CmdLine
 > import Data.Colour.SRGB (sRGB24read)
 > import Data.Colour.Palette.Harmony
 > import Data.Colour.Palette.ColorSet
@@ -74,10 +70,6 @@ Although we have described the base color as a pure hue, we are actually free to
 
 ::
 
-> {-# LANGUAGE NoMonomorphismRestriction #-}
->
-> import Diagrams.Prelude
-> import Diagrams.Backend.SVG.CmdLine
 > import Data.Colour.SRGB (sRGB24read)
 > import Data.Colour.Palette.Harmony
 > import Data.Colour.Palette.ColorSet
@@ -93,10 +85,6 @@ Let's pick a base color to demonstrate the classic color harmonies and how to us
 
 ::
 
-> {-# LANGUAGE NoMonomorphismRestriction #-}
->
-> import Diagrams.Prelude
-> import Diagrams.Backend.SVG.CmdLine
 > import Data.Colour.SRGB (sRGB24read)
 > import Data.Colour.Palette.Harmony
 > gr = (1 + sqrt 5) / 2
@@ -119,10 +107,6 @@ Since we have been talking about complimentary colors, the first scheme we descr
 
 ::
 
-> {-# LANGUAGE NoMonomorphismRestriction #-}
->
-> import Diagrams.Prelude
-> import Diagrams.Backend.SVG.CmdLine
 > import Data.Colour.SRGB (sRGB24read)
 > import Data.Colour.Palette.Harmony
 > wheel cs = wheel' # rotateBy r
@@ -151,10 +135,6 @@ A *Monochromatic* color harmony consists of the base color plus various tints, s
 
 ::
 
-> {-# LANGUAGE NoMonomorphismRestriction #-}
->
-> import Diagrams.Prelude
-> import Diagrams.Backend.SVG.CmdLine
 > import Data.Colour.SRGB (sRGB24read)
 > import Data.Colour.Palette.Harmony
 > wheel cs = wheel' # rotateBy r
@@ -179,10 +159,6 @@ The following scheme does not have a name as far as I know. We take the base col
 
 ::
 
-> {-# LANGUAGE NoMonomorphismRestriction #-}
->
-> import Diagrams.Prelude
-> import Diagrams.Backend.SVG.CmdLine
 > import Data.Colour.SRGB (sRGB24read)
 > import Data.Colour.Palette.Harmony
 > wheel cs = wheel' # rotateBy r
@@ -222,10 +198,6 @@ The *Analogic* color scheme is the base color plus the two colors 30 degrees apa
 
 ::
 
-> {-# LANGUAGE NoMonomorphismRestriction #-}
->
-> import Diagrams.Prelude
-> import Diagrams.Backend.SVG.CmdLine
 > import Data.Colour.SRGB (sRGB24read)
 > import Data.Colour.Palette.Harmony
 > pie (c:cs) = ring <> center
@@ -253,10 +225,6 @@ The lase two schemes provided by `Harmony` are *Triad*, with colors 120 degrees 
 
 ::
 
-> {-# LANGUAGE NoMonomorphismRestriction #-}
->
-> import Diagrams.Prelude
-> import Diagrams.Backend.SVG.CmdLine
 > import Data.Colour.SRGB (sRGB24read)
 > import Data.Colour.Palette.Harmony
 > pie (c:cs) = ring <> center
