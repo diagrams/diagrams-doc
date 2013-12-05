@@ -140,7 +140,7 @@ with the following contents:
 > import Diagrams.Prelude
 > import Diagrams.Backend.SVG.CmdLine
 >
-> main = mainWith (circle 1)
+> main = mainWith (circle 1 :: Diagram B R2)
 
 Turning off the Dreaded Monomorphism Restriction is quite important:
 if you don't, you will almost certainly run into it (and be very
@@ -198,6 +198,11 @@ Attributes
 Suppose we want our circle to be blue, with a thick dashed purple
 outline (there's no accounting for taste!).  We can apply attributes to
 the `circle` diagram with the `(#)` operator:
+
+.. container:: warning
+
+   You may need to include a type signature to build the examples that
+   follow.  We omit `example :: Diagram B R2` in the examples below.
 
 .. class:: dia-lhs
 
