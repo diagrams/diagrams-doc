@@ -47,8 +47,6 @@ We can use `bar` to view the color sets in `Palette`. Let's make a few color bar
 
 > {-# LANGUAGE NoMonomorphismRestriction #-}
 >
-> import Diagrams.Prelude
-> import Diagrams.Backend.SVG.CmdLine
 > import Data.Colour.SRGB (sRGB24read)
 > import Data.Colour.Palette.Harmony
 > import Data.Colour.Palette.ColorSet
@@ -76,8 +74,6 @@ The function we use to access schemes from `Data.Colour.Palette.Brewerset` is `b
 
 > {-# LANGUAGE NoMonomorphismRestriction #-}
 >
-> import Diagrams.Prelude
-> import Diagrams.Backend.SVG.CmdLine
 > import Data.Colour.SRGB (sRGB24read)
 > import Data.Colour.Palette.Harmony
 > import Data.Colour.Palette.ColorSet
@@ -115,8 +111,6 @@ Some of the color sets provided in `ColorSet` occur with 2 or 4 brightness level
 
 > {-# LANGUAGE NoMonomorphismRestriction #-}
 >
-> import Diagrams.Prelude
-> import Diagrams.Backend.SVG.CmdLine
 > import Data.Colour.SRGB (sRGB24read)
 > import Data.Colour.Palette.Harmony
 > import Data.Colour.Palette.ColorSet
@@ -153,8 +147,6 @@ The are over 300 colors that W3C recommends that every browser support. These ar
 
 > {-# LANGUAGE NoMonomorphismRestriction #-}
 >
-> import Diagrams.Prelude
-> import Diagrams.Backend.SVG.CmdLine
 > import Data.Colour.SRGB (sRGB24read)
 > import Data.Colour.Palette.Harmony
 > import Data.Colour.Palette.ColorSet
@@ -189,8 +181,6 @@ Or we can add some gray to the brewer set `GnBu` from above.
 
 > {-# LANGUAGE NoMonomorphismRestriction #-}
 >
-> import Diagrams.Prelude
-> import Diagrams.Backend.SVG.CmdLine
 > import Data.Colour.SRGB (sRGB24read)
 > import Data.Colour.Palette.Harmony
 > import Data.Colour.Palette.ColorSet
