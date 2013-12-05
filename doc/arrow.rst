@@ -5,10 +5,6 @@
 
 .. default-role:: hs
 
-=============================
-Arrow Tutorial
-=============================
-
 .. contents::
 
 Introduction

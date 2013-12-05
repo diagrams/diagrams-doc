@@ -6,10 +6,6 @@
 .. default-role:: hs
 .. sectnum:: :depth: 2
 
-======================
- Diagrams User Manual
-======================
-
 .. contents:: :depth: 2
 
 Preliminaries
@@ -1345,6 +1341,13 @@ enclosing the stroked area (which *does* contribute to the envelope),
 you can use one of the functions described in the section `Offsets of
 segments, trails, and paths`_.
 
+Some backends may not fully support freezing line width.  In such
+cases, a backend may use the `avgScale` function to compute the
+*average* scale represented by a transformation, and use it to scale
+the line width uniformly.  This average scaling is well-behaved; for
+instance, it is the case that `avgScale (scale k) == k`, and `avgScale
+(t1 <> t2) == avgScale t1 * avgScale t2`.
+
 Other line parameters
 +++++++++++++++++++++
 
@@ -2596,6 +2599,17 @@ Anything which is an instance of `DomainBounds`, `Sectionable`, and
 `HasArcLength` can be "adjusted" using the `adjust` function, which
 provides a number of options for changing the length and extent.
 
+Computing tangents and normals
+++++++++++++++++++++++++++++++
+
+The `Diagrams.Tangent`:mod: module contains functions for computing
+tangent vectors and normal vectors to segments and trails, at an
+arbitrary parametmer (`tangentAtParam`, `normalAtParam`) or at the
+start or end (`tangentAtStart`, `tangentAtEnd`, `normalAtStart`,
+`normalAtEnd`). (The start/end functions are provided because such
+tangent and normal vectors may often be computed more quickly and
+precisely than using the general formula with a parameter of 0 or 1.)
+
 Splines
 ~~~~~~~
 
@@ -2938,9 +2952,13 @@ supports an approximation to `alignedText`):
 > example = t1 =/= t2 =/= t3
 
 The most important thing to keep in mind when working with text
-objects is that they *take up no space*; that is, the envelope for a
-text object is constantly zero.  If we omitted the rectangle from the
-above example, there would be no output.
+objects is that they *take up no space*: they have a *point envelope*
+at the origin, *i.e.* for the purposes of things like `beside`, they
+have a width and height of zero. (Note, however, this is not the same
+as having an *empty* envelope.  In particular, they still behave in an
+intuitive manner when included as arguments to things like `hcat`.)
+If we omitted the rectangle from the above example, there would be no
+output.
 
 .. container:: warning
 
@@ -4109,6 +4127,21 @@ so GHC does not know whether they should be `Int`\s or `Integer`\s or
 `Double`\s or... The solution is to annotate the `0` with the desired
 type.
 
+Creating 3D diagrams
+====================
+
+``diagrams``' support for three dimensions is growing: currently,
+modules `Diagrams.ThreeD.Align`:mod:, `Diagrams.ThreeD.Camera`:mod:,
+`Diagrams.ThreeD.Light`:mod:, `Diagrams.ThreeD.Shapes`:mod:,
+`Diagrams.ThreeD.Transform`:mod:, `Diagrams.ThreeD.Types`:mod:, and
+`Diagrams.ThreeD.Vector`:mod: are all included in `diagrams-lib`:pkg:
+(though they are not exported from `Diagrams.Prelude`:mod:).  This
+should still be considered a "feature preview"---in particular,
+appropriate 3D backends are still under construction (see
+`diagrams-povray`:repo: and `diagrams-opengl`_).  Look for fuller (and
+more fully documented) support for 3D diagrams in an upcoming release!
+
+.. _`diagrams-opengl`: https://github.com/bergey/diagrams-opengl
 
 Animation
 =========

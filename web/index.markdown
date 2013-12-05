@@ -33,6 +33,12 @@ with questions or post them to the
 News
 ----
 
+* Brent gave a talk on diagrams at the
+  [New York Haskell users' group](http://www.meetup.com/NY-Haskell/).
+  Video should be available shortly. (25 November 2013)
+
+* Diagrams 1.0 [released](/releases.html)! (25 November 2013)
+
 * Diagrams 0.7 [released](/releases.html)! (9 August 2013)
 
 * Diagrams 0.6 released! (11 December 2012)

@@ -14,6 +14,7 @@ TAGS
 _cache
 _site
 web/doc
+web/blog
 web/gallery/images
 .make
 .shake.database
@@ -23,3 +24,12 @@ Shake
 HCAR/*.pdf
 doc/icons/*.png
 HCAR/html
+*.nav
+*.out
+*.toc
+*.vrb
+*.snm
+talks/2013-nyhaskell/13-11-25-nyhaskell-diagrams.pdf
+talks/2013-nyhaskell/13-11-25-nyhaskell-diagrams.tex
+.diagrams_cache
+talks/*/diagrams

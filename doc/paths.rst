@@ -5,10 +5,6 @@
 
 .. default-role:: hs
 
-================
-Trails and paths
-================
-
 .. contents::
 
 Introduction

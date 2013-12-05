@@ -42,7 +42,7 @@
 <a name="line-33"></a><span class='hs-comment'>-- &gt;</span>
 <a name="line-34"></a><span class='hs-comment'>-- &gt; textSVGExample = stroke $ textSVG "Hello World" 1</span>
 <a name="line-35"></a><span class='hs-comment'>--</span>
-<a name="line-36"></a><span class='hs-comment'>-- &lt;&lt;diagrams/textSVGExample.svg#diagram=textSVGExample&amp;width=300&gt;&gt;</span>
+<a name="line-36"></a><span class='hs-comment'>-- &lt;&lt;diagrams/src_Graphics_SVGFonts_ReadFont_textSVGExample.svg#diagram=textSVGExample&amp;width=300&gt;&gt;</span>
 <a name="line-37"></a><span class='hs-definition'>textSVG</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>String</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Double</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Path</span> <span class='hs-conid'>R2</span>
 <a name="line-38"></a><span class='hs-definition'>textSVG</span> <span class='hs-varid'>t</span> <span class='hs-varid'>h</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>textSVG'</span> <span class='hs-varid'>with</span> <span class='hs-layout'>{</span> <span class='hs-varid'>txt</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>t</span><span class='hs-layout'>,</span> <span class='hs-varid'>textHeight</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>h</span> <span class='hs-layout'>}</span>
 <a name="line-39"></a>
@@ -66,7 +66,7 @@
 <a name="line-57"></a><span class='hs-comment'>-- &gt;</span>
 <a name="line-58"></a><span class='hs-comment'>-- &gt; textPic0 = (text' "Hello World") # showOrigin</span>
 <a name="line-59"></a><span class='hs-comment'>--</span>
-<a name="line-60"></a><span class='hs-comment'>-- &lt;&lt;diagrams/textPic0.svg#diagram=textPic0&amp;width=300&gt;&gt;</span>
+<a name="line-60"></a><span class='hs-comment'>-- &lt;&lt;diagrams/src_Graphics_SVGFonts_ReadFont_textPic0.svg#diagram=textPic0&amp;width=300&gt;&gt;</span>
 <a name="line-61"></a><span class='hs-definition'>textSVG'</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>TextOpts</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Path</span> <span class='hs-conid'>R2</span>
 <a name="line-62"></a><span class='hs-definition'>textSVG'</span> <span class='hs-varid'>to</span> <span class='hs-keyglyph'>=</span>
 <a name="line-63"></a>  <span class='hs-keyword'>case</span> <span class='hs-varid'>mode</span> <span class='hs-varid'>to</span> <span class='hs-keyword'>of</span>
@@ -107,7 +107,7 @@
 <a name="line-98"></a><span class='hs-comment'>-- &gt;</span>
 <a name="line-99"></a><span class='hs-comment'>-- &gt; textPic1 = text'' "Hello World"</span>
 <a name="line-100"></a><span class='hs-comment'>--</span>
-<a name="line-101"></a><span class='hs-comment'>-- &lt;&lt;diagrams/textPic1.svg#diagram=textPic1&amp;width=300&gt;&gt;</span>
+<a name="line-101"></a><span class='hs-comment'>-- &lt;&lt;diagrams/src_Graphics_SVGFonts_ReadFont_textPic1.svg#diagram=textPic1&amp;width=300&gt;&gt;</span>
 <a name="line-102"></a><span class='hs-definition'>textSVG_</span> <span class='hs-keyglyph'>::</span> <span class='hs-keyword'>forall</span> <span class='hs-varid'>b</span> <span class='hs-varop'>.</span> <span class='hs-conid'>Renderable</span> <span class='hs-layout'>(</span><span class='hs-conid'>Path</span> <span class='hs-conid'>R2</span><span class='hs-layout'>)</span> <span class='hs-varid'>b</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>TextOpts</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>QDiagram</span> <span class='hs-varid'>b</span> <span class='hs-conid'>R2</span> <span class='hs-conid'>Any</span>
 <a name="line-103"></a><span class='hs-definition'>textSVG_</span> <span class='hs-varid'>to</span> <span class='hs-keyglyph'>=</span>
 <a name="line-104"></a>  <span class='hs-keyword'>case</span> <span class='hs-varid'>mode</span> <span class='hs-varid'>to</span> <span class='hs-keyword'>of</span>
@@ -383,18 +383,18 @@
 <a name="line-374"></a><a name="Mode"></a><span class='hs-keyword'>data</span> <span class='hs-conid'>Mode</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>INSIDE_H</span>  <span class='hs-comment'>-- ^ The string fills the complete height, width adjusted. Used in text editors.</span>
 <a name="line-375"></a>                      <span class='hs-comment'>-- The result can be smaller or bigger than the bounding box:</span>
 <a name="line-376"></a>                      <span class='hs-comment'>--</span>
-<a name="line-377"></a>                      <span class='hs-comment'>--   &lt;&lt;diagrams/textH.svg#diagram=textH&amp;width=400&gt;&gt;</span>
+<a name="line-377"></a>                      <span class='hs-comment'>--   &lt;&lt;diagrams/src_Graphics_SVGFonts_ReadFont_textH.svg#diagram=textH&amp;width=400&gt;&gt;</span>
 <a name="line-378"></a>          <span class='hs-keyglyph'>|</span> <span class='hs-conid'>INSIDE_W</span>  <span class='hs-comment'>-- ^ The string fills the complete width, height adjusted.</span>
 <a name="line-379"></a>                      <span class='hs-comment'>-- May be useful for single words in a diagram, or for headlines.</span>
 <a name="line-380"></a>                      <span class='hs-comment'>-- The result can be smaller or bigger than the bounding box:</span>
 <a name="line-381"></a>                      <span class='hs-comment'>--</span>
-<a name="line-382"></a>                      <span class='hs-comment'>-- &lt;&lt;diagrams/textW.svg#diagram=textW&amp;width=400&gt;&gt;</span>
+<a name="line-382"></a>                      <span class='hs-comment'>-- &lt;&lt;diagrams/src_Graphics_SVGFonts_ReadFont_textW.svg#diagram=textW&amp;width=400&gt;&gt;</span>
 <a name="line-383"></a>          <span class='hs-keyglyph'>|</span> <span class='hs-conid'>INSIDE_WH</span> <span class='hs-comment'>-- ^ The string is stretched inside Width and Height boundaries.</span>
 <a name="line-384"></a>                      <span class='hs-comment'>-- The horizontal advances are increased if the string is shorter than there is space.</span>
 <a name="line-385"></a>                      <span class='hs-comment'>-- The horizontal advances are decreased if the string is longer than there is space.</span>
 <a name="line-386"></a>                      <span class='hs-comment'>-- This feature is experimental and might change in the future.</span>
 <a name="line-387"></a>                      <span class='hs-comment'>--</span>
-<a name="line-388"></a>                      <span class='hs-comment'>-- &lt;&lt;diagrams/textWH.svg#diagram=textWH&amp;width=400&gt;&gt;</span>
+<a name="line-388"></a>                      <span class='hs-comment'>-- &lt;&lt;diagrams/src_Graphics_SVGFonts_ReadFont_textWH.svg#diagram=textWH&amp;width=400&gt;&gt;</span>
 <a name="line-389"></a>           <span class='hs-keyword'>deriving</span> <span class='hs-conid'>Show</span>
 <a name="line-390"></a>
 <a name="line-391"></a><a name="mWH"></a><span class='hs-definition'>mWH</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Mode</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Bool</span>
@@ -419,11 +419,11 @@
 <a name="line-410"></a><a name="Spacing"></a><span class='hs-comment'>--</span>
 <a name="line-411"></a><a name="Spacing"></a><span class='hs-keyword'>data</span> <span class='hs-conid'>Spacing</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>HADV</span> <span class='hs-comment'>-- ^ Every glyph has a unique horiz. advance</span>
 <a name="line-412"></a>                    <span class='hs-comment'>--</span>
-<a name="line-413"></a>                    <span class='hs-comment'>--  &lt;&lt;diagrams/textHADV.svg#diagram=textHADV&amp;width=400&gt;&gt;</span>
+<a name="line-413"></a>                    <span class='hs-comment'>--  &lt;&lt;diagrams/src_Graphics_SVGFonts_ReadFont_textHADV.svg#diagram=textHADV&amp;width=400&gt;&gt;</span>
 <a name="line-414"></a>             <span class='hs-keyglyph'>|</span> <span class='hs-conid'>KERN</span> <span class='hs-comment'>-- ^ Recommended, same as HADV but sometimes overridden by kerning:</span>
 <a name="line-415"></a>                    <span class='hs-comment'>-- As You can see there is less space between \"A\" and \"V\":</span>
 <a name="line-416"></a>                    <span class='hs-comment'>--</span>
-<a name="line-417"></a>                    <span class='hs-comment'>--   &lt;&lt;diagrams/textKern.svg#diagram=textKern&amp;width=400&gt;&gt;</span>
+<a name="line-417"></a>                    <span class='hs-comment'>--   &lt;&lt;diagrams/src_Graphics_SVGFonts_ReadFont_textKern.svg#diagram=textKern&amp;width=400&gt;&gt;</span>
 <a name="line-418"></a>             <span class='hs-keyword'>deriving</span> <span class='hs-conid'>Show</span>
 <a name="line-419"></a>
 <a name="line-420"></a><a name="isKern"></a><span class='hs-definition'>isKern</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Spacing</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Bool</span>

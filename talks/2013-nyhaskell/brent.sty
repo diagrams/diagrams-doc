@@ -1,0 +1,214 @@
+%% packages --------------------------------------------------
+
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{mathpartir}
+\usepackage{prettyref}
+
+%% prettyref stuff -------------------------------------------
+
+\newrefformat{fig}{Figure~\ref{#1}}
+\newrefformat{sec}{section~\ref{#1}}
+\newrefformat{eq}{equation~\eqref{#1}}
+\newrefformat{prob}{Problem~\ref{#1}}
+\newrefformat{tab}{Table~\ref{#1}}
+\newrefformat{thm}{Theorem~\ref{#1}}
+\newrefformat{lem}{Lemma~\ref{#1}}
+\newrefformat{prop}{Proposition~\ref{#1}}
+\newrefformat{defn}{Definition~\ref{#1}}
+\newrefformat{cor}{Corollary~\ref{#1}}
+\newcommand{\pref}[1]{\prettyref{#1}}
+
+% \Pref is just like \pref but it uppercases the first letter; for use
+% at the beginning of a sentence.
+\newcommand{\Pref}[1]{%
+  \expandafter\ifx\csname r@#1\endcsname\relax {\scriptsize[ref]}
+    \else
+    \edef\reftext{\prettyref{#1}}\expandafter\MakeUppercase\reftext
+    \fi 
+}
+
+%% PL stuff --------------------------------------------------
+
+\newcommand{\Fw}{\ensuremath{F_\omega}}
+
+\newcommand{\emptyctx}{\ensuremath{\varnothing}}
+
+\newcommand{\kstar}{\ensuremath{\mathnormal{*}}}
+
+\newcommand{\uabs}[2]{\ensuremath{\lambda #1. \, #2}}
+\newcommand{\abs}[3]{\ensuremath{\lambda #1 \colon \! #2 . \, #3}}
+\newcommand{\app}[2]{\ensuremath{#1 \; #2}}
+\newcommand{\abst}[3]{\ensuremath{\Pi #1 \colon \! #2 . \, #3}}
+
+\newcommand{\rulen}[1]{\textsc{#1}}
+\newcommand{\ir}[3]{\inferrule{#2}{#3}\quad(\rulen{#1})}
+\newcommand{\reduce}{\longrightarrow}
+
+\newcommand{\sjf}[3]{\ensuremath{#1 \vdash #2 \leq #3}}
+\newcommand{\sj}[2]{\sjf{\Gamma}{#1}{#2}}
+\newcommand{\ta}[3]{\forall #1 \leq #2 . #3}
+\newcommand{\sja}[5]{\sjf{#1}{(\ta{#2}{#3}{#4})}{#5}}
+
+\newcommand{\gjf}[4]{\ensuremath{#2 \vdash #3 #1 #4}}
+
+\newcommand{\tjf}{\gjf{\in}}
+\newcommand{\tj}{\tjf \G}
+
+\newcommand{\rjf}{\gjf{\reduce}}
+\newcommand{\rj}{\rjf \G}
+
+\newcommand{\kjf}{\gjf{:}}
+\newcommand{\kj}{\kjf \G}
+
+\newcommand{\ih}{induction hypothesis}
+
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+
+\theoremstyle{remark}
+\newtheorem*{rem}{Remark}
+\newtheorem*{ex}{Example}
+\newtheorem*{nota}{Notation}
+
+\newcommand{\G}{\Gamma}
+\newcommand{\D}{\Delta}
+
+\newcommand{\bbrack}[1]{\left\llbracket #1 \right\rrbracket}
+
+\newcommand{\cons}[1]{\textsf{#1}}
+
+\newcommand{\inl}{\cons{inl}}
+\newcommand{\inr}{\cons{inr}}
+
+\DeclareMathOperator{\fv}{fv}
+
+%% math stuff ------------------------------------------------
+
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\C}{\ensuremath{\mathbb{C}}}
+\newcommand{\B}{\ensuremath{\mathbb{B}}}
+
+\newcommand{\Sym}{\ensuremath{\mathcal{S}}}
+
+\newcommand{\comp}{\mathbin{\circ}}
+\newcommand{\union}{\cup}
+\newcommand{\Union}{\bigcup}
+\newcommand{\intersect}{\cap}
+\newcommand{\Intersect}{\bigcap}
+
+\newcommand{\br}[1]{\overline{#1}}
+
+\newcommand{\pset}[1]{\mathcal{P}(#1)}
+\newcommand{\cont}{\ensuremath{2^{\aleph_0}}}
+
+\newcommand{\ang}[1]{\left\langle #1 \right\rangle}
+
+\newcommand{\restr}{\upharpoonright}
+
+\newcommand{\inj}{\xrightarrow{\text{1-1}}}
+\newcommand{\sur}{\xrightarrow[\text{onto}]{}}
+\newcommand{\bij}{\leftrightarrow}
+
+\newcommand{\PP}{\mathbb{P}}
+
+\newcommand{\compat}{\mathrel{\top}}
+\newcommand{\incompat}{\mathrel{\bot}}
+\newcommand{\forces}{\Vdash}
+
+\newcommand{\ramsey}[4]{#1 \to (#2)^{#3}_{#4}}
+
+\usepackage{array}
+  \newcolumntype{C}{>{$}c<{$}} % columns in math mode
+  \newcolumntype{L}{>{$}l<{$}}
+  \newcolumntype{R}{>{$}r<{$}}
+
+%% poisson distribution
+\newcommand{\pois}[2]{\frac{#2^{#1} e^{-#2}}{#1!}}
+\newcommand{\poisl}[1]{\pois{#1}{\lambda}}
+
+%% partial derivative
+\newcommand{\dd}[2]{\frac{\partial #1}{\partial #2}}
+
+%% proofs
+
+%%% structured proofs
+\newenvironment{sproof}{%
+    \begin{tabbing}
+    \phantom{$\equiv$} \= \qquad\qquad\qquad\qquad\qquad \= \kill
+}{
+    \end{tabbing}
+}
+\newcommand{\stmt}[1]{\> \ensuremath{#1} \\}
+\newcommand{\lstmt}[1]{\> \ensuremath{#1} }
+\newcommand{\reason}[2]{\ensuremath{#1} \>\> \{ \quad #2 \quad \} \\}
+
+\newcommand{\subpart}[1]{\llcorner #1 \lrcorner}
+\newcommand{\suppart}[1]{\ulcorner #1 \urcorner}
+
+%%% SDG qed symbol
+\font\tinyfont=cmss10 scaled 375
+\let\oldqedsymbol\qedsymbol
+\renewcommand{\qedsymbol}{\rlap\oldqedsymbol{}\raise
+  .5ex\hbox{\tinyfont \hskip .3em S\kern-.15em D\kern -.15em G}}
+
+%% other
+
+\newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
+\newcommand{\ceil}[1]{\left\lceil #1 \right\rceil}
+
+\newcommand{\xor}{\oplus}
+
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\rng}{rng}
+\DeclareMathOperator{\fld}{fld}
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\card}{card}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\Init}{Init}
+\DeclareMathOperator{\cf}{cf}
+\DeclareMathOperator{\intr}{int}
+\DeclareMathOperator{\val}{val}
+\DeclareMathOperator{\im}{im}
+
+\newcommand{\stirls}[2]{\genfrac{\{}{\}}{0pt}{}{#1}{#2}}
+\newcommand{\stirlc}[2]{\genfrac{[}{]}{0pt}{}{#1}{#2}}
+\newcommand{\euler}[2]{\genfrac{\langle}{\rangle}{0pt}{}{#1}{#2}}
+
+%% category theory -------------------------------------------
+
+\newcommand{\Set}{\ensuremath{\mathbf{Set}}}
+
+%% miscellaneous ---------------------------------------------
+
+\newcommand{\name}[2]{\noindent Brent Yorgey \\ #1 \\ #2 \bigskip}
+\newcommand{\namet}[1]{\name{\today}{#1}}
+
+\newcommand{\pennaddr}{University of Pennsylvania \\ Department of
+  Computer and Information Science \\ Levine Hall \\ 3330 Walnut
+  St. \\ Philadelphia, PA 19104-6309}
+
+%% declarative formatting ------------------------------------
+
+\newcommand{\term}[1]{\emph{#1}}
+\newcommand{\latin}[1]{\emph{#1}}
+\newcommand{\foreign}[1]{\emph{#1}}
+
+\newcommand{\ie}{\latin{i.e.}}
+\newcommand{\eg}{\latin{e.g.}}
+\newcommand{\etal}{\latin{et al.}}
+
+%% Haskell ---------------------------------------------------
+
+\newcommand{\pkg}[1]{\texttt{#1}}
+\newcommand{\module}[1]{\texttt{#1}}

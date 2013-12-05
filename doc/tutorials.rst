@@ -5,10 +5,6 @@
 
 .. default-role:: hs
 
-===============================
-How to write diagrams tutorials
-===============================
-
 Know how to explain a certain technique?  Have a cool diagram which
 makes for a good, illustrative example but is too long to go in the
 gallery?  Write a tutorial!
@@ -26,13 +22,15 @@ tutorial.
 The most important advice is to take a look at the source for the user
 manual and other tutorials for examples, and copy and paste one to get
 started (for example, there is some routine boilerplate that must go
-at the top).  Tutorials go in the `diagrams-doc`:repo: repository, in the
-``doc`` subdirectory.  For example, the user manual is ``doc/manual.rst``;
-the source for this tutorial is ``doc/tutorials.rst``.  Copy one
-of those into ``doc/your-tutorial-name.rst``, and off you go! To get your
-tutorial linked on the main `diagrams` web page edit the file
-``web/documentation.markdown`` by adding a line to the *Tutorials* section
-that looks like
+at the top).  Tutorials go in the `diagrams-doc`:repo: repository, in
+the ``doc`` subdirectory.  For example, the user manual is
+``doc/manual.rst``; the source for this tutorial is
+``doc/tutorials.rst``.  Copy one of those into
+``doc/your-tutorial-name.rst``, and off you go! You also need a file
+called ``doc/your-tutorial-name.html.metadata``, containing the line
+``title: Your Title Here``.  To get your tutorial linked on the main
+`diagrams` web page edit the file ``web/documentation.markdown`` by
+adding a line to the *Tutorials* section that looks like
 
 ``* [Name of your tutorial] (/doc/your-tutorial-name.html) --- description``
 
@@ -52,8 +50,9 @@ reference`_ for more details.
 * Headings levels are indicated by underlining heading titles, with a
   different character for each level.  From top (biggest) to bottom
   (smallest), the heading characters are ``=``, ``-``, ``~``, and
-  ``+``.  The title of the tutorial should be enclosed with ``=`` on
-  top and bottom.
+  ``+``.  The overall title of the tutorial should not be included in
+  the document itself, but in the associated ``.html.metadata`` file
+  (for rendering by hakyll).
 
 .. _`quick reference`: http://docutils.sourceforge.net/docs/user/rst/quickref.html
 

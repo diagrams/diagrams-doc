@@ -2,6 +2,234 @@
 title: Releases
 ---
 
+[diagrams-builder 0.4.2](http://hackage.haskell.org/package/diagrams-builder-0.4.2)
+----------------
+
+- Build expressions of type `Diagram b v` *or* `IO (Diagram b v)`.
+  This means that expressions interpreted by `diagrams-builder` (via
+  *e.g.* `diagrams-haddock` or `BlogLiterately-diagrams`) can do some
+  `IO` to build a diagram.
+
+diagrams 1.0: 25 November 2013
+==============================
+
+[dual-tree 0.2](http://hackage.haskell.org/package/dual-tree-0.2)
+----------------
+
+- Expose internal d-annotations via `foldDUAL`.
+
+[diagrams-core 1.0](http://hackage.haskell.org/package/diagrams-core-1.0)
+----------------
+
+* **New features**
+
+    * Delayed subtrees: instead of a primitive, one can now also have
+      a delayed subtree at a leaf, containing a continuation which
+      generates a `QDiagram` when given the accumulated d-annotation
+      at that point in the tree.  Useful for things which need to know
+      the final transformation applied to them before deciding what
+      diagram to generate.  The prototypical use case is arrows: see
+      https://github.com/diagrams/diagrams-lib/issues/112 .  However,
+      this may be useful for other things as well: for example,
+      diagrams which scale normally until hitting some maximum or
+      minimum size, at which point they refuse to scale any further
+      (or more generally diagrams which scale as some non-linear
+      function of the transformation applied to them).
+
+        The only downside is that the u-annotation must be fixed ahead
+        of time---doing otherwise requires a more general solution for
+        constraint solving.
+
+    * New function `lookupName` for doing a simple lookup of a named
+      subdiagram
+
+    * New module `Diagrams.Core.Compile`, containing a framework for
+      compiling `QDiagrams` into a simpler tree type `RTree`, which
+      may be used by backends for rendering.
+
+* **New instances**
+
+    * `Qualifiable` instances for `(,)`, `(,,)`, `[]`, `Set`, `Map k`,
+      and `(->) e`.
+
+    * `(->) e` instance for `Juxtaposable` (thanks to Carlos Scheidegger)
+
+* **API changes**
+
+    * Export `pointDiagram` function, which creates an otherwise empty
+      diagram with a point (not empty) envelope
+
+    * A bunch of stuff now uses machinery from the `lens` library.
+	    * `envelope`, `trace`, and `subMap` are now `Lens'`es
+        * `Wrapped` instances for `Trace`, `TransInv`, `QDiagram`,
+          `SubMap`, `Envelope`, `Style`, `Query`, and `Name` (replaces
+          `Newtype` instances)
+	    * `Iso`s for `Query`, `Envelope`, `QDiagram`, `SubMap`, `TransInv`
+
+
+[diagrams-lib 1.0](http://hackage.haskell.org/package/diagrams-lib-1.0)
+----------------
+
+* **New features**
+
+    - New modules `Diagrams.TwoD.Arrow` and `Diagrams.TwoD.Arrowheads`
+      for creating arrows.
+    - New module `Diagrams.Backend.CmdLine`, providing a flexible
+      framework for creating command-line-driven diagram rendering executables.
+    - New functions in `Diagrams.Offset`: `offsetTrail` and
+      `offsetPath` for one-sided offsets of trails and paths;
+      `expandTrail` and `expandPath` for "stroking" trails and paths,
+      computing a path whose fill corresponds to the stroke of the
+      given trail or path.
+    - New module `Diagrams.Tangent` for computing tangent and normal
+      vectors of segments, trails, and paths.
+    - New functions in `Diagrams.Align` to allow diagrams to be aligned by `Trace`
+      called `snug`, `snugBy` and `snugCenter`
+      and the ability to define other boundary functions for alignment. Functions
+      `snugL`, `snugR`, etc. are included in `TwoD.Align`.
+    - Lenses from `Control.Lens` are now used consistently for record fields
+      throughout the library.
+    - New function `angleRatio` for calculating the ratio between two angles.
+    - Restricted identity functions `asTurn`, `asRad`, and `asDeg` for
+      resolving type ambiguity
+    - New miter limit attribute.
+    - New function `annularWedge` in `TwoD.Arc`
+    - New `avgScale` utility in `TwoD.Transform`, for backends which
+      cannot fully implement freezing of line width
+    - New function `heptagon`, a vast improvement over the linguistic
+      frankenstein `septagon`.
+    - New function `lookupName` (re-exported from `diagrams-core`) for
+      simple lookups of named subdiagrams
+    - New function `angleBetween` to calculate the angle between two
+      vectors.
+    - New function `arcBetween` to draw an arc between two given
+      points.
+    - A bunch of new modules containing types, primitives and
+      utilities for constructing 3D diagrams: `Diagrams.ThreeD.Align`,
+      `.Camera`, `.Light`, `.Shapes`, `.Transform`, `.Types`, and
+      `.Vector`.  This is still a "feature preview" (in particular,
+      appropriate 3D backends are still under construction).
+
+* **New instances**
+
+    - `AdditiveGroup` and `VectorSpace` instances for `Turn`, `Rad`, `Deg`
+    - `Alignable` instance for `(->) e`
+	- `Default` instances for `FillRule`, `FillRuleA`, `LineJoin`,
+      `LineCap`, `FillColor`
+	- `Show` instances for `FillRule`, `FillRuleA`
+
+* **API changes**
+
+    - `e` no longer exported from `Diagrams.Prelude`.
+    - `Diagrams.BoundingBox` is no longer exported from `Diagrams.Prelude`.
+    - Re-export `Diagrams.Core.pointDiagram` from `Diagrams.Prelude`.
+    - Added `fromAlphaColour` method to `Color` class.
+    - `&` renamed to `^&`
+    - Stop re-exporting `tan`, `over`, and `both` from `Data.Colour`.
+	- New coordinate lenses `_x`, `_y`, and `_z` for `R2`, `P2`, `R3`, `P3`
+    - Export `fullTurn` from `Diagrams.Prelude`.
+    - `Codomain (Located a)` is now `Point (Codomain a)` instead of
+      `Located (Codomain a)`.
+	- Export `domainBounds` from `Diagrams.Parametric`.
+	- Adjusting functionality moved from `Diagrams.Parametric` to its
+      own module, `Diagrams.Parametric.Adjust`.
+    - Rename `strokeT` (and primed variant) to `strokeTrail`; rename
+      `strokeLocT` to `strokeLocTrail`.
+    - `ScaleInv` is now in its own module, `Diagrams.TwoD.Transform.ScaleInv`.
+	- Re-export `Image` type (but not constructor) from `Diagrams.TwoD`
+    - Removed `Floating` and `RealFloat` instances for `Turn` and `Deg`
+    - `offsetSegment` now returns a `Located` instead of a tuple.
+    - Removed `Num` and `Fractional` instances for `R2`.
+
+* **Dependency/version changes**
+
+    - Remove `newtype` dependency
+    - New dependencies on `lens`, `tagged`, `optparse-applicative`,
+      `filepath`, `safe`, `vector-space-points`, `MemoTrie`
+    - Depend on `intervals >= 0.3 && < 0.5`.
+
+* **Bug fixes**
+
+    - Depend on `intervals 0.3`, which allows diagrams to build on
+      Windows, by evading a GHCi linker bug which affects the FFI use in
+      previous versions of intervals ([diagrams-contrib#14](https://github.com/diagrams/diagrams-contrib/issues/14))
+    - Use point envelope at the origin for text objects instead of an
+      empty envelope
+      ([#115](https://github.com/diagrams/diagrams-lib/issues/115),
+      [#116](https://github.com/diagrams/diagrams-lib/issues/116)).
+    - Adjusting the end of a trail now works correctly ([#95](https://github.com/diagrams/diagrams-lib/issues/95)).
+    - Only look for miter join on corners in `Diagrams.TwoD.Offset` ([#118](https://github.com/diagrams/diagrams-lib/issues/118)).
+    - `wedge` from `Diagrams.TwoD.Arc` is now a loop ([#99](https://github.com/diagrams/diagrams-lib/issues/99)).
+
+* **Performance improvements**
+
+    - `R2` is now strict and `UNPACK`ed
+    - Add strictness to `Offset`, `Segment`, `OffsetEnvelope`, and `SizeSpec2D`.
+	- Make `getEnvelope` calculation for `Segment` more efficient by
+      floating divisions out of the inner calculation.
+    - Use a specialized `HasTrie` instance for `R2`.
+
+[diagrams-svg 1.0](http://hackage.haskell.org/package/diagrams-svg-1.0)
+----------------
+
+- Re-implement via new backend `RTree` interface, leading to
+  smaller output files.
+- Use new command-line interface from `diagrams-lib`.
+- Export `B` as an alias for `SVG` token
+
+[diagrams-cairo 1.0](http://hackage.haskell.org/package/diagrams-cairo-1.0)
+----------------
+
+- Re-implement via new backend `RTree` interface.
+- Use new command-line interface from `diagrams-lib`.
+- Export `B` as an alias for `Cairo` token.
+
+[diagrams-postscript 1.0](http://hackage.haskell.org/package/diagrams-postscript-1.0)
+----------------
+
+- Add support for miter limit attribute.
+- Use new command-line interface from `diagrams-lib`.
+- Export `B` as an alias for `Postscript` token.
+
+[diagrams-gtk 1.0](http://hackage.haskell.org/package/diagrams-gtk-1.0)
+----------------
+
+- Updated to work with diagrams-cairo-1.0.
+
+[diagrams-contrib 1.0](http://hackage.haskell.org/package/diagrams-contrib-1.0)
+----------------
+
+* **New features**
+
+    - New module `Diagrams.TwoD.Sunburst`, for drawing sunburst
+      charts.
+    - New module `Diagrams.TwoD.Path.Metafont`, for specifying
+      trails/paths using an API inspired by Metafont.  Like
+      `cubicSpline` but gives you control over things like the
+      tension/curvature or the tangent at a given point.
+    - New module `Diagrams.TwoD.Path.Calligraphic` for making simple
+      "calligraphic" strokes.
+    - New module `Diagrams.Lens` with lenses for working with
+      diagrams.
+
+* **Bug fixes**
+
+    - `Diagrams.TwoD.Factorization.primeLayout` has been rewritten to
+      avoid iterated transformations, giving a significant performance
+      boost.
+
+[monoid-extras 0.3.2.3](http://hackage.haskell.org/package/monoid-extras-0.3.2.3)
+----------------
+
+[SVGFonts 1.4.0.1](http://hackage.haskell.org/package/SVGFonts-1.4.0.1)
+----------------
+
+[diagrams-builder 0.4.1](http://hackage.haskell.org/package/diagrams-builder-0.4.1)
+----------------
+
+[diagrams-haddock 0.2.1.3](http://hackage.haskell.org/package/diagrams-haddock1-0.2.1.3)
+----------------
+
 diagrams 0.7: 9 August 2013
 ===========================
 

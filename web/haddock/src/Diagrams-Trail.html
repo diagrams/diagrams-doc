@@ -752,7 +752,7 @@
 <a name="line-743"></a><span class='hs-comment'>--   &lt;&lt;diagrams/src_Diagrams_Trail_lineFromOffsetsEx.svg#diagram=lineFromOffsetsEx&amp;width=300&gt;&gt;</span>
 <a name="line-744"></a><span class='hs-comment'>--</span>
 <a name="line-745"></a><span class='hs-comment'>--   &gt; import Diagrams.Coordinates</span>
-<a name="line-746"></a><span class='hs-comment'>--   &gt; lineFromOffsetsEx = strokeLine $ lineFromOffsets [ 2 &amp; 1, 2 &amp; (-1), 2 &amp; 0.5 ]</span>
+<a name="line-746"></a><span class='hs-comment'>--   &gt; lineFromOffsetsEx = strokeLine $ lineFromOffsets [ 2 ^&amp; 1, 2 ^&amp; (-1), 2 ^&amp; 0.5 ]</span>
 <a name="line-747"></a><span class='hs-definition'>lineFromOffsets</span> <span class='hs-keyglyph'>::</span> <span class='hs-layout'>(</span><span class='hs-conid'>InnerSpace</span> <span class='hs-varid'>v</span><span class='hs-layout'>,</span> <span class='hs-conid'>OrderedField</span> <span class='hs-layout'>(</span><span class='hs-conid'>Scalar</span> <span class='hs-varid'>v</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span>
 <a name="line-748"></a>                  <span class='hs-keyglyph'>=&gt;</span> <span class='hs-keyglyph'>[</span><span class='hs-varid'>v</span><span class='hs-keyglyph'>]</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Trail'</span> <span class='hs-conid'>Line</span> <span class='hs-varid'>v</span>
 <a name="line-749"></a><span class='hs-definition'>lineFromOffsets</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>lineFromSegments</span> <span class='hs-varop'>.</span> <span class='hs-varid'>map</span> <span class='hs-varid'>straight</span>
@@ -781,7 +781,7 @@
 <a name="line-772"></a><span class='hs-comment'>--</span>
 <a name="line-773"></a><span class='hs-comment'>--   &gt; import Diagrams.Coordinates</span>
 <a name="line-774"></a><span class='hs-comment'>--   &gt; lineFromVerticesEx = pad 1.1 . centerXY . strokeLine</span>
-<a name="line-775"></a><span class='hs-comment'>--   &gt;   $ lineFromVertices [origin, 0 &amp; 1, 1 &amp; 2, 5 &amp; 1]</span>
+<a name="line-775"></a><span class='hs-comment'>--   &gt;   $ lineFromVertices [origin, 0 ^&amp; 1, 1 ^&amp; 2, 5 ^&amp; 1]</span>
 <a name="line-776"></a><span class='hs-definition'>lineFromVertices</span> <span class='hs-keyglyph'>::</span> <span class='hs-layout'>(</span><span class='hs-conid'>InnerSpace</span> <span class='hs-varid'>v</span><span class='hs-layout'>,</span> <span class='hs-conid'>OrderedField</span> <span class='hs-layout'>(</span><span class='hs-conid'>Scalar</span> <span class='hs-varid'>v</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span>
 <a name="line-777"></a>                   <span class='hs-keyglyph'>=&gt;</span> <span class='hs-keyglyph'>[</span><span class='hs-conid'>Point</span> <span class='hs-varid'>v</span><span class='hs-keyglyph'>]</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Trail'</span> <span class='hs-conid'>Line</span> <span class='hs-varid'>v</span>
 <a name="line-778"></a><span class='hs-definition'>lineFromVertices</span> <span class='hs-conid'>[]</span>  <span class='hs-keyglyph'>=</span> <span class='hs-varid'>emptyLine</span>
