@@ -4,6 +4,7 @@ title: Sightings
 
 People using diagrams to do stuff.
 
+* [Haskell, Ising, Markov & Metropolis](http://idontgetoutmuch.wordpress.com/2013/12/07/haskell-ising-markov-metropolis/)
 * [Magicube](http://mathr.co.uk/blog/2013-11-03_magicube.html) (Claude
   Heiland-Allen, 3 November 2013)
 * [Parking in Westminster: An Analysis in Haskell](http://idontgetoutmuch.wordpress.com/2013/10/23/parking-in-westminter-an-analysis-in-haskell/)
