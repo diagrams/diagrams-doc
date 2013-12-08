@@ -18,3 +18,13 @@ div.exercises:before {
     float: right;
     padding: 20px;
 }
+
+div.panoramic {
+    width: 100%;
+    height: 400px;
+    background-image: url(../images/factorization.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    overflow: hidden;
+}
