@@ -6,6 +6,8 @@ Diagrams is a powerful, flexible, declarative domain-specific language
 for creating vector graphics, using the
 [Haskell programming language](http://haskell.org/).
 
+<iframe seamless src="/images/factorization.png" height="400" width="100%"></iframe>
+
 Try it out!
 -----------
 
@@ -80,7 +82,7 @@ Diagrams is:
 
  -->
 
-<div style="text-align:center" >
+<!-- <div style="text-align:center" >
 <a href="/gallery/Pentaflake.html"><img src="/images/Pentaflake-small.png" style="vertical-align: middle" title="Pentaflake" /></a>
 </div>
-
+ -->
