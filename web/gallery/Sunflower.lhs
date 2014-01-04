@@ -36,6 +36,6 @@ The color of each floret is based on it's radius.
 >     florets m = [floret (sqrt (fromIntegral i)) | i <- [1..m]]
 
 > example :: Diagram B R2
-> example = sunflower 2000 # bg darkgreen
->                          # centerXY
+> example = sunflower 2000 # centerXY
 >                          # pad 1.1
+>                          # bg darkgreen
