@@ -25,8 +25,8 @@ ico_d = (stroke $
         # lw 0
 
 {-
-dAngle :: Rad
-dAngle = tau / 6
+dAngle :: Angle
+dAngle = tau / 6 @@ rad
 
 dHeight = 5
 dWidth  = 1
@@ -35,7 +35,7 @@ dRad = 1.5
 
 dPath = pathFromTrail . close $
         arc dAngle (tau - dAngle) # scale dRad
-     <> fromOffsets [ (0, -(1 - cos (tau/4 - getRad dAngle)) * dRad)
+     <> fromOffsets [ (0, -(1 - cos (tau/4 - (dAngle ^. rad))) * dRad)
                     , (dWidth, 0)
                     , (0, dHeight)
                     , (-dWidth, 0)
@@ -120,7 +120,7 @@ r = sketchTurtle (setHeading 90 >> forward 5 >> right 90
   # lc orange
   # (withName "end" $ atop . place turtle . location)
   where
-    turtle = eqTriangle 1 # scaleY 1.3 # rotate (-135 :: Deg)
+    turtle = eqTriangle 1 # scaleY 1.3 # rotate (-135 @@ deg)
              # lw 0.1
 
 aTree = BNode () f f

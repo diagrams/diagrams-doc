@@ -420,7 +420,7 @@ for transforming diagrams, such as:
 
 * `scale` (scale uniformly)
 * `scaleX` and `scaleY` (scale in the X or Y axis only)
-* `rotate` (rotate by an angle in radians)
+* `rotate` (rotate by an Angle)
 * `rotateBy` (rotate by a fraction of a circle)
 * `reflectX` and `reflectY` for reflecting along the X and Y axes
 
