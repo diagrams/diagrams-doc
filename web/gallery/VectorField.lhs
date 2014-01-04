@@ -2,7 +2,7 @@
 title: Vector field
 author: Jeffrey Rosenbluth
 authorurl: https://www.projects.haskell.org/diagrams/
-date: 2013-12-31
+date: 2013-08-13
 description: Arrows of a vector field.
 tags: arrow, vector field
 width: 400
@@ -42,5 +42,4 @@ as are tail size and shaft length.
 > field   = position $ zip points arrows
 >
 > example = ( field # translateY 0.05
->        <> ( square 3.5 # fc ghostwhite # lw 0.02 # alignBL))
->         # scaleX 2
+>        <> ( square 3.5 # lw 0 # alignBL))

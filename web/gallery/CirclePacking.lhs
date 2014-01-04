@@ -11,6 +11,7 @@ width: 400
 > {-# LANGUAGE NoMonomorphismRestriction #-}
 >
 > import Diagrams.Prelude
+> import Data.Colour.Palette.BrewerSet
 
 This code demonstrates the circle-packing layout from the `diagrams-contrib`
 package. For more information on the algorithm used, see the [`circle-packing`
@@ -22,9 +23,7 @@ Lets collect some objects of varying size and color to draw. They do not need
 to be single shapes but can be arbitrary complex diagrams, as demonstrated by
 including some Spierpinsky triangles among them.
 
-> colorize = zipWith fc $
->    cycle [ lightcoral, lightseagreen, paleturquoise
->          , lightsteelblue, plum, violet, coral, honeydew]
+> colorize = zipWith fc $ cycle (brewerSet Dark2 8)
 >
 > sierpinski 1 = eqTriangle 1
 > sierpinski n = (s === (s ||| s) # centerX) # alignY (-1/3)
