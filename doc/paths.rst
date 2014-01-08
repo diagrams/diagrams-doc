@@ -255,15 +255,14 @@ some lines and then call `glueLine` on the result.  You try:
 
      > andThen t1 t2 = t1 <> t2 # rotate (d1 - d2)
      >   where
-     >     d1, d2 :: Rad
      >     d1 = direction (tangentAtEnd t1)
      >     d2 = direction (tangentAtStart t2)
      >
      > str = fromOffsets [unitX]
-     > cap = arc 0 (1/2 :: Turn)
+     > cap = arc 0 (1/2 @@ turn)
      > arm = str `andThen` cap `andThen` str
      >
-     > armUnit = arm `andThen` (arc 0 (3/10 :: Turn) # reflectX)
+     > armUnit = arm `andThen` (arc 0 (3/10 @@ turn) # reflectX)
      >
      > example = foldr andThen mempty (replicate 5 armUnit)
      >   # glueLine # strokeLoop # fc blue
@@ -278,7 +277,6 @@ some lines and then call `glueLine` on the result.  You try:
 
      > andThen t1 t2 = t1 <> t2 # rotate (d1 - d2)
      >   where
-     >     d1, d2 :: Rad
      >     d1 = direction (tangentAtEnd t1)
      >     d2 = direction (tangentAtStart t2)
 

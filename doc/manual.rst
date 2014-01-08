@@ -706,36 +706,30 @@ two-dimensional space:
 Angles
 ~~~~~~
 
-The `Angle` type class classifies types which measure two-dimensional
-angles.  Three instances are provided by default (you can, of course,
-also make your own):
+The `Angle` type represents two-dimensional angles.  Angles can be
+expressed in radians, degrees, or fractions of a circle.
 
-* `Turn` represents fractions of a circle.  A value of `1`
-  represents a full turn, `1/4 :: Turn` represents a right angle, and
-  so on.
-* `Rad` represents angles measured in radians.  A value of `tau` (that
+* `turn` represents fractions of a circle.  A value of `1` represents
+  a full turn, `1/4 @@ turn` constructs a right angle, and so on.  The
+  measure of an Angle ``a`` in turns (of type `Double`), can be gotten
+  by `a ^. turn`.
+* `rad` represents angles measured in radians.  A value of `tau` (that
   is, `\tau = 2 \pi`:math:) represents a full turn. (If you haven't heard of
   `\tau`:math:, see `The Tau Manifesto`__.)
-* `Deg` represents angles measured in degrees.  A value of `360`
+* `deg` represents angles measured in degrees.  A value of `360`
   represents a full turn.
+
+`turn`, `rad`, and `deg` are isomorphisms, represented using the `Iso`
+type from `lens`:pkg:.  The operators `^.` and `@@` can be used with
+any `Iso`.  Unfortunately, all of these have rather cryptic type
+signatures, and error messages can be hard to understand
 
 __ http://tauday.com
 
-The intention is that to pass an argument to a function that expects a
-value of some `Angle` type, you can write something like `(3 :: Deg)`
-or `(3 :: Rad)`.  The `convertAngle` function is also provided for
-converting between different angle representations.
-
-The functions `asTurn`, `asRad`, and `asDeg` are provided for
-convenience. They are all the identity function, but with restricted
-types (for example, `asTurn :: Turn -> Turn`).  Occasionally this can
-be useful to help resolve ambiguity.  For example, `rotation . asTurn
-. fromRational` is a function of type `Rational -> T2` which converts
-a rational number `r`:math: into a rotation of `r`:math: turns.  The
-expression becomes ambiguous if the call to `asTurn` is omitted, since
-`fromRational` can output any instance of `Fractional`, and `rotation`
-accepts any instance of `Angle`.  Inserting `asTurn` fixes the
-intermediate type and resolves the ambiguity.
+The intention is that to pass an argument to a function that expects
+an `Angle`, you can write something like `(3 @@ deg)` or `(3 @@ rad)`.
+The function can use whatever units internally, and this should be
+transparent to the user.
 
 The `direction` function computes the angle of a vector, measured
 clockwise from the positive `x`:math:\-axis.
@@ -797,8 +791,8 @@ __ `Angles`_
 
 > example = hcat [arc a1 a2, strutX 1, wedge 1 a1 a2]
 >   where
->     a1 = tau/4 :: Rad
->     a2 = 4 * tau / 7 :: Rad
+>     a1 = tau/4 @@ rad
+>     a2 = 4 * tau / 7 @@ rad
 
 Pre-defined shapes
 ~~~~~~~~~~~~~~~~~~
@@ -873,7 +867,7 @@ optional parameters that control the generated polygon:
 
       > example = polygon ( with
       >   & polyType .~ PolySides
-      >       [ 20 :: Deg, 90 :: Deg, 40 :: Deg, 100 :: Deg ]
+      >       [ 20 @@ deg, 90 @@ deg, 40 @@ deg, 100 @@ deg ]
       >       [ 1        , 5        , 2        , 4          ]
       >   )
 
@@ -897,7 +891,7 @@ optional parameters that control the generated polygon:
 
 > poly1 = polygon ( with & polyType  .~ PolyRegular 13 5
 >                        & polyOrient .~ OrientV )
-> poly2 = polygon ( with & polyType  .~ PolyPolar (repeat (1/40 :: Turn))
+> poly2 = polygon ( with & polyType  .~ PolyPolar (repeat (1/40 @@ turn))
 >                                                 (take 40 $ cycle [2,7,4,6]) )
 > example = (poly1 ||| strutX 1 ||| poly2) # lw 0.05
 
@@ -1483,11 +1477,12 @@ Rotation
 
 Use `rotate` to rotate a diagram counterclockwise by a given angle__
 about the origin.  Since `rotate` takes an angle, you must specify an
-angle type, such as `rotate (80 :: Deg)`.  In the common case that you
+angle type, such as `rotate (80 @@ deg)`.  In the common case that you
 wish to rotate by an angle specified as a certain fraction of a
-circle, like `rotate (1/8 :: Turn)`, you can use `rotateBy`
-instead. `rotateBy` is specialized to only accept `Turn`\s, so in this
-example you would only have to write `rotateBy (1/8)`.
+circle, like `rotate (1/8 @@ turn)`, you can use `rotateBy`
+instead. `rotateBy` takes a `Double` argument expressing the number of
+turns, so in this example you would only have to write `rotateBy
+(1/8)`.
 
 You can also use `rotateAbout` in the case that you want to rotate
 about some point other than the origin.
@@ -1570,7 +1565,7 @@ thus:
 ::
 
 > eff = text "F" <> square 1 # lw 0
-> example = (scaleX 2 `under` rotation (-1/8 :: Turn)) eff
+> example = (scaleX 2 `under` rotation (-1/8 @@ turn)) eff
 
 The letter F is first rotated so that the desired scaling axis lies
 along the `x`:math:\-axis; then `scaleX` is performed; then it is rotated back
@@ -1670,15 +1665,15 @@ polygon):
 >                   [ 0.25,1,1,1,1] & polyOrient .~ NoOrient )
 >                   # fc blue # lw 0
 >   where
->     a = 1/8 :: Turn
->     b = 1/4 :: Turn
+>     a = 1/8 @@ turn
+>     b = 1/4 @@ turn
 >
 > convex = polygon (with & polyType .~ PolyPolar [a,b] [0.25, 1, 1]
 >                        & polyOrient .~ NoOrient)
 >                        # fc orange # lw 0
 >   where
->     a = 1/8 :: Turn
->     b = 3/4 :: Turn
+>     a = 1/8 @@ turn
+>     b = 3/4 @@ turn
 >
 > aligned = (concave # centerXY # alignR # showOrigin)
 >        <> (convex # centerXY # alignL # showOrigin)
@@ -2819,7 +2814,7 @@ __ /gallery/SymmetryCube.html
 >
 > -- Connect two diagrams and two points on their trails.
 > ex23 = ds # connect "1" "2"
->           # connectPerim "1" "2" (15/16 :: Turn) (9/16 :: Turn)
+>           # connectPerim "1" "2" (15/16 @@ turn) (9/16 @@ turn)
 >
 > -- Place an arrow at (0,0) the size and direction of (0,1).
 > ex4 = arrowAt (0 ^& 0) unit_Y
@@ -2890,7 +2885,7 @@ function.
 >
 > shaft1 = trailFromVertices (map p2 [(0, 0), (1, 0), (1, 0.2), (2, 0.2)])
 > shaft2 = cubicSpline False (map p2 [(0, 0), (1, 0), (1, 0.2), (2, 0.2)])
-> shaft3 = arc 0 (1/6 :: Turn)
+> shaft3 = arc 0 (1/6 @@ turn)
 >
 > example = d
 >    # connect' (with & arrowTail .~ quill& tailSize .~ 1.5
@@ -3866,7 +3861,7 @@ The arrows on the right are wrapped in `ScaleInv` but the ones on the left are n
 >             (map (centerX . showT)
 >               [ scalingX (1/2)
 >               , scalingY 2
->               , scalingX (1/2) <> rotation (-1/12 :: Turn)
+>               , scalingX (1/2) <> rotation (-1/12 @@ turn)
 >               ])
 
 In addition, the `scaleInvPrim` function creates a scale-invariant

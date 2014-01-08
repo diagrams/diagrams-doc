@@ -704,7 +704,7 @@ know what time it is.  Consider the following program.
 >
 >     bigHand    = (0 ^& (-1.5)) ~~ (0 ^& 7.5) # lw 0.5
 >     littleHand = (0 ^& (-2))   ~~ (0 ^& 9.5) # lw 0.2
->     f n v = rotate (Turn (- v / n))
+>     f n v = rotate (- v / n @@ turn)
 > 
 > main = mainWith (clock <$> getCurrentTime)
 
@@ -730,7 +730,7 @@ Running we get:
 >
 >     bigHand    = (0 ^& (-1.5)) ~~ (0 ^& 7.5) # lw 0.5
 >     littleHand = (0 ^& (-2))   ~~ (0 ^& 9.5) # lw 0.2
->     f n v = rotate (Turn (- v / n))
+>     f n v = rotate (- v / n @@ turn)
 >
 > example = clock $ read "2013-11-19 03:14:15.926535 UTC" 
 
