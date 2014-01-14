@@ -54,8 +54,8 @@ options used to make arrows.
 >             # scale 0.75
 >   where
 >     c = circle 1 # showOrigin # lw 0.04
->     a = arc (5/12 :: Turn) (11/12 :: Turn)
->     a1 = arc (1/2 :: Turn) (3/4 :: Turn)
+>     a = arc (5/12 @@ turn) (11/12 @@ turn)
+>     a1 = arc (1/2 @@ turn) (3/4 @@ turn)
 >     t = bezier3 (r2 (1,1)) (r2 (1,1)) (r2 (0,2))
 >     t' = reflectX t
 >     l = straight unitX
@@ -83,7 +83,7 @@ Optional and named parameters
 Most of the arrow functions take an `opts` parameter (see `Faking
 optional named parameters`__) of type `ArrowOpts`, these functions typically
 have companion functions that use a default set of `ArrowOpts`. For example
-the functions `arrow'` and `arrow`. The former takes and `opts` parameter and
+the functions `arrow'` and `arrow`. The former takes an `opts` parameter and
 the latter does not. In this tutorial whenever we mention a function with
 a single quote (`'`) at the end, there is a sister function without the quote that
 uses a default set of options.
@@ -247,7 +247,7 @@ will make the arrow shaft into an arc:
 
 ::
 
-> shaft = arc 0 (1/2 :: Turn)
+> shaft = arc 0 (1/2 @@ turn)
 >
 > example = ( sDot <> eDot
 >          <> arrowBetween' (with & arrowHead .~ spike & arrowTail .~ spike'
@@ -265,7 +265,7 @@ will make the arrow shaft into an arc:
 > sDot = dot # fc blue # moveTo sPt
 > eDot = dot # fc red # moveTo ePt
 >
-> shaft = arc 0 (1/2 :: Turn)
+> shaft = arc 0 (1/2 @@ turn)
 >
 > example = ( sDot <> eDot
 >          <> arrowBetween' (with & arrowHead .~ spike & arrowTail .~ spike'
@@ -286,7 +286,7 @@ vertically.
 
 In order to get the arrow to curve upwards we might initially think we
 could create the shaft reversing the order of the angles, using `arc
-(1/2 :: Turn) 0`, but this won't work either, as it creates a
+(1/2 @@ turn) 0`, but this won't work either, as it creates a
 downwards curving arc from, say, `(0,0)`:math: to `(1,0)`:math: that
 does not need to be rotated. The only way to achieve the desired
 result of making the arrow pointing from `(0,0)`:math: to
@@ -296,7 +296,7 @@ result of making the arrow pointing from `(0,0)`:math: to
 
 ::
 
-> shaft = arc 0 (1/2 :: Turn) # reverseTrail
+> shaft = arc 0 (1/2 @@ turn) # reverseTrail
 
 .. class:: dia
 
@@ -307,7 +307,7 @@ result of making the arrow pointing from `(0,0)`:math: to
 > dot = circle 0.02 # lw 0
 > sDot = dot # fc blue # moveTo sPt
 > eDot = dot # fc red # moveTo ePt
-> shaft = arc 0 (1/2 :: Turn) # reverseTrail
+> shaft = arc 0 (1/2 @@ turn) # reverseTrail
 > example = ( sDot <> eDot
 >          <> arrowBetween' (with & arrowHead .~ spike & arrowTail .~ spike'
 >                                 & arrowShaft .~ shaft) sPt ePt)
@@ -517,8 +517,8 @@ diagram.
 
 ::
 
-> connectPerim "diagram1" "diagram2" (5/12 :: Turn) (1/12 :: Turn)
-> connectPerim "diagram" "diagram" (2/12 :: Turn) (4/12 :: Turn)
+> connectPerim "diagram1" "diagram2" (5/12 @@ turn) (1/12 @@ turn)
+> connectPerim "diagram" "diagram" (2/12 @@ turn) (4/12 @@ turn)
 
 Here is an example of a finite state automata that accepts real numbers.
 The code is a bit longer than what we have seen so far, but still very
@@ -553,8 +553,8 @@ straightforward.
 >
 > states = position (zip points ds)
 >
-> shaft = arc 0 (1/6 :: Turn)
-> shaft' = arc 0 (1/2 :: Turn) # scaleX 0.33
+> shaft = arc 0 (1/6 @@ turn)
+> shaft' = arc 0 (1/2 @@ turn) # scaleX 0.33
 > line = trailFromOffsets [unitX]
 >
 > arrowStyle1 = (with  & arrowHead  .~ noHead & tailSize .~ 0.3
@@ -570,26 +570,26 @@ straightforward.
 >                       & tailColor  .~ black)
 >
 > example = states # connectPerim' arrowStyle1
->                                  "2" "1" (5/12 :: Turn) (1/12 :: Turn)
+>                                  "2" "1" (5/12 @@ turn) (1/12 @@ turn)
 >                  # connectPerim' arrowStyle3
->                                  "4" "1" (2/6 :: Turn) (5/6 :: Turn)
+>                                  "4" "1" (2/6 @@ turn) (5/6 @@ turn)
 >                  # connectPerim' arrowStyle2
->                                  "2" "2" (2/12 :: Turn) (4/12 :: Turn)
+>                                  "2" "2" (2/12 @@ turn) (4/12 @@ turn)
 >                  # connectPerim' arrowStyle1
->                                  "3" "2" (5/12 :: Turn) (1/12 :: Turn)
+>                                  "3" "2" (5/12 @@ turn) (1/12 @@ turn)
 >                  # connectPerim' arrowStyle2
->                                  "3" "3" (2/12 :: Turn) (4/12 :: Turn)
+>                                  "3" "3" (2/12 @@ turn) (4/12 @@ turn)
 >                  # connectPerim' arrowStyle1
->                                  "5" "4" (5/12 :: Turn) (1/12 :: Turn)
+>                                  "5" "4" (5/12 @@ turn) (1/12 @@ turn)
 >                  # connectPerim' arrowStyle2
->                                  "5" "5" (-1/12 :: Turn) (1/12 :: Turn)
+>                                  "5" "5" (-1/12 @@ turn) (1/12 @@ turn)
 
 In the following exercise you can try `connectPerim'` for yourself.
 
 .. container:: exercises
 
   Create a torus (donut) with `16`:math: curved arrows pointing from the
-  outer ring to the inner ring at the same angle every `(1/16) :: Turn`.
+  outer ring to the inner ring at the same angle every `1/16 @@ turn`.
 
     .. class:: dia
 
@@ -606,17 +606,17 @@ In the following exercise you can try `connectPerim'` for yourself.
     >
     > d = bullseye <> target
     >
-    > shaft = arc 0 (1/6 :: Turn)
+    > shaft = arc 0 (1/6 @@ turn)
     >
-    > connectTarget :: (Angle a, Renderable (Path R2) b)
-    >               =>  a -> (Diagram b R2 -> Diagram b R2)
+    > connectTarget :: (Renderable (Path R2) b)
+    >               =>  Angle -> (Diagram b R2 -> Diagram b R2)
     > connectTarget a = connectPerim' (with & arrowHead .~ thorn & shaftStyle %~  lw 0.01
     >                                       & arrowShaft .~ shaft & headSize .~ 0.18
     >                                       & arrowTail .~ thorn'
     >                                      ) "target" "bullseye" a a
     >
-    > angles :: [Turn]
-    > angles = [0, 1/16 .. 15/16]
+    > angles :: [Angle]
+    > angles = map (@@ turn) [0, 1/16 .. 15/16]
     >
     > example = foldr connectTarget d angles
 

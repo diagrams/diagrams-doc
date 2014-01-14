@@ -167,7 +167,7 @@ The first thing to learn is how to *create* values of type
   ::
 
   > example = lw 0.05 . mconcat . map fromOffsets
-  >         $ [ [r *^ fromDirection (Rad r)]
+  >         $ [ [r *^ fromDirection (r @@ rad)]
   >           | r <- [33 * tau/32, 34 * tau/32 .. 2 * tau]
   >           ]
 
@@ -189,7 +189,7 @@ The first thing to learn is how to *create* values of type
 
      ::
 
-     > vs = [ 5 *^ fromDirection (r :: Turn) | r <- [-1/4, -1/4 + 1/12 .. 1/4] ]
+     > vs = [ 5 *^ fromDirection (r @@ turn) | r <- [-1/4, -1/4 + 1/12 .. 1/4] ]
      > example = mconcat (map (\v -> unitCircle # translate v) vs)
      >         # fc blue
      >         # centerXY
@@ -200,7 +200,7 @@ The first thing to learn is how to *create* values of type
 
      ::
 
-     > vs = zipWith mkV (cycle [1,2,3]) [ 1/30, 2/30 .. 1 :: Turn ]
+     > vs = zipWith mkV (cycle [1,2,3]) [ 1/30, 2/30 .. 1 @@ turn ]
      >   where mkV r th = r *^ fromDirection th
      > example = lw 0.02 . mconcat . map (fromOffsets . (:[])) $ vs
 
