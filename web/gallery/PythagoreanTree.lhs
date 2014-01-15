@@ -28,8 +28,8 @@ For aesthetics, let the leaves have circles instead of squares.
 > tree n =
 >   square 1          # translate (r2 (0, 1/2)) # colourise saddlebrown
 >   `atop` triangle   # translate (r2 (0,1))    # colourise sienna
->   `atop` tree (n-1) # rotate (-asin 0.8 :: Rad) # scale 0.6 # translate (r2 ( 0.32,1.24)) # fade
->   `atop` tree (n-1) # rotate ( asin 0.6 :: Rad) # scale 0.8 # translate (r2 (-0.18,1.24)) # fade
+>   `atop` tree (n-1) # rotate (-asin 0.8 @@ rad) # scale 0.6 # translate (r2 ( 0.32,1.24)) # fade
+>   `atop` tree (n-1) # rotate ( asin 0.6 @@ rad) # scale 0.8 # translate (r2 (-0.18,1.24)) # fade
 >   where
 >     triangle = translate (r2 (-0.5,0)) . strokeLoop . closeLine
 >                  . fromVertices . map p2 $ [(0,0), (1,0), (0.8*0.8,0.8*0.6)]

@@ -165,7 +165,7 @@ Some custom shapes.
 >           <> fromVertices [ x^&x , ((-x)^&(-x)) ]
 >
 > plus :: Double -> Path R2
-> plus x = cross x # rotate (45::Deg)
+> plus x = cross x # rotate (45 @@ deg)
 
 The colour styles.
 
