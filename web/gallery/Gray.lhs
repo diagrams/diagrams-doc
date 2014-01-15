@@ -29,12 +29,12 @@ position corresponds to a concentric ring, with black/white indicating
 segments corresponding to consecutive runs of `True`.
 
 > rings n = mkRingsDia . map ringOffsets . transpose . gray $ n
->   where ringOffsets :: [Bool] -> [(CircleFrac, CircleFrac)]
->         ringOffsets = map l2t . chunksOf 2 . findEdges . zip [0,1/(2^n)..1]
+>   where ringOffsets :: [Bool] -> [(Angle, Angle)]
+>         ringOffsets = map l2t . chunksOf 2 . findEdges . zip [0 @@ turn, 1/(2^n) @@ turn .. fullTurn]
 >         l2t [x,y] = (x,y)
->         l2t [x]   = (x,1)
-> 
-> findEdges :: Eq a => [(CircleFrac, a)] -> [CircleFrac]
+>         l2t [x]   = (x,fullTurn)
+>
+> findEdges :: Eq a => [(Angle, a)] -> [Angle]
 > findEdges = catMaybes . (zipWith edge <*> tail)
 >   where edge (_,c1) (a,c2) | c1 /= c2  = Just a
 >                            | otherwise = Nothing
@@ -43,5 +43,5 @@ Generate concentric circular arcs from lists of angular segments.
 
 > mkRingsDia = freeze . mconcat . zipWith mkRingDia [2,3..]
 >   where mkRingDia r = lw 1.05 . mconcat . map (stroke . scale r . uncurry arc)
-> 
+>
 > example = pad 1.1 (rings 10)

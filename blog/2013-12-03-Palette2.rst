@@ -23,12 +23,12 @@ The RYB color wheel and the color schemes we will design below are easy to view 
 
 ::
 
-> wheel cs = wheel' # rotateBy r
+> wheel cs = wheel' # rotate r
 >   where
->     wheel' = mconcat $ zipWith fc cs (iterateN n (rotateBy a) w)
+>     wheel' = mconcat $ zipWith fc cs (iterateN n (rotate a) w)
 >     n = length cs
->     a = 1 / (fromIntegral n) :: Turn
->     w = wedge 1 (0 :: Turn) a # lw 0
+>     a = 1 / (fromIntegral n) @@ turn
+>     w = wedge 1 (0 @@ turn) a # lw 0
 >     r = 1/4 - 1/(2*(fromIntegral n))
 
 Here is the RYB color wheel. Notice that colors we perceive as opposites, e.g. red and green are 180 degrees apart on the wheel. In `harmony` the RYB color wheel is created by shrinking and stretching sections of the HSB color wheel so that complimentary colors are always on opposite sides of the wheel.
@@ -47,12 +47,12 @@ Here is the RYB color wheel. Notice that colors we perceive as opposites, e.g. r
 > import Data.Colour.SRGB (sRGB24read)
 > import Data.Colour.Palette.Harmony
 > import Data.Colour.Palette.ColorSet
-> wheel cs = wheel' # rotateBy r
+> wheel cs = wheel' # rotate r
 >   where
->     wheel' = mconcat $ zipWith fc cs (iterateN n (rotateBy a) w)
+>     wheel' = mconcat $ zipWith fc cs (iterateN n (rotate a) w)
 >     n = length cs
->     a = 1 / (fromIntegral n) :: Turn
->     w = wedge 1 (0 :: Turn) a # lw 0
+>     a = 1 / (fromIntegral n) @@ turn
+>     w = wedge 1 (0 @@ turn) a # lw 0
 >     r = 1/4 - 1/(2*(fromIntegral n))
 > ryb = [rybColor n | n <- [0..23]]
 > example = wheel ryb
@@ -109,12 +109,12 @@ Since we have been talking about complimentary colors, the first scheme we descr
 
 > import Data.Colour.SRGB (sRGB24read)
 > import Data.Colour.Palette.Harmony
-> wheel cs = wheel' # rotateBy r
+> wheel cs = wheel' # rotate r
 >   where
->     wheel' = mconcat $ zipWith fc cs (iterateN n (rotateBy a) w)
+>     wheel' = mconcat $ zipWith fc cs (iterateN n (rotate a) w)
 >     n = length cs
->     a = 1 / (fromIntegral n) :: Turn
->     w = wedge 1 (0 :: Turn) a # lw 0
+>     a = 1 / (fromIntegral n) @@ turn
+>     w = wedge 1 (0 @@ turn) a # lw 0
 >     r = 1/4 - 1/(2*(fromIntegral n))
 > gr = (1 + sqrt 5) / 2
 > bar cs = hcat [square gr # scaleX s # fc k # lw 0 | k <- cs] # centerXY
@@ -137,12 +137,12 @@ A *Monochromatic* color harmony consists of the base color plus various tints, s
 
 > import Data.Colour.SRGB (sRGB24read)
 > import Data.Colour.Palette.Harmony
-> wheel cs = wheel' # rotateBy r
+> wheel cs = wheel' # rotate r
 >   where
->     wheel' = mconcat $ zipWith fc cs (iterateN n (rotateBy a) w)
+>     wheel' = mconcat $ zipWith fc cs (iterateN n (rotate a) w)
 >     n = length cs
->     a = 1 / (fromIntegral n) :: Turn
->     w = wedge 1 (0 :: Turn) a # lw 0
+>     a = 1 / (fromIntegral n) @@ turn
+>     w = wedge 1 (0 @@ turn) a # lw 0
 >     r = 1/4 - 1/(2*(fromIntegral n))
 > base = sRGB24read "#FFC200"
 > example = wheel $ monochrome base
@@ -161,12 +161,12 @@ The following scheme does not have a name as far as I know. We take the base col
 
 > import Data.Colour.SRGB (sRGB24read)
 > import Data.Colour.Palette.Harmony
-> wheel cs = wheel' # rotateBy r
+> wheel cs = wheel' # rotate r
 >   where
->     wheel' = mconcat $ zipWith fc cs (iterateN n (rotateBy a) w)
+>     wheel' = mconcat $ zipWith fc cs (iterateN n (rotate a) w)
 >     n = length cs
->     a = 1 / (fromIntegral n) :: Turn
->     w = wedge 1 (0 :: Turn) a # lw 0
+>     a = 1 / (fromIntegral n) @@ turn
+>     w = wedge 1 (0 @@ turn) a # lw 0
 >     r = 1/4 - 1/(2*(fromIntegral n))
 > base = sRGB24read "#FFC200"
 > example = wheel $ bwg base
@@ -180,10 +180,10 @@ Sometimes it is usefule to view a color scheme like a wheel but with the base co
 > pie (c:cs) = ring <> center
 >   where
 >     center = circle 0.5 # fc c # lw 0
->     ring = mconcat $ zipWith fc cs (iterateN n (rotateBy a) w)
+>     ring = mconcat $ zipWith fc cs (iterateN n (rotate a) w)
 >     n = length cs
->     a = 1 / (fromIntegral n) :: Turn
->     w = annularWedge 0.5 1 (0 :: Turn) a # lw 0
+>     a = 1 / (fromIntegral n) @@ turn
+>     w = annularWedge 0.5 1 (0 @@ turn) a # lw 0
 
 The *Analogic* color scheme is the base color plus the two colors 30 degrees apart on each side. As usual we add in some tints, shades, and tones to fill out a 5 color scheme. *Accent Analogic* is similar but we add in the color complimentary to the base color.
 
@@ -203,10 +203,10 @@ The *Analogic* color scheme is the base color plus the two colors 30 degrees apa
 > pie (c:cs) = ring <> center
 >   where
 >     center = circle 0.5 # fc c # lw 0
->     ring = mconcat $ zipWith fc cs (iterateN n (rotateBy a) w)
+>     ring = mconcat $ zipWith fc cs (iterateN n (rotate a) w)
 >     n = length cs
->     a = 1 / (fromIntegral n) :: Turn
->     w = annularWedge 0.5 1 (0 :: Turn) a # lw 0
+>     a = 1 / (fromIntegral n) @@ turn
+>     w = annularWedge 0.5 1 (0 @@ turn) a # lw 0
 > base = sRGB24read "#FFC200"
 > example = hcat' (with & sep .~ 0.5) [ pie $ analogic base
 >                                     , pie $ accentAnalogic base]
@@ -230,10 +230,10 @@ The lase two schemes provided by `Harmony` are *Triad*, with colors 120 degrees 
 > pie (c:cs) = ring <> center
 >   where
 >     center = circle 0.5 # fc c # lw 0
->     ring = mconcat $ zipWith fc cs (iterateN n (rotateBy a) w)
+>     ring = mconcat $ zipWith fc cs (iterateN n (rotate a) w)
 >     n = length cs
->     a = 1 / (fromIntegral n) :: Turn
->     w = annularWedge 0.5 1 (0 :: Turn) a # lw 0
+>     a = 1 / (fromIntegral n) @@ turn
+>     w = annularWedge 0.5 1 (0 @@ turn) a # lw 0
 > base = sRGB24read "#FFC200"
 > example = hcat' (with & sep .~ 0.5) [ pie $ triad base
 >                                     , pie $ tetrad base]

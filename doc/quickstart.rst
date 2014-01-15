@@ -217,7 +217,7 @@ the `circle` diagram with the `(#)` operator:
 There's actually nothing special about the `(#)` operator: it's just
 reverse function application, that is,
 
-.. class:: lhs
+.. .. class:: lhs
 
 ::
 
@@ -460,34 +460,34 @@ the same as moving its local origin by `(-0.5, -0.3)`.
 Since diagrams are always composed with respect to their local
 origins, translation can affect the way diagrams are composed.
 
-.. class:: dia-lhs
+.. .. class:: dia-lhs
 
-::
+.. ::
 
-> circleSqT   = square 1 `atop` circle 1 # translate (r2 (0.5, 0.3))
-> circleSqHT  = square 1 ||| circle 1 # translate (r2 (0.5, 0.3))
-> circleSqHT2 = square 1 ||| circle 1 # translate (r2 (19.5, 0.3))
->
-> example = hcat [circleSqT, strutX 1, circleSqHT, strutX 1, circleSqHT2]
+.. > circleSqT   = square 1 `atop` circle 1 # translate (r2 (0.5, 0.3))
+.. > circleSqHT  = square 1 ||| circle 1 # translate (r2 (0.5, 0.3))
+.. > circleSqHT2 = square 1 ||| circle 1 # translate (r2 (19.5, 0.3))
+.. >
+.. > example = hcat [circleSqT, strutX 1, circleSqHT, strutX 1, circleSqHT2]
 
-As `circleSqHT` and `circleSqHT2` demonstrate, when we place a
-translated circle next to a square, it doesn't matter how much the
-circle was translated in the *horizontal* direction---the square and
-circle will always simply be placed next to each other.  The vertical
-direction matters, though, since the local origins of the square and
-circle are placed on the same horizontal line.
+.. As `circleSqHT` and `circleSqHT2` demonstrate, when we place a
+.. translated circle next to a square, it doesn't matter how much the
+.. circle was translated in the *horizontal* direction---the square and
+.. circle will always simply be placed next to each other.  The vertical
+.. direction matters, though, since the local origins of the square and
+.. circle are placed on the same horizontal line.
 
-Aligning
---------
+.. Aligning
+.. --------
 
-It's quite common to want to *align* some diagrams in a certain way
-when placing them next to one another---for example, we might want a
-horizontal row of diagrams aligned along their top edges.  The
-*alignment* of a diagram simply refers to its position relative to its
-local origin, and convenient alignment functions are provided for
-aligning a diagram with respect to its envelope.  For example,
-`alignT` translates a diagram in a vertical direction so that its
-local origin ends up exactly on the edge of its envelope.
+.. It's quite common to want to *align* some diagrams in a certain way
+.. when placing them next to one another---for example, we might want a
+.. horizontal row of diagrams aligned along their top edges.  The
+.. *alignment* of a diagram simply refers to its position relative to its
+.. local origin, and convenient alignment functions are provided for
+.. aligning a diagram with respect to its envelope.  For example,
+.. `alignT` translates a diagram in a vertical direction so that its
+.. local origin ends up exactly on the edge of its envelope.
 
 .. class:: dia-lhs
 

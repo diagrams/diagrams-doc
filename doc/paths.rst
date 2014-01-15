@@ -104,7 +104,7 @@ find the source code for this tutorial on github.
      > ln    = fromOffsets [unitX, 2 *^ unitY, 2 *^ unitX]
      > theta = direction (lineOffset ln)
      > example
-     >   = ln # rotateBy (negate theta)
+     >   = ln # rotate (negate theta)
      >   # strokeLine
      >   # centerXY # pad 1.1
 

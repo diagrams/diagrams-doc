@@ -49,7 +49,7 @@ a *magnitude* (length) and a *direction* (angle).
 >                # fc black # alignR
 >           )
 >           # alignL
->           # rotateBy (direction v)
+>           # rotate (direction v)
 >
 > vPic v = drawV v <> xComponent <> yComponent <> theta
 >   where

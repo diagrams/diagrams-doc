@@ -28,10 +28,10 @@ The function to use to create the vector field.
 >   where
 >     vf   = vectorField (x, y)
 >     m    = magnitude $ vectorField (x, y)
-
-Head size is a function of the length of the vector
-as are tail size and shaft length.
-
+>
+> -- Head size is a function of the length of the vector
+> -- as are tail size and shaft length.
+>
 >     hs   = 0.08 * m
 >     sW   = 0.015 * m
 >     sL   = 0.01 + 0.1 * m
