@@ -1,15 +1,39 @@
-I am pleased to announce the 1.0 release of
+    [BLOpts]
+	profile = wp
+	categories = diagrams, haskell, projects
+
+The diagrams team is very pleased to announce the 1.0 release of
 [diagrams](http://projects.haskell.org/diagrams), a framework and
-embedded domain-specific language for declarative drawing in Haskell.
+embedded domain-specific language for declarative drawing in
+Haskell. Diagrams can be used for
+[data visualization](http://idontgetoutmuch.wordpress.com/2013/10/23/parking-in-westminster-an-analysis-in-haskell/),
+illustrating technical concepts, creating art, XXX. Diagrams code can
+be easily
+[embedded in blog posts](http://byorgey.wordpress.com/2012/08/28/creating-documents-with-embedded-diagrams/),
+[LaTeX documents](http://projects.haskell.org/diagrams/doc/latex.html),
+and
+[Haddock documentation](http://byorgey.wordpress.com/2013/03/23/introducing-diagrams-haddock/).
 Check out the
 [gallery](http://projects.haskell.org/diagrams/gallery.html) for some
-examples of what it can do!  Brent gave a talk at the New York Haskell
-Users' Group presenting the new release: you can find the
-[video here](XXX) and the [slides here](http://www.cis.upenn.edu/~byorgey/pub/13-11-25-nyhaskell-diagrams.pdf).
+examples of what it can do.
 
-XXX include some example images?
+[![](http://projects.haskell.org/diagrams/gallery/images/SquareLimit.thumb.png)](http://projects.haskell.org/diagrams/gallery/SquareLimit.html)
+[![](http://projects.haskell.org/diagrams/gallery/images/Chart.thumb.png)](http://projects.haskell.org/diagrams/gallery/Chart.html) [![](http://projects.haskell.org/diagrams/gallery/images/KnightTour.thumb.png)](http://projects.haskell.org/diagrams/gallery/KnightTour.html)
 
-Highlights of this release include:
+What's new
+----------
+
+Brent recently gave a talk at the
+[New York Haskell Users' Group](http://www.meetup.com/NY-Haskell/)
+presenting the new release.  You can find videos of the talk on vimeo:
+[part 1 presents a basic introduction to the library](http://vimeo.com/84104226),
+and
+[part 2 talks about mathematical abstraction and DSL design](http://vimeo.com/84249042).
+The
+[slides are also available](http://www.cis.upenn.edu/~byorgey/pub/13-11-25-nyhaskell-diagrams.pdf).
+
+This release includes a number of significant new features and
+improvements.  Highlights include:
 
 * Support for drawing arrows between given points or between diagrams,
   with many options for customization
@@ -17,7 +41,7 @@ Highlights of this release include:
   [documentation](http://projects.haskell.org/diagrams/doc/manual.html#arrows),
   [API](http://projects.haskell.org/diagrams/haddock/Diagrams-TwoD-Arrow.html)).
 
-* New framework for creating custom command-line-driven executables
+* A new framework for creating custom command-line-driven executables
   for diagram generation
   ([tutorial](http://projects.haskell.org/diagrams/doc/cmdline.html), [API](http://projects.haskell.org/diagrams/haddock/Diagrams-Backend-CmdLine.html)).
 
@@ -38,7 +62,14 @@ Highlights of this release include:
 * `lens`es are now used consistently for record fields throughout the
   library ([documentation](http://projects.haskell.org/diagrams/doc/manual.html#faking-optional-named-arguments)).
 
-* Across-the-board improvements in performance and size of generated files.
+* Across-the-board improvements in performance and size of generated
+  files.
+
+See the
+[release notes](http://projects.haskell.org/diagrams/releases.html)
+for full details, and the
+[migration guide](http://www.haskell.org/haskellwiki/Diagrams/Dev/Migrate1.0)
+for help porting your diagrams 0.7 code to work with diagrams 1.0.
 
 Try it out
 ----------
@@ -49,17 +80,22 @@ For the truly impatient:
 
 Diagrams is supported under GHC 7.4 and 7.6.
 
-To get started with diagrams, read the
-[quick tutorial](http://projects.haskell.org/diagrams/doc/quickstart.html),
+To get started, read the
+[quick start tutorial](http://projects.haskell.org/diagrams/doc/quickstart.html),
 which will introduce you to the fundamentals of the framework and
 provide links for further reading.
 
 For those who are less impatient and want to really dig in and
-use the power features, read the
+use the power features, read the extensive
 [user manual](http://projects.haskell.org/diagrams/doc/manual.html).
+There is also a growing
+[collection of tutorials](http://projects.haskell.org/diagrams/documentation.html)
+on specific topics.
 
 Get involved
 ------------
+
+XXX excellent foo blah bar
 
 Subscribe to the
 [project mailing list](http://groups.google.com/group/diagrams-discuss),
@@ -72,7 +108,7 @@ examples for inclusion in the
 [gallery](http://projects.haskell.org/diagrams/gallery.html) or your
 cool code for inclusion in the
 [diagrams-contrib](http://hackage.haskell.org/package/diagrams%2Dcontrib)
-package!
+package.
 
 Happy diagramming!
 
