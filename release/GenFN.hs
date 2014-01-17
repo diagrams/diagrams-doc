@@ -1,18 +1,18 @@
-{-# LANGUAGE RankNTypes #-}
-{-# LANGUAGE DeriveDataTypeable
-           , FlexibleInstances
-           , MultiParamTypeClasses
-  #-}
+{-# LANGUAGE DeriveDataTypeable    #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE RankNTypes            #-}
 
-import Text.Pandoc
-import Text.Pandoc.Generic
+import           Text.Pandoc          (Block (..), Inline (..), Pandoc (..),
+                                       Target, readMarkdown, writePlain)
+import           Text.Pandoc.Generic  ()
 
-import Data.List (intersperse)
+import           Control.Monad.Writer
+import           Data.List            (intersperse)
+import           Supply
 
-import Control.Monad.Writer
-import Supply
-
-import Data.Generics
+import           Data.Default
+import           Data.Generics
 
 everywhere'M :: Monad m => GenericM m -> GenericM m
 everywhere'M f x = do x' <- f x
@@ -47,10 +47,10 @@ genFN i = return [i]
 ------------------------------------------------------------
 
 readMD :: String -> Pandoc
-readMD = readMarkdown defaultParserState
+readMD = readMarkdown def
 
 writeText :: Pandoc -> String
-writeText = writePlain defaultWriterOptions
+writeText = writePlain def
 
 ------------------------------------------------------------
 -- Main
