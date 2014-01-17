@@ -28,7 +28,9 @@ minimal extra work.
 
  <div style="text-align: center;">
 [![](http://projects.haskell.org/diagrams/gallery/images/Chart.thumb.png)](http://projects.haskell.org/diagrams/gallery/Chart.html)
+ &nbsp;&nbsp;&nbsp;
 [![](http://projects.haskell.org/diagrams/gallery/images/KnightTour.thumb.png)](http://projects.haskell.org/diagrams/gallery/KnightTour.html)
+ &nbsp;&nbsp;&nbsp;
 [![](http://projects.haskell.org/diagrams/gallery/images/SquareLimit.thumb.png)](http://projects.haskell.org/diagrams/gallery/SquareLimit.html)
  </div>
 
