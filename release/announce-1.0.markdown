@@ -1,24 +1,36 @@
+% Diagrams 1.0
+
     [BLOpts]
 	profile = wp
+	postid = 1161
 	categories = diagrams, haskell, projects
+	tags = 1.0, release, announcement
 
 The diagrams team is very pleased to announce the 1.0 release of
 [diagrams](http://projects.haskell.org/diagrams), a framework and
 embedded domain-specific language for declarative drawing in
-Haskell. Diagrams can be used for
-[data visualization](http://idontgetoutmuch.wordpress.com/2013/10/23/parking-in-westminster-an-analysis-in-haskell/),
-illustrating technical concepts, creating art, XXX. Diagrams code can
-be easily
-[embedded in blog posts](http://byorgey.wordpress.com/2012/08/28/creating-documents-with-embedded-diagrams/),
+Haskell. Check out the
+[gallery](http://projects.haskell.org/diagrams/gallery.html) for some
+examples of what it can do. Diagrams can be used for a wide range of
+purposes, from
+[data visualization](http://idontgetoutmuch.wordpress.com/2013/10/23/parking-in-westminster-an-analysis-in-haskell/)
+to
+[illustration](https://www.fpcomplete.com/user/edwardk/cellular-automata/part-1)
+to
+[art](http://mathlesstraveled.com/2013/04/06/stars-of-the-minds-sky-with-diagrams/),
+and diagrams code can be seamlessly embedded in
+[blog posts](http://byorgey.wordpress.com/2012/08/28/creating-documents-with-embedded-diagrams/),
 [LaTeX documents](http://projects.haskell.org/diagrams/doc/latex.html),
 and
-[Haddock documentation](http://byorgey.wordpress.com/2013/03/23/introducing-diagrams-haddock/).
-Check out the
-[gallery](http://projects.haskell.org/diagrams/gallery.html) for some
-examples of what it can do.
+[Haddock documentation](http://byorgey.wordpress.com/2013/03/23/introducing-diagrams-haddock/),
+making it easy to incorporate diagrams into your documents with
+minimal extra work.
 
+ <div style="text-align: center;">
+[![](http://projects.haskell.org/diagrams/gallery/images/Chart.thumb.png)](http://projects.haskell.org/diagrams/gallery/Chart.html)
+[![](http://projects.haskell.org/diagrams/gallery/images/KnightTour.thumb.png)](http://projects.haskell.org/diagrams/gallery/KnightTour.html)
 [![](http://projects.haskell.org/diagrams/gallery/images/SquareLimit.thumb.png)](http://projects.haskell.org/diagrams/gallery/SquareLimit.html)
-[![](http://projects.haskell.org/diagrams/gallery/images/Chart.thumb.png)](http://projects.haskell.org/diagrams/gallery/Chart.html) [![](http://projects.haskell.org/diagrams/gallery/images/KnightTour.thumb.png)](http://projects.haskell.org/diagrams/gallery/KnightTour.html)
+ </div>
 
 What's new
 ----------
@@ -59,7 +71,7 @@ improvements.  Highlights include:
 
 * Alignment can now be done by trace in addition to envelope ([API](http://projects.haskell.org/diagrams/haddock/Diagrams-TwoD-Align.html)).
 
-* `lens`es are now used consistently for record fields throughout the
+* The [`lens`](http://hackage.haskell.org/package/lens) package is now used consistently for record fields throughout the
   library ([documentation](http://projects.haskell.org/diagrams/doc/manual.html#faking-optional-named-arguments)).
 
 * Across-the-board improvements in performance and size of generated
