@@ -109,9 +109,8 @@ on specific topics.
 Get involved
 ------------
 
-XXX excellent foo blah bar
-
-Subscribe to the
+Diagrams has a friendly and growing community of users and developers.
+To connect with the community, subscribe to the
 [project mailing list](http://groups.google.com/group/diagrams-discuss),
 and/or come hang out in the `#diagrams` IRC channel on freenode.org
 for help and discussion.  Development continues stronger than ever,
