@@ -5,6 +5,7 @@
 	postid = 1161
 	categories = diagrams, haskell, projects
 	tags = 1.0, release, announcement
+	publish = true
 
 The diagrams team is very pleased to announce the 1.0 release of
 [diagrams](http://projects.haskell.org/diagrams), a framework and
