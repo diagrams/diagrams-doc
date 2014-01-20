@@ -19,12 +19,37 @@ div.exercises:before {
     padding: 20px;
 }
 
-div.panoramic {
-    width: 100%;
+.container {
+    margin: 0 auto;
+    position: relative;;
+    padding: 2em;
+
+    .container.inner {
+        position: relative;
+        margin: 0 auto;
+        max-width: 760px;
+    }
+}
+
+.banner {
     height: 400px;
-    background-image: url(../images/factorization.png);
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    overflow: hidden;
+    background:#2e3846 url(../images/factorization.png);
+    /*color:#ecf2f9;*/
+    /*text-align:center;*/
+    -webkit-animation:bgscroll 200s infinite linear;
+            animation:bgscroll 200s infinite linear;
+}
+
+    .banner .container {
+        max-width:400px;
+    }
+
+@-webkit-keyframes bgscroll {
+    from {background-position:0 0;}
+    to {background-position:-5333px 0px;}
+}
+
+@keyframes bgscroll {
+    from {background-position:0 0;}
+    to {background-position:-5333px 0px;}
 }

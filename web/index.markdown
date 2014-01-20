@@ -7,9 +7,34 @@ for creating vector graphics, using the
 [Haskell programming language](http://haskell.org/).
 
 <!-- <iframe seamless src="/images/factorization.png" height="400" width="100%"></iframe> -->
-<div class="panoramic">
-
+<div class="banner">
+  <div class="container"
+  </div>
 </div>
+
+|
+
+|
+
+|
+
+|
+
+|
+
+|
+
+|
+
+|
+
+|
+
+|
+
+|
+
+.
 
 Try it out!
 -----------
@@ -59,7 +84,9 @@ News
   [slides](http://www.cis.upenn.edu/~byorgey/pub/12-09-13-monoid-pearl-HS.pdf)
   ] (September 2012)
 
- <!--
+
+
+<!--
 <div style="text-align:center">
 <a href="/gallery/Paradox.html"><img src="/images/Paradox-small.png" style="vertical-align: middle" title="Fibonacci paradox" /></a>
 </div>
