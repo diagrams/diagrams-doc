@@ -24,7 +24,7 @@ You can:
     More detailed installation instructions [can be found on the diagrams wiki](http://www.haskell.org/haskellwiki/Diagrams/Install).
 
 Next, read the [quick start tutorial](/doc/quickstart.html) and the
-[user manual](http://projects.haskell.org/diagrams/manual/diagrams-manual.html),
+[user manual](http://projects.haskell.org/diagrams/doc/manual.html),
 or check out the [gallery](/gallery.html) to see example images and
 code.  Drop by the [`#diagrams` IRC channel](http://webchat.freenode.net/)
 with questions or post them to the
