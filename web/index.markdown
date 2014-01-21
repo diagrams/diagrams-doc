@@ -6,36 +6,6 @@ Diagrams is a powerful, flexible, declarative domain-specific language
 for creating vector graphics, using the
 [Haskell programming language](http://haskell.org/).
 
-<!-- <iframe seamless src="/images/factorization.png" height="400" width="100%"></iframe> -->
-<div class="banner">
-  <div class="container"
-  </div>
-</div>
-
-|
-
-|
-
-|
-
-|
-
-|
-
-|
-
-|
-
-|
-
-|
-
-|
-
-|
-
-.
-
 Try it out!
 -----------
 

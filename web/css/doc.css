@@ -19,12 +19,13 @@ div.exercises:before {
     padding: 20px;
 }
 
-.container {
+.i_container {
+    height: 400px;
     margin: 0 auto;
-    position: relative;;
+    position: relative;
     padding: 2em;
 
-    .container.inner {
+    .i_container.inner {
         position: relative;
         margin: 0 auto;
         max-width: 760px;
@@ -32,16 +33,16 @@ div.exercises:before {
 }
 
 .banner {
+    padding: 40px;
     height: 400px;
+    position: relative;
     background:#2e3846 url(../images/factorization.png);
-    /*color:#ecf2f9;*/
-    /*text-align:center;*/
     -webkit-animation:bgscroll 200s infinite linear;
             animation:bgscroll 200s infinite linear;
 }
 
-    .banner .container {
-        max-width:400px;
+    .banner .i_container {
+        max-width:500px;
     }
 
 @-webkit-keyframes bgscroll {

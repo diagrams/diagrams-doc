@@ -22,8 +22,7 @@ import           Hakyll
 
 pages :: IsString s => [s]
 pages = map (fromString . (++".markdown"))
-  [ "index"
-  , "download"
+  [ "download"
   , "tutorials"
   , "reference"
   , "sightings"
@@ -62,6 +61,14 @@ main = do
     match ("doc/**" .&&. complement "doc/*.html") $ do
         route idRoute
         compile copyFileCompiler
+
+    -- Index --------------------------------------
+    match "index.markdown" $ do
+      route $ setExtension ".html"
+      compile $do
+        pandocCompiler
+          >>= loadAndApplyTemplate "templates/index.html" defaultContext
+          >>= mainCompiler defaultContext
 
     -- Blog ---------------------------------------
     match "blog/*.html" $ do
