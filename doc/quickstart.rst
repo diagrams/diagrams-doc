@@ -737,7 +737,7 @@ possible! Here are pointers to some resources for learning more:
 .. _`other tutorials on more specific topics`: /documentation.html
 .. _`working with vectors and points`: vector.html
 .. _`trails and paths`: paths.html
-.. _`arrows`: arrows.html
+.. _`arrows`: arrow.html
 .. _`command-line driven interfaces`: cmdline.html
 .. _`report it as a bug`: http://github.com/diagrams/diagrams-doc/issues
 .. _`report it as a bug as well`: http://github.com/diagrams/diagrams/issues
