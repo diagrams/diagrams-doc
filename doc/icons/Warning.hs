@@ -10,7 +10,7 @@ import           Diagrams.Backend.Cairo.CmdLine
 #endif
 import           Diagrams.Prelude
 
-signSide = hrule 1 <> arc (-1/4 @@ turn) ((-1/4) + 1/3) # scale 0.3
+signSide = hrule 1 <> arc (-1/4 @@ turn) ((-1/4) + 1/3 @@ turn) # scale 0.3
 
 sign = mconcat . take 3 . iterate (rotateBy (1/3)) $ signSide
 
