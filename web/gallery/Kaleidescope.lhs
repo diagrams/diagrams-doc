@@ -34,9 +34,6 @@ Take any diagram and cut out an equilateral triangle of side 1 from the center. 
 > mkTriangle :: Dia -> Dia
 > mkTriangle = clipTo (triangle 1)
 
-> clipTo :: Path R2 -> Dia -> Dia
-> clipTo p = (withTrace p) . (withEnvelope p) . (clipBy p)
-
 We pass as arguments the number of pieces of confetti `n` and a random seed `r`. Between 10 and 100 pieces seem to work nicely.
 
 > kaleidescope :: Int -> Int -> Dia
