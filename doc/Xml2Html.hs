@@ -14,10 +14,8 @@ import           System.FilePath                    (joinPath, splitPath, (<.>),
 import           System.IO
 
 import           Data.VectorSpace                   (zeroV)
-import           Diagrams.Builder                   (BuildResult (..),
-                                                     buildDiagram,
-                                                     hashedRegenerate,
-                                                     ppInterpError)
+import qualified Diagrams.Builder                   as DB
+import           Diagrams.Prelude                   (centerXY, pad, (&), (.~))
 import           Diagrams.TwoD.Size                 (SizeSpec2D (Dims))
 import           Text.Docutils.CmdLine
 import           Text.Docutils.Transformers.Haskell
@@ -173,66 +171,77 @@ diagramOrPlaceholder outdir =
 compileDiagram :: FilePath -> String -> IO (Either String String)
 compileDiagram outDir src = do
   ensureDir outDir
-  res <- buildDiagram
+
+  let bopts = DB.mkBuildOpts
+
 #ifdef USE_SVG
-           SVG
+                SVG
 #else
-           Cairo
+                Cairo
 #endif
-           zeroV
+
+                zeroV
+
 #ifdef USE_SVG
-           (SVGOptions (Dims 500 200) Nothing)
+                (SVGOptions (Dims 500 200) Nothing)
 #else
-           (CairoOptions "default.png" (Dims 500 200) PNG False)
+                (CairoOptions "default.png" (Dims 500 200) PNG False)
 #endif
-           [src]
-           "(pad 1.1 . centerXY) example"
-           ["DeriveDataTypeable"]
-           [ "Diagrams.TwoD.Types"      -- WHY IS THIS NECESSARY =(
-           , "Diagrams.Core.Points"
-               -- GHC 7.2 bug?  need  V (Point R2) = R2  (see #65)
+
+                & DB.snippets .~ [src]
+                & DB.imports  .~
+                  [ "Diagrams.TwoD.Types"      -- WHY IS THIS NECESSARY =(
+                  , "Diagrams.Core.Points"
+                      -- GHC 7.2 bug?  need  V (Point R2) = R2  (see #65)
 #ifdef USE_SVG
-           , "Diagrams.Backend.SVG"
+                  , "Diagrams.Backend.SVG"
 #else
-           , "Diagrams.Backend.Cairo"
-           , "Diagrams.Backend.Cairo.Internal"
+                  , "Diagrams.Backend.Cairo"
+                  , "Diagrams.Backend.Cairo.Internal"
 #endif
-           , "Graphics.SVGFonts"
-           , "Data.Typeable"
-           ]
-           (hashedRegenerate
+                  , "Graphics.SVGFonts"
+                  , "Data.Typeable"
+                  ]
+                & DB.pragmas .~ ["DeriveDataTypeable"]
+                & DB.diaExpr .~ "example"
+                & DB.postProcess .~ (pad 1.1 . centerXY)
+                & DB.decideRegen .~
+                  (DB.hashedRegenerate
 #ifdef USE_SVG
-             (\_ opts -> opts)
+                    (\_ opts -> opts)
 #else
-             (\hash opts -> opts { _cairoFileName = mkFile hash })
+                    (\hash opts -> opts { _cairoFileName = mkFile hash })
 #endif
-             outDir
-           )
+                    outDir
+                  )
+
+  res <- DB.buildDiagram bopts
+
   case res of
-    ParseErr err    -> do
+    DB.ParseErr err    -> do
       putStrLn ("\nError while parsing\n" ++ src)
       putStrLn err
       return $ Left "Error while parsing"
 
-    InterpErr ierr  -> do
+    DB.InterpErr ierr  -> do
       putStrLn ("\nError while interpreting\n" ++ src)
-      putStrLn (ppInterpError ierr)
+      putStrLn (DB.ppInterpError ierr)
       return $ Left "Error while interpreting"
 
-    Skipped hash    -> do
+    DB.Skipped hash    -> do
       putStr "."
       hFlush stdout
-      return $ Right (mkFile hash)
+      return $ Right (mkFile (DB.hashToHexStr hash))
 
-    OK hash out -> do
+    DB.OK hash out -> do
       putStr "O"
       hFlush stdout
 #ifdef USE_SVG
-      BS.writeFile (mkFile hash) (renderSvg out)
+      BS.writeFile (mkFile (DB.hashToHexStr hash)) (renderSvg out)
 #else
       fst out
 #endif
-      return $ Right (mkFile hash)
+      return $ Right (mkFile (DB.hashToHexStr hash))
 
  where
   mkFile base = outDir </> base <.> backendExt

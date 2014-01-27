@@ -707,32 +707,55 @@ Angles
 ~~~~~~
 
 The `Angle` type represents two-dimensional angles.  Angles can be
-expressed in radians, degrees, or fractions of a circle.
+expressed in radians, degrees, or fractions of a circle. Isomorphisms
+`turn`, `rad`, and `deg` are provided (represented using the `Iso`
+type from the `lens`:pkg: package), which convert between abstract
+`Angle` values and `Double` values with various units.  To construct
+an `Angle`, use the `(@@)` operator, as in `(3 @@ deg)` or `(3 @@
+rad)`. To project an `Angle` back to a `Double`, use the `(^.)`
+operator, as in `someAngle ^. rad`.
 
-* `turn` represents fractions of a circle.  A value of `1` represents
+* `turn` represents fractions of a circle.  A value of `1 @@ turn` represents
   a full turn, `1/4 @@ turn` constructs a right angle, and so on.  The
-  measure of an Angle ``a`` in turns (of type `Double`), can be gotten
-  by `a ^. turn`.
+  measure of an Angle ``a`` in turns (represented with `Double`)
+  can be obtained using `a ^. turn`.
 * `rad` represents angles measured in radians.  A value of `tau` (that
   is, `\tau = 2 \pi`:math:) represents a full turn. (If you haven't heard of
   `\tau`:math:, see `The Tau Manifesto`__.)
 * `deg` represents angles measured in degrees.  A value of `360`
   represents a full turn.
 
-`turn`, `rad`, and `deg` are isomorphisms, represented using the `Iso`
-type from `lens`:pkg:.  The operators `^.` and `@@` can be used with
-any `Iso`.  Unfortunately, all of these have rather cryptic type
-signatures, and error messages can be hard to understand
-
 __ http://tauday.com
 
-The intention is that to pass an argument to a function that expects
-an `Angle`, you can write something like `(3 @@ deg)` or `(3 @@ rad)`.
-The function can use whatever units internally, and this should be
-transparent to the user.
+`fullTurn :: Angle` represents one full turn, equivalent to `1 @@
+turn`, `tau @@ rad`, or `360 @@ deg`.
 
-The `direction` function computes the angle of a vector, measured
-clockwise from the positive `x`:math:\-axis.
+The `direction` function computes the direction of a vector,
+represented by an angle measured clockwise from the positive
+`x`:math:\-axis (shown in green below).
+
+.. class:: dia
+
+::
+
+> example = mconcat
+>   [ exampleVector
+>   , angleArrow
+>   , axes
+>   ]
+>   # centerXY # pad 1.1
+>
+> axes = (arrowV (6 *^ unitX) # centerX <> arrowV (6 *^ unitY) # centerY)
+> theDir = 200 @@ deg
+> theV = 3 *^ fromDirection theDir
+> exampleVector = arrowV theV
+>   # lc blue
+>   # lw 0.03
+> angleArrow = arrowBetween' (with & arrowShaft .~ arc zeroV theDir)
+>   (origin .+^ (1 *^ unitX))
+>   (origin .+^ (theV # normalized))
+>   # dashing [0.05,0.05] 0
+>   # lc green
 
 Primitive shapes
 ----------------
@@ -2885,7 +2908,7 @@ function.
 >
 > shaft1 = trailFromVertices (map p2 [(0, 0), (1, 0), (1, 0.2), (2, 0.2)])
 > shaft2 = cubicSpline False (map p2 [(0, 0), (1, 0), (1, 0.2), (2, 0.2)])
-> shaft3 = arc 0 (1/6 @@ turn)
+> shaft3 = arc (0 @@ turn) (1/6 @@ turn)
 >
 > example = d
 >    # connect' (with & arrowTail .~ quill& tailSize .~ 1.5

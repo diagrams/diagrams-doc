@@ -247,7 +247,7 @@ will make the arrow shaft into an arc:
 
 ::
 
-> shaft = arc 0 (1/2 @@ turn)
+> shaft = arc (0 @@ turn) (1/2 @@ turn)
 >
 > example = ( sDot <> eDot
 >          <> arrowBetween' (with & arrowHead .~ spike & arrowTail .~ spike'
@@ -265,7 +265,7 @@ will make the arrow shaft into an arc:
 > sDot = dot # fc blue # moveTo sPt
 > eDot = dot # fc red # moveTo ePt
 >
-> shaft = arc 0 (1/2 @@ turn)
+> shaft = arc (0 @@ turn) (1/2 @@ turn)
 >
 > example = ( sDot <> eDot
 >          <> arrowBetween' (with & arrowHead .~ spike & arrowTail .~ spike'
@@ -296,7 +296,7 @@ result of making the arrow pointing from `(0,0)`:math: to
 
 ::
 
-> shaft = arc 0 (1/2 @@ turn) # reverseTrail
+> shaft = arc (0 @@ turn) (1/2 @@ turn) # reverseTrail
 
 .. class:: dia
 
@@ -307,7 +307,7 @@ result of making the arrow pointing from `(0,0)`:math: to
 > dot = circle 0.02 # lw 0
 > sDot = dot # fc blue # moveTo sPt
 > eDot = dot # fc red # moveTo ePt
-> shaft = arc 0 (1/2 @@ turn) # reverseTrail
+> shaft = arc (0 @@ turn) (1/2 @@ turn) # reverseTrail
 > example = ( sDot <> eDot
 >          <> arrowBetween' (with & arrowHead .~ spike & arrowTail .~ spike'
 >                                 & arrowShaft .~ shaft) sPt ePt)
@@ -553,8 +553,8 @@ straightforward.
 >
 > states = position (zip points ds)
 >
-> shaft = arc 0 (1/6 @@ turn)
-> shaft' = arc 0 (1/2 @@ turn) # scaleX 0.33
+> shaft = arc (0 @@ turn) (1/6 @@ turn)
+> shaft' = arc (0 @@ turn) (1/2 @@ turn) # scaleX 0.33
 > line = trailFromOffsets [unitX]
 >
 > arrowStyle1 = (with  & arrowHead  .~ noHead & tailSize .~ 0.3
@@ -606,7 +606,7 @@ In the following exercise you can try `connectPerim'` for yourself.
     >
     > d = bullseye <> target
     >
-    > shaft = arc 0 (1/6 @@ turn)
+    > shaft = arc (0 @@ turn) (1/6 @@ turn)
     >
     > connectTarget :: (Renderable (Path R2) b)
     >               =>  Angle -> (Diagram b R2 -> Diagram b R2)
