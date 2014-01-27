@@ -751,7 +751,7 @@ represented by an angle measured clockwise from the positive
 > exampleVector = arrowV theV
 >   # lc blue
 >   # lw 0.03
-> angleArrow = arrowBetween' (with & arrowShaft .~ arc 0 theDir)
+> angleArrow = arrowBetween' (with & arrowShaft .~ arc zeroV theDir)
 >   (origin .+^ (1 *^ unitX))
 >   (origin .+^ (theV # normalized))
 >   # dashing [0.05,0.05] 0
@@ -2908,7 +2908,7 @@ function.
 >
 > shaft1 = trailFromVertices (map p2 [(0, 0), (1, 0), (1, 0.2), (2, 0.2)])
 > shaft2 = cubicSpline False (map p2 [(0, 0), (1, 0), (1, 0.2), (2, 0.2)])
-> shaft3 = arc 0 (1/6 @@ turn)
+> shaft3 = arc (0 @@ turn) (1/6 @@ turn)
 >
 > example = d
 >    # connect' (with & arrowTail .~ quill& tailSize .~ 1.5

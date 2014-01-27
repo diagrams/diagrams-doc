@@ -200,7 +200,7 @@ The first thing to learn is how to *create* values of type
 
      ::
 
-     > vs = zipWith mkV (cycle [1,2,3]) [ 1/30, 2/30 .. 1 @@ turn ]
+     > vs = zipWith mkV (cycle [1,2,3]) [ 1/30 @@ turn, 2/30 @@ turn .. 1 @@ turn ]
      >   where mkV r th = r *^ fromDirection th
      > example = lw 0.02 . mconcat . map (fromOffsets . (:[])) $ vs
 
