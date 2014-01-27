@@ -61,27 +61,36 @@ compileExample mThumb lhs out = do
                 ++ "(r2 " ++ show (vxOff, vyOff) ++ ") example"
             _ -> "example"
 
-  res <- buildDiagram
+      bopts = mkBuildOpts
+
 #ifdef USE_SVG
-           SVG
+                SVG
 #else
-           Cairo
+                Cairo
 #endif
-           zeroV
+
+                zeroV
+
 #ifdef USE_SVG
-           (SVGOptions (mkSizeSpec w h) Nothing)
+                (SVGOptions (mkSizeSpec w h) Nothing)
 #else
-           (CairoOptions out (mkSizeSpec w h) fmt False)
+                (CairoOptions out (mkSizeSpec w h) fmt False)
 #endif
-           [f']
-           toBuild
-           []
+
+                & snippets .~ [f']
+                & imports  .~
+
 #ifdef USE_SVG
-           [ "Diagrams.Backend.SVG" ]
+                  [ "Diagrams.Backend.SVG" ]
 #else
-           [ "Diagrams.Backend.Cairo" ]
+                  [ "Diagrams.Backend.Cairo" ]
 #endif
-           alwaysRegenerate  -- XXX use hashedRegenerate?
+
+                & diaExpr .~ toBuild
+                & decideRegen .~ alwaysRegenerate -- XXX use hashedRegenerate?
+
+  res <- buildDiagram bopts
+
   case res of
     ParseErr err    -> putStrLn ("Parse error in " ++ lhs) >> putStrLn err
     InterpErr err   -> putStrLn ("Error while compiling " ++ lhs) >>
