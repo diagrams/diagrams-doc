@@ -22,9 +22,9 @@ The standard infinite list of Fibonacci numbers.
 Create a grid by gluing together a bunch of squares.
 
 > grid x y = frame <> lattice
->   where s       = unitSquare # lw 0.02 # freeze
+>   where s       = unitSquare # lw 0.02
 >         frame   = rect (fromIntegral x) (fromIntegral y)
->                 # lw thick # freeze
+>                 # lw thick
 >         lattice = centerXY . vcat . map hcat . replicate y . replicate x $ s
 
 The trapezoid and triangle shapes, with sides lengths based on two
@@ -62,7 +62,6 @@ The four shapes assembled into a square.
 >                    fromVertices [p2 (s2,0), p2 (s1+s2,s1+s2)])
 >                 # stroke
 >                 # lw thick
->                 # freeze
 >                 # centerXY
 >
 >         sqShapes = (traps # centerY ||| tris # centerY)
@@ -91,7 +90,6 @@ The four shapes assembled into a rectangle.
 >                  # stroke
 >                  # lw thick
 >                  # lineCap LineCapRound
->                  # freeze
 >                  # centerXY
 
 Draw the order-4 diagram with thick lines in the middle. Passing the
