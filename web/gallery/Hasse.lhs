@@ -45,7 +45,7 @@ element present, and leaving a blank space for absent elements.
 >                       )
 >                 $ [1..n]
 >
-> drawElt e = unitSquare # fc (colors !! e) # lw 0.05 # freeze
+> drawElt e = unitSquare # fc (colors !! e) # lw 0.05
 
 Draw a subset by drawing a dashed rectangle around the elements.  Note
 that we also assign a name to the rectangle, corresponding to the
@@ -58,7 +58,6 @@ later.
 >                                  # lw 0.03
 >                                  # named elts
 >                           )
->                           # freeze
 
 Draw a Hasse diagram by drawing subsets grouped by size in rows, and
 connecting each set to its subsets in the row below.  [See the user
