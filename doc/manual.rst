@@ -1449,10 +1449,12 @@ transformations (rotation, scaling, reflection, shears---anything
 which leaves the origin fixed and sends lines to lines) as well as
 translations.  In the simplified case of the real line, an affine
 transformation is any function of the form `f(x) = mx + b`:math:.
-Generalizing to `d`:math: dimensions, an affine transformation is
-a vector function of the form `f(\mathbf{v}) = \mathbf{M}\mathbf{v} +
+Generalizing to `d`:math: dimensions, an affine transformation is a
+vector function of the form `f(\mathbf{v}) = \mathbf{M}\mathbf{v} +
 \mathbf{B}`:math:, where `\mathbf{M}`:math: and `\mathbf{B}`:math: are
-`d \times d`:math: matrices.
+`d \times d`:math: matrices.  More general, non-affine
+transformations, including projective transformations, are referred to
+in ``diagrams`` as `Deformations`_
 
 `Diagrams.TwoD.Transform`:mod: defines a number of common affine
 transformations in two-dimensional space. (To construct
@@ -1469,6 +1471,7 @@ directly applies the transformation.  The verb form is much more
 common (and the documentation below will only discuss verb forms), but
 getting one's hands on a first-class `Transformation` value can
 occasionally be useful.
+
 
 Transformations in general
 ++++++++++++++++++++++++++
@@ -1499,8 +1502,8 @@ Rotation
 ++++++++
 
 Use `rotate` to rotate a diagram counterclockwise by a given angle__
-about the origin.  Since `rotate` takes an angle, you must specify an
-angle type, such as `rotate (80 @@ deg)`.  In the common case that you
+about the origin.  Since `rotate` takes an `Angle`, you must specify an
+angle unit, such as `rotate (80 @@ deg)`.  In the common case that you
 wish to rotate by an angle specified as a certain fraction of a
 circle, like `rotate (1/8 @@ turn)`, you can use `rotateBy`
 instead. `rotateBy` takes a `Double` argument expressing the number of
@@ -1608,6 +1611,48 @@ Instances of `Transformable` include vectors, points, trails, paths,
 envelopes, and `Transformations` themselves.  In addition,
 tuples, lists, maps, or sets of `Transformable` things are also
 `Transformable` in the obvious way.
+
+.. _`Deformations`:
+
+Deformations
+~~~~~~~~~~~~
+
+The affine transformations represented by `Transformation` include the
+most commonly used transformations, but occasionally other sorts are
+useful.  Non-affine transformations are represented by the
+`Deformation` type.  The design is quite similar to that of
+`Transformation`.  A `Deformation` is parameterized by the vector space
+over which it acts.  There is a `Deformable` type class, and `deform`
+applies a `Deformation` to a `Deformable` type in the same vector
+space, returning a value of the same type.
+
+`Diagrams.TwoD.Deform`:mod: defines parallel and perspective
+projections along the principal axes in 2 dimensions.  
+
+`Deformation v` is a `Monoid` for any vector space `v`.  New
+deformations can be formed by composing two deformations.  The
+composition of an affine transformation with a `Deformation` is also a
+`Deformation`.  `asDeformation` converts a `Transformation` to an
+equivalent `Deformation`, "forgetting" the inverse and other extra
+information which distinguishes affine transformations.
+
+The very general nature  of deformations prevents certain types
+from being `Deformable`.  Because not every `Deformation` is
+invertible, diagrams cannot be deformed.  In general, for two points
+`p`:math: and `q`:math:, and a deformation `D`:math:, there is no
+deformation `D_v`:math: such that, `Dp - Dq = D_v(p-q)`:math:.  For
+this reason, only points and concretely located types are deformable.
+Finally, segments are not deformable because the image of the segment
+may not be representable by a single segment.  The `Deformable`
+instances for trails and paths will approximate each segment by
+several segments as necessary.  Points, `Located` trails, and paths
+are all deformable.
+
+Because approximation and subdivision are required for many
+`Deformable` instances, the type class provides a function `deform'`,
+which takes the approximation accuracy as its first argument.  For
+trails and paths, `deform` calls `deform'` with an error limit of 0.01
+times the object's size.
 
 Alignment
 ~~~~~~~~~
