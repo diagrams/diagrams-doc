@@ -1627,7 +1627,22 @@ applies a `Deformation` to a `Deformable` type in the same vector
 space, returning a value of the same type.
 
 `Diagrams.TwoD.Deform`:mod: defines parallel and perspective
-projections along the principal axes in 2 dimensions.  
+projections along the principal axes in 2 dimensions.
+
+.. class:: dia-lhs
+
+::
+
+> sq = unitSquare # translate (5 ^& 3) :: Path R2
+> marks = repeat . lw 0 $ circle 0.02
+> dots c p = position $ zip (concat $ pathVertices p) (marks # fc c)
+> example = stroke sq <> dots blue sq <> dots green (deform perspectiveX1 sq)
+
+The example above projects a square onto the plane x=1.  In this
+example, only the projected vertices are drawn, since the four
+overlapping line segments corresponding to the edges of the square are
+not interesting.  Note, though, that the `Path` is deformed, and then
+the vertices are taken from the projected result.
 
 `Deformation v` is a `Monoid` for any vector space `v`.  New
 deformations can be formed by composing two deformations.  The
@@ -1636,7 +1651,7 @@ composition of an affine transformation with a `Deformation` is also a
 equivalent `Deformation`, "forgetting" the inverse and other extra
 information which distinguishes affine transformations.
 
-The very general nature  of deformations prevents certain types
+The very general nature of deformations prevents certain types
 from being `Deformable`.  Because not every `Deformation` is
 invertible, diagrams cannot be deformed.  In general, for two points
 `p`:math: and `q`:math:, and a deformation `D`:math:, there is no
@@ -1651,8 +1666,8 @@ are all deformable.
 Because approximation and subdivision are required for many
 `Deformable` instances, the type class provides a function `deform'`,
 which takes the approximation accuracy as its first argument.  For
-trails and paths, `deform` calls `deform'` with an error limit of 0.01
-times the object's size.
+trails and paths, `deform` (without a prime) calls `deform'` with an
+error limit of 0.01 times the object's size.
 
 Alignment
 ~~~~~~~~~
