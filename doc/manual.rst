@@ -1454,7 +1454,7 @@ vector function of the form `f(\mathbf{v}) = \mathbf{M}\mathbf{v} +
 \mathbf{B}`:math:, where `\mathbf{M}`:math: and `\mathbf{B}`:math: are
 `d \times d`:math: matrices.  More general, non-affine
 transformations, including projective transformations, are referred to
-in ``diagrams`` as `Deformations`_
+in ``diagrams`` as `Deformations`_.
 
 `Diagrams.TwoD.Transform`:mod: defines a number of common affine
 transformations in two-dimensional space. (To construct
