@@ -4,6 +4,7 @@ title: Sightings
 
 People using diagrams to do stuff.
 
+* [Performance profiling with ghc-events-analyze](http://www.well-typed.com/blog/86)
 * [Laplace's Equation in Haskell: Using a DSL for Stencils](http://idontgetoutmuch.wordpress.com/2014/02/10/laplaces-equation-in-haskell-using-a-dsl-for-stencils-3/)
   (Dominic Steinitz, 10 February 2014)
 * [Demystifying DList](http://h2.jaguarpaw.co.uk/posts/demystifying-dlist/)
