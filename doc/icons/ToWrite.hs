@@ -9,10 +9,10 @@ import           Diagrams.Backend.SVG.CmdLine
 import           Diagrams.Backend.Cairo.CmdLine
 #endif
 
+import           Control.Lens                   ((&), (.~))
 import           Diagrams.Prelude
-import           Control.Lens ((&), (.~))
 
-frame = rect 8.5 11
+page  = rect 8.5 11
       # lw 0.4
       # lineJoin LineJoinRound
 
@@ -23,6 +23,6 @@ textLines = vcat' (with & sep .~ 1.5 ) [s,l,l,s,l,l]
   where l = hrule 6 # alignR
         s = hrule 5 # alignR
 
-d = frame <> textLines
+d = page <> textLines
 
 main = defaultMain (pad 1.1 d)
