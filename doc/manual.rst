@@ -3339,29 +3339,31 @@ Every diagram (and, more generally, anything which is an instance of
 the `Traced` type class) has a *trace*, a function which is like an
 "embedded ray tracer" for finding points on the diagram boundary.  In
 particular, the trace function takes a *ray* as input (represented by
-a base point and a vector indicating the direction) and returns the
-positive distance (given as a multiple of the input vector magnitude)
-to the nearest point where the ray intersects the diagram.
+a pair ``(p,v)`` of a base point and a vector) and returns a sorted
+list of parameters ``t`` such that ``p .+^ (t *^ v)`` is a point of
+intersection between the ray and the boundary of the diagram.
 
 Normally, a trace is accessed using one of the four functions
-`traceV`, `traceP`, `maxTraceV`, and `maxTraceP`.
+`rayTraceV`, `rayTraceP`, `maxRayTraceV`, and `maxRayTraceP`.
 
-* `traceV` takes as inputs a base point ``p``, a vector ``v``, and any
-  instance of `Traced`.  It looks for intersection points with the
-  given object along the entire line determined by ``p`` and ``v``
-  (that is, the line with parametric form ``p .+^ (t *^ v)``), and
-  returns a scalar multiple of ``v`` which extends from ``p`` to the
-  point of intersection with the smallest parameter, or ``Nothing`` if
-  there is no such intersection.
+* `rayTraceV` takes as inputs a base point ``p``, a vector ``v``, and
+  any instance of `Traced`.  It looks for intersection points with the
+  given object along the ray determined by ``p`` and ``v``, and finds
+  the smallest *positive* scalar ``t`` such that ``p .+^ (t *^ v)`` is
+  a point of intersection between the ray and the boundary of the
+  `Traced` object.  If such a ``t`` exists, it returns the vector from
+  ``p`` to the intersection point, that is, ``t *^ v``.  If there is
+  no such intersection, `rayTraceV` returns ``Nothing``.
 
-  Intuitively, the result of `traceV` extends from the given point to
-  the "closest" intersection, but it must be kept in mind that if any
-  intersection points lie in the direction opposite ``v``, it is
-  really the *furthest* such point which will be used (that is, the
-  point with the smallest, *i.e.* most negative, parameter).
-
-  This behavior is illustrated below.  Note that it can be somewhat
-  unintuitive when the base point lies inside the diagram.
+  Intuitively, restricting to *positive* ``t``-values means that only
+  intersection points "in front of" the point ``p`` (that is, in the
+  direction of ``v``) are considered.  This tends to be the most
+  intuitive behavior, and parallels the way raytracers work---think of
+  ``p`` as the location of the "camera" and ``v`` as the direction the
+  camera is pointing.  If you want to consider negative ``t``-values,
+  see the `traceV` family of functions, described below, or use
+  `getTrace` to access the list of all intersection parameters
+  directly.
 
   .. class:: dia-lhs
 
@@ -3374,7 +3376,7 @@ Normally, a trace is accessed using one of the four functions
   > drawTraceV v d
   >   = lc green $
   >     fromMaybe mempty
-  >       ((origin ~~) <$> traceP origin v d)
+  >       ((origin ~~) <$> rayTraceP origin v d)
   > illustrateTraceV v d = (d <> drawV v <> drawTraceV v d) # showOrigin
   >
   > example = hcat' (with & sep .~ 1)
@@ -3385,27 +3387,32 @@ Normally, a trace is accessed using one of the four functions
   >           , circle 1 # translate (r2 (1.5, 1.5))
   >           ]
 
-* `traceP` works similarly, except that it returns the point of
+* `rayTraceP` works similarly, except that it returns the point of
   intersection itself, which lies on the boundary of the object, or
   ``Nothing`` if there is no such point.
 
-  `traceV` and `traceP` are related: ``traceP p v x == Just p'`` if and
-  only if ``traceV p v x == Just (p' .-. p)``.
+  That is, ``rayTraceP p v x == Just p'`` if and only if ``rayTraceV p
+  v x == Just (p' .-. p)``.
 
-* `maxTraceV` and `maxTraceP` are similar to `traceV` and `traceP`,
-  respectively, except they look for the point of intersection with
-  the *greatest* parameter.
+* `maxRayTraceV` and `maxRayTraceP` are similar to `rayTraceV` and `rayTraceP`,
+  respectively, except that they look for the *largest* positive
+  ``t``-value, that is, the *furthest* intersection point in the
+  direction of ``v``.  Again, intersection points in the opposite
+  direction from ``v`` are not considered.
 
-For slightly more low-level access, the `Traced` class provides the
+* The `traceV`, `traceP`, `maxTraceV`, and `maxTraceP` functions work
+  similarly, but are a bit more low-level: they look for the
+  intersection point with the *smallest* (respectively *largest*)
+  parameter, even if it is negative.
+
+For even more low-level access, the `Traced` class provides the
 `getTrace` method, which can be used to directly access the trace
-function for an object.  Currently, given inputs ``p`` and ``v``, it
-returns a scalar ``s`` such that ``s *^ v`` extends from ``p`` to the
-intersection point with the smallest parameter.  In the future, it may
-be extended to return a list of all intersection points instead of
-just the smallest; please contact the developers if you would be
-interested in this feature.
+function for an object.  Given inputs ``p`` and ``v``, it returns a
+sorted list of scalars ``t`` such that ``p .+^ (t *^ v)`` is a point
+of intersection between the ray ``(p,v)`` and the boundary of the
+diagram.
 
-The below diagram illustrates the use of the `traceP` function to
+The below diagram illustrates the use of the `rayTraceP` function to
 identify points on the boundaries of several diagrams.
 
 .. class:: dia-lhs
