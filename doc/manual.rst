@@ -743,7 +743,7 @@ represented by an angle measured clockwise from the positive
 >   , angleArrow
 >   , axes
 >   ]
->   # centerXY # pad 1.1
+>   # center # pad 1.1
 >
 > axes = (arrowV (6 *^ unitX) # centerX <> arrowV (6 *^ unitY) # centerY)
 > theDir = 200 @@ deg
@@ -985,7 +985,7 @@ which there are two possibilities:
   >                   # fontSize 0.6
   >              <> star (StarFun f) (regPoly 7 1)
   >                   # stroke # lw 0.05 # lc red
-  > example       = centerXY . hcat' (with & sep .~ 0.5) $ map visualize funs
+  > example       = center . hcat' (with & sep .~ 0.5) $ map visualize funs
 
 You may notice that all the above examples need to call `stroke` (or
 `stroke'`), which converts a path into a diagram.  Many functions
@@ -1382,7 +1382,7 @@ for three aspects of line drawing:
 ::
 
 > path = fromVertices (map p2 [(0,0), (1,0.3), (2,0), (2.2,0.3)]) # lw 0.1
-> example = centerXY . vcat' (with & sep .~ 0.1 )
+> example = center . vcat' (with & sep .~ 0.1 )
 >           $ map (path #)
 >             [ lineCap LineCapButt   . lineJoin LineJoinMiter
 >             , lineCap LineCapRound  . lineJoin LineJoinRound
@@ -1731,6 +1731,10 @@ interpolating between the bottom and top of the square:
 > example = hcat . map showOrigin
 >         $ zipWith alignY [-1, -0.8 .. 1] (repeat s)
 
+To center an object along an axis we provide the functions `centerX`
+and `centerY`. An object can be simultaneously centered along both axis
+(actually along all of its basis vectors) using the `center` function.
+
 The align funcitons have sister functions like `snugL` and `snugX`
 that work the same way as `alignL` and `alignX`. The difference is
 that the `snug` class of functions use the trace as the boundary
@@ -1758,11 +1762,11 @@ polygon):
 >     a = 1/8 @@ turn
 >     b = 3/4 @@ turn
 >
-> aligned = (concave # centerXY # alignR # showOrigin)
->        <> (convex # centerXY # alignL # showOrigin)
+> aligned = (concave # center # alignR # showOrigin)
+>        <> (convex # center # alignL # showOrigin)
 >
-> snugged = (concave # centerXY # snugR # showOrigin)
->        <> (convex # centerXY # snugL # showOrigin)
+> snugged = (concave # center # snugR # showOrigin)
+>        <> (convex # center # snugL # showOrigin)
 >
 > example = aligned ||| strutX 0.5 ||| snugged
 
@@ -1923,7 +1927,7 @@ is how to convert between them.
     > almostClosed = fromOffsets $ (map r2
     >   [(2, -1), (-3, -0.5), (-2, 1), (1, 0.5)])
     >
-    > example = pad 1.1 . centerXY . fc orange . hcat' (with & sep .~ 1)
+    > example = pad 1.1 . center . fc orange . hcat' (with & sep .~ 1)
     >   $ [ almostClosed # strokeLine
     >     , almostClosed # closeLine # strokeLoop
     >     ]
@@ -1972,7 +1976,7 @@ To construct a line, loop, or trail, you can use one of the following:
 
   > theLine = fromOffsets (iterateN 5 (rotateBy (1/20)) unitX)
   > example = theLine # strokeLine
-  >         # lc blue # lw 0.05 # centerXY # pad 1.1
+  >         # lc blue # lw 0.05 # center # pad 1.1
 
 * `fromVertices` takes a list of vertices, generating linear segments
   between them.
@@ -1983,7 +1987,7 @@ To construct a line, loop, or trail, you can use one of the following:
 
   > vertices = map p2 $ [(x,y) | x <- [0,0.2 .. 2], y <- [0,1]]
   > example = fromVertices vertices # strokeLine
-  >         # lc red # centerXY # pad 1.1
+  >         # lc red # center # pad 1.1
 
 * `(~~)` creates a simple linear trail between two points.
 * `cubicSpline` creates a smooth curve passing through a given list of
@@ -1997,7 +2001,7 @@ To construct a line, loop, or trail, you can use one of the following:
   > theLine = cubicSpline False vertices
   > example = mconcat (iterateN 6 (rotateBy (-1/6)) theLine)
   >         # glueLine # strokeLoop
-  >         # lc green # lw 0.05 # fc aqua # centerXY # pad 1.1
+  >         # lc green # lw 0.05 # fc aqua # center # pad 1.1
 
 * `fromSegments` takes an explicit list of `Segment`\s, which can
   occasionally be useful if, say, you want to generate some Bézier
@@ -2482,7 +2486,7 @@ instances of `TrailLike`:
 > blueSquares = decoratePath s {- 1 -}
 >                 (replicate 4 (s {- 2 -} # scale 0.5) # fc blue)
 > paths       = lc purple . stroke $ star (StarSkip 2) s {- 3 -}
-> aster       = centerXY . lc green . strokeLine
+> aster       = center . lc green . strokeLine
 >             . mconcat . take 5 . iterate (rotateBy (1/5))
 >             . onLineSegments init
 >             $ s {- 4 -}
@@ -2823,7 +2827,7 @@ lower-left to upper-right corner.
 ::
 
 > circles = (c ||| c) === (c ||| c) where c = circle 1 # fc fuchsia
-> example = circles # centerXY # view (p2 (-1,-1)) (r2 (1.3, 0.7))
+> example = circles # center # view (p2 (-1,-1)) (r2 (1.3, 0.7))
 
 Note in the above example how the actual portion of the diagram that
 ends up being visible is larger than the specification given to
@@ -2890,6 +2894,9 @@ __ /gallery/SymmetryCube.html
 
 * `arrowAt` to place an arrow at a point.
 
+* `arrowV` to create an arrow with the magnitude and direction of a given
+  vector.
+
 .. class:: dia-lhs
 
 ::
@@ -2914,7 +2921,7 @@ __ /gallery/SymmetryCube.html
 >           ===
 >           strutY 0.5
 >           ===
->           (ex23 <> ex4)) # centerXY
+>           (ex23 <> ex4)) # center
 
 Notice that the arrows in the above diagram all have the same dart
 shaped head, no tail, and a straight shaft. All of these aspects, and
@@ -2946,7 +2953,8 @@ to `connect` is `connect'`. These companion functions take an extra
   the amount of space between the end of the arrow and the location it
   is pointing at.  Unlike `headSize` and `tailSize`, these values are
   relative to the *local* vector space (*i.e.* they are affected
-  normally by scaling).
+  normally by scaling). A traversal called `gap` is provided to set
+  both the `headGap` and `tailGap` simultaneously.
 
 * `headStyle`, `tailStyle` and `shaftStyle` are used to pass in style
   functions like `fc blue . opacity 0.75` to customize parts of the
@@ -3096,7 +3104,7 @@ generally, `fontWeight`), `italic`, and `oblique` (or, more generally,
 ::
 
 > text' s t = text t # fontSize s <> strutY (s * 1.3)
-> example = centerXY $
+> example = center $
 >       text' 10 "Hello" # italic
 >   === text' 5 "there"  # bold # font "freeserif"
 >   === text' 3 "world"  # fc green
@@ -3205,7 +3213,7 @@ Envelope-related functions
 
   ::
 
-  > surround d = c === (c ||| d ||| c) # centerXY === c
+  > surround d = c === (c ||| d ||| c) # center === c
   >   where c = circle 0.5
   >
   > example = surround (square 1) ||| strutX 1
@@ -3218,7 +3226,7 @@ Envelope-related functions
 
      `pad` expands the envelope *relative to the local
      origin*.  So if you want the padding to be equal on all sides, use
-     `centerXY` first.
+     `center` first.
 
   For example,
 
@@ -3226,13 +3234,13 @@ Envelope-related functions
 
   ::
 
-  > surround d = c === (c ||| d ||| c) # centerXY === c
+  > surround d = c === (c ||| d ||| c) # center === c
   >   where c = circle 0.5
   >
   > p = strokeTrail (square 1)
   >
   > example = surround (pad 1.2 $ p # showOrigin) ||| strutX 1
-  >       ||| surround (pad 1.2 $ p # centerXY # showOrigin)
+  >       ||| surround (pad 1.2 $ p # center # showOrigin)
 
 * Envelopes can be "extruded"---like `pad`, but only in a certain
   direction---using `extrudeEnvelope`.  Likewise, `intrudeEnvelope`
@@ -3257,14 +3265,14 @@ Envelope-related functions
   >                     , let t = ((fromIntegral i) * 2.0 * pi)
   >                             / (fromIntegral n)
   >                     ]
-  >         mkLine a v = moveTo a $ fromOffsets [v] # centerXY
+  >         mkLine a v = moveTo a $ fromOffsets [v] # center
   >
   > example
   >   = square 2
   >   # extrudeEnvelope (2 ^& 1)
   >   # sampleEnvelope2D 100
   >   # lw 0.05
-  >   # centerXY # pad 1.1
+  >   # center # pad 1.1
 
 * Manually setting the envelope of a diagram can be
   accomplished using `withEnvelope`.  Additionally, `phantom` can be
@@ -3662,7 +3670,7 @@ below code draws a tree of circles, using subdiagram traces (see
 > import Data.Maybe (fromMaybe)
 >
 > root   = circle 1 # named "root"
-> leaves = centerXY
+> leaves = center
 >        . hcat' (with & sep .~ 0.5)
 >        $ map (\c -> circle 1 # named c) "abcde"
 >
@@ -4381,19 +4389,19 @@ create active `Point`\s, `Path`\s, colors, or values of any other type.
 .. container:: todo
 
   * Examples of animating things other than diagrams
-  
-  
+
+
 Animated GIFs
 -------------
 
 Anumated GIFs can be created directly using the cairo backend.
 This is done by calling `mainWith` with an argument of type
 `[(Diagram Cairo R2, GifDelay)]` where `GifDelay` is a synonym
-for `Int`. Each tuple is a diagram frame of the animation and 
+for `Int`. Each tuple is a diagram frame of the animation and
 a time in one hundredths of a second until the next frame.
 This creates an executable which takes an output file with the
 extension gif. The other command line options which can be used
-are --dither (to turn on dithering), --looping-off, and --loop-repeat 
+are --dither (to turn on dithering), --looping-off, and --loop-repeat
 (to specify the number of times to repeat the loop after the first time).
 
 
