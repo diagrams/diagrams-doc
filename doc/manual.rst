@@ -2790,8 +2790,7 @@ Clipping
 
 With backends that support clipping, paths can be used to *clip* other
 diagrams.  Only the portion of a clipped diagram falling inside the
-clipping path will be drawn.  Note that the diagram's envelope is
-unaffected.
+clipping path will be drawn.
 
 .. class:: dia-lhs
 
@@ -2802,7 +2801,16 @@ unaffected.
 >         # lw 0.05
 >         # clipBy (square 3.2 # rotateBy (1/10))
 
-Altering a diagram's envelope can be accomplished using `withEnvelope`
+Several functions are available, depending on what envelope and trace
+you want the resulting diagram to have.  `clipBy` uses the envelope
+and trace of the original diagram.  `clipped` uses the envelope and
+trace of the clipping path.  `clipTo` uses the intersection of the two
+envelopes, and a trace which matches the displayed outline of the
+diagram.  Note that in general the intersection of envelopes is larger
+than the envelope of an intersection.  Diagrams does not have a
+function which returns the tight envelope of the intersection.
+
+Altering a diagram's envelope can also be accomplished using `withEnvelope`
 (see `Envelope-related functions`_).  The `view` function is also
 provided for the special case of setting a diagram's envelope to some
 rectangle, often used for the purpose of selecting only a part of a
