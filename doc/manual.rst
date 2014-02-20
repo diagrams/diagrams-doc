@@ -4241,7 +4241,8 @@ Animation
 
 Diagrams has experimental support for the creation of *animations*.
 Animations are created with the help of a generic `Active`
-abstraction, defined in the `active`:pkg: package.
+abstraction, defined in the `active`:pkg: package. Additionally,
+animated GIFs can be created using the cairo backend.
 
 .. container:: warning
 
@@ -4380,6 +4381,21 @@ create active `Point`\s, `Path`\s, colors, or values of any other type.
 .. container:: todo
 
   * Examples of animating things other than diagrams
+  
+  
+Animated GIFs
+-------------
+
+Anumated GIFs can be created directly using the cairo backend.
+This is done by calling `mainWith` with an argument of type
+`[(Diagram Cairo R2, GifDelay)]` where `GifDelay` is a synonym
+for `Int`. Each tuple is a diagram frame of the animation and 
+a time in one hundredths of a second until the next frame.
+This creates an executable which takes an output file with the
+extension gif. The other command line options which can be used
+are --dither (to turn on dithering), --looping-off, and --loop-repeat 
+(to specify the number of times to repeat the loop after the first time).
+
 
 Rendering backends
 ==================
@@ -4437,7 +4453,8 @@ platforms, particularly OS X.
 
 .. _`cairo 2D graphics library`: http://www.cairographics.org/
 
-The cairo backend can produce PNG, SVG, PDF, and postscript output.
+The cairo backend can produce PNG, SVG, PDF, postscript,
+and animated GIF output.
 For specific information on how to make use of it, see the
 documentation for the `Diagrams.Backend.Cairo`:mod: module.
 
