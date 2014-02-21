@@ -1,0 +1,106 @@
+.. role:: pkg(literal)
+.. role:: hs(literal)
+.. role:: mod(literal)
+.. role:: repo(literal)
+
+.. default-role:: hs
+
+Diagrams can be used to model three dimensional scenes, as well.
+There is currently one 3D Backend, [diagrams-povray][], which uses
+[POV-Ray][] to raytrace the scene to PNG.  Many functions used for 2D
+Diagrams have polymorphic types and can also be used in 3D.  Some are
+specific to three dimensions - many of these are introduced below.
+And some definitions have a 2D and a 3D version, with the same name,
+such as `unitX`.
+
+.. _diagrams-povray: https://github.com/diagrams/diagrams-povray
+.. _POV-Ray: http://povray.org/
+
+Every 3D scene rendered by Diagrams needs 3 elements - an object, a
+light, and a camera.  (Future Backends may work differently.)  Without
+a light, the scene will appear completely black.
+
+.. class:: lhs
+
+::
+
+  import Diagrams.Prelude.ThreeD
+  import Diagrams.Backend.POVRay
+
+  cam = mm50Camera # translate (r3 (0,0,10))
+
+  _xy :: Spherical
+  _xy = direction . r3 $ (-1, -1, -0.5)
+
+  light = parallelLight _xy white
+
+  example :: Diagram POVRay R3
+  example = centerX $ cat unitX
+    [sphere # fc cyan, sphere # fc green, sphere # fc blue]
+
+  main :: IO ()
+  main = putStrLn $ renderDia POVRay POVRayOptions $ mconcat [example, cam, light]
+
+Note that we import Diagrams.Prelude.ThreeD instead of
+Diagrams.Prelude.  This module exports all of the definitions useful
+in 3D, and not those, like the 2D `unitX`, which would get in the way.
+We introduce a camera, a light which casts parallel rays, and some
+spheres (of radius 1).  We move the camera away from the origin, so
+that the spheres are in its field of view.  The translate function is
+polymorphic, and takes a vector `R3` because cameras are defined in
+`R3`.  Now we render our scene.  At the command line:
+
+::
+
+   ghc 3dtutorial.hs
+   ./3dtutorial > 3dtutorial.pov
+   povray -W640 -H480 3dtutorial.pov
+
+After these commands you should have a file 3dtutorial.png:
+
+.. image:: /doc/static/3dtutorial1.png
+
+.. container:: todo
+
+  Write more about cameras and lights.
+
+`ThreeD.Transform`:mod: defines many `Transformation`\s specific to
+three dimensions.  For example, we could have defined the camera above
+as `cam = mm50Camera # translateZ 10`.  The example below uses
+nonuniform scales and rotations to make a slightly more interesting
+scene.
+
+.. class:: lhs
+
+::
+
+  import Diagrams.Prelude.ThreeD
+  import Diagrams.Backend.POVRay
+  import Data.Colour.Palette.ColorSet
+
+  cam = mm50Camera # translateZ 40
+
+  _xy :: Spherical
+  _xy = direction . r3 $ (-1, -1, -0.5)
+
+  light = parallelLight _xy white
+
+  s = sphere # scaleY 1.6 # translateX 6
+
+  color theta = fc $ rybColor (floor $ theta * 24)
+
+  example :: Diagram POVRay R3
+  example = mconcat
+              [transform (aboutZ (t @@ turn)) (s # color t) | t <- [0,1/8..7/8]]
+
+  main :: IO ()
+  main = putStrLn $ renderDia POVRay POVRayOptions $ mconcat [example, cam, light]
+
+.. image:: /doc/static/3dtutorial2.png
+
+.. container:: warning
+
+  The 3D features of Diagrams are changing even more rapidly than the
+  rest of the library.  The examples in this tutorial will not work in
+  the next release.
+               

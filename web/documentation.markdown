@@ -17,6 +17,7 @@ Tutorials
 * [Diagrams and LaTeX](/doc/latex.html) --- including diagrams in your LaTeX documents.
 * [Command-line diagram creation](/doc/cmdline.html) --- build
   programs that produce diagrams controlled by the command-line.
+* [Three Dimensional Diagrams](/doc/3D.html) --- render ellipsoids with POV-Ray
 * [How to write diagrams tutorials](/doc/tutorials.html) --- how to
   write one of these here things, and have it included in this list!
 
