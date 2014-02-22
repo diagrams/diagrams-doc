@@ -410,7 +410,7 @@ and override only the fields you want, like this:
 
 > foo (def & arg1 .~ someValue & arg6 .~ blah)
 
-This is using machinery from the `lens`:pkg:; but you don't have to
+This is using machinery from the `lens`:pkg: package; but you don't have to
 understand `lens`:pkg:, or know anything beyond the above syntax in
 order to use diagrams (for convenience, diagrams re-exports the `(&)`
 and `(.~)` operators from `lens`:pkg:).  In fact, in most cases, you
