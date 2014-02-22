@@ -434,6 +434,10 @@ could write
 
   foo (with & arg1 .~ someValue & arg6 .~ blah)
 
+Most functions which take an optional arguments record have two
+variants: one named `foo` which uses all default arguments, and one
+named `foo'` (with a trailing prime) which takes an options record.
+
 Vectors and points
 ------------------
 
