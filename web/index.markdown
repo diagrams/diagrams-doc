@@ -24,7 +24,7 @@ You can:
     More detailed installation instructions [can be found on the diagrams wiki](http://www.haskell.org/haskellwiki/Diagrams/Install).
 
 Next, read the [quick start tutorial](/doc/quickstart.html) and the
-[user manual](http://projects.haskell.org/diagrams/manual/diagrams-manual.html),
+[user manual](http://projects.haskell.org/diagrams/doc/manual.html),
 or check out the [gallery](/gallery.html) to see example images and
 code.  Drop by the [`#diagrams` IRC channel](http://webchat.freenode.net/)
 with questions or post them to the
@@ -35,7 +35,12 @@ News
 
 * Brent gave a talk on diagrams at the
   [New York Haskell users' group](http://www.meetup.com/NY-Haskell/).
-  Video should be available shortly. (25 November 2013)
+  [Part 1 presents a basic introduction to the library](http://vimeo.com/84104226),
+  and
+  [part 2 talks about mathematical abstraction and DSL design](http://vimeo.com/84249042).
+  The
+  [slides are also available](http://www.cis.upenn.edu/~byorgey/pub/13-11-25-nyhaskell-diagrams.pdf).
+  (25 November 2013)
 
 * Diagrams 1.0 [released](/releases.html)! (25 November 2013)
 

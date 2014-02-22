@@ -1,0 +1,160 @@
+
+The diagrams team is very pleased to announce the 1.0 release of
+diagrams [1], a framework and embedded domain-specific language for
+declarative drawing in Haskell. Check out the gallery [2] for some
+examples of what it can do. Diagrams can be used for a wide range of
+purposes, from data visualization [3] to illustration [4] to art [5],
+and diagrams code can be seamlessly embedded in blog posts [6], LaTeX
+documents [7], and Haddock documentation [8], making it easy to
+incorporate diagrams into your documents with minimal extra work.
+
+[1] http://projects.haskell.org/diagrams
+[2] http://projects.haskell.org/diagrams/gallery.html
+[3] http://idontgetoutmuch.wordpress.com/2013/10/23/parking-in-westminster-an-analysis-in-haskell/
+[4] https://www.fpcomplete.com/user/edwardk/cellular-automata/part-1
+[5] http://mathlesstraveled.com/2013/04/06/stars-of-the-minds-sky-with-diagrams/
+[6] http://byorgey.wordpress.com/2012/08/28/creating-documents-with-embedded-diagrams/
+[7] http://projects.haskell.org/diagrams/doc/latex.html
+[8] http://byorgey.wordpress.com/2013/03/23/introducing-diagrams-haddock/
+
+What's new
+----------
+
+Brent recently gave a talk at the New York Haskell Users' Group [12]
+presenting the new release. You can find videos of the talk on vimeo:
+part 1 presents a basic introduction to the library [13], and part 2
+talks about mathematical abstraction and DSL design [14]. The slides are
+also available [15].
+
+[12] http://www.meetup.com/NY-Haskell/
+[13] http://vimeo.com/84104226
+[14] http://vimeo.com/84249042
+[15] http://www.cis.upenn.edu/~byorgey/pub/13-11-25-nyhaskell-diagrams.pdf
+
+
+This release includes a number of significant new features and
+improvements. Highlights include:
+
+-   Support for drawing arrows between given points or between diagrams,
+    with many options for customization (tutorial [16], documentation
+    [17], API [18]).
+
+    [16] http://projects.haskell.org/diagrams/doc/arrow.html
+    [17] http://projects.haskell.org/diagrams/doc/manual.html#arrows
+    [18] http://projects.haskell.org/diagrams/haddock/Diagrams-TwoD-Arrow.html
+
+-   A new framework for creating custom command-line-driven executables
+    for diagram generation (tutorial [19], API [20]).
+
+    [19] http://projects.haskell.org/diagrams/doc/cmdline.html
+    [20] http://projects.haskell.org/diagrams/haddock/Diagrams-Backend-CmdLine.html
+
+-   Offsets of trails and paths, i.e. compute the trail or path lying a
+    constant distance from the given one (documentation [21], API [22]).
+
+    [21] http://projects.haskell.org/diagrams/doc/manual.html#offsets-of-segments-trails-and-paths
+    [22] http://projects.haskell.org/diagrams/haddock/Diagrams-TwoD-Offset.html
+
+-   A new API, based on Metafont, for constructing cubic splines with
+    control over things like tangents and "tension" (tutorial [23], API
+    [24]).
+
+    [23] http://projects.haskell.org/diagrams/doc/metafont.html
+    [24] http://projects.haskell.org/diagrams/haddock/Diagrams-TwoD-Path-Metafont.html
+
+-   Tangent and normal vectors of segments and trails (API [25]).
+
+    [25] http://projects.haskell.org/diagrams/haddock/Diagrams-Tangent.html
+
+-   Alignment can now be done by trace in addition to envelope (API
+    [26]).
+
+    [26] http://projects.haskell.org/diagrams/haddock/Diagrams-TwoD-Align.html
+
+-   The lens [27] package is now used consistently for record fields
+    throughout the library (documentation [28]).
+
+    [27] http://hackage.haskell.org/package/lens
+    [28] http://projects.haskell.org/diagrams/doc/manual.html#faking-optional-named-arguments
+
+-   Across-the-board improvements in performance and size of generated
+    files.
+
+See the release notes [29] for full details, and the migration guide
+[30] for help porting your diagrams 0.7 code to work with diagrams 1.0.
+
+[29] http://projects.haskell.org/diagrams/releases.html
+[30] http://www.haskell.org/haskellwiki/Diagrams/Dev/Migrate1.0
+
+
+Try it out
+----------
+
+For the truly impatient:
+
+    cabal install diagrams
+
+Diagrams is supported under GHC 7.4 and 7.6.
+
+To get started, read the quick start tutorial [31], which will introduce
+you to the fundamentals of the framework and provide links for further
+reading.
+
+For those who are less impatient and want to really dig in and use the
+power features, read the extensive user manual [32]. There is also a
+growing collection of tutorials [33] on specific topics.
+
+[31] http://projects.haskell.org/diagrams/doc/quickstart.html
+[32] http://projects.haskell.org/diagrams/doc/manual.html
+[33] http://projects.haskell.org/diagrams/documentation.html
+
+Get involved
+------------
+
+Diagrams has a friendly and growing community of users and developers.
+To connect with the community, subscribe to the project mailing list
+[34], and/or come hang out in the #diagrams IRC channel on freenode.org
+for help and discussion. Development continues stronger than ever, and
+there are a wide range of projects available for new contributors of all
+levels of Haskell skill. Make some diagrams. Fix some bugs [35]. Submit
+your cool examples for inclusion in the gallery [36] or your cool code
+for inclusion in the diagrams-contrib [37] package.
+
+[34] http://groups.google.com/group/diagrams-discuss
+[35] http://github.com/diagrams/
+[36] http://projects.haskell.org/diagrams/gallery.html
+[37] http://hackage.haskell.org/package/diagrams%2Dcontrib
+
+
+Happy diagramming!
+
+Brought to you by the diagrams team:
+
+-   Daniel Bergey
+-   Jeff Rosenbluth
+-   Ryan Yates
+-   Brent Yorgey
+
+with contributions from:
+
+-   Jan Bracker
+-   Conal Elliott
+-   Daniil Frumin
+-   Sam Griffin
+-   Niklas Haas
+-   Peter Hall
+-   Claude Heiland-Allen
+-   Deepak Jois
+-   John Lato
+-   Felipe Lessa
+-   Chris Mears
+-   Ian Ross
+-   Carlos Scheidegger
+-   Vilhelm Sjöberg
+-   Michael Sloan
+-   Jim Snavely
+-   Luite Stegeman
+-   Kanchalai Suveepattananont
+-   Michael Thompson
+-   Scott Walck
+

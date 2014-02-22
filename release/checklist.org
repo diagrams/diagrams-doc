@@ -2,7 +2,7 @@
   + make sure all examples build
   + make sure documentation is up-to-date
   + make sure all new features are described/mentioned in the manual
-+ Haddock
++ diagrams-haddock
   + make sure all diagrams-haddock examples build
   + rebuild all diagrams-haddock examples and check them in
 + testing
@@ -13,5 +13,6 @@
 + update release page on website
 + update LICENSE files
 + bump version numbers
++ regenerate combined Haddock documentation and commit to website
 + upload packages
 + upload website

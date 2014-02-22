@@ -4,6 +4,11 @@ title: Sightings
 
 People using diagrams to do stuff.
 
+* [Performance profiling with ghc-events-analyze](http://www.well-typed.com/blog/86)
+* [Laplace's Equation in Haskell: Using a DSL for Stencils](http://idontgetoutmuch.wordpress.com/2014/02/10/laplaces-equation-in-haskell-using-a-dsl-for-stencils-3/)
+  (Dominic Steinitz, 10 February 2014)
+* [Demystifying DList](http://h2.jaguarpaw.co.uk/posts/demystifying-dlist/)
+  (Tom Ellis)
 * [Haskell, Ising, Markov & Metropolis](http://idontgetoutmuch.wordpress.com/2013/12/07/haskell-ising-markov-metropolis/)
 * [Magicube](http://mathr.co.uk/blog/2013-11-03_magicube.html) (Claude
   Heiland-Allen, 3 November 2013)
