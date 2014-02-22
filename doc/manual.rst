@@ -3230,7 +3230,10 @@ Envelope-related functions
 
      `pad` expands the envelope *relative to the local
      origin*.  So if you want the padding to be equal on all sides, use
-     `center` first.
+     `center` first or use `frame` as described next.
+
+* `frame` increases the envelope in all directions by a given amount measued
+  in local coordinates.
 
   For example,
 
@@ -3238,13 +3241,18 @@ Envelope-related functions
 
   ::
 
-  > surround d = c === (c ||| d ||| c) # center === c
+  > surround d = c === d === c
   >   where c = circle 0.5
   >
-  > p = strokeTrail (square 1)
+  > s = square 1 # alignB
   >
-  > example = surround (pad 1.2 $ p # showOrigin) ||| strutX 1
-  >       ||| surround (pad 1.2 $ p # center # showOrigin)
+  > p = s # pad 1.2 # showOrigin # center
+  > q = s # frame 0.2 # showOrigin # center
+  > r = s # center # showOrigin # pad 1.2
+  >
+  > example = surround p ||| strutX 0.5
+  >       ||| surround q ||| strutX 0.5
+  >       ||| surround r
 
 * Envelopes can be "extruded"---like `pad`, but only in a certain
   direction---using `extrudeEnvelope`.  Likewise, `intrudeEnvelope`
