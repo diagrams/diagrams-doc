@@ -2113,12 +2113,11 @@ holes:
 ::
 
 > ring :: Path R2
-> ring = circle 3 <> circle 2
+> ring = circle 3 <> (circle 2 # reversePath)
 >
-> example = stroke ring # fc purple # fillRule EvenOdd
+> example = stroke ring # fc purple
 
-(See `Fill rules`_ for an explanation of the call to `fillRule
-EvenOdd`.)
+See the section on `Fill rules`_ for more information.
 
 `stroke` turns a path into a diagram, just as `strokeTrail` turns a trail
 into a diagram. (In fact, `strokeTrail` really works by first turning the
@@ -2800,7 +2799,35 @@ paths, they usually result in different regions being filled.
   it turns out to be (with some clever optimizations) not much more
   difficult to implement or inefficient than the even-odd rule.
 
+You should be aware that queries (see `Using queries`_) use the
+winding rule by default, and are not affected by the path fill rule
+attribute.  Thus, if you apply the even-odd rule to a diagram, the
+query may not match in the way you expect.  For this reason, if you
+want to make a shape with holes in it, it is usually better to form
+the holes from paths winding in the opposite direction (using
+`reversePath` and the winding rule) than from the even-odd rule.  For
+example, in the diagram below, the annulus on the left is formed using
+the even-odd fill rule, and the one on the right with the default
+winding rule and a reversed inner circle.  The dark blue points
+indicate places where the associated query evaluates to true.
 
+.. class:: dia-lhs
+
+::
+
+> points = [x ^& 0 | x <- [-2.3, -2.1 .. 2.3]]
+> dia1 = (circle 2 <> circle 1) # stroke # fillRule EvenOdd
+> dia2 = (circle 2 <> reversePath (circle 1)) # stroke
+>
+> illustrate d = ((d # fc grey) `beneath`) . mconcat . map drawPt $ points
+>   where
+>     drawPt p | getAny (sample d p) = circle 0.1 # fc blue # moveTo p
+>              | otherwise           = circle 0.07 # fc lightblue # moveTo p
+>
+> example = illustrate dia1 ||| strutX 1 ||| illustrate dia2
+
+If you do want to make a diagram whose query uses the even-odd rule,
+you can use the `stroke'` function.
 
 Clipping
 ~~~~~~~~
@@ -3915,6 +3942,15 @@ As another interesting example, consider using a set monoid to keep
 track of names or identifiers for the diagrams at a given point.  This
 could be used, say, to identify which element(s) of a diagram have been
 selected by the user after receiving the coordinates of a mouse click.
+
+Queries and fill rules
+~~~~~~~~~~~~~~~~~~~~~~
+
+By default, queries use the winding rule (see `Fill rules`_).  You can
+pass an extra option to the `stroke'` function to specify the even-odd
+fill rule if you wish.  Be aware that queries are unaffected by
+applications of the `fillRule` attribute, which only affects the way a
+diagram is drawn.
 
 Bounding boxes
 --------------
