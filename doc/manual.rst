@@ -2887,9 +2887,9 @@ of closed segments plus a single final open segment.
 .. _`finger trees`: http://apfelmus.nfshost.com/articles/monoid-fingertree.html
 
 The benefit of using a finger tree (instead of just, say, a list, or
-even a `Seq` structure from `Data.Sequence`:mod:) is that it allows us
-to cache monoidal "measures" of the entire trail.  In particular, we
-cache
+even a `Seq` structure from `Data.Sequence`:mod:) is that it allows
+caching monoidal "measures" of the entire trail.  In particular, the
+finger trees underlying trails cache
 
 * the number of segments
 * the total arc length (up to a standard error tolerance)
@@ -2916,6 +2916,8 @@ drawn with scale-invariant heads and tails (see `Scale-invariance`_).
 Arrows can be used to connect various things including literal points,
 named subdiagrams, or their traces. For more detailed information,
 examples, and exercises, see the `Arrows tutorial`__.
+
+__ arrow.html
 
 To create arrows, one may use the functions:
 
@@ -3043,8 +3045,6 @@ function.
 >                     & arrowHead .~ tri & headSize .~ 1.5
 >                     & headStyle %~ fc red . opacity 0.5
 >                     & shaftStyle %~ lw 0.2 . lc black . opacity 0.5 ) "7" "8"
-
-__ arrow.html
 
 Text
 ----
@@ -3982,9 +3982,9 @@ transformation is applied to each pair of arrows.
 
 .. container:: warning
 
-  Diagrams contains native support for drawing arrows (see `Arrows`_),
-  we only create the arrows in the example below by hand to demonstrate
-  scale-invariance.
+  Diagrams contains native support for drawing arrows (see `Arrows`_);
+  the arrows in the example below are constructed manually in order to
+  demonstrate scale-invariance.
 
 The arrows on the right are wrapped in `ScaleInv` but the ones on the left are not.
 
@@ -4029,8 +4029,7 @@ The arrows on the right are wrapped in `ScaleInv` but the ones on the left are n
 
 In addition, the `scaleInvPrim` function creates a scale-invariant
 diagram from a primitive (such as a path).  At the moment it is not
-possible to create a scale-invariant diagram from another *diagram*
-(since this would require nesting diagrams in a funny way).
+possible to create a scale-invariant diagram from another *diagram*.
 
 Tips and tricks
 ===============
@@ -4298,8 +4297,11 @@ should still be considered a "feature preview"---in particular,
 appropriate 3D backends are still under construction (see
 `diagrams-povray`:repo: and `diagrams-opengl`_).  Look for fuller (and
 more fully documented) support for 3D diagrams in an upcoming release!
+In the meantime, consult the `3D tutorial`_ for a more detailed
+feature preview.
 
 .. _`diagrams-opengl`: https://github.com/bergey/diagrams-opengl
+.. _`3D tutorial`: 3D.html
 
 Animation
 =========
@@ -4451,15 +4453,15 @@ create active `Point`\s, `Path`\s, colors, or values of any other type.
 Animated GIFs
 -------------
 
-Anumated GIFs can be created directly using the cairo backend.
-This is done by calling `mainWith` with an argument of type
-`[(Diagram Cairo R2, GifDelay)]` where `GifDelay` is a synonym
-for `Int`. Each tuple is a diagram frame of the animation and
-a time in one hundredths of a second until the next frame.
-This creates an executable which takes an output file with the
-extension gif. The other command line options which can be used
-are --dither (to turn on dithering), --looping-off, and --loop-repeat
-(to specify the number of times to repeat the loop after the first time).
+Animated GIFs can be created directly using the cairo backend.  This
+is done by calling `mainWith` with an argument of type `[(Diagram
+Cairo R2, GifDelay)]` where `GifDelay` is a synonym for `Int`. Each
+tuple is a diagram frame of the animation and a time in hundredths of
+a second until the next frame.  This creates an executable which takes
+an output file with the extension gif. The other command line options
+which can be used are ``--dither`` (to turn on dithering), ``--looping-off``,
+and ``--loop-repeat`` (to specify the number of times to repeat the loop
+after the first time).
 
 
 Rendering backends
@@ -4536,6 +4538,8 @@ quite a few advanced features that other backends do not have:
 
 * `Diagrams.Backend.Cairo.Ptr`:mod: exports functions for rendering
   diagrams directly to buffers in memory.
+
+* Direct output of animated GIFs.
 
 The source code for the cairo backend can be found in the
 `diagrams-cairo`:repo: repository.
