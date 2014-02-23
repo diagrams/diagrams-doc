@@ -4,6 +4,7 @@ title: Sightings
 
 People using diagrams to do stuff.
 
+* [A Cretan Maze using Haskell Diagrams](http://www.corentindupont.info/blog/posts/2014-02-17-Cretan-Maze.html)
 * [Performance profiling with ghc-events-analyze](http://www.well-typed.com/blog/86)
 * [Laplace's Equation in Haskell: Using a DSL for Stencils](http://idontgetoutmuch.wordpress.com/2014/02/10/laplaces-equation-in-haskell-using-a-dsl-for-stencils-3/)
   (Dominic Steinitz, 10 February 2014)
