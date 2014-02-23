@@ -36,7 +36,8 @@ framework is:
 
   * **Flexible**: diagrams is designed from the ground up to be as
     generic and flexible as possible, with support for pluggable
-    rendering backends and multiple vector spaces (2D, 3D, ...).
+    rendering backends, arbitrary graphics primitives, and multiple
+    vector spaces (2D, 3D, ...).
 
 About this document
 -------------------
@@ -46,7 +47,7 @@ This document attempts to explain all major aspects of using the
 it easy to find what you are looking for.  It is not, however, a
 complete reference of every single function in the standard library:
 for that, see the API documentation listed under `Other resources`_.
-Most sections contain links to relevant module(s) you can follow to
+Most sections contain links to relevant modules you can follow to
 read about other functions not covered in the text.
 
 Module names in the text are typeset like this:
@@ -58,7 +59,7 @@ code examples to take you to its documentation.  Try it:
 
 ::
 
-  example = circle 2 ||| unitCircle
+  example = circle 2 ||| pentagon 3
 
 Mathematical equations are typeset using MathJax_:
 
@@ -70,7 +71,7 @@ zoom settings, and so on.
 
 .. _MathJax: http://www.mathjax.org/
 
-Occasionally content may be missing or incomplete; this iis noted by a
+Occasionally content may be missing or incomplete; this is noted by a
 light blue box with a "document" icon on the right hand side, like
 this:
 
@@ -104,11 +105,11 @@ about ``diagrams``:
     is intended to be high-quality and up-to-date, and is available
     `from the diagrams website`_.  If you find an omission, error, or
     something confusing, please `report it as a bug`_!
-  * The ``diagrams`` website_ has a `gallery of examples`_ and links
-    to tutorials, blog posts, and other documentation.
+  * The ``diagrams`` website_ has a `gallery of examples`_ and a `list
+    of tutorials`_, as well as links to blog posts and other documentation.
   * The `diagrams wiki`_ is a good place to find tips and tricks,
     examples, answers to frequently asked questions, and more.
-  * The ``#diagrams`` IRC channel on Freenode is a friendly place
+  * The ``#diagrams`` `IRC channel on Freenode`_ is a friendly place
     where you can get help from other ``diagrams`` users and developers.
   * Consider joining the `diagrams mailing list`_ for discussions
     and announcements about ``diagrams``.
@@ -119,8 +120,10 @@ about ``diagrams``:
 .. _`from the diagrams website`: http://projects.haskell.org/diagrams/doc/index.html
 .. _`report it as a bug`: https://github.com/diagrams/diagrams-doc/issues
 .. _website: http://projects.haskell.org/diagrams
+.. _`list of tutorials`: http://projects.haskell.org/diagrams/documentation.html
 .. _`diagrams wiki`: http://haskell.org/haskellwiki/Diagrams
 .. _`gallery of examples`: http://projects.haskell.org/diagrams/gallery.html
+.. _`IRC channel on Freenode`: http://webchat.freenode.net/?channels=diagrams
 .. _`diagrams mailing list`: http://groups.google.com/group/diagrams-discuss?pli=1
 .. _`developer wiki`: http://code.google.com/p/diagrams/
 .. _`diagrams organization on github` : https://github.com/diagrams/
@@ -153,13 +156,15 @@ Once you have successfully installed the Haskell platform, installing
 
 ::
 
-  cabal install diagrams
+  cabal install diagrams -jN
+
+where ``N`` is the number of cores you wish to use for
+compilation.
 
 The `diagrams`:pkg: package is a convenience wrapper that simply pulls
 in (by default) four other packages:
 
-* `diagrams-core`:pkg: (core data
-   type definitions and utilities),
+* `diagrams-core`:pkg: (core data type definitions and utilities),
 * `diagrams-lib`:pkg: (standard primitives and combinators),
 * `diagrams-contrib`:pkg: (user-contributed extensions), and
 * `diagrams-svg`:pkg: (Haskell-native backend generating SVG files).
@@ -444,11 +449,12 @@ Vectors and points
 Although much of this user manual focuses on constructing
 two-dimensional diagrams, the definitions in the core library in fact
 work for *any* vector space.  Vector spaces are defined in the
-`Data.VectorSpace`:mod: module from the `vector-space`:pkg: package.
+`Data.VectorSpace`:mod: module from Conal Elliott's `vector-space`:pkg: package.
 
 Many objects (diagrams, paths, backends...) inherently live in some
-particular vector space.  The vector space associated to any type can
-be computed by the type function `V`.  So, for example, the type
+particular vector space.  The vector space in which a given type
+"lives" can be computed by the type function `V`.  So, for example,
+the type
 
 ::
 
@@ -1134,7 +1140,7 @@ implemented as a call to `juxtapose` followed by a call to `(<>)`.)
 >   where circles = mconcat [d1, d2, d3]
 
 See `envelopes and local vector spaces`_ for more information on what
-"next to" means, and `Working with envelopes`_ for information on
+"next to" means, and `Envelopes`_ for information on
 functions available for manipulating envelopes.  To learn about how
 envelopes are implemented, see the `core library reference`__.
 
@@ -1477,8 +1483,8 @@ getting one's hands on a first-class `Transformation` value can
 occasionally be useful.
 
 
-Transformations in general
-++++++++++++++++++++++++++
+Affine transformations in general
++++++++++++++++++++++++++++++++++
 
 Before looking at specific two-dimensional transformations, it's worth
 saying a bit about transformations in general (a fuller treatment can
@@ -1699,10 +1705,11 @@ whichever one corresponds to the most natural point of view in a given
 situation, without having to worry about inserting calls to `negateV`.
 
 Often, however, one wishes to move a diagram's origin with respect to
-its "boundary".  Here, boundary usually refers to the diagram's envelope
-or trace; envelope being the default. To this end, some general tools
-are provided in `Diagrams.Align`:mod:, and specialized 2D-specific ones by
-`Diagrams.TwoD.Align`:mod:.
+its "boundary".  Here, boundary usually refers to the diagram's
+envelope or trace, with envelope being the default (see `Envelopes`_
+and `Traces`_ for more information). To this end, some general tools
+are provided in `Diagrams.Align`:mod:, and specialized 2D-specific
+ones by `Diagrams.TwoD.Align`:mod:.
 
 Functions like `alignT` (align Top) and `alignBR` (align Bottom Right)
 move the local origin to the edge of the envelope:
@@ -2793,6 +2800,8 @@ paths, they usually result in different regions being filled.
   it turns out to be (with some clever optimizations) not much more
   difficult to implement or inefficient than the even-odd rule.
 
+
+
 Clipping
 ~~~~~~~~
 
@@ -3183,8 +3192,8 @@ core and standard libraries for constructing diagrams.  Most of the
 content in this section is applicable to diagrams in any vector space,
 although 2D diagrams are used as illustrations.
 
-Working with envelopes
-----------------------
+Envelopes
+---------
 
 The `Envelope` type, defined in
 `Diagrams.Core.Envelope`:mod:, encapsulates *envelopes*
@@ -3910,7 +3919,7 @@ selected by the user after receiving the coordinates of a mouse click.
 Bounding boxes
 --------------
 
-Envelopes (see `Working with envelopes`_) are more flexible and
+Envelopes (see `Envelopes`_) are more flexible and
 compositional than bounding boxes for the purposes of combining
 diagrams.  However, occasionally it is useful for certain applications
 to be able to work with bounding boxes, which support fast tests for
@@ -4789,8 +4798,7 @@ Instances:
     the envelopes of the individual elements: `[a]`, `(a,b)`, `Set`,
     `Map`.
 
-Further reading: `Envelopes and local vector spaces`_; `Working with
-envelopes`_.
+Further reading: `Envelopes and local vector spaces`_; `Envelopes`_.
 
 Traced
 ++++++
