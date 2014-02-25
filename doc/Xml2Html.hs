@@ -117,8 +117,11 @@ sidebarTOC =
                 )
              += (eelem "div"
                    += attr "class" (txt "col-md-9")
+                   -- The idea is to capture all children except the TOC
+                   -- which we used above.
                    += (getChildren >>> isElem >>> hasName "h1")
                    += (getChildren >>> isElem >>> hasAttrValue "class" (=="section"))
+                   += (getChildren >>> isElem >>> hasName "p")
                 )
          )
 
