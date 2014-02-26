@@ -105,7 +105,7 @@ sidebarTOC =
                         += attr "class" (txt "bs-sidebar hidden-print")
                         += attr "role" (txt "complementary")
                         += attr "data-spy" (txt "affix")
-                        += (getChildren >>> isElem >>> hasAttrValue "class" (=="contents") >>>
+                        += (getChildren >>> isTOC >>>
                             getChildren >>> isElem >>> hasName "ul" >>> addAttr "class" "nav bs-sidenav" >>>
                               -- get rid of <h2>Contents</h2>
                             doTransforms
@@ -117,13 +117,12 @@ sidebarTOC =
                 )
              += (eelem "div"
                    += attr "class" (txt "col-md-9")
-                   -- The idea is to capture all children except the TOC
-                   -- which we used above.
-                   += (getChildren >>> isElem >>> hasName "h1")
-                   += (getChildren >>> isElem >>> hasAttrValue "class" (=="section"))
-                   += (getChildren >>> isElem >>> hasName "p")
+                   += (getChildren >>> neg isTOC)
                 )
          )
+
+isTOC :: ArrowXml a => a XmlTree XmlTree
+isTOC = isElem >>> hasAttrValue "class" (=="contents")
 
 linkifyGithub :: ArrowXml a => XmlT a
 linkifyGithub =
