@@ -13,7 +13,10 @@ Introduction
 ============
 Choosing a set of colors that look good together can be quite a challenge. The task comes up in a variety of different contexts including: webiste design, print design, cartography, and as we will discuss here, making diagrams. The problem comes down to a balancing act between two issues; first is that the choosen set of colors is asthetically pleasing, and second is that there is enough contrast between them.
 
-The easiest approach is to borrow a set of colors from someone who has already put in the time and effort to create it. The Palette package "Data.Colour.Palette.ColorSet" provides access to a few different predefined color sets including [the ones in d3](https://github.com/mbostock/d3/wiki/Ordinal-Scales) and the package "Data.Colour.Palette.BrewerSet" contains a large variety of color schemes created by Cynthia Brewer for use in map making see [colorbrewer 2.0](http://colorbrewer2.org/).
+The easiest approach is to borrow a set of colors from someone who has already put in the time and effort to create it. The Palette package "Data.Colour.Palette.ColorSet" provides access to a few different predefined color sets including `the ones in d3`_ and the package "Data.Colour.Palette.BrewerSet" contains a large variety of color schemes created by Cynthia Brewer for use in map making see `colorbrewer 2.0`_.
+
+.. _the ones in d3: https://github.com/mbostock/d3/wiki/Ordinal-Scales
+.. _colorbrewer 2.0: http://colorbrewer2.org/
 
 Let's start out by building some tools in Diagrams, the Haskell drawing framework. We will use the golden ration to give us some pleasing proportions.
 
@@ -164,8 +167,11 @@ The are over 300 colors that W3C recommends that every browser support. These ar
 > w2 = grid web2
 > example = hcat' (with & sep .~ 0.5) [w1, w2]
 
-If none of the above color schemes suit your purposes or if you just want to create your own - use the functions in `Data.Colour.Palette.Harmony`. The module provides some basic functions for adjusting colors plus a progammatic interface to tools like [Adobe Kuler](https://kuler.adobe.com/create/color-wheel/) and [Color Scheme Designer](http://colorschemedesigner.com/). We'll finish Part 1 of this post by examining some of the functions provided to tweak a color: `shade`, `tone` and `tint`. These three functions mix a given color with black, gray, and white repsectively. So if for example we wanted a darker version of the d3 scheme, we can apply a shade.
+If none of the above color schemes suit your purposes or if you just want to create your own - use the functions in `Data.Colour.Palette.Harmony`. The module provides some basic functions for adjusting colors plus a progammatic interface to tools like `Adobe Kuler`_ and `Color Scheme Designer`_. We'll finish Part 1 of this post by examining some of the functions provided to tweak a color: `shade`, `tone` and `tint`. These three functions mix a given color with black, gray, and white repsectively. So if for example we wanted a darker version of the d3 scheme, we can apply a shade.
 Or we can add some gray to the brewer set `GnBu` from above.
+
+.. _Adobe Kuler: https://kuler.adobe.com/create/color-wheel/
+.. _Color Scheme Designer: http://colorschemedesigner.com/
 
 .. class:: lhs
 
