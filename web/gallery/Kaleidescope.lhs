@@ -72,4 +72,4 @@ Make the confetti diagram and extract it from the monad.
 
 Use `main = mainWith $ kaleidescope` to create an  executable that takes as parameters the number of pieces of confetti and a random seed.
 
-> example = circle 1 -- kaleidescope 40 9
+> example = kaleidescope 40 9
