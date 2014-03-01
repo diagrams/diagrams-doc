@@ -1,0 +1,26 @@
+* Packages
+** vector-space-points						       :skip:
+   Has had no updates since 0.1.3, already on Hackage.
+** monoid-extras						       :skip:
+   No updates since 0.3.2.4, on Hackage.
+** dual-tree							       :skip:
+   No updates since 0.2.0.1, on Hackage.
+** diagrams-core						       :done:
+  + [X] CHANGES file updated
+  + [X] all CHANGES in user manual
+  + [X] version bumped to 1.1
+  + [X] update LICENSE
+** active							       :todo:
+** diagrams-lib							       :todo:
+** SVGFonts							       :todo:
+** palette							       :todo:
+** diagrams-contrib						       :todo:
+** statestack							       :todo:
+** diagrams-cairo						       :todo:
+** diagrams-gtk							       :todo:
+** diagrams-postscript						       :todo:
+** diagrams-svg							       :todo:
+** diagrams							       :todo:
+** diagrams-builder						       :todo:
+** diagrams-haddock						       :todo:
+** diagrams-doc							       :todo:

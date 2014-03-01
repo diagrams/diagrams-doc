@@ -14,6 +14,17 @@
   - Has the LICENSE file been updated with the appropriate copyright
     years and name(s) of any new contributors?
 
+  Checklist version of the above, suitable for pasting into an .org
+  file:
+
+  + [ ] CHANGES updated
+  + [ ] all CHANGES in user manual or tutorial
+  + [ ] upper bounds fixed
+  + [ ] lower bounds fixed
+  + [ ] Haddocks up to date
+  + [ ] version bump
+  + [ ] LICENSE updated
+
   Topologically sorted list of packages:
 
   - vector-space-points
@@ -55,6 +66,8 @@
     + copy diagrams-backend-tests output to website
   + update release page on website
   + upload packages
+    + list release date in each CHANGES file
+    + upload
   + regenerate combined Haddock documentation and commit to website.
     NOTE: this must be done AFTER releasing packages to Hackage!
     There is a script, build-haddocks.sh, in the diagrams-doc root
