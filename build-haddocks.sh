@@ -19,8 +19,8 @@ git checkout cabal-1.16-haddock-fix
 cabal install cabal-install/ -j8
 cd ../..
 cabal install gtk2hs-buildtools
-cabal install diagrams diagrams-postscript diagrams-cairo diagrams-gtk diagrams-builder diagrams-haddock SVGFonts -j8
-for f in vector-space-points monoid-extras dual-tree active core lib svg postscript cairo gtk contrib SVGFonts builder haddock
+cabal install diagrams diagrams-postscript diagrams-cairo diagrams-gtk diagrams-builder diagrams-haddock SVGFonts palette -j8
+for f in vector-space-points monoid-extras dual-tree active core lib svg postscript cairo gtk contrib SVGFonts builder haddock palette
 do
   cd $f
   cabal configure
@@ -31,7 +31,7 @@ darcs get --lazy http://hub.darcs.net/byorgey/hproj
 cabal install hproj/ -j8
 cd ..
 mkdir -p haddocks-tmp/haddock
-hproj doc -o haddocks-tmp/haddock -t 'The diagrams framework' vector-space-points monoid-extras dual-tree active core lib svg postscript cairo gtk contrib SVGFonts builder haddock
+hproj doc -o haddocks-tmp/haddock -t 'The diagrams framework' vector-space-points monoid-extras dual-tree active core lib svg postscript cairo gtk contrib SVGFonts builder haddock palette
 mkdir -p haddocks-tmp/haddock/diagrams
 for f in lib contrib SVGFonts haddock
 do
