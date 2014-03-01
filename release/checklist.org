@@ -1,18 +1,64 @@
-+ user manual / tutorials
-  + make sure all examples build
-  + make sure documentation is up-to-date
-  + make sure all new features are described/mentioned in the manual
-+ diagrams-haddock
-  + make sure all diagrams-haddock examples build
-  + rebuild all diagrams-haddock examples and check them in
-+ testing
-  + check all travis tests
-  + run diagrams-backend-tests
-  + copy diagrams-backend-tests output to website
-+ update all CHANGES files
-+ update release page on website
-+ update LICENSE files
-+ bump version numbers
-+ regenerate combined Haddock documentation and commit to website
-+ upload packages
-+ upload website
+* Per-package checklist
+
+  For each package:
+
+  - Has it had any new features, bugfixes, etc. that need to be
+    released?
+  - Have the features, bugfixes, etc. been added to the CHANGES file?
+  - Are all new features etc. properly described in the user manual
+    or a tutorial?
+  - Does it have any upper bounds that need increasing?
+  - Does it have any lower bounds that need increasing?
+  - Is the Haddock documentation up to date?
+  - Has the version number been bumped appropriately?
+  - Has the LICENSE file been updated with the appropriate copyright
+    years and name(s) of any new contributors?
+
+  Topologically sorted list of packages:
+
+  - vector-space-points
+  - monoid-extras
+  - dual-tree
+  - diagrams-core
+  - active
+  - diagrams-lib
+  - SVGFonts
+  - palette
+  - diagrams-contrib
+  - statestack
+  - diagrams-cairo
+  - diagrams-gtk
+  - diagrams-postscript
+  - diagrams-svg
+  - diagrams
+  - diagrams-builder
+  - diagrams-haddock
+
+  Other packages that should be checked:
+
+  - diagrams-backend-tests
+  - docutils
+  - diagrams-doc
+  - diagrams-povray
+* Checklist for major releases
+  + go through per-package checklist
+  + user manual / tutorials
+    + make sure all examples build
+    + make sure documentation is up-to-date
+    + make sure all new features are described/mentioned in the manual
+    + diagrams-haddock
+      + make sure all diagrams-haddock examples build
+      + rebuild all diagrams-haddock examples and check them in
+  + testing
+    + check all travis tests
+    + run diagrams-backend-tests
+    + copy diagrams-backend-tests output to website
+  + update release page on website
+  + upload packages
+  + regenerate combined Haddock documentation and commit to website.
+    NOTE: this must be done AFTER releasing packages to Hackage!
+    There is a script, build-haddocks.sh, in the diagrams-doc root
+    which can be used to build combined Haddocks.  See the comments
+    for more info and prerequisites.
+  + Rebuild and upload new website.
+* Checklist for minor releases
