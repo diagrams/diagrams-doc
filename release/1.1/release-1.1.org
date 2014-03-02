@@ -5,15 +5,26 @@
    No updates since 0.3.2.4, on Hackage.
 ** dual-tree							       :skip:
    No updates since 0.2.0.1, on Hackage.
-** diagrams-core						       :done:
+** diagrams-core						   :toupload:
   + [X] CHANGES file updated
   + [X] all CHANGES in user manual
   + [X] version bumped to 1.1
   + [X] update LICENSE
-** active							       :todo:
-** diagrams-lib							       :todo:
-** SVGFonts							       :todo:
-** palette							       :todo:
+** active							       :skip:
+   0.1.0.10 on Hackage.  Needs no updating.
+   IMPORTANT: look at active-0.1 branch, not master!
+** diagrams-lib							   :toupload:
+  + [X] CHANGES updated
+  + [X] all CHANGES in user manual or tutorial
+  + [X] upper bounds fixed
+  + [X] lower bounds fixed
+  + [X] update tested-with field
+  + [X] Haddocks up to date
+  + [X] version bump
+  + [X] LICENSE updated
+** SVGFonts							       :done:
+   Only a simple bump to the diagrams-lib upper bound.  Uploaded.
+** palette							       :skip:
 ** diagrams-contrib						       :todo:
 ** statestack							       :todo:
 ** diagrams-cairo						       :todo:
