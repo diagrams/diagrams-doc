@@ -1,3 +1,25 @@
+* General notes
+** Versioning policy
+
+   Diagrams packages generally have version numbers like A.B.C.D.
+
+   + For "core" packages, the A component should match across major
+     releases.  I.e. when making a 2.0 release we will bump all A
+     components to 2, regardless of what sorts of changes there are to
+     each package.  (Some "peripheral" or "supporting" packages, like
+     SVGFonts, palette, monoid-extras, etc. just follow their own
+     version scheme instead.  There is no specific policy as to what
+     counts as a "core" package and what is "peripheral".)
+
+   + The B and C components should follow the PVP
+     (http://www.haskell.org/haskellwiki/Package_versioning_policy).
+     In short, C can be bumped if there were only additions, and B
+     must be bumped if there were any removals or API modifications.
+     See the PVP for complete details.
+
+   + The D component is bumped for minor releases (bug fixes, relaxing
+     upper bounds, etc.) which do not change the API at all.
+
 * Per-package checklist
 
   For each package:
@@ -9,6 +31,7 @@
     or a tutorial?
   - Does it have any upper bounds that need increasing?
   - Does it have any lower bounds that need increasing?
+  - Is the tested-with: field in the .cabal file up-to-date?
   - Is the Haddock documentation up to date?
   - Has the version number been bumped appropriately?
   - Has the LICENSE file been updated with the appropriate copyright
@@ -21,6 +44,7 @@
   + [ ] all CHANGES in user manual or tutorial
   + [ ] upper bounds fixed
   + [ ] lower bounds fixed
+  + [ ] update tested-with field
   + [ ] Haddocks up to date
   + [ ] version bump
   + [ ] LICENSE updated
