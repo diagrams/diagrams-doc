@@ -13,7 +13,7 @@
 ** active							       :skip:
    0.1.0.10 on Hackage.  Needs no updating.
    IMPORTANT: look at active-0.1 branch, not master!
-** diagrams-lib							   :toupload:
+** diagrams-lib							       :todo:
   + [X] CHANGES updated
   + [X] all CHANGES in user manual or tutorial
   + [X] upper bounds fixed
@@ -22,14 +22,46 @@
   + [X] Haddocks up to date
   + [X] version bump
   + [X] LICENSE updated
-** SVGFonts							       :done:
+  + [X] make sure denys's doc fix is incorporated and noted
+  + [ ] note new features to fix SVG fill bug
+** SVGFonts 							       :done:
    Only a simple bump to the diagrams-lib upper bound.  Uploaded.
 ** palette							       :skip:
-** diagrams-contrib						       :todo:
-** statestack							       :todo:
-** diagrams-cairo						       :todo:
+** diagrams-contrib						   :toupload:
+   No significant changes, but bumped lower bounds for diagrams-lib
+   and -core to 1.1.
+
+  + [X] CHANGES updated
+  + [X] all CHANGES in user manual or tutorial
+  + [X] upper bounds fixed
+  + [X] lower bounds fixed
+  + [X] update tested-with field
+  + [X] Haddocks up to date
+  + [X] version bump
+  + [X] LICENSE updated
+** statestack							       :skip:
+   Latest version (0.2) is already on Hackage, no changes needed.
+** diagrams-cairo						   :toupload:
+  + [X] CHANGES updated
+  + [X] all CHANGES in user manual or tutorial
+  + [X] upper bounds fixed
+  + [X] lower bounds fixed
+  + [X] update tested-with field
+  + [X] Haddocks up to date
+  + [X] version bump
+  + [X] LICENSE updated
 ** diagrams-gtk							       :todo:
+   Waiting to merge new double-buffering code:
+   https://github.com/diagrams/diagrams-gtk/pull/1
 ** diagrams-postscript						       :todo:
+  + [ ] CHANGES updated
+  + [ ] all CHANGES in user manual or tutorial
+  + [ ] upper bounds fixed
+  + [ ] lower bounds fixed
+  + [ ] update tested-with field
+  + [ ] Haddocks up to date
+  + [ ] version bump
+  + [ ] LICENSE updated
 ** diagrams-svg							       :todo:
 ** diagrams							       :todo:
 ** diagrams-builder						       :todo:

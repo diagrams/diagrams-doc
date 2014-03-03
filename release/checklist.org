@@ -24,18 +24,45 @@
 
   For each package:
 
-  - Has it had any new features, bugfixes, etc. that need to be
+  + Has it had any new features, bugfixes, etc. that need to be
     released?
-  - Have the features, bugfixes, etc. been added to the CHANGES file?
-  - Are all new features etc. properly described in the user manual
+  + Have the features, bugfixes, etc. been added to the CHANGES file?
+
+    - A template for CHANGES sections (if there are more than just a
+      couple items) can be found in
+      diagrams-doc/release/CHANGES-template.
+
+    - Note: one nice way to do this is to use a command like
+
+        git log v1.1..
+
+      to show all commits since the v1.1 tag.  Go through and delete
+      the ones which don't need to show up in the release notes, and
+      use the commit messages for those that should as starting points
+      to describe them.
+
+      In emacs you can even do something like
+
+        C-SPC C-SPC C-u M-| git log v1.1..
+
+      to paste the output of the git command directly into the buffer
+      as a starting point.
+
+    - The CHANGES files are in Markdown format.
+
+  + Are all new features etc. properly described in the user manual
     or a tutorial?
-  - Does it have any upper bounds that need increasing?
-  - Does it have any lower bounds that need increasing?
-  - Is the tested-with: field in the .cabal file up-to-date?
-  - Is the Haddock documentation up to date?
-  - Has the version number been bumped appropriately?
-  - Has the LICENSE file been updated with the appropriate copyright
+  + Does it have any upper bounds that need increasing?
+  + Does it have any lower bounds that need increasing?
+  + Is the tested-with: field in the .cabal file up-to-date?
+  + Is the Haddock documentation up to date?
+  + Has the version number been bumped appropriately?
+  + Has the LICENSE file been updated with the appropriate copyright
     years and name(s) of any new contributors?
+
+    - To get the list of contributors, use a command like e.g.
+
+      git log --format='%aN <%aE>' | sort | uniq -i
 
   Checklist version of the above, suitable for pasting into an .org
   file:
@@ -75,6 +102,7 @@
   - docutils
   - diagrams-doc
   - diagrams-povray
+
 * Checklist for major releases
   + go through per-package checklist
   + user manual / tutorials
@@ -89,9 +117,20 @@
     + run diagrams-backend-tests
     + copy diagrams-backend-tests output to website
   + update release page on website
+    - See previous versions for format.  Should be possible to
+      essentially paste in the relevant parts of the CHANGES files
+      for individual repos.
+    - We should probably come up with a better format and/or a more
+      automated way of doing this...
   + upload packages
-    + list release date in each CHANGES file
-    + upload
+    + List release date in each CHANGES file
+    + Apply a tag to each repo just before releasing
+      - The tag should have a name like "vX.X.X", with a v prefixed
+        to the version
+      - The tag message should mention the version and give a very
+        short comment describing the release
+      - Use a command like: git tag -a v1.3 -m "1.3 release (update for frozz-wizz)"
+    + Upload
   + regenerate combined Haddock documentation and commit to website.
     NOTE: this must be done AFTER releasing packages to Hackage!
     There is a script, build-haddocks.sh, in the diagrams-doc root
