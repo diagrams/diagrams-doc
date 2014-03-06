@@ -2,10 +2,10 @@
 ** vector-space-points						       :skip:
    Has had no updates since 0.1.3, already on Hackage.
 ** monoid-extras						       :skip:
-   No updates since 0.3.2.4, on Hackage.
+   0.3.3 is on Hackage.
 ** dual-tree							       :skip:
    No updates since 0.2.0.1, on Hackage.
-** diagrams-core						   :toupload:
+** diagrams-core						       :todo:
   + [X] CHANGES file updated
   + [X] all CHANGES in user manual
   + [X] version bumped to 1.1
@@ -23,11 +23,14 @@
   + [X] version bump
   + [X] LICENSE updated
   + [X] make sure denys's doc fix is incorporated and noted
-  + [ ] note new features to fix SVG fill bug
+  + [X] note new features to fix SVG fill bug
 ** SVGFonts 							       :done:
    Only a simple bump to the diagrams-lib upper bound.  Uploaded.
 ** palette							       :skip:
-** diagrams-contrib						   :toupload:
+** diagrams-contrib						       :todo:
+   Need to ensure it builds on 7.8.1 as advertised.  Requires at least
+   an update to the arithmoi package.
+
    No significant changes, but bumped lower bounds for diagrams-lib
    and -core to 1.1.
 
@@ -50,9 +53,14 @@
   + [X] Haddocks up to date
   + [X] version bump
   + [X] LICENSE updated
-** diagrams-gtk							       :todo:
-   Waiting to merge new double-buffering code:
-   https://github.com/diagrams/diagrams-gtk/pull/1
+** diagrams-gtk							   :toupload:
+  + [X] CHANGES updated
+  + [X] all CHANGES in user manual or tutorial
+  + [X] upper bounds fixed
+  + [X] lower bounds fixed
+  + [X] update tested-with field
+  + [X] Haddocks up to date
+  + [X] version bump
 ** diagrams-postscript						       :todo:
    Waiting to merge CMYK support?
 
@@ -65,6 +73,30 @@
   + [ ] version bump
   + [ ] LICENSE updated
 ** diagrams-svg							       :todo:
+  + [X] CHANGES updated
+    - [X] hyperlinks
+  + [ ] all CHANGES in user manual or tutorial
+    - [ ] Need to incorporate changes for hyperlinks
+  + [X] upper bounds fixed
+  + [ ] lower bounds fixed
+    - need hyperlink stuff from diagrams-core now
+  + [X] update tested-with field
+  + [X] Haddocks up to date
+  + [ ] version bump
+    - bump to 1.0.2
+  + [X] LICENSE updated
+
+  NOTE, should release from master branch, not svg-1.0
+** diagrams 							       :todo:
+  + [ ] CHANGES updated
+    - need to figure out what diagrams-contrib version is
+  + [X] upper bounds fixed
+  + [X] lower bounds fixed
+  + [X] update tested-with field
+  + [X] Haddocks up to date
+  + [X] version bump
+  + [X] LICENSE updated
+** diagrams-builder						       :todo:
   + [ ] CHANGES updated
   + [ ] all CHANGES in user manual or tutorial
   + [ ] upper bounds fixed
@@ -73,9 +105,15 @@
   + [ ] Haddocks up to date
   + [ ] version bump
   + [ ] LICENSE updated
-** diagrams							       :todo:
-** diagrams-builder						       :todo:
 ** diagrams-haddock						       :todo:
+  + [ ] CHANGES updated
+  + [ ] all CHANGES in user manual or tutorial
+  + [ ] upper bounds fixed
+  + [ ] lower bounds fixed
+  + [ ] update tested-with field
+  + [ ] Haddocks up to date
+  + [ ] version bump
+  + [ ] LICENSE updated
 ** diagrams-doc							       :todo:
 * Release checklist
   + [ ] go through per-package checklist
