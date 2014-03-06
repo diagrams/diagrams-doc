@@ -5,7 +5,7 @@
    0.3.3 is on Hackage.
 ** dual-tree							       :skip:
    No updates since 0.2.0.1, on Hackage.
-** diagrams-core						       :todo:
+** diagrams-core						   :toupload:
   + [X] CHANGES file updated
   + [X] all CHANGES in user manual
   + [X] version bumped to 1.1
@@ -13,7 +13,7 @@
 ** active							       :skip:
    0.1.0.10 on Hackage.  Needs no updating.
    IMPORTANT: look at active-0.1 branch, not master!
-** diagrams-lib							       :todo:
+** diagrams-lib							   :toupload:
   + [X] CHANGES updated
   + [X] all CHANGES in user manual or tutorial
   + [X] upper bounds fixed
@@ -61,28 +61,27 @@
   + [X] update tested-with field
   + [X] Haddocks up to date
   + [X] version bump
-** diagrams-postscript						       :todo:
-   Waiting to merge CMYK support?
+** diagrams-postscript						   :toupload:
+  + [X] CHANGES updated
+  + [X] upper bounds fixed
+  + [X] lower bounds fixed
+  + [X] update tested-with field
+  + [X] Haddocks up to date
+  + [X] version bump
+  + [X] LICENSE updated
 
-  + [ ] CHANGES updated
-  + [ ] all CHANGES in user manual or tutorial
-  + [ ] upper bounds fixed
-  + [ ] lower bounds fixed
-  + [ ] update tested-with field
-  + [ ] Haddocks up to date
-  + [ ] version bump
-  + [ ] LICENSE updated
-** diagrams-svg							       :todo:
+    NOTE: release from master, not ps-1.0 branch
+** diagrams-svg							   :toupload:
   + [X] CHANGES updated
     - [X] hyperlinks
-  + [ ] all CHANGES in user manual or tutorial
-    - [ ] Need to incorporate changes for hyperlinks
+  + [X] all CHANGES in user manual or tutorial
+    - [X] Need to incorporate changes for hyperlinks
   + [X] upper bounds fixed
-  + [ ] lower bounds fixed
+  + [X] lower bounds fixed
     - need hyperlink stuff from diagrams-core now
   + [X] update tested-with field
   + [X] Haddocks up to date
-  + [ ] version bump
+  + [X] version bump
     - bump to 1.0.2
   + [X] LICENSE updated
 
@@ -96,25 +95,19 @@
   + [X] Haddocks up to date
   + [X] version bump
   + [X] LICENSE updated
-** diagrams-builder						       :todo:
-  + [ ] CHANGES updated
-  + [ ] all CHANGES in user manual or tutorial
-  + [ ] upper bounds fixed
-  + [ ] lower bounds fixed
-  + [ ] update tested-with field
-  + [ ] Haddocks up to date
-  + [ ] version bump
-  + [ ] LICENSE updated
-** diagrams-haddock						       :todo:
-  + [ ] CHANGES updated
-  + [ ] all CHANGES in user manual or tutorial
-  + [ ] upper bounds fixed
-  + [ ] lower bounds fixed
-  + [ ] update tested-with field
-  + [ ] Haddocks up to date
-  + [ ] version bump
-  + [ ] LICENSE updated
-** diagrams-doc							       :todo:
+** diagrams-builder						       :done:
+   Only version bumps since last release, works with latest
+   everything.  Released 0.5.0.2.
+** diagrams-haddock						       :done:
+   No changes other than version bumps.  Uploaded.
+* Stuff remaining to settle
+
+  + [X] returning output -> local coordinate backtransforms from
+    adjust
+    - not going to include this in 1.1
+  + [ ] website bootstrap branch?
+  + [ ] arrow head/tail adjustment?
+
 * Release checklist
   + [ ] go through per-package checklist
   + [ ] user manual / tutorials
