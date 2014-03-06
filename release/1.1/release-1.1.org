@@ -77,3 +77,37 @@
 ** diagrams-builder						       :todo:
 ** diagrams-haddock						       :todo:
 ** diagrams-doc							       :todo:
+* Release checklist
+  + [ ] go through per-package checklist
+  + [ ] user manual / tutorials
+    + [ ] make sure all examples build
+    + [ ] make sure documentation is up-to-date
+    + [ ] make sure all new features are described/mentioned in the manual
+    + [ ] diagrams-haddock
+      + [ ] make sure all diagrams-haddock examples build
+      + [ ] rebuild all diagrams-haddock examples and check them in
+  + [ ] testing
+    + [ ] check all travis tests
+    + [ ] run diagrams-backend-tests
+    + [ ] copy diagrams-backend-tests output to website
+  + [ ] update release page on website
+    - See previous versions for format.  Should be possible to
+      essentially paste in the relevant parts of the CHANGES files
+      for individual repos.
+    - We should probably come up with a better format and/or a more
+      automated way of doing this...
+  + [ ] upload packages
+    + [ ] List release date in each CHANGES file
+    + [ ] Apply a tag to each repo just before releasing
+      - The tag should have a name like "vX.X.X", with a v prefixed
+        to the version
+      - The tag message should mention the version and give a very
+        short comment describing the release
+      - Use a command like: git tag -a v1.3 -m "1.3 release (update for frozz-wizz)"
+    + [ ] Upload
+  + [ ] regenerate combined Haddock documentation and commit to website.
+    NOTE: this must be done AFTER releasing packages to Hackage!
+    There is a script, build-haddocks.sh, in the diagrams-doc root
+    which can be used to build combined Haddocks.  See the comments
+    for more info and prerequisites.
+  + [ ] Rebuild and upload new website.
