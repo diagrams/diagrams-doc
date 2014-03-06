@@ -105,22 +105,23 @@
   + [X] returning output -> local coordinate backtransforms from
     adjust
     - not going to include this in 1.1
+  + [X] arrow head/tail adjustment?
+    - not going to include this in 1.1 either?
   + [ ] website bootstrap branch?
-  + [ ] arrow head/tail adjustment?
 
 * Release checklist
   + [ ] go through per-package checklist
-  + [ ] user manual / tutorials
-    + [ ] make sure all examples build
-    + [ ] make sure documentation is up-to-date
-    + [ ] make sure all new features are described/mentioned in the manual
-    + [ ] diagrams-haddock
-      + [ ] make sure all diagrams-haddock examples build
-      + [ ] rebuild all diagrams-haddock examples and check them in
-  + [ ] testing
+  + [X] user manual / tutorials
+    + [X] make sure all examples build
+    + [X] make sure documentation is up-to-date
+    + [X] make sure all new features are described/mentioned in the manual
+  + [-] testing
     + [ ] check all travis tests
-    + [ ] run diagrams-backend-tests
-    + [ ] copy diagrams-backend-tests output to website
+      - all tests are passing, except:
+      - [ ] diagrams-contrib (arithmoi)
+      - [ ] diagrams-doc (hakyll)
+    + [X] run diagrams-backend-tests
+    + [X] copy diagrams-backend-tests output to website
   + [ ] update release page on website
     - See previous versions for format.  Should be possible to
       essentially paste in the relevant parts of the CHANGES files
