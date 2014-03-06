@@ -1450,6 +1450,18 @@ already have one:
 Likewise, there are `HasStyle` instances for pairs, `Map`\s, `Set`\s,
 and functions.
 
+Static attributes
+~~~~~~~~~~~~~~~~~
+
+Diagrams can also have "static attributes" which are applied at a
+specific node in the tree representing a diagram.  Currently, the only
+static attribute is a hyperlink, which is supported only by the SVG
+backend.  To turn a diagram into a hyperlink, use the `href`
+function.
+
+More static attributes (for example, node IDs and transparency
+grouping) and wider backend support will be added in future versions.
+
 2D Transformations
 ~~~~~~~~~~~~~~~~~~
 
