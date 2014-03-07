@@ -1,6 +1,6 @@
 * Packages
-** vector-space-points						       :skip:
-   Has had no updates since 0.1.3, already on Hackage.
+** vector-space-points						   :toupload:
+   Removed Newtype instance.
 ** monoid-extras						       :skip:
    0.3.3 is on Hackage.
 ** dual-tree							       :skip:
@@ -101,14 +101,14 @@
 ** diagrams-haddock						   :toupload:
    Need to do a bugfix release (version bumps) once we get it to
    build with 7.8.1.
-* Stuff remaining to settle
+* Stuff remaining to settle					       :done:
 
   + [X] returning output -> local coordinate backtransforms from
     adjust
     - not going to include this in 1.1
-  + [X] arrow head/tail adjustment?
-    - not going to include this in 1.1 either?
-  + [ ] website bootstrap branch?
+  + [X] arrow head/tail adjustment
+    - not going to include this in 1.1 either
+  + [X] website bootstrap branch
 
 * Release checklist
   + [ ] go through per-package checklist
