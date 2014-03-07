@@ -18,26 +18,26 @@ Introduction
 (EDSL) for creating vector graphics and animations.  The ``diagrams``
 framework is:
 
-  * **Declarative**: you specify *what* a diagram is, not *how* to
-    draw it.  ``diagrams`` takes care of the how.
+* **Declarative**: you specify *what* a diagram is, not *how* to
+  draw it.  ``diagrams`` takes care of the how.
 
-  * **Compositional**: diagrams can be easily *combined* in many ways to
-    produce more complex diagrams.
+* **Compositional**: diagrams can be easily *combined* in many ways to
+  produce more complex diagrams.
 
-  * **Embedded**: the full power of Haskell_, including every library
-    on Hackage_, is available to help construct and manipulate
-    graphics.
+* **Embedded**: the full power of Haskell_, including every library
+  on Hackage_, is available to help construct and manipulate
+  graphics.
 
 .. _Haskell: http://haskell.org/
 .. _Hackage: http://hackage.haskell.org/
 
-  * **Extensible**: extending diagrams with additional or higher-level
-    functionality is as simple as writing a Haskell module.
+* **Extensible**: extending diagrams with additional or higher-level
+  functionality is as simple as writing a Haskell module.
 
-  * **Flexible**: diagrams is designed from the ground up to be as
-    generic and flexible as possible, with support for pluggable
-    rendering backends, arbitrary graphics primitives, and multiple
-    vector spaces (2D, 3D, ...).
+* **Flexible**: diagrams is designed from the ground up to be as
+  generic and flexible as possible, with support for pluggable
+  rendering backends, arbitrary graphics primitives, and multiple
+  vector spaces (2D, 3D, ...).
 
 About this document
 -------------------
@@ -63,7 +63,7 @@ code examples to take you to its documentation.  Try it:
 
 Mathematical equations are typeset using MathJax_:
 
-  `\sum_{k=1}^\infty \frac{1}{k^2} = \frac{\pi^2}{6}`:math:
+`\sum_{k=1}^\infty \frac{1}{k^2} = \frac{\pi^2}{6}`:math:
 
 Right-click on any equation to access MathJax options, like displaying
 the LaTeX source, switching between MathML and HTML/CSS for display,
@@ -101,21 +101,21 @@ Other resources
 Here are some other resources that may be helpful to you as you learn
 about ``diagrams``:
 
-  * The API reference documentation for all the ``diagrams`` packages
-    is intended to be high-quality and up-to-date, and is available
-    `from the diagrams website`_.  If you find an omission, error, or
-    something confusing, please `report it as a bug`_!
-  * The ``diagrams`` website_ has a `gallery of examples`_ and a `list
+* The API reference documentation for all the ``diagrams`` packages
+  is intended to be high-quality and up-to-date, and is available
+  `from the diagrams website`_.  If you find an omission, error, or
+  something confusing, please `report it as a bug`_!
+* The ``diagrams`` website_ has a `gallery of examples`_ and a `list
     of tutorials`_, as well as links to blog posts and other documentation.
-  * The `diagrams wiki`_ is a good place to find tips and tricks,
-    examples, answers to frequently asked questions, and more.
-  * The ``#diagrams`` `IRC channel on Freenode`_ is a friendly place
-    where you can get help from other ``diagrams`` users and developers.
-  * Consider joining the `diagrams mailing list`_ for discussions
-    and announcements about ``diagrams``.
-  * See the issue trackers in the `diagrams organization on github`_
-    for a list of open tickets.  If you find a bug or would like to
-    request a feature, please file a ticket!
+* The `diagrams wiki`_ is a good place to find tips and tricks,
+  examples, answers to frequently asked questions, and more.
+* The ``#diagrams`` IRC channel on Freenode is a friendly place
+  where you can get help from other ``diagrams`` users and developers.
+* Consider joining the `diagrams mailing list`_ for discussions
+  and announcements about ``diagrams``.
+* See the issue trackers in the `diagrams organization on github`_
+  for a list of open tickets.  If you find a bug or would like to
+  request a feature, please file a ticket!
 
 .. _`from the diagrams website`: http://projects.haskell.org/diagrams/doc/index.html
 .. _`report it as a bug`: https://github.com/diagrams/diagrams-doc/issues
@@ -133,15 +133,15 @@ Installation
 
 Before installing ``diagrams``, you will need the following:
 
-  * The `Glasgow Haskell Compiler`_ (GHC), version 7.4.x or later
-    (7.6.3 is recommended).
+* The `Glasgow Haskell Compiler`_ (GHC), version 7.4.x or later
+  (7.6.3 is recommended).
 
-  * It is recommended (but not required) to have the latest release of
-    the `Haskell Platform`_ (currently 2013.2.0.0).  At the very least
-    you will want the `cabal-install`_ tool.  Diagrams is always
-    tested on at least two versions of the Haskell Platform (the
-    current and previous releases), and may work on earlier HP
-    releases as well.
+* It is recommended (but not required) to have the latest release of
+  the `Haskell Platform`_ (currently 2013.2.0.0).  At the very least
+  you will want the `cabal-install`_ tool.  Diagrams is always
+  tested on at least two versions of the Haskell Platform (the
+  current and previous releases), and may work on earlier HP
+  releases as well.
 
 .. _`cabal-install`: http://hackage.haskell.org/trac/hackage/wiki/CabalInstall
 
@@ -322,22 +322,22 @@ Semigroups and monoids
 
 A *semigroup* consists of
 
-  * A set of elements `S`:math:
-  * An *associative binary operation* on the set, that is, some
-    operation
+* A set of elements `S`:math:
+* An *associative binary operation* on the set, that is, some
+  operation
 
-    `\oplus \colon S \to S \to S`:math:
+  `\oplus \colon S \to S \to S`:math:
 
-    for which
+  for which
 
-    `(x \oplus y) \oplus z = x \oplus (y \oplus z).`:math:
+  `(x \oplus y) \oplus z = x \oplus (y \oplus z).`:math:
 
 A *monoid* is a semigroup with the addition of
 
-  * An *identity element* `i \in S`:math: which is the identity for
-    `\oplus`:math:, that is,
+* An *identity element* `i \in S`:math: which is the identity for
+  `\oplus`:math:, that is,
 
-    `x \oplus i = i \oplus x = x.`:math:
+  `x \oplus i = i \oplus x = x.`:math:
 
 In Haskell, semigroups are expressed using the `Semigroup` type class
 from the `semigroups`:pkg: package:
@@ -469,11 +469,11 @@ of *scalars*, `Scalar v`.  A vector represents a direction and
 magnitude, whereas a scalar represents only a magnitude.  Useful
 operations on vectors and scalars include:
 
-  * Adding and subtracting vectors with `(^+^)` and `(^-^)`
-  * Multiplying a vector by a scalar with `(*^)`
-  * Linearly interpolating between two vectors with `lerp`
-  * Finding the `magnitude` (length) of a vector
-  * Projecting one vector onto another with `project`.
+* Adding and subtracting vectors with `(^+^)` and `(^-^)`
+* Multiplying a vector by a scalar with `(*^)`
+* Linearly interpolating between two vectors with `lerp`
+* Finding the `magnitude` (length) of a vector
+* Projecting one vector onto another with `project`.
 
 See `this tutorial for a more in-depth introduction to working with vectors
 and points`__.
@@ -880,33 +880,33 @@ optional parameters that control the generated polygon:
 * `polyType` specifies one of several methods for determining the
   vertices of the polygon:
 
-    * `PolyRegular` indicates a regular polygon with a certain number
-      of sides and a given *radius*.
+  * `PolyRegular` indicates a regular polygon with a certain number
+    of sides and a given *radius*.
 
-      .. class:: dia-lhs
+    .. class:: dia-lhs
 
-      ::
+    ::
 
-      > example = strutX 1 ||| p 6 ||| p 24 ||| strutX 1
-      >   where p n = polygon (with
-      >                 & polyType .~ PolyRegular n 1 )
+    > example = strutX 1 ||| p 6 ||| p 24 ||| strutX 1
+    >   where p n = polygon (with
+    >                 & polyType .~ PolyRegular n 1 )
 
-    * `PolySides` specifies the vertices using a list of angles
-      between edges, and a list of edge lengths.
+  * `PolySides` specifies the vertices using a list of angles
+    between edges, and a list of edge lengths.
 
-      .. class:: dia-lhs
+    .. class:: dia-lhs
 
-      ::
+    ::
 
-      > example = polygon ( with
-      >   & polyType .~ PolySides
-      >       [ 20 @@ deg, 90 @@ deg, 40 @@ deg, 100 @@ deg ]
-      >       [ 1        , 5        , 2        , 4          ]
-      >   )
+    > example = polygon ( with
+    >   & polyType .~ PolySides
+    >       [ 20 @@ deg, 90 @@ deg, 40 @@ deg, 100 @@ deg ]
+    >       [ 1        , 5        , 2        , 4          ]
+    >   )
 
-    * `PolyPolar` specifies the vertices using polar coordinates: a
-      list of central angles between vertices, and a list of vertex
-      radii.
+  * `PolyPolar` specifies the vertices using polar coordinates: a
+    list of central angles between vertices, and a list of vertex
+    radii.
 
 * `polyOrient` specifies the `PolyOrientation`: the polygon can be
   oriented with an edge parallel to the `x`:math:\-axis. with an edge parallel
@@ -4057,17 +4057,17 @@ really wants to just think in absolute coordinates: draw this here,
 draw that there.  If you find yourself wanting this, here are some
 tips:
 
-  * If you have a list of diagrams which are already correctly
-    positioned, you can combine them with `mconcat`.
-  * The `position` function takes a list of diagrams associated with
-    positions and combines them while placing them at the indicated
-    absolute positions.
-  * `juxtapose` can be used to position a diagram relative to
-    something else without composing them; see `Juxtaposing without
-    composing`_.
-  * `moveTo` can be used to position a single diagram absolutely.
-  * `place` is a flipped version of `moveTo` which is sometimes
-    convenient.
+* If you have a list of diagrams which are already correctly
+  positioned, you can combine them with `mconcat`.
+* The `position` function takes a list of diagrams associated with
+  positions and combines them while placing them at the indicated
+  absolute positions.
+* `juxtapose` can be used to position a diagram relative to
+  something else without composing them; see `Juxtaposing without
+  composing`_.
+* `moveTo` can be used to position a single diagram absolutely.
+* `place` is a flipped version of `moveTo` which is sometimes
+  convenient.
 
 Delayed composition
 -------------------
@@ -4718,21 +4718,21 @@ point.
 
 Instances:
 
-  * The instances for `Point`, `SubMap`, `Subdiagram`, and `QDiagram`
-    all have the meaning you would expect.
-  * The instances for `Trace`, `Envelope`, and `Query` all obey the
-    invariant that, *e.g.*, ``getEnvelope . moveOriginTo p t ==
-    moveOriginTo p t . getEnvelope``. That is, if ``e`` is the
-    envelope/trace/query for diagram ``d``, moving the origin of ``e``
-    to ``p`` yields the envelope/trace/query for ``d`` with its origin
-    moved to ``p``.
-  * Container types can be translated by translating each
-    element (``(a,b)``, ``[a]``, `Set`, `Map`).
-  * Things wrapped in `TransInv` are not supposed to be affected by
-    translation, so the `TransInv` instance has `moveOriginTo = const
-    id`.
-  * The instance for `Transformation` constructs a translation and
-    composes it appropriately.
+* The instances for `Point`, `SubMap`, `Subdiagram`, and `QDiagram`
+  all have the meaning you would expect.
+* The instances for `Trace`, `Envelope`, and `Query` all obey the
+  invariant that, *e.g.*, ``getEnvelope . moveOriginTo p t ==
+  moveOriginTo p t . getEnvelope``. That is, if ``e`` is the
+  envelope/trace/query for diagram ``d``, moving the origin of ``e``
+  to ``p`` yields the envelope/trace/query for ``d`` with its origin
+  moved to ``p``.
+* Container types can be translated by translating each
+  element (``(a,b)``, ``[a]``, `Set`, `Map`).
+* Things wrapped in `TransInv` are not supposed to be affected by
+  translation, so the `TransInv` instance has `moveOriginTo = const
+  id`.
+* The instance for `Transformation` constructs a translation and
+  composes it appropriately.
 
 Further reading: `Alignment`_.
 
@@ -4753,33 +4753,34 @@ linear transformations, in the case of translationally invariant
 things).
 
 Instances:
-  * `Prim`, `SubMap`, `Subdiagram`, `QDiagram`: these have the meaning
-    you would expect.
-  * Of course, `Transformation` is itself transformable, by composition.
-  * Container types can be transformed by transforming each
-    element (``(t,t)``, ``(t,t,t)``, ``[t]``, `Set`, `Map`).
-  * ``Point v`` is transformable whenever ``v`` is; translations
-    actually affect points (whereas they might not have an effect on
-    the underlying type ``v``).
-  * Anything wrapped in `TransInv` will not be affected by
-    translation.
-  * Anything wrapped in `ScaleInv` will not be affected by scaling.
-    See `Scale-invariance`_ for more information.
-  * Applying a transformation to a `Style`
-    simply applies it to every attribute.
-  * The meaning of transforming an `Attribute` depends on the
-    particular attribute.
-  * The instances for `Trace`, `Envelope`, and `Query` all obey the
-    invariant that, *e.g.*, ``getEnvelope . transform t == transform t
-    . getEnvelope``. That is, if ``e`` is the envelope/trace/query for
-    diagram ``d``, transforming ``e`` with ``t`` yields the
-    envelope/trace/query for ``d`` transformed by ``t``.
-  * The instance for `Deletable` simply lifts transformations on the
-    underlying type.
-  * The instance for `NullPrim` does nothing, since there is nothing
-    to transform.
-  * Uniform scales can be applied to `Double` and `Rational` values;
-    translations can also be applied but have no effect.
+
+* `Prim`, `SubMap`, `Subdiagram`, `QDiagram`: these have the meaning
+  you would expect.
+* Of course, `Transformation` is itself transformable, by composition.
+* Container types can be transformed by transforming each
+  element (``(t,t)``, ``(t,t,t)``, ``[t]``, `Set`, `Map`).
+* ``Point v`` is transformable whenever ``v`` is; translations
+  actually affect points (whereas they might not have an effect on
+  the underlying type ``v``).
+* Anything wrapped in `TransInv` will not be affected by
+  translation.
+* Anything wrapped in `ScaleInv` will not be affected by scaling.
+  See `Scale-invariance`_ for more information.
+* Applying a transformation to a `Style`
+  simply applies it to every attribute.
+* The meaning of transforming an `Attribute` depends on the
+  particular attribute.
+* The instances for `Trace`, `Envelope`, and `Query` all obey the
+  invariant that, *e.g.*, ``getEnvelope . transform t == transform t
+  . getEnvelope``. That is, if ``e`` is the envelope/trace/query for
+  diagram ``d``, transforming ``e`` with ``t`` yields the
+  envelope/trace/query for ``d`` transformed by ``t``.
+* The instance for `Deletable` simply lifts transformations on the
+  underlying type.
+* The instance for `NullPrim` does nothing, since there is nothing
+  to transform.
+* Uniform scales can be applied to `Double` and `Rational` values;
+  translations can also be applied but have no effect.
 
 Further reading: `Euclidean 2-space`_; `2D Transformations`_.
 
@@ -4868,13 +4869,14 @@ boundary of an object.
 >   getTrace :: a -> Trace (V a)
 
 Instances:
-  * The instance for `QDiagram` does what you would expect.
-  * The instance for `Subdiagram` yields a trace positioned
-    relative to the parent diagram.
-  * The trace of a `Point` is the empty trace.
-  * Many container types have instances which work by combining all
-    the envelopes of the individual elements: `[a]`, `(a,b)`, `Set`,
-    `Map`.
+
+* The instance for `QDiagram` does what you would expect.
+* The instance for `Subdiagram` yields a trace positioned
+  relative to the parent diagram.
+* The trace of a `Point` is the empty trace.
+* Many container types have instances which work by combining all
+  the envelopes of the individual elements: `[a]`, `(a,b)`, `Set`,
+  `Map`.
 
 Further reading: `Traces`_.
 
@@ -4917,14 +4919,15 @@ the left with the existing `Style` (according to the `Monoid` instance
 of `Style`).
 
 Instances:
-  * `Style` itself is an instance.
-  * Many container types are instances as long as their elements are;
-    applying a style to a container simply applies the style uniformly
-    to every element: `(a,b)`, `Map k a`, `Set`, `[a]`.
-  * Functions `(b -> a)` are an instance as long as `a` is.  (This can
-    also be thought of as a "container type".)
-  * Of course, `QDiagram b v m` is an instance, given a few
-    restrictions on `v` and `m`.
+
+* `Style` itself is an instance.
+* Many container types are instances as long as their elements are;
+  applying a style to a container simply applies the style uniformly
+  to every element: `(a,b)`, `Map k a`, `Set`, `[a]`.
+* Functions `(b -> a)` are an instance as long as `a` is.  (This can
+  also be thought of as a "container type".)
+* Of course, `QDiagram b v m` is an instance, given a few
+  restrictions on `v` and `m`.
 
 Further reading: `Attributes and styles`_; `Text`_.
 
@@ -4948,12 +4951,13 @@ values of arbitrary types to be used as names for subdiagrams.
 >   toName = Name . (:[]) . AName
 
 Instances:
-  * Many primitive types such as `()`, `Bool`, `Char`, `Int`, `Float`,
-    `Double`, `Integer`, `String`, `[a]`, `(a,b)`, `(a,b,c)` have a
-    default `IsName` instance.
-  * `AName` is an instance; converting an atomic name to `Name` works
-    by creating a singleton list.
-  * `Name` is an instance, with `toName` as the identity function.
+
+* Many primitive types such as `()`, `Bool`, `Char`, `Int`, `Float`,
+  `Double`, `Integer`, `String`, `[a]`, `(a,b)`, `(a,b,c)` have a
+  default `IsName` instance.
+* `AName` is an instance; converting an atomic name to `Name` works
+  by creating a singleton list.
+* `Name` is an instance, with `toName` as the identity function.
 
 Further reading: `Stroking trails and paths`_; `Named subdiagrams`_;
 `User-defined names`_.
@@ -4974,9 +4978,10 @@ with a name.
 >   (|>) :: IsName a => a -> q -> q
 
 Instances:
-  * `Name`: qualifying one name with another is just concatenation.
-  * `SubMap` and `QDiagram`: qualifying prefixes a name on all the
-    existing names.
+
+* `Name`: qualifying one name with another is just concatenation.
+* `SubMap` and `QDiagram`: qualifying prefixes a name on all the
+  existing names.
 
 Further reading: `Named subdiagrams`_; `Subdiagrams`_; `Qualifying
 names`_.

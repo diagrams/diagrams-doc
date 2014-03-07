@@ -2,67 +2,91 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Diagrams - $title$</title>
-        <link rel="stylesheet" type="text/css" href="/css/default.css" />
-        <link rel="stylesheet" type="text/css" href="/css/syntax.css" />
-	<link rel="shortcut icon" href="/diagrams.ico" />
+  <head>
+    <title>Diagrams - $title$</title>
 
-        <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-	<!--
-	<script type="text/javascript" src="/js/listCollapse.js"></script>
-	<script type="text/javascript">
-	window.onload = function () {
-	  compactMenu('toc',true,'&plusmn; ');
-	}
-        </script>
-	-->
-    </head>
-    <body>
-      <div id="wrap">
-        <div id="header">
-	  <img src="/images/Logo.png" height="50" /> Haskell drawing framework
-	</div>
+    <!-- Bootstrap -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="/css/sticky-footer-navbar.css" rel="stylesheet" />
+    <link href="/css/callout.css" rel="stylesheet" />
+    <link href="/css/doc.css" rel="stylesheet" />
+    <link href="/css/bootstrap-docs.css" rel="stylesheet" />
 
-        <div id="navigation">
-	  <ul>
-            <li><a href="/">About</a></li>
-	    <li><a href="/download.html">Installation</a></li>
-            <li><a href="/documentation.html">Documentation</a>
-	      <ul>
-		<li><a href="/documentation.html">Tutorials</a></li>
+    <link rel="stylesheet" type="text/css" href="/css/syntax.css" />
+    <link rel="shortcut icon" href="/diagrams.ico" />
+
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  </head>
+  <body>
+
+    <div id="wrap">
+
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Diagrams</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav pull-right">
+            <li><a href="/">Home</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Documentation <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+		<li><a href="/download.html">Installation</a></li>
+		<li class="divider" />
+ 		<li><a href="/tutorials.html">Tutorials</a></li>
 		<li><a href="/doc/manual.html">User manual</a></li>
-		<li><a href="/haddock/index.html">API reference</a></li>
+		<li><a href="/reference.html">Reference</a></li>
+		<li class="divider" />
 		<li><a href="http://haskell.org/haskellwiki/Diagrams">Wiki</a></li>
 		<li><a href="http://www.haskell.org/haskellwiki/Diagrams/FAQ">FAQ</a></li>
+		<li><a href="/releases.html">Releases</a></li>
               </ul>
-	    </li>
+            </li>
 	    <li><a href="/gallery.html">Gallery</a></li>
-	    <li><a href="/community.html">Community</a>
-	      <ul>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Community <b class="caret"></b></a>
+	      <ul class="dropdown-menu">
 		<li><a href="http://webchat.freenode.net?channels=diagrams">IRC channel</a></li>
 		<li><a href="http://groups.google.com/group/diagrams-discuss">Mailing
-		list</a></li>
-		<li><a href="/community.html">Bug trackers</a></li>
+		    list</a></li>
+		<li><a href="/sightings.html">Sightings</a></li>
+		<li><a href="/community.html">Get involved</a></li>
               </ul>
 	    </li>
-	    <li><a href="/releases.html">Releases</a></li>
-        <li><a href="/blog/index.html">Blog</a></li>
+            <li><a href="/blog/index.html">Blog</a></li>
 	   </ul>
-
         </div>
-
-	<div id="content">
-	<h1>$title$</h1>
-        $body$
-	</div>
-
-	<div id="footer">
-	  Site generated
-	  by <a href="http://jaspervdj.be/hakyll/">hakyll</a>.
-	</div>
       </div>
-    </body>
+    </div>
+
+    <div class="container" style="padding-top: 60px;">
+      $body$
+    </div>
+
+    </div> <!-- #wrap -->
+
+    <div  class="navbar navbar-fixed-bottom">
+      <div class="container">
+	      <p class="text-muted credit">Site built with
+	         using <a href="http://hackage.haskell.org/package/shake">shake</a>, <a href="http://jaspervdj.be/hakyll/">hakyll</a>,
+	         and <a href="http://getbootstrap.com">bootstrap</a>.
+        </p>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/bootstrap-docs-application.js"></script>
+  </body>
 </html>

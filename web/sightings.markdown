@@ -1,42 +1,16 @@
 ---
-title: Documentation
+title: Sightings
 ---
 
-Tutorials
----------
+People using diagrams to do stuff.
 
-* [Quick start tutorial](/doc/quickstart.html) --- get
-  started making simple diagrams quickly.
-* [Vectors and points](/doc/vector.html) --- learn how to work with
-  vectors and points.
-* [Trails and paths](/doc/paths.html) --- learn about lines, loops, trails, and
-  paths the hard way.
-* [Arrows](/doc/arrow.html) --- using the arrow API.
-* [Metafont](/doc/metafont.html) --- describing curved paths using a
-  clone of the Metafont API.
-* [Diagrams and LaTeX](/doc/latex.html) --- including diagrams in your LaTeX documents.
-* [Command-line diagram creation](/doc/cmdline.html) --- build
-  programs that produce diagrams controlled by the command-line.
-* [Three Dimensional Diagrams](/doc/3D.html) --- render ellipsoids with POV-Ray
-* [How to write diagrams tutorials](/doc/tutorials.html) --- how to
-  write one of these here things, and have it included in this list!
-
-Reference
----------
-
-* [User manual](/doc/manual.html) --- (almost) everything
-  you ever wanted to know about using diagrams.
-* [API reference](/haddock/index.html) --- Haddock-generated reference
-  documentation, all in one place with a convenient comprehensive index.
-* [Core library reference](/doc/core.html) --- (almost) everything you
-  ever wanted to know about how diagrams works under the hood.
-* [Diagrams wiki](http://www.haskell.org/haskellwiki/Diagrams) ---
-  frequently asked questions, installation instructions, examples,
-  tips and tricks, links to related projects, *etc.*
-
-Blog posts/other
-----------------
-
+* [A Cretan Maze using Haskell Diagrams](http://www.corentindupont.info/blog/posts/2014-02-17-Cretan-Maze.html)
+* [Performance profiling with ghc-events-analyze](http://www.well-typed.com/blog/86)
+* [Laplace's Equation in Haskell: Using a DSL for Stencils](http://idontgetoutmuch.wordpress.com/2014/02/10/laplaces-equation-in-haskell-using-a-dsl-for-stencils-3/)
+  (Dominic Steinitz, 10 February 2014)
+* [Demystifying DList](http://h2.jaguarpaw.co.uk/posts/demystifying-dlist/)
+  (Tom Ellis)
+* [Haskell, Ising, Markov & Metropolis](http://idontgetoutmuch.wordpress.com/2013/12/07/haskell-ising-markov-metropolis/)
 * [Magicube](http://mathr.co.uk/blog/2013-11-03_magicube.html) (Claude
   Heiland-Allen, 3 November 2013)
 * [Parking in Westminster: An Analysis in Haskell](http://idontgetoutmuch.wordpress.com/2013/10/23/parking-in-westminter-an-analysis-in-haskell/)

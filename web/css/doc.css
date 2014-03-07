@@ -1,0 +1,56 @@
+
+div.todo:before {
+    content: url(../doc/icons/ToWrite.$ext$);
+    float: right;
+    padding-left: 20px;
+    padding-bottom: 20px;
+}
+
+div.warning:before {
+    content: url(../doc/icons/Warning.$ext$);
+    float: right;
+    padding-left: 20px;
+    padding-bottom: 20px;
+}
+
+div.exercises:before {
+    content: url(../doc/icons/Exercises.$ext$);
+    float: right;
+    padding: 20px;
+}
+
+.i_container {
+    height: 400px;
+    margin: 0 auto;
+    position: relative;
+    padding: 2em;
+
+    .i_container.inner {
+        position: relative;
+        margin: 0 auto;
+        max-width: 760px;
+    }
+}
+
+.banner {
+    padding: 40px;
+    height: 400px;
+    position: relative;
+    background:#2e3846 url(../images/factorization.png);
+    -webkit-animation:bgscroll 200s infinite linear;
+            animation:bgscroll 200s infinite linear;
+}
+
+    .banner .i_container {
+        max-width:500px;
+    }
+
+@-webkit-keyframes bgscroll {
+    from {background-position:0 0;}
+    to {background-position:-5333px 0px;}
+}
+
+@keyframes bgscroll {
+    from {background-position:0 0;}
+    to {background-position:-5333px 0px;}
+}

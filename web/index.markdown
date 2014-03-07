@@ -59,7 +59,9 @@ News
   [slides](http://www.cis.upenn.edu/~byorgey/pub/12-09-13-monoid-pearl-HS.pdf)
   ] (September 2012)
 
- <!--
+
+
+<!--
 <div style="text-align:center">
 <a href="/gallery/Paradox.html"><img src="/images/Paradox-small.png" style="vertical-align: middle" title="Fibonacci paradox" /></a>
 </div>
@@ -85,7 +87,7 @@ Diagrams is:
 
  -->
 
-<div style="text-align:center" >
+<!-- <div style="text-align:center" >
 <a href="/gallery/Pentaflake.html"><img src="/images/Pentaflake-small.png" style="vertical-align: middle" title="Pentaflake" /></a>
 </div>
-
+ -->
