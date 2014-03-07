@@ -137,4 +137,32 @@
     which can be used to build combined Haddocks.  See the comments
     for more info and prerequisites.
   + Rebuild and upload new website.
-* Checklist for minor releases
+* Checklist for minor/bugfix releases
+
+  If a package has had a bug fix, or some dependency version bound
+  bumps, etc.---something that only requires bumping the 'D'
+  component of the A.B.C.D version number---we can do a simple,
+  immediate bugfix release.
+
+  In the general case, the idea is to maintain a separate branch
+  tracking the released version.  (Probably a release branch ought to
+  correspond to the A.B.C portion of a version number---i.e. we should
+  have separate release branches like lib-1.1.0, lib-1.1.1, lib-1.1.2,
+  ... though I confess in practice I have often been making release
+  branches with names like lib-1.1.)  Bug fixes, etc. are made in the
+  master branch and then cherry-picked into the release branch.
+
+  Assume the fix(es) in question has already been made in master.
+  Then the process goes like this:
+
+  + update the CHANGES.md file *in master* to describe the release.
+  + checkout the release branch.
+  + cherry-pick the fixes and the update to CHANGES into the release
+    branch.
+  + bump the package version number *in the release branch*.
+  + tag the release branch
+  + upload from the release branch to Hackage.
+
+  Note it's important that CHANGES.md is updated in both the master
+  and release branches, but the version number is only bumped in the
+  release branch.
