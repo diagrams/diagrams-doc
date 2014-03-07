@@ -95,11 +95,12 @@
   + [X] Haddocks up to date
   + [X] version bump
   + [X] LICENSE updated
-** diagrams-builder						       :done:
-   Only version bumps since last release, works with latest
-   everything.  Released 0.5.0.2.
-** diagrams-haddock						       :done:
-   No changes other than version bumps.  Uploaded.
+** diagrams-builder						   :toupload:
+   Need to do a bugfix release (version bumps) once we get it to
+   build with 7.8.1.
+** diagrams-haddock						   :toupload:
+   Need to do a bugfix release (version bumps) once we get it to
+   build with 7.8.1.
 * Stuff remaining to settle
 
   + [X] returning output -> local coordinate backtransforms from
