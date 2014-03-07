@@ -125,7 +125,7 @@
       - [ ] diagrams-haddock on 7.8.1 (gcc bug?)
     + [X] run diagrams-backend-tests
     + [X] copy diagrams-backend-tests output to website
-  + [ ] update release page on website
+  + [X] update release page on website
     - See previous versions for format.  Should be possible to
       essentially paste in the relevant parts of the CHANGES files
       for individual repos.
