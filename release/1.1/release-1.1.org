@@ -120,7 +120,9 @@
     + [ ] check all travis tests
       - all tests are passing, except:
       - [ ] diagrams-contrib (arithmoi)
-      - [ ] diagrams-doc (hakyll)
+      - [ ] diagrams-doc (hakyll) (this one doesn't matter much)
+      - [ ] diagrams-builder on 7.8.1 (gcc bug?)
+      - [ ] diagrams-haddock on 7.8.1 (gcc bug?)
     + [X] run diagrams-backend-tests
     + [X] copy diagrams-backend-tests output to website
   + [ ] update release page on website
