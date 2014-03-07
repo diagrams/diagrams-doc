@@ -2,8 +2,170 @@
 title: Releases
 ---
 
+diagrams 1.1: XXX
+=================
+
+[diagrams-core-1.1](http://hackage.haskell.org/package/diagrams-core-1.1)
+--------------------------
+
+* **New features**
+
+    - New `basis` function
+	- New `determinant` function for computing the determinant of a
+      `Transformation`
+    - Add `Typeable` constraint on `Prim`s, making it possible to
+      extract things back out of a `Prim` wrapper using `cast`
+	- Raw `Trace`s now return a *sorted list* of intersections,
+      instead of only the smallest.  This is used to implement a new
+      family of functions `rayTraceV`, `rayTraceP`, `maxRayTraceV`,
+      `maxRayTraceP`, which work similarly to the parallel versions
+      without `Ray`, but return the first intersection in the
+      *positive* direction from the given point, rather than the
+      smallest in absolute terms.
+    - New `Annotation` type and corresponding `applyAnnotation`
+      function, for attaching uninterpreted annotations at specific
+      points in a diagram tree.  Currently this is used for
+      hyperlinks; more annotation types will be added in the future.
+
+* **Dependency/version changes**
+
+    - Require `lens-4.0`
+
+* **Bug fixes**
+
+    - Looking up a subdiagram by name now results in a diagram which
+      still has that name (#43)
+
+[diagrams-lib-1.1](http://hackage.haskell.org/package/diagrams-lib-1.1)
+--------------------------
+
+* **New features**
+
+    - Support for `Deformation`s, arbitrary (non-affine)
+      transformations on objects such as points, paths, and located
+      trails (though not on diagrams).
+
+    - New functions `clipTo`, which clips a diagram's envelope and
+      trace along with its visual representation, and `clipped`, which
+      clips the diagram's visual representation but replaces its
+      envelope and trace with those of the clipping path.
+
+    - New `arrowV` function, for creating an arrow with the direction
+      and magnitude of a given vector.
+
+    - `gap` traversal, for setting the head and tail gaps of an arrow
+      simultaneously.
+
+    - Generalized types for `centerXY` and `snugXY`, based on new
+      `basis` function from `diagrams-core
+
+    - New 3D `Transform`s, alignment, and 3D-specific `Prelude`.
+
+    - New `frame` function similar to `pad`, but increases the envelope
+      of a diagram by an amount specified in local units in every direction
+      irrespective of the local origin.
+
+    - New `splitFills` function for pushing fill attributes down to
+      subtrees containing only loops (mostly of relevance only to
+      backend implementors).
+
+* **New instances**
+
+    - `Typeable` instances for all data types that are used as diagram
+      primitives.
+    - `Sectionable` instance for `FixedSegment`.
+
+* **API changes**
+
+    - `Angle` is now a type, rather than a class.  It uses a single
+      internal representation for angles, and lenses `turn`, `rad,`
+      and `deg` are supplied for constructing (using `@@`) and viewing
+      (using `^.`) `Angle`s in various units.  In addition, the `Num`
+      instance for `Angle` has been removed, eliminating a class of
+      errors where a bare number is interpreted in units other than
+      what you expect.
+
+    - Removed `Num` instance for angles.
+
+* **Dependency/version changes**
+
+    - Require `lens >= 4.0`.
+	- Allow `array-0.5`.
+	- Allow `hashable-1.1`.
+	- Remove `NumInstances` dependency.
+
+* **Bug fixes**
+
+    - Exclude joins in offsets on close segments (#160).
+    - Exclude extra segment when joining loops in offset (#155).
+
+* **Performance improvements**
+
+    - `colorToSRGBA` function now avoids expensive matrix operations,
+      offering dramatic speedups in rendering diagrams with many color
+      attributes.
+
+[diagrams-cairo-1.1](http://hackage.haskell.org/package/diagrams-cairo-1.1)
+--------------------------
+
+* **New features**
+
+    - It is now possible to directly output animated GIFs, using the
+      `gifMain` function.
+
+* **Dependency/version changes**
+
+    - allow `diagrams-core-1.1` and `diagrams-lib-1.1`
+    - allow `unix-2.7`
+    - allow `vector-0.10`
+
+* **Bug fixes**
+
+    - Don't explicitly draw final segment of a loop if it is straight
+      ([#38](https://github.com/diagrams/diagrams-cairo/issues/38))
+
+[diagrams-gtk-1.0.1](http://hackage.haskell.org/package/diagrams-gtk-1.1)
+--------------------------
+
+* Use double buffering.
+
+[diagrams-postscript-1.0.2](http://hackage.haskell.org/package/diagrams-postscript-1.1)
+--------------------------
+
+* **New features**
+
+  - Experimental support for raw CMYK colors.
+
+* **Dependency/version changes**
+
+  - Allow `diagrams-core-1.1` and `diagrams-lib-1.1`.
+
+[diagrams-svg-1.0.2](http://hackage.haskell.org/package/diagrams-svg-1.1)
+--------------------------
+
+* **New features**
+
+    - Support for including hyperlinks.
+
+* **Dependency/version changes**
+
+    - Allow `diagrams-core-1.1` and `diagrams-lib-1.1`
+    - Allow `lens-4.0`
+
+* **Bug fixes**
+
+    - Use `splitFills` to properly render certain diagrams with mixed
+      lines and filled loops.  Previously, in certain situations loops that should
+      have been filled were not.  ([#43](https://github.com/diagrams/diagrams-svg/issues/43))
+
+    - Don't emit last segment of a loop if it is linear.
+
+      See [diagrams-cairo#38](http://github.com/diagrams/diagrams-cairo/issues/38).  This wasn't actually causing any
+      observable problems in the SVG backend output, but this seems a
+      better/more robust way to do things in any case.
+
 [diagrams-builder 0.4.2](http://hackage.haskell.org/package/diagrams-builder-0.4.2)
-----------------
+==========================
 
 - Build expressions of type `Diagram b v` *or* `IO (Diagram b v)`.
   This means that expressions interpreted by `diagrams-builder` (via
