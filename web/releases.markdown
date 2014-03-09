@@ -2,8 +2,8 @@
 title: Releases
 ---
 
-diagrams 1.1: XXX
-=================
+diagrams 1.1: 8 March 2014
+==========================
 
 [diagrams-core-1.1](http://hackage.haskell.org/package/diagrams-core-1.1)
 --------------------------
@@ -30,6 +30,7 @@ diagrams 1.1: XXX
 * **Dependency/version changes**
 
     - Require `lens-4.0`
+    - Allow `vector-space-points-0.2`
 
 * **Bug fixes**
 

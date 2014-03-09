@@ -1,11 +1,11 @@
 * Packages
-** vector-space-points						   :toupload:
+** vector-space-points						       :done:
    Removed Newtype instance.
 ** monoid-extras						       :skip:
    0.3.3 is on Hackage.
 ** dual-tree							       :skip:
    No updates since 0.2.0.1, on Hackage.
-** diagrams-core						   :toupload:
+** diagrams-core						       :done:
   + [X] CHANGES file updated
   + [X] all CHANGES in user manual
   + [X] version bumped to 1.1
@@ -13,7 +13,7 @@
 ** active							       :skip:
    0.1.0.10 on Hackage.  Needs no updating.
    IMPORTANT: look at active-0.1 branch, not master!
-** diagrams-lib							   :toupload:
+** diagrams-lib							       :done:
   + [X] CHANGES updated
   + [X] all CHANGES in user manual or tutorial
   + [X] upper bounds fixed
@@ -27,7 +27,7 @@
 ** SVGFonts 							       :done:
    Only a simple bump to the diagrams-lib upper bound.  Uploaded.
 ** palette							       :skip:
-** diagrams-contrib						       :todo:
+** diagrams-contrib						       :done:
    Need to ensure it builds on 7.8.1 as advertised.  Requires at least
    an update to the arithmoi package.
 
@@ -44,7 +44,7 @@
   + [X] LICENSE updated
 ** statestack							       :skip:
    Latest version (0.2) is already on Hackage, no changes needed.
-** diagrams-cairo						   :toupload:
+** diagrams-cairo						       :done:
   + [X] CHANGES updated
   + [X] all CHANGES in user manual or tutorial
   + [X] upper bounds fixed
@@ -53,7 +53,7 @@
   + [X] Haddocks up to date
   + [X] version bump
   + [X] LICENSE updated
-** diagrams-gtk							   :toupload:
+** diagrams-gtk							       :done:
   + [X] CHANGES updated
   + [X] all CHANGES in user manual or tutorial
   + [X] upper bounds fixed
@@ -61,7 +61,7 @@
   + [X] update tested-with field
   + [X] Haddocks up to date
   + [X] version bump
-** diagrams-postscript						   :toupload:
+** diagrams-postscript						       :done:
   + [X] CHANGES updated
   + [X] upper bounds fixed
   + [X] lower bounds fixed
@@ -71,7 +71,7 @@
   + [X] LICENSE updated
 
     NOTE: release from master, not ps-1.0 branch
-** diagrams-svg							   :toupload:
+** diagrams-svg							       :done:
   + [X] CHANGES updated
     - [X] hyperlinks
   + [X] all CHANGES in user manual or tutorial
@@ -86,8 +86,8 @@
   + [X] LICENSE updated
 
   NOTE, should release from master branch, not svg-1.0
-** diagrams 							       :todo:
-  + [ ] CHANGES updated
+** diagrams							   :toupload:
+  + [X] CHANGES updated
     - need to figure out what diagrams-contrib version is
   + [X] upper bounds fixed
   + [X] lower bounds fixed
@@ -95,10 +95,10 @@
   + [X] Haddocks up to date
   + [X] version bump
   + [X] LICENSE updated
-** diagrams-builder						   :toupload:
+** diagrams-builder						       :done:
    Need to do a bugfix release (version bumps) once we get it to
    build with 7.8.1.
-** diagrams-haddock						   :toupload:
+** diagrams-haddock						       :done:
    Need to do a bugfix release (version bumps) once we get it to
    build with 7.8.1.
 * Stuff remaining to settle					       :done:
@@ -111,7 +111,7 @@
   + [X] website bootstrap branch
 
 * Release checklist
-  + [ ] go through per-package checklist
+  + [X] go through per-package checklist
   + [X] user manual / tutorials
     + [X] make sure all examples build
     + [X] make sure documentation is up-to-date
@@ -131,18 +131,19 @@
       for individual repos.
     - We should probably come up with a better format and/or a more
       automated way of doing this...
-  + [ ] upload packages
-    + [ ] List release date in each CHANGES file
-    + [ ] Apply a tag to each repo just before releasing
+  + [X] upload packages
+    + [X] List release date in each CHANGES file
+    + [X] Apply a tag to each repo just before releasing
       - The tag should have a name like "vX.X.X", with a v prefixed
         to the version
       - The tag message should mention the version and give a very
         short comment describing the release
       - Use a command like: git tag -a v1.3 -m "1.3 release (update for frozz-wizz)"
-    + [ ] Upload
+    + [X] Upload
   + [ ] regenerate combined Haddock documentation and commit to website.
     NOTE: this must be done AFTER releasing packages to Hackage!
     There is a script, build-haddocks.sh, in the diagrams-doc root
     which can be used to build combined Haddocks.  See the comments
     for more info and prerequisites.
   + [ ] Rebuild and upload new website.
+* Packages to upload
