@@ -33,6 +33,9 @@ with questions or post them to the
 News
 ----
 
+* Diagrams 1.1 [released](/releases.html) (8 March 2014).  This is
+  mostly a bugfix release though there are a few cool new features.
+
 * Brent gave a talk on diagrams at the
   [New York Haskell users' group](http://www.meetup.com/NY-Haskell/).
   [Part 1 presents a basic introduction to the library](http://vimeo.com/84104226),
