@@ -24,6 +24,7 @@ cabal install diagrams diagrams-postscript diagrams-cairo diagrams-gtk diagrams-
 for f in vector-space-points monoid-extras dual-tree active core lib svg postscript cairo gtk contrib SVGFonts builder haddock palette
 do
   cd $f
+  cabal sandbox delete  # be sure to remove any sandboxes so we use the global hsenv one instead
   cabal configure
   cd ..
 done
@@ -34,7 +35,7 @@ cd ..
 mkdir -p haddocks-tmp/haddock
 hproj doc -o haddocks-tmp/haddock -t 'The diagrams framework' vector-space-points monoid-extras dual-tree active core lib svg postscript cairo gtk contrib SVGFonts builder haddock palette
 mkdir -p haddocks-tmp/haddock/diagrams
-for f in lib contrib SVGFonts haddock
+for f in core lib contrib SVGFonts haddock
 do
   cp $f/diagrams/*.svg haddocks-tmp/haddock/diagrams/
 done
