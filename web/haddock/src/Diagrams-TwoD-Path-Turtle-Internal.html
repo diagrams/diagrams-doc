@@ -85,7 +85,7 @@
 <a name="line-76"></a>     <span class='hs-comment'>-- | Current position. This is updated everytime the turtle moves</span>
 <a name="line-77"></a>  <span class='hs-layout'>,</span> <span class='hs-varid'>penPos</span>       <span class='hs-keyglyph'>::</span> <span class='hs-conid'>P2</span>
 <a name="line-78"></a>     <span class='hs-comment'>-- | Orientation of the turtle in 2D space, given in degrees</span>
-<a name="line-79"></a>  <span class='hs-layout'>,</span> <span class='hs-varid'>heading</span>      <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Deg</span>
+<a name="line-79"></a>  <span class='hs-layout'>,</span> <span class='hs-varid'>heading</span>      <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Angle</span>
 <a name="line-80"></a>     <span class='hs-comment'>-- | Path traversed by the turtle so far, without any style or pen</span>
 <a name="line-81"></a>     <span class='hs-comment'>-- attributes changing</span>
 <a name="line-82"></a>  <span class='hs-layout'>,</span> <span class='hs-varid'>currTrail</span>    <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Located</span> <span class='hs-layout'>(</span><span class='hs-conid'>Trail'</span> <span class='hs-conid'>Line</span> <span class='hs-conid'>R2</span><span class='hs-layout'>)</span>
@@ -104,7 +104,7 @@
 <a name="line-95"></a><span class='hs-comment'>-- orientation of 0 degrees with its pen position down. The pen style is</span>
 <a name="line-96"></a><span class='hs-comment'>-- @defaultPenStyle@.</span>
 <a name="line-97"></a><span class='hs-definition'>startTurtle</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>TurtleState</span>
-<a name="line-98"></a><span class='hs-definition'>startTurtle</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>TurtleState</span> <span class='hs-conid'>True</span> <span class='hs-varid'>origin</span> <span class='hs-num'>0</span> <span class='hs-layout'>(</span><span class='hs-varid'>mempty</span> <span class='hs-varop'>`at`</span> <span class='hs-varid'>origin</span><span class='hs-layout'>)</span> <span class='hs-varid'>defaultPenStyle</span> <span class='hs-conid'>[]</span>
+<a name="line-98"></a><span class='hs-definition'>startTurtle</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>TurtleState</span> <span class='hs-conid'>True</span> <span class='hs-varid'>origin</span> <span class='hs-varid'>zeroV</span> <span class='hs-layout'>(</span><span class='hs-varid'>mempty</span> <span class='hs-varop'>`at`</span> <span class='hs-varid'>origin</span><span class='hs-layout'>)</span> <span class='hs-varid'>defaultPenStyle</span> <span class='hs-conid'>[]</span>
 <a name="line-99"></a>
 <a name="line-100"></a><a name="moveTurtle"></a><span class='hs-comment'>-- | Draw a segment along the turtle’s path and update its position. If the pen</span>
 <a name="line-101"></a><span class='hs-comment'>-- is up, only the position is updated.</span>
@@ -140,7 +140,7 @@
 <a name="line-131"></a>
 <a name="line-132"></a><a name="turnTurtle"></a><span class='hs-comment'>-- | Turn the turtle by applying the given function to its current orientation</span>
 <a name="line-133"></a><span class='hs-comment'>-- (in degrees)</span>
-<a name="line-134"></a><span class='hs-definition'>turnTurtle</span> <span class='hs-keyglyph'>::</span> <span class='hs-layout'>(</span><span class='hs-conid'>Deg</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Deg</span><span class='hs-layout'>)</span>   <span class='hs-comment'>-- ^ Transformation to apply on current orientation</span>
+<a name="line-134"></a><span class='hs-definition'>turnTurtle</span> <span class='hs-keyglyph'>::</span> <span class='hs-layout'>(</span><span class='hs-conid'>Angle</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Angle</span><span class='hs-layout'>)</span>   <span class='hs-comment'>-- ^ Transformation to apply on current orientation</span>
 <a name="line-135"></a>           <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>TurtleState</span>    <span class='hs-comment'>-- ^ Turtle to turn</span>
 <a name="line-136"></a>           <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>TurtleState</span>    <span class='hs-comment'>-- ^ Resulting turtle</span>
 <a name="line-137"></a><span class='hs-definition'>turnTurtle</span> <span class='hs-varid'>f</span> <span class='hs-varid'>t</span><span class='hs-keyglyph'>@</span><span class='hs-layout'>(</span><span class='hs-conid'>TurtleState</span> <span class='hs-keyword'>_</span> <span class='hs-keyword'>_</span> <span class='hs-varid'>h</span> <span class='hs-keyword'>_</span> <span class='hs-keyword'>_</span> <span class='hs-keyword'>_</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>t</span> <span class='hs-layout'>{</span> <span class='hs-varid'>heading</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>f</span> <span class='hs-varid'>h</span>  <span class='hs-layout'>}</span>
@@ -149,19 +149,19 @@
 <a name="line-140"></a><span class='hs-definition'>left</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Double</span>       <span class='hs-comment'>-- ^ Degree of turn</span>
 <a name="line-141"></a>     <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>TurtleState</span>  <span class='hs-comment'>-- ^ Turtle to turn</span>
 <a name="line-142"></a>     <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>TurtleState</span>  <span class='hs-comment'>-- ^ Resulting turtle</span>
-<a name="line-143"></a><span class='hs-definition'>left</span> <span class='hs-varid'>d</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>turnTurtle</span> <span class='hs-layout'>(</span><span class='hs-varop'>+</span> <span class='hs-layout'>(</span><span class='hs-conid'>Deg</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span>
+<a name="line-143"></a><span class='hs-definition'>left</span> <span class='hs-varid'>d</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>turnTurtle</span> <span class='hs-layout'>(</span><span class='hs-varop'>^+^</span> <span class='hs-layout'>(</span><span class='hs-varid'>d</span> <span class='hs-varop'>@@</span> <span class='hs-varid'>deg</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span>
 <a name="line-144"></a>
 <a name="line-145"></a><a name="right"></a><span class='hs-comment'>-- | Turn the turtle clockwise (right)</span>
 <a name="line-146"></a><span class='hs-definition'>right</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Double</span>       <span class='hs-comment'>-- ^ Degree of turn</span>
 <a name="line-147"></a>      <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>TurtleState</span>  <span class='hs-comment'>-- ^ Turtle to turn</span>
 <a name="line-148"></a>      <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>TurtleState</span>  <span class='hs-comment'>-- ^ Resulting turtle</span>
-<a name="line-149"></a><span class='hs-definition'>right</span> <span class='hs-varid'>d</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>turnTurtle</span> <span class='hs-layout'>(</span><span class='hs-varid'>subtract</span> <span class='hs-layout'>(</span><span class='hs-conid'>Deg</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span>
+<a name="line-149"></a><span class='hs-definition'>right</span> <span class='hs-varid'>d</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>turnTurtle</span> <span class='hs-layout'>(</span><span class='hs-varop'>^-^</span> <span class='hs-layout'>(</span><span class='hs-varid'>d</span> <span class='hs-varop'>@@</span> <span class='hs-varid'>deg</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span>
 <a name="line-150"></a>
 <a name="line-151"></a><a name="setHeading"></a><span class='hs-comment'>-- | Turn the turtle to the given orientation, in degrees</span>
 <a name="line-152"></a><span class='hs-definition'>setHeading</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Double</span>       <span class='hs-comment'>-- ^ Degree of orientation</span>
 <a name="line-153"></a>           <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>TurtleState</span>  <span class='hs-comment'>-- ^ Turtle to orient</span>
 <a name="line-154"></a>           <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>TurtleState</span>  <span class='hs-comment'>-- ^ Resulting turtle</span>
-<a name="line-155"></a><span class='hs-definition'>setHeading</span> <span class='hs-varid'>d</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>turnTurtle</span> <span class='hs-layout'>(</span><span class='hs-varid'>const</span> <span class='hs-varop'>$</span> <span class='hs-conid'>Deg</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span>
+<a name="line-155"></a><span class='hs-definition'>setHeading</span> <span class='hs-varid'>d</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>turnTurtle</span> <span class='hs-layout'>(</span><span class='hs-varid'>const</span> <span class='hs-varop'>$</span> <span class='hs-varid'>d</span> <span class='hs-varop'>@@</span> <span class='hs-varid'>deg</span><span class='hs-layout'>)</span>
 <a name="line-156"></a>
 <a name="line-157"></a><a name="towards"></a><span class='hs-comment'>-- | Sets the turtle orientation towards a given location.</span>
 <a name="line-158"></a><span class='hs-definition'>towards</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>P2</span>           <span class='hs-comment'>-- ^ Point to orient turtle towards</span>

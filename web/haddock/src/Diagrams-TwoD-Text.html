@@ -63,199 +63,200 @@
 <a name="line-54"></a><a name="Text"></a><span class='hs-comment'>--   vector space of the text to the vector space in which it is</span>
 <a name="line-55"></a><a name="Text"></a><span class='hs-comment'>--   embedded.</span>
 <a name="line-56"></a><a name="Text"></a><span class='hs-keyword'>data</span> <span class='hs-conid'>Text</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Text</span> <span class='hs-conid'>T2</span> <span class='hs-conid'>TextAlignment</span> <span class='hs-conid'>String</span>
-<a name="line-57"></a>
-<a name="line-58"></a><span class='hs-keyword'>type</span> <span class='hs-keyword'>instance</span> <span class='hs-conid'>V</span> <span class='hs-conid'>Text</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>R2</span>
-<a name="line-59"></a>
-<a name="line-60"></a><a name="instance%20Transformable%20Text"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Transformable</span> <span class='hs-conid'>Text</span> <span class='hs-keyword'>where</span>
-<a name="line-61"></a>  <span class='hs-varid'>transform</span> <span class='hs-varid'>t</span> <span class='hs-layout'>(</span><span class='hs-conid'>Text</span> <span class='hs-varid'>tt</span> <span class='hs-varid'>a</span> <span class='hs-varid'>s</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Text</span> <span class='hs-layout'>(</span><span class='hs-varid'>t</span> <span class='hs-varop'>&lt;&gt;</span> <span class='hs-varid'>tt</span><span class='hs-layout'>)</span> <span class='hs-varid'>a</span> <span class='hs-varid'>s</span>
-<a name="line-62"></a>
-<a name="line-63"></a><a name="instance%20IsPrim%20Text%20instance%20HasOrigin%20Text"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>IsPrim</span> <span class='hs-conid'>Text</span>
-<a name="line-64"></a>
-<a name="line-65"></a><a name="instance%20HasOrigin%20Text"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>HasOrigin</span> <span class='hs-conid'>Text</span> <span class='hs-keyword'>where</span>
-<a name="line-66"></a>  <span class='hs-varid'>moveOriginTo</span> <span class='hs-varid'>p</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>translate</span> <span class='hs-layout'>(</span><span class='hs-varid'>origin</span> <span class='hs-varop'>.-.</span> <span class='hs-varid'>p</span><span class='hs-layout'>)</span>
-<a name="line-67"></a>
-<a name="line-68"></a><a name="instance%20Renderable%20Text%20NullBackend"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Renderable</span> <span class='hs-conid'>Text</span> <span class='hs-conid'>NullBackend</span> <span class='hs-keyword'>where</span>
-<a name="line-69"></a>  <span class='hs-varid'>render</span> <span class='hs-keyword'>_</span> <span class='hs-keyword'>_</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>mempty</span>
-<a name="line-70"></a>
-<a name="line-71"></a><a name="TextAlignment"></a><span class='hs-comment'>-- | @TextAlignment@ specifies the alignment of the text's origin.</span>
-<a name="line-72"></a><a name="TextAlignment"></a><span class='hs-keyword'>data</span> <span class='hs-conid'>TextAlignment</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>BaselineText</span> <span class='hs-keyglyph'>|</span> <span class='hs-conid'>BoxAlignedText</span> <span class='hs-conid'>Double</span> <span class='hs-conid'>Double</span>
-<a name="line-73"></a>
-<a name="line-74"></a><a name="mkText"></a><span class='hs-definition'>mkText</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Renderable</span> <span class='hs-conid'>Text</span> <span class='hs-varid'>b</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>TextAlignment</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>String</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Diagram</span> <span class='hs-varid'>b</span> <span class='hs-conid'>R2</span>
-<a name="line-75"></a><span class='hs-definition'>mkText</span> <span class='hs-varid'>a</span> <span class='hs-varid'>t</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>recommendFillColor</span> <span class='hs-layout'>(</span><span class='hs-varid'>black</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Colour</span> <span class='hs-conid'>Double</span><span class='hs-layout'>)</span>
-<a name="line-76"></a>             <span class='hs-comment'>-- See Note [recommendFillColor]</span>
-<a name="line-77"></a>
-<a name="line-78"></a>           <span class='hs-varop'>$</span> <span class='hs-varid'>mkQD</span> <span class='hs-layout'>(</span><span class='hs-conid'>Prim</span> <span class='hs-layout'>(</span><span class='hs-conid'>Text</span> <span class='hs-varid'>mempty</span> <span class='hs-varid'>a</span> <span class='hs-varid'>t</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span>
-<a name="line-79"></a>                       <span class='hs-layout'>(</span><span class='hs-varid'>pointEnvelope</span> <span class='hs-varid'>origin</span><span class='hs-layout'>)</span>
-<a name="line-80"></a>                       <span class='hs-varid'>mempty</span>
+<a name="line-57"></a>  <span class='hs-keyword'>deriving</span> <span class='hs-conid'>Typeable</span>
+<a name="line-58"></a>
+<a name="line-59"></a><span class='hs-keyword'>type</span> <span class='hs-keyword'>instance</span> <span class='hs-conid'>V</span> <span class='hs-conid'>Text</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>R2</span>
+<a name="line-60"></a>
+<a name="line-61"></a><a name="instance%20Transformable%20Text"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Transformable</span> <span class='hs-conid'>Text</span> <span class='hs-keyword'>where</span>
+<a name="line-62"></a>  <span class='hs-varid'>transform</span> <span class='hs-varid'>t</span> <span class='hs-layout'>(</span><span class='hs-conid'>Text</span> <span class='hs-varid'>tt</span> <span class='hs-varid'>a</span> <span class='hs-varid'>s</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Text</span> <span class='hs-layout'>(</span><span class='hs-varid'>t</span> <span class='hs-varop'>&lt;&gt;</span> <span class='hs-varid'>tt</span><span class='hs-layout'>)</span> <span class='hs-varid'>a</span> <span class='hs-varid'>s</span>
+<a name="line-63"></a>
+<a name="line-64"></a><a name="instance%20IsPrim%20Text%20instance%20HasOrigin%20Text"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>IsPrim</span> <span class='hs-conid'>Text</span>
+<a name="line-65"></a>
+<a name="line-66"></a><a name="instance%20HasOrigin%20Text"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>HasOrigin</span> <span class='hs-conid'>Text</span> <span class='hs-keyword'>where</span>
+<a name="line-67"></a>  <span class='hs-varid'>moveOriginTo</span> <span class='hs-varid'>p</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>translate</span> <span class='hs-layout'>(</span><span class='hs-varid'>origin</span> <span class='hs-varop'>.-.</span> <span class='hs-varid'>p</span><span class='hs-layout'>)</span>
+<a name="line-68"></a>
+<a name="line-69"></a><a name="instance%20Renderable%20Text%20NullBackend"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Renderable</span> <span class='hs-conid'>Text</span> <span class='hs-conid'>NullBackend</span> <span class='hs-keyword'>where</span>
+<a name="line-70"></a>  <span class='hs-varid'>render</span> <span class='hs-keyword'>_</span> <span class='hs-keyword'>_</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>mempty</span>
+<a name="line-71"></a>
+<a name="line-72"></a><a name="TextAlignment"></a><span class='hs-comment'>-- | @TextAlignment@ specifies the alignment of the text's origin.</span>
+<a name="line-73"></a><a name="TextAlignment"></a><span class='hs-keyword'>data</span> <span class='hs-conid'>TextAlignment</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>BaselineText</span> <span class='hs-keyglyph'>|</span> <span class='hs-conid'>BoxAlignedText</span> <span class='hs-conid'>Double</span> <span class='hs-conid'>Double</span>
+<a name="line-74"></a>
+<a name="line-75"></a><a name="mkText"></a><span class='hs-definition'>mkText</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Renderable</span> <span class='hs-conid'>Text</span> <span class='hs-varid'>b</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>TextAlignment</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>String</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Diagram</span> <span class='hs-varid'>b</span> <span class='hs-conid'>R2</span>
+<a name="line-76"></a><span class='hs-definition'>mkText</span> <span class='hs-varid'>a</span> <span class='hs-varid'>t</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>recommendFillColor</span> <span class='hs-layout'>(</span><span class='hs-varid'>black</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Colour</span> <span class='hs-conid'>Double</span><span class='hs-layout'>)</span>
+<a name="line-77"></a>             <span class='hs-comment'>-- See Note [recommendFillColor]</span>
+<a name="line-78"></a>
+<a name="line-79"></a>           <span class='hs-varop'>$</span> <span class='hs-varid'>mkQD</span> <span class='hs-layout'>(</span><span class='hs-conid'>Prim</span> <span class='hs-layout'>(</span><span class='hs-conid'>Text</span> <span class='hs-varid'>mempty</span> <span class='hs-varid'>a</span> <span class='hs-varid'>t</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span>
+<a name="line-80"></a>                       <span class='hs-layout'>(</span><span class='hs-varid'>pointEnvelope</span> <span class='hs-varid'>origin</span><span class='hs-layout'>)</span>
 <a name="line-81"></a>                       <span class='hs-varid'>mempty</span>
 <a name="line-82"></a>                       <span class='hs-varid'>mempty</span>
-<a name="line-83"></a>
-<a name="line-84"></a><span class='hs-comment'>-- ~~~~ Note [recommendFillColor]</span>
-<a name="line-85"></a>
-<a name="line-86"></a><span class='hs-comment'>-- The reason we "recommend" a fill color of black instead of setting</span>
-<a name="line-87"></a><span class='hs-comment'>-- it directly (or instead of simply not specifying a fill color at</span>
-<a name="line-88"></a><span class='hs-comment'>-- all) was originally to support the SVG backend, though it is</span>
-<a name="line-89"></a><span class='hs-comment'>-- actually in some sense the "right thing" to do, and other backends</span>
-<a name="line-90"></a><span class='hs-comment'>-- we add later may conceivably need it as well.  The cairo backend</span>
-<a name="line-91"></a><span class='hs-comment'>-- defaults happen to be to use a transparent fill for paths and a</span>
-<a name="line-92"></a><span class='hs-comment'>-- black fill for text.  The SVG standard, however, specifies a</span>
-<a name="line-93"></a><span class='hs-comment'>-- default fill of black for everything (both text and paths).  In</span>
-<a name="line-94"></a><span class='hs-comment'>-- order to correctly render paths with no fill set, the SVG backend</span>
-<a name="line-95"></a><span class='hs-comment'>-- must therefore explicitly set the fill to transparent -- but this</span>
-<a name="line-96"></a><span class='hs-comment'>-- meant that it was also drawing text with a transparent fill.  The</span>
-<a name="line-97"></a><span class='hs-comment'>-- solution is that we now explicitly inform all backends that the</span>
-<a name="line-98"></a><span class='hs-comment'>-- *default* ("recommended") fill color for text should be black; an</span>
-<a name="line-99"></a><span class='hs-comment'>-- absence of fill specification now consistently means to use a</span>
-<a name="line-100"></a><span class='hs-comment'>-- "transparent" fill no matter what the primitive.  The reason we</span>
-<a name="line-101"></a><span class='hs-comment'>-- need the special recommend/commit distinction is because if the</span>
-<a name="line-102"></a><span class='hs-comment'>-- user explicitly sets a fill color later it should override this</span>
-<a name="line-103"></a><span class='hs-comment'>-- recommendation; normally, the innermost occurrence of an attribute</span>
-<a name="line-104"></a><span class='hs-comment'>-- would override all outer occurrences.</span>
-<a name="line-105"></a>
-<a name="line-106"></a><a name="text"></a><span class='hs-comment'>-- | Create a primitive text diagram from the given string, with center</span>
-<a name="line-107"></a><span class='hs-comment'>--   alignment, equivalent to @'alignedText' 0.5 0.5@.</span>
-<a name="line-108"></a><span class='hs-comment'>--</span>
-<a name="line-109"></a><span class='hs-comment'>--   Note that it /takes up no space/, as text size information is not</span>
-<a name="line-110"></a><span class='hs-comment'>--   available.</span>
-<a name="line-111"></a><span class='hs-definition'>text</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Renderable</span> <span class='hs-conid'>Text</span> <span class='hs-varid'>b</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>String</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Diagram</span> <span class='hs-varid'>b</span> <span class='hs-conid'>R2</span>
-<a name="line-112"></a><span class='hs-definition'>text</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>alignedText</span> <span class='hs-num'>0.5</span> <span class='hs-num'>0.5</span>
-<a name="line-113"></a>
-<a name="line-114"></a><a name="topLeftText"></a><span class='hs-comment'>-- | Create a primitive text diagram from the given string, origin at</span>
-<a name="line-115"></a><span class='hs-comment'>--   the top left corner of the text's bounding box, equivalent to</span>
-<a name="line-116"></a><span class='hs-comment'>--   @'alignedText' 0 1@.</span>
-<a name="line-117"></a><span class='hs-comment'>--</span>
-<a name="line-118"></a><span class='hs-comment'>--   Note that it /takes up no space/.</span>
-<a name="line-119"></a><span class='hs-definition'>topLeftText</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Renderable</span> <span class='hs-conid'>Text</span> <span class='hs-varid'>b</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>String</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Diagram</span> <span class='hs-varid'>b</span> <span class='hs-conid'>R2</span>
-<a name="line-120"></a><span class='hs-definition'>topLeftText</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>alignedText</span> <span class='hs-num'>0</span> <span class='hs-num'>1</span>
-<a name="line-121"></a>
-<a name="line-122"></a><a name="alignedText"></a><span class='hs-comment'>-- | Create a primitive text diagram from the given string, with the</span>
-<a name="line-123"></a><span class='hs-comment'>--   origin set to a point interpolated within the bounding box.  The</span>
-<a name="line-124"></a><span class='hs-comment'>--   first parameter varies from 0 (left) to 1 (right), and the second</span>
-<a name="line-125"></a><span class='hs-comment'>--   parameter from 0 (bottom) to 1 (top).</span>
-<a name="line-126"></a><span class='hs-comment'>--</span>
-<a name="line-127"></a><span class='hs-comment'>--   The height of this box is determined by the font's potential ascent</span>
-<a name="line-128"></a><span class='hs-comment'>--   and descent, rather than the height of the particular string.</span>
-<a name="line-129"></a><span class='hs-comment'>--</span>
-<a name="line-130"></a><span class='hs-comment'>--   Note that it /takes up no space/.</span>
-<a name="line-131"></a><span class='hs-definition'>alignedText</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Renderable</span> <span class='hs-conid'>Text</span> <span class='hs-varid'>b</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>Double</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Double</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>String</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Diagram</span> <span class='hs-varid'>b</span> <span class='hs-conid'>R2</span>
-<a name="line-132"></a><span class='hs-definition'>alignedText</span> <span class='hs-varid'>w</span> <span class='hs-varid'>h</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>mkText</span> <span class='hs-layout'>(</span><span class='hs-conid'>BoxAlignedText</span> <span class='hs-varid'>w</span> <span class='hs-varid'>h</span><span class='hs-layout'>)</span>
-<a name="line-133"></a>
-<a name="line-134"></a><a name="baselineText"></a><span class='hs-comment'>-- | Create a primitive text diagram from the given string, with the</span>
-<a name="line-135"></a><span class='hs-comment'>--   origin set to be on the baseline, at the beginning (although not</span>
-<a name="line-136"></a><span class='hs-comment'>--   bounding).  This is the reference point of showText in the Cairo</span>
-<a name="line-137"></a><span class='hs-comment'>--   graphics library.</span>
-<a name="line-138"></a><span class='hs-comment'>--</span>
-<a name="line-139"></a><span class='hs-comment'>--   Note that it /takes up no space/.</span>
-<a name="line-140"></a><span class='hs-definition'>baselineText</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Renderable</span> <span class='hs-conid'>Text</span> <span class='hs-varid'>b</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>String</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Diagram</span> <span class='hs-varid'>b</span> <span class='hs-conid'>R2</span>
-<a name="line-141"></a><span class='hs-definition'>baselineText</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>mkText</span> <span class='hs-conid'>BaselineText</span>
-<a name="line-142"></a>
-<a name="line-143"></a><span class='hs-comment'>------------------------------------------------------------</span>
-<a name="line-144"></a><span class='hs-comment'>-- Text attributes</span>
-<a name="line-145"></a><span class='hs-comment'>------------------------------------------------------------</span>
-<a name="line-146"></a>
-<a name="line-147"></a><span class='hs-comment'>--------------------------------------------------</span>
-<a name="line-148"></a><span class='hs-comment'>-- Font family</span>
-<a name="line-149"></a>
-<a name="line-150"></a><a name="Font"></a><span class='hs-comment'>-- | The @Font@ attribute specifies the name of a font family.  Inner</span>
-<a name="line-151"></a><a name="Font"></a><span class='hs-comment'>--   @Font@ attributes override outer ones.</span>
-<a name="line-152"></a><a name="Font"></a><span class='hs-keyword'>newtype</span> <span class='hs-conid'>Font</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Font</span> <span class='hs-layout'>(</span><span class='hs-conid'>Last</span> <span class='hs-conid'>String</span><span class='hs-layout'>)</span>
-<a name="line-153"></a>  <span class='hs-keyword'>deriving</span> <span class='hs-layout'>(</span><span class='hs-conid'>Typeable</span><span class='hs-layout'>,</span> <span class='hs-conid'>Semigroup</span><span class='hs-layout'>,</span> <span class='hs-conid'>Eq</span><span class='hs-layout'>)</span>
-<a name="line-154"></a><a name="instance%20String%20-%3e%20a%20-%3e%20a%20font%20=%20applyAttr%20.%20Font%20.%20Last%20--------------------------------------------------%20--%20Font%20size%20--%20%7c%20The%20@FontSize@%20attribute%20specifies%20the%20size%20of%20a%20font's%20--%20em-square,%20measured%20with%20respect%20to%20the%20current%20local%20vector%20space.%20--%20Inner%20@FontSize@%20attributes%20override%20outer%20ones.%20newtype%20FontSize%20=%20FontSize%20(Last%20Double)%20deriving%20(Typeable,%20Semigroup,%20Eq)%20instance%20AttributeClass%20FontSize%20instance%20Default%20FontSize"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>AttributeClass</span> <span class='hs-conid'>Font</span>
-<a name="line-155"></a>
-<a name="line-156"></a><a name="getFont"></a><span class='hs-comment'>-- | Extract the font family name from a @Font@ attribute.</span>
-<a name="line-157"></a><span class='hs-definition'>getFont</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Font</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>String</span>
-<a name="line-158"></a><span class='hs-definition'>getFont</span> <span class='hs-layout'>(</span><span class='hs-conid'>Font</span> <span class='hs-layout'>(</span><span class='hs-conid'>Last</span> <span class='hs-varid'>f</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>f</span>
-<a name="line-159"></a>
-<a name="line-160"></a><a name="font"></a><span class='hs-comment'>-- | Specify a font family to be used for all text within a diagram.</span>
-<a name="line-161"></a><span class='hs-definition'>font</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>HasStyle</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>String</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span>
-<a name="line-162"></a><span class='hs-definition'>font</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>applyAttr</span> <span class='hs-varop'>.</span> <span class='hs-conid'>Font</span> <span class='hs-varop'>.</span> <span class='hs-conid'>Last</span>
-<a name="line-163"></a>
-<a name="line-164"></a><span class='hs-comment'>--------------------------------------------------</span>
-<a name="line-165"></a><span class='hs-comment'>-- Font size</span>
-<a name="line-166"></a>
-<a name="line-167"></a><a name="FontSize"></a><span class='hs-comment'>-- | The @FontSize@ attribute specifies the size of a font's</span>
-<a name="line-168"></a><a name="FontSize"></a><span class='hs-comment'>--   em-square, measured with respect to the current local vector space.</span>
-<a name="line-169"></a><a name="FontSize"></a><span class='hs-comment'>--   Inner @FontSize@ attributes override outer ones.</span>
-<a name="line-170"></a><a name="FontSize"></a><span class='hs-keyword'>newtype</span> <span class='hs-conid'>FontSize</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>FontSize</span> <span class='hs-layout'>(</span><span class='hs-conid'>Last</span> <span class='hs-conid'>Double</span><span class='hs-layout'>)</span>
-<a name="line-171"></a>  <span class='hs-keyword'>deriving</span> <span class='hs-layout'>(</span><span class='hs-conid'>Typeable</span><span class='hs-layout'>,</span> <span class='hs-conid'>Semigroup</span><span class='hs-layout'>,</span> <span class='hs-conid'>Eq</span><span class='hs-layout'>)</span>
-<a name="line-172"></a><a name="instance%20AttributeClass%20FontSize%20instance%20Default%20FontSize"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>AttributeClass</span> <span class='hs-conid'>FontSize</span>
-<a name="line-173"></a>
-<a name="line-174"></a><a name="instance%20Default%20FontSize"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Default</span> <span class='hs-conid'>FontSize</span> <span class='hs-keyword'>where</span>
-<a name="line-175"></a>    <span class='hs-varid'>def</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>FontSize</span> <span class='hs-layout'>(</span><span class='hs-conid'>Last</span> <span class='hs-num'>1</span><span class='hs-layout'>)</span>
-<a name="line-176"></a>
-<a name="line-177"></a><a name="getFontSize"></a><span class='hs-comment'>-- | Extract the size from a @FontSize@ attribute.</span>
-<a name="line-178"></a><span class='hs-definition'>getFontSize</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>FontSize</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Double</span>
-<a name="line-179"></a><span class='hs-definition'>getFontSize</span> <span class='hs-layout'>(</span><span class='hs-conid'>FontSize</span> <span class='hs-layout'>(</span><span class='hs-conid'>Last</span> <span class='hs-varid'>s</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>s</span>
-<a name="line-180"></a>
-<a name="line-181"></a><a name="fontSize"></a><span class='hs-comment'>-- | Set the font size, that is, the size of the font's em-square as</span>
-<a name="line-182"></a><span class='hs-comment'>--   measured within the current local vector space.  The default size</span>
-<a name="line-183"></a><span class='hs-comment'>--   is @1@.</span>
-<a name="line-184"></a><span class='hs-definition'>fontSize</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>HasStyle</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>Double</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span>
-<a name="line-185"></a><span class='hs-definition'>fontSize</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>applyAttr</span> <span class='hs-varop'>.</span> <span class='hs-conid'>FontSize</span> <span class='hs-varop'>.</span> <span class='hs-conid'>Last</span>
-<a name="line-186"></a>
-<a name="line-187"></a><a name="fontSizeA"></a><span class='hs-comment'>-- | Apply a 'FontSize' attribute.</span>
-<a name="line-188"></a><span class='hs-definition'>fontSizeA</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>HasStyle</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>FontSize</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span>
-<a name="line-189"></a><span class='hs-definition'>fontSizeA</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>applyAttr</span>
-<a name="line-190"></a>
-<a name="line-191"></a><span class='hs-comment'>--------------------------------------------------</span>
-<a name="line-192"></a><span class='hs-comment'>-- Font slant</span>
-<a name="line-193"></a>
-<a name="line-194"></a><a name="FontSlant"></a><span class='hs-keyword'>data</span> <span class='hs-conid'>FontSlant</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>FontSlantNormal</span>
-<a name="line-195"></a>               <span class='hs-keyglyph'>|</span> <span class='hs-conid'>FontSlantItalic</span>
-<a name="line-196"></a>               <span class='hs-keyglyph'>|</span> <span class='hs-conid'>FontSlantOblique</span>
-<a name="line-197"></a>    <span class='hs-keyword'>deriving</span> <span class='hs-layout'>(</span><span class='hs-conid'>Eq</span><span class='hs-layout'>)</span>
-<a name="line-198"></a>
-<a name="line-199"></a><a name="FontSlantA"></a><span class='hs-comment'>-- | The @FontSlantA@ attribute specifies the slant (normal, italic,</span>
-<a name="line-200"></a><a name="FontSlantA"></a><span class='hs-comment'>--   or oblique) that should be used for all text within a diagram.</span>
-<a name="line-201"></a><a name="FontSlantA"></a><span class='hs-comment'>--   Inner @FontSlantA@ attributes override outer ones.</span>
-<a name="line-202"></a><a name="FontSlantA"></a><span class='hs-keyword'>newtype</span> <span class='hs-conid'>FontSlantA</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>FontSlantA</span> <span class='hs-layout'>(</span><span class='hs-conid'>Last</span> <span class='hs-conid'>FontSlant</span><span class='hs-layout'>)</span>
-<a name="line-203"></a>  <span class='hs-keyword'>deriving</span> <span class='hs-layout'>(</span><span class='hs-conid'>Typeable</span><span class='hs-layout'>,</span> <span class='hs-conid'>Semigroup</span><span class='hs-layout'>,</span> <span class='hs-conid'>Eq</span><span class='hs-layout'>)</span>
-<a name="line-204"></a><a name="instance%20FontSlant%20-%3e%20a%20-%3e%20a%20fontSlant%20=%20applyAttr%20.%20FontSlantA%20.%20Last%20--%20%7c%20Set%20all%20text%20in%20italics.%20italic%20::%20HasStyle%20a%20=%3e%20a%20-%3e%20a%20italic%20=%20fontSlant%20FontSlantItalic%20--%20%7c%20Set%20all%20text%20using%20an%20oblique%20slant.%20oblique%20::%20HasStyle%20a%20=%3e%20a%20-%3e%20a%20oblique%20=%20fontSlant%20FontSlantOblique%20--------------------------------------------------%20--%20Font%20weight%20data%20FontWeight%20=%20FontWeightNormal%20%7c%20FontWeightBold%20deriving%20(Eq)%20--%20%7c%20The%20@FontWeightA@%20attribute%20specifies%20the%20weight%20(normal%20or%20bold)%20--%20that%20should%20be%20used%20for%20all%20text%20within%20a%20diagram.%20Inner%20--%20@FontWeightA@%20attributes%20override%20outer%20ones.%20newtype%20FontWeightA%20=%20FontWeightA%20(Last%20FontWeight)%20deriving%20(Typeable,%20Semigroup,%20Eq)%20instance%20AttributeClass%20FontWeightA%20--%20%7c%20Extract%20the%20font%20weight%20from%20a%20'FontWeightA'%20attribute.%20getFontWeight%20::%20FontWeightA%20-%3e%20FontWeight%20getFontWeight%20(FontWeightA%20(Last%20w))%20=%20w%20--%20%7c%20Specify%20the%20weight%20(normal%20or%20bold)%20that%20should%20be%20--%20used%20for%20all%20text%20within%20a%20diagram.%20See%20also%20'bold'%20--%20for%20a%20useful%20special%20case.%20fontWeight%20::%20HasStyle%20a%20=%3e%20FontWeight%20-%3e%20a%20-%3e%20a%20fontWeight%20=%20applyAttr%20.%20FontWeightA%20.%20Last%20--%20%7c%20Set%20all%20text%20using%20a%20bold%20font%20weight.%20bold%20::%20HasStyle%20a%20=%3e%20a%20-%3e%20a%20bold%20=%20fontWeight%20FontWeightBold"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>AttributeClass</span> <span class='hs-conid'>FontSlantA</span>
-<a name="line-205"></a>
-<a name="line-206"></a><a name="getFontSlant"></a><span class='hs-comment'>-- | Extract the font slant from a 'FontSlantA' attribute.</span>
-<a name="line-207"></a><span class='hs-definition'>getFontSlant</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>FontSlantA</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>FontSlant</span>
-<a name="line-208"></a><span class='hs-definition'>getFontSlant</span> <span class='hs-layout'>(</span><span class='hs-conid'>FontSlantA</span> <span class='hs-layout'>(</span><span class='hs-conid'>Last</span> <span class='hs-varid'>s</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>s</span>
-<a name="line-209"></a>
-<a name="line-210"></a><a name="fontSlant"></a><span class='hs-comment'>-- | Specify the slant (normal, italic, or oblique) that should be</span>
-<a name="line-211"></a><span class='hs-comment'>--   used for all text within a diagram.  See also 'italic' and</span>
-<a name="line-212"></a><span class='hs-comment'>--   'oblique' for useful special cases.</span>
-<a name="line-213"></a><span class='hs-definition'>fontSlant</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>HasStyle</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>FontSlant</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span>
-<a name="line-214"></a><span class='hs-definition'>fontSlant</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>applyAttr</span> <span class='hs-varop'>.</span> <span class='hs-conid'>FontSlantA</span> <span class='hs-varop'>.</span> <span class='hs-conid'>Last</span>
-<a name="line-215"></a>
-<a name="line-216"></a><a name="italic"></a><span class='hs-comment'>-- | Set all text in italics.</span>
-<a name="line-217"></a><span class='hs-definition'>italic</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>HasStyle</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span>
-<a name="line-218"></a><span class='hs-definition'>italic</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>fontSlant</span> <span class='hs-conid'>FontSlantItalic</span>
-<a name="line-219"></a>
-<a name="line-220"></a><a name="oblique"></a><span class='hs-comment'>-- | Set all text using an oblique slant.</span>
-<a name="line-221"></a><span class='hs-definition'>oblique</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>HasStyle</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span>
-<a name="line-222"></a><span class='hs-definition'>oblique</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>fontSlant</span> <span class='hs-conid'>FontSlantOblique</span>
-<a name="line-223"></a>
-<a name="line-224"></a><span class='hs-comment'>--------------------------------------------------</span>
-<a name="line-225"></a><span class='hs-comment'>-- Font weight</span>
-<a name="line-226"></a>
-<a name="line-227"></a><a name="FontWeight"></a><span class='hs-keyword'>data</span> <span class='hs-conid'>FontWeight</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>FontWeightNormal</span>
-<a name="line-228"></a>                <span class='hs-keyglyph'>|</span> <span class='hs-conid'>FontWeightBold</span>
-<a name="line-229"></a>    <span class='hs-keyword'>deriving</span> <span class='hs-layout'>(</span><span class='hs-conid'>Eq</span><span class='hs-layout'>)</span>
-<a name="line-230"></a>
-<a name="line-231"></a><a name="FontWeightA"></a><span class='hs-comment'>-- | The @FontWeightA@ attribute specifies the weight (normal or bold)</span>
-<a name="line-232"></a><a name="FontWeightA"></a><span class='hs-comment'>--   that should be used for all text within a diagram.  Inner</span>
-<a name="line-233"></a><a name="FontWeightA"></a><span class='hs-comment'>--   @FontWeightA@ attributes override outer ones.</span>
-<a name="line-234"></a><a name="FontWeightA"></a><span class='hs-keyword'>newtype</span> <span class='hs-conid'>FontWeightA</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>FontWeightA</span> <span class='hs-layout'>(</span><span class='hs-conid'>Last</span> <span class='hs-conid'>FontWeight</span><span class='hs-layout'>)</span>
-<a name="line-235"></a>  <span class='hs-keyword'>deriving</span> <span class='hs-layout'>(</span><span class='hs-conid'>Typeable</span><span class='hs-layout'>,</span> <span class='hs-conid'>Semigroup</span><span class='hs-layout'>,</span> <span class='hs-conid'>Eq</span><span class='hs-layout'>)</span>
-<a name="line-236"></a><a name="instance%20FontWeight%20-%3e%20a%20-%3e%20a%20fontWeight%20=%20applyAttr%20.%20FontWeightA%20.%20Last%20--%20%7c%20Set%20all%20text%20using%20a%20bold%20font%20weight.%20bold%20::%20HasStyle%20a%20=%3e%20a%20-%3e%20a%20bold%20=%20fontWeight%20FontWeightBold"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>AttributeClass</span> <span class='hs-conid'>FontWeightA</span>
-<a name="line-237"></a>
-<a name="line-238"></a><a name="getFontWeight"></a><span class='hs-comment'>-- | Extract the font weight from a 'FontWeightA' attribute.</span>
-<a name="line-239"></a><span class='hs-definition'>getFontWeight</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>FontWeightA</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>FontWeight</span>
-<a name="line-240"></a><span class='hs-definition'>getFontWeight</span> <span class='hs-layout'>(</span><span class='hs-conid'>FontWeightA</span> <span class='hs-layout'>(</span><span class='hs-conid'>Last</span> <span class='hs-varid'>w</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>w</span>
-<a name="line-241"></a>
-<a name="line-242"></a><a name="fontWeight"></a><span class='hs-comment'>-- | Specify the weight (normal or bold) that should be</span>
-<a name="line-243"></a><span class='hs-comment'>--   used for all text within a diagram.  See also 'bold'</span>
-<a name="line-244"></a><span class='hs-comment'>--   for a useful special case.</span>
-<a name="line-245"></a><span class='hs-definition'>fontWeight</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>HasStyle</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>FontWeight</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span>
-<a name="line-246"></a><span class='hs-definition'>fontWeight</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>applyAttr</span> <span class='hs-varop'>.</span> <span class='hs-conid'>FontWeightA</span> <span class='hs-varop'>.</span> <span class='hs-conid'>Last</span>
-<a name="line-247"></a>
-<a name="line-248"></a><a name="bold"></a><span class='hs-comment'>-- | Set all text using a bold font weight.</span>
-<a name="line-249"></a><span class='hs-definition'>bold</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>HasStyle</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span>
-<a name="line-250"></a><span class='hs-definition'>bold</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>fontWeight</span> <span class='hs-conid'>FontWeightBold</span>
+<a name="line-83"></a>                       <span class='hs-varid'>mempty</span>
+<a name="line-84"></a>
+<a name="line-85"></a><span class='hs-comment'>-- ~~~~ Note [recommendFillColor]</span>
+<a name="line-86"></a>
+<a name="line-87"></a><span class='hs-comment'>-- The reason we "recommend" a fill color of black instead of setting</span>
+<a name="line-88"></a><span class='hs-comment'>-- it directly (or instead of simply not specifying a fill color at</span>
+<a name="line-89"></a><span class='hs-comment'>-- all) was originally to support the SVG backend, though it is</span>
+<a name="line-90"></a><span class='hs-comment'>-- actually in some sense the "right thing" to do, and other backends</span>
+<a name="line-91"></a><span class='hs-comment'>-- we add later may conceivably need it as well.  The cairo backend</span>
+<a name="line-92"></a><span class='hs-comment'>-- defaults happen to be to use a transparent fill for paths and a</span>
+<a name="line-93"></a><span class='hs-comment'>-- black fill for text.  The SVG standard, however, specifies a</span>
+<a name="line-94"></a><span class='hs-comment'>-- default fill of black for everything (both text and paths).  In</span>
+<a name="line-95"></a><span class='hs-comment'>-- order to correctly render paths with no fill set, the SVG backend</span>
+<a name="line-96"></a><span class='hs-comment'>-- must therefore explicitly set the fill to transparent -- but this</span>
+<a name="line-97"></a><span class='hs-comment'>-- meant that it was also drawing text with a transparent fill.  The</span>
+<a name="line-98"></a><span class='hs-comment'>-- solution is that we now explicitly inform all backends that the</span>
+<a name="line-99"></a><span class='hs-comment'>-- *default* ("recommended") fill color for text should be black; an</span>
+<a name="line-100"></a><span class='hs-comment'>-- absence of fill specification now consistently means to use a</span>
+<a name="line-101"></a><span class='hs-comment'>-- "transparent" fill no matter what the primitive.  The reason we</span>
+<a name="line-102"></a><span class='hs-comment'>-- need the special recommend/commit distinction is because if the</span>
+<a name="line-103"></a><span class='hs-comment'>-- user explicitly sets a fill color later it should override this</span>
+<a name="line-104"></a><span class='hs-comment'>-- recommendation; normally, the innermost occurrence of an attribute</span>
+<a name="line-105"></a><span class='hs-comment'>-- would override all outer occurrences.</span>
+<a name="line-106"></a>
+<a name="line-107"></a><a name="text"></a><span class='hs-comment'>-- | Create a primitive text diagram from the given string, with center</span>
+<a name="line-108"></a><span class='hs-comment'>--   alignment, equivalent to @'alignedText' 0.5 0.5@.</span>
+<a name="line-109"></a><span class='hs-comment'>--</span>
+<a name="line-110"></a><span class='hs-comment'>--   Note that it /takes up no space/, as text size information is not</span>
+<a name="line-111"></a><span class='hs-comment'>--   available.</span>
+<a name="line-112"></a><span class='hs-definition'>text</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Renderable</span> <span class='hs-conid'>Text</span> <span class='hs-varid'>b</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>String</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Diagram</span> <span class='hs-varid'>b</span> <span class='hs-conid'>R2</span>
+<a name="line-113"></a><span class='hs-definition'>text</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>alignedText</span> <span class='hs-num'>0.5</span> <span class='hs-num'>0.5</span>
+<a name="line-114"></a>
+<a name="line-115"></a><a name="topLeftText"></a><span class='hs-comment'>-- | Create a primitive text diagram from the given string, origin at</span>
+<a name="line-116"></a><span class='hs-comment'>--   the top left corner of the text's bounding box, equivalent to</span>
+<a name="line-117"></a><span class='hs-comment'>--   @'alignedText' 0 1@.</span>
+<a name="line-118"></a><span class='hs-comment'>--</span>
+<a name="line-119"></a><span class='hs-comment'>--   Note that it /takes up no space/.</span>
+<a name="line-120"></a><span class='hs-definition'>topLeftText</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Renderable</span> <span class='hs-conid'>Text</span> <span class='hs-varid'>b</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>String</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Diagram</span> <span class='hs-varid'>b</span> <span class='hs-conid'>R2</span>
+<a name="line-121"></a><span class='hs-definition'>topLeftText</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>alignedText</span> <span class='hs-num'>0</span> <span class='hs-num'>1</span>
+<a name="line-122"></a>
+<a name="line-123"></a><a name="alignedText"></a><span class='hs-comment'>-- | Create a primitive text diagram from the given string, with the</span>
+<a name="line-124"></a><span class='hs-comment'>--   origin set to a point interpolated within the bounding box.  The</span>
+<a name="line-125"></a><span class='hs-comment'>--   first parameter varies from 0 (left) to 1 (right), and the second</span>
+<a name="line-126"></a><span class='hs-comment'>--   parameter from 0 (bottom) to 1 (top).</span>
+<a name="line-127"></a><span class='hs-comment'>--</span>
+<a name="line-128"></a><span class='hs-comment'>--   The height of this box is determined by the font's potential ascent</span>
+<a name="line-129"></a><span class='hs-comment'>--   and descent, rather than the height of the particular string.</span>
+<a name="line-130"></a><span class='hs-comment'>--</span>
+<a name="line-131"></a><span class='hs-comment'>--   Note that it /takes up no space/.</span>
+<a name="line-132"></a><span class='hs-definition'>alignedText</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Renderable</span> <span class='hs-conid'>Text</span> <span class='hs-varid'>b</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>Double</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Double</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>String</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Diagram</span> <span class='hs-varid'>b</span> <span class='hs-conid'>R2</span>
+<a name="line-133"></a><span class='hs-definition'>alignedText</span> <span class='hs-varid'>w</span> <span class='hs-varid'>h</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>mkText</span> <span class='hs-layout'>(</span><span class='hs-conid'>BoxAlignedText</span> <span class='hs-varid'>w</span> <span class='hs-varid'>h</span><span class='hs-layout'>)</span>
+<a name="line-134"></a>
+<a name="line-135"></a><a name="baselineText"></a><span class='hs-comment'>-- | Create a primitive text diagram from the given string, with the</span>
+<a name="line-136"></a><span class='hs-comment'>--   origin set to be on the baseline, at the beginning (although not</span>
+<a name="line-137"></a><span class='hs-comment'>--   bounding).  This is the reference point of showText in the Cairo</span>
+<a name="line-138"></a><span class='hs-comment'>--   graphics library.</span>
+<a name="line-139"></a><span class='hs-comment'>--</span>
+<a name="line-140"></a><span class='hs-comment'>--   Note that it /takes up no space/.</span>
+<a name="line-141"></a><span class='hs-definition'>baselineText</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Renderable</span> <span class='hs-conid'>Text</span> <span class='hs-varid'>b</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>String</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Diagram</span> <span class='hs-varid'>b</span> <span class='hs-conid'>R2</span>
+<a name="line-142"></a><span class='hs-definition'>baselineText</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>mkText</span> <span class='hs-conid'>BaselineText</span>
+<a name="line-143"></a>
+<a name="line-144"></a><span class='hs-comment'>------------------------------------------------------------</span>
+<a name="line-145"></a><span class='hs-comment'>-- Text attributes</span>
+<a name="line-146"></a><span class='hs-comment'>------------------------------------------------------------</span>
+<a name="line-147"></a>
+<a name="line-148"></a><span class='hs-comment'>--------------------------------------------------</span>
+<a name="line-149"></a><span class='hs-comment'>-- Font family</span>
+<a name="line-150"></a>
+<a name="line-151"></a><a name="Font"></a><span class='hs-comment'>-- | The @Font@ attribute specifies the name of a font family.  Inner</span>
+<a name="line-152"></a><a name="Font"></a><span class='hs-comment'>--   @Font@ attributes override outer ones.</span>
+<a name="line-153"></a><a name="Font"></a><span class='hs-keyword'>newtype</span> <span class='hs-conid'>Font</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Font</span> <span class='hs-layout'>(</span><span class='hs-conid'>Last</span> <span class='hs-conid'>String</span><span class='hs-layout'>)</span>
+<a name="line-154"></a>  <span class='hs-keyword'>deriving</span> <span class='hs-layout'>(</span><span class='hs-conid'>Typeable</span><span class='hs-layout'>,</span> <span class='hs-conid'>Semigroup</span><span class='hs-layout'>,</span> <span class='hs-conid'>Eq</span><span class='hs-layout'>)</span>
+<a name="line-155"></a><a name="instance%20String%20-%3e%20a%20-%3e%20a%20font%20=%20applyAttr%20.%20Font%20.%20Last%20--------------------------------------------------%20--%20Font%20size%20--%20%7c%20The%20@FontSize@%20attribute%20specifies%20the%20size%20of%20a%20font's%20--%20em-square,%20measured%20with%20respect%20to%20the%20current%20local%20vector%20space.%20--%20Inner%20@FontSize@%20attributes%20override%20outer%20ones.%20newtype%20FontSize%20=%20FontSize%20(Last%20Double)%20deriving%20(Typeable,%20Semigroup,%20Eq)%20instance%20AttributeClass%20FontSize%20instance%20Default%20FontSize"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>AttributeClass</span> <span class='hs-conid'>Font</span>
+<a name="line-156"></a>
+<a name="line-157"></a><a name="getFont"></a><span class='hs-comment'>-- | Extract the font family name from a @Font@ attribute.</span>
+<a name="line-158"></a><span class='hs-definition'>getFont</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Font</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>String</span>
+<a name="line-159"></a><span class='hs-definition'>getFont</span> <span class='hs-layout'>(</span><span class='hs-conid'>Font</span> <span class='hs-layout'>(</span><span class='hs-conid'>Last</span> <span class='hs-varid'>f</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>f</span>
+<a name="line-160"></a>
+<a name="line-161"></a><a name="font"></a><span class='hs-comment'>-- | Specify a font family to be used for all text within a diagram.</span>
+<a name="line-162"></a><span class='hs-definition'>font</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>HasStyle</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>String</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span>
+<a name="line-163"></a><span class='hs-definition'>font</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>applyAttr</span> <span class='hs-varop'>.</span> <span class='hs-conid'>Font</span> <span class='hs-varop'>.</span> <span class='hs-conid'>Last</span>
+<a name="line-164"></a>
+<a name="line-165"></a><span class='hs-comment'>--------------------------------------------------</span>
+<a name="line-166"></a><span class='hs-comment'>-- Font size</span>
+<a name="line-167"></a>
+<a name="line-168"></a><a name="FontSize"></a><span class='hs-comment'>-- | The @FontSize@ attribute specifies the size of a font's</span>
+<a name="line-169"></a><a name="FontSize"></a><span class='hs-comment'>--   em-square, measured with respect to the current local vector space.</span>
+<a name="line-170"></a><a name="FontSize"></a><span class='hs-comment'>--   Inner @FontSize@ attributes override outer ones.</span>
+<a name="line-171"></a><a name="FontSize"></a><span class='hs-keyword'>newtype</span> <span class='hs-conid'>FontSize</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>FontSize</span> <span class='hs-layout'>(</span><span class='hs-conid'>Last</span> <span class='hs-conid'>Double</span><span class='hs-layout'>)</span>
+<a name="line-172"></a>  <span class='hs-keyword'>deriving</span> <span class='hs-layout'>(</span><span class='hs-conid'>Typeable</span><span class='hs-layout'>,</span> <span class='hs-conid'>Semigroup</span><span class='hs-layout'>,</span> <span class='hs-conid'>Eq</span><span class='hs-layout'>)</span>
+<a name="line-173"></a><a name="instance%20AttributeClass%20FontSize%20instance%20Default%20FontSize"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>AttributeClass</span> <span class='hs-conid'>FontSize</span>
+<a name="line-174"></a>
+<a name="line-175"></a><a name="instance%20Default%20FontSize"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Default</span> <span class='hs-conid'>FontSize</span> <span class='hs-keyword'>where</span>
+<a name="line-176"></a>    <span class='hs-varid'>def</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>FontSize</span> <span class='hs-layout'>(</span><span class='hs-conid'>Last</span> <span class='hs-num'>1</span><span class='hs-layout'>)</span>
+<a name="line-177"></a>
+<a name="line-178"></a><a name="getFontSize"></a><span class='hs-comment'>-- | Extract the size from a @FontSize@ attribute.</span>
+<a name="line-179"></a><span class='hs-definition'>getFontSize</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>FontSize</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Double</span>
+<a name="line-180"></a><span class='hs-definition'>getFontSize</span> <span class='hs-layout'>(</span><span class='hs-conid'>FontSize</span> <span class='hs-layout'>(</span><span class='hs-conid'>Last</span> <span class='hs-varid'>s</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>s</span>
+<a name="line-181"></a>
+<a name="line-182"></a><a name="fontSize"></a><span class='hs-comment'>-- | Set the font size, that is, the size of the font's em-square as</span>
+<a name="line-183"></a><span class='hs-comment'>--   measured within the current local vector space.  The default size</span>
+<a name="line-184"></a><span class='hs-comment'>--   is @1@.</span>
+<a name="line-185"></a><span class='hs-definition'>fontSize</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>HasStyle</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>Double</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span>
+<a name="line-186"></a><span class='hs-definition'>fontSize</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>applyAttr</span> <span class='hs-varop'>.</span> <span class='hs-conid'>FontSize</span> <span class='hs-varop'>.</span> <span class='hs-conid'>Last</span>
+<a name="line-187"></a>
+<a name="line-188"></a><a name="fontSizeA"></a><span class='hs-comment'>-- | Apply a 'FontSize' attribute.</span>
+<a name="line-189"></a><span class='hs-definition'>fontSizeA</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>HasStyle</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>FontSize</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span>
+<a name="line-190"></a><span class='hs-definition'>fontSizeA</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>applyAttr</span>
+<a name="line-191"></a>
+<a name="line-192"></a><span class='hs-comment'>--------------------------------------------------</span>
+<a name="line-193"></a><span class='hs-comment'>-- Font slant</span>
+<a name="line-194"></a>
+<a name="line-195"></a><a name="FontSlant"></a><span class='hs-keyword'>data</span> <span class='hs-conid'>FontSlant</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>FontSlantNormal</span>
+<a name="line-196"></a>               <span class='hs-keyglyph'>|</span> <span class='hs-conid'>FontSlantItalic</span>
+<a name="line-197"></a>               <span class='hs-keyglyph'>|</span> <span class='hs-conid'>FontSlantOblique</span>
+<a name="line-198"></a>    <span class='hs-keyword'>deriving</span> <span class='hs-layout'>(</span><span class='hs-conid'>Eq</span><span class='hs-layout'>)</span>
+<a name="line-199"></a>
+<a name="line-200"></a><a name="FontSlantA"></a><span class='hs-comment'>-- | The @FontSlantA@ attribute specifies the slant (normal, italic,</span>
+<a name="line-201"></a><a name="FontSlantA"></a><span class='hs-comment'>--   or oblique) that should be used for all text within a diagram.</span>
+<a name="line-202"></a><a name="FontSlantA"></a><span class='hs-comment'>--   Inner @FontSlantA@ attributes override outer ones.</span>
+<a name="line-203"></a><a name="FontSlantA"></a><span class='hs-keyword'>newtype</span> <span class='hs-conid'>FontSlantA</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>FontSlantA</span> <span class='hs-layout'>(</span><span class='hs-conid'>Last</span> <span class='hs-conid'>FontSlant</span><span class='hs-layout'>)</span>
+<a name="line-204"></a>  <span class='hs-keyword'>deriving</span> <span class='hs-layout'>(</span><span class='hs-conid'>Typeable</span><span class='hs-layout'>,</span> <span class='hs-conid'>Semigroup</span><span class='hs-layout'>,</span> <span class='hs-conid'>Eq</span><span class='hs-layout'>)</span>
+<a name="line-205"></a><a name="instance%20FontSlant%20-%3e%20a%20-%3e%20a%20fontSlant%20=%20applyAttr%20.%20FontSlantA%20.%20Last%20--%20%7c%20Set%20all%20text%20in%20italics.%20italic%20::%20HasStyle%20a%20=%3e%20a%20-%3e%20a%20italic%20=%20fontSlant%20FontSlantItalic%20--%20%7c%20Set%20all%20text%20using%20an%20oblique%20slant.%20oblique%20::%20HasStyle%20a%20=%3e%20a%20-%3e%20a%20oblique%20=%20fontSlant%20FontSlantOblique%20--------------------------------------------------%20--%20Font%20weight%20data%20FontWeight%20=%20FontWeightNormal%20%7c%20FontWeightBold%20deriving%20(Eq)%20--%20%7c%20The%20@FontWeightA@%20attribute%20specifies%20the%20weight%20(normal%20or%20bold)%20--%20that%20should%20be%20used%20for%20all%20text%20within%20a%20diagram.%20Inner%20--%20@FontWeightA@%20attributes%20override%20outer%20ones.%20newtype%20FontWeightA%20=%20FontWeightA%20(Last%20FontWeight)%20deriving%20(Typeable,%20Semigroup,%20Eq)%20instance%20AttributeClass%20FontWeightA%20--%20%7c%20Extract%20the%20font%20weight%20from%20a%20'FontWeightA'%20attribute.%20getFontWeight%20::%20FontWeightA%20-%3e%20FontWeight%20getFontWeight%20(FontWeightA%20(Last%20w))%20=%20w%20--%20%7c%20Specify%20the%20weight%20(normal%20or%20bold)%20that%20should%20be%20--%20used%20for%20all%20text%20within%20a%20diagram.%20See%20also%20'bold'%20--%20for%20a%20useful%20special%20case.%20fontWeight%20::%20HasStyle%20a%20=%3e%20FontWeight%20-%3e%20a%20-%3e%20a%20fontWeight%20=%20applyAttr%20.%20FontWeightA%20.%20Last%20--%20%7c%20Set%20all%20text%20using%20a%20bold%20font%20weight.%20bold%20::%20HasStyle%20a%20=%3e%20a%20-%3e%20a%20bold%20=%20fontWeight%20FontWeightBold"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>AttributeClass</span> <span class='hs-conid'>FontSlantA</span>
+<a name="line-206"></a>
+<a name="line-207"></a><a name="getFontSlant"></a><span class='hs-comment'>-- | Extract the font slant from a 'FontSlantA' attribute.</span>
+<a name="line-208"></a><span class='hs-definition'>getFontSlant</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>FontSlantA</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>FontSlant</span>
+<a name="line-209"></a><span class='hs-definition'>getFontSlant</span> <span class='hs-layout'>(</span><span class='hs-conid'>FontSlantA</span> <span class='hs-layout'>(</span><span class='hs-conid'>Last</span> <span class='hs-varid'>s</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>s</span>
+<a name="line-210"></a>
+<a name="line-211"></a><a name="fontSlant"></a><span class='hs-comment'>-- | Specify the slant (normal, italic, or oblique) that should be</span>
+<a name="line-212"></a><span class='hs-comment'>--   used for all text within a diagram.  See also 'italic' and</span>
+<a name="line-213"></a><span class='hs-comment'>--   'oblique' for useful special cases.</span>
+<a name="line-214"></a><span class='hs-definition'>fontSlant</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>HasStyle</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>FontSlant</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span>
+<a name="line-215"></a><span class='hs-definition'>fontSlant</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>applyAttr</span> <span class='hs-varop'>.</span> <span class='hs-conid'>FontSlantA</span> <span class='hs-varop'>.</span> <span class='hs-conid'>Last</span>
+<a name="line-216"></a>
+<a name="line-217"></a><a name="italic"></a><span class='hs-comment'>-- | Set all text in italics.</span>
+<a name="line-218"></a><span class='hs-definition'>italic</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>HasStyle</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span>
+<a name="line-219"></a><span class='hs-definition'>italic</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>fontSlant</span> <span class='hs-conid'>FontSlantItalic</span>
+<a name="line-220"></a>
+<a name="line-221"></a><a name="oblique"></a><span class='hs-comment'>-- | Set all text using an oblique slant.</span>
+<a name="line-222"></a><span class='hs-definition'>oblique</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>HasStyle</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span>
+<a name="line-223"></a><span class='hs-definition'>oblique</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>fontSlant</span> <span class='hs-conid'>FontSlantOblique</span>
+<a name="line-224"></a>
+<a name="line-225"></a><span class='hs-comment'>--------------------------------------------------</span>
+<a name="line-226"></a><span class='hs-comment'>-- Font weight</span>
+<a name="line-227"></a>
+<a name="line-228"></a><a name="FontWeight"></a><span class='hs-keyword'>data</span> <span class='hs-conid'>FontWeight</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>FontWeightNormal</span>
+<a name="line-229"></a>                <span class='hs-keyglyph'>|</span> <span class='hs-conid'>FontWeightBold</span>
+<a name="line-230"></a>    <span class='hs-keyword'>deriving</span> <span class='hs-layout'>(</span><span class='hs-conid'>Eq</span><span class='hs-layout'>)</span>
+<a name="line-231"></a>
+<a name="line-232"></a><a name="FontWeightA"></a><span class='hs-comment'>-- | The @FontWeightA@ attribute specifies the weight (normal or bold)</span>
+<a name="line-233"></a><a name="FontWeightA"></a><span class='hs-comment'>--   that should be used for all text within a diagram.  Inner</span>
+<a name="line-234"></a><a name="FontWeightA"></a><span class='hs-comment'>--   @FontWeightA@ attributes override outer ones.</span>
+<a name="line-235"></a><a name="FontWeightA"></a><span class='hs-keyword'>newtype</span> <span class='hs-conid'>FontWeightA</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>FontWeightA</span> <span class='hs-layout'>(</span><span class='hs-conid'>Last</span> <span class='hs-conid'>FontWeight</span><span class='hs-layout'>)</span>
+<a name="line-236"></a>  <span class='hs-keyword'>deriving</span> <span class='hs-layout'>(</span><span class='hs-conid'>Typeable</span><span class='hs-layout'>,</span> <span class='hs-conid'>Semigroup</span><span class='hs-layout'>,</span> <span class='hs-conid'>Eq</span><span class='hs-layout'>)</span>
+<a name="line-237"></a><a name="instance%20FontWeight%20-%3e%20a%20-%3e%20a%20fontWeight%20=%20applyAttr%20.%20FontWeightA%20.%20Last%20--%20%7c%20Set%20all%20text%20using%20a%20bold%20font%20weight.%20bold%20::%20HasStyle%20a%20=%3e%20a%20-%3e%20a%20bold%20=%20fontWeight%20FontWeightBold"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>AttributeClass</span> <span class='hs-conid'>FontWeightA</span>
+<a name="line-238"></a>
+<a name="line-239"></a><a name="getFontWeight"></a><span class='hs-comment'>-- | Extract the font weight from a 'FontWeightA' attribute.</span>
+<a name="line-240"></a><span class='hs-definition'>getFontWeight</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>FontWeightA</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>FontWeight</span>
+<a name="line-241"></a><span class='hs-definition'>getFontWeight</span> <span class='hs-layout'>(</span><span class='hs-conid'>FontWeightA</span> <span class='hs-layout'>(</span><span class='hs-conid'>Last</span> <span class='hs-varid'>w</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>w</span>
+<a name="line-242"></a>
+<a name="line-243"></a><a name="fontWeight"></a><span class='hs-comment'>-- | Specify the weight (normal or bold) that should be</span>
+<a name="line-244"></a><span class='hs-comment'>--   used for all text within a diagram.  See also 'bold'</span>
+<a name="line-245"></a><span class='hs-comment'>--   for a useful special case.</span>
+<a name="line-246"></a><span class='hs-definition'>fontWeight</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>HasStyle</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>FontWeight</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span>
+<a name="line-247"></a><span class='hs-definition'>fontWeight</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>applyAttr</span> <span class='hs-varop'>.</span> <span class='hs-conid'>FontWeightA</span> <span class='hs-varop'>.</span> <span class='hs-conid'>Last</span>
+<a name="line-248"></a>
+<a name="line-249"></a><a name="bold"></a><span class='hs-comment'>-- | Set all text using a bold font weight.</span>
+<a name="line-250"></a><span class='hs-definition'>bold</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>HasStyle</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span>
+<a name="line-251"></a><span class='hs-definition'>bold</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>fontWeight</span> <span class='hs-conid'>FontWeightBold</span>
 </pre></body>
 </html>

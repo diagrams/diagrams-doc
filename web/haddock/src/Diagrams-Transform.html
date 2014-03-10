@@ -50,7 +50,7 @@
 <a name="line-41"></a>
 <a name="line-42"></a><a name="under"></a><span class='hs-comment'>-- | Carry out some transformation \"under\" another one: @f ``under``</span>
 <a name="line-43"></a><span class='hs-comment'>--   t@ first applies @t@, then @f@, then the inverse of @t@.  For</span>
-<a name="line-44"></a><span class='hs-comment'>--   example, @'scaleX' 2 ``under`` 'rotationBy' (-1/8 :: Turn)@</span>
+<a name="line-44"></a><span class='hs-comment'>--   example, @'scaleX' 2 ``under`` 'rotation' (-1/8 \@\@ Turn)@</span>
 <a name="line-45"></a><span class='hs-comment'>--   is the transformation which scales by a factor of 2 along the</span>
 <a name="line-46"></a><span class='hs-comment'>--   diagonal line y = x.</span>
 <a name="line-47"></a><span class='hs-comment'>--</span>
