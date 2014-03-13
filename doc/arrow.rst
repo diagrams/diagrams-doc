@@ -375,7 +375,7 @@ used to set the `headSize` and `tailSize` to a specified width. This
 is useful, for example, for making the arrowhead and tail take up the
 same length of shaft. In fact `widths` can be used to simultaneously
 set the size of the head and tail so that they have the specified
-width. Similarly `gap` and `sizes` can be used to simultaneously set
+width. Similarly `gaps` and `sizes` can be used to simultaneously set
 the `headGap` / `tailGap` and the `headSize` / `tailSize`
 respectively.
 
