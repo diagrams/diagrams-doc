@@ -368,18 +368,19 @@ the following example. The default gaps are 0.
 > example = ( sDot <> mDot <> eDot <> leftArrow <> rightArrow)
 >           # centerXY # pad 1.1
 
-Our use of the Lens package (`Control.Lens`:mod:) allows use to create
-functions to modify `ArrowOpts` using the same syntax as the record field
-lenses. The functions `headWidth` and `tailWidth` can be used to set the
-`headSize` and `tailSize` to a specified width. This is useful for example
-for making the arrowhead and tail take up the same length of shaft. In fact
-the function (traversal) `widths` can be used to simultaneously set the size of
-the head and tail so that they have the specified width. Similarly `gaps` and
-`sizes` can be used to simultaneously set the `headGap` / `tailGap` and the
-`headSize` / `tailSize` respectively.
+Our use of the `lens`:pkg: package allows us to create other lenses to
+modify `ArrowOpts` using the same syntax as the record field
+lenses. For example, the functions `headWidth` and `tailWidth` can be
+used to set the `headSize` and `tailSize` to a specified width. This
+is useful, for example, for making the arrowhead and tail take up the
+same length of shaft. In fact `widths` can be used to simultaneously
+set the size of the head and tail so that they have the specified
+width. Similarly `gaps` and `sizes` can be used to simultaneously set
+the `headGap` / `tailGap` and the `headSize` / `tailSize`
+respectively.
 
 A useful pattern is to use `lineTail` together with `widths` as in the
-this example
+following example:
 
 .. class:: dia-lhs
 
@@ -391,22 +392,20 @@ this example
 >
 > ushaft = trailFromVertices (map p2 [(0, 0), (-0.5, 0), (-0.5, 1), (0, 1)])
 >
-> uconnect = connect' (with
->                    & arrowHead .~ spike
->                    & arrowShaft .~ ushaft
->                    & shaftStyle %~ lw 0.1 . lc black
->                    & arrowTail .~ noTail
->                    & headWidth .~ 0.5)
+> uconnect tl setWd =
+>   connect' (with
+>           & arrowHead .~ spike
+>           & arrowShaft .~ ushaft
+>           & shaftStyle %~ lw 0.1 . lc black
+>           & arrowTail .~ tl
+>           & setWd)
 >
-> uconnect' = connect' (with
->                    & arrowHead .~ spike
->                    & arrowShaft .~ ushaft
->                    & shaftStyle %~ lw 0.1 . lc black
->                    & arrowTail .~ lineTail
->                    & widths .~ 0.5)
->
-> example = (dia # uconnect "B" "A" ||| strutX 0.5 ||| dia # uconnect' "B" "A")
->          # centerXY # pad 1.1
+> example =
+>   hcat' (with & sep .~ 1.5)
+>   [ dia # uconnect noTail   (headWidth .~ 0.5) "B" "A"  -- looks bad
+>   , dia # uconnect lineTail (widths    .~ 0.5) "B" "A"  -- looks good!
+>   ]
+>   # frame 1.1
 
 The style options
 -----------------
