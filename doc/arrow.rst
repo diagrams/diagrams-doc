@@ -201,11 +201,11 @@ then the arrow from the previous example looks like this:
 >          # centerXY # pad 1.1
 
 The `Arrowheads` package exports a number of standard arrowheads
-including, `tri`, `dart`, `spike`, `thorn`, `missile`, and `noHead`,
+including, `tri`, `dart`, `spike`, `thorn`, `missile`, `lineHead`, and `noHead`,
 with `dart` being
 the default. Also available are companion functions like `arrowheadDart`
 that allow finer control over the shape of a dart style head. For tails,
-in addition to `quill` are `block` and `noTail`. Again for more control
+in addition to `quill` are `block`, `lineTail`, and `noTail`. Again for more control
 are functions like, `arrowtailQuill`. Finally, any of the standard arrowheads
 can be used as tails by appending a single quote, so for example:
 
@@ -368,6 +368,45 @@ the following example. The default gaps are 0.
 > example = ( sDot <> mDot <> eDot <> leftArrow <> rightArrow)
 >           # centerXY # pad 1.1
 
+Our use of the Lens package (`Control.Lens`:mod:) allows use to create
+functions to modify `ArrowOpts` using the same syntax as the record field
+lenses. The functions `headWidth` and `tailWidth` can be used to set the
+`headSize` and `tailSize` to a specified width. This is useful for example
+for making the arrowhead and tail take up the same length of shaft. In fact
+the function (traversal) `widths` can be used to simultaneously set the size of
+the head and tail so that they have the specified width. Similarly `gaps` and
+`sizes` can be used to simultaneously set the `headGap` / `tailGap` and the
+`headSize` / `tailSize` respectively.
+
+A useful pattern is to use `lineTail` together with `widths` as in the
+this example
+
+.. class:: dia-lhs
+
+::
+
+> dia = (rect 5 2 # fc lavender # alignX (-1) # showOrigin # named "A")
+>        === strutY 2 ===
+>       (rect 5 2 # fc pink # alignX (-1) # showOrigin # named "B")
+>
+> ushaft = trailFromVertices (map p2 [(0, 0), (-0.5, 0), (-0.5, 1), (0, 1)])
+>
+> uconnect = connect' (with
+>                    & arrowHead .~ spike
+>                    & arrowShaft .~ ushaft
+>                    & shaftStyle %~ lw 0.1 . lc black
+>                    & arrowTail .~ noTail
+>                    & headWidth .~ 0.5)
+>
+> uconnect' = connect' (with
+>                    & arrowHead .~ spike
+>                    & arrowShaft .~ ushaft
+>                    & shaftStyle %~ lw 0.1 . lc black
+>                    & arrowTail .~ lineTail
+>                    & widths .~ 0.5)
+>
+> example = (dia # uconnect "B" "A" ||| strutX 0.5 ||| dia # uconnect' "B" "A")
+>          # centerXY # pad 1.1
 
 The style options
 -----------------
@@ -504,8 +543,8 @@ Connecting points on the trace of diagrams
 ==========================================
 
 It is often convenient to be able to connect the points on the `Trace`
-of diagrams with arrows. The `connectPerim` and `connectPerim'`
-functions are used for this purpose.  We pass `connectPerim` two names
+of diagrams with arrows. The `connectPerim'` and `connectOutside'`
+functions are used for this purpose. We pass `connectPerim` two names
 and two angles. The angles are used to determine points on the traces
 of the two diagrams, determined by shooting a ray from the local
 origin of each diagram in the direction of the given angle.  The
@@ -513,11 +552,13 @@ generated arrow stretches between these two points. Note that if the
 names are the same then the arrow connects two points on the same
 diagram.
 
+In the case of `connectOutside` The arrow lies on the line between the centers of the diagrams, but is drawn so that it stops at the boundaries of the diagrams, using traces to find the intersection points.
+
 .. class:: lhs
 
 ::
 
-> connectPerim "diagram1" "diagram2" (5/12 @@ turn) (1/12 @@ turn)
+> connectOutside "diagram1" "diagram2"
 > connectPerim "diagram" "diagram" (2/12 @@ turn) (4/12 @@ turn)
 
 Here is an example of a finite state automata that accepts real numbers.
@@ -533,8 +574,8 @@ straightforward.
 > state = circle 1 # lw 0.05 # fc silver
 > fState = circle 0.85 # lw 0.05 # fc lightblue <> state
 >
-> points = map p2 [ (0, 3), (3, 3.4), (6, 3), (5.75, 5.75), (9, 3.75), (12, 3)
->                 , (11.75, 5.75), (3, 0), (2,2), (6, 0.5), (9, 0), (12.25, 0.25)]
+> points = map p2 [ (0, 3), (3, 4), (6, 3), (6, 6), (9, 4), (12, 3)
+>                 , (12, 6), (3, 0), (1.75, 1.75), (6, 1), (9, 0), (12.25, 0)]
 >
 > ds = [ (text "1" <> state)  # named "1"
 >        , label "0-9" 0.5
@@ -553,36 +594,28 @@ straightforward.
 >
 > states = position (zip points ds)
 >
-> shaft = arc (0 @@ turn) (1/6 @@ turn)
-> shaft' = arc (0 @@ turn) (1/2 @@ turn) # scaleX 0.33
+> shaft = reverseTrail $ arc (0 @@ turn) (1/6 @@ turn)
+> shaft' = reverseTrail $ arc (1/2 @@ turn) (0 @@ turn) # scaleX 0.33
 > line = trailFromOffsets [unitX]
 >
-> arrowStyle1 = (with  & arrowHead  .~ noHead & tailSize .~ 0.3
->                      & arrowShaft .~ shaft  & arrowTail .~ spike'
->                      & tailColor  .~ black)
+> arrowStyle1 = (with  & arrowHead  .~ spike  & headSize .~ 0.3
+>                      & arrowShaft .~ shaft & shaftStyle %~ lw 0.02)
+> arrowStyle2  = (with  & arrowHead  .~ spike & shaftStyle %~ lw 0.02
+>                       & arrowShaft .~ shaft' & arrowTail .~ lineTail
+>                       & tailColor  .~ black & widths .~ 0.2)
+> arrowStyle3  = (with  & arrowHead  .~ spike  & headSize .~ 0.3
+>                       & arrowShaft .~ line & shaftStyle %~ lw 0.02)
 >
-> arrowStyle2  = (with  & arrowHead  .~ noHead &  tailSize .~ 0.3
->                       & arrowShaft .~ shaft' & arrowTail .~ spike'
->                       & tailColor  .~ black)
->
-> arrowStyle3  = (with  & arrowHead  .~ noHead & tailSize .~ 0.3
->                       & arrowShaft .~ line & arrowTail .~ spike'
->                       & tailColor  .~ black)
->
-> example = states # connectPerim' arrowStyle1
->                                  "2" "1" (5/12 @@ turn) (1/12 @@ turn)
->                  # connectPerim' arrowStyle3
->                                  "4" "1" (2/6 @@ turn) (5/6 @@ turn)
->                  # connectPerim' arrowStyle2
->                                  "2" "2" (2/12 @@ turn) (4/12 @@ turn)
->                  # connectPerim' arrowStyle1
->                                  "3" "2" (5/12 @@ turn) (1/12 @@ turn)
->                  # connectPerim' arrowStyle2
->                                  "3" "3" (2/12 @@ turn) (4/12 @@ turn)
->                  # connectPerim' arrowStyle1
->                                  "5" "4" (5/12 @@ turn) (1/12 @@ turn)
->                  # connectPerim' arrowStyle2
->                                  "5" "5" (-1/12 @@ turn) (1/12 @@ turn)
+> example = states # connectOutside' arrowStyle1 "1" "2"
+>                  # connectOutside' arrowStyle3 "1" "4"
+>                  # connectPerim' arrowStyle2 "2" "2"
+>                     (4/12 @@ turn) (2/12 @@ turn)
+>                  # connectOutside' arrowStyle1 "2" "3"
+>                  # connectPerim' arrowStyle2 "3" "3"
+>                     (4/12 @@ turn) (2/12 @@ turn)
+>                  # connectOutside' arrowStyle1 "4" "5"
+>                  # connectPerim' arrowStyle2 "5" "5"
+>                     (1/12 @@ turn) (-1/12 @@ turn)
 
 In the following exercise you can try `connectPerim'` for yourself.
 
@@ -619,8 +652,3 @@ In the following exercise you can try `connectPerim'` for yourself.
     > angles = map (@@ turn) [0, 1/16 .. 15/16]
     >
     > example = foldr connectTarget d angles
-
-.. container:: todo
-
-  Add a paragraph about connectOutside and refrence the Symmetry cube in
-  the gallery.
