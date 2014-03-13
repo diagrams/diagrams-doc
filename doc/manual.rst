@@ -105,8 +105,9 @@ about ``diagrams``:
   is intended to be high-quality and up-to-date, and is available
   `from the diagrams website`_.  If you find an omission, error, or
   something confusing, please `report it as a bug`_!
-* The ``diagrams`` website_ has a `gallery of examples`_ and a `list
-    of tutorials`_, as well as links to blog posts and other documentation.
+* The ``diagrams`` website_ has a `gallery of examples`_ and a
+  `list of tutorials`_, as well as links to blog posts and
+  other documentation.
 * The `diagrams wiki`_ is a good place to find tips and tricks,
   examples, answers to frequently asked questions, and more.
 * The ``#diagrams`` IRC channel on Freenode is a friendly place
