@@ -131,6 +131,10 @@
 %%% (Include chart of contribution volume across time for various
 %%% different repos?)
 
+\begin{frame}{History}
+
+\end{frame}
+
 %%% Domain-specific language for producing vector graphics. Intended
 %%% to be higher-level than e.g. cairo but still general-purpose.
 %%% Make it easy to build special-purpose visualizations on top of it.
