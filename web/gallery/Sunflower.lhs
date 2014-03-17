@@ -38,4 +38,4 @@ The color of each floret is based on it's radius.
 > example :: Diagram B R2
 > example = sunflower 2000 # centerXY
 >                          # pad 1.1
->                          # bg darkgreen
+>                          # bg black
