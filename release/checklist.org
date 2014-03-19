@@ -166,3 +166,9 @@
   Note it's important that CHANGES.md is updated in both the master
   and release branches, but the version number is only bumped in the
   release branch.
+
+  Note, if there's no release branch yet and the only changes on
+  master since the last release are the bugfixes in question, making
+  the release directly from master is fine.  In that case just ignore
+  all the instructions above about switching branches and
+  cherry-picking.
