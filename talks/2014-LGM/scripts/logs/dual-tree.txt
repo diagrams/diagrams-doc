@@ -1,0 +1,78 @@
+Daniel Bergey
+Fri, 7 Mar 2014 01:36:54 +0000
+Brent Yorgey
+Wed, 27 Nov 2013 23:25:35 -0500
+Brent Yorgey
+Wed, 27 Nov 2013 23:25:14 -0500
+Daniel Bergey
+Wed, 27 Nov 2013 15:40:09 +0000
+Brent Yorgey
+Sun, 24 Nov 2013 22:44:46 -0500
+Brent Yorgey
+Thu, 7 Nov 2013 07:35:41 -0500
+Brent Yorgey
+Tue, 5 Nov 2013 21:54:30 -0500
+Jeffrey Rosenbluth
+Tue, 5 Nov 2013 15:36:37 -0800
+Brent Yorgey
+Tue, 5 Nov 2013 16:44:54 -0500
+Brent Yorgey
+Thu, 26 Sep 2013 23:36:55 -0400
+Brent Yorgey
+Thu, 26 Sep 2013 23:29:43 -0400
+Brent Yorgey
+Thu, 22 Aug 2013 06:50:54 -0400
+Brent Yorgey
+Thu, 22 Aug 2013 06:50:33 -0400
+Brent Yorgey
+Wed, 21 Aug 2013 22:01:54 -0400
+Brent Yorgey
+Wed, 21 Aug 2013 21:47:57 -0400
+Brent Yorgey
+Mon, 15 Jul 2013 22:11:33 -0400
+Brent Yorgey
+Mon, 15 Jul 2013 22:09:36 -0400
+Brent Yorgey
+Thu, 28 Mar 2013 09:19:32 -0400
+Brent Yorgey
+Thu, 28 Mar 2013 09:12:39 -0400
+Brent Yorgey
+Tue, 12 Feb 2013 11:28:10 -0500
+Brent Yorgey
+Mon, 7 Jan 2013 16:20:46 -0500
+Brent Yorgey
+Fri, 28 Sep 2012 11:59:59 -0400
+Brent Yorgey
+Fri, 7 Sep 2012 20:00:13 -0400
+Brent Yorgey
+Mon, 3 Sep 2012 22:05:30 -0400
+Brent Yorgey
+Mon, 3 Sep 2012 22:04:26 -0400
+Brent Yorgey
+Mon, 3 Sep 2012 22:00:31 -0400
+Brent Yorgey
+Mon, 3 Sep 2012 22:00:12 -0400
+Brent Yorgey
+Mon, 3 Sep 2012 20:49:55 -0400
+Brent Yorgey
+Mon, 3 Sep 2012 20:48:28 -0400
+Brent Yorgey
+Mon, 3 Sep 2012 20:48:03 -0400
+Ryan Yates
+Sun, 2 Sep 2012 22:08:55 -0400
+Brent Yorgey
+Sun, 2 Sep 2012 20:59:55 -0400
+Brent Yorgey
+Sun, 2 Sep 2012 21:17:18 -0400
+Brent Yorgey
+Sun, 2 Sep 2012 21:11:21 -0400
+Brent Yorgey
+Sun, 2 Sep 2012 21:10:17 -0400
+Brent Yorgey
+Mon, 20 Aug 2012 14:12:03 -0400
+Brent Yorgey
+Thu, 10 May 2012 21:29:07 +0000
+Brent Yorgey
+Thu, 10 May 2012 21:25:06 +0000
+Brent Yorgey
+Thu, 10 May 2012 21:24:50 +0000
