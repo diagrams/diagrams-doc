@@ -3,10 +3,14 @@
 import           Diagrams.Backend.Cairo.CmdLine
 import           Diagrams.Prelude
 
+import           Control.Monad                  (filterM)
+import           Data.List                      (sortBy)
 import           Data.List.Split
 import qualified Data.Map                       as M
+import           Data.Ord                       (comparing)
 import           Data.Time
-import           System.Directory               (getDirectoryContents)
+import           System.Directory               (doesFileExist,
+                                                 getDirectoryContents)
 import           System.FilePath                ((</>))
 import           System.Locale                  (defaultTimeLocale)
 
@@ -19,14 +23,18 @@ data Commit = Commit { committer  :: Committer
   deriving Show
 type RepoHist = [Commit]
 
-parseCommit :: Day -> (String, String) -> Maybe Commit
-parseCommit today (name, t) = do
-  pt <- parseTime defaultTimeLocale "%s" t
-  let ptDay = case utcToLocalTime utc pt of
-                (LocalTime d _) -> d
-  return $ Commit name pt (diffDays today ptDay `div` 7)
+parseCommit :: Day -> (String, String) -> Either String Commit
+parseCommit today (name, t) =
+  case mpt of
+    Nothing -> Left t
+    Just pt ->
+      let ptDay = case utcToLocalTime utc pt of
+                    (LocalTime d _) -> d
+      in  Right $ Commit name pt (diffDays today ptDay `div` 7)
+  where
+    mpt = parseTime defaultTimeLocale "%s" t
 
-parseHist :: Day -> String -> Maybe RepoHist
+parseHist :: Day -> String -> Either String RepoHist
 parseHist today = mapM (parseCommit today) . map (\[x,y] -> (x,y)) . chunksOf 2 . lines
 
 drawHist :: RepoHist -> Diagram B R2
@@ -45,15 +53,19 @@ drawHist hist = map (drawWeek . flip M.lookup buckets) [0 .. numWeeks] # reverse
 
 main :: IO ()
 main = do
-  files <- getDirectoryContents "logs"
+  files  <- getDirectoryContents "logs"
+  files' <- filterM doesFileExist (map ("logs" </>) files)
   now <- getCurrentTime
   let (LocalTime today _) = utcToLocalTime utc now
-  dias <- mapM (genDia today) files
-  defaultMain (vcat dias)
+  repos <- mapM (getRepoHist today) files'
+  let reposSorted = reverse $ sortBy (comparing (maximum . map weeksAgo)) repos
+  let reposDia = vcat' (with & catMethod .~ Distrib & sep .~ 30) . map (alignR . drawHist) $ reposSorted
+      allDia   = alignR . drawHist . concat $ repos
+  defaultMain $ (reposDia)
 
-genDia :: Day -> FilePath -> IO (Diagram B R2)
-genDia today file = do
-  log <- readFile ("logs" </> file)
+getRepoHist :: Day -> FilePath -> IO RepoHist
+getRepoHist today file = do
+  log <- readFile file
   case parseHist today log of
-    Nothing   -> putStrLn ("No parse: " ++ file) >> return mempty
-    Just hist -> return (drawHist hist)
+    Left s     -> putStrLn ("No parse: " ++ file ++ s) >> return mempty
+    Right hist -> return hist
