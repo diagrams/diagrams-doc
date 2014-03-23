@@ -78,6 +78,10 @@
   \vfill
 }
 
+\newenvironment{xframe}[1][]
+  {\begin{frame}[fragile,environment=xframe,#1]}
+  {\end{frame}}
+
 % uncomment me to get 4 slides per page for printing
 % \usepackage{pgfpages}
 % \pgfpagesuselayout{4 on 1}[uspaper, border shrink=5mm]
@@ -95,9 +99,9 @@
 
 \begin{document}
 
-\begin{frame}[fragile]
+\begin{xframe}
   \titlepage
-\end{frame}
+\end{xframe}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -127,30 +131,70 @@
 %% Diagrams.
 %% [All graphics in this talk were produced using diagrams!]
 
-%%% Since 2008.
-%%% (Include chart of contribution volume across time for various
-%%% different repos?)
+\begin{xframe}{}
+  Diagrams %% TODO use logo?
+  is a domain-specific language for producing vector graphics.
 
-\begin{frame}{History}
+  %% TODO add picture with cairo, SVG, PS, POV-Ray etc. below it, and
+  %% images representing higher-level stuff above it?
 
-\end{frame}
+  %%% "Domain-specific language for producing vector
+  %%% graphics. Intended to be higher-level than e.g. cairo but still
+  %%% general-purpose. Make it easy to build special-purpose
+  %%% visualizations on top of it."
+\end{xframe}
 
-%%% Domain-specific language for producing vector graphics. Intended
-%%% to be higher-level than e.g. cairo but still general-purpose.
-%%% Make it easy to build special-purpose visualizations on top of it.
+\begin{xframe}{History}
+  \begin{center}
+    %% TODO (if time, e.g. on plane)
+    %%% maybe try using Chart instead?!
+    %%% add another graph showing total LOC (use Chart)
+    %%% add colors for contributors!!
+    %%% scale vertically to maximize slide space usage
+    %%% add vertical lines with years marked
+    \includegraphics[width=3in]{RepoRainbow}
+  \end{center}
+\end{xframe}
 
+\begin{xframe}{Declarative}
 %%% Declarative: high-level description of "what a drawing is" rather
 %%% than "how to draw it".  (Motivation at least; somewhat arbitrary.)
 %%% Show an example.
 
+  \begin{center}
+  Say \emph{what} to draw rather than \emph{how} to draw it. \vfill
+
+  \begin{diagram}[width=100]
+    dia = circle 1 # fc green |||||| square 2 # fc blue
+  \end{diagram}
+   \bigskip
+
+  %% TODO: fix up Haskell typesetting
+  \begin{spec}
+    circle 1 # fc green ||| square 2 # fc blue
+  \end{spec}
+
+  \onslide<2>{\textit{Look ma, no coordinates!}}
+  \end{center}
+\end{xframe}
+
+\begin{xframe}{Embedded}
 %%% Embedded in Haskell.  (Will have seen kuribas's talk?)  Say a few
 %%% words about Haskell: high-level, functional, strongly typed, pure.
 %%% Don't mean to start a language war, but this is a really fantastic
 %%% real-world language for working at a high level.  Encourages
 %%% thinking carefully about semantics and abstractions.
 
+  Embedded in Haskell.
+
+  %% TODO: include Haskell logo.
+\end{xframe}
+
+\begin{xframe}{Flexible}
 %%% Flexible: multiple vector spaces (2D, 3D); many backends (cairo,
 %%% SVG, postscript, povray, ...)
+
+\end{xframe}
 
 %% Examples! (most with code)
 
