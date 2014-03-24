@@ -13,7 +13,7 @@ main = shake shakeOptions $ do
     "*.tex" *> \output -> do
         let input = replaceExtension output "lhs"
         need [input]
-        system' lhs2TeX $ ["--poly", "-o", output] ++ [input]
+        system' lhs2TeX $ ["--verb", "-o", output] ++ [input]
 
     "*.pdf" *> \output -> do
         let input = replaceExtension output "tex"

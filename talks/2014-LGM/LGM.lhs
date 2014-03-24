@@ -1,15 +1,12 @@
 %% -*- mode: LaTeX; compile-command: "mk" -*-
 \documentclass[xcolor=svgnames,12pt]{beamer}
 
-%include polycode.fmt
+%include lhs2TeX.fmt
 
 % \usepackage{brent}
 \usepackage[backend=cairo,extension=pdf,outputdir=diagrams]{diagrams-latex}
 \graphicspath{{images/}}
 \usepackage{ulem}
-
-\renewcommand{\onelinecomment}{\quad--- \itshape}
-\renewcommand{\Varid}[1]{{\mathit{#1}}}
 
 % \setbeamertemplate{footline}{\insertframenumber}
 
@@ -131,7 +128,7 @@
 %% Diagrams.
 %% [All graphics in this talk were produced using diagrams!]
 
-\begin{xframe}{}
+\begin{xframe}
   Diagrams %% TODO use logo?
   is a domain-specific language for producing vector graphics.
 
@@ -191,20 +188,71 @@
 \end{xframe}
 
 \begin{xframe}{Flexible}
-%%% Flexible: multiple vector spaces (2D, 3D); many backends (cairo,
-%%% SVG, postscript, povray, ...)
-
+  %%% Flexible: multiple vector spaces (2D, 3D); many backends (cairo,
+  %%% SVG, postscript, povray, ...)
+  Flexible.
 \end{xframe}
 
+\begin{xframe}{Example: Basic geometry and arrows}
+  \begin{center}
+  \begin{diagram}[width=150]
+    shapes = hcat' (with & sep .~ 3)
+           [ square 2 # fc green # named "t"
+           , circle 1 # fc blue  # named "c"
+           ]
+    dia = shapes # connectOutside' (with & gap .~ 0.2) "t" "c"
+        # frame 0.5
+  \end{diagram}
+  \begin{spec}
+    shapes = hcat' (with & sep .~ 3)
+           [ square 2  # fc green  # named "t"
+           , circle 1  # fc blue   # named "c"
+           ]
+    dia = shapes
+        #  connectOutside' (with & gap .~ 0.2)
+           "t" "c"
+  \end{spec}
+  \end{center}
+\end{xframe}
+
+\begin{xframe}{Example: Trees}
+  Trees.
+\end{xframe}
+
+\begin{xframe}{Example: Sunflower}
+  Sunflower.
+\end{xframe}
+
+\begin{xframe}{Example: Charts}
+  Chart.
+\end{xframe}
+
+\begin{xframe}{Example: Parking}
+  Parking.
+\end{xframe}
 %% Examples! (most with code)
 
 %%% decide on some actual examples to include: each one should
 %%% probably illustrate some particular feature
 
+%%% arrow from one thing to another.
+%%% Fibonacci call tree.
+%%% Sunflower
+%%% unix poster?
+%%% charts generated with Chart?
+%%% parking diagram --- embedded.
+
+%%% other features---animation
+
 %%% things to mention/illustrate:
+%%%% example showing why it's nice having it embedded.
 %%%% mathematical approach. semantics.
 %%%% animation??
 %%%% ???
+
+\begin{xframe}{Diagrams and LGM}
+  LGM.
+\end{xframe}
 
 %% LGM
 
@@ -217,13 +265,36 @@
 %%% Domain-specific languages.  Capture inherent semantics of a
 %%% domain.
 
+\begin{xframe}{Community}
+  %% Graph of unique nicks in IRC channel??  Nah, don't have enough
+  %% data for that.
+  Community.
+\end{xframe}
+
 %% Where we are going.
 
 %%% Strong community.  Successful GSoC projects (two last year, one or
 %%% more this year?)
 
-%%% Editing operations
-%%% GUI --- interactive, bidirectional
-%%% Modelling animations & interactivity
+\begin{xframe}{What's next?}
+  %% Screenshot of Trello
+  Trello.
+\end{xframe}
+
+\begin{xframe}{Editing}
+  %% GSoC project
+  %% Give some examples.
+  Editing.
+\end{xframe}
+
+\begin{xframe}{Animations and interactivity}
+  %% work with Andy and Nick.
+  Animation.
+\end{xframe}
+
+\begin{xframe}{GUI}
+  %% Bidirectional GUI.
+  GUI.
+\end{xframe}
 
 \end{document}
