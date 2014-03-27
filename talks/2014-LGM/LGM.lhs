@@ -197,38 +197,68 @@
   \begin{center}
   \begin{diagram}[width=150]
     shapes = hcat' (with & sep .~ 3)
-           [ square 2 # fc green # named "t"
+           [ square 2 # fc green # named "s"
            , circle 1 # fc blue  # named "c"
            ]
-    dia = shapes # connectOutside' (with & gap .~ 0.2) "t" "c"
+    dia = shapes # connectOutside' (with & gap .~ 0.2) "s" "c" # lw 0.03
         # frame 0.5
   \end{diagram}
   \begin{spec}
     shapes = hcat' (with & sep .~ 3)
-           [ square 2  # fc green  # named "t"
+           [ square 2  # fc green  # named "s"
            , circle 1  # fc blue   # named "c"
            ]
     dia = shapes
-        #  connectOutside' (with & gap .~ 0.2)
-           "t" "c"
+        # connectOutside' (with & gap .~ 0.2)
+          "s" "c"
   \end{spec}
   \end{center}
 \end{xframe}
 
 \begin{xframe}{Example: Trees}
-  Trees.
-\end{xframe}
+  %% XXX todo: pick better colors somehow.  Lowest leaves are too light.
+  \begin{center}
+  \begin{diagram}[width=200]
+    import Diagrams.TwoD.Layout.Tree
+    import Data.Maybe (fromJust)
+    import Data.Colour.Palette.BrewerSet
 
-\begin{xframe}{Example: Sunflower}
-  Sunflower.
+    fibCalls :: Int -> BTree Int
+    fibCalls 0 = leaf 0
+    fibCalls 1 = leaf 1
+    fibCalls n = BNode n (fibCalls (n-1)) (fibCalls (n-2))
+
+    colors = brewerSet PuBuGn 9
+
+    tree = renderTree'
+             (\i -> circle 0.3 # lw 0 # fc (colors !! i))
+             (\(i,p) (_,q) -> p ~~ q # lw 0.03 # lc (colors !! i))
+         . fromJust . symmLayoutBin . fibCalls $ 8
+    dia = tree # centerXY # frame 1
+  \end{diagram}
+  \begin{spec}
+    fib 0 = leaf 0
+    fib 1 = leaf 1
+    fib n = BNode n (fib (n-1)) (fib (n-2))
+
+    colors = brewerSet PuBuGn 9
+
+    tree = renderTree'
+      (\i -> circle 0.3 # lw 0 # fc (colors !! i))
+      (\(i,p) (_,q) -> p ~~ q # lc (colors !! i))
+      . fromJust . symmLayoutBin . fib $ 8
+  \end{spec}
+  \end{center}
 \end{xframe}
 
 \begin{xframe}{Example: Charts}
   Chart.
 \end{xframe}
 
-\begin{xframe}{Example: Parking}
-  Parking.
+\begin{xframe}{Example: Parking in London}
+  \begin{center}
+    \includegraphics[width=3in]{parking}
+  \end{center}
 \end{xframe}
 %% Examples! (most with code)
 
@@ -251,7 +281,27 @@
 %%%% ???
 
 \begin{xframe}{Diagrams and LGM}
-  LGM.
+  \begin{diagram}[width=100]
+    import Data.Colour.SRGB
+    import Diagrams.Example.Logo
+
+    lgm = iterate (/1.2) 1 # take 3
+        # map (rotate (15 @@@@ deg) . alignBL . square)
+        # hcat' (with & catMethod .~ Distrib
+                      & sep .~ (1/1.2) / cos (15 * pi / 180) - 0.01)
+        # lw 0 # fc (sRGB24 0 0 0x7e)
+    -- 94 px, 15.36
+    -- 78.x px, 15 deg
+    -- 65 px, 15 deg
+    -- 1.2 scaling factor.
+
+    -- 82 px bewteen bottom corners.  Basically should be 
+    -- middle square length / cos 15.
+
+    -- color is 0x00007e.
+
+    dia = hcat [logo, lgm # scale 10]
+  \end{diagram}
 \end{xframe}
 
 %% LGM
