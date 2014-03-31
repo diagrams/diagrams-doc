@@ -129,9 +129,30 @@
 %% [All graphics in this talk were produced using diagrams!]
 
 \begin{xframe}
-  Diagrams %% TODO use logo?
-  is a domain-specific language for producing vector graphics.
+  \begin{center}
+  \begin{diagram}[width=50]
+    import Diagrams.Example.Logo
 
+    dia = ico_d
+  \end{diagram}
+
+  \vfill
+  \begin{overprint}
+  \onslide<2>
+  \begin{center}
+    Programming language theory + vector graphics.
+  \end{center}
+
+  \onslide<3->
+  \begin{center}
+    Declarative domain-specific language for creating vector graphics.
+  \end{center}
+  \end{overprint}
+
+  \vfill
+  \onslide<4>
+  \includegraphics[width=1in]{haskell-logo}
+  \end{center}
   %% TODO add picture with cairo, SVG, PS, POV-Ray etc. below it, and
   %% images representing higher-level stuff above it?
 
@@ -139,18 +160,6 @@
   %%% graphics. Intended to be higher-level than e.g. cairo but still
   %%% general-purpose. Make it easy to build special-purpose
   %%% visualizations on top of it."
-\end{xframe}
-
-\begin{xframe}{History}
-  \begin{center}
-    %% TODO (if time, e.g. on plane)
-    %%% maybe try using Chart instead?!
-    %%% add another graph showing total LOC (use Chart)
-    %%% add colors for contributors!!
-    %%% scale vertically to maximize slide space usage
-    %%% add vertical lines with years marked
-    \includegraphics[width=3in]{RepoRainbow}
-  \end{center}
 \end{xframe}
 
 \begin{xframe}{Declarative}
@@ -168,7 +177,7 @@
 
   %% TODO: fix up Haskell typesetting
   \begin{spec}
-    circle 1 # fc green ||| square 2 # fc blue
+circle 1 # fc green ||| square 2 # fc blue
   \end{spec}
 
   \onslide<2>{\textit{Look ma, no coordinates!}}
@@ -187,13 +196,46 @@
   %% TODO: include Haskell logo.
 \end{xframe}
 
+\begin{xframe}{Strongly typed}
+  %% TODO: give example things with their types.
+  %% diagram representing each thing
+  \begin{center}
+  points
+  \begin{diagram}[width=10]
+    dia = circle 1 # fc black
+  \end{diagram}
+  vectors
+  \begin{diagram}[width=30] dia = arrow 2 # rotateBy (1/10) #
+    centerXY # pad 1.2 \end{diagram}
+  colors
+  \begin{diagram}[width=30] dia = square 1 # lw 0 # fc
+    red \end{diagram}
+  paths
+  \begin{diagram}[width=50] dia = hrule 2 <> vrule 1 \end{diagram}
+  \end{center}
+
+  %%   - diagrams of course
+  %%   - points, vectors
+  %%   - trails, paths
+  %%   - other things?
+\end{xframe}
+
 \begin{xframe}{Flexible}
   %%% Flexible: multiple vector spaces (2D, 3D); many backends (cairo,
   %%% SVG, postscript, povray, ...)
-  Flexible.
+
+  %%% XXX todo: vertically center images
+  %%% XXX todo: add something about diagrams, with arrows?
+  %%% XXX todo: mention OpenGL, HTML5 canvas, PGF, PDF!
+
+  \hfill \includegraphics[width=0.5in]{Cairo-logo}
+  \hfill \includegraphics[width=0.8in]{postscript-logo}
+  \hfill \includegraphics[width=0.5in]{Povray-logo}
+  \hfill \includegraphics[width=0.5in]{SVG-logo}
+  \hfill
 \end{xframe}
 
-\begin{xframe}{Example: Basic geometry and arrows}
+\begin{xframe}{Example: Basics}
   \begin{center}
   \begin{diagram}[width=150]
     shapes = hcat' (with & sep .~ 3)
@@ -204,13 +246,13 @@
         # frame 0.5
   \end{diagram}
   \begin{spec}
-    shapes = hcat' (with & sep .~ 3)
-           [ square 2  # fc green  # named "s"
-           , circle 1  # fc blue   # named "c"
-           ]
-    dia = shapes
-        # connectOutside' (with & gap .~ 0.2)
-          "s" "c"
+shapes = hcat' (with & sep .~ 3)
+       [ square 2  # fc green  # named "s"
+       , circle 1  # fc blue   # named "c"
+       ]
+dia = shapes
+    # connectOutside' (with & gap .~ 0.2)
+      "s" "c"
   \end{spec}
   \end{center}
 \end{xframe}
@@ -220,15 +262,17 @@
   \begin{center}
   \begin{diagram}[width=200]
     import Diagrams.TwoD.Layout.Tree
+    import Data.List (transpose)
     import Data.Maybe (fromJust)
     import Data.Colour.Palette.BrewerSet
 
     fibCalls :: Int -> BTree Int
-    fibCalls 0 = leaf 0
-    fibCalls 1 = leaf 1
+    fibCalls 0 = leaf 0; fibCalls 1 = leaf 1
     fibCalls n = BNode n (fibCalls (n-1)) (fibCalls (n-2))
 
-    colors = brewerSet PuBuGn 9
+    colorsBS = brewerSet PuBuGn 9 # reverse # drop 2
+    colors = concat (transpose [colorsBS, blends])
+      where blends = zipWith (blend 0.5) colorsBS (tail colorsBS)
 
     tree = renderTree'
              (\i -> circle 0.3 # lw 0 # fc (colors !! i))
@@ -237,16 +281,15 @@
     dia = tree # centerXY # frame 1
   \end{diagram}
   \begin{spec}
-    fib 0 = leaf 0
-    fib 1 = leaf 1
-    fib n = BNode n (fib (n-1)) (fib (n-2))
+fib 0 = leaf 0; fib 1 = leaf 1
+fib n = BNode n (fib (n-1)) (fib (n-2))
 
-    colors = brewerSet PuBuGn 9
-
-    tree = renderTree'
+tree
+  = renderTree'
       (\i -> circle 0.3 # lw 0 # fc (colors !! i))
       (\(i,p) (_,q) -> p ~~ q # lc (colors !! i))
-      . fromJust . symmLayoutBin . fib $ 8
+  . fromJust . symmLayoutBin . fib
+  $ 8
   \end{spec}
   \end{center}
 \end{xframe}
@@ -295,7 +338,7 @@
     -- 65 px, 15 deg
     -- 1.2 scaling factor.
 
-    -- 82 px bewteen bottom corners.  Basically should be 
+    -- 82 px bewteen bottom corners.  Basically should be
     -- middle square length / cos 15.
 
     -- color is 0x00007e.
@@ -305,6 +348,14 @@
 \end{xframe}
 
 %% LGM
+
+\begin{xframe}{Lessons}
+  \begin{itemize}
+  \item Domain-specific languages
+  \item Denotational design (XXX point to monoids pearl!)
+  \item ???
+  \end{itemize}
+\end{xframe}
 
 %%% How does diagrams fit here?  Has things to learn and to offer.
 
@@ -318,17 +369,32 @@
 \begin{xframe}{Community}
   %% Graph of unique nicks in IRC channel??  Nah, don't have enough
   %% data for that.
+
+  %%% Strong community.  Successful GSoC projects (two last year, one or
+  %%% more this year?)
+
   Community.
+\end{xframe}
+
+\begin{xframe}{History}
+  \begin{center}
+    %% TODO (if time, e.g. on plane)
+    %%% maybe try using Chart instead?!
+    %%% add another graph showing total LOC (use Chart)
+    %%% add colors for contributors!!
+    %%% scale vertically to maximize slide space usage
+    %%% add vertical lines with years marked
+    \includegraphics[width=3in]{RepoRainbow}
+  \end{center}
 \end{xframe}
 
 %% Where we are going.
 
-%%% Strong community.  Successful GSoC projects (two last year, one or
-%%% more this year?)
-
 \begin{xframe}{What's next?}
-  %% Screenshot of Trello
-  Trello.
+  \onslide<2>
+  \begin{center}
+  \includegraphics[width=4in]{trello}
+  \end{center}
 \end{xframe}
 
 \begin{xframe}{Editing}
@@ -345,6 +411,10 @@
 \begin{xframe}{GUI}
   %% Bidirectional GUI.
   GUI.
+\end{xframe}
+
+\begin{xframe}
+  \url{http://projects.haskell.org/diagrams}
 \end{xframe}
 
 \end{document}
