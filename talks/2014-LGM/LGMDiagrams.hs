@@ -16,7 +16,7 @@ enbox sz d ls =
 
 -- TODO: change to SVGFonts for better-looking lambda
 pl = enbox 1 (text "λ" <> strutX 1 <> strutY 1)
-       ["Cool math/PL", "theory"]
+       ["Math/PL theory"]
 
 vgDia = mconcat
   [ arrow' vgAOpts 1 # rotate (70 @@ deg) # lc green
@@ -31,7 +31,7 @@ vg = enbox 1 (vgDia <> strutX 1 <> strutY 1)
 
 mkDiagrams d = hcat' (with & sep .~ 2)
   [ pl # named "pl"
-  , enbox 1.3 d ["Diagrams!"] # named "d"
+  , enbox 1.3 d ["Diagrams"] # named "d"
   , vg # named "vg"
   ]
   # connectOutside' aOpts "pl" "d"
@@ -40,5 +40,7 @@ mkDiagrams d = hcat' (with & sep .~ 2)
   # frame 1
 
 aOpts = with & gap .~ 0.2
+
+mkColor c = roundedRect 1 1 0.1 # lw 0 # fc c
 
 main = return ()

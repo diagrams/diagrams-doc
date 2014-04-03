@@ -88,7 +88,7 @@
 \renewcommand{\emph}{\textbf}
 
 \title{Declarative, Programmatic Vector Graphics in Haskell}
-\date{Libre Graphics Meeting \\ Leipzig, Germany \\ 3 April, 2013}
+\date{Libre Graphics Meeting \\ Leipzig \\ 3 April, 2013}
 \author{Brent Yorgey}
 % \titlegraphic{\includegraphics[width=1in]{Factorization.png}}
 
@@ -130,15 +130,18 @@
 
 \begin{xframe}
 
-  %%% This talk is about diagrams, a
+  %%% I'd like to tell you about diagrams, a
   %%% domain-specific language for producing vector
-  %%% graphics. Intended to be higher-level than e.g. cairo but still
-  %%% general-purpose. Make it easy to build special-purpose
-  %%% visualizations on top of it."
+  %%% graphics. Born out of taking ideas from math and programming
+  %%% languages theory and applying them to the domain of vector
+  %%% graphics.
 
-  %%% Note I am a PL person who loves to think and communicate
-  %%% visually.  I don't know a lot about graphics (but I am
-  %%% learning!).  So I would welcome feedback and collaboration.
+  %%% My route to this has been as someone who does research in
+  %%% programming languages who loves to think and communicate
+  %%% visually.  I'm especially excited to be here since I don't
+  %%% actually know a whole lot about graphics (but I am
+  %%% learning!).  So I would particularly welcome feedback and
+  %%% collaboration.
 
   \begin{overprint}
   \onslide<1>
@@ -151,9 +154,15 @@
   \end{diagram}
   \end{center}
 
-  %%% One of the most interesting things about it is that it is
-  %%% *embedded* in Haskell.  By "embedded" I mean that diagrams is
+  %%% One particularly notable feature of diagrams is that it is
+  %%% *embedded* in the Haskell programming language.
+  %%% Out of curiosity --- how many of you have heard of Haskell?  How
+  %%% many have used it?
+  %%%
+  %%% By "embedded" I mean diagrams is
   %%% "just" a Haskell library, with the feel of a separate language.
+  %%% Most of my talk will be about why this is a powerful way to do
+  %%% things.  But first, let me show you a few examples.
 
   \onslide<2>
   \begin{center}
@@ -181,12 +190,8 @@
 \end{xframe}
 
 %%% Here's a simple example of what you can do.  Make a circle and a
-%%% square, give them some coordinates, put them next to each other.
+%%% square, give them some attributes, and put them next to each other.
 %%% Note this is really a Haskell expression!
-%%%
-%%% Worth pointing out one feature: we don't need coordinates.  This
-%%% is a design goal.  Should be able to work in relative and
-%%% scale-invariant ways.
 
 \begin{xframe}
   \begin{center}
@@ -199,15 +204,20 @@
     circle 1 # fc green ||| square 2 # fc blue
   \end{spec}
 
+%%% Worth pointing out one feature: we don't need coordinates.  This
+%%% is a design goal.  Should be able to work in relative and
+%%% scale-invariant ways.
+
   \onslide<2>{\textit{Look ma, no coordinates!}}
   \end{center}
 \end{xframe}
 
-%%% Here's a more complex example.  Understanding the code is not the
-%%% point.  Note that this is just a Haskell program; Haskell is
-%%% general-purpose so we get to use it, e.g. to compute the tree we
-%%% want to draw.  Can combine data processing and visualization into
-%%% a single program.
+%%% Here's a more complex example.  Quickly walk through code, though
+%%% understanding all the details is not important. Note that this is
+%%% just a Haskell program; Haskell is general-purpose so we get to
+%%% use it, e.g. to compute the tree we want to draw.  Can combine
+%%% data processing and visualization into a single program---an
+%%% example of that later.
 
 \begin{xframe}
   \begin{center}
@@ -239,8 +249,7 @@ tree
   = renderTree'
       (\i -> circle 0.3 # lw 0 # fc (colors !! i))
       (\(i,p) (_,q) -> p ~~ q # lc (colors !! i))
-  . fromJust . symmLayoutBin . fib
-  $ 8
+  . fromJust . symmLayoutBin $ fib 8
   \end{spec}
   \end{center}
 \end{xframe}
@@ -262,12 +271,24 @@ tree
   \end{itemize}
 \end{xframe}
 
-%%% XXX write up what I should say!
+%%% The first reason Haskell makes a great host for EDSLs is its
+%%% strong static type system.  I'm sure many of you are fans of
+%%% dynamically typed languages like Python, which is a fine language.
+%%% But I often come across people who are vehemently opposed to
+%%% static typing, and from my point of view I think a large part of
+%%% that is a reaction to languages with insufficiently powerful
+%%% static type systems---those just tend to get in your way.
+%%% Haskell's type system, on the other hand, is an indispensable tool
+%%% that lets you encode properties of your programs, and then catches
+%%% large classes of bugs for you.  Examples in diagrams:
 
 \begin{xframe}{Types}
   \begin{center}
-    Haskell has a \emph{strong static type system}. \medskip
+    Haskell has a \emph{strong static type system}. \bigskip
 
+    \onslide<2>
+\begin{minipage}{0.49\textwidth}
+  \centering
   points
   \begin{tabular}{@@{}c@@{}}
   \begin{diagram}[width=10]
@@ -279,7 +300,7 @@ tree
   vectors
   \begin{tabular}{@@{}c@@{}}
   \begin{diagram}[width=30]
-    dia = arrow 2 # rotateBy (1/10) # lw 0.03 # frame 0.2
+    dia = arrow' (with & headSize .~ 0.5) 2 # rotateBy (1/10) # lw 0.03 # frame 0.3
   \end{diagram}
   \end{tabular}
   \medskip
@@ -287,11 +308,13 @@ tree
   colors
   \begin{tabular}{@@{}c@@{}}
   \begin{diagram}[width=30]
-    dia = square 1 # lw 0 # fc red
+    import LGMDiagrams
+    dia = mkColor red
   \end{diagram}
   \end{tabular}
-  \medskip
-
+\end{minipage}
+\begin{minipage}{0.49\textwidth}
+  \centering
   paths
   \begin{tabular}{@@{}c@@{}}
   \begin{diagram}[width=50]
@@ -299,6 +322,34 @@ tree
         # lw 0.05 # frame 0.5
   \end{diagram}
   \end{tabular}
+
+  transformations
+  \begin{tabular}{@@{}c@@{}}
+  \begin{diagram}[width=40]
+    dia = hcat' (with & sep .~ 1)
+      [ ltr 'F' # named (1 :: Int)
+      , ltr 'F' # shearX 0.5 # rotateBy (1/9) # reflectY # named (2 :: Int)
+      ]
+      # connectOutside' (with & gap .~ 0.1)
+          (1 :: Int) (2 :: Int)
+      # dashing [0.05,0.05] 0
+      # lw 0.03
+    ltr x = text [x] <> square 1 # lw 0
+  \end{diagram}
+  \end{tabular}
+
+  diagrams
+  \begin{tabular}{@@{}c@@{}}
+  \begin{diagram}[width=50]
+    dia = mconcat
+      [ circle 0.4 # fc yellow # translate ((-0.2) ^& 0.3)
+      , square 1 # fc purple # rotateBy (1/7) # translateX 0.2
+      , square 1 # fc blue
+      ]
+      # frame 0.2
+  \end{diagram}
+  \end{tabular}
+\end{minipage}
   \medskip
 
   Impossible to make silly mistakes like applying a vector to a color,
@@ -307,11 +358,24 @@ tree
   \end{center}
 \end{xframe}
 
-%%% XXX write up what I should say
+%%% Haskell also has excellent support for first-class functions.  Can
+%%% pass them as arguments, return them, store them in data
+%%% structures.  One example of how we make use of this facility in
+%%% diagrams:  along with each diagram we store what we call an
+%%% "envelope", which you can think of as a generalization of a
+%%% bounding box.  It is a *function* which takes as input a vector
+%%% and computes how far you need to go to find the boundary.  This is
+%%% the secret sauce that allows doing things like "putting diagrams
+%%% next to each other"---along *any* axis, works just as you would
+%%% expect with transformations etc.  Ability to have functions is
+%%% really critical here; no way to store this information as
+%%% first-order data.
 
 \begin{xframe}{Functions}
   \begin{center}
     Haskell has \emph{first-class functions}.
+
+    \onslide<2>
     \vfill
     \begin{diagram}[width=250]
 mkP d = d <> square 5 # lw 0.01 # dashing [0.1,0.1] 0
@@ -339,9 +403,6 @@ illustrateEnvelope v d
       # lc green # lw 0.05
     ]
 
-withEnv :: Diagram Cairo R2 -> R2 -> Diagram Cairo R2
-withEnv d v = illustrateEnvelope v d <> d # showOrigin
-
 d1 = circle 1 # scaleX 2 # translate (r2 (0.5, 0.5))
 
 d2 = square 1.5 # translate ((-1) ^& (-1.5))
@@ -366,7 +427,19 @@ dia = hcat [
 %   XXX do I want to include this?
 % \end{xframe}
 
-%%% XXX write up what I should say.
+%%% Haskell has lots of facilities for abstraction which makes it easy
+%%% to build up embedded DSLs with the desired API.
+%%%
+%%% One example of how we make use of this.  Consider a square.  You
+%%% might expect a function with a type like this: takes a side length
+%%% and constructs a diagram.
+%%%
+%%% In fact, the type of square is like this instead!  I'll explain.
+%%% We make use of Haskell's *type classes*---sort of like interfaces
+%%% in Java but more powerful.  This says square can construct *any*
+%%% type you like, as long as things of that type can be constructed
+%%% from a "trail", can be transformed, and live in 2D.  Here I have a
+%%% diagram as before, but also two paths, and a list of vertices.
 
 \begin{xframe}{Abstraction}
   \begin{center}
@@ -388,6 +461,8 @@ dia = hcat [
     \begin{center}
     \begin{diagram}[width=250]
       {-# LANGUAGE TypeFamilies #-}
+      import Data.Foldable
+
       hsep :: (Monoid' a, Juxtaposable a, HasOrigin a, V a ~ R2) => Double -> [a] -> a
       hsep n = hcat' (with & sep .~ n)
 
@@ -396,9 +471,12 @@ dia = hcat [
       dia = hsep 1 [ square 1
                    , (square 1 <> square 1 # reversePath # rotateBy (1/7))
                      # stroke # fc red
-                   , square 1 # map (place dot) # mconcat
+                   , square 1 # mcatmap (place dot)
                    ]
         # frame 0.2
+
+      mcatmap :: Monoid m => (a -> m) -> [a] -> m
+      mcatmap = foldMap
     \end{diagram}
     \end{center}
 
@@ -410,15 +488,29 @@ square :: (TrailLike t, Transformable t, V t ~ R2)
   \end{center}
 \end{xframe}
 
-\begin{xframe}{Denotational design}
-  \begin{overprint}
-  \onslide<1>
+%%% The last point is really about the culture of the Haskell
+%%% community, but it is reflected in the design of the language as
+%%% well.  One thing I love about the Haskell open-source community is
+%%% that it is a place where theory really meets practice---people
+%%% love talking about esoteric math and then turning around and
+%%% making it into beautiful libraries for doing everything from web
+%%% programming to databases to graphics to you name it.
+%%%
+%%% The idea is to iterate and refine your design and discover elegant
+%%% mathematical models that underlie a particular domain.
+%%% A particular example in the case of diagrams: much of it is
+%%% centered around the theory of *monoids*: idea is that things
+%%% have specific ways they can be *combined*, which has to be
+%%% "sufficiently nice".  Go through examples.
+
+\begin{xframe}{Design}
   \begin{center}
-    \vspace{0.3in}
     Haskell encourages \emph{elegant, mathematically-based design}. \medskip
 
+    \onslide<2>
     \begin{diagram}[width=200]
       {-# LANGUAGE FlexibleInstances #-}
+      import LGMDiagrams
 
       eqn vis a b = hcat' (with & sep .~ 1) [vis a, text "+", vis b, text "=" # named "ctr", vis (a `mappend` b)]
         # withName "ctr" (\sub -> translate (origin .-. location sub))
@@ -428,27 +520,39 @@ square :: (TrailLike t, Transformable t, V t ~ R2)
         mempty = Next mempty
         (Next a) `mappend` (Next b) = Next (a |||||| b)
 
+      newtype Blend a = Blend { getBlend :: a }
+      instance Monoid (Blend (Colour Double)) where
+        mempty = Blend white
+        (Blend a) `mappend` (Blend b) = Blend (blend 0.5 a b)
+
       c = circle 0.5 # fc blue
       s = square 1 # fc yellow
 
       dia = vcat' (with & sep .~ 1)
         [ eqn id c s
         , eqn getNext (Next c) (Next s)
-        , eqn (\c -> square 0.8 # lw 0 # fc c) red blue
+        , eqn (scale 0.8 . mkColor . getBlend) (Blend red) (Blend blue)
         , eqn (lw 0.03 . centerXY . strokeT)
             (fromOffsets [unitX, unitY])
             (fromOffsets [1 ^& (-1), 1 ^& 1])
         , eqn (\t -> transform t (text "F" <> square 1 # lw 0)) (scalingX 3) (rotation (20 @@@@ deg))
         ]
+        # frame 0.2
     \end{diagram}
   \end{center}
+\end{xframe}
 
-  \onslide<2>
+%%% If this is interesting to you, I had a paper published about this
+%%% in the Haskell Symposium two years ago.
+\begin{xframe}{Design}
   \begin{center}
   \includegraphics[width=2.5in]{monoid-pearl-page1}
   \end{center}
-  \end{overprint}
 \end{xframe}
+
+%%% Let me show you a few more examples of things people have done.
+%%% These are taken from the gallery on our website, where you can
+%%% find lots more examples and the complete code for each example.
 
 \begin{xframe}{Examples}
   \begin{center}
@@ -456,31 +560,17 @@ square :: (TrailLike t, Transformable t, V t ~ R2)
   \end{center}
 \end{xframe}
 
+%%% Here is an example of a user who analyzed a big data set of
+%%% parking in London, and then used diagrams to visualize the
+%%% results.  A real-world example of being able to do the data
+%%% analysis and visualization in the same language---lets you iterate
+%%% much faster.
+
 \begin{xframe}{Examples}
   \begin{center}
     \includegraphics[width=3in]{parking}
   \end{center}
 \end{xframe}
-
-%% Examples! (most with code)
-
-%%% decide on some actual examples to include: each one should
-%%% probably illustrate some particular feature
-
-%%% arrow from one thing to another.
-%%% Fibonacci call tree.
-%%% Sunflower
-%%% unix poster?
-%%% charts generated with Chart?
-%%% parking diagram --- embedded.
-
-%%% other features---animation
-
-%%% things to mention/illustrate:
-%%%% example showing why it's nice having it embedded.
-%%%% mathematical approach. semantics.
-%%%% animation??
-%%%% ???
 
 % \begin{xframe}{Diagrams and LGM}
 %   \begin{diagram}[width=100]
@@ -506,17 +596,6 @@ square :: (TrailLike t, Transformable t, V t ~ R2)
 %   \end{diagram}
 % \end{xframe}
 
-%% LGM
-
-%%% How does diagrams fit here?  Has things to learn and to offer.
-
-%%% I would love to get feedback from people who actually know things
-%%% about graphics!  I am enthusiastic and like communicating
-%%% visually, but don't actually know a lot about the area.
-
-%%% Domain-specific languages.  Capture inherent semantics of a
-%%% domain.
-
 % \begin{xframe}{Community}
 %   %% Graph of unique nicks in IRC channel??  Nah, don't have enough
 %   %% data for that.
@@ -535,18 +614,36 @@ square :: (TrailLike t, Transformable t, V t ~ R2)
 %     %%% add colors for contributors!!
 %     %%% scale vertically to maximize slide space usage
 %     %%% add vertical lines with years marked
-%     \includegraphics[width=3in]{RepoRainbow}
+%
 %   \end{center}
 % \end{xframe}
 
 %% Where we are going.
 
 \begin{xframe}{What's next?}
+  %%% Want to conclude by telling you a bit about where we are headed.
+  %%% We have a strong community and lots of momentum: this graph
+  %%% shows commits on repositories.  We've gone from one developer
+  %%% (me) to lots, depending how you count (four main developers,
+  %%% with a long tail).
+
+  \begin{overprint}
   \onslide<2>
+  \begin{center}
+    %%% if time: improve this a bit.  Add year markers?
+  \includegraphics[width=3in]{RepoRainbow}
+  \end{center}
+
+  %%% We have lots of ideas and not enough time to accomplish them!
+
+  \onslide<3>
   \begin{center}
   \includegraphics[width=4in]{trello}
   \end{center}
+  \end{overprint}
 \end{xframe}
+
+%%% A few bigger goals we hope to attack.
 
 \begin{xframe}{What's next?}
   \begin{itemize}
@@ -569,42 +666,79 @@ square :: (TrailLike t, Transformable t, V t ~ R2)
   \end{center}
 \end{xframe}
 
-% \begin{xframe}
-%   \begin{center}
-%   \begin{diagram}[width=150]
-%     shapes = hcat' (with & sep .~ 3)
-%            [ square 2 # fc green # named "s"
-%            , circle 1 # fc blue  # named "c"
-%            ]
-%     dia = shapes # connectOutside' (with & gap .~ 0.2) "s" "c" # lw 0.03
-%         # frame 0.5
-%   \end{diagram}
-%   \begin{spec}
-% shapes = hcat' (with & sep .~ 3)
-%        [ square 2  # fc green  # named "s"
-%        , circle 1  # fc blue   # named "c"
-%        ]
-% dia = shapes
-%     # connectOutside' (with & gap .~ 0.2)
-%       "s" "c"
-%   \end{spec}
-%   \end{center}
-% \end{xframe}
+\begin{xframe}{Extra slides}
+  \mbox{}
+\end{xframe}
 
-% \begin{xframe}{Flexible}
-%   %%% Flexible: multiple vector spaces (2D, 3D); many backends (cairo,
-%   %%% SVG, postscript, povray, ...)
+\begin{xframe}{Backends}
+  \[ \hfill \vcenter{\includegraphics[width=0.5in]{Cairo-logo}
+       \hfill \includegraphics[width=0.8in]{postscript-logo}
+       \hfill \includegraphics[width=0.5in]{Povray-logo}
+       \hfill \includegraphics[width=0.5in]{SVG-logo}}
+     \hfill
+   \]
+   and:
+   \begin{itemize}
+   \item OpenGL
+   \item HTML5 canvas
+   \item PGF/TikZ
+   \item PDF
+   \item native Haskell raster library
+   \end{itemize}
+\end{xframe}
 
-%   %%% XXX todo: vertically center images
-%   %%% XXX todo: add something about diagrams, with arrows?
-%   %%% XXX todo: mention OpenGL, HTML5 canvas, PGF, PDF!
+\begin{xframe}
+  \begin{center}
+  \begin{diagram}[width=150]
+    shapes = hcat' (with & sep .~ 3)
+           [ square 2 # fc green # named "s"
+           , circle 1 # fc blue  # named "c"
+           ]
+    dia = shapes # connectOutside' (with & gap .~ 0.2) "s" "c" # lw 0.03
+        # frame 0.5
+  \end{diagram}
+  \begin{spec}
+shapes = hcat' (with & sep .~ 3)
+       [ square 2  # fc green  # named "s"
+       , circle 1  # fc blue   # named "c"
+       ]
+dia = shapes
+    # connectOutside' (with & gap .~ 0.2)
+      "s" "c"
+  \end{spec}
+  \end{center}
+\end{xframe}
 
-%   \hfill \includegraphics[width=0.5in]{Cairo-logo}
-%   \hfill \includegraphics[width=0.8in]{postscript-logo}
-%   \hfill \includegraphics[width=0.5in]{Povray-logo}
-%   \hfill \includegraphics[width=0.5in]{SVG-logo}
-%   \hfill
-% \end{xframe}
+\begin{xframe}
+  \centering
+  \begin{diagram}[width=250]
+  {-# LANGUAGE TypeFamilies #-}
+  hsep :: (Monoid' a, Juxtaposable a, HasOrigin a, V a ~ R2) => Double -> [a] -> a
+  hsep n = hcat' (with & sep .~ n)
 
+  dot = circle 0.2 # fc blue # lw 0
 
+  dia = hsep 1 [ square 1
+               , (square 1 <> square 1 # reversePath # rotateBy (1/7))
+                 # stroke # fc red
+               , square 1 # map (place dot) # mconcat
+               ]
+    # frame 0.2
+  \end{diagram}
+
+  \begin{spec}
+dia = hcat' (with & sep .~ 1)
+  [ square 1
+  , mconcat
+    [ square 1
+    , square 1 # reversePath # rotateBy (1/7))
+    ]
+    # stroke # fc red
+  , square 1 # map (place dot) # mconcat
+  ]
+  where
+    dot = circle 0.2 # fc blue # lw 0
+  \end{spec}
+
+\end{xframe}
 \end{document}
