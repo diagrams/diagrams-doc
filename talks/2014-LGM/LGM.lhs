@@ -269,6 +269,13 @@ tree
   \item culture that encourages elegant, mathematically-based design:
     theory meets practice
   \end{itemize}
+
+  \onslide<2>
+  Full disclosure:
+  \begin{itemize}
+  \item Error messages suck
+  \end{itemize}
+
 \end{xframe}
 
 %%% The first reason Haskell makes a great host for EDSLs is its
