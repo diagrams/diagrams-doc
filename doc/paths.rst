@@ -282,7 +282,7 @@ some lines and then call `glueLine` on the result.  You try:
 
 The second function for converting from lines to loops, `closeLine`,
 adds an extra (linear) segment from the end of the line to the
-beginning.  This
+beginning.
 
 .. container:: exercises
 
