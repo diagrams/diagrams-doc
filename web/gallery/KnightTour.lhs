@@ -50,7 +50,7 @@ Now we can go about visualizing a tour.  First, let's draw a chessboard:
 > chessBoard n
 >   = vcat . map hcat . map (map boardSq)
 >   . take n . map (take n) . tails
->   $ cycle [saddlebrown, antiquewhite]
+>   $ cycle [antiquewhite, saddlebrown]
 
 Now, we need a way to convert `Square` coordinates (a pair of numbers
 in the range 0-7) into actual coordinates on the chessboard.  Since
