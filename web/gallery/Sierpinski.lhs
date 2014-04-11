@@ -17,5 +17,5 @@ width: 400
 >                (s ||| s) # centerX
 >   where s = sierpinski (n-1)
 >
-> example = pad 1.1 $ sierpinski 7 # centerXY # lw 0 # fc white
+> example = pad 1.1 $ sierpinski 7 # centerXY # lwG 0 # fc white
 >                   `atop` square 70 # fc darkslategray

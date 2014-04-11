@@ -9,7 +9,7 @@ width: 400
 ---
 
 > {-# LANGUAGE NoMonomorphismRestriction #-}
-> 
+>
 > import Diagrams.Prelude
 
 To see how this example is implemented, see the source code of the
@@ -18,4 +18,4 @@ To see how this example is implemented, see the source code of the
 
 > import Diagrams.TwoD.Factorization
 >
-> example = fdGridList 6 # centerXY # pad 1.05
+> example = fdGridList 6 # center # pad 1.05

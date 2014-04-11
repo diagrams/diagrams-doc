@@ -153,7 +153,7 @@ IO that the diagram depends on.
 > -- IO-diagram
 >
 > d :: FilePath -> IO (Diagram SVG R2)
-> d file = do 
+> d file = do
 >     f <- readFile file
 >     ...
 >
@@ -504,7 +504,7 @@ We can also handle IO with a couple more instances.  First we will need a
 > instance ToResult d => ToResult (IO d) where
 >    type Args (IO d) = Args d
 >    type ResultOf (IO d) = IO (ResultOf d)
-> 
+>
 >    toResult d args = flip toResult args <$> d
 
 This states that the needed arguments are not affected by this being
@@ -518,12 +518,12 @@ be written:
 
 > instance Mainable d => Mainable (IO d) where
 >     type MainOpts (IO d) = MainOpts d
-> 
+>
 >     mainRender opts dio = dio >>= mainRender opts
 
 Here we merely perform the diagram creating action and bind its value
 to the `Mainable` instance that can handle it.  For an example of using
-these instances see the `Clock Example`_ section below. 
+these instances see the `Clock Example`_ section below.
 
 
 User Extensions
@@ -691,21 +691,21 @@ know what time it is.  Consider the following program.
 > import Diagrams.Prelude
 > import Diagrams.Coordinates
 > import Data.Time
-> 
+>
 > clock :: UTCTime -> Diagram B R2
-> clock t = circle 0.35 # fc silver # lw 0
+> clock t = circle 0.35 # fc silver # lwG 0
 >        <> bigHand # f 12 h <> littleHand # f 60 m
->        <> circle 1  # fc black # lw 0
->        <> circle 11 # lw 1.5 # lc slategray # fc lightsteelblue
+>        <> circle 1  # fc black # lwG 0
+>        <> circle 11 # lwG 1.5 # lc slategray # fc lightsteelblue
 >   where
 >     s = realToFrac $ utctDayTime t :: Double
 >     m = s / 60
 >     h = m / 60
 >
->     bigHand    = (0 ^& (-1.5)) ~~ (0 ^& 7.5) # lw 0.5
->     littleHand = (0 ^& (-2))   ~~ (0 ^& 9.5) # lw 0.2
+>     bigHand    = (0 ^& (-1.5)) ~~ (0 ^& 7.5) # lwG 0.5
+>     littleHand = (0 ^& (-2))   ~~ (0 ^& 9.5) # lwG 0.2
 >     f n v = rotate (- v / n @@ turn)
-> 
+>
 > main = mainWith (clock <$> getCurrentTime)
 
 Running we get:
@@ -717,22 +717,22 @@ Running we get:
 > import Diagrams.Prelude
 > import Diagrams.Coordinates
 > import Data.Time
-> 
+>
 > clock :: UTCTime -> Diagram B R2
-> clock t = circle 0.35 # fc silver # lw 0
+> clock t = circle 0.35 # fc silver # lwG 0
 >        <> bigHand # f 12 h <> littleHand # f 60 m
->        <> circle 1  # fc black # lw 0
->        <> circle 11 # lw 1.5 # lc slategray # fc lightsteelblue
+>        <> circle 1  # fc black # lwG 0
+>        <> circle 11 # lwG 1.5 # lc slategray # fc lightsteelblue
 >   where
 >     s = realToFrac $ utctDayTime t :: Double
 >     m = s / 60
 >     h = m / 60
 >
->     bigHand    = (0 ^& (-1.5)) ~~ (0 ^& 7.5) # lw 0.5
->     littleHand = (0 ^& (-2))   ~~ (0 ^& 9.5) # lw 0.2
+>     bigHand    = (0 ^& (-1.5)) ~~ (0 ^& 7.5) # lwG 0.5
+>     littleHand = (0 ^& (-2))   ~~ (0 ^& 9.5) # lwG 0.2
 >     f n v = rotate (- v / n @@ turn)
 >
-> example = clock $ read "2013-11-19 03:14:15.926535 UTC" 
+> example = clock $ read "2013-11-19 03:14:15.926535 UTC"
 
 This uses the `Mainable d => Mainable (IO d)` instance to allow our
 effectful clock generator.  However, we could have just as well avoided
@@ -757,6 +757,6 @@ a useful clock making program.
       option, but if one is not given, it uses the current time.
 
    #. Modify `clock` to take a `ClockStyle` argument that includes options for
-      various visual styles for the clock.  For instance `ClockStyle` could 
+      various visual styles for the clock.  For instance `ClockStyle` could
       include a color for the clock background, a flag for turning on hour
       marks, or a flag for including a second hand.

@@ -42,6 +42,6 @@ segments corresponding to consecutive runs of `True`.
 Generate concentric circular arcs from lists of angular segments.
 
 > mkRingsDia = mconcat . zipWith mkRingDia [2,3..]
->   where mkRingDia r = lw 1.05 . mconcat . map (stroke . scale r . uncurry arc)
+>   where mkRingDia r = lwL 1.05 . mconcat . map (stroke . scale r . uncurry arc)
 >
 > example = pad 1.1 (rings 10)

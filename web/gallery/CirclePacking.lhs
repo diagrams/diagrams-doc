@@ -29,7 +29,7 @@ including some Spierpinsky triangles among them.
 > sierpinski n = (s === (s ||| s) # centerX) # alignY (-1/3)
 >   where s = sierpinski (n-1)
 
-> objects = map (lw 0.03) $ colorize $
+> objects = map (lwG 0.03) $ colorize $
 >     scale 0.04 (sierpinski 7) :
 >     scale 0.03 (sierpinski 7) :
 >     [ circle r  | r <- [0.1,0.2..1.6] ] ++

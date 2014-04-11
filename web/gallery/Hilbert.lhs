@@ -15,4 +15,4 @@ width: 400
 >   expand t = alignBL $ hcat [u, hrule 1, reflectX u] where
 >              u = vcat [t, alignT $ vrule 1, rotateBy (3/4) t]
 >
-> example = pad 1.1 . centerXY . lw 0.1 $ hilbert!!5
+> example = pad 1.1 . centerXY . lwG 0.1 $ hilbert!!5

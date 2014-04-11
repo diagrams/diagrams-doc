@@ -45,7 +45,7 @@ here](http://rosettacode.org/wiki/Knight%27s_tour#Haskell).
 
 Now we can go about visualizing a tour.  First, let's draw a chessboard:
 
-> boardSq c = square 1 # lw 0 # fc c
+> boardSq c = square 1 # lwG 0 # fc c
 >
 > chessBoard n
 >   = vcat . map hcat . map (map boardSq)

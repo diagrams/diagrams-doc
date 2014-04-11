@@ -48,6 +48,6 @@ place behind every pixel.
 > minBox = centerXY (strutX w <> strutY w)
 >   where w = 2 * sqrt max_iter
 >
-> to_circle = (<> minBox) . centerXY . lw 0 . fc blue . circle . sqrt . fromIntegral
+> to_circle = (<> minBox) . centerXY . lwG 0 . fc blue . circle . sqrt . fromIntegral
 >
 > example = vcat . map hcat $ image

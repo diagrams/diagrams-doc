@@ -34,7 +34,7 @@ corresponding to those names, and superimpose a line between the points:
 Finish creating one quarter of the diagram by connecting corresponding
 points.
 
-> pic n = applyAll (map (connect n) [0..n]) (axes n) # centerXY # lw 0.05
+> pic n = applyAll (map (connect n) [0..n]) (axes n) # centerXY # lwG 0.05
 
 The final diagram is created by assembling four copies of the above.
 

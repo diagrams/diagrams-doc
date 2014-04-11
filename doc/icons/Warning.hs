@@ -15,7 +15,7 @@ signSide = hrule 1 <> arc (-1/4 @@ turn) ((-1/4) + 1/3 @@ turn) # scale 0.3
 sign = mconcat . take 3 . iterate (rotateBy (1/3)) $ signSide
 
 d = text "!" # fc black # bold
- <> strokeLoop (glueLine sign) # lc black # lw 0.1 # centerXY
+ <> strokeLoop (glueLine sign) # lc black # lwG 0.1 # center
 
 
 main = defaultMain $ pad 1.15 d

@@ -29,7 +29,7 @@ and a function to render edges.
 
 > Just t = uniqueXLayout 2 2 (fibCalls 5)
 >
-> example = pad 1.1 . lw 0.05 . centerXY
+> example = pad 1.1 . lwG 0.05 . centerXY
 >         $ renderTree
 >             (\n -> (text ("fib " ++ show n)
 >                     <> roundedRect 3 1.3 0.3 # fc gold)
@@ -37,4 +37,4 @@ and a function to render edges.
 >             (~~) t
 >         `atop` square 1 # scaleY 12 # translateY (-5)
 >                         # scaleX 34
->                         # lw 0 # fc whitesmoke
+>                         # lwG 0 # fc whitesmoke

@@ -45,7 +45,7 @@ rectangle.
 A single string of text.
 
 > text' :: String -> Double -> Diagram B R2
-> text' s n = textSVG_ (textOpts s n) # fc white # lw 0
+> text' s n = textSVG_ (textOpts s n) # fc white # lwG 0
 
 Several lines of text stacked vertically.
 
@@ -89,7 +89,7 @@ diagram "b".
 > drawLines cube = foldr (.) id (map (uncurry
 >                        (connectOutside' (with
 >                        & headSize .~ 0.8
->                        & shaftStyle %~ lw 0.04))) pairs) cube
+>                        & shaftStyle %~ lwG 0.04))) pairs) cube
 >   where pairs = [ ("perm","permgroup")
 >                 , ("perm","sym")
 >                 , ("perm","paramperm")

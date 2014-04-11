@@ -87,7 +87,7 @@ Plot many data series using the given list of styles.
 A string of text, converted to a path and filled.
 
 > text' :: String -> Dia
-> text' s = (stroke $ textSVG' (TextOpts s lin2 INSIDE_H KERN False 0.4 0.4)) # fc black # lw 0
+> text' s = (stroke $ textSVG' (TextOpts s lin2 INSIDE_H KERN False 0.4 0.4)) # fc black # lwG 0
 
 The chart's legend.  Each label is drawn next to a little example of
 how the line looks in the chart.
@@ -175,6 +175,6 @@ The colour styles.
 The line styles.
 
 > lineStyles :: [Dia -> Dia]
-> lineStyles = cycle . map (. lw 0.03) $
+> lineStyles = cycle . map (. lwG 0.03) $
 >                [ id, dashing [0.1,0.1] 0, dashing [0.02,0.02] 0
 >                , dashing [0.1,0.1,0.03,0.1] 0, dashing [0.1,0.1,0.02,0.02,0.02,0.1] 0 ]
