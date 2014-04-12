@@ -24,7 +24,7 @@ Let's start with the most boring possible example:
 .. class:: dia-lhs
 
 ::
-   
+
    > import Diagrams.TwoD.Path.Metafont
    > z1 = p2 (1,0)
    > example = metafont $ origin .--. endpt z1
@@ -40,7 +40,7 @@ Let's give it a whirl:
 .. class:: lhs
 
 ::
-   
+
    > z1 = p2 (0,1)
    > z2 = p2 (1,1)
    > z3 = p2 (2,1)
@@ -52,11 +52,11 @@ Let's give it a whirl:
 .. class:: dia
 
 ::
-   
+
    import Diagrams.TwoD.Path.Metafont
 
    --ptMark :: Diagram SVG R2
-   ptMark = circle 0.02 # lw 0
+   ptMark = circle 0.02 # lwG 0
 
    --illustrateSegment :: FixedSegment R2 -> Diagram SVG R2
    illustrateSegment (FLinear from to) = position [
@@ -115,7 +115,7 @@ adjacent paths will curve around to remain smooth and continuous.
    import Diagrams.TwoD.Path.Metafont
 
    --ptMark :: Diagram SVG R2
-   ptMark = circle 0.02 # lw 0
+   ptMark = circle 0.02 # lwG 0
 
    --illustrateSegment :: FixedSegment R2 -> Diagram SVG R2
    illustrateSegment (FLinear from to) = position [
@@ -164,7 +164,7 @@ pulled taut.  The tension defaults to 1; here we set it to 1.5.
    import Diagrams.TwoD.Path.Metafont
 
    --ptMark :: Diagram SVG R2
-   ptMark = circle 0.02 # lw 0
+   ptMark = circle 0.02 # lwG 0
 
    --illustrateSegment :: FixedSegment R2 -> Diagram SVG R2
    illustrateSegment (FLinear from to) = position [
@@ -236,7 +236,7 @@ other.
    import Diagrams.TwoD.Path.Metafont
 
    --ptMark :: Diagram SVG R2
-   ptMark = circle 0.02 # lw 0
+   ptMark = circle 0.02 # lwG 0
 
    --illustrateSegment :: FixedSegment R2 -> Diagram SVG R2
    illustrateSegment (FLinear from to) = position [
@@ -294,7 +294,7 @@ Here is the code that marks the control points in examples above:
 
    -- Type signatures may be needed to resolve ambiguity
    --ptMark :: Diagram SVG R2
-   ptMark = circle 0.02 # lw 0
+   ptMark = circle 0.02 # lwG 0
 
    --illustrateSegment :: FixedSegment R2 -> Diagram SVG R2
    illustrateSegment (FLinear from to) = position [
