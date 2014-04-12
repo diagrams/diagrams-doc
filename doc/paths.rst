@@ -389,7 +389,7 @@ another.
      >   # map strokeLocTrail
      >   # zipWith lc (cycle [red, blue])
      >   # mconcat
-     >   # lw 0.05
+     >   # lwG 0.05
      >   # centerXY # pad 1.1 # sized (Width 2)
 
 Paths
@@ -414,7 +414,7 @@ A *path* is simply a collection of located trails.
      >   # map strokeLocTrail
      >   # zipWith lc [red,orange,yellow,blue,green,purple]
      >   # mconcat
-     >   # lw 0.03
+     >   # lwG 0.03
      >   # centerXY # pad 1.1 # sized (Width 2)
 
   #. `decorateLocatedTrail`, `fillRule`
