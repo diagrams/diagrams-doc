@@ -60,7 +60,7 @@ a *magnitude* (length) and a *direction* (angle).
 >     theta = text' 0.5 "θ" # translate (0.7 ^& 0.2)
 >
 > text' d s = (stroke $ textSVG' (TextOpts s lin INSIDE_H KERN False d d))
->           # lw 0 # fc black
+>           # lwG 0 # fc black
 >
 > example = ( (vPic ((4 ^& 0) # rotateBy (1/12)) # centerXY)
 >             ||| strutX 0.2 ||| text' 0.5 "y"
@@ -166,7 +166,7 @@ The first thing to learn is how to *create* values of type
 
   ::
 
-  > example = lw 0.05 . mconcat . map fromOffsets
+  > example = lwG 0.05 . mconcat . map fromOffsets
   >         $ [ [r *^ fromDirection (r @@ rad)]
   >           | r <- [33 * tau/32, 34 * tau/32 .. 2 * tau]
   >           ]
@@ -202,7 +202,7 @@ The first thing to learn is how to *create* values of type
 
      > vs = zipWith mkV (cycle [1,2,3]) [ 1/30 @@ turn, 2/30 @@ turn .. 1 @@ turn ]
      >   where mkV r th = r *^ fromDirection th
-     > example = lw 0.02 . mconcat . map (fromOffsets . (:[])) $ vs
+     > example = lwG 0.02 . mconcat . map (fromOffsets . (:[])) $ vs
 
 Destructing vectors
 -------------------
@@ -337,7 +337,7 @@ __ http://en.wikipedia.org/wiki/Dot_product
   > drawV v = fromOffsets [v]
   >
   > example = mconcat
-  >   [ drawV p # lc green # lw 0.03
+  >   [ drawV p # lc green # lwG 0.03
   >   , drawV u # lc blue
   >   , drawV v # lc red
   >   , drawV (p ^-^ v) # translate v # dashing [0.1,0.1] 0
@@ -379,7 +379,7 @@ __ http://en.wikipedia.org/wiki/Dot_product
      >     , drawV (v1 ^+^ v2) # lc purple
      >     ]
      >
-     > example = vAddVis (r2 (0.5,1)) (r2 (2,0.5)) # lw 0.02
+     > example = vAddVis (r2 (0.5,1)) (r2 (2,0.5)) # lwG 0.02
 
 Using vectors
 -------------

@@ -527,9 +527,9 @@ if you are just reading this manual for the first time!)
 >   = mconcat
 >     [arrowAt' (with & arrowHead .~ tri & headSize .~ 0.2) origin v
 >     , origin ~~ b
->       # lc green # lw 0.05
+>       # lc green # lwG 0.05
 >     , p1 ~~ p2
->       # lc red # lw 0.02
+>       # lc red # lwG 0.02
 >     ]
 >     where
 >       b  = envelopeP v d
@@ -761,7 +761,7 @@ represented by an angle measured clockwise from the positive
 > theV = 3 *^ fromDirection theDir
 > exampleVector = arrowV theV
 >   # lc blue
->   # lw 0.03
+>   # lwG 0.03
 > angleArrow = arrowBetween' (with & arrowShaft .~ arc zeroV theDir)
 >   (origin .+^ (1 *^ unitX))
 >   (origin .+^ (theV # normalized))
@@ -927,7 +927,7 @@ optional parameters that control the generated polygon:
 >                        & polyOrient .~ OrientV )
 > poly2 = polygon ( with & polyType  .~ PolyPolar (repeat (1/40 @@ turn))
 >                                                 (take 40 $ cycle [2,7,4,6]) )
-> example = (poly1 ||| strutX 1 ||| poly2) # lw 0.05
+> example = (poly1 ||| strutX 1 ||| poly2) # lwG 0.05
 
 Notice the idiom of using `with` to construct a record of default
 options and selectively overriding particular options by name. `with`
@@ -991,11 +991,11 @@ which there are two possibilities:
   > funs          = map (flip (^)) [2..6]
   > visualize f	  = stroke' (with & vertexNames .~ [[0 .. 6 :: Int]] )
   >                     (regPoly 7 1)
-  >                   # lw 0
+  >                   # lwG 0
   >                   # showLabels
   >                   # fontSize 0.6
   >              <> star (StarFun f) (regPoly 7 1)
-  >                   # stroke # lw 0.05 # lc red
+  >                   # stroke # lwG 0.05 # lc red
   > example       = center . hcat' (with & sep .~ 0.5) $ map visualize funs
 
 You may notice that all the above examples need to call `stroke` (or
@@ -1178,7 +1178,7 @@ local origin of the final result.
 ::
 
 > example = cat (r2 (2, -1)) (map p [3..8]) # showOrigin
->   where p n = regPoly n 1 # lw 0.03
+>   where p n = regPoly n 1 # lwG 0.03
 
 Semantically, `cat v === foldr (beside v) mempty`, although the actual
 implementation of `cat` uses a more efficient balanced fold.
@@ -1193,7 +1193,7 @@ possibilities.
 ::
 
 > example = cat' (r2 (2,-1)) (with & catMethod .~ Distrib & sep .~ 2 ) (map p [3..8])
->   where p n = regPoly n 1 # lw 0.03
+>   where p n = regPoly n 1 # lwG 0.03
 >                           # scale (1 + fromIntegral n/4)
 >                           # showOrigin
 
@@ -1213,7 +1213,7 @@ course, `appends` is implemented in terms of `juxtapose` (see
 
 ::
 
-> c        = circle 1 # lw 0.03
+> c        = circle 1 # lwG 0.03
 > dirs     = iterate (rotateBy (1/7)) unitX
 > cdirs    = zip dirs (replicate 7 c)
 > example1 = appends c cdirs
@@ -1348,7 +1348,7 @@ otherwise.
 
 > example = (square 1
 >       ||| square 1 # scale 2
->       ||| circle 1 # scaleX 3) # lw 0.03 # dashing [0.1,0.1] 0
+>       ||| circle 1 # scaleX 3) # lwG 0.03 # dashing [0.1,0.1] 0
 
 However, occasionally you *do* want subsequent transformations to
 affect line width or dashing style.  The `freeze` function is supplied for this
@@ -1360,8 +1360,8 @@ transformations will affect the line width and dashing style.
 ::
 
 > example = (square 1
->       ||| square 1 # freeze # scale 2
->       ||| circle 1 # freeze # scaleX 3) # lw 0.03 # dashing [0.1,0.1] 0
+>       ||| square 1 # scale 2
+>       ||| circle 1 # scaleX 3) # lwG 0.03 # dashing [0.1,0.1] 0
 
 Note that line width does not affect the envelope of diagrams at all.
 To stroke a line "internally", turning it into a diagrams path
@@ -1392,7 +1392,7 @@ for three aspects of line drawing:
 
 ::
 
-> path = fromVertices (map p2 [(0,0), (1,0.3), (2,0), (2.2,0.3)]) # lw 0.1
+> path = fromVertices (map p2 [(0,0), (1,0.3), (2,0), (2.2,0.3)]) # lwG 0.1
 > example = center . vcat' (with & sep .~ 0.1 )
 >           $ map (path #)
 >             [ lineCap LineCapButt   . lineJoin LineJoinMiter
@@ -1433,7 +1433,7 @@ applying the desired attributes:
 
 ::
 
-> foo = myFun (mempty # fontSize 10 # lw 0 # fc green)
+> foo = myFun (mempty # fontSize 10 # lwG 0 # fc green)
 
 If the type `T` is an instance of `HasStyle`, then `[T]` is also.
 This means that you can apply styles uniformly to entire lists of
@@ -1542,7 +1542,7 @@ __ `Angles`_
 
 ::
 
-> eff = text "F" <> square 1 # lw 0
+> eff = text "F" <> square 1 # lwG 0
 > rs  = map rotateBy [1/7, 2/7 .. 6/7]
 > example = hcat . map (eff #) $ rs
 
@@ -1561,7 +1561,7 @@ results in a reflection (in the case of `scaleX` and `scaleY`) or a
 
 ::
 
-> eff = text "F" <> square 1 # lw 0
+> eff = text "F" <> square 1 # lwG 0
 > ts  = [ scale (1/2), id, scale 2,    scaleX 2,    scaleY 2
 >       ,                  scale (-1), scaleX (-1), scaleY (-1)
 >       ]
@@ -1583,7 +1583,7 @@ To reflect in some line other than an axis, use `reflectAbout`.
 
 ::
 
-> eff = text "F" <> square 1 # lw 0
+> eff = text "F" <> square 1 # lwG 0
 > example = eff
 >        <> reflectAbout (p2 (0.2,0.2)) (rotateBy (-1/10) unitX) eff
 
@@ -1613,7 +1613,7 @@ thus:
 
 ::
 
-> eff = text "F" <> square 1 # lw 0
+> eff = text "F" <> square 1 # lwG 0
 > example = (scaleX 2 `under` rotation (-1/8 @@ turn)) eff
 
 The letter F is first rotated so that the desired scaling axis lies
@@ -1657,7 +1657,7 @@ projections along the principal axes in 2 dimensions.
 ::
 
 > sq = unitSquare # translate (5 ^& 3) :: Path R2
-> marks = repeat . lw 0 $ circle 0.02
+> marks = repeat . lwG 0 $ circle 0.02
 > dots c p = position $ zip (concat $ pathVertices p) (marks # fc c)
 > example = stroke sq <> dots blue sq <> dots green (deform perspectiveX1 sq)
 
@@ -1774,14 +1774,14 @@ polygon):
 >
 > concave = polygon ( with & polyType .~ PolyPolar [a, b, b, b]
 >                   [ 0.25,1,1,1,1] & polyOrient .~ NoOrient )
->                   # fc blue # lw 0
+>                   # fc blue # lwG 0
 >   where
 >     a = 1/8 @@ turn
 >     b = 1/4 @@ turn
 >
 > convex = polygon (with & polyType .~ PolyPolar [a,b] [0.25, 1, 1]
 >                        & polyOrient .~ NoOrient)
->                        # fc orange # lw 0
+>                        # fc orange # lwG 0
 >   where
 >     a = 1/8 @@ turn
 >     b = 3/4 @@ turn
@@ -1856,8 +1856,8 @@ __ http://en.wikipedia.org/wiki/Bézier_curve
 >     <> fromSegments [bézier3 c1 c2 x2]
 >   where
 >     dashed  = dashing [0.1,0.1] 0
->     endpt   = circle 0.05 # fc red  # lw 0
->     ctrlpt  = circle 0.05 # fc blue # lw 0
+>     endpt   = circle 0.05 # fc red  # lwG 0
+>     ctrlpt  = circle 0.05 # fc blue # lwG 0
 >     l1      = fromOffsets [c1] # dashed
 >     l2      = fromOffsets [x2 ^-^ c2] # translate c2 # dashed
 >
@@ -1980,7 +1980,7 @@ also analogous functions `strokeLine` and `strokeTrail`.)
 > burst :: Trail' Loop R2
 > burst = glueLine . mconcat . take 13 . iterate (rotateBy (-1/13)) $ spoke
 >
-> example = strokeLoop burst # fc yellow # lw 0.1 # lc orange
+> example = strokeLoop burst # fc yellow # lwG 0.1 # lc orange
 
 For convenience, there is also a monoid instance for `Trail` based on
 the instance for lines: any loops are first cut with `cutLine`, and
@@ -2000,7 +2000,7 @@ To construct a line, loop, or trail, you can use one of the following:
 
   > theLine = fromOffsets (iterateN 5 (rotateBy (1/20)) unitX)
   > example = theLine # strokeLine
-  >         # lc blue # lw 0.05 # center # pad 1.1
+  >         # lc blue # lwG 0.05 # center # pad 1.1
 
 * `fromVertices` takes a list of vertices, generating linear segments
   between them.
@@ -2025,7 +2025,7 @@ To construct a line, loop, or trail, you can use one of the following:
   > theLine = cubicSpline False vertices
   > example = mconcat (iterateN 6 (rotateBy (-1/6)) theLine)
   >         # glueLine # strokeLoop
-  >         # lc green # lw 0.05 # fc aqua # center # pad 1.1
+  >         # lc green # lwG 0.05 # fc aqua # center # pad 1.1
 
 * `fromSegments` takes an explicit list of `Segment`\s, which can
   occasionally be useful if, say, you want to generate some Bézier
@@ -2060,7 +2060,7 @@ the edges individually:
 >
 > colors = cycle [aqua, orange, deeppink, blueviolet, crimson, darkgreen]
 >
-> example = lw 0.1
+> example = lwG 0.1
 >         . mconcat
 >         . zipWith lc colors
 >         . map strokeLocTrail . explodeTrail
@@ -2283,7 +2283,7 @@ corners, the offset will be disconnected!
 >
 > example :: Diagram B R2
 > example = (p # strokeTrail <> offsetTrailNaive 0.1 0.3 p # stroke # lc blue)
->         # lw 0.01
+>         # lwG 0.01
 >   where p = fromVertices . map p2 $ [(0,0), (1,0.3), (2,0), (2.2,0.3)]
 
 First let's consider the outside corner where the adjacent offset segments do
@@ -2305,7 +2305,7 @@ offset segments in other sensible ways.  For the choice of join we have the
 >
 > example :: Diagram B R2
 > example = (p # strokeTrail <> o # strokeLocTrail # lc blue)
->         # lw 0.01
+>         # lwG 0.01
 >   where
 >     p = fromVertices . map p2 $ [(0,0), (1,0.3), (2,0), (2.2,0.3)]
 >     o = offsetTrail' (with & offsetJoin .~ LineJoinRound) 0.3 p
@@ -2413,7 +2413,7 @@ of loops, one inside and one outside.  To express this we need a `Path`.
 > import Diagrams.TwoD.Offset
 >
 > example :: Diagram B R2
-> example = (p # strokeTrail # lw 0.02 # lc white <> e # stroke # lw 0 # fc blue)
+> example = (p # strokeTrail # lwG 0.02 # lc white <> e # stroke # lwG 0 # fc blue)
 >   where
 >     p = fromVertices . map p2 $ [(0,0), (1,0.3), (2,0), (2.2,0.3)]
 >     e = expandTrail' opts 0.3 p
@@ -2435,8 +2435,8 @@ and plan to support custom styles in future releases.
 > example :: Diagram B R2
 > example = hcat' (with & sep .~ 0.5) $ map f [LineCapButt, LineCapRound, LineCapSquare]
 >   where
->     f s =  p # strokeTrail # lw 0.02 # lc white
->         <> expandTrail' (opts s) 0.3 p # stroke # lw 0 # fc blue
+>     f s =  p # strokeTrail # lwG 0.02 # lc white
+>         <> expandTrail' (opts s) 0.3 p # stroke # lwG 0 # fc blue
 >     p = fromVertices . map p2 $ [(0,0), (1,0), (0.5,0.7)]
 >     opts s = with & expandJoin .~ LineJoinRound
 >                   & expandCap  .~ s
@@ -2513,7 +2513,7 @@ instances of `TrailLike`:
 >             . mconcat . take 5 . iterate (rotateBy (1/5))
 >             . onLineSegments init
 >             $ s {- 4 -}
-> example = (blueSquares <> aster <> paths) # lw 0.05
+> example = (blueSquares <> aster <> paths) # lwG 0.05
 
 Exercise: figure out which occurrence of `s` has which type. (Answers
 below.)
@@ -2730,9 +2730,9 @@ closed.
 ::
 
 > pts = map p2 [(0,0), (2,3), (5,-2), (-4,1), (0,3)]
-> dot = circle 0.2 # fc blue # lw 0
+> dot = circle 0.2 # fc blue # lwG 0
 > mkPath closed = position (zip pts (repeat dot))
->              <> cubicSpline closed pts # lw 0.05
+>              <> cubicSpline closed pts # lwG 0.05
 > example = mkPath False ||| strutX 2 ||| mkPath True
 
 For more precise control over the generation of curved paths, see the
@@ -2855,7 +2855,7 @@ clipping path will be drawn.
 
 > example = square 3
 >         # fc green
->         # lw 0.05
+>         # lwG 0.05
 >         # clipBy (square 3.2 # rotateBy (1/10))
 
 Several functions are available, depending on what envelope and trace
@@ -2962,7 +2962,7 @@ __ /gallery/SymmetryCube.html
 > -- Connect two points.
 > ex1 = arrowBetween sPt ePt
 >
-> d = octagon 1 # lc blue # lw 0.10 # showOrigin
+> d = octagon 1 # lc blue # lwG 0.10 # showOrigin
 > ds = d # named "1" ||| strut 3 ||| d # named "2"
 >
 > -- Connect two diagrams and two points on their trails.
@@ -3026,7 +3026,7 @@ function.
 
 ::
 
-> c = circle 2 # fc lightgray # lw 0 # showOrigin
+> c = circle 2 # fc lightgray # lwG 0 # showOrigin
 >
 > x |-| y = x ||| strutX 3 ||| y
 >
@@ -3045,19 +3045,19 @@ function.
 >    # connect' (with & arrowTail .~ quill& tailSize .~ 1.5
 >                     & tailColor .~ orange & headColor .~ orange
 >                     & arrowHead .~ spike & headSize  .~ 1.5
->                     & shaftStyle %~ lw 0.3 ) "1" "2"
+>                     & shaftStyle %~ lwG 0.3 ) "1" "2"
 >    # connect' (with & arrowTail .~ thorn'& tailSize .~ 1.5
 >                     & arrowHead .~ thorn & headSize .~ 1.5
->                     & arrowShaft .~ shaft1 & shaftStyle %~ lw 0.15 ) "3" "4"
+>                     & arrowShaft .~ shaft1 & shaftStyle %~ lwG 0.15 ) "3" "4"
 >    # connect' (with & arrowTail .~ block & tailSize .~ 1& tailGap .~ 0.4
 >                     & arrowHead .~ missile & headSize .~ 1.5& headGap .~ 0.4
 >                     & arrowShaft .~ shaft2
 >                     & headColor .~ blue & tailColor .~ blue
->                     & shaftStyle %~ lw 0.15 . lc blue ) "5" "6"
+>                     & shaftStyle %~ lwG 0.15 . lc blue ) "5" "6"
 >    # connect' (with & arrowShaft .~ shaft3
 >                     & arrowHead .~ tri & headSize .~ 1.5
 >                     & headStyle %~ fc red . opacity 0.5
->                     & shaftStyle %~ lw 0.2 . lc black . opacity 0.5 ) "7" "8"
+>                     & shaftStyle %~ lwG 0.2 . lc black . opacity 0.5 ) "7" "8"
 
 Text
 ----
@@ -3178,7 +3178,7 @@ its own `textSVG` function which can be used to convert text into a
 ::
 
 > text' d s = (stroke $ textSVG' (TextOpts s lin2 INSIDE_H KERN False d d))
->           # lw 0
+>           # lwG 0
 >
 > example = text' 5 "Hello" # fc blue ||| text' 3 "world" # fc green
 
@@ -3199,7 +3199,7 @@ and specify a file name and size for the image:
 ::
 
 > no = (circle 1 <> hrule 2 # rotateBy (1/8))
->    # lw 0.2 # lc red
+>    # lwG 0.2 # lc red
 > example = no <> image "doc/static/phone.png" 1.5 1.5
 
 Unfortunately, you must specify both a width and a height for each
@@ -3332,7 +3332,7 @@ Envelope-related functions
   >   = square 2
   >   # extrudeEnvelope (2 ^& 1)
   >   # sampleEnvelope2D 100
-  >   # lw 0.05
+  >   # lwG 0.05
   >   # center # pad 1.1
 
 * Manually setting the envelope of a diagram can be
@@ -3457,7 +3457,7 @@ Normally, a trace is accessed using one of the four functions
   > illustrateTraceV v d = (d <> drawV v <> drawTraceV v d) # showOrigin
   >
   > example = hcat' (with & sep .~ 1)
-  >         . lw 0.03
+  >         . lwG 0.03
   >         . map (illustrateTraceV (0.5 *^ (r2 (1, 1))))
   >         $ [ circle 1 # translate (r2 (-1.5, -1.5))
   >           , circle 1
@@ -3657,7 +3657,7 @@ function):
 > attach n1 n2
 >   = withName n1 $ \b1 ->
 >     withName n2 $ \b2 ->
->       atop ((location b1 ~~ location b2) # lc red # lw 0.03)
+>       atop ((location b1 ~~ location b2) # lc red # lwG 0.03)
 >
 > example = (square 3 # named Baz ||| circle 2.3 # named Bar)
 >         # attach Baz Bar
@@ -3771,7 +3771,7 @@ a qualified name explicitly, separate the components with `(.>)`.
 > attach n1 n2
 >   = withName n1 $ \b1 ->
 >     withName n2 $ \b2 ->
->       atop ((location b1 ~~ location b2) # lc red # lw 0.03)
+>       atop ((location b1 ~~ location b2) # lc red # lwG 0.03)
 >
 > squares =  (s # named NW ||| s # named NE)
 >        === (s # named SW ||| s # named SE)
@@ -3858,7 +3858,7 @@ the ellipse red and points outside it blue.
 ::
 
 > c :: Diagram B R2
-> c = circle 5 # scaleX 2 # rotateBy (1/14) # lw 0.03
+> c = circle 5 # scaleX 2 # rotateBy (1/14) # lwG 0.03
 >
 > -- Generated by fair dice roll, guaranteed to be random
 > points = map p2 $
@@ -3885,7 +3885,7 @@ the ellipse red and points outside it blue.
 >          ]
 >
 > mkPoint p = (p, circle 0.3
->           	  # lw 0
+>           	  # lwG 0
 >           	  # fc (case sample c p of
 >           	          Any True  -> red
 >           	          Any False -> blue
@@ -3914,7 +3914,7 @@ and `Any False` with `mempty`.
 > c = (   circle 5 # scaleX 2 # rotateBy (1/14) # withCount
 >      <> circle 2 # scaleX 5 # rotateBy (-4/14) # withCount
 >     )
->     # lw 0.03
+>     # lwG 0.03
 >
 > -- Generated by fair dice roll, guaranteed to be random
 > points = map p2 $
@@ -4437,7 +4437,7 @@ viewpoint.  Let's use an invisible square:
 
 ::
 
-> (translateX <$> ui <*> circle 2) <> (pure (square 6 # lw 0))
+> (translateX <$> ui <*> circle 2) <> (pure (square 6 # lwG 0))
 
 Notice that we composed two animations using `(<>)`, which does
 exactly what you would think: superimposes them at every instant in time.
