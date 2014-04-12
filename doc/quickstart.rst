@@ -209,7 +209,7 @@ the `circle` diagram with the `(#)` operator:
 ::
 
 > example = circle 1 # fc blue
->                    # lw 0.05
+>                    # lwG 0.05
 >                    # lc purple
 >                    # dashing [0.2,0.05] 0
 
@@ -229,7 +229,7 @@ Just to illustrate,
 
 ::
 
-> example = dashing [0.2,0.05] 0 . lc purple . lw 0.05 . fc blue
+> example = dashing [0.2,0.05] 0 . lc purple . lwG 0.05 . fc blue
 >         $ circle 1
 
 produces exactly the same diagram as before.  So why bother with
@@ -242,7 +242,7 @@ combine diagrams with specified attributes.  For example,
 
 ::
 
-> example = circle 1 # fc red # lw 0 ||| circle 1 # fc green # lw 0
+> example = circle 1 # fc red # lwG 0 ||| circle 1 # fc green # lwG 0
 
 places a red circle with no border next to a green circle with no
 border (we'll see more about the `(|||)` operator shortly). Without
@@ -252,7 +252,7 @@ border (we'll see more about the `(|||)` operator shortly). Without
 
 ::
 
-> (fc red . lw 0 $ circle 1) ||| (fc green . lw 0 $ circle 1)
+> (fc red . lwG 0 $ circle 1) ||| (fc green . lwG 0 $ circle 1)
 
 For information on other standard attributes, see
 the `Diagrams.Attributes`:mod: module.
@@ -493,9 +493,9 @@ origins, translation can affect the way diagrams are composed.
 
 ::
 
-> example = hrule (2 * sum sizes) # lw 0.1 === circles # centerX
+> example = hrule (2 * sum sizes) # lwG 0.1 === circles # centerX
 >   where circles = hcat . map alignT . zipWith scale sizes
->                 $ repeat (circle 1 # lw 0.1)
+>                 $ repeat (circle 1 # lwG 0.1)
 >         sizes   = [2,5,4,7,1,3]
 
 See `Diagrams.TwoD.Align`:mod: for other alignment combinators.
