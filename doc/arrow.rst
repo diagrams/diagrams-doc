@@ -22,41 +22,35 @@ options used to make arrows.
 
 ::
 
-> example = d # connect' (with & arrowHead .~ dart & arrowTail .~ quill
->                              & shaftStyle %~ lwG 0.1 . lc black & arrowShaft .~ s
+> example = d # connect' (with & arrowHead .~ dart & headSize .~ Global 1 & arrowTail .~ quill
+>                              & tailSize .~ Global 1 & shaftStyle %~ lwG 0.1 . lc black & arrowShaft .~ s
 >                              & tailGap .~ 0.1 & headGap .~ 0.1
 >                              & headColor .~ blue & tailColor .~ orange)
 >                              "1" "2"
->             # headSizeG 1 # tailSizeG 1
->             # connect' (with & arrowHead .~ missile & arrowTail .~ missile'
->                              & shaftStyle %~ lwG 0.05 & arrowShaft .~ s1
+>             # connect' (with & arrowHead .~ missile & headSize .~ Global 0.8 & arrowTail .~ missile'
+>                              & tailSize .~ Global 0.8 & shaftStyle %~ lwG 0.05 & arrowShaft .~ s1
 >                              & headGap .~ 0 & tailGap .~ 0.1)
->             # headSizeG 0.8 # tailSizeG 0.8
 >                              "4" "3"
->             # connect' (with & arrowHead .~ thorn & arrowShaft .~ a1
+>             # connect' (with & arrowHead .~ thorn & headSize .~ Global 0.8 & arrowShaft .~ a1
 >                              & arrowTail .~ noTail & shaftStyle %~ lwG 0.03
 >                              & tailGap .~ 1 & headGap .~ 1 )
 >                              "1" "6"
->             # headSizeG 0.8
->             # connect' (with & arrowHead .~ dart & arrowTail .~ dart'
->                              & arrowShaft .~ s2
+>             # connect' (with & arrowHead .~ dart & tailSize .~ Global 1 & arrowTail .~ dart'
+>                              & headSize .~ Global 1 & arrowShaft .~ s2
 >                              & headColor .~ green & tailColor .~ green
 >                              & shaftStyle %~ lwG 0.1 . lc green )
 >                              "4" "7"
->             # headSizeG 1 # tailSizeG 1
->             # connect' (with & arrowTail .~ dart' & arrowShaft .~ a
->                              & arrowHead .~ spike & headColor .~ red
+>             # connect' (with & arrowTail .~ dart' & tailSize .~ Global 1 & arrowShaft .~ a
+>                              & arrowHead .~ spike & headSize .~ Global 1 & headColor .~ red
 >                              & tailGap .~ 0.1 & tailColor .~ red
 >                              & shaftStyle %~ lwG 0.2 . lc blue )
 >                              "9" "5"
->             # headSizeG 1 # tailSizeG 1
 >             # connect' (with & arrowHead .~ tri & arrowTail .~ block
->                              & headGap .~ 0.5
+>                              & headSize .~ Global 1 & tailSize .~ Global 0.6 & headGap .~ 0.5
 >                              & headStyle %~ fc black . opacity 0.5
 >                              & tailStyle %~ fc black . opacity 0.5
->                              & shaftStyle %~ lwG 0.06 . dashing [0.1,0.2,0.3,0.1] 0)
+>                              & shaftStyle %~ lwG 0.06 . dashingG [0.1,0.2,0.3,0.1] 0)
 >                              "8" "9"
->             # headSizeG 1 # tailSizeG 0.6
 >             # scale 0.75
 >   where
 >     c = circle 1 # showOrigin # lwG 0.04
@@ -131,7 +125,7 @@ its cousin `arrowBetween'`) connects two points.
 > ePt = p2 (2.85, 0.85)
 >
 > -- We use small blue and red circles to mark the start and end points.
-> dot  = circle 0.02 # lwG 0
+> dot  = circle 0.02 # lw none
 > sDot = dot # fc blue # moveTo sPt
 > eDot = dot # fc red  # moveTo ePt
 >
@@ -196,7 +190,7 @@ then the arrow from the previous example looks like this:
 > sPt = p2 (0.20, 0.20)
 > ePt = p2 (2.85,  0.85)
 >
-> dot = circle 0.02 # lwG 0
+> dot = circle 0.02 # lw none
 > sDot = dot # fc blue # moveTo sPt
 > eDot = dot # fc red # moveTo ePt
 >
@@ -228,7 +222,7 @@ yields:
 > sPt = p2 (0.20, 0.20)
 > ePt = p2 (2.85, 0.85)
 >
-> dot = circle 0.02 # lwG 0
+> dot = circle 0.02 # lw none
 > sDot = dot # fc blue # moveTo sPt
 > eDot = dot # fc red # moveTo ePt
 >
@@ -265,7 +259,7 @@ will make the arrow shaft into an arc:
 > sPt = p2 (0.20, 0.40)
 > ePt = p2 (2.80, 0.40)
 >
-> dot = circle 0.02 # lwG 0
+> dot = circle 0.02 # lw none
 > sDot = dot # fc blue # moveTo sPt
 > eDot = dot # fc red # moveTo ePt
 >
@@ -308,7 +302,7 @@ result of making the arrow pointing from `(0,0)`:math: to
 
 > sPt = p2 (0.20, 0.40)
 > ePt = p2 (2.80, 0.40)
-> dot = circle 0.02 # lwG 0
+> dot = circle 0.02 # lw none
 > sDot = dot # fc blue # moveTo sPt
 > eDot = dot # fc red # moveTo ePt
 > shaft = arc (0 @@ turn) (1/2 @@ turn) # reverseTrail
@@ -351,7 +345,7 @@ the following example. The default gaps are 0.
 > mPt = p2 (1.50, 0.50)
 > ePt = p2 (2.80, 0.50)
 >
-> dot  = circle 0.02 # lwG 0
+> dot  = circle 0.02 # lw none
 > sDot = dot # fc blue  # moveTo sPt
 > mDot = dot # fc green # moveTo mPt
 > eDot = dot # fc red   # moveTo ePt
@@ -359,12 +353,12 @@ the following example. The default gaps are 0.
 >
 > leftArrow  = arrowBetween' (with & arrowHead .~ missile & arrowTail .~ spike'
 >                                  & shaftStyle %~ lwG 0.02
+>                                  & headSize .~ Global 0.15 & tailSize .~ Global 0.1
 >                                  & headGap .~ 0.05) sPt mPt
->            # headSizeG 0.15 # tailSizeG 0.1
 > rightArrow = arrowBetween' (with & arrowHead .~ tri & arrowTail .~ dart'
 >                                  & shaftStyle %~ lwG 0.015
+>                                  & headSize .~ Global 0.25 & tailSize .~ Global 0.2
 >                                  & tailGap .~ 0.1) mPt ePt
->            # headSizeG 0.25 # tailSizeG 0.2
 >
 > example = ( sDot <> mDot <> eDot <> leftArrow <> rightArrow)
 >           # centerXY # pad 1.1
@@ -432,7 +426,7 @@ styles are controlled using `headStyle`, `tailStyle`, and
 
 > dashedArrow = arrowBetween' (with & arrowHead .~ dart & arrowTail .~ spike'
 >                                   & headColor .~ blue & tailColor .~ orange
->                                   & shaftStyle %~ dashing [0.04, 0.02] 0
+>                                   & shaftStyle %~ dashingG [0.04, 0.02] 0
 >                                   . lwG 0.01) sPt ePt
 >
 
@@ -455,7 +449,7 @@ styles are controlled using `headStyle`, `tailStyle`, and
 > example = (sDot <> eDot <> arrow1) # centerXY # pad 1.1
 
 Note that when setting a style, one must generally use the `%~`
-operator in order to apply something like `dashing [0.04, 0.02] 0`
+operator in order to apply something like `dashingG [0.04, 0.02] 0`
 which is a *function* that changes the style.
 
 .. container:: warning
@@ -489,8 +483,7 @@ how we might create a vector field using the `arrowAt'` function.
 >
 > arrows = map arrowAtPoint locs
 >
-> arrowAtPoint (x, y) = arrowAt' opts (p2 (x, y)) (sL *^ vf)
->                       headSizeG hs # alignTL
+> arrowAtPoint (x, y) = arrowAt' opts (p2 (x, y)) (sL *^ vf) # alignTL
 >   where
 >     vf   = vectorField (x, y)
 >     m    = magnitude $ vectorField (x, y)
@@ -500,7 +493,7 @@ how we might create a vector field using the `arrowAt'` function.
 >     hs   = 0.08 * m
 >     sW   = 0.015 * m
 >     sL   = 0.01 + 0.1 * m
->     opts = (with & arrowHead .~ spike & shaftStyle %~ lwG sW)
+>     opts = (with & arrowHead .~ spike & headSize .~ Global hs & shaftStyle %~ lwG sW)
 >
 > field   = position $ zip points arrows
 > example = ( field # translateY 0.05
@@ -530,11 +523,9 @@ specified).
 > ds = (s # named "1") ||| strutX 3 ||| (s # named "2")
 > t  = cubicSpline False (map p2 [(0, 0), (1, 0), (1, 0.2), (2, 0.2)])
 >
-> example = ds # connect' (with & arrowHead .~ dart
->                               & arrowTail .~ dart'
->                               & shaftStyle %~ lwG 0.03
->                               & arrowShaft .~ t) "1" "2"
->              # headSizeG 0.6 # tailSizeG 0.6
+> example = ds # connect' (with & arrowHead .~ dart & headSize .~ Global 0.6
+>                               & tailSize .~ Global 0.6 & arrowTail .~ dart'
+>                               & shaftStyle %~ lwG 0.03 & arrowShaft .~ t) "1" "2"
 
 Connecting points on the trace of diagrams
 ==========================================
@@ -595,31 +586,24 @@ straightforward.
 > shaft' = reverseTrail $ arc (1/2 @@ turn) (0 @@ turn) # scaleX 0.33
 > line = trailFromOffsets [unitX]
 >
-> arrowStyle1 = (with  & arrowHead  .~ spike
+> arrowStyle1 = (with  & arrowHead  .~ spike  & headSize .~ Global 0.3
 >                      & arrowShaft .~ shaft & shaftStyle %~ lwG 0.02)
 > arrowStyle2  = (with  & arrowHead  .~ spike & shaftStyle %~ lwG 0.02
 >                       & arrowShaft .~ shaft' & arrowTail .~ lineTail
 >                       & tailColor  .~ black & widths .~ 0.2)
-> arrowStyle3  = (with  & arrowHead  .~ spike
+> arrowStyle3  = (with  & arrowHead  .~ spike  & headSize .~ Global 0.3
 >                       & arrowShaft .~ line & shaftStyle %~ lwG 0.02)
 >
 > example = states # connectOutside' arrowStyle1 "1" "2"
->                  # headSizeG 0.3
 >                  # connectOutside' arrowStyle3 "1" "4"
->                  # headSizeG 0.3
 >                  # connectPerim' arrowStyle2 "2" "2"
 >                     (4/12 @@ turn) (2/12 @@ turn)
->                  # headSizeG 0.3
 >                  # connectOutside' arrowStyle1 "2" "3"
->                  # headSizeG 0.3
 >                  # connectPerim' arrowStyle2 "3" "3"
 >                     (4/12 @@ turn) (2/12 @@ turn)
->                  # headSizeG 0.3
 >                  # connectOutside' arrowStyle1 "4" "5"
->                  # headSizeG 0.3
 >                  # connectPerim' arrowStyle2 "5" "5"
 >                     (1/12 @@ turn) (-1/12 @@ turn)
->                  # headSizeG 0.3
 
 In the following exercise you can try `connectPerim'` for yourself.
 
@@ -648,10 +632,9 @@ In the following exercise you can try `connectPerim'` for yourself.
     > connectTarget :: (Renderable (Path R2) b)
     >               =>  Angle -> (Diagram b R2 -> Diagram b R2)
     > connectTarget a = connectPerim' (with & arrowHead .~ thorn & shaftStyle %~  lwG 0.01
-    >                                       & arrowShaft .~ shaft
+    >                                       & arrowShaft .~ shaft & headSize .~ Global 0.18
     >                                       & arrowTail .~ thorn'
     >                                      ) "target" "bullseye" a a
-    >                 # headSizeG 0.18
     >
     > angles :: [Angle]
     > angles = map (@@ turn) [0, 1/16 .. 15/16]

@@ -211,7 +211,7 @@ the `circle` diagram with the `(#)` operator:
 > example = circle 1 # fc blue
 >                    # lwG 0.05
 >                    # lc purple
->                    # dashing [0.2,0.05] 0
+>                    # dashingG [0.2,0.05] 0
 
 
 There's actually nothing special about the `(#)` operator: it's just
@@ -229,7 +229,7 @@ Just to illustrate,
 
 ::
 
-> example = dashing [0.2,0.05] 0 . lc purple . lwG 0.05 . fc blue
+> example = dashingG [0.2,0.05] 0 . lc purple . lwG 0.05 . fc blue
 >         $ circle 1
 
 produces exactly the same diagram as before.  So why bother with
@@ -524,7 +524,7 @@ picture:
 
 ::
 
-> opts = with & headGap .~ 0.05 & tailGap .~ 0.05 & headSize .~ 0.15
+> opts = with & headGap .~ 0.05 & tailGap .~ 0.05 & headSize .~ Global 0.15
 >
 > tournament :: Int -> Diagram B R2
 > tournament n = decorateTrail (regPoly n 1) (map mkNode [1..n])
@@ -672,7 +672,7 @@ follows:
 > example = tournament 6
 >   # connectOutside' (with & headGap  .~ 0.07
 >                           & tailGap  .~ 0.07
->                           & headSize .~ 0.2
+>                           & headSize .~ Global 0.2
 >                     )
 >     (1 :: Int) (2 :: Int)
 
@@ -697,7 +697,7 @@ of situation.
 >
 > arrowOpts = with & headGap  .~ 0.07
 >                  & tailGap  .~ 0.07
->                  & headSize .~ 0.2
+>                  & headSize .~ Global 0.2
 >
 > tournament :: Int -> Diagram B R2
 > tournament n = decorateTrail (regPoly n 1) (map node [1..n])

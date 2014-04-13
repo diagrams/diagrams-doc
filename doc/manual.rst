@@ -525,7 +525,7 @@ if you are just reading this manual for the first time!)
 
 > illustrateEnvelope v d
 >   = mconcat
->     [arrowAt' (with & arrowHead .~ tri & headSize .~ 0.2) origin v
+>     [arrowAt' (with & arrowHead .~ tri & headSize .~ Global 0.2) origin v
 >     , origin ~~ b
 >       # lc green # lwG 0.05
 >     , p1 ~~ p2
@@ -754,6 +754,7 @@ represented by an angle measured clockwise from the positive
 >   , angleArrow
 >   , axes
 >   ]
+>   # (<> square 6 # lw none)
 >   # center # pad 1.1
 >
 > axes = (arrowV (6 *^ unitX) # centerX <> arrowV (6 *^ unitY) # centerY)
@@ -765,7 +766,7 @@ represented by an angle measured clockwise from the positive
 > angleArrow = arrowBetween' (with & arrowShaft .~ arc zeroV theDir)
 >   (origin .+^ (1 *^ unitX))
 >   (origin .+^ (theV # normalized))
->   # dashing [0.05,0.05] 0
+>   # dashingG [0.05,0.05] 0
 >   # lc green
 
 Primitive shapes
@@ -993,7 +994,7 @@ which there are two possibilities:
   >                     (regPoly 7 1)
   >                   # lwG 0
   >                   # showLabels
-  >                   # fontSize 0.6
+  >                   # fontSize (Global 0.6)
   >              <> star (StarFun f) (regPoly 7 1)
   >                   # stroke # lwG 0.05 # lc red
   > example       = center . hcat' (with & sep .~ 0.5) $ map visualize funs
@@ -1348,7 +1349,7 @@ otherwise.
 
 > example = (square 1
 >       ||| square 1 # scale 2
->       ||| circle 1 # scaleX 3) # lwG 0.03 # dashing [0.1,0.1] 0
+>       ||| circle 1 # scaleX 3) # lwG 0.03 # dashingG [0.1,0.1] 0
 
 However, occasionally you *do* want subsequent transformations to
 affect line width or dashing style.  The `freeze` function is supplied for this
@@ -1361,7 +1362,7 @@ transformations will affect the line width and dashing style.
 
 > example = (square 1
 >       ||| square 1 # scale 2
->       ||| circle 1 # scaleX 3) # lwG 0.03 # dashing [0.1,0.1] 0
+>       ||| circle 1 # scaleX 3) # lwG 0.03 # dashingG [0.1,0.1] 0
 
 Note that line width does not affect the envelope of diagrams at all.
 To stroke a line "internally", turning it into a diagrams path
@@ -1398,7 +1399,7 @@ for three aspects of line drawing:
 >             [ lineCap LineCapButt   . lineJoin LineJoinMiter
 >             , lineCap LineCapRound  . lineJoin LineJoinRound
 >             , lineCap LineCapSquare . lineJoin LineJoinBevel
->             , dashing [0.1,0.2,0.3,0.1] 0
+>             , dashingG [0.1,0.2,0.3,0.1] 0
 >             ]
 
 The ``HasStyle`` class
@@ -1433,7 +1434,7 @@ applying the desired attributes:
 
 ::
 
-> foo = myFun (mempty # fontSize 10 # lwG 0 # fc green)
+> foo = myFun (mempty # fontSize (Global 10) # lwG 0 # fc green)
 
 If the type `T` is an instance of `HasStyle`, then `[T]` is also.
 This means that you can apply styles uniformly to entire lists of
@@ -1855,7 +1856,7 @@ __ http://en.wikipedia.org/wiki/Bézier_curve
 >     <> l2
 >     <> fromSegments [bézier3 c1 c2 x2]
 >   where
->     dashed  = dashing [0.1,0.1] 0
+>     dashed  = dashingG [0.1,0.1] 0
 >     endpt   = circle 0.05 # fc red  # lwG 0
 >     ctrlpt  = circle 0.05 # fc blue # lwG 0
 >     l1      = fromOffsets [c1] # dashed
@@ -3042,20 +3043,20 @@ function.
 > shaft3 = arc (0 @@ turn) (1/6 @@ turn)
 >
 > example = d
->    # connect' (with & arrowTail .~ quill& tailSize .~ 1.5
+>    # connect' (with & arrowTail .~ quill & tailSize .~ Global 1.5
 >                     & tailColor .~ orange & headColor .~ orange
->                     & arrowHead .~ spike & headSize  .~ 1.5
+>                     & arrowHead .~ spike & headSize  .~ Global 1.5
 >                     & shaftStyle %~ lwG 0.3 ) "1" "2"
->    # connect' (with & arrowTail .~ thorn'& tailSize .~ 1.5
->                     & arrowHead .~ thorn & headSize .~ 1.5
+>    # connect' (with & arrowTail .~ thorn'& tailSize .~ Global 1.5
+>                     & arrowHead .~ thorn & headSize .~ Global 1.5
 >                     & arrowShaft .~ shaft1 & shaftStyle %~ lwG 0.15 ) "3" "4"
->    # connect' (with & arrowTail .~ block & tailSize .~ 1& tailGap .~ 0.4
->                     & arrowHead .~ missile & headSize .~ 1.5& headGap .~ 0.4
+>    # connect' (with & arrowTail .~ block & tailSize .~ Global 1 & tailGap .~ 0.4
+>                     & arrowHead .~ missile & headSize .~ Global 1.5 & headGap .~ 0.4
 >                     & arrowShaft .~ shaft2
 >                     & headColor .~ blue & tailColor .~ blue
 >                     & shaftStyle %~ lwG 0.15 . lc blue ) "5" "6"
 >    # connect' (with & arrowShaft .~ shaft3
->                     & arrowHead .~ tri & headSize .~ 1.5
+>                     & arrowHead .~ tri & headSize .~ Global 1.5
 >                     & headStyle %~ fc red . opacity 0.5
 >                     & shaftStyle %~ lwG 0.2 . lc black . opacity 0.5 ) "7" "8"
 
@@ -3156,7 +3157,7 @@ generally, `fontWeight`), `italic`, and `oblique` (or, more generally,
 
 ::
 
-> text' s t = text t # fontSize s <> strutY (s * 1.3)
+> text' s t = text t # fontSize (Global s) <> strutY (s * 1.3)
 > example = center $
 >       text' 10 "Hello" # italic
 >   === text' 5 "there"  # bold # font "freeserif"
@@ -3200,7 +3201,11 @@ and specify a file name and size for the image:
 
 > no = (circle 1 <> hrule 2 # rotateBy (1/8))
 >    # lwG 0.2 # lc red
-> example = no <> image "doc/static/phone.png" 1.5 1.5
+> example = do
+>   res <- loadImageExt "doc/static/phone.png"
+>   return $ case res of
+>     Left err    -> mempty
+>     Right phone -> no <> image phone # sized (Dims 1.5 1.5)
 
 Unfortunately, you must specify both a width and a height for each
 image.  You might hope to be able to specify just a width or just a
@@ -3448,7 +3453,7 @@ Normally, a trace is accessed using one of the four functions
 
   > import Data.Maybe (fromMaybe)
   >
-  > drawV v = arrowAt' (with & headSize .~ 0.2) origin v
+  > drawV v = arrowAt' (with & headSize .~ Global 0.2) origin v
   >
   > drawTraceV v d
   >   = lc green $

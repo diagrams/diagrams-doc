@@ -54,7 +54,7 @@ a *magnitude* (length) and a *direction* (angle).
 > vPic v = drawV v <> xComponent <> yComponent <> theta
 >   where
 >     component u = fromOffsets [project u v]
->                 # dashing [0.05,0.05] 0
+>                 # dashingG [0.05,0.05] 0
 >     xComponent = component unitX
 >     yComponent = component unitY # translate (project unitX v)
 >     theta = text' 0.5 "θ" # translate (0.7 ^& 0.2)
@@ -340,7 +340,7 @@ __ http://en.wikipedia.org/wiki/Dot_product
   >   [ drawV p # lc green # lwG 0.03
   >   , drawV u # lc blue
   >   , drawV v # lc red
-  >   , drawV (p ^-^ v) # translate v # dashing [0.1,0.1] 0
+  >   , drawV (p ^-^ v) # translate v # dashingG [0.1,0.1] 0
   >   ]
 
 .. container:: exercises
@@ -374,8 +374,8 @@ __ http://en.wikipedia.org/wiki/Dot_product
      >   = mconcat
      >     [ drawV v1 # lc red
      >     , drawV v2 # lc blue
-     >	   , drawV v1 # lc red  # dashing [0.1,0.1] 0 # translate v2
-     >     , drawV v2 # lc blue # dashing [0.1,0.1] 0 # translate v1
+     >	   , drawV v1 # lc red  # dashingG [0.1,0.1] 0 # translate v2
+     >     , drawV v2 # lc blue # dashingG [0.1,0.1] 0 # translate v1
      >     , drawV (v1 ^+^ v2) # lc purple
      >     ]
      >
