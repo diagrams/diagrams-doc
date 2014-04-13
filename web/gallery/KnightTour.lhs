@@ -64,7 +64,7 @@ To draw a knight on a given square, we load an image of a knight, size
 it to fit a square, and translate it appropriately:
 
 > knight sq
->   = image "../../doc/static/white-knight.png" 1 1
+>   = image (uncheckedImageRef "../../doc/static/white-knight.png" 1 1)
 >   # moveTo (squareToPoint sq)
 
 Finally, given a tour, we turn it into a path using `fromVertices`,

@@ -16,8 +16,6 @@ width: 400
 The standard infinite list of Fibonacci numbers.
 
 > fibs = 0 : 1 : zipWith (+) fibs (tail fibs)
->
-> thick = 0.15
 
 Create a grid by gluing together a bunch of squares.
 

@@ -114,7 +114,7 @@ right.
 >     let textBits = mconcat [ text' t # alignR # moveTo ((-0.2)^&(y*h)) | (y,t) <- pairs ]
 >         tickBits =    mconcat [ fromVertices [ 0^&(y*h), 0.1    ^&(y*h) ] | (y,_) <- pairs ]
 >                    <> mconcat [ fromVertices [ w^&(y*h), (w-0.1)^&(y*h) ] | (y,_) <- pairs ]
->                    <> mconcat [ fromVertices [ 0^&(y*h), w^&(y*h)       ] # lc gray # dashing [ 0.1, 0.1 ] 0 | (y,_) <- pairs ]
+>                    <> mconcat [ fromVertices [ 0^&(y*h), w^&(y*h)       ] # lc gray # dashingG [ 0.1, 0.1 ] 0 | (y,_) <- pairs ]
 >     in textBits <> tickBits
 
 (Similar for the horizontal axis.)
@@ -124,7 +124,7 @@ right.
 >     let textBits = mconcat [ text' t # moveTo ((x*w)^&(-0.3)) | (x,t) <- pairs ]
 >         tickBits =    mconcat [ fromVertices [ (x*w)^&0, (x*w)^&0.1     ] | (x,_) <- pairs ]
 >                    <> mconcat [ fromVertices [ (x*w)^&h, (x*w)^&(h-0.1) ] | (x,_) <- pairs ]
->                    <> mconcat [ fromVertices [ (x*w)^&0, (x*w)^&h       ] # lc gray # dashing [ 0.1, 0.1 ] 0 | (x,_) <- pairs ]
+>                    <> mconcat [ fromVertices [ (x*w)^&0, (x*w)^&h       ] # lc gray # dashingG [ 0.1, 0.1 ] 0 | (x,_) <- pairs ]
 >     in textBits <> tickBits
 
 A dot style is a shape (any diagram) and a boolean indicating whether
@@ -176,5 +176,5 @@ The line styles.
 
 > lineStyles :: [Dia -> Dia]
 > lineStyles = cycle . map (. lwG 0.03) $
->                [ id, dashing [0.1,0.1] 0, dashing [0.02,0.02] 0
->                , dashing [0.1,0.1,0.03,0.1] 0, dashing [0.1,0.1,0.02,0.02,0.02,0.1] 0 ]
+>                [ id, dashingG [0.1,0.1] 0, dashingG [0.02,0.02] 0
+>                , dashingG [0.1,0.1,0.03,0.1] 0, dashingG [0.1,0.1,0.02,0.02,0.02,0.1] 0 ]

@@ -88,7 +88,7 @@ diagram "b".
 > drawLines :: Diagram B R2 -> Diagram B R2
 > drawLines cube = foldr (.) id (map (uncurry
 >                        (connectOutside' (with
->                        & headSize .~ 0.8
+>                        & headSize .~ Global 0.8
 >                        & shaftStyle %~ lwG 0.04))) pairs) cube
 >   where pairs = [ ("perm","permgroup")
 >                 , ("perm","sym")
