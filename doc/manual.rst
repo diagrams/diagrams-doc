@@ -527,9 +527,9 @@ if you are just reading this manual for the first time!)
 >   = mconcat
 >     [arrowAt' (with & arrowHead .~ tri & headSize .~ Global 0.2) origin v
 >     , origin ~~ b
->       # lc green # lwG 0.05
+>       # lc green # lw veryThick
 >     , p1 ~~ p2
->       # lc red # lwG 0.02
+>       # lc red
 >     ]
 >     where
 >       b  = envelopeP v d
@@ -1193,8 +1193,7 @@ possibilities.
 ::
 
 > example = cat' (r2 (2,-1)) (with & catMethod .~ Distrib & sep .~ 2 ) (map p [3..8])
->   where p n = regPoly n 1 # lwG 0.03
->                           # scale (1 + fromIntegral n/4)
+>   where p n = regPoly n 1 # scale (1 + fromIntegral n/4)
 >                           # showOrigin
 
 For convenience, `Diagrams.TwoD.Combinators`:mod: also provides `hcat`, `hcat'`,
@@ -1213,7 +1212,7 @@ course, `appends` is implemented in terms of `juxtapose` (see
 
 ::
 
-> c        = circle 1 # lwG 0.03
+> c        = circle 1
 > dirs     = iterate (rotateBy (1/7)) unitX
 > cdirs    = zip dirs (replicate 7 c)
 > example1 = appends c cdirs
@@ -1392,7 +1391,7 @@ for three aspects of line drawing:
 
 ::
 
-> path = fromVertices (map p2 [(0,0), (1,0.3), (2,0), (2.2,0.3)]) # lwG 0.1
+> path = fromVertices (map p2 [(0,0), (1,0.3), (2,0), (2.2,0.3)]) # lwO 10
 > example = center . vcat' (with & sep .~ 0.1 )
 >           $ map (path #)
 >             [ lineCap LineCapButt   . lineJoin LineJoinMiter
@@ -1433,7 +1432,7 @@ applying the desired attributes:
 
 ::
 
-> foo = myFun (mempty # fontSize (Global 10) # lwG 0 # fc green)
+> foo = myFun (mempty # fontSize (Global 10) # lw none # fc green)
 
 If the type `T` is an instance of `HasStyle`, then `[T]` is also.
 This means that you can apply styles uniformly to entire lists of
@@ -1542,7 +1541,7 @@ __ `Angles`_
 
 ::
 
-> eff = text "F" <> square 1 # lwG 0
+> eff = text "F" <> square 1 # lw none
 > rs  = map rotateBy [1/7, 2/7 .. 6/7]
 > example = hcat . map (eff #) $ rs
 
@@ -1561,7 +1560,7 @@ results in a reflection (in the case of `scaleX` and `scaleY`) or a
 
 ::
 
-> eff = text "F" <> square 1 # lwG 0
+> eff = text "F" <> square 1 # lw none
 > ts  = [ scale (1/2), id, scale 2,    scaleX 2,    scaleY 2
 >       ,                  scale (-1), scaleX (-1), scaleY (-1)
 >       ]
@@ -1583,7 +1582,7 @@ To reflect in some line other than an axis, use `reflectAbout`.
 
 ::
 
-> eff = text "F" <> square 1 # lwG 0
+> eff = text "F" <> square 1 # lw none
 > example = eff
 >        <> reflectAbout (p2 (0.2,0.2)) (rotateBy (-1/10) unitX) eff
 
@@ -1613,7 +1612,7 @@ thus:
 
 ::
 
-> eff = text "F" <> square 1 # lwG 0
+> eff = text "F" <> square 1 # lw none
 > example = (scaleX 2 `under` rotation (-1/8 @@ turn)) eff
 
 The letter F is first rotated so that the desired scaling axis lies
@@ -1657,7 +1656,7 @@ projections along the principal axes in 2 dimensions.
 ::
 
 > sq = unitSquare # translate (5 ^& 3) :: Path R2
-> marks = repeat . lwG 0 $ circle 0.02
+> marks = repeat . lw none $ circle 0.02
 > dots c p = position $ zip (concat $ pathVertices p) (marks # fc c)
 > example = stroke sq <> dots blue sq <> dots green (deform perspectiveX1 sq)
 
@@ -1774,14 +1773,14 @@ polygon):
 >
 > concave = polygon ( with & polyType .~ PolyPolar [a, b, b, b]
 >                   [ 0.25,1,1,1,1] & polyOrient .~ NoOrient )
->                   # fc blue # lwG 0
+>                   # fc blue # lw none
 >   where
 >     a = 1/8 @@ turn
 >     b = 1/4 @@ turn
 >
 > convex = polygon (with & polyType .~ PolyPolar [a,b] [0.25, 1, 1]
 >                        & polyOrient .~ NoOrient)
->                        # fc orange # lwG 0
+>                        # fc orange # lw none
 >   where
 >     a = 1/8 @@ turn
 >     b = 3/4 @@ turn
@@ -1856,8 +1855,8 @@ __ http://en.wikipedia.org/wiki/Bézier_curve
 >     <> fromSegments [bézier3 c1 c2 x2]
 >   where
 >     dashed  = dashingG [0.1,0.1] 0
->     endpt   = circle 0.05 # fc red  # lwG 0
->     ctrlpt  = circle 0.05 # fc blue # lwG 0
+>     endpt   = circle 0.05 # fc red  # lw none
+>     ctrlpt  = circle 0.05 # fc blue # lw none
 >     l1      = fromOffsets [c1] # dashed
 >     l2      = fromOffsets [x2 ^-^ c2] # translate c2 # dashed
 >
@@ -1980,7 +1979,7 @@ also analogous functions `strokeLine` and `strokeTrail`.)
 > burst :: Trail' Loop R2
 > burst = glueLine . mconcat . take 13 . iterate (rotateBy (-1/13)) $ spoke
 >
-> example = strokeLoop burst # fc yellow # lwG 0.1 # lc orange
+> example = strokeLoop burst # fc yellow # lw thick # lc orange
 
 For convenience, there is also a monoid instance for `Trail` based on
 the instance for lines: any loops are first cut with `cutLine`, and
@@ -2000,7 +1999,7 @@ To construct a line, loop, or trail, you can use one of the following:
 
   > theLine = fromOffsets (iterateN 5 (rotateBy (1/20)) unitX)
   > example = theLine # strokeLine
-  >         # lc blue # lwG 0.05 # center # pad 1.1
+  >         # lc blue # lw thick # center # pad 1.1
 
 * `fromVertices` takes a list of vertices, generating linear segments
   between them.
@@ -2025,7 +2024,7 @@ To construct a line, loop, or trail, you can use one of the following:
   > theLine = cubicSpline False vertices
   > example = mconcat (iterateN 6 (rotateBy (-1/6)) theLine)
   >         # glueLine # strokeLoop
-  >         # lc green # lwG 0.05 # fc aqua # center # pad 1.1
+  >         # lc green # lw veryThick # fc aqua # center # pad 1.1
 
 * `fromSegments` takes an explicit list of `Segment`\s, which can
   occasionally be useful if, say, you want to generate some Bézier
@@ -2060,7 +2059,7 @@ the edges individually:
 >
 > colors = cycle [aqua, orange, deeppink, blueviolet, crimson, darkgreen]
 >
-> example = lwG 0.1
+> example = lw thick
 >         . mconcat
 >         . zipWith lc colors
 >         . map strokeLocTrail . explodeTrail
@@ -2283,7 +2282,7 @@ corners, the offset will be disconnected!
 >
 > example :: Diagram B R2
 > example = (p # strokeTrail <> offsetTrailNaive 0.1 0.3 p # stroke # lc blue)
->         # lwG 0.01
+>         # lw thick
 >   where p = fromVertices . map p2 $ [(0,0), (1,0.3), (2,0), (2.2,0.3)]
 
 First let's consider the outside corner where the adjacent offset segments do
@@ -2305,7 +2304,7 @@ offset segments in other sensible ways.  For the choice of join we have the
 >
 > example :: Diagram B R2
 > example = (p # strokeTrail <> o # strokeLocTrail # lc blue)
->         # lwG 0.01
+>         # lw thick
 >   where
 >     p = fromVertices . map p2 $ [(0,0), (1,0.3), (2,0), (2.2,0.3)]
 >     o = offsetTrail' (with & offsetJoin .~ LineJoinRound) 0.3 p
@@ -2413,7 +2412,7 @@ of loops, one inside and one outside.  To express this we need a `Path`.
 > import Diagrams.TwoD.Offset
 >
 > example :: Diagram B R2
-> example = (p # strokeTrail # lwG 0.02 # lc white <> e # stroke # lwG 0 # fc blue)
+> example = (p # strokeTrail # lw veryThick # lc white <> e # stroke # lw none # fc blue)
 >   where
 >     p = fromVertices . map p2 $ [(0,0), (1,0.3), (2,0), (2.2,0.3)]
 >     e = expandTrail' opts 0.3 p
@@ -2435,8 +2434,8 @@ and plan to support custom styles in future releases.
 > example :: Diagram B R2
 > example = hcat' (with & sep .~ 0.5) $ map f [LineCapButt, LineCapRound, LineCapSquare]
 >   where
->     f s =  p # strokeTrail # lwG 0.02 # lc white
->         <> expandTrail' (opts s) 0.3 p # stroke # lwG 0 # fc blue
+>     f s =  p # strokeTrail # lw veryThick # lc white
+>         <> expandTrail' (opts s) 0.3 p # stroke # lw none # fc blue
 >     p = fromVertices . map p2 $ [(0,0), (1,0), (0.5,0.7)]
 >     opts s = with & expandJoin .~ LineJoinRound
 >                   & expandCap  .~ s
@@ -2513,7 +2512,7 @@ instances of `TrailLike`:
 >             . mconcat . take 5 . iterate (rotateBy (1/5))
 >             . onLineSegments init
 >             $ s {- 4 -}
-> example = (blueSquares <> aster <> paths) # lwG 0.05
+> example = (blueSquares <> aster <> paths)
 
 Exercise: figure out which occurrence of `s` has which type. (Answers
 below.)
@@ -2730,9 +2729,9 @@ closed.
 ::
 
 > pts = map p2 [(0,0), (2,3), (5,-2), (-4,1), (0,3)]
-> dot = circle 0.2 # fc blue # lwG 0
+> dot = circle 0.2 # fc blue # lw none
 > mkPath closed = position (zip pts (repeat dot))
->              <> cubicSpline closed pts # lwG 0.05
+>              <> cubicSpline closed pts
 > example = mkPath False ||| strutX 2 ||| mkPath True
 
 For more precise control over the generation of curved paths, see the
@@ -2855,7 +2854,7 @@ clipping path will be drawn.
 
 > example = square 3
 >         # fc green
->         # lwG 0.05
+>         # lw veryThick
 >         # clipBy (square 3.2 # rotateBy (1/10))
 
 Several functions are available, depending on what envelope and trace
@@ -3026,7 +3025,7 @@ function.
 
 ::
 
-> c = circle 2 # fc lightgray # lwG 0 # showOrigin
+> c = circle 2 # fc lightgray # lw none # showOrigin
 >
 > x |-| y = x ||| strutX 3 ||| y
 >
@@ -3178,7 +3177,7 @@ its own `textSVG` function which can be used to convert text into a
 ::
 
 > text' d s = (stroke $ textSVG' (TextOpts s lin2 INSIDE_H KERN False d d))
->           # lwG 0
+>           # lw none
 >
 > example = text' 5 "Hello" # fc blue ||| text' 3 "world" # fc green
 
@@ -3889,7 +3888,7 @@ the ellipse red and points outside it blue.
 >          ]
 >
 > mkPoint p = (p, circle 0.3
->           	  # lwG 0
+>           	  # lw none
 >           	  # fc (case sample c p of
 >           	          Any True  -> red
 >           	          Any False -> blue
@@ -4441,7 +4440,7 @@ viewpoint.  Let's use an invisible square:
 
 ::
 
-> (translateX <$> ui <*> circle 2) <> (pure (square 6 # lwG 0))
+> (translateX <$> ui <*> circle 2) <> (pure (square 6 # lw none))
 
 Notice that we composed two animations using `(<>)`, which does
 exactly what you would think: superimposes them at every instant in time.
