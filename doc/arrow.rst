@@ -371,7 +371,11 @@ the `headGap` / `tailGap`.
 A useful pattern is to use `lineTail` together with `widths` as in the
 following example:
 
-.. class:: dia-lhs
+.. container:: todo
+
+  Update me to avoid using `widths`! (And switch back to `dia-lhs`.)
+
+.. class:: lhs
 
 ::
 
@@ -553,7 +557,11 @@ Here is an example of a finite state automata that accepts real numbers.
 The code is a bit longer than what we have seen so far, but still very
 straightforward.
 
-.. class:: dia-lhs
+.. container:: todo
+
+  Update me to avoid using `widths`! (And switch back to `dia-lhs`.)
+
+.. class:: lhs
 
 ::
 
