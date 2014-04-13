@@ -754,15 +754,14 @@ represented by an angle measured clockwise from the positive
 >   , angleArrow
 >   , axes
 >   ]
->   # (<> square 6 # lw none)
->   # center # pad 1.1
+>   # (<> rect 12 6 # alignB # lw none)
+>   # center # frame 1
 >
 > axes = (arrowV (6 *^ unitX) # centerX <> arrowV (6 *^ unitY) # centerY)
 > theDir = 200 @@ deg
 > theV = 3 *^ fromDirection theDir
 > exampleVector = arrowV theV
 >   # lc blue
->   # lwG 0.03
 > angleArrow = arrowBetween' (with & arrowShaft .~ arc zeroV theDir)
 >   (origin .+^ (1 *^ unitX))
 >   (origin .+^ (theV # normalized))
@@ -928,7 +927,7 @@ optional parameters that control the generated polygon:
 >                        & polyOrient .~ OrientV )
 > poly2 = polygon ( with & polyType  .~ PolyPolar (repeat (1/40 @@ turn))
 >                                                 (take 40 $ cycle [2,7,4,6]) )
-> example = (poly1 ||| strutX 1 ||| poly2) # lwG 0.05
+> example = (poly1 ||| strutX 1 ||| poly2)
 
 Notice the idiom of using `with` to construct a record of default
 options and selectively overriding particular options by name. `with`
@@ -992,11 +991,11 @@ which there are two possibilities:
   > funs          = map (flip (^)) [2..6]
   > visualize f	  = stroke' (with & vertexNames .~ [[0 .. 6 :: Int]] )
   >                     (regPoly 7 1)
-  >                   # lwG 0
+  >                   # lw none
   >                   # showLabels
   >                   # fontSize (Global 0.6)
   >              <> star (StarFun f) (regPoly 7 1)
-  >                   # stroke # lwG 0.05 # lc red
+  >                   # stroke # lw thick # lc red
   > example       = center . hcat' (with & sep .~ 0.5) $ map visualize funs
 
 You may notice that all the above examples need to call `stroke` (or
@@ -1179,7 +1178,7 @@ local origin of the final result.
 ::
 
 > example = cat (r2 (2, -1)) (map p [3..8]) # showOrigin
->   where p n = regPoly n 1 # lwG 0.03
+>   where p n = regPoly n 1
 
 Semantically, `cat v === foldr (beside v) mempty`, although the actual
 implementation of `cat` uses a more efficient balanced fold.
@@ -1349,7 +1348,7 @@ otherwise.
 
 > example = (square 1
 >       ||| square 1 # scale 2
->       ||| circle 1 # scaleX 3) # lwG 0.03 # dashingG [0.1,0.1] 0
+>       ||| circle 1 # scaleX 3) # dashingG [0.1,0.1] 0
 
 However, occasionally you *do* want subsequent transformations to
 affect line width or dashing style.  The `freeze` function is supplied for this
@@ -1362,7 +1361,7 @@ transformations will affect the line width and dashing style.
 
 > example = (square 1
 >       ||| square 1 # scale 2
->       ||| circle 1 # scaleX 3) # lwG 0.03 # dashingG [0.1,0.1] 0
+>       ||| circle 1 # scaleX 3) # dashingG [0.1,0.1] 0
 
 Note that line width does not affect the envelope of diagrams at all.
 To stroke a line "internally", turning it into a diagrams path
