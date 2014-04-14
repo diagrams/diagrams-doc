@@ -525,7 +525,7 @@ if you are just reading this manual for the first time!)
 
 > illustrateEnvelope v d
 >   = mconcat
->     [arrowAt' (with & arrowHead .~ tri & headSize .~ Global 0.2) origin v
+>     [arrowAt' (with & arrowHead .~ tri) origin v
 >     , origin ~~ b
 >       # lc green # lw veryThick
 >     , p1 ~~ p2
@@ -993,7 +993,7 @@ which there are two possibilities:
   >                     (regPoly 7 1)
   >                   # lw none
   >                   # showLabels
-  >                   # fontSize (Global 0.6)
+  >                   # fontSize (Local 0.6)
   >              <> star (StarFun f) (regPoly 7 1)
   >                   # stroke # lw thick # lc red
   > example       = center . hcat' (with & sep .~ 0.5) $ map visualize funs
@@ -1318,6 +1318,10 @@ color.
 Line width, dashing, and freezing
 +++++++++++++++++++++++++++++++++
 
+.. container:: todo
+
+   Fix me!!
+
 To alter the *width* of the lines used to stroke paths, use `lw`. The
 default line width is (arbitrarily) `0.01`.  You can also set the line
 width to zero if you do not want a path stroked at all.
@@ -1345,22 +1349,12 @@ otherwise.
 
 ::
 
-> example = (square 1
->       ||| square 1 # scale 2
->       ||| circle 1 # scaleX 3) # dashingG [0.1,0.1] 0
-
-However, occasionally you *do* want subsequent transformations to
-affect line width or dashing style.  The `freeze` function is supplied for this
-purpose.  Once `freeze` has been applied to a diagram, any subsequent
-transformations will affect the line width and dashing style.
-
-.. class:: dia-lhs
-
-::
-
-> example = (square 1
->       ||| square 1 # scale 2
->       ||| circle 1 # scaleX 3) # dashingG [0.1,0.1] 0
+> example = hcat
+>   [ square 1
+>   , square 1 # scale 2
+>   , circle 1 # scaleX 3
+>   ]
+>   # dashingN [0.03,0.03] 0
 
 Note that line width does not affect the envelope of diagrams at all.
 To stroke a line "internally", turning it into a diagrams path
@@ -1397,7 +1391,7 @@ for three aspects of line drawing:
 >             [ lineCap LineCapButt   . lineJoin LineJoinMiter
 >             , lineCap LineCapRound  . lineJoin LineJoinRound
 >             , lineCap LineCapSquare . lineJoin LineJoinBevel
->             , dashingG [0.1,0.2,0.3,0.1] 0
+>             , dashingN [0.03,0.06,0.09,0.03] 0
 >             ]
 
 The ``HasStyle`` class
@@ -1432,7 +1426,7 @@ applying the desired attributes:
 
 ::
 
-> foo = myFun (mempty # fontSize (Global 10) # lw none # fc green)
+> foo = myFun (mempty # fontSize (Local 2) # lw none # fc green)
 
 If the type `T` is an instance of `HasStyle`, then `[T]` is also.
 This means that you can apply styles uniformly to entire lists of
@@ -1854,7 +1848,7 @@ __ http://en.wikipedia.org/wiki/Bézier_curve
 >     <> l2
 >     <> fromSegments [bézier3 c1 c2 x2]
 >   where
->     dashed  = dashingG [0.1,0.1] 0
+>     dashed  = dashingN [0.03,0.03] 0
 >     endpt   = circle 0.05 # fc red  # lw none
 >     ctrlpt  = circle 0.05 # fc blue # lw none
 >     l1      = fromOffsets [c1] # dashed
@@ -3041,20 +3035,20 @@ function.
 > shaft3 = arc (0 @@ turn) (1/6 @@ turn)
 >
 > example = d
->    # connect' (with & arrowTail .~ quill & tailSize .~ Global 1.5
+>    # connect' (with & arrowTail .~ quill & tailSize .~ large
 >                     & tailColor .~ orange & headColor .~ orange
->                     & arrowHead .~ spike & headSize  .~ Global 1.5
+>                     & arrowHead .~ spike & headSize  .~ large
 >                     & shaftStyle %~ lw ultraThick ) "1" "2"
->    # connect' (with & arrowTail .~ thorn'& tailSize .~ Global 1.5
->                     & arrowHead .~ thorn & headSize .~ Global 1.5
+>    # connect' (with & arrowTail .~ thorn' & tailSize .~ large
+>                     & arrowHead .~ thorn  & headSize .~ large
 >                     & arrowShaft .~ shaft1 & shaftStyle %~ lw veryThick ) "3" "4"
->    # connect' (with & arrowTail .~ block & tailSize .~ Global 1 & tailGap .~ 0.4
->                     & arrowHead .~ missile & headSize .~ Global 1.5 & headGap .~ 0.4
+>    # connect' (with & arrowTail .~ block & tailGap .~ 0.4
+>                     & arrowHead .~ missile & headSize .~ large & headGap .~ 0.4
 >                     & arrowShaft .~ shaft2
 >                     & headColor .~ blue & tailColor .~ blue
 >                     & shaftStyle %~ lw veryThick . lc blue ) "5" "6"
 >    # connect' (with & arrowShaft .~ shaft3
->                     & arrowHead .~ tri & headSize .~ Global 1.5
+>                     & arrowHead .~ tri & headSize .~ large
 >                     & headStyle %~ fc red . opacity 0.5
 >                     & shaftStyle %~ lw veryThick . lc black . opacity 0.5 ) "7" "8"
 
@@ -3155,7 +3149,7 @@ generally, `fontWeight`), `italic`, and `oblique` (or, more generally,
 
 ::
 
-> text' s t = text t # fontSize (Global s) <> strutY (s * 1.3)
+> text' s t = text t # fontSize (Local s) <> strutY (s * 1.3)
 > example = center $
 >       text' 10 "Hello" # italic
 >   === text' 5 "there"  # bold # font "freeserif"
