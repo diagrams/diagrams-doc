@@ -30,10 +30,10 @@ markings on, and a fifth which is blank, all $16 \times 16$. The actual
 markings are defined at the end of the file.
 
 > blank :: Diagram B R2
-> blank = lwG 0 $ square 16
+> blank = lw none $ square 16
 
 > makeTile :: [[P2]] -> Diagram B R2
-> makeTile = showOrigin . lwG 0.05 . centerXY . mconcat . map fromVertices where
+> makeTile = showOrigin . lw thin . centerXY . mconcat . map fromVertices where
 
 > markingsP, markingsQ, markingsR, markingsS :: [[P2]]
 

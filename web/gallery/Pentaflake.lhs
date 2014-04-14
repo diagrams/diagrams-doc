@@ -13,7 +13,7 @@ width: 400
 
 A $0$-pentaflake is just a regular pentagon:
 
-> pentaflake' 0 = regPoly 5 1 # lwG 0
+> pentaflake' 0 = regPoly 5 1 # lw none
 
 An [$n$-pentaflake](http://mathworld.wolfram.com/Pentaflake.html)
 is an $(n-1)$-pentaflake surrounded by five more.  The `appends`

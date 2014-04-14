@@ -183,7 +183,7 @@ Actual drawing
 >     )
 
 > diagram eps ta tb
->     = fc (sRGB24read "#DB4105") $ lwG 0 $ pad 1.1
+>     = fc (sRGB24read "#DB4105") $ lw none $ pad 1.1
 >     $ strokeT
 >     $ closeTrail
 >     $ fromVertices [origin .+^ r2 (x,y) | x :+ y <- limitPoints eps a b]

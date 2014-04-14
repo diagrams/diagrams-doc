@@ -32,8 +32,8 @@ its disk number, using a color selected from the `colors` list.
 > renderDisk :: Disk -> Dia
 > renderDisk n = rect (fromIntegral n + 2) 1
 >                # lc black
+>                # lw thin
 >                # fc (colors !! n)
->                # lwG 0.1
 
 To render a stack of disks, just stack their renderings on top of a
 drawing of a peg.  We use `alignB` to place stack of disks at the
@@ -44,7 +44,7 @@ bottom of the peg.
 >   where disks = (vcat . map renderDisk $ s)
 >                 # alignB
 >         post  = rect 0.8 6
->                 # lwG 0
+>                 # lw none
 >                 # fc black
 >                 # alignB
 

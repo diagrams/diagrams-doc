@@ -25,7 +25,7 @@ The n florets of the sunflower are positioned at radii proportional to the squar
 The color of each floret is based on it's radius.
 
 > floret :: Double -> Diagram B R2
-> floret r = circle 0.6 # lwG 0 # fc (colors !! n)
+> floret r = circle 0.6 # lw none # fc (colors !! n)
 >   where
 >     n = floor (1.4 * sqrt r) `mod` 10
 >     colors = black : (reverse $ brewerSet YlOrBr 9)
