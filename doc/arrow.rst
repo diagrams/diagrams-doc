@@ -23,37 +23,37 @@ options used to make arrows.
 ::
 
 > example = d # connect' (with & arrowHead .~ dart & headSize .~ Global 1 & arrowTail .~ quill
->                              & tailSize .~ Global 1 & shaftStyle %~ lwG 0.1 . lc black & arrowShaft .~ s
+>                              & tailSize .~ Global 1 & shaftStyle %~ lw thick . lc black & arrowShaft .~ s
 >                              & tailGap .~ 0.1 & headGap .~ 0.1
 >                              & headColor .~ blue & tailColor .~ orange)
 >                              "1" "2"
 >             # connect' (with & arrowHead .~ missile & headSize .~ Global 0.8 & arrowTail .~ missile'
->                              & tailSize .~ Global 0.8 & shaftStyle %~ lwG 0.05 & arrowShaft .~ s1
+>                              & tailSize .~ Global 0.8 & arrowShaft .~ s1
 >                              & headGap .~ 0 & tailGap .~ 0.1)
 >                              "4" "3"
 >             # connect' (with & arrowHead .~ thorn & headSize .~ Global 0.8 & arrowShaft .~ a1
->                              & arrowTail .~ noTail & shaftStyle %~ lwG 0.03
+>                              & arrowTail .~ noTail
 >                              & tailGap .~ 1 & headGap .~ 1 )
 >                              "1" "6"
 >             # connect' (with & arrowHead .~ dart & tailSize .~ Global 1 & arrowTail .~ dart'
 >                              & headSize .~ Global 1 & arrowShaft .~ s2
 >                              & headColor .~ green & tailColor .~ green
->                              & shaftStyle %~ lwG 0.1 . lc green )
+>                              & shaftStyle %~ lw thick . lc green )
 >                              "4" "7"
 >             # connect' (with & arrowTail .~ dart' & tailSize .~ Global 1 & arrowShaft .~ a
 >                              & arrowHead .~ spike & headSize .~ Global 1 & headColor .~ red
 >                              & tailGap .~ 0.1 & tailColor .~ red
->                              & shaftStyle %~ lwG 0.2 . lc blue )
+>                              & shaftStyle %~ lw veryThick . lc blue )
 >                              "9" "5"
 >             # connect' (with & arrowHead .~ tri & arrowTail .~ block
 >                              & headSize .~ Global 1 & tailSize .~ Global 0.6 & headGap .~ 0.5
 >                              & headStyle %~ fc black . opacity 0.5
 >                              & tailStyle %~ fc black . opacity 0.5
->                              & shaftStyle %~ lwG 0.06 . dashingG [0.1,0.2,0.3,0.1] 0)
+>                              & shaftStyle %~ lw thick . dashingG [0.1,0.2,0.3,0.1] 0)
 >                              "8" "9"
 >             # scale 0.75
 >   where
->     c = circle 1 # showOrigin # lwG 0.04
+>     c = circle 1 # showOrigin
 >     a = arc (5/12 @@ turn) (11/12 @@ turn)
 >     a1 = arc (1/2 @@ turn) (3/4 @@ turn)
 >     t = bezier3 (r2 (1,1)) (r2 (1,1)) (r2 (0,2))
@@ -179,7 +179,9 @@ being the shape. So, for example, if we set `arrowHead=spike` and
 
 ::
 
-> arrowBetween' (with & arrowHead .~ spike & arrowTail .~ quill) sPt ePt
+> arrowBetween' (with & arrowHead .~ spike & arrowTail .~ quill
+>                     & headSize  .~ large & tailSize  .~ large
+>   sPt ePt
 
 then the arrow from the previous example looks like this:
 
@@ -195,7 +197,9 @@ then the arrow from the previous example looks like this:
 > eDot = dot # fc red # moveTo ePt
 >
 > example = (sDot <> eDot <> arrowBetween' (with & arrowHead .~ spike
->                                                & arrowTail .~ quill) sPt ePt)
+>                                                & arrowTail .~ quill
+>                                                & headSize  .~ large
+>                                                & tailSize  .~ large) sPt ePt)
 >          # centerXY # pad 1.1
 
 The `Arrowheads` package exports a number of standard arrowheads
@@ -211,7 +215,8 @@ can be used as tails by appending a single quote, so for example:
 
 ::
 
-> arrowBetween' (with & arrowHead .~ thorn & arrowTail .~ thorn') sPt ePt
+> arrowBetween' (with & arrowHead .~ thorn & arrowTail .~ thorn'
+>                     & headSize  .~ large & tailSize  .~ large) sPt ePt
 
 yields:
 
@@ -227,7 +232,8 @@ yields:
 > eDot = dot # fc red # moveTo ePt
 >
 > example = ( sDot <> eDot <>arrowBetween' (with & arrowHead .~ thorn
->                                                & arrowTail .~ thorn') sPt ePt)
+>                                                & arrowTail .~ thorn'
+>                                                & headSize .~ large & tailSize .~ large) sPt ePt)
 >           # centerXY # pad 1.1
 
 
@@ -249,15 +255,16 @@ will make the arrow shaft into an arc:
 >
 > example = ( sDot <> eDot
 >          <> arrowBetween' (with & arrowHead .~ spike & arrowTail .~ spike'
->                                 & arrowShaft .~shaft) sPt ePt)
+>                                 & arrowShaft .~ shaft) sPt ePt
+>          <> circle 1.5 # lw none)
 >           # centerXY # pad 1.1
 
 .. class:: dia
 
 ::
 
-> sPt = p2 (0.20, 0.40)
-> ePt = p2 (2.80, 0.40)
+> sPt = p2 (-1.5, 0)
+> ePt = p2 ( 1.5, 0)
 >
 > dot = circle 0.02 # lw none
 > sDot = dot # fc blue # moveTo sPt
@@ -267,7 +274,8 @@ will make the arrow shaft into an arc:
 >
 > example = ( sDot <> eDot
 >          <> arrowBetween' (with & arrowHead .~ spike & arrowTail .~ spike'
->                                 & arrowShaft .~ shaft) sPt ePt)
+>                                 & arrowShaft .~ shaft) sPt ePt
+>          <> circle 1.5 # lw none)
 >           # centerXY # pad 1.1
 
 Arrows with curved shafts don't always render the way our intuition
