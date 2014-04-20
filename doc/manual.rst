@@ -814,7 +814,7 @@ Arcs
 `Diagrams.TwoD.Arc`:mod: provides a function `arc`, which constructs a
 radius-one circular arc starting at a first angle__ and extending
 counterclockwise to the second, as well as `wedge` which constructs a
-wedge shape (an arc plus two radii), and various other
+wedge shape, `annularWedge` (an arc plus two radii) and various other
 functions for conveniently constructing arcs.
 
 __ `Angles`_
@@ -823,7 +823,7 @@ __ `Angles`_
 
 ::
 
-> example = hcat [arc a1 a2, strutX 1, wedge 1 a1 a2]
+> example = hcat' (with & sep .~ 0.5) [arc a1 a2, wedge 1 a1 a2, annularWedge 1 0.6 a1 a2]
 >   where
 >     a1 = tau/4 @@ rad
 >     a2 = 4 * tau / 7 @@ rad
