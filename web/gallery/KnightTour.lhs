@@ -45,12 +45,12 @@ here](http://rosettacode.org/wiki/Knight%27s_tour#Haskell).
 
 Now we can go about visualizing a tour.  First, let's draw a chessboard:
 
-> boardSq c = square 1 # lw 0 # fc c
+> boardSq c = square 1 # lw none # fc c
 >
 > chessBoard n
 >   = vcat . map hcat . map (map boardSq)
 >   . take n . map (take n) . tails
->   $ cycle [saddlebrown, antiquewhite]
+>   $ cycle [antiquewhite, saddlebrown]
 
 Now, we need a way to convert `Square` coordinates (a pair of numbers
 in the range 0-7) into actual coordinates on the chessboard.  Since
@@ -64,7 +64,7 @@ To draw a knight on a given square, we load an image of a knight, size
 it to fit a square, and translate it appropriately:
 
 > knight sq
->   = image "../../doc/static/white-knight.png" 1 1
+>   = image (uncheckedImageRef "../../doc/static/white-knight.png" 1 1)
 >   # moveTo (squareToPoint sq)
 
 Finally, given a tour, we turn it into a path using `fromVertices`,

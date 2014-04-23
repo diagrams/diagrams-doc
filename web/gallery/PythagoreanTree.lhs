@@ -40,6 +40,6 @@ For aesthetics, let the leaves have circles instead of squares.
 Draw the order 10 tree.
 
 > example = tree 10 `atop` square 6.5 # fc skyblue # opacity 0.4
->                                     # lw 0
+>                                     # lw none
 >                                     # translateY 2
 >                                     # translateX (-0.5)

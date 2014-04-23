@@ -67,7 +67,9 @@ preamble of your `\LaTeX`:math: file, add
 ::
 
   \usepackage{diagrams-latex}
+  \usepackage{graphicx}
 
+Note inclusion of the ``graphicx`` package is currently required.
 You can also pass some options to the ``diagrams-latex`` package:
 
 * ``outputdir`` specifies the name of directory where intermediate and
@@ -92,6 +94,7 @@ write
 ::
 
   \usepackage[backend=ps, extension=eps, outputdir=diagrams]{diagrams-latex}
+  \usepackage{graphicx}
 
 Diagram blocks
 ==============
@@ -160,3 +163,18 @@ choke with horrendous, inscrutable errors.  If you are using
 ``pandoc`` to generate slides, you can "trick" ``pandoc`` into
 emitting ``[fragile]`` annotations by inserting an empty code block
 into each slide with a diagram.
+
+See [this Stack Exchange
+answer](http://tex.stackexchange.com/questions/11328/beamers-fragile-frame-as-default)
+explaining how to define an alternate ``frame`` environment which is
+fragile by default.  It boils down to something like
+
+::
+
+  \newenvironment{xframe}[1][]
+    {\begin{frame}[fragile,environment=xframe,#1]}
+    {\end{frame}}
+
+and then using ``xframe`` instead of ``frame`` (it's probably possible
+to replace ``frame`` entirely with some clever renaming, but I haven't
+figured out how to do it).

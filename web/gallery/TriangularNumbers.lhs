@@ -18,7 +18,7 @@ and backed by a solid-colored triangle to visually group them.  Note
 how the dots are laid out by creating a trail called `edge`, rotating
 it 60 degrees, and using `decorateTrail` to lay out the rows of dots.
 
-> mkTri c n = dots <> (strokeLoop edges # lc c # lw 0.2 # fcA (c `withOpacity` 0.5))
+> mkTri c n = dots <> (strokeLoop edges # lc c # lw thin # fcA (c `withOpacity` 0.5))
 >   where rows = map (hcat' (with & sep .~ 1 ))
 >              . zipWith replicate [n,n-1..1]
 >              . repeat
@@ -28,7 +28,7 @@ it 60 degrees, and using `decorateTrail` to lay out the rows of dots.
 >         edges = glueLine (edge <> rotateBy (1/3) edge <> rotateBy (2/3) edge)
 >
 > dot c = unitCircle
->       # lw 0
+>       # lw none
 >       # fc c
 >
 > rowSpc = height (rotateBy (1/6) $ strutY 1 :: D R2)
@@ -56,4 +56,4 @@ sizes.
 >   where law4' k = law4 k 3 purple gold
 >
 > example = pad 1.1 $ law4Dia # centerXY
->        <> square 90 # lw 0.1 # fc beige
+>        <> square 90 # lw thin # fc beige

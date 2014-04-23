@@ -105,8 +105,9 @@ about ``diagrams``:
   is intended to be high-quality and up-to-date, and is available
   `from the diagrams website`_.  If you find an omission, error, or
   something confusing, please `report it as a bug`_!
-* The ``diagrams`` website_ has a `gallery of examples`_ and a `list
-    of tutorials`_, as well as links to blog posts and other documentation.
+* The ``diagrams`` website_ has a `gallery of examples`_ and a
+  `list of tutorials`_, as well as links to blog posts and
+  other documentation.
 * The `diagrams wiki`_ is a good place to find tips and tricks,
   examples, answers to frequently asked questions, and more.
 * The ``#diagrams`` IRC channel on Freenode is a friendly place
@@ -524,11 +525,11 @@ if you are just reading this manual for the first time!)
 
 > illustrateEnvelope v d
 >   = mconcat
->     [arrowAt' (with & arrowHead .~ tri & headSize .~ 0.2) origin v
+>     [arrowAt' (with & arrowHead .~ tri) origin v
 >     , origin ~~ b
->       # lc green # lw 0.05
+>       # lc green # lw veryThick
 >     , p1 ~~ p2
->       # lc red # lw 0.02
+>       # lc red
 >     ]
 >     where
 >       b  = envelopeP v d
@@ -753,18 +754,18 @@ represented by an angle measured clockwise from the positive
 >   , angleArrow
 >   , axes
 >   ]
->   # center # pad 1.1
+>   # (<> rect 12 6 # alignB # lw none)
+>   # center # frame 1
 >
 > axes = (arrowV (6 *^ unitX) # centerX <> arrowV (6 *^ unitY) # centerY)
 > theDir = 200 @@ deg
 > theV = 3 *^ fromDirection theDir
 > exampleVector = arrowV theV
 >   # lc blue
->   # lw 0.03
 > angleArrow = arrowBetween' (with & arrowShaft .~ arc zeroV theDir)
 >   (origin .+^ (1 *^ unitX))
 >   (origin .+^ (theV # normalized))
->   # dashing [0.05,0.05] 0
+>   # dashingG [0.05,0.05] 0
 >   # lc green
 
 Primitive shapes
@@ -813,7 +814,7 @@ Arcs
 `Diagrams.TwoD.Arc`:mod: provides a function `arc`, which constructs a
 radius-one circular arc starting at a first angle__ and extending
 counterclockwise to the second, as well as `wedge` which constructs a
-wedge shape (an arc plus two radii), and various other
+wedge shape, `annularWedge` (an arc plus two radii) and various other
 functions for conveniently constructing arcs.
 
 __ `Angles`_
@@ -822,7 +823,7 @@ __ `Angles`_
 
 ::
 
-> example = hcat [arc a1 a2, strutX 1, wedge 1 a1 a2]
+> example = hcat' (with & sep .~ 0.5) [arc a1 a2, wedge 1 a1 a2, annularWedge 1 0.6 a1 a2]
 >   where
 >     a1 = tau/4 @@ rad
 >     a2 = 4 * tau / 7 @@ rad
@@ -926,7 +927,7 @@ optional parameters that control the generated polygon:
 >                        & polyOrient .~ OrientV )
 > poly2 = polygon ( with & polyType  .~ PolyPolar (repeat (1/40 @@ turn))
 >                                                 (take 40 $ cycle [2,7,4,6]) )
-> example = (poly1 ||| strutX 1 ||| poly2) # lw 0.05
+> example = (poly1 ||| strutX 1 ||| poly2)
 
 Notice the idiom of using `with` to construct a record of default
 options and selectively overriding particular options by name. `with`
@@ -990,11 +991,11 @@ which there are two possibilities:
   > funs          = map (flip (^)) [2..6]
   > visualize f	  = stroke' (with & vertexNames .~ [[0 .. 6 :: Int]] )
   >                     (regPoly 7 1)
-  >                   # lw 0
+  >                   # lw none
   >                   # showLabels
-  >                   # fontSize 0.6
+  >                   # fontSize (Local 0.6)
   >              <> star (StarFun f) (regPoly 7 1)
-  >                   # stroke # lw 0.05 # lc red
+  >                   # stroke # lw thick # lc red
   > example       = center . hcat' (with & sep .~ 0.5) $ map visualize funs
 
 You may notice that all the above examples need to call `stroke` (or
@@ -1177,7 +1178,7 @@ local origin of the final result.
 ::
 
 > example = cat (r2 (2, -1)) (map p [3..8]) # showOrigin
->   where p n = regPoly n 1 # lw 0.03
+>   where p n = regPoly n 1
 
 Semantically, `cat v === foldr (beside v) mempty`, although the actual
 implementation of `cat` uses a more efficient balanced fold.
@@ -1192,8 +1193,7 @@ possibilities.
 ::
 
 > example = cat' (r2 (2,-1)) (with & catMethod .~ Distrib & sep .~ 2 ) (map p [3..8])
->   where p n = regPoly n 1 # lw 0.03
->                           # scale (1 + fromIntegral n/4)
+>   where p n = regPoly n 1 # scale (1 + fromIntegral n/4)
 >                           # showOrigin
 
 For convenience, `Diagrams.TwoD.Combinators`:mod: also provides `hcat`, `hcat'`,
@@ -1212,7 +1212,7 @@ course, `appends` is implemented in terms of `juxtapose` (see
 
 ::
 
-> c        = circle 1 # lw 0.03
+> c        = circle 1
 > dirs     = iterate (rotateBy (1/7)) unitX
 > cdirs    = zip dirs (replicate 7 c)
 > example1 = appends c cdirs
@@ -1318,6 +1318,10 @@ color.
 Line width, dashing, and freezing
 +++++++++++++++++++++++++++++++++
 
+.. container:: todo
+
+   Fix me!!
+
 To alter the *width* of the lines used to stroke paths, use `lw`. The
 default line width is (arbitrarily) `0.01`.  You can also set the line
 width to zero if you do not want a path stroked at all.
@@ -1345,22 +1349,12 @@ otherwise.
 
 ::
 
-> example = (square 1
->       ||| square 1 # scale 2
->       ||| circle 1 # scaleX 3) # lw 0.03 # dashing [0.1,0.1] 0
-
-However, occasionally you *do* want subsequent transformations to
-affect line width or dashing style.  The `freeze` function is supplied for this
-purpose.  Once `freeze` has been applied to a diagram, any subsequent
-transformations will affect the line width and dashing style.
-
-.. class:: dia-lhs
-
-::
-
-> example = (square 1
->       ||| square 1 # freeze # scale 2
->       ||| circle 1 # freeze # scaleX 3) # lw 0.03 # dashing [0.1,0.1] 0
+> example = hcat
+>   [ square 1
+>   , square 1 # scale 2
+>   , circle 1 # scaleX 3
+>   ]
+>   # dashingN [0.03,0.03] 0
 
 Note that line width does not affect the envelope of diagrams at all.
 To stroke a line "internally", turning it into a diagrams path
@@ -1391,13 +1385,13 @@ for three aspects of line drawing:
 
 ::
 
-> path = fromVertices (map p2 [(0,0), (1,0.3), (2,0), (2.2,0.3)]) # lw 0.1
+> path = fromVertices (map p2 [(0,0), (1,0.3), (2,0), (2.2,0.3)]) # lwO 10
 > example = center . vcat' (with & sep .~ 0.1 )
 >           $ map (path #)
 >             [ lineCap LineCapButt   . lineJoin LineJoinMiter
 >             , lineCap LineCapRound  . lineJoin LineJoinRound
 >             , lineCap LineCapSquare . lineJoin LineJoinBevel
->             , dashing [0.1,0.2,0.3,0.1] 0
+>             , dashingN [0.03,0.06,0.09,0.03] 0
 >             ]
 
 The ``HasStyle`` class
@@ -1432,7 +1426,7 @@ applying the desired attributes:
 
 ::
 
-> foo = myFun (mempty # fontSize 10 # lw 0 # fc green)
+> foo = myFun (mempty # fontSize (Local 2) # lw none # fc green)
 
 If the type `T` is an instance of `HasStyle`, then `[T]` is also.
 This means that you can apply styles uniformly to entire lists of
@@ -1589,7 +1583,7 @@ __ `Angles`_
 
 ::
 
-> eff = text "F" <> square 1 # lw 0
+> eff = text "F" <> square 1 # lw none
 > rs  = map rotateBy [1/7, 2/7 .. 6/7]
 > example = hcat . map (eff #) $ rs
 
@@ -1608,7 +1602,7 @@ results in a reflection (in the case of `scaleX` and `scaleY`) or a
 
 ::
 
-> eff = text "F" <> square 1 # lw 0
+> eff = text "F" <> square 1 # lw none
 > ts  = [ scale (1/2), id, scale 2,    scaleX 2,    scaleY 2
 >       ,                  scale (-1), scaleX (-1), scaleY (-1)
 >       ]
@@ -1630,7 +1624,7 @@ To reflect in some line other than an axis, use `reflectAbout`.
 
 ::
 
-> eff = text "F" <> square 1 # lw 0
+> eff = text "F" <> square 1 # lw none
 > example = eff
 >        <> reflectAbout (p2 (0.2,0.2)) (rotateBy (-1/10) unitX) eff
 
@@ -1660,7 +1654,7 @@ thus:
 
 ::
 
-> eff = text "F" <> square 1 # lw 0
+> eff = text "F" <> square 1 # lw none
 > example = (scaleX 2 `under` rotation (-1/8 @@ turn)) eff
 
 The letter F is first rotated so that the desired scaling axis lies
@@ -1704,7 +1698,7 @@ projections along the principal axes in 2 dimensions.
 ::
 
 > sq = unitSquare # translate (5 ^& 3) :: Path R2
-> marks = repeat . lw 0 $ circle 0.02
+> marks = repeat . lw none $ circle 0.02
 > dots c p = position $ zip (concat $ pathVertices p) (marks # fc c)
 > example = stroke sq <> dots blue sq <> dots green (deform perspectiveX1 sq)
 
@@ -1821,14 +1815,14 @@ polygon):
 >
 > concave = polygon ( with & polyType .~ PolyPolar [a, b, b, b]
 >                   [ 0.25,1,1,1,1] & polyOrient .~ NoOrient )
->                   # fc blue # lw 0
+>                   # fc blue # lw none
 >   where
 >     a = 1/8 @@ turn
 >     b = 1/4 @@ turn
 >
 > convex = polygon (with & polyType .~ PolyPolar [a,b] [0.25, 1, 1]
 >                        & polyOrient .~ NoOrient)
->                        # fc orange # lw 0
+>                        # fc orange # lw none
 >   where
 >     a = 1/8 @@ turn
 >     b = 3/4 @@ turn
@@ -1902,9 +1896,9 @@ __ http://en.wikipedia.org/wiki/Bézier_curve
 >     <> l2
 >     <> fromSegments [bézier3 c1 c2 x2]
 >   where
->     dashed  = dashing [0.1,0.1] 0
->     endpt   = circle 0.05 # fc red  # lw 0
->     ctrlpt  = circle 0.05 # fc blue # lw 0
+>     dashed  = dashingN [0.03,0.03] 0
+>     endpt   = circle 0.05 # fc red  # lw none
+>     ctrlpt  = circle 0.05 # fc blue # lw none
 >     l1      = fromOffsets [c1] # dashed
 >     l2      = fromOffsets [x2 ^-^ c2] # translate c2 # dashed
 >
@@ -2027,7 +2021,7 @@ also analogous functions `strokeLine` and `strokeTrail`.)
 > burst :: Trail' Loop R2
 > burst = glueLine . mconcat . take 13 . iterate (rotateBy (-1/13)) $ spoke
 >
-> example = strokeLoop burst # fc yellow # lw 0.1 # lc orange
+> example = strokeLoop burst # fc yellow # lw thick # lc orange
 
 For convenience, there is also a monoid instance for `Trail` based on
 the instance for lines: any loops are first cut with `cutLine`, and
@@ -2047,7 +2041,7 @@ To construct a line, loop, or trail, you can use one of the following:
 
   > theLine = fromOffsets (iterateN 5 (rotateBy (1/20)) unitX)
   > example = theLine # strokeLine
-  >         # lc blue # lw 0.05 # center # pad 1.1
+  >         # lc blue # lw thick # center # pad 1.1
 
 * `fromVertices` takes a list of vertices, generating linear segments
   between them.
@@ -2072,7 +2066,7 @@ To construct a line, loop, or trail, you can use one of the following:
   > theLine = cubicSpline False vertices
   > example = mconcat (iterateN 6 (rotateBy (-1/6)) theLine)
   >         # glueLine # strokeLoop
-  >         # lc green # lw 0.05 # fc aqua # center # pad 1.1
+  >         # lc green # lw veryThick # fc aqua # center # pad 1.1
 
 * `fromSegments` takes an explicit list of `Segment`\s, which can
   occasionally be useful if, say, you want to generate some Bézier
@@ -2107,7 +2101,7 @@ the edges individually:
 >
 > colors = cycle [aqua, orange, deeppink, blueviolet, crimson, darkgreen]
 >
-> example = lw 0.1
+> example = lw thick
 >         . mconcat
 >         . zipWith lc colors
 >         . map strokeLocTrail . explodeTrail
@@ -2330,7 +2324,7 @@ corners, the offset will be disconnected!
 >
 > example :: Diagram B R2
 > example = (p # strokeTrail <> offsetTrailNaive 0.1 0.3 p # stroke # lc blue)
->         # lw 0.01
+>         # lw thick
 >   where p = fromVertices . map p2 $ [(0,0), (1,0.3), (2,0), (2.2,0.3)]
 
 First let's consider the outside corner where the adjacent offset segments do
@@ -2352,7 +2346,7 @@ offset segments in other sensible ways.  For the choice of join we have the
 >
 > example :: Diagram B R2
 > example = (p # strokeTrail <> o # strokeLocTrail # lc blue)
->         # lw 0.01
+>         # lw thick
 >   where
 >     p = fromVertices . map p2 $ [(0,0), (1,0.3), (2,0), (2.2,0.3)]
 >     o = offsetTrail' (with & offsetJoin .~ LineJoinRound) 0.3 p
@@ -2460,7 +2454,7 @@ of loops, one inside and one outside.  To express this we need a `Path`.
 > import Diagrams.TwoD.Offset
 >
 > example :: Diagram B R2
-> example = (p # strokeTrail # lw 0.02 # lc white <> e # stroke # lw 0 # fc blue)
+> example = (p # strokeTrail # lw veryThick # lc white <> e # stroke # lw none # fc blue)
 >   where
 >     p = fromVertices . map p2 $ [(0,0), (1,0.3), (2,0), (2.2,0.3)]
 >     e = expandTrail' opts 0.3 p
@@ -2482,8 +2476,8 @@ and plan to support custom styles in future releases.
 > example :: Diagram B R2
 > example = hcat' (with & sep .~ 0.5) $ map f [LineCapButt, LineCapRound, LineCapSquare]
 >   where
->     f s =  p # strokeTrail # lw 0.02 # lc white
->         <> expandTrail' (opts s) 0.3 p # stroke # lw 0 # fc blue
+>     f s =  p # strokeTrail # lw veryThick # lc white
+>         <> expandTrail' (opts s) 0.3 p # stroke # lw none # fc blue
 >     p = fromVertices . map p2 $ [(0,0), (1,0), (0.5,0.7)]
 >     opts s = with & expandJoin .~ LineJoinRound
 >                   & expandCap  .~ s
@@ -2560,7 +2554,7 @@ instances of `TrailLike`:
 >             . mconcat . take 5 . iterate (rotateBy (1/5))
 >             . onLineSegments init
 >             $ s {- 4 -}
-> example = (blueSquares <> aster <> paths) # lw 0.05
+> example = (blueSquares <> aster <> paths)
 
 Exercise: figure out which occurrence of `s` has which type. (Answers
 below.)
@@ -2777,9 +2771,9 @@ closed.
 ::
 
 > pts = map p2 [(0,0), (2,3), (5,-2), (-4,1), (0,3)]
-> dot = circle 0.2 # fc blue # lw 0
+> dot = circle 0.2 # fc blue # lw none
 > mkPath closed = position (zip pts (repeat dot))
->              <> cubicSpline closed pts # lw 0.05
+>              <> cubicSpline closed pts
 > example = mkPath False ||| strutX 2 ||| mkPath True
 
 For more precise control over the generation of curved paths, see the
@@ -2902,7 +2896,7 @@ clipping path will be drawn.
 
 > example = square 3
 >         # fc green
->         # lw 0.05
+>         # lw veryThick
 >         # clipBy (square 3.2 # rotateBy (1/10))
 
 Several functions are available, depending on what envelope and trace
@@ -3009,7 +3003,7 @@ __ /gallery/SymmetryCube.html
 > -- Connect two points.
 > ex1 = arrowBetween sPt ePt
 >
-> d = octagon 1 # lc blue # lw 0.10 # showOrigin
+> d = octagon 1 # lc blue # lw ultraThick # showOrigin
 > ds = d # named "1" ||| strut 3 ||| d # named "2"
 >
 > -- Connect two diagrams and two points on their trails.
@@ -3073,7 +3067,7 @@ function.
 
 ::
 
-> c = circle 2 # fc lightgray # lw 0 # showOrigin
+> c = circle 2 # fc lightgray # lw none # showOrigin
 >
 > x |-| y = x ||| strutX 3 ||| y
 >
@@ -3089,22 +3083,22 @@ function.
 > shaft3 = arc (0 @@ turn) (1/6 @@ turn)
 >
 > example = d
->    # connect' (with & arrowTail .~ quill& tailSize .~ 1.5
+>    # connect' (with & arrowTail .~ quill & tailSize .~ large
 >                     & tailColor .~ orange & headColor .~ orange
->                     & arrowHead .~ spike & headSize  .~ 1.5
->                     & shaftStyle %~ lw 0.3 ) "1" "2"
->    # connect' (with & arrowTail .~ thorn'& tailSize .~ 1.5
->                     & arrowHead .~ thorn & headSize .~ 1.5
->                     & arrowShaft .~ shaft1 & shaftStyle %~ lw 0.15 ) "3" "4"
->    # connect' (with & arrowTail .~ block & tailSize .~ 1& tailGap .~ 0.4
->                     & arrowHead .~ missile & headSize .~ 1.5& headGap .~ 0.4
+>                     & arrowHead .~ spike & headSize  .~ large
+>                     & shaftStyle %~ lw ultraThick ) "1" "2"
+>    # connect' (with & arrowTail .~ thorn' & tailSize .~ large
+>                     & arrowHead .~ thorn  & headSize .~ large
+>                     & arrowShaft .~ shaft1 & shaftStyle %~ lw veryThick ) "3" "4"
+>    # connect' (with & arrowTail .~ block & tailGap .~ 0.4
+>                     & arrowHead .~ missile & headSize .~ large & headGap .~ 0.4
 >                     & arrowShaft .~ shaft2
 >                     & headColor .~ blue & tailColor .~ blue
->                     & shaftStyle %~ lw 0.15 . lc blue ) "5" "6"
+>                     & shaftStyle %~ lw veryThick . lc blue ) "5" "6"
 >    # connect' (with & arrowShaft .~ shaft3
->                     & arrowHead .~ tri & headSize .~ 1.5
+>                     & arrowHead .~ tri & headSize .~ large
 >                     & headStyle %~ fc red . opacity 0.5
->                     & shaftStyle %~ lw 0.2 . lc black . opacity 0.5 ) "7" "8"
+>                     & shaftStyle %~ lw veryThick . lc black . opacity 0.5 ) "7" "8"
 
 Text
 ----
@@ -3203,7 +3197,7 @@ generally, `fontWeight`), `italic`, and `oblique` (or, more generally,
 
 ::
 
-> text' s t = text t # fontSize s <> strutY (s * 1.3)
+> text' s t = text t # fontSize (Local s) <> strutY (s * 1.3)
 > example = center $
 >       text' 10 "Hello" # italic
 >   === text' 5 "there"  # bold # font "freeserif"
@@ -3225,7 +3219,7 @@ its own `textSVG` function which can be used to convert text into a
 ::
 
 > text' d s = (stroke $ textSVG' (TextOpts s lin2 INSIDE_H KERN False d d))
->           # lw 0
+>           # lw none
 >
 > example = text' 5 "Hello" # fc blue ||| text' 3 "world" # fc green
 
@@ -3246,8 +3240,12 @@ and specify a file name and size for the image:
 ::
 
 > no = (circle 1 <> hrule 2 # rotateBy (1/8))
->    # lw 0.2 # lc red
-> example = no <> image "doc/static/phone.png" 1.5 1.5
+>    # lwO 20 # lc red # frame 0.2
+> example = do
+>   res <- loadImageExt "doc/static/phone.png"
+>   return $ case res of
+>     Left err    -> mempty
+>     Right phone -> no <> image phone # sized (Dims 1.5 1.5)
 
 Unfortunately, you must specify both a width and a height for each
 image.  You might hope to be able to specify just a width or just a
@@ -3379,7 +3377,6 @@ Envelope-related functions
   >   = square 2
   >   # extrudeEnvelope (2 ^& 1)
   >   # sampleEnvelope2D 100
-  >   # lw 0.05
   >   # center # pad 1.1
 
 * Manually setting the envelope of a diagram can be
@@ -3495,7 +3492,7 @@ Normally, a trace is accessed using one of the four functions
 
   > import Data.Maybe (fromMaybe)
   >
-  > drawV v = arrowAt' (with & headSize .~ 0.2) origin v
+  > drawV v = arrowAt origin v
   >
   > drawTraceV v d
   >   = lc green $
@@ -3504,7 +3501,6 @@ Normally, a trace is accessed using one of the four functions
   > illustrateTraceV v d = (d <> drawV v <> drawTraceV v d) # showOrigin
   >
   > example = hcat' (with & sep .~ 1)
-  >         . lw 0.03
   >         . map (illustrateTraceV (0.5 *^ (r2 (1, 1))))
   >         $ [ circle 1 # translate (r2 (-1.5, -1.5))
   >           , circle 1
@@ -3704,7 +3700,7 @@ function):
 > attach n1 n2
 >   = withName n1 $ \b1 ->
 >     withName n2 $ \b2 ->
->       atop ((location b1 ~~ location b2) # lc red # lw 0.03)
+>       atop ((location b1 ~~ location b2) # lc red)
 >
 > example = (square 3 # named Baz ||| circle 2.3 # named Bar)
 >         # attach Baz Bar
@@ -3818,7 +3814,7 @@ a qualified name explicitly, separate the components with `(.>)`.
 > attach n1 n2
 >   = withName n1 $ \b1 ->
 >     withName n2 $ \b2 ->
->       atop ((location b1 ~~ location b2) # lc red # lw 0.03)
+>       atop ((location b1 ~~ location b2) # lc red # lw thick)
 >
 > squares =  (s # named NW ||| s # named NE)
 >        === (s # named SW ||| s # named SE)
@@ -3904,42 +3900,26 @@ the ellipse red and points outside it blue.
 
 ::
 
-> c :: Diagram B R2
-> c = circle 5 # scaleX 2 # rotateBy (1/14) # lw 0.03
+> import System.Random (randomRIO)
+> import Control.Monad (replicateM)
 >
-> -- Generated by fair dice roll, guaranteed to be random
-> points = map p2 $
->          [ (0.8936218079179525,6.501173563301563)
->          , (0.33932828810065985,9.06458375044167)
->          , (2.12546952534467,4.603130561299622)
->          , (-8.036711369641125,6.741718165576458)
->          , (-9.636495308950543,-8.960315063595772)
->          , (-5.125008672475815,-4.196763141080737)
->          , (-8.740284494124353,-1.748269759118557)
->          , (-2.7303729625418782,-9.902752498164773)
->          , (-1.6317121405154467,-6.026127282530069)
->          , (-3.363167801871896,7.5571909081190825)
->          , (5.109759075567126,-5.433154460042715)
->          , (8.492015791125596,-9.813023637980223)
->          , (7.762080919928849,8.340037921443582)
->          , (-6.8589746952056885,3.9604472182691097)
->          , (-0.6083773449063301,-3.7738202372565866)
->          , (1.3444943726062775,1.1363744735717773)
->          , (0.13720748480409384,8.718934659846127)
->          , (-5.091010760515928,-8.887260649353266)
->          , (-5.828490639105439,-9.392594425007701)
->          , (0.7190148020163178,1.4832069771364331)
->          ]
+> c :: Diagram B R2
+> c = circle 5 # scaleX 2 # rotateBy (1/14)
 >
 > mkPoint p = (p, circle 0.3
->           	  # lw 0
+>           	  # lw none
 >           	  # fc (case sample c p of
 >           	          Any True  -> red
 >           	          Any False -> blue
 >           	       )
 >             )
 >
-> example = c <> position (map mkPoint points)
+> rand10 :: IO Double
+> rand10 = randomRIO (-10,10)
+>
+> example = do
+>   points <- replicateM 20 (mkP2 <$> rand10 <*> rand10)
+>   return $ c <> position (map mkPoint points)
 
 Using other monoids
 ~~~~~~~~~~~~~~~~~~~
@@ -3955,44 +3935,27 @@ and `Any False` with `mempty`.
 
 ::
 
+> import System.Random (randomRIO)
+> import Control.Monad (replicateM)
+>
 > withCount = (# value (Sum 1))
 >
 > c :: QDiagram B R2 (Sum Int)
 > c = (   circle 5 # scaleX 2 # rotateBy (1/14) # withCount
 >      <> circle 2 # scaleX 5 # rotateBy (-4/14) # withCount
 >     )
->     # lw 0.03
->
-> -- Generated by fair dice roll, guaranteed to be random
-> points = map p2 $
->          [ (0.8936218079179525,6.501173563301563)
->          , (0.33932828810065985,9.06458375044167)
->          , (2.12546952534467,4.603130561299622)
->          , (-8.036711369641125,6.741718165576458)
->          , (-9.636495308950543,-8.960315063595772)
->          , (-5.125008672475815,-4.196763141080737)
->          , (-8.740284494124353,-1.748269759118557)
->          , (-2.7303729625418782,-9.902752498164773)
->          , (-1.6317121405154467,-6.026127282530069)
->          , (-3.363167801871896,7.5571909081190825)
->          , (5.109759075567126,-5.433154460042715)
->          , (8.492015791125596,-9.813023637980223)
->          , (7.762080919928849,8.340037921443582)
->          , (-6.8589746952056885,3.9604472182691097)
->          , (-0.6083773449063301,-3.7738202372565866)
->          , (1.3444943726062775,1.1363744735717773)
->          , (0.13720748480409384,8.718934659846127)
->          , (-5.091010760515928,-8.887260649353266)
->          , (-5.828490639105439,-9.392594425007701)
->          , (0.7190148020163178,1.4832069771364331)
->          ]
 >
 > mkPoint p = (p, circle (case sample c p of
 >                           Sum n  -> 2 * fromIntegral n / 5 + 1/5)
 >                 # fc black
 >             )
 >
-> example = c # clearValue <> position (map mkPoint points)
+> rand10 :: IO Double
+> rand10 = randomRIO (-10,10)
+>
+> example = do
+>   points <- replicateM 20 (mkP2 <$> rand10 <*> rand10)
+>   return $ c # clearValue <> position (map mkPoint points)
 
 Notice also the use of `clearValue` to get rid of the custom query;
 the program that builds this documentation requires `example` to have
@@ -4484,7 +4447,7 @@ viewpoint.  Let's use an invisible square:
 
 ::
 
-> (translateX <$> ui <*> circle 2) <> (pure (square 6 # lw 0))
+> (translateX <$> ui <*> circle 2) <> (pure (square 6 # lw none))
 
 Notice that we composed two animations using `(<>)`, which does
 exactly what you would think: superimposes them at every instant in time.

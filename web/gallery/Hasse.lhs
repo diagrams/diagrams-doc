@@ -5,7 +5,7 @@ authorurl: http://www.cis.upenn.edu/~byorgey/
 date: 2012-02-23
 description: Hasse diagram of all subsets of a four-element set.
 tags: hasse, subsets
-width: 400
+width: 600
 view: -10,-5,15,15
 ---
 
@@ -45,7 +45,7 @@ element present, and leaving a blank space for absent elements.
 >                       )
 >                 $ [1..n]
 >
-> drawElt e = unitSquare # fc (colors !! e) # lw 0.05
+> drawElt e = unitSquare # fc (colors !! e) # lw thin
 
 Draw a subset by drawing a dashed rectangle around the elements.  Note
 that we also assign a name to the rectangle, corresponding to the
@@ -54,8 +54,8 @@ later.
 
 > drawSet (Subset n elts) = (    drawElts n elts # centerXY
 >                             <> rect (fromIntegral n + 0.5) 1.5
->                                  # dashing [0.2,0.2] 0
->                                  # lw 0.03
+>                                  # dashingG [0.2,0.2] 0
+>                                  # lw thin
 >                                  # named elts
 >                           )
 
@@ -89,6 +89,6 @@ lower boundary of the other.
 
 >         connect (Subset _ elts1) (Subset _ elts2) =
 >           withNames [elts1, elts2] $ \[b1, b2] ->
->             beneath ((boundaryFrom b1 unitY ~~ boundaryFrom b2 unit_Y) # lw 0.03)
+>             beneath ((boundaryFrom b1 unitY ~~ boundaryFrom b2 unit_Y) # lw thin)
 >
 > example = pad 1.1 $ hasseDiagram 4

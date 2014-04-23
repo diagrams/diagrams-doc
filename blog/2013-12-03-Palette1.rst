@@ -32,7 +32,7 @@ The function `bar` takes a list of colors which we define here as `[Colour Doubl
 
 ::
 
-> bar cs = hcat [square gr # scaleX s # fc k # lw 0 | k <- cs] # centerXY
+> bar cs = hcat [square gr # scaleX s # fc k # lwG 0 | k <- cs] # centerXY
 >   where s = gr / (fromIntegral (length cs))
 
 We can use `bar` to view the color sets in `Palette`. Let's make a few color bars. We will use functions provided in `Palette` to make the color lists and then use `bar` to make the diagrams. The function `d3Colors1` takes an `Int` between 0 and 9 and returns a color from the set.
@@ -55,7 +55,7 @@ We can use `bar` to view the color sets in `Palette`. Let's make a few color bar
 > import Data.Colour.Palette.ColorSet
 > import Data.Colour.Palette.BrewerSet
 > gr = (1 + sqrt 5) / 2
-> bar cs = hcat [square gr # scaleX s # fc k # lw 0 | k <- cs] # centerXY
+> bar cs = hcat [square gr # scaleX s # fc k # lwG 0 | k <- cs] # centerXY
 >   where s = gr / (fromIntegral (length cs))
 > d3 = [d3Colors1 n | n <- [0..9]]
 > example = bar d3
@@ -82,7 +82,7 @@ The function we use to access schemes from `Data.Colour.Palette.Brewerset` is `b
 > import Data.Colour.Palette.ColorSet
 > import Data.Colour.Palette.BrewerSet
 > gr = (1 + sqrt 5) / 2
-> bar cs = hcat [square gr # scaleX s # fc k # lw 0 | k <- cs] # centerXY
+> bar cs = hcat [square gr # scaleX s # fc k # lwG 0 | k <- cs] # centerXY
 >   where s = gr / (fromIntegral (length cs))
 > gb = bar $ brewerSet GnBu 9    -- green/blue, sequential multihue
 > po = bar $ brewerSet PuOr 11   -- purple/orange, diverging
@@ -119,7 +119,7 @@ Some of the color sets provided in `ColorSet` occur with 2 or 4 brightness level
 > import Data.Colour.Palette.ColorSet
 > import Data.Colour.Palette.BrewerSet
 > gr = (1 + sqrt 5) / 2
-> bar cs = hcat [square gr # scaleX s # fc k # lw 0 | k <- cs] # centerXY
+> bar cs = hcat [square gr # scaleX s # fc k # lwG 0 | k <- cs] # centerXY
 >   where s = gr / (fromIntegral (length cs))
 > grid cs = centerXY $ vcat [bar c # scaleY s | c <- cs]
 >   where s = 1 / (fromIntegral (length cs))
@@ -155,7 +155,7 @@ The are over 300 colors that W3C recommends that every browser support. These ar
 > import Data.Colour.Palette.ColorSet
 > import Data.Colour.Palette.BrewerSet
 > gr = (1 + sqrt 5) / 2
-> bar cs = hcat [square gr # scaleX s # fc k # lw 0 | k <- cs] # centerXY
+> bar cs = hcat [square gr # scaleX s # fc k # lwG 0 | k <- cs] # centerXY
 >   where s = gr / (fromIntegral (length cs))
 > grid cs = centerXY $ vcat [bar c # scaleY s | c <- cs]
 >   where s = 1 / (fromIntegral (length cs))
@@ -193,7 +193,7 @@ Or we can add some gray to the brewer set `GnBu` from above.
 > import Data.Colour.Palette.BrewerSet
 > d3 = [d3Colors1 n | n <- [0..9]]
 > gr = (1 + sqrt 5) / 2
-> bar cs = hcat [square gr # scaleX s # fc k # lw 0 | k <- cs] # centerXY
+> bar cs = hcat [square gr # scaleX s # fc k # lwG 0 | k <- cs] # centerXY
 >   where s = gr / (fromIntegral (length cs))
 > s = bar $ map (shade 0.75) d3
 > t = bar $ map (tone 0.65) (brewerSet GnBu 9)

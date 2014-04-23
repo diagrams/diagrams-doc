@@ -35,11 +35,11 @@ The function to use to create the vector field.
 >     hs   = 0.08 * m
 >     sW   = 0.015 * m
 >     sL   = 0.01 + 0.1 * m
->     opts = (with & arrowHead .~ spike
->                  & headSize .~ hs
->                  & shaftStyle %~ lw sW)
+>     opts = (with & arrowHead  .~ spike
+>                  & headSize   .~ Global hs
+>                  & shaftStyle %~ lwG sW)
 >
 > field   = position $ zip points arrows
 >
 > example = ( field # translateY 0.05
->        <> ( square 3.5 # lw 0 # alignBL))
+>        <> ( square 3.5 # lw none # alignBL))

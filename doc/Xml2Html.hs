@@ -5,7 +5,6 @@ module Xml2Html where
 
 import           Control.Arrow
 import           Control.Monad                      (when)
-import           Data.Char                          (toLower)
 import           System.Directory                   (createDirectory,
                                                      doesDirectoryExist)
 import           System.Exit
@@ -32,6 +31,7 @@ import           Diagrams.Backend.Cairo
 import           Diagrams.Backend.Cairo.Internal
 #endif
 
+backendExt :: String
 #ifdef USE_SVG
 backendExt = "svg"
 #else

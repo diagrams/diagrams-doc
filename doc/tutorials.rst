@@ -222,8 +222,8 @@ To reference an image from a diagram, do something like
   ::
 
   > no = (circle 1 <> hrule 2 # rotateBy (1/8))
-  >    # lw 0.2 # lc red
-  > example = no <> image "doc/static/phone.png" 1.5 1.5
+  >    # lwG 0.2 # lc red
+  > example = no <> image (uncheckedImageRef "doc/static/phone.png" 1.5 1.5)
 
 (note the *lack* of a leading slash), which produces
 
@@ -232,8 +232,12 @@ To reference an image from a diagram, do something like
 ::
 
 > no = (circle 1 <> hrule 2 # rotateBy (1/8))
->    # lw 0.2 # lc red
-> example = no <> image "doc/static/phone.png" 1.5 1.5
+>    # lwG 0.2 # lc red
+> example = do
+>   res <- loadImageExt "doc/static/phone.png"
+>   return $ case res of
+>     Left err    -> mempty
+>     Right phone -> no <> image phone # sized (Dims 1.5 1.5)
 
 Building
 ========

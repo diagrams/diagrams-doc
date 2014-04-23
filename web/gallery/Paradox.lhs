@@ -16,13 +16,11 @@ width: 400
 The standard infinite list of Fibonacci numbers.
 
 > fibs = 0 : 1 : zipWith (+) fibs (tail fibs)
->
-> thick = 0.15
 
 Create a grid by gluing together a bunch of squares.
 
 > grid x y = frame <> lattice
->   where s       = unitSquare # lw 0.02
+>   where s       = unitSquare # lw thin
 >         frame   = rect (fromIntegral x) (fromIntegral y)
 >                 # lw thick
 >         lattice = centerXY . vcat . map hcat . replicate y . replicate x $ s
@@ -30,9 +28,9 @@ Create a grid by gluing together a bunch of squares.
 The trapezoid and triangle shapes, with sides lengths based on two
 Fibonacci numbers.
 
-> trap s1 s2 = lw 0 . strokeLoop . closeLine
+> trap s1 s2 = lw none . strokeLoop . closeLine
 >            . fromOffsets . map r2 $ [(0,-s2), (s2,0), (0,s1)]
-> tri s1 s2  = lw 0 .  strokeLoop . closeLine
+> tri s1 s2  = lw none .  strokeLoop . closeLine
 >            . fromOffsets . map r2 $ [(s1,0), (0,s1+s2)]
 
 Draw the paradox diagram based on the nth Fibonacci number.
