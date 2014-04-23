@@ -1488,6 +1488,54 @@ common (and the documentation below will only discuss verb forms), but
 getting one's hands on a first-class `Transformation` value can
 occasionally be useful.
 
+.. container:: warning
+
+   Both the verb and noun variants of transformations are monoids, and
+   can be composed with `(<>)`. However, the results are quite distinct,
+   as shown in this example.
+
+   .. class:: dia-lhs
+
+   ::
+
+   > ell = text "L" <> square 1 # lw 0
+   > alpha = tau / 8 @@ rad
+   > 
+   > dia1 = ell # translateX 2 # rotate alpha
+   > dia2 = ell # ( rotate alpha <> translateX 2 )
+   > dia3 = ell # transform ( rotation alpha <> translationX 2 )
+   > 
+   > example = 
+   >   hcat' (with & sep .~ 2) 
+   >     [ (dia1 <> orig)
+   >     , (dia2 <> orig)
+   >     , (dia3 <> orig)
+   >     ]
+   >   where
+   >     orig = circle 0.05 # fc red
+
+   `dia1` is the intended result: a character L translated along the X axis,
+   and then rotated over 45 degrees around the origin. 
+
+   `dia2` shows the result of naively composing the verb versions of
+   the transformations: a superposition of a rotated L and a
+   translated L.  To understand this, consider that `(rotate alpha)`
+   is a *function*, and functions as monoid instances (`Monoid m =>
+   Monoid (a -> m)`) are composed as `(f <> g) x = f x <> g x`.  To
+   quote the typeclassopedia_: if `a` is a Monoid, then so is the
+   function type `e -> a` for any `e`; in particular, `g \`mappend\`
+   h` is the function which applies both `g` and `h` to its argument
+   and then combines the results using the underlying Monoid instance
+   for `a`.
+
+   Hence `ell # ( rotate alpha <> translateX 2 )` is
+   the same as the superposition of two diagrams: `rotate alpha ell <>
+   translateX 2 ell`.
+
+   `dia3` shows how the noun versions can be composed with the intended
+   result.
+
+.. _`typeclassopedia`: http://www.haskell.org/haskellwiki/Typeclassopedia#Instances_4
 
 Affine transformations in general
 +++++++++++++++++++++++++++++++++
