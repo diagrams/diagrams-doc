@@ -1253,7 +1253,7 @@ details.
 __ core.html
 
 Most of the attributes discussed in this section are defined in
-`Diagrams.Attributes`:mod:.
+`Diagrams.TwoD.Attributes`:mod:.
 
 Texture
 ~~~~~~~
@@ -1262,12 +1262,21 @@ Two-dimensional diagrams can be filled and stroked with a `Texture`. A
 `Texture` can be either a solid color, a linear gradient or a radial
 gradient. Not all backends support gradients, in particular gradients are
 supported by the SVG, Cairo, and Rasterific backends (see `Rendering backends`_).
-Future releases should also support patterns as textures.
+Future releases should also support patterns as textures. The data type
+for a texture is
+
+.. class:: lhs
+
+::
+
+> data Texture = SC SomeColor | LG LGradient | RG RGradient
+
+and `Prism` s `_SC`, `_LG`, `_RG` are provided for access.
 
 Color
 +++++
 
-Tthe color used to stroke the paths can be set with the `lc` (line color)
+The color used to stroke the paths can be set with the `lc` (line color)
 function and the color used to fill them with the `fc` (fill color) function.
 
 .. class:: dia-lhs
@@ -1327,11 +1336,39 @@ color.
 Linear Gradients
 ++++++++++++++++
 
+A linear gradient must have a list of color stops, a starting point, an ending point,
+a transformation and a spread method. Color stops are pairs of (color, fraction) where
+the fraction is usually between 0 and 1 that are mapped onto the start and end
+points. The starting point and endping point are
+specified in local coordinates. Typically the transformation starts as the identity
+transform `mempty` and records any transformations that are applied to the object
+using the gradient. The spread method defines how space beyond the starting and
+ending points should be handled, `GradPad` will fill the space with the final stop
+color, `GradRepeat` will restart the gradient, and `GradReflect` will restart the
+gradient but with the stops reversed. This is the data type for a linear gradient.
+
+.. class:: lhs
+
+::
+
+> data LGradient = LGradient
+>   { _lGradStops        :: [GradientStop]
+>   , _lGradStart        :: P2
+>   , _lGradEnd          :: P2
+>   , _lGradTrans        :: T2
+>   , _lGradSpreadMethod :: SpreadMethod }
+
+Lenses are provided to access the record fields. In addition the functions `mkStops` taking
+a list of triples (color, fraction, opacity) and `mkLinearGradient` which takes a list of stops,
+a start and end point, and a spread method and creates a `Texture` are provided for convenience.
+In this example we demonstrate how to make linear gradients with the `mkLinearGradient`
+functions and how to adjust it using the lenses and prisms.
+
 .. class:: dia-lhs
 
 ::
 
-> stops = mkStops [(lightgray, 0, 1), (purple, 1, 1)]
+> stops = mkStops [(gray, 0, 1), (white, 0.5, 1), (purple, 1, 1)]
 > gradient = mkLinearGradient stops ((-0.5) ^& 0) (0.5 ^& 0) GradPad
 > sq1 = square 1 # fillTexture  gradient
 > sq2 = square 1 # fillTexture (gradient & _LG . lGradSpreadMethod .~ GradRepeat
@@ -1343,8 +1380,56 @@ Linear Gradients
 >
 > example = hcat' (with & sep .~ 0.25) [sq1, sq2, sq3]
 
+
+Here we apply the gradient to the stroke only and give it starting and
+ending points towards the corners.
+
+.. class:: dia-lhs
+
+::
+
+> stops = mkStops [(teal, 0, 1), (orange, 1, 1)]
+> gradient = mkLinearGradient stops ((-1) ^& (-1)) (1 ^& 1) GradPad
+> example = rect 3 1 # lineTexture  gradient # lwO 15 # fc black # opacity 0.75
+
 Radial Gradients
 ++++++++++++++++
+
+Radial gradients are similar, only they begin at the perimeter of an inner cirlce and
+end at the perimeter of an outer circle.
+
+.. class:: lhs
+
+::
+
+> data RGradient = RGradient
+>     { _rGradStops        :: [GradientStop]
+>     , _rGradCenter0      :: P2
+>     , _rGradRadius0      :: Double
+>     , _rGradCenter1      :: P2
+>     , _rGradRadius1      :: Double
+>     , _rGradTrans        :: T2
+>     , _rGradSpreadMethod :: SpreadMethod }
+
+Where radius and center 0 are for the inner circle, and 1 for the outer circle.
+In this example we place the inner circle off center and place a circle filled
+with the radial gradient on top of a rectangle filled with a linear gradient 
+to create a 3D effect.
+
+.. class:: dia-lhs
+
+::
+
+> radial = mkRadialGradient (mkStops [(white,0,1), (black,1,1)])
+>                           ((-0.15) ^& (0.15)) 0.06 (0 ^& 0) 0.5
+>                           GradPad
+>
+> linear = mkLinearGradient (mkStops [(black,0,1), (white,1,1)])
+>                           (0 ^& (-0.5)) (0 ^& 0.5)
+>                           GradPad 
+> 
+> example = circle 0.35 # fillTexture radial # lw none
+>        <> rect 2 1 # fillTexture linear # lw none
 
 
 
