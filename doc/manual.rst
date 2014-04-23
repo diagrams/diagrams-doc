@@ -1498,7 +1498,7 @@ occasionally be useful.
 
    ::
 
-   > ell = text "L" <> square 1 # lw 0
+   > ell = text "L" <> square 1 # lw none
    > alpha = tau / 8 @@ rad
    >
    > dia1 = ell # translateX 2 # rotate alpha
