@@ -1500,13 +1500,13 @@ occasionally be useful.
 
    > ell = text "L" <> square 1 # lw 0
    > alpha = tau / 8 @@ rad
-   > 
+   >
    > dia1 = ell # translateX 2 # rotate alpha
    > dia2 = ell # ( rotate alpha <> translateX 2 )
    > dia3 = ell # transform ( rotation alpha <> translationX 2 )
-   > 
-   > example = 
-   >   hcat' (with & sep .~ 2) 
+   >
+   > example =
+   >   hcat' (with & sep .~ 2)
    >     [ (dia1 <> orig)
    >     , (dia2 <> orig)
    >     , (dia3 <> orig)
@@ -1515,7 +1515,7 @@ occasionally be useful.
    >     orig = circle 0.05 # fc red
 
    `dia1` is the intended result: a character L translated along the X axis,
-   and then rotated over 45 degrees around the origin. 
+   and then rotated over 45 degrees around the origin.
 
    `dia2` shows the result of naively composing the verb versions of
    the transformations: a superposition of a rotated L and a
@@ -4516,6 +4516,11 @@ backend is on a par with the cairo backend in terms of features
 described above).  For information on making use of the SVG backend,
 see `Diagrams.Backend.SVG`:mod:.
 
+Gradient support is complete in this backend however, most browsers to not
+handle the SVG spec correctly when it comes to reflect and repeat.
+Apparently only Chrome and IE follow the spec correctly at this point, while
+Safari does not handle reflect and repeat at all and Firefox gets it wrong.
+
 The source code for the SVG backend can be found in the
 `diagrams-svg`:repo: repository.
 
@@ -4527,7 +4532,7 @@ backend, is written purely in Haskell.  It outputs encapsulated
 PostScript (EPS) files.  Note that by nature, EPS does not support
 transparency.  The postscript backend also does not support embedded
 images.  However, it is fairly complete in its support for other
-features.
+features with the exception of gradients.
 
 The source code for the postscript backend can be found in the
 `diagrams-postscript`:repo: repository.
@@ -4544,7 +4549,12 @@ platforms, particularly OS X.
 .. _`cairo 2D graphics library`: http://www.cairographics.org/
 
 The cairo backend can produce PNG, SVG, PDF, postscript,
-and animated GIF output.
+and animated GIF output. The cairo backend does support gradients
+however, do to a bug in the cairo package it does not handle reflect
+and repeat correctly,
+
+.. _ `Extend`:http://hackage.haskell.org/package/cairo-0.12.5.3/docs/Graphics-Rendering-Cairo.html#t:Extend
+
 For specific information on how to make use of it, see the
 documentation for the `Diagrams.Backend.Cairo`:mod: module.
 
@@ -4586,6 +4596,18 @@ out which part the user clicked on (see `Using queries`_).
 
 The source code for the GTK backend can be found in the
 `diagrams-gtk`:repo: repository.
+
+The Rasterific backend
+----------------------
+
+The Rasterific backend is built on top of the `Rasterific`:pkg: package, which
+is a pure haskell rasterizer that uses `JuicyPixels`:pkg: and `FontyFruity`:pkg:.
+This is a fully featured backend that supports almost everything that the cairo
+backend does plus a few other things. It can produce PNG, JPG, BMP, TIF and
+animated GIF images. It also supports embedded images (see `DImage`) and
+although does not yet have the text handling capabilities of cairo, it does use
+the exact text bounding box for alignment. Gradients are fully supported
+including, repeat and reflect.
 
 Other backends
 --------------
