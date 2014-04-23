@@ -1255,13 +1255,20 @@ __ core.html
 Most of the attributes discussed in this section are defined in
 `Diagrams.Attributes`:mod:.
 
+Texture
+~~~~~~~
+
+Two-dimensional diagrams can be filled and stroked with a `Texture`. A
+`Texture` can be either a solid color, a linear gradient or a radial
+gradient. Not all backends support gradients, in particular gradients are
+supported by the SVG, Cairo, and Rasterific backends (see `Rendering backends`_).
+Future releases should also support patterns as textures.
+
 Color
 +++++
 
-Two-dimensional diagrams have two main colors, the color used to
-stroke the paths in the diagram and the color used to fill them.
-These can be set, respectively, with the `lc` (line color) and `fc`
-(fill color) functions.
+Tthe color used to stroke the paths can be set with the `lc` (line color)
+function and the color used to fill them with the `fc` (fill color) function.
 
 .. class:: dia-lhs
 
@@ -1277,7 +1284,9 @@ provides a large set of predefined color names as well as many more
 sophisticated color operations; see its documentation for more
 information.  The `colour`:pkg: package uses a different type for
 colors with an alpha channel (*i.e.* transparency). To make use of
-transparent colors you can use `lcA` and `fcA`.
+transparent colors you can use `lcA` and `fcA`. The `palette`::pkg: package
+provides additional sets of colors and algorithms for creating harmonious
+color combinations.
 
 .. class:: dia-lhs
 
@@ -1314,6 +1323,30 @@ color.
 > t = regPoly 3 1
 >
 > example = t ||| t # bg orange
+
+Linear Gradients
+++++++++++++++++
+
+.. class:: dia-lhs
+
+::
+
+> stops = mkStops [(lightgray, 0, 1), (purple, 1, 1)]
+> gradient = mkLinearGradient stops ((-0.5) ^& 0) (0.5 ^& 0) GradPad
+> sq1 = square 1 # fillTexture  gradient
+> sq2 = square 1 # fillTexture (gradient & _LG . lGradSpreadMethod .~ GradRepeat
+>                                        & _LG . lGradStart .~ (-0.1) ^& 0
+>                                        & _LG . lGradEnd .~ 0.1 ^& 0)
+> sq3 = square 1 # fillTexture (gradient & _LG . lGradSpreadMethod .~ GradReflect
+>                                        & _LG . lGradStart .~ (-0.1) ^& 0
+>                                        & _LG . lGradEnd .~ 0.1 ^& 0)
+>
+> example = hcat' (with & sep .~ 0.25) [sq1, sq2, sq3]
+
+Radial Gradients
+++++++++++++++++
+
+
 
 Line width, dashing, and freezing
 +++++++++++++++++++++++++++++++++
@@ -4551,7 +4584,7 @@ platforms, particularly OS X.
 The cairo backend can produce PNG, SVG, PDF, postscript,
 and animated GIF output. The cairo backend does support gradients
 however, do to a bug in the cairo package it does not handle reflect
-and repeat correctly,
+and repeat correctly for radial gradients,
 
 .. _ `Extend`:http://hackage.haskell.org/package/cairo-0.12.5.3/docs/Graphics-Rendering-Cairo.html#t:Extend
 
