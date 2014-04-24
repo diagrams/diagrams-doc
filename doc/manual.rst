@@ -229,6 +229,8 @@ the following contents:
   -- import Diagrams.Backend.Cairo.CmdLine
   -- or:
   -- import Diagrams.Backend.Postscript.CmdLine
+  -- or:
+  -- import Diagrams.Backend.Rasterific.CmdLine
 
   myCircle :: Diagram B R2
   myCircle = circle 1
@@ -277,7 +279,8 @@ The above will generate a 100x100 SVG that should look like this:
 If you are using the cairo backend you can also request a ``.png``,
 ``.ps``, or ``.pdf`` file (the format is automatically determined by
 the extension), or an ``.eps`` file if using the postscript
-backend.
+backend. The rasterific backend allows ``.png``, ``.jpg``, ``.tif``,
+and ``.bmp``.
 
 Try typing
 
@@ -1438,16 +1441,8 @@ to create a 3D effect.
 
 
 
-Line width, dashing, and freezing
-+++++++++++++++++++++++++++++++++
-
-.. container:: todo
-
-   Fix me!!
-
-To alter the *width* of the lines used to stroke paths, use `lw`. The
-default line width is (arbitrarily) `0.01`.  You can also set the line
-width to zero if you do not want a path stroked at all.
+Line width and dashing
+++++++++++++++++++++++
 
 Line width is actually more subtle than you might think.  Suppose you
 create a diagram consisting of a square, and another square twice as
@@ -1455,18 +1450,20 @@ large next to it (using `scale 2`).  How should they be drawn?  Should
 the lines be the same width, or should the larger square use a line
 twice as thick?  The same questions also come up when considering the
 dashing style used to draw some shapes---should the size of the dashes
-scale with transformations applied to the shapes, or not?
+scale with transformations applied to the shapes, or not? We allow the
+user to decide by specying both line width and dashing with attributes
+of value `Measure R2`.
 
-In fact, in many situations the line thickness and dashing pattern
+In many situations the line thickness and dashing pattern
 should actually be the *same*, so a collection of shapes will be drawn
-in a uniform way.  This is the default in ``diagrams``.  Specifically,
-the arguments to `lw` and `dashing` are measured with respect to the
-*final* vector space of a complete, rendered diagram, *not* with
-respect to the local vector space at the time the functions are
-applied.  Put another way, subsequent transformations do not affect
-the line width and dashing pattern.  This is perhaps a bit confusing,
-but trying to get things to look reasonable would be a nightmare
-otherwise.
+in a uniform way.  This is what happens if you choose values of type
+`Global`, `Normalized` or `Output` as parameters of `Measure`.
+This is perhaps a bit confusing, but trying to get things to look 
+reasonable would be a nightmare otherwise. If you do want the line
+width to scale with the diagram then specify the type of
+the `Measure` parameter to be `Local`. In this case line widths will
+be scaled in proportion to the geometeric average of the scaling
+transformatins applied to the diagram.
 
 .. class:: dia-lhs
 
@@ -1479,18 +1476,36 @@ otherwise.
 >   ]
 >   # dashingN [0.03,0.03] 0
 
+The `LineWidth` attribute is used to alter the *width* with which paths
+are stroked. The most general function that can be used to set the
+line width is `lineWidth`, and its synonym `lw`, which takes an argument 
+of type `Measure R2`.
+So for example `lineWidth (Normalized 0.1)` or `lineWidth (Output 0.02)`.
+Since setting the stroke width is such a common operation we provide
+numerous short cuts to accomplish this task. Additionally, we aim to make
+setting the line width more intuitive by allowing things like `lw thick`
+to make the lineWidth thick. We also define the functions: `lwG`,
+`lwN`, `lwO`, and `lwL` that take an argument of type `Double` and set
+the line width to, `Global`, `Normalized`, `Ouput` and `Local` respectively.
+Here we demonstrate using the convenience values to set the line width.
+(Note these values are all of type `Normalized w \`atleast\` Output 0.5`)
+You can also make the line invisible with `lw none`. The default value
+for line width is `lw medium`
+
+.. class:: dia-lhs
+
+::
+
+> line = strokeT . fromOffsets $ [unitX]
+> example = vcat' (with & sep .~ 0.1) 
+>   [line # lw w | w <- [ultraThin, veryThin, thin, 
+>                        medium, thick, veryThick, ultraThick]]
+
 Note that line width does not affect the envelope of diagrams at all.
 To stroke a line "internally", turning it into a diagrams path
 enclosing the stroked area (which *does* contribute to the envelope),
 you can use one of the functions described in the section `Offsets of
 segments, trails, and paths`_.
-
-Some backends may not fully support freezing line width.  In such
-cases, a backend may use the `avgScale` function to compute the
-*average* scale represented by a transformation, and use it to scale
-the line width uniformly.  This average scaling is well-behaved; for
-instance, it is the case that `avgScale (scale k) == k`, and `avgScale
-(t1 <> t2) == avgScale t1 * avgScale t2`.
 
 Other line parameters
 +++++++++++++++++++++
@@ -3165,8 +3180,8 @@ to `connect` is `connect'`. These companion functions take an extra
   defined as the diameter of an enclosing circle. The default value is
   0.3.  Note that arrowheads and tails are scale-invariant, so the
   these sizes are relative to the *final* vector space of the rendered
-  diagram (see also the section on `Line width, dashing, and
-  freezing`_ and the documentation for `freeze`).
+  diagram (see also the section on `Line width and dashing`_ and the 
+  documentation for `freeze`).
 
 * `headGap` and `tailGap` both default to 0 and are used to indicate
   the amount of space between the end of the arrow and the location it
