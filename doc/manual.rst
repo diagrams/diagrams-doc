@@ -1361,6 +1361,8 @@ gradient but with the stops reversed. This is the data type for a linear gradien
 Lenses are provided to access the record fields. In addition the functions `mkStops` taking
 a list of triples (color, fraction, opacity) and `mkLinearGradient` which takes a list of stops,
 a start and end point, and a spread method and creates a `Texture` are provided for convenience.
+`LGradient` also has a default instance where the stops are set to the empty list, start is
+(-0.5, 0), end is (0.5, 0), the transform is identity and the spread method is pad.
 In this example we demonstrate how to make linear gradients with the `mkLinearGradient`
 functions and how to adjust it using the lenses and prisms.
 
@@ -1412,6 +1414,9 @@ end at the perimeter of an outer circle.
 >     , _rGradSpreadMethod :: SpreadMethod }
 
 Where radius and center 0 are for the inner circle, and 1 for the outer circle.
+The default instance for `RGradient` is the same as for `LGradient` in all common
+fields, the inner circle is a point at the origin and the outer circle is centered
+at the origin with radius 0.5.
 In this example we place the inner circle off center and place a circle filled
 with the radial gradient on top of a rectangle filled with a linear gradient 
 to create a 3D effect.
