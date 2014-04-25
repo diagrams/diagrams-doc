@@ -19,7 +19,7 @@ view: -10,1.5,20,20
 First, some colors for our disks, and types to represent the data
 structures involved.
 
-> colors = map sRGB24read [ "#9FB4CC", "#CCCC9F", "#DB4105", "#FFF8E3", "#33332D"]
+> colors = cycle $ map sRGB24read [ "#9FB4CC", "#CCCC9F", "#DB4105", "#FFF8E3", "#33332D"]
 >
 > type Disk  = Int
 > type Stack = [Disk]
