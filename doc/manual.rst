@@ -669,8 +669,20 @@ property as well, and are probably more useful; the problem with
 the final size of the diagram, which is not typically something one
 knows in advance.  In particular, note that applying something like
 `scale 20` to the `example` above---a seemingly innocuous
-change---would result in extremely thin (or even invisible!) lines,
-requiring a change to the argument to `lwG`.
+change---would result in extremely thin lines (or even invisible,
+depending on the backend), as shown below.  Making this look
+reasonable again would require changing the argument to `lwG`.
+
+.. class:: dia-lhs
+
+::
+
+> theSq = square 1 # lwG 0.05
+>
+> example =
+>   hcat' (with & sep .~ 0.2)
+>     (map (\s -> theSq # scale s) [0.5, 0.8, 1, 1.5, 2])
+>   # scale 20
 
 In short, `Global` units tend to go against ``diagrams`` emphasis on
 local, scale-invariant thinking.  They were left in for backwards
@@ -1593,29 +1605,23 @@ to create a 3D effect.
 
 
 
-Line width and dashing
-++++++++++++++++++++++
+Line width
+++++++++++
 
 Line width is actually more subtle than you might think.  Suppose you
 create a diagram consisting of a square, and another square twice as
 large next to it (using `scale 2`).  How should they be drawn?  Should
 the lines be the same width, or should the larger square use a line
-twice as thick?  The same questions also come up when considering the
-dashing style used to draw some shapes---should the size of the dashes
-scale with transformations applied to the shapes, or not? We allow the
-user to decide by specying both line width and dashing with attributes
-of value `Measure R2`.
+twice as thick?  (Note that similar questions also come up when
+considering the dashing style used to draw some shapes---should the
+size of the dashes scale with transformations applied to the shapes,
+or not?) ``diagrams`` allows the user to decide, using `Measure R2`
+values to specify things like line width (see `Measurement units`_).
 
-In many situations the line thickness and dashing pattern
-should actually be the *same*, so a collection of shapes will be drawn
-in a uniform way.  This is what happens if you choose values of type
-`Global`, `Normalized` or `Output` as parameters of `Measure`.
-This is perhaps a bit confusing, but trying to get things to look
-reasonable would be a nightmare otherwise. If you do want the line
-width to scale with the diagram then specify the type of
-the `Measure` parameter to be `Local`. In this case line widths will
-be scaled in proportion to the geometeric average of the scaling
-transformatins applied to the diagram.
+In many situations, it is desirable to have lines drawn in a uniform
+way, regardless of any scaling applied to shapes.  This is what
+happens with line widths measured in `Global`, `Normalized` or
+`Output` units, as in the following example:
 
 .. class:: dia-lhs
 
@@ -1627,34 +1633,49 @@ transformatins applied to the diagram.
 >   , circle 1 # scaleX 3
 >   ]
 >   # dashingN [0.03,0.03] 0
+>   # lwN 0.01
 
-The `LineWidth` attribute is used to alter the *width* with which paths
-are stroked. The most general function that can be used to set the
-line width is `lineWidth`, and its synonym `lw`, which takes an argument 
-of type `Measure R2`.
-So for example `lineWidth (Normalized 0.1)` or `lineWidth (Output 0.02)`.
-Since setting the stroke width is such a common operation we provide
-numerous short cuts to accomplish this task. Additionally, we aim to make
-setting the line width more intuitive by allowing things like `lw thick`
-to make the lineWidth thick. We also define the functions: `lwG`,
-`lwN`, `lwO`, and `lwL` that take an argument of type `Double` and set
-the line width to, `Global`, `Normalized`, `Ouput` and `Local` respectively.
-Here we demonstrate using the convenience values to set the line width.
-(Note these values are all of type `Normalized w \`atleast\` Output 0.5`)
-You can also make the line invisible with `lw none`. The default value
-for line width is `lw medium`
+For line widths that scale along with a diagram, use `Local`; in this
+case line widths will be scaled in proportion to the geometeric
+average of the scaling transformatins applied to the diagram.
+
+The `LineWidth` attribute is used to alter the *width* with which
+paths are stroked. The most general functions that can be used to set
+the line width are `lineWidth` and its synonym `lw`, which take an
+argument of type `Measure R2`.  Since typing things like `lineWidth
+(Normalized 0.01)` is cumbersome, there are also shortcuts provided:
+`lwG`, `lwN`, `lwO`, and `lwL` all take an argument of type `Double`
+and wrap it in `Global`, `Normalized`, `Ouput` and `Local`,
+respectively.
+
+There are also predefined `Measure R2` values with intuitive names,
+namely, `ultraThin`, `veryThin`, `thin`, `medium`, `thick`,
+`veryThick`, `ultraThick`, and `none` (the default is `medium`), which
+should often suffice for setting the line width.
 
 .. class:: dia-lhs
 
 ::
 
 > line = strokeT . fromOffsets $ [unitX]
-> example = vcat' (with & sep .~ 0.1) 
->   [line # lw w | w <- [ultraThin, veryThin, thin, 
+> example = vcat' (with & sep .~ 0.1)
+>   [line # lw w | w <- [ultraThin, veryThin, thin,
 >                        medium, thick, veryThick, ultraThick]]
 
+In the above example, there is no discernible difference between
+`ultraThin`, `veryThin`, and `thin`; these names all describe
+`Normalized` measurements with a physical lower bound, so the physical
+width of the resulting lines depends on the physical size of the
+rendered diagram.  At larger rendering sizes the differences between
+the smaller widths become apparent.
+
+.. container:: todo
+
+  Explain that they all have a minimum output size.  Should wait until
+  we have a better idea what the heck output size actually means.
+
 Note that line width does not affect the envelope of diagrams at all.
-To stroke a line "internally", turning it into a diagrams path
+To stroke a line "internally", turning it into a `Path` value
 enclosing the stroked area (which *does* contribute to the envelope),
 you can use one of the functions described in the section `Offsets of
 segments, trails, and paths`_.
@@ -1789,7 +1810,7 @@ occasionally be useful.
    ::
 
    > ell = text "L" <> square 1 # lw none
-   > alpha = tau / 8 @@ rad
+   > alpha = 45 @@ deg
    >
    > dia1 = ell # translateX 2 # rotate alpha
    > dia2 = ell # ( rotate alpha <> translateX 2 )
@@ -1798,21 +1819,23 @@ occasionally be useful.
    > example =
    >   hcat' (with & sep .~ 2)
    >     [ (dia1 <> orig)
+   >     , vrule 4
    >     , (dia2 <> orig)
+   >     , vrule 4
    >     , (dia3 <> orig)
    >     ]
    >   where
-   >     orig = circle 0.05 # fc red
+   >     orig = circle 0.05 # fc red # lw none
 
    `dia1` is the intended result: a character L translated along the X axis,
-   and then rotated over 45 degrees around the origin.
+   and then rotated 45 degrees around the origin.
 
    `dia2` shows the result of naively composing the verb versions of
    the transformations: a superposition of a rotated L and a
    translated L.  To understand this, consider that `(rotate alpha)`
    is a *function*, and functions as monoid instances (`Monoid m =>
    Monoid (a -> m)`) are composed as `(f <> g) x = f x <> g x`.  To
-   quote the typeclassopedia_: if `a` is a Monoid, then so is the
+   quote the Typeclassopedia_: if `a` is a Monoid, then so is the
    function type `e -> a` for any `e`; in particular, `g \`mappend\`
    h` is the function which applies both `g` and `h` to its argument
    and then combines the results using the underlying Monoid instance
@@ -1822,8 +1845,8 @@ occasionally be useful.
    the same as the superposition of two diagrams: `rotate alpha ell <>
    translateX 2 ell`.
 
-   `dia3` shows how the noun versions can be composed with the intended
-   result.
+   `dia3` shows how the noun versions can be composed (using the
+   `Monoid` instance for `Transformation`) with the intended result.
 
 .. _`typeclassopedia`: http://www.haskell.org/haskellwiki/Typeclassopedia#Instances_4
 
@@ -3330,10 +3353,7 @@ to `connect` is `connect'`. These companion functions take an extra
 
 * `headSize` and `tailSize` specify the size of the head and tail,
   defined as the diameter of an enclosing circle. The default value is
-  0.3.  Note that arrowheads and tails are scale-invariant, so the
-  these sizes are relative to the *final* vector space of the rendered
-  diagram (see also the section on `Line width and dashing`_ and the 
-  documentation for `freeze`).
+  0.3 XXX FIX ME
 
 * `headGap` and `tailGap` both default to 0 and are used to indicate
   the amount of space between the end of the arrow and the location it
