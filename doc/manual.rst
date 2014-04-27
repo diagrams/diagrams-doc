@@ -568,6 +568,158 @@ moving their local origins.  The `showOrigin` function is provided as
 a quick way of visualizing the local origin of a diagram (also
 illustrated above).
 
+Measurement units
+-----------------
+
+Certain attributes (such as line width, dashing size, arrowhead size,
+and font size) can be specified with respect to several different
+reference frames.  For example, the lines used to draw a certain
+square can be specified as an absolute two pixels wide, or as a
+certain percentage of the size of the final diagram, or in units
+relative to the size of the square.  More specifically, values of type
+`Measure v` represent `Scalar v` values, interpreted in one of four
+"reference frames": `Local`, `Global`, `Normalized`, or `Output`,
+described below in turn.
+
+In addition to the four reference frames described here, it is
+possible to combine them into more complex expressions using a small
+DSL for specifying measurements; see `XXX`_.
+
+.. container:: todo
+
+  * Write a section about `Measure` DSL
+  * Mention somewhere(s) below about `avgScale` (relevant to
+    interpreting uniform line width under non-uniform scales, and to
+    interpreting `Normalized` units)
+
+Local units
+~~~~~~~~~~~
+
+`Local` units are the most straightforward to explain.  Values in
+`Local` units are interpreted in the context of the *local* vector
+space, just as most other length measurements (*e.g.* arguments to
+functions like `circle` and `square`).  For example, `square 1 # lwL
+0.2` specifies a square which is drawn with lines one fifth as wide as
+its sides are long---and will *always* be, even if it is scaled: the
+line width scales right along with the square. (Note that `lwL`
+specifies the line width using `Local` units, and is a synonym for `lw
+. Local`.),
+
+.. class:: dia-lhs
+
+::
+
+> localSq = square 1 # lwL 0.2
+> example =
+>   hcat' (with & sep .~ 0.5)
+>   [localSq, localSq # scale 2, localSq # scaleX 2]
+
+It's important to note that---as illustrated by the third figure in
+the above picture---line width always scales uniformly, even when a
+non-uniform scaling is applied.  Previous versions of diagrams had a
+`freeze` operation which could be used to apply non-uniform scaling to
+lines; to achieve such an effect, you can first turn a stroked line
+into a closed path, as described in `Offsets of segments, trails, and
+paths`_.
+
+A important consequence of `Local` units having the *current* vector
+space as their reference is that attribute-setting functions such as
+`lwL` do *not* commute with transformations.
+
+.. class:: dia-lhs
+
+::
+
+> example =
+>   hcat' (with & sep .~ 0.5)
+>   [ square 1 # lwL 0.2 # scale 2
+>   , square 1 # scale 2 # lwL 0.2
+>   ]
+>   # frame 0.5
+
+Global units
+~~~~~~~~~~~~
+
+Whereas `Local` values are interpreted in the current, "local" vector
+space, `Global` values are interpreted in the final, "global" vector
+space of the diagram that is rendered.  In the following example,
+`theSq` is specified as having a `Global` line width of `1`; five
+differently-scaled copies of the square are laid out, so that the entire
+scaled diagram has a width of around `6` units.  The lines, having a
+line width of `Global 0.05`, are thus about 0.8% of the width of the
+entire diagram.
+
+.. class:: dia-lhs
+
+::
+
+> theSq = square 1 # lwG 0.05
+>
+> example =
+>   hcat' (with & sep .~ 0.2)
+>     (map (\s -> theSq # scale s) [0.5, 0.8, 1, 1.5, 2])
+
+Versions of ``diagrams`` prior to `1.2` actually had a semantics for
+`lw` equivalent to `lwG`.  One advantage, as can be seen from the
+above example, is that different shapes having the same `Global` line
+width, even when differently scaled, will all be drawn with the same
+apparent line width. However, `Normalized` and `Output` have that
+property as well, and are probably more useful; the problem with
+`Global` units is that in order to decide on values, one has to know
+the final size of the diagram, which is not typically something one
+knows in advance.  In particular, note that applying something like
+`scale 20` to the `example` above---a seemingly innocuous
+change---would result in extremely thin (or even invisible!) lines,
+requiring a change to the argument to `lwG`.
+
+In short, `Global` units tend to go against ``diagrams`` emphasis on
+local, scale-invariant thinking.  They were left in for backwards
+compatibility, and because they can occasionaly be useful in special
+situations where you do already have some absolute, global coordinate
+system in mind: for example, if you know you want to construct a
+100x100 diagram using lines that are 1 unit wide.
+
+Normalized units
+~~~~~~~~~~~~~~~~
+
+`Normalized` units, like `Global` units, are measured with respect to
+the final size of a diagram. However, for the purposes of interpreting
+`Normalized` units, the diagram is considered to be one "normalized
+unit" in both height and width.  For example, a `Normalized` value of
+`0.1` means "10% of the height/width of the final diagram".  Thus,
+scaling the diagram has no effect on the relative size of the lines
+(just as with `Local`), but lines look consistent even across shapes
+that have been scaled differently (as with `Global`).
+
+.. class:: dia-lhs
+
+::
+
+> theSq = square 1 # lwN 0.01
+>
+> example =
+>   hcat' (with & sep .~ 0.2)
+>     (map (\s -> theSq # scale s) [0.5, 0.8, 1, 1.5, 2])
+>   # scale 20
+
+Note that the `scale 20` threatened in the `Global` example has been
+applied here, but makes no difference: changing the `20` to any other
+nonzero value has no effect on the appearance of the rendered diagram.
+
+Output units
+~~~~~~~~~~~~
+
+Values measured in `Output` units are interpreted with respect to the
+*requested output size* of a diagram.  Sometimes you really do know
+that you want your lines to be exactly 1/2 inch wide when printed.  In
+this case, scaling a diagram will preserve its appearance, but
+requesting a different output size might not.
+
+.. container:: todo
+
+  Expand on this.  Show some examples.  Need a better story about
+  physical units.
+
 Postfix transformation
 ----------------------
 
@@ -1458,7 +1610,7 @@ In many situations the line thickness and dashing pattern
 should actually be the *same*, so a collection of shapes will be drawn
 in a uniform way.  This is what happens if you choose values of type
 `Global`, `Normalized` or `Output` as parameters of `Measure`.
-This is perhaps a bit confusing, but trying to get things to look 
+This is perhaps a bit confusing, but trying to get things to look
 reasonable would be a nightmare otherwise. If you do want the line
 width to scale with the diagram then specify the type of
 the `Measure` parameter to be `Local`. In this case line widths will
