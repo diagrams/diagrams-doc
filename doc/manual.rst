@@ -4375,6 +4375,39 @@ In addition, the `scaleInvPrim` function creates a scale-invariant
 diagram from a primitive (such as a path).  At the moment it is not
 possible to create a scale-invariant diagram from another *diagram*.
 
+Measurement expressions
+-----------------------
+
+.. container:: todo
+
+  Go through this section and update it if we merge physical units for
+  `Output`.
+
+There is more to `Measure`\s (see `Measurement units`_) than just the
+four reference frames.  In fact, a small domain-specific language for
+constructing measurements is provided, with the following features:
+
+* `atLeast :: Measure v -> Measure v -> Measure v` finds the maximum
+  of two measurements.  For example, `Normalized 0.2 \`atLeast\`
+  Local 1` evaluates to whichever measurement ends up being larger,
+  `Normalized 0.2` or `Local 1`.
+
+  In fact, the standard line widths like `medium`, `thick`, *etc.*
+  are defined as `Normalized w \`atLeast\` Output 0.5`, each with a
+  different value of `w` (for example, for `medium`, `w = 0.004`).
+* Similarly, `atMost` takes the minimum of two `Measure`\s.
+* `Measure v` is an instance of `AdditiveGroup`, which provides `zeroV
+  :: Measure v`, `negateV :: Measure v -> Measure v`, and `(^+^)` for
+  adding measurements.  For example, `Normalized 0.1 ^+^ Output 1`
+  represents 10% of the width or height of the diagram plus one output
+  unit.
+* `Measure v` is also an instance of `VectorSpace`, which provides
+    `(*^) :: Scalar v -> Measure v -> Measure v` as a scaling operation.
+
+The semantics of these expressions is what you would expect:
+everything is first converted to compatible units, and then the
+operations are interpreted in the obvious way.
+
 Tips and tricks
 ===============
 
