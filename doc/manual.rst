@@ -3336,8 +3336,9 @@ to `connect` is `connect'`. These companion functions take an extra
 
 * `arrowHead` and `arrowTail`, to specify the shape of the head and
   tail. The `Diagrams.TwoD.Arrowheads`:mod: module exports the
-  arrowheads `tri`, `dart`, `spike`, `thorn`, `missile`, and `noHead`;
-  the default is `dart`. For tails we have `quill`, `block` and
+  arrowheads `tri`, `dart`, `spike`, `thorn`, `missile`, `lineHead`,
+  and `noHead`;
+  the default is `dart`. For tails we have `quill`, `block`, `lineTail`, and
   `noTail`; `noTail` is the default. Addtionally, any head can be used
   as a tail by appending a `'` (e.g. `dart'`). There are also
   functions that can be used to create custom heads and tails (see
@@ -3347,8 +3348,10 @@ to `connect` is `connect'`. These companion functions take an extra
   fit between the endpoints of the arrow.
 
 * `headSize` and `tailSize` specify the size of the head and tail,
-  defined as the diameter of an enclosing circle. The default value is
-  0.3 XXX FIX ME
+  defined as the diameter of an enclosing circle. Their value is of `
+  is of type `Measure R2` (see  `Measurement units`_). The 
+  default value is `normal` which is a synonym for `Normalized 0.05 
+  \`atLeast\` Output 1`.
 
 * `headGap` and `tailGap` both default to 0 and are used to indicate
   the amount of space between the end of the arrow and the location it
@@ -3359,10 +3362,9 @@ to `connect` is `connect'`. These companion functions take an extra
 
 * `headStyle`, `tailStyle` and `shaftStyle` are used to pass in style
   functions like `fc blue . opacity 0.75` to customize parts of the
-  arrow. `headColor`, `tailColor` and `shaftColor` can be used for the
-  common case of setting just the color. (By default, the entire
+  arrow. (By default, the entire
   arrow, including head and tail, is drawn using the current line
-  color.)
+  texture.)
 
 The following example demonstrates the use of various `ArrowOpts`.
 See `Named subdiagrams`_ for the use of names and the `named`
@@ -3389,16 +3391,16 @@ function.
 >
 > example = d
 >    # connect' (with & arrowTail .~ quill & tailSize .~ large
->                     & tailColor .~ orange & headColor .~ orange
+>                     & tailStyle %~ fc orange & headStyle %~ fc orange
 >                     & arrowHead .~ spike & headSize  .~ large
 >                     & shaftStyle %~ lw ultraThick ) "1" "2"
 >    # connect' (with & arrowTail .~ thorn' & tailSize .~ large
 >                     & arrowHead .~ thorn  & headSize .~ large
 >                     & arrowShaft .~ shaft1 & shaftStyle %~ lw veryThick ) "3" "4"
->    # connect' (with & arrowTail .~ block & tailGap .~ 0.4
->                     & arrowHead .~ missile & headSize .~ large & headGap .~ 0.4
+>    # connect' (with & arrowTail .~ block & gap .~ 4
+>                     & arrowHead .~ missile & headSize .~ large
 >                     & arrowShaft .~ shaft2
->                     & headColor .~ blue & tailColor .~ blue
+>                     & headStyle %~ fc blue & tailStyle %~ fc blue
 >                     & shaftStyle %~ lw veryThick . lc blue ) "5" "6"
 >    # connect' (with & arrowShaft .~ shaft3
 >                     & arrowHead .~ tri & headSize .~ large
