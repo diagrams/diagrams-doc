@@ -4,6 +4,7 @@ title: Sightings
 
 People using diagrams to do stuff.
 
+* [Red-Black Neighbourhood Stencil Diagrams](http://readerunner.wordpress.com/2014/04/29/red-black-neighbourhood-stencil-diagrams/) (Chris Reade, 29 April 2014)
 * [mini-cyk-parser](https://github.com/ludflu/mini-cyk-parser)
 * [Drawing puzzles with the Haskell Diagrams framework](http://maybepuzzles.wordpress.com/2014/04/07/drawing-puzzles-with-the-haskell-diagrams-framework/)
 * [A Cretan Maze using Haskell Diagrams](http://www.corentindupont.info/blog/posts/2014-02-17-Cretan-Maze.html)
