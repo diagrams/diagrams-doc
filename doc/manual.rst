@@ -293,6 +293,12 @@ manual.
 
 .. _`quick start tutorial`: /doc/quickstart.html
 
+If you want to roll your own code, e.g. as a component of a
+stand-alone program, see the backend specific sections under
+`Rendering backends`_.
+
+FIXME
+
 Contributing
 ------------
 
@@ -4642,6 +4648,8 @@ Safari does not handle reflect and repeat at all and Firefox gets it wrong.
 The source code for the SVG backend can be found in the
 `diagrams-svg`:repo: repository.
 
+FIXME
+
 The postscript backend
 ----------------------
 
@@ -4654,6 +4662,8 @@ features with the exception of gradients.
 
 The source code for the postscript backend can be found in the
 `diagrams-postscript`:repo: repository.
+
+FIXME
 
 The cairo backend
 -----------------
@@ -4695,6 +4705,8 @@ quite a few advanced features that other backends do not have:
 The source code for the cairo backend can be found in the
 `diagrams-cairo`:repo: repository.
 
+FIXME
+
 The GTK backend
 ---------------
 
@@ -4715,6 +4727,8 @@ out which part the user clicked on (see `Using queries`_).
 The source code for the GTK backend can be found in the
 `diagrams-gtk`:repo: repository.
 
+FIXME
+
 The Rasterific backend
 ----------------------
 
@@ -4726,6 +4740,8 @@ animated GIF images. It also supports embedded images (see `DImage`) and
 although does not yet have the text handling capabilities of cairo, it does use
 the exact text bounding box for alignment. Gradients are fully supported
 including, repeat and reflect.
+
+FIXME
 
 Other backends
 --------------
