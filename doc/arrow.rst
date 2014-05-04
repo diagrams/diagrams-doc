@@ -22,60 +22,70 @@ options used to make arrows.
 
 ::
 
-> example = d # connect' (with & arrowHead .~ dart & headSize .~ Global 1 & arrowTail .~ quill
->                              & tailSize .~ Global 1 & shaftStyle %~ lw thick . lc black & arrowShaft .~ s
->                              & tailGap .~ 0.1 & headGap .~ 0.1
->                              & headColor .~ blue & tailColor .~ orange)
->                              "1" "2"
->             # connect' (with & arrowHead .~ missile & headSize .~ Global 0.8 & arrowTail .~ missile'
->                              & tailSize .~ Global 0.8 & arrowShaft .~ s1
->                              & headGap .~ 0 & tailGap .~ 0.1)
->                              "4" "3"
->             # connect' (with & arrowHead .~ thorn & headSize .~ Global 0.8 & arrowShaft .~ a1
->                              & arrowTail .~ noTail
->                              & tailGap .~ 1 & headGap .~ 1 )
->                              "1" "6"
->             # connect' (with & arrowHead .~ dart & tailSize .~ Global 1 & arrowTail .~ dart'
->                              & headSize .~ Global 1 & arrowShaft .~ s2
->                              & headColor .~ green & tailColor .~ green
->                              & shaftStyle %~ lw thick . lc green )
->                              "4" "7"
->             # connect' (with & arrowTail .~ dart' & tailSize .~ Global 1 & arrowShaft .~ a
->                              & arrowHead .~ spike & headSize .~ Global 1 & headColor .~ red
->                              & tailGap .~ 0.1 & tailColor .~ red
->                              & shaftStyle %~ lw veryThick . lc blue )
->                              "9" "5"
->             # connect' (with & arrowHead .~ tri & arrowTail .~ block
->                              & headSize .~ Global 1 & tailSize .~ Global 0.6 & headGap .~ 0.5
->                              & headStyle %~ fc black . opacity 0.5
->                              & tailStyle %~ fc black . opacity 0.5
->                              & shaftStyle %~ lw thick . dashingG [0.1,0.2,0.3,0.1] 0)
->                              "8" "9"
->             # scale 0.75
->   where
->     c = circle 1 # showOrigin
->     a = arc (5/12 @@ turn) (11/12 @@ turn)
->     a1 = arc (1/2 @@ turn) (3/4 @@ turn)
->     t = bezier3 (r2 (1,1)) (r2 (1,1)) (r2 (0,2))
->     t' = reflectX t
->     l = straight unitX
->     l' = straight (unitX # rotateBy (1/6))
->     s = trailFromSegments [t, l, t', l, t]
->     s1 = cubicSpline False (trailVertices (s `at` origin))
->     s2 = cubicSpline False (map p2 [(0,0), (1,0), (0.8, 0.2),(2,0.2)])
->     x |-| y = x ||| strutX 12 ||| y
->     row1 = (c # named "1") |-| (c # named "2") |-| (c # named "3")
->     row2 = (c # named "4") |-| (c # named "5") |-| (c # named "6")
->     row3 = (c # named "7") |-| (c # named "8") |-| (c # named "9")
->     d = row1
->         ===
->         strutY 4
->         ===
->         row2
->         ===
->         strutY 4
->         ===
->         row3
+> import Data.List.Split (chunksOf)
+> 
+> -- Create a 3 x 3 grid of circles named "1" to "9"
+> c = circle 1.5 # fc lightgray # lw none # showOrigin
+> cs = [c # named (show x) | x <- [1..9]]
+> cGrid = (vcat' $ with & sep .~ 4)
+>       . map (hcat' $ with & sep .~ 12)
+>       . chunksOf 3 $ cs
+> 
+> -- For the Shafts.
+> semicircle = arc (5/12 @@ turn) (11/12 @@ turn)
+> quartercircle = arc (1/2 @@ turn) (3/4 @@ turn)
+> 
+> parab = bezier3 (1 ^& 1) (1 ^& 1) (0 ^& 2)
+> parab' = reflectX parab
+> 
+> seg = straight unitX
+> seg' = seg # rotateBy (1/6)
+> 
+> shaft0 = trailFromSegments [parab, seg, parab', seg, parab]
+> shaft1 = cubicSpline False (trailVertices (shaft0 `at` origin))
+> shaft2 = cubicSpline False (map p2 [(0,0), (1,0), (0.8, 0.2),(2, 0.2)])
+> 
+> example :: Diagram B R2
+> example = connect'        arrow1 "1" "2"
+>         . connect'        arrow2 "4" "3"
+>         . connect'        arrow3 "1" "6"
+>         . connectOutside' arrow4 "4" "8"
+>         . connect'        arrow5 "9" "5"
+>         . connectOutside' arrow6 "8" "9"
+>         . connectOutside' arrow7 "8" "7"
+>         $ cGrid
+>  where
+>     -- The arrows
+>     arrow1 = with & arrowHead .~ dart & headSize .~ large
+>                   & arrowTail .~ quill & shaftStyle %~ lw thick . lc black
+>                   & arrowShaft .~ shaft0 & headStyle %~ fc blue
+>                   & tailStyle %~ fc red
+> 
+>     arrow2 = with & arrowHead .~ missile 
+>                   & arrowTail .~ missile'
+>                   & shaftStyle %~ lw thin & arrowShaft .~ shaft1
+> 
+>     arrow3 = with & arrowHead .~ thorn & headSize .~ large
+>                   & arrowShaft .~ quartercircle & arrowTail .~ noTail
+>                   & gaps .~ normal
+> 
+>     arrow4 = with & arrowHead .~ dart & arrowTail .~ dart'
+>                   & arrowShaft .~ shaft2 & headStyle %~ fc teal
+>                   & tailStyle %~ fc teal & shaftStyle %~ lw thick . lc teal
+> 
+>     arrow5 = with & arrowTail .~ spike' & tailSize .~ large
+>                   & arrowShaft .~ semicircle & arrowHead .~ spike
+>                   & headSize .~ large & headStyle %~ fc darkorange
+>                   & tailStyle %~ fc darkorange
+>                   & shaftStyle %~ lw veryThick . lc navy
+> 
+>     arrow6 = with & arrowHead .~ tri & arrowTail .~ tri' & tailSize .~ small
+>                   & headStyle %~ fc black . opacity 0.5
+>                   & tailStyle %~ fc black . opacity 0.5
+>                   & shaftStyle %~ dashingN [0.01,0.02,0.03,0.01] 0
+> 
+>     arrow7 = arrow6 & arrowHead .~ tri & arrowTail .~ tri'
+
 
 Optional and named parameters
 -----------------------------
@@ -155,10 +165,12 @@ is the definition for reference:
     { _arrowHead  :: ArrowHT
     , _arrowTail  :: ArrowHT
     , _arrowShaft :: Trail R2
-    , _headGap    :: Double
-    , _tailGap    :: Double
+    , _headGap    :: Measure R2
+    , _tailGap    :: Measure R2
     , _headStyle  :: Style R2
+    , _headSize   :: Measure R2
     , _tailStyle  :: Style R2
+    , _tailSize   :: Measure R2
     , _shaftStyle :: Style R2
     }
 
@@ -337,13 +349,16 @@ Here are some exercises to try.
 
   #. The same as above, only now make it curve upwards.
 
-Gaps
+Size and Gaps
 --------------
 
-The `headGap` and
+The fields `heasSize` and `tailSize` are for setting the size of the head
+and tail. The head and tail size are specified as the diameter of an imaginary
+circle that would circumscribe the head or tail. They have type `Measure R2` and
+the default is `normal`. `headGap` and
 `tailGap` options are also fairly self explanatory: they leave space
 at the end or beginning of the arrow. Take a look at their effect in
-the following example. The default gaps are 0.
+the following example. The default gaps are `none`.
 
 .. class:: dia-lhs
 
@@ -359,14 +374,13 @@ the following example. The default gaps are 0.
 > eDot = dot # fc red   # moveTo ePt
 >
 >
-> leftArrow  = arrowBetween' (with & arrowHead .~ missile & arrowTail .~ spike'
->                                  & shaftStyle %~ lwG 0.02
->                                  & headSize .~ Global 0.15 & tailSize .~ Global 0.1
->                                  & headGap .~ 0.05) sPt mPt
-> rightArrow = arrowBetween' (with & arrowHead .~ tri & arrowTail .~ dart'
->                                  & shaftStyle %~ lwG 0.015
->                                  & headSize .~ Global 0.25 & tailSize .~ Global 0.2
->                                  & tailGap .~ 0.1) mPt ePt
+> leftArrow  = arrowBetween' (with & arrowHead .~ missile & arrowTail .~ tri'
+>                                  & headSize .~ normal & tailSize .~ small 
+>                                  & headGap .~ small) sPt mPt
+> rightArrow = arrowBetween' (with & arrowHead .~ spike & arrowTail .~ dart'
+>                                  & shaftStyle %~ lwO 4 
+>                                  & headSize .~ veryLarge & tailSize .~ large 
+>                                  & tailGap .~ normal) mPt ePt
 >
 > example = ( sDot <> mDot <> eDot <> leftArrow <> rightArrow)
 >           # centerXY # pad 1.1
@@ -437,7 +451,7 @@ styles are controlled using `headStyle`, `tailStyle`, and
 ::
 
 > dashedArrow = arrowBetween' (with & arrowHead .~ dart & arrowTail .~ spike'
->                                   & headColor .~ blue & tailColor .~ orange
+>                                   & headStyle %~ fc blue & tailStyle %~ fc orange
 >                                   & shaftStyle %~ dashingG [0.04, 0.02] 0
 >                                   . lwG 0.01) sPt ePt
 >
@@ -454,7 +468,7 @@ styles are controlled using `headStyle`, `tailStyle`, and
 > eDot = dot # fc red # moveTo ePt
 >
 > arrow1 = arrowBetween' (with & arrowHead .~ dart & arrowTail .~ spike'
->                              & headColor .~ blue & tailColor .~ orange
+>                              & headStyle %~ fc blue & tailStyle %~ fc orange
 >                              & shaftStyle %~ dashingG [0.04, 0.02] 0 . lwG 0.01
 >                              ) sPt ePt
 >
@@ -470,7 +484,7 @@ which is a *function* that changes the style.
   shaft of an arrow.  However, when setting the styles individually,
   the fill color should be used for the head and tail, and line color
   for the shaft.  This issue can be avoided entirely by using, for
-  example, `headColor .~ blue` to set the color instead of `headStyle
+  example, `headStyle %~ fc blue` to set the color instead of `headStyle
   %~ fc blue`.
 
 Placing an arrow at a point

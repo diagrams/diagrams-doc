@@ -524,14 +524,14 @@ picture:
 
 ::
 
-> opts = with & headGap .~ 0.05 & tailGap .~ 0.05 & headSize .~ Global 0.15
+> opts = with & gaps .~ small & headSize .~ Global 0.15
 >
 > tournament :: Int -> Diagram B R2
 > tournament n = decorateTrail (regPoly n 1) (map mkNode [1..n])
 >     # applyAll [connectOutside' opts j k | j <- [1 .. n-1], k <- [j+1 .. n]]
 >     # sized (Width 2)
 >   where
->     mkNode n = text (show n) # scale 0.2 # fc white <> circle 0.2 # fc green # named n
+>     mkNode n = text (show n) # fontSizeN 0.1 # fc white <> circle 0.2 # fc green # named n
 >
 > example = tournament 6
 
@@ -583,7 +583,7 @@ the number of nodes:
 ::
 
 > node :: Int -> Diagram B R2
-> node n = text (show n) # scale 0.2 # fc white <> circle 0.2 # fc green
+> node n = text (show n) # fontSizeN 0.1 # fc white <> circle 0.2 # fc green
 >
 > tournament :: Int -> Diagram B R2
 > tournament n = decorateTrail (regPoly n 1) (map node [1..n])
@@ -608,7 +608,7 @@ function:
 ::
 
 > node :: Int -> Diagram B R2
-> node n = text (show n) # scale 0.2 # fc white
+> node n = text (show n) # fontSizeN 0.1 # fc white
 >       <> circle 0.2 # fc green # named n
 >
 > tournament :: Int -> Diagram B R2
@@ -638,7 +638,7 @@ objects.  Here we connect nodes 1 and 2:
 ::
 
 > node :: Int -> Diagram B R2
-> node n = text (show n) # scale 0.2 # fc white
+> node n = text (show n) # fontSizeN 0.1 # fc white
 >       <> circle 0.2 # fc green # named n
 >
 > tournament :: Int -> Diagram B R2
@@ -663,15 +663,14 @@ follows:
 ::
 
 > node :: Int -> Diagram B R2
-> node n = text (show n) # scale 0.2 # fc white
+> node n = text (show n) # fontSizeN 0.1 # fc white
 >       <> circle 0.2 # fc green # named n
 >
 > tournament :: Int -> Diagram B R2
 > tournament n = decorateTrail (regPoly n 1) (map node [1..n])
 >
 > example = tournament 6
->   # connectOutside' (with & headGap  .~ 0.07
->                           & tailGap  .~ 0.07
+>   # connectOutside' (with & gaps .~ small
 >                           & headSize .~ Global 0.2
 >                     )
 >     (1 :: Int) (2 :: Int)
@@ -692,11 +691,10 @@ of situation.
 ::
 
 > node :: Int -> Diagram B R2
-> node n = text (show n) # scale 0.2 # fc white
+> node n = text (show n) # fontSizeN 0.1 # fc white
 >       <> circle 0.2 # fc green # named n
 >
-> arrowOpts = with & headGap  .~ 0.07
->                  & tailGap  .~ 0.07
+> arrowOpts = with & gaps  .~ small
 >                  & headSize .~ Global 0.2
 >
 > tournament :: Int -> Diagram B R2

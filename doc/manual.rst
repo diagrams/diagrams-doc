@@ -3397,7 +3397,7 @@ function.
 >    # connect' (with & arrowTail .~ thorn' & tailSize .~ large
 >                     & arrowHead .~ thorn  & headSize .~ large
 >                     & arrowShaft .~ shaft1 & shaftStyle %~ lw veryThick ) "3" "4"
->    # connect' (with & arrowTail .~ block & gap .~ 4
+>    # connect' (with & arrowTail .~ block & gaps .~ small
 >                     & arrowHead .~ missile & headSize .~ large
 >                     & arrowShaft .~ shaft2
 >                     & headStyle %~ fc blue & tailStyle %~ fc blue
