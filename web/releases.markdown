@@ -125,12 +125,12 @@ diagrams 1.1: 8 March 2014
     - Don't explicitly draw final segment of a loop if it is straight
       ([#38](https://github.com/diagrams/diagrams-cairo/issues/38))
 
-[diagrams-gtk-1.0.1](http://hackage.haskell.org/package/diagrams-gtk-1.1)
+[diagrams-gtk-1.0.1](http://hackage.haskell.org/package/diagrams-gtk-1.0.1)
 --------------------------
 
 * Use double buffering.
 
-[diagrams-postscript-1.0.2](http://hackage.haskell.org/package/diagrams-postscript-1.1)
+[diagrams-postscript-1.0.2](http://hackage.haskell.org/package/diagrams-postscript-1.0.2)
 --------------------------
 
 * **New features**
@@ -141,7 +141,7 @@ diagrams 1.1: 8 March 2014
 
   - Allow `diagrams-core-1.1` and `diagrams-lib-1.1`.
 
-[diagrams-svg-1.0.2](http://hackage.haskell.org/package/diagrams-svg-1.1)
+[diagrams-svg-1.0.2](http://hackage.haskell.org/package/diagrams-svg-1.0.2)
 --------------------------
 
 * **New features**
@@ -390,7 +390,7 @@ diagrams 1.0: 25 November 2013
 [diagrams-builder 0.4.1](http://hackage.haskell.org/package/diagrams-builder-0.4.1)
 ----------------
 
-[diagrams-haddock 0.2.1.3](http://hackage.haskell.org/package/diagrams-haddock1-0.2.1.3)
+[diagrams-haddock 0.2.1.3](http://hackage.haskell.org/package/diagrams-haddock-0.2.1.3)
 ----------------
 
 diagrams 0.7: 9 August 2013
