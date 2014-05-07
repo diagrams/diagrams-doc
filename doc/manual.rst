@@ -3414,9 +3414,9 @@ Text
 
   Note: this section describes the basic text support built into
   ``diagrams``, which suffices for simple applications.  However, for
-  much nicer text support (with a tradeoff in complexity), see the
-  `SVGFonts`:pkg: package, described in the section `Native font
-  support`_ below.
+  much nicer text support (with a tradeoff in complexity/efficiency),
+  see the `SVGFonts`:pkg: package, described in the section `Native
+  font support`_ below.
 
 Text objects, defined in `Diagrams.TwoD.Text`:mod:, can be created
 most simply with the `text` function, which turns a `String` into a
@@ -3464,21 +3464,6 @@ given font is rather complicated, and ``diagrams`` cannot (yet) do it
 natively.  The cairo backend can do it (see below) but we don't want
 to tie diagrams to a particular backend.
 
-..
-   The second reason is that font size is handled similarly to line
-   width, so the size of a text object cannot be known at the time of its
-   creation anyway!  (Future versions of ``diagrams`` may include some
-   sort of constraint-solving engine to be able to handle this sort of
-   situation, but don't hold your breath.)  Font size is treated
-   similarly to line width for a similar reason: we often want disparate
-   text elements to be the same size, but those text elements may be part
-   of subdiagrams that have been transformed in various ways.
-
-   Note: I wish this were true, but currently it isn't.  At some
-   future date when we do an overhaul of this stuff and introduce
-   units, perhaps users can choose which behavior they want. --
-   byorgey 20 Nov 2013
-
 Note, however, that the cairo backend includes a module
 `Diagrams.Backend.Cairo.Text`:mod: with functions for querying font
 and text extents, and creating text diagrams that take up an
@@ -3487,15 +3472,7 @@ automatically-sized text objects, at the cost of being tied to the
 cairo backend and bringing `IO` into the picture (or being at peace
 with some probably-justified uses of `unsafePerformIO`).
 
-To set the font size, use the `fontSize` function; the default font
-size is (arbitrarily) 1.
-
-..
-   Remember, however, that the font size is
-   measured in the *final* vector space of the diagram, rather than in
-   the local vector space in effect at the time of the text's creation.
-
-Other attributes of text can be set using `font`, `bold` (or, more
+Various attributes of text can be set using `font`, `bold` (or, more
 generally, `fontWeight`), `italic`, and `oblique` (or, more generally,
 `fontSlant`).  Text is colored with the current fill color (see
 `Color`_).
@@ -3509,6 +3486,75 @@ generally, `fontWeight`), `italic`, and `oblique` (or, more generally,
 >       text' 10 "Hello" # italic
 >   === text' 5 "there"  # bold # font "freeserif"
 >   === text' 3 "world"  # fc green
+
+Font size
+~~~~~~~~~
+
+Font size is set using the `fontSize` function, and is specified by a
+value of type `Measure R2` (see `Measurement units`_).
+
+* Text with a `Local` font size is measured relative to its local
+  vector space.  Such text is transformed normally by any
+  transformations applied to it.  For example, in the diagram below,
+  `fontSize (Local 1)` is specified (this is actually the default, so
+  it could be omitted without changing the diagram). Note how the F's
+  are the same size as a unit box, and scale, stretch, and rotate
+  along with it.
+
+  .. class:: dia-lhs
+
+  ::
+
+  > eff = text "F" <> square 1
+  >
+  > example = hcat
+  >   [eff, eff # scale 2, eff # scaleX 2, eff # scaleY 2, eff # rotateBy (1/12)]
+  >         # fontSize (Local 1)
+
+* Text whose font size is specified in any measurement other than
+  `Local` (that is, `Normalized`, `Global`, or `Output`) behaves
+  differently.
+
+  .. class:: dia-lhs
+
+  ::
+
+  > eff = text "F" <> square 1
+  >
+  > example = hcat
+  >   [eff, eff # scale 2, eff # scaleX 2, eff # scaleY 2, eff # rotateBy (1/12)]
+  >         # fontSize (Normalized 0.1)
+
+  There are several things to notice about the above example
+  diagram, which is identical to the previous one except for the
+  fact that `Normalized 0.1` is used instead of `Local 1`:
+
+  * The F's are 1/10th the size of the overall diagram.  If
+    we added more copies of `eff` to the right, but kept the
+    physical size of the rendered image the same, the F's would
+    remain the same physical size on the screen, but would get
+    bigger relative to the boxes (since the boxes would be smaller
+    in absolute terms).
+
+  * The F's are all about the same size---in particular, the uniform
+    scaling applied to the second F has no effect, and the fourth F is
+    not twice as tall as the others.  Note, however, that the final F
+    rotates with the square as expected.  Note also that the third and
+    fourth F's are squished, as one would expect from a non-uniform
+    scaling.  The hand-wavy slogan is that non-`Local`-sized text is
+    "affected by transformations, but without changing size".
+
+    The technical specification is that applying a transformation
+    `T`:math: to non-`Local`-sized text actually results in applying
+    the transformation `T/|T|`:math:, where `|T|`:math: denotes the
+    *average scaling factor* of the transformation `T`:math:, computed
+    as the square root of the positive determinant of `T`:math:.  This
+    behaves nicely: for example, the average scaling factor of `scale
+    k` is `k`, so applying a uniform scaling to non-`Local`-sized text
+    has no effect; it is also compositional, so applying `t` and then
+    `s` to some text has exactly the same effect as applying `s <> t`.
+    For more information, see the `avgScale` function and the comments
+    associated with its source code.
 
 Native font support
 ~~~~~~~~~~~~~~~~~~~
