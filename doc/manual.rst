@@ -1580,7 +1580,7 @@ end at the perimeter of an outer circle.
 
 Where radius and center 0 are for the inner circle, and 1 for the outer circle.
 In this example we place the inner circle off center and place a circle filled
-with the radial gradient on top of a rectangle filled with a linear gradient 
+with the radial gradient on top of a rectangle filled with a linear gradient
 to create a 3D effect.
 
 .. class:: dia-lhs
@@ -1593,8 +1593,8 @@ to create a 3D effect.
 >
 > linear = mkLinearGradient (mkStops [(black,0,1), (white,1,1)])
 >                           (0 ^& (-0.5)) (0 ^& 0.5)
->                           GradPad 
-> 
+>                           GradPad
+>
 > example = circle 0.35 # fillTexture radial # lw none
 >        <> rect 2 1 # fillTexture linear # lw none
 
@@ -3349,8 +3349,8 @@ to `connect` is `connect'`. These companion functions take an extra
 
 * `headSize` and `tailSize` specify the size of the head and tail,
   defined as the diameter of an enclosing circle. Their value is of `
-  is of type `Measure R2` (see  `Measurement units`_). The 
-  default value is `normal` which is a synonym for `Normalized 0.05 
+  is of type `Measure R2` (see  `Measurement units`_). The
+  default value is `normal` which is a synonym for `Normalized 0.05
   \`atLeast\` Output 1`.
 
 * `headGap` and `tailGap` both default to 0 and are used to indicate
@@ -3544,9 +3544,9 @@ backend supports external images and only the rasterific backend
 supports embedded images.
 
 To create an embedded image use either `loadImageEmb` to read an
-image from a file path using `JuicyPixels`:pkg: and return a 
-`DImage Embedded`. Then use `image` to convert the `DImage Embedded` 
-to a diagram. You can also create an a diagram with an embedded image 
+image from a file path using `JuicyPixels`:pkg: and return a
+`DImage Embedded`. Then use `image` to convert the `DImage Embedded`
+to a diagram. You can also create an a diagram with an embedded image
 by supplying a function that maps pixel coordinates to `alphaColour` s
 plus a width and a height to the`rasterDia` function.
 
@@ -3569,15 +3569,15 @@ reference with a width and height to make a `DImage External`.
 
 When using `loadImageEmb` and `loadImageExt` you do not need to
 provide the width and height of the image as they will be calculated
-by `JuicyPixels`:pkg:. Otherwise you must specify both a width and 
-a height for each image.  In this case you might hope to be able to 
-specify just a width or just a height, and have the other dimension 
-computed so as to preserve the image's aspect ratio.  However, there 
-is no way for ``diagrams`` to query an image's aspect ratio until 
-rendering time, but (until such time as a constraint solver is added) 
-it needs to know the size of the image when composing it with other 
-subdiagrams.  Hence, both dimensions must be specified, and for the 
-purposes of positioning relative to other diagrams, the image will 
+by `JuicyPixels`:pkg:. Otherwise you must specify both a width and
+a height for each image.  In this case you might hope to be able to
+specify just a width or just a height, and have the other dimension
+computed so as to preserve the image's aspect ratio.  However, there
+is no way for ``diagrams`` to query an image's aspect ratio until
+rendering time, but (until such time as a constraint solver is added)
+it needs to know the size of the image when composing it with other
+subdiagrams.  Hence, both dimensions must be specified, and for the
+purposes of positioning relative to other diagrams, the image will
 be assumed to occupy a rectangle of the given dimensions.
 
 However, note that the image's aspect ratio will be preserved: if you
