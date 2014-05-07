@@ -583,14 +583,7 @@ described below in turn.
 
 In addition to the four reference frames described here, it is
 possible to combine them into more complex expressions using a small
-DSL for specifying measurements; see `XXX`_.
-
-.. container:: todo
-
-  * Write a section about `Measure` DSL
-  * Mention somewhere(s) below about `avgScale` (relevant to
-    interpreting uniform line width under non-uniform scales, and to
-    interpreting `Normalized` units)
+DSL for specifying measurements; see `Measurement expressions`_.
 
 Local units
 ~~~~~~~~~~~
