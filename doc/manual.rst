@@ -2108,7 +2108,7 @@ To center an object along an axis we provide the functions `centerX`
 and `centerY`. An object can be simultaneously centered along both axis
 (actually along all of its basis vectors) using the `center` function.
 
-The align funcitons have sister functions like `snugL` and `snugX`
+The align functions have sister functions like `snugL` and `snugX`
 that work the same way as `alignL` and `alignX`. The difference is
 that the `snug` class of functions use the trace as the boundary
 instead of the envelope. For example, here we want to snug a convex
