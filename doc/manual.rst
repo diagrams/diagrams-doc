@@ -293,11 +293,11 @@ manual.
 
 .. _`quick start tutorial`: /doc/quickstart.html
 
-If you want to roll your own code, e.g. as a component of a
-stand-alone program, see the backend specific sections under
-`Rendering backends`_.
-
-FIXME
+Note that `Diagrams.Backend.SVG.CmdLine` is provided for convenience;
+it's not the only interface to the backend though. If you want to roll
+your own code, e.g. as a component of another program, use the
+`renderDia` function, or see the related section under `Rendering
+backends`_ for additional backend specific entry points.
 
 Contributing
 ------------
@@ -4646,9 +4646,8 @@ Apparently only Chrome and IE follow the spec correctly at this point, while
 Safari does not handle reflect and repeat at all and Firefox gets it wrong.
 
 The source code for the SVG backend can be found in the
-`diagrams-svg`:repo: repository.
-
-FIXME
+`diagrams-svg`:repo: repository. Note the functions `renderDia` and
+`renderSVG` for rendering diagrams directly.
 
 The postscript backend
 ----------------------
@@ -4662,8 +4661,6 @@ features with the exception of gradients.
 
 The source code for the postscript backend can be found in the
 `diagrams-postscript`:repo: repository.
-
-FIXME
 
 The cairo backend
 -----------------
@@ -4703,9 +4700,10 @@ quite a few advanced features that other backends do not have:
 * Direct output of animated GIFs.
 
 The source code for the cairo backend can be found in the
-`diagrams-cairo`:repo: repository.
-
-FIXME
+`diagrams-cairo`:repo: repository.  The functions `renderDia` and
+`renderCairo` provide an alternative to the
+`Diagrams.Backend.Cairo.CmdLine` interface for more programmatic
+control of the output.
 
 The GTK backend
 ---------------
@@ -4720,14 +4718,13 @@ diagrams``, or it can be installed separately later with ``cabal
 install diagrams-gtk``.
 
 The GTK backend allows rendering diagrams directly to GTK windows
-instead of to a file.  Note that it is possible to receive mouse
-clicks and then query the corresponding location in a diagram to find
-out which part the user clicked on (see `Using queries`_).
+instead of to a file (`defaultRender` and `renderToGtk`).  Note that
+it is possible to receive mouse clicks and then query the
+corresponding location in a diagram to find out which part the user
+clicked on (see `Using queries`_).
 
 The source code for the GTK backend can be found in the
 `diagrams-gtk`:repo: repository.
-
-FIXME
 
 The Rasterific backend
 ----------------------
@@ -4741,7 +4738,9 @@ although does not yet have the text handling capabilities of cairo, it does use
 the exact text bounding box for alignment. Gradients are fully supported
 including, repeat and reflect.
 
-FIXME
+The Rasterific backend can be invoked via
+`Diagrams.Backend.Rasterific.CmdLine`:mod: module, or via the
+`renderDia`/`renderRasterific` functions.
 
 Other backends
 --------------
