@@ -56,30 +56,31 @@ options used to make arrows.
 >         $ cGrid
 >  where
 >     -- The arrows
->     arrow1 = with & arrowHead .~ dart & headSize .~ large
+>     arrow1 = with & arrowHead .~ dart & headSize .~ veryLarge
 >                   & arrowTail .~ quill & shaftStyle %~ lw thick . lc black
 >                   & arrowShaft .~ shaft0 & headStyle %~ fc blue
->                   & tailStyle %~ fc red
+>                   & tailStyle %~ fc red & tailSize .~ large
 > 
->     arrow2 = with & arrowHead .~ missile 
->                   & arrowTail .~ missile'
+>     arrow2 = with & arrowHead .~ missile & headSize .~ large
+>                   & arrowTail .~ missile' & tailSize .~ large
 >                   & shaftStyle %~ lw thin & arrowShaft .~ shaft1
 > 
->     arrow3 = with & arrowHead .~ thorn & headSize .~ large
+>     arrow3 = with & arrowHead .~ thorn & headSize .~ veryLarge
 >                   & arrowShaft .~ quartercircle & arrowTail .~ noTail
 >                   & gaps .~ normal
 > 
 >     arrow4 = with & arrowHead .~ dart & arrowTail .~ dart'
+>                   & headSize .~ large & tailSize .~ large
 >                   & arrowShaft .~ shaft2 & headStyle %~ fc teal
 >                   & tailStyle %~ fc teal & shaftStyle %~ lw thick . lc teal
 > 
->     arrow5 = with & arrowTail .~ spike' & tailSize .~ large
+>     arrow5 = with & arrowTail .~ spike' & tailSize .~ veryLarge
 >                   & arrowShaft .~ semicircle & arrowHead .~ spike
->                   & headSize .~ large & headStyle %~ fc darkorange
+>                   & headSize .~ veryLarge & headStyle %~ fc darkorange
 >                   & tailStyle %~ fc darkorange
 >                   & shaftStyle %~ lw veryThick . lc navy
 > 
->     arrow6 = with & arrowHead .~ tri & arrowTail .~ tri' & tailSize .~ small
+>     arrow6 = with & arrowHead .~ tri & arrowTail .~ tri' & headSize .~ large
 >                   & headStyle %~ fc black . opacity 0.5
 >                   & tailStyle %~ fc black . opacity 0.5
 >                   & shaftStyle %~ dashingN [0.01,0.02,0.03,0.01] 0
@@ -139,7 +140,7 @@ its cousin `arrowBetween'`) connects two points.
 > sDot = dot # fc blue # moveTo sPt
 > eDot = dot # fc red  # moveTo ePt
 >
-> example = ( sDot <> eDot <> arrowBetween sPt ePt)
+> example = ( sDot <> eDot <> arrowBetween' (with & headSize .~ veryLarge) sPt ePt)
 >           # centerXY # pad 1.1
 
 .. container:: exercises
@@ -192,7 +193,7 @@ being the shape. So, for example, if we set `arrowHead=spike` and
 ::
 
 > arrowBetween' (with & arrowHead .~ spike & arrowTail .~ quill
->                     & headSize  .~ large & tailSize  .~ large
+>                     & headSize  .~ veryLarge & tailSize  .~ veryLarge
 >   sPt ePt
 
 then the arrow from the previous example looks like this:
@@ -210,8 +211,8 @@ then the arrow from the previous example looks like this:
 >
 > example = (sDot <> eDot <> arrowBetween' (with & arrowHead .~ spike
 >                                                & arrowTail .~ quill
->                                                & headSize  .~ large
->                                                & tailSize  .~ large) sPt ePt)
+>                                                & headSize  .~ veryLarge
+>                                                & tailSize  .~ veryLarge) sPt ePt)
 >          # centerXY # pad 1.1
 
 The `Arrowheads` package exports a number of standard arrowheads
@@ -228,7 +229,7 @@ can be used as tails by appending a single quote, so for example:
 ::
 
 > arrowBetween' (with & arrowHead .~ thorn & arrowTail .~ thorn'
->                     & headSize  .~ large & tailSize  .~ large) sPt ePt
+>                     & headSize  .~ veryLarge & tailSize  .~ veryLarge) sPt ePt
 
 yields:
 
@@ -245,7 +246,7 @@ yields:
 >
 > example = ( sDot <> eDot <>arrowBetween' (with & arrowHead .~ thorn
 >                                                & arrowTail .~ thorn'
->                                                & headSize .~ large & tailSize .~ large) sPt ePt)
+>                                                & headSize .~ veryLarge & tailSize .~ veryLarge) sPt ePt)
 >           # centerXY # pad 1.1
 
 
@@ -267,9 +268,9 @@ will make the arrow shaft into an arc:
 >
 > example = ( sDot <> eDot
 >          <> arrowBetween' (with & arrowHead .~ spike & arrowTail .~ spike'
->                                 & arrowShaft .~ shaft) sPt ePt
->          <> circle 1.5 # lw none)
->           # centerXY # pad 1.1
+>                                 & arrowShaft .~ shaft
+>                                 & headSize .~ veryLarge & tailSize .~ veryLarge) sPt ePt
+>           # frame 0.25 
 
 .. class:: dia
 
@@ -286,9 +287,9 @@ will make the arrow shaft into an arc:
 >
 > example = ( sDot <> eDot
 >          <> arrowBetween' (with & arrowHead .~ spike & arrowTail .~ spike'
->                                 & arrowShaft .~ shaft) sPt ePt
->          <> circle 1.5 # lw none)
->           # centerXY # pad 1.1
+>                                 & arrowShaft .~ shaft 
+>                                 & headSize .~ veryLarge & tailSize .~ veryLarge) sPt ePt)
+>           # frame 0.25 
 
 Arrows with curved shafts don't always render the way our intuition
 may lead us to expect. One could reasonably expect that the arc in the
@@ -328,8 +329,9 @@ result of making the arrow pointing from `(0,0)`:math: to
 > shaft = arc (0 @@ turn) (1/2 @@ turn) # reverseTrail
 > example = ( sDot <> eDot
 >          <> arrowBetween' (with & arrowHead .~ spike & arrowTail .~ spike'
->                                 & arrowShaft .~ shaft) sPt ePt)
->           # centerXY # pad 1.1
+>                                 & arrowShaft .~ shaft
+>                                 & headSize .~ veryLarge & tailSize .~ veryLarge) sPt ePt)
+>           # frame 0.25 
 
 .. container:: warning
 
@@ -376,11 +378,11 @@ the following example. The default gaps are `none`.
 >
 > leftArrow  = arrowBetween' (with & arrowHead .~ missile & arrowTail .~ tri'
 >                                  & headSize .~ normal & tailSize .~ small 
->                                  & headGap .~ small) sPt mPt
+>                                  & headGap .~ large) sPt mPt
 > rightArrow = arrowBetween' (with & arrowHead .~ spike & arrowTail .~ dart'
 >                                  & shaftStyle %~ lwO 4 
->                                  & headSize .~ veryLarge & tailSize .~ large 
->                                  & tailGap .~ normal) mPt ePt
+>                                  & headSize .~ veryLarge & tailSize .~ veryLarge 
+>                                  & tailGap .~ veryLarge) mPt ePt
 >
 > example = ( sDot <> mDot <> eDot <> leftArrow <> rightArrow)
 >           # centerXY # pad 1.1

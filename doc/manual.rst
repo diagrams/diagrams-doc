@@ -3335,7 +3335,7 @@ to `connect` is `connect'`. These companion functions take an extra
 
 * `arrowHead` and `arrowTail`, to specify the shape of the head and
   tail. The `Diagrams.TwoD.Arrowheads`:mod: module exports the
-  arrowheads `tri`, `dart`, `spike`, `thorn`, `missile`, `lineHead`,
+  arrowheads `tri`, `dart`, `spike`, `thorn`, `lineHead`,
   and `noHead`;
   the default is `dart`. For tails we have `quill`, `block`, `lineTail`, and
   `noTail`; `noTail` is the default. Addtionally, any head can be used
@@ -3346,17 +3346,18 @@ to `connect` is `connect'`. These companion functions take an extra
 * `arrowShaft` is any `Trail R2`; it will be sized automatically to
   fit between the endpoints of the arrow.
 
-* `headSize` and `tailSize` specify the size of the head and tail,
-  defined as the diameter of an enclosing circle. Their value is of `
-  is of type `Measure R2` (see  `Measurement units`_). The
-  default value is `normal` which is a synonym for `Normalized 0.05
-  \`atLeast\` Output 1`.
+* `headLength` and `tailLength` specify the size of the head and tail,
+  defined as the length of the head or tail plus the joint connecting
+  it to the shaft. Their value is of 
+  type `Measure R2` (see  `Measurement units`_). The
+  default value is `normal` which is a synonym for `Normalized 0.035`.
+  A traversal called `lengths` sets both the `headLength` and `tailLength`
+  at the same time. 
 
-* `headGap` and `tailGap` both default to 0 and are used to indicate
+* `headGap` and `tailGap` both default to `none` and are used to indicate
   the amount of space between the end of the arrow and the location it
-  is pointing at.  Unlike `headSize` and `tailSize`, these values are
-  relative to the *local* vector space (*i.e.* they are affected
-  normally by scaling). A traversal called `gap` is provided to set
+  is pointing at. They are also of type `Measure R2`.  
+  A traversal called `gaps` is provided to set
   both the `headGap` and `tailGap` simultaneously.
 
 * `headStyle`, `tailStyle` and `shaftStyle` are used to pass in style
@@ -3364,6 +3365,11 @@ to `connect` is `connect'`. These companion functions take an extra
   arrow. (By default, the entire
   arrow, including head and tail, is drawn using the current line
   texture.)
+
+The Lenses `headTexture`, `tailTexture`, and `shaftTexture` are provided
+for conveniently setting the texture of a head or tail. Addtionally, the
+function `solid` converts a color to a texture. For example, 
+`(with & headTexture .~ solid blue)` will set the head color to blue.
 
 The following example demonstrates the use of various `ArrowOpts`.
 See `Named subdiagrams`_ for the use of names and the `named`
@@ -3389,21 +3395,21 @@ function.
 > shaft3 = arc (0 @@ turn) (1/6 @@ turn)
 >
 > example = d
->    # connect' (with & arrowTail .~ quill & tailSize .~ large
->                     & tailStyle %~ fc orange & headStyle %~ fc orange
->                     & arrowHead .~ spike & headSize  .~ large
->                     & shaftStyle %~ lw ultraThick ) "1" "2"
->    # connect' (with & arrowTail .~ thorn' & tailSize .~ large
->                     & arrowHead .~ thorn  & headSize .~ large
+>    # connect' (with & arrowTail .~ quill & lengths .~ large
+>                     & tailTexture .~ solid orange & headTexture .~ solid orange
+>                     & arrowHead .~ spike 
+>                     & shaftStyle %~ lw veryThick ) "1" "2"
+>    # connect' (with & arrowTail .~ thorn' & lengths .~ large
+>                     & arrowHead .~ thorn 
 >                     & arrowShaft .~ shaft1 & shaftStyle %~ lw veryThick ) "3" "4"
 >    # connect' (with & arrowTail .~ block & gaps .~ small
->                     & arrowHead .~ missile & headSize .~ large
+>                     & arrowHead .~ dart & headLength .~ large
 >                     & arrowShaft .~ shaft2
 >                     & headStyle %~ fc blue & tailStyle %~ fc blue
 >                     & shaftStyle %~ lw veryThick . lc blue ) "5" "6"
 >    # connect' (with & arrowShaft .~ shaft3
->                     & arrowHead .~ tri & headSize .~ large
->                     & headStyle %~ fc red . opacity 0.5
+>                     & arrowHead .~ tri & headLength .~ large
+>                     & headStyle %~ fc red . opacity 0.5 
 >                     & shaftStyle %~ lw veryThick . lc black . opacity 0.5 ) "7" "8"
 
 Text
