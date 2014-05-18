@@ -524,7 +524,7 @@ picture:
 
 ::
 
-> opts = with & gaps .~ small & headSize .~ Global 0.15
+> opts = with & gaps .~ small & headLength .~ Global 0.15
 >
 > tournament :: Int -> Diagram B R2
 > tournament n = decorateTrail (regPoly n 1) (map mkNode [1..n])
@@ -671,7 +671,7 @@ follows:
 >
 > example = tournament 6
 >   # connectOutside' (with & gaps .~ small
->                           & headSize .~ Global 0.2
+>                           & headLength .~ Global 0.2
 >                     )
 >     (1 :: Int) (2 :: Int)
 
@@ -695,7 +695,7 @@ of situation.
 >       <> circle 0.2 # fc green # named n
 >
 > arrowOpts = with & gaps  .~ small
->                  & headSize .~ Global 0.2
+>                  & headLength .~ Global 0.2
 >
 > tournament :: Int -> Diagram B R2
 > tournament n = decorateTrail (regPoly n 1) (map node [1..n])
