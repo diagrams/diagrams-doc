@@ -32,12 +32,12 @@ The function to use to create the vector field.
 > -- Head size is a function of the length of the vector
 > -- as are tail size and shaft length.
 >
->     hs   = 0.08 * m
->     sW   = 0.015 * m
->     sL   = 0.01 + 0.1 * m
+>     hs   = 0.02 * m
+>     sW   = 0.004 * m
+>     sL   = 0.05 + 0.1 * m
 >     opts = (with & arrowHead  .~ spike
->                  & headLength   .~ Global hs
->                  & shaftStyle %~ lwG sW)
+>                  & headLength   .~ Normalized hs
+>                  & shaftStyle %~ lwN sW)
 >
 > field   = position $ zip points arrows
 >
