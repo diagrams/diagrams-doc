@@ -16,7 +16,7 @@ No changes should be necessary to the following modules (all prefixed by <code>D
 
 I'm not sure about <code>Style</code> yet.
 
-==== <code>Diagrams.Core.Compile</code> ====
+==== <code>Diagrams.Core.Types</code> ====
 
 * Change the name of <code>UpAnnots</code> to <code>Summary</code>.
 * Change the name of <code>DownAnnots</code> to <code>Context</code>, and change its definition to
@@ -85,6 +85,6 @@ Then the implementation of <code>pointDiagram</code> only needs to change to
 
 * <code>query</code>, <code>sample</code>, <code>value</code>
 
-==== <code>Diagrams.Core.Types</code> ====
+==== <code>Diagrams.Core.Compile</code> ====
 
 === diagrams-lib ===
