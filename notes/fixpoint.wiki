@@ -1,0 +1,90 @@
+This page describes the motivation and design for a refactoring of diagrams, to give them a semantics based on computing fixed points of functions from "context" information to raw tree of primitives together with some summary information.
+
+== Reference ==
+
+See the original "manifesto" and ensuing mailing list discussion here: http://thread.gmane.org/gmane.comp.lang.haskell.diagrams/383
+
+See also later IRC discussion beginning here: http://ircbrowse.net/browse/diagrams?events_page=935
+
+== Detailed design ==
+
+Most of the changes should be in the <code>diagrams-core</code> package, though a few things in <code>diagrams-lib</code> may need to change as well.
+
+=== diagrams-core ===
+
+No changes should be necessary to the following modules (all prefixed by <code>Diagrams.Core</code>): <code>Envelope</code>, <code>HasOrigin</code>, <code>Juxtapose</code>, <code>Names</code>, <code>Points</code>, <code>Query</code>, <code>Trace</code>, <code>Transform</code>, <code>V</code>.
+
+I'm not sure about <code>Style</code> yet.
+
+==== <code>Diagrams.Core.Compile</code> ====
+
+* Change the name of <code>UpAnnots</code> to <code>Summary</code>.
+* Change the name of <code>DownAnnots</code> to <code>Context</code>, and change its definition to
+
+  type Context b v m = Style v
+                     ::: Name
+                     ::: SubMap b v m
+                     ::: ()
+
+The addition of <code>SubMap</code> is so that we can use the positions of laid-out subdiagrams to compute the positions of others.
+
+* <code>transfToAnnot</code> and <code>transfFromAnnot</code> can be deleted.
+* <code>QDiaLeaf</code> and <code>withQDiaLeaf</code> can be deleted.
+
+* Create new definitions
+
+  type ContextualT b v q m a = ReaderT (Context b v q) m a
+
+  type Contextual b v q a = ContextualT b v q Identity a
+
+One could imagine making <code>ContextualT</code> a <code>newtype</code> but that would necessitate writing lots of instances for things like <code>MonadState</code>, <code>MonadReader</code>, and so on.
+
+* The definition of <code>QDiagram</code> should be changed to something like
+
+  type QDiagram b v m = Contextual b v m (RTree b v Annotation, Summary b v m)
+
+It's important that this is NOT a newtype, so we can freely use the <code>Monad</code> instance for <code>Contextual</code> when working with diagrams.  This also means we don't need <code>Wrapped</code> or <code>Rewrapped</code> instances for it anymore.
+
+* The implementation of <code>applyAnnotation</code> needs to change.  All it needs to do is create a new <code>RTree</code> node (an <code>RAnnot</code> node), ignoring the context and having no effect on the summary.  So something like
+
+  applyAnnotation an = fmap (first (Node (RAnnot an) . (:[])))
+
+We may end up having to do similar things in other situations so it may make sense to factor out parts of this into general utilities (e.g. <code>addRoot :: RNode -> RTree -> RTree</code> etc.)
+
+* Of course the implementation of almost all the rest of the functions in this module will need to change as well.  I'll walk through a few particular examples and then discuss more general principles.  First, <code>pointDiagram</code>.  The current code is
+
+  pointDiagram :: (Fractional (Scalar v), InnerSpace v)
+               => Point v -> QDiagram b v m
+  pointDiagram p = QD $ D.leafU (inj . toDeletable $ pointEnvelope p)
+
+This creates a point envelope, wraps it in <code>Deletable</code>, injects it into an <code>UpAnnots</code> value, and uses it to create a leaf <code>DUALTree</code>.  Everything up through <code>UpAnnots</code> still applies (though the name of <code>UpAnnots</code> has changed).  What's different is that we aren't creating an explicit tree with summary values at leaves; we simply return the summary value as part of the result of the diagram function.  So we can create a function <code>leafS</code> in parallel with <code>leafU</code>:
+
+  emptyTree = Node REmpty []
+
+  leafS :: Summary b v m -> QDiagram b v m
+  leafS s = return (emptyTree, s)
+
+Then the implementation of <code>pointDiagram</code> only needs to change to
+
+  pointDiagram p = leafS (inj . toDeletable $ pointEnvelope p)
+
+* The current type of <code>getU'</code> can't work anymore, since we can't escape the <code>Contextual</code> monad.  But we can have
+
+  getU' :: (Monoid u', u :>: u') => QDiagram b v m  -> Contextual b v m u'
+  getU' = fmap (option mempty id . get . snd)
+
+* <code>setEnvelope</code>
+
+* <code>envelope</code>
+
+* <code>trace</code> and <code>setTrace</code> are similar.
+
+* Name stuff: think about monad, etc. <code>subMap</code>, <code>names</code>, <code>nameSub</code>, <code>lookupName</code>, <code>localize</code>
+
+* <code>withName</code>, <code>withNameAll</code>, <code>withNames</code>: should be able to simplify these to take advantage of monad.  Don't need to have them in CPS anymore.
+
+* <code>query</code>, <code>sample</code>, <code>value</code>
+
+==== <code>Diagrams.Core.Types</code> ====
+
+=== diagrams-lib ===
