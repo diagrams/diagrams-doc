@@ -73,9 +73,30 @@ Then the implementation of <code>pointDiagram</code> only needs to change to
   getU' :: (Monoid u', u :>: u') => QDiagram b v m  -> Contextual b v m u'
   getU' = fmap (option mempty id . get . snd)
 
-* <code>setEnvelope</code>
+* <code>setEnvelope</code>: the main issue here is to figure out suitable replacements for <code>applyUPre</code> and <code>applyUPost</code>.  We could do
 
-* <code>envelope</code>
+  applySPre :: Summary b v m -> QDiagram b v m -> QDiagram b v m
+  applySPre s = (fmap . second) (s<>)
+
+But note we can also give this a much more general type signature like
+
+  applyUPre :: (Functor f, Semigroup s) => s -> f (t,s) -> f (t,s)
+
+Not sure which is better.
+
+In any case, we don't need any of the <code>over _Wrapped</code> stuff any more.
+
+* <code>envelope</code> is problematic.  We had
+
+  envelope :: forall b v m. (OrderedField (Scalar v), InnerSpace v
+                            , HasLinearMap v, Monoid' m)
+           => Lens' (QDiagram b v m) (Envelope v)
+
+But this type won't work any more, because e.g. we can't simply extract an <code>Envelope</code> from a <code>QDiagram</code>.  I suppose we could do
+
+  ... Lens' (QDiagram b v m) (Contextual b v m (Envelope v))
+
+?
 
 * <code>trace</code> and <code>setTrace</code> are similar.
 
