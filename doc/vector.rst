@@ -49,7 +49,7 @@ a *magnitude* (length) and a *direction* (angle).
 >                # fc black # alignR
 >           )
 >           # alignL
->           # rotate (direction v)
+>           # rotate (angleBetween v unitX)
 >
 > vPic v = drawV v <> xComponent <> yComponent <> theta
 >   where
@@ -148,26 +148,27 @@ The first thing to learn is how to *create* values of type
   Only you can decide whether the tradeoffs are worth it in a given
   situation.
 
-* One final way to construct vectors is using the `fromDirection`
-  function (or its synonym `e`).  `fromDirection` takes an angle and
+* You can construct vectors from `Direction`s using the
+  `fromDirection` function.  `fromDirection` takes a `Direction` and
   constructs a unit (*i.e.* magnitude 1) vector pointing in the given
-  direction.  This can also be accomplished using `unitX` and `rotate`
-  (in particular, `fromDirection a == unitX # rotate a`), but
-  sometimes calling `fromDirection` can be more convenient.
-  Additionally, the synonym `e` is available as a sort of convenient
-  pun: in the same way that a complex number with magnitude `r`:math:
-  and angle `\theta`:math: can be constructed as `r
-  e^{i\theta}`:math:, a vector with given magnitude and direction can
-  be constructed as `r *^ e theta`. (Note that `e` is not exported
-  from `Diagrams.Prelude`:mod:; if you wish to use it you must import
-  it from `Diagrams.TwoD.Vector`:mod:.)
+  direction.
+
+* One final way to construct vectors is using the function `e`.  By
+  definition, `e a == unitX # rotate a`, but sometimes calling `e`
+  can be more convenient.  The name `e` is a sort of pun: in the same
+  way that a complex number with magnitude `r`:math: and angle
+  `\theta`:math: can be constructed as `r e^{i\theta}`:math:, a vector
+  with given magnitude and direction can be constructed as `r *^ e
+  theta`. (Note that `e` is not exported from `Diagrams.Prelude`:mod:;
+  if you wish to use it you must import it from
+  `Diagrams.TwoD.Vector`:mod:.)
 
   .. class:: dia-lhs
 
   ::
 
   > example = lwG 0.05 . mconcat . map fromOffsets
-  >         $ [ [r *^ fromDirection (r @@ rad)]
+  >         $ [ [r *^ rotate (r @@ rad) unitX]
   >           | r <- [33 * tau/32, 34 * tau/32 .. 2 * tau]
   >           ]
 
@@ -189,7 +190,7 @@ The first thing to learn is how to *create* values of type
 
      ::
 
-     > vs = [ 5 *^ fromDirection (r @@ turn) | r <- [-1/4, -1/4 + 1/12 .. 1/4] ]
+     > vs = [ 5 *^ rotate (r @@ turn) unitX | r <- [-1/4, -1/4 + 1/12 .. 1/4] ]
      > example = mconcat (map (\v -> unitCircle # translate v) vs)
      >         # fc blue
      >         # centerXY
@@ -201,7 +202,7 @@ The first thing to learn is how to *create* values of type
      ::
 
      > vs = zipWith mkV (cycle [1,2,3]) [ 1/30 @@ turn, 2/30 @@ turn .. 1 @@ turn ]
-     >   where mkV r th = r *^ fromDirection th
+     >   where mkV r th = r *^ rotate th unitX
      > example = lwG 0.02 . mconcat . map (fromOffsets . (:[])) $ vs
 
 Destructing vectors

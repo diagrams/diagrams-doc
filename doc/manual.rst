@@ -924,11 +924,11 @@ represented by an angle measured clockwise from the positive
 >   # center # frame 1
 >
 > axes = (arrowV (6 *^ unitX) # centerX <> arrowV (6 *^ unitY) # centerY)
-> theDir = 200 @@ deg
-> theV = 3 *^ fromDirection theDir
+> theAngle = 200 @@ deg
+> theV = 3 *^ rotate theAngle unitX
 > exampleVector = arrowV theV
 >   # lc blue
-> angleArrow = arrowBetween' (with & arrowShaft .~ arc zeroV theDir)
+> angleArrow = arrowBetween' (with & arrowShaft .~ arc xDir theAngle)
 >   (origin .+^ (1 *^ unitX))
 >   (origin .+^ (theV # normalized))
 >   # dashingG [0.05,0.05] 0
@@ -978,9 +978,9 @@ Arcs
 ~~~~
 
 `Diagrams.TwoD.Arc`:mod: provides a function `arc`, which constructs a
-radius-one circular arc starting at a first angle__ and extending
-counterclockwise to the second, as well as `wedge` which constructs a
-wedge shape, `annularWedge` (an arc plus two radii) and various other
+radius-one circular arc starting at a first direction and extending
+through a given angle__ , as well as `wedge` which constructs a wedge
+shape, `annularWedge` (an arc plus two radii) and various other
 functions for conveniently constructing arcs.
 
 __ `Angles`_
@@ -989,10 +989,10 @@ __ `Angles`_
 
 ::
 
-> example = hcat' (with & sep .~ 0.5) [arc a1 a2, wedge 1 a1 a2, annularWedge 1 0.6 a1 a2]
+> example = hcat' (with & sep .~ 0.5) [arc d a, wedge 1 d a, annularWedge 1 0.6 d a]
 >   where
->     a1 = tau/4 @@ rad
->     a2 = 4 * tau / 7 @@ rad
+>     d = rotateBy (1/4) xDir
+>     a = 4 * tau / 7 - tau / 4 @@ rad
 
 Pre-defined shapes
 ~~~~~~~~~~~~~~~~~~
@@ -1330,7 +1330,7 @@ local origin of each diagram at the indicated point.
 
 > example = position (zip (map mkPoint [-3, -2.8 .. 3]) (repeat dot))
 >   where dot       = circle 0.2 # fc black
->         mkPoint x = p2 (x,x^2)
+>         mkPoint x = p2 (x,x^(2::Int))
 
 `cat` is an iterated version of `beside`, which takes a direction
 vector and a list of diagrams, laying out the diagrams beside one
@@ -3392,7 +3392,7 @@ function.
 >
 > shaft1 = trailFromVertices (map p2 [(0, 0), (1, 0), (1, 0.2), (2, 0.2)])
 > shaft2 = cubicSpline False (map p2 [(0, 0), (1, 0), (1, 0.2), (2, 0.2)])
-> shaft3 = arc (0 @@ turn) (1/6 @@ turn)
+> shaft3 = arc xDir (1/6 @@ turn)
 >
 > example = d
 >    # connect' (with & arrowTail .~ quill & lengths .~ large

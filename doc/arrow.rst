@@ -32,8 +32,8 @@ options used to make arrows.
 >       . chunksOf 3 $ cs
 > 
 > -- For the Shafts.
-> semicircle = arc (5/12 @@ turn) (11/12 @@ turn)
-> quartercircle = arc (1/2 @@ turn) (3/4 @@ turn)
+> semicircle = arc (rotateBy (5/12) xDir) (6/12 @@ turn)
+> quartercircle = arc (rotateBy (1/2) xDir) (1/4 @@ turn)
 > 
 > parab = bezier3 (1 ^& 1) (1 ^& 1) (0 ^& 2)
 > parab' = reflectX parab
@@ -273,7 +273,7 @@ will make the arrow shaft into an arc:
 
 ::
 
-> shaft = arc (0 @@ turn) (1/2 @@ turn)
+> shaft = arc xDir (1/2 @@ turn)
 >
 > example = ( sDot <> eDot
 >          <> arrowBetween' (with & arrowHead .~ spike & arrowTail .~ spike'
@@ -292,7 +292,7 @@ will make the arrow shaft into an arc:
 > sDot = dot # fc blue # moveTo sPt
 > eDot = dot # fc red # moveTo ePt
 >
-> shaft = arc (0 @@ turn) (1/2 @@ turn)
+> shaft = arc xDir (1/2 @@ turn)
 >
 > example = ( sDot <> eDot
 >          <> arrowBetween' (with & arrowHead .~ spike & arrowTail .~ spike'
@@ -310,21 +310,14 @@ with origin at `(0,0)`:math:. Now suppose we want to connect points
 `(0,0)`:math: and `(1,0)`:math:. We attach the arrow head and tail and
 rotate the arrow about its origin at `(0,0)`:math: until the tip of
 the head is touching `(1,0)`:math:.  This rotation flips the arrow
-vertically.
-
-In order to get the arrow to curve upwards we might initially think we
-could create the shaft reversing the order of the angles, using `arc
-(1/2 @@ turn) 0`, but this won't work either, as it creates a
-downwards curving arc from, say, `(0,0)`:math: to `(1,0)`:math: that
-does not need to be rotated. The only way to achieve the desired
-result of making the arrow pointing from `(0,0)`:math: to
-`(1,0)`:math: curve upwards is to reverse the trail:
+vertically.  To make an arc that runs clockwise from its starting
+point, use a negative `Angle`.
 
 .. class:: lhs
 
 ::
 
-> shaft = arc (0 @@ turn) (1/2 @@ turn) # reverseTrail
+> shaft = arc xDir (-1/2 @@ turn)
 
 .. class:: dia
 
@@ -335,7 +328,7 @@ result of making the arrow pointing from `(0,0)`:math: to
 > dot = circle 0.02 # lw none
 > sDot = dot # fc blue # moveTo sPt
 > eDot = dot # fc red # moveTo ePt
-> shaft = arc (0 @@ turn) (1/2 @@ turn) # reverseTrail
+> shaft = arc xDir (-1/2 @@ turn)
 > example = ( sDot <> eDot
 >          <> arrowBetween' (with & arrowHead .~ spike & arrowTail .~ spike'
 >                                 & arrowShaft .~ shaft
@@ -344,7 +337,8 @@ result of making the arrow pointing from `(0,0)`:math: to
 
 .. container:: warning
 
-  If an arrow shaft does not appear as you expect, then try using `reverseTrail`.
+  If an arrow shaft does not appear as you expect, then try using
+  `reverseTrail`, or in the case of arcs, multiplying the angle by -1.
 
 Here are some exercises to try.
 
@@ -618,8 +612,8 @@ straightforward.
 >
 > states = position (zip points ds)
 >
-> shaft = reverseTrail $ arc (0 @@ turn) (1/6 @@ turn)
-> shaft' = reverseTrail $ arc (1/2 @@ turn) (0 @@ turn) # scaleX 0.33
+> shaft = arc xDir (-1/6 @@ turn)
+> shaft' = arc xDir (1/2 @@ turn) # scaleX 0.33
 > line = trailFromOffsets [unitX]
 >
 > arrowStyle1 = (with  & arrowHead  .~ spike & headLength .~ large
@@ -663,7 +657,7 @@ In the following exercise you can try `connectPerim'` for yourself.
     >
     > d = bullseye <> target
     >
-    > shaft = arc (0 @@ turn) (1/6 @@ turn)
+    > shaft = arc xDir (1/6 @@ turn)
     >
     > connectTarget :: (Renderable (Path R2) b)
     >               =>  Angle -> (Diagram b R2 -> Diagram b R2)
