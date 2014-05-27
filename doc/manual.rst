@@ -1330,7 +1330,7 @@ local origin of each diagram at the indicated point.
 
 > example = position (zip (map mkPoint [-3, -2.8 .. 3]) (repeat dot))
 >   where dot       = circle 0.2 # fc black
->         mkPoint x = p2 (x,x^2)
+>         mkPoint x = p2 (x,x*x)
 
 `cat` is an iterated version of `beside`, which takes a direction
 vector and a list of diagrams, laying out the diagrams beside one
@@ -3913,9 +3913,10 @@ identify points on the boundaries of several diagrams.
 .. class:: dia-lhs
 
 ::
+> {-# LANGUAGE TypeFamilies #-}
 
 > import Data.Maybe (mapMaybe)
->
+> illustrateTrace :: (TrailLike a, Traced a, Semigroup a, Monoid a, V a ~ R2) => a -> a
 > illustrateTrace d = d <> traceLines
 >   where
 >     traceLines  = mconcat
