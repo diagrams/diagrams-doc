@@ -9,6 +9,8 @@ width: 400
 ---
 
 > {-# LANGUAGE NoMonomorphismRestriction #-}
+> {-# LANGUAGE MultiParamTypeClasses #-}
+> {-# LANGUAGE FlexibleContexts #-}
 >
 > import Diagrams.Prelude
 > import Data.Colour.Palette.BrewerSet
@@ -25,6 +27,7 @@ including some Spierpinsky triangles among them.
 
 > colorize = zipWith fc $ cycle (brewerSet Dark2 8)
 >
+> sierpinski :: Renderable (Path R2) b => Int -> Diagram b R2
 > sierpinski 1 = eqTriangle 1
 > sierpinski n = (s === (s ||| s) # centerX) # alignY (-1/3)
 >   where s = sierpinski (n-1)
