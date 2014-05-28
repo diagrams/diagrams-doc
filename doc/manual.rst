@@ -3589,10 +3589,11 @@ Images
 ------
 
 The `Diagrams.TwoD.Image`:mod: module provides basic support for
-including both external and embedded images in diagrams. Backend
-support for images is currently somewhat limited, only the cairo
-backend supports external images and only the rasterific backend
-supports embedded images.
+including both external and embedded images in diagrams. 
+Support for images varies by backend, only the cairo
+backend supports external images. The rasterific backend
+supports embedded images of many formats and the SVG backend
+supports embedded png images.
 
 To create an embedded image use either `loadImageEmb` to read an
 image from a file path using `JuicyPixels`:pkg: and return a
