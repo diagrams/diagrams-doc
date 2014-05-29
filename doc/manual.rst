@@ -3417,11 +3417,14 @@ Text
 
 .. container:: warning
 
-  Note: this section describes the basic text support built into
-  ``diagrams``, which suffices for simple applications.  However, for
-  much nicer text support (with a tradeoff in complexity/efficiency),
-  see the `SVGFonts`:pkg: package, described in the section `Native
-  font support`_ below.
+Note: The various Backends differ substantially in their text-handling
+capabilities.  For this and other reasons, there are two ways to add
+text to diagrams, each with advantages.  The method in this section is
+heavily dependant on Backend support.  The Cairo Backend has the most
+complete support; in particular, this is the best approach for complex
+(non-Roman) scripts.  You may also want to look at `SVGFonts`:pkg:
+package, described in the section `Native font support`_ below, which
+converts text directly as `Path`\s.
 
 Text objects, defined in `Diagrams.TwoD.Text`:mod:, can be created
 most simply with the `text` function, which turns a `String` into a
