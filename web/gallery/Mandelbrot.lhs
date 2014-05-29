@@ -23,8 +23,9 @@ slowly its orbit diverges.
 >
 > critical_orbit z = iterate (quadratic z) 0
 >
-> pixel = length . takeWhile (\z -> magnitude z <= 2) . take max_iter
-> max_iter = 32
+> pixel = length . takeWhile (\z -> magnitude z <= 2) . take maxIter
+> maxIter = 32
+> edge = 128
 
 Generate a grid of points of the desired size.
 
@@ -32,22 +33,19 @@ Generate a grid of points of the desired size.
 >    let sv = (v1 - v0) / fromIntegral n
 >    in  [v0, (v0 + sv) .. v1]
 >
-> side_x = side 64 (-2) 2
-> side_y = side 64 (-2) 2
+> sideX = side edge (-2) 2
+> sideY = side edge (-2) 2
 >
-> grid = map (\y -> map (:+ y) side_x) side_y
+> grid = map (\y -> map (:+ y) sideX) sideY
 
 Generate the Mandelbrot image as a grid of pixel magnitudes.
 
-> image = map (map (to_circle . pixel . critical_orbit)) grid
+> image = map (map (toSquare . pixel . critical_orbit)) grid
 
-To lay out the pixels in a grid we have to make them into elements of
-the same size, so we construct a "phantom box" out of struts which we
-place behind every pixel.
-
-> minBox = centerXY (strutX w <> strutY w)
->   where w = 2 * sqrt max_iter
+To lay out the pixels in a grid we have to make them into a square
+whose opacity varies with the square root of the pixel value.
+ 
+> toSquare n = square 1 # lw medium # fc black # opacity (sqrt o)
+>   where o = fromIntegral n / maxIter
 >
-> to_circle = (<> minBox) . centerXY . lw none . fc blue . circle . sqrt . fromIntegral
->
-> example = vcat . map hcat $ image
+> example = (vcat . map hcat $ image) # bg red
