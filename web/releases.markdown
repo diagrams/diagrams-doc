@@ -122,9 +122,8 @@ diagrams 1.2: 2 June 2014
 
 * **Dependency/version changes**
 
-  - Allow `semigroups-0.15`
-
-  - Allow `opt-parse-applicative-0.9.0
+    - Allow `semigroups-0.15`
+    - Allow `optparse-applicative-0.9.0`
   
 [diagrams-cairo-1.2](http://hackage.haskell.org/package/diagrams-cairo-1.2)
 
@@ -135,18 +134,18 @@ diagrams 1.2: 2 June 2014
 
     - Support for linear and radial gradients on strokes and fills.
 
-* **Dependency/version changes
+* **Dependency/version changes**
 
-  - Allow `opt-parse-applicative-0.9`
-  - Allow `lens-4.2`
-  - Allow `mtl-2.2`
-  - Allow `transformers-0.4`
+    - Allow `opt-parse-applicative-0.9`
+    - Allow `lens-4.2`
+    - Allow `mtl-2.2`
+    - Allow `transformers-0.4`
   
 [diagrams-postscript-1.1](http://hackage.haskell.org/package/diagrams-postscript-1.1)
 
-    - Changes to reflect `Measure` refactoring.
-    - Allow `diagrams-core-1.2` and `diagrams-lib-1.2`
-    - Allow `semigroups-0.15`
+  - Changes to reflect `Measure` refactoring.
+  - Allow `diagrams-core-1.2` and `diagrams-lib-1.2`
+  - Allow `semigroups-0.15`
     
 [diagrams-svg-1.1](http://hackage.haskell.org/package/diagrams-svg-1.1)
 
@@ -173,8 +172,8 @@ diagrams 1.2: 2 June 2014
       
 [diagrams-builder 0.5.0.10](http://hackage.haskell.org/package/diagrams-builder-0.5,0,10)
 
-    - Module parse error messages now include the error location
-      (thanks to Yiding Jia)
+  - Module parse error messages now include the error location
+    (thanks to Yiding Jia)
 
 diagrams 1.1: 8 March 2014
 ==========================
