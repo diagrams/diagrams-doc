@@ -33,6 +33,9 @@ with questions or post them to the
 News
 ----
 
+* Diagrams 1.2 [released](/releases.html) (2 June 2014)!  See
+  [XXX](XXX TODO blog post) for a rundown of new features.
+
 * Diagrams 1.1 [released](/releases.html) (8 March 2014).  This is
   mostly a bugfix release though there are a few cool new features.
 
