@@ -2,6 +2,180 @@
 title: Releases
 ---
 
+diagrams 1.2: 2 June 2014
+=========================
+
+[diagrams-core-1.2](http://hackage.haskell.org/package/diagrams-core-1.2)
+
+* **New features**
+
+    - New function `matrixHomRep` to convert a transformation to a
+      homogeneous matrix representation.
+
+    - New function `dropTransl` to drop the translation component
+      from a transformation.
+
+    - A mini-DSL for Measures.
+
+    - New `extent` function, used in `diameter`.
+
+    - New `dimension` function to return the dimension of a vector space.
+
+    - New `_relative` iso between points and vectors.
+
+    - `avgScale` function (for computing the average scaling factor of
+      a transformation) has been moved from `diagrams-lib` to
+      `diagrams-core` and generalized to work over any vector space.
+
+* **Dependency/version changes**
+
+    - Allow `semigroups-0.14`
+    - Allow `lens-4.1`
+
+* **API changes**
+
+    - Major refactoring which removes `freeze` (and hence `Split` transforms,
+      etc.) and adds units of `Measure`.
+
+    - Refactoring and simplification of the `Backend` class.
+
+    - Remove `Multibackend`.
+
+    - Remove `nullPrim`, `IsPrim` and simplify `RPrim` so that it does not
+      carry a transformation.
+
+    - Update `adjustDia` to return a transformation, not just a scale factor.
+      Add `renderDiaT` which returns a transformation (for use by end
+      users, e.g. to convert output coordinates back into local coordinates).
+      
+[diagrams-lib-1.2](http://hackage.haskell.org/package/diagrams-lib-1.2)
+
+* **New features**
+
+    - Several attributes (such as line width, dashing size, arrowhead
+      size, and font size) that formerly had a value of type `Double`
+      now have the more general type `Measure R2`. This allows the
+      attributes to be specified relative to one of four measurement
+      frames: `Local`, `Global`, `Normalized`, and `Output`.
+
+    - New DSL for specifying measurements.
+
+    - New synonyms for specifying measurements, *e.g.* `thin`,
+      `thick`, and `medium`, `large`.
+
+    - Support for radial and linear gradients for fills and strokes.
+
+    - New `DImage` type that supports both embedded and external images in
+      Backends that support them.
+
+    - New `lengths` Traversal for setting `headLength` and `tailLength`
+      simultaneously.
+
+    - `Frustrum` and `Box` shapes added to `Diagrams.ThreeD.Shapes`.
+
+    - New function `quartForm` to find roots of quartic polynomials.
+
+    - New Lenses for polar coordinates.
+
+    - New trig functions, `sinA`, `atanA`, etc. which take `Angle` as
+      input or output.
+
+* **New instances**
+
+    - `Transformable` instances for `LineWidth`, `Dashing`,
+      `LineTexture`, and  `FillTexture`.
+
+* **API changes**
+
+    - `FillColor` and `LineColor` attributes have been replaced with
+      the more general `FillTexture` and `LineTexture`. Use the `solid`
+      function to convert a color to a texture.
+
+    - The size of arrow heads and tails is now specified in terms of
+      length instead of the radius of their circumcircle.
+
+    - Gaps at the ends of arrows are now specified using `Measure R2`.
+
+    - The `gap` traversal has been replaced by `gaps` for consistency
+      in naming, though `gap` is still provided for backwards compatibility.
+
+    - `fontSize` now takes a value of type `Measure R2`.
+
+    - Get rid of (bitrotted) `Show` backend.
+
+    - Functions in `TwoD.Adjust` now return the adjustment
+      transformation itself in addition to the resized `Diagram` and
+      `Options` record; this can be used, *e.g.* to convert screen
+      coordinates back into diagram coordinates.
+
+    - Export `pathLocSegments`.
+
+    - The `avgScale` function has been moved to `Diagrams.Core`.
+
+    - The `Angle` definition and related functions (*e.g.*
+      `angleBetween`) have moved to a separate module, `Diagrams.Angle`.
+
+    - A separate `Diagrams.TwoD.Attributes` module now contains most
+      of the attributes that require 2D transformation instances.
+
+    - The `splitColorFills` function has been replaced by `splitTextureFills`.
+
+* **Dependency/version changes**
+
+  - Allow `semigroups-0.15`
+
+  - Allow `opt-parse-applicative-0.9.0
+  
+[diagrams-cairo-1.2](http://hackage.haskell.org/package/diagrams-cairo-1.2)
+
+* **New features**
+
+    - Much improved text support using the `pango` library instead of
+      cairo's "toy" text API.
+
+    - Support for linear and radial gradients on strokes and fills.
+
+* **Dependency/version changes
+
+  - Allow `opt-parse-applicative-0.9`
+  - Allow `lens-4.2`
+  - Allow `mtl-2.2`
+  - Allow `transformers-0.4`
+  
+[diagrams-postscript-1.1](http://hackage.haskell.org/package/diagrams-postscript-1.1)
+
+    - Changes to reflect `Measure` refactoring.
+    - Allow `diagrams-core-1.2` and `diagrams-lib-1.2`
+    - Allow `semigroups-0.15`
+    
+[diagrams-svg-1.1](http://hackage.haskell.org/package/diagrams-svg-1.1)
+
+* **New features**
+
+    - Support for radial and linear gradients.
+
+    - Support for embedded images in `.png` format.
+
+* **New instances**
+
+    - `Renderable` instances for `DImage Embedded`.
+
+* **API changes**
+
+    - Updates to work with `Measure` units.
+
+    - Substantial refactoring of `Backend` instance to support changes in
+      `Diagrams.Core`.
+      
+[diagrams-rasterific-0.1](http://hackage.haskell.org/package/diagrams-rasterific_0.1)
+
+  *Initial release*
+      
+[diagrams-builder 0.5.0.10](http://hackage.haskell.org/package/diagrams-builder-0.5,0,10)
+
+    - Module parse error messages now include the error location
+      (thanks to Yiding Jia)
+
 diagrams 1.1: 8 March 2014
 ==========================
 
