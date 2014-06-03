@@ -36,7 +36,7 @@
 <a name="line-27"></a>       <span class='hs-layout'>,</span> <span class='hs-varid'>requiredScaleT</span><span class='hs-layout'>,</span> <span class='hs-varid'>requiredScale</span>
 <a name="line-28"></a>
 <a name="line-29"></a>         <span class='hs-comment'>-- ** Changing the size of things</span>
-<a name="line-30"></a>       <span class='hs-layout'>,</span> <span class='hs-varid'>sized</span><span class='hs-layout'>,</span> <span class='hs-varid'>sizedAs</span>
+<a name="line-30"></a>       <span class='hs-layout'>,</span> <span class='hs-varid'>sized</span><span class='hs-layout'>,</span> <span class='hs-varid'>sizedAs</span><span class='hs-layout'>,</span> <span class='hs-varid'>sizePair</span>
 <a name="line-31"></a>       <span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
 <a name="line-32"></a>
 <a name="line-33"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Core</span>
@@ -157,5 +157,12 @@
 <a name="line-148"></a>           <span class='hs-layout'>,</span> <span class='hs-conid'>Enveloped</span> <span class='hs-varid'>b</span><span class='hs-layout'>,</span> <span class='hs-conid'>V</span> <span class='hs-varid'>b</span> <span class='hs-keyglyph'>~</span> <span class='hs-conid'>R2</span><span class='hs-layout'>)</span>
 <a name="line-149"></a>        <span class='hs-keyglyph'>=&gt;</span> <span class='hs-varid'>b</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span>
 <a name="line-150"></a><span class='hs-definition'>sizedAs</span> <span class='hs-varid'>other</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>sized</span> <span class='hs-layout'>(</span><span class='hs-varid'>sizeSpec2D</span> <span class='hs-varid'>other</span><span class='hs-layout'>)</span>
+<a name="line-151"></a>
+<a name="line-152"></a><a name="sizePair"></a><span class='hs-comment'>-- | Make width and height of `SizeSpec2D` into a tuple.</span>
+<a name="line-153"></a><span class='hs-definition'>sizePair</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>SizeSpec2D</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-layout'>(</span><span class='hs-conid'>Double</span><span class='hs-layout'>,</span> <span class='hs-conid'>Double</span><span class='hs-layout'>)</span>
+<a name="line-154"></a><span class='hs-definition'>sizePair</span> <span class='hs-layout'>(</span><span class='hs-conid'>Width</span> <span class='hs-varid'>w'</span><span class='hs-layout'>)</span>   <span class='hs-keyglyph'>=</span> <span class='hs-layout'>(</span><span class='hs-varid'>w'</span><span class='hs-layout'>,</span><span class='hs-varid'>w'</span><span class='hs-layout'>)</span>
+<a name="line-155"></a><span class='hs-definition'>sizePair</span> <span class='hs-layout'>(</span><span class='hs-conid'>Height</span> <span class='hs-varid'>h'</span><span class='hs-layout'>)</span>  <span class='hs-keyglyph'>=</span> <span class='hs-layout'>(</span><span class='hs-varid'>h'</span><span class='hs-layout'>,</span><span class='hs-varid'>h'</span><span class='hs-layout'>)</span>
+<a name="line-156"></a><span class='hs-definition'>sizePair</span> <span class='hs-layout'>(</span><span class='hs-conid'>Dims</span> <span class='hs-varid'>w'</span> <span class='hs-varid'>h'</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-layout'>(</span><span class='hs-varid'>w'</span><span class='hs-layout'>,</span><span class='hs-varid'>h'</span><span class='hs-layout'>)</span>
+<a name="line-157"></a><span class='hs-definition'>sizePair</span> <span class='hs-conid'>Absolute</span>     <span class='hs-keyglyph'>=</span> <span class='hs-layout'>(</span><span class='hs-num'>100</span><span class='hs-layout'>,</span><span class='hs-num'>100</span><span class='hs-layout'>)</span>
 </pre></body>
 </html>

@@ -392,13 +392,13 @@
 <a name="line-383"></a><span class='hs-comment'>-- &gt; pointB = 1 ^&amp; 1.2</span>
 <a name="line-384"></a><span class='hs-comment'>-- &gt; pointC = 2.5 ^&amp; 3.5</span>
 <a name="line-385"></a><span class='hs-comment'>-- &gt;</span>
-<a name="line-386"></a><span class='hs-comment'>-- &gt; dot = circle 0.05 # lw 0</span>
+<a name="line-386"></a><span class='hs-comment'>-- &gt; dot = circle 0.05 # lw none</span>
 <a name="line-387"></a><span class='hs-comment'>-- &gt;</span>
 <a name="line-388"></a><span class='hs-comment'>-- &gt; mkTraceDia :: TraceDiaOpts -&gt; Diagram B R2</span>
 <a name="line-389"></a><span class='hs-comment'>-- &gt; mkTraceDia tdo = mconcat</span>
 <a name="line-390"></a><span class='hs-comment'>-- &gt;   [ mconcat $ map (place (dot # fc red)) pts</span>
 <a name="line-391"></a><span class='hs-comment'>-- &gt;   , if drawV tdo then resultArrow else mempty</span>
-<a name="line-392"></a><span class='hs-comment'>-- &gt;   , arrowAt (basePt tdo) (dirV tdo) # lw 0.02 # lc blue</span>
+<a name="line-392"></a><span class='hs-comment'>-- &gt;   , arrowAt (basePt tdo) (dirV tdo) # lc blue</span>
 <a name="line-393"></a><span class='hs-comment'>-- &gt;   , dot # fc blue # moveTo (basePt tdo)</span>
 <a name="line-394"></a><span class='hs-comment'>-- &gt;   , traceLine (basePt tdo) maxPosPt</span>
 <a name="line-395"></a><span class='hs-comment'>-- &gt;   , traceLine (basePt tdo) minNegPt</span>
@@ -414,7 +414,7 @@
 <a name="line-405"></a><span class='hs-comment'>-- &gt;     minNegPt = (mkPt &lt;$&gt;) . safeHead $ filter (&lt;0) ss</span>
 <a name="line-406"></a><span class='hs-comment'>-- &gt;     minPt = (mkPt &lt;$&gt;) . safeHead $ ss</span>
 <a name="line-407"></a><span class='hs-comment'>-- &gt;     resultArrow = fromMaybe mempty (arrowBetween (basePt tdo) &lt;$&gt; minPt)</span>
-<a name="line-408"></a><span class='hs-comment'>-- &gt;       # lw 0.03 # lc green</span>
+<a name="line-408"></a><span class='hs-comment'>-- &gt;       # lc green</span>
 <a name="line-409"></a><span class='hs-comment'>-- &gt;</span>
 <a name="line-410"></a><span class='hs-comment'>-- &gt; safeLast [] = Nothing</span>
 <a name="line-411"></a><span class='hs-comment'>-- &gt; safeLast xs = Just $ last xs</span>
@@ -424,7 +424,7 @@
 <a name="line-415"></a><span class='hs-comment'>-- &gt; dropAllBut1 xs = [last xs]</span>
 <a name="line-416"></a><span class='hs-comment'>-- &gt;</span>
 <a name="line-417"></a><span class='hs-comment'>-- &gt; traceLine _ Nothing = mempty</span>
-<a name="line-418"></a><span class='hs-comment'>-- &gt; traceLine p (Just q) = (p ~~ q) # dashing [0.1,0.1] 0</span>
+<a name="line-418"></a><span class='hs-comment'>-- &gt; traceLine p (Just q) = (p ~~ q) # dashingG [0.1,0.1] 0</span>
 <a name="line-419"></a><span class='hs-comment'>-- &gt;</span>
 <a name="line-420"></a><span class='hs-comment'>-- &gt; mkTraceDias :: [TraceDiaOpts] -&gt; Diagram B R2</span>
 <a name="line-421"></a><span class='hs-comment'>-- &gt; mkTraceDias = hcat' (with &amp; sep .~ 1) . map mkTraceDia</span>

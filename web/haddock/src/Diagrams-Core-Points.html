@@ -7,33 +7,45 @@
 <link type='text/css' rel='stylesheet' href='hscolour.css' />
 </head>
 <body>
-<pre><a name="line-1"></a><span class='hs-comment'>{-# LANGUAGE TypeFamilies
-<a name="line-2"></a>  #-}</span>
-<a name="line-3"></a><span class='hs-comment'>-----------------------------------------------------------------------------</span>
-<a name="line-4"></a><span class='hs-comment'>-- |</span>
-<a name="line-5"></a><span class='hs-comment'>-- Module      :  Diagrams.Core.Points</span>
-<a name="line-6"></a><span class='hs-comment'>-- Copyright   :  (c) 2011 diagrams-core team (see LICENSE)</span>
-<a name="line-7"></a><span class='hs-comment'>-- License     :  BSD-style (see LICENSE)</span>
-<a name="line-8"></a><span class='hs-comment'>-- Maintainer  :  diagrams-discuss@googlegroups.com</span>
-<a name="line-9"></a><span class='hs-comment'>--</span>
-<a name="line-10"></a><span class='hs-comment'>-- A type for /points/ (as distinct from vectors).</span>
+<pre><a name="line-1"></a><span class='hs-comment'>{-# LANGUAGE FlexibleContexts #-}</span>
+<a name="line-2"></a><span class='hs-comment'>{-# LANGUAGE RankNTypes #-}</span>
+<a name="line-3"></a><span class='hs-comment'>{-# LANGUAGE TypeFamilies #-}</span>
+<a name="line-4"></a>
+<a name="line-5"></a><span class='hs-comment'>-----------------------------------------------------------------------------</span>
+<a name="line-6"></a><span class='hs-comment'>-- |</span>
+<a name="line-7"></a><span class='hs-comment'>-- Module      :  Diagrams.Core.Points</span>
+<a name="line-8"></a><span class='hs-comment'>-- Copyright   :  (c) 2011 diagrams-core team (see LICENSE)</span>
+<a name="line-9"></a><span class='hs-comment'>-- License     :  BSD-style (see LICENSE)</span>
+<a name="line-10"></a><span class='hs-comment'>-- Maintainer  :  diagrams-discuss@googlegroups.com</span>
 <a name="line-11"></a><span class='hs-comment'>--</span>
-<a name="line-12"></a><span class='hs-comment'>-----------------------------------------------------------------------------</span>
-<a name="line-13"></a>
-<a name="line-14"></a><span class='hs-keyword'>module</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Core</span><span class='hs-varop'>.</span><span class='hs-conid'>Points</span>
-<a name="line-15"></a>       <span class='hs-layout'>(</span> <span class='hs-comment'>-- * Points</span>
-<a name="line-16"></a>
-<a name="line-17"></a>         <span class='hs-conid'>Point</span><span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span><span class='hs-layout'>,</span> <span class='hs-varid'>origin</span><span class='hs-layout'>,</span> <span class='hs-layout'>(</span><span class='hs-varop'>*.</span><span class='hs-layout'>)</span>
+<a name="line-12"></a><span class='hs-comment'>-- A type for /points/ (as distinct from vectors).</span>
+<a name="line-13"></a><span class='hs-comment'>--</span>
+<a name="line-14"></a><span class='hs-comment'>-----------------------------------------------------------------------------</span>
+<a name="line-15"></a>
+<a name="line-16"></a><span class='hs-keyword'>module</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Core</span><span class='hs-varop'>.</span><span class='hs-conid'>Points</span>
+<a name="line-17"></a>       <span class='hs-layout'>(</span> <span class='hs-comment'>-- * Points</span>
 <a name="line-18"></a>
-<a name="line-19"></a>       <span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
-<a name="line-20"></a>
-<a name="line-21"></a><span class='hs-comment'>-- We just import from Data.AffineSpace.Point (defined in the</span>
-<a name="line-22"></a><span class='hs-comment'>-- vector-space-points package) and re-export.  We also define an</span>
-<a name="line-23"></a><span class='hs-comment'>-- instance of V for Point here.</span>
-<a name="line-24"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Data</span><span class='hs-varop'>.</span><span class='hs-conid'>AffineSpace</span><span class='hs-varop'>.</span><span class='hs-conid'>Point</span>
-<a name="line-25"></a>
-<a name="line-26"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Core</span><span class='hs-varop'>.</span><span class='hs-conid'>V</span>
+<a name="line-19"></a>         <span class='hs-conid'>Point</span><span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span><span class='hs-layout'>,</span> <span class='hs-varid'>origin</span><span class='hs-layout'>,</span> <span class='hs-layout'>(</span><span class='hs-varop'>*.</span><span class='hs-layout'>)</span>
+<a name="line-20"></a>       <span class='hs-layout'>,</span> <span class='hs-sel'>_relative</span>
+<a name="line-21"></a>
+<a name="line-22"></a>       <span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
+<a name="line-23"></a>
+<a name="line-24"></a><span class='hs-comment'>-- We import from Data.AffineSpace.Point (defined in the</span>
+<a name="line-25"></a><span class='hs-comment'>-- vector-space-points package) and re-export.  We also define an</span>
+<a name="line-26"></a><span class='hs-comment'>-- instance of V for Point here.</span>
 <a name="line-27"></a>
-<a name="line-28"></a><span class='hs-keyword'>type</span> <span class='hs-keyword'>instance</span> <span class='hs-conid'>V</span> <span class='hs-layout'>(</span><span class='hs-conid'>Point</span> <span class='hs-varid'>v</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>v</span>
+<a name="line-28"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Control</span><span class='hs-varop'>.</span><span class='hs-conid'>Lens</span> <span class='hs-layout'>(</span><span class='hs-conid'>Iso'</span><span class='hs-layout'>,</span> <span class='hs-varid'>iso</span><span class='hs-layout'>)</span>
+<a name="line-29"></a>
+<a name="line-30"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Data</span><span class='hs-varop'>.</span><span class='hs-conid'>AffineSpace</span><span class='hs-varop'>.</span><span class='hs-conid'>Point</span>
+<a name="line-31"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Data</span><span class='hs-varop'>.</span><span class='hs-conid'>AffineSpace</span>
+<a name="line-32"></a>
+<a name="line-33"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Core</span><span class='hs-varop'>.</span><span class='hs-conid'>V</span>
+<a name="line-34"></a>
+<a name="line-35"></a><span class='hs-keyword'>type</span> <span class='hs-keyword'>instance</span> <span class='hs-conid'>V</span> <span class='hs-layout'>(</span><span class='hs-conid'>Point</span> <span class='hs-varid'>v</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>v</span>
+<a name="line-36"></a>
+<a name="line-37"></a><span class='hs-comment'>-- | An isomorphism between points and vectors, given a reference</span>
+<a name="line-38"></a><span class='hs-comment'>-- point.  This is provided for defining new lenses on points.</span>
+<a name="line-39"></a><span class='hs-sel'>_relative</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>AffineSpace</span> <span class='hs-layout'>(</span><span class='hs-conid'>Point</span> <span class='hs-varid'>v</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>Point</span> <span class='hs-varid'>v</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Iso'</span> <span class='hs-layout'>(</span><span class='hs-conid'>Point</span> <span class='hs-varid'>v</span><span class='hs-layout'>)</span> <span class='hs-varid'>v</span>
+<a name="line-40"></a><span class='hs-sel'>_relative</span> <span class='hs-varid'>p0</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>iso</span> <span class='hs-layout'>(</span><span class='hs-varop'>.-.</span> <span class='hs-varid'>p0</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-varid'>p0</span> <span class='hs-varop'>.+^</span><span class='hs-layout'>)</span>
 </pre></body>
 </html>

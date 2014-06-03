@@ -50,9 +50,9 @@
 <a name="line-41"></a><span class='hs-comment'>--   &lt;&lt;diagrams/src_Diagrams_CubicSpline_cubicSplineEx.svg#diagram=cubicSplineEx&amp;width=600&gt;&gt;</span>
 <a name="line-42"></a><span class='hs-comment'>--</span>
 <a name="line-43"></a><span class='hs-comment'>--   &gt; pts = map p2 [(0,0), (2,3), (5,-2), (-4,1), (0,3)]</span>
-<a name="line-44"></a><span class='hs-comment'>--   &gt; dot = circle 0.2 # fc blue # lw 0</span>
+<a name="line-44"></a><span class='hs-comment'>--   &gt; dot = circle 0.2 # fc blue # lw none</span>
 <a name="line-45"></a><span class='hs-comment'>--   &gt; mkPath closed = position (zip pts (repeat dot))</span>
-<a name="line-46"></a><span class='hs-comment'>--   &gt;              &lt;&gt; cubicSpline closed pts # lw 0.05</span>
+<a name="line-46"></a><span class='hs-comment'>--   &gt;              &lt;&gt; cubicSpline closed pts</span>
 <a name="line-47"></a><span class='hs-comment'>--   &gt; cubicSplineEx = (mkPath False ||| strutX 2 ||| mkPath True)</span>
 <a name="line-48"></a><span class='hs-comment'>--   &gt;               # centerXY # pad 1.1</span>
 <a name="line-49"></a><span class='hs-comment'>--</span>

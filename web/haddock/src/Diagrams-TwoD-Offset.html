@@ -217,7 +217,7 @@
 <a name="line-208"></a><span class='hs-comment'>-- &gt; import Diagrams.TwoD.Offset</span>
 <a name="line-209"></a><span class='hs-comment'>-- &gt;</span>
 <a name="line-210"></a><span class='hs-comment'>-- &gt; showExample :: Segment Closed R2 -&gt; Diagram SVG R2</span>
-<a name="line-211"></a><span class='hs-comment'>-- &gt; showExample s = pad 1.1 . centerXY $ d # lc blue # lw 0.1 &lt;&gt; d' # lw 0.1</span>
+<a name="line-211"></a><span class='hs-comment'>-- &gt; showExample s = pad 1.1 . centerXY $ d # lc blue # lw thick &lt;&gt; d' # lw thick</span>
 <a name="line-212"></a><span class='hs-comment'>-- &gt;   where</span>
 <a name="line-213"></a><span class='hs-comment'>-- &gt;       d  = stroke . fromSegments $ [s]</span>
 <a name="line-214"></a><span class='hs-comment'>-- &gt;       d' = mconcat . zipWith lc colors . map stroke . explodeTrail</span>
@@ -307,7 +307,7 @@
 <a name="line-298"></a><span class='hs-comment'>-- &gt; corner = fromVertices (map p2 [(0, 0), (10, 0), (5, 6)]) `at` origin</span>
 <a name="line-299"></a><span class='hs-comment'>-- &gt;</span>
 <a name="line-300"></a><span class='hs-comment'>-- &gt; offsetTrailExample :: Diagram SVG R2</span>
-<a name="line-301"></a><span class='hs-comment'>-- &gt; offsetTrailExample = pad 1.1 . centerXY . lw 0.2 . hcat' (def &amp; sep .~ 1 )</span>
+<a name="line-301"></a><span class='hs-comment'>-- &gt; offsetTrailExample = pad 1.1 . centerXY . lwO 3 . hcat' (def &amp; sep .~ 1 )</span>
 <a name="line-302"></a><span class='hs-comment'>-- &gt;                    . map (uncurry showStyle)</span>
 <a name="line-303"></a><span class='hs-comment'>-- &gt;                    $ [ (LineJoinMiter, "LineJoinMiter")</span>
 <a name="line-304"></a><span class='hs-comment'>-- &gt;                      , (LineJoinRound, "LineJoinRound")</span>
@@ -319,7 +319,7 @@
 <a name="line-310"></a><span class='hs-comment'>-- &gt;            === (strutY 3 &lt;&gt; text s # font "Helvetica" # bold)</span>
 <a name="line-311"></a><span class='hs-comment'>-- &gt;</span>
 <a name="line-312"></a><span class='hs-comment'>-- &gt; offsetTrailLeftExample :: Diagram SVG R2</span>
-<a name="line-313"></a><span class='hs-comment'>-- &gt; offsetTrailLeftExample = pad 1.1 . centerXY . lw 0.2</span>
+<a name="line-313"></a><span class='hs-comment'>-- &gt; offsetTrailLeftExample = pad 1.1 . centerXY . lwO 3</span>
 <a name="line-314"></a><span class='hs-comment'>-- &gt;                        $ (trailLike c # lc blue)</span>
 <a name="line-315"></a><span class='hs-comment'>-- &gt;                        &lt;&gt; (lc green . trailLike</span>
 <a name="line-316"></a><span class='hs-comment'>-- &gt;                         . offsetTrail' (def &amp; offsetJoin .~ LineJoinRound) (-2) $ c)</span>
@@ -327,7 +327,7 @@
 <a name="line-318"></a><span class='hs-comment'>-- &gt;     c = reflectY corner</span>
 <a name="line-319"></a><span class='hs-comment'>-- &gt;</span>
 <a name="line-320"></a><span class='hs-comment'>-- &gt; offsetTrailOuterExample :: Diagram SVG R2</span>
-<a name="line-321"></a><span class='hs-comment'>-- &gt; offsetTrailOuterExample = pad 1.1 . centerXY . lw 0.2</span>
+<a name="line-321"></a><span class='hs-comment'>-- &gt; offsetTrailOuterExample = pad 1.1 . centerXY . lwO 3</span>
 <a name="line-322"></a><span class='hs-comment'>-- &gt;                         $ (trailLike c # lc blue)</span>
 <a name="line-323"></a><span class='hs-comment'>-- &gt;                         &lt;&gt; (lc green . trailLike</span>
 <a name="line-324"></a><span class='hs-comment'>-- &gt;                          . offsetTrail' (def &amp; offsetJoin .~ LineJoinRound) 2 $ c)</span>
@@ -410,17 +410,17 @@
 <a name="line-401"></a><span class='hs-comment'>-- &gt;                      , (LineCapSquare, "LineCapSquare")</span>
 <a name="line-402"></a><span class='hs-comment'>-- &gt;                      ]</span>
 <a name="line-403"></a><span class='hs-comment'>-- &gt;  where</span>
-<a name="line-404"></a><span class='hs-comment'>-- &gt;    showStyle c s = centerXY (trailLike corner # lc white # lw 0.2</span>
+<a name="line-404"></a><span class='hs-comment'>-- &gt;    showStyle c s = centerXY (trailLike corner # lc white # lw veryThick</span>
 <a name="line-405"></a><span class='hs-comment'>-- &gt;                               &lt;&gt; stroke (expandTrail'</span>
 <a name="line-406"></a><span class='hs-comment'>-- &gt;                                              (def &amp; expandJoin .~ LineJoinRound</span>
 <a name="line-407"></a><span class='hs-comment'>-- &gt;                                                   &amp; expandCap .~ c</span>
 <a name="line-408"></a><span class='hs-comment'>-- &gt;                                                   ) 2 corner)</span>
-<a name="line-409"></a><span class='hs-comment'>-- &gt;                                      # lw 0 # fc green)</span>
+<a name="line-409"></a><span class='hs-comment'>-- &gt;                                      # lw none # fc green)</span>
 <a name="line-410"></a><span class='hs-comment'>-- &gt;               === (strutY 3 &lt;&gt; text s # font "Helvetica" # bold)</span>
 <a name="line-411"></a><span class='hs-comment'>-- &gt;</span>
 <a name="line-412"></a><span class='hs-comment'>-- &gt; expandLoopExample :: Diagram SVG R2</span>
-<a name="line-413"></a><span class='hs-comment'>-- &gt; expandLoopExample = pad 1.1 . centerXY $ ((strokeLocT t # lw 0.2 # lc white)</span>
-<a name="line-414"></a><span class='hs-comment'>-- &gt;                                        &lt;&gt; (stroke t' # lw 0 # fc green))</span>
+<a name="line-413"></a><span class='hs-comment'>-- &gt; expandLoopExample = pad 1.1 . centerXY $ ((strokeLocT t # lw veryThick # lc white)</span>
+<a name="line-414"></a><span class='hs-comment'>-- &gt;                                        &lt;&gt; (stroke t' # lw none # fc green))</span>
 <a name="line-415"></a><span class='hs-comment'>-- &gt;   where</span>
 <a name="line-416"></a><span class='hs-comment'>-- &gt;     t  = mapLoc glueTrail $ fromVertices (map p2 [(0, 0), (5, 0), (10, 5), (10, 10), (0, 0)])</span>
 <a name="line-417"></a><span class='hs-comment'>-- &gt;     t' = expandTrail' (def &amp; expandJoin .~ LineJoinRound) 1 t</span>

@@ -57,11 +57,11 @@
 <a name="line-48"></a><span class='hs-comment'>--</span>
 <a name="line-49"></a><span class='hs-comment'>-- For a tutorial on command-line diagram creation see</span>
 <a name="line-50"></a><span class='hs-comment'>-- &lt;<a href="http://projects.haskell.org/diagrams/doc/cmdline.html">http://projects.haskell.org/diagrams/doc/cmdline.html</a>&gt;.</span>
-<a name="line-51"></a><span class='hs-comment'>-- </span>
+<a name="line-51"></a><span class='hs-comment'>--</span>
 <a name="line-52"></a><span class='hs-comment'>-----------------------------------------------------------------------------</span>
 <a name="line-53"></a>
 <a name="line-54"></a><span class='hs-keyword'>module</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Backend</span><span class='hs-varop'>.</span><span class='hs-conid'>Postscript</span><span class='hs-varop'>.</span><span class='hs-conid'>CmdLine</span>
-<a name="line-55"></a>       <span class='hs-layout'>(</span> 
+<a name="line-55"></a>       <span class='hs-layout'>(</span>
 <a name="line-56"></a>         <span class='hs-comment'>-- * General form of @main@</span>
 <a name="line-57"></a>         <span class='hs-comment'>-- $mainwith</span>
 <a name="line-58"></a>
@@ -165,7 +165,7 @@
 <a name="line-156"></a><span class='hs-definition'>chooseRender</span> <span class='hs-varid'>opts</span> <span class='hs-varid'>renderer</span> <span class='hs-keyglyph'>=</span>
 <a name="line-157"></a>  <span class='hs-keyword'>case</span> <span class='hs-varid'>splitOn</span> <span class='hs-str'>"."</span> <span class='hs-layout'>(</span><span class='hs-varid'>opts</span><span class='hs-varop'>^.</span><span class='hs-varid'>output</span><span class='hs-layout'>)</span> <span class='hs-keyword'>of</span>
 <a name="line-158"></a>    <span class='hs-keyglyph'>[</span><span class='hs-str'>""</span><span class='hs-keyglyph'>]</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>putStrLn</span> <span class='hs-str'>"No output file given."</span>
-<a name="line-159"></a>    <span class='hs-varid'>ps</span> <span class='hs-keyglyph'>|</span>  <span class='hs-varid'>last</span> <span class='hs-varid'>ps</span> <span class='hs-varop'>`elem`</span> <span class='hs-keyglyph'>[</span><span class='hs-str'>"eps"</span><span class='hs-keyglyph'>]</span> 
+<a name="line-159"></a>    <span class='hs-varid'>ps</span> <span class='hs-keyglyph'>|</span>  <span class='hs-varid'>last</span> <span class='hs-varid'>ps</span> <span class='hs-varop'>`elem`</span> <span class='hs-keyglyph'>[</span><span class='hs-str'>"eps"</span><span class='hs-keyglyph'>]</span>
 <a name="line-160"></a>       <span class='hs-varop'>||</span> <span class='hs-varid'>last</span> <span class='hs-varid'>ps</span> <span class='hs-varop'>`elem`</span> <span class='hs-keyglyph'>[</span><span class='hs-str'>"ps"</span><span class='hs-keyglyph'>]</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-keyword'>do</span>
 <a name="line-161"></a>           <span class='hs-keyword'>let</span> <span class='hs-varid'>outfmt</span> <span class='hs-keyglyph'>=</span> <span class='hs-keyword'>case</span> <span class='hs-varid'>last</span> <span class='hs-varid'>ps</span> <span class='hs-keyword'>of</span>
 <a name="line-162"></a>                          <span class='hs-keyword'>_</span>     <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>EPS</span>
@@ -178,13 +178,13 @@
 <a name="line-169"></a>
 <a name="line-170"></a>           <span class='hs-varid'>renderer</span> <span class='hs-layout'>(</span><span class='hs-conid'>PostscriptOptions</span> <span class='hs-layout'>(</span><span class='hs-varid'>opts</span><span class='hs-varop'>^.</span><span class='hs-varid'>output</span><span class='hs-layout'>)</span> <span class='hs-varid'>sizeSpec</span> <span class='hs-varid'>outfmt</span><span class='hs-layout'>)</span>
 <a name="line-171"></a>       <span class='hs-keyglyph'>|</span> <span class='hs-varid'>otherwise</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>putStrLn</span> <span class='hs-varop'>$</span> <span class='hs-str'>"Unknown file type: "</span> <span class='hs-varop'>++</span> <span class='hs-varid'>last</span> <span class='hs-varid'>ps</span>
-<a name="line-172"></a>       
+<a name="line-172"></a>
 <a name="line-173"></a><a name="renderDias'"></a><span class='hs-definition'>renderDias'</span> <span class='hs-keyglyph'>::</span> <span class='hs-keyglyph'>[</span><span class='hs-conid'>Diagram</span> <span class='hs-conid'>Postscript</span> <span class='hs-conid'>R2</span><span class='hs-keyglyph'>]</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Options</span> <span class='hs-conid'>Postscript</span> <span class='hs-conid'>R2</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>IO</span> <span class='hs-conid'>()</span>
-<a name="line-174"></a><span class='hs-definition'>renderDias'</span> <span class='hs-varid'>ds</span> <span class='hs-varid'>o</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>renderDias</span> <span class='hs-conid'>Postscript</span> <span class='hs-varid'>o</span> <span class='hs-varid'>ds</span> <span class='hs-varop'>&gt;&gt;</span> <span class='hs-varid'>return</span> <span class='hs-conid'>()</span>
+<a name="line-174"></a><span class='hs-definition'>renderDias'</span> <span class='hs-varid'>ds</span> <span class='hs-varid'>o</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>renderDias</span> <span class='hs-varid'>o</span> <span class='hs-varid'>ds</span> <span class='hs-varop'>&gt;&gt;</span> <span class='hs-varid'>return</span> <span class='hs-conid'>()</span>
 <a name="line-175"></a>
 <a name="line-176"></a><a name="renderDia'"></a><span class='hs-definition'>renderDia'</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Diagram</span> <span class='hs-conid'>Postscript</span> <span class='hs-conid'>R2</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Options</span> <span class='hs-conid'>Postscript</span> <span class='hs-conid'>R2</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>IO</span> <span class='hs-conid'>()</span>
 <a name="line-177"></a><span class='hs-definition'>renderDia'</span> <span class='hs-varid'>d</span> <span class='hs-varid'>o</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>renderDia</span> <span class='hs-conid'>Postscript</span> <span class='hs-varid'>o</span> <span class='hs-varid'>d</span> <span class='hs-varop'>&gt;&gt;</span> <span class='hs-varid'>return</span> <span class='hs-conid'>()</span>
-<a name="line-178"></a>       
+<a name="line-178"></a>
 <a name="line-179"></a>
 <a name="line-180"></a><span class='hs-comment'>-- | @multiMain@ is like 'defaultMain', except instead of a single</span>
 <a name="line-181"></a><span class='hs-comment'>--   diagram it takes a list of diagrams paired with names as input.</span>
