@@ -907,9 +907,9 @@ __ http://tauday.com
 `fullTurn :: Angle` represents one full turn, equivalent to `1 @@
 turn`, `tau @@ rad`, or `360 @@ deg`.
 
-The `direction` function computes the direction of a vector,
-represented by an angle measured clockwise from the positive
-`x`:math:\-axis (shown in green below).
+In two dimensions, the direction of a vector can be represented by an
+angle measured clockwise from the positive `x`:math:\-axis (shown in
+green below).  For some vector u, this angle can be found by `u ^. _theta`.
 
 .. class:: dia
 
@@ -933,6 +933,15 @@ represented by an angle measured clockwise from the positive
 >   (origin .+^ (theV # normalized))
 >   # dashingG [0.05,0.05] 0
 >   # lc green
+
+Directions
+~~~~~~~~~~
+
+Whereas a vector is described by a direction and a magnitude, some
+functions only depend on the direction.  The `Direction` type is used
+in these cases to make the relationship clear.  The `direction`
+function converts a vector to its `Direction`; `fromDirection` creates a
+unit (magnitude 1) vector in the given direction.
 
 Primitive shapes
 ----------------
