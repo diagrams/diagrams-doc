@@ -1372,9 +1372,18 @@ possibilities.
 >   where p n = regPoly n 1 # scale (1 + fromIntegral n/4)
 >                           # showOrigin
 
-For convenience, `Diagrams.TwoD.Combinators`:mod: also provides `hcat`, `hcat'`,
-`vcat`, and `vcat'`, variants of `cat` and `cat'` which concatenate
-diagrams horizontally and vertically.
+For convenience, `Diagrams.TwoD.Combinators`:mod: also provides
+`hcat`, `hcat'`, `vcat`, and `vcat'`, variants of `cat` and `cat'`
+which concatenate diagrams horizontally and vertically.  In addition,
+since using `hcat'` or `vcat'` with some separation tends to be
+common, `hsep` and `vsep` are provided as short synonyms; that is,
+`hsep s = hcat' (with & sep .~ s)`, and similarly for `vsep`.
+
+.. class:: dia-lhs
+
+::
+
+> example = hsep 0.2 (map square [0.3, 0.7 .. 2])
 
 Finally, `appends` is like an iterated variant of `beside`, with the
 important difference that multiple diagrams are placed next to a
