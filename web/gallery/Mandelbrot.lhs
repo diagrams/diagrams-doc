@@ -21,6 +21,7 @@ slowly its orbit diverges.
 
 > quadratic c z = z*z + c
 >
+> critical_orbit :: Complex Double -> [Complex Double]
 > critical_orbit z = iterate (quadratic z) 0
 >
 > pixel = length . takeWhile (\z -> magnitude z <= 2) . take maxIter
@@ -44,7 +45,7 @@ Generate the Mandelbrot image as a grid of pixel magnitudes.
 
 To lay out the pixels in a grid we have to make them into a square
 whose opacity varies with the square root of the pixel value.
- 
+
 > toSquare n = square 1 # lw medium # fc black # opacity (sqrt o)
 >   where o = fromIntegral n / maxIter
 >
