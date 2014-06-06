@@ -171,13 +171,19 @@ in (by default) four other packages:
 * `diagrams-svg`:pkg: (Haskell-native backend generating SVG files).
 
 There is also a Haskell-native `postscript backend`_, which supports
-all features except transparency.  To get it, add the ``-fps`` flag:
+all features except transparency, and a Haskell-native `raster
+backend`_ (based on the excellent `Rasterific`_ package).  To get
+them, add the ``-fps`` or ``-frasterific`` flags, respectively:
 
 ::
 
   cabal install -fps diagrams
+    OR
+  cabal install -frasterific diagrams
 
-.. _`postscript backend`: http://github.com/diagrams/diagrams-postscript/
+.. _`postscript backend`: http://hackage.haskell.org/package/diagrams-postscript/
+.. _`raster backend`: http://hackage.haskell.org/package/diagrams-rasterific/
+.. _`Rasterific`: http://hackage.haskell.org/package/Rasterific/
 
 There is also a backend based on the `cairo graphics
 library`_; it has support for more
@@ -198,10 +204,12 @@ previously, though note that you may need to reinstall it if you are
 building under GHC 7.6 and the last time you installed
 ``gtk2hs-buildtools`` was sufficiently long ago---otherwise you may
 get FFI-related errors when building the `cairo`:pkg: package.)
+Add ``-fgtk`` to also get a GTK backend (based on the cairo backend)
+which can render diagrams directly to GTK windows.
 
-You can also mix and match these flags to get multiple backends.
-Note, if you don't want the SVG backend at all, you must add the
-``-f-svg`` flag to disable it.
+You can also mix and match all the above flags to get multiple
+backends.  Note, if you don't want the SVG backend at all, you must
+add the ``-f-svg`` flag to disable it.
 
 `See the wiki for the most up-to-date information`_ regarding
 installation.  If you have trouble installing diagrams, feel free to
