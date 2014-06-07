@@ -1516,7 +1516,8 @@ results in a diagram `p` times as opaque.
 To "set the background color" of a diagram, use the `bg`
 function---which does not actually set any attributes, but simply
 superimposes the diagram on top of a bounding rectangle of the given
-color.
+color. The `bgFrame` function is similar but the background is expanded
+to frame the diagram by a specified amount.
 
 .. class:: dia-lhs
 
@@ -1524,7 +1525,7 @@ color.
 
 > t = regPoly 3 1
 >
-> example = t ||| t # bg orange
+> example = hsep 0.2 [t, t # bg orange, t # bgFrame 0.1 orange]
 
 Linear Gradients
 ++++++++++++++++
