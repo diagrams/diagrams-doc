@@ -533,6 +533,7 @@ picture:
 >     # sized (Width 2)
 >   where
 >     mkNode n = text (show n) # fontSizeN 0.1 # fc white <> circle 0.2 # fc green # named n
+>     decorateTrail t ds = atPoints (trailVertices t) ds
 >
 > example = tournament 6
 

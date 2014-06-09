@@ -1412,10 +1412,6 @@ course, `appends` is implemented in terms of `juxtapose` (see
 > example2 = foldl (\a (v,b) -> beside v a b) c cdirs
 > example  = example1 ||| strutX 3 ||| example2
 
-`Diagrams.Combinators`:mod: also provides `decoratePath` and
-`decorateTrail`, which are described in `Decorating trails and
-paths`_.
-
 Modifying diagrams
 ------------------
 
@@ -2550,41 +2546,6 @@ Currently, `StrokeOpts` has two fields:
 
   By default, `queryFillRule` is set to `Winding`.
 
-Decorating trails and paths
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Paths (and trails) can be used not just to draw certain shapes, but
-also as tools for positioning other objects.  To this end,
-``diagrams`` provides `decoratePath`, `decorateLocatedTrail`, and
-`decorateTrail`, which position a list of objects at the vertices of a
-given path or trail.
-
-For example, suppose we want to create an equilateral triangular
-arrangement of dots.  One possibility is to create horizontal rows of
-dots, center them, and stack them vertically.  However, this is
-annoying, because we must manually compute the proper vertical
-stacking distance between rows. Whether you think this sounds easy or
-not, it is certainly going to involve the `sqrt` function, or perhaps
-some trig, or both, and we'd rather avoid all that.
-
-Fortunately, there's an easier way: after creating the horizontal
-rows, we create the path corresponding to the left-hand side of the
-triangle (which can be done using `fromOffsets` and a simple
-rotation), and then decorate it with the rows.
-
-.. class:: dia-lhs
-
-::
-
-> dot       = circle 1 # fc black
-> dotSep    = 0.5
-> dotOffset = (width (dot :: D R2) + dotSep) *^ unitX
-> mkRow n   = hcat' (with & sep .~ dotSep) (replicate n dot)
-> mkTri n   = decoratePath
->               (fromOffsets (replicate (n-1) dotOffset) # rotateBy (-1/3))
->               (map mkRow [1..n])
-> example   = mkTri 5
-
 Offsets of segments, trails, and paths
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -2882,7 +2843,7 @@ instances of `TrailLike`:
 
 > s = square 2  -- a squarish thingy.
 >
-> blueSquares = decoratePath s {- 1 -}
+> blueSquares = atPoints  (concat . pathVertices $ s) {- 1 -}
 >                 (replicate 4 (s {- 2 -} # scale 0.5) # fc blue)
 > paths       = lc purple . stroke $ star (StarSkip 2) s {- 3 -}
 > aster       = center . lc green . strokeLine
@@ -5780,12 +5741,12 @@ Other times, `V` can show up on the right-hand side of `=>`, as in
 
 ::
 
-> decorateTrail :: (...) => Trail (V a) -> [a] -> a
+> deform :: (...) => Deformation (V a) -> a -> a
 
-This says that `decorateTrail` takes two arguments: a `Trail` and a
-list of values of some type `a`.  However, `Trail`\s are parameterized
-by a vector space; `Trail (V a)` means that the vector space of the
-trail is the vector space associated to `a`.
+This says that `deform` takes two arguments: a `Deformation` and a
+value of some type `a`.  However, `Deformations`\s are parameterized
+by a vector space; `Deformation (V a)` means that the vector space of the
+deformation is the vector space associated to `a`.
 
 Scalar
 ~~~~~~
