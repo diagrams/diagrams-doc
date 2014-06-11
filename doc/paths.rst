@@ -102,9 +102,9 @@ find the source code for this tutorial on github.
      ::
 
      > ln    = fromOffsets [unitX, 2 *^ unitY, 2 *^ unitX]
-     > theta = direction (lineOffset ln)
+     > theta = angleBetween unitX (lineOffset ln)
      > example
-     >   = ln # rotate (negateV theta)
+     >   = ln # rotate theta
      >   # strokeLine
      >   # centerXY # pad 1.1
 
@@ -253,16 +253,16 @@ some lines and then call `glueLine` on the result.  You try:
 
      ::
 
-     > andThen t1 t2 = t1 <> t2 # rotate (d1 ^-^ d2)
+     > andThen t1 t2 = t1 <> t2 # rotate (angleBetween d1 d2)
      >   where
-     >     d1 = direction (tangentAtEnd t1)
-     >     d2 = direction (tangentAtStart t2)
+     >     d1 = tangentAtEnd t1
+     >     d2 = tangentAtStart t2
      >
      > str = fromOffsets [unitX]
-     > cap = arc zeroV (1/2 @@ turn)
+     > cap = arc xDir (1/2 @@ turn)
      > arm = str `andThen` cap `andThen` str
      >
-     > armUnit = arm `andThen` (arc zeroV (3/10 @@ turn) # reflectX)
+     > armUnit = arm `andThen` (arc xDir (3/10 @@ turn) # reflectX)
      >
      > example = foldr andThen mempty (replicate 5 armUnit)
      >   # glueLine # strokeLoop # fc blue

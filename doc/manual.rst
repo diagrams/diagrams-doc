@@ -925,9 +925,9 @@ __ http://tauday.com
 `fullTurn :: Angle` represents one full turn, equivalent to `1 @@
 turn`, `tau @@ rad`, or `360 @@ deg`.
 
-The `direction` function computes the direction of a vector,
-represented by an angle measured clockwise from the positive
-`x`:math:\-axis (shown in green below).
+In two dimensions, the direction of a vector can be represented by an
+angle measured clockwise from the positive `x`:math:\-axis (shown in
+green below).  For some vector u, this angle can be found by `u ^. _theta`.
 
 .. class:: dia
 
@@ -942,15 +942,24 @@ represented by an angle measured clockwise from the positive
 >   # center # frame 1
 >
 > axes = (arrowV (6 *^ unitX) # centerX <> arrowV (6 *^ unitY) # centerY)
-> theDir = 200 @@ deg
-> theV = 3 *^ fromDirection theDir
+> theAngle = 200 @@ deg
+> theV = 3 *^ rotate theAngle unitX
 > exampleVector = arrowV theV
 >   # lc blue
-> angleArrow = arrowBetween' (with & arrowShaft .~ arc zeroV theDir)
+> angleArrow = arrowBetween' (with & arrowShaft .~ arc xDir theAngle)
 >   (origin .+^ (1 *^ unitX))
 >   (origin .+^ (theV # normalized))
 >   # dashingG [0.05,0.05] 0
 >   # lc green
+
+Directions
+~~~~~~~~~~
+
+Whereas a vector is described by a direction and a magnitude, some
+functions only depend on the direction.  The `Direction` type is used
+in these cases to make the relationship clear.  The `direction`
+function converts a vector to its `Direction`; `fromDirection` creates a
+unit (magnitude 1) vector in the given direction.
 
 Primitive shapes
 ----------------
@@ -996,9 +1005,9 @@ Arcs
 ~~~~
 
 `Diagrams.TwoD.Arc`:mod: provides a function `arc`, which constructs a
-radius-one circular arc starting at a first angle__ and extending
-counterclockwise to the second, as well as `wedge` which constructs a
-wedge shape, `annularWedge` (an arc plus two radii) and various other
+radius-one circular arc starting at a first direction and extending
+through a given angle__ , as well as `wedge` which constructs a wedge
+shape, `annularWedge` (an arc plus two radii) and various other
 functions for conveniently constructing arcs.
 
 __ `Angles`_
@@ -1007,10 +1016,10 @@ __ `Angles`_
 
 ::
 
-> example = hcat' (with & sep .~ 0.5) [arc a1 a2, wedge 1 a1 a2, annularWedge 1 0.6 a1 a2]
+> example = hcat' (with & sep .~ 0.5) [arc d a, wedge 1 d a, annularWedge 1 0.6 d a]
 >   where
->     a1 = tau/4 @@ rad
->     a2 = 4 * tau / 7 @@ rad
+>     d = rotateBy (1/4) xDir
+>     a = 4 * tau / 7 - tau / 4 @@ rad
 
 Pre-defined shapes
 ~~~~~~~~~~~~~~~~~~
@@ -3381,7 +3390,7 @@ function.
 >
 > shaft1 = trailFromVertices (map p2 [(0, 0), (1, 0), (1, 0.2), (2, 0.2)])
 > shaft2 = cubicSpline False (map p2 [(0, 0), (1, 0), (1, 0.2), (2, 0.2)])
-> shaft3 = arc (0 @@ turn) (1/6 @@ turn)
+> shaft3 = arc xDir (1/6 @@ turn)
 >
 > example = d
 >    # connect' (with & arrowTail .~ quill & lengths .~ large
