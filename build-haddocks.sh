@@ -19,9 +19,9 @@ cd ..
 # git checkout cabal-1.16-haddock-fix
 # cabal install cabal-install/ -j8
 # cd ../..
-cabal install gtk2hs-buildtools
-cabal install diagrams diagrams-postscript diagrams-cairo diagrams-gtk diagrams-builder diagrams-haddock SVGFonts palette -j8
-for f in vector-space-points monoid-extras dual-tree active core lib svg postscript cairo gtk contrib SVGFonts builder haddock palette
+cabal install -j8 gtk2hs-buildtools
+cabal install -j8 diagrams diagrams-postscript diagrams-cairo diagrams-gtk diagrams-rasterific diagrams-builder diagrams-haddock SVGFonts palette
+for f in vector-space-points monoid-extras dual-tree active core lib svg postscript cairo gtk rasterific contrib SVGFonts builder haddock palette
 do
   cd $f
   cabal sandbox delete  # be sure to remove any sandboxes so we use the global hsenv one instead

@@ -25,7 +25,7 @@
 <a name="line-16"></a>    <span class='hs-layout'>(</span> <span class='hs-layout'>(</span><span class='hs-conop'>:&amp;</span><span class='hs-layout'>)</span><span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span><span class='hs-layout'>,</span> <span class='hs-conid'>Coordinates</span><span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span>
 <a name="line-17"></a>
 <a name="line-18"></a>    <span class='hs-comment'>-- * Lenses for particular axes</span>
-<a name="line-19"></a>    <span class='hs-layout'>,</span> <span class='hs-conid'>HasX</span><span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span><span class='hs-layout'>,</span> <span class='hs-conid'>HasY</span><span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span><span class='hs-layout'>,</span> <span class='hs-conid'>HasZ</span><span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span>
+<a name="line-19"></a>    <span class='hs-layout'>,</span> <span class='hs-conid'>HasX</span><span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span><span class='hs-layout'>,</span> <span class='hs-conid'>HasY</span><span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span><span class='hs-layout'>,</span> <span class='hs-conid'>HasZ</span><span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span><span class='hs-layout'>,</span> <span class='hs-conid'>HasR</span><span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span>
 <a name="line-20"></a>    <span class='hs-layout'>)</span>
 <a name="line-21"></a>    <span class='hs-keyword'>where</span>
 <a name="line-22"></a>
@@ -130,5 +130,10 @@
 <a name="line-121"></a><span class='hs-comment'>-- | The class of types with at least three coordinates, the third called _z.</span>
 <a name="line-122"></a><span class='hs-keyword'>class</span> <span class='hs-conid'>HasZ</span> <span class='hs-varid'>t</span> <span class='hs-keyword'>where</span>
 <a name="line-123"></a>    <span class='hs-sel'>_z</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Lens'</span> <span class='hs-varid'>t</span> <span class='hs-conid'>Double</span>
+<a name="line-124"></a>
+<a name="line-125"></a><span class='hs-comment'>-- | The class of types with a single length coordinate _r.  _r is</span>
+<a name="line-126"></a><span class='hs-comment'>-- magnitude of a vector, or the distance from the origin of a point.</span>
+<a name="line-127"></a><span class='hs-keyword'>class</span> <span class='hs-conid'>HasR</span> <span class='hs-varid'>t</span> <span class='hs-keyword'>where</span>
+<a name="line-128"></a>    <span class='hs-sel'>_r</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Lens'</span> <span class='hs-varid'>t</span> <span class='hs-conid'>Double</span>
 </pre></body>
 </html>

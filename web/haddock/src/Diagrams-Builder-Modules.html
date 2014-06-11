@@ -64,7 +64,7 @@
 <a name="line-55"></a><span class='hs-definition'>doModuleParse</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>String</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Either</span> <span class='hs-conid'>String</span> <span class='hs-conid'>Module</span>
 <a name="line-56"></a><span class='hs-definition'>doModuleParse</span> <span class='hs-varid'>src</span> <span class='hs-keyglyph'>=</span>
 <a name="line-57"></a>  <span class='hs-keyword'>case</span> <span class='hs-varid'>parseFileContentsWithMode</span> <span class='hs-varid'>parseMode</span> <span class='hs-varid'>src</span> <span class='hs-keyword'>of</span>
-<a name="line-58"></a>    <span class='hs-conid'>ParseFailed</span> <span class='hs-keyword'>_</span> <span class='hs-varid'>err</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Left</span> <span class='hs-varid'>err</span>
+<a name="line-58"></a>    <span class='hs-conid'>ParseFailed</span> <span class='hs-varid'>sloc</span> <span class='hs-varid'>err</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Left</span> <span class='hs-layout'>(</span><span class='hs-varid'>prettyPrint</span> <span class='hs-varid'>sloc</span> <span class='hs-varop'>++</span> <span class='hs-str'>": "</span> <span class='hs-varop'>++</span> <span class='hs-varid'>err</span><span class='hs-layout'>)</span>
 <a name="line-59"></a>    <span class='hs-conid'>ParseOk</span> <span class='hs-varid'>m</span>         <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>return</span> <span class='hs-varid'>m</span>
 <a name="line-60"></a>  <span class='hs-keyword'>where</span>
 <a name="line-61"></a>    <span class='hs-varid'>parseMode</span>

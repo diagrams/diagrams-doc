@@ -23,7 +23,8 @@ it 60 degrees, and using `decorateTrail` to lay out the rows of dots.
 >              . zipWith replicate [n,n-1..1]
 >              . repeat
 >              $ dot c
->         dots = decorateTrail (rotateBy (1/6) edge) rows
+>         dots = cat' v (with & sep .~ 3 & catMethod .~ Distrib) rows
+>         v = fromDirection (1/6 @@ turn)
 >         edge = fromOffsets . replicate (n-1) $ unitX # scale 3
 >         edges = glueLine (edge <> rotateBy (1/3) edge <> rotateBy (2/3) edge)
 >
@@ -55,5 +56,5 @@ sizes.
 > law4Dia = exampleRow law4' [2..4]
 >   where law4' k = law4 k 3 purple gold
 >
-> example = pad 1.1 $ law4Dia # centerXY
->        <> square 90 # lw thin # fc beige
+> example = law4Dia # frame 0.2
+

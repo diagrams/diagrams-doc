@@ -171,13 +171,19 @@ in (by default) four other packages:
 * `diagrams-svg`:pkg: (Haskell-native backend generating SVG files).
 
 There is also a Haskell-native `postscript backend`_, which supports
-all features except transparency.  To get it, add the ``-fps`` flag:
+all features except transparency, and a Haskell-native `raster
+backend`_ (based on the excellent `Rasterific`_ package).  To get
+them, add the ``-fps`` or ``-frasterific`` flags, respectively:
 
 ::
 
   cabal install -fps diagrams
+    OR
+  cabal install -frasterific diagrams
 
-.. _`postscript backend`: http://github.com/diagrams/diagrams-postscript/
+.. _`postscript backend`: http://hackage.haskell.org/package/diagrams-postscript/
+.. _`raster backend`: http://hackage.haskell.org/package/diagrams-rasterific/
+.. _`Rasterific`: http://hackage.haskell.org/package/Rasterific/
 
 There is also a backend based on the `cairo graphics
 library`_; it has support for more
@@ -198,10 +204,12 @@ previously, though note that you may need to reinstall it if you are
 building under GHC 7.6 and the last time you installed
 ``gtk2hs-buildtools`` was sufficiently long ago---otherwise you may
 get FFI-related errors when building the `cairo`:pkg: package.)
+Add ``-fgtk`` to also get a GTK backend (based on the cairo backend)
+which can render diagrams directly to GTK windows.
 
-You can also mix and match these flags to get multiple backends.
-Note, if you don't want the SVG backend at all, you must add the
-``-f-svg`` flag to disable it.
+You can also mix and match all the above flags to get multiple
+backends.  Note, if you don't want the SVG backend at all, you must
+add the ``-f-svg`` flag to disable it.
 
 `See the wiki for the most up-to-date information`_ regarding
 installation.  If you have trouble installing diagrams, feel free to
@@ -725,6 +733,16 @@ Values measured in `Output` units are interpreted with respect to the
 that you want your lines to be exactly 1/2 inch wide when printed.  In
 this case, scaling a diagram will preserve its appearance, but
 requesting a different output size might not.
+
+One situation in which `Output` units can be particularly useful is
+when preparing a document (paper, blog post, *etc.*) with multiple
+embedded diagrams of various physical sizes.  Using the same `Output`
+value for the line width (or arrowhead length, arrow gap, font size,
+*etc.*) of every diagram ensures that the diagrams will all look
+consistent.  On the other hand, if the diagrams all have the same
+physical size (*e.g.* they are all $300 \times 200$ pixels), then they
+will also look consistent if the same `Normalized` value is used for
+all of them (which is the default for line width).
 
 .. container:: todo
 
@@ -1339,7 +1357,7 @@ local origin of each diagram at the indicated point.
 
 > example = position (zip (map mkPoint [-3, -2.8 .. 3]) (repeat dot))
 >   where dot       = circle 0.2 # fc black
->         mkPoint x = p2 (x,x^(2::Int))
+>         mkPoint x = p2 (x,x*x)
 
 `cat` is an iterated version of `beside`, which takes a direction
 vector and a list of diagrams, laying out the diagrams beside one
@@ -1371,9 +1389,18 @@ possibilities.
 >   where p n = regPoly n 1 # scale (1 + fromIntegral n/4)
 >                           # showOrigin
 
-For convenience, `Diagrams.TwoD.Combinators`:mod: also provides `hcat`, `hcat'`,
-`vcat`, and `vcat'`, variants of `cat` and `cat'` which concatenate
-diagrams horizontally and vertically.
+For convenience, `Diagrams.TwoD.Combinators`:mod: also provides
+`hcat`, `hcat'`, `vcat`, and `vcat'`, variants of `cat` and `cat'`
+which concatenate diagrams horizontally and vertically.  In addition,
+since using `hcat'` or `vcat'` with some separation tends to be
+common, `hsep` and `vsep` are provided as short synonyms; that is,
+`hsep s = hcat' (with & sep .~ s)`, and similarly for `vsep`.
+
+.. class:: dia-lhs
+
+::
+
+> example = hsep 0.2 (map square [0.3, 0.7 .. 2])
 
 Finally, `appends` is like an iterated variant of `beside`, with the
 important difference that multiple diagrams are placed next to a
@@ -1393,10 +1420,6 @@ course, `appends` is implemented in terms of `juxtapose` (see
 > example1 = appends c cdirs
 > example2 = foldl (\a (v,b) -> beside v a b) c cdirs
 > example  = example1 ||| strutX 3 ||| example2
-
-`Diagrams.Combinators`:mod: also provides `decoratePath` and
-`decorateTrail`, which are described in `Decorating trails and
-paths`_.
 
 Modifying diagrams
 ------------------
@@ -1498,7 +1521,8 @@ results in a diagram `p` times as opaque.
 To "set the background color" of a diagram, use the `bg`
 function---which does not actually set any attributes, but simply
 superimposes the diagram on top of a bounding rectangle of the given
-color.
+color. The `bgFrame` function is similar but the background is expanded
+to frame the diagram by a specified amount.
 
 .. class:: dia-lhs
 
@@ -1506,7 +1530,7 @@ color.
 
 > t = regPoly 3 1
 >
-> example = t ||| t # bg orange
+> example = hsep 0.2 [t, t # bg orange, t # bgFrame 0.1 orange]
 
 Linear Gradients
 ++++++++++++++++
@@ -2531,41 +2555,6 @@ Currently, `StrokeOpts` has two fields:
 
   By default, `queryFillRule` is set to `Winding`.
 
-Decorating trails and paths
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-Paths (and trails) can be used not just to draw certain shapes, but
-also as tools for positioning other objects.  To this end,
-``diagrams`` provides `decoratePath`, `decorateLocatedTrail`, and
-`decorateTrail`, which position a list of objects at the vertices of a
-given path or trail.
-
-For example, suppose we want to create an equilateral triangular
-arrangement of dots.  One possibility is to create horizontal rows of
-dots, center them, and stack them vertically.  However, this is
-annoying, because we must manually compute the proper vertical
-stacking distance between rows. Whether you think this sounds easy or
-not, it is certainly going to involve the `sqrt` function, or perhaps
-some trig, or both, and we'd rather avoid all that.
-
-Fortunately, there's an easier way: after creating the horizontal
-rows, we create the path corresponding to the left-hand side of the
-triangle (which can be done using `fromOffsets` and a simple
-rotation), and then decorate it with the rows.
-
-.. class:: dia-lhs
-
-::
-
-> dot       = circle 1 # fc black
-> dotSep    = 0.5
-> dotOffset = (width (dot :: D R2) + dotSep) *^ unitX
-> mkRow n   = hcat' (with & sep .~ dotSep) (replicate n dot)
-> mkTri n   = decoratePath
->               (fromOffsets (replicate (n-1) dotOffset) # rotateBy (-1/3))
->               (map mkRow [1..n])
-> example   = mkTri 5
-
 Offsets of segments, trails, and paths
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -2863,7 +2852,7 @@ instances of `TrailLike`:
 
 > s = square 2  -- a squarish thingy.
 >
-> blueSquares = decoratePath s {- 1 -}
+> blueSquares = atPoints  (concat . pathVertices $ s) {- 1 -}
 >                 (replicate 4 (s {- 2 -} # scale 0.5) # fc blue)
 > paths       = lc purple . stroke $ star (StarSkip 2) s {- 3 -}
 > aster       = center . lc green . strokeLine
@@ -3426,11 +3415,14 @@ Text
 
 .. container:: warning
 
-  Note: this section describes the basic text support built into
-  ``diagrams``, which suffices for simple applications.  However, for
-  much nicer text support (with a tradeoff in complexity/efficiency),
-  see the `SVGFonts`:pkg: package, described in the section `Native
-  font support`_ below.
+    Note: The various backends differ substantially in their text-handling
+    capabilities.  For this and other reasons, there are two ways to add
+    text to diagrams, each with advantages.  The method in this section is
+    heavily dependant on Backend support.  The Cairo Backend has the most
+    complete support; in particular, this is the best approach for complex
+    (non-Roman) scripts.  You may also want to look at `SVGFonts`:pkg:
+    package, described in the section `Native font support`_ below, which
+    converts text directly as `Path`\s.
 
 Text objects, defined in `Diagrams.TwoD.Text`:mod:, can be created
 most simply with the `text` function, which turns a `String` into a
@@ -3598,10 +3590,11 @@ Images
 ------
 
 The `Diagrams.TwoD.Image`:mod: module provides basic support for
-including both external and embedded images in diagrams. Backend
-support for images is currently somewhat limited, only the cairo
-backend supports external images and only the rasterific backend
-supports embedded images.
+including both external and embedded images in diagrams. 
+Support for images varies by backend, only the cairo
+backend supports external images. The rasterific backend
+supports embedded images of many formats and the SVG backend
+supports embedded png images.
 
 To create an embedded image use either `loadImageEmb` to read an
 image from a file path using `JuicyPixels`:pkg: and return a
@@ -5757,12 +5750,12 @@ Other times, `V` can show up on the right-hand side of `=>`, as in
 
 ::
 
-> decorateTrail :: (...) => Trail (V a) -> [a] -> a
+> deform :: (...) => Deformation (V a) -> a -> a
 
-This says that `decorateTrail` takes two arguments: a `Trail` and a
-list of values of some type `a`.  However, `Trail`\s are parameterized
-by a vector space; `Trail (V a)` means that the vector space of the
-trail is the vector space associated to `a`.
+This says that `deform` takes two arguments: a `Deformation` and a
+value of some type `a`.  However, `Deformations`\s are parameterized
+by a vector space; `Deformation (V a)` means that the vector space of the
+deformation is the vector space associated to `a`.
 
 Scalar
 ~~~~~~

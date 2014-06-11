@@ -56,12 +56,12 @@
 <a name="line-47"></a>
 <a name="line-48"></a>         <span class='hs-comment'>-- * Utilities</span>
 <a name="line-49"></a>       <span class='hs-layout'>,</span> <span class='hs-varid'>onBasis</span>
-<a name="line-50"></a>       <span class='hs-layout'>,</span> <span class='hs-varid'>avgScale</span>
-<a name="line-51"></a>       <span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
-<a name="line-52"></a>
-<a name="line-53"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Core</span>
-<a name="line-54"></a><span class='hs-keyword'>import</span> <span class='hs-keyword'>qualified</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Core</span><span class='hs-varop'>.</span><span class='hs-conid'>Transform</span> <span class='hs-keyword'>as</span> <span class='hs-conid'>T</span>
-<a name="line-55"></a>
+<a name="line-50"></a>       <span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
+<a name="line-51"></a>
+<a name="line-52"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Core</span>
+<a name="line-53"></a><span class='hs-keyword'>import</span> <span class='hs-keyword'>qualified</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Core</span><span class='hs-varop'>.</span><span class='hs-conid'>Transform</span> <span class='hs-keyword'>as</span> <span class='hs-conid'>T</span>
+<a name="line-54"></a>
+<a name="line-55"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Angle</span>
 <a name="line-56"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Transform</span>
 <a name="line-57"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>TwoD</span><span class='hs-varop'>.</span><span class='hs-conid'>Size</span>      <span class='hs-layout'>(</span><span class='hs-varid'>height</span><span class='hs-layout'>,</span> <span class='hs-varid'>width</span><span class='hs-layout'>)</span>
 <a name="line-58"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>TwoD</span><span class='hs-varop'>.</span><span class='hs-conid'>Types</span>
@@ -258,43 +258,5 @@
 <a name="line-249"></a><span class='hs-definition'>onBasis</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Transformation</span> <span class='hs-conid'>R2</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-layout'>(</span><span class='hs-layout'>(</span><span class='hs-conid'>R2</span><span class='hs-layout'>,</span> <span class='hs-conid'>R2</span><span class='hs-layout'>)</span><span class='hs-layout'>,</span> <span class='hs-conid'>R2</span><span class='hs-layout'>)</span>
 <a name="line-250"></a><span class='hs-definition'>onBasis</span> <span class='hs-varid'>t</span> <span class='hs-keyglyph'>=</span> <span class='hs-layout'>(</span><span class='hs-layout'>(</span><span class='hs-varid'>x</span><span class='hs-layout'>,</span> <span class='hs-varid'>y</span><span class='hs-layout'>)</span><span class='hs-layout'>,</span> <span class='hs-varid'>v</span><span class='hs-layout'>)</span>
 <a name="line-251"></a>  <span class='hs-keyword'>where</span> <span class='hs-layout'>(</span><span class='hs-layout'>(</span><span class='hs-varid'>x</span><span class='hs-conop'>:</span><span class='hs-varid'>y</span><span class='hs-conop'>:</span><span class='hs-conid'>[]</span><span class='hs-layout'>)</span><span class='hs-layout'>,</span> <span class='hs-varid'>v</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>T</span><span class='hs-varop'>.</span><span class='hs-varid'>onBasis</span> <span class='hs-varid'>t</span>
-<a name="line-252"></a>
-<a name="line-253"></a><a name="avgScale"></a><span class='hs-comment'>-- | Compute the \"average\" amount of scaling performed by a</span>
-<a name="line-254"></a><span class='hs-comment'>--   transformation.  Satisfies the properties</span>
-<a name="line-255"></a><span class='hs-comment'>--</span>
-<a name="line-256"></a><span class='hs-comment'>--   @</span>
-<a name="line-257"></a><span class='hs-comment'>--   avgScale (scaling k) == k</span>
-<a name="line-258"></a><span class='hs-comment'>--   avgScale (t1 &lt;&gt; t2)  == avgScale t1 * avgScale t2</span>
-<a name="line-259"></a><span class='hs-comment'>--   @</span>
-<a name="line-260"></a><span class='hs-comment'>--</span>
-<a name="line-261"></a><span class='hs-comment'>--   Backends which do not support stroking in the context of an</span>
-<a name="line-262"></a><span class='hs-comment'>--   arbitrary transformation may instead call 'avgScale' on</span>
-<a name="line-263"></a><span class='hs-comment'>--   \"frozen\" transformations and multiply the line width by the</span>
-<a name="line-264"></a><span class='hs-comment'>--   resulting value.</span>
-<a name="line-265"></a><span class='hs-definition'>avgScale</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>T2</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Double</span>
-<a name="line-266"></a><span class='hs-definition'>avgScale</span> <span class='hs-varid'>t</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>sqrt</span> <span class='hs-layout'>(</span><span class='hs-varid'>abs</span> <span class='hs-layout'>(</span><span class='hs-varid'>x1</span><span class='hs-varop'>*</span><span class='hs-varid'>y2</span> <span class='hs-comment'>-</span> <span class='hs-varid'>y1</span><span class='hs-varop'>*</span><span class='hs-varid'>x2</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span>
-<a name="line-267"></a>  <span class='hs-keyword'>where</span> <span class='hs-layout'>(</span><span class='hs-layout'>(</span><span class='hs-varid'>unr2</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-layout'>(</span><span class='hs-varid'>x1</span><span class='hs-layout'>,</span><span class='hs-varid'>y1</span><span class='hs-layout'>)</span><span class='hs-layout'>,</span> <span class='hs-varid'>unr2</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-layout'>(</span><span class='hs-varid'>x2</span><span class='hs-layout'>,</span><span class='hs-varid'>y2</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span><span class='hs-layout'>,</span> <span class='hs-keyword'>_</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>onBasis</span> <span class='hs-varid'>t</span>
-<a name="line-268"></a>
-<a name="line-269"></a><span class='hs-comment'>{-
-<a name="line-270"></a>
-<a name="line-271"></a>avgScale is computed as the square root of the positive
-<a name="line-272"></a>determinant. Proofs for the specified properties:
-<a name="line-273"></a>
-<a name="line-274"></a>1. sqrt (|det (scaling k)|) = sqrt (k^2) = k
-<a name="line-275"></a>2. sqrt (|det t1|) * sqrt (|det t2|)
-<a name="line-276"></a>   = sqrt (|det t1| * |det t2|)
-<a name="line-277"></a>   = sqrt (|det t1 * det t2|)
-<a name="line-278"></a>   = sqrt (|det (t1 * t2)|)
-<a name="line-279"></a>
-<a name="line-280"></a>From wikipedia:
-<a name="line-281"></a>
-<a name="line-282"></a>     A geometric interpretation can be given to the value of the
-<a name="line-283"></a>     determinant of a square matrix with real entries: the absolute
-<a name="line-284"></a>     value of the determinant gives the scale factor by which area or
-<a name="line-285"></a>     volume (or a higher dimensional analogue) is multiplied under the
-<a name="line-286"></a>     associated linear transformation, while its sign indicates whether
-<a name="line-287"></a>     the transformation preserves orientation.
-<a name="line-288"></a>
-<a name="line-289"></a>-}</span>
 </pre></body>
 </html>

@@ -432,114 +432,120 @@
 <a name="line-423"></a>    <span class='hs-comment'>-- that users will call from their program @main@.  For instance an expected</span>
 <a name="line-424"></a>    <span class='hs-comment'>-- user program would take the following form.</span>
 <a name="line-425"></a>    <span class='hs-comment'>--</span>
-<a name="line-426"></a>    <span class='hs-comment'>-- &gt; import Diagrams.Prelude</span>
-<a name="line-427"></a>    <span class='hs-comment'>-- &gt; import Diagrams.Backend.TheBestBackend.CmdLine</span>
-<a name="line-428"></a>    <span class='hs-comment'>-- &gt;</span>
-<a name="line-429"></a>    <span class='hs-comment'>-- &gt; d :: Diagram B R2</span>
-<a name="line-430"></a>    <span class='hs-comment'>-- &gt; d = ...</span>
-<a name="line-431"></a>    <span class='hs-comment'>-- &gt;</span>
-<a name="line-432"></a>    <span class='hs-comment'>-- &gt; main = mainWith d</span>
-<a name="line-433"></a>    <span class='hs-comment'>--</span>
-<a name="line-434"></a>    <span class='hs-comment'>-- Most backends should be able to use the default implementation.  A different</span>
-<a name="line-435"></a>    <span class='hs-comment'>-- implementation should be used to handle more complex interactions with the user.</span>
-<a name="line-436"></a>    <span class='hs-varid'>mainWith</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Parseable</span> <span class='hs-layout'>(</span><span class='hs-conid'>MainOpts</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-varid'>d</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>IO</span> <span class='hs-conid'>()</span>
-<a name="line-437"></a>    <span class='hs-varid'>mainWith</span> <span class='hs-varid'>d</span> <span class='hs-keyglyph'>=</span> <span class='hs-keyword'>do</span>
-<a name="line-438"></a>        <span class='hs-varid'>opts</span> <span class='hs-keyglyph'>&lt;-</span> <span class='hs-varid'>mainArgs</span> <span class='hs-varid'>d</span>
-<a name="line-439"></a>        <span class='hs-varid'>mainRender</span> <span class='hs-varid'>opts</span> <span class='hs-varid'>d</span>
-<a name="line-440"></a>
-<a name="line-441"></a><a name="instance%20Mainable%20(a%20-%3e%20d)"></a><span class='hs-comment'>-- | This instance allows functions resulting in something that is 'Mainable' to</span>
-<a name="line-442"></a><a name="instance%20Mainable%20(a%20-%3e%20d)"></a><span class='hs-comment'>--   be 'Mainable'.  It takes a parse of collected arguments and applies them to</span>
-<a name="line-443"></a><a name="instance%20Mainable%20(a%20-%3e%20d)"></a><span class='hs-comment'>--   the given function producing the 'Mainable' result.</span>
-<a name="line-444"></a><a name="instance%20Mainable%20(a%20-%3e%20d)"></a><span class='hs-keyword'>instance</span> <span class='hs-layout'>(</span><span class='hs-conid'>Parseable</span> <span class='hs-layout'>(</span><span class='hs-conid'>Args</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span><span class='hs-layout'>,</span> <span class='hs-conid'>ToResult</span> <span class='hs-varid'>d</span><span class='hs-layout'>,</span> <span class='hs-conid'>Mainable</span> <span class='hs-layout'>(</span><span class='hs-conid'>ResultOf</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span>
-<a name="line-445"></a>        <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>Mainable</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
-<a name="line-446"></a>    <span class='hs-keyword'>type</span> <span class='hs-conid'>MainOpts</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-layout'>(</span><span class='hs-conid'>MainOpts</span> <span class='hs-layout'>(</span><span class='hs-conid'>ResultOf</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span><span class='hs-layout'>,</span> <span class='hs-conid'>Args</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span>
-<a name="line-447"></a>
-<a name="line-448"></a>    <span class='hs-varid'>mainRender</span> <span class='hs-layout'>(</span><span class='hs-varid'>opts</span><span class='hs-layout'>,</span> <span class='hs-varid'>a</span><span class='hs-layout'>)</span> <span class='hs-varid'>f</span>  <span class='hs-keyglyph'>=</span> <span class='hs-varid'>mainRender</span> <span class='hs-varid'>opts</span> <span class='hs-layout'>(</span><span class='hs-varid'>toResult</span> <span class='hs-varid'>f</span> <span class='hs-varid'>a</span><span class='hs-layout'>)</span>
-<a name="line-449"></a><span class='hs-comment'>-- TODO: why can't we get away with: instance (Parseable (Args (a -&gt; d)), Mainable (ResultOf d)) =&gt; ...</span>
-<a name="line-450"></a><span class='hs-comment'>--       Doesn't `Args (a -&gt; d)` imply `ToResult (a -&gt; d)` which implies `ToResult d` ?</span>
-<a name="line-451"></a>
-<a name="line-452"></a><a name="instance%20Mainable%20(IO%20d)"></a><span class='hs-comment'>-- | With this instance we can perform IO to produce something </span>
-<a name="line-453"></a><a name="instance%20Mainable%20(IO%20d)"></a><span class='hs-comment'>--   'Mainable' before rendering.</span>
-<a name="line-454"></a><a name="instance%20Mainable%20(IO%20d)"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Mainable</span> <span class='hs-varid'>d</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>Mainable</span> <span class='hs-layout'>(</span><span class='hs-conid'>IO</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
-<a name="line-455"></a>    <span class='hs-keyword'>type</span> <span class='hs-conid'>MainOpts</span> <span class='hs-layout'>(</span><span class='hs-conid'>IO</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>MainOpts</span> <span class='hs-varid'>d</span>
-<a name="line-456"></a>
-<a name="line-457"></a>    <span class='hs-varid'>mainRender</span> <span class='hs-varid'>opts</span> <span class='hs-varid'>dio</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>dio</span> <span class='hs-varop'>&gt;&gt;=</span> <span class='hs-varid'>mainRender</span> <span class='hs-varid'>opts</span>
+<a name="line-426"></a>    <span class='hs-comment'>-- @</span>
+<a name="line-427"></a>    <span class='hs-comment'>-- import Diagrams.Prelude</span>
+<a name="line-428"></a>    <span class='hs-comment'>-- import Diagrams.Backend.TheBestBackend.CmdLine</span>
+<a name="line-429"></a>    <span class='hs-comment'>-- </span>
+<a name="line-430"></a>    <span class='hs-comment'>-- d :: Diagram B R2</span>
+<a name="line-431"></a>    <span class='hs-comment'>-- d = ...</span>
+<a name="line-432"></a>    <span class='hs-comment'>-- </span>
+<a name="line-433"></a>    <span class='hs-comment'>-- main = mainWith d</span>
+<a name="line-434"></a>    <span class='hs-comment'>-- @</span>
+<a name="line-435"></a>    <span class='hs-comment'>--</span>
+<a name="line-436"></a>    <span class='hs-comment'>-- Most backends should be able to use the default implementation.  A different</span>
+<a name="line-437"></a>    <span class='hs-comment'>-- implementation should be used to handle more complex interactions with the user.</span>
+<a name="line-438"></a>    <span class='hs-varid'>mainWith</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Parseable</span> <span class='hs-layout'>(</span><span class='hs-conid'>MainOpts</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-varid'>d</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>IO</span> <span class='hs-conid'>()</span>
+<a name="line-439"></a>    <span class='hs-varid'>mainWith</span> <span class='hs-varid'>d</span> <span class='hs-keyglyph'>=</span> <span class='hs-keyword'>do</span>
+<a name="line-440"></a>        <span class='hs-varid'>opts</span> <span class='hs-keyglyph'>&lt;-</span> <span class='hs-varid'>mainArgs</span> <span class='hs-varid'>d</span>
+<a name="line-441"></a>        <span class='hs-varid'>mainRender</span> <span class='hs-varid'>opts</span> <span class='hs-varid'>d</span>
+<a name="line-442"></a>
+<a name="line-443"></a><a name="instance%20Mainable%20(a%20-%3e%20d)"></a><span class='hs-comment'>-- | This instance allows functions resulting in something that is 'Mainable' to</span>
+<a name="line-444"></a><a name="instance%20Mainable%20(a%20-%3e%20d)"></a><span class='hs-comment'>--   be 'Mainable'.  It takes a parse of collected arguments and applies them to</span>
+<a name="line-445"></a><a name="instance%20Mainable%20(a%20-%3e%20d)"></a><span class='hs-comment'>--   the given function producing the 'Mainable' result.</span>
+<a name="line-446"></a><a name="instance%20Mainable%20(a%20-%3e%20d)"></a><span class='hs-keyword'>instance</span> <span class='hs-layout'>(</span><span class='hs-conid'>Parseable</span> <span class='hs-layout'>(</span><span class='hs-conid'>Args</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span><span class='hs-layout'>,</span> <span class='hs-conid'>ToResult</span> <span class='hs-varid'>d</span><span class='hs-layout'>,</span> <span class='hs-conid'>Mainable</span> <span class='hs-layout'>(</span><span class='hs-conid'>ResultOf</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span>
+<a name="line-447"></a>        <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>Mainable</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
+<a name="line-448"></a>    <span class='hs-keyword'>type</span> <span class='hs-conid'>MainOpts</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-layout'>(</span><span class='hs-conid'>MainOpts</span> <span class='hs-layout'>(</span><span class='hs-conid'>ResultOf</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span><span class='hs-layout'>,</span> <span class='hs-conid'>Args</span> <span class='hs-layout'>(</span><span class='hs-varid'>a</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span>
+<a name="line-449"></a>
+<a name="line-450"></a>    <span class='hs-varid'>mainRender</span> <span class='hs-layout'>(</span><span class='hs-varid'>opts</span><span class='hs-layout'>,</span> <span class='hs-varid'>a</span><span class='hs-layout'>)</span> <span class='hs-varid'>f</span>  <span class='hs-keyglyph'>=</span> <span class='hs-varid'>mainRender</span> <span class='hs-varid'>opts</span> <span class='hs-layout'>(</span><span class='hs-varid'>toResult</span> <span class='hs-varid'>f</span> <span class='hs-varid'>a</span><span class='hs-layout'>)</span>
+<a name="line-451"></a><span class='hs-comment'>-- TODO: why can't we get away with: instance (Parseable (Args (a -&gt; d)), Mainable (ResultOf d)) =&gt; ...</span>
+<a name="line-452"></a><span class='hs-comment'>--       Doesn't `Args (a -&gt; d)` imply `ToResult (a -&gt; d)` which implies `ToResult d` ?</span>
+<a name="line-453"></a>
+<a name="line-454"></a><a name="instance%20Mainable%20(IO%20d)"></a><span class='hs-comment'>-- | With this instance we can perform IO to produce something</span>
+<a name="line-455"></a><a name="instance%20Mainable%20(IO%20d)"></a><span class='hs-comment'>--   'Mainable' before rendering.</span>
+<a name="line-456"></a><a name="instance%20Mainable%20(IO%20d)"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Mainable</span> <span class='hs-varid'>d</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>Mainable</span> <span class='hs-layout'>(</span><span class='hs-conid'>IO</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
+<a name="line-457"></a>    <span class='hs-keyword'>type</span> <span class='hs-conid'>MainOpts</span> <span class='hs-layout'>(</span><span class='hs-conid'>IO</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>MainOpts</span> <span class='hs-varid'>d</span>
 <a name="line-458"></a>
-<a name="line-459"></a><a name="defaultMultiMainRender"></a><span class='hs-comment'>-- | @defaultMultiMainRender@ is an implementation of 'mainRender' where</span>
-<a name="line-460"></a><span class='hs-comment'>--   instead of a single diagram it takes a list of diagrams paired with names</span>
-<a name="line-461"></a><span class='hs-comment'>--   as input.  The generated executable then takes a @--selection@ option</span>
-<a name="line-462"></a><span class='hs-comment'>--   specifying the name of the diagram that should be rendered.  The list of</span>
-<a name="line-463"></a><span class='hs-comment'>--   available diagrams may also be printed by passing the option @--list@.</span>
-<a name="line-464"></a><span class='hs-comment'>--</span>
-<a name="line-465"></a><span class='hs-comment'>--   Typically a backend can write its @[(String,Diagram B V)]@ instance as</span>
+<a name="line-459"></a>    <span class='hs-varid'>mainRender</span> <span class='hs-varid'>opts</span> <span class='hs-varid'>dio</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>dio</span> <span class='hs-varop'>&gt;&gt;=</span> <span class='hs-varid'>mainRender</span> <span class='hs-varid'>opts</span>
+<a name="line-460"></a>
+<a name="line-461"></a><a name="defaultMultiMainRender"></a><span class='hs-comment'>-- | @defaultMultiMainRender@ is an implementation of 'mainRender' where</span>
+<a name="line-462"></a><span class='hs-comment'>--   instead of a single diagram it takes a list of diagrams paired with names</span>
+<a name="line-463"></a><span class='hs-comment'>--   as input.  The generated executable then takes a @--selection@ option</span>
+<a name="line-464"></a><span class='hs-comment'>--   specifying the name of the diagram that should be rendered.  The list of</span>
+<a name="line-465"></a><span class='hs-comment'>--   available diagrams may also be printed by passing the option @--list@.</span>
 <a name="line-466"></a><span class='hs-comment'>--</span>
-<a name="line-467"></a><span class='hs-comment'>--   &gt; instance Mainable [(String,Diagram B V)] where</span>
-<a name="line-468"></a><span class='hs-comment'>--   &gt;     type MainOpts [(String,Diagram B V)] = (DiagramOpts, DiagramMultiOpts)</span>
-<a name="line-469"></a><span class='hs-comment'>--   &gt;     mainRender = defaultMultiMainRender</span>
-<a name="line-470"></a><span class='hs-comment'>--</span>
-<a name="line-471"></a><span class='hs-comment'>--   We do not provide this instance in general so that backends can choose to</span>
-<a name="line-472"></a><span class='hs-comment'>--   opt-in to this form or provide a different instance that makes more sense.</span>
-<a name="line-473"></a><span class='hs-definition'>defaultMultiMainRender</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Mainable</span> <span class='hs-varid'>d</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-layout'>(</span><span class='hs-conid'>MainOpts</span> <span class='hs-varid'>d</span><span class='hs-layout'>,</span> <span class='hs-conid'>DiagramMultiOpts</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-keyglyph'>[</span><span class='hs-layout'>(</span><span class='hs-conid'>String</span><span class='hs-layout'>,</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span><span class='hs-keyglyph'>]</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>IO</span> <span class='hs-conid'>()</span>
-<a name="line-474"></a><span class='hs-definition'>defaultMultiMainRender</span> <span class='hs-layout'>(</span><span class='hs-varid'>opts</span><span class='hs-layout'>,</span><span class='hs-varid'>multi</span><span class='hs-layout'>)</span> <span class='hs-varid'>ds</span> <span class='hs-keyglyph'>=</span>
-<a name="line-475"></a>    <span class='hs-keyword'>if</span> <span class='hs-varid'>multi</span><span class='hs-varop'>^.</span><span class='hs-varid'>list</span>
-<a name="line-476"></a>      <span class='hs-keyword'>then</span> <span class='hs-varid'>showDiaList</span> <span class='hs-layout'>(</span><span class='hs-varid'>map</span> <span class='hs-varid'>fst</span> <span class='hs-varid'>ds</span><span class='hs-layout'>)</span>
-<a name="line-477"></a>      <span class='hs-keyword'>else</span> <span class='hs-keyword'>case</span> <span class='hs-varid'>multi</span><span class='hs-varop'>^.</span><span class='hs-varid'>selection</span> <span class='hs-keyword'>of</span>
-<a name="line-478"></a>             <span class='hs-conid'>Nothing</span>  <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>putStrLn</span> <span class='hs-str'>"No diagram selected."</span> <span class='hs-varop'>&gt;&gt;</span> <span class='hs-varid'>showDiaList</span> <span class='hs-layout'>(</span><span class='hs-varid'>map</span> <span class='hs-varid'>fst</span> <span class='hs-varid'>ds</span><span class='hs-layout'>)</span>
-<a name="line-479"></a>             <span class='hs-conid'>Just</span> <span class='hs-varid'>sel</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-keyword'>case</span> <span class='hs-varid'>lookup</span> <span class='hs-varid'>sel</span> <span class='hs-varid'>ds</span> <span class='hs-keyword'>of</span>
-<a name="line-480"></a>                           <span class='hs-conid'>Nothing</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>putStrLn</span> <span class='hs-varop'>$</span> <span class='hs-str'>"Unknown diagram: "</span> <span class='hs-varop'>++</span> <span class='hs-varid'>sel</span>
-<a name="line-481"></a>                           <span class='hs-conid'>Just</span> <span class='hs-varid'>d</span>  <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>mainRender</span> <span class='hs-varid'>opts</span> <span class='hs-varid'>d</span>
-<a name="line-482"></a>
-<a name="line-483"></a><a name="showDiaList"></a><span class='hs-comment'>-- | Display the list of diagrams available for rendering.</span>
-<a name="line-484"></a><span class='hs-definition'>showDiaList</span> <span class='hs-keyglyph'>::</span> <span class='hs-keyglyph'>[</span><span class='hs-conid'>String</span><span class='hs-keyglyph'>]</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>IO</span> <span class='hs-conid'>()</span>
-<a name="line-485"></a><span class='hs-definition'>showDiaList</span> <span class='hs-varid'>ds</span> <span class='hs-keyglyph'>=</span> <span class='hs-keyword'>do</span>
-<a name="line-486"></a>  <span class='hs-varid'>putStrLn</span> <span class='hs-str'>"Available diagrams:"</span>
-<a name="line-487"></a>  <span class='hs-varid'>putStrLn</span> <span class='hs-varop'>$</span> <span class='hs-str'>"  "</span> <span class='hs-varop'>++</span> <span class='hs-varid'>intercalate</span> <span class='hs-str'>" "</span> <span class='hs-varid'>ds</span>
-<a name="line-488"></a>
-<a name="line-489"></a><a name="defaultAnimMainRender"></a><span class='hs-comment'>-- | @defaultAnimMainRender@ is an implementation of 'mainRender' which renders</span>
-<a name="line-490"></a><span class='hs-comment'>--   an animation as numbered frames, named by extending the given output file</span>
-<a name="line-491"></a><span class='hs-comment'>--   name by consecutive integers.  For example if the given output file name is</span>
-<a name="line-492"></a><span class='hs-comment'>--   @foo\/blah.ext@, the frames will be saved in @foo\/blah001.ext@,</span>
-<a name="line-493"></a><span class='hs-comment'>--   @foo\/blah002.ext@, and so on (the number of padding digits used depends on</span>
-<a name="line-494"></a><span class='hs-comment'>--   the total number of frames).  It is up to the user to take these images and</span>
-<a name="line-495"></a><span class='hs-comment'>--   stitch them together into an actual animation format (using, /e.g./</span>
-<a name="line-496"></a><span class='hs-comment'>--   @ffmpeg@).</span>
-<a name="line-497"></a><span class='hs-comment'>--</span>
-<a name="line-498"></a><span class='hs-comment'>--   Of course, this is a rather crude method of rendering animations;</span>
-<a name="line-499"></a><span class='hs-comment'>--   more sophisticated methods will likely be added in the future.</span>
-<a name="line-500"></a><span class='hs-comment'>--</span>
-<a name="line-501"></a><span class='hs-comment'>--   The @fpu@ option from 'DiagramAnimOpts' can be used to control how many frames will</span>
-<a name="line-502"></a><span class='hs-comment'>--   be output for each second (unit time) of animation.</span>
-<a name="line-503"></a><span class='hs-comment'>--</span>
-<a name="line-504"></a><span class='hs-comment'>--   This function requires a lens into the structure that the particular backend</span>
-<a name="line-505"></a><span class='hs-comment'>--   uses for it's diagram base case.  If @MainOpts (Diagram b v) ~ DiagramOpts@</span>
-<a name="line-506"></a><span class='hs-comment'>--   then this lens will simply be 'output'.  For a backend supporting looping</span>
-<a name="line-507"></a><span class='hs-comment'>--   it will most likely be @_1 . output@.  This lens is required because the</span>
-<a name="line-508"></a><span class='hs-comment'>--   implementation works by modifying the output field and running the base @mainRender@.</span>
-<a name="line-509"></a><span class='hs-comment'>--   Typically a backend can write its @Animation B V@ instance as</span>
-<a name="line-510"></a><span class='hs-comment'>--</span>
-<a name="line-511"></a><span class='hs-comment'>--   &gt; instance Mainable (Animation B V) where</span>
-<a name="line-512"></a><span class='hs-comment'>--   &gt;     type MainOpts (Animation B V) = (DiagramOpts, DiagramAnimOpts)</span>
-<a name="line-513"></a><span class='hs-comment'>--   &gt;     mainRender = defaultAnimMainRender output</span>
+<a name="line-467"></a><span class='hs-comment'>--   Typically a backend can write its @[(String,Diagram B V)]@ instance as</span>
+<a name="line-468"></a><span class='hs-comment'>--</span>
+<a name="line-469"></a><span class='hs-comment'>--   @</span>
+<a name="line-470"></a><span class='hs-comment'>--   instance Mainable [(String,Diagram B V)] where</span>
+<a name="line-471"></a><span class='hs-comment'>--       type MainOpts [(String,Diagram B V)] = (DiagramOpts, DiagramMultiOpts)</span>
+<a name="line-472"></a><span class='hs-comment'>--       mainRender = defaultMultiMainRender</span>
+<a name="line-473"></a><span class='hs-comment'>--   @</span>
+<a name="line-474"></a><span class='hs-comment'>--</span>
+<a name="line-475"></a><span class='hs-comment'>--   We do not provide this instance in general so that backends can choose to</span>
+<a name="line-476"></a><span class='hs-comment'>--   opt-in to this form or provide a different instance that makes more sense.</span>
+<a name="line-477"></a><span class='hs-definition'>defaultMultiMainRender</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Mainable</span> <span class='hs-varid'>d</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-layout'>(</span><span class='hs-conid'>MainOpts</span> <span class='hs-varid'>d</span><span class='hs-layout'>,</span> <span class='hs-conid'>DiagramMultiOpts</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-keyglyph'>[</span><span class='hs-layout'>(</span><span class='hs-conid'>String</span><span class='hs-layout'>,</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span><span class='hs-keyglyph'>]</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>IO</span> <span class='hs-conid'>()</span>
+<a name="line-478"></a><span class='hs-definition'>defaultMultiMainRender</span> <span class='hs-layout'>(</span><span class='hs-varid'>opts</span><span class='hs-layout'>,</span><span class='hs-varid'>multi</span><span class='hs-layout'>)</span> <span class='hs-varid'>ds</span> <span class='hs-keyglyph'>=</span>
+<a name="line-479"></a>    <span class='hs-keyword'>if</span> <span class='hs-varid'>multi</span><span class='hs-varop'>^.</span><span class='hs-varid'>list</span>
+<a name="line-480"></a>      <span class='hs-keyword'>then</span> <span class='hs-varid'>showDiaList</span> <span class='hs-layout'>(</span><span class='hs-varid'>map</span> <span class='hs-varid'>fst</span> <span class='hs-varid'>ds</span><span class='hs-layout'>)</span>
+<a name="line-481"></a>      <span class='hs-keyword'>else</span> <span class='hs-keyword'>case</span> <span class='hs-varid'>multi</span><span class='hs-varop'>^.</span><span class='hs-varid'>selection</span> <span class='hs-keyword'>of</span>
+<a name="line-482"></a>             <span class='hs-conid'>Nothing</span>  <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>putStrLn</span> <span class='hs-str'>"No diagram selected."</span> <span class='hs-varop'>&gt;&gt;</span> <span class='hs-varid'>showDiaList</span> <span class='hs-layout'>(</span><span class='hs-varid'>map</span> <span class='hs-varid'>fst</span> <span class='hs-varid'>ds</span><span class='hs-layout'>)</span>
+<a name="line-483"></a>             <span class='hs-conid'>Just</span> <span class='hs-varid'>sel</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-keyword'>case</span> <span class='hs-varid'>lookup</span> <span class='hs-varid'>sel</span> <span class='hs-varid'>ds</span> <span class='hs-keyword'>of</span>
+<a name="line-484"></a>                           <span class='hs-conid'>Nothing</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>putStrLn</span> <span class='hs-varop'>$</span> <span class='hs-str'>"Unknown diagram: "</span> <span class='hs-varop'>++</span> <span class='hs-varid'>sel</span>
+<a name="line-485"></a>                           <span class='hs-conid'>Just</span> <span class='hs-varid'>d</span>  <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>mainRender</span> <span class='hs-varid'>opts</span> <span class='hs-varid'>d</span>
+<a name="line-486"></a>
+<a name="line-487"></a><a name="showDiaList"></a><span class='hs-comment'>-- | Display the list of diagrams available for rendering.</span>
+<a name="line-488"></a><span class='hs-definition'>showDiaList</span> <span class='hs-keyglyph'>::</span> <span class='hs-keyglyph'>[</span><span class='hs-conid'>String</span><span class='hs-keyglyph'>]</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>IO</span> <span class='hs-conid'>()</span>
+<a name="line-489"></a><span class='hs-definition'>showDiaList</span> <span class='hs-varid'>ds</span> <span class='hs-keyglyph'>=</span> <span class='hs-keyword'>do</span>
+<a name="line-490"></a>  <span class='hs-varid'>putStrLn</span> <span class='hs-str'>"Available diagrams:"</span>
+<a name="line-491"></a>  <span class='hs-varid'>putStrLn</span> <span class='hs-varop'>$</span> <span class='hs-str'>"  "</span> <span class='hs-varop'>++</span> <span class='hs-varid'>intercalate</span> <span class='hs-str'>" "</span> <span class='hs-varid'>ds</span>
+<a name="line-492"></a>
+<a name="line-493"></a><a name="defaultAnimMainRender"></a><span class='hs-comment'>-- | @defaultAnimMainRender@ is an implementation of 'mainRender' which renders</span>
+<a name="line-494"></a><span class='hs-comment'>--   an animation as numbered frames, named by extending the given output file</span>
+<a name="line-495"></a><span class='hs-comment'>--   name by consecutive integers.  For example if the given output file name is</span>
+<a name="line-496"></a><span class='hs-comment'>--   @foo\/blah.ext@, the frames will be saved in @foo\/blah001.ext@,</span>
+<a name="line-497"></a><span class='hs-comment'>--   @foo\/blah002.ext@, and so on (the number of padding digits used depends on</span>
+<a name="line-498"></a><span class='hs-comment'>--   the total number of frames).  It is up to the user to take these images and</span>
+<a name="line-499"></a><span class='hs-comment'>--   stitch them together into an actual animation format (using, /e.g./</span>
+<a name="line-500"></a><span class='hs-comment'>--   @ffmpeg@).</span>
+<a name="line-501"></a><span class='hs-comment'>--</span>
+<a name="line-502"></a><span class='hs-comment'>--   Of course, this is a rather crude method of rendering animations;</span>
+<a name="line-503"></a><span class='hs-comment'>--   more sophisticated methods will likely be added in the future.</span>
+<a name="line-504"></a><span class='hs-comment'>--</span>
+<a name="line-505"></a><span class='hs-comment'>--   The @fpu@ option from 'DiagramAnimOpts' can be used to control how many frames will</span>
+<a name="line-506"></a><span class='hs-comment'>--   be output for each second (unit time) of animation.</span>
+<a name="line-507"></a><span class='hs-comment'>--</span>
+<a name="line-508"></a><span class='hs-comment'>--   This function requires a lens into the structure that the particular backend</span>
+<a name="line-509"></a><span class='hs-comment'>--   uses for it's diagram base case.  If @MainOpts (Diagram b v) ~ DiagramOpts@</span>
+<a name="line-510"></a><span class='hs-comment'>--   then this lens will simply be 'output'.  For a backend supporting looping</span>
+<a name="line-511"></a><span class='hs-comment'>--   it will most likely be @_1 . output@.  This lens is required because the</span>
+<a name="line-512"></a><span class='hs-comment'>--   implementation works by modifying the output field and running the base @mainRender@.</span>
+<a name="line-513"></a><span class='hs-comment'>--   Typically a backend can write its @Animation B V@ instance as</span>
 <a name="line-514"></a><span class='hs-comment'>--</span>
-<a name="line-515"></a><span class='hs-comment'>--   We do not provide this instance in general so that backends can choose to</span>
-<a name="line-516"></a><span class='hs-comment'>--   opt-in to this form or provide a different instance that makes more sense.</span>
-<a name="line-517"></a><span class='hs-definition'>defaultAnimMainRender</span> <span class='hs-keyglyph'>::</span> <span class='hs-layout'>(</span><span class='hs-conid'>Mainable</span> <span class='hs-layout'>(</span><span class='hs-conid'>Diagram</span> <span class='hs-varid'>b</span> <span class='hs-varid'>v</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span>
-<a name="line-518"></a>                      <span class='hs-keyglyph'>=&gt;</span> <span class='hs-layout'>(</span><span class='hs-conid'>Lens'</span> <span class='hs-layout'>(</span><span class='hs-conid'>MainOpts</span> <span class='hs-layout'>(</span><span class='hs-conid'>Diagram</span> <span class='hs-varid'>b</span> <span class='hs-varid'>v</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span> <span class='hs-conid'>FilePath</span><span class='hs-layout'>)</span> <span class='hs-comment'>-- ^ A lens into the output path.</span>
-<a name="line-519"></a>                      <span class='hs-keyglyph'>-&gt;</span> <span class='hs-layout'>(</span><span class='hs-conid'>MainOpts</span> <span class='hs-layout'>(</span><span class='hs-conid'>Diagram</span> <span class='hs-varid'>b</span> <span class='hs-varid'>v</span><span class='hs-layout'>)</span><span class='hs-layout'>,</span><span class='hs-conid'>DiagramAnimOpts</span><span class='hs-layout'>)</span>
-<a name="line-520"></a>                      <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Animation</span> <span class='hs-varid'>b</span> <span class='hs-varid'>v</span>
-<a name="line-521"></a>                      <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>IO</span> <span class='hs-conid'>()</span>
-<a name="line-522"></a><span class='hs-definition'>defaultAnimMainRender</span> <span class='hs-varid'>out</span> <span class='hs-layout'>(</span><span class='hs-varid'>opts</span><span class='hs-layout'>,</span><span class='hs-varid'>animOpts</span><span class='hs-layout'>)</span> <span class='hs-varid'>anim</span> <span class='hs-keyglyph'>=</span> <span class='hs-keyword'>do</span>
-<a name="line-523"></a>    <span class='hs-keyword'>let</span> <span class='hs-varid'>frames</span>  <span class='hs-keyglyph'>=</span> <span class='hs-varid'>simulate</span> <span class='hs-layout'>(</span><span class='hs-varid'>toRational</span> <span class='hs-varop'>$</span> <span class='hs-varid'>animOpts</span><span class='hs-varop'>^.</span><span class='hs-varid'>fpu</span><span class='hs-layout'>)</span> <span class='hs-varid'>anim</span>
-<a name="line-524"></a>        <span class='hs-varid'>nDigits</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>length</span> <span class='hs-varop'>.</span> <span class='hs-varid'>show</span> <span class='hs-varop'>.</span> <span class='hs-varid'>length</span> <span class='hs-varop'>$</span> <span class='hs-varid'>frames</span>
-<a name="line-525"></a>    <span class='hs-varid'>forM_</span> <span class='hs-layout'>(</span><span class='hs-varid'>zip</span> <span class='hs-keyglyph'>[</span><span class='hs-num'>1</span><span class='hs-keyglyph'>..</span><span class='hs-keyglyph'>]</span> <span class='hs-varid'>frames</span><span class='hs-layout'>)</span> <span class='hs-varop'>$</span> <span class='hs-keyglyph'>\</span><span class='hs-layout'>(</span><span class='hs-varid'>i</span><span class='hs-layout'>,</span><span class='hs-varid'>d</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>mainRender</span> <span class='hs-layout'>(</span><span class='hs-varid'>indexize</span> <span class='hs-varid'>out</span> <span class='hs-varid'>nDigits</span> <span class='hs-varid'>i</span> <span class='hs-varid'>opts</span><span class='hs-layout'>)</span> <span class='hs-varid'>d</span>
-<a name="line-526"></a>
-<a name="line-527"></a><a name="indexize"></a><span class='hs-comment'>-- | @indexize d n@ adds the integer index @n@ to the end of the</span>
-<a name="line-528"></a><span class='hs-comment'>--   output file name, padding with zeros if necessary so that it uses</span>
-<a name="line-529"></a><span class='hs-comment'>--   at least @d@ digits.</span>
-<a name="line-530"></a><span class='hs-definition'>indexize</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Lens'</span> <span class='hs-varid'>s</span> <span class='hs-conid'>FilePath</span> <span class='hs-keyglyph'>-&gt;</span>  <span class='hs-conid'>Int</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Integer</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>s</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>s</span>
-<a name="line-531"></a><span class='hs-definition'>indexize</span> <span class='hs-varid'>out</span> <span class='hs-varid'>nDigits</span> <span class='hs-varid'>i</span> <span class='hs-varid'>opts</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>opts</span> <span class='hs-varop'>&amp;</span> <span class='hs-varid'>out</span> <span class='hs-varop'>.~</span> <span class='hs-varid'>output'</span>
-<a name="line-532"></a>  <span class='hs-keyword'>where</span> <span class='hs-varid'>fmt</span>         <span class='hs-keyglyph'>=</span> <span class='hs-str'>"%0"</span> <span class='hs-varop'>++</span> <span class='hs-varid'>show</span> <span class='hs-varid'>nDigits</span> <span class='hs-varop'>++</span> <span class='hs-str'>"d"</span>
-<a name="line-533"></a>        <span class='hs-varid'>output'</span>     <span class='hs-keyglyph'>=</span> <span class='hs-varid'>addExtension</span> <span class='hs-layout'>(</span><span class='hs-varid'>base</span> <span class='hs-varop'>++</span> <span class='hs-varid'>printf</span> <span class='hs-varid'>fmt</span> <span class='hs-layout'>(</span><span class='hs-varid'>i</span><span class='hs-keyglyph'>::</span><span class='hs-conid'>Integer</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span> <span class='hs-varid'>ext</span>
-<a name="line-534"></a>        <span class='hs-layout'>(</span><span class='hs-varid'>base</span><span class='hs-layout'>,</span> <span class='hs-varid'>ext</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>splitExtension</span> <span class='hs-layout'>(</span><span class='hs-varid'>opts</span><span class='hs-varop'>^.</span><span class='hs-varid'>out</span><span class='hs-layout'>)</span>
+<a name="line-515"></a><span class='hs-comment'>--   @</span>
+<a name="line-516"></a><span class='hs-comment'>--   instance Mainable (Animation B V) where</span>
+<a name="line-517"></a><span class='hs-comment'>--       type MainOpts (Animation B V) = (DiagramOpts, DiagramAnimOpts)</span>
+<a name="line-518"></a><span class='hs-comment'>--       mainRender = defaultAnimMainRender output</span>
+<a name="line-519"></a><span class='hs-comment'>--   @</span>
+<a name="line-520"></a><span class='hs-comment'>--</span>
+<a name="line-521"></a><span class='hs-comment'>--   We do not provide this instance in general so that backends can choose to</span>
+<a name="line-522"></a><span class='hs-comment'>--   opt-in to this form or provide a different instance that makes more sense.</span>
+<a name="line-523"></a><span class='hs-definition'>defaultAnimMainRender</span> <span class='hs-keyglyph'>::</span> <span class='hs-layout'>(</span><span class='hs-conid'>Mainable</span> <span class='hs-layout'>(</span><span class='hs-conid'>Diagram</span> <span class='hs-varid'>b</span> <span class='hs-varid'>v</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span>
+<a name="line-524"></a>                      <span class='hs-keyglyph'>=&gt;</span> <span class='hs-layout'>(</span><span class='hs-conid'>Lens'</span> <span class='hs-layout'>(</span><span class='hs-conid'>MainOpts</span> <span class='hs-layout'>(</span><span class='hs-conid'>Diagram</span> <span class='hs-varid'>b</span> <span class='hs-varid'>v</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span> <span class='hs-conid'>FilePath</span><span class='hs-layout'>)</span> <span class='hs-comment'>-- ^ A lens into the output path.</span>
+<a name="line-525"></a>                      <span class='hs-keyglyph'>-&gt;</span> <span class='hs-layout'>(</span><span class='hs-conid'>MainOpts</span> <span class='hs-layout'>(</span><span class='hs-conid'>Diagram</span> <span class='hs-varid'>b</span> <span class='hs-varid'>v</span><span class='hs-layout'>)</span><span class='hs-layout'>,</span><span class='hs-conid'>DiagramAnimOpts</span><span class='hs-layout'>)</span>
+<a name="line-526"></a>                      <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Animation</span> <span class='hs-varid'>b</span> <span class='hs-varid'>v</span>
+<a name="line-527"></a>                      <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>IO</span> <span class='hs-conid'>()</span>
+<a name="line-528"></a><span class='hs-definition'>defaultAnimMainRender</span> <span class='hs-varid'>out</span> <span class='hs-layout'>(</span><span class='hs-varid'>opts</span><span class='hs-layout'>,</span><span class='hs-varid'>animOpts</span><span class='hs-layout'>)</span> <span class='hs-varid'>anim</span> <span class='hs-keyglyph'>=</span> <span class='hs-keyword'>do</span>
+<a name="line-529"></a>    <span class='hs-keyword'>let</span> <span class='hs-varid'>frames</span>  <span class='hs-keyglyph'>=</span> <span class='hs-varid'>simulate</span> <span class='hs-layout'>(</span><span class='hs-varid'>toRational</span> <span class='hs-varop'>$</span> <span class='hs-varid'>animOpts</span><span class='hs-varop'>^.</span><span class='hs-varid'>fpu</span><span class='hs-layout'>)</span> <span class='hs-varid'>anim</span>
+<a name="line-530"></a>        <span class='hs-varid'>nDigits</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>length</span> <span class='hs-varop'>.</span> <span class='hs-varid'>show</span> <span class='hs-varop'>.</span> <span class='hs-varid'>length</span> <span class='hs-varop'>$</span> <span class='hs-varid'>frames</span>
+<a name="line-531"></a>    <span class='hs-varid'>forM_</span> <span class='hs-layout'>(</span><span class='hs-varid'>zip</span> <span class='hs-keyglyph'>[</span><span class='hs-num'>1</span><span class='hs-keyglyph'>..</span><span class='hs-keyglyph'>]</span> <span class='hs-varid'>frames</span><span class='hs-layout'>)</span> <span class='hs-varop'>$</span> <span class='hs-keyglyph'>\</span><span class='hs-layout'>(</span><span class='hs-varid'>i</span><span class='hs-layout'>,</span><span class='hs-varid'>d</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>mainRender</span> <span class='hs-layout'>(</span><span class='hs-varid'>indexize</span> <span class='hs-varid'>out</span> <span class='hs-varid'>nDigits</span> <span class='hs-varid'>i</span> <span class='hs-varid'>opts</span><span class='hs-layout'>)</span> <span class='hs-varid'>d</span>
+<a name="line-532"></a>
+<a name="line-533"></a><a name="indexize"></a><span class='hs-comment'>-- | @indexize d n@ adds the integer index @n@ to the end of the</span>
+<a name="line-534"></a><span class='hs-comment'>--   output file name, padding with zeros if necessary so that it uses</span>
+<a name="line-535"></a><span class='hs-comment'>--   at least @d@ digits.</span>
+<a name="line-536"></a><span class='hs-definition'>indexize</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Lens'</span> <span class='hs-varid'>s</span> <span class='hs-conid'>FilePath</span> <span class='hs-keyglyph'>-&gt;</span>  <span class='hs-conid'>Int</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Integer</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>s</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>s</span>
+<a name="line-537"></a><span class='hs-definition'>indexize</span> <span class='hs-varid'>out</span> <span class='hs-varid'>nDigits</span> <span class='hs-varid'>i</span> <span class='hs-varid'>opts</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>opts</span> <span class='hs-varop'>&amp;</span> <span class='hs-varid'>out</span> <span class='hs-varop'>.~</span> <span class='hs-varid'>output'</span>
+<a name="line-538"></a>  <span class='hs-keyword'>where</span> <span class='hs-varid'>fmt</span>         <span class='hs-keyglyph'>=</span> <span class='hs-str'>"%0"</span> <span class='hs-varop'>++</span> <span class='hs-varid'>show</span> <span class='hs-varid'>nDigits</span> <span class='hs-varop'>++</span> <span class='hs-str'>"d"</span>
+<a name="line-539"></a>        <span class='hs-varid'>output'</span>     <span class='hs-keyglyph'>=</span> <span class='hs-varid'>addExtension</span> <span class='hs-layout'>(</span><span class='hs-varid'>base</span> <span class='hs-varop'>++</span> <span class='hs-varid'>printf</span> <span class='hs-varid'>fmt</span> <span class='hs-layout'>(</span><span class='hs-varid'>i</span><span class='hs-keyglyph'>::</span><span class='hs-conid'>Integer</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span> <span class='hs-varid'>ext</span>
+<a name="line-540"></a>        <span class='hs-layout'>(</span><span class='hs-varid'>base</span><span class='hs-layout'>,</span> <span class='hs-varid'>ext</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>splitExtension</span> <span class='hs-layout'>(</span><span class='hs-varid'>opts</span><span class='hs-varop'>^.</span><span class='hs-varid'>out</span><span class='hs-layout'>)</span>
 </pre></body>
 </html>

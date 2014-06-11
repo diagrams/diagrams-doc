@@ -159,44 +159,26 @@
 <a name="line-150"></a>
 <a name="line-151"></a>-}</span>
 <a name="line-152"></a>
-<a name="line-153"></a><a name="instance%20IsPrim%20(ScaleInv%20t)"></a><span class='hs-comment'>-- This is how we handle freezing properly with ScaleInv wrappers.</span>
-<a name="line-154"></a><a name="instance%20IsPrim%20(ScaleInv%20t)"></a><span class='hs-comment'>-- Normal transformations are applied ignoring scaling; "frozen"</span>
-<a name="line-155"></a><a name="instance%20IsPrim%20(ScaleInv%20t)"></a><span class='hs-comment'>-- transformations (i.e. transformations applied after a freeze) are</span>
-<a name="line-156"></a><a name="instance%20IsPrim%20(ScaleInv%20t)"></a><span class='hs-comment'>-- applied directly to the underlying object, scales and all.  We must</span>
-<a name="line-157"></a><a name="instance%20IsPrim%20(ScaleInv%20t)"></a><span class='hs-comment'>-- take care to transform the reference point and direction vector</span>
-<a name="line-158"></a><a name="instance%20IsPrim%20(ScaleInv%20t)"></a><span class='hs-comment'>-- appropriately.</span>
-<a name="line-159"></a><a name="instance%20IsPrim%20(ScaleInv%20t)"></a><span class='hs-keyword'>instance</span> <span class='hs-layout'>(</span><span class='hs-conid'>V</span> <span class='hs-varid'>t</span> <span class='hs-keyglyph'>~</span> <span class='hs-conid'>R2</span><span class='hs-layout'>,</span> <span class='hs-conid'>Transformable</span> <span class='hs-varid'>t</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>IsPrim</span> <span class='hs-layout'>(</span><span class='hs-conid'>ScaleInv</span> <span class='hs-varid'>t</span><span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
-<a name="line-160"></a>  <span class='hs-varid'>transformWithFreeze</span> <span class='hs-varid'>t1</span> <span class='hs-varid'>t2</span> <span class='hs-varid'>s</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>ScaleInv</span> <span class='hs-varid'>t''</span> <span class='hs-varid'>d''</span> <span class='hs-varid'>origin''</span>
-<a name="line-161"></a>    <span class='hs-keyword'>where</span>
-<a name="line-162"></a>      <span class='hs-comment'>-- first, apply t2 normally, i.e. ignoring scaling</span>
-<a name="line-163"></a>      <span class='hs-varid'>s'</span><span class='hs-keyglyph'>@</span><span class='hs-layout'>(</span><span class='hs-conid'>ScaleInv</span> <span class='hs-varid'>t'</span> <span class='hs-keyword'>_</span> <span class='hs-keyword'>_</span><span class='hs-layout'>)</span>      <span class='hs-keyglyph'>=</span> <span class='hs-varid'>transform</span> <span class='hs-varid'>t2</span> <span class='hs-varid'>s</span>
-<a name="line-164"></a>
-<a name="line-165"></a>      <span class='hs-comment'>-- now apply t1 to get the new direction and origin</span>
-<a name="line-166"></a>      <span class='hs-layout'>(</span><span class='hs-conid'>ScaleInv</span> <span class='hs-keyword'>_</span> <span class='hs-varid'>d''</span> <span class='hs-varid'>origin''</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>transform</span> <span class='hs-varid'>t1</span> <span class='hs-varid'>s'</span>
-<a name="line-167"></a>
-<a name="line-168"></a>      <span class='hs-comment'>-- but apply t1 directly to the underlying thing, scales and all.</span>
-<a name="line-169"></a>      <span class='hs-varid'>t''</span>                       <span class='hs-keyglyph'>=</span> <span class='hs-varid'>transform</span> <span class='hs-varid'>t1</span> <span class='hs-varid'>t'</span>
-<a name="line-170"></a>
-<a name="line-171"></a><a name="instance%20Renderable%20(ScaleInv%20t)%20b"></a><span class='hs-keyword'>instance</span> <span class='hs-layout'>(</span><span class='hs-conid'>Renderable</span> <span class='hs-varid'>t</span> <span class='hs-varid'>b</span><span class='hs-layout'>,</span> <span class='hs-conid'>V</span> <span class='hs-varid'>t</span> <span class='hs-keyglyph'>~</span> <span class='hs-conid'>R2</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>Renderable</span> <span class='hs-layout'>(</span><span class='hs-conid'>ScaleInv</span> <span class='hs-varid'>t</span><span class='hs-layout'>)</span> <span class='hs-varid'>b</span> <span class='hs-keyword'>where</span>
-<a name="line-172"></a>  <span class='hs-varid'>render</span> <span class='hs-varid'>b</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>render</span> <span class='hs-varid'>b</span> <span class='hs-varop'>.</span> <span class='hs-varid'>view</span> <span class='hs-varid'>scaleInvObj</span>
-<a name="line-173"></a>
-<a name="line-174"></a><a name="scaleInvPrim"></a><span class='hs-comment'>-- | Create a diagram from a single scale-invariant primitive.  The</span>
-<a name="line-175"></a><span class='hs-comment'>--   vector argument specifies the direction in which the primitive is</span>
-<a name="line-176"></a><span class='hs-comment'>--   \"pointing\" (for the purpose of keeping it rotated correctly</span>
-<a name="line-177"></a><span class='hs-comment'>--   under non-uniform scaling).  The primitive is assumed to be</span>
-<a name="line-178"></a><span class='hs-comment'>--   \"located\" at the origin (for the purpose of translating it</span>
-<a name="line-179"></a><span class='hs-comment'>--   correctly under scaling).</span>
-<a name="line-180"></a><span class='hs-comment'>--</span>
-<a name="line-181"></a><span class='hs-comment'>--   Note that the resulting diagram will have an /empty/ envelope,</span>
-<a name="line-182"></a><span class='hs-comment'>--   trace, and query.  The reason is that the envelope, trace, and</span>
-<a name="line-183"></a><span class='hs-comment'>--   query cannot be cached---applying a transformation would cause</span>
-<a name="line-184"></a><span class='hs-comment'>--   the cached envelope, etc. to get \"out of sync\" with the</span>
-<a name="line-185"></a><span class='hs-comment'>--   scale-invariant object.  The intention, at any rate, is that</span>
-<a name="line-186"></a><span class='hs-comment'>--   scale-invariant things will be used only as \"decorations\" (/e.g./</span>
-<a name="line-187"></a><span class='hs-comment'>--   arrowheads) which should not affect the envelope, trace, and</span>
-<a name="line-188"></a><span class='hs-comment'>--   query.</span>
-<a name="line-189"></a><span class='hs-definition'>scaleInvPrim</span> <span class='hs-keyglyph'>::</span> <span class='hs-layout'>(</span><span class='hs-conid'>Transformable</span> <span class='hs-varid'>t</span><span class='hs-layout'>,</span> <span class='hs-conid'>Typeable</span> <span class='hs-varid'>t</span><span class='hs-layout'>,</span> <span class='hs-conid'>Renderable</span> <span class='hs-varid'>t</span> <span class='hs-varid'>b</span><span class='hs-layout'>,</span> <span class='hs-conid'>V</span> <span class='hs-varid'>t</span> <span class='hs-keyglyph'>~</span> <span class='hs-conid'>R2</span><span class='hs-layout'>,</span> <span class='hs-conid'>Monoid</span> <span class='hs-varid'>m</span><span class='hs-layout'>)</span>
-<a name="line-190"></a>             <span class='hs-keyglyph'>=&gt;</span> <span class='hs-varid'>t</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>R2</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>QDiagram</span> <span class='hs-varid'>b</span> <span class='hs-conid'>R2</span> <span class='hs-varid'>m</span>
-<a name="line-191"></a><span class='hs-definition'>scaleInvPrim</span> <span class='hs-varid'>t</span> <span class='hs-varid'>d</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>mkQD</span> <span class='hs-layout'>(</span><span class='hs-conid'>Prim</span> <span class='hs-varop'>$</span> <span class='hs-varid'>scaleInv</span> <span class='hs-varid'>t</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span> <span class='hs-varid'>mempty</span> <span class='hs-varid'>mempty</span> <span class='hs-varid'>mempty</span> <span class='hs-varid'>mempty</span>
+<a name="line-153"></a><a name="instance%20Renderable%20(ScaleInv%20t)%20b"></a><span class='hs-keyword'>instance</span> <span class='hs-layout'>(</span><span class='hs-conid'>Renderable</span> <span class='hs-varid'>t</span> <span class='hs-varid'>b</span><span class='hs-layout'>,</span> <span class='hs-conid'>V</span> <span class='hs-varid'>t</span> <span class='hs-keyglyph'>~</span> <span class='hs-conid'>R2</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>Renderable</span> <span class='hs-layout'>(</span><span class='hs-conid'>ScaleInv</span> <span class='hs-varid'>t</span><span class='hs-layout'>)</span> <span class='hs-varid'>b</span> <span class='hs-keyword'>where</span>
+<a name="line-154"></a>  <span class='hs-varid'>render</span> <span class='hs-varid'>b</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>render</span> <span class='hs-varid'>b</span> <span class='hs-varop'>.</span> <span class='hs-varid'>view</span> <span class='hs-varid'>scaleInvObj</span>
+<a name="line-155"></a>
+<a name="line-156"></a><a name="scaleInvPrim"></a><span class='hs-comment'>-- | Create a diagram from a single scale-invariant primitive.  The</span>
+<a name="line-157"></a><span class='hs-comment'>--   vector argument specifies the direction in which the primitive is</span>
+<a name="line-158"></a><span class='hs-comment'>--   \"pointing\" (for the purpose of keeping it rotated correctly</span>
+<a name="line-159"></a><span class='hs-comment'>--   under non-uniform scaling).  The primitive is assumed to be</span>
+<a name="line-160"></a><span class='hs-comment'>--   \"located\" at the origin (for the purpose of translating it</span>
+<a name="line-161"></a><span class='hs-comment'>--   correctly under scaling).</span>
+<a name="line-162"></a><span class='hs-comment'>--</span>
+<a name="line-163"></a><span class='hs-comment'>--   Note that the resulting diagram will have an /empty/ envelope,</span>
+<a name="line-164"></a><span class='hs-comment'>--   trace, and query.  The reason is that the envelope, trace, and</span>
+<a name="line-165"></a><span class='hs-comment'>--   query cannot be cached---applying a transformation would cause</span>
+<a name="line-166"></a><span class='hs-comment'>--   the cached envelope, etc. to get \"out of sync\" with the</span>
+<a name="line-167"></a><span class='hs-comment'>--   scale-invariant object.  The intention, at any rate, is that</span>
+<a name="line-168"></a><span class='hs-comment'>--   scale-invariant things will be used only as \"decorations\" (/e.g./</span>
+<a name="line-169"></a><span class='hs-comment'>--   arrowheads) which should not affect the envelope, trace, and</span>
+<a name="line-170"></a><span class='hs-comment'>--   query.</span>
+<a name="line-171"></a><span class='hs-definition'>scaleInvPrim</span> <span class='hs-keyglyph'>::</span> <span class='hs-layout'>(</span><span class='hs-conid'>Transformable</span> <span class='hs-varid'>t</span><span class='hs-layout'>,</span> <span class='hs-conid'>Typeable</span> <span class='hs-varid'>t</span><span class='hs-layout'>,</span> <span class='hs-conid'>Renderable</span> <span class='hs-varid'>t</span> <span class='hs-varid'>b</span><span class='hs-layout'>,</span> <span class='hs-conid'>V</span> <span class='hs-varid'>t</span> <span class='hs-keyglyph'>~</span> <span class='hs-conid'>R2</span><span class='hs-layout'>,</span> <span class='hs-conid'>Monoid</span> <span class='hs-varid'>m</span><span class='hs-layout'>)</span>
+<a name="line-172"></a>             <span class='hs-keyglyph'>=&gt;</span> <span class='hs-varid'>t</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>R2</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>QDiagram</span> <span class='hs-varid'>b</span> <span class='hs-conid'>R2</span> <span class='hs-varid'>m</span>
+<a name="line-173"></a><span class='hs-definition'>scaleInvPrim</span> <span class='hs-varid'>t</span> <span class='hs-varid'>d</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>mkQD</span> <span class='hs-layout'>(</span><span class='hs-conid'>Prim</span> <span class='hs-varop'>$</span> <span class='hs-varid'>scaleInv</span> <span class='hs-varid'>t</span> <span class='hs-varid'>d</span><span class='hs-layout'>)</span> <span class='hs-varid'>mempty</span> <span class='hs-varid'>mempty</span> <span class='hs-varid'>mempty</span> <span class='hs-varid'>mempty</span>
 </pre></body>
 </html>

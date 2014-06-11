@@ -33,6 +33,11 @@ with questions or post them to the
 News
 ----
 
+* Diagrams 1.2 [released](/releases.html) (2 June 2014)!  Look for a
+  blog post soon with a rundown of new features. In the meantime, see
+  the [migration guide](http://www.haskell.org/haskellwiki/Diagrams/Dev/Migrate1.2)
+  for help porting existing diagrams code to 1.2.
+
 * Diagrams 1.1 [released](/releases.html) (8 March 2014).  This is
   mostly a bugfix release though there are a few cool new features.
 

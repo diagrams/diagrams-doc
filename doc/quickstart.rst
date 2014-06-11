@@ -209,7 +209,7 @@ the `circle` diagram with the `(#)` operator:
 ::
 
 > example = circle 1 # fc blue
->                    # lwG 0.05
+>                    # lw veryThick
 >                    # lc purple
 >                    # dashingG [0.2,0.05] 0
 
@@ -217,7 +217,7 @@ the `circle` diagram with the `(#)` operator:
 There's actually nothing special about the `(#)` operator: it's just
 reverse function application, that is,
 
-.. .. class:: lhs
+.. class:: lhs
 
 ::
 
@@ -229,7 +229,7 @@ Just to illustrate,
 
 ::
 
-> example = dashingG [0.2,0.05] 0 . lc purple . lwG 0.05 . fc blue
+> example = dashingG [0.2,0.05] 0 . lc purple . lw veryThick . fc blue
 >         $ circle 1
 
 produces exactly the same diagram as before.  So why bother with
@@ -242,7 +242,7 @@ combine diagrams with specified attributes.  For example,
 
 ::
 
-> example = circle 1 # fc red # lwG 0 ||| circle 1 # fc green # lwG 0
+> example = circle 1 # fc red # lw none ||| circle 1 # fc green # lw none
 
 places a red circle with no border next to a green circle with no
 border (we'll see more about the `(|||)` operator shortly). Without
@@ -252,10 +252,11 @@ border (we'll see more about the `(|||)` operator shortly). Without
 
 ::
 
-> (fc red . lwG 0 $ circle 1) ||| (fc green . lwG 0 $ circle 1)
+> (fc red . lw none $ circle 1) ||| (fc green . lw none $ circle 1)
 
-For information on other standard attributes, see
-the `Diagrams.Attributes`:mod: module.
+For information on other standard attributes, see the
+`Diagrams.Attributes`:mod: and `Diagrams.TwoD.Attributes`:mod:
+modules.
 
 Combining diagrams
 ==================
@@ -460,42 +461,42 @@ the same as moving its local origin by `(-0.5, -0.3)`.
 Since diagrams are always composed with respect to their local
 origins, translation can affect the way diagrams are composed.
 
-.. .. class:: dia-lhs
+.. class:: dia-lhs
 
-.. ::
+::
 
-.. > circleSqT   = square 1 `atop` circle 1 # translate (r2 (0.5, 0.3))
-.. > circleSqHT  = square 1 ||| circle 1 # translate (r2 (0.5, 0.3))
-.. > circleSqHT2 = square 1 ||| circle 1 # translate (r2 (19.5, 0.3))
-.. >
-.. > example = hcat [circleSqT, strutX 1, circleSqHT, strutX 1, circleSqHT2]
+> circleSqT   = square 1 `atop` circle 1 # translate (r2 (0.5, 0.3))
+> circleSqHT  = square 1 ||| circle 1 # translate (r2 (0.5, 0.3))
+> circleSqHT2 = square 1 ||| circle 1 # translate (r2 (19.5, 0.3))
+>
+> example = hcat [circleSqT, strutX 1, circleSqHT, strutX 1, circleSqHT2]
 
-.. As `circleSqHT` and `circleSqHT2` demonstrate, when we place a
-.. translated circle next to a square, it doesn't matter how much the
-.. circle was translated in the *horizontal* direction---the square and
-.. circle will always simply be placed next to each other.  The vertical
-.. direction matters, though, since the local origins of the square and
-.. circle are placed on the same horizontal line.
+As `circleSqHT` and `circleSqHT2` demonstrate, when we place a
+translated circle next to a square, it doesn't matter how much the
+circle was translated in the *horizontal* direction---the square and
+circle will always simply be placed next to each other.  The vertical
+direction matters, though, since the local origins of the square and
+circle are placed on the same horizontal line.
 
-.. Aligning
-.. --------
+Aligning
+--------
 
-.. It's quite common to want to *align* some diagrams in a certain way
-.. when placing them next to one another---for example, we might want a
-.. horizontal row of diagrams aligned along their top edges.  The
-.. *alignment* of a diagram simply refers to its position relative to its
-.. local origin, and convenient alignment functions are provided for
-.. aligning a diagram with respect to its envelope.  For example,
-.. `alignT` translates a diagram in a vertical direction so that its
-.. local origin ends up exactly on the edge of its envelope.
+It's quite common to want to *align* some diagrams in a certain way
+when placing them next to one another---for example, we might want a
+horizontal row of diagrams aligned along their top edges.  The
+*alignment* of a diagram simply refers to its position relative to its
+local origin, and convenient alignment functions are provided for
+aligning a diagram with respect to its envelope.  For example,
+`alignT` translates a diagram in a vertical direction so that its
+local origin ends up exactly on the edge of its envelope.
 
 .. class:: dia-lhs
 
 ::
 
-> example = hrule (2 * sum sizes) # lwG 0.1 === circles # centerX
+> example = hrule (2 * sum sizes) === circles # centerX
 >   where circles = hcat . map alignT . zipWith scale sizes
->                 $ repeat (circle 1 # lwG 0.1)
+>                 $ repeat (circle 1)
 >         sizes   = [2,5,4,7,1,3]
 
 See `Diagrams.TwoD.Align`:mod: for other alignment combinators.
@@ -532,6 +533,7 @@ picture:
 >     # sized (Width 2)
 >   where
 >     mkNode n = text (show n) # fontSizeN 0.1 # fc white <> circle 0.2 # fc green # named n
+>     decorateTrail t ds = atPoints (trailVertices t) ds
 >
 > example = tournament 6
 
