@@ -417,13 +417,13 @@ A *path* is simply a collection of located trails.
      >   # lwG 0.03
      >   # centerXY # pad 1.1 # sized (Width 2)
 
-  #. `decorateLocatedTrail`, `fillRule`
+  #. `atPoints`, `fillRule`
 
      .. class:: dia
 
      ::
 
      > innerCircles :: Path R2
-     > innerCircles = decorateLocatedTrail (hexagon 2) (repeat (circle 1)) <> circle 1
+     > innerCircles = atPoints (trailVertices $ hexagon 2) (repeat (circle 1)) <> circle 1
      >
      > example = (innerCircles <> circle 3) # stroke # fc blue # fillRule EvenOdd

@@ -24,7 +24,7 @@ it 60 degrees, and using `decorateTrail` to lay out the rows of dots.
 >              . repeat
 >              $ dot c
 >         dots = cat' v (with & sep .~ 3 & catMethod .~ Distrib) rows
->         v = fromDirection (1/6 @@ turn)
+>         v = rotateBy (1/6) unitX
 >         edge = fromOffsets . replicate (n-1) $ unitX # scale 3
 >         edges = glueLine (edge <> rotateBy (1/3) edge <> rotateBy (2/3) edge)
 >

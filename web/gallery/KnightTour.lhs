@@ -73,7 +73,7 @@ and decorate the vertices with dots.
 > drawTour tour = tourPoints <> stroke tourPath
 >   where
 >     tourPath   = fromVertices . map squareToPoint $ tour
->     tourPoints = decoratePath tourPath (repeat dot)
+>     tourPoints = atPoints (concat . pathVertices $ tourPath) (repeat dot)
 >     dot = circle 0.05 # fc black
 
 Putting it all together:

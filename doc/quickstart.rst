@@ -528,12 +528,11 @@ picture:
 > opts = with & gaps .~ small & headLength .~ Global 0.15
 >
 > tournament :: Int -> Diagram B R2
-> tournament n = decorateTrail (regPoly n 1) (map mkNode [1..n])
+> tournament n = atPoints (trailVertices $ regPoly n 1) (map mkNode [1..n])
 >     # applyAll [connectOutside' opts j k | j <- [1 .. n-1], k <- [j+1 .. n]]
 >     # sized (Width 2)
 >   where
 >     mkNode n = text (show n) # fontSizeN 0.1 # fc white <> circle 0.2 # fc green # named n
->     decorateTrail t ds = atPoints (trailVertices t) ds
 >
 > example = tournament 6
 
@@ -562,7 +561,8 @@ one-dimensional tracks through space, and paths are collections of
 trails; see the `tutorial on trails and paths`__ for a more detailed
 account.  Trails and paths can be explicitly manipulated and computed
 with, and used, for example, to describe and position other
-diagrams. In this case, we can use the `decorateTrail` function to
+diagrams. In this case, we can use the `trailVertices`, and `atPoints`
+functions to
 place nodes at the vertices of the trail produced by `regPoly`:
 
 .. class:: dia-lhs
@@ -570,7 +570,7 @@ place nodes at the vertices of the trail produced by `regPoly`:
 ::
 
 > node    = circle 0.2 # fc green
-> example = decorateTrail (regPoly 6 1) (repeat node)
+> example = atPoints (trailVertices $ regPoly 6 1) (repeat node)
 
 __ paths.html
 
@@ -588,7 +588,7 @@ the number of nodes:
 > node n = text (show n) # fontSizeN 0.1 # fc white <> circle 0.2 # fc green
 >
 > tournament :: Int -> Diagram B R2
-> tournament n = decorateTrail (regPoly n 1) (map node [1..n])
+> tournament n = atPoints (trailVertices $ regPoly n 1) (map node [1..n])
 >
 > example = tournament 5
 
@@ -614,7 +614,7 @@ function:
 >       <> circle 0.2 # fc green # named n
 >
 > tournament :: Int -> Diagram B R2
-> tournament n = decorateTrail (regPoly n 1) (map node [1..n])
+> tournament n = atPoints (trailVertices $ regPoly n 1) (map node [1..n])
 
 Note the addition of `... # named n` to the circles making up the nodes.
 This doesn't yet change the picture in any way, but it sets us up to
@@ -644,7 +644,7 @@ objects.  Here we connect nodes 1 and 2:
 >       <> circle 0.2 # fc green # named n
 >
 > tournament :: Int -> Diagram B R2
-> tournament n = decorateTrail (regPoly n 1) (map node [1..n])
+> tournament n = atPoints (trailVertices $ regPoly n 1) (map node [1..n])
 >
 > example = tournament 6 # connectOutside (1 :: Int) (2 :: Int)
 
@@ -669,7 +669,7 @@ follows:
 >       <> circle 0.2 # fc green # named n
 >
 > tournament :: Int -> Diagram B R2
-> tournament n = decorateTrail (regPoly n 1) (map node [1..n])
+> tournament n = atPoints (trailVertices $ regPoly n 1) (map node [1..n])
 >
 > example = tournament 6
 >   # connectOutside' (with & gaps .~ small
@@ -700,7 +700,7 @@ of situation.
 >                  & headLength .~ Global 0.2
 >
 > tournament :: Int -> Diagram B R2
-> tournament n = decorateTrail (regPoly n 1) (map node [1..n])
+> tournament n = atPoints (trailVertices $ regPoly n 1) (map node [1..n])
 >   # applyAll [connectOutside' arrowOpts j k | j <- [1 .. n-1], k <- [j+1 .. n]]
 >
 > example = tournament 6
