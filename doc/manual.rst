@@ -3975,6 +3975,29 @@ That's it!  No method definitions are even needed for the `IsName`
 instance, since `toName` (the sole method of `IsName`) has a default
 implementation which works just fine.
 
+.. container:: warning
+
+   It is not recommended to use `GeneralizedNewtypeDeriving` in
+   conjunction with `IsName`, since in that case the underlying type
+   and the ``newtype`` will be considered equivalent when comparing
+   names.  For example:
+
+   .. class:: lhs
+
+   ::
+
+   > newtype WordN = WordN Int deriving (Show, Ord, Eq, Typeable, IsName)
+
+   is unlikely to work as intended, since `(1 :: Int)` and `(WordN 1)`
+   will be considered equal as names.  Instead, use
+
+   .. class:: lhs
+
+   ::
+
+   > newtype WordN = WordN Int deriving (Show, Ord, Eq, Typeable, IsName)
+   > instance IsName WordN
+
 Listing names
 ~~~~~~~~~~~~~
 
