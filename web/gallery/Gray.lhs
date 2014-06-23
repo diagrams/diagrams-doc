@@ -30,11 +30,11 @@ segments corresponding to consecutive runs of `True`.
 
 > rings n = mkRingsDia . map ringOffsets . transpose . gray $ n
 >   where ringOffsets :: [Bool] -> [(Direction R2, Angle)]
->         ringOffsets = map l2t . chunksOf 2 . findEdges . zip [0 @@ turn, 1/(2^n) @@ turn .. fullTurn]
->         l2t [x,y] = (rotate x xDir,y)
->         l2t [x]   = (rotate x xDir,fullTurn)
+>         ringOffsets = map l2t . chunksOf 2 . findEdges . zip [rotate α xDir | α <- [0 @@ turn, 1/(2^n) @@ turn .. fullTurn]]
+>         l2t [x,y] =  (x, angleBetweenDirs x y)
+>         l2t [x]   = (x, angleBetweenDirs x xDir) -- arc angle will never be > fullturn ^/ 2
 >
-> findEdges :: Eq a => [(Angle, a)] -> [Angle]
+> findEdges :: Eq a => [(Direction R2, a)] -> [Direction R2]
 > findEdges = catMaybes . (zipWith edge <*> tail)
 >   where edge (_,c1) (a,c2) | c1 /= c2  = Just a
 >                            | otherwise = Nothing
