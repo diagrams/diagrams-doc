@@ -1805,10 +1805,10 @@ translations.  In the simplified case of the real line, an affine
 transformation is any function of the form `f(x) = mx + b`:math:.
 Generalizing to `d`:math: dimensions, an affine transformation is a
 vector function of the form `f(\mathbf{v}) = \mathbf{M}\mathbf{v} +
-\mathbf{B}`:math:, where `\mathbf{M}`:math: and `\mathbf{B}`:math: are
-`d \times d`:math: matrices.  More general, non-affine
-transformations, including projective transformations, are referred to
-in ``diagrams`` as `Deformations`_.
+\mathbf{b}`:math:, where `\mathbf{M}`:math: is a `d \times d`:math:
+matrix.  More general, non-affine transformations, including
+projective transformations, are referred to in ``diagrams`` as
+`Deformations`_.
 
 `Diagrams.TwoD.Transform`:mod: defines a number of common affine
 transformations in two-dimensional space. (To construct
@@ -3346,15 +3346,15 @@ to `connect` is `connect'`. These companion functions take an extra
 
 * `headLength` and `tailLength` specify the size of the head and tail,
   defined as the length of the head or tail plus the joint connecting
-  it to the shaft. Their value is of 
+  it to the shaft. Their value is of
   type `Measure R2` (see  `Measurement units`_). The
   default value is `normal` which is a synonym for `Normalized 0.035`.
   A traversal called `lengths` sets both the `headLength` and `tailLength`
-  at the same time. 
+  at the same time.
 
 * `headGap` and `tailGap` both default to `none` and are used to indicate
   the amount of space between the end of the arrow and the location it
-  is pointing at. They are also of type `Measure R2`.  
+  is pointing at. They are also of type `Measure R2`.
   A traversal called `gaps` is provided to set
   both the `headGap` and `tailGap` simultaneously.
 
@@ -3366,7 +3366,7 @@ to `connect` is `connect'`. These companion functions take an extra
 
 The Lenses `headTexture`, `tailTexture`, and `shaftTexture` are provided
 for conveniently setting the texture of a head or tail. Addtionally, the
-function `solid` converts a color to a texture. For example, 
+function `solid` converts a color to a texture. For example,
 `(with & headTexture .~ solid blue)` will set the head color to blue.
 
 The following example demonstrates the use of various `ArrowOpts`.
@@ -3395,10 +3395,10 @@ function.
 > example = d
 >    # connect' (with & arrowTail .~ quill & lengths .~ large
 >                     & tailTexture .~ solid orange & headTexture .~ solid orange
->                     & arrowHead .~ spike 
+>                     & arrowHead .~ spike
 >                     & shaftStyle %~ lw veryThick ) "1" "2"
 >    # connect' (with & arrowTail .~ thorn' & lengths .~ large
->                     & arrowHead .~ thorn 
+>                     & arrowHead .~ thorn
 >                     & arrowShaft .~ shaft1 & shaftStyle %~ lw veryThick ) "3" "4"
 >    # connect' (with & arrowTail .~ block & gaps .~ small
 >                     & arrowHead .~ dart & headLength .~ large
@@ -3407,7 +3407,7 @@ function.
 >                     & shaftStyle %~ lw veryThick . lc blue ) "5" "6"
 >    # connect' (with & arrowShaft .~ shaft3
 >                     & arrowHead .~ tri & headLength .~ large
->                     & headStyle %~ fc red . opacity 0.5 
+>                     & headStyle %~ fc red . opacity 0.5
 >                     & shaftStyle %~ lw veryThick . lc black . opacity 0.5 ) "7" "8"
 
 Text
@@ -3590,7 +3590,7 @@ Images
 ------
 
 The `Diagrams.TwoD.Image`:mod: module provides basic support for
-including both external and embedded images in diagrams. 
+including both external and embedded images in diagrams.
 Support for images varies by backend, only the cairo
 backend supports external images. The rasterific backend
 supports embedded images of many formats and the SVG backend
