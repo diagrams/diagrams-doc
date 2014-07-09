@@ -4,6 +4,7 @@ title: Sightings
 
 People using diagrams to do stuff.
 
+* [ReCode Project - Traveling Through the Square Series](http://mathr.co.uk/blog/2014-07-08_recode_project_traveling_through_the_square_series.html) (Claude Heiland-Allen, 8 July 2014)
 * [Red-Black Neighbourhood Stencil Diagrams](http://readerunner.wordpress.com/2014/04/29/red-black-neighbourhood-stencil-diagrams/) (Chris Reade, 29 April 2014)
 * [mini-cyk-parser](https://github.com/ludflu/mini-cyk-parser) (Jim Snavely)
 * [Drawing puzzles with the Haskell Diagrams framework](http://maybepuzzles.wordpress.com/2014/04/07/drawing-puzzles-with-the-haskell-diagrams-framework/) (7 April 2014)
