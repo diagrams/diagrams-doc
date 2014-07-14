@@ -3596,7 +3596,8 @@ backend supports external images. The rasterific backend
 supports embedded images of many formats and the SVG backend
 supports embedded png images.
 
-To create an embedded image use either `loadImageEmb` to read an
+To create a diagram from an image file
+call `loadImageEmb` to read the
 image from a file path using `JuicyPixels`:pkg: and return a
 `DImage Embedded`. Then use `image` to convert the `DImage Embedded`
 to a diagram. You can also create an a diagram with an embedded image
