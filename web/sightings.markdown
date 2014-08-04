@@ -5,8 +5,9 @@ title: Sightings
 People using diagrams to do stuff.
 
 * [ReCode Project - Topographic Form animated](http://mathr.co.uk/blog/2014-07-31_recode_project_topographic_form_animated.html) (Claude Heiland-Allen, 31 July 2014)
+* [Tree Derivations](https://www.youtube.com/watch?v=ud_xnX9uixg&feature=youtu.be) (Bob Grudem, 18 July 2014)
 * [ReCode Project - Traveling Through the Square Series](http://mathr.co.uk/blog/2014-07-08_recode_project_traveling_through_the_square_series.html) (Claude Heiland-Allen, 8 July 2014)
-* [Haskelll numeric types: quick reference] (http://martingalemeasure.wordpress.com/2014/07/07/haskell-numeric-types-quick-reference/) (Jeffrey Rosenbluth, 7 July 2014)
+* [Haskell numeric types: quick reference](http://martingalemeasure.wordpress.com/2014/07/07/haskell-numeric-types-quick-reference/) (Jeffrey Rosenbluth, 7 July 2014)
 * [Solving the 15-Puzzle with Haskell and diagrams](http://martingalemeasure.wordpress.com/2014/06/24/solving-the-15-puzzle-with-haskell-and-diagrams-10/) (Jeffrey Rosenbluth, 24 June 2014)
 * [Red-Black Neighbourhood Stencil Diagrams](http://readerunner.wordpress.com/2014/04/29/red-black-neighbourhood-stencil-diagrams/) (Chris Reade, 29 April 2014)
 * [mini-cyk-parser](https://github.com/ludflu/mini-cyk-parser) (Jim Snavely)
