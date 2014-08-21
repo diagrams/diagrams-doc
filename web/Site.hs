@@ -167,7 +167,9 @@ main = do
       -- build syntax-highlighted source code for examples
     match "gallery/*.lhs" $ version "gallery" $ do
         route $ setExtension "html"
-        compile $ withMathJax
+        compile $ getResourceBody
+            >>= loadAndApplyTemplate "templates/wrapExample.lhs" defaultContext
+            >>= return . withMathJax
             >>= loadAndApplyTemplate "templates/exampleHi.html"
                   ( mconcat
                     [ setImgURL imgExt
@@ -181,14 +183,11 @@ main = do
       -- export raw .lhs of examples for download
     match "gallery/*.lhs" $ version "raw" $ do
         route idRoute
-        compile getResourceBody
+        compile $ getResourceBody
+            >>= loadAndApplyTemplate "templates/wrapExample.lhs" defaultContext
 
-withMathJax :: Compiler (Item String)
-withMathJax =
-  pandocCompilerWithTransform
-    defaultHakyllReaderOptions
-    defaultHakyllWriterOptions
-    (bottomUp latexToMathJax)
+withMathJax :: Item String -> Item String
+withMathJax = writePandoc . fmap (bottomUp latexToMathJax) . readPandoc
   where latexToMathJax (Math InlineMath str)
           = RawInline "html" ("\\(" ++ str ++ "\\)")
         latexToMathJax (Math DisplayMath str)
