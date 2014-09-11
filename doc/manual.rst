@@ -740,7 +740,7 @@ embedded diagrams of various physical sizes.  Using the same `Output`
 value for the line width (or arrowhead length, arrow gap, font size,
 *etc.*) of every diagram ensures that the diagrams will all look
 consistent.  On the other hand, if the diagrams all have the same
-physical size (*e.g.* they are all $300 \times 200$ pixels), then they
+physical size (*e.g.* they are all `300 \times 200`:math: pixels), then they
 will also look consistent if the same `Normalized` value is used for
 all of them (which is the default for line width).
 
