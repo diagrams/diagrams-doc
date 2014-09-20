@@ -27,7 +27,7 @@ the central one.
 >                   pCenter
 >                   (zip vs (repeat (rotateBy (1/2) pOutside)))
 >   where vs = iterateN 5 (rotateBy (1/5))
->            . (if odd n then negateV else id)
+>            . (if odd n then negated else id)
 >            $ unitY
 >         pCenter  = pentaflake' (n-1)
 >         pOutside = pCenter # opacity (1.7 / fromIntegral n)

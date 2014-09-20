@@ -27,7 +27,7 @@ The function to use to create the vector field.
 > arrowAtPoint (x, y) = arrowAt' opts (p2 (x, y)) (sL *^ vf) # alignTL
 >   where
 >     vf   = vectorField (x, y)
->     m    = magnitude $ vectorField (x, y)
+>     m    = norm $ vectorField (x, y)
 >
 > -- Head size is a function of the length of the vector
 > -- as are tail size and shaft length.

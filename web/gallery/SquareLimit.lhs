@@ -29,13 +29,13 @@ The diagram is constructed from five basic tiles: four with specific
 markings on, and a fifth which is blank, all $16 \times 16$. The actual
 markings are defined at the end of the file.
 
-> blank :: Diagram B R2
+> blank :: Diagram B V2 Double
 > blank = lw none $ square 16
 
-> makeTile :: [[P2]] -> Diagram B R2
+> makeTile :: [[P2 Double]] -> Diagram B V2 Double
 > makeTile = showOrigin . lw thin . centerXY . mconcat . map fromVertices where
 
-> markingsP, markingsQ, markingsR, markingsS :: [[P2]]
+> markingsP, markingsQ, markingsR, markingsS :: [[P2 Double]]
 
 Here is an algenraic datatype of pictures. Composition is by
 juxtaposition, which requires bounding boxes. In order to achieve this
@@ -44,7 +44,7 @@ even with infinite pictures, we make all pictures the same size
 
 > data Picture
 >   = Blank
->   | Single [[P2]]
+>   | Single [[P2 Double]]
 >   | Rot Picture
 >   | Cycle Picture
 >   | HPair Picture Picture
@@ -73,7 +73,7 @@ pictures are the same size.
 
 Folding with these operators draws a whole picture.
 
-> drawPicture :: Picture -> Diagram B R2
+> drawPicture :: Picture -> Diagram B V2 Double
 > drawPicture Blank = blank
 > drawPicture (Single m) = makeTile m
 > drawPicture (Rot p) = rot (drawPicture p)
