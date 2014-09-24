@@ -45,7 +45,7 @@ options used to make arrows.
 > shaft1 = cubicSpline False (trailVertices (shaft0 `at` origin))
 > shaft2 = cubicSpline False (map p2 [(0,0), (1,0), (0.8, 0.2),(2, 0.2)])
 > 
-> example :: Diagram B R2
+> example :: Diagram B V2 Double
 > example = connect'        arrow1 "1" "2"
 >         . connect'        arrow2 "4" "3"
 >         . connect'        arrow3 "1" "6"
@@ -175,14 +175,14 @@ is the definition for reference:
   data ArrowOpts = ArrowOpts
     { _arrowHead  :: ArrowHT
     , _arrowTail  :: ArrowHT
-    , _arrowShaft :: Trail R2
-    , _headGap    :: Measure R2
-    , _tailGap    :: Measure R2
-    , _headStyle  :: Style R2
-    , _headLength :: Measure R2
-    , _tailStyle  :: Style R2
-    , _tailLength :: Measure R2
-    , _shaftStyle :: Style R2
+    , _arrowShaft :: Trail V2 Double
+    , _headGap    :: Mesure Double
+    , _tailGap    :: Mesure Double
+    , _headStyle  :: Style V2 Double
+    , _headLength :: Mesure Double
+    , _tailStyle  :: Style V2 Double
+    , _tailLength :: Mesure Double
+    , _shaftStyle :: Style V2 Double
     }
 
 Don't worry if some of the field types in this record are not yet clear,
@@ -262,7 +262,7 @@ yields:
 The shaft
 ----------
 
-The shaft of an arrow can be any arbitrary `Trail R2` in addition to a
+The shaft of an arrow can be any arbitrary `Trail V2 Double` in addition to a
 simple straight line. For example, an arc makes a perfectly good
 shaft. The length of the trail is irrelevant, as the arrow is scaled
 to connect the starting point and ending point regardless of the
@@ -360,10 +360,10 @@ Lengths and Gaps
 The fields `headLength` and `tailLength` are for setting the length of the head
 and tail. The head length is measured from the tip of the head to the start
 of the joint connecting the head to the shaft. And the tail length in an
-analagous manner. They have type `Measure R2` and
+analagous manner. They have type `Mesure Double` and
 the default is `normal`. `headGap` and
 `tailGap` options are fairly self explanatory: they leave space
-at the end or beginning of the arrow and are also type `Measure R2`.
+at the end or beginning of the arrow and are also type `Mesure Double`.
 Take a look at their effect in
 the following example. The default gaps are `none`.
 
@@ -659,8 +659,8 @@ In the following exercise you can try `connectPerim'` for yourself.
     >
     > shaft = arc xDir (1/6 @@ turn)
     >
-    > connectTarget :: (Renderable (Path R2) b)
-    >               =>  Angle -> (Diagram b R2 -> Diagram b R2)
+    > connectTarget :: (Renderable (Path V2 Double) b)
+    >               =>  Angle -> (Diagram b V2 Double -> Diagram b V2 Double)
     > connectTarget a = connectPerim' (with & arrowHead .~ thorn & shaftStyle %~  lwG 0.01
     >                                       & arrowShaft .~ shaft & headLength .~ Global 0.18
     >                                       & arrowTail .~ thorn' & tailLength .~ Global 0.12

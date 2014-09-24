@@ -44,7 +44,7 @@ black.
 
   light = parallelLight _xy white
 
-  example :: Diagram POVRay R3
+  example :: Diagram POVRay V3 Double
   example = centerX $ cat unitX
     [sphere # fc cyan, sphere # fc green, sphere # fc blue]
 
@@ -57,8 +57,8 @@ useful in 3D, and not those, like the 2D `unitX`, which would get in
 the way.  We introduce a camera, a light which casts parallel rays,
 and some spheres (of radius 1).  We move the camera away from the
 origin, so that the spheres are in its field of view.  The translate
-function is polymorphic, and takes a vector `R3` because cameras are
-defined in `R3`.  Now we render our scene.  At the command line:
+function is polymorphic, and takes a vector `V3 Double` because cameras are
+defined in `V3 Double`.  Now we render our scene.  At the command line:
 
 ::
 
@@ -99,7 +99,7 @@ scene.
 
   color theta = fc $ rybColor (floor $ theta * 24)
 
-  example :: Diagram POVRay R3
+  example :: Diagram POVRay V3 Double
   example = mconcat
               [transform (aboutZ (t @@ turn)) (s # color t) | t <- [0,1/8..7/8]]
 

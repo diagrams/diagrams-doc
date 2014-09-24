@@ -33,7 +33,7 @@ First is the simplest case of generating a single diagram:
 
 > -- Simple
 >
-> d :: Diagram SVG R2
+> d :: Diagram SVG V2 Double
 > d = ...
 >
 > main = mainWith d
@@ -54,7 +54,7 @@ interface that allows the selection of a particular diagram by name.
 
 > -- Multiple
 >
-> d1, d2, d3 :: Diagram SVG R2
+> d1, d2, d3 :: Diagram SVG V2 Double
 > ...
 >
 > main = mainWith [("First", d1),("Second", d2),("Third", d3)]
@@ -79,7 +79,7 @@ files of frames).
 
 > -- Animation
 >
-> a :: Animation Cairo R2
+> a :: Animation Cairo V2 Double
 > a = ...
 >
 > main = mainWith a
@@ -102,7 +102,7 @@ have each render on its own page.
 
 > -- Pages
 >
-> d1, d2, d3 :: Diagram Postscript R2
+> d1, d2, d3 :: Diagram Postscript V2 Double
 > ...
 >
 > main = mainWith [d1,d2,d3]
@@ -125,7 +125,7 @@ arguments from the command-line.
 
 > -- Function
 >
-> f :: Colour Double -> Double -> Diagram SVG R2
+> f :: Colour Double -> Double -> Diagram SVG V2 Double
 > f c x = ...
 >
 > main = mainWith f
@@ -152,7 +152,7 @@ IO that the diagram depends on.
 
 > -- IO-diagram
 >
-> d :: FilePath -> IO (Diagram SVG R2)
+> d :: FilePath -> IO (Diagram SVG V2 Double)
 > d file = do
 >     f <- readFile file
 >     ...
@@ -244,7 +244,7 @@ use (we will use the `Cairo` backend for this example).
 
 ::
 
-> defaultMain :: Diagram Cairo R2 -> IO ()
+> defaultMain :: Diagram Cairo V2 Double -> IO ()
 > defaultMain d = do
 >   prog <- getProgName
 >   let p = info (helper' <*> diagramOpts)
@@ -254,7 +254,7 @@ use (we will use the `Cairo` backend for this example).
 >   opts <- execParser p
 >   chooseRender opts d
 >
-> chooseRender :: DiagramOpts -> Diagram Cairo R2 -> IO ()
+> chooseRender :: DiagramOpts -> Diagram Cairo V2 Double -> IO ()
 > chooseRender opts d =
 >   case splitOn "." (output opts) of
 >     [""] -> putStrLn "No output file given."
@@ -287,7 +287,7 @@ diagram.
 
 ::
 
-> functionMain :: (a -> Diagram Cairo R2) -> IO ()
+> functionMain :: (a -> Diagram Cairo V2 Double) -> IO ()
 
 Clearly we cannot use the given function as we have no way to produce an `a`.
 So we provide a type class called `Parseable` for associating a parser with the
@@ -306,7 +306,7 @@ Now we can make more progress.
 
 ::
 
-> functionMain :: Parseable a => (a -> Diagram Cairo R2) -> IO ()
+> functionMain :: Parseable a => (a -> Diagram Cairo V2 Double) -> IO ()
 > functionMain f = do
 >   prog <- getProgName
 >   let p = info (helper' <*> ((,) <$> diagramOpts <*> parser))
@@ -335,13 +335,13 @@ name `Mainable`.
 >    mainWith   :: Parseable (MainOpts d) => d -> IO ()
 
 There is one associated type and three class methods.  Let's consider the
-instance of `Mainable` for a simple diagram with type `Diagram Cairo R2`:
+instance of `Mainable` for a simple diagram with type `Diagram Cairo V2 Double`:
 
 .. class:: lhs
 
 ::
 
-> instance Mainable (Diagram Cairo R2) where
+> instance Mainable (Diagram Cairo V2 Double) where
 
 The associated type indicates what options we will want to be parsed
 from the command-line.  In this case we will just use the standard
@@ -351,7 +351,7 @@ options:
 
 ::
 
->     type MainOpts (Diagram Cairo R2) = DiagramOpts
+>     type MainOpts (Diagram Cairo V2 Double) = DiagramOpts
 
 The `mainArgs` method is nearly what we had before.  In this case there isn't
 anything backend specific, so instead of an instance implementation we will
@@ -385,12 +385,12 @@ interpretation of the standard arguments.
 
 ::
 
->     mainRender :: DiagramOpts -> Diagram Cairo R2 -> IO ()
+>     mainRender :: DiagramOpts -> Diagram Cairo V2 Double -> IO ()
 >     mainRender = chooseRender
 
 Finally we have `mainWith` which joins the previous parts to make an entry point
 for users of the backend to build their programs.  In this example we take as an
-argument the `Diagram Cairo R2` and result in a complete program.  Again, we can
+argument the `Diagram Cairo V2 Double` and result in a complete program.  Again, we can
 get away with the default implementation.
 
 .. class:: lhs
@@ -569,7 +569,7 @@ We now create a newtype for "flippable" things:
 > newtype Flippable a = Flippable a
 
 We need a newtype since we need to make a `Mainable` instance which is
-different than the default instance for `Diagram SVG R2`.
+different than the default instance for `Diagram SVG V2 Double`.
 
 We create a data structure to contain our new command-line options,
 along with a `Parseable` instance for it.  In this case we just want a
@@ -600,8 +600,8 @@ diagrams, flipping the diagram appropriately.
 
 ::
 
-> instance Mainable (Flippable (Diagram SVG R2)) where
->   type MainOpts (Flippable (Diagram SVG R2)) = (MainOpts (Diagram SVG R2), FlipOpts)
+> instance Mainable (Flippable (Diagram SVG V2 Double)) where
+>   type MainOpts (Flippable (Diagram SVG V2 Double)) = (MainOpts (Diagram SVG V2 Double), FlipOpts)
 >
 >   mainRender (opts, FlipOpts f) (Flippable d) = mainRender opts ((if f then reflectX else id) d)
 
@@ -611,7 +611,7 @@ Let's try it out!
 
 ::
 
-> d :: Diagram SVG R2
+> d :: Diagram SVG V2 Double
 > d = square 1 # fc red ||| square 1 # fc blue
 >
 > main = mainWith (Flippable d)
@@ -692,7 +692,7 @@ know what time it is.  Consider the following program.
 > import Diagrams.Coordinates
 > import Data.Time
 >
-> clock :: UTCTime -> Diagram B R2
+> clock :: UTCTime -> Diagram B V2 Double
 > clock t = circle 0.35 # fc silver # lwG 0
 >        <> bigHand # f 12 h <> littleHand # f 60 m
 >        <> circle 1  # fc black # lwG 0
@@ -718,7 +718,7 @@ Running we get:
 > import Diagrams.Coordinates
 > import Data.Time
 >
-> clock :: UTCTime -> Diagram B R2
+> clock :: UTCTime -> Diagram B V2 Double
 > clock t = circle 0.35 # fc silver # lwG 0
 >        <> bigHand # f 12 h <> littleHand # f 60 m
 >        <> circle 1  # fc black # lwG 0
