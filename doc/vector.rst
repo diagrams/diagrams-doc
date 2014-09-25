@@ -42,7 +42,7 @@ a *magnitude* (length) and a *direction* (angle).
 
 ::
 
-> drawV v = (    beside unitY (hrule (magnitude v))
+> drawV v = (    beside unitY (hrule (norm v))
 >                             (text' 0.5 "r" === strutY 0.2)
 >                # alignR
 >             <> triangle 0.3 # rotateBy (-1/4) # scaleY (1/2)
@@ -403,7 +403,7 @@ Points
 
 A *point* is a location in space.  In ``diagrams``, points are based
 on the `vector-space-points`:pkg: package, and in the case of 2D are
-represented by the type `P2`. In 2D, points are usually thought of as
+represented by the type `Point V2 Double`. In 2D, points are usually thought of as
 a pair of `x`:math: and `y`:math: coordinates (though other coordinate
 systems could be used as well, *e.g.* polar coordinates).
 
@@ -424,7 +424,7 @@ There are several ways to construct points.
     the vector space (note this works in any dimension).
 
 * To create a point with given :math:`x`- and :math:`y`- components,
-  you can use the function `p2 :: (Double,Double) -> P2`:
+  you can use the function `p2 :: (Double,Double) -> Point V2 Double`:
 
   .. class:: dia-lhs
 
@@ -437,10 +437,10 @@ There are several ways to construct points.
   As with `r2`, `p2` is especially useful if you already have pairs
   representing point coordinates.
 
-* The `^&` operator can be used to construct literal points (`P2`
+* The `^&` operator can be used to construct literal points (`Point V2 Double`
   values) as well as vectors (`R2` values).  The proper type is chosen
   via type inference: if the expression `(3 ^& 5)` is used in a context
-  where its type is inferred to be `P2`, it is the point at
+  where its type is inferred to be `Point V2 Double`, it is the point at
   `(3,5)`:math:; if its type is inferred to be `R2`, it is the vector
   with `x`:math:-component `3`:math: and `y`:math:-component
   `5`:math:.
@@ -452,9 +452,9 @@ There are several ways to construct points.
   discussion of `.+^`).
 
 * An advanced method of generating points is to use any function
-  returning a `TrailLike` result, since `[P2]` is an instace of
+  returning a `TrailLike` result, since `[Point V2 Double]` is an instace of
   `TrailLike`. Using a function returning any `TrailLike` at the
-  result type `[P2]` will result in the list of vertices of the trail.
+  result type `[Point V2 Double]` will result in the list of vertices of the trail.
   For example, here we obtain the list of vertices of a regular
   nonagon:
 
@@ -462,7 +462,7 @@ There are several ways to construct points.
 
   ::
 
-  > pts :: [P2]
+  > pts :: [Point V2 Double]
   > pts = nonagon 1
   > example = position . map (\p -> (p, circle 0.2 # fc green)) $ pts
 
@@ -474,7 +474,7 @@ There are several ways to construct points.
 
   > example = position . map (\p -> (p, circle 0.2 # fc green)) $ nonagon 1
 
-  In this case, the type of `nonagon 1` would be inferred as `[P2]`
+  In this case, the type of `nonagon 1` would be inferred as `[Point V2 Double]`
   (since `position` expects a list of paired points and diagrams),
   causing the appropriate `TrailLike` instance to be chosen.
 
@@ -515,7 +515,7 @@ avoids a square root).
      > pts = [ [p2 (x,y) | x <- [-r .. r]] | y <- [-r .. r]]
      > mkSquare p = circle 0.5 # fc c # moveTo p
      >   where
-     >     c | distanceSq p origin <= (r*r) = yellow
+     >     c | distance p origin <= r= yellow
      >       | otherwise                    = purple
 
 Point operations
@@ -557,10 +557,10 @@ It's not important to understand the formal mathematical
 definition of an affine space; it's enough to understand the sorts of
 operations which this enables on points and vectors.
 
-In particular, `P2` is an instance of the `AffineSpace` type class
+In particular, `Point V2 Double` is an instance of the `AffineSpace` type class
 (defined in `Data.AffineSpace`:mod: from the `vector-space`:pkg:
 package).  This class also has an associated type family called
-`Diff`, which for `P2` is defined to be `R2`: roughly, this says that
+`Diff`, which for `Point V2 Double` is defined to be `R2`: roughly, this says that
 the *difference* or "offset" between two points is given by a vector.
 
 Note how the operators below are named: a period indicates a point

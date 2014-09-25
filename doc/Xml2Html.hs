@@ -12,9 +12,8 @@ import           System.FilePath                    (joinPath, splitPath, (<.>),
                                                      (</>))
 import           System.IO
 
-import           Data.VectorSpace                   (zeroV)
 import qualified Diagrams.Builder                   as DB
-import           Diagrams.Prelude                   (centerXY, pad, (&), (.~))
+import           Diagrams.Prelude                   (centerXY, pad, (&), (.~), zero)
 import           Diagrams.TwoD.Size                 (SizeSpec2D (Dims))
 import           Text.Docutils.CmdLine
 import           Text.Docutils.Transformers.Haskell
@@ -45,8 +44,6 @@ main = do
                        , "active"
                        , "diagrams-lib"
                        , "diagrams-contrib"
-                       , "vector-space"
-                       , "vector-space-points"
                        ]
   errCode <- docutilsCmdLine (diagramsDoc modMap nameMap)
   exitWith errCode
@@ -182,7 +179,7 @@ compileDiagram outDir src = do
                 Cairo
 #endif
 
-                zeroV
+                zero
 
 #ifdef USE_SVG
                 (SVGOptions (Dims 500 200) Nothing)

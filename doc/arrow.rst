@@ -146,9 +146,9 @@ its cousin `arrowBetween'`) connects two points.
 > ePt = p2 (2.85, 0.85)
 >
 > -- We use small blue and red circles to mark the start and end points.
-> dot  = circle 0.02 # lw none
-> sDot = dot # fc blue # moveTo sPt
-> eDot = dot # fc red  # moveTo ePt
+> spot  = circle 0.02 # lw none
+> sDot = spot # fc blue # moveTo sPt
+> eDot = spot # fc red  # moveTo ePt
 >
 > example = ( sDot <> eDot <> arrowBetween' (with & headLength .~ veryLarge) sPt ePt)
 >           # centerXY # pad 1.1
@@ -215,9 +215,9 @@ then the arrow from the previous example looks like this:
 > sPt = p2 (0.20, 0.20)
 > ePt = p2 (2.85,  0.85)
 >
-> dot = circle 0.02 # lw none
-> sDot = dot # fc blue # moveTo sPt
-> eDot = dot # fc red # moveTo ePt
+> spot = circle 0.02 # lw none
+> sDot = spot # fc blue # moveTo sPt
+> eDot = spot # fc red # moveTo ePt
 >
 > example = (sDot <> eDot <> arrowBetween' (with & arrowHead .~ spike
 >                                                & arrowTail .~ quill
@@ -249,9 +249,9 @@ yields:
 > sPt = p2 (0.20, 0.20)
 > ePt = p2 (2.85, 0.85)
 >
-> dot = circle 0.02 # lw none
-> sDot = dot # fc blue # moveTo sPt
-> eDot = dot # fc red # moveTo ePt
+> spot = circle 0.02 # lw none
+> sDot = spot # fc blue # moveTo sPt
+> eDot = spot # fc red # moveTo ePt
 >
 > example = ( sDot <> eDot <>arrowBetween' (with & arrowHead .~ thorn
 >                                                & arrowTail .~ thorn'
@@ -288,9 +288,9 @@ will make the arrow shaft into an arc:
 > sPt = p2 (-1.5, 0)
 > ePt = p2 ( 1.5, 0)
 >
-> dot = circle 0.02 # lw none
-> sDot = dot # fc blue # moveTo sPt
-> eDot = dot # fc red # moveTo ePt
+> spot = circle 0.02 # lw none
+> sDot = spot # fc blue # moveTo sPt
+> eDot = spot # fc red # moveTo ePt
 >
 > shaft = arc xDir (1/2 @@ turn)
 >
@@ -325,9 +325,9 @@ point, use a negative `Angle`.
 
 > sPt = p2 (0.20, 0.40)
 > ePt = p2 (2.80, 0.40)
-> dot = circle 0.02 # lw none
-> sDot = dot # fc blue # moveTo sPt
-> eDot = dot # fc red # moveTo ePt
+> spot = circle 0.02 # lw none
+> sDot = spot # fc blue # moveTo sPt
+> eDot = spot # fc red # moveTo ePt
 > shaft = arc xDir (-1/2 @@ turn)
 > example = ( sDot <> eDot
 >          <> arrowBetween' (with & arrowHead .~ spike & arrowTail .~ spike'
@@ -375,10 +375,10 @@ the following example. The default gaps are `none`.
 > mPt = p2 (1.50, 0.50)
 > ePt = p2 (2.80, 0.50)
 >
-> dot  = circle 0.02 # lw none
-> sDot = dot # fc blue  # moveTo sPt
-> mDot = dot # fc green # moveTo mPt
-> eDot = dot # fc red   # moveTo ePt
+> spot  = circle 0.02 # lw none
+> sDot = spot # fc blue  # moveTo sPt
+> mDot = spot # fc green # moveTo mPt
+> eDot = spot # fc red   # moveTo ePt
 >
 >
 > leftArrow  = arrowBetween' (with & arrowHead .~ dart & arrowTail .~ tri'
@@ -467,9 +467,9 @@ styles are controlled using `headStyle`, `tailStyle`, and
 > sPt = p2 (0.20, 0.20)
 > ePt = p2 (2.95, 0.85)
 >
-> dot = circle 0.025 # lwG 0
-> sDot = dot # fc blue # moveTo sPt
-> eDot = dot # fc red # moveTo ePt
+> spot = circle 0.025 # lwG 0
+> sDot = spot # fc blue # moveTo sPt
+> eDot = spot # fc red # moveTo ePt
 >
 > arrow1 = arrowBetween' (with & arrowHead .~ dart & arrowTail .~ spike' & lengths .~ veryLarge
 >                              & headTexture .~ solid blue & tailTexture .~ solid orange
@@ -516,7 +516,7 @@ how we might create a vector field using the `arrowAt'` function.
 > arrowAtPoint (x, y) = arrowAt' opts (p2 (x, y)) (sL *^ vf) # alignTL
 >   where
 >     vf   = vectorField (x, y)
->     m    = magnitude $ vectorField (x, y)
+>     m    = norm $ vectorField (x, y)
 >
 >     -- Head size is a function of the length of the vector
 >     -- as are tail size and shaft length.
@@ -660,13 +660,13 @@ In the following exercise you can try `connectPerim'` for yourself.
     > shaft = arc xDir (1/6 @@ turn)
     >
     > connectTarget :: (Renderable (Path V2 Double) b)
-    >               =>  Angle -> (Diagram b V2 Double -> Diagram b V2 Double)
+    >               =>  Angle Double -> (Diagram b V2 Double -> Diagram b V2 Double)
     > connectTarget a = connectPerim' (with & arrowHead .~ thorn & shaftStyle %~  lwG 0.01
     >                                       & arrowShaft .~ shaft & headLength .~ Global 0.18
     >                                       & arrowTail .~ thorn' & tailLength .~ Global 0.12
     >                                      ) "target" "bullseye" a a
     >
-    > angles :: [Angle]
+    > angles :: [Angle Double]
     > angles = map (@@ turn) [0, 1/16 .. 15/16]
     >
     > example = foldr connectTarget d angles
