@@ -186,7 +186,7 @@ and concatenation of lines as `mappend` (aka `<>`).
 Loops
 =====
 
-A *loop* is another kind of trail, with type `Trail' Loop V2 Double`.  Loops
+A *loop* is another kind of trail, with type `Trail' Loop v n`.  Loops
 are like lines, except for the fact that they are "closed": they end
 in the same place where they start, and have an "inside" and an
 "outside".
@@ -275,7 +275,7 @@ some lines and then call `glueLine` on the result.  You try:
 
      ::
 
-     > andThen t1 t2 = t1 <> t2 # rotate (d1 - d2)
+     > andThen t1 t2 = t1 <> t2 # rotate (d1 ^-^ d2)
      >   where
      >     d1 = direction (tangentAtEnd t1)
      >     d2 = direction (tangentAtStart t2)
@@ -324,18 +324,18 @@ first place.  For example,
 
   (square 1 :: Trail' Loop V2 Double) # cutLoop :: Trail' Line V2 Double
 
-is exactly the same as `square 1 :: Trail' Line V2 Double`.  So there are no
-exercises here; it's simply useful to be aware that in any situation
-where something that is naturally a loop is interpreted as a line (for
-example, `square 1 :: Trail' Line V2 Double`), `cutLoop` is being used under
-the hood.
+is exactly the same as `square 1 :: Trail' Line V2 Double`.  So there
+are no exercises here; it's simply useful to be aware that in any
+situation where something that is naturally a loop is interpreted as a
+line (for example, `square 1 :: Trail' Line V2 Double`), `cutLoop` is being
+used under the hood.
 
 Trails
 ======
 
 We have now seen both types of trails.  The `Trail` type is simply a
 wrapper around both lines and loops.  That is, something of type
-`Trail V2 Double` is either a line or a loop, wrapped up so the type does not
+`Trail v n` is either a line or a loop, wrapped up so the type does not
 tell you which it is (though it is possible to recover the information
 dynamically, using functions like `withTrail`).  To make a line or
 loop into a `Trail`, use `wrapLine` or `wrapLoop`, respectively.  Many
@@ -349,7 +349,7 @@ Located
 The `Located` wrapper associates a point location with an object,
 turning translation-invariant things into located things.
 
-To give a location to something, use `at :: a -> Point (V a) ->
+To give a location to something, use `at :: a -> Point (V a) (N a) ->
 Located a`.  Located lines, loops, and trails can be turned into
 diagrams with `strokeLocLine`, `strokeLocLoop`, and `strokeLocTrail`
 respectively.

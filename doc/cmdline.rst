@@ -197,21 +197,20 @@ command-line parsing and the parser for the standard options is the following:
 
 > diagramOpts :: Parser DiagramOpts
 > diagramOpts = DiagramOpts
->     <$> (optional . option)
+>     <$> (optional . option auto)
 >         ( long "width" <> short 'w'
->        <> value 400
 >        <> metavar "WIDTH"
->        <> help "Desired WIDTH of the output image (default 400)")
->     <*> (optional . option)
+>        <> help "Desired WIDTH of the output image")
+>     <*> (optional . option auto)
 >         ( long "height" <> short 'h'
->        <> value 400
 >        <> metavar "HEIGHT"
->        <> help "Desired HEIGHT of the output image (default 400)")
+>        <> help "Desired HEIGHT of the output image")
 >     <*> strOption
 >         ( long "output" <> short 'o'
 >        <> value ""
 >        <> metavar "OUTPUT"
 >        <> help "OUTPUT file")
+
 
 This is written in applicative form, `Constructor <$> ... <*> ... <*> ...`,
 where the values we fill in are the parsers for the fields of the record.  The
@@ -432,9 +431,9 @@ the diagram itself.
 
 ::
 
-> instance ToResult (Diagram b v) where
->     type Args (Diagram b v) = ()
->     type ResultOf (Diagram b v) = Diagram b v
+> instance ToResult (Diagram b v n) where
+>     type Args (Diagram b v n) = ()
+>     type ResultOf (Diagram b v n) = Diagram b v n
 >
 >     toResult d _ = d
 

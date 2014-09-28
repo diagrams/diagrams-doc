@@ -342,13 +342,13 @@ local origin of the first diagram to the local origin of the second.
 
 ::
 
-> circleSqV1 = beside (r2 (1,1)) (circle 1) (square 2)
+> circleSqV1 = beside (V2 Double (1,1)) (circle 1) (square 2)
 >
-> circleSqV2 = beside (r2 (1,-2)) (circle 1) (square 2)
+> circleSqV2 = beside (V2 Double (1,-2)) (circle 1) (square 2)
 >
 > example = hcat [circleSqV1, strutX 1, circleSqV2]
 
-Notice how we use the `r2` function to create a 2D vector from a pair
+Notice how we use the `V2 Double` function to create a 2D vector from a pair
 of coordinates; see the `vectors and points tutorial`__ for more.
 
 __ vector.html
@@ -453,7 +453,7 @@ relative to its local origin.
 
 ::
 
-> example = circle 1 # translate (r2 (0.5, 0.3)) # showOrigin
+> example = circle 1 # translate (V2 Double (0.5, 0.3)) # showOrigin
 
 As the above example shows, translating a diagram by `(0.5, 0.3)` is
 the same as moving its local origin by `(-0.5, -0.3)`.
@@ -465,9 +465,9 @@ origins, translation can affect the way diagrams are composed.
 
 ::
 
-> circleSqT   = square 1 `atop` circle 1 # translate (r2 (0.5, 0.3))
-> circleSqHT  = square 1 ||| circle 1 # translate (r2 (0.5, 0.3))
-> circleSqHT2 = square 1 ||| circle 1 # translate (r2 (19.5, 0.3))
+> circleSqT   = square 1 `atop` circle 1 # translate (V2 Double (0.5, 0.3))
+> circleSqHT  = square 1 ||| circle 1 # translate (V2 Double (0.5, 0.3))
+> circleSqHT2 = square 1 ||| circle 1 # translate (V2 Double (19.5, 0.3))
 >
 > example = hcat [circleSqT, strutX 1, circleSqHT, strutX 1, circleSqHT2]
 

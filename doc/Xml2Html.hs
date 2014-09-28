@@ -1,10 +1,9 @@
-{-# LANGUAGE Arrows #-}
 {-# LANGUAGE CPP    #-}
 
 module Xml2Html where
 
 import           Control.Arrow
-import           Control.Monad                      (when)
+import           Control.Monad                      (unless)
 import           System.Directory                   (createDirectory,
                                                      doesDirectoryExist)
 import           System.Exit
@@ -162,7 +161,7 @@ dropPrefix pre = joinPath . drop (n-1) . splitPath
 
 diagramOrPlaceholder outdir =
   arrIO (compileDiagram outdir) >>> (missing ||| passthrough) where
-    missing = issueErr "diagram could not be rendered"  >>^ (const "default.png")
+    missing = issueErr "diagram could not be rendered" >>^ (const "default.png")
     passthrough = arr id
 
 -- | Compile the literate source code of a diagram to a .png file with
@@ -246,4 +245,4 @@ compileDiagram outDir src = do
   mkFile base = outDir </> base <.> backendExt
   ensureDir dir = do
     b <- doesDirectoryExist dir
-    when (not b) $ createDirectory dir
+    unless b $ createDirectory dir

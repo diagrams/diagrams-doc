@@ -13,7 +13,7 @@ Introduction
 
 Diagrams can be used to easily include pictures in your `\LaTeX`:math:
 documents, using either the `diagrams-cairo`:pkg: or
-`diagrams-postscript`:pkg: backend (and, soon, the ``diagrams-tikz``
+`diagrams-postscript`:pkg: backend (and, soon, the ``diagrams-pgf``
 backend).  You directly embed diagrams code in your `\LaTeX`:math:
 source, within special ``\begin{diagram} ... \end{diagram}`` blocks;
 the ``diagrams-latex`` package then takes care of automatically

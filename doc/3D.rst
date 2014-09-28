@@ -34,13 +34,13 @@ black.
 
 ::
 
-  import Diagrams.Prelude.ThreeD
+  import Diagrams.Prelude
   import Diagrams.Backend.POVRay
 
   cam = mm50Camera # translate (r3 (0,0,10))
 
-  _xy :: Spherical
-  _xy = direction . r3 $ (-1, -1, -0.5)
+  xy :: Direction V3 Double
+  xy = direction . r3 $ (-1, -1, -0.5)
 
   light = parallelLight _xy white
 
@@ -84,14 +84,14 @@ scene.
 
 ::
 
-  import Diagrams.Prelude.ThreeD
+  import Diagrams.Prelude
   import Diagrams.Backend.POVRay
   import Data.Colour.Palette.ColorSet
 
   cam = mm50Camera # translateZ 40
 
-  _xy :: Spherical
-  _xy = direction . r3 $ (-1, -1, -0.5)
+  xy :: Direction V3 Double
+  xy = direction . r3 $ (-1, -1, -0.5)
 
   light = parallelLight _xy white
 
