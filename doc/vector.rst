@@ -86,7 +86,7 @@ see this for yourself at a ``ghci`` prompt:
 Constructing vectors
 --------------------
 
-Vectors in two dimensions have the type `V2 N`.  (One can also work with
+Vectors in two dimensions have the type `V2 n`.  (One can also work with
 other vector spaces with any number of dimensions; in this tutorial
 we'll stick to the 2D case.)
 
@@ -346,7 +346,7 @@ __ http://en.wikipedia.org/wiki/Dot_product
 
 .. container:: exercises
 
-  1. Write a function `vTriangle :: V2 Double -> V2 Double-> Diagram SVG V2 Double`
+  1. Write a function `vTriangle :: V2 Double -> V2 Double -> Diagram SVG V2 Double`
      (substituting your favorite backend in place of `SVG`) which
      takes as arguments two vectors representing two sides of a
      triangle and draws the corresponding triangle.  For example,
@@ -516,8 +516,8 @@ avoids a square root).
      > pts = [ [p2 (x,y) | x <- [-r .. r]] | y <- [-r .. r]]
      > mkSquare p = circle 0.5 # fc c # moveTo p
      >   where
-     >     c | distance p origin <= r= yellow
-     >       | otherwise                    = purple
+     >     c | distance p origin <= r = yellow
+     >       | otherwise              = purple
 
 Point operations
 ----------------
@@ -578,11 +578,10 @@ its second.
   `p .+^ v == p'`, then `p' .-. p == v`.  You can also use `(.-^)` to
   subtract a vector from a point.
 
-* Although it does not make sense to "add" two points, it does make
-  sense to *linearly interpolate* between them using the `alerp`
-  function (defined in `Data.AffineSpace`:mod:), for example, to find
-  the point which is 25% of the way from the first point to the
-  second.
+* Although it is not semanticly correct, `Point` is an instance of
+  `Additive`. This means you can *linearly interpolate* between two
+  points using `lerp`, which does make sense. For example, to find the
+  point which is 25% of the way from the first point to the second. 
 
   .. class:: dia-lhs
 
@@ -594,7 +593,7 @@ its second.
   > example = position $
   >   [ (p, circle 0.2 # fc c)
   >   | a <- [0, 0.1 .. 1]
-  >   , let p = alerp pt1 pt2 a
+  >   , let p = lerp a pt2 pt1
   >   , let c = blend a blue green
   >   ]
 
