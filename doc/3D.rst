@@ -42,7 +42,7 @@ black.
   xy :: Direction V3 Double
   xy = direction . r3 $ (-1, -1, -0.5)
 
-  light = parallelLight _xy white
+  light = parallelLight xy white
 
   example :: Diagram POVRay V3 Double
   example = centerX $ cat unitX
@@ -93,7 +93,7 @@ scene.
   xy :: Direction V3 Double
   xy = direction . r3 $ (-1, -1, -0.5)
 
-  light = parallelLight _xy white
+  light = parallelLight xy white
 
   s = sphere # scaleY 1.6 # translateX 6
 
