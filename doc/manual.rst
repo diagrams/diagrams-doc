@@ -1,4 +1,4 @@
-.. role:: pkg(literal)
+n.. role:: pkg(literal)
 .. role:: hs(literal)
 .. role:: mod(literal)
 .. role:: repo(literal)
@@ -36,8 +36,8 @@ framework is:
 
 * **Flexible**: diagrams is designed from the ground up to be as
   generic and flexible as possible, with support for pluggable
-  rendering backends, arbitrary graphics primitives, and multiple
-  vector spaces (2D, 3D, ...).
+  rendering backends, arbitrary graphics primitives, multiple numeric
+  types, and multiple vector spaces (2D, 3D, ...).
 
 About this document
 -------------------
@@ -135,10 +135,10 @@ Installation
 Before installing ``diagrams``, you will need the following:
 
 * The `Glasgow Haskell Compiler`_ (GHC), version 7.4.x or later
-  (7.6.3 is recommended).
+  (7.8.3 is recommended).
 
 * It is recommended (but not required) to have the latest release of
-  the `Haskell Platform`_ (currently 2013.2.0.0).  At the very least
+  the `Haskell Platform`_ (currently 2014.2.0.0).  At the very least
   you will want the `cabal-install`_ tool.  Diagrams is always
   tested on at least two versions of the Haskell Platform (the
   current and previous releases), and may work on earlier HP
@@ -251,16 +251,17 @@ run into lots of crazy error messages.
 
 .. _`dreaded monomorphism restriction`: http://www.haskell.org/haskellwiki/Monomorphism_restriction
 
-`Diagrams.Prelude`:mod: re-exports most everything from the standard
+`Diagrams.Prelude`:mod: re-exports almost everything from the standard
 library; `Diagrams.Backend.SVG.CmdLine`:mod: provides a command-line
 interface to the SVG rendering backend.  We then declare `myCircle` to
-have the type `Diagram B V2 Double`: the `V2 Double` part means that it is a
-two-dimensional diagram; `B` is an alias for a tag representing the
-particular backend.  All the backends export `B` as an alias for
-themselves, so you can switch backends just by changing an import,
-without having to change type annotations on your diagrams; `B` simply
-refers to whichever backend is in scope.  Finally, `mainWith` takes a
-diagram and creates a command-line-driven executable for rendering it.
+have the type `Diagram B V2 Double`: the `V2 Double` part means that
+it is a two-dimensional diagram using a `Double` for each coördinate;
+`B` is an alias representing the particular backend.  All the backends
+export `B` as an alias for themselves, so you can switch backends just
+by changing an import, without having to change type annotations on
+your diagrams; `B` simply refers to whichever backend is in scope.
+Finally, `mainWith` takes a diagram and creates a command-line-driven
+executable for rendering it.
 
 To compile your program, type
 
@@ -466,36 +467,45 @@ Vectors and points
 
 Although much of this user manual focuses on constructing
 two-dimensional diagrams, the definitions in the core library in fact
-work for *any* vector space.  Vector spaces are defined in the
-`Data.VectorSpace`:mod: module from Conal Elliott's `vector-space`:pkg: package.
+work for *any* vector space.  Vector spaces are defined in the`
+Linear.Vector`:mod: module from EdwardKmett's `linear`:pkg: package.
 
 Many objects (diagrams, paths, backends...) inherently live in some
 particular vector space.  The vector space in which a given type
-"lives" can be computed by the type function `V`.  So, for example,
+"lives" can be computed by the type function `Vn`.  So, for example,
 the type
 
 ::
 
-  Foo d => V d -> d -> d
+  Foo d => Vn d -> d -> d
 
 is the type of a two-argument function whose first argument is a
 vector in whatever vector space corresponds to the type `d` (which
 must be an instance of `Foo`).
 
-Each vector space has a type of *vectors* `v` and an associated type
-of *scalars*, `Scalar v`.  A vector represents a direction and
-magnitude, whereas a scalar represents only a magnitude.  Useful
-operations on vectors and scalars include:
+Each vector space has a *dimension* and a type of *scalars*.  The type
+`V2 Double` specifies that the dimension is 2 and the scalar type is
+`Double` (64-bit floating point values).  A vector represents a
+direction and magnitude, whereas a scalar represents only a magnitude.
+Useful operations on vectors and scalars include:
 
 * Adding and subtracting vectors with `(^+^)` and `(^-^)`
 * Multiplying a vector by a scalar with `(*^)`
 * Linearly interpolating between two vectors with `lerp`
-* Finding the `magnitude` (length) of a vector
+* Finding the `norm` (length) of a vector
 * Projecting one vector onto another with `project`.
+
+Functions and types which are parametric in the vector space have two
+type parameters, `v` representing the dimension and `n` the scalar
+type.  Occasionally `v` or `n` appears alone in a type signature, with
+the same meaning.  `n` is most commonly `Double`, or some other type
+approximating the real numbers, but this is not required. Many
+functions require than `n` be an instance of `Num`, or one of the
+narrower classes `Fractional`, `Floating`, or `Real`.
 
 See `this tutorial for a more in-depth introduction to working with vectors
 and points`__.
-
+]
 __ vector.html
 
 One might think we could also identify *points* in a space with
@@ -509,11 +519,11 @@ different point.
 
 Although it is a bad idea to *conflate* vectors and points, we can
 certainly *represent* points using vectors. The
-`vector-space-points`:pkg: package defines a newtype wrapper around
+`linear`:pkg: package defines a newtype wrapper around
 vectors called `Point`.  The most important connection between points
 and vectors is given by `(.-.)`, defined in
-`Data.AffineSpace`:mod:. If `p1` and `p2` are points, `p2 .-. p1` is
-the vector giving the direction and distance from `p1` to `p2`.
+`Linear.Affine`:mod:. If `p` and `q` are points, `p .-. q` is
+the vector giving the direction and distance from `p` to `q`.
 Offsetting a point by a vector (resulting in a new point) is
 accomplished with `(.+^)`.
 
@@ -591,7 +601,7 @@ reference frames.  For example, the lines used to draw a certain
 square can be specified as an absolute two pixels wide, or as a
 certain percentage of the size of the final diagram, or in units
 relative to the size of the square.  More specifically, values of type
-`Measure v` represent `Scalar v` values, interpreted in one of four
+`Measure n` represent `n` values, interpreted in one of four
 "reference frames": `Local`, `Global`, `Normalized`, or `Output`,
 described below in turn.
 
@@ -803,19 +813,20 @@ actuality, its type is
 
 ::
 
-  hcat :: (Juxtaposable a, HasOrigin a, Monoid' a, V a ~ V2 Double) => [a] -> a
+  hcat :: (Juxtaposable a, HasOrigin a, Monoid' a, V a ~ V2, N a ~ n, TypeableFloat n)
+     => [a] -> a
 
 which may indeed be intimidating at first glance, and at any rate
 takes a bit of time and practice to understand!  The essential idea is
 to realize that `hcat` is actually quite a bit more general than
 previously described: it can lay out not just diagrams, but any
-two-dimensional things (``V a ~ V2 Double``) which can be positioned "next
-to" one another (`Juxtaposable`), can be translated (`HasOrigin`), and
-are an instance of `Monoid` (`Monoid'` is actually a synonym for the
-combination of `Monoid` and `Semigroup`).  This certainly includes
-diagrams, but it also includes other things like paths, envelopes,
-animations, and even tuples, lists, sets, or maps containing any of
-these things.
+two-dimensional things (``V a ~ V2`` and the constrants on ``N a``)
+which can be positioned "next to" one another (`Juxtaposable`), can be
+translated (`HasOrigin`), and are an instance of `Monoid` (`Monoid'`
+is actually a synonym for the combination of `Monoid` and
+`Semigroup`).  This certainly includes diagrams, but it also includes
+other things like paths, envelopes, animations, and even tuples,
+lists, sets, or maps containing any of these things.
 
 At first, you may want to just try working through some examples
 intuitively, without worrying too much about the types involved.
@@ -844,7 +855,7 @@ Basic 2D types
 --------------
 
 `Diagrams.TwoD.Types`:mod: defines types for working with
-two-dimensional Euclidean space and with angles.
+two-dimensional Euclidean space.
 
 Euclidean 2-space
 ~~~~~~~~~~~~~~~~~
@@ -852,14 +863,14 @@ Euclidean 2-space
 There are three main type synonyms defined for referring to
 two-dimensional space:
 
-* `V2 Double` is the type of the two-dimensional Euclidean vector
-  space. Standard ``diagrams`` backends render images with the
-  positive `x`:math:\-axis extending to the right, and the positive
-  `y`:math:\-axis extending *upwards*.  This is consistent with standard
-  mathematical practice, but upside-down with respect to many common
-  graphics systems.  This is intentional: the goal is to provide an
-  elegant interface which is abstracted as much as possible from
-  implementation details.
+* `V2 n` is the type of the two-dimensional Euclidean vector space
+  (`n` is usually `Double`). Standard ``diagrams`` backends render
+  images with the positive `x`:math:\-axis extending to the right, and
+  the positive `y`:math:\-axis extending *upwards*.  This is
+  consistent with standard mathematical practice, but upside-down with
+  respect to many common graphics systems.  This is intentional: the
+  goal is to provide an elegant interface which is abstracted as much
+  as possible from implementation details.
 
   `unitX` and `unitY` are unit vectors in the positive `x`:math:\- and
   `y`:math:\-directions, respectively.  Their negated counterparts are
@@ -881,8 +892,8 @@ two-dimensional space:
 
   __ vector.html
 
-* `P2` is the type of points in two-dimensional space. It is a synonym
-  for `Point V2 Double`.  The distinction between points and vectors is
+* `P2 n` is the type of points in two-dimensional space. It is a synonym
+  for `Point V2 n`.  The distinction between points and vectors is
   important; see `Vectors and points`_.
 
   Points can be created from pairs of coordinates using `p2` and
@@ -895,19 +906,19 @@ two-dimensional space:
 
   __ vector.html
 
-* `T2` is the type of two-dimensional affine transformations.  It is a
-  synonym for `Transformation V2 Double`.
+* `T2 n` is the type of two-dimensional affine transformations.  It is a
+  synonym for `Transformation V2`.
 
 Angles
 ~~~~~~
 
-The `Angle` type represents two-dimensional angles.  Angles can be
+The type `Angle n` represents two-dimensional angles.  Angles can be
 expressed in radians, degrees, or fractions of a circle. Isomorphisms
 `turn`, `rad`, and `deg` are provided (represented using the `Iso`
 type from the `lens`:pkg: package), which convert between abstract
-`Angle` values and `Double` values with various units.  To construct
+`Angle n` values and `n` values with various units.  To construct
 an `Angle`, use the `(@@)` operator, as in `(3 @@ deg)` or `(3 @@
-rad)`. To project an `Angle` back to a `Double`, use the `(^.)`
+rad)`. To project an `Angle` back to a scalar, use the `(^.)`
 operator, as in `someAngle ^. rad`.
 
 * `turn` represents fractions of a circle.  A value of `1 @@ turn` represents
@@ -926,7 +937,7 @@ __ http://tauday.com
 turn`, `tau @@ rad`, or `360 @@ deg`.
 
 In two dimensions, the direction of a vector can be represented by an
-angle measured clockwise from the positive `x`:math:\-axis (shown in
+angle measured counterclockwise from the positive `x`:math:\-axis (shown in
 green below).  For some vector u, this angle can be found by `u ^. _theta`.
 
 .. class:: dia
@@ -959,7 +970,7 @@ Whereas a vector is described by a direction and a magnitude, some
 functions only depend on the direction.  The `Direction` type is used
 in these cases to make the relationship clear.  The `direction`
 function converts a vector to its `Direction`; `fromDirection` creates a
-unit (magnitude 1) vector in the given direction.
+unit (length 1) vector in the given direction.
 
 Primitive shapes
 ----------------
@@ -1340,6 +1351,7 @@ envelopes are implemented, see the `core library reference`__.
 
 __ core.html
 
+
 Concatenating diagrams
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1642,7 +1654,7 @@ the lines be the same width, or should the larger square use a line
 twice as thick?  (Note that similar questions also come up when
 considering the dashing style used to draw some shapes---should the
 size of the dashes scale with transformations applied to the shapes,
-or not?) ``diagrams`` allows the user to decide, using `Measure V2 Double`
+or not?) ``diagrams`` allows the user to decide, using `Measure Double`
 values to specify things like line width (see `Measurement units`_).
 
 In many situations, it is desirable to have lines drawn in a uniform
@@ -1669,13 +1681,13 @@ average of the scaling transformatins applied to the diagram.
 The `LineWidth` attribute is used to alter the *width* with which
 paths are stroked. The most general functions that can be used to set
 the line width are `lineWidth` and its synonym `lw`, which take an
-argument of type `Measure V2 Double`.  Since typing things like `lineWidth
+argument of type `Measure V2 n`.  Since typing things like `lineWidth
 (Normalized 0.01)` is cumbersome, there are also shortcuts provided:
 `lwG`, `lwN`, `lwO`, and `lwL` all take an argument of type `Double`
 and wrap it in `Global`, `Normalized`, `Ouput` and `Local`,
 respectively.
 
-There are also predefined `Measure V2 Double` values with intuitive names,
+There are also predefined `Measure n` values with intuitive names,
 namely, `ultraThin`, `veryThin`, `thin`, `medium`, `thick`,
 `veryThick`, `ultraThick`, and `none` (the default is `medium`), which
 should often suffice for setting the line width.
@@ -1885,8 +1897,8 @@ saying a bit about transformations in general (a fuller treatment can
 be found in the `core library reference`_).  The `Transformation`
 type is defined in `Diagrams.Core.Transform`:mod:, from the
 `diagrams-core`:pkg: package.  `Transformation` is parameterized by
-the vector space over which it acts; recall that `T2` is provided as a
-synonym for `Transformation V2 Double`.
+the vector space over which it acts; recall that `T2 n` is provided as a
+synonym for `Transformation V2 n`.
 
 .. _`core library reference`: core.html
 
@@ -1906,7 +1918,7 @@ Rotation
 ++++++++
 
 Use `rotate` to rotate a diagram counterclockwise by a given angle__
-about the origin.  Since `rotate` takes an `Angle`, you must specify an
+about the origin.  Since `rotate` takes an `Angle n`, you must specify an
 angle unit, such as `rotate (80 @@ deg)`.  In the common case that you
 wish to rotate by an angle specified as a certain fraction of a
 circle, like `rotate (1/8 @@ turn)`, you can use `rotateBy`
@@ -2048,7 +2060,7 @@ overlapping line segments corresponding to the edges of the square are
 not interesting.  Note, though, that the `Path` is deformed, and then
 the vertices are taken from the projected result.
 
-`Deformation v` is a `Monoid` for any vector space `v`.  New
+`Deformation v` is a `Monoid` for any vector space `v n`.  New
 deformations can be formed by composing two deformations.  The
 composition of an affine transformation with a `Deformation` is also a
 `Deformation`.  `asDeformation` converts a `Transformation` to an
@@ -2818,7 +2830,7 @@ There are quite a few instances of `TrailLike`:
 * `Trail' Loop`: throw away the location, and perform `glueLine` if
   necessary.
 * `Path`: construct a path with a single component.
-* `Diagram b V2 Double`: as long as the backend `b` knows how to render 2D
+* `Diagram b`: as long as the backend `b` knows how to render
   paths, `trailLike` can construct a diagram by stroking the generated
   single-component path.
 * `[Point v]`: this instance generates the vertices of the trail.
@@ -3591,7 +3603,7 @@ Images
 
 The `Diagrams.TwoD.Image`:mod: module provides basic support for
 including both external and embedded images in diagrams.
-Support for images varies by backend, only the cairo
+Support for images varies by backend.  Only the cairo
 backend supports external images. The rasterific backend
 supports embedded images of many formats and the SVG backend
 supports embedded png images.
@@ -3622,7 +3634,7 @@ reference with a width and height to make a `DImage External`.
 >     Right phone -> no <> image phone # sized (Dims 1.5 1.5)
 
 When using `loadImageEmb` and `loadImageExt` you do not need to
-provide the width and height of the image as they will be calculated
+provide the width and height of the image, as they will be calculated
 by `JuicyPixels`:pkg:. Otherwise you must specify both a width and
 a height for each image.  In this case you might hope to be able to
 specify just a width or just a height, and have the other dimension
@@ -3996,7 +4008,7 @@ implementation which works just fine.
 
    ::
 
-   > newtype WordN = WordN Int deriving (Show, Ord, Eq, Typeable, IsName)
+   > newtype WordN = WordN Int deriving (Show, Ord, Eq, Typeable)
    > instance IsName WordN
 
 Listing names
@@ -4009,7 +4021,7 @@ of all the names recorded within a diagram and the locations of any
 associated subdiagrams.
 
 When using `names` you will often need to add a type annotation such
-as `D V2 Double` to its argument, as shown below---for an explanation and
+as `Diagram B V2 Double` to its argument, as shown below---for an explanation and
 more information, see `No instances for Backend b0 V2 Double ...`_.
 
 ::
@@ -4049,27 +4061,26 @@ scary-looking!) type
 
 ::
 
-  withName :: ( IsName n, AdditiveGroup (Scalar v), Floating (Scalar v)
-              , InnerSpace v, HasLinearMap v)
-           => n -> (Subdiagram v -> QDiagram b v m -> QDiagram b v m)
-                -> (QDiagram b v m -> QDiagram b v m)
+  withName :: (IsName nm, Metric v , Semigroup m, OrderedField n)
+           => nm -> (Subdiagram b v n m -> QDiagram b v n m -> QDiagram b v n m)
+           -> QDiagram b v n m -> QDiagram b v n m
 
-Let's pick this apart a bit.  First, we see that the type `n` must be
-a name type. So far so good.  Then there are a bunch of constraints
-involving `v`, but we can ignore those; they just ensure that `v` is a
-vector space with the right properties.  So the first argument of
-`withName` is a name---that makes sense.  The second argument is a
-function of type
+Let's pick this apart a bit.  First, we see that the type `nm` must be
+a name type. So far so good.  The constraints on `v` and `n` say that
+`v n` must be a metric space (a vector space with a notion of
+distance), and that `n` must behave sufficiently like the real
+numbers.  So the first argument of `withName` is a name---that makes
+sense.  The second argument is a function of type
 
 .. class:: lhs
 
 ::
 
-  Subdiagram v -> QDiagram b v m -> QDiagram b v m
+  Subdiagram b v n m -> QDiagram b v n m -> QDiagram b v  n m
 
 We can see this function as a transformation on diagrams, except that
 it also gets to use some extra information---namely, the `Subdiagram
-v` associated with the name we pass as the first argument to
+b v n m` associated with the name we pass as the first argument to
 `withName`.
 
 Finally, the return type of `withName` is itself a transformation of
@@ -4467,7 +4478,7 @@ There is more to `Measure`\s (see `Measurement units`_) than just the
 four reference frames.  In fact, a small domain-specific language for
 constructing measurements is provided, with the following features:
 
-* `atLeast :: Measure v -> Measure v -> Measure v` finds the maximum
+* `atLeast :: Measure n -> Measure n -> Measure n` finds the maximum
   of two measurements.  For example, `Normalized 0.2 \`atLeast\`
   Local 1` evaluates to whichever measurement ends up being larger,
   `Normalized 0.2` or `Local 1`.
@@ -4481,8 +4492,6 @@ constructing measurements is provided, with the following features:
   adding measurements.  For example, `Normalized 0.1 ^+^ Output 1`
   represents 10% of the width or height of the diagram plus one output
   unit.
-* `Measure v` is also an instance of `VectorSpace`, which provides
-    `(*^) :: Scalar v -> Measure v -> Measure v` as a scaling operation.
 
 The semantics of these expressions is what you would expect:
 everything is first converted to compatible units, and then the
@@ -4625,10 +4634,10 @@ This section is certainly incomplete; please send examples of other
 error messages to the `diagrams mailing list`_ for help interpreting
 them and/or so they can be added to this section.
 
-Couldn't match type `V P2` with `V2 Double`
+Couldn't match type `V (P2 Double)` with `V2 Double`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This error is due to what appears to be a bug in recent versions of
+This error is due to what appears to be a bug in 7.6.* versions of
 GHC.  For some reason the definition of the `V` type family for points
 is not exported.  To solve this you can add an explicit import of the
 form `import Diagrams.Core.Points` to the top of your
@@ -4666,11 +4675,11 @@ width of a radius-1 circle:
 
     <interactive>:1:8:
         No instances for (Backend b0 V2 Double,
-                          Renderable Diagrams.TwoD.Ellipse.Ellipse b0)
+                          Renderable (Path V2 Double) b0)
           arising from a use of `circle'
         Possible fix:
           add instance declarations for
-          (Backend b0 V2 Double, Renderable Diagrams.TwoD.Ellipse.Ellipse b0)
+          (Backend b0 V2 Double, Renderable (Path V2 Double) b0)
         In the first argument of `width', namely `(circle 1)'
         In the expression: width (circle 1)
         In an equation for `it': it = width (circle 1)
@@ -4688,7 +4697,7 @@ The special type `D` is provided for exactly this situation, defined as
 
 ::
 
-> type D v = Diagram NullBackend v
+> type D v n = Diagram NullBackend v n
 
 `NullBackend` is a "backend" which simply does nothing: perfect
 for use in cases where GHC insists on knowing what backend to use but
@@ -4752,12 +4761,11 @@ modules `Diagrams.ThreeD.Align`:mod:, `Diagrams.ThreeD.Camera`:mod:,
 (though they are not exported from `Diagrams.Prelude`:mod:).  This
 should still be considered a "feature preview"---in particular,
 appropriate 3D backends are still under construction (see
-`diagrams-povray`:repo: and `diagrams-opengl`_).  Look for fuller (and
+`diagrams-povray`:repo:).  Look for fuller (and
 more fully documented) support for 3D diagrams in an upcoming release!
 In the meantime, consult the `3D tutorial`_ for a more detailed
 feature preview.
 
-.. _`diagrams-opengl`: https://github.com/bergey/diagrams-opengl
 .. _`3D tutorial`: 3D.html
 
 Animation
@@ -5127,7 +5135,8 @@ classes`_:
 
 ::
 
-  hcat :: (Juxtaposable a, HasOrigin a, Monoid' a, V a ~ V2 Double) => [a] -> a
+  hcat :: (Juxtaposable a, HasOrigin a, Monoid' a, V a ~ V2, N a ~ n, TypeableFloat n)
+       => [a] -> a
 
 This is fairly typical of the types you will encounter when using
 diagrams.  They can be intimidating at first, but with a little
@@ -5138,13 +5147,19 @@ this particular type from right to left:
   a list of `a`\'s to a single `a`.  Typically, the type to the right
   of `=>` will be some simple polymorphic type.
 
-* `V a ~ V2 Double`.  This is a `type equality constraint`_, which says that
-  the types `V a` and `V2 Double` must be equal.  In this case `V2 Double` is the
-  `type of two-dimensional vectors`_, and `V` is a `type family`_
-  which tells us the vector space that corresponds to a particular
-  type.  So `V a ~ V2 Double` means "the vector space corresponding to `a`
-  must be `V2 Double`", or more informally, "`a` must be a type representing
-  two-dimensional things".
+* `TypeableFloat n`.  This says that the numeric type `n` must behave
+ like a real number.  `TypeableFloat` is a type alias for the type
+ families `Typeable` and `RealFloat`, which imply `Real`, `Floating`,
+ `Fractional`,  `Num`, and `Ord`.
+
+* `V a ~ V2 Double, N a ~ n`.  These are `type equality constraints`_,
+  which say that the types `V a` and `V2` must be equal, and that we
+  will refer to `N a` with the type variable `n`.  In this case `V2`
+  is the `type of two-dimensional vectors`_, and `V` is a `type
+  family`_ which tells us the vector space that corresponds to a
+  particular type.  So `V a ~ V2` means "the vector space
+  corresponding to `a` must be two-dimensional", or more informally, "`a`
+  must be a type representing two-dimensional things".
 
 * `Juxtaposable a, ...` These are type class constraints on `a`,
   specifying what primitive operations `a` must support in order to be
@@ -5152,7 +5167,7 @@ this particular type from right to left:
   type classes used by diagrams, see the next section, `Type class
   reference`_.
 
-.. _`type equality constraint`: http://www.haskell.org/ghc/docs/latest/html/users_guide/equality-constraints.html
+.. _`type equality constraints`: http://www.haskell.org/ghc/docs/latest/html/users_guide/equality-constraints.html
 .. _`type of two-dimensional vectors`: `Basic 2D types`_
 .. _`type family`: http://www.haskell.org/haskellwiki/GHC/Type_families
 
@@ -5178,8 +5193,8 @@ HasOrigin
 
 ::
 
-> class VectorSpace (V t) => HasOrigin t where
->   moveOriginTo :: Point (V t) -> t -> t
+> class HasOrigin t where
+>  moveOriginTo :: Point (V t) (N t) -> t -> t
 
 `HasOrigin` classifies types with a notion of a fixed "location"
 relative to some "local origin", and provides a means of moving the
@@ -5221,8 +5236,8 @@ Transformable
 
 ::
 
-> class HasLinearMap (V t) => Transformable t where
->   transform :: Transformation (V t) -> t -> t
+> class Transformable t where
+>   transform :: Transformation (V t) (N t) -> t -> t
 
 It represents types which support arbitrary affine transformations (or
 linear transformations, in the case of translationally invariant
@@ -5235,9 +5250,9 @@ Instances:
 * Of course, `Transformation` is itself transformable, by composition.
 * Container types can be transformed by transforming each
   element (``(t,t)``, ``(t,t,t)``, ``[t]``, `Set`, `Map`).
-* ``Point v`` is transformable whenever ``v`` is; translations
+* ``Point v n`` is transformable whenever ``v n`` is; translations
   actually affect points (whereas they might not have an effect on
-  the underlying type ``v``).
+  the underlying type ``v n``).
 * Anything wrapped in `TransInv` will not be affected by
   translation.
 * Anything wrapped in `ScaleInv` will not be affected by scaling.
@@ -5711,6 +5726,23 @@ with `Envelopes` it's often necessary to have scalars which support
 all four arithmetic operations as well as square root, and can be
 compared for ordering.
 
+TypeableFloat
++++++++++++++
+
+`TypeableFloat n`, defined in `Diagrams.Core.Types`:mod:, is a synonym for
+
+  `(Typeable n, RealFloat n)`
+
+which implies `(Real n, Floating n, Fractional n, Num n, Ord n)`.
+These constraints are needed on many functions that produce diagrams,
+due to constraints on transformations and attributes.
+
+DataFloat
++++++++++
+
+`DataFloat n` is the same as `TypeableFloat n`, but strengthens the
+`Typeable` constraint to `Data`.
+
 Type family reference
 ---------------------
 
@@ -5741,7 +5773,7 @@ family named `Foo`, with two definition clauses.
 __ http://www.haskell.org/haskellwiki/GHC/Type_families
 
 Diagrams only makes use of a few type families, though two of them
-(`V` and `Scalar`) are used quite extensively.  The following sections
+(`V` and `N`) are used quite extensively.  The following sections
 list each of the type families employed by diagrams
 
 V
@@ -5749,10 +5781,12 @@ V
 
 The `V` type family is defined in `Diagrams.Core.V`.  The idea is that
 many types have an "associated" vector space, *i.e.* the vector space
-in which they "live".  `V` simply maps from types to their associated
-vector space.  For example, `V (Path V2 Double) = V2 Double` (two-dimensional paths
-live in `V2 Double`), and `V [a] = V a` (lists of `a`\'s live in whatever
-vector space `a`\'s themselves live in).
+in which they "live".  The vector space is described by it's dimension
+and its numeric type.  `V` simply maps from types to a type
+representing the vector space dimension.  For example, `V (Path V2
+Double) = V2` (ordinary two-dimensional paths live in `V2 Double`),
+and `V [a] = V a` (lists of `a`\'s live in whatever vector space
+`a`\'s themselves live in).
 
 Often, `V` shows up in a constraint on the left hand side of `=>`, as
 in
@@ -5761,11 +5795,11 @@ in
 
 ::
 
-> alignT :: (Alignable a, V a ~ V2 Double) => a -> a
+> alignT :: (Alignable a, HasOrigin a, V a ~ V2, N a ~ n, Floating n) => a -> a
 
 This type says that `alignT` can be applied to values of any type `a`,
 *as long as* `a` is an instance of `Alignable`, and `a` lives in the
-vector space `V2 Double`, that is, `V a ~ V2 Double` (the tilde expresses a *type
+vector space `V2`, that is, `V a ~ V2` (the tilde expresses a *type
 equality constraint*).
 
 Other times, `V` can show up on the right-hand side of `=>`, as in
@@ -5774,30 +5808,24 @@ Other times, `V` can show up on the right-hand side of `=>`, as in
 
 ::
 
-> deform :: (...) => Deformation (V a) -> a -> a
+> deform :: Deformation (V a) (N a) -> a -> a
 
 This says that `deform` takes two arguments: a `Deformation` and a
 value of some type `a`.  However, `Deformations`\s are parameterized
-by a vector space; `Deformation (V a)` means that the vector space of the
-deformation is the vector space associated to `a`.
+by a vector space; `Deformation (V a) (N a)` means that the vector
+space of the deformation is the vector space associated to `a`.  Many
+types in diagrams are parameterized this way, by `v` and `n`
+parameters which together define a vector space.
 
-Scalar
-~~~~~~
+N
+~
 
-The `Scalar` type family is defined in the `vector-space`:pkg:.  It
-associates a scalar type to each instance of `VectorSpace`. A "scalar"
-can be thought of as a distance, or scaling factor.  For example, you
-can scale a vector by a scalar (using `(*^)`), and the `magnitude`
-function takes a vector and returns a scalar.
-
-Diff
-~~~~
-
-`Diff` is another associated type family from `vector-space`:pkg:,
-which associates to each instance of `AffineSpace` a vector space
-which is the type of the "difference" between two affine values (as
-given by `(.-.)`).  For example, `Diff P2 ~ V2 Double`, that is, the
-difference between two points is a vector.
+The `N` type family is defined in `Diagrams.Core.V`:mod:.  Whereas `V`
+describes the *dimension* of a vector space, `N` describes the scalar
+value used to represent coördinates or distances in the space.  A
+"scalar" can be thought of as a distance, or scaling factor.  For
+example, you can scale a vector by a scalar (using `(*^)`), and the
+`norm` function takes a vector and returns a scalar.
 
 Render
 ~~~~~~
