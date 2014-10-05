@@ -266,8 +266,7 @@ are open to adding more!).
   >     ls = [[x] | x <- vs]
 
 * `V2` is an instance of the `Additive` class (see
-  `Linear.Additive`:mod: from the `linear`:pkg: package), which is for
-  types with an (additive) group structure.  This means:
+  `Linear.Additive`:mod: from the `linear`:pkg: package). This means:
 
   * Vectors can be added with `(^+^)`.  To add two vectors, think of
     placing them head-to-tail; the result of the addition is the
