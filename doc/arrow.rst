@@ -361,7 +361,7 @@ Lengths and Gaps
 The fields `headLength` and `tailLength` are for setting the length of the head
 and tail. The head length is measured from the tip of the head to the start
 of the joint connecting the head to the shaft. And the tail length in an
-analagous manner. They have type `Mesure Double` and
+analagous manner. They have type `Measure Double` and
 the default is `normal`. `headGap` and
 `tailGap` options are fairly self explanatory: they leave space
 at the end or beginning of the arrow and are also type `Mesure Double`.
@@ -445,7 +445,7 @@ current line styling attributes.  For example:
 >   ]
 >   # dashingG [0.05, 0.05] 0
 
-The colors (or more gnerally textues of the head, tail, and shaft
+The colors (or more generally textues of the head, tail, and shaft
 may be individually overridden using `headTexture`, `tailTexture`, and
 `shaftTexture` in conjunction with the `solid` function.  More generally, the
 styles are controlled using `headStyle`, `tailStyle`, and `shaftStyle`. For

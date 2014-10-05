@@ -42,7 +42,7 @@ __ manual.html#v
 Diagrams.Core.Points
 ====================
 
-The `linear`:pkg: package defines a `Point` type in `Linear.Affine`
+The `linear`:pkg: package defines a `Point` type in `Linear.Affine`:mod:
 along with some functions for working with points.
 
 The `Diagrams.Core.Points`:mod: module simply re-exports a few things
