@@ -4635,7 +4635,7 @@ error messages to the `diagrams mailing list`_ for help interpreting
 them and/or so they can be added to this section.
 
 Couldn't match type `V (P2 Double)` with `V2 Double`
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This error is due to what appears to be a bug in 7.6.* versions of
 GHC.  For some reason the definition of the `V` type family for points
@@ -4644,7 +4644,7 @@ form `import Diagrams.Core.Points` to the top of your
 file.
 
 No instances for Backend b0 V2 Double ...
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 There will probably come a time when you get an error message such as
 
@@ -5146,9 +5146,9 @@ this particular type from right to left:
   of `=>` will be some simple polymorphic type.
 
 * `TypeableFloat n`.  This says that the numeric type `n` must behave
- like a real number.  `TypeableFloat` is a type alias for the type
- families `Typeable` and `RealFloat`, which imply `Real`, `Floating`,
- `Fractional`,  `Num`, and `Ord`.
+  like a real number.  `TypeableFloat` is a type alias for the type
+  families `Typeable` and `RealFloat`, which imply `Real`, `Floating`,
+  `Fractional`,  `Num`, and `Ord`.
 
 * `V a ~ V2 Double, N a ~ n`.  These are `type equality constraints`_,
   which say that the types `V a` and `V2` must be equal, and that we
