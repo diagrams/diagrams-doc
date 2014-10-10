@@ -32,7 +32,7 @@ many of the exercises have multiple good solutions.
 Vectors
 =======
 
-Vectors in ``diagrams`` are based on the `vector-space`:pkg: package.
+Vectors in ``diagrams`` are based on the `linear`:pkg: package.
 In two dimensions, you can think of a vector as a pair of coordinates,
 representing *displacements* in the `x`:math: and `y`:math:
 directions. Alternatively, you can think of a vector as consisting of
@@ -42,7 +42,7 @@ a *magnitude* (length) and a *direction* (angle).
 
 ::
 
-> drawV v = (    beside unitY (hrule (magnitude v))
+> drawV v = (    beside unitY (hrule (norm v))
 >                             (text' 0.5 "r" === strutY 0.2)
 >                # alignR
 >             <> triangle 0.3 # rotateBy (-1/4) # scaleY (1/2)
@@ -76,29 +76,27 @@ see this for yourself at a ``ghci`` prompt:
 
 ::
 
-  >>> (3 ^& 6) :: R2
+  >>> (3 ^& 6) :: V2 Double
   3.0 ^& 6.0
-  >>> translateX 19 (3 ^& 6) :: R2
+  >>> translateX 19 (3 ^& 6) :: V2 Double
   3.0 ^& 6.0
-  >>> rotateBy (1/4) (3 ^& 6) :: R2
+  >>> rotateBy (1/4) (3 ^& 6) :: V2 Double
   (-6.0) ^& 3.0000000000000004
 
 Constructing vectors
 --------------------
 
-Vectors in two dimensions have the type `R2`.  (One can also work with
+Vectors in two dimensions have the type `V2 n`.  (One can also work with
 other vector spaces with any number of dimensions; in this tutorial
 we'll stick to the 2D case.)
 
-The first thing to learn is how to *create* values of type
-`R2`. There are many options:
+The first thing to learn is how to *create* values of type `V2 n`.
+There are many options:
 
-* `zeroV` is the zero vector, that is, the vector with zero magnitude
-  (and no direction, or perhaps every direction).  `zeroV` is rarely
+* `zero` is the zero vector, that is, the vector with zero magnitude
+  (and no direction, or perhaps every direction).  `zero` is rarely
   useful on its own, but can come in handy *e.g.* as an argument to a
-  function expecting a vector input.  (`zeroV` is actually quite a bit
-  more general; see the discussion of the `AdditiveGroup` class in the
-  `Vector operations`_ section below.)
+  function expecting a vector input.
 
 * `unitX` and `unitY` are the length-one vectors in the positive
   `x`:math: and `y`:math: directions, respectively.  To create a
@@ -115,7 +113,7 @@ The first thing to learn is how to *create* values of type
   > example = fromOffsets [unitX, unitY, 2 *^ unit_X, unit_Y] # centerXY
 
 * To create a vector with given :math:`x`- and :math:`y`- components,
-  you can use the function `r2 :: (Double,Double) -> R2`:
+  you can use the function `r2 :: (n, n) -> V2 n`:
 
   .. class:: dia-lhs
 
@@ -126,6 +124,14 @@ The first thing to learn is how to *create* values of type
   As you can see, `r2` is especially useful if you already have pairs
   representing vector components (which is not uncommon if the
   components are coming from some other data source).
+
+* You can also use the data constructor `V2`:
+
+  .. class:: dia-lhs
+
+  ::
+
+  > example = fromOffsets [V2 1 1, V2 0 3, V2 (-2) 1, V2 (-1) (-4)]
 
 * You can also use `(^&)` to construct vector literals, like so:
 
@@ -209,7 +215,7 @@ Destructing vectors
 -------------------
 
 To take apart a vector into its `x`:math: and `y`:math: components,
-use `unr2 :: R2 -> (Double, Double)`, or more generally you can use
+use `unr2 :: V2 n -> (n, n)`, or more generally you can use
 `coords` (from `Diagrams.Coordinates`:mod:) and pattern-match on
 `(:^&)`.  Both these methods work well in conjunction with the
 ``ViewPatterns`` `GHC extension`__, as in
@@ -220,7 +226,7 @@ __ http://ghc.haskell.org/trac/ghc/wiki/ViewPatterns
 
 ::
 
-> foo :: R2 -> ...
+> foo :: V2 n -> ...
 > foo (unr2 -> (x,y)) = ... x ... y ...
 
 Note, however, that you will probably need this less often than you
@@ -230,11 +236,11 @@ level of working with explicit coordinates when absolutely necessary.
 
 To get the magnitude and direction of a vector, you can use the
 `magnitude` and `direction` functions.  To get the angle between two
-given vectors, use `angleBetween`.  Additionally, `magnitudeSq` gives
+given vectors, use `angleBetween`.  Additionally, `quadrance` gives
 the *squared* magnitude of a vector, and is more efficient than
-squaring the result of `magnitude`, since it avoids a `sqrt` call.
+squaring the result of `norm`, since it avoids a `sqrt` call.
 For example, if you want to test which of two vectors is longer, you
-can compare the results of `magnitudeSq` instead of `magnitude` (since
+can compare the results of `quadrance` instead of `norm` (since
 `a < b \iff a^2 < b^2`:math: as long as `a`:math: and `b`:math: are
 nonnegative).
 
@@ -259,49 +265,42 @@ are open to adding more!).
   >        $ unitX
   >     ls = [[x] | x <- vs]
 
-* `R2` is an instance of the `AdditiveGroup` class (see
-  `Data.AdditiveGroup`:mod: from the `vector-space`:pkg: package),
-  which is for types with an (additive) group structure.  This means:
+* `V2` is an instance of the `Additive` class (see
+  `Linear.Additive`:mod: from the `linear`:pkg: package). This means:
 
   * Vectors can be added with `(^+^)`.  To add two vectors, think of
     placing them head-to-tail; the result of the addition is the
     vector from the tail of the first vector to the head of the
     second.
-  * There is a zero vector `zeroV` (mentioned previously), which is
+  * There is a zero vector `zero` (mentioned previously), which is
     the identity for `(^+^)`.
-  * Vectors can be negated with `negateV`.  The negation of a vector
+  * Vectors can be negated with `negated`.  The negation of a vector
     ``v`` is the vector with the same magnitude which points in the
     opposite direction, and is the additive inverse of ``v``: that is,
-    `v ^+^ negateV v == zeroV`.
+    `v ^+^ negated v == zero`.
 
-  `Data.AdditiveGroup`:mod: also defines a few other methods which can
+  `Linear.Additive`:mod: also defines a few other methods which can
   be used on vectors, including `(^-^)` (vector subtraction) and
   `sumV` (summing an entire list or other `Foldable` container of
   vectors).
 
-* `R2` is also an instance of the `VectorSpace` class (see
-  `Data.VectorSpace`:mod: from the `vector-space`:pkg: package).
-  Significantly, this class defines an associated type family called
-  `Scalar`; the `Scalar` type associated to a `VectorSpace` can be
-  thought of as representing *distances* or *scaling
-  factors*. In particular `Scalar R2` is defined to be `Double`.
-
-  You can multiply (scale) a vector by a `Scalar` using `(*^)` (which
-  takes a `Scalar` on the left and a vector on the right) or `(^*)`
-  (which is `(*^)` with the arguments reversed).  (Note that
-  `vector-space`:pkg: operators always use ``^`` in their names to
-  indicate a vector argument, as in `(*^)` (scalar times vector) and
-  `(^+^)` (vector plus vector) and `(.+^)` (point plus vector, as we
-  will see later.)
+* `V2` is also an instance of the `Functor` class (see
+  `Data.Functor`:mod: from the `base`:pkg:). The `(*^)` operator uses
+  this class to multiply all components of a vector by a scalar. In
+  particular for `Num n => V2 n` we have `(*^) :: n -> V2 n -> V2 n`.
+  (Note that `linear`:pkg: operators always use ``^`` in their
+  names to indicate a vector argument, as in `(*^)` (scalar times
+  vector) and `(^+^)` (vector plus vector) and `(.+^)` (point plus
+  vector, as we will see later.)
 
   Note that using `(*^)` is equivalent to using `scale`; that is, `s
   *^ v == v # scale s`.  There is also a `(^/)` operator provided for
   convenience which divides a vector by a scalar; of course `v ^/ s ==
   v ^* (1/s)`.
 
-* Finally, `R2` is an instance of the `InnerSpace` class (also in
-  `Data.VectorSpace`:mod:), which provides the *inner product* (also
-  called *dot product*) operator, `(<.>)`.  The definition and
+* Finally, `R2` is an instance of the `Metric` class (also in
+  `linear`:mod:), which provides the *inner product* (also
+  called *dot product*) function, `dot`.  The definition and
   properties of the dot product are beyond the scope of this tutorial;
   you can `read about it on Wikipedia`__.  However, note that several
   common uses of the dot product are already encapsulated in other
@@ -346,7 +345,7 @@ __ http://en.wikipedia.org/wiki/Dot_product
 
 .. container:: exercises
 
-  1. Write a function `vTriangle :: R2 -> R2 -> Diagram SVG R2`
+  1. Write a function `vTriangle :: V2 Double -> V2 Double -> Diagram SVG V2 Double`
      (substituting your favorite backend in place of `SVG`) which
      takes as arguments two vectors representing two sides of a
      triangle and draws the corresponding triangle.  For example,
@@ -402,18 +401,17 @@ Points
 ======
 
 A *point* is a location in space.  In ``diagrams``, points are based
-on the `vector-space-points`:pkg: package, and in the case of 2D are
-represented by the type `P2`. In 2D, points are usually thought of as
-a pair of `x`:math: and `y`:math: coordinates (though other coordinate
-systems could be used as well, *e.g.* polar coordinates).
+on the `linear`:pkg: package, and in the case of 2D are represented by
+the type alias `P2 = Point V2`. In 2D, points are usually thought of
+as a pair of `x`:math: and `y`:math: coordinates (though other
+coordinate systems could be used as well, *e.g.* polar coordinates).
 
 Points and vectors are closely related, and are sometimes conflated
 since both can be concretely represented by tuples of coordinates.
 However, they are distinct concepts which support different sets of
 operations. For example, points are affected by translation whereas
-vectors are not; vectors can be added but adding points does not make
-sense; and so on.  Hence, they are represented by distinct types in
-``diagrams``.
+vectors are not and so on.  Hence, they are represented by distinct
+types in ``diagrams``.
 
 Constructing points
 -------------------
@@ -421,10 +419,10 @@ Constructing points
 There are several ways to construct points.
 
 * `origin` is the name of the distinguished point at the origin of
-    the vector space (note this works in any dimension).
+   the vector space (note this works in any dimension).
 
 * To create a point with given :math:`x`- and :math:`y`- components,
-  you can use the function `p2 :: (Double,Double) -> P2`:
+  you can use the function `p2 :: (n,n) -> Point V2 n`:
 
   .. class:: dia-lhs
 
@@ -437,24 +435,25 @@ There are several ways to construct points.
   As with `r2`, `p2` is especially useful if you already have pairs
   representing point coordinates.
 
-* The `^&` operator can be used to construct literal points (`P2`
-  values) as well as vectors (`R2` values).  The proper type is chosen
+* The `^&` operator can be used to construct literal points (`P2 n`
+  values) as well as vectors (`V2 n` values).  The proper type is chosen
   via type inference: if the expression `(3 ^& 5)` is used in a context
-  where its type is inferred to be `P2`, it is the point at
-  `(3,5)`:math:; if its type is inferred to be `R2`, it is the vector
+  where its type is inferred to be `P2 n`, it is the point at
+  `(3,5)`:math:; if its type is inferred to be `V2 n`, it is the vector
   with `x`:math:-component `3`:math: and `y`:math:-component
   `5`:math:.
 
-* There is no way to directly convert a vector into a point---this is
+* There is no way to directly convert a vector into a point (unless
+  you use the `P` type constructor from `Linear.Affine`)---this is
   intentional!  If you have a vector `v` and you want to refer to the
   point located at the vector's head (when the vector tail is placed
   at, say, the origin) you can write `origin .+^ v` (see below for a
   discussion of `.+^`).
 
 * An advanced method of generating points is to use any function
-  returning a `TrailLike` result, since `[P2]` is an instace of
+  returning a `TrailLike` result, since `[Point V2 Double]` is an instace of
   `TrailLike`. Using a function returning any `TrailLike` at the
-  result type `[P2]` will result in the list of vertices of the trail.
+  result type `[Point V2 Double]` will result in the list of vertices of the trail.
   For example, here we obtain the list of vertices of a regular
   nonagon:
 
@@ -462,7 +461,7 @@ There are several ways to construct points.
 
   ::
 
-  > pts :: [P2]
+  > pts :: [P2 Double]
   > pts = nonagon 1
   > example = position . map (\p -> (p, circle 0.2 # fc green)) $ pts
 
@@ -474,9 +473,10 @@ There are several ways to construct points.
 
   > example = position . map (\p -> (p, circle 0.2 # fc green)) $ nonagon 1
 
-  In this case, the type of `nonagon 1` would be inferred as `[P2]`
-  (since `position` expects a list of paired points and diagrams),
-  causing the appropriate `TrailLike` instance to be chosen.
+  In this case, the type of `nonagon 1` would be inferred as `[P2 Double]`
+  (since `position` expects a list of paired points and diagrams), causing the
+  appropriate `TrailLike` instance to be
+  chosen.
 
 Destructing points
 ------------------
@@ -490,7 +490,7 @@ request`__!).
 __ http://www.haskell.org/haskellwiki/Diagrams/Contributing
 
 You can compute the distance between two points with the `distance`
-function (or `distanceSq` to get the square of the distance, which
+function (or `quadrance` to get the square of the distance, which
 avoids a square root).
 
 .. container:: exercises
@@ -515,8 +515,8 @@ avoids a square root).
      > pts = [ [p2 (x,y) | x <- [-r .. r]] | y <- [-r .. r]]
      > mkSquare p = circle 0.5 # fc c # moveTo p
      >   where
-     >     c | distanceSq p origin <= (r*r) = yellow
-     >       | otherwise                    = purple
+     >     c | distance p origin <= r = yellow
+     >       | otherwise              = purple
 
 Point operations
 ----------------
@@ -557,11 +557,11 @@ It's not important to understand the formal mathematical
 definition of an affine space; it's enough to understand the sorts of
 operations which this enables on points and vectors.
 
-In particular, `P2` is an instance of the `AffineSpace` type class
-(defined in `Data.AffineSpace`:mod: from the `vector-space`:pkg:
-package).  This class also has an associated type family called
-`Diff`, which for `P2` is defined to be `R2`: roughly, this says that
-the *difference* or "offset" between two points is given by a vector.
+In particular, `P2` is an instance of the `Affine` type class
+(defined in `Linear.Affine`:mod: from the `linear`:pkg: package).
+This class also has an associated type family called `Diff`, which for
+`P2` is defined to be `V2`: roughly, this says that the *difference*
+or "offset" between two points is given by a vector.
 
 Note how the operators below are named: a period indicates a point
 argument, and a carat (`^`) indicates a vector argument.  So, for
@@ -577,11 +577,10 @@ its second.
   `p .+^ v == p'`, then `p' .-. p == v`.  You can also use `(.-^)` to
   subtract a vector from a point.
 
-* Although it does not make sense to "add" two points, it does make
-  sense to *linearly interpolate* between them using the `alerp`
-  function (defined in `Data.AffineSpace`:mod:), for example, to find
-  the point which is 25% of the way from the first point to the
-  second.
+* Although it is not semanticly correct, `Point` is an instance of
+  `Additive`. This means you can *linearly interpolate* between two
+  points using `lerp`, which does make sense. For example, to find the
+  point which is 25% of the way from the first point to the second. 
 
   .. class:: dia-lhs
 
@@ -593,7 +592,7 @@ its second.
   > example = position $
   >   [ (p, circle 0.2 # fc c)
   >   | a <- [0, 0.1 .. 1]
-  >   , let p = alerp pt1 pt2 a
+  >   , let p = lerp a pt2 pt1
   >   , let c = blend a blue green
   >   ]
 
@@ -601,7 +600,7 @@ its second.
   list of points using the `centroid` function (defined in
   `Diagrams.Points`:mod:).
 
-* Finally, you can scale a point using the `(*.)` operator (though, as
+* Finally, you can scale a point using the `(*^)` operator (though, as
   mentioned earlier, you can also use `scale`).
 
 .. container:: exercises

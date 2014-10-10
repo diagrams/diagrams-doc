@@ -36,8 +36,8 @@ framework is:
 
 * **Flexible**: diagrams is designed from the ground up to be as
   generic and flexible as possible, with support for pluggable
-  rendering backends, arbitrary graphics primitives, and multiple
-  vector spaces (2D, 3D, ...).
+  rendering backends, arbitrary graphics primitives, multiple numeric
+  types, and multiple vector spaces (2D, 3D, ...).
 
 About this document
 -------------------
@@ -135,10 +135,10 @@ Installation
 Before installing ``diagrams``, you will need the following:
 
 * The `Glasgow Haskell Compiler`_ (GHC), version 7.4.x or later
-  (7.6.3 is recommended).
+  (7.8.3 is recommended).
 
 * It is recommended (but not required) to have the latest release of
-  the `Haskell Platform`_ (currently 2013.2.0.0).  At the very least
+  the `Haskell Platform`_ (currently 2014.2.0.0).  At the very least
   you will want the `cabal-install`_ tool.  Diagrams is always
   tested on at least two versions of the Haskell Platform (the
   current and previous releases), and may work on earlier HP
@@ -240,7 +240,7 @@ the following contents:
   -- or:
   -- import Diagrams.Backend.Rasterific.CmdLine
 
-  myCircle :: Diagram B R2
+  myCircle :: Diagram B V2 Double
   myCircle = circle 1
 
   main = mainWith myCircle
@@ -251,16 +251,17 @@ run into lots of crazy error messages.
 
 .. _`dreaded monomorphism restriction`: http://www.haskell.org/haskellwiki/Monomorphism_restriction
 
-`Diagrams.Prelude`:mod: re-exports most everything from the standard
+`Diagrams.Prelude`:mod: re-exports almost everything from the standard
 library; `Diagrams.Backend.SVG.CmdLine`:mod: provides a command-line
 interface to the SVG rendering backend.  We then declare `myCircle` to
-have the type `Diagram B R2`: the `R2` part means that it is a
-two-dimensional diagram; `B` is an alias for a tag representing the
-particular backend.  All the backends export `B` as an alias for
-themselves, so you can switch backends just by changing an import,
-without having to change type annotations on your diagrams; `B` simply
-refers to whichever backend is in scope.  Finally, `mainWith` takes a
-diagram and creates a command-line-driven executable for rendering it.
+have the type `Diagram B V2 Double`: the `V2 Double` part means that
+it is a two-dimensional diagram using a `Double` for each coördinate;
+`B` is an alias representing the particular backend.  All the backends
+export `B` as an alias for themselves, so you can switch backends just
+by changing an import, without having to change type annotations on
+your diagrams; `B` simply refers to whichever backend is in scope.
+Finally, `mainWith` takes a diagram and creates a command-line-driven
+executable for rendering it.
 
 To compile your program, type
 
@@ -466,36 +467,45 @@ Vectors and points
 
 Although much of this user manual focuses on constructing
 two-dimensional diagrams, the definitions in the core library in fact
-work for *any* vector space.  Vector spaces are defined in the
-`Data.VectorSpace`:mod: module from Conal Elliott's `vector-space`:pkg: package.
+work for *any* vector space.  Vector spaces are defined in the`
+Linear.Vector`:mod: module from Edward Kmett's `linear`:pkg: package.
 
 Many objects (diagrams, paths, backends...) inherently live in some
 particular vector space.  The vector space in which a given type
-"lives" can be computed by the type function `V`.  So, for example,
+"lives" can be computed by the type function `Vn`.  So, for example,
 the type
 
 ::
 
-  Foo d => V d -> d -> d
+  Foo d => Vn d -> d -> d
 
 is the type of a two-argument function whose first argument is a
 vector in whatever vector space corresponds to the type `d` (which
 must be an instance of `Foo`).
 
-Each vector space has a type of *vectors* `v` and an associated type
-of *scalars*, `Scalar v`.  A vector represents a direction and
-magnitude, whereas a scalar represents only a magnitude.  Useful
-operations on vectors and scalars include:
+Each vector space has a *dimension* and a type of *scalars*.  The type
+`V2 Double` specifies that the dimension is 2 and the scalar type is
+`Double` (64-bit floating point values).  A vector represents a
+direction and magnitude, whereas a scalar represents only a magnitude.
+Useful operations on vectors and scalars include:
 
 * Adding and subtracting vectors with `(^+^)` and `(^-^)`
 * Multiplying a vector by a scalar with `(*^)`
 * Linearly interpolating between two vectors with `lerp`
-* Finding the `magnitude` (length) of a vector
+* Finding the `norm` (length) of a vector
 * Projecting one vector onto another with `project`.
+
+Functions and types which are parametric in the vector space have two
+type parameters, `v` representing the dimension and `n` the scalar
+type.  Occasionally `v` or `n` appears alone in a type signature, with
+the same meaning.  `n` is most commonly `Double`, or some other type
+approximating the real numbers, but this is not required. Many
+functions require than `n` be an instance of `Num`, or one of the
+narrower classes `Fractional`, `Floating`, or `Real`.
 
 See `this tutorial for a more in-depth introduction to working with vectors
 and points`__.
-
+]
 __ vector.html
 
 One might think we could also identify *points* in a space with
@@ -509,11 +519,11 @@ different point.
 
 Although it is a bad idea to *conflate* vectors and points, we can
 certainly *represent* points using vectors. The
-`vector-space-points`:pkg: package defines a newtype wrapper around
+`linear`:pkg: package defines a newtype wrapper around
 vectors called `Point`.  The most important connection between points
 and vectors is given by `(.-.)`, defined in
-`Data.AffineSpace`:mod:. If `p1` and `p2` are points, `p2 .-. p1` is
-the vector giving the direction and distance from `p1` to `p2`.
+`Linear.Affine`:mod:. If `p` and `q` are points, `p .-. q` is
+the vector giving the direction and distance from `p` to `q`.
 Offsetting a point by a vector (resulting in a new point) is
 accomplished with `(.+^)`.
 
@@ -550,14 +560,14 @@ if you are just reading this manual for the first time!)
 >     ]
 >     where
 >       b  = envelopeP v d
->       v' = normalized v
+>       v' = signorm v
 >       p1 = b .+^ (rotateBy (1/4) v')
 >       p2 = b .+^ (rotateBy (-1/4) v')
 >
-> d1 :: Path R2
+> d1 :: Path V2 Double
 > d1 = circle 1
 >
-> d2 :: Path R2
+> d2 :: Path V2 Double
 > d2 = (pentagon 1 === roundedRect 1.5 0.7 0.3)
 >
 > example = (stroke d1 # showOrigin <> illustrateEnvelope (r2 (-0.5,0.3)) d1)
@@ -591,7 +601,7 @@ reference frames.  For example, the lines used to draw a certain
 square can be specified as an absolute two pixels wide, or as a
 certain percentage of the size of the final diagram, or in units
 relative to the size of the square.  More specifically, values of type
-`Measure v` represent `Scalar v` values, interpreted in one of four
+`Measure n` represent `n` values, interpreted in one of four
 "reference frames": `Local`, `Global`, `Normalized`, or `Output`,
 described below in turn.
 
@@ -803,19 +813,20 @@ actuality, its type is
 
 ::
 
-  hcat :: (Juxtaposable a, HasOrigin a, Monoid' a, V a ~ R2) => [a] -> a
+  hcat :: (Juxtaposable a, HasOrigin a, Monoid' a, V a ~ V2, N a ~ n, TypeableFloat n)
+     => [a] -> a
 
 which may indeed be intimidating at first glance, and at any rate
 takes a bit of time and practice to understand!  The essential idea is
 to realize that `hcat` is actually quite a bit more general than
 previously described: it can lay out not just diagrams, but any
-two-dimensional things (``V a ~ R2``) which can be positioned "next
-to" one another (`Juxtaposable`), can be translated (`HasOrigin`), and
-are an instance of `Monoid` (`Monoid'` is actually a synonym for the
-combination of `Monoid` and `Semigroup`).  This certainly includes
-diagrams, but it also includes other things like paths, envelopes,
-animations, and even tuples, lists, sets, or maps containing any of
-these things.
+two-dimensional things (``V a ~ V2`` and the constrants on ``N a``)
+which can be positioned "next to" one another (`Juxtaposable`), can be
+translated (`HasOrigin`), and are an instance of `Monoid` (`Monoid'`
+is actually a synonym for the combination of `Monoid` and
+`Semigroup`).  This certainly includes diagrams, but it also includes
+other things like paths, envelopes, animations, and even tuples,
+lists, sets, or maps containing any of these things.
 
 At first, you may want to just try working through some examples
 intuitively, without worrying too much about the types involved.
@@ -844,7 +855,7 @@ Basic 2D types
 --------------
 
 `Diagrams.TwoD.Types`:mod: defines types for working with
-two-dimensional Euclidean space and with angles.
+two-dimensional Euclidean space.
 
 Euclidean 2-space
 ~~~~~~~~~~~~~~~~~
@@ -852,20 +863,20 @@ Euclidean 2-space
 There are three main type synonyms defined for referring to
 two-dimensional space:
 
-* `R2` is the type of the two-dimensional Euclidean vector
-  space. Standard ``diagrams`` backends render images with the
-  positive `x`:math:\-axis extending to the right, and the positive
-  `y`:math:\-axis extending *upwards*.  This is consistent with standard
-  mathematical practice, but upside-down with respect to many common
-  graphics systems.  This is intentional: the goal is to provide an
-  elegant interface which is abstracted as much as possible from
-  implementation details.
+* `V2 n` is the type of the two-dimensional Euclidean vector space
+  (`n` is usually `Double`). Standard ``diagrams`` backends render
+  images with the positive `x`:math:\-axis extending to the right, and
+  the positive `y`:math:\-axis extending *upwards*.  This is
+  consistent with standard mathematical practice, but upside-down with
+  respect to many common graphics systems.  This is intentional: the
+  goal is to provide an elegant interface which is abstracted as much
+  as possible from implementation details.
 
   `unitX` and `unitY` are unit vectors in the positive `x`:math:\- and
   `y`:math:\-directions, respectively.  Their negated counterparts are
   `unit_X` and `unit_Y`.
 
-  Vectors of type `R2` can be created by passing a pair of type
+  Vectors of type `V2 Double` can be created by passing a pair of type
   `(Double, Double)` to the function `r2`; vectors can likewise be
   converted back into pairs using `unr2`.
 
@@ -876,13 +887,13 @@ two-dimensional space:
   pattern-matched by calling `coords` and then matching on the pattern
   `(x :& y)`.
 
-  For more in-depth information on working with `R2`, `see this
+  For more in-depth information on working with `V2 Double`, `see this
   tutorial`__.
 
   __ vector.html
 
-* `P2` is the type of points in two-dimensional space. It is a synonym
-  for `Point R2`.  The distinction between points and vectors is
+* `P2 n` is the type of points in two-dimensional space. It is a synonym
+  for `Point V2 n`.  The distinction between points and vectors is
   important; see `Vectors and points`_.
 
   Points can be created from pairs of coordinates using `p2` and
@@ -895,19 +906,19 @@ two-dimensional space:
 
   __ vector.html
 
-* `T2` is the type of two-dimensional affine transformations.  It is a
-  synonym for `Transformation R2`.
+* `T2 n` is the type of two-dimensional affine transformations.  It is a
+  synonym for `Transformation V2 n`.
 
 Angles
 ~~~~~~
 
-The `Angle` type represents two-dimensional angles.  Angles can be
+The type `Angle n` represents two-dimensional angles.  Angles can be
 expressed in radians, degrees, or fractions of a circle. Isomorphisms
 `turn`, `rad`, and `deg` are provided (represented using the `Iso`
 type from the `lens`:pkg: package), which convert between abstract
-`Angle` values and `Double` values with various units.  To construct
+`Angle n` values and `n` values with various units.  To construct
 an `Angle`, use the `(@@)` operator, as in `(3 @@ deg)` or `(3 @@
-rad)`. To project an `Angle` back to a `Double`, use the `(^.)`
+rad)`. To project an `Angle` back to a scalar, use the `(^.)`
 operator, as in `someAngle ^. rad`.
 
 * `turn` represents fractions of a circle.  A value of `1 @@ turn` represents
@@ -926,7 +937,7 @@ __ http://tauday.com
 turn`, `tau @@ rad`, or `360 @@ deg`.
 
 In two dimensions, the direction of a vector can be represented by an
-angle measured clockwise from the positive `x`:math:\-axis (shown in
+angle measured counterclockwise from the positive `x`:math:\-axis (shown in
 green below).  For some vector u, this angle can be found by `u ^. _theta`.
 
 .. class:: dia
@@ -948,7 +959,7 @@ green below).  For some vector u, this angle can be found by `u ^. _theta`.
 >   # lc blue
 > angleArrow = arrowBetween' (with & arrowShaft .~ arc xDir theAngle)
 >   (origin .+^ (1 *^ unitX))
->   (origin .+^ (theV # normalized))
+>   (origin .+^ (theV # signorm))
 >   # dashingG [0.05,0.05] 0
 >   # lc green
 
@@ -959,7 +970,7 @@ Whereas a vector is described by a direction and a magnitude, some
 functions only depend on the direction.  The `Direction` type is used
 in these cases to make the relationship clear.  The `direction`
 function converts a vector to its `Direction`; `fromDirection` creates a
-unit (magnitude 1) vector in the given direction.
+unit (length 1) vector in the given direction.
 
 Primitive shapes
 ----------------
@@ -1295,7 +1306,7 @@ combining (see `Alignment`_):
 
 If you want to place two diagrams next to each other using the local
 origin of the *second* diagram, you can use something like `beside' =
-flip . beside . negateV`, that is, use a vector in the opposite
+flip . beside . negated`, that is, use a vector in the opposite
 direction and give the diagrams in the other order.
 
 Since placing diagrams next to one another horizontally and vertically
@@ -1340,6 +1351,7 @@ envelopes are implemented, see the `core library reference`__.
 
 __ core.html
 
+
 Concatenating diagrams
 ~~~~~~~~~~~~~~~~~~~~~~
 
@@ -1355,8 +1367,8 @@ local origin of each diagram at the indicated point.
 
 ::
 
-> example = position (zip (map mkPoint [-3, -2.8 .. 3]) (repeat dot))
->   where dot       = circle 0.2 # fc black
+> example = position (zip (map mkPoint [-3, -2.8 .. 3]) (repeat spot))
+>   where spot       = circle 0.2 # fc black
 >         mkPoint x = p2 (x,x*x)
 
 `cat` is an iterated version of `beside`, which takes a direction
@@ -1552,8 +1564,8 @@ gradient but with the stops reversed. This is the data type for a linear gradien
 
 > data LGradient = LGradient
 >   { _lGradStops        :: [GradientStop]
->   , _lGradStart        :: P2
->   , _lGradEnd          :: P2
+>   , _lGradStart        :: Point V2 n
+>   , _lGradEnd          :: Point V2 n
 >   , _lGradTrans        :: T2
 >   , _lGradSpreadMethod :: SpreadMethod }
 
@@ -1603,9 +1615,9 @@ end at the perimeter of an outer circle.
 
 > data RGradient = RGradient
 >     { _rGradStops        :: [GradientStop]
->     , _rGradCenter0      :: P2
+>     , _rGradCenter0      :: Point V2 n
 >     , _rGradRadius0      :: Double
->     , _rGradCenter1      :: P2
+>     , _rGradCenter1      :: Point V2 n
 >     , _rGradRadius1      :: Double
 >     , _rGradTrans        :: T2
 >     , _rGradSpreadMethod :: SpreadMethod }
@@ -1642,7 +1654,7 @@ the lines be the same width, or should the larger square use a line
 twice as thick?  (Note that similar questions also come up when
 considering the dashing style used to draw some shapes---should the
 size of the dashes scale with transformations applied to the shapes,
-or not?) ``diagrams`` allows the user to decide, using `Measure R2`
+or not?) ``diagrams`` allows the user to decide, using `Measure Double`
 values to specify things like line width (see `Measurement units`_).
 
 In many situations, it is desirable to have lines drawn in a uniform
@@ -1669,13 +1681,13 @@ average of the scaling transformatins applied to the diagram.
 The `LineWidth` attribute is used to alter the *width* with which
 paths are stroked. The most general functions that can be used to set
 the line width are `lineWidth` and its synonym `lw`, which take an
-argument of type `Measure R2`.  Since typing things like `lineWidth
+argument of type `Measure V2 n`.  Since typing things like `lineWidth
 (Normalized 0.01)` is cumbersome, there are also shortcuts provided:
 `lwG`, `lwN`, `lwO`, and `lwL` all take an argument of type `Double`
 and wrap it in `Global`, `Normalized`, `Ouput` and `Local`,
 respectively.
 
-There are also predefined `Measure R2` values with intuitive names,
+There are also predefined `Measure n` values with intuitive names,
 namely, `ultraThin`, `veryThin`, `thin`, `medium`, `thick`,
 `veryThick`, `ultraThick`, and `none` (the default is `medium`), which
 should often suffice for setting the line width.
@@ -1885,8 +1897,8 @@ saying a bit about transformations in general (a fuller treatment can
 be found in the `core library reference`_).  The `Transformation`
 type is defined in `Diagrams.Core.Transform`:mod:, from the
 `diagrams-core`:pkg: package.  `Transformation` is parameterized by
-the vector space over which it acts; recall that `T2` is provided as a
-synonym for `Transformation R2`.
+the vector space over which it acts; recall that `T2 n` is provided as a
+synonym for `Transformation V2 n`.
 
 .. _`core library reference`: core.html
 
@@ -1906,7 +1918,7 @@ Rotation
 ++++++++
 
 Use `rotate` to rotate a diagram counterclockwise by a given angle__
-about the origin.  Since `rotate` takes an `Angle`, you must specify an
+about the origin.  Since `rotate` takes an `Angle n`, you must specify an
 angle unit, such as `rotate (80 @@ deg)`.  In the common case that you
 wish to rotate by an angle specified as a certain fraction of a
 circle, like `rotate (1/8 @@ turn)`, you can use `rotateBy`
@@ -2037,10 +2049,10 @@ projections along the principal axes in 2 dimensions.
 
 ::
 
-> sq = unitSquare # translate (5 ^& 3) :: Path R2
+> sq = unitSquare # translate (5 ^& 3) :: Path V2 Double
 > marks = repeat . lw none $ circle 0.02
-> dots c p = position $ zip (concat $ pathVertices p) (marks # fc c)
-> example = stroke sq <> dots blue sq <> dots green (deform perspectiveX1 sq)
+> spots c p = position $ zip (concat $ pathVertices p) (marks # fc c)
+> example = stroke sq <> spots blue sq <> spots green (deform perspectiveX1 sq)
 
 The example above projects a square onto the plane x=1.  In this
 example, only the projected vertices are drawn, since the four
@@ -2048,7 +2060,7 @@ overlapping line segments corresponding to the edges of the square are
 not interesting.  Note, though, that the `Path` is deformed, and then
 the vertices are taken from the projected result.
 
-`Deformation v` is a `Monoid` for any vector space `v`.  New
+`Deformation v` is a `Monoid` for any vector space `v n`.  New
 deformations can be formed by composing two deformations.  The
 composition of an affine transformation with a `Deformation` is also a
 `Deformation`.  `asDeformation` converts a `Transformation` to an
@@ -2090,13 +2102,13 @@ actually dual, in the sense that
 
 ::
 
-    moveOriginBy v === translate (negateV v).
+    moveOriginBy v === translate (negated v).
 
 This duality comes about since `translate` moves a diagram with
 respect to its origin, whereas `moveOriginBy` moves the *origin* with
 respect to the *diagram*.  Both are provided so that you can use
 whichever one corresponds to the most natural point of view in a given
-situation, without having to worry about inserting calls to `negateV`.
+situation, without having to worry about inserting calls to `negated`.
 
 Often, however, one wishes to move a diagram's origin with respect to
 its "boundary".  Here, boundary usually refers to the diagram's
@@ -2242,7 +2254,7 @@ __ http://en.wikipedia.org/wiki/Bézier_curve
 >     l1      = fromOffsets [c1] # dashed
 >     l2      = fromOffsets [x2 ^-^ c2] # translate c2 # dashed
 >
-> x2      = r2 (3,-1) :: R2         -- endpoint
+> x2      = r2 (3,-1) :: V2 Double         -- endpoint
 > [c1,c2] = map r2 [(1,2), (3,0)]   -- control points
 >
 > example = illustrateBézier c1 c2 x2
@@ -2328,7 +2340,7 @@ is how to convert between them.
 
     ::
 
-    > almostClosed :: Trail' Line R2
+    > almostClosed :: Trail' Line V2 Double
     > almostClosed = fromOffsets $ (map r2
     >   [(2, -1), (-3, -0.5), (-2, 1), (1, 0.5)])
     >
@@ -2355,10 +2367,10 @@ also analogous functions `strokeLine` and `strokeTrail`.)
 
 ::
 
-> spoke :: Trail' Line R2
+> spoke :: Trail' Line V2 Double
 > spoke = fromOffsets . map r2 $ [(1,3), (1,-3)]
 >
-> burst :: Trail' Loop R2
+> burst :: Trail' Loop V2 Double
 > burst = glueLine . mconcat . take 13 . iterate (rotateBy (-1/13)) $ spoke
 >
 > example = strokeLoop burst # fc yellow # lw thick # lc orange
@@ -2434,7 +2446,7 @@ the edges individually:
 
 ::
 
-> spoke :: Trail R2
+> spoke :: Trail V2 Double
 > spoke = fromOffsets . map r2 $ [(1,3), (1,-3)]
 >
 > burst = mconcat . take 13 . iterate (rotateBy (-1/13)) $ spoke
@@ -2506,7 +2518,7 @@ holes:
 
 ::
 
-> ring :: Path R2
+> ring :: Path V2 Double
 > ring = circle 3 <> (circle 2 # reversePath)
 >
 > example = stroke ring # fc purple
@@ -2570,14 +2582,14 @@ right of the curve for a positive radius and on the left for a negative radius.
 
 > import Diagrams.TwoD.Offset
 >
-> example :: Diagram B R2
+> example :: Diagram B V2 Double
 > example = hcat' (with & sep .~ 1) $ map f
 >         [ straight p
 >         , bézier3 (r2 (0,0.5)) (r2 (1,0.5)) p
 >         ]
 >   where
 >     p = r2 (1,1)
->     f :: Segment Closed R2 -> Diagram B R2
+>     f :: Segment Closed V2 Double -> Diagram B V2 Double
 >     f s =  fromSegments [s]
 >         <> offsetSegment 0.1 0.2 s # strokeLocTrail # lc blue
 
@@ -2597,7 +2609,7 @@ now have enough details to write the type for `offsetSegment`.
 
 ::
 
-> offsetSegment :: Double -> Double -> Segment Closed R2 -> Located (Trail R2)
+> offsetSegment :: Double -> Double -> Segment Closed V2 Double -> Located (Trail V2 Double)
 
 The first parameter to `offsetSegment` is an epsilon factor `\epsilon`:math:.
 When the radius is multiplied by `\epsilon`:math: we get the maximum allowed
@@ -2623,11 +2635,11 @@ corners, the offset will be disconnected!
 >   where
 >     join' x = let (p,a) = viewLoc x in translate (p .-. origin) a
 >
-> offsetTrailNaive :: Double -> Double -> Trail R2 -> Path R2
+> offsetTrailNaive :: Double -> Double -> Trail V2 Double -> Path V2 Double
 > offsetTrailNaive e r = mconcat . map (pathFromLocTrail . bindLoc (offsetSegment e r))
 >                      . locatedTrailSegments . (`at` origin)
 >
-> example :: Diagram B R2
+> example :: Diagram B V2 Double
 > example = (p # strokeTrail <> offsetTrailNaive 0.1 0.3 p # stroke # lc blue)
 >         # lw thick
 >   where p = fromVertices . map p2 $ [(0,0), (1,0.3), (2,0), (2.2,0.3)]
@@ -2649,7 +2661,7 @@ offset segments in other sensible ways.  For the choice of join we have the
 
 > import Diagrams.TwoD.Offset
 >
-> example :: Diagram B R2
+> example :: Diagram B V2 Double
 > example = (p # strokeTrail <> o # strokeLocTrail # lc blue)
 >         # lw thick
 >   where
@@ -2675,7 +2687,7 @@ join.
 
 > import Diagrams.TwoD.Offset
 >
-> example :: Diagram B R2
+> example :: Diagram B V2 Double
 > example = hcat' (with & sep .~ 0.5) $ map f [LineJoinMiter, LineJoinRound, LineJoinBevel]
 >   where
 >     f s = p # strokeTrail <> (offsetTrail' (with & offsetJoin .~ s) 0.3 p # strokeLocTrail # lc blue)
@@ -2707,14 +2719,14 @@ instance for `OffsetOpts`):
 
 ::
 
-> offsetTrail  ::               Double -> Located (Trail R2) -> Located (Trail R2)
-> offsetTrail' :: OffsetOpts -> Double -> Located (Trail R2) -> Located (Trail R2)
+> offsetTrail  ::               Double -> Located (Trail V2 Double) -> Located (Trail V2 Double)
+> offsetTrail' :: OffsetOpts -> Double -> Located (Trail V2 Double) -> Located (Trail V2 Double)
 >
-> offsetPath  ::               Double -> Path R2 -> Path R2
-> offsetPath' :: OffsetOpts -> Double -> Path R2 -> Path R2
+> offsetPath  ::               Double -> Path V2 Double -> Path V2 Double
+> offsetPath' :: OffsetOpts -> Double -> Path V2 Double -> Path V2 Double
 
-Notice this takes a `Trail R2` which means it works for both `Trail' Line R2`
-and `Trail' Loop R2`.  The second parameter is the radius for the offset.  A
+Notice this takes a `Trail V2 Double` which means it works for both `Trail' Line V2 Double`
+and `Trail' Loop V2 Double`.  The second parameter is the radius for the offset.  A
 negative radius gives a `Line` on the right of the curve, or a `Loop` inside a
 counter-clockwise `Loop`.  For `offsetPath` we can simply map `offsetTrail`
 over the trails in the path in the most natural way.
@@ -2741,15 +2753,15 @@ This is given by the `LineCap`.
 >     , _expandEpsilon    :: Double
 >     }
 >
-> expandTrail  ::               Double -> Located (Trail R2) -> Path R2
-> expandTrail' :: ExpandOpts -> Double -> Located (Trail R2) -> Path R2
+> expandTrail  ::               Double -> Located (Trail V2 Double) -> Path V2 Double
+> expandTrail' :: ExpandOpts -> Double -> Located (Trail V2 Double) -> Path V2 Double
 >
-> expandPath  ::               Double -> Path R2 -> Path R2
-> expandPath' :: ExpandOpts -> Double -> Path R2 -> Path R2
+> expandPath  ::               Double -> Path V2 Double -> Path V2 Double
+> expandPath' :: ExpandOpts -> Double -> Path V2 Double -> Path V2 Double
 
 The functionality follows closely to the offset functions, but notice that
-the result of `expandTrail` is a `Path R2` where `offsetTrail` resulted in
-a `Located (Trail R2)`.  This is because an expanded `Loop` will be a pair
+the result of `expandTrail` is a `Path V2 Double` where `offsetTrail` resulted in
+a `Located (Trail V2 Double)`.  This is because an expanded `Loop` will be a pair
 of loops, one inside and one outside.  To express this we need a `Path`.
 
 .. class:: dia-lhs
@@ -2758,7 +2770,7 @@ of loops, one inside and one outside.  To express this we need a `Path`.
 
 > import Diagrams.TwoD.Offset
 >
-> example :: Diagram B R2
+> example :: Diagram B V2 Double
 > example = (p # strokeTrail # lw veryThick # lc white <> e # stroke # lw none # fc blue)
 >   where
 >     p = fromVertices . map p2 $ [(0,0), (1,0.3), (2,0), (2.2,0.3)]
@@ -2778,7 +2790,7 @@ and plan to support custom styles in future releases.
 
 > import Diagrams.TwoD.Offset
 >
-> example :: Diagram B R2
+> example :: Diagram B V2 Double
 > example = hcat' (with & sep .~ 0.5) $ map f [LineCapButt, LineCapRound, LineCapSquare]
 >   where
 >     f s =  p # strokeTrail # lw veryThick # lc white
@@ -2813,12 +2825,12 @@ There are quite a few instances of `TrailLike`:
 
 * `Trail`: this instance simply throws away the location.
 * `Trail' Line`: throw away the location, and perform `cutLoop` if
-  necessary.  For example, `circle 3 :: Trail' Line R2` is an open `360^\circ`:math:
+  necessary.  For example, `circle 3 :: Trail' Line V2 Double` is an open `360^\circ`:math:
   circular arc.
 * `Trail' Loop`: throw away the location, and perform `glueLine` if
   necessary.
 * `Path`: construct a path with a single component.
-* `Diagram b R2`: as long as the backend `b` knows how to render 2D
+* `Diagram b`: as long as the backend `b` knows how to render
   paths, `trailLike` can construct a diagram by stroking the generated
   single-component path.
 * `[Point v]`: this instance generates the vertices of the trail.
@@ -2830,7 +2842,7 @@ There are quite a few instances of `TrailLike`:
   another call to `trailLike`.  This is most useful for generating
   values of type `Located (Trail' Line v)` and `Located (Trail' Loop
   v)`.  For example, `circle 3 # translateX 2 :: Located (Trail' Line
-  R2)` is an open `360^\circ`:math: circular arc centered at
+  V2 Double)` is an open `360^\circ`:math: circular arc centered at
   `(2,0)`:math:.
 
 It is quite convenient to be able to use, say, `square 2` as a
@@ -2891,11 +2903,11 @@ four different monoidal `TrailLike` types:
   triangle diagrams superimposed on one another with `atop`.
 
 * `stroke` turns `Path`\s into diagrams, so the second `ts` has type
-  `Path R2`.  Hence it is interpreted as three closed triangular paths
+  `Path V2 Double`.  Hence it is interpreted as three closed triangular paths
   superimposed into one three-component path, which is then stroked.
 
 * `strokeLine` turns `Trail' Line`\s into diagrams, so the third
-  occurrence of `ts` has type `Trail' Line R2`.  It is thus
+  occurrence of `ts` has type `Trail' Line V2 Double`.  It is thus
   interpreted as three open triangular trails sequenced end-to-end
   into one long open trail.  As a line (*i.e.* an open trail), it is
   not filled (in order to make it filled we could replace `strokeLine
@@ -2913,10 +2925,10 @@ confusing semantics.
 
 Answers to the `square 2` type inference challenge:
 
-#. `Path R2`
-#. `Diagram b R2`
-#. `[P2]`
-#. `Trail' Line R2`
+#. `Path V2 Double`
+#. `Diagram b V2 Double`
+#. `[Point V2 n]`
+#. `Trail' Line V2 Double`
 
 Segments and trails as parametric objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2937,8 +2949,8 @@ As explained above, parametric objects can be viewed semantically as
 functions.  In particular, parametric objects of type `p` can be seen
 as functions of type `Scalar (V p) -> Codomain p`, where the type
 family `Codomain` is defined in such a way as to make this true.  For
-example, `Codomain (Trail R2) ~ R2`, because a trail can be thought of
-as a function `Double -> R2`.
+example, `Codomain (Trail V2 Double) ~ V2 Double`, because a trail can be thought of
+as a function `Double -> V2 Double`.
 
 The `Parametric` class defines the single method `atParam` which
 yields this parametric view of an object:
@@ -2959,12 +2971,12 @@ continuity; segments are even more restricted.)
 
 ::
 
-> spline :: Located (Trail R2)
+> spline :: Located (Trail V2 Double)
 > spline = cubicSpline False [origin, 0 ^& 1, 1 ^& 1, 1 ^& 0] # scale 3
 > pts = map (spline `atParam`) [0, 0.1 .. 1]
-> dot = circle 0.2 # fc blue
+> spot = circle 0.2 # fc blue
 >
-> example = mconcat (map (place dot) pts) <> strokeLocTrail spline
+> example = mconcat (map (place spot) pts) <> strokeLocTrail spline
 
 Instances of `Parametric` include:
 
@@ -2978,7 +2990,7 @@ Instances of `Parametric` include:
 * `Trail`: same as the instance for `Trail'`.
 * `Located a`: as long as `a` is also `Parametric` and the codomain of
   `a` is a vector space, `Located a` is parametric with points as the
-  codomain.  For example, calling `atParam` on a `Located (Trail R2)`
+  codomain.  For example, calling `atParam` on a `Located (Trail V2 Double)`
   returns a `P2`.
 
 `Path`\s are *not* `Parametric`, since they may have multiple trail
@@ -3076,8 +3088,8 @@ closed.
 ::
 
 > pts = map p2 [(0,0), (2,3), (5,-2), (-4,1), (0,3)]
-> dot = circle 0.2 # fc blue # lw none
-> mkPath closed = position (zip pts (repeat dot))
+> spot = circle 0.2 # fc blue # lw none
+> mkPath closed = position (zip pts (repeat spot))
 >              <> cubicSpline closed pts
 > example = mkPath False ||| strutX 2 ||| mkPath True
 
@@ -3341,20 +3353,20 @@ to `connect` is `connect'`. These companion functions take an extra
   functions that can be used to create custom heads and tails (see
   `Diagrams.TwoD.Arrow`:mod:).
 
-* `arrowShaft` is any `Trail R2`; it will be sized automatically to
+* `arrowShaft` is any `Trail V2 Double`; it will be sized automatically to
   fit between the endpoints of the arrow.
 
 * `headLength` and `tailLength` specify the size of the head and tail,
   defined as the length of the head or tail plus the joint connecting
   it to the shaft. Their value is of
-  type `Measure R2` (see  `Measurement units`_). The
+  type `Measure V2 Double` (see  `Measurement units`_). The
   default value is `normal` which is a synonym for `Normalized 0.035`.
   A traversal called `lengths` sets both the `headLength` and `tailLength`
   at the same time.
 
 * `headGap` and `tailGap` both default to `none` and are used to indicate
   the amount of space between the end of the arrow and the location it
-  is pointing at. They are also of type `Measure R2`.
+  is pointing at. They are also of type `Measure V2 Double`.
   A traversal called `gaps` is provided to set
   both the `headGap` and `tailGap` simultaneously.
 
@@ -3497,7 +3509,7 @@ Font size
 ~~~~~~~~~
 
 Font size is set using the `fontSize` function, and is specified by a
-value of type `Measure R2` (see `Measurement units`_).
+value of type `Measure V2 Double` (see `Measurement units`_).
 
 * Text with a `Local` font size is measured relative to its local
   vector space.  Such text is transformed normally by any
@@ -3591,7 +3603,7 @@ Images
 
 The `Diagrams.TwoD.Image`:mod: module provides basic support for
 including both external and embedded images in diagrams.
-Support for images varies by backend, only the cairo
+Support for images varies by backend.  Only the cairo
 backend supports external images. The rasterific backend
 supports embedded images of many formats and the SVG backend
 supports embedded png images.
@@ -3622,7 +3634,7 @@ reference with a width and height to make a `DImage External`.
 >     Right phone -> no <> image phone # sized (Dims 1.5 1.5)
 
 When using `loadImageEmb` and `loadImageExt` you do not need to
-provide the width and height of the image as they will be calculated
+provide the width and height of the image, as they will be calculated
 by `JuicyPixels`:pkg:. Otherwise you must specify both a width and
 a height for each image.  In this case you might hope to be able to
 specify just a width or just a height, and have the other dimension
@@ -3740,7 +3752,7 @@ Envelope-related functions
   > sampleEnvelope2D n d = foldr (flip atop) (d # lc red) bs
   >   where b  = fromJust $ appEnvelope (getEnvelope d)
   >         bs = [stroke $ mkLine (origin .+^ (s *^ v))
-  >                               (5 *^ normalized (perp v))
+  >                               (5 *^ signorm (perp v))
   >              | v <- vs, let s = b v
   >              ]
   >         vs = map r2 [ (2 * cos t, 2 * sin t)
@@ -3766,19 +3778,19 @@ Envelope-related functions
   ::
 
   > example = hcat [ square 2
-  >                , circle 1 # withEnvelope (square 3 :: D R2)
+  >                , circle 1 # withEnvelope (square 3 :: D V2 Double)
   >                , square 2
-  >                , text "hi" <> phantom (circle 2 :: D R2)
+  >                , text "hi" <> phantom (circle 2 :: D V2 Double)
   >                ]
 
   In the above example, `withEnvelope` is used to put more space
   surrounding the circle, and `phantom` is used to put space around
   `text "hi"` (which would otherwise take up no space).  Note that we
   could equally well have written
-  `text "hi" # withEnvelope (circle 2 :: D R2)`.  Notice that the
-  `D R2` annotations are necessary, since otherwise GHC will not know
+  `text "hi" # withEnvelope (circle 2 :: D V2 Double)`.  Notice that the
+  `D V2 Double` annotations are necessary, since otherwise GHC will not know
   what types to pick for `square 3` and `circle 2`.  See `No instances
-  for Backend b0 R2 ...`_ for more information.
+  for Backend b0 V2 Double ...`_ for more information.
 
 * `Diagrams.TwoD.Size`:mod: provides functions for extracting
   information from the envelopes of two-dimensional diagrams,
@@ -3793,9 +3805,9 @@ Envelope-related functions
 
   > shapes = circle 1
   >      ||| square 2
-  >      ||| circle 1 # scaleY 0.3 # sizedAs (square 2 :: D R2)
+  >      ||| circle 1 # scaleY 0.3 # sizedAs (square 2 :: D V2 Double)
   >
-  > example = hrule 1 # sizedAs (shapes # scale 0.5 :: D R2)
+  > example = hrule 1 # sizedAs (shapes # scale 0.5 :: D V2 Double)
   >        <> shapes # centerX
 
 The ``Enveloped`` class
@@ -3918,7 +3930,7 @@ identify points on the boundaries of several diagrams.
 > {-# LANGUAGE TypeFamilies #-}
 
 > import Data.Maybe (mapMaybe)
-> illustrateTrace :: (TrailLike a, Traced a, Semigroup a, Monoid a, V a ~ R2) => a -> a
+> illustrateTrace :: (TrailLike a, Traced a, Semigroup a, Monoid a, V a ~ V2 Double) => a -> a
 > illustrateTrace d = d <> traceLines
 >   where
 >     traceLines  = mconcat
@@ -3996,7 +4008,7 @@ implementation which works just fine.
 
    ::
 
-   > newtype WordN = WordN Int deriving (Show, Ord, Eq, Typeable, IsName)
+   > newtype WordN = WordN Int deriving (Show, Ord, Eq, Typeable)
    > instance IsName WordN
 
 Listing names
@@ -4009,12 +4021,12 @@ of all the names recorded within a diagram and the locations of any
 associated subdiagrams.
 
 When using `names` you will often need to add a type annotation such
-as `D R2` to its argument, as shown below---for an explanation and
-more information, see `No instances for Backend b0 R2 ...`_.
+as `Diagram B V2 Double` to its argument, as shown below---for an explanation and
+more information, see `No instances for Backend b0 V2 Double ...`_.
 
 ::
 
-    ghci> names (circle 1 # named "joe" ||| circle 2 # named "bob" :: D R2)
+    ghci> names (circle 1 # named "joe" ||| circle 2 # named "bob" :: D V2 Double)
     [("bob",[P (2.9999999999999996 ^& 0.0)]),("joe",[P (0.0 ^& 0.0)])]
 
 Of course, there is in fact an entire subdiagram (or subdiagrams)
@@ -4049,27 +4061,26 @@ scary-looking!) type
 
 ::
 
-  withName :: ( IsName n, AdditiveGroup (Scalar v), Floating (Scalar v)
-              , InnerSpace v, HasLinearMap v)
-           => n -> (Subdiagram v -> QDiagram b v m -> QDiagram b v m)
-                -> (QDiagram b v m -> QDiagram b v m)
+  withName :: (IsName nm, Metric v , Semigroup m, OrderedField n)
+           => nm -> (Subdiagram b v n m -> QDiagram b v n m -> QDiagram b v n m)
+           -> QDiagram b v n m -> QDiagram b v n m
 
-Let's pick this apart a bit.  First, we see that the type `n` must be
-a name type. So far so good.  Then there are a bunch of constraints
-involving `v`, but we can ignore those; they just ensure that `v` is a
-vector space with the right properties.  So the first argument of
-`withName` is a name---that makes sense.  The second argument is a
-function of type
+Let's pick this apart a bit.  First, we see that the type `nm` must be
+a name type. So far so good.  The constraints on `v` and `n` say that
+`v n` must be a metric space (a vector space with a notion of
+distance), and that `n` must behave sufficiently like the real
+numbers.  So the first argument of `withName` is a name---that makes
+sense.  The second argument is a function of type
 
 .. class:: lhs
 
 ::
 
-  Subdiagram v -> QDiagram b v m -> QDiagram b v m
+  Subdiagram b v n m -> QDiagram b v n m -> QDiagram b v n m
 
 We can see this function as a transformation on diagrams, except that
 it also gets to use some extra information---namely, the `Subdiagram
-v` associated with the name we pass as the first argument to
+b v n m` associated with the name we pass as the first argument to
 `withName`.
 
 Finally, the return type of `withName` is itself a transformation of
@@ -4304,7 +4315,7 @@ the ellipse red and points outside it blue.
 > import System.Random (randomRIO)
 > import Control.Monad (replicateM)
 >
-> c :: Diagram B R2
+> c :: Diagram B V2 Double
 > c = circle 5 # scaleX 2 # rotateBy (1/14)
 >
 > mkPoint p = (p, circle 0.3
@@ -4341,7 +4352,7 @@ and `Any False` with `mempty`.
 >
 > withCount = (# value (Sum 1))
 >
-> c :: QDiagram B R2 (Sum Int)
+> c :: QDiagram B V2 Double (Sum Int)
 > c = (   circle 5 # scaleX 2 # rotateBy (1/14) # withCount
 >      <> circle 2 # scaleX 5 # rotateBy (-4/14) # withCount
 >     )
@@ -4360,7 +4371,7 @@ and `Any False` with `mempty`.
 
 Notice also the use of `clearValue` to get rid of the custom query;
 the program that builds this documentation requires `example` to have
-the type `QDiagram B R2 Any`.
+the type `QDiagram B V2 Double Any`.
 
 As another interesting example, consider using a set monoid to keep
 track of names or identifiers for the diagrams at a given point.  This
@@ -4422,9 +4433,9 @@ The arrows on the right are wrapped in `ScaleInv` but the ones on the left are n
 > import Control.Lens ((^.))
 >
 > class Drawable d where
->   draw :: d -> Diagram B R2
+>   draw :: d -> Diagram B V2 Double
 >
-> instance Drawable (Diagram B R2) where
+> instance Drawable (Diagram B V2 Double) where
 >   draw = id
 >
 > instance Drawable a => Drawable (ScaleInv a) where
@@ -4433,7 +4444,7 @@ The arrows on the right are wrapped in `ScaleInv` but the ones on the left are n
 > instance (Drawable a, Drawable b) => Drawable (a,b) where
 >   draw (x,y) = draw x <> draw y
 >
-> arrowhead, shaft :: Diagram B R2
+> arrowhead, shaft :: Diagram B V2 Double
 > arrowhead = triangle 0.5 # fc black # rotateBy (-1/4)
 > shaft = origin ~~ p2 (3, 0)
 >
@@ -4467,7 +4478,7 @@ There is more to `Measure`\s (see `Measurement units`_) than just the
 four reference frames.  In fact, a small domain-specific language for
 constructing measurements is provided, with the following features:
 
-* `atLeast :: Measure v -> Measure v -> Measure v` finds the maximum
+* `atLeast :: Measure n -> Measure n -> Measure n` finds the maximum
   of two measurements.  For example, `Normalized 0.2 \`atLeast\`
   Local 1` evaluates to whichever measurement ends up being larger,
   `Normalized 0.2` or `Local 1`.
@@ -4476,13 +4487,11 @@ constructing measurements is provided, with the following features:
   are defined as `Normalized w \`atLeast\` Output 0.5`, each with a
   different value of `w` (for example, for `medium`, `w = 0.004`).
 * Similarly, `atMost` takes the minimum of two `Measure`\s.
-* `Measure v` is an instance of `AdditiveGroup`, which provides `zeroV
-  :: Measure v`, `negateV :: Measure v -> Measure v`, and `(^+^)` for
+* `Measure v` is an instance of `AdditiveGroup`, which provides `zero
+  :: Measure v`, `negated :: Measure v -> Measure v`, and `(^+^)` for
   adding measurements.  For example, `Normalized 0.1 ^+^ Output 1`
   represents 10% of the width or height of the diagram plus one output
   unit.
-* `Measure v` is also an instance of `VectorSpace`, which provides
-    `(*^) :: Scalar v -> Measure v -> Measure v` as a scaling operation.
 
 The semantics of these expressions is what you would expect:
 everything is first converted to compatible units, and then the
@@ -4625,24 +4634,24 @@ This section is certainly incomplete; please send examples of other
 error messages to the `diagrams mailing list`_ for help interpreting
 them and/or so they can be added to this section.
 
-Couldn't match type `V P2` with `R2`
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Couldn't match type `V (P2 Double)` with `V2 Double`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This error is due to what appears to be a bug in recent versions of
+This error is due to what appears to be a bug in 7.6.* versions of
 GHC.  For some reason the definition of the `V` type family for points
 is not exported.  To solve this you can add an explicit import of the
 form `import Diagrams.Core.Points` to the top of your
 file.
 
-No instances for Backend b0 R2 ...
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+No instances for Backend b0 V2 Double ...
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 There will probably come a time when you get an error message such as
 
 ::
 
     <interactive>:1:8:
-        No instances for (Backend b0 R2,
+        No instances for (Backend b0 V2 Double,
                           Renderable Diagrams.TwoD.Ellipse.Ellipse b0)
           arising from a use of `circle'
 
@@ -4665,18 +4674,18 @@ width of a radius-1 circle:
     ghci> width (circle 1)
 
     <interactive>:1:8:
-        No instances for (Backend b0 R2,
-                          Renderable Diagrams.TwoD.Ellipse.Ellipse b0)
+        No instances for (Backend b0 V2 Double,
+                          Renderable (Path V2 Double) b0)
           arising from a use of `circle'
         Possible fix:
           add instance declarations for
-          (Backend b0 R2, Renderable Diagrams.TwoD.Ellipse.Ellipse b0)
+          (Backend b0 V2 Double, Renderable (Path V2 Double) b0)
         In the first argument of `width', namely `(circle 1)'
         In the expression: width (circle 1)
         In an equation for `it': it = width (circle 1)
 
 GHC complains that it cannot find an instance for "`Backend b0
-R2`"; what is really going on is that it does not have enough
+V2 Double`"; what is really going on is that it does not have enough
 information to decide which backend to use for the circle (hence
 the type variable `b0`).  This is annoying because *we* know that
 the choice of backend cannot possibly affect the width of the
@@ -4688,18 +4697,18 @@ The special type `D` is provided for exactly this situation, defined as
 
 ::
 
-> type D v = Diagram NullBackend v
+> type D v n = Diagram NullBackend v n
 
 `NullBackend` is a "backend" which simply does nothing: perfect
 for use in cases where GHC insists on knowing what backend to use but
 the backend really does not matter.
 
 For example, the solution to the problem with `width` is to annotate
-`circle 1` with the type `D R2`, like so:
+`circle 1` with the type `D V2 Double`, like so:
 
 ::
 
-    ghci> width (circle 1 :: D R2)
+    ghci> width (circle 1 :: D V2 Double)
     2.0
 
 More ambiguity
@@ -4748,16 +4757,13 @@ Creating 3D diagrams
 modules `Diagrams.ThreeD.Align`:mod:, `Diagrams.ThreeD.Camera`:mod:,
 `Diagrams.ThreeD.Light`:mod:, `Diagrams.ThreeD.Shapes`:mod:,
 `Diagrams.ThreeD.Transform`:mod:, `Diagrams.ThreeD.Types`:mod:, and
-`Diagrams.ThreeD.Vector`:mod: are all included in `diagrams-lib`:pkg:
-(though they are not exported from `Diagrams.Prelude`:mod:).  This
-should still be considered a "feature preview"---in particular,
+`Diagrams.ThreeD.Vector`:mod: are all included in `diagrams-lib`:pkg:.
+This should still be considered a "feature preview"---in particular,
 appropriate 3D backends are still under construction (see
-`diagrams-povray`:repo: and `diagrams-opengl`_).  Look for fuller (and
-more fully documented) support for 3D diagrams in an upcoming release!
-In the meantime, consult the `3D tutorial`_ for a more detailed
-feature preview.
+`diagrams-povray`:repo:).  Look for fuller (and more fully documented)
+support for 3D diagrams in an upcoming release!  In the meantime,
+consult the `3D tutorial`_ for a more detailed feature preview.
 
-.. _`diagrams-opengl`: https://github.com/bergey/diagrams-opengl
 .. _`3D tutorial`: 3D.html
 
 Animation
@@ -4766,7 +4772,7 @@ Animation
 Diagrams has experimental support for the creation of *animations*.
 Animations are created with the help of a generic `Active`
 abstraction, defined in the `active`:pkg: package. Additionally,
-animated GIFs can be created using the cairo backend.
+animated GIFs can be created using the cairo or rasterific backend.
 
 .. container:: warning
 
@@ -4912,7 +4918,7 @@ Animated GIFs
 
 Animated GIFs can be created directly using the cairo backend.  This
 is done by calling `mainWith` with an argument of type `[(Diagram
-Cairo R2, GifDelay)]` where `GifDelay` is a synonym for `Int`. Each
+Cairo V2 Double, GifDelay)]` where `GifDelay` is a synonym for `Int`. Each
 tuple is a diagram frame of the animation and a time in hundredths of
 a second until the next frame.  This creates an executable which takes
 an output file with the extension gif. The other command line options
@@ -5127,7 +5133,8 @@ classes`_:
 
 ::
 
-  hcat :: (Juxtaposable a, HasOrigin a, Monoid' a, V a ~ R2) => [a] -> a
+  hcat :: (Juxtaposable a, HasOrigin a, Monoid' a, V a ~ V2, N a ~ n, TypeableFloat n)
+       => [a] -> a
 
 This is fairly typical of the types you will encounter when using
 diagrams.  They can be intimidating at first, but with a little
@@ -5138,13 +5145,19 @@ this particular type from right to left:
   a list of `a`\'s to a single `a`.  Typically, the type to the right
   of `=>` will be some simple polymorphic type.
 
-* `V a ~ R2`.  This is a `type equality constraint`_, which says that
-  the types `V a` and `R2` must be equal.  In this case `R2` is the
-  `type of two-dimensional vectors`_, and `V` is a `type family`_
-  which tells us the vector space that corresponds to a particular
-  type.  So `V a ~ R2` means "the vector space corresponding to `a`
-  must be `R2`", or more informally, "`a` must be a type representing
-  two-dimensional things".
+* `TypeableFloat n`.  This says that the numeric type `n` must behave
+  like a real number.  `TypeableFloat` is a type alias for the type
+  families `Typeable` and `RealFloat`, which imply `Real`, `Floating`,
+  `Fractional`,  `Num`, and `Ord`.
+
+* `V a ~ V2 Double, N a ~ n`.  These are `type equality constraints`_,
+  which say that the types `V a` and `V2` must be equal, and that we
+  will refer to `N a` with the type variable `n`.  In this case `V2`
+  is the `type of two-dimensional vectors`_, and `V` is a `type
+  family`_ which tells us the vector space that corresponds to a
+  particular type.  So `V a ~ V2` means "the vector space
+  corresponding to `a` must be two-dimensional", or more informally, "`a`
+  must be a type representing two-dimensional things".
 
 * `Juxtaposable a, ...` These are type class constraints on `a`,
   specifying what primitive operations `a` must support in order to be
@@ -5152,7 +5165,7 @@ this particular type from right to left:
   type classes used by diagrams, see the next section, `Type class
   reference`_.
 
-.. _`type equality constraint`: http://www.haskell.org/ghc/docs/latest/html/users_guide/equality-constraints.html
+.. _`type equality constraints`: http://www.haskell.org/ghc/docs/latest/html/users_guide/equality-constraints.html
 .. _`type of two-dimensional vectors`: `Basic 2D types`_
 .. _`type family`: http://www.haskell.org/haskellwiki/GHC/Type_families
 
@@ -5178,8 +5191,8 @@ HasOrigin
 
 ::
 
-> class VectorSpace (V t) => HasOrigin t where
->   moveOriginTo :: Point (V t) -> t -> t
+> class HasOrigin t where
+>  moveOriginTo :: Point (V t) (N t) -> t -> t
 
 `HasOrigin` classifies types with a notion of a fixed "location"
 relative to some "local origin", and provides a means of moving the
@@ -5221,8 +5234,8 @@ Transformable
 
 ::
 
-> class HasLinearMap (V t) => Transformable t where
->   transform :: Transformation (V t) -> t -> t
+> class Transformable t where
+>   transform :: Transformation (V t) (N t) -> t -> t
 
 It represents types which support arbitrary affine transformations (or
 linear transformations, in the case of translationally invariant
@@ -5235,9 +5248,9 @@ Instances:
 * Of course, `Transformation` is itself transformable, by composition.
 * Container types can be transformed by transforming each
   element (``(t,t)``, ``(t,t,t)``, ``[t]``, `Set`, `Map`).
-* ``Point v`` is transformable whenever ``v`` is; translations
+* ``Point v n`` is transformable whenever ``v n`` is; translations
   actually affect points (whereas they might not have an effect on
-  the underlying type ``v``).
+  the underlying type ``v n``).
 * Anything wrapped in `TransInv` will not be affected by
   translation.
 * Anything wrapped in `ScaleInv` will not be affected by scaling.
@@ -5304,8 +5317,8 @@ classifies types which have an associated `Envelope`.
 
 ::
 
-> class (InnerSpace (V a), OrderedField (Scalar (V a))) => Enveloped a where
->   getEnvelope :: a -> Envelope (V a)
+> class (InnerSpace (V a), OrderedField (N a)) => Enveloped a where
+>   getEnvelope :: a -> Envelope (V a) (N a)
 
 The `getEnvelope` method simply computes or projects out its
 argument's associated `Envelope`.  `InnerSpace`, defined in
@@ -5341,8 +5354,8 @@ boundary of an object.
 
 ::
 
-> class (Ord (Scalar (V a)), VectorSpace (V a)) => Traced a where
->   getTrace :: a -> Trace (V a)
+> class (Ord (N a), Additive (V a)) => Traced a where
+>   getTrace :: a -> Trace (V a) (N a)
 
 Instances:
 
@@ -5388,7 +5401,7 @@ things to which a `Style` can be applied.
 ::
 
 > class HasStyle a where
->   applyStyle :: Style (V a) -> a -> a
+>   applyStyle :: Style (V a) (N a) -> a -> a
 
 `applyStyle` applies the given `Style` to an object, combining it on
 the left with the existing `Style` (according to the `Monoid` instance
@@ -5476,13 +5489,13 @@ can be used to construct a diagram, a path, a trail, *etc.*.
 
 ::
 
-> class (InnerSpace (V t), OrderedField (Scalar (V t))) => TrailLike t where
+> class (Metric (V t), OrderedField (N t)) => TrailLike t where
 >
 >   trailLike
->     :: Located (Trail (V t))  -- ^ The concretely located trail.  Note
->                               --   that some trail-like things
->                               --   (e.g. 'Trail's) may ignore the
->                               --   location.
+>     :: Located (Trail (V t) (N t))  -- ^ The concretely located trail.  Note
+>                                     --   that some trail-like things
+>                                     --   (e.g. 'Trail's) may ignore the
+>                                     --   location.
 >     -> t
 
 The `trailLike` method provides a generic way to build a "trail-like"
@@ -5494,12 +5507,12 @@ Instances:
 
 * `Trail`: this instance simply throws away the location.
 * `Trail' Line`: throw away the location, and perform `cutLoop` if
-  necessary.  For example, `circle 3 :: Trail' Line R2` is an open `360^\circ`:math:
+  necessary.  For example, `circle 3 :: Trail' Line V2 Double` is an open `360^\circ`:math:
   circular arc.
 * `Trail' Loop`: throw away the location, and perform `glueLine` if
   necessary.
 * `Path`: construct a path with a single component.
-* `Diagram b R2`: as long as the backend `b` knows how to render 2D
+* `Diagram b V2 Double`: as long as the backend `b` knows how to render 2D
   paths, `trailLike` can construct a diagram by stroking the generated
   single-component path.
 * `[Point v]`: this instance generates the vertices of the trail.
@@ -5509,9 +5522,9 @@ Instances:
   instance.  In particular, the resulting `Located a` has the location
   of the input `Located Trail`, and a value of type `a` generated by
   another call to `trailLike`.  This is most useful for generating
-  values of type `Located (Trail' Line v)` and `Located (Trail' Loop
+  values of type `Located (Trail' Line v Doubl)` and `Located (Trail' Loop
   v)`.  For example, `circle 3 # translateX 2 :: Located (Trail' Line
-  R2)` is an open `360^\circ`:math: circular arc centered at
+  V2 Double)` is an open `360^\circ`:math: circular arc centered at
   `(2,0)`:math:.
 * `Active t` (for any `TrailLike p`): creates a constant `Active`
   value.
@@ -5555,9 +5568,9 @@ meaning of this function depends on the backend.
 
 ::
 
-> class Backend b v => MultiBackend b v where
->   renderDias :: (InnerSpace v, OrderedField (Scalar v), Monoid' m)
->              => b -> Options b v -> [QDiagram b v m] -> Result b v
+> class Backend b v n => MultiBackend b v n where
+>   renderDias :: (Metric v, OrderedField n, Monoid' m)
+>              => b -> Options b v n -> [QDiagram b v n m] -> Result b v n
 
 So far, the only backend which supports multi-diagram rendering is
 the `postscript backend`_.
@@ -5579,7 +5592,7 @@ it.
 ::
 
 > class Transformable t => Renderable t b where
->   render :: b -> t -> Render b (V t)
+>   render :: b -> t -> Render b (V t) (N t)
 
 Instances: There are many instances defined by each backend.
 
@@ -5688,15 +5701,23 @@ hack: although every monoid is a semigroup mathematically speaking,
 `Semigroup` is not actually a superclass of `Monoid`, so if we want to
 use both we have to actually declare both.
 
+HasBasis
+++++++++
+
+`HasBasis v` is a synonym for
+
+  `(Representable v, Rep v ~ E v)`,
+
+which is used to get access to the basis elements of a vector.
+
 HasLinearMap
 ++++++++++++
 
 `HasLinearMap v` is a synonym for
 
-  `(HasBasis v, HasTrie (Basis v), VectorSpace v)`,
+  `(Additive v, Applicative v, Traversable v)`,
 
-all of which are necessary for constructing linear maps over the
-vector space `v`.
+which is used for many of the functions related to transforms.
 
 OrderedField
 ++++++++++++
@@ -5710,6 +5731,23 @@ synonym for
 with `Envelopes` it's often necessary to have scalars which support
 all four arithmetic operations as well as square root, and can be
 compared for ordering.
+
+TypeableFloat
++++++++++++++
+
+`TypeableFloat n`, defined in `Diagrams.Core.Types`:mod:, is a synonym for
+
+  `(Typeable n, RealFloat n)`
+
+which implies `(Real n, Floating n, Fractional n, Num n, Ord n)`.
+These constraints are needed on many functions that produce diagrams,
+due to constraints on transformations and attributes.
+
+DataFloat
++++++++++
+
+`DataFloat n` is the same as `TypeableFloat n`, but strengthens the
+`Typeable` constraint to `Data`.
 
 Type family reference
 ---------------------
@@ -5741,7 +5779,7 @@ family named `Foo`, with two definition clauses.
 __ http://www.haskell.org/haskellwiki/GHC/Type_families
 
 Diagrams only makes use of a few type families, though two of them
-(`V` and `Scalar`) are used quite extensively.  The following sections
+(`V` and `N`) are used quite extensively.  The following sections
 list each of the type families employed by diagrams
 
 V
@@ -5749,10 +5787,12 @@ V
 
 The `V` type family is defined in `Diagrams.Core.V`.  The idea is that
 many types have an "associated" vector space, *i.e.* the vector space
-in which they "live".  `V` simply maps from types to their associated
-vector space.  For example, `V (Path R2) = R2` (two-dimensional paths
-live in `R2`), and `V [a] = V a` (lists of `a`\'s live in whatever
-vector space `a`\'s themselves live in).
+in which they "live".  The vector space is described by it's dimension
+and its numeric type.  `V` simply maps from types to a type
+representing the vector space dimension.  For example, `V (Path V2
+Double) = V2` (ordinary two-dimensional paths live in `V2 Double`),
+and `V [a] = V a` (lists of `a`\'s live in whatever vector space
+`a`\'s themselves live in).
 
 Often, `V` shows up in a constraint on the left hand side of `=>`, as
 in
@@ -5761,11 +5801,11 @@ in
 
 ::
 
-> alignT :: (Alignable a, V a ~ R2) => a -> a
+> alignT :: (Alignable a, HasOrigin a, V a ~ V2, N a ~ n, Floating n) => a -> a
 
 This type says that `alignT` can be applied to values of any type `a`,
 *as long as* `a` is an instance of `Alignable`, and `a` lives in the
-vector space `R2`, that is, `V a ~ R2` (the tilde expresses a *type
+vector space `V2`, that is, `V a ~ V2` (the tilde expresses a *type
 equality constraint*).
 
 Other times, `V` can show up on the right-hand side of `=>`, as in
@@ -5774,30 +5814,24 @@ Other times, `V` can show up on the right-hand side of `=>`, as in
 
 ::
 
-> deform :: (...) => Deformation (V a) -> a -> a
+> deform :: Deformation (V a) (N a) -> a -> a
 
 This says that `deform` takes two arguments: a `Deformation` and a
 value of some type `a`.  However, `Deformations`\s are parameterized
-by a vector space; `Deformation (V a)` means that the vector space of the
-deformation is the vector space associated to `a`.
+by a vector space; `Deformation (V a) (N a)` means that the vector
+space of the deformation is the vector space associated to `a`.  Many
+types in diagrams are parameterized this way, by `v` and `n`
+parameters which together define a vector space.
 
-Scalar
-~~~~~~
+N
+~
 
-The `Scalar` type family is defined in the `vector-space`:pkg:.  It
-associates a scalar type to each instance of `VectorSpace`. A "scalar"
-can be thought of as a distance, or scaling factor.  For example, you
-can scale a vector by a scalar (using `(*^)`), and the `magnitude`
-function takes a vector and returns a scalar.
-
-Diff
-~~~~
-
-`Diff` is another associated type family from `vector-space`:pkg:,
-which associates to each instance of `AffineSpace` a vector space
-which is the type of the "difference" between two affine values (as
-given by `(.-.)`).  For example, `Diff P2 ~ R2`, that is, the
-difference between two points is a vector.
+The `N` type family is defined in `Diagrams.Core.V`:mod:.  Whereas `V`
+describes the *dimension* of a vector space, `N` describes the scalar
+value used to represent coördinates or distances in the space.  A
+"scalar" can be thought of as a distance, or scaling factor.  For
+example, you can scale a vector by a scalar (using `(*^)`), and the
+`norm` function takes a vector and returns a scalar.
 
 Render
 ~~~~~~
@@ -5833,5 +5867,5 @@ Codomain
 
 `Codomain` is a type family defined in `Diagrams.Parametric`:mod:.
 Parametric objects of type `a` can be viewed as functions of type
-`Scalar (V a) -> Codomain a`.  For more information, see `Segments and
+`N a -> Codomain a`.  For more information, see `Segments and
 trails as parametric objects`_.

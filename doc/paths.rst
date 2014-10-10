@@ -52,7 +52,7 @@ or a "subway line".
 
 A line is a kind of *trail* (we will meet the other kind in the
 following section), and has type `Trail' Line v` for some vector type
-`v` (typically `R2`).
+`v` (typically `V2 Double`).
 
 Constructing lines
 ------------------
@@ -186,7 +186,7 @@ and concatenation of lines as `mappend` (aka `<>`).
 Loops
 =====
 
-A *loop* is another kind of trail, with type `Trail' Loop R2`.  Loops
+A *loop* is another kind of trail, with type `Trail' Loop v n`.  Loops
 are like lines, except for the fact that they are "closed": they end
 in the same place where they start, and have an "inside" and an
 "outside".
@@ -275,7 +275,7 @@ some lines and then call `glueLine` on the result.  You try:
 
      ::
 
-     > andThen t1 t2 = t1 <> t2 # rotate (d1 - d2)
+     > andThen t1 t2 = t1 <> t2 # rotate (d1 ^-^ d2)
      >   where
      >     d1 = direction (tangentAtEnd t1)
      >     d2 = direction (tangentAtStart t2)
@@ -322,20 +322,20 @@ first place.  For example,
 
 ::
 
-  (square 1 :: Trail' Loop R2) # cutLoop :: Trail' Line R2
+  (square 1 :: Trail' Loop V2 Double) # cutLoop :: Trail' Line V2 Double
 
-is exactly the same as `square 1 :: Trail' Line R2`.  So there are no
-exercises here; it's simply useful to be aware that in any situation
-where something that is naturally a loop is interpreted as a line (for
-example, `square 1 :: Trail' Line R2`), `cutLoop` is being used under
-the hood.
+is exactly the same as `square 1 :: Trail' Line V2 Double`.  So there
+are no exercises here; it's simply useful to be aware that in any
+situation where something that is naturally a loop is interpreted as a
+line (for example, `square 1 :: Trail' Line V2 Double`), `cutLoop` is being
+used under the hood.
 
 Trails
 ======
 
 We have now seen both types of trails.  The `Trail` type is simply a
 wrapper around both lines and loops.  That is, something of type
-`Trail R2` is either a line or a loop, wrapped up so the type does not
+`Trail v n` is either a line or a loop, wrapped up so the type does not
 tell you which it is (though it is possible to recover the information
 dynamically, using functions like `withTrail`).  To make a line or
 loop into a `Trail`, use `wrapLine` or `wrapLoop`, respectively.  Many
@@ -349,7 +349,7 @@ Located
 The `Located` wrapper associates a point location with an object,
 turning translation-invariant things into located things.
 
-To give a location to something, use `at :: a -> Point (V a) ->
+To give a location to something, use `at :: a -> Point (V a) (N a) ->
 Located a`.  Located lines, loops, and trails can be turned into
 diagrams with `strokeLocLine`, `strokeLocLoop`, and `strokeLocTrail`
 respectively.
@@ -378,7 +378,7 @@ another.
 
      ::
 
-     > sqTrail :: Trail' Line R2
+     > sqTrail :: Trail' Line V2 Double
      > sqTrail = iterateN 4 (rotateBy (1/4))
      >             (fromOffsets (replicate 4 unitX))
      >           # mconcat
@@ -405,7 +405,7 @@ A *path* is simply a collection of located trails.
 
      ::
 
-     > s :: Path R2
+     > s :: Path V2 Double
      > s = star (StarSkip 5) (regPoly 30 1)
      >
      > example
@@ -423,7 +423,7 @@ A *path* is simply a collection of located trails.
 
      ::
 
-     > innerCircles :: Path R2
+     > innerCircles :: Path V2 Double
      > innerCircles = atPoints (trailVertices $ hexagon 2) (repeat (circle 1)) <> circle 1
      >
      > example = (innerCircles <> circle 3) # stroke # fc blue # fillRule EvenOdd

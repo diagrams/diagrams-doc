@@ -69,7 +69,7 @@ compileExample mThumb lhs out = do
                 Cairo
 #endif
 
-                zeroV
+                zero
 
 #ifdef USE_SVG
                 (SVGOptions (mkSizeSpec w h) Nothing)

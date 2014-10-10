@@ -29,12 +29,12 @@ position corresponds to a concentric ring, with black/white indicating
 segments corresponding to consecutive runs of `True`.
 
 > rings n = mkRingsDia . map ringOffsets . transpose . gray $ n
->   where ringOffsets :: [Bool] -> [(Direction R2, Angle)]
+>   where ringOffsets :: [Bool] -> [(Direction V2 Double, Angle Double)]
 >         ringOffsets = map l2t . chunksOf 2 . findEdges . zip [rotate α xDir | α <- [0 @@ turn, 1/(2^n) @@ turn .. fullTurn]]
 >         l2t [x,y] =  (x, angleBetweenDirs x y)
 >         l2t [x]   = (x, angleBetweenDirs x xDir) -- arc angle will never be > fullturn ^/ 2
 >
-> findEdges :: Eq a => [(Direction R2, a)] -> [Direction R2]
+> findEdges :: Eq a => [(Direction V2 Double, a)] -> [Direction V2 Double]
 > findEdges = catMaybes . (zipWith edge <*> tail)
 >   where edge (_,c1) (a,c2) | c1 /= c2  = Just a
 >                            | otherwise = Nothing

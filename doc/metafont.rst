@@ -55,10 +55,10 @@ Let's give it a whirl:
 
    import Diagrams.TwoD.Path.Metafont
 
-   --ptMark :: Diagram SVG R2
+   --ptMark :: Diagram SVG V2 Double
    ptMark = circle 0.02 # lwG 0
 
-   --illustrateSegment :: FixedSegment R2 -> Diagram SVG R2
+   --illustrateSegment :: FixedSegment V2 Double -> Diagram SVG V2 Double
    illustrateSegment (FLinear from to) = position [
      (from, ptMark # fc blue),
      (to,   ptMark # fc blue)]
@@ -66,7 +66,7 @@ Let's give it a whirl:
      (c1, ptMark # fc red),
      (c2, ptMark # fc red)] <> illustrateSegment (FLinear from to)
 
-   --illustrateTrail :: Renderable (Path R2) b => Trail R2 -> Diagram b R2
+   --illustrateTrail :: Renderable (Path V2 Double) b => Trail V2 Double -> Diagram b V2 Double
    illustrateTrail t = strokeTrail t <> (mconcat . map illustrateSegment . fixTrail . flip at origin $ t)
 
    z1 = p2 (0,1)
@@ -114,10 +114,10 @@ adjacent paths will curve around to remain smooth and continuous.
 
    import Diagrams.TwoD.Path.Metafont
 
-   --ptMark :: Diagram SVG R2
+   --ptMark :: Diagram SVG V2 Double
    ptMark = circle 0.02 # lwG 0
 
-   --illustrateSegment :: FixedSegment R2 -> Diagram SVG R2
+   --illustrateSegment :: FixedSegment V2 Double -> Diagram SVG V2 Double
    illustrateSegment (FLinear from to) = position [
      (from, ptMark # fc blue),
      (to,   ptMark # fc blue)]
@@ -125,7 +125,7 @@ adjacent paths will curve around to remain smooth and continuous.
      (c1, ptMark # fc red),
      (c2, ptMark # fc red)] <> illustrateSegment (FLinear from to)
 
-   --illustrateTrail :: Renderable (Path R2) b => Trail R2 -> Diagram b R2
+   --illustrateTrail :: Renderable (Path V2 Double) b => Trail V2 Double -> Diagram b V2 Double
    illustrateTrail t = strokeTrail t <> (mconcat . map illustrateSegment . fixTrail . flip at origin $ t)
 
    z1 = p2 (0,1)
@@ -163,10 +163,10 @@ pulled taut.  The tension defaults to 1; here we set it to 1.5.
 
    import Diagrams.TwoD.Path.Metafont
 
-   --ptMark :: Diagram SVG R2
+   --ptMark :: Diagram SVG V2 Double
    ptMark = circle 0.02 # lwG 0
 
-   --illustrateSegment :: FixedSegment R2 -> Diagram SVG R2
+   --illustrateSegment :: FixedSegment V2 Double -> Diagram SVG V2 Double
    illustrateSegment (FLinear from to) = position [
      (from, ptMark # fc blue),
      (to,   ptMark # fc blue)]
@@ -174,7 +174,7 @@ pulled taut.  The tension defaults to 1; here we set it to 1.5.
      (c1, ptMark # fc red),
      (c2, ptMark # fc red)] <> illustrateSegment (FLinear from to)
 
-   --illustrateTrail :: Renderable (Path R2) b => Trail R2 -> Diagram b R2
+   --illustrateTrail :: Renderable (Path V2 Double) b => Trail V2 Double -> Diagram b V2 Double
    illustrateTrail t = strokeTrail t <> (mconcat . map illustrateSegment . fixTrail . flip at origin $ t)
 
    z1 = p2 (0,1)
@@ -211,7 +211,7 @@ Explicit Control Points
 
 If you need complete control over a particular segment, you can
 specify the control points directly using the function `controls`.
-This function takes two `P2` values, and goes between `.-` and `-.`,
+This function takes two `Point V2 Double` values, and goes between `.-` and `-.`,
 just like `leaving` or `tension`.
 
 Loops
@@ -235,10 +235,10 @@ other.
 
    import Diagrams.TwoD.Path.Metafont
 
-   --ptMark :: Diagram SVG R2
+   --ptMark :: Diagram SVG V2 Double
    ptMark = circle 0.02 # lwG 0
 
-   --illustrateSegment :: FixedSegment R2 -> Diagram SVG R2
+   --illustrateSegment :: FixedSegment V2 Double -> Diagram SVG V2 Double
    illustrateSegment (FLinear from to) = position [
      (from, ptMark # fc blue),
      (to,   ptMark # fc blue)]
@@ -246,7 +246,7 @@ other.
      (c1, ptMark # fc red),
      (c2, ptMark # fc red)] <> illustrateSegment (FLinear from to)
 
-   --illustrateTrail :: Renderable (Path R2) b => Trail R2 -> Diagram b R2
+   --illustrateTrail :: Renderable (Path V2 Double) b => Trail V2 Double -> Diagram b V2 Double
    illustrateTrail t = strokeTrail t <> (mconcat . map illustrateSegment . fixTrail . flip at origin $ t)
 
    z1 = p2 (0,1)
@@ -293,10 +293,10 @@ Here is the code that marks the control points in examples above:
 ::
 
    -- Type signatures may be needed to resolve ambiguity
-   --ptMark :: Diagram SVG R2
+   --ptMark :: Diagram SVG V2 Double
    ptMark = circle 0.02 # lwG 0
 
-   --illustrateSegment :: FixedSegment R2 -> Diagram SVG R2
+   --illustrateSegment :: FixedSegment V2 Double -> Diagram SVG V2 Double
    illustrateSegment (FLinear from to) = position [
      (from, ptMark # fc blue),
      (to,   ptMark # fc blue)]
@@ -304,7 +304,7 @@ Here is the code that marks the control points in examples above:
      (c1, ptMark # fc red),
      (c2, ptMark # fc red)] <> illustrateSegment (FLinear from to)
 
-   --illustrateTrail :: Renderable (Path R2) b => Trail R2 -> Diagram b R2
+   --illustrateTrail :: Renderable (Path V2 Double) b => Trail V2 Double -> Diagram b V2 Double
    illustrateTrail t = strokeTrail t <> (mconcat . map illustrateSegment . fixTrail . flip at origin $ t)
 
 The authoritative references on `Metafont` are of course the following books by Knuth:

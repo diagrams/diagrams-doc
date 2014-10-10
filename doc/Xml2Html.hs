@@ -1,10 +1,9 @@
-{-# LANGUAGE Arrows #-}
 {-# LANGUAGE CPP    #-}
 
 module Xml2Html where
 
 import           Control.Arrow
-import           Control.Monad                      (when)
+import           Control.Monad                      (unless)
 import           System.Directory                   (createDirectory,
                                                      doesDirectoryExist)
 import           System.Exit
@@ -12,9 +11,8 @@ import           System.FilePath                    (joinPath, splitPath, (<.>),
                                                      (</>))
 import           System.IO
 
-import           Data.VectorSpace                   (zeroV)
 import qualified Diagrams.Builder                   as DB
-import           Diagrams.Prelude                   (centerXY, pad, (&), (.~))
+import           Diagrams.Prelude                   (centerXY, pad, (&), (.~), zero)
 import           Diagrams.TwoD.Size                 (SizeSpec2D (Dims))
 import           Text.Docutils.CmdLine
 import           Text.Docutils.Transformers.Haskell
@@ -45,8 +43,6 @@ main = do
                        , "active"
                        , "diagrams-lib"
                        , "diagrams-contrib"
-                       , "vector-space"
-                       , "vector-space-points"
                        ]
   errCode <- docutilsCmdLine (diagramsDoc modMap nameMap)
   exitWith errCode
@@ -165,7 +161,7 @@ dropPrefix pre = joinPath . drop (n-1) . splitPath
 
 diagramOrPlaceholder outdir =
   arrIO (compileDiagram outdir) >>> (missing ||| passthrough) where
-    missing = issueErr "diagram could not be rendered"  >>^ (const "default.png")
+    missing = issueErr "diagram could not be rendered" >>^ (const "default.png")
     passthrough = arr id
 
 -- | Compile the literate source code of a diagram to a .png file with
@@ -182,7 +178,7 @@ compileDiagram outDir src = do
                 Cairo
 #endif
 
-                zeroV
+                zero
 
 #ifdef USE_SVG
                 (SVGOptions (Dims 500 200) Nothing)
@@ -249,4 +245,4 @@ compileDiagram outDir src = do
   mkFile base = outDir </> base <.> backendExt
   ensureDir dir = do
     b <- doesDirectoryExist dir
-    when (not b) $ createDirectory dir
+    unless b $ createDirectory dir

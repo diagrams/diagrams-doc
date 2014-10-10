@@ -42,15 +42,12 @@ __ manual.html#v
 Diagrams.Core.Points
 ====================
 
-The `vector-space-points`:pkg: package defines a `Point` type for
-points built on top of the `vector-space`:pkg: package, along with an
-"unsafe" `unPoint` function, the `origin` constant for referring to
-the origin of a vector space, and the `(*.)` operator for scaling a
-point.
+The `linear`:pkg: package defines a `Point` type in `Linear.Affine`:mod:
+along with some functions for working with points.
 
 The `Diagrams.Core.Points`:mod: module simply re-exports a few things
-from `vector-space-points`:pkg:, and defines an instance of `V` for
-`Point`.
+from `linear`:pkg:, defines an instance of `V` and `N` for `Point`,
+and adds a few utility functions for points.
 
 Diagrams.Core.Names
 ===================

@@ -9,7 +9,7 @@ width: 400
 ---
 
 > {-# LANGUAGE NoMonomorphismRestriction #-}
-> import Diagrams.Prelude
+> import Diagrams.Prelude hiding (dot)
 >
 > import Data.Colour
 
@@ -32,7 +32,7 @@ it 60 degrees, and using `decorateTrail` to lay out the rows of dots.
 >       # lw none
 >       # fc c
 >
-> rowSpc = height (rotateBy (1/6) $ strutY 1 :: D R2)
+> rowSpc = height (rotateBy (1/6) $ strutY 1 :: D V2 Double)
 
 `row k n s c` draws a row of `k` size-`n` triangles with color `c`,
 separated by enough space for `s` dots.
@@ -57,4 +57,3 @@ sizes.
 >   where law4' k = law4 k 3 purple gold
 >
 > example = law4Dia # frame 0.2
-

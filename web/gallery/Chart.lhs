@@ -1,3 +1,5 @@
+> import Diagrams.Backend.Cairo.CmdLine
+
 ---
 title: Simple Chart
 author: Chris Mears
@@ -29,7 +31,7 @@ dashing pattern and shape.
 >   , ("sin",      map (\x -> (x, 8+sin x)) [0.0, 0.5 .. 10.0])
 >   ]
 >
-> type Dia = Diagram B R2
+> type Dia = Diagram B V2 Double
 
 The final diagram is the chart with the legend next to it.
 
@@ -160,11 +162,11 @@ The dot styles.
 
 Some custom shapes.
 
-> cross :: Double -> Path R2
+> cross :: Double -> Path V2 Double
 > cross x = fromVertices [ x^&(-x) , ((-x)^&x) ]
 >           <> fromVertices [ x^&x , ((-x)^&(-x)) ]
 >
-> plus :: Double -> Path R2
+> plus :: Double -> Path V2 Double
 > plus x = cross x # rotate (45 @@ deg)
 
 The colour styles.
@@ -178,3 +180,6 @@ The line styles.
 > lineStyles = cycle $
 >                [ id, dashingG [0.1,0.1] 0, dashingG [0.02,0.02] 0
 >                , dashingG [0.1,0.1,0.03,0.1] 0, dashingG [0.1,0.1,0.02,0.02,0.02,0.1] 0 ]
+
+
+> main = mainWith (example :: Diagram B V2 Double)

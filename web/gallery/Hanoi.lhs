@@ -14,7 +14,7 @@ view: -10,1.5,20,20
 > import Data.List
 > import Data.Colour.SRGB (sRGB24read)
 >
-> type Dia = Diagram B R2
+> type Dia = Diagram B V2 Double
 
 First, some colors for our disks, and types to represent the data
 structures involved.

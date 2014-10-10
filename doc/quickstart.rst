@@ -140,7 +140,7 @@ with the following contents:
 > import Diagrams.Prelude
 > import Diagrams.Backend.SVG.CmdLine
 >
-> main = mainWith (circle 1 :: Diagram B R2)
+> main = mainWith (circle 1 :: Diagram B V2 Double)
 
 Turning off the Dreaded Monomorphism Restriction is quite important:
 if you don't, you will almost certainly run into it (and be very
@@ -202,7 +202,7 @@ the `circle` diagram with the `(#)` operator:
 .. container:: warning
 
    You may need to include a type signature to build the examples that
-   follow.  We omit `example :: Diagram B R2` in the examples below.
+   follow.  We omit `example :: Diagram B V2 Double` in the examples below.
 
 .. class:: dia-lhs
 
@@ -342,13 +342,13 @@ local origin of the first diagram to the local origin of the second.
 
 ::
 
-> circleSqV1 = beside (r2 (1,1)) (circle 1) (square 2)
+> circleSqV1 = beside (V2 Double (1,1)) (circle 1) (square 2)
 >
-> circleSqV2 = beside (r2 (1,-2)) (circle 1) (square 2)
+> circleSqV2 = beside (V2 Double (1,-2)) (circle 1) (square 2)
 >
 > example = hcat [circleSqV1, strutX 1, circleSqV2]
 
-Notice how we use the `r2` function to create a 2D vector from a pair
+Notice how we use the `V2 Double` function to create a 2D vector from a pair
 of coordinates; see the `vectors and points tutorial`__ for more.
 
 __ vector.html
@@ -453,7 +453,7 @@ relative to its local origin.
 
 ::
 
-> example = circle 1 # translate (r2 (0.5, 0.3)) # showOrigin
+> example = circle 1 # translate (V2 Double (0.5, 0.3)) # showOrigin
 
 As the above example shows, translating a diagram by `(0.5, 0.3)` is
 the same as moving its local origin by `(-0.5, -0.3)`.
@@ -465,9 +465,9 @@ origins, translation can affect the way diagrams are composed.
 
 ::
 
-> circleSqT   = square 1 `atop` circle 1 # translate (r2 (0.5, 0.3))
-> circleSqHT  = square 1 ||| circle 1 # translate (r2 (0.5, 0.3))
-> circleSqHT2 = square 1 ||| circle 1 # translate (r2 (19.5, 0.3))
+> circleSqT   = square 1 `atop` circle 1 # translate (V2 Double (0.5, 0.3))
+> circleSqHT  = square 1 ||| circle 1 # translate (V2 Double (0.5, 0.3))
+> circleSqHT2 = square 1 ||| circle 1 # translate (V2 Double (19.5, 0.3))
 >
 > example = hcat [circleSqT, strutX 1, circleSqHT, strutX 1, circleSqHT2]
 
@@ -527,7 +527,7 @@ picture:
 
 > opts = with & gaps .~ small & headLength .~ Global 0.15
 >
-> tournament :: Int -> Diagram B R2
+> tournament :: Int -> Diagram B V2 Double
 > tournament n = atPoints (trailVertices $ regPoly n 1) (map mkNode [1..n])
 >     # applyAll [connectOutside' opts j k | j <- [1 .. n-1], k <- [j+1 .. n]]
 >     # sized (Width 2)
@@ -584,10 +584,10 @@ the number of nodes:
 
 ::
 
-> node :: Int -> Diagram B R2
+> node :: Int -> Diagram B V2 Double
 > node n = text (show n) # fontSizeN 0.1 # fc white <> circle 0.2 # fc green
 >
-> tournament :: Int -> Diagram B R2
+> tournament :: Int -> Diagram B V2 Double
 > tournament n = atPoints (trailVertices $ regPoly n 1) (map node [1..n])
 >
 > example = tournament 5
@@ -595,9 +595,9 @@ the number of nodes:
 Note the use of the type `B`, which is exported by every backend as a
 synonym for its particular backend type tag.  This makes it easier to
 switch between backends while still giving explicit type signatures for
-your code: in contrast to a type like `Diagram SVG R2` which is
+your code: in contrast to a type like `Diagram SVG V2 Double` which is
 explicitly tied to a particular backend and would have to be changed
-when switchin to a different backend, the `B` in `Diagram B R2` will
+when switchin to a different backend, the `B` in `Diagram B V2 Double` will
 get instantiated to whichever backend happens to be in scope.
 
 Our final task is to connect the nodes with arrows.  First, in order
@@ -609,11 +609,11 @@ function:
 
 ::
 
-> node :: Int -> Diagram B R2
+> node :: Int -> Diagram B V2 Double
 > node n = text (show n) # fontSizeN 0.1 # fc white
 >       <> circle 0.2 # fc green # named n
 >
-> tournament :: Int -> Diagram B R2
+> tournament :: Int -> Diagram B V2 Double
 > tournament n = atPoints (trailVertices $ regPoly n 1) (map node [1..n])
 
 Note the addition of `... # named n` to the circles making up the nodes.
@@ -639,11 +639,11 @@ objects.  Here we connect nodes 1 and 2:
 
 ::
 
-> node :: Int -> Diagram B R2
+> node :: Int -> Diagram B V2 Double
 > node n = text (show n) # fontSizeN 0.1 # fc white
 >       <> circle 0.2 # fc green # named n
 >
-> tournament :: Int -> Diagram B R2
+> tournament :: Int -> Diagram B V2 Double
 > tournament n = atPoints (trailVertices $ regPoly n 1) (map node [1..n])
 >
 > example = tournament 6 # connectOutside (1 :: Int) (2 :: Int)
@@ -664,11 +664,11 @@ follows:
 
 ::
 
-> node :: Int -> Diagram B R2
+> node :: Int -> Diagram B V2 Double
 > node n = text (show n) # fontSizeN 0.1 # fc white
 >       <> circle 0.2 # fc green # named n
 >
-> tournament :: Int -> Diagram B R2
+> tournament :: Int -> Diagram B V2 Double
 > tournament n = atPoints (trailVertices $ regPoly n 1) (map node [1..n])
 >
 > example = tournament 6
@@ -692,14 +692,14 @@ of situation.
 
 ::
 
-> node :: Int -> Diagram B R2
+> node :: Int -> Diagram B V2 Double
 > node n = text (show n) # fontSizeN 0.1 # fc white
 >       <> circle 0.2 # fc green # named n
 >
 > arrowOpts = with & gaps  .~ small
 >                  & headLength .~ Global 0.2
 >
-> tournament :: Int -> Diagram B R2
+> tournament :: Int -> Diagram B V2 Double
 > tournament n = atPoints (trailVertices $ regPoly n 1) (map node [1..n])
 >   # applyAll [connectOutside' arrowOpts j k | j <- [1 .. n-1], k <- [j+1 .. n]]
 >
