@@ -19,7 +19,7 @@ width: 600
 
 The diagram is the boxes (the "cube") and the lines between the boxes.
 
-> example = let c = cube
+> example = let c = sCube
 >           in pad 1.1 . centerXY $ c <> drawLines c <> square 30
 >                                 # fc whitesmoke
 >                                 # scaleY 0.94
@@ -71,8 +71,8 @@ A box with some interior text and a name.
 The cube is just several boxes superimposed, positioned by adding
 together some positioning vectors.
 
-> cube :: Diagram B V2 Double
-> cube = fc navy $ mconcat
+> sCube :: Diagram B V2 Double
+> sCube = fc navy $ mconcat
 >   [ mybox "Permutation" "perm"
 >   , mybox "Permutation\ngroup" "permgroup"                     # translate right
 >   , mybox "Symmetry" "sym"                                     # translate upright
