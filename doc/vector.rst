@@ -532,8 +532,8 @@ respect to the origin (for example, scaling the point `(1,1)`:math: by
 
 > sqPts = square 1
 >
-> drawPts pts c = pts # map (\p -> (p,dot c)) # position
-> dot c = circle 0.2 # fc c
+> drawPts pts c = pts # map (\p -> (p,dot' c)) # position
+> dot' c = circle 0.2 # fc c
 >
 > example = drawPts sqPts blue
 >        <> drawPts (sqPts # scale 2 # rotateBy(1/10)) red

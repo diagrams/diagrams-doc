@@ -12,7 +12,7 @@ import           System.FilePath                    (joinPath, splitPath, (<.>),
 import           System.IO
 
 import qualified Diagrams.Builder                   as DB
-import           Diagrams.Prelude                   (centerXY, pad, (&), (.~), zero)
+import           Diagrams.Prelude                   (centerXY, pad, (&), (.~), zero, V2)
 import           Diagrams.TwoD.Size                 (SizeSpec2D (Dims))
 import           Text.Docutils.CmdLine
 import           Text.Docutils.Transformers.Haskell
@@ -178,7 +178,7 @@ compileDiagram outDir src = do
                 Cairo
 #endif
 
-                zero
+                (zero :: V2 Double)
 
 #ifdef USE_SVG
                 (SVGOptions (Dims 500 200) Nothing)
