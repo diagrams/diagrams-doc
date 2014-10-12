@@ -81,9 +81,9 @@ compileExample mThumb lhs out = do
                 & imports  .~
 
 #ifdef USE_SVG
-                  [ "Diagrams.Backend.SVG" ]
+                  [ "Diagrams.Backend.SVG", "Diagrams.Backend.SVG.CmdLine" ]
 #else
-                  [ "Diagrams.Backend.Cairo" ]
+                  [ "Diagrams.Backend.Cairo", "Diagrams.Backend.Cairo.CmdLine" ]
 #endif
 
                 & diaExpr .~ toBuild

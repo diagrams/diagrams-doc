@@ -1,5 +1,3 @@
-> import Diagrams.Backend.Cairo.CmdLine
-
 ---
 title: Simple Chart
 author: Chris Mears

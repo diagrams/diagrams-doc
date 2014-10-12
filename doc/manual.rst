@@ -3628,7 +3628,7 @@ reference with a width and height to make a `DImage External`.
 > no = (circle 1 <> hrule 2 # rotateBy (1/8))
 >    # lwO 20 # lc red # frame 0.2
 > example = do
->   res <- loadImageExt "doc/static/phone.png"
+>   res <- loadImageEmb "doc/static/phone.png"
 >   return $ case res of
 >     Left err    -> mempty
 >     Right phone -> no <> image phone # sized (Dims 1.5 1.5)
@@ -5652,6 +5652,8 @@ program.  For example, a diagram; but also animations, lists of
 diagrams, association lists of strings and diagrams, and functions
 from parseable things to any of the above.  See the `command-line
 tutorial`__ for more.
+
+__ cmdline.html
 
 .. class:: lhs
 

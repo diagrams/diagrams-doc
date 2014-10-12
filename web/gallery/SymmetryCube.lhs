@@ -15,7 +15,6 @@ width: 600
 > import Diagrams.Core.Envelope
 > import Diagrams.Prelude
 > import Graphics.SVGFonts
-> import Diagrams.Backend.Cairo.CmdLine
 
 The diagram is the boxes (the "cube") and the lines between the boxes.
 
