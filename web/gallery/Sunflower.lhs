@@ -24,18 +24,18 @@ The n florets of the sunflower are positioned at radii proportional to the squar
 
 The color of each floret is based on it's radius.
 
-> floret :: Double -> Diagram B V2 Double
+> floret :: Double -> Diagram B
 > floret r = circle 0.6 # lw none # fc (colors !! n)
 >   where
 >     n = floor (1.4 * sqrt r) `mod` 10
 >     colors = black : (reverse $ brewerSet YlOrBr 9)
 
-> sunflower :: Int ->  Diagram B V2 Double
+> sunflower :: Int ->  Diagram B
 > sunflower n = position $ zip (mkCoords n) (florets n)
 >   where
 >     florets m = [floret (sqrt (fromIntegral i)) | i <- [1..m]]
 
-> example :: Diagram B V2 Double
+> example :: Diagram B
 > example = sunflower 2000 # centerXY
 >                          # pad 1.1
 >                          # bg black

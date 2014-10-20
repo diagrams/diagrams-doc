@@ -40,4 +40,4 @@ and a function to render edges.
 >         `atop` square 1 # scaleY 12 # translateY (-5)
 >                         # scaleX 34
 >                         # lw none # fc whitesmoke
-> main = mainWith (example :: Diagram B V2 Double)
+> main = mainWith (example :: Diagram B)

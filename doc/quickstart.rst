@@ -140,7 +140,7 @@ with the following contents:
 > import Diagrams.Prelude
 > import Diagrams.Backend.SVG.CmdLine
 >
-> main = mainWith (circle 1 :: Diagram B V2 Double)
+> main = mainWith (circle 1 :: Diagram B)
 
 Turning off the Dreaded Monomorphism Restriction is quite important:
 if you don't, you will almost certainly run into it (and be very
@@ -202,7 +202,7 @@ the `circle` diagram with the `(#)` operator:
 .. container:: warning
 
    You may need to include a type signature to build the examples that
-   follow.  We omit `example :: Diagram B V2 Double` in the examples below.
+   follow.  We omit `example :: Diagram B` in the examples below.
 
 .. class:: dia-lhs
 
@@ -527,7 +527,7 @@ picture:
 
 > opts = with & gaps .~ small & headLength .~ Global 0.15
 >
-> tournament :: Int -> Diagram B V2 Double
+> tournament :: Int -> Diagram B
 > tournament n = atPoints (trailVertices $ regPoly n 1) (map mkNode [1..n])
 >     # applyAll [connectOutside' opts j k | j <- [1 .. n-1], k <- [j+1 .. n]]
 >     # sized (Width 2)
@@ -584,10 +584,10 @@ the number of nodes:
 
 ::
 
-> node :: Int -> Diagram B V2 Double
+> node :: Int -> Diagram B
 > node n = text (show n) # fontSizeN 0.1 # fc white <> circle 0.2 # fc green
 >
-> tournament :: Int -> Diagram B V2 Double
+> tournament :: Int -> Diagram B
 > tournament n = atPoints (trailVertices $ regPoly n 1) (map node [1..n])
 >
 > example = tournament 5
@@ -595,9 +595,9 @@ the number of nodes:
 Note the use of the type `B`, which is exported by every backend as a
 synonym for its particular backend type tag.  This makes it easier to
 switch between backends while still giving explicit type signatures for
-your code: in contrast to a type like `Diagram SVG V2 Double` which is
+your code: in contrast to a type like `Diagram SVG` which is
 explicitly tied to a particular backend and would have to be changed
-when switchin to a different backend, the `B` in `Diagram B V2 Double` will
+when switchin to a different backend, the `B` in `Diagram B` will
 get instantiated to whichever backend happens to be in scope.
 
 Our final task is to connect the nodes with arrows.  First, in order
@@ -609,11 +609,11 @@ function:
 
 ::
 
-> node :: Int -> Diagram B V2 Double
+> node :: Int -> Diagram B
 > node n = text (show n) # fontSizeN 0.1 # fc white
 >       <> circle 0.2 # fc green # named n
 >
-> tournament :: Int -> Diagram B V2 Double
+> tournament :: Int -> Diagram B
 > tournament n = atPoints (trailVertices $ regPoly n 1) (map node [1..n])
 
 Note the addition of `... # named n` to the circles making up the nodes.
@@ -639,11 +639,11 @@ objects.  Here we connect nodes 1 and 2:
 
 ::
 
-> node :: Int -> Diagram B V2 Double
+> node :: Int -> Diagram B
 > node n = text (show n) # fontSizeN 0.1 # fc white
 >       <> circle 0.2 # fc green # named n
 >
-> tournament :: Int -> Diagram B V2 Double
+> tournament :: Int -> Diagram B
 > tournament n = atPoints (trailVertices $ regPoly n 1) (map node [1..n])
 >
 > example = tournament 6 # connectOutside (1 :: Int) (2 :: Int)
@@ -664,11 +664,11 @@ follows:
 
 ::
 
-> node :: Int -> Diagram B V2 Double
+> node :: Int -> Diagram B
 > node n = text (show n) # fontSizeN 0.1 # fc white
 >       <> circle 0.2 # fc green # named n
 >
-> tournament :: Int -> Diagram B V2 Double
+> tournament :: Int -> Diagram B
 > tournament n = atPoints (trailVertices $ regPoly n 1) (map node [1..n])
 >
 > example = tournament 6
@@ -692,14 +692,14 @@ of situation.
 
 ::
 
-> node :: Int -> Diagram B V2 Double
+> node :: Int -> Diagram B
 > node n = text (show n) # fontSizeN 0.1 # fc white
 >       <> circle 0.2 # fc green # named n
 >
 > arrowOpts = with & gaps  .~ small
 >                  & headLength .~ Global 0.2
 >
-> tournament :: Int -> Diagram B V2 Double
+> tournament :: Int -> Diagram B
 > tournament n = atPoints (trailVertices $ regPoly n 1) (map node [1..n])
 >   # applyAll [connectOutside' arrowOpts j k | j <- [1 .. n-1], k <- [j+1 .. n]]
 >

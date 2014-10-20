@@ -27,7 +27,7 @@ including some Spierpinsky triangles among them.
 
 > colorize = zipWith fc $ cycle (brewerSet Dark2 8)
 >
-> sierpinski :: Renderable (Path V2 Double) b => Int -> Diagram b V2 Double
+> sierpinski :: Renderable (Path V2 Double) b => Int -> QDiagram b V2 Double Any
 > sierpinski 1 = eqTriangle 1
 > sierpinski n = (s === (s ||| s) # centerX) # alignY (-1/3)
 >   where s = sierpinski (n-1)

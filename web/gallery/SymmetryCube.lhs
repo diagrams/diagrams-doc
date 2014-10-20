@@ -44,7 +44,7 @@ rectangle.
 
 A single string of text.
 
-> text' :: String -> Double -> Diagram B V2 Double
+> text' :: String -> Double -> Diagram B
 > text' s n = textSVG_ (textOpts s n) # fc white # lw none
 
 Several lines of text stacked vertically.
@@ -70,7 +70,7 @@ A box with some interior text and a name.
 The cube is just several boxes superimposed, positioned by adding
 together some positioning vectors.
 
-> sCube :: Diagram B V2 Double
+> sCube :: Diagram B
 > sCube = fc navy $ mconcat
 >   [ mybox "Permutation" "perm"
 >   , mybox "Permutation\ngroup" "permgroup"                     # translate right
@@ -85,7 +85,7 @@ together some positioning vectors.
 For each pair (a,b) of names, draw an arrow from diagram "a" to
 diagram "b".
 
-> drawLines :: Diagram B V2 Double -> Diagram B V2 Double
+> drawLines :: Diagram B -> Diagram B
 > drawLines cube = foldr (.) id (map (uncurry
 >                        (connectOutside' (with
 >                        & headLength .~ small
@@ -104,4 +104,4 @@ diagram "b".
 >                 , ("parampermgroup","paramsymgroup")
 >                 ]
 
-> main = mainWith (example :: Diagram B V2 Double)
+> main = mainWith (example :: Diagram B)
