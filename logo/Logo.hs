@@ -1,6 +1,6 @@
 {-# LANGUAGE NoMonomorphismRestriction #-}
 
-import Diagrams.Prelude
+import Diagrams.Prelude hiding (dot)
 import Diagrams.Backend.Cairo.CmdLine
 import Diagrams.TwoD.Path
 

@@ -16,6 +16,7 @@ weights hs
   # map (\h -> roundedRect 1 h 0.2)
   # hcat' (with & sep .~ 0.3)
 
+dumbbell :: Double -> [Double] -> Diagram B
 dumbbell w hs = hcat' (with & sep .~ 0.5) [cap, wts, bar, wts # reflectX, cap]
   where
     wts = weights hs

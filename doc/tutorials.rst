@@ -234,7 +234,7 @@ To reference an image from a diagram, do something like
 > no = (circle 1 <> hrule 2 # rotateBy (1/8))
 >    # lwG 0.2 # lc red
 > example = do
->   res <- loadImageExt "doc/static/phone.png"
+>   res <- loadImageEmb "doc/static/phone.png"
 >   return $ case res of
 >     Left err    -> mempty
 >     Right phone -> no <> image phone # sized (Dims 1.5 1.5)

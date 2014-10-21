@@ -691,7 +691,7 @@ know what time it is.  Consider the following program.
 > import Diagrams.Coordinates
 > import Data.Time
 >
-> clock :: UTCTime -> Diagram B V2 Double
+> clock :: UTCTime -> Diagram B
 > clock t = circle 0.35 # fc silver # lwG 0
 >        <> bigHand # f 12 h <> littleHand # f 60 m
 >        <> circle 1  # fc black # lwG 0
@@ -717,7 +717,7 @@ Running we get:
 > import Diagrams.Coordinates
 > import Data.Time
 >
-> clock :: UTCTime -> Diagram B V2 Double
+> clock :: UTCTime -> Diagram B
 > clock t = circle 0.35 # fc silver # lwG 0
 >        <> bigHand # f 12 h <> littleHand # f 60 m
 >        <> circle 1  # fc black # lwG 0

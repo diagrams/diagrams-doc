@@ -45,7 +45,7 @@ options used to make arrows.
 > shaft1 = cubicSpline False (trailVertices (shaft0 `at` origin))
 > shaft2 = cubicSpline False (map p2 [(0,0), (1,0), (0.8, 0.2),(2, 0.2)])
 >
-> example :: Diagram B V2 Double
+> example :: Diagram B
 > example = connect'        arrow1 "1" "2"
 >         . connect'        arrow2 "4" "3"
 >         . connect'        arrow3 "1" "6"
@@ -661,7 +661,7 @@ In the following exercise you can try `connectPerim'` for yourself.
     > shaft = arc xDir (1/6 @@ turn)
     >
     > connectTarget :: (Renderable (Path V2 Double) b)
-    >               =>  Angle Double -> (Diagram b V2 Double -> Diagram b V2 Double)
+    >               =>  Angle Double -> (QDiagram b V2 Double Any -> QDiagram b V2 Double Any)
     > connectTarget a = connectPerim' (with & arrowHead .~ thorn & shaftStyle %~  lwG 0.01
     >                                       & arrowShaft .~ shaft & headLength .~ Global 0.18
     >                                       & arrowTail .~ thorn' & tailLength .~ Global 0.12

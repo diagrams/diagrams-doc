@@ -29,10 +29,10 @@ The diagram is constructed from five basic tiles: four with specific
 markings on, and a fifth which is blank, all $16 \times 16$. The actual
 markings are defined at the end of the file.
 
-> blank :: Diagram B V2 Double
+> blank :: Diagram B
 > blank = lw none $ square 16
 
-> makeTile :: [[P2 Double]] -> Diagram B V2 Double
+> makeTile :: [[P2 Double]] -> Diagram B
 > makeTile = showOrigin . lw thin . centerXY . mconcat . map fromVertices where
 
 > markingsP, markingsQ, markingsR, markingsS :: [[P2 Double]]
@@ -73,7 +73,7 @@ pictures are the same size.
 
 Folding with these operators draws a whole picture.
 
-> drawPicture :: Picture -> Diagram B V2 Double
+> drawPicture :: Picture -> Diagram B
 > drawPicture Blank = blank
 > drawPicture (Single m) = makeTile m
 > drawPicture (Rot p) = rot (drawPicture p)

@@ -1,5 +1,3 @@
-> import Diagrams.Backend.Cairo.CmdLine
-
 ---
 title: Simple Chart
 author: Chris Mears
@@ -31,7 +29,7 @@ dashing pattern and shape.
 >   , ("sin",      map (\x -> (x, 8+sin x)) [0.0, 0.5 .. 10.0])
 >   ]
 >
-> type Dia = Diagram B V2 Double
+> type Dia = Diagram B
 
 The final diagram is the chart with the legend next to it.
 
@@ -182,4 +180,4 @@ The line styles.
 >                , dashingG [0.1,0.1,0.03,0.1] 0, dashingG [0.1,0.1,0.02,0.02,0.02,0.1] 0 ]
 
 
-> main = mainWith (example :: Diagram B V2 Double)
+> main = mainWith (example :: Diagram B)

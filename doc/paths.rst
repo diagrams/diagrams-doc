@@ -101,6 +101,7 @@ find the source code for this tutorial on github.
 
      ::
 
+     > ln :: Trail' Line V2 Double
      > ln    = fromOffsets [unitX, 2 *^ unitY, 2 *^ unitX]
      > theta = angleBetween unitX (lineOffset ln)
      > example

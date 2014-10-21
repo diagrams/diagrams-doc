@@ -23,6 +23,7 @@ textLines = vcat' (with & sep .~ 1.5 ) [s,l,l,s,l,l]
   where l = hrule 6 # alignR
         s = hrule 5 # alignR
 
+d :: Diagram B
 d = page <> textLines
 
 main = defaultMain (pad 1.1 d)

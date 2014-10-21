@@ -15,11 +15,10 @@ width: 600
 > import Diagrams.Core.Envelope
 > import Diagrams.Prelude
 > import Graphics.SVGFonts
-> import Diagrams.Backend.Cairo.CmdLine
 
 The diagram is the boxes (the "cube") and the lines between the boxes.
 
-> example = let c = cube
+> example = let c = sCube
 >           in pad 1.1 . centerXY $ c <> drawLines c <> square 30
 >                                 # fc whitesmoke
 >                                 # scaleY 0.94
@@ -45,7 +44,7 @@ rectangle.
 
 A single string of text.
 
-> text' :: String -> Double -> Diagram B V2 Double
+> text' :: String -> Double -> Diagram B
 > text' s n = textSVG_ (textOpts s n) # fc white # lw none
 
 Several lines of text stacked vertically.
@@ -71,8 +70,8 @@ A box with some interior text and a name.
 The cube is just several boxes superimposed, positioned by adding
 together some positioning vectors.
 
-> cube :: Diagram B V2 Double
-> cube = fc navy $ mconcat
+> sCube :: Diagram B
+> sCube = fc navy $ mconcat
 >   [ mybox "Permutation" "perm"
 >   , mybox "Permutation\ngroup" "permgroup"                     # translate right
 >   , mybox "Symmetry" "sym"                                     # translate upright
@@ -86,7 +85,7 @@ together some positioning vectors.
 For each pair (a,b) of names, draw an arrow from diagram "a" to
 diagram "b".
 
-> drawLines :: Diagram B V2 Double -> Diagram B V2 Double
+> drawLines :: Diagram B -> Diagram B
 > drawLines cube = foldr (.) id (map (uncurry
 >                        (connectOutside' (with
 >                        & headLength .~ small
@@ -105,4 +104,4 @@ diagram "b".
 >                 , ("parampermgroup","paramsymgroup")
 >                 ]
 
-> main = mainWith (example :: Diagram B V2 Double)
+> main = mainWith (example :: Diagram B)

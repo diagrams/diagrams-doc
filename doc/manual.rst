@@ -240,7 +240,7 @@ the following contents:
   -- or:
   -- import Diagrams.Backend.Rasterific.CmdLine
 
-  myCircle :: Diagram B V2 Double
+  myCircle :: Diagram B
   myCircle = circle 1
 
   main = mainWith myCircle
@@ -254,12 +254,11 @@ run into lots of crazy error messages.
 `Diagrams.Prelude`:mod: re-exports almost everything from the standard
 library; `Diagrams.Backend.SVG.CmdLine`:mod: provides a command-line
 interface to the SVG rendering backend.  We then declare `myCircle` to
-have the type `Diagram B V2 Double`: the `V2 Double` part means that
-it is a two-dimensional diagram using a `Double` for each coördinate;
-`B` is an alias representing the particular backend.  All the backends
-export `B` as an alias for themselves, so you can switch backends just
-by changing an import, without having to change type annotations on
-your diagrams; `B` simply refers to whichever backend is in scope.
+have the type `Diagram B` the `B` is an alias representing the particular
+backend.  This also fixes the vector space and numerical field for the diagram.
+All the backends export `B` as an alias for themselves, so you can switch
+backends just by changing an import, without having to change type annotations
+on your diagrams; `B` simply refers to whichever backend is in scope.
 Finally, `mainWith` takes a diagram and creates a command-line-driven
 executable for rendering it.
 
@@ -2582,14 +2581,14 @@ right of the curve for a positive radius and on the left for a negative radius.
 
 > import Diagrams.TwoD.Offset
 >
-> example :: Diagram B V2 Double
+> example :: Diagram B
 > example = hcat' (with & sep .~ 1) $ map f
 >         [ straight p
 >         , bézier3 (r2 (0,0.5)) (r2 (1,0.5)) p
 >         ]
 >   where
 >     p = r2 (1,1)
->     f :: Segment Closed V2 Double -> Diagram B V2 Double
+>     f :: Segment Closed V2 Double -> Diagram B
 >     f s =  fromSegments [s]
 >         <> offsetSegment 0.1 0.2 s # strokeLocTrail # lc blue
 
@@ -2639,7 +2638,7 @@ corners, the offset will be disconnected!
 > offsetTrailNaive e r = mconcat . map (pathFromLocTrail . bindLoc (offsetSegment e r))
 >                      . locatedTrailSegments . (`at` origin)
 >
-> example :: Diagram B V2 Double
+> example :: Diagram B
 > example = (p # strokeTrail <> offsetTrailNaive 0.1 0.3 p # stroke # lc blue)
 >         # lw thick
 >   where p = fromVertices . map p2 $ [(0,0), (1,0.3), (2,0), (2.2,0.3)]
@@ -2661,7 +2660,7 @@ offset segments in other sensible ways.  For the choice of join we have the
 
 > import Diagrams.TwoD.Offset
 >
-> example :: Diagram B V2 Double
+> example :: Diagram B
 > example = (p # strokeTrail <> o # strokeLocTrail # lc blue)
 >         # lw thick
 >   where
@@ -2687,7 +2686,7 @@ join.
 
 > import Diagrams.TwoD.Offset
 >
-> example :: Diagram B V2 Double
+> example :: Diagram B
 > example = hcat' (with & sep .~ 0.5) $ map f [LineJoinMiter, LineJoinRound, LineJoinBevel]
 >   where
 >     f s = p # strokeTrail <> (offsetTrail' (with & offsetJoin .~ s) 0.3 p # strokeLocTrail # lc blue)
@@ -2770,7 +2769,7 @@ of loops, one inside and one outside.  To express this we need a `Path`.
 
 > import Diagrams.TwoD.Offset
 >
-> example :: Diagram B V2 Double
+> example :: Diagram B
 > example = (p # strokeTrail # lw veryThick # lc white <> e # stroke # lw none # fc blue)
 >   where
 >     p = fromVertices . map p2 $ [(0,0), (1,0.3), (2,0), (2.2,0.3)]
@@ -2790,7 +2789,7 @@ and plan to support custom styles in future releases.
 
 > import Diagrams.TwoD.Offset
 >
-> example :: Diagram B V2 Double
+> example :: Diagram B
 > example = hcat' (with & sep .~ 0.5) $ map f [LineCapButt, LineCapRound, LineCapSquare]
 >   where
 >     f s =  p # strokeTrail # lw veryThick # lc white
@@ -3628,7 +3627,7 @@ reference with a width and height to make a `DImage External`.
 > no = (circle 1 <> hrule 2 # rotateBy (1/8))
 >    # lwO 20 # lc red # frame 0.2
 > example = do
->   res <- loadImageExt "doc/static/phone.png"
+>   res <- loadImageEmb "doc/static/phone.png"
 >   return $ case res of
 >     Left err    -> mempty
 >     Right phone -> no <> image phone # sized (Dims 1.5 1.5)
@@ -4021,7 +4020,7 @@ of all the names recorded within a diagram and the locations of any
 associated subdiagrams.
 
 When using `names` you will often need to add a type annotation such
-as `Diagram B V2 Double` to its argument, as shown below---for an explanation and
+as `Diagram B` to its argument, as shown below---for an explanation and
 more information, see `No instances for Backend b0 V2 Double ...`_.
 
 ::
@@ -4315,7 +4314,7 @@ the ellipse red and points outside it blue.
 > import System.Random (randomRIO)
 > import Control.Monad (replicateM)
 >
-> c :: Diagram B V2 Double
+> c :: Diagram B
 > c = circle 5 # scaleX 2 # rotateBy (1/14)
 >
 > mkPoint p = (p, circle 0.3
@@ -4433,9 +4432,9 @@ The arrows on the right are wrapped in `ScaleInv` but the ones on the left are n
 > import Control.Lens ((^.))
 >
 > class Drawable d where
->   draw :: d -> Diagram B V2 Double
+>   draw :: d -> Diagram B
 >
-> instance Drawable (Diagram B V2 Double) where
+> instance Drawable (QDiagram B V2 Double Any) where
 >   draw = id
 >
 > instance Drawable a => Drawable (ScaleInv a) where
@@ -4444,7 +4443,7 @@ The arrows on the right are wrapped in `ScaleInv` but the ones on the left are n
 > instance (Drawable a, Drawable b) => Drawable (a,b) where
 >   draw (x,y) = draw x <> draw y
 >
-> arrowhead, shaft :: Diagram B V2 Double
+> arrowhead, shaft :: Diagram B
 > arrowhead = triangle 0.5 # fc black # rotateBy (-1/4)
 > shaft = origin ~~ p2 (3, 0)
 >
@@ -5652,6 +5651,8 @@ program.  For example, a diagram; but also animations, lists of
 diagrams, association lists of strings and diagrams, and functions
 from parseable things to any of the above.  See the `command-line
 tutorial`__ for more.
+
+__ cmdline.html
 
 .. class:: lhs
 
