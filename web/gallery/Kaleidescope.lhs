@@ -14,7 +14,7 @@ width: 400
 > import           Data.Colour.Palette.ColorSet
 > import           Data.List                     (zipWith, zipWith3)
 > import           Diagrams.Prelude
-> import           System.Random
+> import           System.Random hiding (mkStdGen, RandomGen, StdGen)
 
 > type Dia = Diagram B
 

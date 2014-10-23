@@ -36,7 +36,7 @@ The function to use to create the vector field.
 >     sW   = 0.004 * m
 >     sL   = 0.05 + 0.1 * m
 >     opts = (with & arrowHead  .~ spike
->                  & headLength   .~ Normalized hs
+>                  & headLength   .~ normalized hs
 >                  & shaftStyle %~ lwN sW)
 >
 > field   = position $ zip points arrows

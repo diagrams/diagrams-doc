@@ -601,7 +601,7 @@ square can be specified as an absolute two pixels wide, or as a
 certain percentage of the size of the final diagram, or in units
 relative to the size of the square.  More specifically, values of type
 `Measure n` represent `n` values, interpreted in one of four
-"reference frames": `Local`, `Global`, `Normalized`, or `Output`,
+"reference frames": `local`, `global`, `normalized`, or `output`,
 described below in turn.
 
 In addition to the four reference frames described here, it is
@@ -611,15 +611,15 @@ DSL for specifying measurements; see `Measurement expressions`_.
 Local units
 ~~~~~~~~~~~
 
-`Local` units are the most straightforward to explain.  Values in
-`Local` units are interpreted in the context of the *local* vector
+`local` units are the most straightforward to explain.  Values in
+`local` units are interpreted in the context of the *local* vector
 space, just as most other length measurements (*e.g.* arguments to
 functions like `circle` and `square`).  For example, `square 1 # lwL
 0.2` specifies a square which is drawn with lines one fifth as wide as
 its sides are long---and will *always* be, even if it is scaled: the
 line width scales right along with the square. (Note that `lwL`
-specifies the line width using `Local` units, and is a synonym for `lw
-. Local`.),
+specifies the line width using `local` units, and is a synonym for `lw
+. local`.),
 
 .. class:: dia-lhs
 
@@ -638,7 +638,7 @@ lines; to achieve such an effect, you can first turn a stroked line
 into a closed path, as described in `Offsets of segments, trails, and
 paths`_.
 
-A important consequence of `Local` units having the *current* vector
+A important consequence of `local` units having the *current* vector
 space as their reference is that attribute-setting functions such as
 `lwL` do *not* commute with transformations.
 
@@ -656,13 +656,13 @@ space as their reference is that attribute-setting functions such as
 Global units
 ~~~~~~~~~~~~
 
-Whereas `Local` values are interpreted in the current, "local" vector
-space, `Global` values are interpreted in the final, "global" vector
+Whereas `local` values are interpreted in the current, "local" vector
+space, `global` values are interpreted in the final, "global" vector
 space of the diagram that is rendered.  In the following example,
-`theSq` is specified as having a `Global` line width of `1`; five
+`theSq` is specified as having a `global` line width of `1`; five
 differently-scaled copies of the square are laid out, so that the entire
 scaled diagram has a width of around `6` units.  The lines, having a
-line width of `Global 0.05`, are thus about 0.8% of the width of the
+line width of `global 0.05`, are thus about 0.8% of the width of the
 entire diagram.
 
 .. class:: dia-lhs
@@ -677,11 +677,11 @@ entire diagram.
 
 Versions of ``diagrams`` prior to `1.2` actually had a semantics for
 `lw` equivalent to `lwG`.  One advantage, as can be seen from the
-above example, is that different shapes having the same `Global` line
+above example, is that different shapes having the same `global` line
 width, even when differently scaled, will all be drawn with the same
-apparent line width. However, `Normalized` and `Output` have that
+apparent line width. However, `normalized` and `output` have that
 property as well, and are probably more useful; the problem with
-`Global` units is that in order to decide on values, one has to know
+`global` units is that in order to decide on values, one has to know
 the final size of the diagram, which is not typically something one
 knows in advance.  In particular, note that applying something like
 `scale 20` to the `example` above---a seemingly innocuous
@@ -700,7 +700,7 @@ reasonable again would require changing the argument to `lwG`.
 >     (map (\s -> theSq # scale s) [0.5, 0.8, 1, 1.5, 2])
 >   # scale 20
 
-In short, `Global` units tend to go against ``diagrams`` emphasis on
+In short, `global` units tend to go against ``diagrams`` emphasis on
 local, scale-invariant thinking.  They were left in for backwards
 compatibility, and because they can occasionaly be useful in special
 situations where you do already have some absolute, global coordinate
@@ -710,14 +710,14 @@ system in mind: for example, if you know you want to construct a
 Normalized units
 ~~~~~~~~~~~~~~~~
 
-`Normalized` units, like `Global` units, are measured with respect to
+`normalized` units, like `global` units, are measured with respect to
 the final size of a diagram. However, for the purposes of interpreting
-`Normalized` units, the diagram is considered to be one "normalized
-unit" in both height and width.  For example, a `Normalized` value of
+`normalized` units, the diagram is considered to be one "normalized
+unit" in both height and width.  For example, a `normalized` value of
 `0.1` means "10% of the height/width of the final diagram".  Thus,
 scaling the diagram has no effect on the relative size of the lines
-(just as with `Local`), but lines look consistent even across shapes
-that have been scaled differently (as with `Global`).
+(just as with `local`), but lines look consistent even across shapes
+that have been scaled differently (as with `global`).
 
 .. class:: dia-lhs
 
@@ -730,27 +730,27 @@ that have been scaled differently (as with `Global`).
 >     (map (\s -> theSq # scale s) [0.5, 0.8, 1, 1.5, 2])
 >   # scale 20
 
-Note that the `scale 20` threatened in the `Global` example has been
+Note that the `scale 20` threatened in the `global` example has been
 applied here, but makes no difference: changing the `20` to any other
 nonzero value has no effect on the appearance of the rendered diagram.
 
 Output units
 ~~~~~~~~~~~~
 
-Values measured in `Output` units are interpreted with respect to the
+Values measured in `output` units are interpreted with respect to the
 *requested output size* of a diagram.  Sometimes you really do know
 that you want your lines to be exactly 1/2 inch wide when printed.  In
 this case, scaling a diagram will preserve its appearance, but
 requesting a different output size might not.
 
-One situation in which `Output` units can be particularly useful is
+One situation in which `output` units can be particularly useful is
 when preparing a document (paper, blog post, *etc.*) with multiple
-embedded diagrams of various physical sizes.  Using the same `Output`
+embedded diagrams of various physical sizes.  Using the same `output`
 value for the line width (or arrowhead length, arrow gap, font size,
 *etc.*) of every diagram ensures that the diagrams will all look
 consistent.  On the other hand, if the diagrams all have the same
 physical size (*e.g.* they are all `300 \times 200`:math: pixels), then they
-will also look consistent if the same `Normalized` value is used for
+will also look consistent if the same `normalized` value is used for
 all of them (which is the default for line width).
 
 .. container:: todo
@@ -1196,7 +1196,7 @@ which there are two possibilities:
   >                     (regPoly 7 1)
   >                   # lw none
   >                   # showLabels
-  >                   # fontSize (Local 0.6)
+  >                   # fontSize (local 0.6)
   >              <> star (StarFun f) (regPoly 7 1)
   >                   # stroke # lw thick # lc red
   > example       = center . hcat' (with & sep .~ 0.5) $ map visualize funs
@@ -1658,8 +1658,8 @@ values to specify things like line width (see `Measurement units`_).
 
 In many situations, it is desirable to have lines drawn in a uniform
 way, regardless of any scaling applied to shapes.  This is what
-happens with line widths measured in `Global`, `Normalized` or
-`Output` units, as in the following example:
+happens with line widths measured in `global`, `normalized` or
+`output` units, as in the following example:
 
 .. class:: dia-lhs
 
@@ -1673,7 +1673,7 @@ happens with line widths measured in `Global`, `Normalized` or
 >   # dashingN [0.03,0.03] 0
 >   # lwN 0.01
 
-For line widths that scale along with a diagram, use `Local`; in this
+For line widths that scale along with a diagram, use `local`; in this
 case line widths will be scaled in proportion to the geometeric
 average of the scaling transformatins applied to the diagram.
 
@@ -1681,9 +1681,9 @@ The `LineWidth` attribute is used to alter the *width* with which
 paths are stroked. The most general functions that can be used to set
 the line width are `lineWidth` and its synonym `lw`, which take an
 argument of type `Measure V2 n`.  Since typing things like `lineWidth
-(Normalized 0.01)` is cumbersome, there are also shortcuts provided:
+(normalized 0.01)` is cumbersome, there are also shortcuts provided:
 `lwG`, `lwN`, `lwO`, and `lwL` all take an argument of type `Double`
-and wrap it in `Global`, `Normalized`, `Ouput` and `Local`,
+and wrap it in `global`, `normalized`, `ouput` and `local`,
 respectively.
 
 There are also predefined `Measure n` values with intuitive names,
@@ -1702,7 +1702,7 @@ should often suffice for setting the line width.
 
 In the above example, there is no discernible difference between
 `ultraThin`, `veryThin`, and `thin`; these names all describe
-`Normalized` measurements with a physical lower bound, so the physical
+`normalized` measurements with a physical lower bound, so the physical
 width of the resulting lines depends on the physical size of the
 rendered diagram.  At larger rendering sizes the differences between
 the smaller widths become apparent.
@@ -1775,7 +1775,7 @@ applying the desired attributes:
 
 ::
 
-> foo = myFun (mempty # fontSize (Local 2) # lw none # fc green)
+> foo = myFun (mempty # fontSize (local 2) # lw none # fc green)
 
 If the type `T` is an instance of `HasStyle`, then `[T]` is also.
 This means that you can apply styles uniformly to entire lists of
@@ -3359,7 +3359,7 @@ to `connect` is `connect'`. These companion functions take an extra
   defined as the length of the head or tail plus the joint connecting
   it to the shaft. Their value is of
   type `Measure V2 Double` (see  `Measurement units`_). The
-  default value is `normal` which is a synonym for `Normalized 0.035`.
+  default value is `normal` which is a synonym for `normalized 0.035`.
   A traversal called `lengths` sets both the `headLength` and `tailLength`
   at the same time.
 
@@ -3498,7 +3498,7 @@ generally, `fontWeight`), `italic`, and `oblique` (or, more generally,
 
 ::
 
-> text' s t = text t # fontSize (Local s) <> strutY (s * 1.3)
+> text' s t = text t # fontSize (local s) <> strutY (s * 1.3)
 > example = center $
 >       text' 10 "Hello" # italic
 >   === text' 5 "there"  # bold # font "freeserif"
@@ -3510,10 +3510,10 @@ Font size
 Font size is set using the `fontSize` function, and is specified by a
 value of type `Measure V2 Double` (see `Measurement units`_).
 
-* Text with a `Local` font size is measured relative to its local
+* Text with a `local` font size is measured relative to its Local
   vector space.  Such text is transformed normally by any
   transformations applied to it.  For example, in the diagram below,
-  `fontSize (Local 1)` is specified (this is actually the default, so
+  `fontSize (local 1)` is specified (this is actually the default, so
   it could be omitted without changing the diagram). Note how the F's
   are the same size as a unit box, and scale, stretch, and rotate
   along with it.
@@ -3526,10 +3526,10 @@ value of type `Measure V2 Double` (see `Measurement units`_).
   >
   > example = hcat
   >   [eff, eff # scale 2, eff # scaleX 2, eff # scaleY 2, eff # rotateBy (1/12)]
-  >         # fontSize (Local 1)
+  >         # fontSize (local 1)
 
 * Text whose font size is specified in any measurement other than
-  `Local` (that is, `Normalized`, `Global`, or `Output`) behaves
+  `local` (that is, `normalized`, `global`, or `output`) behaves
   differently.
 
   .. class:: dia-lhs
@@ -3540,11 +3540,11 @@ value of type `Measure V2 Double` (see `Measurement units`_).
   >
   > example = hcat
   >   [eff, eff # scale 2, eff # scaleX 2, eff # scaleY 2, eff # rotateBy (1/12)]
-  >         # fontSize (Normalized 0.1)
+  >         # fontSize (normalized 0.1)
 
   There are several things to notice about the above example
   diagram, which is identical to the previous one except for the
-  fact that `Normalized 0.1` is used instead of `Local 1`:
+  fact that `normalized 0.1` is used instead of `local 1`:
 
   * The F's are 1/10th the size of the overall diagram.  If
     we added more copies of `eff` to the right, but kept the
@@ -3558,16 +3558,16 @@ value of type `Measure V2 Double` (see `Measurement units`_).
     not twice as tall as the others.  Note, however, that the final F
     rotates with the square as expected.  Note also that the third and
     fourth F's are squished, as one would expect from a non-uniform
-    scaling.  The hand-wavy slogan is that non-`Local`-sized text is
+    scaling.  The hand-wavy slogan is that non-`local`-sized text is
     "affected by transformations, but without changing size".
 
     The technical specification is that applying a transformation
-    `T`:math: to non-`Local`-sized text actually results in applying
+    `T`:math: to non-`local`-sized text actually results in applying
     the transformation `T/|T|`:math:, where `|T|`:math: denotes the
     *average scaling factor* of the transformation `T`:math:, computed
     as the square root of the positive determinant of `T`:math:.  This
     behaves nicely: for example, the average scaling factor of `scale
-    k` is `k`, so applying a uniform scaling to non-`Local`-sized text
+    k` is `k`, so applying a uniform scaling to non-`local`-sized text
     has no effect; it is also compositional, so applying `t` and then
     `s` to some text has exactly the same effect as applying `s <> t`.
     For more information, see the `avgScale` function and the comments
@@ -3630,7 +3630,7 @@ reference with a width and height to make a `DImage External`.
 >   res <- loadImageEmb "doc/static/phone.png"
 >   return $ case res of
 >     Left err    -> mempty
->     Right phone -> no <> image phone # sized (Dims 1.5 1.5)
+>     Right phone -> no <> image phone # sized (dims2D 1.5 1.5)
 
 When using `loadImageEmb` and `loadImageExt` you do not need to
 provide the width and height of the image, as they will be calculated
@@ -4428,7 +4428,7 @@ The arrows on the right are wrapped in `ScaleInv` but the ones on the left are n
 
 > {-# LANGUAGE TypeSynonymInstances, FlexibleInstances #-}
 >
-> import Diagrams.TwoD.Transform.ScaleInv
+> import Diagrams.Transform.ScaleInv
 > import Control.Lens ((^.))
 >
 > class Drawable d where
@@ -4471,24 +4471,24 @@ Measurement expressions
 .. container:: todo
 
   Go through this section and update it if we merge physical units for
-  `Output`.
+  `output`.
 
 There is more to `Measure`\s (see `Measurement units`_) than just the
 four reference frames.  In fact, a small domain-specific language for
 constructing measurements is provided, with the following features:
 
 * `atLeast :: Measure n -> Measure n -> Measure n` finds the maximum
-  of two measurements.  For example, `Normalized 0.2 \`atLeast\`
-  Local 1` evaluates to whichever measurement ends up being larger,
-  `Normalized 0.2` or `Local 1`.
+  of two measurements.  For example, `normalized 0.2 \`atLeast\`
+  local 1` evaluates to whichever measurement ends up being larger,
+  `normalized 0.2` or `local 1`.
 
   In fact, the standard line widths like `medium`, `thick`, *etc.*
-  are defined as `Normalized w \`atLeast\` Output 0.5`, each with a
+  are defined as `normalized w \`atLeast\` output 0.5`, each with a
   different value of `w` (for example, for `medium`, `w = 0.004`).
 * Similarly, `atMost` takes the minimum of two `Measure`\s.
 * `Measure v` is an instance of `AdditiveGroup`, which provides `zero
   :: Measure v`, `negated :: Measure v -> Measure v`, and `(^+^)` for
-  adding measurements.  For example, `Normalized 0.1 ^+^ Output 1`
+  adding measurements.  For example, `normalized 0.1 ^+^ output 1`
   represents 10% of the width or height of the diagram plus one output
   unit.
 

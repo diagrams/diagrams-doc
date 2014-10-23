@@ -163,7 +163,7 @@ and concatenation of lines as `mappend` (aka `<>`).
 
      > p = pentagon 1 # onLineSegments init
      > example = iterateN 5 (rotateBy (1/5)) p
-     >    # mconcat # strokeLine # centerXY # pad 1.1 # sized (Width 2)
+     >    # mconcat # strokeLine # centerXY # pad 1.1 # sized (mkWidth 2)
 
   #. `reverseLine`
 
@@ -182,7 +182,7 @@ and concatenation of lines as `mappend` (aka `<>`).
      >   where h' = hanoi (n-1)
      >
      > example = hanoi 4 # strokeLine
-     >   # centerXY # pad 1.1 # sized (Width 2)
+     >   # centerXY # pad 1.1 # sized (mkWidth 2)
 
 Loops
 =====
@@ -238,7 +238,7 @@ some lines and then call `glueLine` on the result.  You try:
      > p = pentagon 1 # onLineSegments init
      > example = iterateN 5 (rotateBy (1/5)) p
      >    # mconcat # glueLine # strokeLoop
-     >    # fc green # centerXY # pad 1.1 # sized (Width 2)
+     >    # fc green # centerXY # pad 1.1 # sized (mkWidth 2)
 
   #. .. class:: dia
 
@@ -248,7 +248,7 @@ some lines and then call `glueLine` on the result.  You try:
      > steps n = mconcat (replicate n step)
      >        <> step # rotateBy (1/2) # scale (fromIntegral n)
      > example = steps 5 # glueLine # strokeLoop # fc red
-     >   # centerXY # pad 1.1 # sized (Width 2)
+     >   # centerXY # pad 1.1 # sized (mkWidth 2)
 
   #. .. class:: dia
 
@@ -268,7 +268,7 @@ some lines and then call `glueLine` on the result.  You try:
      > example = foldr andThen mempty (replicate 5 armUnit)
      >   # glueLine # strokeLoop # fc blue
      >   # rotateBy (1/20)
-     >   # centerXY # pad 1.1 # sized (Width 2)
+     >   # centerXY # pad 1.1 # sized (mkWidth 2)
 
      You may find this function useful:
 
@@ -310,7 +310,7 @@ beginning.
      > tines = mconcat . replicate 10 $ tine
      > comb = s <> tines <> s # reflectX # reverseLine
      > example = comb # closeLine # strokeLoop # fc yellow
-     >   # centerXY # pad 1.1 # sized (Width 2)
+     >   # centerXY # pad 1.1 # sized (mkWidth 2)
 
 Finally, to convert from a loop to a line, use `cutLoop`, which "cuts"
 a loop at its shared start/end point, resulting in a line which "just
@@ -373,7 +373,7 @@ another.
      >   = explodeTrail (heptagon 1)
      >   # map (strokeLocTrail . mapLoc (rotateBy (1/20)))
      >   # mconcat
-     >   # centerXY # pad 1.1 # sized (Width 2)
+     >   # centerXY # pad 1.1 # sized (mkWidth 2)
 
   #. .. class:: dia
 
@@ -391,7 +391,7 @@ another.
      >   # zipWith lc (cycle [red, blue])
      >   # mconcat
      >   # lwG 0.05
-     >   # centerXY # pad 1.1 # sized (Width 2)
+     >   # centerXY # pad 1.1 # sized (mkWidth 2)
 
 Paths
 =====
@@ -416,7 +416,7 @@ A *path* is simply a collection of located trails.
      >   # zipWith lc [red,orange,yellow,blue,green,purple]
      >   # mconcat
      >   # lwG 0.03
-     >   # centerXY # pad 1.1 # sized (Width 2)
+     >   # centerXY # pad 1.1 # sized (mkWidth 2)
 
   #. `atPoints`, `fillRule`
 

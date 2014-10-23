@@ -72,9 +72,9 @@ compileExample mThumb lhs out = do
                 zero
 
 #ifdef USE_SVG
-                (SVGOptions (mkSizeSpec w h) Nothing)
+                (SVGOptions (mkSizeSpec2D w h) Nothing)
 #else
-                (CairoOptions out (mkSizeSpec w h) fmt False)
+                (CairoOptions out (mkSizeSpec2D w h) fmt False)
 #endif
 
                 & snippets .~ [f']

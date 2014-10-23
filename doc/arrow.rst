@@ -126,7 +126,7 @@ Connecting Points
 
 .. container:: warning
 
-  The default length of an arrow head is `Normalized 0.035` which
+  The default length of an arrow head is `normalized 0.035` which
   scales with the size of the diagram. Since the diagrams in this
   tutorial are relatively small and we want to highlight the arrows,
   we often set the head length and tail length to a larger size.
@@ -524,7 +524,7 @@ how we might create a vector field using the `arrowAt'` function.
 >     hs   = 0.08 * m
 >     sW   = 0.015 * m
 >     sL   = 0.01 + 0.1 * m
->     opts = (with & arrowHead .~ tri & headLength .~ Global hs & shaftStyle %~ lwG sW)
+>     opts = (with & arrowHead .~ tri & headLength .~ global hs & shaftStyle %~ lwG sW)
 >
 > field   = position $ zip points arrows
 > example = ( field # translateY 0.05
@@ -663,8 +663,8 @@ In the following exercise you can try `connectPerim'` for yourself.
     > connectTarget :: (Renderable (Path V2 Double) b)
     >               =>  Angle Double -> (QDiagram b V2 Double Any -> QDiagram b V2 Double Any)
     > connectTarget a = connectPerim' (with & arrowHead .~ thorn & shaftStyle %~  lwG 0.01
-    >                                       & arrowShaft .~ shaft & headLength .~ Global 0.18
-    >                                       & arrowTail .~ thorn' & tailLength .~ Global 0.12
+    >                                       & arrowShaft .~ shaft & headLength .~ global 0.18
+    >                                       & arrowTail .~ thorn' & tailLength .~ global 0.12
     >                                      ) "target" "bullseye" a a
     >
     > angles :: [Angle Double]

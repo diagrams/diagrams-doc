@@ -13,7 +13,7 @@ import           System.IO
 
 import qualified Diagrams.Builder                   as DB
 import           Diagrams.Prelude                   (centerXY, pad, (&), (.~), zero, V2)
-import           Diagrams.TwoD.Size                 (SizeSpec2D (Dims))
+import           Diagrams.TwoD.Size                 (dims2D)
 import           Text.Docutils.CmdLine
 import           Text.Docutils.Transformers.Haskell
 import           Text.Docutils.Util
@@ -181,9 +181,9 @@ compileDiagram outDir src = do
                 (zero :: V2 Double)
 
 #ifdef USE_SVG
-                (SVGOptions (Dims 500 200) Nothing)
+                (SVGOptions (dims2D 500 200) Nothing)
 #else
-                (CairoOptions "default.png" (Dims 500 200) PNG False)
+                (CairoOptions "default.png" (dims2D 500 200) PNG False)
 #endif
 
                 & DB.snippets .~ [src]
