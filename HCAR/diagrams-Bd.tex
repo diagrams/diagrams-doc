@@ -1,9 +1,10 @@
 % diagrams-Bd.tex
 \begin{hcarentry}[updated]{diagrams}
-\report{Brent Yorgey}%05/13
+\report{Brent Yorgey}%11/14
 \status{active development}
-\participants{Daniel Bergey, Jan Bracker, Daniil Frumin, Andy Gill, John Lato, Chris Mears, Jeff
-  Rosenbluth, Michael Sloan, Ryan Yates}
+\participants{Daniel Bergey, Jan Bracker, Christopher Chalmers, Daniil Frumin,  Alan Gardner, Andy Gill, 
+  Niklas Haas, John Lato, Chris Mears, Jeff Rosenbluth, Michael Sloan, Ryan Yates}
+
 \makeheader
 
 The diagrams framework provides an embedded domain-specific language
@@ -27,29 +28,27 @@ annotations, named subdiagrams, and more.
 
 \subsubsection*{What's new}
 
-Since the last HCAR edition, version 0.7 was released in August 2013.
-New features in 0.7 include:
+Since the last HCAR edition we have seen releases 1.0 and 1.1 and 
+the current version 1.2 was released in June 2014.
+New features include:
 \begin{itemize}
-\item A big refactoring of the way segments, trails, and paths are
-  represented; the new API is more powerful and semantically consistent.
-\item Functions to compute the curvature of path segments at a given point.
-\item Segment offsets (paths lying a constant distance away
-  from a given segment).  A fuller implementation with offsets for
-  entire trails will be in the upcoming 1.0 release.
-\item A generalized color API, allowing backends to use whatever color
-  space they want.
-\item Additions to the \texttt{diagrams-contrib} library, including a
-  symmetric layout algorithm for binary trees, circle packing layout, a
-  generalized turtle drawing interface, factorization diagrams, and
-  iterated subset fractals.
-\item Many documentation improvements, using \texttt{diagrams-haddock}
-  to  generate example images.
-\item Big improvements to \texttt{diagrams-builder}, including much
-  smarter rebuilding and \texttt{hsenv} support.
-\item Official support for the \texttt{SVGFonts} package, providing
-  Haskell-native code for handling font data and converting strings
-  into diagrams paths.
+\item An API for drawing arrows including: several ways to connect diagrams
+  with arrows, arbitrary shaped shafts, a collection of arrowheads and tails.
+\item Consistent use of the \texttt{lens} package to access and modify 
+  record fields and newtypes.
+\item Performance improvements of about 30\% obtained by the use
+  of better data structures to represent diagram output.
+\item Support for 3D diagrams.
+\item Introduction of a new measurement type and the removal of the
+  freeze function makes things like handling line widths and text sizes
+   more flexible.
+\item New haskell native backends: \texttt{diagrams-rasterific} and
+  \texttt{diagrams-canvas}. 
+\item Many other features including support for: linear and radial gradients, tight alignment of convex
+  shapes, improved clipping, animated GIFs (in cairo and rasterific), creating offsets paths,
+  and both external and embedded images.
 \end{itemize}
+
 
 % %**<img width=400 src="./diagrams-haddock.jpg">
 % %*ignore
@@ -59,19 +58,18 @@ New features in 0.7 include:
 % %*endignore
 
 There have been many improvements and changes to the core
-diagrams libraries as well.  A 1.0 release is planned for on or around
-November 20, to coincide with Brent's presentation at the New York
-Haskell Users' Group.  Features slated for the 1.0 release
-include:
+diagrams libraries as well.  The next release of diagrams is
+slated to include:
 \begin{itemize}
-\item A nice API for drawing arrows between arbitrary points or diagrams.
-\item Convenient integration with the \texttt{lens} package.
-\item Path offsets and expansions: for example, the operation of
-  ``stroking'' a path can now be internalized within diagrams,
-  returning a closed path representing the outline of the stroke.
-\item Performance improvements: across-the-board improvements of
-  around 30\%, and more optimized SVG output.
+\item Support of handling directions (vectors which have forgotten their magnitude).
+  Which will provide a consistent API in all dimensions.
+\item Generic scalars values, i.e. not restricted to type 
+  Double.
+\item A major refactoring of the way vector spaces are handled
+  using the \texttt{linear} package.
+\item a PGF backend with full TeX support.
 \end{itemize}
+
 
 %**<img width=350 src="./PythagoreanTree.png">
 %*ignore
@@ -87,6 +85,15 @@ include:
 \includegraphics[width=0.33\textwidth]{html/FibCalls.png}
 \end{center}
 %*endignore
+\subsubsection*{GSoC}
+
+We had two Google Summer of Code projects dedicated to diagrams
+projects this past summer ...
+
+\begin{itemize}
+\item (mathnerd 314) ...
+\item (hassn) ...
+\end{itemize}
 
 \subsubsection*{Contributing}
 
