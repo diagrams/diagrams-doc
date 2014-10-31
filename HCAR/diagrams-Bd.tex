@@ -1,6 +1,6 @@
 % diagrams-Bd.tex
 \begin{hcarentry}[updated]{diagrams}
-\report{Brent Yorgey}%11/14
+\report{Jeffrey Rosenbluth}%11/14
 \status{active development}
 \participants{Daniel Bergey, Jan Bracker, Christopher Chalmers, Daniil Frumin,  Allan Gardner, Andy Gill, 
   Niklas Haas, John Lato, Chris Mears, Jeff Rosenbluth, Michael Sloan, Ryan Yates}
@@ -19,10 +19,10 @@ of primitive shapes and attributes, many different modes of
 composition, paths, cubic splines, images, text, arbitrary monoidal
 annotations, named subdiagrams, and more.
 
-%**<img width=500 src="./paradox.jpg">
+%**<img width=400 src="./paradox.jpg">
 %*ignore
 \begin{center}
-\includegraphics[width=0.47\textwidth]{html/paradox.jpg}
+\includegraphics[width=0.47\textwidth]{html/arrows.png}
 \end{center}
 %*endignore
 
@@ -33,7 +33,7 @@ the current version 1.2 was released in June 2014.
 New features include:
 \begin{itemize}
 \item An API for drawing arrows including: several ways to connect diagrams
-  with arrows, arbitrary shaped shafts, a collection of arrowheads and tails.
+  with arrows, arbitrary shaped shafts, and a collection of arrowheads.
 \item Consistent use of the \texttt{lens} package to access and modify 
   record fields and newtypes.
 \item Performance improvements of about 30\% obtained by the use
@@ -71,10 +71,10 @@ slated to include:
 \end{itemize}
 
 
-%**<img width=350 src="./PythagoreanTree.png">
+%**<img width=350 src="./kaleidoscope.png">
 %*ignore
 \begin{center}
-\includegraphics[width=0.4\textwidth]{html/kaleidoscope.png}
+\includegraphics[width=0.45\textwidth]{html/kaleidoscope.png}
 \end{center}
 %*endignore
 
@@ -91,15 +91,14 @@ We had two Google Summer of Code projects dedicated to diagrams
 projects this past summer ...
 
 \begin{itemize}
-\item (Allan Gardner)
-\item (Niklas Haas) ...
-\end{itemize}
-
-Allan Gardner laid the groundwork for using numeric types beyond
+\item Allan Gardner laid the groundwork for using numeric types beyond
 Double.  After several iterations, this led to the adoption of the
 \textt{linear} package. This paves the way for using automatic
 differentiation, constraint solving, and fixed or dynamic precision
 numbers with Diagrams.
+\item (Niklas Haas) ...
+\end{itemize}
+
 
 \subsubsection*{Contributing}
 
