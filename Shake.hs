@@ -107,7 +107,7 @@ main = do
       obj "//*.xml" *> \out -> do
         let rst = un $ out -<.> "rst"
         need [rst]
-        system' "rst2xml" ["--input-encoding=utf8", rst, out]
+        system' "rst2xml.py" ["--input-encoding=utf8", rst, out]
 
       obj "//*.hs.o" *> \out -> do
         let hs = un $ dropExtension out
