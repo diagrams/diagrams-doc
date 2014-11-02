@@ -3617,7 +3617,7 @@ plus a width and a height to the`rasterDia` function.
 
 The function `loadImageExt` checks to make sure the file exists, uses
 `JuicyPixels`:pkg: to determine its size and returns a reference to
-the image. On the otherhand `uncheckedImageRef` simply packages the
+the image. On the other hand `uncheckedImageRef` simply packages the
 reference with a width and height to make a `DImage External`.
 
 .. class:: dia-lhs
