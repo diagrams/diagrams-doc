@@ -1502,7 +1502,7 @@ provides a large set of predefined color names as well as many more
 sophisticated color operations; see its documentation for more
 information.  The `colour`:pkg: package uses a different type for
 colors with an alpha channel (*i.e.* transparency). To make use of
-transparent colors you can use `lcA` and `fcA`. The `palette`::pkg: package
+transparent colors you can use `lcA` and `fcA`. The `palette`:pkg: package
 provides additional sets of colors and algorithms for creating harmonious
 color combinations.
 
