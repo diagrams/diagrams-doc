@@ -57,10 +57,19 @@ loop.  The website will now automatically be rebuilt any time any
 source files change.
 
 For example, on a four-core Ubuntu machine, assuming you already have
-the Haskell Platform installed, and have cloned the relevant diagrams
-repositories from github, and want to use the cairo backend, you could
-issue the commands
+the Haskell Platform installed and want to use the cairo backend, you could
+first clone the relevant diagrams repositories from github:
 
+* [diagrams-core](https://github.com/diagrams/diagrams-core/)
+* [diagrams-lib](https://github.com/diagrams/diagrams-lib/)
+* [diagrams-cairo](https://github.com/diagrams/diagrams-cairo/)
+* [diagrams-contrib](https://github.com/diagrams/diagrams-contrib/)
+* [diagrams-builder](https://github.com/diagrams/diagrams-builder/)
+* [SVGFonts](https://github.com/diagrams/SVGFonts/)
+* [palette](https://github.com/diagrams/palette/)
+* [docutils](https://github.com/diagrams/docutils/)
+
+Then run the following commands:
 ```
 sudo apt-get install libgtk-3-dev libcairo2-dev python-docutils
 cabal install hsenv
