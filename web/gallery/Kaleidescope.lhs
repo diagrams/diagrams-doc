@@ -60,7 +60,7 @@ We use monadRandom to hide the plumbing of the many random numbers we need. The 
 >   xs <- replicateM n coordValue  -- x coordinate
 >   ys <- replicateM n coordValue  -- y coordinate
 >   let mkCirc :: Double -> Int -> Double -> Dia
->       mkCirc s c a = circle s # fc (webColors c) # opacity a
+>       mkCirc s c a = circle s # fc (webColors c) # lw none # opacity a
 >       pos = zipWith mkP2 xs ys
 >       conf = zipWith3 mkCirc ss cs as
 >   return $ position (zip pos conf)
