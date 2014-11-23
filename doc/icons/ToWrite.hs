@@ -13,12 +13,12 @@ import           Control.Lens                   ((&), (.~))
 import           Diagrams.Prelude
 
 page  = rect 8.5 11
-      # lw (Local 0.4)
+      # lw (local 0.4)
       # lineJoin LineJoinRound
 
 textLines = vcat' (with & sep .~ 1.5 ) [s,l,l,s,l,l]
           # centerXY
-          # lw (Local 0.5)
+          # lw (local 0.5)
           # lineCap LineCapRound
   where l = hrule 6 # alignR
         s = hrule 5 # alignR

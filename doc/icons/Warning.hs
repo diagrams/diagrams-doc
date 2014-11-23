@@ -16,7 +16,7 @@ sign = mconcat . take 3 . iterate (rotateBy (1/3)) $ signSide
 
 d :: Diagram B
 d = text "!" # fc black # bold
- <> strokeLoop (glueLine sign) # lc black # lw (Output 3) # center
+ <> strokeLoop (glueLine sign) # lc black # lw (output 3) # center
 
 
 main = defaultMain $ pad 1.15 d
