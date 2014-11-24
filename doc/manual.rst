@@ -1095,8 +1095,11 @@ optional parameters that control the generated polygon:
     >   where p n = polygon (with
     >                 & polyType .~ PolyRegular n 1 )
 
-  * `PolySides` specifies the vertices using a list of angles
-    between edges, and a list of edge lengths.
+  * `PolySides` specifies the vertices using a list of external angles between
+    edges, and a list of edge lengths. More precisely, the first edge length is
+    between the first and second vertex, while the first external angle is
+    between the first and second edge. In the example below, the first vertex is
+    on the bottom right.
 
     .. class:: dia-lhs
 
