@@ -55,9 +55,7 @@ Module names in the text are typeset like this:
 documentation.  You can also click on any function or operator name in
 code examples to take you to its documentation.  Try it:
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
   example = circle 2 ||| pentagon 3
 
@@ -225,9 +223,7 @@ Getting started
 Create a file called ``TestDiagram.hs`` (or whatever you like) with
 the following contents:
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
   {-# LANGUAGE NoMonomorphismRestriction #-}
 
@@ -360,9 +356,7 @@ A *monoid* is a semigroup with the addition of
 In Haskell, semigroups are expressed using the `Semigroup` type class
 from the `semigroups`:pkg: package:
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
   class Semigroup s where
     (<>) :: s -> s -> s
@@ -370,9 +364,7 @@ from the `semigroups`:pkg: package:
 and monoids are expressed using the `Monoid` type class, defined in
 ``Data.Monoid``:
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
   class Monoid m where
     mempty  :: m
@@ -383,9 +375,7 @@ and `mempty` is the identity element.  (`mappend` and `(<>)` should
 always be the same; there are two different functions for historical
 reasons.) A function
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
   mconcat :: Monoid m => [m] -> m
 
@@ -414,9 +404,7 @@ Any function which should take some optional, named arguments instead
 takes a single argument which is a record of options.  The record type
 is declared to be an instance of the `Default` type class:
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > class Default d where
 >   def :: d
@@ -427,9 +415,7 @@ containing all the default arguments.  The idea is that you can pass
 `def` as an argument to a function which takes a record of options,
 and override only the fields you want, like this:
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > foo (def & arg1 .~ someValue & arg6 .~ blah)
 
@@ -545,9 +531,7 @@ help clarify things if you found the above description confusing.
 included, although you certainly aren't expected to understand it yet
 if you are just reading this manual for the first time!)
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > illustrateEnvelope v d
 >   = mconcat
@@ -618,10 +602,10 @@ functions like `circle` and `square`).  For example, `square 1 # lwL
 0.2` specifies a square which is drawn with lines one fifth as wide as
 its sides are long---and will *always* be, even if it is scaled: the
 line width scales right along with the square. (Note that `lwL`
+specifies the line width using `local` units, and is a synonym for `lw
+. local`.),
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > localSq = square 1 # lwL 0.2
 > example =
@@ -640,9 +624,7 @@ A important consequence of `local` units having the *current* vector
 space as their reference is that attribute-setting functions such as
 `lwL` do *not* commute with transformations.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > example =
 >   hcat' (with & sep .~ 0.5)
@@ -663,9 +645,7 @@ scaled diagram has a width of around `6` units.  The lines, having a
 line width of `global 0.05`, are thus about 0.8% of the width of the
 entire diagram.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > theSq = square 1 # lwG 0.05
 >
@@ -687,9 +667,7 @@ change---would result in extremely thin lines (or even invisible,
 depending on the backend), as shown below.  Making this look
 reasonable again would require changing the argument to `lwG`.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > theSq = square 1 # lwG 0.05
 >
@@ -717,9 +695,7 @@ scaling the diagram has no effect on the relative size of the lines
 (just as with `local`), but lines look consistent even across shapes
 that have been scaled differently (as with `global`).
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > theSq = square 1 # lwN 0.01
 >
@@ -782,9 +758,7 @@ and modifications.  Additionally, `(#)` has a high precedence so it
 can be used to make "local" modifications without requiring lots of
 parentheses:
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > example =     square 2 # fc red # rotateBy (1/3)
 >           ||| circle 1 # lc blue # fc green
@@ -806,9 +780,7 @@ a list of diagrams and lays them out in a horizontal row.  So one
 might expect its type to be something like `[Diagram] -> Diagram`.  In
 actuality, its type is
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
   hcat :: (Juxtaposable a, HasOrigin a, Monoid' a, V a ~ V2, N a ~ n, TypeableFloat n)
      => [a] -> a
@@ -983,9 +955,7 @@ functions, defined in `Diagrams.TwoD.Ellipse`:mod:.
 
 For example,
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > example = circle 0.5 <> unitCircle
 
@@ -998,9 +968,7 @@ and rotating`__ circles.
 
 __ `2D Transformations`_
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > example = unitCircle # scaleX 0.5 # rotateBy (1/6)
 
@@ -1020,9 +988,7 @@ functions for conveniently constructing arcs.
 
 __ `Angles`_
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > example = hcat' (with & sep .~ 0.5) [arc d a, wedge 1 d a, annularWedge 1 0.6 d a]
 >   where
@@ -1048,9 +1014,7 @@ polygons and other path-based shapes.  For example:
 * `roundedRect` constructs a rectangle with circular rounded corners.
 * `roundedRect'` works like `roundedRect` but allowing a different radius to be set for each corner, using `RoundedRectOpts`.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > example = square 1
 >       ||| rect 0.3 0.5
@@ -1065,9 +1029,7 @@ Completing the hodgepodge in `Diagrams.TwoD.Shapes`:mod: for now, the
 functions `hrule` and `vrule` create horizontal and vertical lines,
 respectively.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > example = c ||| hrule 1 ||| c
 >   where c = circle 1 <> vrule 2
@@ -1123,9 +1085,7 @@ optional parameters that control the generated polygon:
 * Additionally, a center other than the origin can be specified using
   `polyCenter`.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > poly1 = polygon ( with & polyType  .~ PolyRegular 13 5
 >                        & polyOrient .~ OrientV )
@@ -1145,9 +1105,7 @@ Star polygons
 A "star polygon" is a polygon where the edges do not connect
 consecutive vertices; for example:
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > example = star (StarSkip 3) (regPoly 13 1) # stroke
 
@@ -1228,9 +1186,7 @@ top of the other with `atop`.  The diagram `d1 \`atop\` d2` is formed
 by placing `d1`'s local origin on top of `d2`'s local origin; that is,
 by identifying their local vector spaces.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > example = circle 1 `atop` square (sqrt 2)
 
@@ -1244,9 +1200,7 @@ This also means that a list of diagrams can be stacked with `mconcat`;
 that is, `mconcat [d1, d2, d3, ...]` is the diagram with `d1` on top
 of `d2` on top of `d3` on top of...
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > example = mconcat [ circle 0.1 # fc green
 >                   , triangle 1 # scale 0.4 # fc yellow
@@ -1266,9 +1220,7 @@ first argument to `beside` is a vector specifying a direction.  The
 second and third arguments are diagrams, which are placed next to each
 other so that the vector points from the first diagram to the second.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > example = beside (r2 (20,30))
 >                  (circle 1 # fc orange)
@@ -1284,9 +1236,7 @@ makes `beside v` associative, so diagrams under `beside v` form a
 semigroup.  In fact, they form a monoid, since `mempty` is a left and
 right identity for `beside v`, as can be seen in the example below:
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > example = hcat' (with & sep .~ 1) . map showOrigin
 >         $ [ d, mempty ||| d, d ||| mempty ]
@@ -1298,9 +1248,7 @@ recover the old behavior, simply perform an alignment on the first
 diagram in the same direction as the argument to `beside` before
 combining (see `Alignment`_):
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > example = beside (r2 (20,30))
 >                  (circle 1   # fc orange # align (r2 (20,30)))
@@ -1317,9 +1265,7 @@ is quite common, special combinators are provided for convenience.
 `(|||)` and `(===)` are specializations of `beside` which juxtapose
 diagrams in the `x`:math:\- and `y`:math:\-directions, respectively.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > d1 = circle 1 # fc red
 > d2 = square 1 # fc blue
@@ -1337,9 +1283,7 @@ returns a modified version of `d2` which has been translated to be
 next to `d1` in the direction of `v`.  (In fact, `beside` itself is
 implemented as a call to `juxtapose` followed by a call to `(<>)`.)
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > d1 = juxtapose unitX             (square 1) (circle 1 # fc red)
 > d2 = juxtapose (unitX ^+^ unitY) (square 1) (circle 1 # fc green)
@@ -1366,9 +1310,7 @@ The simplest method of combining multiple diagrams is `position`,
 which takes a list of diagrams paired with points, and places the
 local origin of each diagram at the indicated point.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > example = position (zip (map mkPoint [-3, -2.8 .. 3]) (repeat spot))
 >   where spot       = circle 0.2 # fc black
@@ -1381,9 +1323,7 @@ along a straight line in the direction of the given vector, and the
 local origin of the first diagram in the list will be used as the
 local origin of the final result.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > example = cat (r2 (2, -1)) (map p [3..8]) # showOrigin
 >   where p n = regPoly n 1
@@ -1396,9 +1336,7 @@ For more control over the way in which the diagrams are laid out, use
 the documentation for `cat'` and `CatOpts` to learn about the various
 possibilities.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > example = cat' (r2 (2,-1)) (with & catMethod .~ Distrib & sep .~ 2 ) (map p [3..8])
 >   where p n = regPoly n 1 # scale (1 + fromIntegral n/4)
@@ -1411,9 +1349,7 @@ since using `hcat'` or `vcat'` with some separation tends to be
 common, `hsep` and `vsep` are provided as short synonyms; that is,
 `hsep s = hcat' (with & sep .~ s)`, and similarly for `vsep`.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > example = hsep 0.2 (map square [0.3, 0.7 .. 2])
 
@@ -1425,9 +1361,7 @@ be taken into account when deciding where to place the next one.  Of
 course, `appends` is implemented in terms of `juxtapose` (see
 `Juxtaposing without composing`_).
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > c        = circle 1
 > dirs     = iterate (rotateBy (1/7)) unitX
@@ -1478,9 +1412,7 @@ supported by the SVG, Cairo, and Rasterific backends (see `Rendering backends`_)
 Future releases should also support patterns as textures. The data type
 for a texture is
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > data Texture = SC SomeColor | LG LGradient | RG RGradient
 
@@ -1492,9 +1424,7 @@ Color
 The color used to stroke the paths can be set with the `lc` (line color)
 function and the color used to fill them with the `fc` (fill color) function.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > example = circle 0.2 # lc purple # fc yellow
 
@@ -1510,9 +1440,7 @@ transparent colors you can use `lcA` and `fcA`. The `palette`:pkg: package
 provides additional sets of colors and algorithms for creating harmonious
 color combinations.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > import Data.Colour (withOpacity)
 >
@@ -1525,9 +1453,7 @@ sets the opacity/transparency of a diagram as a whole. Applying
 `opacity p` to a diagram, where `p` is a value between `0` and `1`,
 results in a diagram `p` times as opaque.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > s c     = square 1 # fc c
 > reds    = (s darkred ||| s red) === (s pink ||| s indianred)
@@ -1539,9 +1465,7 @@ superimposes the diagram on top of a bounding rectangle of the given
 color. The `bgFrame` function is similar but the background is expanded
 to frame the diagram by a specified amount.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > t = regPoly 3 1
 >
@@ -1561,9 +1485,7 @@ ending points should be handled, `GradPad` will fill the space with the final st
 color, `GradRepeat` will restart the gradient, and `GradReflect` will restart the
 gradient but with the stops reversed. This is the data type for a linear gradient.
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > data LGradient = LGradient
 >   { _lGradStops        :: [GradientStop]
@@ -1578,9 +1500,7 @@ a start and end point, and a spread method and creates a `Texture` are provided 
 In this example we demonstrate how to make linear gradients with the `mkLinearGradient`
 functions and how to adjust it using the lenses and prisms.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > stops = mkStops [(gray, 0, 1), (white, 0.5, 1), (purple, 1, 1)]
 > gradient = mkLinearGradient stops ((-0.5) ^& 0) (0.5 ^& 0) GradPad
@@ -1598,9 +1518,7 @@ functions and how to adjust it using the lenses and prisms.
 Here we apply the gradient to the stroke only and give it starting and
 ending points towards the corners.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > stops = mkStops [(teal, 0, 1), (orange, 1, 1)]
 > gradient = mkLinearGradient stops ((-1) ^& (-1)) (1 ^& 1) GradPad
@@ -1612,9 +1530,7 @@ Radial Gradients
 Radial gradients are similar, only they begin at the perimeter of an inner cirlce and
 end at the perimeter of an outer circle.
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > data RGradient = RGradient
 >     { _rGradStops        :: [GradientStop]
@@ -1630,9 +1546,7 @@ In this example we place the inner circle off center and place a circle filled
 with the radial gradient on top of a rectangle filled with a linear gradient
 to create a 3D effect.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > radial = mkRadialGradient (mkStops [(white,0,1), (black,1,1)])
 >                           ((-0.15) ^& (0.15)) 0.06 (0 ^& 0) 0.5
@@ -1665,9 +1579,7 @@ way, regardless of any scaling applied to shapes.  This is what
 happens with line widths measured in `global`, `normalized` or
 `output` units, as in the following example:
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > example = hcat
 >   [ square 1
@@ -1695,9 +1607,7 @@ namely, `ultraThin`, `veryThin`, `thin`, `medium`, `thick`,
 `veryThick`, `ultraThick`, and `none` (the default is `medium`), which
 should often suffice for setting the line width.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > line = strokeT . fromOffsets $ [unitX]
 > example = vcat' (with & sep .~ 0.1)
@@ -1734,9 +1644,7 @@ for three aspects of line drawing:
 * `dashing` allows for drawing dashed lines with arbitrary dashing
   patterns.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > path = fromVertices (map p2 [(0,0), (1,0.3), (2,0), (2.2,0.3)]) # lwO 10
 > example = center . vcat' (with & sep .~ 0.1 )
@@ -1761,9 +1669,7 @@ style of generated diagrams.  The general pattern is to take a `Style`
 (or several) as an argument, then apply it to a diagram along with
 some default attributes:
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > myFun style = d # applyStyle style # lc red # ...
 >   where d = ...
@@ -1775,9 +1681,7 @@ To call `myFun`, a user can construct a `Style` by starting with an
 empty style (`mempty`, since `Style` is an instance of `Monoid`) and
 applying the desired attributes:
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > foo = myFun (mempty # fontSize (local 2) # lw none # fc green)
 
@@ -1787,9 +1691,7 @@ diagrams at once, which occasionally comes in handy, for example, to
 assign a default attribute to all diagrams in a list which do not
 already have one:
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > example = hcat $
 >   [circle 1, square 2, triangle 2 # fc yellow, hexagon 1] # fc blue
@@ -1934,9 +1836,7 @@ about some point other than the origin.
 
 __ `Angles`_
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > eff = text "F" <> square 1 # lw none
 > rs  = map rotateBy [1/7, 2/7 .. 6/7]
@@ -1953,9 +1853,7 @@ shrinking (with a factor less than one).  Using a negative factor
 results in a reflection (in the case of `scaleX` and `scaleY`) or a
 180-degree rotation (in the case of `scale`).
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > eff = text "F" <> square 1 # lw none
 > ts  = [ scale (1/2), id, scale 2,    scaleX 2,    scaleY 2
@@ -1975,9 +1873,7 @@ confusing (does `reflectX` reflect *along* the `x`:math:\-axis or
 
 To reflect in some line other than an axis, use `reflectAbout`.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > eff = text "F" <> square 1 # lw none
 > example = eff
@@ -2005,9 +1901,7 @@ then the inverse of the transformation.  For example, scaling by a
 factor of 2 along the diagonal line `y = x`:math: can be accomplished
 thus:
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > eff = text "F" <> square 1 # lw none
 > example = (scaleX 2 `under` rotation (-1/8 @@ turn)) eff
@@ -2048,9 +1942,7 @@ space, returning a value of the same type.
 `Diagrams.TwoD.Deform`:mod: defines parallel and perspective
 projections along the principal axes in 2 dimensions.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > sq = unitSquare # translate (5 ^& 3) :: Path V2 Double
 > marks = repeat . lw none $ circle 0.02
@@ -2123,9 +2015,7 @@ ones by `Diagrams.TwoD.Align`:mod:.
 Functions like `alignT` (align Top) and `alignBR` (align Bottom Right)
 move the local origin to the edge of the envelope:
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > s = square 1 # fc yellow
 > x |-| y = x ||| strutX 0.5 ||| y
@@ -2143,9 +2033,7 @@ Functions like `alignY` allow finer control over the alignment.  In
 the below example, the origin is moved to a series of locations
 interpolating between the bottom and top of the square:
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > s = square 1 # fc yellow
 > example = hcat . map showOrigin
@@ -2162,9 +2050,7 @@ instead of the envelope. For example, here we want to snug a convex
 shape (the orange triangle) next to a concave shape (the blue
 polygon):
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > import Diagrams.TwoD.Align
 >
@@ -2238,9 +2124,7 @@ Currently, ``diagrams`` supports two types of segment, defined in
 
 __ http://en.wikipedia.org/wiki/Bézier_curve
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > illustrateBézier c1 c2 x2
 >     =  endpt
@@ -2366,9 +2250,7 @@ fill it (lines cannot be filled).  `strokeLoop` turns a loop into a
 diagram, with the start of the loop at the local origin. (There are
 also analogous functions `strokeLine` and `strokeTrail`.)
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > spoke :: Trail' Line V2 Double
 > spoke = fromOffsets . map r2 $ [(1,3), (1,-3)]
@@ -2445,9 +2327,7 @@ a trail but then do different things with its individual segments.
 For example, we could construct the same starburst as above but color
 the edges individually:
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > spoke :: Trail V2 Double
 > spoke = fromOffsets . map r2 $ [(1,3), (1,-3)]
@@ -2517,9 +2397,7 @@ section: `fromSegments`, `fromOffsets`, `fromVertices`, `(~~)`, and
 multiple components can be used, for example, to create shapes with
 holes:
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > ring :: Path V2 Double
 > ring = circle 3 <> (circle 2 # reversePath)
@@ -2579,9 +2457,7 @@ you can think of the offset as the curve traced by the end of a vector of
 length `r`:math: perpendicular to the original curve.  This vector goes on the
 right of the curve for a positive radius and on the left for a negative radius.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > import Diagrams.TwoD.Offset
 >
@@ -2608,9 +2484,7 @@ The offset of a cubic Bézier curve could be a higher degree curve.  To
 accommodate this we approximate the offset with a sequence of segments.  We
 now have enough details to write the type for `offsetSegment`.
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > offsetSegment :: Double -> Double -> Segment Closed V2 Double -> Located (Trail V2 Double)
 
@@ -2626,9 +2500,7 @@ trail.  A first approach might be to simply map `offsetSegment` over the
 segments of a trail.  But we quickly notice that if the trail has any sharp
 corners, the offset will be disconnected!
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > import Diagrams.TwoD.Offset
 >
@@ -2658,9 +2530,7 @@ is perpendicular at the start of the next.  We could also choose to join togethe
 offset segments in other sensible ways.  For the choice of join we have the
 `_offsetJoin` field in the `OffsetOpts` record.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > import Diagrams.TwoD.Offset
 >
@@ -2684,9 +2554,7 @@ There are other interesting ways we can join segments.  We implement the standar
 line join styles and will also in the future provide the ability to specify a custom
 join.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > import Diagrams.TwoD.Offset
 >
@@ -2705,9 +2573,7 @@ would be beyond the miter limit, the join is instead done with a straight line
 as in the `LineJoinBevel` style.  The `OffsetOpts` record then has three
 parameters:
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > data OffsetOpts = OffsetOpts
 >     { _offsetJoin       :: LineJoin
@@ -2718,9 +2584,7 @@ parameters:
 And the type for `offsetTrail'` is (`offsetTrail` simply uses the `Default`
 instance for `OffsetOpts`):
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > offsetTrail  ::               Double -> Located (Trail V2 Double) -> Located (Trail V2 Double)
 > offsetTrail' :: OffsetOpts -> Double -> Located (Trail V2 Double) -> Located (Trail V2 Double)
@@ -2745,9 +2609,7 @@ In addition to specifying how segments are joined, we now have to specify the
 transition from the offset on one side of a curve to the other side of a curve.
 This is given by the `LineCap`.
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > data ExpandOpts = ExpandOpts
 >     { _expandJoin       :: LineJoin
@@ -2767,9 +2629,7 @@ the result of `expandTrail` is a `Path V2 Double` where `offsetTrail` resulted i
 a `Located (Trail V2 Double)`.  This is because an expanded `Loop` will be a pair
 of loops, one inside and one outside.  To express this we need a `Path`.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > import Diagrams.TwoD.Offset
 >
@@ -2787,9 +2647,7 @@ works out that the extra loop in the rounded line join will match with
 the outside corner.  We currently implement all the `LineCap` styles,
 and plan to support custom styles in future releases.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > import Diagrams.TwoD.Offset
 >
@@ -2815,9 +2673,7 @@ of the `TrailLike` type class.
 The `TrailLike` type class, defined in `Diagrams.TrailLike`:mod:, has
 only a single method, `trailLike`:
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > trailLike :: Located (Trail (V t)) -> t
 
@@ -2861,9 +2717,7 @@ As an (admittedly contrived) example, the following diagram defines
 `s` as an alias for `square 2` and then uses it at four different
 instances of `TrailLike`:
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > s = square 2  -- a squarish thingy.
 >
@@ -2887,9 +2741,7 @@ paths, trails, and lists of vertices all have `Monoid` instances, but
 they are all different, so the combination of shapes has different
 semantics depending on which type is inferred.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > ts = mconcat . iterateN 3 (rotateBy (1/9)) $ triangle 1
 > example = (ts ||| stroke ts ||| strokeLine ts ||| fromVertices ts) # fc red
@@ -2958,9 +2810,7 @@ as a function `Double -> V2 Double`.
 The `Parametric` class defines the single method `atParam` which
 yields this parametric view of an object:
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > atParam :: Parametric p => p -> Scalar (V p) -> Codomain p
 
@@ -2970,9 +2820,7 @@ not correspond to something of type `p`.  For example, to convert from
 a function to a trail one would need at the very least a guarantee of
 continuity; segments are even more restricted.)
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > spline :: Located (Trail V2 Double)
 > spline = cubicSpline False [origin, 0 ^& 1, 1 ^& 1, 1 ^& 0] # scale 3
@@ -3086,9 +2934,7 @@ path passing through each point in turn.  The first argument to
 `cubicSpline` is a boolean value indicating whether the path should be
 closed.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > pts = map p2 [(0,0), (2,3), (5,-2), (-4,1), (0,3)]
 > spot = circle 0.2 # fc blue # lw none
@@ -3114,9 +2960,7 @@ determining which points are inside is quite simple, and the two
 algorithms give the same results. However, for self-intersecting
 paths, they usually result in different regions being filled.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > loopyStar = fc red
 >           . mconcat . map (cubicSpline True)
@@ -3185,9 +3029,7 @@ the even-odd fill rule, and the one on the right with the default
 winding rule and a reversed inner circle.  The dark blue points
 indicate places where the associated query evaluates to true.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > points = [x ^& 0 | x <- [-2.3, -2.1 .. 2.3]]
 > dia1 = (circle 2 <> circle 1) # stroke # fillRule EvenOdd
@@ -3210,9 +3052,7 @@ With backends that support clipping, paths can be used to *clip* other
 diagrams.  Only the portion of a clipped diagram falling inside the
 clipping path will be drawn.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > example = square 3
 >         # fc green
@@ -3236,9 +3076,7 @@ diagram to be "viewed" in the final output.  It takes a point---the
 lower-left corner of the viewing rectangle---and the vector from the
 lower-left to upper-right corner.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > circles = (c ||| c) === (c ||| c) where c = circle 1 # fc fuchsia
 > example = circles # center # view (p2 (-1,-1)) (r2 (1.3, 0.7))
@@ -3313,9 +3151,7 @@ __ /gallery/SymmetryCube.html
 * `arrowV` to create an arrow with the magnitude and direction of a given
   vector.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > sPt = 0.50 ^& 0.50
 > ePt = 5.2 ^& 0.50
@@ -3388,9 +3224,7 @@ The following example demonstrates the use of various `ArrowOpts`.
 See `Named subdiagrams`_ for the use of names and the `named`
 function.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > c = circle 2 # fc lightgray # lw none # showOrigin
 >
@@ -3443,9 +3277,7 @@ Text objects, defined in `Diagrams.TwoD.Text`:mod:, can be created
 most simply with the `text` function, which turns a `String` into a
 diagram with (centered) text:
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > example = text "Hello world!" <> rect 8 1
 
@@ -3454,9 +3286,7 @@ Text with different alignments can be created using `topLeftText` or
 supported by all backends---the SVG backend in particular only
 supports an approximation to `alignedText`):
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > pt = circle 0.1 # fc red
 >
@@ -3498,9 +3328,8 @@ generally, `fontWeight`), `italic`, and `oblique` (or, more generally,
 `fontSlant`).  Text is colored with the current fill color (see
 `Color`_).
 
-.. class:: dia-lhs
+.. code:: dia-lhs
 
-::
 > text' s t = text t # fontSize (local s) <> strutY (s * 1.3)
 > example = center $
 >       text' 10 "Hello" # italic
@@ -3587,9 +3416,7 @@ its own `textSVG` function which can be used to convert text into a
 
 .. _`SVGFonts package`: http://hackage.haskell.org/package/SVGFonts
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > text' d s = (stroke $ textSVG' (TextOpts s lin2 INSIDE_H KERN False d d))
 >           # lw none
@@ -3623,9 +3450,7 @@ The function `loadImageExt` checks to make sure the file exists, uses
 the image. On the other hand `uncheckedImageRef` simply packages the
 reference with a width and height to make a `DImage External`.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > no = (circle 1 <> hrule 2 # rotateBy (1/8))
 >    # lwO 20 # lc red # frame 0.2
@@ -3819,9 +3644,7 @@ All objects with an associated envelope are instances of the
 `Enveloped` type class.  This includes diagrams, segments, trails, and
 paths.  `Enveloped` provides a single method,
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > getEnvelope :: Enveloped b => b -> Envelope (V b)
 
@@ -3926,9 +3749,7 @@ diagram.
 The below diagram illustrates the use of the `rayTraceP` function to
 identify points on the boundaries of several diagrams.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 > {-# LANGUAGE TypeFamilies #-}
 
 > import Data.Maybe (mapMaybe)
@@ -3975,9 +3796,7 @@ suffices for a type to be an instance of `Typeable`, `Eq`, `Ord`, and
 `Show`.  Making a user-defined type an instance of `IsName` is as
 simple as:
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > {-# LANGUAGE DeriveDataTypeable #-}
 >
@@ -4042,9 +3861,7 @@ Once we have given names to one or more diagrams, what can we do with
 them?  The simplest tool for working with names is `lookupName`, which
 has the type
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
   lookupName :: IsName n
              => n -> QDiagram b v m -> Maybe (Subdiagram b v m)
@@ -4059,9 +3876,7 @@ hope is that you shouldn't need to.)
 A more sophisticated tool is `withName`, which has the (admittedly
 scary-looking!) type
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
   withName :: (IsName nm, Metric v , Semigroup m, OrderedField n)
            => nm -> (Subdiagram b v n m -> QDiagram b v n m -> QDiagram b v n m)
@@ -4074,9 +3889,7 @@ distance), and that `n` must behave sufficiently like the real
 numbers.  So the first argument of `withName` is a name---that makes
 sense.  The second argument is a function of type
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
   Subdiagram b v n m -> QDiagram b v n m -> QDiagram b v n m
 
@@ -4102,9 +3915,7 @@ the centers of two subdiagrams (though for this particular task it is
 probably more convenient to use the provided `connect`
 function):
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > data Foo = Baz | Bar | Wibble
 >   deriving (Typeable, Eq, Ord, Show)
@@ -4160,9 +3971,7 @@ There is also a function `place`, which is simply a flipped version of
 conjunction with `withName`.  For example, to draw a square at the
 location of a given name, one can write something like
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > withName n $ atop . place (square 1) . location
 
@@ -4181,9 +3990,7 @@ below code draws a tree of circles, using subdiagram traces (see
 `Traces`_) to connect the *bottom* edge of the parent circle to the
 *top* edge of each child circle, instead of connecting their centers.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > import Data.Maybe (fromMaybe)
 >
@@ -4217,9 +4024,7 @@ applied not only to individual names but also to an entire diagram
 (resulting in all names in the diagram being qualified).  To construct
 a qualified name explicitly, separate the components with `(.>)`.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > data Corner = NW | NE | SW | SE
 >   deriving (Typeable, Eq, Ord, Show)
@@ -4310,9 +4115,7 @@ The following example queries an ellipse (using the `sample` function
 to sample it at a set of particular points), coloring points inside
 the ellipse red and points outside it blue.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > import System.Random (randomRIO)
 > import Control.Monad (replicateM)
@@ -4345,9 +4148,7 @@ given point.  Note the use of the `value` function to switch from the
 default `Any` to a different monoid: `value v` replaces `Any True` with `v`
 and `Any False` with `mempty`.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > import System.Random (randomRIO)
 > import Control.Monad (replicateM)
@@ -4425,9 +4226,7 @@ transformation is applied to each pair of arrows.
 
 The arrows on the right are wrapped in `ScaleInv` but the ones on the left are not.
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > {-# LANGUAGE TypeSynonymInstances, FlexibleInstances #-}
 >
@@ -4531,9 +4330,7 @@ Delayed composition
 Suppose we have four diagrams that we want to lay out relative to one
 another.  For example:
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > t = triangle   5   # fc orange
 > s = square     3   # fc red
@@ -4558,9 +4355,7 @@ would get ugly and unintuitive.
 Here is where the nifty trick comes in: simply enclose each shape in a
 list, like so:
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > ds = centerX ([t] ||| [s] ||| [o] ||| [c])
 
@@ -4571,9 +4366,7 @@ individually.  For example, we could alter their positions slightly
 before composing them (*e.g.* this makes for an easy way to apply some
 random "jitter" to a layout):
 
-.. class:: dia-lhs
-
-::
+.. code:: dia-lhs
 
 > t = triangle   5   # fc orange
 > s = square     3   # fc red
@@ -4611,9 +4404,7 @@ then turning the trail into a diagram.
 In particular, assigning names to the vertices of a shape can be
 accomplished as follows. Instead of writing just (say) `pentagon`, write
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > stroke' ( with & vertexNames .~ [[0..]] ) pentagon
 
@@ -4695,9 +4486,7 @@ circle; but there is no way for GHC to know that.
 
 The special type `D` is provided for exactly this situation, defined as
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > type D v n = Diagram NullBackend v n
 
@@ -4720,9 +4509,7 @@ You may also see error messages that directly complain about
 ambiguity. For example, the code below is taken from the example in
 the section on `Qualifying names`_:
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > hcat' ( with & sep .~ 0.5 ) (zipWith (|>) [0 .. ] (replicate 5 squares))
 
@@ -4806,26 +4593,20 @@ For example, to create a value of type `Active Double` which represents
 one period of a sine wave starting at time 0 and ending at time 1, we
 could write
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > mkActive 0 1 (\t -> sin (fromTime t * tau))
 
 or
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > (sin . (*tau)) <$> ui
 
 `pure` can also be used to create `Active` values which are constant
 and have no start or end time. For example,
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > mod <$> (floor <$> interval 0 100) <*> pure 7
 
@@ -4863,9 +4644,7 @@ However, most often, animations are constructed using the
 `Applicative` interface.  For example, to create a moving circle we
 can write
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > translateX <$> ui <*> circle 2
 
@@ -4885,9 +4664,7 @@ stationary.  The way to fix this is by placing the moving circle on
 top of something larger and stationary in order to "fix" the
 viewpoint.  Let's use an invisible square:
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > (translateX <$> ui <*> circle 2) <> (pure (square 6 # lw none))
 
@@ -4901,9 +4678,7 @@ envelopes over time (determined by sampling at a number of points).  That
 is, the animation will now use a constant envelope that encloses the
 entirety of the animation at all points in time.
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > animEnvelope (translateX <$> ui <*> circle 2)
 
@@ -5131,9 +4906,7 @@ Understanding diagrams types
 Let's look again at the type of `hcat`, mentioned in `Types and type
 classes`_:
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
   hcat :: (Juxtaposable a, HasOrigin a, Monoid' a, V a ~ V2, N a ~ n, TypeableFloat n)
        => [a] -> a
@@ -5189,9 +4962,7 @@ HasOrigin
 
 `HasOrigin` is defined in `Diagrams.Core.HasOrigin`:mod:.
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > class HasOrigin t where
 >  moveOriginTo :: Point (V t) (N t) -> t -> t
@@ -5232,9 +5003,7 @@ Transformable
 
 `Transformable` is defined in `Diagrams.Core.Transform`:mod:.
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > class Transformable t where
 >   transform :: Transformation (V t) (N t) -> t -> t
@@ -5280,9 +5049,7 @@ Juxtaposable
 
 `Juxtaposable` is defined in `Diagrams.Core.Juxtapose`:mod:.
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > class Juxtaposable a where
 >   juxtapose :: V a -> a -> a -> a
@@ -5315,9 +5082,7 @@ Enveloped
 `Enveloped` is defined in `Diagrams.Core.Envelope`:mod:.  It
 classifies types which have an associated `Envelope`.
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > class (InnerSpace (V a), OrderedField (N a)) => Enveloped a where
 >   getEnvelope :: a -> Envelope (V a) (N a)
@@ -5352,9 +5117,7 @@ role as `Enveloped`.  `Traced` types have an associated `Trace`, which
 is like an embedded ray tracer that can be used to find points on the
 boundary of an object.
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > class (Ord (N a), Additive (V a)) => Traced a where
 >   getTrace :: a -> Trace (V a) (N a)
@@ -5381,9 +5144,7 @@ AttributeClass
 proxy for `Typeable` and `Semigroup`; it has no methods.  Any type
 used as an attribute must be made a member of this class.
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > class (Typeable a, Semigroup a) => AttributeClass a
 
@@ -5398,9 +5159,7 @@ HasStyle
 `HasStyle`, also defined in `Diagrams.Core.Style`:mod:, classifies
 things to which a `Style` can be applied.
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > class HasStyle a where
 >   applyStyle :: Style (V a) (N a) -> a -> a
@@ -5433,9 +5192,7 @@ the `toName` method for converting to `Name`, with a default
 implementation that wraps up a value as an atomic name.  It allows
 values of arbitrary types to be used as names for subdiagrams.
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > class (Typeable a, Ord a, Show a) => IsName a where
 >   toName :: a -> Name
@@ -5460,9 +5217,7 @@ Qualifiable
 of `Qualifiable` are things which can be "qualified" by prefixing them
 with a name.
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > class Qualifiable q where
 >   -- | Qualify with the given name.
@@ -5487,9 +5242,7 @@ The `TrailLike` class, defined in `Diagrams.TrailLike`:mod:, abstracts
 over things that are "trail-like", so that functions such as `square`
 can be used to construct a diagram, a path, a trail, *etc.*.
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > class (Metric (V t), OrderedField (N t)) => TrailLike t where
 >
@@ -5566,9 +5319,7 @@ multi-page pdf or something similar.  It simply provides the
 `renderDias` function for rendering multiple diagrams at once; the
 meaning of this function depends on the backend.
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > class Backend b v n => MultiBackend b v n where
 >   renderDias :: (Metric v, OrderedField n, Monoid' m)
@@ -5589,9 +5340,7 @@ primitive `P` by giving a `Renderable P B` instance, which requires
 implementing the `render` function which takes a primitive and renders
 it.
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > class Transformable t => Renderable t b where
 >   render :: b -> t -> Render b (V t) (N t)
@@ -5612,9 +5361,7 @@ all their arguments at once.  See the `command-line tutorial`__ for more.
 
 __ cmdline.html
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > class ToResult d where
 >     type Args d :: *
@@ -5624,9 +5371,7 @@ __ cmdline.html
 
 The most interesting instance is the one for functions:
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > instance ToResult d => ToResult (a -> d) where
 >     type Args (a -> d) = (a, Args d)
@@ -5657,9 +5402,7 @@ tutorial`__ for more.
 
 __ cmdline.html
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > class Mainable d where
 >     type MainOpts d :: *
@@ -5682,9 +5425,7 @@ diagrams still supports older versions of GHC, these are declared as a
 new type class with no methods and a single universal instance.  For
 example,
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > class (Class1 a, Class2 a, Class3 a) => Synonym a
 > instance (Class1 a, Class2 a, Class3 a) => Synonym a
@@ -5772,9 +5513,7 @@ can have a different implementation for each instance type).  For
 example, the following (admittedly contrived) example declares a type
 family named `Foo`, with two definition clauses.
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > type family Foo a :: *
 > type instance Foo Int  = Int
@@ -5801,9 +5540,7 @@ and `V [a] = V a` (lists of `a`\'s live in whatever vector space
 Often, `V` shows up in a constraint on the left hand side of `=>`, as
 in
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > alignT :: (Alignable a, HasOrigin a, V a ~ V2, N a ~ n, Floating n) => a -> a
 
@@ -5814,9 +5551,7 @@ equality constraint*).
 
 Other times, `V` can show up on the right-hand side of `=>`, as in
 
-.. class:: lhs
-
-::
+.. code:: lhs
 
 > deform :: Deformation (V a) (N a) -> a -> a
 
