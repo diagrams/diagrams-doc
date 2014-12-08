@@ -200,7 +200,7 @@ compileDiagram outDir src = do
                   , "Graphics.SVGFonts"
                   , "Data.Typeable"
                   ]
-                & DB.pragmas .~ ["DeriveDataTypeable"]
+                & DB.pragmas .~ ["DeriveDataTypeable", "MultiParamTypeClasses"]
                 & DB.diaExpr .~ "example"
                 & DB.postProcess .~ (pad 1.1 . centerXY)
                 & DB.decideRegen .~
