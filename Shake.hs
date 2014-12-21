@@ -6,7 +6,7 @@ import           Control.Monad               (mplus, when)
 import           Control.Parallel.Strategies (NFData)
 import           Data.Functor                ((<$>))
 import           Data.List                   (isPrefixOf, (\\))
-import           Development.Shake
+import           Development.Shake hiding ((<//>))
 import           Development.Shake.Classes   (Binary, Hashable)
 import           Development.Shake.FilePath  (dropDirectory1, dropExtension,
                                               takeBaseName, takeDirectory,
