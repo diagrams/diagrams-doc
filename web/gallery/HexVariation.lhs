@@ -62,18 +62,28 @@ The tiling is created from a list of centers, defined here:
 The function generating random angles with a fixed seed:
 
 > generateAngles :: [Int]
-> generateAngles = randomRs (0, 2) (mkStdGen 42)
+> generateAngles = randomRs (0, 2) (mkStdGen 31)
 
-The tiling is created here:
+Finally, the tiling is created here:
 
-> hexVariation :: Int -> Int -> Diagram B R2
-> hexVariation nbX nbY = position (zip (map p2 pos) (map rotateHexagon' angles))
+> hexVariation :: Diagram B R2
+> hexVariation = position (zip (map p2 pos) (map rotateHexagon' angles))
 >   where 
->     pos = [(centerPosition x y) | x <- [0..nbX], y <- [0..nbY]]
->     angles = take ((nbX+1)*(nbY+1)) $ generateAngles
-> 
+>     pos = [(centerPosition x y) | x <- [0..nb-1], y <- [0..nb-1]]
+>     angles = take ((nb+1)*(nb+1)) $ generateAngles
 
-Finally, the picture is created here:
+The enveloppe of our tiling is nb*1.5*side + 0.5*side in width and nb*2*h+h in
+height. We remove the "corners" to avoid "holes" at the borders of the figure
+and define the new width and height:
 
-> example :: Diagram B R2
-> example = hexVariation 12 10
+> width' = nb*1.5 - 0.5
+> height' = nb*2*h - h
+
+Which are used to "clip" the figure here:
+
+> nb = 12
+> example :: Diagram B R2
+> example = hexVariation # center # view x0 u0
+>   where
+>     x0 = p2 (-width'/2, -height'/2) 
+>     u0 = r2 (width', height') 
