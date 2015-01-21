@@ -1,3 +1,7 @@
+---
+title: Trails and paths
+...
+
 Introduction
 ============
 
@@ -138,7 +142,7 @@ A very important feature of lines is that they are an instance of
     ``` {.diagram}
     p = pentagon 1 # onLineSegments init
     example = iterateN 5 (rotateBy (1/5)) p
-       # mconcat # strokeLine # centerXY # pad 1.1 # sized (Width 2)
+       # mconcat # strokeLine # centerXY # pad 1.1 # sized (mkWidth 2)
     ```
 
 3.  `reverseLine`{.hs}
@@ -155,7 +159,7 @@ A very important feature of lines is that they are an instance of
       where h' = hanoi (n-1)
 
     example = hanoi 4 # strokeLine
-      # centerXY # pad 1.1 # sized (Width 2)
+      # centerXY # pad 1.1 # sized (mkWidth 2)
     ```
 
 </div>
@@ -211,7 +215,7 @@ some lines and then call `glueLine`{.hs} on the result. You try:
     p = pentagon 1 # onLineSegments init
     example = iterateN 5 (rotateBy (1/5)) p
        # mconcat # glueLine # strokeLoop
-       # fc green # centerXY # pad 1.1 # sized (Width 2)
+       # fc green # centerXY # pad 1.1 # sized (mkWidth 2)
     ```
 
 2.  ``` {.diagram}
@@ -219,7 +223,7 @@ some lines and then call `glueLine`{.hs} on the result. You try:
     steps n = mconcat (replicate n step)
            <> step # rotateBy (1/2) # scale (fromIntegral n)
     example = steps 5 # glueLine # strokeLoop # fc red
-      # centerXY # pad 1.1 # sized (Width 2)
+      # centerXY # pad 1.1 # sized (mkWidth 2)
     ```
 
 3.  ``` {.diagram}
@@ -237,7 +241,7 @@ some lines and then call `glueLine`{.hs} on the result. You try:
     example = foldr andThen mempty (replicate 5 armUnit)
       # glueLine # strokeLoop # fc blue
       # rotateBy (1/20)
-      # centerXY # pad 1.1 # sized (Width 2)
+      # centerXY # pad 1.1 # sized (mkWidth 2)
     ```
 
     You may find this function useful:
@@ -275,7 +279,7 @@ line to the beginning.
     tines = mconcat . replicate 10 $ tine
     comb = s <> tines <> s # reflectX # reverseLine
     example = comb # closeLine # strokeLoop # fc yellow
-      # centerXY # pad 1.1 # sized (Width 2)
+      # centerXY # pad 1.1 # sized (mkWidth 2)
     ```
 
 </div>
@@ -337,7 +341,7 @@ relative to one another.
       = explodeTrail (heptagon 1)
       # map (strokeLocTrail . mapLoc (rotateBy (1/20)))
       # mconcat
-      # centerXY # pad 1.1 # sized (Width 2)
+      # centerXY # pad 1.1 # sized (mkWidth 2)
     ```
 
 2.  ``` {.diagram}
@@ -353,7 +357,7 @@ relative to one another.
       # zipWith lc (cycle [red, blue])
       # mconcat
       # lwG 0.05
-      # centerXY # pad 1.1 # sized (Width 2)
+      # centerXY # pad 1.1 # sized (mkWidth 2)
     ```
 
 </div>
@@ -378,7 +382,7 @@ A *path* is simply a collection of located trails.
       # zipWith lc [red,orange,yellow,blue,green,purple]
       # mconcat
       # lwG 0.03
-      # centerXY # pad 1.1 # sized (Width 2)
+      # centerXY # pad 1.1 # sized (mkWidth 2)
     ```
 
 2.  `atPoints`{.hs}, `fillRule`{.hs}

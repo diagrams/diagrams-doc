@@ -1,3 +1,7 @@
+---
+title: Metafont
+...
+
 `Diagrams.TwoD.Path.Metafont`{.mod} has tools to define Diagrams Trails
 in the style of [Metafont](https://en.wikipedia.org/wiki/Metafont). This
 is a convenient way to draw smooth curves through a series of points,

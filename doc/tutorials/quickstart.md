@@ -1,3 +1,7 @@
+---
+title: Quickstart tutorial
+...
+
 Diagrams Quick Start Tutorial
 =============================
 
@@ -452,12 +456,12 @@ As a way of exhibing a complete example and introducing some additional
 features of diagrams, consider trying to draw the following picture:
 
 ``` {.diagram}
-opts = with & gaps .~ small & headLength .~ Global 0.15
+opts = with & gaps .~ small & headLength .~ global 0.15
 
 tournament :: Int -> Diagram B
 tournament n = atPoints (trailVertices $ regPoly n 1) (map mkNode [1..n])
     # applyAll [connectOutside' opts j k | j <- [1 .. n-1], k <- [j+1 .. n]]
-    # sized (Width 2)
+    # sized (mkWidth 2)
   where
     mkNode n = text (show n) # fontSizeN 0.1 # fc white <> circle 0.2 # fc green # named n
 
@@ -580,7 +584,7 @@ tournament n = atPoints (trailVertices $ regPoly n 1) (map node [1..n])
 
 example = tournament 6
   # connectOutside' (with & gaps .~ small
-                          & headLength .~ Global 0.2
+                          & headLength .~ global 0.2
                     )
     (1 :: Int) (2 :: Int)
 ```
@@ -600,7 +604,7 @@ node n = text (show n) # fontSizeN 0.1 # fc white
       <> circle 0.2 # fc green # named n
 
 arrowOpts = with & gaps  .~ small
-                 & headLength .~ Global 0.2
+                 & headLength .~ global 0.2
 
 tournament :: Int -> Diagram B
 tournament n = atPoints (trailVertices $ regPoly n 1) (map node [1..n])

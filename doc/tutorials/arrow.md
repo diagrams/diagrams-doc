@@ -1,3 +1,7 @@
+---
+title: Arrows
+...
+
 Introduction
 ============
 
@@ -116,7 +120,7 @@ Connecting Points
 
 <div class="warning">
 
-The default length of an arrow head is `Normalized 0.035`{.hs} which
+The default length of an arrow head is `normalized 0.035`{.hs} which
 scales with the size of the diagram. Since the diagrams in this tutorial
 are relatively small and we want to highlight the arrows, we often set
 the head length and tail length to a larger size. This is accomplished
@@ -139,7 +143,8 @@ spot  = circle 0.02 # lw none
 sDot = spot # fc blue # moveTo sPt
 eDot = spot # fc red  # moveTo ePt
 
-example = ( sDot <> eDot <> arrowBetween' (with & headLength .~ veryLarge) sPt ePt)
+example = (sDot <> eDot <> arrowBetween'
+              (with & headLength .~ veryLarge) sPt ePt)
           # centerXY # pad 1.1
 ```
 
@@ -205,9 +210,11 @@ spot = circle 0.02 # lw none
 sDot = spot # fc blue # moveTo sPt
 eDot = spot # fc red # moveTo ePt
 
-example = (sDot <> eDot <> arrowBetween' (with & arrowHead .~ spike
-                                               & arrowTail .~ quill
-                                               & lengths   .~ veryLarge) sPt ePt)
+example = (sDot <> eDot <> arrowBetween'
+            (with & arrowHead .~ spike
+                  & arrowTail .~ quill
+                  & lengths   .~ veryLarge
+            ) sPt ePt)
          # centerXY # pad 1.1
 ```
 
@@ -222,7 +229,8 @@ like, `arrowtailQuill`{.hs}. Finally, any of the standard arrowheads can
 be used as tails by appending a single quote, so for example:
 
 ``` {.haskell}
-arrowBetween' (with & arrowHead .~ thorn & arrowTail .~ thorn'
+arrowBetween' (with & arrowHead .~ thorn
+                    & arrowTail .~ thorn'
                     & lengths  .~ veryLarge) sPt ePt
 ```
 
@@ -236,9 +244,11 @@ spot = circle 0.02 # lw none
 sDot = spot # fc blue # moveTo sPt
 eDot = spot # fc red # moveTo ePt
 
-example = ( sDot <> eDot <>arrowBetween' (with & arrowHead .~ thorn
-                                               & arrowTail .~ thorn'
-                                               & lengths .~ veryLarge) sPt ePt)
+example = (sDot <> eDot <> arrowBetween'
+             (with & arrowHead .~ thorn
+                   & arrowTail .~ thorn'
+                   & lengths .~ veryLarge
+              ) sPt ePt)
           # centerXY # pad 1.1
 ```
 
@@ -256,9 +266,11 @@ arrow shaft into an arc:
 shaft = arc xDir (1/2 @@ turn)
 
 example = ( sDot <> eDot
-         <> arrowBetween' (with & arrowHead .~ spike & arrowTail .~ spike'
-                                & arrowShaft .~ shaft
-                                & lengths .~ veryLarge) sPt ePt
+         <> arrowBetween'
+              (with & arrowHead .~ spike & arrowTail .~ spike'
+                    & arrowShaft .~ shaft
+                    & lengths .~ veryLarge
+              ) sPt ePt
           # frame 0.25
 ```
 
@@ -273,9 +285,11 @@ eDot = spot # fc red # moveTo ePt
 shaft = arc xDir (1/2 @@ turn)
 
 example = ( sDot <> eDot
-         <> arrowBetween' (with & arrowHead .~ spike & arrowTail .~ spike'
-                                & arrowShaft .~ shaft
-                                & lengths .~ veryLarge) sPt ePt)
+         <> arrowBetween'
+              (with & arrowHead .~ spike & arrowTail .~ spike'
+                    & arrowShaft .~ shaft
+                    & lengths .~ veryLarge
+              ) sPt ePt)
           # frame 0.25
 ```
 
@@ -303,9 +317,11 @@ sDot = spot # fc blue # moveTo sPt
 eDot = spot # fc red # moveTo ePt
 shaft = arc xDir (-1/2 @@ turn)
 example = ( sDot <> eDot
-         <> arrowBetween' (with & arrowHead  .~ spike & arrowTail .~ spike'
-                                & arrowShaft .~ shaft
-                                & lengths    .~ veryLarge) sPt ePt)
+         <> arrowBetween'
+              (with & arrowHead  .~ spike & arrowTail .~ spike'
+                    & arrowShaft .~ shaft
+                    & lengths    .~ veryLarge
+              ) sPt ePt)
           # frame 0.25
 ```
 
@@ -355,16 +371,20 @@ mDot = spot # fc green # moveTo mPt
 eDot = spot # fc red   # moveTo ePt
 
 
-leftArrow  = arrowBetween' (with & arrowHead  .~ dart  & arrowTail .~ tri'
-                                 & headLength .~ large & tailLength .~ normal
-                                 & headGap    .~ large) sPt mPt
+leftArrow  = arrowBetween'
+  (with & arrowHead  .~ dart  & arrowTail .~ tri'
+        & headLength .~ large & tailLength .~ normal
+        & headGap    .~ large
+  ) sPt mPt
 
-rightArrow = arrowBetween' (with & arrowHead  .~ spike & arrowTail .~ dart'
-                                 & shaftStyle %~ lw ultraThick
-                                 & tailLength .~ veryLarge & headLength .~ huge
-                                 & tailGap    .~ veryLarge) mPt ePt
+rightArrow = arrowBetween'
+  (with & arrowHead  .~ spike & arrowTail .~ dart'
+        & shaftStyle %~ lw ultraThick
+        & tailLength .~ veryLarge & headLength .~ huge
+        & tailGap    .~ veryLarge
+  ) mPt ePt
 
-example = ( sDot <> mDot <> eDot <> leftArrow <> rightArrow)
+example = (sDot <> mDot <> eDot <> leftArrow <> rightArrow)
           # frame 0.25
 ```
 
@@ -393,8 +413,8 @@ uconnect tl setWd =
 
 example =
   hcat' (with & sep .~ 1.5)
-  [ dia # uconnect noTail   (headLength .~ veryLarge) "B" "A"  -- looks bad
-  , dia # uconnect lineTail (lengths    .~ veryLarge) "B" "A"  -- looks good!
+  [ dia # uconnect noTail   (headLength .~ veryLarge) "B" "A" -- looks bad
+  , dia # uconnect lineTail (lengths    .~ veryLarge) "B" "A" -- looks good!
   ]
   # frame 0.25
 ```
@@ -422,10 +442,11 @@ More generally, the styles are controlled using `headStyle`{.hs},
 `tailStyle`{.hs}, and `shaftStyle`{.hs}. For example:
 
 ``` {.haskell}
-dashedArrow = arrowBetween' (with & arrowHead .~ dart & arrowTail .~ spike' & lengths .~ veryLarge
-                                  & headTexture .~ solid blue & tailTexture .~ solid orange
-                                  & shaftStyle %~ dashingG [0.04, 0.02] 0
-                                  . lw thick) sPt ePt
+dashedArrow = arrowBetween'
+  (with & arrowHead .~ dart & arrowTail .~ spike' & lengths .~ veryLarge
+        & headTexture .~ solid blue & tailTexture .~ solid orange
+        & shaftStyle %~ dashingG [0.04, 0.02] 0 . lw thick
+  ) sPt ePt
 ```
 
 ``` {.diagram}
@@ -436,10 +457,11 @@ spot = circle 0.025 # lwG 0
 sDot = spot # fc blue # moveTo sPt
 eDot = spot # fc red # moveTo ePt
 
-arrow1 = arrowBetween' (with & arrowHead .~ dart & arrowTail .~ spike' & lengths .~ veryLarge
-                             & headTexture .~ solid blue & tailTexture .~ solid orange
-                             & shaftStyle %~ dashingG [0.04, 0.02] 0 . lw thick
-                             ) sPt ePt
+arrow1 = arrowBetween'
+  (with & arrowHead .~ dart & arrowTail .~ spike' & lengths .~ veryLarge
+        & headTexture .~ solid blue & tailTexture .~ solid orange
+        & shaftStyle %~ dashingG [0.04, 0.02] 0 . lw thick
+        ) sPt ePt
 
 example = (sDot <> eDot <> arrow1) # frame 0.25
 ```
@@ -489,7 +511,9 @@ arrowAtPoint (x, y) = arrowAt' opts (p2 (x, y)) (sL *^ vf) # alignTL
     hs   = 0.08 * m
     sW   = 0.015 * m
     sL   = 0.01 + 0.1 * m
-    opts = (with & arrowHead .~ tri & headLength .~ Global hs & shaftStyle %~ lwG sW)
+    opts = with & arrowHead .~ tri
+                & headLength .~ global hs
+                & shaftStyle %~ lwG sW
 
 field   = position $ zip points arrows
 example = ( field # translateY 0.05
@@ -518,9 +542,10 @@ s  = square 2 # showOrigin # lw thick
 ds = (s # named "1") ||| strutX 3 ||| (s # named "2")
 t  = cubicSpline False (map p2 [(0, 0), (1, 0), (1, 0.2), (2, 0.2)])
 
-example = ds # connect' (with & arrowHead .~ dart & lengths .~ veryLarge
-                              & arrowTail .~ dart'
-                              & shaftStyle %~ lw thick & arrowShaft .~ t) "1" "2"
+example = ds # connect'
+  (with & arrowHead .~ dart & lengths .~ veryLarge
+        & arrowTail .~ dart'
+        & shaftStyle %~ lw thick & arrowShaft .~ t) "1" "2"
 ```
 
 Connecting points on the trace of diagrams
@@ -591,13 +616,13 @@ arrowStyle3  = (with  & arrowHead  .~ spike  & headLength .~ large
 example = states # connectOutside' arrowStyle1 "1" "2"
                  # connectOutside' arrowStyle3 "1" "4"
                  # connectPerim' arrowStyle2 "2" "2"
-                    (4/12 @@ turn) (2/12 @@ turn)
+                    (2/12 @@ turn) (4/12 @@ turn)
                  # connectOutside' arrowStyle1 "2" "3"
                  # connectPerim' arrowStyle2 "3" "3"
-                    (4/12 @@ turn) (2/12 @@ turn)
+                    (2/12 @@ turn) (4/12 @@ turn)
                  # connectOutside' arrowStyle1 "4" "5"
                  # connectPerim' arrowStyle2 "5" "5"
-                    (1/12 @@ turn) (-1/12 @@ turn)
+                    (-1/12 @@ turn) (1/12 @@ turn)
 ```
 
 In the following exercise you can try `connectPerim'`{.hs} for yourself.
@@ -607,31 +632,31 @@ In the following exercise you can try `connectPerim'`{.hs} for yourself.
 Create a torus (donut) with $16$ curved arrows pointing from the outer
 ring to the inner ring at the same angle every `1/16 @@ turn`{.hs}.
 
-> ``` {.diagram}
-> {-# LANGUAGE MultiParamTypeClasses          #-}
-> {-# LANGUAGE FlexibleContexts               #-}
->
-> bullseye = circle 0.2 # fc orangered
->                       # lw none
->                       # named "bullseye"
->
-> target = circle 1 # fc gold # named "target"
->
-> d = bullseye <> target
->
-> shaft = arc xDir (1/6 @@ turn)
->
-> connectTarget :: (Renderable (Path V2 Double) b)
->               =>  Angle Double -> (QDiagram b V2 Double Any -> QDiagram b V2 Double Any)
-> connectTarget a = connectPerim' (with & arrowHead .~ thorn & shaftStyle %~  lwG 0.01
->                                       & arrowShaft .~ shaft & headLength .~ Global 0.18
->                                       & arrowTail .~ thorn' & tailLength .~ Global 0.12
->                                      ) "target" "bullseye" a a
->
-> angles :: [Angle Double]
-> angles = map (@@ turn) [0, 1/16 .. 15/16]
->
-> example = foldr connectTarget d angles
-> ```
+``` {.diagram}
+{-# LANGUAGE MultiParamTypeClasses          #-}
+{-# LANGUAGE FlexibleContexts               #-}
+
+bullseye = circle 0.2 # fc orangered
+                      # lw none
+                      # named "bullseye"
+
+target = circle 1 # fc gold # named "target"
+
+d = bullseye <> target
+
+shaft = arc xDir (1/6 @@ turn)
+
+connectTarget :: (Renderable (Path V2 Double) b)
+              =>  Angle Double -> (QDiagram b V2 Double Any -> QDiagram b V2 Double Any)
+connectTarget a = connectPerim' (with & arrowHead  .~ thorn & shaftStyle %~  lwG 0.01
+                                      & arrowShaft .~ shaft & headLength .~ global 0.18
+                                      & arrowTail  .~ thorn' & tailLength .~ global 0.12
+                                     ) "target" "bullseye" a a
+
+angles :: [Angle Double]
+angles = map (@@ turn) [0, 1/16 .. 15/16]
+
+example = foldr connectTarget d angles
+```
 
 </div>

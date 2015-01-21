@@ -495,8 +495,8 @@ d1 = circle 1
 d2 :: Path V2 Double
 d2 = (pentagon 1 === roundedRect 1.5 0.7 0.3)
 
-example = (stroke d1 # showOrigin <> illustrateEnvelope (r2 (-0.5,0.3)) d1)
-      ||| (stroke d2 # showOrigin <> illustrateEnvelope (r2 (0.5, 0.2)) d2)
+example = (strokePath d1 # showOrigin <> illustrateEnvelope (r2 (-0.5,0.3)) d1)
+      ||| (strokePath d2 # showOrigin <> illustrateEnvelope (r2 (0.5, 0.2)) d2)
 ```
 
 The black arrows represent inputs to the envelopes for the two diagrams;
@@ -527,8 +527,8 @@ can be specified as an absolute two pixels wide, or as a certain
 percentage of the size of the final diagram, or in units relative to the
 size of the square. More specifically, values of type `Measure n`{.hs}
 represent `n`{.hs} values, interpreted in one of four "reference
-frames": `Local`{.hs}, `Global`{.hs}, `Normalized`{.hs}, or
-`Output`{.hs}, described below in turn.
+frames": `local`{.hs}, `global`{.hs}, `normalized`{.hs}, or
+`output`{.hs}, described below in turn.
 
 In addition to the four reference frames described here, it is possible
 to combine them into more complex expressions using a small DSL for
@@ -536,17 +536,17 @@ specifying measurements; see `Measurement expressions`{.hs}\_.
 
 ### Local units
 
-`Local`{.hs} units are the most straightforward to explain. Values in
-`Local`{.hs} units are interpreted in the context of the *local* vector
+`local`{.hs} units are the most straightforward to explain. Values in
+`local`{.hs} units are interpreted in the context of the *local* vector
 space, just as most other length measurements (*e.g.* arguments to
 functions like `circle`{.hs} and `square`{.hs}). For example,
 `square 1 # lwL
 0.2`{.hs} specifies a square which is drawn with lines one fifth as wide
 as its sides are long---and will *always* be, even if it is scaled: the
 line width scales right along with the square. (Note that `lwL`{.hs}
-specifies the line width using `Local`{.hs} units, and is a synonym for
+specifies the line width using `local`{.hs} units, and is a synonym for
 `lw
-. Local`{.hs}.),
+. local`{.hs}.),
 
 ``` {.diagram-code}
 localSq = square 1 # lwL 0.2
@@ -563,7 +563,7 @@ to lines; to achieve such an effect, you can first turn a stroked line
 into a closed path, as described in `Offsets of segments, trails, and
 paths`{.hs}\_.
 
-A important consequence of `Local`{.hs} units having the *current*
+A important consequence of `local`{.hs} units having the *current*
 vector space as their reference is that attribute-setting functions such
 as `lwL`{.hs} do *not* commute with transformations.
 
@@ -578,13 +578,13 @@ example =
 
 ### Global units
 
-Whereas `Local`{.hs} values are interpreted in the current, "local"
-vector space, `Global`{.hs} values are interpreted in the final,
+Whereas `local`{.hs} values are interpreted in the current, "local"
+vector space, `global`{.hs} values are interpreted in the final,
 "global" vector space of the diagram that is rendered. In the following
-example, `theSq`{.hs} is specified as having a `Global`{.hs} line width
+example, `theSq`{.hs} is specified as having a `global`{.hs} line width
 of `1`{.hs}; five differently-scaled copies of the square are laid out,
 so that the entire scaled diagram has a width of around `6`{.hs} units.
-The lines, having a line width of `Global 0.05`{.hs}, are thus about
+The lines, having a line width of `global 0.05`{.hs}, are thus about
 0.8% of the width of the entire diagram.
 
 ``` {.diagram-code}
@@ -598,10 +598,10 @@ example =
 Versions of `diagrams` prior to `1.2`{.hs} actually had a semantics for
 `lw`{.hs} equivalent to `lwG`{.hs}. One advantage, as can be seen from
 the above example, is that different shapes having the same
-`Global`{.hs} line width, even when differently scaled, will all be
-drawn with the same apparent line width. However, `Normalized`{.hs} and
-`Output`{.hs} have that property as well, and are probably more useful;
-the problem with `Global`{.hs} units is that in order to decide on
+`global`{.hs} line width, even when differently scaled, will all be
+drawn with the same apparent line width. However, `normalized`{.hs} and
+`output`{.hs} have that property as well, and are probably more useful;
+the problem with `global`{.hs} units is that in order to decide on
 values, one has to know the final size of the diagram, which is not
 typically something one knows in advance. In particular, note that
 applying something like `scale 20`{.hs} to the `example`{.hs} above---a
@@ -618,7 +618,7 @@ example =
   # scale 20
 ```
 
-In short, `Global`{.hs} units tend to go against `diagrams` emphasis on
+In short, `global`{.hs} units tend to go against `diagrams` emphasis on
 local, scale-invariant thinking. They were left in for backwards
 compatibility, and because they can occasionaly be useful in special
 situations where you do already have some absolute, global coordinate
@@ -627,15 +627,15 @@ diagram using lines that are 1 unit wide.
 
 ### Normalized units
 
-`Normalized`{.hs} units, like `Global`{.hs} units, are measured with
+`normalized`{.hs} units, like `global`{.hs} units, are measured with
 respect to the final size of a diagram. However, for the purposes of
-interpreting `Normalized`{.hs} units, the diagram is considered to be
+interpreting `normalized`{.hs} units, the diagram is considered to be
 one "normalized unit" in both height and width. For example, a
-`Normalized`{.hs} value of `0.1`{.hs} means "10% of the height/width of
+`normalized`{.hs} value of `0.1`{.hs} means "10% of the height/width of
 the final diagram". Thus, scaling the diagram has no effect on the
-relative size of the lines (just as with `Local`{.hs}), but lines look
+relative size of the lines (just as with `local`{.hs}), but lines look
 consistent even across shapes that have been scaled differently (as with
-`Global`{.hs}).
+`global`{.hs}).
 
 ``` {.diagram-code}
 theSq = square 1 # lwN 0.01
@@ -646,27 +646,27 @@ example =
   # scale 20
 ```
 
-Note that the `scale 20`{.hs} threatened in the `Global`{.hs} example
+Note that the `scale 20`{.hs} threatened in the `global`{.hs} example
 has been applied here, but makes no difference: changing the `20`{.hs}
 to any other nonzero value has no effect on the appearance of the
 rendered diagram.
 
 ### Output units
 
-Values measured in `Output`{.hs} units are interpreted with respect to
+Values measured in `output`{.hs} units are interpreted with respect to
 the *requested output size* of a diagram. Sometimes you really do know
 that you want your lines to be exactly 1/2 inch wide when printed. In
 this case, scaling a diagram will preserve its appearance, but
 requesting a different output size might not.
 
-One situation in which `Output`{.hs} units can be particularly useful is
+One situation in which `output`{.hs} units can be particularly useful is
 when preparing a document (paper, blog post, *etc.*) with multiple
 embedded diagrams of various physical sizes. Using the same
-`Output`{.hs} value for the line width (or arrowhead length, arrow gap,
+`output`{.hs} value for the line width (or arrowhead length, arrow gap,
 font size, *etc.*) of every diagram ensures that the diagrams will all
 look consistent. On the other hand, if the diagrams all have the same
 physical size (*e.g.* they are all $300 \times 200$ pixels), then they
-will also look consistent if the same `Normalized`{.hs} value is used
+will also look consistent if the same `normalized`{.hs} value is used
 for all of them (which is the default for line width).
 
 <div class="todo">
@@ -1077,13 +1077,14 @@ As its first argument, `star`{.hs} takes a value of type
 
     ``` {.diagram-code}
     funs          = map (flip (^)) [2..6]
-    visualize f	  = stroke' (with & vertexNames .~ [[0 .. 6 :: Int]] )
+    visualize :: (Int -> Int) -> Diagram B
+    visualize f   = strokePath' (with & vertexNames .~ [[0 .. 6 :: Int]] )
                         (regPoly 7 1)
                       # lw none
                       # showLabels
-                      # fontSize (Local 0.6)
+                      # fontSize (local 0.6)
                  <> star (StarFun f) (regPoly 7 1)
-                      # stroke # lw thick # lc red
+                      # strokePath # lw thick # lc red
     example       = center . hcat' (with & sep .~ 0.5) $ map visualize funs
     ```
 
@@ -1488,8 +1489,8 @@ to specify things like line width (see `Measurement units`{.hs}\_).
 
 In many situations, it is desirable to have lines drawn in a uniform
 way, regardless of any scaling applied to shapes. This is what happens
-with line widths measured in `Global`{.hs}, `Normalized`{.hs} or
-`Output`{.hs} units, as in the following example:
+with line widths measured in `global`{.hs}, `normalized`{.hs} or
+`output`{.hs} units, as in the following example:
 
 ``` {.diagram-code}
 example = hcat
@@ -1501,19 +1502,19 @@ example = hcat
   # lwN 0.01
 ```
 
-For line widths that scale along with a diagram, use `Local`{.hs}; in
+For line widths that scale along with a diagram, use `local`{.hs}; in
 this case line widths will be scaled in proportion to the geometeric
 average of the scaling transformatins applied to the diagram.
 
-The `LineWidth`{.hs} attribute is used to alter the *width* with which
+The `LinemkWidth`{.hs} attribute is used to alter the *width* with which
 paths are stroked. The most general functions that can be used to set
-the line width are `lineWidth`{.hs} and its synonym `lw`{.hs}, which
+the line width are `linemkWidth`{.hs} and its synonym `lw`{.hs}, which
 take an argument of type `Measure V2 n`{.hs}. Since typing things like
-`lineWidth
-(Normalized 0.01)`{.hs} is cumbersome, there are also shortcuts
+`linemkWidth
+(normalized 0.01)`{.hs} is cumbersome, there are also shortcuts
 provided: `lwG`{.hs}, `lwN`{.hs}, `lwO`{.hs}, and `lwL`{.hs} all take an
-argument of type `Double`{.hs} and wrap it in `Global`{.hs},
-`Normalized`{.hs}, `Ouput`{.hs} and `Local`{.hs}, respectively.
+argument of type `Double`{.hs} and wrap it in `global`{.hs},
+`normalized`{.hs}, `Ouput`{.hs} and `local`{.hs}, respectively.
 
 There are also predefined `Measure n`{.hs} values with intuitive names,
 namely, `ultraThin`{.hs}, `veryThin`{.hs}, `thin`{.hs}, `medium`{.hs},
@@ -1530,7 +1531,7 @@ example = vcat' (with & sep .~ 0.1)
 
 In the above example, there is no discernible difference between
 `ultraThin`{.hs}, `veryThin`{.hs}, and `thin`{.hs}; these names all
-describe `Normalized`{.hs} measurements with a physical lower bound, so
+describe `normalized`{.hs} measurements with a physical lower bound, so
 the physical width of the resulting lines depends on the physical size
 of the rendered diagram. At larger rendering sizes the differences
 between the smaller widths become apparent.
@@ -1596,7 +1597,7 @@ with an empty style (`mempty`{.hs}, since `Style`{.hs} is an instance of
 `Monoid`{.hs}) and applying the desired attributes:
 
 ``` {.haskell}
-foo = myFun (mempty # fontSize (Local 2) # lw none # fc green)
+foo = myFun (mempty # fontSize (local 2) # lw none # fc green)
 ```
 
 If the type `T`{.hs} is an instance of `HasStyle`{.hs}, then `[T]`{.hs}
@@ -2633,7 +2634,7 @@ depending on which type is inferred.
 
 ``` {.diagram-code}
 ts = mconcat . iterateN 3 (rotateBy (1/9)) $ triangle 1
-example = (ts ||| stroke ts ||| strokeLine ts ||| fromVertices ts) # fc red
+example = (ts ||| strokePath ts ||| strokeLine ts ||| fromVertices ts) # fc red
 ```
 
 The above example defines `ts`{.hs} by generating three equilateral
@@ -2915,8 +2916,9 @@ associated query evaluates to true.
 
 ``` {.diagram-code}
 points = [x ^& 0 | x <- [-2.3, -2.1 .. 2.3]]
-dia1 = (circle 2 <> circle 1) # stroke # fillRule EvenOdd
-dia2 = (circle 2 <> reversePath (circle 1)) # stroke
+dia1, dia2 :: Diagram B
+dia1 = (circle 2 <> circle 1) # strokePath # fillRule EvenOdd
+dia2 = (circle 2 <> reversePath (circle 1)) # strokePath
 
 illustrate d = ((d # fc grey) `beneath`) . mconcat . map drawPt $ points
   where
@@ -3073,7 +3075,7 @@ extra `ArrowOpts`{.hs} record, whose fields are:
     connecting it to the shaft. Their value is of type
     `Measure V2 Double`{.hs} (see `Measurement units`{.hs}\_). The
     default value is `normal`{.hs} which is a synonym for
-    `Normalized 0.035`{.hs}. A traversal called `lengths`{.hs} sets both
+    `normalized 0.035`{.hs}. A traversal called `lengths`{.hs} sets both
     the `headLength`{.hs} and `tailLength`{.hs} at the same time.
 -   `headGap`{.hs} and `tailGap`{.hs} both default to `none`{.hs} and
     are used to indicate the amount of space between the end of the
@@ -3204,7 +3206,7 @@ Various attributes of text can be set using `font`{.hs}, `bold`{.hs}
 with the current fill color (see `Color`{.hs}\_).
 
 ``` {.diagram-code}
-text' s t = text t # fontSize (Local s) <> strutY (s * 1.3)
+text' s t = text t # fontSize (local s) <> strutY (s * 1.3)
 example = center $
       text' 10 "Hello" # italic
   === text' 5 "there"  # bold # font "freeserif"
@@ -3217,10 +3219,10 @@ Font size is set using the `fontSize`{.hs} function, and is specified by
 a value of type `Measure V2 Double`{.hs} (see
 `Measurement units`{.hs}\_).
 
--   Text with a `Local`{.hs} font size is measured relative to its local
+-   Text with a `local`{.hs} font size is measured relative to its local
     vector space. Such text is transformed normally by any
     transformations applied to it. For example, in the diagram below,
-    `fontSize (Local 1)`{.hs} is specified (this is actually the
+    `fontSize (local 1)`{.hs} is specified (this is actually the
     default, so it could be omitted without changing the diagram). Note
     how the F's are the same size as a unit box, and scale, stretch, and
     rotate along with it.
@@ -3230,24 +3232,24 @@ a value of type `Measure V2 Double`{.hs} (see
 
     example = hcat
       [eff, eff # scale 2, eff # scaleX 2, eff # scaleY 2, eff # rotateBy (1/12)]
-            # fontSize (Local 1)
+            # fontSize (local 1)
     ```
 
 -   Text whose font size is specified in any measurement other than
-    `Local`{.hs} (that is, `Normalized`{.hs}, `Global`{.hs}, or
-    `Output`{.hs}) behaves differently.
+    `local`{.hs} (that is, `normalized`{.hs}, `global`{.hs}, or
+    `output`{.hs}) behaves differently.
 
     ``` {.diagram-code}
     eff = text "F" <> square 1
 
     example = hcat
       [eff, eff # scale 2, eff # scaleX 2, eff # scaleY 2, eff # rotateBy (1/12)]
-            # fontSize (Normalized 0.1)
+            # fontSize (normalized 0.1)
     ```
 
     There are several things to notice about the above example diagram,
     which is identical to the previous one except for the fact that
-    `Normalized 0.1`{.hs} is used instead of \`Local 1\`:
+    `normalized 0.1`{.hs} is used instead of \`local 1\`:
 
     -   The F's are 1/10th the size of the overall diagram. If we added
         more copies of `eff`{.hs} to the right, but kept the physical
@@ -3261,17 +3263,17 @@ a value of type `Measure V2 Double`{.hs} (see
         final F rotates with the square as expected. Note also that the
         third and fourth F's are squished, as one would expect from a
         non-uniform scaling. The hand-wavy slogan is that
-        non-`Local`{.hs}-sized text is "affected by transformations, but
+        non-`local`{.hs}-sized text is "affected by transformations, but
         without changing size".
 
         The technical specification is that applying a transformation
-        $T$ to non-`Local`{.hs}-sized text actually results in applying
+        $T$ to non-`local`{.hs}-sized text actually results in applying
         the transformation $T/|T|$, where $|T|$ denotes the *average
         scaling factor* of the transformation $T$, computed as the
         square root of the positive determinant of $T$. This behaves
         nicely: for example, the average scaling factor of `scale
         k`{.hs} is `k`{.hs}, so applying a uniform scaling to
-        non-`Local`{.hs}-sized text has no effect; it is also
+        non-`local`{.hs}-sized text has no effect; it is also
         compositional, so applying `t`{.hs} and then `s`{.hs} to some
         text has exactly the same effect as applying `s <> t`{.hs}. For
         more information, see the `avgScale`{.hs} function and the
@@ -3287,8 +3289,11 @@ function which can be used to convert text into a *path* tracing the
 outline of the text. Here is a simple example:
 
 ``` {.diagram-code}
-text' d s = (stroke $ textSVG' (TextOpts s lin2 INSIDE_H KERN False d d))
-          # lw none
+import Graphics.SVGFonts
+
+text' d s =
+  stroke (textSVG' (TextOpts lin2 INSIDE_H KERN False d d) s)
+    # lw none
 
 example = text' 5 "Hello" # fc blue ||| text' 3 "world" # fc green
 ```
@@ -3325,7 +3330,7 @@ example = do
   res <- loadImageEmb "doc/static/phone.png"
   return $ case res of
     Left err    -> mempty
-    Right phone -> no <> image phone # sized (Dims 1.5 1.5)
+    Right phone -> no <> image phone # sized (dims2D 1.5 1.5)
 ```
 
 When using `loadImageEmb`{.hs} and `loadImageExt`{.hs} you do not need
@@ -3439,7 +3444,7 @@ Envelopes are used implicitly when placing diagrams next to each other
 
     sampleEnvelope2D n d = foldr (flip atop) (d # lc red) bs
       where b  = fromJust $ appEnvelope (getEnvelope d)
-            bs = [stroke $ mkLine (origin .+^ (s *^ v))
+            bs = [strokePath $ mkLine (origin .+^ (s *^ v))
                                   (5 *^ signorm (perp v))
                  | v <- vs, let s = b v
                  ]
@@ -3646,6 +3651,7 @@ instance of `IsName`{.hs} is as simple as:
 
 ``` {.haskell}
 {-# LANGUAGE DeriveDataTypeable #-}
+import Data.Typeable
 
 data Foo = Baz | Bar | Wibble
   deriving (Typeable, Eq, Ord, Show)
@@ -3759,6 +3765,9 @@ the centers of two subdiagrams (though for this particular task it is
 probably more convenient to use the provided `connect`{.hs} function):
 
 ``` {.diagram-code}
+{-# LANGUAGE DeriveDataTypeable #-}
+import Data.Typeable
+
 data Foo = Baz | Bar | Wibble
   deriving (Typeable, Eq, Ord, Show)
 
@@ -3865,6 +3874,9 @@ applied not only to individual names but also to an entire diagram
 qualified name explicitly, separate the components with `(.>)`{.hs}.
 
 ``` {.diagram-code}
+{-# LANGUAGE DeriveDataTypeable #-}
+import Data.Typeable
+
 data Corner = NW | NE | SW | SE
   deriving (Typeable, Eq, Ord, Show)
 instance IsName Corner
@@ -3909,7 +3921,7 @@ Note how we also made use of `applyAll`{.hs}, which takes a list of
 functions as an argument and composes them into one; that is,
 `applyAll [f, g, h] === f . g . h`{.hs}.
 
-### Localizing names
+### localizing names
 
 In some situations, giving globally unique names to everything (even
 with the qualification mechanism) is a big pain. The `localize`{.hs}
@@ -4054,7 +4066,7 @@ Scale-invariance
 The `ScaleInv`{.hs} wrapper can be used to create "scale-invariant"
 objects. (Note that `ScaleInv`{.hs} is not exported from
 `Diagrams.Prelude`{.mod}; to use it, import
-`Diagrams.TwoD.Transform.ScaleInv`{.mod}.) In the diagram below, the
+`Diagrams.Transform.ScaleInv`{.mod}.) In the diagram below, the
 same transformation is applied to each pair of arrows.
 
 <div class="warning">
@@ -4071,7 +4083,7 @@ the left are not.
 ``` {.diagram-code}
 {-# LANGUAGE TypeSynonymInstances, FlexibleInstances #-}
 
-import Diagrams.TwoD.Transform.ScaleInv
+import Diagrams.Transform.ScaleInv
 import Control.Lens ((^.))
 
 class Drawable d where
@@ -4115,7 +4127,7 @@ Measurement expressions
 <div class="todo">
 
 Go through this section and update it if we merge physical units for
-`Output`{.hs}.
+`output`{.hs}.
 
 </div>
 
@@ -4126,12 +4138,12 @@ features:
 
 -   `atLeast :: Measure n -> Measure n -> Measure n`{.hs} finds the
     maximum of two measurements. For example,
-    `Normalized 0.2 \`{.hs}atLeast\` Local 1\` evaluates to whichever
-    measurement ends up being larger, `Normalized 0.2`{.hs} or
-    `Local 1`{.hs}.
+    `normalized 0.2 \`{.hs}atLeast\` local 1\` evaluates to whichever
+    measurement ends up being larger, `normalized 0.2`{.hs} or
+    `local 1`{.hs}.
 
     In fact, the standard line widths like `medium`{.hs}, `thick`{.hs},
-    *etc.* are defined as `Normalized w \`{.hs}atLeast\` Output 0.5\`,
+    *etc.* are defined as `normalized w \`{.hs}atLeast\` output 0.5\`,
     each with a different value of `w`{.hs} (for example, for
     `medium`{.hs}, `w = 0.004`{.hs}).
 -   Similarly, `atMost`{.hs} takes the minimum of two `Measure`{.hs}s.
@@ -4139,7 +4151,7 @@ features:
     provides `zero
     :: Measure v`{.hs}, `negated :: Measure v -> Measure v`{.hs}, and
     `(^+^)`{.hs} for adding measurements. For example,
-    `Normalized 0.1 ^+^ Output 1`{.hs} represents 10% of the width or
+    `normalized 0.1 ^+^ output 1`{.hs} represents 10% of the width or
     height of the diagram plus one output unit.
 
 The semantics of these expressions is what you would expect: everything
@@ -4736,12 +4748,13 @@ Understanding diagrams types
 ----------------------------
 
 Let's look again at the type of `hcat`{.hs}, mentioned in
-`Types and type
-classes`{.hs}\_:
+`Types and type classes`{.hs}\_:
 
 ``` {.haskell}
-hcat :: (Juxtaposable a, HasOrigin a, Monoid' a, V a ~ V2, N a ~ n, TypeableFloat n)
-     => [a] -> a
+hcat ::
+  (InSpace V2 n a, Floating n, Juxtaposable a, HasOrigin a,
+   Monoid' a) =>
+  [a] -> a
 ```
 
 This is fairly typical of the types you will encounter when using
@@ -4917,7 +4930,7 @@ Further reading: `Juxtaposing diagrams`{.hs}\_;
 classifies types which have an associated `Envelope`{.hs}.
 
 ``` {.haskell}
-class (InnerSpace (V a), OrderedField (N a)) => Enveloped a where
+class (Metric (V a), OrderedField (N a)) => Enveloped a where
   getEnvelope :: a -> Envelope (V a) (N a)
 ```
 

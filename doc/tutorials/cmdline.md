@@ -1,3 +1,7 @@
+---
+title: Command-line diagrams creation
+...
+
 Introduction
 ============
 

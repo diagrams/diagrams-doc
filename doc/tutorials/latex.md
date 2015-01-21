@@ -1,3 +1,7 @@
+---
+title: Diagrams and LaTeX
+...
+
 Introduction
 ============
 
