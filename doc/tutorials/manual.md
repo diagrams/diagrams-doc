@@ -1,3 +1,7 @@
+---
+title: Diagrams manual
+...
+
 Preliminaries
 =============
 

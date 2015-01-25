@@ -1,5 +1,9 @@
 ---
 title: Metafont
+extra-diagrams-modules:
+  - Diagrams.TwoD.Path.Metafont
+  - Graphics.SVGFonts
+extra-dia-mods: Diagrams.TwoD.Turtle
 ...
 
 `Diagrams.TwoD.Path.Metafont`{.mod} has tools to define Diagrams Trails

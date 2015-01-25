@@ -64,7 +64,7 @@ text in curly brackets, followed by a tag with a prepending dot, like
     For example, `` `circle 1 ``\` is typeset like this: `circle 1`.
 -   For other literal expressions which should be typeset using a
     monospaced font, use double backquotes, like ``foo``.
--   For embedded $\LaTeX$ like $2 + \sqrt{\pi}$, use a surrounding `$`,
+-   For embedded Latex like $2 + \sqrt{\pi}$, use a surrounding `$`,
     as in `$2 + \sqrt{\pi}$. Math is typeset using
     [MathJax](http://www.mathjax.org/).
 -   For names of packages on Hackage, use the `pkg` tag, as in ``
@@ -165,7 +165,6 @@ example = hcat (replicate 4 myCircle)
 produces
 
 ``` diagram
-
 myCircle = circle 1 # fc purple
 example = hcat (replicate 4 myCircle)
 ```
@@ -188,7 +187,7 @@ example = hcat (replicate 4 myCircle)
 Static images
 =============
 
-![image](doc/static/phone.png)
+![image](static/phone.png)
 
 If you have some static images (that is, images which are not generated
 by diagrams code, but are to be stored explicitly in the diagrams-doc
@@ -197,7 +196,7 @@ reference them in several ways. To include a static image in a tutorial,
 as above, do something like
 
 ```
-![image](doc/static/phone.png)
+![image](static/phone.png)
 ```
 
 (this is the code used for the image above); note the leading slash. To
