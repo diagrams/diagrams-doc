@@ -1,0 +1,27 @@
+\usepackage[framemethod=tikz]{mdframed}
+\usetikzlibrary{calc}
+
+\def\defenv#1#2{
+\newmdenv[
+  % hidealllines=true,
+  linewidth=0pt,
+  backgroundcolor=#2!5,%
+  frametitle={},
+  skipabove=\topsep,
+  skipbelow=\topsep,
+  nobreak,
+  innerleftmargin=2.5cm,
+  innertopmargin=0.5cm,
+  innerbottommargin=0.5cm,
+  skipabove=\topskip,
+  singleextra={
+    \path let \p1=(P), \p2=(O) in ($(\x2,0)+0.5*(2,\y1)$)
+      node [] {\includegraphics[width=1.5cm]{static/#1.pdf}};
+    \draw[line width=2pt,#2!20]  ($(O)$) -- ($(O|-P)$);
+  },%
+]{#1}
+}
+
+\defenv{warning}{yellow}
+\defenv{exercises}{blue}
+\defenv{todo}{purple}
