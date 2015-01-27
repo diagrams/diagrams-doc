@@ -215,7 +215,7 @@ getMaps = do
 diagramsName :: Name -> Target
 diagramsName n = (link, showName n)
   where
-    link = fst (diagramsModule (nameModule n)) ++ nameHyperlink n
+    link = fst (diagramsModule (nameModule n)) ++ nameAnchor n
 
 -- | Make a link to the diagrams site if it's a diagrams module,
 --   otherwise link to hackage.

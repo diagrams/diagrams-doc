@@ -14,7 +14,7 @@ module Links
   , Name
   , nameModule
   , showName
-  , nameHyperlink
+  , nameAnchor
 
     -- * Module helpers
   , showModule
@@ -28,40 +28,34 @@ module Links
 -- |
 -- Provides maps from modules to packages and functions / data types to
 -- modules.
-import           DynFlags                        (PackageFlag (ExposePackage),
-                                                  defaultFatalMessager,
-                                                  defaultFlushOut)
-import           GHC                             (ModuleInfo,
-                                                  defaultErrorHandler,
-                                                  getModuleInfo,
-                                                  getSessionDynFlags,
-                                                  modInfoExports, noLoc,
-                                                  packageFlags,
-                                                  parseDynamicFlags, pkgState,
-                                                  runGhc, setSessionDynFlags)
-import           GHC.Paths                       (libdir)
-import           Module                          (Module, PackageId,
-                                                  mkModule, moduleNameString, modulePackageId,
-                                                  packageIdString, moduleName)
-import           Name                            (Name, nameOccName, occNameString, nameModule)
-import           Packages                        (exposedModules,
-                                                  getPackageDetails,
-                                                  initPackages)
-
-import           Control.Applicative             ((<$>))
-import           Data.List                       (intercalate, isPrefixOf)
-import qualified Data.Map                        as M
+import           Control.Applicative    ((<$>))
+import           Data.Foldable          (foldMap)
+import           Data.List              (intercalate, isPrefixOf)
+import qualified Data.Map               as M
 import           Data.Maybe
-import Data.Foldable (foldMap)
+import           DynFlags               (PackageFlag (ExposePackage),
+                                         defaultFatalMessager, defaultFlushOut)
+import           GHC                    (ModuleInfo, defaultErrorHandler,
+                                         getModuleInfo, getSessionDynFlags,
+                                         modInfoExports, noLoc, packageFlags,
+                                         parseDynamicFlags, pkgState, runGhc,
+                                         setSessionDynFlags)
+import           GHC.Paths              (libdir)
+import           Module                 (Module, PackageId, mkModule,
+                                         moduleName, moduleNameString,
+                                         modulePackageId, packageIdString)
+import           Name                   (Name, isValName, nameModule,
+                                         nameOccName, occNameString)
+import           Packages               (exposedModules, getPackageDetails,
+                                         initPackages)
 
+import           Control.Arrow
+import           Control.Monad.IO.Class
+import           Data.Char
 import           Data.List.Split
-import Control.Monad.IO.Class
-import Data.Traversable
-import Data.Char (isUpper)
-import Control.Arrow
-import Data.Tuple
-import Prelude hiding (mapM, sequence)
--- import           Text.Docutils.Util              (XmlT, mkLink, onElemA)
+import           Data.Traversable
+import           Data.Tuple
+import           Prelude                hiding (mapM, sequence)
 
 -- There are two abstract data types used in this module:
 --
@@ -88,12 +82,12 @@ type NameMap = M.Map String Name
 -- | Make a link to the hackage site to the given
 --   'Name'. Includes a hyperlink to the name.
 hackageName :: Name -> String
-hackageName n = hackageModule (nameModule n) ++ nameHyperlink n
+hackageName n = hackageModule (nameModule n) ++ nameAnchor n
 
 -- | Make a link to the hackage site to the given 'Module'
 hackageModule :: Module -> String
 hackageModule m =
-  hackage ++ showModulePkg m ++ "/docs/" ++ showModuleD m ++ ".html"
+  hackage ++ showModulePkgV m ++ "/docs/" ++ showModuleD m ++ ".html"
 
 -- | @https://hackage.haskell.org/package/@
 hackage :: String
@@ -103,13 +97,25 @@ hackage = "https://hackage.haskell.org/package/"
 -- Name helpers
 ------------------------------------------------------------------------
 
--- | The hyperlink for a haddock page to the name.
---   !!! Needs url escaping !!!
-nameHyperlink :: Name -> String
-nameHyperlink (showName -> name) =
-  if isUpper (head name)
-    then "#t:" ++ name
-    else "#v:" ++ name
+-- | The anchor for a haddock page to the name.
+
+nameAnchor :: Name -> String
+nameAnchor name =
+   '#' : prefix : ':' : makeAnchorId (showName name)
+ where prefix | isValName name = 'v'
+              | otherwise      = 't'
+
+-- Taken from haddock.
+makeAnchorId :: String -> String
+makeAnchorId [] = []
+makeAnchorId (f:r) = escape isAlpha f ++ concatMap (escape isLegal) r
+  where
+    escape p c | p c = [c]
+               | otherwise = '-' : show (ord c) ++ "-"
+    isLegal ':' = True
+    isLegal '_' = True
+    isLegal '.' = True
+    isLegal c = isAscii c && isAlphaNum c
 
 showName :: Name -> String
 showName = occNameString . nameOccName
