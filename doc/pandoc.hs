@@ -25,16 +25,25 @@
 -- Note you must be in the directory of the target file or the diagram
 -- files won't be saved properly.
 --
+-- Since Links uses the ghc package, this needs to compiled with
+-- @-package ghc@.
+--
 -----------------------------------------------------------------------------
+import           Control.Applicative
 import           Control.Lens
 import           Control.Monad.IO.Class
 import qualified Data.DList             as D
 import           Data.List              (intersect)
+import           Data.Semigroup
 import           Data.Maybe
 import           Diagrams.Builder
 import           Diagrams.Pandoc
 import           Text.Pandoc.JSON
 import           Text.Pandoc.Walk
+import           System.IO.Unsafe
+import qualified Data.Map as M
+
+import Links
 
 ------------------------------------------------------------------------
 -- Pandoc filter
@@ -44,7 +53,7 @@ main :: IO ()
 main = toJSONFilter docFilter
 
 docFilter :: Maybe Format -> Pandoc -> IO Pandoc
-docFilter mf = pFilter mf
+docFilter mf = fmap (walk linkInline) . pFilter mf
   where
     pFilter = case mf of
       Just (Format "latex") -> pandocFilter latexFilter
@@ -124,4 +133,99 @@ getHeadings = D.toList . query qHeadings
   where
     qHeadings (Header i (ref,_,_) inlines) = D.singleton (i,ref,inlines)
     qHeadings _                            = D.empty
+
+------------------------------------------------------------------------
+-- Linking to Hackage
+------------------------------------------------------------------------
+
+-- Current issues:
+--
+-- * d i a g ... are getting exported from Diagrams.Example.Logo
+-- * name' is not escaping the ' properly
+-- * things from base aren't getting a package in hackage link
+-- * only single worded code is linked
+
+-- Pandoc stuff
+
+-- annoyingly pandoc doesn't support links in code so for now only
+-- support linking single terms (we'll need to implement separate ones
+-- for each supported format)
+linkInline :: Inline -> Inline
+linkInline (Code (_id,classes,_keys) code)
+  | length (words code) > 1 = codeI
+  | "hs"  `elem` classes = mkLink nameLink
+  | "mod" `elem` classes = mkLink modLink
+  | "pkg" `elem` classes = mkLink pkgLink
+  | otherwise            = mkLink guess -- experiment
+  where
+    codeI   = Code nullAttr code
+    mkLink  = maybe codeI (Link [codeI])
+
+    nameLink = nameLookup code
+    modLink  = moduleLookup code
+    pkgLink  = Just (hackage ++ code, code)
+    guess = nameLink
+        <|> modLink
+        <|> if code `elem` (diagramsPackages ++ otherPackages)
+               then pkgLink
+               else Nothing
+linkInline i = i
+
+-- | Packages that will be on the site.
+diagramsPackages :: [String]
+diagramsPackages =
+  [ "linear" -- linear should be first so overlaps gets replaced
+  , "diagrams-core", "diagrams-lib"
+  , "SVGFonts", "palette", "diagrams-contrib"
+  , "diagrams-pgf", "diagrams-svg", "diagrams-rasterific"
+  ]
+
+-- | Package whose modules we'll link to hackage for.
+otherPackages :: [String]
+otherPackages =
+  [ "base", "lens" ]
+
+-- Helpers stuff
+
+-- this just makes things easier
+
+moduleMap :: ModuleMap
+nameMap :: NameMap
+(moduleMap, nameMap) = unsafePerformIO getMaps
+
+nameLookup, moduleLookup :: String -> Maybe Target
+nameLookup n = diagramsName <$> M.lookup n nameMap
+moduleLookup m = diagramsModule <$> M.lookup m moduleMap
+
+getMaps :: IO (ModuleMap, NameMap)
+getMaps = do
+  (diaMods, diaNames) <- buildPackageMaps diagramsPackages
+
+  -- We need other modules so we can link to things like @Control.Lens@
+  --
+  -- We don't need the names because (arguably) we shouldn't use any
+  -- names not exported by a diagrams module (which shouldn't have any
+  -- conflicts).
+  (otherMods, _) <- buildPackageMaps otherPackages
+
+  return (diaMods <> otherMods, diaNames)
+
+-- | Make a link to the diagrams site if it's a diagrams module,
+--   otherwise link to hackage. Includes hyperlink to the name.
+diagramsName :: Name -> Target
+diagramsName n = (link, showName n)
+  where
+    link = fst (diagramsModule (nameModule n)) ++ nameHyperlink n
+
+-- | Make a link to the diagrams site if it's a diagrams module,
+--   otherwise link to hackage.
+diagramsModule :: Module -> Target
+diagramsModule m = (link, showModule m)
+  where
+    link
+      | isDiagramMod = diagramsLink
+      | otherwise    = hackageModule m
+    isDiagramMod = showModulePkg m `elem` diagramsPackages
+    diagramsLink =
+      "http://projects.haskell.org/diagrams/haddock/" ++ showModuleD m
 
