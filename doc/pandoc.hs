@@ -15,11 +15,11 @@
 -- A typical call would look something like:
 --
 -- @
--- pandoc ../tutorials/tutorials.md -o tutorials.tex --template default.latex -F ../../pandoc/filter
+-- pandoc ../tutorials/tutorials.md -o tutorials.tex --template default.latex -F ../pandoc/filter
 -- @
 --
 -- @
--- pandoc ../tutorials/tutorials.md -o tutorials.pdf --template default.html -F ../../pandoc/filter
+-- pandoc ../tutorials/tutorials.md -o tutorials.pdf --template default.html -F ../pandoc/filter
 -- @
 --
 -- Note you must be in the directory of the target file or the diagram
@@ -41,7 +41,7 @@ import           Diagrams.Pandoc
 import           Text.Pandoc.JSON
 import           Text.Pandoc.Walk
 import           System.IO.Unsafe
-import qualified Data.Map as M
+import qualified Data.HashMap.Lazy as M
 
 import Links
 
@@ -141,8 +141,6 @@ getHeadings = D.toList . query qHeadings
 -- Current issues:
 --
 -- * d i a g ... are getting exported from Diagrams.Example.Logo
--- * name' is not escaping the ' properly
--- * things from base aren't getting a package in hackage link
 -- * only single worded code is linked
 
 -- Pandoc stuff
@@ -206,9 +204,10 @@ getMaps = do
   -- We don't need the names because (arguably) we shouldn't use any
   -- names not exported by a diagrams module (which shouldn't have any
   -- conflicts).
-  (otherMods, _) <- buildPackageMaps otherPackages
+  (otherMods, otherNames) <- buildPackageMaps otherPackages
 
-  return (diaMods <> otherMods, diaNames)
+  -- want diagrams modules to be on the left of <>
+  return (diaMods <> otherMods, diaNames <> otherNames)
 
 -- | Make a link to the diagrams site if it's a diagrams module,
 --   otherwise link to hackage. Includes hyperlink to the name.

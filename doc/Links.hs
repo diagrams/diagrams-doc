@@ -31,7 +31,7 @@ module Links
 import           Control.Applicative    ((<$>))
 import           Data.Foldable          (foldMap)
 import           Data.List              (intercalate, isPrefixOf)
-import qualified Data.Map               as M
+import qualified Data.HashMap.Lazy          as M
 import           Data.Maybe
 import           DynFlags               (PackageFlag (ExposePackage),
                                          defaultFatalMessager, defaultFlushOut)
@@ -69,11 +69,11 @@ import           Prelude                hiding (mapM, sequence)
 
 -- | A mapping from the name of a module (like @Diagrams.TwoD.Text@) to a
 --   @Module@.
-type ModuleMap = M.Map String Module
+type ModuleMap = M.HashMap String Module
 
 -- | A mapping from exported names (like 'scale') to a @Name@ and the
 -- @Module@ the name was exported from.
-type NameMap = M.Map String Name
+type NameMap = M.HashMap String Name
 
 ------------------------------------------------------------------------
 -- Hackage utils
@@ -88,6 +88,7 @@ hackageName n = hackageModule (nameModule n) ++ nameAnchor n
 hackageModule :: Module -> String
 hackageModule m =
   hackage ++ showModulePkgV m ++ "/docs/" ++ showModuleD m ++ ".html"
+  -- if we don't include the version, the anchors no longer work
 
 -- | @https://hackage.haskell.org/package/@
 hackage :: String
@@ -126,7 +127,9 @@ showName = occNameString . nameOccName
 
 -- | Show package with without: @diagrams-lib@.
 showModulePkg :: Module -> String
-showModulePkg = intercalate "-" . init . splitOn "-" . showModulePkgV
+showModulePkg = intercalate "-" . init' . splitOn "-" . showModulePkgV
+  where init' x | length x > 1 = init x
+                | otherwise    = x
 
 -- | Show package with version: @diagrams-lib-1.2@.
 showModulePkgV :: Module -> String
@@ -207,5 +210,5 @@ getPkgModules pkg =
           return $ Just (pkgid, catMaybes modInfos)
 
 -- TODO:
--- Include types with Name
+-- Include Types
 
