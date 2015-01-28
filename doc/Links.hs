@@ -56,6 +56,11 @@ import           Data.List.Split
 import           Data.Traversable
 import           Data.Tuple
 import           Prelude                hiding (mapM, sequence)
+import Data.Foldable (toList)
+
+import Diagrams.Util (findSandbox)
+import           System.IO
+
 
 -- There are two abstract data types used in this module:
 --
@@ -174,14 +179,6 @@ buildPackageMaps pkgs = do
 -- but can be found here:
 -- https://downloads.haskell.org/~ghc/latest/docs/html/libraries/ghc-7.8.4/index.html
 
--- getHsenvArgv :: IO [String]
--- getHsenvArgv = do
---   env <- getEnvironment
---   return $ case lookup "HSENV" env of
---              Nothing -> []
---              _       -> hsenvArgv
---                where hsenvArgv = words $ fromMaybe "" (lookup "PACKAGE_DB_FOR_GHC" env)
-
 -- | Get the list of modules provided by a package.
 getPkgModules :: String -> IO (Maybe (PackageId, [(Module, ModuleInfo)]))
 getPkgModules pkg =
@@ -190,14 +187,13 @@ getPkgModules pkg =
     runGhc (Just libdir) $ do
       dflags0 <- getSessionDynFlags
       let dflags1 = dflags0 { packageFlags = ExposePackage pkg : packageFlags dflags0 }
-      -- args <- liftIO getHsenvArgv
-      let args = []
-      let args' = map noLoc args
-      (dflags2, _, _) <- parseDynamicFlags dflags1 args'
+      args <- liftIO $
+        maybe [] (\p -> [noLoc $ "-package-db" ++ p]) <$> findSandbox []
+      (dflags2, _, _) <- parseDynamicFlags dflags1 args
       (dflags3, pids) <- liftIO $ initPackages dflags2
       _ <- setSessionDynFlags dflags3
       let pkgSt    = pkgState dflags3
-          mpid     = listToMaybe (filter ((pkg `isPrefixOf`) . packageIdString) pids)
+          mpid     = listToMaybe $ filter ((pkg `isPrefixOf`) . packageIdString) pids
       case mpid of
         Nothing    -> return Nothing
         Just pkgid -> do
