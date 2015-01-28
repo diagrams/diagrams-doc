@@ -1,3 +1,7 @@
+---
+title: How to write diagrams tutorials
+...
+
 Introduction
 ============
 
@@ -29,6 +33,8 @@ Alternatively, you can think of a vector as consisting of a *magnitude*
 (length) and a *direction* (angle).
 
 ``` {.diagram}
+import Graphics.SVGFonts
+
 drawV v = (    beside unitY (hrule (norm v))
                             (text' 0.5 "r" === strutY 0.2)
                # alignR
@@ -46,8 +52,10 @@ vPic v = drawV v <> xComponent <> yComponent <> theta
     yComponent = component unitY # translate (project unitX v)
     theta = text' 0.5 "θ" # translate (0.7 ^& 0.2)
 
-text' d s = (stroke $ textSVG' (TextOpts s lin INSIDE_H KERN False d d))
-          # lwG 0 # fc black
+text' d s =
+  stroke (textSVG' (TextOpts lin INSIDE_H KERN False d d) s)
+    # lw none
+    # fc black
 
 example = ( (vPic ((4 ^& 0) # rotateBy (1/12)) # centerXY)
             ||| strutX 0.2 ||| text' 0.5 "y"
@@ -331,7 +339,7 @@ open to adding more!).
       = mconcat
         [ drawV v1 # lc red
         , drawV v2 # lc blue
-    	   , drawV v1 # lc red  # dashingG [0.1,0.1] 0 # translate v2
+        , drawV v1 # lc red  # dashingG [0.1,0.1] 0 # translate v2
         , drawV v2 # lc blue # dashingG [0.1,0.1] 0 # translate v1
         , drawV (v1 ^+^ v2) # lc purple
         ]

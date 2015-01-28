@@ -3,7 +3,7 @@ title: Metafont
 extra-diagrams-modules:
   - Diagrams.TwoD.Path.Metafont
   - Graphics.SVGFonts
-extra-dia-mods: Diagrams.TwoD.Turtle
+extra-dia-mods: Diagrams.TwoD.Path.Metafont
 ...
 
 `Diagrams.TwoD.Path.Metafont`{.mod} has tools to define Diagrams Trails
@@ -20,7 +20,6 @@ Getting started
 Let's start with the most boring possible example:
 
 ``` {.diagram-code}
-import Diagrams.TwoD.Path.Metafont
 z1 = p2 (1,0)
 example = metafont $ origin .--. endpt z1
 ```
@@ -44,7 +43,6 @@ example = metafont $ z4.--.z1.--.z2.--.endpt z6
 ```
 
 ``` {.diagram}
-import Diagrams.TwoD.Path.Metafont
 
 --ptMark :: Diagram SVG V2 Double
 ptMark = circle 0.02 # lwG 0
@@ -99,7 +97,6 @@ example = metafont $ z4.--.z1 .- leaving unitX -. z2.--.endpt z6
 ```
 
 ``` {.diagram}
-import Diagrams.TwoD.Path.Metafont
 
 --ptMark :: Diagram SVG V2 Double
 ptMark = circle 0.02 # lwG 0
@@ -144,7 +141,6 @@ example = metafont $ z4 .--. z1.- tension 1.5 -.z2.--.endpt z6
 ```
 
 ``` {.diagram}
-import Diagrams.TwoD.Path.Metafont
 
 --ptMark :: Diagram SVG V2 Double
 ptMark = circle 0.02 # lwG 0
@@ -211,7 +207,6 @@ example = metafont $ z4.--.z1.--.z2.--.z6.- tension 1.5 -.cyclePath
 ```
 
 ``` {.diagram}
-import Diagrams.TwoD.Path.Metafont
 
 --ptMark :: Diagram SVG V2 Double
 ptMark = circle 0.02 # lwG 0
@@ -250,7 +245,8 @@ directions, you can use the terser syntax created for Metafont.
 {-# LANGUAGE OverloadedStrings #-}
 import qualified Diagrams.TwoD.Path.Metafont as MF
 import Control.Lens as L
-example = L.view _Right $ MF.fromString "(1,0)..(0,0)..(0,1)..tension 1.2..(2,1)..(2,0)..cycle"
+example = L.view _Right $
+  MF.fromString "(1,0)..(0,0)..(0,1)..tension 1.2..(2,1)..(2,0)..cycle"
 ```
 
 Quasiquoting

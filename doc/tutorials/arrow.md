@@ -10,7 +10,7 @@ variety of flexible and extensible tools for creating and using arrows.
 The diagram below gives a small taste of some of the different arrows
 that can be created easily with `diagrams`. The
 `Diagrams.TwoD.Arrow`{.mod} module, along with
-`Diagrams.TwD.Arrowheads`{.mod}, provides a collection of functions and
+`Diagrams.TwoD.Arrowheads`{.mod}, provides a collection of functions and
 options used to make arrows.
 
 ``` {.diagram}
@@ -104,7 +104,7 @@ other transformations such as rotation and translation). The
 manual](http://projects.haskell.org/diagrams/doc/manual.html#scale-invariance)
 has a good example showing why scale-invariance is necessary for the
 creation of arrowheads; detailed documentation explaining scale
-invariant objects is in `Diagrams.TwoD.Transform.ScaleInv`{.mod}. The
+invariant objects is in `Diagrams.Transform.ScaleInv`{.mod}. The
 most important consequence for day-to-day diagramming with arrows is
 that arrowheads and -tails do not contribute to the envelope of an arrow
 (arrow shafts, on the other hand, do).
