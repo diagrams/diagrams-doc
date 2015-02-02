@@ -3929,8 +3929,9 @@ identify points on the boundaries of several diagrams.
 .. class:: dia-lhs
 
 ::
-> {-# LANGUAGE TypeFamilies #-}
 
+> {-# LANGUAGE TypeFamilies #-}
+>
 > import Data.Maybe (mapMaybe)
 > illustrateTrace :: (TrailLike a, Traced a, Semigroup a, Monoid a, V a ~ V2 Double) => a -> a
 > illustrateTrace d = d <> traceLines
