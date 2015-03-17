@@ -123,7 +123,9 @@ section for now---but you might want to come back and read it later!)
   to do *real-time* graphics generation you will probably be best
   served by looking elsewhere! (With that said, however, we certainly
   are interested in making diagrams as fast as possible without
-  sacrificing other features.)
+  sacrificing other features, and there have been several cases of
+  people successfully using diagrams for simple real-time graphics
+  generation.)
 
 Your first diagram
 ==================
@@ -147,10 +149,11 @@ if you don't, you will almost certainly run into it (and be very
 confused by the resulting error messages).
 
 The first `import` statement brings into scope the entire diagrams DSL
-and standard library.  The second `import` is so that we can use the
-SVG backend for rendering diagrams.  Among other things, it provides
-the function `mainWith`, which takes a diagram as input (in this
-case, a circle of radius 1) and creates a command-line-driven
+and standard library, as well as a few things from other libraries
+re-exported for convenience.  The second `import` is so that we can
+use the SVG backend for rendering diagrams.  Among other things, it
+provides the function `mainWith`, which takes a diagram as input (in
+this case, a circle of radius 1) and creates a command-line-driven
 application for rendering it.
 
 Let's compile and run it:
@@ -396,8 +399,8 @@ However:
   reposition their local origins before composing them with `atop`.
 
 Happily, in this particular case, it *is* possible to place the
-ellipses tangent to one another, though this solution is not quite as
-general as one might hope:
+ellipses tangent to one another (though this solution is not quite as
+general as one might hope):
 
 .. class:: dia-lhs
 
@@ -597,7 +600,7 @@ synonym for its particular backend type tag.  This makes it easier to
 switch between backends while still giving explicit type signatures for
 your code: in contrast to a type like `Diagram SVG` which is
 explicitly tied to a particular backend and would have to be changed
-when switchin to a different backend, the `B` in `Diagram B` will
+when switching to a different backend, the `B` in `Diagram B` will
 get instantiated to whichever backend happens to be in scope.
 
 Our final task is to connect the nodes with arrows.  First, in order
