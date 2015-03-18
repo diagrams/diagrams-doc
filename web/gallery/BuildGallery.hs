@@ -57,7 +57,7 @@ compileExample mThumb lhs out = do
       toBuild =
           case (mThumb, mvs) of
             (Just _, Just [vx, vy, vxOff, vyOff]) ->
-                "boxEnvelope (p2 " ++ show (vx,vy) ++ ") "
+                "rectEnvelope (p2 " ++ show (vx,vy) ++ ") "
                 ++ "(r2 " ++ show (vxOff, vyOff) ++ ") example"
             _ -> "example"
 

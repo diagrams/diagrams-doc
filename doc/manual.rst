@@ -3760,6 +3760,7 @@ Envelope-related functions
   > import Diagrams.TwoD.Vector
   > import Data.Maybe (fromJust)
   >
+  > sampleEnvelope2D :: Int -> Diagram B -> Diagram B
   > sampleEnvelope2D n d = foldr (flip atop) (d # lc red) bs
   >   where b  = fromJust $ appEnvelope (getEnvelope d)
   >         bs = [stroke $ mkLine (origin .+^ (s *^ v))
@@ -3942,7 +3943,7 @@ identify points on the boundaries of several diagrams.
 > {-# LANGUAGE TypeFamilies #-}
 >
 > import Data.Maybe (mapMaybe)
-> illustrateTrace :: (TrailLike a, Traced a, Semigroup a, Monoid a, V a ~ V2 Double) => a -> a
+> illustrateTrace :: (TrailLike a, Traced a, Semigroup a, Monoid a, V a ~ V2) => a -> a
 > illustrateTrace d = d <> traceLines
 >   where
 >     traceLines  = mconcat
@@ -4222,7 +4223,7 @@ existing names with one or more prefixes.  Names actually consist of a
 *sequence* of atomic names, much like Haskell module names consist of
 a sequence of identifiers like `Diagrams.TwoD.Shapes`:mod:.
 
-To qualify an existing name, use the `(|>)` operator, which can be
+To qualify an existing name, use the `(.>>)` operator, which can be
 applied not only to individual names but also to an entire diagram
 (resulting in all names in the diagram being qualified).  To construct
 a qualified name explicitly, separate the components with `(.>)`.
@@ -4244,7 +4245,7 @@ a qualified name explicitly, separate the components with `(.>)`.
 >        === (s # named SW ||| s # named SE)
 >   where s = square 1
 >
-> d = hcat' (with & sep .~ 0.5) (zipWith (|>) [0::Int ..] (replicate 5 squares))
+> d = hcat' (with & sep .~ 0.5) (zipWith (.>>) [0::Int ..] (replicate 5 squares))
 >
 > pairs :: [(Name, Name)]
 > pairs = [ ((0::Int) .> NE, (2::Int) .> SW)
@@ -4262,7 +4263,7 @@ individually.  The solution is to qualify each of the copies
 differently; here we have used a numeric prefix.
 
 (As an aside, note how we had to use a type annotation on the integers
-that we used as names; numeric literals are polymorphic and `(|>)`
+that we used as names; numeric literals are polymorphic and `(.>>)`
 needs to know what type of atomic name we are using. Without the type
 annotations, we would get an `error about an "ambiguous type variable"`_.
 It's a bit annoying to insert all these annotations, of course;
@@ -4734,7 +4735,7 @@ the section on `Qualifying names`_:
 
 ::
 
-> hcat' ( with & sep .~ 0.5 ) (zipWith (|>) [0 .. ] (replicate 5 squares))
+> hcat' ( with & sep .~ 0.5 ) (zipWith (.>>) [0 .. ] (replicate 5 squares))
 
 It is an attempt to qualify the names in five copies of `squares` with
 the numbers `0`, `1`, `2`, ...  However, it generates the error shown below:
@@ -4742,18 +4743,18 @@ the numbers `0`, `1`, `2`, ...  However, it generates the error shown below:
 ::
 
     Ambiguous type variable `a0' in the constraints:
-      (IsName a0) arising from a use of `|>'
+      (IsName a0) arising from a use of `.>>'
                   at /tmp/Diagram2499.lhs:13:39-42
       (Num a0) arising from the literal `0' at /tmp/Diagram2499.lhs:13:45
       (Enum a0) arising from the arithmetic sequence `0 .. '
                 at /tmp/Diagram2499.lhs:13:44-49
     Probable fix: add a type signature that fixes these type variable(s)
-    In the first argument of `zipWith', namely `(|>)'
+    In the first argument of `zipWith', namely `(.>>)'
     In the second argument of `hcat'', namely
-      `(zipWith (|>) [0 .. ] (replicate 5 squares))'
+      `(zipWith (.>>) [0 .. ] (replicate 5 squares))'
     In the expression:
       hcat'
-        (with & sep .~ 0.5)) (zipWith (|>) [0 .. ] (replicate 5 squares))
+        (with & sep .~ 0.5)) (zipWith (.>>) [0 .. ] (replicate 5 squares))
 
 The problem, again, is that GHC does not know what type to choose for
 some polymorphic value.  Here, the polymorphic values in question are
@@ -5476,7 +5477,7 @@ with a name.
 
 > class Qualifiable q where
 >   -- | Qualify with the given name.
->   (|>) :: IsName a => a -> q -> q
+>   (.>>) :: IsName a => a -> q -> q
 
 Instances:
 

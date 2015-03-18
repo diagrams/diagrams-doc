@@ -29,7 +29,7 @@ here](http://rosettacode.org/wiki/Knight%27s_tour#Haskell).
 > board = [ (x,y) | x <- [0..7], y <- [0..7] ]
 >
 > knightMoves :: Square -> [Square]
-> knightMoves (x,y) = filter (flip elem board) jumps
+> knightMoves (x,y) = filter (`elem` board) jumps
 >   where jumps = [ (x+i,y+j) | i <- jv, j <- jv, abs i /= abs j ]
 >         jv    = [1,-1,2,-2]
 >
@@ -45,8 +45,10 @@ here](http://rosettacode.org/wiki/Knight%27s_tour#Haskell).
 
 Now we can go about visualizing a tour.  First, let's draw a chessboard:
 
+> boardSq :: Colour Double -> Diagram B
 > boardSq c = square 1 # lw none # fc c
 >
+> chessBoard :: Int -> Diagram B
 > chessBoard n
 >   = vcat . map hcat . map (map boardSq)
 >   . take n . map (take n) . tails
@@ -63,6 +65,7 @@ top-left square, all we need to do is negate the $y$-coordinate:
 To draw a knight on a given square, we load an image of a knight, size
 it to fit a square, and translate it appropriately:
 
+> knight :: Square -> Diagram B
 > knight sq
 >   = image (uncheckedImageRef "../../doc/static/white-knight.png" 1 1)
 >   # moveTo (squareToPoint sq)
@@ -70,6 +73,7 @@ it to fit a square, and translate it appropriately:
 Finally, given a tour, we turn it into a path using `fromVertices`,
 and decorate the vertices with dots.
 
+> drawTour :: [Square] -> Diagram B
 > drawTour tour = tourPoints <> stroke tourPath
 >   where
 >     tourPath   = fromVertices . map squareToPoint $ tour
