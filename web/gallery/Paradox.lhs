@@ -19,6 +19,7 @@ The standard infinite list of Fibonacci numbers.
 
 Create a grid by gluing together a bunch of squares.
 
+> grid :: Int -> Int -> Diagram B
 > grid x y = frame <> lattice
 >   where s       = unitSquare # lw thin
 >         frame   = rect (fromIntegral x) (fromIntegral y)
@@ -28,6 +29,7 @@ Create a grid by gluing together a bunch of squares.
 The trapezoid and triangle shapes, with sides lengths based on two
 Fibonacci numbers.
 
+> trap, tri :: Double -> Double -> Diagram B
 > trap s1 s2 = lw none . strokeLoop . closeLine
 >            . fromOffsets . map r2 $ [(0,-s2), (s2,0), (0,s1)]
 > tri s1 s2  = lw none .  strokeLoop . closeLine
@@ -35,6 +37,7 @@ Fibonacci numbers.
 
 Draw the paradox diagram based on the nth Fibonacci number.
 
+> paradox :: Int -> Boolean -> Diagram B
 > paradox n drawDiags = (sq # rotateBy (1/4)
 >                    ||| strutX (s2 / 2)
 >                    ||| rect # rotateBy (1/4)) # centerXY
@@ -96,4 +99,4 @@ skinny gap in the rectangular assembly.  Lower-order diagrams make the
 gap more obvious; higher-order diagrams make it increasingly less
 obvious (but make the grid smaller).
 
-> example = pad 1.1 $ paradox 4 True
+> example = paradox 4 True # frame 0.5

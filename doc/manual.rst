@@ -1192,6 +1192,11 @@ which there are two possibilities:
 
   ::
 
+  > {-# LANGUAGE MultiParamTypeClasses #-}
+  > {-# LANGUAGE FlexibleContexts      #-}
+  >
+  > import Diagrams.TwoD.Text (Text)
+  >
   > funs          = map (flip (^)) [2..6]
   > visualize :: (Renderable (Text Double) b,
   >                  Renderable (Path V2 Double) b) =>
@@ -1994,11 +1999,15 @@ Conjugation
 
 `Diagrams.Transform`:mod: exports useful transformation utilities
 which are not specific to two dimensions.  At the moment there are
-only two: `conjugate` and `under`.  The first simply performs
+only two: `conjugate` and `underT`.  The first simply performs
 conjugation: `conjugate t1 t2 == inv t1 <> t2 <> t1`, that is,
 performs `t1`, then `t2`, then undoes `t1`.
 
-`under` performs a transformation using conjugation.  It takes as
+.. container:: todo
+
+  Talk about lensy things.
+
+`underT` performs a transformation using conjugation.  It takes as
 arguments a function `f` as well as a transformation to conjugate by,
 and produces a function which performs the transformation, then `f`,
 then the inverse of the transformation.  For example, scaling by a
@@ -2010,14 +2019,14 @@ thus:
 ::
 
 > eff = text "F" <> square 1 # lw none
-> example = (scaleX 2 `under` rotation (-1/8 @@ turn)) eff
+> example = (scaleX 2 `underT` rotation (-1/8 @@ turn)) eff
 
 The letter F is first rotated so that the desired scaling axis lies
 along the `x`:math:\-axis; then `scaleX` is performed; then it is rotated back
 to its original position.
 
 Note that `reflectAbout` and `rotateAbout` are implemented using
-`under`.
+`underT`.
 
 .. _`The Transformable class`:
 
@@ -4415,7 +4424,7 @@ Scale-invariance
 The `ScaleInv` wrapper can be used to create "scale-invariant"
 objects. (Note that `ScaleInv` is not exported from
 `Diagrams.Prelude`:mod:; to use it, import
-`Diagrams.TwoD.Transform.ScaleInv`:mod:.)  In the diagram below, the same
+`Diagrams.Transform.ScaleInv`:mod:.)  In the diagram below, the same
 transformation is applied to each pair of arrows.
 
 .. container:: warning
@@ -4432,7 +4441,7 @@ The arrows on the right are wrapped in `ScaleInv` but the ones on the left are n
 
 > {-# LANGUAGE TypeSynonymInstances, FlexibleInstances #-}
 >
-> import Diagrams.TwoD.Transform.ScaleInv
+> import Diagrams.Transform.ScaleInv
 > import Control.Lens ((^.))
 >
 > class Drawable d where

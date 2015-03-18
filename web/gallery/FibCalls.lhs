@@ -17,8 +17,6 @@ We make use of a tree layout module from the `diagrams-contrib` package:
 
 > import Diagrams.TwoD.Layout.Tree
 
-> import Diagrams.Backend.SVG.CmdLine
-
 Generate the tree of naive Fibonacci calls.
 
 > fibCalls :: Integer -> BTree Integer

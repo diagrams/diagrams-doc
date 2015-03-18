@@ -13,7 +13,7 @@ import           Diagrams.Backend.Cairo
 import           Diagrams.Backend.Cairo.Internal
 #endif
 
-import           Diagrams.Prelude
+import           Diagrams.Prelude                hiding (def)
 
 import           Diagrams.Builder                hiding (Build (..))
 
@@ -57,7 +57,7 @@ compileExample mThumb lhs out = do
       toBuild =
           case (mThumb, mvs) of
             (Just _, Just [vx, vy, vxOff, vyOff]) ->
-                "view (p2 " ++ show (vx,vy) ++ ") "
+                "boxEnvelope (p2 " ++ show (vx,vy) ++ ") "
                 ++ "(r2 " ++ show (vxOff, vyOff) ++ ") example"
             _ -> "example"
 
@@ -72,9 +72,9 @@ compileExample mThumb lhs out = do
                 zero
 
 #ifdef USE_SVG
-                (SVGOptions (mkSizeSpec w h) Nothing)
+                (SVGOptions (mkSizeSpec2D w h) Nothing)
 #else
-                (CairoOptions out (mkSizeSpec w h) fmt False)
+                (CairoOptions out (mkSizeSpec2D w h) fmt False)
 #endif
 
                 & snippets .~ [f']
