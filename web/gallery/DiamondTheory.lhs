@@ -14,8 +14,6 @@ http://recodeproject.com/artwork/v2n1diamond-theory).
 
 > {-# LANGUAGE NoMonomorphismRestriction #-}
 >
-> import Diagrams.Prelude
-> import Diagrams.Backend.SVG.CmdLine
 > import System.Random
 > import Data.List.Split
 
