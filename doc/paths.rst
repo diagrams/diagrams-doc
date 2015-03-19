@@ -260,7 +260,7 @@ some lines and then call `glueLine` on the result.  You try:
      >     d2 = tangentAtStart t2
      >
      > str = fromOffsets [unitX]
-     > cap = arc xDir (1/2 @@ turn)
+     > cap = arc (negated xDir) (1/2 @@ turn)
      > arm = str `andThen` cap `andThen` str
      >
      > armUnit = arm `andThen` (arc xDir (3/10 @@ turn) # reflectX)
