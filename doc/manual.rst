@@ -3250,7 +3250,7 @@ lower-left to upper-right corner.
 ::
 
 > circles = (c ||| c) === (c ||| c) where c = circle 1 # fc fuchsia
-> example = circles # center # view (p2 (-1,-1)) (r2 (1.3, 0.7))
+> example = circles # center # rectEnvelope (p2 (-1,-1)) (r2 (1.3, 0.7))
 
 Note in the above example how the actual portion of the diagram that
 ends up being visible is larger than the specification given to
@@ -3642,7 +3642,7 @@ reference with a width and height to make a `DImage External`.
 >   res <- loadImageEmb "doc/static/phone.png"
 >   return $ case res of
 >     Left err    -> mempty
->     Right phone -> no <> image phone # sized (Dims 1.5 1.5)
+>     Right phone -> no <> image phone # sized (mkSizeSpec2D 1.5 1.5)
 
 When using `loadImageEmb` and `loadImageExt` you do not need to
 provide the width and height of the image, as they will be calculated
