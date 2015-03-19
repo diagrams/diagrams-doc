@@ -74,7 +74,7 @@ Finally, given a tour, we turn it into a path using `fromVertices`,
 and decorate the vertices with dots.
 
 > drawTour :: [Square] -> Diagram B
-> drawTour tour = tourPoints <> stroke tourPath
+> drawTour tour = tourPoints <> strokeP tourPath
 >   where
 >     tourPath   = fromVertices . map squareToPoint $ tour
 >     tourPoints = atPoints (concat . pathVertices $ tourPath) (repeat dot)
