@@ -6,7 +6,7 @@ import           Control.Monad               (mplus, when)
 import           Control.Parallel.Strategies (NFData)
 import           Data.Functor                ((<$>))
 import           Data.List                   (isPrefixOf, (\\))
-import           Development.Shake hiding ((<//>))
+import           Development.Shake           hiding ((<//>))
 import           Development.Shake.Classes   (Binary, Hashable)
 import           Development.Shake.FilePath  (dropDirectory1, dropExtension,
                                               takeBaseName, takeDirectory,
@@ -26,6 +26,7 @@ dist = ("dist" <//>)
 
 -- Like </>, but retain the first argument when the second starts with
 -- a forward slash
+(<//>) :: String -> String -> String
 d <//> p@('/':_) = d ++ p
 d <//> p = d </> p
 
@@ -98,7 +99,7 @@ main = do
         let xml = obj . un $ out -<.> "xml"
             exe = obj "doc/Xml2Html.hs.exe"
         need [xml, exe]
-        system' exe
+        command_ [] exe
           ([xml, "-o", takeDirectory out </> "images", out] ++ ["--keepgoing" | useSVG])
 
       dist "blog/*.metadata" *> \out -> copyFile' (un out) out
@@ -107,7 +108,7 @@ main = do
       obj "//*.xml" *> \out -> do
         let rst = un $ out -<.> "rst"
         need [rst]
-        system' "rst2xml.py" ["--input-encoding=utf8", rst, out]
+        command_ [] "rst2xml.py" ["--input-encoding=utf8", rst, out]
 
       obj "//*.hs.o" *> \out -> do
         let hs = un $ dropExtension out
@@ -123,7 +124,7 @@ main = do
       dist ("doc/icons/*" <.> imgExt) *> \out -> do
         let exe = obj . un $ out -<.> ".hs.exe"
         need [exe]
-        system' exe ["-w", "40", "-h", "40", "-o", out]
+        command_ [] exe ["-w", "40", "-h", "40", "-o", out]
 
       copyFiles "doc/static"
 
@@ -135,8 +136,8 @@ main = do
         need [dropExtension (un out) -<.> "lhs"]
         compileImg True out
 
-      addOracle $ \(GhcPkg _) -> do
-        (out,_) <- systemOutput "ghc-pkg" ["dump"]
+      _ <- addOracle $ \(GhcPkg _) -> do
+        Stdout out <- command [] "ghc-pkg" ["dump"]
         return $ words out
 
       when (m /= Build) (action $ runWeb m imgExt)
@@ -190,14 +191,14 @@ requireRst dir = do
 webRules :: Rules ()
 webRules = do
   "web/doc" *> \out ->
-    system' "ln" ["-s", "-f", "../dist/doc", out]
+    command_ [] "ln" ["-s", "-f", "../dist/doc", out]
 
   "web/blog" *> \out ->
-    system' "ln" ["-s", "-f", "../dist/blog", out]
+    command_ [] "ln" ["-s", "-f", "../dist/blog", out]
 
   "web/gallery/images" *> \out -> do
     liftIO $ createDirectoryIfMissing True "dist/web/gallery"
-    system' "ln" ["-s", "-f", "../../dist/web/gallery", out]
+    command_ [] "ln" ["-s", "-f", "../../dist/web/gallery", out]
 
 runWeb :: MkMode -> String -> Action ()
 runWeb m imgExt = do
@@ -205,9 +206,9 @@ runWeb m imgExt = do
   needWeb imgExt
 
   -- work around weird bug(?)
-  system' "rm" ["-f", "dist/doc/doc"]
-  system' "rm" ["-f", "dist/web/gallery/gallery"]
-  system' "rm" ["-f", "dist/blog/blog"]
+  command_ [] "rm" ["-f", "dist/doc/doc"]
+  command_ [] "rm" ["-f", "dist/web/gallery/gallery"]
+  command_ [] "rm" ["-f", "dist/blog/blog"]
 
   systemCwdNorm "web" (obj "web/Site.hs.exe")
     [ case m of
@@ -240,10 +241,10 @@ ghc mode useSVG r out hs = do
              | otherwise                   = []
 
   -- Rebuild when the package database has changed
-  askOracleWith (GhcPkg ()) [""]
+  _ <- askOracleWith (GhcPkg ()) [""]
 
   -- Run GHC, limiting to four linking invocations at a time
-  resourced mode $ system' "ghc" $
+  resourced mode $ command_ [] "ghc" $
     concat
     [ ["--make", "-O2", "-outputdir", odir, "-o", out, "-osuf", "hs.o", hs]
     , mainIs
@@ -258,4 +259,4 @@ systemCwdNorm :: FilePath -> FilePath -> [String] -> Action ()
 systemCwdNorm path exe as = do
   path' <- liftIO (canonicalizePath path)
   exe'  <- liftIO (canonicalizePath exe)
-  systemCwd path' exe' as
+  command_ [Cwd path'] exe' as
