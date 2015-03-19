@@ -614,7 +614,7 @@ straightforward.
 > states = position (zip points ds)
 >
 > shaft = arc xDir (-1/6 @@ turn)
-> shaft' = arc xDir (1/2 @@ turn) # scaleX 0.33
+> shaft' = arc xDir (-1/2 @@ turn) # scaleX 0.33
 > line = trailFromOffsets [unitX]
 >
 > arrowStyle1 = (with  & arrowHead  .~ spike & headLength .~ large
