@@ -10,7 +10,7 @@ width: 600
 ---
 
 > import Diagrams.Prelude
-> import Graphics.SVGFonts.ReadFont
+> import Graphics.SVGFonts
 >
 > import Diagrams.Core.Points -- needed to work around bug in GHC 7.4
 
@@ -75,7 +75,7 @@ and straight lines are drawn between points.
 > plot dataToFrac shape lineStyle ps =
 >     let scalify (x,y) = (x*w,y*h)
 >         ps' = map (p2 . scalify . dataToFrac) ps
->     in (stroke $ fromVertices ps') # lineStyle
+>     in (strokeP $ fromVertices ps') # lineStyle
 >          `beneath` mconcat [ shape # moveTo p | p <- ps' ]
 
 Plot many data series using the given list of styles.
@@ -87,7 +87,7 @@ Plot many data series using the given list of styles.
 A string of text, converted to a path and filled.
 
 > text' :: String -> Dia
-> text' s = (stroke $ textSVG' (TextOpts s lin2 INSIDE_H KERN False 0.4 0.4)) # fc black # lw none
+> text' s = (strokeP $ textSVG' (TextOpts lin2 INSIDE_H KERN False 0.4 0.4) s) # fc black # lw none
 
 The chart's legend.  Each label is drawn next to a little example of
 how the line looks in the chart.
@@ -97,7 +97,7 @@ how the line looks in the chart.
 >     vcat' with {_sep=0.15} $
 >       map (\(l,s) -> littleLine s ||| strutX 0.4 ||| text' l # alignL)
 >         (zip labels (styles ++ plotStyles))
->   where littleLine (d,l) = (stroke $ fromVertices [ 0^&0, 1^&0 ]) # l
+>   where littleLine (d,l) = (strokeP $ fromVertices [ 0^&0, 1^&0 ]) # l
 >                            <> d # moveTo (0.5^&0)
 
 The outer box is just a rectangle.
@@ -147,7 +147,7 @@ The dot styles.
 
 > dotStyles :: [DotStyle]
 > dotStyles = cycle $
->     let shapes = map (stroke)
+>     let shapes = map (strokeP)
 >            [ circle 0.07
 >            , square 0.1
 >            , eqTriangle 0.1

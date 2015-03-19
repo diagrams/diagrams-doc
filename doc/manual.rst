@@ -1201,13 +1201,13 @@ which there are two possibilities:
   > visualize :: (Renderable (Text Double) b,
   >                  Renderable (Path V2 Double) b) =>
   >                  (Int -> Int) -> QDiagram b V2 Double Any
-  > visualize f	  = stroke' (with & vertexNames .~ [[0 .. 6 :: Int]] )
+  > visualize f	  = strokeP' (with & vertexNames .~ [[0 .. 6 :: Int]] )
   >                     (regPoly 7 1)
   >                   # lw none
   >                   # showLabels
   >                   # fontSize (local 0.6)
   >              <> star (StarFun f) (regPoly 7 1)
-  >                   # stroke # lw thick # lc red
+  >                   # strokeP # lw thick # lc red
   > example       = center . hcat' (with & sep .~ 0.5) $ map visualize funs
 
 You may notice that all the above examples need to call `stroke` (or
@@ -1986,7 +1986,7 @@ To reflect in some line other than an axis, use `reflectAbout`.
 
 > eff = text "F" <> square 1 # lw none
 > example = eff
->        <> reflectAbout (p2 (0.2,0.2)) (rotateBy (-1/10) unitX) eff
+>        <> reflectAbout (p2 (0.2,0.2)) (rotateBy (-1/10) xDir) eff
 
 Translation
 +++++++++++
@@ -2901,7 +2901,7 @@ semantics depending on which type is inferred.
 ::
 
 > ts = mconcat . iterateN 3 (rotateBy (1/9)) $ triangle 1
-> example = (ts ||| stroke ts ||| strokeLine ts ||| fromVertices ts) # fc red
+> example = (ts ||| strokeP ts ||| strokeLine ts ||| fromVertices ts) # fc red
 
 The above example defines `ts` by generating three equilateral
 triangles offset by 1/9 rotations, then combining them with `mconcat`.
@@ -3199,8 +3199,8 @@ indicate places where the associated query evaluates to true.
 ::
 
 > points = [x ^& 0 | x <- [-2.3, -2.1 .. 2.3]]
-> dia1 = (circle 2 <> circle 1) # stroke # fillRule EvenOdd
-> dia2 = (circle 2 <> reversePath (circle 1)) # stroke
+> dia1 = (circle 2 <> circle 1) # strokeP # fillRule EvenOdd
+> dia2 = (circle 2 <> reversePath (circle 1)) # strokeP
 >
 > illustrate d = ((d # fc grey) `beneath`) . mconcat . map drawPt $ points
 >   where
@@ -3600,7 +3600,7 @@ its own `textSVG` function which can be used to convert text into a
 
 ::
 
-> text' d s = (stroke $ textSVG' (TextOpts s lin2 INSIDE_H KERN False d d))
+> text' d s = (strokeP $ textSVG' (TextOpts lin2 INSIDE_H KERN False d d) s)
 >           # lw none
 >
 > example = text' 5 "Hello" # fc blue ||| text' 3 "world" # fc green
@@ -3763,7 +3763,7 @@ Envelope-related functions
   > sampleEnvelope2D :: Int -> Diagram B -> Diagram B
   > sampleEnvelope2D n d = foldr (flip atop) (d # lc red) bs
   >   where b  = fromJust $ appEnvelope (getEnvelope d)
-  >         bs = [stroke $ mkLine (origin .+^ (s *^ v))
+  >         bs = [strokeP $ mkLine (origin .+^ (s *^ v))
   >                               (5 *^ signorm (perp v))
   >              | v <- vs, let s = b v
   >              ]

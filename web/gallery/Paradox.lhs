@@ -37,7 +37,7 @@ Fibonacci numbers.
 
 Draw the paradox diagram based on the nth Fibonacci number.
 
-> paradox :: Int -> Boolean -> Diagram B
+> paradox :: Int -> Bool -> Diagram B
 > paradox n drawDiags = (sq # rotateBy (1/4)
 >                    ||| strutX (s2 / 2)
 >                    ||| rect # rotateBy (1/4)) # centerXY
@@ -61,7 +61,7 @@ The four shapes assembled into a square.
 >         sqDiags = (fromVertices [p2 (0,s2), p2 (s2,s1)] <>
 >                    fromVertices [p2 (s2,0), p2 (s2,s1+s2)] <>
 >                    fromVertices [p2 (s2,0), p2 (s1+s2,s1+s2)])
->                 # stroke
+>                 # strokeP
 >                 # lw thick
 >                 # centerXY
 >
@@ -88,7 +88,7 @@ The four shapes assembled into a rectangle.
 >                   fromVertices [p2 (s2,0), p2 (s2,s1)] <>
 >                   fromVertices [p2 (s1+s2,s2-s1), p2 (s1+s2,s2)]
 >                   )
->                  # stroke
+>                  # strokeP
 >                  # lw thick
 >                  # lineCap LineCapRound
 >                  # centerXY

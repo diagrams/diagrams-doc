@@ -40,12 +40,12 @@ rectangle.
 >         width  = diameter (r2 (1,0)) padded
 >     in centerXY innards <> roundedRect width height 0.1
 >
-> textOpts s n = TextOpts s lin2 INSIDE_H KERN False 1 n
+> textOpts n = TextOpts lin2 INSIDE_H KERN False 1 n
 
 A single string of text.
 
 > text' :: String -> Double -> Diagram B
-> text' s n = textSVG_ (textOpts s n) # fc white # lw none
+> text' s n = textSVG_ (textOpts n) s # fc white # lw none
 
 Several lines of text stacked vertically.
 
