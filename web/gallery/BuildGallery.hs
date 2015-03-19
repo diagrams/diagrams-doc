@@ -7,7 +7,8 @@ module BuildGallery where
 #ifdef USE_SVG
 import qualified Data.ByteString.Lazy            as BS
 import           Diagrams.Backend.SVG
-import           Text.Blaze.Svg.Renderer.Utf8    (renderSvg)
+import           Data.Text                       (empty)
+import           Lucid.Svg                       (renderBS)
 #else
 import           Diagrams.Backend.Cairo
 import           Diagrams.Backend.Cairo.Internal
@@ -72,7 +73,7 @@ compileExample mThumb lhs out = do
                 zero
 
 #ifdef USE_SVG
-                (SVGOptions (mkSizeSpec2D w h) Nothing)
+                (SVGOptions (mkSizeSpec2D w h) [] empty)
 #else
                 (CairoOptions out (mkSizeSpec2D w h) fmt False)
 #endif
@@ -98,7 +99,7 @@ compileExample mThumb lhs out = do
     Skipped _       -> return ()
     OK _ build      ->
 #ifdef USE_SVG
-      BS.writeFile out (renderSvg build)
+      BS.writeFile out (renderBS build)
 #else
       fst build
 #endif

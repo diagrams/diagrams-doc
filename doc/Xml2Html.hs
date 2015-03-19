@@ -13,7 +13,7 @@ import           System.IO
 
 import qualified Diagrams.Builder                   as DB
 import           Diagrams.Prelude                   (centerXY, pad, (&), (.~), zero, V2(..))
-import           Diagrams.Size                 (dims)
+import           Diagrams.Size                      (dims)
 import           Text.Docutils.CmdLine
 import           Text.Docutils.Transformers.Haskell
 import           Text.Docutils.Util
@@ -23,7 +23,8 @@ import           Text.XML.HXT.Core                  hiding (when)
 #ifdef USE_SVG
 import qualified Data.ByteString.Lazy               as BS
 import           Diagrams.Backend.SVG
-import           Text.Blaze.Svg.Renderer.Utf8       (renderSvg)
+import           Data.Text                          (empty)
+import           Lucid.Svg                          (renderBS)
 #else
 import           Diagrams.Backend.Cairo
 import           Diagrams.Backend.Cairo.Internal
@@ -181,7 +182,7 @@ compileDiagram outDir src = do
                 (zero :: V2 Double)
 
 #ifdef USE_SVG
-    (SVGOptions (dims $ V2 500 200) Nothing)
+                (SVGOptions (dims $ V2 500 200) [] empty)
 #else
                 (CairoOptions "default.png" (dims $ V2 500 200) PNG False)
 #endif
@@ -235,7 +236,7 @@ compileDiagram outDir src = do
       putStr "O"
       hFlush stdout
 #ifdef USE_SVG
-      BS.writeFile (mkFile (DB.hashToHexStr hash)) (renderSvg out)
+      BS.writeFile (mkFile (DB.hashToHexStr hash)) (renderBS out)
 #else
       fst out
 #endif
