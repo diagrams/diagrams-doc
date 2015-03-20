@@ -3,8 +3,7 @@ title: DiamondTheory
 author: Alexis Praga
 authorurl: https://www.projects.haskell.org/diagrams/
 date: 2014-12-16
-description: W. Kolmyjec's Hex Variation
-tags: hexagon, kolmyjec, position
+description: Steven H. Cullinane's Diamond Theory
 width: 400
 view: 0, -3 ,30,35
 ---
