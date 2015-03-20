@@ -65,10 +65,8 @@ top-left square, all we need to do is negate the $y$-coordinate:
 To draw a knight on a given square, we load an image of a knight, size
 it to fit a square, and translate it appropriately:
 
-> knight :: Square -> Diagram B
-> knight sq
->   = image (uncheckedImageRef "../../doc/static/white-knight.png" 1 1)
->   # moveTo (squareToPoint sq)
+> knight :: Square -> Diagram B -> Diagram B
+> knight sq knightImg = knightImg # moveTo (squareToPoint sq)
 
 Finally, given a tour, we turn it into a path using `fromVertices`,
 and decorate the vertices with dots.
@@ -82,13 +80,17 @@ and decorate the vertices with dots.
 
 Putting it all together:
 
-> example =
->   mconcat
->   [ knight tourStart
->   , knight tourEnd
->   , drawTour tour
->   , chessBoard 8
->   ]
+> example = do
+>   res <- loadImageEmb "../../doc/static/white-knight.png"
+>   let knightImg = case res of
+>         Left _    -> mempty
+>         Right img -> image img # sized (mkWidth 1)
+>   return $ mconcat
+>     [ knight tourStart knightImg
+>     , knight tourEnd knightImg
+>     , drawTour tour
+>     , chessBoard 8
+>     ]
 >   where
 >     tourStart = (1,3)
 >     tour      = knightTour tourStart

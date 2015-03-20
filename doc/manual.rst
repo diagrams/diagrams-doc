@@ -2645,7 +2645,7 @@ corners, the offset will be disconnected!
 >   where
 >     join' x = let (p,a) = viewLoc x in translate (p .-. origin) a
 >
-> offsetTrailNaive :: Double -> Double -> Trail V2 Double -> Path V2 Double
+> offsetTrailNaive :: N B -> N B -> Trail V2 (N B) -> Path V2 (N B)
 > offsetTrailNaive e r = mconcat . map (pathFromLocTrail . bindLoc (offsetSegment e r))
 >                      . locatedTrailSegments . (`at` origin)
 >
@@ -2981,7 +2981,7 @@ continuity; segments are even more restricted.)
 
 ::
 
-> spline :: Located (Trail V2 Double)
+> spline :: Located (Trail V2 (N B))
 > spline = cubicSpline False [origin, 0 ^& 1, 1 ^& 1, 1 ^& 0] # scale 3
 > pts = map (spline `atParam`) [0, 0.1 .. 1]
 > spot = circle 0.2 # fc blue
@@ -3640,7 +3640,7 @@ reference with a width and height to make a `DImage External`.
 >   res <- loadImageEmb "doc/static/phone.png"
 >   return $ case res of
 >     Left err    -> mempty
->     Right phone -> no <> image phone # sized (mkSizeSpec2D 1.5 1.5)
+>     Right phone -> no <> image phone # sized (dims2D 1.5 1.5)
 
 When using `loadImageEmb` and `loadImageExt` you do not need to
 provide the width and height of the image, as they will be calculated
@@ -3788,9 +3788,9 @@ Envelope-related functions
   ::
 
   > example = hcat [ square 2
-  >                , circle 1 # withEnvelope (square 3 :: D V2 Double)
+  >                , circle 1 # withEnvelope (square 3 :: D V2 (N B))
   >                , square 2
-  >                , text "hi" <> phantom (circle 2 :: D V2 Double)
+  >                , text "hi" <> phantom (circle 2 :: D V2 (N B))
   >                ]
 
   In the above example, `withEnvelope` is used to put more space
@@ -3815,9 +3815,9 @@ Envelope-related functions
 
   > shapes = circle 1
   >      ||| square 2
-  >      ||| circle 1 # scaleY 0.3 # sizedAs (square 2 :: D V2 Double)
+  >      ||| circle 1 # scaleY 0.3 # sizedAs (square 2 :: D V2 (N B))
   >
-  > example = hrule 1 # sizedAs (shapes # scale 0.5 :: D V2 Double)
+  > example = hrule 1 # sizedAs (shapes # scale 0.5 :: D V2 (N B))
   >        <> shapes # centerX
 
 The ``Enveloped`` class
@@ -4337,7 +4337,7 @@ the ellipse red and points outside it blue.
 >           	       )
 >             )
 >
-> rand10 :: IO Double
+> rand10 :: IO (N B)
 > rand10 = randomRIO (-10,10)
 >
 > example = do
@@ -4363,7 +4363,7 @@ and `Any False` with `mempty`.
 >
 > withCount = (# value (Sum 1))
 >
-> c :: QDiagram B V2 Double (Sum Int)
+> c :: QDiagram B V2 (N B) (Sum Int)
 > c = (   circle 5 # scaleX 2 # rotateBy (1/14) # withCount
 >      <> circle 2 # scaleX 5 # rotateBy (-4/14) # withCount
 >     )
@@ -4373,7 +4373,7 @@ and `Any False` with `mempty`.
 >                 # fc black
 >             )
 >
-> rand10 :: IO Double
+> rand10 :: IO (N B)
 > rand10 = randomRIO (-10,10)
 >
 > example = do
@@ -4438,7 +4438,7 @@ The arrows on the right are wrapped in `ScaleInv` but the ones on the left are n
 
 ::
 
-> {-# LANGUAGE TypeSynonymInstances, FlexibleInstances #-}
+> {-# LANGUAGE TypeSynonymInstances, FlexibleInstances, TypeFamilies #-}
 >
 > import Diagrams.Transform.ScaleInv
 > import Control.Lens ((^.))
@@ -4446,7 +4446,7 @@ The arrows on the right are wrapped in `ScaleInv` but the ones on the left are n
 > class Drawable d where
 >   draw :: d -> Diagram B
 >
-> instance Drawable (QDiagram B V2 Double Any) where
+> instance (n ~ N B) => Drawable (QDiagram B V2 n Any) where
 >   draw = id
 >
 > instance Drawable a => Drawable (ScaleInv a) where

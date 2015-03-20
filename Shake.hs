@@ -169,7 +169,7 @@ requireStatic = do
 -- A list of gallery examples which only build with rasterific, to be
 -- excluded when building with SVG.
 rasterificOnly :: [FilePath]
-rasterificOnly = ["KnightTour.lhs"]
+rasterificOnly = []
 
 requireGallery :: String -> Action ()
 requireGallery imgExt = do

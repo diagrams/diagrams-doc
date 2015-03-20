@@ -5,11 +5,11 @@ module Site where
 
 import           Control.Monad   (forM_, (>=>))
 import           Data.Functor    ((<$>))
-import           Data.List       (sortBy, isPrefixOf)
-import           Data.Text       (pack,unpack,replace,empty)
+import           Data.List       (isPrefixOf, sortBy)
 import           Data.Maybe      (fromMaybe)
 import           Data.Monoid
 import           Data.Ord        (comparing)
+import           Data.Text       (empty, pack, replace, unpack)
 
 import           Data.String
 
@@ -32,8 +32,8 @@ pages = map (fromString . (++".markdown"))
 
 main :: IO ()
 main = do
-  cairoPkg <- readProcess "ghc-pkg" ["list", "--simple-output", "diagrams-cairo"] ""
-  let useSVG = null cairoPkg
+  rasterificPkg <- readProcess "ghc-pkg" ["list", "--simple-output", "diagrams-rasterific"] ""
+  let useSVG = null rasterificPkg
       imgExt | useSVG    = "svg"
              | otherwise = "png"
 
