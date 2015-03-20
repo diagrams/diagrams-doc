@@ -39,7 +39,7 @@ the list below:
 >                   , arc1 # rotateBy (1/2) # translateX 1
 >                   ]
 >     where
->       arc1 = arc' 0.5 (xDir # rotate (-pi/3 @@ rad)) (pi/3 @@ rad)
+>       arc1 = arc' 0.5 (xDir # rotate (-pi/3 @@ rad)) (2*pi/3 @@ rad)
 
 In the final tiling, the tiles will be rotated randomly with angles in `\{0,
 \frac{2 \pi}{3}, \frac{4 \pi}{3} \}`.
