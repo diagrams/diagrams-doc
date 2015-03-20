@@ -461,7 +461,7 @@ There are several ways to construct points.
 
   ::
 
-  > pts :: [P2 Double]
+  > pts :: [P2 (N B)]
   > pts = nonagon 1
   > example = position . map (\p -> (p, circle 0.2 # fc green)) $ pts
 
@@ -586,11 +586,12 @@ its second.
 
   ::
 
+  > pt1, pt2 :: P2 (N B)
   > pt1 = origin
   > pt2 = p2 (5,3)
   >
   > example = position $
-  >   [ (p, circle 0.2 # fc c)
+  >   [ (p, circle 0.2 # fc (colourConvert c))
   >   | a <- [0, 0.1 .. 1]
   >   , let p = lerp a pt2 pt1
   >   , let c = blend a blue green

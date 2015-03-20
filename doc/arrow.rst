@@ -660,14 +660,14 @@ In the following exercise you can try `connectPerim'` for yourself.
     >
     > shaft = arc xDir (1/6 @@ turn)
     >
-    > connectTarget :: (Renderable (Path V2 Double) b)
-    >               =>  Angle Double -> (QDiagram b V2 Double Any -> QDiagram b V2 Double Any)
+    > connectTarget :: (Renderable (Path V2 (N B)) b)
+    >               =>  Angle (N B) -> (QDiagram b V2 (N B) Any -> QDiagram b V2 (N B) Any)
     > connectTarget a = connectPerim' (with & arrowHead .~ thorn & shaftStyle %~  lwG 0.01
     >                                       & arrowShaft .~ shaft & headLength .~ global 0.18
     >                                       & arrowTail .~ thorn' & tailLength .~ global 0.12
     >                                      ) "target" "bullseye" a a
     >
-    > angles :: [Angle Double]
+    > angles :: [Angle (N B)]
     > angles = map (@@ turn) [0, 1/16 .. 15/16]
     >
     > example = foldr connectTarget d angles

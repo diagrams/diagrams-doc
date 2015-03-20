@@ -6,7 +6,7 @@ module Warning where
 #ifdef USE_SVG
 import           Diagrams.Backend.SVG.CmdLine
 #else
-import           Diagrams.Backend.Cairo.CmdLine
+import           Diagrams.Backend.Rasterific.CmdLine
 #endif
 import           Diagrams.Prelude
 

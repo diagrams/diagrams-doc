@@ -59,7 +59,7 @@ in the range 0-7) into actual coordinates on the chessboard.  Since
 the chessboard ends up with its local origin in the center of the
 top-left square, all we need to do is negate the $y$-coordinate:
 
-> squareToPoint :: Square -> P2 Double
+> squareToPoint :: Square -> P2 (N B)
 > squareToPoint (x,y) = fromIntegral x ^& negate (fromIntegral y)
 
 To draw a knight on a given square, we load an image of a knight, size

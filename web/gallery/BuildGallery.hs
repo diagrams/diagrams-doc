@@ -5,54 +5,44 @@
 module BuildGallery where
 
 #ifdef USE_SVG
-import qualified Data.ByteString.Lazy            as BS
+import qualified Data.ByteString.Lazy        as BS
+import           Data.Text                   (empty)
 import           Diagrams.Backend.SVG
-import           Data.Text                       (empty)
-import           Lucid.Svg                       (renderBS)
+import           Lucid.Svg                   (renderBS)
 #else
-import           Diagrams.Backend.Cairo
-import           Diagrams.Backend.Cairo.Internal
+import qualified Codec.Picture               as JP
+import           Diagrams.Backend.Rasterific
 #endif
 
-import           Diagrams.Prelude                hiding (def)
+import           Diagrams.Prelude            hiding (def)
 
-import           Diagrams.Builder                hiding (Build (..))
+import           Diagrams.Builder            hiding (Build (..))
 
 import           Data.List.Split
 
-import qualified System.FilePath                 as FP
+import qualified System.FilePath             as FP
 
-import           Control.Arrow                   (second)
-import           Control.Monad                   (mplus)
+import           Control.Arrow               (second)
+import           Control.Monad               (mplus)
 
-import qualified Data.Map                        as M
+import qualified Data.Map                    as M
 
-import           System.Console.CmdArgs          hiding (name)
+import           System.Console.CmdArgs      hiding (name)
 
 -- If the first argument is 'Just', we're making a thumbnail, so use
 -- that as the width and height, and use the 'view' parameters from
 -- the LHS file to pick out just a sub-view of the entire diagram.
 -- Otherwise, use the width and height specified in the .lhs file and
 -- build the entire diagram.
-compileExample :: Maybe Double -> String -> String -> IO ()
+compileExample :: Maybe (N B) -> String -> String -> IO ()
 compileExample mThumb lhs out = do
-#ifdef USE_SVG
-#else
-  let fmt = case FP.takeExtension out of
-              ".png" -> PNG
-              ".svg" -> SVG
-              ".ps"  -> PS
-              ".pdf" -> PDF
-              _      -> PNG
-#endif
-
   f   <- readFile lhs
   let (fields, f') = parseFields f
 
       w = mThumb `mplus` (read <$> M.lookup "width" fields)
       h = mThumb `mplus` (read <$> M.lookup "height" fields)
 
-      mvs :: Maybe [Double]
+      mvs :: Maybe [N B]
       mvs = (map read . splitOn ",") <$> M.lookup "view" fields
 
       toBuild =
@@ -67,7 +57,7 @@ compileExample mThumb lhs out = do
 #ifdef USE_SVG
                 SVG
 #else
-                Cairo
+                Rasterific
 #endif
 
                 zero
@@ -75,7 +65,7 @@ compileExample mThumb lhs out = do
 #ifdef USE_SVG
                 (SVGOptions (mkSizeSpec2D w h) [] empty)
 #else
-                (CairoOptions out (mkSizeSpec2D w h) fmt False)
+                (RasterificOptions (mkSizeSpec2D w h))
 #endif
 
                 & snippets .~ [f']
@@ -84,7 +74,7 @@ compileExample mThumb lhs out = do
 #ifdef USE_SVG
                   [ "Diagrams.Backend.SVG", "Diagrams.Backend.SVG.CmdLine" ]
 #else
-                  [ "Diagrams.Backend.Cairo", "Diagrams.Backend.Cairo.CmdLine" ]
+                  [ "Diagrams.Backend.Rasterific", "Diagrams.Backend.Rasterific.CmdLine" ]
 #endif
 
                 & diaExpr .~ toBuild
@@ -101,7 +91,7 @@ compileExample mThumb lhs out = do
 #ifdef USE_SVG
       BS.writeFile out (renderBS build)
 #else
-      fst build
+      JP.savePngImage out (JP.ImageRGBA8 build)
 #endif
 
 parseFields :: String -> (M.Map String String, String)
@@ -111,7 +101,7 @@ parseFields s = (fieldMap, unlines $ tail rest)
                        . map ((uncurry M.singleton) . second (drop 2) . break (==':'))
                        $ fields
 
-data Build = Build { thumb :: Maybe Double, name :: String, outFile :: String }
+data Build = Build { thumb :: Maybe (N B), name :: String, outFile :: String }
   deriving (Typeable, Data)
 
 build :: Build

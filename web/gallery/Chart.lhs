@@ -18,7 +18,8 @@ Each series is a label and a list of points (x-y pairs).  Each series
 will be drawn as a separate line, with its own combination of colour,
 dashing pattern and shape.
 
-> type Points = [(Double, Double)]
+> type Pt = (N B, N B)
+> type Points = [Pt]
 >
 > dataSeries :: [(String,Points)]
 > dataSeries =
@@ -42,7 +43,7 @@ The final diagram is the chart with the legend next to it.
 
 The size of the chart, in logical units.
 
-> h,w :: Double
+> h,w :: N B
 > h = 7
 > w = 7
 
@@ -52,7 +53,7 @@ horizontal and vertical axes markings.
 "dataToFrac" converts points from the "data" space [0..10] into the
 [0..1] range.
 
-> chart :: [Points] -> [(Dia, Dia -> Dia)] -> [Double] -> [Double] -> Dia
+> chart :: [Points] -> [(Dia, Dia -> Dia)] -> [N B] -> [N B] -> Dia
 > chart series styles xs ys = mconcat
 >   [ plotMany styles series dataToFrac
 >   , horizticks (map (\x -> ((x-minx)/xrange, showFloor x)) xs)
@@ -66,12 +67,12 @@ horizontal and vertical axes markings.
 >         xrange = maxx-minx
 >         yrange = maxy-miny
 >         dataToFrac (x,y) = ((x-minx)/xrange, (y-miny)/yrange)
->         showFloor = show . (floor :: Double -> Integer)
+>         showFloor = show . (floor :: N B -> Integer)
 
 Plot a single data series.  A "shape" is drawn at every data point,
 and straight lines are drawn between points.
 
-> plot :: ((Double,Double) -> (Double,Double)) -> Dia -> (Dia -> Dia) -> [(Double,Double)] -> Dia
+> plot :: ((N B, N B) -> (N B, N B)) -> Dia -> (Dia -> Dia) -> Points -> Dia
 > plot dataToFrac shape lineStyle ps =
 >     let scalify (x,y) = (x*w,y*h)
 >         ps' = map (p2 . scalify . dataToFrac) ps
@@ -80,7 +81,7 @@ and straight lines are drawn between points.
 
 Plot many data series using the given list of styles.
 
-> plotMany :: [(Dia, Dia -> Dia)] -> [[(Double, Double)]] -> ((Double, Double) -> (Double, Double)) -> Dia
+> plotMany :: [(Dia, Dia -> Dia)] -> [Points] -> (Pt -> Pt) -> Dia
 > plotMany styles seriesList dataToFrac =
 >     mconcat $ zipWith (uncurry (plot dataToFrac)) (styles ++ plotStyles) seriesList
 
@@ -109,7 +110,7 @@ Each tick on the vertical axis has a text part, a solid line on the
 left, a solid line on the right, and a long dashed line from left to
 right.
 
-> vertticks :: [(Double,String)] -> Dia
+> vertticks :: [(N B, String)] -> Dia
 > vertticks pairs =
 >     let textBits = mconcat [ text' t # alignR # moveTo ((-0.2)^&(y*h)) | (y,t) <- pairs ]
 >         tickBits =    mconcat [ fromVertices [ 0^&(y*h), 0.1    ^&(y*h) ] | (y,_) <- pairs ]
@@ -119,7 +120,7 @@ right.
 
 (Similar for the horizontal axis.)
 
-> horizticks :: [(Double,String)] -> Dia
+> horizticks :: [(N B, String)] -> Dia
 > horizticks pairs =
 >     let textBits = mconcat [ text' t # moveTo ((x*w)^&(-0.3)) | (x,t) <- pairs ]
 >         tickBits =    mconcat [ fromVertices [ (x*w)^&0, (x*w)^&0.1     ] | (x,_) <- pairs ]
@@ -160,11 +161,11 @@ The dot styles.
 
 Some custom shapes.
 
-> cross :: Double -> Path V2 Double
+> cross :: N B -> Path V2 (N B)
 > cross x = fromVertices [ x^&(-x) , ((-x)^&x) ]
 >           <> fromVertices [ x^&x , ((-x)^&(-x)) ]
 >
-> plus :: Double -> Path V2 Double
+> plus :: N B -> Path V2 (N B)
 > plus x = cross x # rotate (45 @@ deg)
 
 The colour styles.

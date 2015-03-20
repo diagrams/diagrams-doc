@@ -32,10 +32,10 @@ markings are defined at the end of the file.
 > blank :: Diagram B
 > blank = lw none $ square 16
 
-> makeTile :: [[P2 Double]] -> Diagram B
+> makeTile :: [[P2 (N B)]] -> Diagram B
 > makeTile = showOrigin . lw thin . centerXY . mconcat . map fromVertices where
 
-> markingsP, markingsQ, markingsR, markingsS :: [[P2 Double]]
+> markingsP, markingsQ, markingsR, markingsS :: [[P2 (N B)]]
 
 Here is an algenraic datatype of pictures. Composition is by
 juxtaposition, which requires bounding boxes. In order to achieve this
@@ -44,7 +44,7 @@ even with infinite pictures, we make all pictures the same size
 
 > data Picture
 >   = Blank
->   | Single [[P2 Double]]
+>   | Single [[P2 (N B)]]
 >   | Rot Picture
 >   | Cycle Picture
 >   | HPair Picture Picture
@@ -91,7 +91,7 @@ with the non-homogeneous scaling in `HPair` and `VPair`. The definition
 only works properly if `Cycles` are scaled only homogenously; that is
 the case in Escher's picture.
 
-> prune :: Double -> Picture -> Picture
+> prune :: N B -> Picture -> Picture
 > prune s p = prune' (s,s) p where
 >   prune' (x,y) p | min x y < 1 = Blank -- cut off when either factor <1
 >   prune' (x,y) Blank = Blank

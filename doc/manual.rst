@@ -563,10 +563,10 @@ if you are just reading this manual for the first time!)
 >       p1 = b .+^ (rotateBy (1/4) v')
 >       p2 = b .+^ (rotateBy (-1/4) v')
 >
-> d1 :: Path V2 Double
+> d1 :: Path V2 (N B)
 > d1 = circle 1
 >
-> d2 :: Path V2 Double
+> d2 :: Path V2 (N B)
 > d2 = (pentagon 1 === roundedRect 1.5 0.7 0.3)
 >
 > example = (stroke d1 # showOrigin <> illustrateEnvelope (r2 (-0.5,0.3)) d1)
@@ -1198,9 +1198,7 @@ which there are two possibilities:
   > import Diagrams.TwoD.Text (Text)
   >
   > funs          = map (flip (^)) [2..6]
-  > visualize :: (Renderable (Text Double) b,
-  >                  Renderable (Path V2 Double) b) =>
-  >                  (Int -> Int) -> QDiagram b V2 Double Any
+  > visualize :: (Int -> Int) -> Diagram B
   > visualize f	  = strokeP' (with & vertexNames .~ [[0 .. 6 :: Int]] )
   >                     (regPoly 7 1)
   >                   # lw none
@@ -2061,7 +2059,7 @@ projections along the principal axes in 2 dimensions.
 
 ::
 
-> sq = unitSquare # translate (5 ^& 3) :: Path V2 Double
+> sq = unitSquare # translate (5 ^& 3) :: Path V2 (N B)
 > marks = repeat . lw none $ circle 0.02
 > spots c p = position $ zip (concat $ pathVertices p) (marks # fc c)
 > example = stroke sq <> spots blue sq <> spots green (deform perspectiveX1 sq)
@@ -2266,8 +2264,8 @@ __ http://en.wikipedia.org/wiki/Bézier_curve
 >     l1      = fromOffsets [c1] # dashed
 >     l2      = fromOffsets [x2 ^-^ c2] # translate c2 # dashed
 >
-> x2      = r2 (3,-1) :: V2 Double         -- endpoint
-> [c1,c2] = map r2 [(1,2), (3,0)]   -- control points
+> x2      = r2 (3,-1) :: V2 (N B)     -- endpoint
+> [c1,c2] = map r2 [(1,2), (3,0)]     -- control points
 >
 > example = illustrateBézier c1 c2 x2
 
@@ -2352,7 +2350,7 @@ is how to convert between them.
 
     ::
 
-    > almostClosed :: Trail' Line V2 Double
+    > almostClosed :: Trail' Line V2 (N B)
     > almostClosed = fromOffsets $ (map r2
     >   [(2, -1), (-3, -0.5), (-2, 1), (1, 0.5)])
     >
@@ -2379,10 +2377,10 @@ also analogous functions `strokeLine` and `strokeTrail`.)
 
 ::
 
-> spoke :: Trail' Line V2 Double
+> spoke :: Trail' Line V2 (N B)
 > spoke = fromOffsets . map r2 $ [(1,3), (1,-3)]
 >
-> burst :: Trail' Loop V2 Double
+> burst :: Trail' Loop V2 (N B)
 > burst = glueLine . mconcat . take 13 . iterate (rotateBy (-1/13)) $ spoke
 >
 > example = strokeLoop burst # fc yellow # lw thick # lc orange
@@ -2458,7 +2456,7 @@ the edges individually:
 
 ::
 
-> spoke :: Trail V2 Double
+> spoke :: Trail V2 (N B)
 > spoke = fromOffsets . map r2 $ [(1,3), (1,-3)]
 >
 > burst = mconcat . take 13 . iterate (rotateBy (-1/13)) $ spoke
@@ -2530,7 +2528,7 @@ holes:
 
 ::
 
-> ring :: Path V2 Double
+> ring :: Path V2 (N B)
 > ring = circle 3 <> (circle 2 # reversePath)
 >
 > example = stroke ring # fc purple
@@ -2601,7 +2599,7 @@ right of the curve for a positive radius and on the left for a negative radius.
 >         ]
 >   where
 >     p = r2 (1,1)
->     f :: Segment Closed V2 Double -> Diagram B
+>     f :: Segment Closed V2 (N B) -> Diagram B
 >     f s =  fromSegments [s]
 >         <> offsetSegment 0.1 0.2 s # strokeLocTrail # lc blue
 

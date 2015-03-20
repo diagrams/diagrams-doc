@@ -15,6 +15,7 @@ width: 400
 
 The standard infinite list of Fibonacci numbers.
 
+> fibs :: [Int]
 > fibs = 0 : 1 : zipWith (+) fibs (tail fibs)
 
 Create a grid by gluing together a bunch of squares.
@@ -29,7 +30,7 @@ Create a grid by gluing together a bunch of squares.
 The trapezoid and triangle shapes, with sides lengths based on two
 Fibonacci numbers.
 
-> trap, tri :: Double -> Double -> Diagram B
+> trap, tri :: N B -> N B -> Diagram B
 > trap s1 s2 = lw none . strokeLoop . closeLine
 >            . fromOffsets . map r2 $ [(0,-s2), (s2,0), (0,s1)]
 > tri s1 s2  = lw none .  strokeLoop . closeLine

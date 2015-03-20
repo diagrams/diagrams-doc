@@ -6,10 +6,10 @@ module ToWrite where
 #ifdef USE_SVG
 import           Diagrams.Backend.SVG.CmdLine
 #else
-import           Diagrams.Backend.Cairo.CmdLine
+import           Diagrams.Backend.Rasterific.CmdLine
 #endif
 
-import           Control.Lens                   ((&), (.~))
+import           Control.Lens                        ((&), (.~))
 import           Diagrams.Prelude
 
 page  = rect 8.5 11

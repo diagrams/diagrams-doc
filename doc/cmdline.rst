@@ -723,7 +723,7 @@ Running we get:
 >        <> circle 1  # fc black # lwG 0
 >        <> circle 11 # lwG 1.5 # lc slategray # fc lightsteelblue
 >   where
->     s = realToFrac $ utctDayTime t :: Double
+>     s = realToFrac $ utctDayTime t :: N B
 >     m = s / 60
 >     h = m / 60
 >
