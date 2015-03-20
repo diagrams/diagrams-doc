@@ -3510,6 +3510,7 @@ generally, `fontWeight`), `italic`, and `oblique` (or, more generally,
 .. class:: dia-lhs
 
 ::
+
 > text' s t = text t # fontSize (local s) <> strutY (s * 1.3)
 > example = center $
 >       text' 10 "Hello" # italic
