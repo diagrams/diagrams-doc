@@ -1,4 +1,4 @@
-{-# LANGUAGE CPP    #-}
+{-# LANGUAGE CPP #-}
 
 module Xml2Html where
 
@@ -12,7 +12,8 @@ import           System.FilePath                    (joinPath, splitPath, (<.>),
 import           System.IO
 
 import qualified Diagrams.Builder                   as DB
-import           Diagrams.Prelude                   (centerXY, pad, (&), (.~), zero, V2(..))
+import           Diagrams.Prelude                   (V2 (..), centerXY, pad,
+                                                     zero, (&), (.~))
 import           Diagrams.Size                      (dims)
 import           Text.Docutils.CmdLine
 import           Text.Docutils.Transformers.Haskell
@@ -22,8 +23,8 @@ import           Text.XML.HXT.Core                  hiding (when)
 
 #ifdef USE_SVG
 import qualified Data.ByteString.Lazy               as BS
-import           Diagrams.Backend.SVG
 import           Data.Text                          (empty)
+import           Diagrams.Backend.SVG
 import           Lucid.Svg                          (renderBS)
 #else
 import           Diagrams.Backend.Cairo
@@ -189,18 +190,15 @@ compileDiagram outDir src = do
 
                 & DB.snippets .~ [src]
                 & DB.imports  .~
-                  [ "Diagrams.TwoD.Types"      -- WHY IS THIS NECESSARY =(
-                  , "Diagrams.Core.Points"
-                      -- GHC 7.2 bug?  need  V (Point R2) = R2  (see #65)
+                  [ "Data.Typeable"
 #ifdef USE_SVG
                   , "Diagrams.Backend.SVG"
 #else
                   , "Diagrams.Backend.Cairo"
                   , "Diagrams.Backend.Cairo.Internal"
 #endif
-                  , "Graphics.SVGFonts"
-                  , "Data.Typeable"
                   ]
+                & DB.qimports .~ [("Graphics.SVGFonts", "SF")]
                 & DB.pragmas .~ ["DeriveDataTypeable", "MultiParamTypeClasses"]
                 & DB.diaExpr .~ "example"
                 & DB.postProcess .~ (pad 1.1 . centerXY)
