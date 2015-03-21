@@ -3788,7 +3788,7 @@ its own `textSVG` function which can be used to convert text into a
 
 ::
 
-> text' d s = (strokeP $ textSVG' (TextOpts lin2 INSIDE_H KERN False d d) s)
+> text' d s = (strokeP $ SF.textSVG' (SF.TextOpts SF.lin2 SF.INSIDE_H SF.KERN False d d) s)
 >           # lw none
 >
 > example = text' 5 "Hello" # fc blue ||| text' 3 "world" # fc green

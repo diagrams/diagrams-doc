@@ -59,7 +59,7 @@ a *magnitude* (length) and a *direction* (angle).
 >     yComponent = component unitY # translate (project unitX v)
 >     theta = text' 0.5 "θ" # translate (0.7 ^& 0.2)
 >
-> text' d s = (stroke $ textSVG' (TextOpts lin INSIDE_H KERN False d d) s)
+> text' d s = (stroke $ SF.textSVG' (SF.TextOpts SF.lin SF.INSIDE_H SF.KERN False d d) s)
 >           # lwG 0 # fc black
 >
 > example = ( (vPic ((4 ^& 0) # rotateBy (1/12)) # centerXY)

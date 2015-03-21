@@ -15,7 +15,7 @@ import           System.FilePath                    (joinPath, splitPath, (<.>),
 import           System.IO
 
 import qualified Diagrams.Builder                   as DB
-import           Diagrams.Prelude                   (N, V2 (..), centerXY, pad,
+import           Diagrams.Prelude                   (V2 (..), centerXY, pad,
                                                      zero, (&), (.~))
 import           Diagrams.Size                      (dims)
 import           Text.Docutils.CmdLine
@@ -204,17 +204,14 @@ compileDiagram outDir src = do
 
                 & DB.snippets .~ [src]
                 & DB.imports  .~
-                  [ "Diagrams.TwoD.Types"      -- WHY IS THIS NECESSARY =(
-                  , "Diagrams.Core.Points"
-                      -- GHC 7.2 bug?  need  V (Point R2) = R2  (see #65)
+                  [ "Data.Typeable"
 #ifdef USE_SVG
                   , "Diagrams.Backend.SVG"
 #else
                   , "Diagrams.Backend.Rasterific"
 #endif
-                  , "Graphics.SVGFonts"
-                  , "Data.Typeable"
                   ]
+                & DB.qimports .~ [("Graphics.SVGFonts", "SF")]
                 & DB.pragmas .~ ["DeriveDataTypeable", "MultiParamTypeClasses"]
                 & DB.diaExpr .~ "example"
                 & DB.postProcess .~ (pad 1.1 . centerXY)
