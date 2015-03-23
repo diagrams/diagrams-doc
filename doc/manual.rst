@@ -617,7 +617,8 @@ space, just as most other length measurements (*e.g.* arguments to
 functions like `circle` and `square`).  For example, `square 1 # lwL
 0.2` specifies a square which is drawn with lines one fifth as wide as
 its sides are long---and will *always* be, even if it is scaled: the
-line width scales right along with the square. (Note that `lwL`
+line width scales right along with the square. (The `L` in `lwL`
+stands for "Local".)
 
 .. class:: dia-lhs
 
@@ -630,11 +631,12 @@ line width scales right along with the square. (Note that `lwL`
 
 It's important to note that---as illustrated by the third figure in
 the above picture---line width always scales uniformly, even when a
-non-uniform scaling is applied.  Previous versions of diagrams had a
-`freeze` operation which could be used to apply non-uniform scaling to
-lines; to achieve such an effect, you can first turn a stroked line
-into a closed path, as described in `Offsets of segments, trails, and
-paths`_.
+non-uniform scaling is applied.  That is, the line used to draw the
+rectangle in the example above is a uniform thickness all the way
+around. Previous versions of diagrams had a `freeze` operation which
+could be used to apply non-uniform scaling to lines; to achieve such
+an effect, you can first turn a stroked line into a closed path, as
+described in `Offsets of segments, trails, and paths`_.
 
 A important consequence of `local` units having the *current* vector
 space as their reference is that attribute-setting functions such as
