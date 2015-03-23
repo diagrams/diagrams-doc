@@ -60,15 +60,15 @@ main = do
 
   putStrLn $ "Using " ++ show numThreads ++ " threads."
 
-  -- Check for diagrams-cairo
-  cairoPkg <- readProcess "ghc-pkg" ["list", "--simple-output", "diagrams-cairo"] ""
-  let useSVG = null cairoPkg
+  -- Check for diagrams-rasterific
+  rasterificPkg <- readProcess "ghc-pkg" ["list", "--simple-output", "diagrams-rasterific"] ""
+  let useSVG = null rasterificPkg
       imgExt | useSVG    = "svg"
              | otherwise = "png"
 
   case useSVG of
     True  -> putStrLn $ "Falling back to SVG backend."
-    False -> putStrLn $ "Using cairo backend."
+    False -> putStrLn $ "Using rasterific backend."
 
   case m of
     Clean -> mapM_ system
@@ -166,15 +166,15 @@ requireStatic = do
   let static = map (dist . ("doc/static" </>)) staticSrc
   need static
 
--- A list of gallery examples which only build with cairo, to be
+-- A list of gallery examples which only build with rasterific, to be
 -- excluded when building with SVG.
-cairoOnly :: [FilePath]
-cairoOnly = ["KnightTour.lhs"]
+rasterificOnly :: [FilePath]
+rasterificOnly = []
 
 requireGallery :: String -> Action ()
 requireGallery imgExt = do
   gallerySrc <- ( filter (not . (".#" `isPrefixOf`))
-                . if imgExt == "svg" then (\\ cairoOnly) else id
+                . if imgExt == "svg" then (\\ rasterificOnly) else id
                 )
                 <$> getDirectoryFiles "web/gallery" ["*.lhs"]
   let imgs   = map (dist . ("web/gallery" </>) . (-<.> ("big" <.> imgExt))) gallerySrc

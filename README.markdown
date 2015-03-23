@@ -24,10 +24,9 @@ tutorials), you will need:
   [SVGFonts package](http://github.com/diagrams/SVGFonts),
   [palette package](http://github.com/diagrams/palette), and
   [diagrams-builder package](http://github.com/diagrams/diagrams-builder)).
-* *Either* the [cairo
-  backend](http://github.com/diagrams/diagrams-cairo) (recommended)
-  *or* the [SVG backend](http://github.com/diagrams/diagrams-svg) (if
-  you cannot build the cairo backend).  See below for more
+* *Either* the [rasterific
+  backend](http://github.com/diagrams/diagrams-rasterific) (recommended)
+  *or* the [SVG backend](http://github.com/diagrams/diagrams-svg).  See below for more
   information re: using the SVG backend.
 * the python [docutils suite](http://docutils.sourceforge.net/) (in
   particular `rst2xml` should be on your PATH).
@@ -57,12 +56,13 @@ loop.  The website will now automatically be rebuilt any time any
 source files change.
 
 For example, on a four-core Ubuntu machine, assuming you already have
-the Haskell Platform installed and want to use the cairo backend, you could
+the Haskell Platform installed and want to use the rasterific backend, you could
 first clone the relevant diagrams repositories from github:
 
 * [diagrams-core](https://github.com/diagrams/diagrams-core/)
+* [diagrams-solve](https://github.com/diagrams/diagrams-solve/)
 * [diagrams-lib](https://github.com/diagrams/diagrams-lib/)
-* [diagrams-cairo](https://github.com/diagrams/diagrams-cairo/)
+* [diagrams-cairo](https://github.com/diagrams/diagrams-rasterific/)
 * [diagrams-contrib](https://github.com/diagrams/diagrams-contrib/)
 * [diagrams-builder](https://github.com/diagrams/diagrams-builder/)
 * [SVGFonts](https://github.com/diagrams/SVGFonts/)
@@ -71,12 +71,10 @@ first clone the relevant diagrams repositories from github:
 
 Then run the following commands:
 ```
-sudo apt-get install libgtk-3-dev libcairo2-dev python-docutils
-cabal install hsenv
-hsenv --name=dia
-.hsenv_dia/bin/activate
-cabal install gtk2hs-buildtools
-cabal install diagrams-core/ diagrams-lib/ diagrams-cairo/ diagrams-contrib/ diagrams-builder/ SVGFonts/ palette/ docutils/ shake hakyll safe
+sudo apt-get install python-docutils
+cabal sandbox init
+cabal install diagrams-core/ diagrams-solve/ diagrams-lib/ diagrams-rasterific/ diagrams-contrib/ diagrams-builder/ SVGFonts/ palette/ docutils/ shake hakyll safe
+cabal exec bash
 cd diagrams-doc
 ghc --make Shake -threaded
 ./Shake +RTS -N4 -RTS preview
@@ -84,7 +82,7 @@ ghc --make Shake -threaded
 
 ## Building with `diagrams-svg`
 
-The build system will first check for an installed `diagrams-cairo`
+The build system will first check for an installed `diagrams-rasterific`
 package.  If none is found, it will fall back to using the
 `diagrams-svg` package.  This almost works, except for a few small
 issues:
@@ -98,7 +96,7 @@ issues:
 
 * There is also an explicit list of gallery examples which are
   excluded from the build when using `diagrams-svg`, since they only
-  build with `diagrams-cairo`.
+  build with `diagrams-rasterific`.
 
 These issues should not cause too much trouble but are simply good to
 be aware of.  Using `diagrams-svg` should be perfectly adequate for

@@ -16,7 +16,7 @@ A representation of Vogel's model for the floret pattern of a sunflower head. Vo
 
 The n florets of the sunflower are positioned at radii proportional to the square root of n and rotated by a factor 2.4 radians in accordance with Vogel's model.
 
-> mkCoords :: Int -> [P2 Double]
+> mkCoords :: Int -> [P2 (N B)]
 > mkCoords n =[coord (fromIntegral i) | i <- [1..n]]
 >   where
 >     coord m = p2 $ fromPolar (sqrt m) (2.4 * m)
@@ -24,7 +24,7 @@ The n florets of the sunflower are positioned at radii proportional to the squar
 
 The color of each floret is based on it's radius.
 
-> floret :: Double -> Diagram B
+> floret :: N B -> Diagram B
 > floret r = circle 0.6 # lw none # fc (colors !! n)
 >   where
 >     n = floor (1.4 * sqrt r) `mod` 10

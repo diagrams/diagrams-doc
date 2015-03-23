@@ -1,4 +1,4 @@
-{-# LANGUAGE CPP    #-}
+{-# LANGUAGE CPP #-}
 
 module Xml2Html where
 
@@ -12,7 +12,8 @@ import           System.FilePath                    (joinPath, splitPath, (<.>),
 import           System.IO
 
 import qualified Diagrams.Builder                   as DB
-import           Diagrams.Prelude                   (centerXY, pad, (&), (.~), zero, V2(..))
+import           Diagrams.Prelude                   (N, V2 (..), centerXY, pad,
+                                                     zero, (&), (.~))
 import           Diagrams.Size                      (dims)
 import           Text.Docutils.CmdLine
 import           Text.Docutils.Transformers.Haskell
@@ -22,12 +23,12 @@ import           Text.XML.HXT.Core                  hiding (when)
 
 #ifdef USE_SVG
 import qualified Data.ByteString.Lazy               as BS
-import           Diagrams.Backend.SVG
 import           Data.Text                          (empty)
+import           Diagrams.Backend.SVG
 import           Lucid.Svg                          (renderBS)
 #else
-import           Diagrams.Backend.Cairo
-import           Diagrams.Backend.Cairo.Internal
+import qualified Codec.Picture                      as JP
+import           Diagrams.Backend.Rasterific
 #endif
 
 backendExt :: String
@@ -176,15 +177,15 @@ compileDiagram outDir src = do
 #ifdef USE_SVG
                 SVG
 #else
-                Cairo
+                Rasterific
 #endif
 
-                (zero :: V2 Double)
+                (zero :: V2 (N B))
 
 #ifdef USE_SVG
                 (SVGOptions (dims $ V2 500 200) [] empty)
 #else
-                (CairoOptions "default.png" (dims $ V2 500 200) PNG False)
+                (RasterificOptions (dims $ V2 500 200))
 #endif
 
                 & DB.snippets .~ [src]
@@ -195,8 +196,7 @@ compileDiagram outDir src = do
 #ifdef USE_SVG
                   , "Diagrams.Backend.SVG"
 #else
-                  , "Diagrams.Backend.Cairo"
-                  , "Diagrams.Backend.Cairo.Internal"
+                  , "Diagrams.Backend.Rasterific"
 #endif
                   , "Graphics.SVGFonts"
                   , "Data.Typeable"
@@ -206,11 +206,7 @@ compileDiagram outDir src = do
                 & DB.postProcess .~ (pad 1.1 . centerXY)
                 & DB.decideRegen .~
                   (DB.hashedRegenerate
-#ifdef USE_SVG
                     (\_ opts -> opts)
-#else
-                    (\hash opts -> opts { _cairoFileName = mkFile hash })
-#endif
                     outDir
                   )
 
@@ -238,7 +234,7 @@ compileDiagram outDir src = do
 #ifdef USE_SVG
       BS.writeFile (mkFile (DB.hashToHexStr hash)) (renderBS out)
 #else
-      fst out
+      JP.savePngImage (mkFile (DB.hashToHexStr hash)) (JP.ImageRGBA8 out)
 #endif
       return $ Right (mkFile (DB.hashToHexStr hash))
 

@@ -563,10 +563,10 @@ if you are just reading this manual for the first time!)
 >       p1 = b .+^ (rotateBy (1/4) v')
 >       p2 = b .+^ (rotateBy (-1/4) v')
 >
-> d1 :: Path V2 Double
+> d1 :: Path V2 (N B)
 > d1 = circle 1
 >
-> d2 :: Path V2 Double
+> d2 :: Path V2 (N B)
 > d2 = (pentagon 1 === roundedRect 1.5 0.7 0.3)
 >
 > example = (stroke d1 # showOrigin <> illustrateEnvelope (r2 (-0.5,0.3)) d1)
@@ -1198,9 +1198,7 @@ which there are two possibilities:
   > import Diagrams.TwoD.Text (Text)
   >
   > funs          = map (flip (^)) [2..6]
-  > visualize :: (Renderable (Text Double) b,
-  >                  Renderable (Path V2 Double) b) =>
-  >                  (Int -> Int) -> QDiagram b V2 Double Any
+  > visualize :: (Int -> Int) -> Diagram B
   > visualize f	  = strokeP' (with & vertexNames .~ [[0 .. 6 :: Int]] )
   >                     (regPoly 7 1)
   >                   # lw none
@@ -2061,7 +2059,7 @@ projections along the principal axes in 2 dimensions.
 
 ::
 
-> sq = unitSquare # translate (5 ^& 3) :: Path V2 Double
+> sq = unitSquare # translate (5 ^& 3) :: Path V2 (N B)
 > marks = repeat . lw none $ circle 0.02
 > spots c p = position $ zip (concat $ pathVertices p) (marks # fc c)
 > example = stroke sq <> spots blue sq <> spots green (deform perspectiveX1 sq)
@@ -2266,8 +2264,8 @@ __ http://en.wikipedia.org/wiki/Bézier_curve
 >     l1      = fromOffsets [c1] # dashed
 >     l2      = fromOffsets [x2 ^-^ c2] # translate c2 # dashed
 >
-> x2      = r2 (3,-1) :: V2 Double         -- endpoint
-> [c1,c2] = map r2 [(1,2), (3,0)]   -- control points
+> x2      = r2 (3,-1) :: V2 (N B)     -- endpoint
+> [c1,c2] = map r2 [(1,2), (3,0)]     -- control points
 >
 > example = illustrateBézier c1 c2 x2
 
@@ -2352,7 +2350,7 @@ is how to convert between them.
 
     ::
 
-    > almostClosed :: Trail' Line V2 Double
+    > almostClosed :: Trail' Line V2 (N B)
     > almostClosed = fromOffsets $ (map r2
     >   [(2, -1), (-3, -0.5), (-2, 1), (1, 0.5)])
     >
@@ -2379,10 +2377,10 @@ also analogous functions `strokeLine` and `strokeTrail`.)
 
 ::
 
-> spoke :: Trail' Line V2 Double
+> spoke :: Trail' Line V2 (N B)
 > spoke = fromOffsets . map r2 $ [(1,3), (1,-3)]
 >
-> burst :: Trail' Loop V2 Double
+> burst :: Trail' Loop V2 (N B)
 > burst = glueLine . mconcat . take 13 . iterate (rotateBy (-1/13)) $ spoke
 >
 > example = strokeLoop burst # fc yellow # lw thick # lc orange
@@ -2458,7 +2456,7 @@ the edges individually:
 
 ::
 
-> spoke :: Trail V2 Double
+> spoke :: Trail V2 (N B)
 > spoke = fromOffsets . map r2 $ [(1,3), (1,-3)]
 >
 > burst = mconcat . take 13 . iterate (rotateBy (-1/13)) $ spoke
@@ -2530,7 +2528,7 @@ holes:
 
 ::
 
-> ring :: Path V2 Double
+> ring :: Path V2 (N B)
 > ring = circle 3 <> (circle 2 # reversePath)
 >
 > example = stroke ring # fc purple
@@ -2601,7 +2599,7 @@ right of the curve for a positive radius and on the left for a negative radius.
 >         ]
 >   where
 >     p = r2 (1,1)
->     f :: Segment Closed V2 Double -> Diagram B
+>     f :: Segment Closed V2 (N B) -> Diagram B
 >     f s =  fromSegments [s]
 >         <> offsetSegment 0.1 0.2 s # strokeLocTrail # lc blue
 
@@ -2647,7 +2645,7 @@ corners, the offset will be disconnected!
 >   where
 >     join' x = let (p,a) = viewLoc x in translate (p .-. origin) a
 >
-> offsetTrailNaive :: Double -> Double -> Trail V2 Double -> Path V2 Double
+> offsetTrailNaive :: N B -> N B -> Trail V2 (N B) -> Path V2 (N B)
 > offsetTrailNaive e r = mconcat . map (pathFromLocTrail . bindLoc (offsetSegment e r))
 >                      . locatedTrailSegments . (`at` origin)
 >
@@ -2983,7 +2981,7 @@ continuity; segments are even more restricted.)
 
 ::
 
-> spline :: Located (Trail V2 Double)
+> spline :: Located (Trail V2 (N B))
 > spline = cubicSpline False [origin, 0 ^& 1, 1 ^& 1, 1 ^& 0] # scale 3
 > pts = map (spline `atParam`) [0, 0.1 .. 1]
 > spot = circle 0.2 # fc blue
@@ -3791,9 +3789,9 @@ Envelope-related functions
   ::
 
   > example = hcat [ square 2
-  >                , circle 1 # withEnvelope (square 3 :: D V2 Double)
+  >                , circle 1 # withEnvelope (square 3 :: D V2 (N B))
   >                , square 2
-  >                , text "hi" <> phantom (circle 2 :: D V2 Double)
+  >                , text "hi" <> phantom (circle 2 :: D V2 (N B))
   >                ]
 
   In the above example, `withEnvelope` is used to put more space
@@ -3818,9 +3816,9 @@ Envelope-related functions
 
   > shapes = circle 1
   >      ||| square 2
-  >      ||| circle 1 # scaleY 0.3 # sizedAs (square 2 :: D V2 Double)
+  >      ||| circle 1 # scaleY 0.3 # sizedAs (square 2 :: D V2 (N B))
   >
-  > example = hrule 1 # sizedAs (shapes # scale 0.5 :: D V2 Double)
+  > example = hrule 1 # sizedAs (shapes # scale 0.5 :: D V2 (N B))
   >        <> shapes # centerX
 
 The ``Enveloped`` class
@@ -4340,7 +4338,7 @@ the ellipse red and points outside it blue.
 >           	       )
 >             )
 >
-> rand10 :: IO Double
+> rand10 :: IO (N B)
 > rand10 = randomRIO (-10,10)
 >
 > example = do
@@ -4366,7 +4364,7 @@ and `Any False` with `mempty`.
 >
 > withCount = (# value (Sum 1))
 >
-> c :: QDiagram B V2 Double (Sum Int)
+> c :: QDiagram B V2 (N B) (Sum Int)
 > c = (   circle 5 # scaleX 2 # rotateBy (1/14) # withCount
 >      <> circle 2 # scaleX 5 # rotateBy (-4/14) # withCount
 >     )
@@ -4376,7 +4374,7 @@ and `Any False` with `mempty`.
 >                 # fc black
 >             )
 >
-> rand10 :: IO Double
+> rand10 :: IO (N B)
 > rand10 = randomRIO (-10,10)
 >
 > example = do
@@ -4441,7 +4439,7 @@ The arrows on the right are wrapped in `ScaleInv` but the ones on the left are n
 
 ::
 
-> {-# LANGUAGE TypeSynonymInstances, FlexibleInstances #-}
+> {-# LANGUAGE TypeSynonymInstances, FlexibleInstances, TypeFamilies #-}
 >
 > import Diagrams.Transform.ScaleInv
 > import Control.Lens ((^.))
@@ -4449,7 +4447,7 @@ The arrows on the right are wrapped in `ScaleInv` but the ones on the left are n
 > class Drawable d where
 >   draw :: d -> Diagram B
 >
-> instance Drawable (QDiagram B V2 Double Any) where
+> instance (n ~ N B) => Drawable (QDiagram B V2 n Any) where
 >   draw = id
 >
 > instance Drawable a => Drawable (ScaleInv a) where

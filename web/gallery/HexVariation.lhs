@@ -51,7 +51,7 @@ In the final tiling, the tiles will be rotated randomly with angles in $\{0,
 
 The tiling is created from a list of centers, defined here:
 
-> centerPosition :: Int -> Int -> (Double, Double)
+> centerPosition :: Int -> Int -> (N B, N B)
 > centerPosition x y
 >   | (x `mod` 2 == 0) = ((2-h')*x', 2*y'*h)
 >   | otherwise        = ((2-h')*x', (2*y'-1)*h)

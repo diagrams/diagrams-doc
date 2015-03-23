@@ -44,12 +44,12 @@ rectangle.
 
 A single string of text.
 
-> text' :: String -> Double -> Diagram B
+> text' :: String -> N B -> Diagram B
 > text' s n = textSVG_ (textOpts n) s # fc white # lw none
 
 Several lines of text stacked vertically.
 
-> centredText ls n = vcat' (with & catMethod .~ Distrib & sep .~ (n))
+> centredText ls n = vcat' (with & catMethod .~ Distrib & sep .~ n)
 >                      (map (\l -> centerX (text' l n)) ls)
 > centredText' s = centredText (splitOn "\n" s)
 
