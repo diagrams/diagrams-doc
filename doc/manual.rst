@@ -659,7 +659,7 @@ Global units
 Whereas `local` values are interpreted in the current, "local" vector
 space, `global` values are interpreted in the final, "global" vector
 space of the diagram that is rendered.  In the following example,
-`theSq` is specified as having a `global` line width of `1`; five
+`theSq` is specified as having a `global` line width of `0.05`; five
 differently-scaled copies of the square are laid out, so that the entire
 scaled diagram has a width of around `6` units.  The lines, having a
 line width of `global 0.05`, are thus about 0.8% of the width of the
