@@ -3512,7 +3512,7 @@ generally, `fontWeight`), `italic`, and `oblique` (or, more generally,
 > text' s t = text t # fontSize (local s) <> strutY (s * 1.3)
 > example = center $
 >       text' 10 "Hello" # italic
->   === text' 5 "there"  # bold # font "freeserif"
+>   === text' 5 "there"  # bold # Diagrams.Prelude.font "freeserif"
 >   === text' 3 "world"  # fc green
 
 Font size
@@ -3533,11 +3533,10 @@ value of type `Measure V2 Double` (see `Measurement units`_).
 
   ::
 
-  > eff = text "F" <> square 1
+  > eff = (text "F" <> square 1) # fontSize (local 1)
   >
   > example = hcat
   >   [eff, eff # scale 2, eff # scaleX 2, eff # scaleY 2, eff # rotateBy (1/12)]
-  >         # fontSize (local 1)
 
 * Text whose font size is specified in any measurement other than
   `local` (that is, `normalized`, `global`, or `output`) behaves
@@ -3547,11 +3546,10 @@ value of type `Measure V2 Double` (see `Measurement units`_).
 
   ::
 
-  > eff = text "F" <> square 1
+  > eff = (text "F" <> square 1)  # fontSize (normalized 0.1)
   >
   > example = hcat
   >   [eff, eff # scale 2, eff # scaleX 2, eff # scaleY 2, eff # rotateBy (1/12)]
-  >         # fontSize (normalized 0.1)
 
   There are several things to notice about the above example
   diagram, which is identical to the previous one except for the
