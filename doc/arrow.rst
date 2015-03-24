@@ -622,8 +622,8 @@ straightforward.
 > arrowStyle1 = (with  & arrowHead  .~ spike & headLength .~ normal
 >                      & arrowShaft .~ shaft)
 >
-> arrowStyle2 = (with  & arrowHead  .~ spike
->                      & arrowShaft .~ shaft' & arrowTail .~ lineTail
+> arrowStyle2 = (with  & arrowHead   .~ spike
+>                      & arrowShaft  .~ shaft' & arrowTail .~ lineTail
 >                      & tailTexture .~ solid black & lengths .~ normal)
 >
 > arrowStyle3 = (with  & arrowHead  .~ spike  & headLength .~ normal
