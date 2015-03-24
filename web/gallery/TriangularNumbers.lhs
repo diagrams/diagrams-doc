@@ -32,7 +32,7 @@ it 60 degrees, and using `decorateTrail` to lay out the rows of dots.
 >       # lw none
 >       # fc c
 >
-> rowSpc = height (rotateBy (1/6) $ strutY 1 :: D V2 (N B))
+> rowSpc = height (rotateBy (1/6) $ strutY 1 :: D V2 Double)
 
 `row k n s c` draws a row of `k` size-`n` triangles with color `c`,
 separated by enough space for `s` dots.

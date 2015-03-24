@@ -180,7 +180,7 @@ compileDiagram outDir src = do
                 Rasterific
 #endif
 
-                (zero :: V2 (N B))
+                (zero :: V2 Double)
 
 #ifdef USE_SVG
                 (SVGOptions (dims $ V2 500 200) [] empty)

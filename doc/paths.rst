@@ -101,7 +101,7 @@ find the source code for this tutorial on github.
 
      ::
 
-     > ln :: Trail' Line V2 (N B)
+     > ln :: Trail' Line V2 Double
      > ln    = fromOffsets [unitX, 2 *^ unitY, 2 *^ unitX]
      > theta = angleBetween unitX (lineOffset ln)
      > example
@@ -379,7 +379,7 @@ another.
 
      ::
 
-     > sqTrail :: Trail' Line V2 (N B)
+     > sqTrail :: Trail' Line V2 Double
      > sqTrail = iterateN 4 (rotateBy (1/4))
      >             (fromOffsets (replicate 4 unitX))
      >           # mconcat
@@ -406,7 +406,7 @@ A *path* is simply a collection of located trails.
 
      ::
 
-     > s :: Path V2 (N B)
+     > s :: Path V2 Double
      > s = star (StarSkip 5) (regPoly 30 1)
      >
      > example
@@ -424,7 +424,7 @@ A *path* is simply a collection of located trails.
 
      ::
 
-     > innerCircles :: Path V2 (N B)
+     > innerCircles :: Path V2 Double
      > innerCircles = atPoints (trailVertices $ hexagon 2) (repeat (circle 1)) <> circle 1
      >
      > example = (innerCircles <> circle 3) # stroke # fc blue # fillRule EvenOdd

@@ -44,7 +44,7 @@ rectangle.
 
 A single string of text.
 
-> text' :: String -> N B -> Diagram B
+> text' :: String -> Double -> Diagram B
 > text' s n = textSVG_ (textOpts n) s # fc white # lw none
 
 Several lines of text stacked vertically.

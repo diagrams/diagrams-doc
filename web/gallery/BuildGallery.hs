@@ -34,7 +34,7 @@ import           System.Console.CmdArgs      hiding (name)
 -- the LHS file to pick out just a sub-view of the entire diagram.
 -- Otherwise, use the width and height specified in the .lhs file and
 -- build the entire diagram.
-compileExample :: Maybe (N B) -> String -> String -> IO ()
+compileExample :: Maybe Double -> String -> String -> IO ()
 compileExample mThumb lhs out = do
   f   <- readFile lhs
   let (fields, f') = parseFields f
@@ -42,7 +42,7 @@ compileExample mThumb lhs out = do
       w = mThumb `mplus` (read <$> M.lookup "width" fields)
       h = mThumb `mplus` (read <$> M.lookup "height" fields)
 
-      mvs :: Maybe [N B]
+      mvs :: Maybe [Double]
       mvs = (map read . splitOn ",") <$> M.lookup "view" fields
 
       toBuild =
@@ -101,7 +101,7 @@ parseFields s = (fieldMap, unlines $ tail rest)
                        . map ((uncurry M.singleton) . second (drop 2) . break (==':'))
                        $ fields
 
-data Build = Build { thumb :: Maybe (N B), name :: String, outFile :: String }
+data Build = Build { thumb :: Maybe Double, name :: String, outFile :: String }
   deriving (Typeable, Data)
 
 build :: Build

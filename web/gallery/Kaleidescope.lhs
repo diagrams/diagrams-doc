@@ -50,10 +50,10 @@ We pass as arguments the number of pieces of confetti `n` and a random seed `r`.
 
 To create and image to use in the kadeidescope we generate a bunch of disks with random location, size, color and opacity. This is the confetti used as the image. Of course using circles is arbitrary, any shapes and sizes will do.
 
-> sizeValue :: (RandomGen g) => Rand g (N B)
+> sizeValue :: (RandomGen g) => Rand g Double
 > sizeValue = getRandomR (0.05, 0.25)
 
-> coordValue :: (RandomGen g) => Rand g (N B)
+> coordValue :: (RandomGen g) => Rand g Double
 > coordValue = getRandomR (-0.5, 0.5)
 
 We use monadRandom to hide the plumbing of the many random numbers we need. The colors are choosen from the 330+ `webColors` from the package `Data.Colour.Palette.ColorSet`.
@@ -65,7 +65,7 @@ We use monadRandom to hide the plumbing of the many random numbers we need. The 
 >   as <- replicateM n getRandom   -- opacity
 >   xs <- replicateM n coordValue  -- x coordinate
 >   ys <- replicateM n coordValue  -- y coordinate
->   let mkCirc :: N B -> Int -> Double -> Diagram B
+>   let mkCirc :: Double -> Int -> Double -> Diagram B
 >       mkCirc s c a = circle s # fc (webColors c) # lw none # opacity a
 >       pos = zipWith mkP2 xs ys
 >       conf = zipWith3 mkCirc ss cs as

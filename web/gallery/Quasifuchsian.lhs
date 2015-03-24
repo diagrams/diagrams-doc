@@ -28,7 +28,7 @@ Moebius Transformations
 =======================
 We are dealing with complex numbers.
 
-> type C = Complex (N B)
+> type C = Complex Double
 > i = 0 :+ 1
 
 A *Moebius transformation* is a mapping of the (projective) complex plane `C` onto itself, given by a linear fractional transformation $z \to \frac{az+b}{cz+d}$.
@@ -105,7 +105,7 @@ We will seed the plot with fixed points of *commutators*, for instance `[A,B,A1,
 
 Now for the function that enumerates points in the limit set
 
-> limitPoints :: N B -> Moebius -> Moebius -> [C]
+> limitPoints :: Double -> Moebius -> Moebius -> [C]
 > limitPoints eps a b = points
 >     where
 
