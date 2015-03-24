@@ -76,4 +76,4 @@ Make the confetti Diagram and extract it from the monad.
 > mkConfetti :: Int -> (StdGen -> Diagram B)
 > mkConfetti n = evalRand $ confetti n
 
-> example = confettiScope 45 102
+> example = confettiScope 39 0

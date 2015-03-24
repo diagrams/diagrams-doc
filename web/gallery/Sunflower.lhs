@@ -31,11 +31,9 @@ The color of each floret is based on it's radius.
 >     colors = black : (reverse $ brewerSet YlOrBr 9)
 
 > sunflower :: Int ->  Diagram B
-> sunflower n = position $ zip (mkCoords n) (florets n)
+> sunflower n = frame 4 $ position $ zip (mkCoords n) (florets n)
 >   where
 >     florets m = [floret (sqrt (fromIntegral i)) | i <- [1..m]]
 
 > example :: Diagram B
-> example = sunflower 2000 # centerXY
->                          # pad 1.1
->                          # bg black
+> example = frame 4 $ sunflower 2000 # bg black

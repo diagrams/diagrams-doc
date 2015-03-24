@@ -3514,7 +3514,7 @@ generally, `fontWeight`), `italic`, and `oblique` (or, more generally,
 > text' s t = text t # fontSize (local s) <> strutY (s * 1.3)
 > example = center $
 >       text' 10 "Hello" # italic
->   === text' 5 "there"  # bold
+>   === text' 5 "there"  # bold # font "freeserif"
 >   === text' 3 "world"  # fc green
 
 Font size

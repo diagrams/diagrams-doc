@@ -83,7 +83,7 @@ Which are used to "clip" the figure here:
 
 > nb = 12
 > example :: Diagram B
-> example = hexVariation # center # rectEnvelope x0 u0
+> example = hexVariation # center # rectEnvelope x0 u0 # rotateBy (1/4)
 >   where
 >     x0 = p2 (-width'/2, -height'/2)
 >     u0 = r2 (width', height')
