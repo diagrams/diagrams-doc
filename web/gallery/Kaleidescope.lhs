@@ -1,7 +1,7 @@
 ---
 title: Kaleidescope
 author: Jeffrey Rosenbluth
-authorurl: https://www.projects.haskell.org/diagrams/
+authorurl: https://www.projects.haskell.org/Diagram Bgrams/
 date: 2013-12-31
 description: A three mirror kaleidescope with random confetti.
 tags: kaleidescope, random, clipping, mainWith
@@ -16,29 +16,35 @@ width: 400
 > import           Diagrams.Prelude
 > import           System.Random
 
-> type Dia = Diagram B
+A helper function like `iterate` but also takes list index as a parameter.
 
-Take any diagram and cut out an equilateral triangle of side 1 from the center. This is the traingle inside of the three mirrors that make up a kaleidescope. The image is created by first repeatedly refecting this triangle to make a hexagon. Then the image plane is tiled with this hexagon.I use a little bit of trickery to create the hexagon of reflected triangles. If you want to see what is really going on, examine the diagrams `ts !! 2` and `ts !! 1`.
-
-> kaleid :: Dia -> Dia
-> kaleid d = rotateBy (1/12) $ appends hex hexs
+> iterateIdx :: (Int -> a -> a) -> a -> [a]
+> iterateIdx f t = go f t 0
 >   where
->     hexs = zip dirs (replicate 6 hex)
->     dirs = iterate (rotateBy (1/6)) unitX
->     hex = rotateBy (1/12) $
->             (ts !! 2 # centerXY)
->          <> (ts !! 1 # rotateBy (1/2) # snugT)
->     ts = iterate flipTurn (mkTriangle d)
->     flipTurn tri = (tri === tri # reflectY) # rotateBy (1/6)
+>     go f t i = let t' = f i t in t' : go f t' (i + 1)
 
-> mkTriangle :: Dia -> Dia
-> mkTriangle = clipped (triangle 1)
+Take any Diagram and cut out an equilateral triangle of side 1 from the center.
+This is the traingle inside of the three mirrors that make up a kaleidescope.
+The image is created by first repeatedly refecting this triangle to make a hexagon.
+Then the image plane is tiled with this hexagon.
+
+> kaleidoscope :: Diagram B -> Diagram B
+> kaleidoscope d = appends hex hexs
+>   where
+>     hexs   = zip dirs (replicate 6 hex)
+>     dirs   = iterate (rotateBy (1/6)) (rotateBy (1/12) unitX)
+>     hex    = mconcat . take 6 $ iterateIdx next tri
+>     tri    = alignBR $ mkTriangle d
+>     next i = reflectAbout (0 ^& 0) (rotateBy (- fromIntegral i / 6) xDir)
+
+> mkTriangle :: Diagram B -> Diagram B
+> mkTriangle = clipped (triangle 1) # lw none
 
 We pass as arguments the number of pieces of confetti `n` and a random seed `r`. Between 10 and 100 pieces seem to work nicely.
 
-> kaleidescope :: Int -> Int -> Dia
-> kaleidescope n r
->   = kaleid (mkConfetti n (mkStdGen r))
+> confettiScope :: Int -> Int -> Diagram B
+> confettiScope n r
+>   = kaleidoscope (mkConfetti n (mkStdGen r))
 >           # centerXY <> (circle 2.75 # fc black)
 >           # pad 1.1
 
@@ -52,24 +58,22 @@ To create and image to use in the kadeidescope we generate a bunch of disks with
 
 We use monadRandom to hide the plumbing of the many random numbers we need. The colors are choosen from the 330+ `webColors` from the package `Data.Colour.Palette.ColorSet`.
 
-> confetti :: Int -> Rand StdGen Dia
+> confetti :: Int -> Rand StdGen (Diagram B)
 > confetti n = do
 >   ss <- replicateM n sizeValue   -- radius
 >   cs <- replicateM n getRandom   -- color index
 >   as <- replicateM n getRandom   -- opacity
 >   xs <- replicateM n coordValue  -- x coordinate
 >   ys <- replicateM n coordValue  -- y coordinate
->   let mkCirc :: N B -> Int -> Double -> Dia
+>   let mkCirc :: N B -> Int -> Double -> Diagram B
 >       mkCirc s c a = circle s # fc (webColors c) # lw none # opacity a
 >       pos = zipWith mkP2 xs ys
 >       conf = zipWith3 mkCirc ss cs as
 >   return $ position (zip pos conf)
 
-Make the confetti diagram and extract it from the monad.
+Make the confetti Diagram and extract it from the monad.
 
-> mkConfetti :: Int -> (StdGen -> Dia)
+> mkConfetti :: Int -> (StdGen -> Diagram B)
 > mkConfetti n = evalRand $ confetti n
 
-Use `main = mainWith $ kaleidescope` to create an  executable that takes as parameters the number of pieces of confetti and a random seed.
-
-> example = kaleidescope 40 9
+> example = confettiScope 45 102
