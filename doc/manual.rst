@@ -118,15 +118,14 @@ about ``diagrams``:
   for a list of open tickets.  If you find a bug or would like to
   request a feature, please file a ticket!
 
-.. _`from the diagrams website`: http://projects.haskell.org/diagrams/reference.html
+.. _`from the diagrams website`: http://projects.haskell.org/reference.html
 .. _`report it as a bug`: https://github.com/diagrams/diagrams-doc/issues
 .. _website: http://projects.haskell.org/diagrams
 .. _`list of tutorials`: http://projects.haskell.org/diagrams/documentation.html
-.. _`diagrams wiki`: http://haskell.org/haskellwiki/Diagrams
+.. _`diagrams wiki`: https://wiki.haskell.org/Diagrams
 .. _`gallery of examples`: http://projects.haskell.org/diagrams/gallery.html
 .. _`IRC channel on Freenode`: http://webchat.freenode.net/?channels=diagrams
 .. _`diagrams mailing list`: http://groups.google.com/group/diagrams-discuss?pli=1
-.. _`developer wiki`: http://code.google.com/p/diagrams/
 .. _`diagrams organization on github` : https://github.com/diagrams/
 
 Installation
@@ -134,8 +133,8 @@ Installation
 
 Before installing ``diagrams``, you will need the following:
 
-* The `Glasgow Haskell Compiler`_ (GHC), version 7.4.x or later
-  (7.8.3 is recommended).
+* The `Glasgow Haskell Compiler`_ (GHC), version 7.6.x or later
+  (7.8.4 is recommended).
 
 * It is recommended (but not required) to have the latest release of
   the `Haskell Platform`_ (currently 2014.2.0.0).  At the very least
@@ -211,12 +210,16 @@ You can also mix and match all the above flags to get multiple
 backends.  Note, if you don't want the SVG backend at all, you must
 add the ``-f-svg`` flag to disable it.
 
+.. container:: todo
+
+  Mention other backends?
+
 `See the wiki for the most up-to-date information`_ regarding
 installation.  If you have trouble installing diagrams, feel free to
 send email to the `diagrams mailing list`_; we would like to collect
 reports of problems and solutions on various platforms.
 
-.. _`See the wiki for the most up-to-date information`: http://www.haskell.org/haskellwiki/Diagrams/Install
+.. _`See the wiki for the most up-to-date information`: http://wiki.haskell.org/Diagrams/Install
 
 
 Getting started
@@ -251,16 +254,17 @@ run into lots of crazy error messages.
 
 .. _`dreaded monomorphism restriction`: http://www.haskell.org/haskellwiki/Monomorphism_restriction
 
-`Diagrams.Prelude`:mod: re-exports almost everything from the standard
-library; `Diagrams.Backend.SVG.CmdLine`:mod: provides a command-line
-interface to the SVG rendering backend.  We then declare `myCircle` to
-have the type `Diagram B` the `B` is an alias representing the particular
-backend.  This also fixes the vector space and numerical field for the diagram.
-All the backends export `B` as an alias for themselves, so you can switch
-backends just by changing an import, without having to change type annotations
-on your diagrams; `B` simply refers to whichever backend is in scope.
-Finally, `mainWith` takes a diagram and creates a command-line-driven
-executable for rendering it.
+`Diagrams.Prelude`:mod: re-exports almost everything from the
+``diagrams`` standard library, along with things from other packages
+which are often used in conjunction with ``diagrams``.
+`Diagrams.Backend.SVG.CmdLine`:mod: provides a command-line interface
+to the SVG rendering backend.  We then declare `myCircle` to have the
+type `Diagram B`.  The `B` is an alias representing the particular
+backend. All backends export `B` as an alias for themselves, so
+you can switch backends just by changing an import, without having to
+change type annotations on your diagrams; `B` simply refers to
+whichever backend is in scope.  Finally, `mainWith` takes a diagram
+and creates a command-line-driven executable for rendering it.
 
 To compile your program, type
 
@@ -284,11 +288,11 @@ The above will generate a 100x100 SVG that should look like this:
 
 > example = circle 1
 
-If you are using the cairo backend you can also request a ``.png``,
-``.ps``, or ``.pdf`` file (the format is automatically determined by
-the extension), or an ``.eps`` file if using the postscript
-backend. The rasterific backend allows ``.png``, ``.jpg``, ``.tif``,
-and ``.bmp``.
+If you are using the rasterific backend you can also request a
+``.png``, ``.jpg``, ``.tif``, or ``.bmp`` file (the format is
+automatically determined by the extension), or an ``.eps`` file if
+using the postscript backend.  The cairo backend allows ``.svg``,
+``.png``, ``.ps``, and ``.pdf``.
 
 Try typing
 
@@ -304,11 +308,12 @@ manual.
 
 .. _`quick start tutorial`: /doc/quickstart.html
 
-Note that `Diagrams.Backend.SVG.CmdLine` is provided for convenience;
-it's not the only interface to the backend though. If you want to roll
-your own code, e.g. as a component of another program, use the
-`renderDia` function, or see the related section under `Rendering
-backends`_ for additional backend specific entry points.
+Note that `Diagrams.Backend.SVG.CmdLine` is provided for convenience,
+but it is not the only interface to the backend. For more control over
+when and how diagrams are rendered, *e.g.* as one component of a
+larger program, use the `renderDia` function, or see the related
+section under `Rendering backends`_ for additional backend specific
+entry points.
 
 Contributing
 ------------
@@ -466,8 +471,8 @@ Vectors and points
 
 Although much of this user manual focuses on constructing
 two-dimensional diagrams, the definitions in the core library in fact
-work for *any* vector space.  Vector spaces are defined in the`
-Linear.Vector`:mod: module from Edward Kmett's `linear`:pkg: package.
+work for *any* vector space.  Vector spaces are defined in the
+`Linear.Vector`:mod: module from Edward Kmett's `linear`:pkg: package.
 
 Many objects (diagrams, paths, backends...) inherently live in some
 particular vector space.  The vector space in which a given type
@@ -504,7 +509,7 @@ narrower classes `Fractional`, `Floating`, or `Real`.
 
 See `this tutorial for a more in-depth introduction to working with vectors
 and points`__.
-]
+
 __ vector.html
 
 One might think we could also identify *points* in a space with
@@ -5677,8 +5682,6 @@ __ cmdline.html
 >     mainArgs   :: Parseable (MainOpts d) => d -> IO (MainOpts d)
 >     mainRender :: MainOpts d -> d -> IO ()
 >     mainWith   :: Parseable (MainOpts d) => d -> IO ()
-
-__ cmdline.html
 
 Poor man's type synonyms
 ~~~~~~~~~~~~~~~~~~~~~~~~
