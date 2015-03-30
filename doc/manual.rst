@@ -1544,10 +1544,16 @@ color combinations.
 ::
 
 > import Data.Colour (withOpacity)
+> import Data.Colour.Palette.BrewerSet
 >
-> colors  = map (blue `withOpacity`) [0.1, 0.2 .. 1.0]
-> example = hcat' (with & catMethod .~ Distrib & sep .~ 1 )
->                 (zipWith fcA colors (repeat (circle 1)))
+> blues   = map (blue `withOpacity`) [0.1, 0.2 .. 1.0]
+> alphaEx = hcat' (with & catMethod .~ Distrib & sep .~ 1 )
+>                 (zipWith fcA blues (repeat (circle 1)))
+>
+> colors  = brewerSet Pastel1 9
+> paletteEx = hsep 0.3 (zipWith fc colors (repeat (rect 0.5 1 # lw none)))
+>
+> example = vsep 1 ([alphaEx, paletteEx] # map centerX)
 
 Transparency can also be tweaked with the `Opacity` attribute, which
 sets the opacity/transparency of a diagram as a whole. Applying
