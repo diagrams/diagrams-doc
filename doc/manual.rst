@@ -1087,8 +1087,8 @@ polygons and other path-based shapes.  For example:
 >                                      & radiusBR .~ 0.1)
 
 Completing the hodgepodge in `Diagrams.TwoD.Shapes`:mod: for now, the
-functions `hrule` and `vrule` create horizontal and vertical lines,
-respectively.
+functions `hrule` and `vrule` create horizontal and vertical lines of
+a given length, respectively.
 
 .. class:: dia-lhs
 
@@ -1114,7 +1114,7 @@ optional parameters that control the generated polygon:
 
     ::
 
-    > example = strutX 1 ||| p 6 ||| p 24 ||| strutX 1
+    > example = p 6 ||| p 24
     >   where p n = polygon (with
     >                 & polyType .~ PolyRegular n 1 )
 
@@ -1139,11 +1139,12 @@ optional parameters that control the generated polygon:
     radii.
 
 * `polyOrient` specifies the `PolyOrientation`: the polygon can be
-  oriented with an edge parallel to the `x`:math:\-axis. with an edge parallel
-  to the `y`:math:\-axis, or with an edge perpendicular to any given vector.
-  You may also specify that no special orientation should be applied,
-  in which case the first vertex of the polygon will be located along the
-  positive `x`:math:\-axis.
+  oriented with an edge parallel to the `x`:math:\-axis (`OrientH`),
+  with an edge parallel to the `y`:math:\-axis (`OrientV`), or with an
+  edge perpendicular to any given vector.  You may also specify that
+  no special orientation should be applied, in which case the first
+  vertex of the polygon will be located along the positive
+  `x`:math:\-axis.
 
 * Additionally, a center other than the origin can be specified using
   `polyCenter`.
@@ -1174,7 +1175,7 @@ consecutive vertices; for example:
 
 ::
 
-> example = star (StarSkip 3) (regPoly 13 1) # stroke
+> example = star (StarSkip 3) (regPoly 13 1) # strokeP
 
 `Diagrams.TwoD.Polygons`:mod: provides the `star` function for
 creating star polygons of this sort, although it is actually quite a
@@ -1197,9 +1198,9 @@ which there are two possibilities:
 
   ::
 
-  > example = stroke (star (StarSkip 2) (regPoly 8 1))
+  > example = strokeP (star (StarSkip 2) (regPoly 8 1))
   >       ||| strutX 1
-  >       ||| stroke (star (StarSkip 3) (regPoly 8 1))
+  >       ||| strokeP (star (StarSkip 3) (regPoly 8 1))
 
   As you can see, `star` may result in a path with multiple components,
   if the argument to `StarSkip` and the number of vertices have a
@@ -1233,8 +1234,8 @@ which there are two possibilities:
   >                   # strokeP # lw thick # lc red
   > example       = center . hcat' (with & sep .~ 0.5) $ map visualize funs
 
-You may notice that all the above examples need to call `stroke` (or
-`stroke'`), which converts a path into a diagram.  Many functions
+You may notice that all the above examples need to call `strokeP` (or
+`strokeP'`), which converts a path into a diagram.  Many functions
 similar to `star` are polymorphic in their return type over any
 `TrailLike`, but `star` is not. As we have seen, `star` may need to
 construct a path with multiple components, which is not supported by
