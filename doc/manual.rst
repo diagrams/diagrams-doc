@@ -980,6 +980,9 @@ Double` represents directions in 2D Euclidean space.  The `direction`
 function converts a vector to its `Direction`; `fromDirection` creates a
 unit (length 1) vector in the given direction.
 
+`xDir` and `yDir` are provided as the directions of the positive x-
+and y-axes, respectively.
+
 The relationship between `Angle`\s and `Direction`\s is similar to
 that between vectors and points.  The `Angle` between two fixed
 `Direction`\s can be found with `angleBetweenDirs`.
@@ -1030,8 +1033,9 @@ Arcs
 `Diagrams.TwoD.Arc`:mod: provides a function `arc`, which constructs a
 radius-one circular arc starting at a first direction and extending
 through a given angle__ , as well as `wedge` which constructs a wedge
-shape, `annularWedge` (an arc plus two radii) and various other
-functions for conveniently constructing arcs.
+shape with a given radius, `annularWedge` which expects an outer and
+inner radius, and various other functions for conveniently
+constructing arcs.
 
 __ `Angles`_
 
@@ -1041,8 +1045,14 @@ __ `Angles`_
 
 > example = hcat' (with & sep .~ 0.5) [arc d a, wedge 1 d a, annularWedge 1 0.6 d a]
 >   where
+>     d :: Direction V2 Double
 >     d = rotateBy (1/4) xDir
->     a = 4 * tau / 7 - tau / 4 @@ rad
+>     a :: Angle Double
+>     a = (4 * tau / 7 - tau / 4) @@ rad
+
+(Note that the parentheses in the definition of ``a`` are not strictly
+necessary, as `(@@)` has lower precedence (namely, 5) than `(-)`
+(which has precedence 6).)
 
 Pre-defined shapes
 ~~~~~~~~~~~~~~~~~~
