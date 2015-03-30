@@ -466,6 +466,44 @@ Most functions which take an optional arguments record have two
 variants: one named `foo` which uses all default arguments, and one
 named `foo'` (with a trailing prime) which takes an options record.
 
+Postfix transformation
+----------------------
+
+You will often see idiomatic ``diagrams`` code that looks like this:
+
+::
+
+  foobar # attr1
+         # attr2
+         # attr3
+         # transform1
+
+There is nothing magical about `(#)`, and it is not required in order
+to apply attributes or transformations. In fact, it is nothing more
+than reverse function application with a high precedence (namely, 8):
+
+::
+  infixl 8 #
+  x # f = f x
+
+`(#)` is provided simply because it often reads better to first write
+down what a diagram *is*, and then afterwards write down attributes
+and modifications.  Additionally, `(#)` has a high precedence so it
+can be used to make "local" modifications without requiring lots of
+parentheses:
+
+.. class:: lhs
+
+::
+
+> example =     square 2 # fc red # rotateBy (1/3)
+>           ||| circle 1 # lc blue # fc green
+
+Note how the modifiers `fc red` and `rotateBy (1/3)` apply only to the
+square, and `lc blue` and `fc green` only to the circle. The
+horizontal composition operator `(|||)` has a precedence of 6, lower
+than that of `(#)`.
+
 Vectors and points
 ------------------
 
@@ -762,43 +800,6 @@ all of them (which is the default for line width).
 
   Expand on this.  Show some examples.  Need a better story about
   physical units.
-
-Postfix transformation
-----------------------
-
-You will often see idiomatic ``diagrams`` code that looks like this:
-
-::
-
-  foobar # attr1
-         # attr2
-         # attr3
-         # transform1
-
-There is nothing magical about `(#)`, and it is not required in order
-to apply attributes or transformations. In fact, it is nothing more
-than reverse function application with a high precedence (namely, 8):
-
-::
-
-  x # f = f x
-
-`(#)` is provided simply because it often reads better to first write
-down what a diagram *is*, and then afterwards write down attributes
-and modifications.  Additionally, `(#)` has a high precedence so it
-can be used to make "local" modifications without requiring lots of
-parentheses:
-
-.. class:: lhs
-
-::
-
-> example =     square 2 # fc red # rotateBy (1/3)
->           ||| circle 1 # lc blue # fc green
-
-Note how the modifiers `fc red` and `rotateBy (1/3)` apply only to the
-square, and `lc blue` and `fc green` only to the circle (`(|||)` has a
-precedence of 6, lower than that of `(#)`).
 
 Types and type classes
 ----------------------
