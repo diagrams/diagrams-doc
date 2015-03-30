@@ -602,7 +602,7 @@ if you are just reading this manual for the first time!)
 >     ]
 >     where
 >       b  = envelopeP v d
->       v' = signorm v
+>       v' = 1.5 *^ signorm v
 >       p1 = b .+^ (rotateBy (1/4) v')
 >       p2 = b .+^ (rotateBy (-1/4) v')
 >
@@ -612,8 +612,10 @@ if you are just reading this manual for the first time!)
 > d2 :: Path V2 Double
 > d2 = (pentagon 1 === roundedRect 1.5 0.7 0.3)
 >
-> example = (stroke d1 # showOrigin <> illustrateEnvelope (r2 (-0.5,0.3)) d1)
->       ||| (stroke d2 # showOrigin <> illustrateEnvelope (r2 (0.5, 0.2)) d2)
+> example = (stroke d1 # showOrigin <> illustrateEnvelope (r2 (-0.5, 0.3)) d1)
+>       ||| (stroke d2 # showOrigin <> illustrateEnvelope (r2 (0.5, 0.2)) d2
+>                                   <> illustrateEnvelope (r2 (0.5, -0.1)) d2
+>           )
 
 The black arrows represent inputs to the envelopes for the
 two diagrams; the envelopes' outputs are the distances
