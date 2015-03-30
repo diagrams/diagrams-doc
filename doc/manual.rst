@@ -870,7 +870,7 @@ Euclidean 2-space
 There are three main type synonyms defined for referring to
 two-dimensional space:
 
-* `V2 n` is the type of the two-dimensional Euclidean vector space
+* `V2 n` is the type of a two-dimensional Euclidean vector space
   (`n` is usually `Double`). Standard ``diagrams`` backends render
   images with the positive `x`:math:\-axis extending to the right, and
   the positive `y`:math:\-axis extending *upwards*.  This is
@@ -945,7 +945,7 @@ turn`, `tau @@ rad`, or `360 @@ deg`.
 
 In two dimensions, the direction of a vector can be represented by an
 angle measured counterclockwise from the positive `x`:math:\-axis (shown in
-green below).  For some vector u, this angle can be found by `u ^. _theta`.
+green below).  For some vector `u`, this angle can be found by `u ^. _theta`.
 
 .. class:: dia
 
@@ -957,7 +957,7 @@ green below).  For some vector u, this angle can be found by `u ^. _theta`.
 >   , axes
 >   ]
 >   # (<> rect 12 6 # alignB # lw none)
->   # center # frame 1
+>   # center # frame 0.2
 >
 > axes = (arrowV (6 *^ unitX) # centerX <> arrowV (6 *^ unitY) # centerY)
 > theAngle = 200 @@ deg
@@ -974,10 +974,15 @@ Directions
 ~~~~~~~~~~
 
 Whereas a vector is described by a direction and a magnitude, some
-functions only depend on the direction.  The `Direction` type is used
-in these cases to make the relationship clear.  The `direction`
+functions only depend on the direction.  `Direction v n` is the type
+of directions of vectors of type `v n`; for example, `Direction V2
+Double` represents directions in 2D Euclidean space.  The `direction`
 function converts a vector to its `Direction`; `fromDirection` creates a
 unit (length 1) vector in the given direction.
+
+The relationship between `Angle`\s and `Direction`\s is similar to
+that between vectors and points.  The `Angle` between two fixed
+`Direction`\s can be found with `angleBetweenDirs`.
 
 Primitive shapes
 ----------------
