@@ -2239,10 +2239,11 @@ move the local origin to the edge of the envelope:
 ::
 
 > s = square 1 # fc yellow
-> x |-| y = x ||| strutX 0.5 ||| y
-> example =  (s # showOrigin)
->        |-| (s # alignT  # showOrigin)
->        |-| (s # alignBR # showOrigin)
+> example = hsep 0.5
+>   [ s # showOrigin
+>   , s # alignT  # showOrigin
+>   , s # alignBR # showOrigin
+>   ]
 
 There are two things to note about the above example.  First, notice
 how `alignT` and `alignBR` move the local origin of the square in the
@@ -3505,12 +3506,14 @@ function.
 
 > c = circle 2 # fc lightgray # lw none # showOrigin
 >
-> x |-| y = x ||| strutX 3 ||| y
->
-> row1 = (c # named "1") |-| (c # named "3")
->    |-| (c # named "5") |-| (c # named "7")
-> row2 = (c # named "2") |-| (c # named "4")
->    |-| (c # named "6") |-| (c # named "8")
+> row1 = hsep 3
+>   [ c # named "1", c # named "3"
+>   , c # named "5", c # named "7"
+>   ]
+> row2 = hsep 3
+>   [ c # named "2", c # named "4"
+>   , c # named "6", c # named "8"
+>   ]
 >
 > d = row1 === strutY 5 === row2
 >
