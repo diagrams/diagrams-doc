@@ -3723,32 +3723,47 @@ including both external and embedded images in diagrams.
 Support for images varies by backend.  Only the cairo
 backend supports external images. The rasterific backend
 supports embedded images of many formats and the SVG backend
-supports embedded png images.
+supports embedded PNG images.
 
-To create a diagram from an image file
-call `loadImageEmb` to read the
-image from a file path using `JuicyPixels`:pkg: and return a
-`DImage Embedded`. Then use `image` to convert the `DImage Embedded`
+To create an embedded diagram from an image file call `loadImageEmb`
+to read the image from a file path using `JuicyPixels`:pkg: and return
+a `DImage Embedded`. Then use `image` to convert the `DImage Embedded`
 to a diagram. You can also create an a diagram with an embedded image
-by supplying a function that maps pixel coordinates to `alphaColour` s
-plus a width and a height to the`rasterDia` function.
-
-The function `loadImageExt` checks to make sure the file exists, uses
-`JuicyPixels`:pkg: to determine its size and returns a reference to
-the image. On the other hand `uncheckedImageRef` simply packages the
-reference with a width and height to make a `DImage External`.
+by supplying a function that maps pixel coordinates to `AlphaColour`\s
+plus a width and a height to the `rasterDia` function.  For example,
+the below code uses `rasterDia` to visualize the multiplication table
+for the group `U_7`:math: of natural numbers `\{0, \dots, 6\}`:math:
+under multiplication mod 7.
 
 .. class:: dia-lhs
 
 ::
 
+> import Data.Colour.Palette.BrewerSet
+>
 > no = (circle 1 <> hrule 2 # rotateBy (1/8))
->    # lwO 20 # lc red # frame 0.2
-> example = do
+>    # lwO 40 # lc red # frame 0.2
+> noPhoneIO = do
 >   res <- loadImageEmb "doc/static/phone.png"
 >   return $ case res of
 >     Left err    -> mempty
 >     Right phone -> no <> image phone # sized (dims2D 1.5 1.5)
+>
+> colors = brewerSet YlGn 7
+> u7 = rasterDia
+>   (\x y -> opaque (colors !! ((x `div` 100) * (y `div` 100) `mod` 7)))
+>   700 700
+>   # sized (dims2D 2 2)
+>
+> example = do
+>   noPhone <- noPhoneIO
+>   return $ noPhone ||| strutX 1.5 ||| u7
+
+The function `loadImageExt` checks to make sure the file exists, uses
+`JuicyPixels`:pkg: to determine its size and returns a reference to
+the image. On the other hand `uncheckedImageRef` simply packages the
+reference with a width and height to make a `DImage External`, without
+checking to make sure the image exists.
 
 When using `loadImageEmb` and `loadImageExt` you do not need to
 provide the width and height of the image, as they will be calculated
@@ -3770,10 +3785,11 @@ compensate.  If you wish to alter an image's aspect ratio, you can do
 so by scaling nonuniformly with `scaleX`, `scaleY`, or something
 similar.
 
-Currently, the cairo backend can only include images in ``png``
-format, but hopefully this will be expanded in the future. The rasterific
-backend will render many different image formats including, ``png``, ``jpg``,
-``tif``, ``bmp`` and ``gif``.
+Current backend support for images can be summarized as follows:
+
+* Cairo: external PNG
+* SVG: embedded PNG
+* Rasterific: embedded ``PNG``, ``JPG``, ``TIF``, ``BMP`` and ``GIF``.
 
 Advanced tools for diagram creation
 ===================================
