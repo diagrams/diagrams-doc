@@ -2109,41 +2109,48 @@ The affine transformations represented by `Transformation` include the
 most commonly used transformations, but occasionally other sorts are
 useful.  Non-affine transformations are represented by the
 `Deformation` type.  The design is quite similar to that of
-`Transformation`.  A `Deformation` is parameterized by the vector space
-over which it acts.  There is a `Deformable` type class, and `deform`
-applies a `Deformation` to a `Deformable` type in the same vector
-space, returning a value of the same type.
-
-`Diagrams.TwoD.Deform`:mod: defines parallel and perspective
-projections along the principal axes in 2 dimensions.
+`Transformation`.  A `Deformation` is parameterized by the vector
+spaces over which it acts: most generally, it may send objects in one
+vector space to objects in another.  There is a `Deformable` type
+class with a function `deform`, which applies a `Deformation` to a
+`Deformable` value.  There is also a function `deform'` which takes an
+extra tolerance parameter; applying deformations usually involves
+approximation.
 
 .. class:: dia-lhs
 
 ::
 
-> sq = unitSquare # translate (5 ^& 3) :: Path V2 Double
-> marks = repeat . lw none $ circle 0.02
-> spots c p = position $ zip (concat $ pathVertices p) (marks # fc c)
-> example = stroke sq <> spots blue sq <> spots green (deform perspectiveX1 sq)
+> wibble :: Deformation V2 V2 Double
+> wibble = Deformation $ \p ->
+>   ((p^._x) + 0.3 * cos ((p ^. _y) * tau)) ^& (p ^. _y)
+>   -- perturb x-coordinates by the cosine of the y-coordinate
+>
+> circles :: Path V2 Double
+> circles = mconcat . map circle $ [3, 2.6, 2.2]
+>
+> example :: Diagram B
+> example = circles # deform' 0.0001 wibble # strokeP
+>         # fillRule EvenOdd # fc purple # frame 1
 
-The example above projects a square onto the plane x=1.  In this
-example, only the projected vertices are drawn, since the four
-overlapping line segments corresponding to the edges of the square are
-not interesting.  Note, though, that the `Path` is deformed, and then
-the vertices are taken from the projected result.
+Because the `deform` function is so general, type signatures are often
+required on both its inputs and results, as in the example above;
+otherwise ambiguous type errors are likely to result.
 
-`Deformation v` is a `Monoid` for any vector space `v n`.  New
-deformations can be formed by composing two deformations.  The
-composition of an affine transformation with a `Deformation` is also a
-`Deformation`.  `asDeformation` converts a `Transformation` to an
-equivalent `Deformation`, "forgetting" the inverse and other extra
-information which distinguishes affine transformations.
+`Deformation v v n` is a `Monoid` for any vector space `v n`. (In
+general, `Deformation u v n` maps objects with vector space `u` to
+ones with vector space `v`.)  New deformations can be formed by
+composing two deformations.  The composition of an affine
+transformation with a `Deformation` is also a `Deformation`.
+`asDeformation` converts a `Transformation` to an equivalent
+`Deformation`, "forgetting" the inverse and other extra information
+which distinguishes affine transformations.
 
 The very general nature of deformations prevents certain types
 from being `Deformable`.  Because not every `Deformation` is
 invertible, diagrams cannot be deformed.  In general, for two points
-`p`:math: and `q`:math:, and a deformation `D`:math:, there is no
-deformation `D_v`:math: such that, `Dp - Dq = D_v(p-q)`:math:.  For
+`p`:math: and `q`:math:, and a deformation `D`:math:, there may be no
+deformation `D_v`:math: such that `Dp - Dq = D_v(p-q)`:math:.  For
 this reason, only points and concretely located types are deformable.
 Finally, segments are not deformable because the image of the segment
 may not be representable by a single segment.  The `Deformable`
@@ -2156,6 +2163,41 @@ Because approximation and subdivision are required for many
 which takes the approximation accuracy as its first argument.  For
 trails and paths, `deform` (without a prime) calls `deform'` with an
 error limit of 0.01 times the object's size.
+
+.. container:: todo
+
+  Fix all references to `trailVertices` etc., and make sure it's
+  discussed somewhere in the manual
+
+`Diagrams.TwoD.Deform`:mod: defines parallel and perspective
+projections along the principal axes in 2 dimensions. The below
+example projects the vertices of a square orthogonally onto the
+`x`:math:- and `y`:math:-axes, and also using a perspective projection
+onto the line `x = 1`:math:.
+
+.. class:: dia-lhs
+
+::
+
+> sq = unitSquare # rotateBy (1/17) # translate (3 ^& 2) :: Path V2 Double
+> sqPts = concat $ pathPoints sq
+> marks = repeat . lw none $ circle 0.05
+> spots c pts = atPoints pts (marks # fc c)
+> connectPoints pts1 pts2
+>   = zipWith (~~) pts1 pts2
+>   # mconcat
+>   # dashingL [0.1, 0.1] 0
+> example =
+>   mconcat
+>   [ spots blue sqPts
+>   , strokeP sq
+>   , spots green (map (deform parallelX0) sqPts)
+>   , spots green (map (deform parallelY0) sqPts)
+>   , spots green (map (deform perspectiveX1) sqPts)
+>   , connectPoints sqPts (map (deform parallelX0) sqPts)
+>   , connectPoints sqPts (map (deform parallelY0) sqPts)
+>   , connectPoints sqPts (repeat origin)
+>   ]
 
 Alignment
 ~~~~~~~~~
