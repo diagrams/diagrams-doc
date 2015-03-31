@@ -3790,6 +3790,7 @@ Current backend support for images can be summarized as follows:
 * Cairo: external PNG
 * SVG: embedded PNG
 * Rasterific: embedded ``PNG``, ``JPG``, ``TIF``, ``BMP`` and ``GIF``.
+* PGF: external ``PDF``, ``JPG`` and ``PNG``; embedded ``ImageRGB8``.
 
 Advanced tools for diagram creation
 ===================================
