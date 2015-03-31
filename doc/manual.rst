@@ -2248,8 +2248,9 @@ move the local origin to the edge of the envelope:
 There are two things to note about the above example.  First, notice
 how `alignT` and `alignBR` move the local origin of the square in the
 way you would expect.  Second, notice that when placed "next to" each
-other using the `(|||)` operator, the squares are placed so that their
-local origins fall on a horizontal line.
+other using the `(|||)` operator (here implicitly via `hsep`), the
+squares are placed so that their local origins fall on a horizontal
+line.
 
 Functions like `alignY` allow finer control over the alignment.  In
 the below example, the origin is moved to a series of locations
@@ -2264,8 +2265,9 @@ interpolating between the bottom and top of the square:
 >         $ zipWith alignY [-1, -0.8 .. 1] (repeat s)
 
 To center an object along an axis we provide the functions `centerX`
-and `centerY`. An object can be simultaneously centered along both axis
-(actually along all of its basis vectors) using the `center` function.
+and `centerY`. An object can be simultaneously centered along both axes
+(actually along all of its basis vectors) using the `center` function
+(or `centerXY` in the specific case of two dimensions).
 
 The align functions have sister functions like `snugL` and `snugX`
 that work the same way as `alignL` and `alignX`. The difference is
@@ -2404,7 +2406,7 @@ __ /doc/paths.html
 
 There are two types of trail:
 
-* A *loop*, with a type like `Trail' Loop v`, is a trail which forms
+* A *loop*, with a type like `Trail' Loop v n`, is a trail which forms
   a "closed loop", ending at the same place where it started.
 
   .. class:: dia
@@ -2416,7 +2418,7 @@ There are two types of trail:
 
   Loops in 2D can be filled, as in the example above.
 
-* A *line*, with a type like `Trail' Line v`, is a trail which does
+* A *line*, with a type like `Trail' Line v n`, is a trail which does
   not form a closed loop, that is, it starts in one place and ends
   in another.
 
@@ -2537,6 +2539,7 @@ To construct a line, loop, or trail, you can use one of the following:
 
 * `fromSegments` takes an explicit list of `Segment`\s, which can
   occasionally be useful if, say, you want to generate some Bézier
+  curves and assemble them into a trail.
 
 All the above functions construct loops by first constructing a line
 and then calling `glueLine` (see also the below section on
@@ -2597,7 +2600,7 @@ utilities for working with it:
   components of a `Located` value.
 * `mapLoc` can be used to apply a function to the value of type `a`
   inside a value of type `Located a`.  Note that `Located` is not a
-  functor, since it is not possible to change the contained type
+  `Functor`, since it is not possible to change the contained type
   arbitrarily: `mapLoc` does not change the location, and the vector
   space associated to the type `a` must therefore remain the same.
 
@@ -2636,13 +2639,14 @@ holes:
 > ring :: Path V2 Double
 > ring = circle 3 <> (circle 2 # reversePath)
 >
-> example = stroke ring # fc purple
+> example = ring # strokeP # fc purple
 
 See the section on `Fill rules`_ for more information.
 
-`stroke` turns a path into a diagram, just as `strokeTrail` turns a trail
-into a diagram. (In fact, `strokeTrail` really works by first turning the
-trail into a path and then calling `stroke` on the result.)
+`strokePath` (alias `strokeP`) turns a path into a diagram, just as
+`strokeTrail` turns a trail into a diagram. (In fact, `strokeTrail`
+really works by first turning the trail into a path and then calling
+`strokePath` on the result.)
 
 `explodePath`, similar to `explodeTrail`, turns the segments of a path
 into individual paths.  Since a path is a collection of trails, each
@@ -2650,17 +2654,17 @@ of which is a sequence of segments, `explodePath` actually returns a
 list of lists of paths.
 
 For information on other path manipulation functions such as
-`pathFromTrail`, `pathFromLocTrail`, `pathVertices`, `pathOffsets`,
-`scalePath`, and `reversePath`, see the Haddock documentation in
-`Diagrams.Path`:mod:.
+`pathFromTrail`, `pathFromLocTrail`, `pathPoints`, `pathVertices`,
+`pathOffsets`, `scalePath`, and `reversePath`, see the Haddock
+documentation in `Diagrams.Path`:mod:.
 
 Stroking trails and paths
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The `strokeTrail` and `stroke` functions, which turn trails and paths into
+The `strokeTrail` and `strokePath` functions, which turn trails and paths into
 diagrams respectively, have already been mentioned; they are defined
 in `Diagrams.TwoD.Path`:mod:.  Both also have primed variants,
-`strokeTrail'` and `stroke'`, which take a record of `StrokeOpts`.
+`strokeTrail'` and `strokePath'`, which take a record of `StrokeOpts`.
 Currently, `StrokeOpts` has two fields:
 
 * `vertexNames` takes a list of lists of names, and zips each list
@@ -2681,6 +2685,10 @@ Currently, `StrokeOpts` has two fields:
   affect both the query and the rendering of the diagram.)
 
   By default, `queryFillRule` is set to `Winding`.
+
+.. container:: todo
+
+  Write about `ToPath` type class and `stroke` function.
 
 Offsets of segments, trails, and paths
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2931,7 +2939,7 @@ only a single method, `trailLike`:
 
 ::
 
-> trailLike :: Located (Trail (V t)) -> t
+> trailLike :: Located (Trail (V t) (N t)) -> t
 
 That is, a trail-like thing is anything which can be constructed from
 a `Located Trail`.
@@ -3050,7 +3058,7 @@ Segments and trails as parametric objects
 
 Both segments and trails, semantically, can be seen as *parametric
 functions*: that is, for each value of a parameter within some given
-range (usually `[0,1]`:math:, there is a corresponding vector value
+range (usually `[0,1]`:math:), there is a corresponding vector value
 (or point, for `Located` segments and trails).  The entire collection
 of such vectors or points makes up the segment or trail.
 
@@ -3106,7 +3114,7 @@ Instances of `Parametric` include:
 * `Located a`: as long as `a` is also `Parametric` and the codomain of
   `a` is a vector space, `Located a` is parametric with points as the
   codomain.  For example, calling `atParam` on a `Located (Trail V2 Double)`
-  returns a `P2`.
+  returns a `P2 Double`.
 
 `Path`\s are *not* `Parametric`, since they may have multiple trail
 components and there is no canonical way to assign them a
@@ -3302,8 +3310,8 @@ indicate places where the associated query evaluates to true.
 ::
 
 > points = [x ^& 0 | x <- [-2.3, -2.1 .. 2.3]]
-> dia1 = (circle 2 <> circle 1) # strokeP # fillRule EvenOdd
-> dia2 = (circle 2 <> reversePath (circle 1)) # strokeP
+> dia1 = (circle 2 <> circle 1) # strokeP # fillRule EvenOdd # rotateBy (1/100)
+> dia2 = (circle 2 <> reversePath (circle 1)) # strokeP # rotateBy (1/100)
 >
 > illustrate d = ((d # fc grey) `beneath`) . mconcat . map drawPt $ points
 >   where
@@ -3313,7 +3321,7 @@ indicate places where the associated query evaluates to true.
 > example = illustrate dia1 ||| strutX 1 ||| illustrate dia2
 
 If you do want to make a diagram whose query uses the even-odd rule,
-you can use the `stroke'` function.
+you can use the `strokePath'` function.
 
 Clipping
 ~~~~~~~~
@@ -3341,7 +3349,7 @@ than the envelope of an intersection.  Diagrams does not have a
 function which returns the tight envelope of the intersection.
 
 Altering a diagram's envelope can also be accomplished using `withEnvelope`
-(see `Envelope-related functions`_).  The `view` function is also
+(see `Envelope-related functions`_).  The `rectEnvelope` function is also
 provided for the special case of setting a diagram's envelope to some
 rectangle, often used for the purpose of selecting only a part of a
 diagram to be "viewed" in the final output.  It takes a point---the
@@ -3357,11 +3365,12 @@ lower-left to upper-right corner.
 
 Note in the above example how the actual portion of the diagram that
 ends up being visible is larger than the specification given to
-`view`---this is because the aspect ratio of the requested output
-image does not match the aspect ratio of the rectangle given to
-`view` (and also because of the use of `pad` by the framework which
-renders the user manual examples).  If the aspect ratios matched the
-viewed portion would be exactly that specified in the call to `view`.
+`rectEnvelope`---this is because the aspect ratio of the requested
+output image does not match the aspect ratio of the rectangle given to
+`rectEnvelope` (and also because of the use of `frame` by the
+framework which renders the user manual examples).  If the aspect
+ratios matched the viewed portion would be exactly that specified in
+the call to `rectEnvelope`.
 
 Trail and path implementation details
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -3420,7 +3429,7 @@ __ /gallery/SymmetryCube.html
 * `connectPerim` to connect points on the traces of diagrams at
   particular external angles;
 
-* `arrowAt` to place an arrow at a point.
+* `arrowAt` to place an arrow at a point;
 
 * `arrowV` to create an arrow with the magnitude and direction of a given
   vector.
@@ -3544,14 +3553,16 @@ Text
 
 .. container:: warning
 
-    Note: The various backends differ substantially in their text-handling
-    capabilities.  For this and other reasons, there are two ways to add
-    text to diagrams, each with advantages.  The method in this section is
-    heavily dependant on Backend support.  The Cairo Backend has the most
-    complete support; in particular, this is the best approach for complex
-    (non-Roman) scripts.  You may also want to look at `SVGFonts`:pkg:
-    package, described in the section `Native font support`_ below, which
-    converts text directly as `Path`\s.
+    Note: The various backends differ substantially in their
+    text-handling capabilities.  For this and other reasons, there are
+    two ways to add text to diagrams, each with advantages.  The
+    method in this section is heavily dependant on backend support.
+    The Cairo backend has the most complete support; in particular,
+    this is the best approach for complex (non-Roman) scripts.  The
+    Rasterific backend also has good text support, via the
+    `FontyFruity`:pkg: package.  You may also want to look at the
+    `SVGFonts`:pkg: package, described in the section `Native font
+    support`_ below, which converts text directly into `Path`\s.
 
 Text objects, defined in `Diagrams.TwoD.Text`:mod:, can be created
 most simply with the `text` function, which turns a `String` into a
@@ -3596,16 +3607,7 @@ output.
 
 The main reason for this is that computing the size of some text in a
 given font is rather complicated, and ``diagrams`` cannot (yet) do it
-natively.  The cairo backend can do it (see below) but we don't want
-to tie diagrams to a particular backend.
-
-Note, however, that the cairo backend includes a module
-`Diagrams.Backend.Cairo.Text`:mod: with functions for querying font
-and text extents, and creating text diagrams that take up an
-appropriate amount of space.  So it *is* possible to have
-automatically-sized text objects, at the cost of being tied to the
-cairo backend and bringing `IO` into the picture (or being at peace
-with some probably-justified uses of `unsafePerformIO`).
+natively.
 
 Various attributes of text can be set using `font`, `bold` (or, more
 generally, `fontWeight`), `italic`, and `oblique` (or, more generally,
@@ -3679,7 +3681,7 @@ value of type `Measure V2 Double` (see `Measurement units`_).
 
     The technical specification is that applying a transformation
     `T`:math: to non-`local`-sized text actually results in applying
-    the transformation `T/|T|`:math:, where `|T|`:math: denotes the
+    the transformation `\frac{1}{|T|} T`:math:, where `|T|`:math: denotes the
     *average scaling factor* of the transformation `T`:math:, computed
     as the square root of the positive determinant of `T`:math:.  This
     behaves nicely: for example, the average scaling factor of `scale
