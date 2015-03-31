@@ -671,7 +671,7 @@ stands for "Local".)
 
 > localSq = square 1 # lwL 0.2
 > example =
->   hcat' (with & sep .~ 0.5)
+>   hsep 0.5
 >   [localSq, localSq # scale 2, localSq # scaleX 2]
 
 It's important to note that---as illustrated by the third figure in
@@ -692,7 +692,7 @@ space as their reference is that attribute-setting functions such as
 ::
 
 > example =
->   hcat' (with & sep .~ 0.5)
+>   hsep 0.5
 >   [ square 1 # lwL 0.2 # scale 2
 >   , square 1 # scale 2 # lwL 0.2
 >   ]
@@ -717,7 +717,7 @@ entire diagram.
 > theSq = square 1 # lwG 0.05
 >
 > example =
->   hcat' (with & sep .~ 0.2)
+>   hsep 0.2
 >     (map (\s -> theSq # scale s) [0.5, 0.8, 1, 1.5, 2])
 
 Versions of ``diagrams`` prior to `1.2` actually had a semantics for
@@ -741,7 +741,7 @@ reasonable again would require changing the argument to `lwG`.
 > theSq = square 1 # lwG 0.05
 >
 > example =
->   hcat' (with & sep .~ 0.2)
+>   hsep 0.2
 >     (map (\s -> theSq # scale s) [0.5, 0.8, 1, 1.5, 2])
 >   # scale 20
 
@@ -771,7 +771,7 @@ that have been scaled differently (as with `global`).
 > theSq = square 1 # lwN 0.01
 >
 > example =
->   hcat' (with & sep .~ 0.2)
+>   hsep 0.2
 >     (map (\s -> theSq # scale s) [0.5, 0.8, 1, 1.5, 2])
 >   # scale 20
 
@@ -1043,7 +1043,7 @@ __ `Angles`_
 
 ::
 
-> example = hcat' (with & sep .~ 0.5) [arc d a, wedge 1 d a, annularWedge 1 0.6 d a]
+> example = hsep 0.5 [arc d a, wedge 1 d a, annularWedge 1 0.6 d a]
 >   where
 >     d :: Direction V2 Double
 >     d = rotateBy (1/4) xDir
@@ -1232,7 +1232,7 @@ which there are two possibilities:
   >                   # fontSize (local 0.6)
   >              <> star (StarFun f) (regPoly 7 1)
   >                   # strokeP # lw thick # lc red
-  > example       = center . hcat' (with & sep .~ 0.5) $ map visualize funs
+  > example       = center . hsep 0.5 $ map visualize funs
 
 You may notice that all the above examples need to call `strokeP` (or
 `strokeP'`), which converts a path into a diagram.  Many functions
@@ -1317,7 +1317,7 @@ right identity for `beside v`, as can be seen in the example below:
 
 ::
 
-> example = hcat' (with & sep .~ 1) . map showOrigin
+> example = hsep 1 . map showOrigin
 >         $ [ d, mempty ||| d, d ||| mempty ]
 >   where d = square 1
 
@@ -1566,7 +1566,7 @@ results in a diagram `p` times as opaque.
 
 > s c     = square 1 # fc c
 > reds    = (s darkred ||| s red) === (s pink ||| s indianred)
-> example = hcat' (with & sep .~ 1 ) . take 4 . iterate (opacity 0.7) $ reds
+> example = hsep 1 . take 4 . iterate (opacity 0.7) $ reds
 
 To "set the background color" of a diagram, use the `bg`
 function---which does not actually set any attributes, but simply
@@ -1627,7 +1627,7 @@ functions and how to adjust it using the lenses and prisms.
 >                                        & _LG . lGradStart .~ (-0.1) ^& 0
 >                                        & _LG . lGradEnd .~ 0.1 ^& 0)
 >
-> example = hcat' (with & sep .~ 0.25) [sq1, sq2, sq3]
+> example = hsep 0.25 [sq1, sq2, sq3]
 
 
 Here we apply the gradient to the stroke only and give it starting and
@@ -1894,7 +1894,7 @@ occasionally be useful.
    > dia3 = ell # transform ( rotation alpha <> translationX 2 )
    >
    > example =
-   >   hcat' (with & sep .~ 2)
+   >   hsep 2
    >     [ (dia1 <> orig)
    >     , vrule 4
    >     , (dia2 <> orig)
@@ -2386,7 +2386,7 @@ is how to convert between them.
     > almostClosed = fromOffsets $ (map r2
     >   [(2, -1), (-3, -0.5), (-2, 1), (1, 0.5)])
     >
-    > example = pad 1.1 . center . fc orange . hcat' (with & sep .~ 1)
+    > example = pad 1.1 . center . fc orange . hsep 1
     >   $ [ almostClosed # strokeLine
     >     , almostClosed # closeLine # strokeLoop
     >     ]
@@ -2625,7 +2625,7 @@ right of the curve for a positive radius and on the left for a negative radius.
 > import Diagrams.TwoD.Offset
 >
 > example :: Diagram B
-> example = hcat' (with & sep .~ 1) $ map f
+> example = hsep 1 $ map f
 >         [ straight p
 >         , bézier3 (r2 (0,0.5)) (r2 (1,0.5)) p
 >         ]
@@ -2730,7 +2730,7 @@ join.
 > import Diagrams.TwoD.Offset
 >
 > example :: Diagram B
-> example = hcat' (with & sep .~ 0.5) $ map f [LineJoinMiter, LineJoinRound, LineJoinBevel]
+> example = hsep 0.5 $ map f [LineJoinMiter, LineJoinRound, LineJoinBevel]
 >   where
 >     f s = p # strokeTrail <> (offsetTrail' (with & offsetJoin .~ s) 0.3 p # strokeLocTrail # lc blue)
 >     p = fromVertices . map p2 $ [(0,0), (1,0), (0.5,0.7)]
@@ -2833,7 +2833,7 @@ and plan to support custom styles in future releases.
 > import Diagrams.TwoD.Offset
 >
 > example :: Diagram B
-> example = hcat' (with & sep .~ 0.5) $ map f [LineCapButt, LineCapRound, LineCapSquare]
+> example = hsep 0.5 $ map f [LineCapButt, LineCapRound, LineCapSquare]
 >   where
 >     f s =  p # strokeTrail # lw veryThick # lc white
 >         <> expandTrail' (opts s) 0.3 p # stroke # lw none # fc blue
@@ -3930,7 +3930,7 @@ Normally, a trace is accessed using one of the four functions
   >       ((origin ~~) <$> rayTraceP origin v d)
   > illustrateTraceV v d = (d <> drawV v <> drawTraceV v d) # showOrigin
   >
-  > example = hcat' (with & sep .~ 1)
+  > example = hsep 1
   >         . map (illustrateTraceV (0.5 *^ (r2 (1, 1))))
   >         $ [ circle 1 # translate (r2 (-1.5, -1.5))
   >           , circle 1
@@ -3983,7 +3983,7 @@ identify points on the boundaries of several diagrams.
 >     basePt = p2 (0, -2)
 >
 > example
->   = hcat' (with & sep .~ 1)
+>   = hsep 1
 >   . map illustrateTrace
 >   $ [ square 1
 >     , circle 1
@@ -4229,7 +4229,7 @@ below code draws a tree of circles, using subdiagram traces (see
 >
 > root   = circle 1 # named "root"
 > leaves = center
->        . hcat' (with & sep .~ 0.5)
+>        . hsep 0.5
 >        $ map (\c -> circle 1 # named c) "abcde"
 >
 > parentToChild child
@@ -4274,7 +4274,7 @@ a qualified name explicitly, separate the components with `(.>)`.
 >        === (s # named SW ||| s # named SE)
 >   where s = square 1
 >
-> d = hcat' (with & sep .~ 0.5) (zipWith (.>>) [0::Int ..] (replicate 5 squares))
+> d = hsep 0.5 (zipWith (.>>) [0::Int ..] (replicate 5 squares))
 >
 > pairs :: [(Name, Name)]
 > pairs = [ ((0::Int) .> NE, (2::Int) .> SW)
@@ -4764,7 +4764,7 @@ the section on `Qualifying names`_:
 
 ::
 
-> hcat' ( with & sep .~ 0.5 ) (zipWith (.>>) [0 .. ] (replicate 5 squares))
+> hsep 0.5 (zipWith (.>>) [0 .. ] (replicate 5 squares))
 
 It is an attempt to qualify the names in five copies of `squares` with
 the numbers `0`, `1`, `2`, ...  However, it generates the error shown below:
@@ -4779,11 +4779,10 @@ the numbers `0`, `1`, `2`, ...  However, it generates the error shown below:
                 at /tmp/Diagram2499.lhs:13:44-49
     Probable fix: add a type signature that fixes these type variable(s)
     In the first argument of `zipWith', namely `(.>>)'
-    In the second argument of `hcat'', namely
+    In the second argument of `hsep', namely
       `(zipWith (.>>) [0 .. ] (replicate 5 squares))'
     In the expression:
-      hcat'
-        (with & sep .~ 0.5)) (zipWith (.>>) [0 .. ] (replicate 5 squares))
+      hsep 0.5 (zipWith (.>>) [0 .. ] (replicate 5 squares))
 
 The problem, again, is that GHC does not know what type to choose for
 some polymorphic value.  Here, the polymorphic values in question are
