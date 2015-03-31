@@ -1719,7 +1719,7 @@ happens with line widths measured in `global`, `normalized` or
 
 For line widths that scale along with a diagram, use `local`; in this
 case line widths will be scaled in proportion to the geometeric
-average of the scaling transformatins applied to the diagram.
+average of the scaling transformations applied to the diagram.
 
 The `LineWidth` attribute is used to alter the *width* with which
 paths are stroked. The most general functions that can be used to set
@@ -1727,7 +1727,7 @@ the line width are `lineWidth` and its synonym `lw`, which take an
 argument of type `Measure V2 n`.  Since typing things like `lineWidth
 (normalized 0.01)` is cumbersome, there are also shortcuts provided:
 `lwG`, `lwN`, `lwO`, and `lwL` all take an argument of type `Double`
-and wrap it in `global`, `normalized`, `Ouput` and `local`,
+and wrap it in `global`, `normalized`, `output` and `local`,
 respectively.
 
 There are also predefined `Measure n` values with intuitive names,
@@ -1745,16 +1745,12 @@ should often suffice for setting the line width.
 >                        medium, thick, veryThick, ultraThick]]
 
 In the above example, there is no discernible difference between
-`ultraThin`, `veryThin`, and `thin`; these names all describe
-`normalized` measurements with a physical lower bound, so the physical
-width of the resulting lines depends on the physical size of the
-rendered diagram.  At larger rendering sizes the differences between
-the smaller widths become apparent.
-
-.. container:: todo
-
-  Explain that they all have a minimum output size.  Should wait until
-  we have a better idea what the heck output size actually means.
+`ultraThin` and `veryThin` (depending on the resolution of your
+display you may not see any difference with `thin` either); these
+names all describe `normalized` measurements with a physical lower
+bound, so the physical width of the resulting lines depends on the
+physical size of the rendered diagram.  At larger rendering sizes the
+differences between the smaller widths become apparent.
 
 Note that line width does not affect the envelope of diagrams at all.
 To stroke a line "internally", turning it into a `Path` value
@@ -1766,8 +1762,8 @@ Other line parameters
 +++++++++++++++++++++
 
 Many rendering backends provide some control over the particular way
-in which lines are drawn.  Currently, ``diagrams`` provides support
-for three aspects of line drawing:
+in which lines are drawn.  Currently, ``diagrams`` provides built-in
+support for three aspects of line drawing:
 
 * `lineCap` sets the `LineCap` style.
 * `lineJoin` sets the `LineJoin` style.
@@ -1778,7 +1774,7 @@ for three aspects of line drawing:
 
 ::
 
-> path = fromVertices (map p2 [(0,0), (1,0.3), (2,0), (2.2,0.3)]) # lwO 10
+> path = fromVertices (map p2 [(0,0), (1,0.3), (2,0), (2.2,0.3)]) # lwO 20
 > example = center . vcat' (with & sep .~ 0.1 )
 >           $ map (path #)
 >             [ lineCap LineCapButt   . lineJoin LineJoinMiter
