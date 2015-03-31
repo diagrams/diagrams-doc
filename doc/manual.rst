@@ -1515,8 +1515,8 @@ for a texture is
 
 and `Prism` s `_SC`, `_LG`, `_RG` are provided for access.
 
-Color
-+++++
+Color and Opacity
++++++++++++++++++
 
 The color used to stroke the paths can be set with the `lc` (line color)
 function and the color used to fill them with the `fc` (fill color) function.
@@ -1567,6 +1567,29 @@ results in a diagram `p` times as opaque.
 > s c     = square 1 # fc c
 > reds    = (s darkred ||| s red) === (s pink ||| s indianred)
 > example = hsep 1 . take 4 . iterate (opacity 0.7) $ reds
+
+Grouped opacity can be applied using the `opacityGroup` annotation,
+which is currently supported only by the SVG and PGF backends.  In the
+example to the left below, the section where the two transparent
+circles overlap is darker, just as if *e.g.* two circles made out of
+colored cellophane were overlapped.  If this documentation was
+compiled with a backend that supports opacity grouping (*e.g.* SVG),
+then the example on the right shows two transparent circles without a
+darker section where they overlap---the transparency has been applied
+to the group of diagrams as a whole, as if it were a single piece of
+cellophane cut in the shape of overlapping circles.  Otherwise (*e.g.*
+if this documentation was compiled with the Rasterific backend), the
+example on the right simply shows two opaque overlapping circles,
+*i.e.* the call to `opacityGroup` is ignored.
+
+.. class:: dia-lhs
+
+::
+
+> cir = circle 1 # lw none # fc red
+> overlap = (cir <> cir # translateX 1)
+>
+> example = hsep 1 [ overlap # opacity 0.3, overlap # opacityGroup 0.3 ]
 
 To "set the background color" of a diagram, use the `bg`
 function---which does not actually set any attributes, but simply
@@ -1837,13 +1860,17 @@ Static attributes
 ~~~~~~~~~~~~~~~~~
 
 Diagrams can also have "static attributes" which are applied at a
-specific node in the tree representing a diagram.  Currently, the only
-static attribute is a hyperlink, which is supported only by the SVG
-backend.  To turn a diagram into a hyperlink, use the `href`
-function.
+specific node in the tree representing a diagram.  Currently, only
+two static attributes are provided:
 
-More static attributes (for example, node IDs and transparency
-grouping) and wider backend support will be added in future versions.
+* Hyperlinks are supported only by the SVG backend.  To turn a diagram
+  into a hyperlink, use the `href` function.
+
+* Transparency grouping via the `opacityGroup` function is supported
+  only by the SVG and PGF backends; see `Color and Opacity`_.
+
+More static attributes (for example, node IDs) and wider backend
+support may be added in future versions.
 
 2D Transformations
 ~~~~~~~~~~~~~~~~~~
@@ -3536,7 +3563,7 @@ with some probably-justified uses of `unsafePerformIO`).
 Various attributes of text can be set using `font`, `bold` (or, more
 generally, `fontWeight`), `italic`, and `oblique` (or, more generally,
 `fontSlant`).  Text is colored with the current fill color (see
-`Color`_).
+`Color and Opacity`_).
 
 .. class:: dia-lhs
 
