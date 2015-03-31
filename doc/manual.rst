@@ -1592,26 +1592,29 @@ points. The starting point and endping point are
 specified in local coordinates. Typically the transformation starts as the identity
 transform `mempty` and records any transformations that are applied to the object
 using the gradient. The spread method defines how space beyond the starting and
-ending points should be handled, `GradPad` will fill the space with the final stop
+ending points should be handled: `GradPad` will fill the space with the final stop
 color, `GradRepeat` will restart the gradient, and `GradReflect` will restart the
-gradient but with the stops reversed. This is the data type for a linear gradient.
+gradient but with the stops reversed. This is the data type for a linear gradient:
 
 .. class:: lhs
 
 ::
 
-> data LGradient = LGradient
->   { _lGradStops        :: [GradientStop]
->   , _lGradStart        :: Point V2 n
->   , _lGradEnd          :: Point V2 n
->   , _lGradTrans        :: T2
->   , _lGradSpreadMethod :: SpreadMethod }
+> data LGradient n = LGradient
+>   { _lGradStops        :: [GradientStop n]
+>   , _lGradStart        :: P2 n,
+>   , _lGradEnd          :: P2 n,
+>   , _lGradTrans        :: T2 n,
+>   , _lGradSpreadMethod :: SpreadMethod
+>   }
 
-Lenses are provided to access the record fields. In addition the functions `mkStops` taking
-a list of triples (color, fraction, opacity) and `mkLinearGradient` which takes a list of stops,
-a start and end point, and a spread method and creates a `Texture` are provided for convenience.
-In this example we demonstrate how to make linear gradients with the `mkLinearGradient`
-functions and how to adjust it using the lenses and prisms.
+Lenses are provided to access the record fields. In addition the
+functions `mkStops` taking a list of triples (color, fraction,
+opacity) and `mkLinearGradient` which takes a list of stops, a start
+and end point, and a spread method and creates a `Texture` are
+provided for convenience.  In this example we demonstrate how to make
+linear gradients with the `mkLinearGradient` functions and how to
+adjust it using the lenses and prisms.
 
 .. class:: dia-lhs
 
@@ -1621,11 +1624,13 @@ functions and how to adjust it using the lenses and prisms.
 > gradient = mkLinearGradient stops ((-0.5) ^& 0) (0.5 ^& 0) GradPad
 > sq1 = square 1 # fillTexture  gradient
 > sq2 = square 1 # fillTexture (gradient & _LG . lGradSpreadMethod .~ GradRepeat
->                                        & _LG . lGradStart .~ (-0.1) ^& 0
->                                        & _LG . lGradEnd .~ 0.1 ^& 0)
+>                                        & _LG . lGradStart        .~ (-0.1) ^& 0
+>                                        & _LG . lGradEnd          .~ 0.1 ^& 0
+>                              )
 > sq3 = square 1 # fillTexture (gradient & _LG . lGradSpreadMethod .~ GradReflect
->                                        & _LG . lGradStart .~ (-0.1) ^& 0
->                                        & _LG . lGradEnd .~ 0.1 ^& 0)
+>                                        & _LG . lGradStart        .~ (-0.1) ^& 0
+>                                        & _LG . lGradEnd          .~ 0.1 ^& 0
+>                              )
 >
 > example = hsep 0.25 [sq1, sq2, sq3]
 
