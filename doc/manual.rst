@@ -1884,9 +1884,10 @@ transformation is any function of the form `f(x) = mx + b`:math:.
 Generalizing to `d`:math: dimensions, an affine transformation is a
 vector function of the form `f(\mathbf{v}) = \mathbf{M}\mathbf{v} +
 \mathbf{b}`:math:, where `\mathbf{M}`:math: is a `d \times d`:math:
-matrix.  More general, non-affine transformations, including
-projective transformations, are referred to in ``diagrams`` as
-`Deformations`_.
+matrix representing a linear transformation, and `\mathbf{b}`:math: is
+a `d`:math:-dimensional vector representing a translation.  More
+general, non-affine transformations, including projective
+transformations, are referred to in ``diagrams`` as `Deformations`_.
 
 `Diagrams.TwoD.Transform`:mod: defines a number of common affine
 transformations in two-dimensional space. (To construct
@@ -1960,15 +1961,15 @@ Affine transformations in general
 
 Before looking at specific two-dimensional transformations, it's worth
 saying a bit about transformations in general (a fuller treatment can
-be found in the `core library reference`_).  The `Transformation`
-type is defined in `Diagrams.Core.Transform`:mod:, from the
+be found in the `core library reference`_).  The `Transformation` type
+is defined in `Diagrams.Core.Transform`:mod:, from the
 `diagrams-core`:pkg: package.  `Transformation` is parameterized by
-the vector space over which it acts; recall that `T2 n` is provided as a
-synonym for `Transformation V2 n`.
+the vector space over which it acts, and the type of scalars; recall
+that `T2 n` is provided as a synonym for `Transformation V2 n`.
 
 .. _`core library reference`: core.html
 
-`Transformation v` is a `Monoid` for any vector space `v`:
+`Transformation v n` is a `Monoid` for any vector space `v`:
 
 * `mempty` is the identity transformation;
 * `mappend` is composition of transformations: `t1 \`mappend\` t2`
@@ -2055,15 +2056,10 @@ Translation is achieved with `translate`, `translateX`, and
 Conjugation
 +++++++++++
 
-`Diagrams.Transform`:mod: exports useful transformation utilities
-which are not specific to two dimensions.  At the moment there are
-only two: `conjugate` and `underT`.  The first simply performs
-conjugation: `conjugate t1 t2 == inv t1 <> t2 <> t1`, that is,
-performs `t1`, then `t2`, then undoes `t1`.
-
-.. container:: todo
-
-  Talk about lensy things.
+`Diagrams.Transform`:mod: also exports some useful transformation
+utilities which are not specific to two dimensions.  The `conjugate`
+function performs conjugation: `conjugate t1 t2 == inv t1 <> t2 <>
+t1`, that is, it performs `t1`, then `t2`, then undoes `t1`.
 
 `underT` performs a transformation using conjugation.  It takes as
 arguments a function `f` as well as a transformation to conjugate by,
@@ -2086,6 +2082,14 @@ to its original position.
 Note that `reflectAbout` and `rotateAbout` are implemented using
 `underT`.
 
+Some functions for producing `Iso`\s (from the `lens`:pkg: library)
+are also provided, which serve a similar purpose to `conjugate` and
+`underT`, but can be more convenient when working in a ``lens``\-y
+style.  For example, the `transformed` function takes a
+`Transformation` and yields an `Iso` between untransformed and
+transformed things.  `movedTo`, `movedFrom`, and `translated` work
+similarly, but specific to translation.
+
 .. _`The Transformable class`:
 
 The ``Transformable`` class
@@ -2097,8 +2101,6 @@ Instances of `Transformable` include vectors, points, trails, paths,
 envelopes, and `Transformations` themselves.  In addition,
 tuples, lists, maps, or sets of `Transformable` things are also
 `Transformable` in the obvious way.
-
-.. _`Deformations`:
 
 Deformations
 ~~~~~~~~~~~~
