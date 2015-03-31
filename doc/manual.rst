@@ -1656,13 +1656,13 @@ end at the perimeter of an outer circle.
 
 ::
 
-> data RGradient = RGradient
->     { _rGradStops        :: [GradientStop]
->     , _rGradCenter0      :: Point V2 n
->     , _rGradRadius0      :: Double
->     , _rGradCenter1      :: Point V2 n
->     , _rGradRadius1      :: Double
->     , _rGradTrans        :: T2
+> data RGradient n = RGradient
+>     { _rGradStops        :: [GradientStop n]
+>     , _rGradCenter0      :: P2 n
+>     , _rGradRadius0      :: n
+>     , _rGradCenter1      :: P2 n
+>     , _rGradRadius1      :: n
+>     , _rGradTrans        :: T2 n
 >     , _rGradSpreadMethod :: SpreadMethod }
 
 Where radius and center 0 are for the inner circle, and 1 for the outer circle.
