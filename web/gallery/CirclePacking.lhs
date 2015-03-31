@@ -6,6 +6,7 @@ date: 2012-12-16
 description: Automatically arranging diagrams in a compact circular fashion
 tags: layout
 width: 400
+height: 400
 ---
 
 > {-# LANGUAGE NoMonomorphismRestriction #-}

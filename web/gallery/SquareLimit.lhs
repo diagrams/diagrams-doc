@@ -6,6 +6,7 @@ date: 2013-08-15
 description: A reconstruction of M C Escher's print "Square Limit".
 tags: escher, fractal, limit, EDSL
 width: 400
+height: 400
 ---
 
 This is a reconstruction of [M C Escher's print "Square

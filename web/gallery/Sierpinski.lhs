@@ -6,6 +6,7 @@ date: 2011-05-21
 description: Sierpinski's classic fractal.
 tags: fractal, Sierpinski, triangle
 width: 400
+height: 400
 ---
 
 > {-# LANGUAGE NoMonomorphismRestriction #-}

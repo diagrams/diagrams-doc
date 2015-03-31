@@ -6,6 +6,7 @@ date: 2012-12-29
 description: Factorization diagrams, as seen on the [cover of Hacker Monthly](http://hackermonthly.com/issue-31.html).
 tags: factorization, primes, recursion
 width: 400
+height: 400
 ---
 
 > {-# LANGUAGE NoMonomorphismRestriction #-}

@@ -6,6 +6,7 @@ date: 2014-11-13
 description: W. Kolmyjec's Hex Variation
 tags: hexagon, kolmyjec, position
 width: 400
+height: 400
 ---
 
 

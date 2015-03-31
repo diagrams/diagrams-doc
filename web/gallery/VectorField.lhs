@@ -6,6 +6,7 @@ date: 2013-08-13
 description: Arrows of a vector field.
 tags: arrow, vector field
 width: 400
+height: 400
 ---
 
 > {-# LANGUAGE NoMonomorphismRestriction #-}

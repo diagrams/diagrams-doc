@@ -5,7 +5,8 @@ authorurl: http://www.cis.upenn.edu/~byorgey/
 date: 2012-02-25
 description: The tree of function calls made by a naive Fibonacci implementation.
 tags: Fibonacci, recursion, tree
-width: 600
+width: 800
+height: 400
 view: -10,-5,10,10
 ---
 
@@ -16,6 +17,7 @@ view: -10,-5,10,10
 We make use of a tree layout module from the `diagrams-contrib` package:
 
 > import Diagrams.TwoD.Layout.Tree
+
 
 Generate the tree of naive Fibonacci calls.
 

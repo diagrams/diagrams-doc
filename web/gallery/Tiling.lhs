@@ -6,6 +6,7 @@ date: 2011-11-11
 description: An example of a semiregular plane tiling.
 tags: Tilings, plane, regular, polygon
 width: 400
+height: 400
 ---
 
 > {-# LANGUAGE NoMonomorphismRestriction #-}

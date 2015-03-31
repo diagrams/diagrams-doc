@@ -6,6 +6,7 @@ date: 2011-06-19
 description: Star construction using straight lines.
 tags: star, arrow
 width: 400
+height: 400
 ---
 
 > {-# LANGUAGE NoMonomorphismRestriction, TupleSections #-}

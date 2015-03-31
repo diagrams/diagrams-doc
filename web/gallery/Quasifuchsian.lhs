@@ -6,6 +6,7 @@ date: 2012-03-12
 description: Quasifuchsian limit circles of Schottky groups of Moebius transformations.
 tags: Quasifuchsian limit circles fractal
 width: 400
+height: 400
 view: 1.5,-3,2.5,-2
 ---
 

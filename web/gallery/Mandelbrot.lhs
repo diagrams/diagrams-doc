@@ -6,6 +6,7 @@ date: 2011-11-18
 description: A discretized version of the familiar Mandelbrot set.  Adapted from [code written by MathematicalOrchid](http://warp.povusers.org/MandScripts/haskell.html).
 tags: fractal, Mandelbrot
 width: 400
+height: 400
 ---
 
 > {-# LANGUAGE NoMonomorphismRestriction #-}

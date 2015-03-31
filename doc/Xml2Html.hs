@@ -155,6 +155,8 @@ compileDiaArr outDir =
     += attr "style" (txt "text-align: center")
     += (eelem "img"
          += attr "src" (dropPrefix outDir ^>> mkText)
+         += attr "width" (txt "500")
+         += attr "height" (txt "200")
        )
 
 dropPrefix :: FilePath -> FilePath -> FilePath
@@ -185,7 +187,7 @@ compileDiagram outDir src = do
 #ifdef USE_SVG
                 (SVGOptions (dims $ V2 500 200) [] empty)
 #else
-                (RasterificOptions (dims $ V2 500 200))
+                (RasterificOptions (dims $ V2 1000 400))
 #endif
 
                 & DB.snippets .~ [src]

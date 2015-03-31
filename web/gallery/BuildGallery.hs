@@ -65,7 +65,9 @@ compileExample mThumb lhs out = do
 #ifdef USE_SVG
                 (SVGOptions (mkSizeSpec2D w h) [] empty)
 #else
-                (RasterificOptions (mkSizeSpec2D w h))
+                -- With raster output, double the resolution so it looks
+                -- better on high-res screens
+                (RasterificOptions (mkSizeSpec2D ((2*) <$> w) ((2*) <$> h)))
 #endif
 
                 & snippets .~ [f']

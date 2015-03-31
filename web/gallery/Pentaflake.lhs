@@ -6,6 +6,7 @@ date: 2011-05-22
 description: Fractal construction with pentagons.
 tags: fractal, pentagon
 width: 400
+height: 400
 ---
 
 > {-# LANGUAGE NoMonomorphismRestriction #-}

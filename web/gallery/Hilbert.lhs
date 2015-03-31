@@ -6,6 +6,7 @@ date: 2011-05-25
 description: An order-5 approximation to the space-filling Hilbert curve.
 tags: fractal, hilbert, curve
 width: 400
+height: 400
 ---
 
 > {-# LANGUAGE NoMonomorphismRestriction #-}

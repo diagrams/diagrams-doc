@@ -6,6 +6,7 @@ date: 2013-10-04
 description: Radial view of a Treemap
 tags: tree, sunburst, partition
 width: 400
+height: 400
 ---
 
 > {-# LANGUAGE NoMonomorphismRestriction #-}

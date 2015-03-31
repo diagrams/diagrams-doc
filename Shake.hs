@@ -147,7 +147,7 @@ main = do
 compileImg :: Bool -> FilePath -> Action ()
 compileImg isThumb outPath = do
     systemCwdNorm "web/gallery" (obj "web/gallery/BuildGallery.hs.exe")
-      ( (if isThumb then [ "--thumb", "175" ] else [])
+      ( (if isThumb then [ "--thumb", "200" ] else [])
         ++ [(takeBaseName . takeBaseName) outPath, "../.." </> outPath]
       )
 

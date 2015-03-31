@@ -6,6 +6,7 @@ date: 2013-08-03
 description: Illustration of a knight tour on an 8x8 chessboard.
 tags: chess, game, knight, tour, Hamiltonian, path
 width: 400
+height: 400
 ---
 
 A relatively well-known puzzle is to find a sequence of moves by which

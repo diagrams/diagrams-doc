@@ -6,6 +6,7 @@ date: 2012-02-23
 description: Hasse diagram of all subsets of a four-element set.
 tags: hasse, subsets
 width: 600
+height: 600
 view: -10,-5,15,15
 ---
 

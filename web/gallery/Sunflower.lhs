@@ -6,6 +6,7 @@ date: 2014-01-04
 description: H.Vogel's pattern for sunflower forets.
 tags: voges, sunflower, position, brewerSet
 width: 400
+height: 400
 ---
 
 A representation of Vogel's model for the floret pattern of a sunflower head. Vogel, H (1979). "A better way to construct the sunflower head". Mathematical Biosciences 44 (44): 179–189. doi:10.1016/0025-5564(79)90080-4.

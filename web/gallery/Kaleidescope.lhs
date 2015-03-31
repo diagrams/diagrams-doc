@@ -6,6 +6,7 @@ date: 2013-12-31
 description: A three mirror kaleidescope with random confetti.
 tags: kaleidescope, random, clipping, mainWith
 width: 400
+height: 400
 ---
 
 > {-# LANGUAGE NoMonomorphismRestriction #-}

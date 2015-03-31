@@ -6,6 +6,7 @@ date: 2011-05-21
 description: Circular gray code, like that used on some rotational sensors.
 tags: gray, code
 width: 400
+height: 400
 ---
 
 > {-# LANGUAGE NoMonomorphismRestriction #-}

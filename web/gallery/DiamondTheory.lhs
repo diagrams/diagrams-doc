@@ -5,6 +5,7 @@ authorurl: https://www.projects.haskell.org/diagrams/
 date: 2014-12-16
 description: Steven H. Cullinane's Diamond Theory
 width: 400
+height: 400
 view: 0, 0 ,27, 27
 ---
 
