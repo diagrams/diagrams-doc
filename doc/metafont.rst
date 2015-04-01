@@ -219,7 +219,7 @@ Loops
 
 The Metafont algorithm can also build loops: use `cyclePath` to
 terminate your path instead of `endPt p` to generate a loop with a
-final segment that cycles smoothly back to where the loop.  Of course,
+final segment that cycles smoothly back to where the loop started.  Of course,
 you can exercise control over the final segment in the same way as any
 other.
 
