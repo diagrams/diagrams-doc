@@ -105,7 +105,7 @@ find the source code for this tutorial on github.
      > ln    = fromOffsets [unitX, 2 *^ unitY, 2 *^ unitX]
      > theta = angleBetween unitX (lineOffset ln)
      > example
-     >   = ln # rotate theta
+     >   = ln # rotate (negated theta)
      >   # strokeLine
      >   # centerXY # pad 1.1
 
@@ -250,7 +250,9 @@ some lines and then call `glueLine` on the result.  You try:
      > example = steps 5 # glueLine # strokeLoop # fc red
      >   # centerXY # pad 1.1 # sized (mkWidth 2)
 
-  #. .. class:: dia
+  #. `arc`
+
+     .. class:: dia
 
      ::
 
@@ -270,7 +272,7 @@ some lines and then call `glueLine` on the result.  You try:
      >   # rotateBy (1/20)
      >   # centerXY # pad 1.1 # sized (mkWidth 2)
 
-     You may find this function useful:
+     You may also find this function useful:
 
      .. class:: lhs
 
