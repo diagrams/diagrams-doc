@@ -3950,6 +3950,11 @@ Envelope-related functions
   > example = hrule 1 # sizedAs (shapes # scale 0.5 :: D V2 Double)
   >        <> shapes # centerX
 
+  .. container:: todo
+
+    Give examples of using `sized` with things like `mkWidth`,
+    `dims2D`, etc.
+
 The ``Enveloped`` class
 ~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -3961,7 +3966,7 @@ paths.  `Enveloped` provides a single method,
 
 ::
 
-> getEnvelope :: Enveloped b => b -> Envelope (V b)
+> getEnvelope :: Enveloped a => a -> Envelope (V a) (N a)
 
 which returns the envelope of an object.
 
@@ -4043,6 +4048,34 @@ Normally, a trace is accessed using one of the four functions
   That is, ``rayTraceP p v x == Just p'`` if and only if ``rayTraceV p
   v x == Just (p' .-. p)``.
 
+  The below diagram illustrates the use of the `rayTraceP` function to
+  identify points on the boundaries of several diagrams.
+
+  .. class:: dia-lhs
+
+  ::
+
+  > {-# LANGUAGE TypeFamilies #-}
+  >
+  > import Data.Maybe (mapMaybe)
+  > illustrateTrace :: (TrailLike a, Traced a, Semigroup a, Monoid a, V a ~ V2) => a -> a
+  > illustrateTrace d = d <> traceLines
+  >   where
+  >     traceLines  = mconcat
+  >                 . mapMaybe traceLine
+  >                 . iterateN 30 (rotateBy (1/60))
+  >                 $ unitX
+  >     traceLine v = (basePt ~~) <$> traceP basePt v d
+  >     basePt = p2 (0, -2)
+  >
+  > example
+  >   = hsep 1
+  >   . map illustrateTrace
+  >   $ [ square 1
+  >     , circle 1
+  >     , triangle 1 # rotateBy (-1/4) ||| triangle 1 # rotateBy (1/4)
+  >     ]
+
 * `maxRayTraceV` and `maxRayTraceP` are similar to `rayTraceV` and `rayTraceP`,
   respectively, except that they look for the *largest* positive
   ``t``-value, that is, the *furthest* intersection point in the
@@ -4061,33 +4094,28 @@ sorted list of scalars ``t`` such that ``p .+^ (t *^ v)`` is a point
 of intersection between the ray ``(p,v)`` and the boundary of the
 diagram.
 
-The below diagram illustrates the use of the `rayTraceP` function to
-identify points on the boundaries of several diagrams.
-
 .. class:: dia-lhs
 
 ::
 
-> {-# LANGUAGE TypeFamilies #-}
+> circles :: Diagram B
+> circles = circle 1 <> circle 1 # translate (1 ^& 0.6)
 >
-> import Data.Maybe (mapMaybe)
-> illustrateTrace :: (TrailLike a, Traced a, Semigroup a, Monoid a, V a ~ V2) => a -> a
-> illustrateTrace d = d <> traceLines
->   where
->     traceLines  = mconcat
->                 . mapMaybe traceLine
->                 . iterateN 30 (rotateBy (1/60))
->                 $ unitX
->     traceLine v = (basePt ~~) <$> traceP basePt v d
->     basePt = p2 (0, -2)
+> basePt :: P2 Double
+> basePt = (-3) ^& 0
 >
-> example
->   = hsep 1
->   . map illustrateTrace
->   $ [ square 1
->     , circle 1
->     , triangle 1 # rotateBy (-1/4) ||| triangle 1 # rotateBy (1/4)
->     ]
+> tVals :: [Double]
+> tVals = getSortedList $ appTrace (getTrace circles) basePt unitX
+>
+> intPts :: [P2 Double]
+> intPts = map (\t -> basePt .+^ t *^ unitX) tVals
+>
+> adot = circle 0.05 # fc blue # lw none
+> example = mconcat
+>   [ circles
+>   , mconcat [ adot # moveTo pt | pt <- intPts ]
+>   , arrowAt basePt (last intPts .-. basePt)
+>   ]
 
 Of course, diagrams are not the only instance of `Traced`.  Paths are
 also `Traced`, as are trails, segments, and points.  Lists and tuples
@@ -4207,11 +4235,11 @@ scary-looking!) type
            -> QDiagram b v n m -> QDiagram b v n m
 
 Let's pick this apart a bit.  First, we see that the type `nm` must be
-a name type. So far so good.  The constraints on `v` and `n` say that
-`v n` must be a metric space (a vector space with a notion of
+a name type. So far so good.  The constraints on `v` and `n` just say
+that `v n` must be a metric space (a vector space with a notion of
 distance), and that `n` must behave sufficiently like the real
-numbers.  So the first argument of `withName` is a name---that makes
-sense.  The second argument is a function of type
+numbers.  Now, the first argument of `withName` is a name. The second
+argument is a function of type
 
 .. class:: lhs
 
@@ -4283,7 +4311,7 @@ examples such manual calculation can be quite out of the question.
   at once.
 
 * `withNames` takes a list of names, and makes available a list of the
-  most recent located envelopes associated with each.  Instead of the
+  most recent subdiagrams associated with each.  Instead of the
   two calls to `withName` in the example above, we could have written
 
   .. class:: lhs
@@ -4443,7 +4471,8 @@ identity).  The default query simply indicates which points are
    another; the `Any` query is a more accurate record of which points
    are enclosed by the diagram.  (Using the query in order to position
    diagrams next to each other more accurately/snugly would be,
-   generally speaking, computationally infeasible.)
+   generally speaking, computationally infeasible---though it may be
+   appropriate in some situations.)
 
 The following example queries an ellipse (using the `sample` function
 to sample it at a set of particular points), coloring points inside
@@ -4628,7 +4657,7 @@ constructing measurements is provided, with the following features:
   are defined as `normalized w \`atLeast\` output 0.5`, each with a
   different value of `w` (for example, for `medium`, `w = 0.004`).
 * Similarly, `atMost` takes the minimum of two `Measure`\s.
-* `Measure v` is an instance of `AdditiveGroup`, which provides `zero
+* `Measure v` is an instance of `Additive`, which provides `zero
   :: Measure v`, `negated :: Measure v -> Measure v`, and `(^+^)` for
   adding measurements.  For example, `normalized 0.1 ^+^ output 1`
   represents 10% of the width or height of the diagram plus one output
@@ -4656,7 +4685,9 @@ tips:
   positioned, you can combine them with `mconcat`.
 * The `position` function takes a list of diagrams associated with
   positions and combines them while placing them at the indicated
-  absolute positions.
+  absolute positions.  `atPoints` is like `position` but takes a
+  separate list of points and list of diagrams, instead of a list of
+  pairs.
 * `juxtapose` can be used to position a diagram relative to
   something else without composing them; see `Juxtaposing without
   composing`_.
@@ -4774,6 +4805,10 @@ causes and solutions.
 This section is certainly incomplete; please send examples of other
 error messages to the `diagrams mailing list`_ for help interpreting
 them and/or so they can be added to this section.
+
+.. container:: todo
+
+  Update with more recent error messages!
 
 Couldn't match type `V (P2 Double)` with `V2 Double`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -5070,6 +5105,10 @@ after the first time).
 Rendering backends
 ==================
 
+.. container:: todo
+
+  How many "officially supported" backends are there? Does it matter?
+
 Diagrams has a system for "pluggable" rendering backends, so new
 backends can be added by implementing instances of some type classes.
 There are currently four "officially supported" backends, described
@@ -5089,17 +5128,12 @@ default "out-of-the-box" backend, i.e. what one gets by typing just
 no dependencies on external libraries via the FFI.  This means that it
 should be easy to install on all platforms.
 
-Note that at the moment the SVG backend does not yet support embedding
-images, but this is planned for a future release.  Otherwise, the SVG
-backend is on a par with the cairo backend in terms of features
-(excluding a few special features specific to the cairo backend,
-described above).  For information on making use of the SVG backend,
-see `Diagrams.Backend.SVG`:mod:.
-
-Gradient support is complete in this backend however, most browsers to not
-handle the SVG spec correctly when it comes to reflect and repeat.
-Apparently only Chrome and IE follow the spec correctly at this point, while
-Safari does not handle reflect and repeat at all and Firefox gets it wrong.
+For information on making use of the SVG backend, see
+`Diagrams.Backend.SVG`:mod:.  Gradient support is complete in this
+backend; however, most browsers do not handle the SVG spec correctly
+when it comes to reflect and repeat.  Apparently only Chrome and IE
+follow the spec correctly at this point, while Safari does not handle
+reflect and repeat at all and Firefox gets it wrong.
 
 The source code for the SVG backend can be found in the
 `diagrams-svg`:repo: repository. Note the functions `renderDia` and
@@ -5141,10 +5175,6 @@ documentation for the `Diagrams.Backend.Cairo`:mod: module.
 
 ``diagrams-cairo`` was the first officially supported backend, and has
 quite a few advanced features that other backends do not have:
-
-* `Diagrams.Backend.Cairo.Text`:mod: has functions for working with
-  text and creating diagrams from text with proper bounding boxes
-  (though currently it seems a bit buggy).
 
 * `Diagrams.Backend.Cairo.List`:mod: exports the `renderToList`
   function, which can convert a 2D diagram to a matrix of pixel color
@@ -5197,6 +5227,20 @@ including, repeat and reflect.
 The Rasterific backend can be invoked via
 `Diagrams.Backend.Rasterific.CmdLine`:mod: module, or via the
 `renderDia`/`renderRasterific` functions.
+
+The HTML5 backend
+-----------------
+
+.. container:: todo
+
+  Write about the HTML5 backend
+
+The PGF backend
+---------------
+
+.. container:: todo
+
+  Write about the PGF backend
 
 Other backends
 --------------
@@ -5332,7 +5376,7 @@ HasOrigin
 ::
 
 > class HasOrigin t where
->  moveOriginTo :: Point (V t) (N t) -> t -> t
+>   moveOriginTo :: Point (V t) (N t) -> t -> t
 
 `HasOrigin` classifies types with a notion of a fixed "location"
 relative to some "local origin", and provides a means of moving the
@@ -5423,7 +5467,7 @@ Juxtaposable
 ::
 
 > class Juxtaposable a where
->   juxtapose :: V a -> a -> a -> a
+>   juxtapose :: Vn a -> a -> a -> a
 
 `Juxtaposable` represents types of things which can be positioned
 "next to" one another.  Note that this is more general than "having an
@@ -5672,6 +5716,52 @@ Instances:
 Further reading: `Trails and paths`_; `Trails`_;
 `Paths`_; `TrailLike`_.
 
+ToPath
+++++++
+
+The `ToPath` class, defined in `Diagrams.Path`:mod:, abstracts
+over things that can be converted to a `Path`.
+
+.. class:: lhs
+
+::
+
+> class ToPath t where
+>   toPath :: (Metric (V t), OrderedField (N t))
+>          => t -> Path (V t) (N t)
+
+If you have a path, trail, line, loop, *etc.* with a definite type,
+you can apply `toPath` to convert it into a path.  A function
+
+.. class:: lhs
+
+::
+
+> stroke
+>   :: ( Renderable (Path V2 (N t)) b, ToPath t
+>      , Data.Typeable.Internal.Typeable (N t), RealFloat (N t)
+>      , V t ~ V2
+>      )
+>   => t -> QDiagram b V2 (N t) Any
+
+is also provided, which works by first converting its argument to a
+`Path` using `toPath`, and then calling `strokePath` on the result.
+This can be convenient if you have something of a definite type which
+you want to turn into a diagram; on the other hand, if you have
+something polymorphic it may be more convenient to use a
+type-specialized function like `strokeLine` to fix its type.
+
+Instances:
+
+* `ToPath a => ToPath [a]`
+* `Trail v n`
+* `Path v n`
+* `Located (Trail v n)`
+* `Located (Trail' l v n)`
+* `Located (Segment Closed v n)`
+* `Located [Segment Closed v n]`
+* `FixedSegment v n`
+
 Classes for parametric objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -5865,7 +5955,7 @@ OrderedField
 `OrderedField s`, defined in `Diagrams.Core.Envelope`:mod:, is a
 synonym for
 
-  `(Fractional s, Floating s, Ord s, AdditiveGroup s)`,
+  `(Floating s, Ord s)`,
 
 *i.e.* a floating-point type which is totally ordered.  When dealing
 with `Envelopes` it's often necessary to have scalars which support
@@ -5920,14 +6010,14 @@ __ http://www.haskell.org/haskellwiki/GHC/Type_families
 
 Diagrams only makes use of a few type families, though two of them
 (`V` and `N`) are used quite extensively.  The following sections
-list each of the type families employed by diagrams
+list each of the type families employed by diagrams.
 
 V
 ~
 
 The `V` type family is defined in `Diagrams.Core.V`.  The idea is that
 many types have an "associated" vector space, *i.e.* the vector space
-in which they "live".  The vector space is described by it's dimension
+in which they "live".  The vector space is described by its dimension
 and its numeric type.  `V` simply maps from types to a type
 representing the vector space dimension.  For example, `V (Path V2
 Double) = V2` (ordinary two-dimensional paths live in `V2 Double`),
@@ -5972,6 +6062,21 @@ value used to represent coördinates or distances in the space.  A
 "scalar" can be thought of as a distance, or scaling factor.  For
 example, you can scale a vector by a scalar (using `(*^)`), and the
 `norm` function takes a vector and returns a scalar.
+
+Vn
+~~
+
+`Vn` is a type synonym yielding a common combination of `V` and `N`:
+
+.. class:: lhs
+
+::
+
+> type Vn a = V a (N a)
+
+That is, `Vn a` is the type of a concrete vector space associated to
+`a`, obtained by extracting the vector space dimension `V a` and
+applying it to the type of scalars `N a`.
 
 Render
 ~~~~~~
