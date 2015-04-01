@@ -33,24 +33,12 @@ div.exercises:before {
 }
 
 .banner {
-    padding: 40px;
-    height: 400px;
-    position: relative;
-    background:#2e3846 url(../images/factorization.png);
-    -webkit-animation:bgscroll 200s infinite linear;
-            animation:bgscroll 200s infinite linear;
+    height: 350px;
+    background-image: url(../images/hilbert.png);
+    background-position: center;
+    background-size: cover;
 }
 
     .banner .i_container {
         max-width:500px;
     }
-
-@-webkit-keyframes bgscroll {
-    from {background-position:0 0;}
-    to {background-position:-5333px 0px;}
-}
-
-@keyframes bgscroll {
-    from {background-position:0 0;}
-    to {background-position:-5333px 0px;}
-}
