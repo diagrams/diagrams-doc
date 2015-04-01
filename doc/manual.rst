@@ -3787,10 +3787,15 @@ similar.
 
 Current backend support for images can be summarized as follows:
 
-* Cairo: external PNG
-* SVG: embedded PNG
+* Cairo: external ``PNG``
+* SVG: embedded ``PNG``; also ``PNG`` and ``JPG`` via a "native"
+  extension
 * Rasterific: embedded ``PNG``, ``JPG``, ``TIF``, ``BMP`` and ``GIF``.
 * PGF: external ``PDF``, ``JPG`` and ``PNG``; embedded ``ImageRGB8``.
+
+.. container:: todo
+
+  Write about "native" images
 
 Advanced tools for diagram creation
 ===================================
