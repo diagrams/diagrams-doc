@@ -77,18 +77,19 @@ see this for yourself at a ``ghci`` prompt:
 ::
 
   >>> (3 ^& 6) :: V2 Double
-  3.0 ^& 6.0
+  V2 3.0 6.0
   >>> translateX 19 (3 ^& 6) :: V2 Double
-  3.0 ^& 6.0
+  V2 3.0 6.0
   >>> rotateBy (1/4) (3 ^& 6) :: V2 Double
-  (-6.0) ^& 3.0000000000000004
+  V2 (-6.0) 3.0000000000000004
 
 Constructing vectors
 --------------------
 
-Vectors in two dimensions have the type `V2 n`.  (One can also work with
-other vector spaces with any number of dimensions; in this tutorial
-we'll stick to the 2D case.)
+Vectors in two dimensions have a type like `V2 n`, where `n` is some
+numeric type of scalar values (often `Double`).  (One can also work
+with other vector spaces with any number of dimensions; in this
+tutorial we'll stick to the 2D case.)
 
 The first thing to learn is how to *create* values of type `V2 n`.
 There are many options:
@@ -154,7 +155,7 @@ There are many options:
   Only you can decide whether the tradeoffs are worth it in a given
   situation.
 
-* You can construct vectors from `Direction`s using the
+* You can construct vectors from `Direction`\s using the
   `fromDirection` function.  `fromDirection` takes a `Direction` and
   constructs a unit (*i.e.* magnitude 1) vector pointing in the given
   direction.
@@ -173,8 +174,10 @@ There are many options:
 
   ::
 
+  > import Diagrams.TwoD.Vector
+  >
   > example = lwG 0.05 . mconcat . map fromOffsets
-  >         $ [ [r *^ rotate (r @@ rad) unitX]
+  >         $ [ [r *^ e (r @@ rad)]
   >           | r <- [33 * tau/32, 34 * tau/32 .. 2 * tau]
   >           ]
 
@@ -217,7 +220,7 @@ Destructing vectors
 To take apart a vector into its `x`:math: and `y`:math: components,
 use `unr2 :: V2 n -> (n, n)`, or more generally you can use
 `coords` (from `Diagrams.Coordinates`:mod:) and pattern-match on
-`(:^&)`.  Both these methods work well in conjunction with the
+`(:&)`.  Both these methods work well in conjunction with the
 ``ViewPatterns`` `GHC extension`__, as in
 
 __ http://ghc.haskell.org/trac/ghc/wiki/ViewPatterns
@@ -238,7 +241,7 @@ To get the magnitude and direction of a vector, you can use the
 `magnitude` and `direction` functions.  To get the angle between two
 given vectors, use `angleBetween`.  Additionally, `quadrance` gives
 the *squared* magnitude of a vector, and is more efficient than
-squaring the result of `norm`, since it avoids a `sqrt` call.
+squaring the result of `norm`, since it avoids a call to `sqrt`.
 For example, if you want to test which of two vectors is longer, you
 can compare the results of `quadrance` instead of `norm` (since
 `a < b \iff a^2 < b^2`:math: as long as `a`:math: and `b`:math: are
@@ -259,11 +262,10 @@ are open to adding more!).
 
   ::
 
-  > example = mconcat $ map fromOffsets ls
+  > example = mconcat $ map fromOffsets (map (:[]) vs)
   >   where
   >     vs = take 33 . iterate (scale (2**(1/32)) . rotateBy (1/32))
   >        $ unitX
-  >     ls = [[x] | x <- vs]
 
 * `V2` is an instance of the `Additive` class (see
   `Linear.Additive`:mod: from the `linear`:pkg: package). This means:
@@ -293,10 +295,10 @@ are open to adding more!).
   vector) and `(^+^)` (vector plus vector) and `(.+^)` (point plus
   vector, as we will see later.)
 
-  Note that using `(*^)` is equivalent to using `scale`; that is, `s
-  *^ v == v # scale s`.  There is also a `(^/)` operator provided for
-  convenience which divides a vector by a scalar; of course `v ^/ s ==
-  v ^* (1/s)`.
+  Using `(*^)` is equivalent to using `scale`; that is, `s *^ v == v #
+  scale s`.  There is also a `(^/)` operator provided for convenience
+  which divides a vector by a scalar; of course `v ^/ s == v ^*
+  (1/s)`.
 
 * Finally, `R2` is an instance of the `Metric` class (also in
   `linear`:mod:), which provides the *inner product* (also
@@ -345,10 +347,9 @@ __ http://en.wikipedia.org/wiki/Dot_product
 
 .. container:: exercises
 
-  1. Write a function `vTriangle :: V2 Double -> V2 Double -> Diagram SVG V2 Double`
-     (substituting your favorite backend in place of `SVG`) which
-     takes as arguments two vectors representing two sides of a
-     triangle and draws the corresponding triangle.  For example,
+  1. Write a function `vTriangle :: V2 Double -> V2 Double -> Diagram
+     B` which takes as arguments two vectors representing two sides of
+     a triangle and draws the corresponding triangle.  For example,
      `vTriangle unitX (unitX # rotateBy (1/8))` should produce
 
      .. class:: dia
@@ -359,7 +360,7 @@ __ http://en.wikipedia.org/wiki/Dot_product
      >                 # glueLine # strokeLoop
      >
      > example = vTriangle unitX (unitX # rotateBy (1/8))
-     >         # centerXY # pad 1.1
+     >         # center
 
   #. Write a function which takes two vectors as input and constructs
      a classic illustration of vector addition using a parallelogram,
@@ -397,21 +398,25 @@ collecting a list here in one place.
 * You can translate things by a vector using `translate` or
   `moveOriginBy`.
 
+* As explained in the next section, you can add a vector to a point to
+  yield another point.
+
 Points
 ======
 
 A *point* is a location in space.  In ``diagrams``, points are based
-on the `linear`:pkg: package, and in the case of 2D are represented by
-the type alias `P2 = Point V2`. In 2D, points are usually thought of
-as a pair of `x`:math: and `y`:math: coordinates (though other
-coordinate systems could be used as well, *e.g.* polar coordinates).
+on the `Point` wrapper from the `linear`:pkg: package, and in the case
+of 2D are represented by the type alias `P2 = Point V2`. In 2D, points
+are usually thought of as a pair of `x`:math: and `y`:math:
+coordinates (though other coordinate systems could be used as well,
+*e.g.* polar coordinates).
 
 Points and vectors are closely related, and are sometimes conflated
 since both can be concretely represented by tuples of coordinates.
 However, they are distinct concepts which support different sets of
 operations. For example, points are affected by translation whereas
-vectors are not and so on.  Hence, they are represented by distinct
-types in ``diagrams``.
+vectors are not; two vectors can be added but two points cannot; and
+so on.  Hence, they are represented by distinct types in ``diagrams``.
 
 Constructing points
 -------------------
@@ -419,7 +424,7 @@ Constructing points
 There are several ways to construct points.
 
 * `origin` is the name of the distinguished point at the origin of
-   the vector space (note this works in any dimension).
+  the vector space (note this works in any dimension).
 
 * To create a point with given :math:`x`- and :math:`y`- components,
   you can use the function `p2 :: (n,n) -> Point V2 n`:
@@ -429,8 +434,8 @@ There are several ways to construct points.
   ::
 
   > example
-  >   = position . flip zip (repeat (circle 0.2 # fc green))
-  >   . map p2 $ [(1,1), (0,3), (-2,1), (-1,-4), (2,0)]
+  >   = flip atPoints (repeat (circle 0.2 # fc green))
+  >     $ map p2 $ [(1,1), (0,3), (-2,1), (-1,-4), (2,0)]
 
   As with `r2`, `p2` is especially useful if you already have pairs
   representing point coordinates.
@@ -463,7 +468,7 @@ There are several ways to construct points.
 
   > pts :: [P2 Double]
   > pts = nonagon 1
-  > example = position . map (\p -> (p, circle 0.2 # fc green)) $ pts
+  > example = atPoints pts (repeat $ circle 0.2 # fc green)
 
   Note that we could also inline `pts` in the above example to obtain
 
@@ -471,7 +476,7 @@ There are several ways to construct points.
 
   ::
 
-  > example = position . map (\p -> (p, circle 0.2 # fc green)) $ nonagon 1
+  > example = atPoints (nonagon 1) (repeat $ circle 0.2 # fc green)
 
   In this case, the type of `nonagon 1` would be inferred as `[P2 Double]`
   (since `position` expects a list of paired points and diagrams), causing the
@@ -481,17 +486,20 @@ There are several ways to construct points.
 Destructing points
 ------------------
 
-For taking a point apart into its components you can use the `unp2`
-function, or, more generally, `coords` (just as with vectors).  There
-is currently no way to get a polar representation of a point, but it
-would be easy to add: if you want it, holler (or `submit a pull
-request`__!).
+For taking a point apart into its components:
 
-__ http://www.haskell.org/haskellwiki/Diagrams/Contributing
+* You can use the `unp2` function, or, more generally, `coords` (just
+  as with vectors) to get the Cartesian coordinates of a point.
+* You can also use the `_x` and `_y` lenses to extract (or update) the
+  `x`:math:- and `y`:math:-coordinates of a point: for example, `pt
+  ^. _x` gets the `x`:math:-coordinate of `pt`, and `pt & _x +~ 2` adds
+  `2` to the `x`:math:-coordinate.
+* You can use the `_theta` lens to refer to the angle of a point
+  (measured counterclockwise from the positive `x`:math:-axis).
 
 You can compute the distance between two points with the `distance`
-function (or `quadrance` to get the square of the distance, which
-avoids a square root).
+function (or `qd` to get the square ("quadrance") of the distance,
+which avoids a square root).
 
 .. container:: exercises
 
@@ -536,7 +544,7 @@ respect to the origin (for example, scaling the point `(1,1)`:math: by
 > dot' c = circle 0.2 # fc c
 >
 > example = drawPts sqPts blue
->        <> drawPts (sqPts # scale 2 # rotateBy(1/10)) red
+>        <> drawPts (sqPts # scale 2 # rotateBy(1/10) # translateX 0.2) red
 
 Abstractly, points and vectors together form what is termed an "affine
 space". Here is a nice intuitive description of affine spaces, stolen
@@ -578,9 +586,10 @@ its second.
   subtract a vector from a point.
 
 * Although it is not semanticly correct, `Point` is an instance of
-  `Additive`. This means you can *linearly interpolate* between two
-  points using `lerp`, which does make sense. For example, to find the
-  point which is 25% of the way from the first point to the second. 
+  `Additive` (this may be fixed in a later release). This means you
+  can *linearly interpolate* between two points using `lerp`, which
+  does make sense. For example, to find the point which is 25% of the
+  way from the first point to the second.
 
   .. class:: dia-lhs
 
