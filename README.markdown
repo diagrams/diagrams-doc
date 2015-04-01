@@ -8,7 +8,7 @@ This repository holds all documentation for the
 * [user manual](http://projects.haskell.org/diagrams/doc/manual.html)
 * IRC logs
 * blog posts
-* related papers
+* related papers and talks
 * release checklists
 
 and more.
@@ -18,7 +18,7 @@ and more.
 To build the website (which includes the gallery, user manual, and
 tutorials), you will need:
 
-* GHC 7.6
+* GHC 7.8
 * the diagrams framework itself (including the
   [contrib package](http://github.com/diagrams/diagrams-contrib),
   [SVGFonts package](http://github.com/diagrams/SVGFonts),
@@ -29,7 +29,7 @@ tutorials), you will need:
   *or* the [SVG backend](http://github.com/diagrams/diagrams-svg).  See below for more
   information re: using the SVG backend.
 * the python [docutils suite](http://docutils.sourceforge.net/) (in
-  particular `rst2xml` should be on your PATH).
+  particular `rst2xml.py` should be on your PATH).
 * the Haskell [docutils package](http://github.com/diagrams/docutils)
   (note it is not on Hackage; just clone the `master` branch from
   github and `cabal install` it).
@@ -61,10 +61,12 @@ first clone the relevant diagrams repositories from github:
 
 * [diagrams-core](https://github.com/diagrams/diagrams-core/)
 * [diagrams-solve](https://github.com/diagrams/diagrams-solve/)
+* [active](https://github.com/diagrams/active/)
 * [diagrams-lib](https://github.com/diagrams/diagrams-lib/)
 * [diagrams-cairo](https://github.com/diagrams/diagrams-rasterific/)
 * [diagrams-contrib](https://github.com/diagrams/diagrams-contrib/)
 * [diagrams-builder](https://github.com/diagrams/diagrams-builder/)
+* [diagrams-rasterific](https://github.com/diagrams/diagrams-rasterific/)
 * [SVGFonts](https://github.com/diagrams/SVGFonts/)
 * [palette](https://github.com/diagrams/palette/)
 * [docutils](https://github.com/diagrams/docutils/)
@@ -84,21 +86,6 @@ ghc --make Shake -threaded
 
 The build system will first check for an installed `diagrams-rasterific`
 package.  If none is found, it will fall back to using the
-`diagrams-svg` package.  This almost works, except for a few small
-issues:
-
-* There are a few examples in the user manual and other tutorials
-  which cannot build with `diagrams-svg`, because they use embedded
-  images, which `diagrams-svg` cannot yet handle.  As a workaround,
-  the build system passes a `--keepgoing` flag to the utility that
-  builds diagrams embedded in the user manual and tutorials, causing
-  it to report success even when an example fails.
-
-* There is also an explicit list of gallery examples which are
-  excluded from the build when using `diagrams-svg`, since they only
-  build with `diagrams-rasterific`.
-
-These issues should not cause too much trouble but are simply good to
-be aware of.  Using `diagrams-svg` should be perfectly adequate for
-ensuring that your contributions to the documentation compile properly
-and look the way you expect.
+`diagrams-svg` package.  As of right now, there are no known issues
+with using `diagrams-svg` for building the website (other than the
+fact that some of the output ``.svg`` files are large).
