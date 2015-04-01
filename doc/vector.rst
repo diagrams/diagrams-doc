@@ -494,8 +494,6 @@ For taking a point apart into its components:
   `x`:math:- and `y`:math:-coordinates of a point: for example, `pt
   ^. _x` gets the `x`:math:-coordinate of `pt`, and `pt & _x +~ 2` adds
   `2` to the `x`:math:-coordinate.
-* You can use the `_theta` lens to refer to the angle of a point
-  (measured counterclockwise from the positive `x`:math:-axis).
 
 You can compute the distance between two points with the `distance`
 function (or `qd` to get the square ("quadrance") of the distance,
@@ -525,6 +523,19 @@ which avoids a square root).
      >   where
      >     c | distance p origin <= r = yellow
      >       | otherwise              = purple
+
+Polar coordinates
+-----------------
+
+Instead of being represented using `x`:math:- and `y`:math:-coordinates,
+points can also be represented using *polar* coordinates (usually
+referred to as `(r, \theta)`:math:).
+
+* You can use the `_r` lens to refer to the magnitude
+  (`r`:math:-coordinate) of a point.
+* You can use the `_theta` lens to refer to the
+  `\theta`:math:-coordinate of a point, that is, the angle to the point
+  as measured counterclockwise from the positive `x`:math:-axis.
 
 Point operations
 ----------------
