@@ -135,6 +135,17 @@
 + [ ] Haddocks up to date
 + [X] version bump
 + [ ] LICENSE updated
+*** diagrams-pgf [0/8]
++ [ ] CHANGES updated
++ [ ] all CHANGES in user manual or tutorial
++ [ ] upper bounds fixed
++ [ ] lower bounds fixed
++ [ ] update tested-with field
++ [ ] Haddocks up to date
++ [ ] version bump
++ [ ] LICENSE updated
+*** cchalmers/texrunner [0/1]
++ [ ] upload
 *** diagrams-rasterific [2/8]
 + [ ] CHANGES updated
 + [ ] all CHANGES in user manual or tutorial
@@ -216,18 +227,18 @@
 + [ ] Haddocks up to date
 + [ ] version bump
 + [ ] LICENSE updated
-** TODO user manual / tutorials [0/3]
-+ [ ] make sure all examples build
+** TODO user manual / tutorials [1/3]
++ [X] make sure all examples build
 + [ ] make sure documentation is up-to-date
 + [ ] make sure all new features are described/mentioned in the manual
-** TODO testing [0/7]
+** TODO testing [2/3]
 + [ ] check all travis tests
-      - all tests are passing, except:
-      - [ ] diagrams-doc (hakyll) (this one doesn't matter much)
-      - [ ] diagrams-builder on 7.8.1 (gcc bug?)
-      - [ ] diagrams-haddock on 7.8.1 (gcc bug?)
-+ [ ] run diagrams-backend-tests
-+ [ ] copy diagrams-backend-tests output to website
+  - all tests are passing, except:
+  - [ ] diagrams-doc (hakyll) (this one doesn't matter much)
+  - [ ] diagrams-builder on 7.8.1 (gcc bug?)
+  - [ ] diagrams-haddock on 7.8.1 (gcc bug?)
++ [X] run diagrams-backend-tests
++ [X] copy diagrams-backend-tests output to website
 ** TODO update release page on website
       - See previous versions for format.  Should be possible to
         essentially paste in the relevant parts of the CHANGES files
