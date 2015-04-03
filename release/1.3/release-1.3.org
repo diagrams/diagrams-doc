@@ -1,14 +1,5 @@
 * Release checklist [0/8]
 ** TODO go through per-package checklist
-*** vector-space-points [5/8]
-+ [X] CHANGES updated
-+ [X] all CHANGES in user manual or tutorial
-+ [X] upper bounds fixed
-+ [X] lower bounds fixed
-+ [ ] update tested-with field
-+ [ ] Haddocks up to date
-+ [X] version bump
-+ [ ] LICENSE updated
 *** monoid-extras [6/8]
 + [X] CHANGES updated
 + [X] all CHANGES in user manual or tutorial
