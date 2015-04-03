@@ -238,6 +238,7 @@
 + [ ] make sure all diagrams-haddock examples build
 + [ ] rebuild all diagrams-haddock examples and check them in
 ** TODO upload packages [0/3]
+For each package:
 + [ ] List release date in each CHANGES file
 + [ ] Apply a tag to each repo just before releasing
         - The tag should have a name like "vX.X.X", with a v prefixed
@@ -245,7 +246,33 @@
         - The tag message should mention the version and give a very
           short comment describing the release
         - Use a command like: git tag -a v1.3 -m "1.3 release (update for frozz-wizz)"
-+ [ ] Upload
+
+Packages:
++ [ ] monoid-extras
++ [ ] dual-tree
++ [ ] diagrams-core
++ [ ] active
++ [ ] diagrams-solve
++ [ ] diagrams-lib
++ [ ] SVGFonts
++ [ ] palette
++ [ ] force-layout
++ [ ] diagrams-contrib
++ [ ] statestack
++ [ ] diagrams-cairo
++ [ ] diagrams-gtk
++ [ ] diagrams-postscript
++ [ ] diagrams-pgf
++ [ ] cchalmers/texrunner
++ [ ] diagrams-rasterific
++ [ ] diagrams-svg
++ [ ] diagrams-canvas
++ [ ] diagrams-html5
++ [ ] diagrams-builder
++ [ ] diagrams-haddock
++ [ ] diagrams-backend-tests
++ [ ] diagrams-doc
++ [ ] diagrams
 ** TODO regenerate combined Haddock documentation and commit to website.
       NOTE: this must be done AFTER releasing packages to Hackage!
       There is a script, build-haddocks.sh, in the diagrams-doc root
