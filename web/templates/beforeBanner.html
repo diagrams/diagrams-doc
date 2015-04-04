@@ -19,7 +19,7 @@
     <link rel="shortcut icon" href="/diagrams.ico" />
 
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-
+    $bannerCSS$
   </head>
   <body>
 
@@ -83,26 +83,12 @@
       <h1 style="font-size: 9rem; padding-top: 110px">diagrams</h1>
     </div>
     <div class="col-md-7">
-      <pre style="background-color: rgba(0,0,0,0); border-width: 0px; font-size: 1.75rem;">
-
-
-        hilbert :: [Diagram B]
-        hilbert = iterate expand mempty
-          where
-            expand t =
-              let u = vcat [ t, alignT &#36 vrule 1
-                           , rotateBy (3/4) t ]
-              in      hcat [ u, hrule 1, reflectX u ]
-                           # alignBL
-
-        diagram :: Diagram B
-        diagram = hilbert !! 5
-     </pre>
+      $body$
    </div>
     </div>
   </div>
     <div class="container" style="padding-top: 60px;">
-      $body$
+      $template$
     </div>
 
     </div> <!-- #wrap -->

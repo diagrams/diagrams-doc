@@ -65,7 +65,7 @@ main = do
     -- Index --------------------------------------
     match "index.markdown" $ do
       route $ setExtension ".html"
-      compile $do
+      compile $ do
         pandocCompiler
           >>= loadAndApplyTemplate "templates/index.html" defaultContext
           >>= mainCompiler defaultContext
@@ -186,6 +186,54 @@ main = do
         compile $ getResourceBody
             >>= loadAndApplyTemplate "templates/wrapExample.lhs" defaultContext
 
+    match "banner/template.css" $ do
+        compile $ getResourceBody
+
+    match "banner/banner.hs" $ version "css" $ do
+        route $ setExtension "css"
+        compile $ getResourceBody >>= buildBannerCSS
+
+    match "banner/banner.hs" $ version "html" $ do
+        route $ setExtension "html"
+        compile $ getResourceBody >>= buildBannerHtml
+
+    match "banner/banner.hs" $ version "template" $ do
+        route $ setExtension "template"
+        compile $ do
+            b <- getResourceBody
+            c <- buildBannerCSS b
+            h <- buildBannerHtml b
+            let ctx =  constField "bannerCSS"  (itemBody c)
+                    <> constField "template" "$body$"
+                    <> defaultContext
+            (readTemplate <$>) <$> loadAndApplyTemplate "templates/beforeBanner.html" ctx h
+
+buildBannerCSS :: Item String -> Compiler (Item String)
+buildBannerCSS b = do
+    t <- loadBody (fromFilePath "banner/template.css")
+    m <- loadAndApplyTemplate "templates/banner.markdown" defaultContext b
+    return $ renderMarkdownPandocWith
+               defaultHakyllReaderOptions
+               defaultHakyllWriterOptions
+                 { writerStandalone = True
+                 , writerTemplate = t
+                 }
+               m
+
+buildBannerHtml :: Item String -> Compiler (Item String)
+buildBannerHtml b = do
+    b <- getResourceBody
+    m <- loadAndApplyTemplate "templates/banner.markdown" defaultContext b
+    return $ renderMarkdownPandoc m
+
+renderMarkdownPandocWith :: ReaderOptions -> WriterOptions -> Item String -> Item String
+renderMarkdownPandocWith ropt wopt = writePandocWith wopt . fmap (readMarkdown ropt)
+
+renderMarkdownPandoc :: Item String -> Item String
+renderMarkdownPandoc = renderMarkdownPandocWith
+                         defaultHakyllReaderOptions
+                         defaultHakyllWriterOptions
+
 withMathJax :: Item String -> Item String
 withMathJax = writePandoc . fmap (bottomUp latexToMathJax) . readPandoc
   where latexToMathJax (Math InlineMath str)
@@ -195,7 +243,8 @@ withMathJax = writePandoc . fmap (bottomUp latexToMathJax) . readPandoc
         latexToMathJax x = x
 
 mainCompiler :: Context String -> Item String -> Compiler (Item String)
-mainCompiler ctx = loadAndApplyTemplate "templates/default.html" ctx
+mainCompiler ctx = loadAndApplyTemplate 
+                      (setVersion (Just "template") $ fromFilePath "banner/banner.hs") ctx
                >=> relativizeUrls
 
 blogCompiler :: Context String -> Item String -> Compiler (Item String)
