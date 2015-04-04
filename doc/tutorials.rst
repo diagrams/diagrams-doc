@@ -4,6 +4,9 @@
 .. role:: repo(literal)
 
 .. default-role:: hs
+.. sectnum:: :depth: 2
+
+.. contents:: :depth: 2
 
 Know how to explain a certain technique?  Have a cool diagram which
 makes for a good, illustrative example but is too long to go in the
@@ -37,8 +40,8 @@ adding a line to the *Tutorials* section that looks like
 Basic formatting
 ================
 
-In addition to the below notes, you can refer to the `quick
-reference`_ for more details.
+In addition to the below notes, you can refer to the reStructuredText
+`quick reference`_ for more details.
 
 * *Italics* can be produced with ``*asterisks*``.
 * Make bulleted lists by preceding the items with ``*``.
@@ -47,7 +50,7 @@ reference`_ for more details.
   extent of each scope).
 * The format for hyperlinks is a bit strange; see the user manual for
   examples, or refer to the `quick reference`_.
-* Headings levels are indicated by underlining heading titles, with a
+* Heading levels are indicated by underlining heading titles, with a
   different character for each level.  From top (biggest) to bottom
   (smallest), the heading characters are ``=``, ``-``, ``~``, and
   ``+``.  The overall title of the tutorial should not be included in

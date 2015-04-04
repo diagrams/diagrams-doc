@@ -101,7 +101,7 @@ main = do
             exe = obj "doc/Xml2Html.hs.exe"
         need [xml, exe]
         command_ [] exe
-          ([xml, "-o", takeDirectory out </> "images", out] ++ ["--keepgoing" | useSVG])
+          ([xml, "-o", takeDirectory out </> "images", out] {- ++ ["--keepgoing" | useSVG] -})
 
       dist "blog/*.metadata" *> \out -> copyFile' (un out) out
       dist "doc/*.metadata"  *> \out -> copyFile' (un out) out
@@ -109,7 +109,7 @@ main = do
       obj "//*.xml" *> \out -> do
         let rst = un $ out -<.> "rst"
         need [rst]
-        command_ [] "rst2xml.py" ["--input-encoding=utf8", rst, out]
+        command_ [] "rst2xml" ["--input-encoding=utf8", rst, out]
 
       obj "//*.hs.o" *> \out -> do
         let hs = un $ dropExtension out

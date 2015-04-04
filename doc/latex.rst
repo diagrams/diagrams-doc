@@ -13,8 +13,10 @@ Introduction
 
 Diagrams can be used to easily include pictures in your `\LaTeX`:math:
 documents, using either the `diagrams-cairo`:pkg: or
-`diagrams-postscript`:pkg: backend (and, soon, the ``diagrams-pgf``
-backend).  You directly embed diagrams code in your `\LaTeX`:math:
+`diagrams-postscript`:pkg: backend. (You can also use the
+`diagrams-pgf`:pkg: backend, which allows you to have `\LaTeX`:math:
+typeset any text in your diagrams, although it is not yet supported by
+`diagrams-latex.sty`.) You directly embed diagrams code in your `\LaTeX`:math:
 source, within special ``\begin{diagram} ... \end{diagram}`` blocks;
 the ``diagrams-latex`` package then takes care of automatically
 running your diagrams code and including the generated images in the
@@ -164,8 +166,7 @@ choke with horrendous, inscrutable errors.  If you are using
 emitting ``[fragile]`` annotations by inserting an empty code block
 into each slide with a diagram.
 
-See [this Stack Exchange
-answer](http://tex.stackexchange.com/questions/11328/beamers-fragile-frame-as-default)
+See `this StackExchange answer`_
 explaining how to define an alternate ``frame`` environment which is
 fragile by default.  It boils down to something like
 
@@ -178,3 +179,5 @@ fragile by default.  It boils down to something like
 and then using ``xframe`` instead of ``frame`` (it's probably possible
 to replace ``frame`` entirely with some clever renaming, but I haven't
 figured out how to do it).
+
+.. _`this StackExchange answer`: http://tex.stackexchange.com/questions/11328/beamers-fragile-frame-as-default

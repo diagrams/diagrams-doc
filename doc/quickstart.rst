@@ -52,7 +52,7 @@ GHC/The Haskell Platform
 ------------------------
 
 You'll need a recent version of the `Glasgow Haskell
-Compiler`_ (7.4 or later), as well as some
+Compiler`_ (7.6 or later), as well as some
 standard libraries and tools.  There are several methods for obtaining
 these:
 
@@ -564,7 +564,7 @@ one-dimensional tracks through space, and paths are collections of
 trails; see the `tutorial on trails and paths`__ for a more detailed
 account.  Trails and paths can be explicitly manipulated and computed
 with, and used, for example, to describe and position other
-diagrams. In this case, we can use the `trailVertices`, and `atPoints`
+diagrams. In this case, we can use the `trailVertices` and `atPoints`
 functions to
 place nodes at the vertices of the trail produced by `regPoly`:
 
@@ -588,7 +588,7 @@ the number of nodes:
 ::
 
 > node :: Int -> Diagram B
-> node n = text (show n) # fontSizeN 0.1 # fc white <> circle 0.2 # fc green
+> node n = text (show n) # fontSizeL 0.2 # fc white <> circle 0.2 # fc green
 >
 > tournament :: Int -> Diagram B
 > tournament n = atPoints (trailVertices $ regPoly n 1) (map node [1..n])
@@ -613,7 +613,7 @@ function:
 ::
 
 > node :: Int -> Diagram B
-> node n = text (show n) # fontSizeN 0.1 # fc white
+> node n = text (show n) # fontSizeL 0.2 # fc white
 >       <> circle 0.2 # fc green # named n
 >
 > tournament :: Int -> Diagram B
@@ -643,7 +643,7 @@ objects.  Here we connect nodes 1 and 2:
 ::
 
 > node :: Int -> Diagram B
-> node n = text (show n) # fontSizeN 0.1 # fc white
+> node n = text (show n) # fontSizeL 0.2 # fc white
 >       <> circle 0.2 # fc green # named n
 >
 > tournament :: Int -> Diagram B
@@ -655,7 +655,7 @@ objects.  Here we connect nodes 1 and 2:
 literals are polymorphic and we can use names of any type.)
 
 This won't do, however; we want to leave some space between the nodes and the
-ends of the arrows, and to use a slightly smaller arrowhead.  Fortunately, the
+ends of the arrows, and to use a slightly larger arrowhead.  Fortunately, the
 arrow-drawing code is highly configurable.  Instead of
 `connectOutside` we can use its sibling function `connectOutside'`
 (note the prime) which takes an extra record of options controlling the way
@@ -668,15 +668,15 @@ follows:
 ::
 
 > node :: Int -> Diagram B
-> node n = text (show n) # fontSizeN 0.1 # fc white
+> node n = text (show n) # fontSizeL 0.2 # fc white
 >       <> circle 0.2 # fc green # named n
 >
 > tournament :: Int -> Diagram B
 > tournament n = atPoints (trailVertices $ regPoly n 1) (map node [1..n])
 >
 > example = tournament 6
->   # connectOutside' (with & gaps .~ small
->                           & headLength .~ global 0.2
+>   # connectOutside' (with & gaps       .~ small
+>                           & headLength .~ local 0.15
 >                     )
 >     (1 :: Int) (2 :: Int)
 
@@ -696,11 +696,11 @@ of situation.
 ::
 
 > node :: Int -> Diagram B
-> node n = text (show n) # fontSizeN 0.1 # fc white
+> node n = text (show n) # fontSizeL 0.2 # fc white
 >       <> circle 0.2 # fc green # named n
 >
-> arrowOpts = with & gaps  .~ small
->                  & headLength .~ global 0.2
+> arrowOpts = with & gaps       .~ small
+>                  & headLength .~ local 0.15
 >
 > tournament :: Int -> Diagram B
 > tournament n = atPoints (trailVertices $ regPoly n 1) (map node [1..n])
