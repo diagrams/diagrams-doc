@@ -15,7 +15,7 @@ signSide = hrule 1 <> arc (rotateBy (-1/4) xDir) (1/3 @@ turn) # scale 0.3
 sign = mconcat . take 3 . iterate (rotateBy (1/3)) $ signSide
 
 d :: Diagram B
-d = text "!" # fc black # bold
+d = text "!" # fc black # bold # translate (-0.075 ^& 0)
  <> strokeLoop (glueLine sign) # lc black # lw (output 3) # center
 
 
