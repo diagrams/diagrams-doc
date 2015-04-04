@@ -4091,7 +4091,7 @@ For even more low-level access, the `Traced` class provides the
 `getTrace` method, which can be used to directly access the trace
 function for an object.  Given inputs ``p`` and ``v``, it returns a
 sorted list of scalars ``t`` such that ``p .+^ (t *^ v)`` is a point
-of intersection between the ray ``(p,v)`` and the boundary of the
+of intersection between the ray ``(p,v)`` and an edge of the
 diagram.
 
 .. class:: dia-lhs
@@ -5531,8 +5531,8 @@ Traced
 
 `Traced` is defined in `Diagrams.Core.Trace`:mod:, and plays a similar
 role as `Enveloped`.  `Traced` types have an associated `Trace`, which
-is like an embedded ray tracer that can be used to find points on the
-boundary of an object.
+is like an embedded ray tracer that can be used to find points on
+edges of an object.
 
 .. class:: lhs
 
