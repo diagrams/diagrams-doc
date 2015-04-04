@@ -18,6 +18,7 @@ _site
 web/doc
 web/blog
 web/gallery/images
+web/banner/images
 .make
 .shake.database
 Shake

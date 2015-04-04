@@ -8,4 +8,4 @@ hilbert = iterate expand mempty
                    # alignBL
 
 diagram :: Diagram B
-diagram = hilbert !! 6
+diagram = hilbert !! 6 # lc lightblue

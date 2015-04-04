@@ -155,6 +155,14 @@ main = do
         route idRoute
         compile copyFileCompiler
 
+    match "banner/images/*.png"  $ do
+        route idRoute
+        compile copyFileCompiler
+
+    match "banner/images/*.svg" $ do
+        route idRoute
+        compile copyFileCompiler
+
     match "gallery.markdown" $ do
         route $ setExtension "html"
 
@@ -189,16 +197,8 @@ main = do
     match "banner/template.css" $ do
         compile $ getResourceBody
 
-    match "banner/banner.hs" $ version "css" $ do
-        route $ setExtension "css"
-        compile $ getResourceBody >>= buildBannerCSS
-
-    match "banner/banner.hs" $ version "html" $ do
-        route $ setExtension "html"
-        compile $ getResourceBody >>= buildBannerHtml
 
     match "banner/banner.hs" $ version "template" $ do
-        route $ setExtension "template"
         compile $ do
             b <- getResourceBody
             c <- buildBannerCSS b

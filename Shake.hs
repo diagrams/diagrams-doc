@@ -77,7 +77,7 @@ main = do
       , "rm -f web/doc"
       , "rm -f web/blog"
       , "rm -f web/gallery/images"
---      , "rm -f web/banner/images"
+      , "rm -f web/banner/images"
       , "rm -rf .make"
       , "rm -rf dist"
       , "rm -f Shake"
@@ -214,9 +214,9 @@ webRules = do
     liftIO $ createDirectoryIfMissing True "dist/web/gallery"
     command_ [] "ln" ["-s", "-f", "../../dist/web/gallery", out]
 
---  "web/banner/images" *> \out -> do
---    liftIO $ createDirectoryIfMissing True "dist/web/banner"
---    command_ [] "ln" ["-s", "-f", "../../dist/web/banner", out]
+  "web/banner/images" *> \out -> do
+    liftIO $ createDirectoryIfMissing True "dist/web/banner"
+    command_ [] "ln" ["-s", "-f", "../../dist/web/banner", out]
 
 runWeb :: MkMode -> String -> Action ()
 runWeb m imgExt = do
@@ -226,6 +226,7 @@ runWeb m imgExt = do
   -- work around weird bug(?)
   command_ [] "rm" ["-f", "dist/doc/doc"]
   command_ [] "rm" ["-f", "dist/web/gallery/gallery"]
+  command_ [] "rm" ["-f", "dist/web/banner/banner"]
   command_ [] "rm" ["-f", "dist/blog/blog"]
 
   systemCwdNorm "web" (obj "web/Site.hs.exe")
@@ -240,7 +241,7 @@ needWeb imgExt = do
        , "web/blog"
        , "web/banner"
        , "web/gallery/images"
---       , "web/banner/images"
+       , "web/banner/images"
        , obj "web/Site.hs.exe"
        , obj "web/gallery/BuildGallery.hs.exe"
        , obj "web/banner/BuildBanner.hs.exe"

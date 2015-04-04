@@ -34,7 +34,7 @@ div.exercises:before {
 
 .banner {
     height: 350px;
-    background-image: url(../banner/banner.$ext$);
+    background-image: url(../banner/images/banner.$ext$);
     background-position: center;
     background-size: cover;
 }
