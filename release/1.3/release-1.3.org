@@ -1,0 +1,281 @@
+* Release checklist [0/8]
+** TODO go through per-package checklist
+*** monoid-extras [8/8]
++ [X] CHANGES updated
++ [X] all CHANGES in user manual or tutorial
++ [X] upper bounds fixed
++ [X] lower bounds fixed
++ [X] update tested-with field
++ [X] Haddocks up to date
++ [X] version bump
++ [X] LICENSE updated
+*** dual-tree [6/8]
++ [X] CHANGES updated
++ [X] all CHANGES in user manual or tutorial
++ [X] upper bounds fixed
++ [X] lower bounds fixed
++ [ ] update tested-with field
++ [X] Haddocks up to date
++ [X] version bump
++ [ ] LICENSE updated
+*** diagrams-core [7/8]
++ [X] CHANGES updated
++ [X] all CHANGES in user manual or tutorial
++ [X] upper bounds fixed
++ [ ] lower bounds fixed
++ [X] update tested-with field
++ [X] Haddocks up to date
++ [X] version bump
++ [X] LICENSE updated
+*** active [7/8]
++ [X] CHANGES updated
++ [X] all CHANGES in user manual or tutorial
++ [X] upper bounds fixed
++ [ ] lower bounds fixed
++ [X] update tested-with field
++ [X] Haddocks up to date
++ [X] version bump
++ [X] LICENSE updated
+*** diagrams-solve [6/8]
++ [X] CHANGES updated
++ [ ] all CHANGES in user manual or tutorial
++ [X] upper bounds fixed
++ [X] lower bounds fixed
++ [X] update tested-with field
++ [ ] Haddocks up to date
++ [X] version bump
++ [X] LICENSE updated
+*** diagrams-lib [5/8]
++ [X] CHANGES updated
++ [ ] all CHANGES in user manual or tutorial
++ [X] upper bounds fixed
++ [ ] lower bounds fixed
++ [X] update tested-with field
++ [ ] Haddocks up to date
++ [X] version bump
++ [X] LICENSE updated
+*** SVGFonts [5/8]
++ [X] CHANGES updated
++ [ ] all CHANGES in user manual or tutorial
++ [X] upper bounds fixed
++ [ ] lower bounds fixed
++ [X] update tested-with field
++ [ ] Haddocks up to date
++ [X] version bump
++ [X] LICENSE updated
+*** palette [0/8]
++ [ ] CHANGES updated
++ [ ] all CHANGES in user manual or tutorial
++ [ ] upper bounds fixed
++ [ ] lower bounds fixed
++ [ ] update tested-with field
++ [ ] Haddocks up to date
++ [ ] version bump
++ [ ] LICENSE updated
+*** force-layout [2/8]
++ [ ] CHANGES updated
++ [ ] all CHANGES in user manual or tutorial
++ [X] upper bounds fixed
++ [ ] lower bounds fixed
++ [ ] update tested-with field
++ [ ] Haddocks up to date
++ [ ] version bump
++ [X] LICENSE updated
+*** diagrams-contrib [5/8]
++ [X] CHANGES updated
++ [ ] all CHANGES in user manual or tutorial
++ [X] upper bounds fixed
++ [ ] lower bounds fixed
++ [X] update tested-with field
++ [ ] Haddocks up to date
++ [X] version bump
++ [X] LICENSE updated
+*** statestack [3/8]
++ [ ] CHANGES updated
++ [ ] all CHANGES in user manual or tutorial
++ [X] upper bounds fixed
++ [X] lower bounds fixed
++ [X] update tested-with field
++ [ ] Haddocks up to date
++ [ ] version bump
++ [ ] LICENSE updated
+*** diagrams-cairo [2/8]
++ [ ] CHANGES updated
++ [ ] all CHANGES in user manual or tutorial
++ [X] upper bounds fixed
++ [ ] lower bounds fixed
++ [ ] update tested-with field
++ [ ] Haddocks up to date
++ [X] version bump
++ [ ] LICENSE updated
+*** diagrams-gtk [0/8]
++ [ ] CHANGES updated
++ [ ] all CHANGES in user manual or tutorial
++ [ ] upper bounds fixed
++ [ ] lower bounds fixed
++ [ ] update tested-with field
++ [ ] Haddocks up to date
++ [ ] version bump
++ [ ] LICENSE updated
+*** diagrams-postscript [1/8]
++ [ ] CHANGES updated
++ [ ] all CHANGES in user manual or tutorial
++ [ ] upper bounds fixed
++ [ ] lower bounds fixed
++ [ ] update tested-with field
++ [ ] Haddocks up to date
++ [X] version bump
++ [ ] LICENSE updated
+*** diagrams-pgf [0/8]
++ [ ] CHANGES updated
++ [ ] all CHANGES in user manual or tutorial
++ [ ] upper bounds fixed
++ [ ] lower bounds fixed
++ [ ] update tested-with field
++ [ ] Haddocks up to date
++ [ ] version bump
++ [ ] LICENSE updated
+*** cchalmers/texrunner [0/1]
++ [ ] upload
+*** diagrams-rasterific [2/8]
++ [ ] CHANGES updated
++ [ ] all CHANGES in user manual or tutorial
++ [X] upper bounds fixed
++ [ ] lower bounds fixed
++ [ ] update tested-with field
++ [ ] Haddocks up to date
++ [X] version bump
++ [ ] LICENSE updated
+*** diagrams-svg [0/8]
++ [ ] CHANGES updated
++ [ ] all CHANGES in user manual or tutorial
++ [ ] upper bounds fixed
++ [ ] lower bounds fixed
++ [ ] update tested-with field
++ [ ] Haddocks up to date
++ [ ] version bump
++ [ ] LICENSE updated
+*** diagrams-canvas [1/8]
++ [ ] CHANGES updated
++ [ ] all CHANGES in user manual or tutorial
++ [ ] upper bounds fixed
++ [ ] lower bounds fixed
++ [ ] update tested-with field
++ [ ] Haddocks up to date
++ [X] version bump
++ [ ] LICENSE updated
+*** diagrams-html5 [0/8]
++ [ ] CHANGES updated
++ [ ] all CHANGES in user manual or tutorial
++ [ ] upper bounds fixed
++ [ ] lower bounds fixed
++ [ ] update tested-with field
++ [ ] Haddocks up to date
++ [ ] version bump
++ [ ] LICENSE updated
+*** diagrams [0/8]
++ [ ] CHANGES updated
++ [ ] all CHANGES in user manual or tutorial
++ [ ] upper bounds fixed
++ [ ] lower bounds fixed
++ [ ] update tested-with field
++ [ ] Haddocks up to date
++ [ ] version bump
++ [ ] LICENSE updated
+*** diagrams-builder [1/8]
++ [ ] CHANGES updated
++ [ ] all CHANGES in user manual or tutorial
++ [ ] upper bounds fixed
++ [ ] lower bounds fixed
++ [ ] update tested-with field
++ [ ] Haddocks up to date
++ [X] version bump
++ [ ] LICENSE updated
+*** diagrams-haddock [0/8]
++ [ ] CHANGES updated
++ [ ] all CHANGES in user manual or tutorial
++ [ ] upper bounds fixed
++ [ ] lower bounds fixed
++ [ ] update tested-with field
++ [ ] Haddocks up to date
++ [ ] version bump
++ [ ] LICENSE updated
+*** diagrams-backend-tests [0/8]
++ [ ] CHANGES updated
++ [ ] all CHANGES in user manual or tutorial
++ [ ] upper bounds fixed
++ [ ] lower bounds fixed
++ [ ] update tested-with field
++ [ ] Haddocks up to date
++ [ ] version bump
++ [ ] LICENSE updated
+*** diagrams-doc [0/8]
++ [ ] CHANGES updated
++ [ ] all CHANGES in user manual or tutorial
++ [ ] upper bounds fixed
++ [ ] lower bounds fixed
++ [ ] update tested-with field
++ [ ] Haddocks up to date
++ [ ] version bump
++ [ ] LICENSE updated
+** TODO user manual / tutorials [1/3]
++ [X] make sure all examples build
++ [ ] make sure documentation is up-to-date
++ [ ] make sure all new features are described/mentioned in the manual
+** TODO testing [2/3]
++ [ ] check all travis tests
+  - all tests are passing, except:
+  - [ ] diagrams-doc (hakyll) (this one doesn't matter much)
+  - [ ] diagrams-builder on 7.8.1 (gcc bug?)
+  - [ ] diagrams-haddock on 7.8.1 (gcc bug?)
++ [X] run diagrams-backend-tests
++ [X] copy diagrams-backend-tests output to website
+** TODO update release page on website
+      - See previous versions for format.  Should be possible to
+        essentially paste in the relevant parts of the CHANGES files
+        for individual repos.
+** TODO diagrams-haddock [0/2]
++ [ ] make sure all diagrams-haddock examples build
++ [ ] rebuild all diagrams-haddock examples and check them in
+** TODO upload packages [1/27]
+For each package:
++ [ ] List release date in each CHANGES file
++ [ ] Apply a tag to each repo just before releasing
+        - The tag should have a name like "vX.X.X", with a v prefixed
+          to the version
+        - The tag message should mention the version and give a very
+          short comment describing the release
+        - Use a command like: git tag -a v1.3 -m "1.3 release (update for frozz-wizz)"
+
+Packages uploaded to Hackage:
++ [ ] monoid-extras
++ [X] dual-tree (0.2.0.6)
++ [ ] diagrams-core
++ [ ] active
++ [ ] diagrams-solve
++ [ ] diagrams-lib
++ [ ] SVGFonts
++ [ ] palette
++ [ ] force-layout
++ [ ] diagrams-contrib
++ [ ] statestack
++ [ ] diagrams-cairo
++ [ ] diagrams-gtk
++ [ ] diagrams-postscript
++ [ ] diagrams-pgf
++ [ ] cchalmers/texrunner
++ [ ] diagrams-rasterific
++ [ ] diagrams-svg
++ [ ] diagrams-canvas
++ [ ] diagrams-html5
++ [ ] diagrams-builder
++ [ ] diagrams-haddock
++ [ ] diagrams-backend-tests
++ [ ] diagrams-doc
++ [ ] diagrams
+** TODO regenerate combined Haddock documentation and commit to website.
+      NOTE: this must be done AFTER releasing packages to Hackage!
+      There is a script, build-haddocks.sh, in the diagrams-doc root
+      which can be used to build combined Haddocks.  See the comments
+      for more info and prerequisites.
+** TODO Rebuild and upload new website.

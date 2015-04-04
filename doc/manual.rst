@@ -5979,6 +5979,19 @@ DataFloat
 `DataFloat n` is the same as `TypeableFloat n`, but strengthens the
 `Typeable` constraint to `Data`.
 
+InSpace
++++++++
+
+`InSpace v n a` is a synonym for `(V a ~ v, N a ~ n, Additive v, Num n)`.
+That is, the type `a` belongs to the vector space `v n`, where `v` is
+`Additive` and `n` is a `Num`.
+
+SameSpace
++++++++++
+
+`SameSpace a b` is a synonym for `(V a ~ V b, N a ~ N b)`, that is,
+the types `a` and `b` belong to the same vector space `v n`.
+
 Type family reference
 ---------------------
 
