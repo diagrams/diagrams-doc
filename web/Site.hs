@@ -67,8 +67,7 @@ main = do
       route $ setExtension ".html"
       compile $ do
         pandocCompiler
-          >>= loadAndApplyTemplate "templates/index.html" defaultContext
-          >>= mainCompiler defaultContext
+          >>= indexCompiler defaultContext
 
     -- Blog ---------------------------------------
     match "blog/*.html" $ do
@@ -242,9 +241,13 @@ withMathJax = writePandoc . fmap (bottomUp latexToMathJax) . readPandoc
           = RawInline "html" ("\\[" ++ str ++ "\\]")
         latexToMathJax x = x
 
-mainCompiler :: Context String -> Item String -> Compiler (Item String)
-mainCompiler ctx = loadAndApplyTemplate 
+indexCompiler :: Context String -> Item String -> Compiler (Item String)
+indexCompiler ctx = loadAndApplyTemplate 
                       (setVersion (Just "template") $ fromFilePath "banner/banner.hs") ctx
+               >=> relativizeUrls
+
+mainCompiler :: Context String -> Item String -> Compiler (Item String)
+mainCompiler ctx = loadAndApplyTemplate "templates/default.html" ctx
                >=> relativizeUrls
 
 blogCompiler :: Context String -> Item String -> Compiler (Item String)
