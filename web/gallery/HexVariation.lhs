@@ -73,7 +73,7 @@ Finally, the tiling is created here:
 >     pos = [(centerPosition x y) | x <- [0..nb-1], y <- [0..nb-1]]
 >     angles = take ((nb+1)*(nb+1)) $ generateAngles
 
-The enveloppe of our tiling is `nb*1.5*side + 0.5*side` in width and `nb*2*h+h` in
+The envelope of our tiling is `nb*1.5*side + 0.5*side` in width and `nb*2*h+h` in
 height. We remove the "corners" to avoid "holes" at the borders of the figure
 and define the new width and height:
 
