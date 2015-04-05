@@ -11,8 +11,8 @@ height: 400
 
 
 This is a transcription in Haskell of "Hex Variation" by William Kolmyjec.
-The algorithm itself is inspired from the version by Steve Berrick (see the
-Recode project: http://recodeproject.com/artwork/v3n4hex-variation).
+The algorithm itself is inspired by [the version of Steve Berrick](http://recodeproject.com/artwork/v3n4hex-variation), from the
+[Recode project](http://recodeproject.com).
 
 > {-# LANGUAGE NoMonomorphismRestriction #-}
 >
