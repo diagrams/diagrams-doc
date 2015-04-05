@@ -77,6 +77,7 @@ main = do
       , "rm -f web/doc"
       , "rm -f web/blog"
       , "rm -f web/gallery/images"
+      , "rm -f web/banner/images"
       , "rm -rf .make"
       , "rm -rf dist"
       , "rm -f Shake"
@@ -136,6 +137,10 @@ main = do
         need [dropExtension (un out) -<.> "lhs"]
         compileImg True out
 
+      dist ("web/banner/banner" <.> imgExt) *> \out -> do
+        need [dropExtension (un out) -<.> "hs"]
+        compileBanner out
+
       _ <- addOracle $ \(GhcPkg _) -> do
         Stdout out <- command [] "ghc-pkg" ["dump"]
         return $ words out
@@ -150,6 +155,11 @@ compileImg isThumb outPath = do
       ( (if isThumb then [ "--thumb", "200" ] else [])
         ++ [(takeBaseName . takeBaseName) outPath, "../.." </> outPath]
       )
+
+compileBanner :: FilePath -> Action ()
+compileBanner outPath = do
+    systemCwdNorm "web/banner" (obj "web/banner/BuildBanner.hs.exe")
+      ([(takeBaseName . takeBaseName) outPath, "../.." </> outPath])
 
 copyFiles :: String -> Rules ()
 copyFiles dir = dist (dir ++ "/*") *> \out -> copyFile' (un out) out
@@ -181,6 +191,10 @@ requireGallery imgExt = do
       thumbs = map (dist . ("web/gallery" </>) . (-<.> ("thumb" <.> imgExt))) gallerySrc
   need (imgs ++ thumbs)
 
+requireBanner :: String -> Action ()
+requireBanner imgExt = do
+  need [dist $ "web/banner/banner" <.> imgExt]
+
 requireRst :: String -> Action ()
 requireRst dir = do
   rsts <- filter (not . (".#" `isPrefixOf`))
@@ -200,6 +214,10 @@ webRules = do
     liftIO $ createDirectoryIfMissing True "dist/web/gallery"
     command_ [] "ln" ["-s", "-f", "../../dist/web/gallery", out]
 
+  "web/banner/images" *> \out -> do
+    liftIO $ createDirectoryIfMissing True "dist/web/banner"
+    command_ [] "ln" ["-s", "-f", "../../dist/web/banner", out]
+
 runWeb :: MkMode -> String -> Action ()
 runWeb m imgExt = do
   alwaysRerun
@@ -208,6 +226,7 @@ runWeb m imgExt = do
   -- work around weird bug(?)
   command_ [] "rm" ["-f", "dist/doc/doc"]
   command_ [] "rm" ["-f", "dist/web/gallery/gallery"]
+  command_ [] "rm" ["-f", "dist/web/banner/banner"]
   command_ [] "rm" ["-f", "dist/blog/blog"]
 
   systemCwdNorm "web" (obj "web/Site.hs.exe")
@@ -220,13 +239,17 @@ needWeb :: String -> Action ()
 needWeb imgExt = do
   need [ "web/doc"
        , "web/blog"
+       , "web/banner"
        , "web/gallery/images"
+       , "web/banner/images"
        , obj "web/Site.hs.exe"
        , obj "web/gallery/BuildGallery.hs.exe"
+       , obj "web/banner/BuildBanner.hs.exe"
        ]
   requireIcons imgExt
   requireStatic
   requireGallery imgExt
+  requireBanner imgExt  
   requireRst "doc"
   requireRst "blog"
 

@@ -2180,7 +2180,7 @@ onto the line `x = 1`:math:.
 ::
 
 > sq = unitSquare # rotateBy (1/17) # translate (3 ^& 2) :: Path V2 Double
-> sqPts = concat $ pathPoints sq
+> sqPts = concat $ pathVertices sq  --XXX dont forget to change back to pathPoints
 > marks = repeat . lw none $ circle 0.05
 > spots c pts = atPoints pts (marks # fc c)
 > connectPoints pts1 pts2
