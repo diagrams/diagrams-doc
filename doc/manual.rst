@@ -5224,9 +5224,16 @@ The Canvas backend can be invoked via
 The HTML5 backend
 -----------------
 
-.. container:: todo
+Like the Canvas backend the Html5 backend targets the browser. The difference is
+that the Html5 backend creates a file of stand alone javascript and optionally
+html that can be used as a (or part of a) web page. It is based on the
+`static-canvas`:pkg: package.  It is a full
+freatured backend supporting gradients and external images.
 
-  Write about the HTML5 backend
+The Canvas backend can be invoked via
+`Diagrams.Backend.Html5.CmdLine`:mod: module, or via the
+`renderDia`/`renderHtml5` functions.
+
 
 The PGF backend
 ---------------
