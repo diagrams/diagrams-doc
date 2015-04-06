@@ -63,11 +63,26 @@ main = do
         compile copyFileCompiler
 
     -- Index --------------------------------------
-    match "index.markdown" $ do
-      route $ setExtension ".html"
+
+    match "news/*" $ do
+      compile pandocCompiler
+
+    create ["index.html"] $ do
+      route idRoute
       compile $ do
-        pandocCompiler
-          >>= indexCompiler defaultContext
+        news <- fmap (take 5) . recentFirst =<< loadAll "news/*"
+        let indexCtx =
+              listField "news" defaultContext (return news) <>
+              defaultContext
+        empty <- makeItem ""
+        tpl <- loadBody "templates/index.markdown"
+        b <- applyTemplate tpl indexCtx empty
+
+        let b' = renderMarkdownPandocWith
+                   defaultHakyllReaderOptions
+                   defaultHakyllWriterOptions
+                   b
+        indexCompiler indexCtx b'
 
     -- Blog ---------------------------------------
     match "blog/*.html" $ do
@@ -242,7 +257,7 @@ withMathJax = writePandoc . fmap (bottomUp latexToMathJax) . readPandoc
         latexToMathJax x = x
 
 indexCompiler :: Context String -> Item String -> Compiler (Item String)
-indexCompiler ctx = loadAndApplyTemplate 
+indexCompiler ctx = loadAndApplyTemplate
                       (setVersion (Just "template") $ fromFilePath "banner/banner.hs") ctx
                >=> relativizeUrls
 
