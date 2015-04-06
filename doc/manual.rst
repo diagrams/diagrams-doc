@@ -5144,12 +5144,13 @@ The Rasterific backend
 
 The Rasterific backend is built on top of the `Rasterific`:pkg: package, which
 is a pure haskell rasterizer that uses `JuicyPixels`:pkg: and `FontyFruity`:pkg:.
-This is a fully featured backend that supports almost everything that the cairo
-backend does plus a few other things. It can produce PNG, JPG, BMP, TIF and
+This is a fully featured backend that supports the full APi of the diagrams library.
+It can produce PNG, JPG, BMP, TIF and
 animated GIF images. It also supports embedded images (see `DImage`) and
 although does not yet have the text handling capabilities of cairo, it does use
 the exact text bounding box for alignment. Gradients are fully supported
-including, repeat and reflect.
+including, repeat and reflect. In addition the Rasterific backend can be used to generate
+in memory images that can be manipulated with `JuicyPixels`.
 
 The Rasterific backend can be invoked via
 `Diagrams.Backend.Rasterific.CmdLine`:mod: module, or via the
@@ -5177,7 +5178,7 @@ For specific information on how to make use of it, see the
 documentation for the `Diagrams.Backend.Cairo`:mod: module.
 
 ``diagrams-cairo`` was the first officially supported backend, and has
-quite a few advanced features that other backends do not have:
+ a few advanced features:
 
 * `Diagrams.Backend.Cairo.List`:mod: exports the `renderToList`
   function, which can convert a 2D diagram to a matrix of pixel color
@@ -5185,8 +5186,6 @@ quite a few advanced features that other backends do not have:
 
 * `Diagrams.Backend.Cairo.Ptr`:mod: exports functions for rendering
   diagrams directly to buffers in memory.
-
-* Direct output of animated GIFs.
 
 The source code for the cairo backend can be found in the
 `diagrams-cairo`:repo: repository.  The functions `renderDia` and
@@ -5213,10 +5212,14 @@ The Canvas backend
 The Canvas backend is one of the two backends that target the browser.
 Running a diagram's program that has been compiled using the Canvas backend
 will create a possibly interactive session accessed at `http://localhost:3000/`.
-The Canvas backend is native and uses the `blank-canvas`:pkg:. It is a full
+The Canvas backend is native and uses the `blank-canvas`:pkg: package. It is a full
 freatured backend supporting gradients and external images. Diagrams generated
 with the Canvas backend cannot be saved as graphics files only as programs to
 be run locally.
+
+The Canvas backend can be invoked via
+`Diagrams.Backend.Canvas.CmdLine`:mod: module, or via the
+`renderDia`/`renderCanvas` functions.
 
 The HTML5 backend
 -----------------
