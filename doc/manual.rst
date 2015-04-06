@@ -5139,18 +5139,21 @@ The source code for the SVG backend can be found in the
 `diagrams-svg`:repo: repository. Note the functions `renderDia` and
 `renderSVG` for rendering diagrams directly.
 
-The postscript backend
+The Rasterific backend
 ----------------------
 
-The postscript backend, `diagrams-postscript`:pkg:, like the SVG
-backend, is written purely in Haskell.  It outputs encapsulated
-PostScript (EPS) files.  Note that by nature, EPS does not support
-transparency.  The postscript backend also does not support embedded
-images.  However, it is fairly complete in its support for other
-features with the exception of gradients.
+The Rasterific backend is built on top of the `Rasterific`:pkg: package, which
+is a pure haskell rasterizer that uses `JuicyPixels`:pkg: and `FontyFruity`:pkg:.
+This is a fully featured backend that supports almost everything that the cairo
+backend does plus a few other things. It can produce PNG, JPG, BMP, TIF and
+animated GIF images. It also supports embedded images (see `DImage`) and
+although does not yet have the text handling capabilities of cairo, it does use
+the exact text bounding box for alignment. Gradients are fully supported
+including, repeat and reflect.
 
-The source code for the postscript backend can be found in the
-`diagrams-postscript`:repo: repository.
+The Rasterific backend can be invoked via
+`Diagrams.Backend.Rasterific.CmdLine`:mod: module, or via the
+`renderDia`/`renderRasterific` functions.
 
 The cairo backend
 -----------------
@@ -5191,6 +5194,44 @@ The source code for the cairo backend can be found in the
 `Diagrams.Backend.Cairo.CmdLine` interface for more programmatic
 control of the output.
 
+The postscript backend
+----------------------
+
+The postscript backend, `diagrams-postscript`:pkg:, like the SVG
+backend, is written purely in Haskell.  It outputs encapsulated
+PostScript (EPS) files.  Note that by nature, EPS does not support
+transparency.  The postscript backend also does not support embedded
+images.  However, it is fairly complete in its support for other
+features with the exception of gradients.
+
+The source code for the postscript backend can be found in the
+`diagrams-postscript`:repo: repository.
+
+The Canvas backend
+------------------
+
+The Canvas backend is one of the two backends that target the browser.
+Running a diagram's program that has been compiled using the Canvas backend
+will create a possibly interactive session accessed at `http://localhost:3000/`.
+The Canvas backend is native and uses the `blank-canvas`:pkg:. It is a full
+freatured backend supporting gradients and external images. Diagrams generated
+with the Canvas backend cannot be saved as graphics files only as programs to
+be run locally.
+
+The HTML5 backend
+-----------------
+
+.. container:: todo
+
+  Write about the HTML5 backend
+
+The PGF backend
+---------------
+
+.. container:: todo
+
+  Write about the PGF backend
+
 The GTK backend
 ---------------
 
@@ -5212,35 +5253,8 @@ clicked on (see `Using queries`_).
 The source code for the GTK backend can be found in the
 `diagrams-gtk`:repo: repository.
 
-The Rasterific backend
-----------------------
 
-The Rasterific backend is built on top of the `Rasterific`:pkg: package, which
-is a pure haskell rasterizer that uses `JuicyPixels`:pkg: and `FontyFruity`:pkg:.
-This is a fully featured backend that supports almost everything that the cairo
-backend does plus a few other things. It can produce PNG, JPG, BMP, TIF and
-animated GIF images. It also supports embedded images (see `DImage`) and
-although does not yet have the text handling capabilities of cairo, it does use
-the exact text bounding box for alignment. Gradients are fully supported
-including, repeat and reflect.
 
-The Rasterific backend can be invoked via
-`Diagrams.Backend.Rasterific.CmdLine`:mod: module, or via the
-`renderDia`/`renderRasterific` functions.
-
-The HTML5 backend
------------------
-
-.. container:: todo
-
-  Write about the HTML5 backend
-
-The PGF backend
----------------
-
-.. container:: todo
-
-  Write about the PGF backend
 
 Other backends
 --------------
