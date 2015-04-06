@@ -1,7 +1,7 @@
 ---
 title: About diagrams
 ---
- <p class="lead" style="text-align: center;">
+ <p class="lead" style="text-align: center; font-size: 3rem">
 <b>diagrams</b> is a <em>powerful</em>, <em>flexible</em>, <em>declarative</em> domain-specific language
 for creating vector graphics, using the
 [Haskell programming language](http://haskell.org/).
