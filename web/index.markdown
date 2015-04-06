@@ -6,13 +6,13 @@ Diagrams is a powerful, flexible, declarative domain-specific language
 for creating vector graphics, using the
 [Haskell programming language](http://haskell.org/).
  </p>
-
+ <br>
  <div class="row">
 
  <div class="col-md-4">
- <div class="panel panel-default" onclick="window.location='/doc/quickstart.html';" style="cursor: pointer;">
+ <div class="panel panel-default" onclick="window.location='/doc/quickstart.html';" style="cursor: pointer; background-color:lightgray">
  <div class="panel-body lead-panel">
- <p class="lead" style="text-align: center">Get started</p>
+ <p class="lead" style="text-align: center; font-size:2.5rem; font-weight:bold">Get started</p>
  <p style="text-align: center">
 Read the [quick start tutorial](/doc/quickstart.html) or the [user manual](http://projects.haskell.org/diagrams/doc/manual.html).
  </p>
@@ -21,9 +21,9 @@ Read the [quick start tutorial](/doc/quickstart.html) or the [user manual](http:
  </div>
 
  <div class="col-md-4">
- <div class="panel panel-default" onclick="window.location='gallery.html';" style="cursor: pointer;">
+ <div class="panel panel-default" onclick="window.location='gallery.html';" style="cursor: pointer; background-color:lightgray">
  <div class="panel-body lead-panel">
- <p class="lead" style="text-align: center">Get excited</p>
+ <p class="lead" style="text-align: center; font-size:2.5rem; font-weight:bold">Get excited</p>
  <p style="text-align: center">
  Check out the [gallery](/gallery.html) for example images and
  code.
@@ -33,9 +33,9 @@ Read the [quick start tutorial](/doc/quickstart.html) or the [user manual](http:
  </div>
 
  <div class="col-md-4">
- <div class="panel panel-default" onclick="window.location='http://webchat.freenode.net/?channels=diagrams';" style="cursor: pointer;">
+ <div class="panel panel-default" onclick="window.location='http://webchat.freenode.net/?channels=diagrams';" style="cursor: pointer; background-color:lightgray">
  <div class="panel-body lead-panel">
- <p class="lead" style="text-align: center">Get connected</p>
+ <p class="lead" style="text-align: center; font-size:2.5rem; font-weight:bold">Get connected</p>
  <p style="text-align: center">
 Drop by the [`#diagrams` IRC channel](http://webchat.freenode.net/?channels=diagrams)
 with questions, or post them to the
