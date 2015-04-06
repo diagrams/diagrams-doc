@@ -1,0 +1,7 @@
+---
+published: April 8, 2015
+---
+Diagrams 1.3 [released](/releases.html)! Look for a
+blog post soon with a rundown of new features. In the meantime, see
+the [migration guide](http://www.haskell.org/haskellwiki/Diagrams/Dev/Migrate1.3)
+for help porting existing diagrams code to 1.3.
