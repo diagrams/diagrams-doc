@@ -5,3 +5,6 @@
     max-height: 100pt;
 }
 
+.lead-panel:hover {
+  background: aliceblue;
+}
