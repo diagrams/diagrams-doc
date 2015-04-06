@@ -2,7 +2,7 @@
 title: About diagrams
 ---
  <p class="lead" style="text-align: center;">
-Diagrams is a powerful, flexible, declarative domain-specific language
+<b>diagrams</b> is a <em>powerful</em>, <em>flexible</em>, <em>declarative</em> domain-specific language
 for creating vector graphics, using the
 [Haskell programming language](http://haskell.org/).
  </p>
