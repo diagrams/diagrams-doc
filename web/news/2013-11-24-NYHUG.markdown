@@ -1,0 +1,9 @@
+---
+published: November 24, 2013
+---
+Brent gave a talk on diagrams at the [New York Haskell users'
+group](http://www.meetup.com/NY-Haskell/).  [Part 1 presents a basic
+introduction to the library](http://vimeo.com/84104226), and [part 2
+talks about mathematical abstraction and DSL
+design](http://vimeo.com/84249042).  The [slides are also
+available](http://www.cis.upenn.edu/~byorgey/pub/13-11-25-nyhaskell-diagrams.pdf).

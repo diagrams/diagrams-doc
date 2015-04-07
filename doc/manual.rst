@@ -169,8 +169,8 @@ in (by default) four other packages:
 * `diagrams-contrib`:pkg: (user-contributed extensions), and
 * `diagrams-svg`:pkg: (Haskell-native backend generating SVG files).
 
-There is also a Haskell-native `postscript backend`_, which supports
-all features except transparency, and a Haskell-native `raster
+There are several other Haskell-native backends including a `postscript backend`_,
+which supports all features except transparency, and a `raster
 backend`_ (based on the excellent `Rasterific`_ package).  To get
 them, add the ``-fps`` or ``-frasterific`` flags, respectively:
 
@@ -237,11 +237,8 @@ the following contents:
   import Diagrams.Prelude
   import Diagrams.Backend.SVG.CmdLine
   -- or:
-  -- import Diagrams.Backend.Cairo.CmdLine
-  -- or:
-  -- import Diagrams.Backend.Postscript.CmdLine
-  -- or:
-  -- import Diagrams.Backend.Rasterific.CmdLine
+  -- import Diagrams.Backend.xxx.CmdLine
+  -- where xxx is the backend you would like to use.
 
   myCircle :: Diagram B
   myCircle = circle 1
@@ -264,13 +261,16 @@ backend. All backends export `B` as an alias for themselves, so
 you can switch backends just by changing an import, without having to
 change type annotations on your diagrams; `B` simply refers to
 whichever backend is in scope.  Finally, `mainWith` takes a diagram
-and creates a command-line-driven executable for rendering it.
+and creates a command-line-driven executable for rendering it. GHC needs some
+help to determine the type of the arugment of `mainWith` so it is important to
+annotate the type of `myCircle` (or whatever argument you pass to `mainWith`)
+as `Diagram B`.
 
 To compile your program, type
 
 ::
 
-  $ ghc --make TestDiagram
+  $ ghc TestDiagram
 
 (Note that the ``$`` indicates a command prompt and should not
 actually be typed.)  Then execute ``TestDiagram`` with some
@@ -349,18 +349,18 @@ A *semigroup* consists of
 * An *associative binary operation* on the set, that is, some
   operation
 
-  `\oplus \colon S \to S \to S`:math:
+  `\diamond \colon S \to S \to S`:math:
 
   for which
 
-  `(x \oplus y) \oplus z = x \oplus (y \oplus z).`:math:
+  `(x \diamond y) \diamond z = x \diamond (y \diamond z).`:math:
 
 A *monoid* is a semigroup with the addition of
 
 * An *identity element* `i \in S`:math: which is the identity for
-  `\oplus`:math:, that is,
+  `\diamond`:math:, that is,
 
-  `x \oplus i = i \oplus x = x.`:math:
+  `x \diamond i = i \diamond x = x.`:math:
 
 In Haskell, semigroups are expressed using the `Semigroup` type class
 from the `semigroups`:pkg: package:
@@ -483,6 +483,7 @@ to apply attributes or transformations. In fact, it is nothing more
 than reverse function application with a high precedence (namely, 8):
 
 ::
+
   infixl 8 #
   x # f = f x
 
@@ -5139,18 +5140,22 @@ The source code for the SVG backend can be found in the
 `diagrams-svg`:repo: repository. Note the functions `renderDia` and
 `renderSVG` for rendering diagrams directly.
 
-The postscript backend
+The Rasterific backend
 ----------------------
 
-The postscript backend, `diagrams-postscript`:pkg:, like the SVG
-backend, is written purely in Haskell.  It outputs encapsulated
-PostScript (EPS) files.  Note that by nature, EPS does not support
-transparency.  The postscript backend also does not support embedded
-images.  However, it is fairly complete in its support for other
-features with the exception of gradients.
+The Rasterific backend is built on top of the `Rasterific`:pkg: package, which
+is a pure haskell rasterizer that uses `JuicyPixels`:pkg: and `FontyFruity`:pkg:.
+This is a fully featured backend that supports the full APi of the diagrams library.
+It can produce PNG, JPG, BMP, TIF and
+animated GIF images. It also supports embedded images (see `DImage`) and
+although does not yet have the text handling capabilities of cairo, it does use
+the exact text bounding box for alignment. Gradients are fully supported
+including, repeat and reflect. In addition the Rasterific backend can be used to generate
+in memory images that can be manipulated with `JuicyPixels`.
 
-The source code for the postscript backend can be found in the
-`diagrams-postscript`:repo: repository.
+The Rasterific backend can be invoked via
+`Diagrams.Backend.Rasterific.CmdLine`:mod: module, or via the
+`renderDia`/`renderRasterific` functions.
 
 The cairo backend
 -----------------
@@ -5174,7 +5179,7 @@ For specific information on how to make use of it, see the
 documentation for the `Diagrams.Backend.Cairo`:mod: module.
 
 ``diagrams-cairo`` was the first officially supported backend, and has
-quite a few advanced features that other backends do not have:
+ a few advanced features:
 
 * `Diagrams.Backend.Cairo.List`:mod: exports the `renderToList`
   function, which can convert a 2D diagram to a matrix of pixel color
@@ -5183,13 +5188,60 @@ quite a few advanced features that other backends do not have:
 * `Diagrams.Backend.Cairo.Ptr`:mod: exports functions for rendering
   diagrams directly to buffers in memory.
 
-* Direct output of animated GIFs.
-
 The source code for the cairo backend can be found in the
 `diagrams-cairo`:repo: repository.  The functions `renderDia` and
 `renderCairo` provide an alternative to the
 `Diagrams.Backend.Cairo.CmdLine` interface for more programmatic
 control of the output.
+
+The postscript backend
+----------------------
+
+The postscript backend, `diagrams-postscript`:pkg:, like the SVG
+backend, is written purely in Haskell.  It outputs encapsulated
+PostScript (EPS) files.  Note that by nature, EPS does not support
+transparency.  The postscript backend also does not support embedded
+images.  However, it is fairly complete in its support for other
+features with the exception of gradients.
+
+The source code for the postscript backend can be found in the
+`diagrams-postscript`:repo: repository.
+
+The Canvas backend
+------------------
+
+The Canvas backend is one of the two backends that target the browser.
+Running a diagram's program that has been compiled using the Canvas backend
+will create a possibly interactive session accessed at `http://localhost:3000/`.
+The Canvas backend is native and uses the `blank-canvas`:pkg: package. It is a full
+freatured backend supporting gradients and external images. Diagrams generated
+with the Canvas backend cannot be saved as graphics files only as programs to
+be run locally.
+
+The Canvas backend can be invoked via
+`Diagrams.Backend.Canvas.CmdLine`:mod: module, or via the
+`renderDia`/`renderCanvas` functions.
+
+The HTML5 backend
+-----------------
+
+Like the Canvas backend the Html5 backend targets the browser. The difference is
+that the Html5 backend creates a file of stand alone javascript and optionally
+html that can be used as a (or part of a) web page. It is based on the
+`static-canvas`:pkg: package.  It is a full
+freatured backend supporting gradients and external images.
+
+The Canvas backend can be invoked via
+`Diagrams.Backend.Html5.CmdLine`:mod: module, or via the
+`renderDia`/`renderHtml5` functions.
+
+
+The PGF backend
+---------------
+
+.. container:: todo
+
+  Write about the PGF backend
 
 The GTK backend
 ---------------
@@ -5212,35 +5264,8 @@ clicked on (see `Using queries`_).
 The source code for the GTK backend can be found in the
 `diagrams-gtk`:repo: repository.
 
-The Rasterific backend
-----------------------
 
-The Rasterific backend is built on top of the `Rasterific`:pkg: package, which
-is a pure haskell rasterizer that uses `JuicyPixels`:pkg: and `FontyFruity`:pkg:.
-This is a fully featured backend that supports almost everything that the cairo
-backend does plus a few other things. It can produce PNG, JPG, BMP, TIF and
-animated GIF images. It also supports embedded images (see `DImage`) and
-although does not yet have the text handling capabilities of cairo, it does use
-the exact text bounding box for alignment. Gradients are fully supported
-including, repeat and reflect.
 
-The Rasterific backend can be invoked via
-`Diagrams.Backend.Rasterific.CmdLine`:mod: module, or via the
-`renderDia`/`renderRasterific` functions.
-
-The HTML5 backend
------------------
-
-.. container:: todo
-
-  Write about the HTML5 backend
-
-The PGF backend
----------------
-
-.. container:: todo
-
-  Write about the PGF backend
 
 Other backends
 --------------
