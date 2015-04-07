@@ -10,7 +10,7 @@ for creating vector graphics, using the
  <div class="row">
 
  <div class="col-md-4">
- <div class="panel panel-default lead-panel" onclick="window.location='/doc/quickstart.html';" style="cursor: pointer; background-color: lightgray">
+ <div class="panel panel-default lead-panel" onclick="window.location='/doc/quickstart.html';">
  <div class="panel-body">
  <p class="lead text-center" style="font-weight:bold; font-size:24px">Get started</p>
  <p class="text-center">
@@ -21,8 +21,8 @@ Read the [quick start tutorial](/doc/quickstart.html) or the [user manual](http:
  </div>
 
  <div class="col-md-4">
- <div class="panel panel-default" onclick="window.location='gallery.html';" style="cursor: pointer; background-color: lightgray">
- <div class="panel-body lead-panel">
+ <div class="panel panel-default lead-panel" onclick="window.location='gallery.html';">
+ <div class="panel-body">
  <p class="lead text-center" style="font-weight:bold; font-size:24px">Get excited</p>
  <p class="text-center">
  Check out the [gallery](/gallery.html) for example images and
@@ -33,8 +33,8 @@ Read the [quick start tutorial](/doc/quickstart.html) or the [user manual](http:
  </div>
 
  <div class="col-md-4">
- <div class="panel panel-default" onclick="window.location='http://webchat.freenode.net/?channels=diagrams';" style="cursor: pointer; background-color: lightgray">
- <div class="panel-body lead-panel">
+ <div class="panel panel-default lead-panel" onclick="window.location='http://webchat.freenode.net/?channels=diagrams';">
+ <div class="panel-body">
  <p class="lead text-center" style="font-weight:bold; font-size:24px">Get connected</p>
  <p class="text-center">
 Drop by the [`#diagrams` IRC channel](http://webchat.freenode.net/?channels=diagrams)
