@@ -2,4 +2,4 @@
 
 $body$
 
-> main = mainWith (example :: Diagram B R2)
+> main = mainWith (example :: Diagram B)
