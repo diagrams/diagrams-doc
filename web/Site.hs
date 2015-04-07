@@ -223,7 +223,7 @@ main = do
                     <> constField "navbarStyle" "navbar-inverse"
                     <> constField "title" "$title$"
                     <> defaultContext
-            (readTemplate <$>) <$> loadAndApplyTemplate "templates/beforeBanner.html" ctx h
+            (readTemplate <$>) <$> loadAndApplyTemplate "templates/default.html" ctx h
 
 buildBannerCSS :: Item String -> Compiler (Item String)
 buildBannerCSS b = do
@@ -266,7 +266,7 @@ indexCompiler ctx = loadAndApplyTemplate
 
 applyDefaultTemplate :: Context String -> Item String -> Compiler (Item String)
 applyDefaultTemplate ctx s = do
-     t <- readTemplate . itemBody <$> loadAndApplyTemplate "templates/beforeBanner.html" ctx' e
+     t <- readTemplate . itemBody <$> loadAndApplyTemplate "templates/default.html" ctx' e
      applyTemplate t ctx s
   where
     ctx' =  constField "bannerCSS"  ""
