@@ -72,6 +72,7 @@ main = do
       compile $ do
         news <- fmap (take 5) . recentFirst =<< loadAll "news/*"
         let indexCtx =
+              constField "title" "About Diagrams" <>
               listField "news" defaultContext (return news) <>
               defaultContext
         empty <- makeItem ""
@@ -102,7 +103,7 @@ main = do
             list <- applyTemplateList itemTpl postCtx sorted
             makeItem list
                 >>= loadAndApplyTemplate "templates/posts.html" allPostsCtx
-                >>= loadAndApplyTemplate "templates/default.html" allPostsCtx
+                >>= applyDefaultTemplate allPostsCtx
                 >>= relativizeUrls
 
     create ["blog.html"] $ do
@@ -114,7 +115,7 @@ main = do
             list <- applyTemplateList itemTpl postCtx sorted
             makeItem list
                 >>= loadAndApplyTemplate "templates/blog.html" (blogCtx tags list)
-                >>= loadAndApplyTemplate "templates/default.html" (blogCtx tags list)
+                >>= applyDefaultTemplate (blogCtx tags list)
                 >>= relativizeUrls
 
     -- Post tags
@@ -126,7 +127,7 @@ main = do
             makeItem ""
                 >>= loadAndApplyTemplate "templates/blog.html"
                   ( constField "body" list `mappend` (blogCtx tags list))
-                >>= loadAndApplyTemplate "templates/default.html"
+                >>= applyDefaultTemplate
                   ( constField "title" title `mappend` (blogCtx tags list))
                 >>= relativizeUrls
 
@@ -211,14 +212,16 @@ main = do
     match "banner/template.css" $ do
         compile $ getResourceBody
 
-
     match "banner/banner.hs" $ version "template" $ do
         compile $ do
             b <- getResourceBody
             c <- buildBannerCSS b
-            h <- buildBannerHtml b
+            h <- buildBannerHtml b 
+                >>= loadAndApplyTemplate "templates/banner.html" defaultContext
             let ctx =  constField "bannerCSS"  (itemBody c)
                     <> constField "template" "$body$"
+                    <> constField "navbarStyle" "navbar-inverse"
+                    <> constField "title" "$title$"
                     <> defaultContext
             (readTemplate <$>) <$> loadAndApplyTemplate "templates/beforeBanner.html" ctx h
 
@@ -261,9 +264,19 @@ indexCompiler ctx = loadAndApplyTemplate
                       (setVersion (Just "template") $ fromFilePath "banner/banner.hs") ctx
                >=> relativizeUrls
 
+applyDefaultTemplate :: Context String -> Item String -> Compiler (Item String)
+applyDefaultTemplate ctx s = do
+     t <- readTemplate . itemBody <$> loadAndApplyTemplate "templates/beforeBanner.html" ctx' e
+     applyTemplate t ctx s
+  where
+    ctx' =  constField "bannerCSS"  ""
+         <> constField "template" "$body$"
+         <> constField "navbarStyle" "navbar-default"
+         <> defaultContext
+    e = const "" <$> s
+
 mainCompiler :: Context String -> Item String -> Compiler (Item String)
-mainCompiler ctx = loadAndApplyTemplate "templates/default.html" ctx
-               >=> relativizeUrls
+mainCompiler ctx = applyDefaultTemplate ctx >=> relativizeUrls
 
 blogCompiler :: Context String -> Item String -> Compiler (Item String)
 blogCompiler ctx = loadAndApplyTemplate "templates/post.html" ctx
