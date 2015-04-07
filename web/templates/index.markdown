@@ -61,3 +61,9 @@ News
  $endfor$
  </div>
  </div>
+
+ <hr />
+
+ <p class="small text-center">
+ Built with [hakyll](http://jaspervdj.be/hakyll/), [pandoc](http://johnmacfarlane.net/pandoc/), and, of course, diagrams.
+ </p>
