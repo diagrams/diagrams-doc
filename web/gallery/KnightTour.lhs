@@ -63,13 +63,12 @@ top-left square, all we need to do is negate the $y$-coordinate:
 > squareToPoint :: Square -> P2 Double
 > squareToPoint (x,y) = fromIntegral x ^& negate (fromIntegral y)
 
-To draw a knight on a given square, we load an image of a knight, size
-it to fit a square, and translate it appropriately:
+To draw a knight on a given square, we simply translate the given image appropriately:
 
 > knight :: Square -> Diagram B -> Diagram B
 > knight sq knightImg = knightImg # moveTo (squareToPoint sq)
 
-Finally, given a tour, we turn it into a path using `fromVertices`,
+Given a tour, we turn it into a path using `fromVertices`,
 and decorate the vertices with dots.
 
 > drawTour :: [Square] -> Diagram B
@@ -79,7 +78,8 @@ and decorate the vertices with dots.
 >     tourPoints = atPoints (concat . pathVertices $ tourPath) (repeat dot)
 >     dot = circle 0.05 # fc black
 
-Putting it all together:
+Finally, we load a knight image, size it to fit a square, and then put all the
+previous pieces together:
 
 > example = do
 >   res <- loadImageEmb "../../doc/static/white-knight.png"
