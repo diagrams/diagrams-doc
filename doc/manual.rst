@@ -169,8 +169,8 @@ in (by default) four other packages:
 * `diagrams-contrib`:pkg: (user-contributed extensions), and
 * `diagrams-svg`:pkg: (Haskell-native backend generating SVG files).
 
-There is also a Haskell-native `postscript backend`_, which supports
-all features except transparency, and a Haskell-native `raster
+There are several other Haskell-native backends including a `postscript backend`_,
+which supports all features except transparency, and a `raster
 backend`_ (based on the excellent `Rasterific`_ package).  To get
 them, add the ``-fps`` or ``-frasterific`` flags, respectively:
 
@@ -237,11 +237,8 @@ the following contents:
   import Diagrams.Prelude
   import Diagrams.Backend.SVG.CmdLine
   -- or:
-  -- import Diagrams.Backend.Cairo.CmdLine
-  -- or:
-  -- import Diagrams.Backend.Postscript.CmdLine
-  -- or:
-  -- import Diagrams.Backend.Rasterific.CmdLine
+  -- import Diagrams.Backend.xxx.CmdLine
+  -- where xxx is the backend you would like to use.
 
   myCircle :: Diagram B
   myCircle = circle 1
@@ -264,13 +261,16 @@ backend. All backends export `B` as an alias for themselves, so
 you can switch backends just by changing an import, without having to
 change type annotations on your diagrams; `B` simply refers to
 whichever backend is in scope.  Finally, `mainWith` takes a diagram
-and creates a command-line-driven executable for rendering it.
+and creates a command-line-driven executable for rendering it. GHC needs some
+help to determine the type of the arugment of `mainWith` so it is important to
+annotate the type of `myCircle` (or whatever argument you pass to `mainWith`)
+as `Diagram B`.
 
 To compile your program, type
 
 ::
 
-  $ ghc --make TestDiagram
+  $ ghc TestDiagram
 
 (Note that the ``$`` indicates a command prompt and should not
 actually be typed.)  Then execute ``TestDiagram`` with some
@@ -349,18 +349,18 @@ A *semigroup* consists of
 * An *associative binary operation* on the set, that is, some
   operation
 
-  `\oplus \colon S \to S \to S`:math:
+  `\diamond \colon S \to S \to S`:math:
 
   for which
 
-  `(x \oplus y) \oplus z = x \oplus (y \oplus z).`:math:
+  `(x \diamond y) \diamond z = x \diamond (y \diamond z).`:math:
 
 A *monoid* is a semigroup with the addition of
 
 * An *identity element* `i \in S`:math: which is the identity for
-  `\oplus`:math:, that is,
+  `\diamond`:math:, that is,
 
-  `x \oplus i = i \oplus x = x.`:math:
+  `x \diamond i = i \diamond x = x.`:math:
 
 In Haskell, semigroups are expressed using the `Semigroup` type class
 from the `semigroups`:pkg: package:
@@ -483,6 +483,7 @@ to apply attributes or transformations. In fact, it is nothing more
 than reverse function application with a high precedence (namely, 8):
 
 ::
+
   infixl 8 #
   x # f = f x
 
