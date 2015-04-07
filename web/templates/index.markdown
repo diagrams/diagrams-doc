@@ -45,7 +45,9 @@ with questions, or post them to the
  </div>
  </div>
 
- <form method="link" action="http://paste.hskll.org">
+ </div>
+
+ <form method="get" action="http://paste.hskll.org">
  <p class="lead text-center">
  Impatient? &nbsp;&nbsp; <button type="submit" value="clickable button" class="btn btn-primary btn-lg">Try diagrams in your browser!</button>
  </p>
