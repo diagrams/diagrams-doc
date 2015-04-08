@@ -90,15 +90,15 @@
 + [ ] Haddocks up to date
 + [X] version bump
 + [X] LICENSE updated
-*** statestack [3/8]
-+ [ ] CHANGES updated
-+ [ ] all CHANGES in user manual or tutorial
+*** statestack [8/8]
++ [X] CHANGES updated
++ [X] all CHANGES in user manual or tutorial
 + [X] upper bounds fixed
 + [X] lower bounds fixed
 + [X] update tested-with field
-+ [ ] Haddocks up to date
-+ [ ] version bump
-+ [ ] LICENSE updated
++ [X] Haddocks up to date
++ [X] version bump
++ [X] LICENSE updated
 *** diagrams-cairo [2/8]
 + [ ] CHANGES updated
 + [ ] all CHANGES in user manual or tutorial
