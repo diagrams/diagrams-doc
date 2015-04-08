@@ -2685,9 +2685,22 @@ Currently, `StrokeOpts` has two fields:
 
   By default, `queryFillRule` is set to `Winding`.
 
-.. container:: todo
+There is also a method `stroke`, which takes as input any type which
+is an instance of `ToPath`, a type class with a single method:
 
-  Write about `ToPath` type class and `stroke` function.
+.. class:: lhs
+
+::
+
+> toPath :: (Metric (V t), OrderedField (N t))
+>        => t -> Path (V t) (N t)
+
+Calling `stroke` can sometimes produce errors complaining of an
+ambiguous type, which can happen if `stroke` is called on something
+which is itself polymorphic (*e.g.* because it can be any instance of
+`TrailLike`).  The solution in this case is to use type-specific
+stroking functions like `strokePath`, `strokeTrail`, `strokeLocLine`,
+*etc.*  See the `ToPath`_ reference for more information.
 
 Offsets of segments, trails, and paths
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -2893,7 +2906,7 @@ of loops, one inside and one outside.  To express this we need a `Path`.
 > import Diagrams.TwoD.Offset
 >
 > example :: Diagram B
-> example = (p # strokeTrail # lw veryThick # lc white <> e # stroke # lw none # fc blue)
+> example = (p # strokeTrail # lw veryThick # lc white <> e # strokePath # lw none # fc blue)
 >   where
 >     p = fromVertices . map p2 $ [(0,0), (1,0.3), (2,0), (2.2,0.3)]
 >     e = expandTrail' opts 0.3 p
@@ -3024,7 +3037,7 @@ four different monoidal `TrailLike` types:
   also a diagram; hence it is interpreted as three equilateral
   triangle diagrams superimposed on one another with `atop`.
 
-* `stroke` turns `Path`\s into diagrams, so the second `ts` has type
+* `strokeP` turns `Path`\s into diagrams, so the second `ts` has type
   `Path V2 Double`.  Hence it is interpreted as three closed triangular paths
   superimposed into one three-component path, which is then stroked.
 
