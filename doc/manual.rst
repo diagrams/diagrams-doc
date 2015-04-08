@@ -5228,8 +5228,8 @@ The HTML5 backend
 Like the Canvas backend the Html5 backend targets the browser. The difference is
 that the Html5 backend creates a file of stand alone javascript and optionally
 html that can be used as a (or part of a) web page. It is based on the
-`static-canvas`:pkg: package.  It is a full
-freatured backend supporting gradients and external images.
+`static-canvas`:pkg: package.  It is a full featured backend supporting
+gradients and external images.
 
 The Canvas backend can be invoked via
 `Diagrams.Backend.Html5.CmdLine`:mod: module, or via the
@@ -5239,9 +5239,26 @@ The Canvas backend can be invoked via
 The PGF backend
 ---------------
 
-.. container:: todo
+The PGF backend, `diagrams-pgf`:pkg:, uses the TeX macro package `PGF`_
+to render diagrams. It supports most
+features of diagrams including external and (non-transplant) embedded
+images. Gradients don't support alpha colours and radial gradients'
+spread methods and positions aren't quite right. These issues will
+hopefully be fixed in the future.
 
-  Write about the PGF backend
+Since it uses TeX, it has excellent typographic capabilities,
+unfortunately these require knowledge of TeX. The backend also including
+experimental functions for querying TeX for the size of hboxes, which
+can be used as a bounding box for a diagram. There are some examples of
+usage in the `examples folder
+<https://github.com/diagrams/diagrams-pgf/tree/master/examples>`_ of the
+`github page <https://github.com/diagrams/diagrams-pgf>`_.
+
+The backend can output Latex, Context or plain Tex TeX files (PGF
+picture code only or standalone TeX files) and can call `pdflatex`,
+`context` or `pdftex` to make PDF files using `texrunner`:pkg:.
+
+.. _`PGF`: https://www.ctan.org/pkg/pgf
 
 The GTK backend
 ---------------
