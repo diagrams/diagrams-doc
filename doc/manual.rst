@@ -3801,13 +3801,14 @@ Current backend support for images can be summarized as follows:
 
 * Cairo: external ``PNG``
 * SVG: embedded ``PNG``; also ``PNG`` and ``JPG`` via a "native"
-  extension
+  extension (see below)
 * Rasterific: embedded ``PNG``, ``JPG``, ``TIF``, ``BMP`` and ``GIF``.
 * PGF: external ``PDF``, ``JPG`` and ``PNG``; embedded ``ImageRGB8``.
 
-.. container:: todo
-
-  Write about "native" images
+Besides `Embedded` and `External` images, there is a third `Native`
+type which supports image formats particular to a specific backend.
+For more information, see "Diagrams.TwoD.Image":mod: as well as the
+documentation for individual backends.
 
 Advanced tools for diagram creation
 ===================================
@@ -3949,7 +3950,9 @@ Envelope-related functions
   such as `width`, `height`, `extentX`, `extentY`, and `center2D`.
 
   It also provides functions `sized` and `sizedAs`, which can be used
-  for changing the size of an object.  For example:
+  for changing the size of an object.  For making `SizedSpec` values,
+  which are used as arguments to `sized`, you can use functions like
+  `mkWidth`, `mkHeight`, and `dims`.  For example:
 
   .. class:: dia-lhs
 
@@ -3961,11 +3964,7 @@ Envelope-related functions
   >
   > example = hrule 1 # sizedAs (shapes # scale 0.5 :: D V2 Double)
   >        <> shapes # centerX
-
-  .. container:: todo
-
-    Give examples of using `sized` with things like `mkWidth`,
-    `dims2D`, etc.
+  >        <> shapes # sized (mkWidth 2) # centerX
 
 The ``Enveloped`` class
 ~~~~~~~~~~~~~~~~~~~~~~~
