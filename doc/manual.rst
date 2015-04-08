@@ -5201,8 +5201,9 @@ The postscript backend, `diagrams-postscript`:pkg:, like the SVG
 backend, is written purely in Haskell.  It outputs encapsulated
 PostScript (EPS) files.  Note that by nature, EPS does not support
 transparency.  The postscript backend also does not support embedded
-images.  However, it is fairly complete in its support for other
-features with the exception of gradients.
+images or gradients.  However, it is fairly complete in its support for other
+features and includes experimental support for multi-page output and
+CMYK colors.
 
 The source code for the postscript backend can be found in the
 `diagrams-postscript`:repo: repository.
