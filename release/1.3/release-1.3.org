@@ -147,14 +147,14 @@
 + [X] version bump
 + [X] LICENSE updated
 *** diagrams-svg [0/8]
-+ [ ] CHANGES updated
-+ [ ] all CHANGES in user manual or tutorial
-+ [ ] upper bounds fixed
++ [X] CHANGES updated
++ [X] all CHANGES in user manual or tutorial
++ [X] upper bounds fixed
 + [ ] lower bounds fixed
-+ [ ] update tested-with field
-+ [ ] Haddocks up to date
-+ [ ] version bump
-+ [ ] LICENSE updated
++ [X] update tested-with field
++ [X] Haddocks up to date
++ [X] version bump
++ [X] LICENSE updated
 *** diagrams-canvas [1/8]
 + [ ] CHANGES updated
 + [ ] all CHANGES in user manual or tutorial
