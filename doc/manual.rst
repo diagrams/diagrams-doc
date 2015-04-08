@@ -210,9 +210,7 @@ You can also mix and match all the above flags to get multiple
 backends.  Note, if you don't want the SVG backend at all, you must
 add the ``-f-svg`` flag to disable it.
 
-.. container:: todo
-
-  Mention other backends?
+There are other backends as well; see `Rendering backends`_.
 
 `See the wiki for the most up-to-date information`_ regarding
 installation.  If you have trouble installing diagrams, feel free to
@@ -5106,17 +5104,13 @@ after the first time).
 Rendering backends
 ==================
 
-.. container:: todo
-
-  How many "officially supported" backends are there? Does it matter?
-
 Diagrams has a system for "pluggable" rendering backends, so new
 backends can be added by implementing instances of some type classes.
-There are currently four "officially supported" backends, described
-below, and several other unofficial or experimental backends.  New
-backends are welcome!  To get started, take a look at the existing
-backends for examples, read the section below on `Tools for
-backends`_, and consult the `core library reference`__.
+Some "official" backends are listed below; there are also several
+other unofficial or experimental backends.  New backends are welcome!
+To get started, take a look at the existing backends for examples,
+read the section below on `Tools for backends`_, and consult the `core
+library reference`__.
 
 __ core.html
 
