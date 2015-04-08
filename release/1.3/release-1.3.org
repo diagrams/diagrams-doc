@@ -9,7 +9,7 @@
 + [X] Haddocks up to date
 + [X] version bump
 + [X] LICENSE updated
-*** dual-tree [6/8]
+*** dual-tree [8/8]
 + [X] CHANGES updated
 + [X] all CHANGES in user manual or tutorial
 + [X] upper bounds fixed
@@ -54,7 +54,7 @@
 + [ ] Haddocks up to date
 + [X] version bump
 + [X] LICENSE updated
-*** SVGFonts [5/8]
+*** SVGFonts [6/8]
 + [X] CHANGES updated
 + [X] all CHANGES in user manual or tutorial
 + [X] upper bounds fixed
@@ -63,7 +63,7 @@
 + [ ] Haddocks up to date
 + [X] version bump
 + [X] LICENSE updated
-*** palette [0/8]
+*** palette [8/8]
 + [X] CHANGES updated
 + [X] all CHANGES in user manual or tutorial
 + [X] upper bounds fixed
@@ -137,7 +137,7 @@
 + [ ] LICENSE updated
 *** cchalmers/texrunner [0/1]
 + [ ] upload
-*** diagrams-rasterific [2/8]
+*** diagrams-rasterific [7/8]
 + [X] CHANGES updated
 + [X] all CHANGES in user manual or tutorial
 + [X] upper bounds fixed
@@ -146,33 +146,33 @@
 + [X] Haddocks up to date
 + [X] version bump
 + [X] LICENSE updated
-*** diagrams-svg [0/8]
-+ [ ] CHANGES updated
-+ [ ] all CHANGES in user manual or tutorial
-+ [ ] upper bounds fixed
+*** diagrams-svg [7/8]
++ [X] CHANGES updated
++ [X] all CHANGES in user manual or tutorial
++ [X] upper bounds fixed
 + [ ] lower bounds fixed
-+ [ ] update tested-with field
-+ [ ] Haddocks up to date
-+ [ ] version bump
-+ [ ] LICENSE updated
-*** diagrams-canvas [1/8]
-+ [ ] CHANGES updated
-+ [ ] all CHANGES in user manual or tutorial
-+ [ ] upper bounds fixed
-+ [ ] lower bounds fixed
-+ [ ] update tested-with field
-+ [ ] Haddocks up to date
++ [X] update tested-with field
++ [X] Haddocks up to date
 + [X] version bump
-+ [ ] LICENSE updated
-*** diagrams-html5 [0/8]
-+ [ ] CHANGES updated
-+ [ ] all CHANGES in user manual or tutorial
-+ [ ] upper bounds fixed
-+ [ ] lower bounds fixed
-+ [ ] update tested-with field
-+ [ ] Haddocks up to date
-+ [ ] version bump
-+ [ ] LICENSE updated
++ [X] LICENSE updated
+*** diagrams-canvas [8/8]
++ [X] CHANGES updated
++ [X] all CHANGES in user manual or tutorial
++ [X] upper bounds fixed
++ [X] lower bounds fixed
++ [X] update tested-with field
++ [X] Haddocks up to date
++ [X] version bump
++ [X] LICENSE updated
+*** diagrams-html5 [8/8]
++ [X] CHANGES updated
++ [X] all CHANGES in user manual or tutorial
++ [X] upper bounds fixed
++ [X] lower bounds fixed
++ [X] update tested-with field
++ [X] Haddocks up to date
++ [X] version bump
++ [X] LICENSE updated
 *** diagrams [0/8]
 + [ ] CHANGES updated
 + [ ] all CHANGES in user manual or tutorial
