@@ -14,7 +14,7 @@
 + [X] all CHANGES in user manual or tutorial
 + [X] upper bounds fixed
 + [X] lower bounds fixed
-+ [ ] update tested-with field
++ [X] update tested-with field
 + [X] Haddocks up to date
 + [X] version bump
 + [X] LICENSE updated
