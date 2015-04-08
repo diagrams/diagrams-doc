@@ -56,7 +56,7 @@
 + [X] LICENSE updated
 *** SVGFonts [5/8]
 + [X] CHANGES updated
-+ [ ] all CHANGES in user manual or tutorial
++ [X] all CHANGES in user manual or tutorial
 + [X] upper bounds fixed
 + [ ] lower bounds fixed
 + [X] update tested-with field
