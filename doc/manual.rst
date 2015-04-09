@@ -6,7 +6,7 @@
 .. default-role:: hs
 .. sectnum:: :depth: 2
 
-.. contents:: :depth: 2
+.. contents:: :depth: 3
 
 Preliminaries
 =============
