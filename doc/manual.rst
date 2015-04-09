@@ -2163,11 +2163,6 @@ which takes the approximation accuracy as its first argument.  For
 trails and paths, `deform` (without a prime) calls `deform'` with an
 error limit of 0.01 times the object's size.
 
-.. container:: todo
-
-  Fix all references to `trailVertices` etc., and make sure it's
-  discussed somewhere in the manual
-
 `Diagrams.TwoD.Deform`:mod: defines parallel and perspective
 projections along the principal axes in 2 dimensions. The below
 example projects the vertices of a square orthogonally onto the
@@ -2656,6 +2651,49 @@ For information on other path manipulation functions such as
 `pathFromTrail`, `pathFromLocTrail`, `pathPoints`, `pathVertices`,
 `pathOffsets`, `scalePath`, and `reversePath`, see the Haddock
 documentation in `Diagrams.Path`:mod:.
+
+Vertices vs points
+~~~~~~~~~~~~~~~~~~
+
+A *vertex* of a trail or path is defined as a sharp corner, *i.e.* a
+non-differentiable point.  This is (mostly) independent of the
+implementation of trails and paths.  A *point*, on the other hand,
+refers to the join point between two `Segment`\s, which is specific to
+the implementation of trails as collections of `Segment`\s.
+
+For computing vertices, there are a number of functions like
+`pathVertices`, `trailVertices`, `lineVertices`, and `loopVertices`.
+Each of these also has a primed variant, like `trailVertices'`, which
+takes an extra argument specifying a *tolerance*: in practice, where
+two segments join, we need some tolerance expressing how close the
+slopes of the segments must be in order to consider the join point
+differentiable (and hence not a vertex).
+
+For computing points, there are variants `pathPoints`, `trailPoints`,
+`linePoints`, and `loopPoints`.  However, these are (intentionally)
+not exported from `Diagrams.Prelude`:mod:.  To use them, import
+`Diagrams.Path`:mod: or `Diagrams.Trail`:mod:.
+
+In the example below, you can see that a circle has no vertices,
+whereas it has four points (exposing the implementation detail that a
+circle is constructed out of four Bézier segments; you should not rely
+on this!).  On the other hand, a hexagon has the six vertices you
+would expect.
+
+.. class:: dia-lhs
+
+::
+
+> import Diagrams.Trail  -- for trailPoints
+>
+> visPoints :: [P2 Double] -> Diagram B
+> visPoints pts = atPoints pts (repeat (circle 0.05 # lw none # fc blue))
+>
+> example = hsep 0.5
+>  [ circle 1 `beneath` visPoints (trailVertices (circle 1))
+>  , circle 1 `beneath` visPoints (trailPoints (circle 1))
+>  , hexagon 1 `beneath` visPoints (trailVertices (hexagon 1))
+>  ]
 
 Stroking trails and paths
 ~~~~~~~~~~~~~~~~~~~~~~~~~
