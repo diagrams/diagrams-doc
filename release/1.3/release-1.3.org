@@ -100,8 +100,8 @@
 + [X] version bump
 + [X] LICENSE updated
 *** diagrams-cairo [2/8]
-+ [ ] CHANGES updated
-+ [ ] all CHANGES in user manual or tutorial
++ [X] CHANGES updated
++ [X] all CHANGES in user manual or tutorial
 + [X] upper bounds fixed
 + [ ] lower bounds fixed
 + [ ] update tested-with field
