@@ -73,7 +73,7 @@
 + [X] version bump
 + [X] LICENSE updated
 *** force-layout [2/8]
-+ [ ] CHANGES updated
++ [X] CHANGES updated
 + [ ] all CHANGES in user manual or tutorial
 + [X] upper bounds fixed
 + [] lower bounds fixed
