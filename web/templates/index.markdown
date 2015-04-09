@@ -47,11 +47,13 @@ with questions, or post them to the
 
  </div>
 
+ <!--
  <form method="get" action="http://paste.hskll.org">
  <p class="lead text-center">
  Impatient? &nbsp;&nbsp; <button type="submit" value="clickable button" class="btn btn-primary btn-lg">Try diagrams in your browser!</button>
  </p>
  </form>
+ -->
 
  <div class="row">
  <div class="col-md-8 col-md-offset-2">
