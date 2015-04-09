@@ -3940,10 +3940,10 @@ Envelope-related functions
   surrounding the circle, and `phantom` is used to put space around
   `text "hi"` (which would otherwise take up no space).  Note that we
   could equally well have written
-  `text "hi" # withEnvelope (circle 2 :: D V2 Double)`.  Notice that the
-  `D V2 Double` annotations are necessary, since otherwise GHC will not know
-  what types to pick for `square 3` and `circle 2`.  See `No instances
-  for Backend b0 V2 Double ...`_ for more information.
+  `text "hi" # withEnvelope (circle 2 :: D V2 Double)`.  Notice that
+  the `D V2 Double` annotations are necessary, since otherwise GHC
+  will not know what types to pick for `square 3` and `circle 2`.  See
+  `Could not deduce N a0 ~ N a ...`_ for more information.
 
 * `Diagrams.TwoD.Size`:mod: provides functions for extracting
   information from the envelopes of two-dimensional diagrams,
@@ -4202,7 +4202,7 @@ associated subdiagrams.
 
 When using `names` you will often need to add a type annotation such
 as `Diagram B` to its argument, as shown below---for an explanation and
-more information, see `No instances for Backend b0 V2 Double ...`_.
+more information, see `Could not deduce N a0 ~ N a ...`_.
 
 ::
 
@@ -4438,7 +4438,7 @@ another option would be to use monomorphic constants like `String`\s
 or `Char`\s instead, or to create our own data type with a short
 constructor name that wraps an `Int`.)
 
-.. _`error about an "ambiguous type variable"`: `More ambiguity`_
+.. _`error about an "ambiguous type variable"`: `Could not deduce (IsName a0)`_
 
 Note how we also made use of `applyAll`, which takes a list of
 functions as an argument and composes them into one; that is,
@@ -4817,10 +4817,6 @@ This section is certainly incomplete; please send examples of other
 error messages to the `diagrams mailing list`_ for help interpreting
 them and/or so they can be added to this section.
 
-.. container:: todo
-
-  Update with more recent error messages!
-
 Couldn't match type `V (P2 Double)` with `V2 Double`
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -4830,28 +4826,29 @@ is not exported.  To solve this you can add an explicit import of the
 form `import Diagrams.Core.Points` to the top of your
 file.
 
-No instances for Backend b0 V2 Double ...
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Could not deduce N a0 ~ N a ...
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 There will probably come a time when you get an error message such as
 
 ::
 
-    <interactive>:1:8:
-        No instances for (Backend b0 V2 Double,
-                          Renderable Diagrams.TwoD.Ellipse.Ellipse b0)
-          arising from a use of `circle'
+    Could not deduce (N a0 ~ N a)
+    from the context ...
 
-The problem really has nothing to do with missing instances, but with
-the fact that a concrete backend type has not been filled in for `b0`
-(or whatever type variable shows up in the error message).  Such
-errors arise when you pass a diagram to a function which is
-polymorphic in its input but monomorphic in its output, such as
-`width`, `height`, `phantom`, or `names`.  Such functions compute some
-property of the diagram, or use it to accomplish some other purpose,
-but do not result in the diagram being rendered.  If the diagram does
-not have a monomorphic type, GHC complains that it cannot determine
-the diagram's type.
+    ... (lots more detail here)
+
+    Probable cause: the inferred type is ambiguous
+
+The last line is actually the most informative: the problem is that
+the types `a` and `a0` are ambiguous.  Such errors arise, for example,
+when you pass a diagram to a function which is polymorphic in its
+input but monomorphic in its output, such as `width`, `height`,
+`phantom`, or `names`.  Such functions compute some property of the
+diagram, or use it to accomplish some other purpose, but do not result
+in the diagram being rendered.  If the diagram does not have a
+monomorphic type, GHC complains that it cannot determine the diagram's
+type.
 
 For example, here is the error we get if we try to compute the
 width of a radius-1 circle:
@@ -4860,23 +4857,33 @@ width of a radius-1 circle:
 
     ghci> width (circle 1)
 
-    <interactive>:1:8:
-        No instances for (Backend b0 V2 Double,
-                          Renderable (Path V2 Double) b0)
-          arising from a use of `circle'
-        Possible fix:
-          add instance declarations for
-          (Backend b0 V2 Double, Renderable (Path V2 Double) b0)
-        In the first argument of `width', namely `(circle 1)'
-        In the expression: width (circle 1)
-        In an equation for `it': it = width (circle 1)
+    <interactive>:4:1:
+        Could not deduce (N a0 ~ N a)
+        from the context (Enveloped a,
+                          Transformable a,
+                          TrailLike a,
+                          RealFloat (N a),
+                          V a ~ V2)
+          bound by the inferred type for ‘it’:
+                     (Enveloped a, Transformable a, TrailLike a, RealFloat (N a),
+                      V a ~ V2) =>
+                     N a
+          at <interactive>:4:1-16
+        NB: ‘N’ is a type function, and may not be injective
+        The type variable ‘a0’ is ambiguous
+        When checking that ‘it’
+          has the inferred type ‘forall a.
+                                 (Enveloped a, Transformable a, TrailLike a, RealFloat (N a),
+                                  V a ~ V2) =>
+                                 N a’
+        Probable cause: the inferred type is ambiguous
 
-GHC complains that it cannot find an instance for "`Backend b0
-V2 Double`"; what is really going on is that it does not have enough
-information to decide which backend to use for the circle (hence
-the type variable `b0`).  This is annoying because *we* know that
-the choice of backend cannot possibly affect the width of the
-circle; but there is no way for GHC to know that.
+GHC complains that it cannot deduce that `N a0` is the same as `N a`;
+what is really going on is that it does not have enough information to
+decide the type of `circle 1` (for example, is it a `Trail`? A `Path`?
+A `Diagram` of some sort?).  This is annoying because *we* know that
+the choice of type cannot affect the width of the circle; but there is
+no way for GHC to know that.
 
 The special type `D` is provided for exactly this situation, defined as
 
@@ -4890,20 +4897,76 @@ The special type `D` is provided for exactly this situation, defined as
 for use in cases where GHC insists on knowing what backend to use but
 the backend really does not matter.
 
-For example, the solution to the problem with `width` is to annotate
+For example, one solution to the problem with `width` is to annotate
 `circle 1` with the type `D V2 Double`, like so:
 
 ::
 
     ghci> width (circle 1 :: D V2 Double)
-    2.0
+    1.9999999999999998
 
-More ambiguity
-~~~~~~~~~~~~~~
+Well... close enough.
 
-You may also see error messages that directly complain about
-ambiguity. For example, the code below is taken from the example in
-the section on `Qualifying names`_:
+Another common cause of "Could not deduce ``N a0 ~ N a`` ..." is
+calling the `stroke` function on a polymorphic value.  For example,
+
+::
+
+    ghci> stroke $ circle 1
+
+    interactive>:9:1:
+        Could not deduce (N s0 ~ N s)
+        from the context (Transformable s,
+                          Renderable (Path V2 (N s)) b,
+                          ToPath s,
+                          TrailLike s,
+                          Data.Typeable.Internal.Typeable (N s),
+                          RealFloat (N s),
+                          V s ~ V2)
+          bound by the inferred type for ‘it’:
+                     (Transformable s, Renderable (Path V2 (N s)) b, ToPath s,
+                      TrailLike s, Data.Typeable.Internal.Typeable (N s),
+                      RealFloat (N s), V s ~ V2) =>
+                     QDiagram b V2 (N s) Any
+          at <interactive>:9:1-17
+        NB: ‘N’ is a type function, and may not be injective
+        The type variable ‘s0’ is ambiguous
+        Expected type: QDiagram b V2 (N s) Any
+          Actual type: QDiagram b V2 (N s0) Any
+        When checking that ‘it’
+          has the inferred type ‘forall b s.
+                                 (Transformable s, Renderable (Path V2 (N s)) b, ToPath s,
+                                  TrailLike s, Data.Typeable.Internal.Typeable (N s),
+                                  RealFloat (N s), V s ~ V2) =>
+                                 QDiagram b V2 (N s) Any’
+        Probable cause: the inferred type is ambiguous
+
+The problem, again, is ambiguity: `circle 1` has a type like `(...) =>
+t`, but `stroke` has a type like `(...) => t -> QDiagram b V2 (N t)
+Any`, so GHC does not know which type to pick for `t`.  You can solve
+this by explicitly fixing a type for `t`, *e.g.* by giving a type
+signature:
+
+.. class:: lhs
+
+::
+
+> stroke $ (circle 1 :: Trail V2 Double)
+
+or by using a version of `stroke` with a more specific type,
+
+.. class:: lhs
+
+::
+
+> strokeTrail $ circle 1
+
+Could not deduce (IsName a0)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Another common source of ambiguity comes from the use of `Name`\s.
+For example, the code below is taken from the example in the section
+on `Qualifying names`_:
 
 .. class:: lhs
 
@@ -4912,22 +4975,42 @@ the section on `Qualifying names`_:
 > hsep 0.5 (zipWith (.>>) [0 .. ] (replicate 5 squares))
 
 It is an attempt to qualify the names in five copies of `squares` with
-the numbers `0`, `1`, `2`, ...  However, it generates the error shown below:
+the numbers `0`, `1`, `2`, ...  However, depending on your version of
+GHC, it may generate the terifying error shown below:
 
 ::
 
-    Ambiguous type variable `a0' in the constraints:
-      (IsName a0) arising from a use of `.>>'
-                  at /tmp/Diagram2499.lhs:13:39-42
-      (Num a0) arising from the literal `0' at /tmp/Diagram2499.lhs:13:45
-      (Enum a0) arising from the arithmetic sequence `0 .. '
-                at /tmp/Diagram2499.lhs:13:44-49
-    Probable fix: add a type signature that fixes these type variable(s)
-    In the first argument of `zipWith', namely `(.>>)'
-    In the second argument of `hsep', namely
-      `(zipWith (.>>) [0 .. ] (replicate 5 squares))'
-    In the expression:
-      hsep 0.5 (zipWith (.>>) [0 .. ] (replicate 5 squares))
+    interactive>:8:19:
+        Could not deduce (IsName a0) arising from a use of ‘.>>’
+        from the context (Monoid a,
+                          HasOrigin a,
+                          Juxtaposable a,
+                          Qualifiable a,
+                          TrailLike a,
+                          Semigroup a,
+                          V a ~ V2)
+          bound by the inferred type of
+                   it :: (Monoid a, HasOrigin a, Juxtaposable a, Qualifiable a,
+                          TrailLike a, Semigroup a, V a ~ V2) =>
+                         a
+          at <interactive>:8:1-54
+        The type variable ‘a0’ is ambiguous
+        Note: there are several potential instances:
+          instance IsName () -- Defined in ‘Diagrams.Core.Names’
+          instance (IsName a, IsName b) => IsName (a, b)
+            -- Defined in ‘Diagrams.Core.Names’
+          instance (IsName a, IsName b, IsName c) => IsName (a, b, c)
+            -- Defined in ‘Diagrams.Core.Names’
+          ...plus 10 others
+        In the first argument of ‘zipWith’, namely ‘(.>>)’
+        In the second argument of ‘hsep’, namely
+          ‘(zipWith (.>>) [0 .. ] (replicate 5 squares))’
+        In the expression:
+          hsep 0.5 (zipWith (.>>) [0 .. ] (replicate 5 squares))
+
+Actually, this is just one of *three* terrifying errors it generates,
+but the other two are similar (one complaining about `Enum` and one
+about `Num`).
 
 The problem, again, is that GHC does not know what type to choose for
 some polymorphic value.  Here, the polymorphic values in question are
