@@ -36,13 +36,13 @@
 + [X] Haddocks up to date
 + [X] version bump
 + [X] LICENSE updated
-*** diagrams-solve [6/8]
+*** diagrams-solve [8/8]
 + [X] CHANGES updated
-+ [ ] all CHANGES in user manual or tutorial
++ [X] all CHANGES in user manual or tutorial
 + [X] upper bounds fixed
 + [X] lower bounds fixed
 + [X] update tested-with field
-+ [ ] Haddocks up to date
++ [X] Haddocks up to date
 + [X] version bump
 + [X] LICENSE updated
 *** diagrams-lib [5/8]
@@ -72,14 +72,14 @@
 + [X] Haddocks up to date
 + [X] version bump
 + [X] LICENSE updated
-*** force-layout [2/8]
+*** force-layout [6/8]
 + [X] CHANGES updated
-+ [ ] all CHANGES in user manual or tutorial
++ [X] all CHANGES in user manual or tutorial
 + [X] upper bounds fixed
-+ [] lower bounds fixed
-+ [ ] update tested-with field
++ [ ] lower bounds fixed
++ [X] update tested-with field
 + [ ] Haddocks up to date
-+ [ ] version bump
++ [X] version bump
 + [X] LICENSE updated
 *** diagrams-contrib [5/8]
 + [X] CHANGES updated
