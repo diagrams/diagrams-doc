@@ -4,7 +4,7 @@ author: Brent Yorgey
 authorurl: http://www.cis.upenn.edu/~byorgey/
 date: 2011-11-15
 description: Generation of Apollonian gaskets.
-tags: appolonain, gasket
+tags: apollonain, gasket
 width: 400
 height: 400
 ---
