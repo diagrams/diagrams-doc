@@ -4171,6 +4171,46 @@ also `Traced`, as are trails, segments, and points.  Lists and tuples
 are `Traced` as long as all of their components are---the trace for a
 list or tuple is the combination of all the element traces.
 
+Path and trail intersections
+----------------------------
+
+Using the functions `intersectPointsP` and `intersectPointsT`, it is
+possible to find the points of intersection between two paths or two
+trails, respectively.  More generally, `intersectPoints` can be called
+on any two (potentially different) instances of `ToPath` (but this
+means the arguments to `intersectPoints` must have fixed types, lest
+the application generate ambiguity errors).  A simple example is shown
+below.
+
+.. class:: dia-lhs
+
+::
+
+> example :: Diagram B
+> example = mconcat
+>   [ mconcat cs # fc purple # lw none
+>   , strokeT    a # lc blue
+>   , strokeLocT b # lc red
+>   ]
+>   where
+>     a :: Trail V2 Double
+>     a = fromSegments [bézier3 a1 a2 a3]
+>     b :: Located (Trail V2 Double)
+>     b = fromSegments [bézier3 b1 b2 b3] `at` (0 ^& 2)
+>
+>     [a1,a2,a3] = map r2 [(2, 4), (4,-2), (6, 2)]
+>     [b1,b2,b3] = map r2 [(2,-4), (4, 2), (6,-2)]
+>
+>     cs = map mkCircle $ intersectPoints a b
+>
+>     mkCircle p = circle 0.05 # moveTo p
+>
+
+Note that this feature is something of a "technology preview" in
+diagrams 1.3: the API will probably change and grow in the next
+release (for example, giving a way to find the *parameters* of
+intersection points).
+
 Named subdiagrams
 -----------------
 
