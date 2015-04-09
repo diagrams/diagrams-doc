@@ -4211,6 +4211,52 @@ diagrams 1.3: the API will probably change and grow in the next
 release (for example, giving a way to find the *parameters* of
 intersection points).
 
+Here is a more complex example which uses `splitAtParam` and `adjust`
+in order to leave some space around intersection points, creating an
+"over/under" or "weaving" effect.  There will likely be easier ways to
+accomplish this included in future versions of diagrams.
+
+.. class:: dia-lhs
+
+::
+
+> import Diagrams.TwoD.Segment
+>
+> import Data.List
+> import Data.Function
+> import Data.Ord
+>
+> import Data.Foldable
+>
+> example :: Diagram B
+> example = mconcat
+>   [ strokeP (foldMap toPath as) # lc blue
+>   , strokeP (foldMap toPath bs) # lc red
+>   ]
+>   where
+>     a = mkFixedSeg $ bézier3 a1 a2 a3 `at` (0 ^& 0)
+>     b = mkFixedSeg $ bézier3 b1 b2 b3 `at` (0 ^& 2)
+>
+>     (as,bs) = weave a b
+>
+>     [a1,a2,a3] = map r2 [(2, 4), (4,-2), (6, 2)]
+>     [b1,b2,b3] = map r2 [(2,-4), (4, 2), (6,-2)]
+>
+> weave a b = go a b [] []
+>   where
+>     go a b as bs =
+>         case sortBy (comparing (view _1)) $ segmentSegment 0.01 a b of
+>             [] -> (reverse (a:as), reverse (b:bs))
+>             ((ta,_,_):_) -> let (a',a'') = splitAround 0.1 ta a
+>                             in  go b a'' bs (a':as)
+>
+> splitAround r t p = ( adjust a (opts & adjSide .~ End)
+>                     , adjust b (opts & adjSide .~ Start)
+>                     )
+>   where
+>     (a,b) = splitAtParam p t
+>     opts = def & adjMethod .~ ByAbsolute (-r)
+
 Named subdiagrams
 -----------------
 
@@ -5407,24 +5453,27 @@ The Canvas backend can be invoked via
 The PGF backend
 ---------------
 
-The PGF backend, `diagrams-pgf`:pkg:, uses the TeX macro package `PGF`_
+The PGF backend, `diagrams-pgf`:pkg:, uses the `\TeX`:math: macro package `PGF`_
 to render diagrams. It supports most
-features of diagrams including external and (non-transplant) embedded
+features of diagrams including external and (non-transparent) embedded
 images. Gradients don't support alpha colours and radial gradients'
 spread methods and positions aren't quite right. These issues will
 hopefully be fixed in the future.
 
-Since it uses TeX, it has excellent typographic capabilities,
-unfortunately these require knowledge of TeX. The backend also including
-experimental functions for querying TeX for the size of hboxes, which
-can be used as a bounding box for a diagram. There are some examples of
-usage in the `examples folder
-<https://github.com/diagrams/diagrams-pgf/tree/master/examples>`_ of the
-`github page <https://github.com/diagrams/diagrams-pgf>`_.
+Since it uses `\TeX`:math:, it has excellent typographic capabilities,
+although these require knowledge of `\TeX`:math:. Simply use the `text`
+function to produce text that will be typeset by `\TeX`:math:.  You can
+also use the `text` function with a string surrounded by dollar signs
+(`$`) to typeset mathematics.  The backend also includes experimental
+functions for querying `\TeX`:math: for the size of hboxes, which can
+be used as a bounding box for a diagram. There are some usage examples
+in the `examples folder
+<https://github.com/diagrams/diagrams-pgf/tree/master/examples>`_ of
+the `github page <https://github.com/diagrams/diagrams-pgf>`_.
 
-The backend can output Latex, Context or plain Tex TeX files (PGF
-picture code only or standalone TeX files) and can call `pdflatex`,
-`context` or `pdftex` to make PDF files using `texrunner`:pkg:.
+The backend can output LaTeX, ConTeXt or plain TeX files (PGF picture
+code only or standalone TeX files) and can call `pdflatex`, `context`
+or `pdftex` to make PDF files using `texrunner`:pkg:.
 
 .. _`PGF`: https://www.ctan.org/pkg/pgf
 
