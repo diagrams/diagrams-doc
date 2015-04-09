@@ -4211,6 +4211,52 @@ diagrams 1.3: the API will probably change and grow in the next
 release (for example, giving a way to find the *parameters* of
 intersection points).
 
+Here is a more complex example which uses `splitAtParam` and `adjust`
+in order to leave some space around intersection points, creating an
+"over/under" or "weaving" effect.  There will likely be easier ways to
+accomplish this included in future versions of diagrams.
+
+.. class:: dia-lhs
+
+::
+
+> import Diagrams.TwoD.Segment
+>
+> import Data.List
+> import Data.Function
+> import Data.Ord
+>
+> import Data.Foldable
+>
+> example :: Diagram B
+> example = mconcat
+>   [ strokeP (foldMap toPath as) # lc blue
+>   , strokeP (foldMap toPath bs) # lc red
+>   ]
+>   where
+>     a = mkFixedSeg $ bézier3 a1 a2 a3 `at` (0 ^& 0)
+>     b = mkFixedSeg $ bézier3 b1 b2 b3 `at` (0 ^& 2)
+>
+>     (as,bs) = weave a b
+>
+>     [a1,a2,a3] = map r2 [(2, 4), (4,-2), (6, 2)]
+>     [b1,b2,b3] = map r2 [(2,-4), (4, 2), (6,-2)]
+>
+> weave a b = go a b [] []
+>   where
+>     go a b as bs =
+>         case sortBy (comparing (view _1)) $ segmentSegment 0.01 a b of
+>             [] -> (reverse (a:as), reverse (b:bs))
+>             ((ta,_,_):_) -> let (a',a'') = splitAround 0.1 ta a
+>                             in  go b a'' bs (a':as)
+>
+> splitAround r t p = ( adjust a (opts & adjSide .~ End)
+>                     , adjust b (opts & adjSide .~ Start)
+>                     )
+>   where
+>     (a,b) = splitAtParam p t
+>     opts = def & adjMethod .~ ByAbsolute (-r)
+
 Named subdiagrams
 -----------------
 
