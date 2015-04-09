@@ -218,10 +218,10 @@
 + [ ] Haddocks up to date
 + [ ] version bump
 + [ ] LICENSE updated
-** TODO user manual / tutorials [1/3]
+** TODO user manual / tutorials [3/3]
 + [X] make sure all examples build
-+ [ ] make sure documentation is up-to-date
-+ [ ] make sure all new features are described/mentioned in the manual
++ [X] make sure documentation is up-to-date
++ [X] make sure all new features are described/mentioned in the manual
 ** TODO testing [2/3]
 + [ ] check all travis tests
   - all tests are passing, except:
