@@ -5453,24 +5453,27 @@ The Canvas backend can be invoked via
 The PGF backend
 ---------------
 
-The PGF backend, `diagrams-pgf`:pkg:, uses the TeX macro package `PGF`_
+The PGF backend, `diagrams-pgf`:pkg:, uses the `\TeX`:math: macro package `PGF`_
 to render diagrams. It supports most
-features of diagrams including external and (non-transplant) embedded
+features of diagrams including external and (non-transparent) embedded
 images. Gradients don't support alpha colours and radial gradients'
 spread methods and positions aren't quite right. These issues will
 hopefully be fixed in the future.
 
-Since it uses TeX, it has excellent typographic capabilities,
-unfortunately these require knowledge of TeX. The backend also including
-experimental functions for querying TeX for the size of hboxes, which
-can be used as a bounding box for a diagram. There are some examples of
-usage in the `examples folder
-<https://github.com/diagrams/diagrams-pgf/tree/master/examples>`_ of the
-`github page <https://github.com/diagrams/diagrams-pgf>`_.
+Since it uses `\TeX`:math:, it has excellent typographic capabilities,
+although these require knowledge of `\TeX`:math:. Simply use the `text`
+function to produce text that will be typeset by `\TeX`:math:.  You can
+also use the `text` function with a string surrounded by dollar signs
+(`$`) to typeset mathematics.  The backend also includes experimental
+functions for querying `\TeX`:math: for the size of hboxes, which can
+be used as a bounding box for a diagram. There are some usage examples
+in the `examples folder
+<https://github.com/diagrams/diagrams-pgf/tree/master/examples>`_ of
+the `github page <https://github.com/diagrams/diagrams-pgf>`_.
 
-The backend can output Latex, Context or plain Tex TeX files (PGF
-picture code only or standalone TeX files) and can call `pdflatex`,
-`context` or `pdftex` to make PDF files using `texrunner`:pkg:.
+The backend can output LaTeX, ConTeXt or plain TeX files (PGF picture
+code only or standalone TeX files) and can call `pdflatex`, `context`
+or `pdftex` to make PDF files using `texrunner`:pkg:.
 
 .. _`PGF`: https://www.ctan.org/pkg/pgf
 
