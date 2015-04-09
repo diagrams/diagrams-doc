@@ -1,5 +1,5 @@
 ---
-published: April 8, 2015
+published: April 9, 2015
 ---
 Diagrams 1.3 [released](/releases.html)! Look for a
 blog post soon with a rundown of new features. In the meantime, see
