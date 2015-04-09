@@ -5326,11 +5326,13 @@ Rendering backends
 Diagrams has a system for "pluggable" rendering backends, so new
 backends can be added by implementing instances of some type classes.
 Some "official" backends are listed below; there are also several
-other unofficial or experimental backends.  New backends are welcome!
-To get started, take a look at the existing backends for examples,
-read the section below on `Tools for backends`_, and consult the `core
-library reference`__.
+other unofficial or experimental backends.  See also the `list of
+backends on the wiki`_. New backends are welcome!  To get started,
+take a look at the existing backends for examples, read the section
+below on `Tools for backends`_, and consult the `core library
+reference`__.
 
+.. _`list of backends on the wiki`: https://wiki.haskell.org/Diagrams/Projects#Officially_supported_backends
 __ core.html
 
 The SVG backend
