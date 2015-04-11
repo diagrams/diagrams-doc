@@ -2068,6 +2068,14 @@ Translation
 Translation is achieved with `translate`, `translateX`, and
 `translateY`, which should be self-explanatory.
 
+Transformation matrices
++++++++++++++++++++++++
+
+Internally, diagrams does not use matrices to represent affine
+transformations, but `Diagrams.Transform.Matrix`:mod: provides several
+functions for converting back and forth between `Transformation`\s and
+their matrix representations.
+
 Conjugation
 +++++++++++
 
