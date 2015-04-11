@@ -633,7 +633,23 @@ operations on diagrams are always with respect to their local origin,
 and you can affect the way diagrams are combined with one another by
 moving their local origins.  The `showOrigin` function is provided as
 a quick way of visualizing the local origin of a diagram (also
-illustrated above).
+illustrated above).  The `showEnvelope` method can also be used to
+show (an approximation of) the envelope of a diagram.  For example:
+
+.. class:: dia-lhs
+
+::
+
+> d1, d2 :: Diagram B
+> d1 = circle 1
+> d2 = (pentagon 1 === roundedRect 1.5 0.7 0.3)
+>
+> example = hsep 1
+>   [ (d1 ||| d2)          # showEnvelope' (with & ePoints .~ 360) # showOrigin
+>   , (d1 ||| d2) # center # showEnvelope' (with & ePoints .~ 360) # showOrigin
+>   ]
+
+As you can see, the location of the origin can make a big difference!
 
 Measurement units
 -----------------
