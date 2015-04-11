@@ -2408,6 +2408,11 @@ a bit of other stuff related to the implementation of trails
 (`SegMeasure` and so on); this is explained in more detail in the
 section `Trail and path implementation details`_.
 
+Functions from the `Diagrams.TwoD.Curvature`:mod: module can be used
+to compute the curvature of segments at various points.  In future
+releases of diagrams this may be extended to tools for finding the
+curvature of trails and paths.
+
 Trails
 ~~~~~~
 
