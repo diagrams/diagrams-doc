@@ -126,17 +126,17 @@
 + [ ] Haddocks up to date
 + [X] version bump
 + [ ] LICENSE updated
-*** diagrams-pgf [0/8]
-+ [ ] CHANGES updated
-+ [ ] all CHANGES in user manual or tutorial
-+ [ ] upper bounds fixed
+*** diagrams-pgf [7/8]
++ [X] CHANGES updated
++ [X] all CHANGES in user manual or tutorial
++ [X] upper bounds fixed
 + [ ] lower bounds fixed
-+ [ ] update tested-with field
-+ [ ] Haddocks up to date
-+ [ ] version bump
-+ [ ] LICENSE updated
-*** cchalmers/texrunner [0/1]
-+ [ ] upload
++ [X] update tested-with field
++ [X] Haddocks up to date
++ [X] version bump
++ [X] LICENSE updated
+*** cchalmers/texrunner [1/1]
++ [X] upload
 *** diagrams-rasterific [7/8]
 + [X] CHANGES updated
 + [X] all CHANGES in user manual or tutorial
@@ -263,7 +263,7 @@ Packages uploaded to Hackage:
 + [ ] diagrams-gtk
 + [ ] diagrams-postscript
 + [ ] diagrams-pgf
-+ [ ] cchalmers/texrunner
++ [X] cchalmers/texrunner
 + [ ] diagrams-rasterific
 + [ ] diagrams-svg
 + [ ] diagrams-canvas
