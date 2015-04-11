@@ -45,13 +45,13 @@
 + [X] Haddocks up to date
 + [X] version bump
 + [X] LICENSE updated
-*** diagrams-lib [5/8]
+*** diagrams-lib [7/8]
 + [X] CHANGES updated
-+ [ ] all CHANGES in user manual or tutorial
++ [X] all CHANGES in user manual or tutorial
 + [X] upper bounds fixed
 + [ ] lower bounds fixed
 + [X] update tested-with field
-+ [ ] Haddocks up to date
++ [X] Haddocks up to date
 + [X] version bump
 + [X] LICENSE updated
 *** SVGFonts [6/8]
