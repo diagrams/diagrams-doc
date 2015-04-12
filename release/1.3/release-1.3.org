@@ -54,13 +54,13 @@
 + [X] Haddocks up to date
 + [X] version bump
 + [X] LICENSE updated
-*** SVGFonts [6/8]
+*** SVGFonts [7/8]
 + [X] CHANGES updated
 + [X] all CHANGES in user manual or tutorial
 + [X] upper bounds fixed
 + [ ] lower bounds fixed
 + [X] update tested-with field
-+ [ ] Haddocks up to date
++ [X] Haddocks up to date
 + [X] version bump
 + [X] LICENSE updated
 *** palette [8/8]
@@ -72,18 +72,18 @@
 + [X] Haddocks up to date
 + [X] version bump
 + [X] LICENSE updated
-*** force-layout [6/8]
+*** force-layout [7/8]
 + [X] CHANGES updated
 + [X] all CHANGES in user manual or tutorial
 + [X] upper bounds fixed
 + [ ] lower bounds fixed
 + [X] update tested-with field
-+ [ ] Haddocks up to date
++ [X] Haddocks up to date
 + [X] version bump
 + [X] LICENSE updated
-*** diagrams-contrib [5/8]
+*** diagrams-contrib [6/8]
 + [X] CHANGES updated
-+ [ ] all CHANGES in user manual or tutorial
++ [X] all CHANGES in user manual or tutorial
 + [X] upper bounds fixed
 + [ ] lower bounds fixed
 + [X] update tested-with field
