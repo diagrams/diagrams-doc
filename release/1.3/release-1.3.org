@@ -266,6 +266,7 @@ Packages uploaded to Hackage:
 + [X] cchalmers/texrunner
 + [ ] diagrams-rasterific
 + [ ] diagrams-svg
++ [X] jeffreyrosenbluth/lucid-svg
 + [ ] diagrams-canvas
 + [ ] diagrams-html5
 + [X] jeffreyrosenbluth/static-canvas
