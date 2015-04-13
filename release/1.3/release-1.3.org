@@ -108,12 +108,12 @@
 + [X] Haddocks up to date
 + [X] version bump
 + [X] LICENSE updated
-*** diagrams-gtk [7/8]
+*** diagrams-gtk [8/8]
 + [X] CHANGES updated
 + [X] all CHANGES in user manual or tutorial
 + [X] upper bounds fixed
 + [X] lower bounds fixed
-+ [ ] update tested-with field
++ [X] update tested-with field
 + [X] Haddocks up to date
 + [X] version bump
 + [X] LICENSE updated
@@ -173,15 +173,15 @@
 + [X] Haddocks up to date
 + [X] version bump
 + [X] LICENSE updated
-*** diagrams [0/8]
-+ [ ] CHANGES updated
-+ [ ] all CHANGES in user manual or tutorial
-+ [ ] upper bounds fixed
-+ [ ] lower bounds fixed
-+ [ ] update tested-with field
-+ [ ] Haddocks up to date
-+ [ ] version bump
-+ [ ] LICENSE updated
+*** diagrams [8/8]
++ [X] CHANGES updated
++ [X] all CHANGES in user manual or tutorial
++ [X] upper bounds fixed
++ [X] lower bounds fixed
++ [X] update tested-with field
++ [X] Haddocks up to date
++ [X] version bump
++ [X] LICENSE updated
 *** diagrams-builder [1/8]
 + [ ] CHANGES updated
 + [ ] all CHANGES in user manual or tutorial
