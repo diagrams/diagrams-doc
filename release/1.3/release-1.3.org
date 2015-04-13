@@ -268,6 +268,7 @@ Packages uploaded to Hackage:
 + [ ] diagrams-svg
 + [ ] diagrams-canvas
 + [ ] diagrams-html5
++ [X] jeffreyrosenbluth/static-canvas
 + [ ] diagrams-builder
 + [ ] diagrams-haddock
 + [ ] diagrams-backend-tests
