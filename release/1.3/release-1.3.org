@@ -255,7 +255,7 @@ Packages uploaded to Hackage:
 + [ ] diagrams-solve
 + [ ] diagrams-lib
 + [ ] SVGFonts
-+ [ ] palette
++ [X] palette
 + [ ] force-layout
 + [ ] diagrams-contrib
 + [ ] statestack
