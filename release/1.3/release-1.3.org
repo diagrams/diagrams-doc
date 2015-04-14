@@ -191,24 +191,15 @@
 + [X] Haddocks up to date
 + [X] version bump
 + [X] LICENSE updated
-*** diagrams-haddock [0/8]
-+ [ ] CHANGES updated
-+ [ ] all CHANGES in user manual or tutorial
-+ [ ] upper bounds fixed
+*** diagrams-haddock [6/8]
++ [X] CHANGES updated
++ [X] all CHANGES in user manual or tutorial
++ [X] upper bounds fixed
 + [ ] lower bounds fixed
-+ [ ] update tested-with field
++ [X] update tested-with field
 + [ ] Haddocks up to date
-+ [ ] version bump
-+ [ ] LICENSE updated
-*** diagrams-doc [0/8]
-+ [ ] CHANGES updated
-+ [ ] all CHANGES in user manual or tutorial
-+ [ ] upper bounds fixed
-+ [ ] lower bounds fixed
-+ [ ] update tested-with field
-+ [ ] Haddocks up to date
-+ [ ] version bump
-+ [ ] LICENSE updated
++ [X] version bump
++ [X] LICENSE updated
 ** TODO user manual / tutorials [3/3]
 + [X] make sure all examples build
 + [X] make sure documentation is up-to-date
