@@ -200,15 +200,6 @@
 + [ ] Haddocks up to date
 + [ ] version bump
 + [ ] LICENSE updated
-*** diagrams-backend-tests [0/8]
-+ [ ] CHANGES updated
-+ [ ] all CHANGES in user manual or tutorial
-+ [ ] upper bounds fixed
-+ [ ] lower bounds fixed
-+ [ ] update tested-with field
-+ [ ] Haddocks up to date
-+ [ ] version bump
-+ [ ] LICENSE updated
 *** diagrams-doc [0/8]
 + [ ] CHANGES updated
 + [ ] all CHANGES in user manual or tutorial
