@@ -191,13 +191,13 @@
 + [X] Haddocks up to date
 + [X] version bump
 + [X] LICENSE updated
-*** diagrams-haddock [6/8]
+*** diagrams-haddock [7/8]
 + [X] CHANGES updated
 + [X] all CHANGES in user manual or tutorial
 + [X] upper bounds fixed
 + [ ] lower bounds fixed
 + [X] update tested-with field
-+ [ ] Haddocks up to date
++ [X] Haddocks up to date
 + [X] version bump
 + [X] LICENSE updated
 ** TODO user manual / tutorials [3/3]
