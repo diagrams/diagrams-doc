@@ -117,15 +117,15 @@
 + [X] Haddocks up to date
 + [X] version bump
 + [X] LICENSE updated
-*** diagrams-postscript [5/8]
+*** diagrams-postscript [7/8]
 + [X] CHANGES updated
 + [X] all CHANGES in user manual or tutorial
 + [X] upper bounds fixed
 + [ ] lower bounds fixed
 + [X] update tested-with field
-+ [ ] Haddocks up to date
++ [X] Haddocks up to date
 + [X] version bump
-+ [ ] LICENSE updated
++ [X] LICENSE updated
 *** diagrams-pgf [7/8]
 + [X] CHANGES updated
 + [X] all CHANGES in user manual or tutorial
@@ -182,15 +182,15 @@
 + [X] Haddocks up to date
 + [X] version bump
 + [X] LICENSE updated
-*** diagrams-builder [5/8]
+*** diagrams-builder [7/8]
 + [X] CHANGES updated
 + [X] all CHANGES in user manual or tutorial
 + [X] upper bounds fixed
 + [ ] lower bounds fixed
 + [X] update tested-with field
-+ [ ] Haddocks up to date
++ [X] Haddocks up to date
 + [X] version bump
-+ [ ] LICENSE updated
++ [X] LICENSE updated
 *** diagrams-haddock [0/8]
 + [ ] CHANGES updated
 + [ ] all CHANGES in user manual or tutorial
