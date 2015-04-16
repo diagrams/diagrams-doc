@@ -29,7 +29,8 @@
 We define both envelopes and convex hulls in terms of \emph{support functions} and show
 that the convex hull is a (possibly proper) subset of the envelope. It turns out that our notion of
 envelope is intimately related to the diagram's support function as we will make precise below.
-In fact of we restrict ourselves to normalized vectors, there is no difference between the two concepts.
+In fact if we restrict ourselves to normalized vectors (there is no harm in doing this since the envelope
+is really a function of direction), then there is no difference between the two concepts.
 Finally we make some observations about envelopes. 
 
 \section{Envelope vs Convex Hull}
@@ -51,7 +52,7 @@ where $\langle \cdot, \cdot \rangle$ denotes inner product.
 
 Note that $q_S(v)$ may be $\infty$ for some $v$. The following theorem
 and example will help us gain some intuition about support functions.\footnote{The proof of the theorem can
-be found in \emph{Convex Sets and Their Applications} by Steven R Lay, 1982. pp. 206-209.} 
+be found in \emph{Convex Sets and Their Applications} by Steven R Lay, 1982. pp. 206-207.} 
 
 \begin{thm}
 Let $S$ be a nonempty compact convex set and let $q$ be its support function. If $v$ is any fixed point other
@@ -89,7 +90,7 @@ e_d(v) &= sup_{u \in d} \frac{\langle u, v \rangle}{\|v\|^2}\\
 \end{defn}
 
 We can create an intensional representation of the envelope by taking the union over all $v$ of the sets
-$$\{av : a \leq e_d(v)\} \cap \{ bv : b \leq e_d(-v)\}$$2
+$$\{av : a \leq e_d(v)\} \cap \{ bv : b \leq e_d(-v)\}$$
 Therefore if we can represent the convex hull as the union over all $v$ of the sets
 $$\{av : a \leq c_d(v)\} \cap \{ bv : b \leq c_d(-v)\}$$
 where $c_d(v) \leq e_d(v)$, then we will have shown the convex hull of $d$ is a subset of its envelope.
