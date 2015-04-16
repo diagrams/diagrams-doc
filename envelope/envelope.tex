@@ -8,7 +8,7 @@
 \usepackage{epstopdf}
 \usepackage{amsthm}
 \usepackage{enumerate}
-\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+%\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
 \setlength{\parindent}{0em}
 \setlength{\parskip}{1em}
 \newtheorem{defn}{Definition}
@@ -50,8 +50,8 @@ where $\langle \cdot, \cdot \rangle$ denotes inner product.
 \end{defn}
 
 Note that $q_S(v)$ may be $\infty$ for some $v$. The following theorem
-and example will help us gain some intuition.\footnote{The proof of the theorem can
-be found in \emph{Convex Sets and Their Applications} by Steven R Lay, 1982. starting on pp. 206-209.} 
+and example will help us gain some intuition about support functions.\footnote{The proof of the theorem can
+be found in \emph{Convex Sets and Their Applications} by Steven R Lay, 1982. pp. 206-209.} 
 
 \begin{thm}
 Let $S$ be a nonempty compact convex set and let $q$ be its support function. If $v$ is any fixed point other
@@ -63,8 +63,8 @@ than the origin, then the following hold:
 \end{enumerate}
 \end{thm}
 
-\textsc{Example}: Let $d$ be the diamond in $\mathbb{R}^2$ with vertices $(0, \pm1)$ and $(\pm 1, 0)$ (see Figure 1). To calculate $q(v)$ for $v = (2,1)$ 
-we need to calculate $sup_{s \in d} \langle s, v \rangle$. This maximum is easily seen to be the point $(1,0)$ and hence $q(v) = \langle (1,0),(2,1) \rangle = 2$. In
+\textsc{Example}. Let $d$ be the diamond in $\mathbb{R}^2$ with vertices $(0, \pm1)$ and $(\pm 1, 0)$ (see Figure 1). To calculate $q(v)$ for $v = (2,1)$ 
+we need to calculate $sup_{s \in d} \langle s, v \rangle$. This maximum is easily seen to be attained at the point $(1,0)$ and hence $q(v) = \langle (1,0),(2,1) \rangle = 2$. In
 general we have $q((x,y)) = \max(|x|,|y|)$.
 
 \begin{figure}[h]
