@@ -125,7 +125,7 @@ for example.
 \end{figure}
 
 The envelope of a diagram is highly dependent on its origin, Figures 3 and 4.
-As the origin moves farther away from the center of the figure, the envelope becomes a 
+As the origin moves farther away from the center of the diagram, the envelope becomes a 
 worse approximation to the convex hull.
 
 \begin{figure}[h]
@@ -148,5 +148,7 @@ worse approximation to the convex hull.
 \end{figure}
 
 Like the convex hull the shape of the bounding box is independent of the placement of the origin. This is not true of envelopes.
+Finally, I wonder if there is an efficient algorithm to calculate and extensional form of the convex hull using the variational form
+$$c_d(v) = \inf_u  \frac{q_d(u)}{\langle u, v \rangle}$$
 
 \end{document}  
