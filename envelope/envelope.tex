@@ -26,7 +26,12 @@
 \vspace{0.25in}
 
 We define both envelopes and convex hulls in terms of \emph{support functions} and show
-that the convex hull is a (possibly proper) subset of the envelope. We start with the definition of support functions
+that the convex hull is a (possibly proper) subset of the envelope. We then make some observations
+about envelopes. 
+
+\section{Envelope vs Convex Hull}
+
+We start with the definition of support functions
 on  $\mathbb{R}^n$.
 \footnote{
 The definition of a support function can be generalized to arbitrary vector spaces.
@@ -81,7 +86,7 @@ scalar $c_d(v)$. By Theorem \ref{convexhull}, for all $u$, these points must sat
 c_d(v)\langle u, v \rangle &\leq q_d(u)\\
 c_d(v) &\leq  \frac{q_d(u)}{\langle u, v \rangle}
 \end{align}
-Since the last inequality hold for all u we have,
+Since the last inequality hold for all $u$ we have,
 \begin{align}
 c_d(v) &\leq \inf_u  \frac{q_d(u)}{\langle u, v \rangle}\\
 &\leq \frac{q_d(v)}{\langle v, v \rangle} \\
@@ -98,4 +103,50 @@ c_d(v) &\leq \inf_u  \frac{q_d(u)}{\langle u, v \rangle}\\
 \end{align}
 The convex hull of $d$ is $d$ since a line segment is convex, and the only point in $d$ lying on $(1,1)$ is $(0,0)$, hence $c_d((1,1)) = 0$ which is less than 
 $1/\sqrt{2}$, thus $c_d((1,1)) < e_d((1,1))$.
+
+\section{Observations}
+
+Almost all diagrams have an envelope which is a proper subset of its convex hull, Figures 1,2 and 5.
+In some cases the bounding box is a better approximation to the convex hull than the envelope, a square
+for example.
+
+\begin{figure}[h]
+\label{s00}
+ \centering
+\includegraphics[width=150pt]{sq1_0_0.png}
+\caption{Envelope of unit square centered at $(0,0)$}
+\end{figure}
+
+\begin{figure}[h]
+\label{s05}
+ \centering
+\includegraphics[width=150pt]{sq1_05.png}
+\caption{Envelope of unit square centered at $(0,-\frac{1}{2})$}
+\end{figure}
+
+The envelope of a diagram is highly dependent on its origin, Figures 3 and 4.
+As the origin moves farther away from the center of the figure, the envelope becomes a 
+worse approximation to the convex hull.
+
+\begin{figure}[h]
+\label{s55}
+ \centering
+\includegraphics[width=150pt]{sq1_55.png}
+\caption{Envelope of unit square centered at $(\frac{1}{2}, \frac{1}{2})$}
+\end{figure}
+
+\begin{figure}[h]
+ \centering
+\includegraphics[width=150pt]{sq1_11.png}
+\caption{Envelope of unit square centered at $(5,5)$}
+\end{figure}
+
+\begin{figure}[h]
+ \centering
+\includegraphics[width=150pt]{c1_00.png}
+\caption{Envelope of an ellipse}
+\end{figure}
+
+Like the convex hull the shape of the bounding box is independent of the placement of the origin. This is not true of envelopes.
+
 \end{document}  
