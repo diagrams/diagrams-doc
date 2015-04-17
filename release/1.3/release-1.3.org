@@ -216,9 +216,9 @@
       - See previous versions for format.  Should be possible to
         essentially paste in the relevant parts of the CHANGES files
         for individual repos.
-** TODO diagrams-haddock [0/2]
-+ [ ] make sure all diagrams-haddock examples build
-+ [ ] rebuild all diagrams-haddock examples and check them in
+** TODO diagrams-haddock [2/2]
++ [X] make sure all diagrams-haddock examples build
++ [X] rebuild all diagrams-haddock examples and check them in
 ** TODO upload packages [1/27]
 For each package:
 + [ ] List release date in each CHANGES file
