@@ -1,4 +1,4 @@
-* Release checklist [5/8]
+* Release checklist [6/8]
 ** DONE go through per-package checklist
 *** monoid-extras [8/8]
 + [X] CHANGES updated
@@ -219,7 +219,7 @@
 ** DONE diagrams-haddock [2/2]
 + [X] make sure all diagrams-haddock examples build
 + [X] rebuild all diagrams-haddock examples and check them in
-** TODO upload packages [1/27]
+** TODO upload packages [23/27]
 For each package:
 + [ ] List release date in each CHANGES file
 + [ ] Apply a tag to each repo just before releasing
@@ -230,36 +230,34 @@ For each package:
         - Use a command like: git tag -a v1.3 -m "1.3 release (update for frozz-wizz)"
 
 Packages uploaded to Hackage:
-+ [ ] monoid-extras
++ [X] monoid-extras
 + [X] dual-tree (0.2.0.6)
-+ [ ] diagrams-core
-+ [ ] active
-+ [ ] diagrams-solve
-+ [ ] diagrams-lib
-+ [ ] SVGFonts
++ [X] diagrams-core
++ [X] active
++ [X] diagrams-solve
++ [X] diagrams-lib
++ [X] SVGFonts
 + [X] palette
-+ [ ] force-layout
-+ [ ] diagrams-contrib
-+ [ ] statestack
-+ [ ] diagrams-cairo
-+ [ ] diagrams-gtk
-+ [ ] diagrams-postscript
++ [X] force-layout
++ [X] diagrams-contrib
++ [X] statestack
++ [X] diagrams-cairo
++ [X] diagrams-gtk
++ [X] diagrams-postscript
 + [ ] diagrams-pgf
 + [X] cchalmers/texrunner
-+ [ ] diagrams-rasterific
-+ [ ] diagrams-svg
++ [X] diagrams-rasterific
++ [X] diagrams-svg
 + [X] jeffreyrosenbluth/lucid-svg
-+ [ ] diagrams-canvas
++ [X] diagrams-canvas
 + [ ] diagrams-html5
 + [X] jeffreyrosenbluth/static-canvas
-+ [ ] diagrams-builder
-+ [ ] diagrams-haddock
-+ [ ] diagrams-backend-tests
-+ [ ] diagrams-doc
-+ [ ] diagrams
++ [X] diagrams-builder
++ [X] diagrams-haddock
++ [X] diagrams
 ** TODO regenerate combined Haddock documentation and commit to website.
       NOTE: this must be done AFTER releasing packages to Hackage!
       There is a script, build-haddocks.sh, in the diagrams-doc root
       which can be used to build combined Haddocks.  See the comments
       for more info and prerequisites.
-** TODO Rebuild and upload new website.
+** DONE Rebuild and upload new website.
