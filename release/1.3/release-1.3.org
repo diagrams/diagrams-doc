@@ -219,7 +219,7 @@
 ** DONE diagrams-haddock [2/2]
 + [X] make sure all diagrams-haddock examples build
 + [X] rebuild all diagrams-haddock examples and check them in
-** TODO upload packages [23/27]
+** TODO upload packages [24/27]
 For each package:
 + [ ] List release date in each CHANGES file
 + [ ] Apply a tag to each repo just before releasing
@@ -250,7 +250,7 @@ Packages uploaded to Hackage:
 + [X] diagrams-svg
 + [X] jeffreyrosenbluth/lucid-svg
 + [X] diagrams-canvas
-+ [ ] diagrams-html5
++ [X] diagrams-html5
 + [X] jeffreyrosenbluth/static-canvas
 + [X] diagrams-builder
 + [X] diagrams-haddock
