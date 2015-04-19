@@ -2,6 +2,392 @@
 title: Releases
 ---
 
+diagrams 1.3: XXX
+=============================
+
+[monoid-extras-0.4.0.0](http://hackage.haskell.org/package/monoid-extras-0.4.0.0)
+
+- add derived instances where possible:
+  `Typeable`, `Data`, `Read`, `Eq`, `Ord`, `Functor`, `Foldable`, `Traversable`
+- allow `base-4.8`
+
+[dual-tree-0.2.0.6](http://hackage.haskell.org/package/dual-tree-0.2.0.6)
+
+- Allow `base-4.8`
+- Allow `monoid-extras-0.4`
+
+[active-0.2.0.0](http://hackage.haskell.org/package/active-0.2.0.0)
+
+- switch from `vector-space` to `linear`
+- allow `lens-4.9`
+- allow `base-4.8`
+
+[diagrams-core-1.3](http://hackage.haskell.org/package/diagrams-core-1.3)
+
+* **New features**
+
+    - Update for ghc-7.10.
+
+    - Switch from `vector-space` to `linear` for linear algebra.
+
+    - `OpacityGroup` annotation for setting the opacity of diagrams as
+      a group. Opacity groups can be applied with the `opacityGroup` or
+      `groupOpacity` functions.
+
+    - Added `atAttr`, `atMAttr` and `atTAttr` lenses onto the attributes
+      of styles.
+
+    - `InSpace` and `SameSpace` synonyms.
+
+    - `size` function for computing the range of an enveloped object in
+      the basis vectors.
+
+    - "Grouping" for transparent things [\#21](https://github.com/diagrams/diagrams-core/issues/21)
+
+* **Dependency/version changes**
+
+    - Allow `base-4.8`
+    - Allow `lens-4.9`
+
+* **New instances**
+
+    - `Show` instances for `Attribute` and `Style`.
+    - `Each`, `Ixed` and `At` instances for and `Style`.
+
+* **API changes**
+
+    - `Measure` has a new internal representation. `Local`, `Global`,
+      `Normalized`, and `Output` have been renamed to `local`, `global`,
+      `normalized` and `output` respectivly. `Measure` is now defined in
+      `Diagrams.Core.Measure`.
+
+    - `GTAttribute` has been removed. `MAttribute` now holds measured
+      attributes and no longer requires a `Data` instance.
+
+    - `V` is now a `* -> *` kind type family.
+
+    - New type family `N` for the number type of an object, `Scalar`
+      type family no longer exists.
+
+    - `(|>)` has moved to `(.>>)` to make room for lens's snoc operator.
+
+    - `Style`'s internal representation now uses a hashmap of the
+      `TypeRep`.
+
+* **Merged pull requests:**
+
+    - Pre 1.3 [\#82](https://github.com/diagrams/diagrams-core/pull/82) ([cchalmers](https://github.com/cchalmers))
+
+    - update for GHC-7.10, -Wall [\#81](https://github.com/diagrams/diagrams-core/pull/81) ([bergey](https://github.com/bergey))
+
+    - Style lenses [\#80](https://github.com/diagrams/diagrams-core/pull/80) ([cchalmers](https://github.com/cchalmers))
+
+    - Add isReflection [\#79](https://github.com/diagrams/diagrams-core/pull/79) ([byorgey](https://github.com/byorgey))
+
+    - Linear update [\#77](https://github.com/diagrams/diagrams-core/pull/77) ([cchalmers](https://github.com/cchalmers))
+
+    - Bump lens upper version bounds [\#74](https://github.com/diagrams/diagrams-core/pull/74) ([RyanGlScott](https://github.com/RyanGlScott))
+
+    - Add Diagram B synonym for Diagram b v n [\#73](https://github.com/diagrams/diagrams-core/pull/73) ([jeffreyrosenbluth](https://github.com/jeffreyrosenbluth))
+
+    - New stuff [\#72](https://github.com/diagrams/diagrams-core/pull/72) ([cchalmers](https://github.com/cchalmers))
+
+    - Linear [\#71](https://github.com/diagrams/diagrams-core/pull/71) ([cchalmers](https://github.com/cchalmers))
+
+    - Bump linear upper version bounds [\#75](https://github.com/diagrams/diagrams-core/pull/75) ([RyanGlScott](https://github.com/RyanGlScott))
+
+    - Change Measure back to not using Scalar v [\#65](https://github.com/diagrams/diagrams-core/pull/65) ([Mathnerd314](https://github.com/Mathnerd314))
+
+    - Remove gratuitous Data constraints [\#69](https://github.com/diagrams/diagrams-core/pull/69) ([Mathnerd314](https://github.com/Mathnerd314))
+
+[diagrams-solve-0.1](http://hackage.haskell.org/package/diagrams-solve-0.1)
+
+*Initial release*
+
+[diagrams-lib-1.3](http://hackage.haskell.org/package/diagrams-lib-1.3)
+
+* **New features**
+
+    - Native image type that backends can specify.
+
+    - Affine maps between spaces for path-like objects. A new
+      `Diagrams.ThreeD.Projections` has some helper functions for
+      orthographic and perspective projections.
+
+    - Intersections for path-like objects using Bézier clipping.
+
+    - Helper functions in `Diagrams.Matrix` for converting between
+      transforms and matrices.
+
+    - New `Diagrams` module that only exports functions defined in
+      diagrams.
+
+    - New `Direction` type. `Direction` is a vector that's forgot it's
+      magnitude. Some functions have changed their type from `R2` to
+      `Direction V2 n` to make it clear that magnitude has no effect.
+
+    - Use the [`fsnotify`](https://hackage.haskell.org/package/fsnotify)
+      package for command line looping. Command line looping now works
+      on Windows.
+
+    - `groupOpacity` function added for lowering the opacity of a
+      diagram as a whole.
+
+    - New `ToPath` class for converting path-like things to a `Path`.
+
+* **New instances**
+
+    - `Each` instances for `BoundingBox`, `Offset`, `Segment`,
+      `FixedSegment` and `Path`.
+
+    - `Reversing` instances for `Offset`, `Segment`, `FixedSegment`,
+      `Trail` and `Path`.
+
+    - `AsEmpty` instances for `BoundingBox`, `Trail` and `Path`.
+
+    - `Cons` and `Snoc` instances for `Path` and `Line`.
+
+    - New `Show` instances for `Angle`, `Segment`, `SomeColor`, `Trail'`
+      and `at`.
+
+    - `Tangent` instance for `(FixedSegment v n)`.
+
+    - `Ord` instances for `LineMiterLimit`, `LineJoin` and `LineCap`.
+
+* **New helper functions**
+
+    - `_Line` and `_Loop` prisms.
+
+    - Style lenses: `_fontSize`, `_lineWidth`, `_fillTexture`,
+      `_lineTexture`, `_opacity`, `_font`, `_lineCap`, `_lineJoin`
+      `_dashing`.
+
+    - `_SomeColor` iso and `_AC` prism onto an `AlphaColour`.
+
+    - `atPoints` function to zip points with diagrams.
+
+* **API changes**
+
+    - `Diagram` type synonym now only takes a backend token: `Diagram B`
+
+    - Types that previously had a `v` variable now have `v` and `n`.
+
+    - `Control.Lens` and `Data.Default.Class` are now exported from from
+      `Diagrams.Prelude`
+
+    - `Measure` has a new internal representation. `Local`, `Global`,
+      `Normalized`, and `Output` have been renamed to `local`, `global`,
+      `normalized` and `output` respectivly.
+
+    - `SizeSpec2D` has moved to `SizeSpec v n` in `Diagrams.SizeSpec`.
+      `Dims, Height, Width and `Absolute` have moved to `dims2D`,
+      `mkHeight`, `mkWidth` and `absolute` respectively.
+
+    - `Color` instances for `Colour` and `AlphaColour` are limited to
+      `Double` for better type inference.
+
+    - `under` has been renamed to `underT`. New `transformed`,
+      `translated`, `movedTo`, `movedFrom` and `rotated` isomorphisms to
+      use with lens's `under` function.
+
+    - `stroke` is now polymorphic. Use `strokePath` or `strokeP` to get
+      old `stroke` behaviour.
+
+    - `angleBetween` now works for any vector space, which means the
+      angle is always positive. The old behaviour can be retrieved from
+      `signedAngleBetween`
+
+    - `arc` now takes a starting `Direction` and a sweep `Angle`.
+      `arcCW` and `arcCCW` take a start and finish `Direction`.
+
+* **Dependency/version changes**
+
+    - use `linear` instead of `vector-space`
+
+* **Closed issues:**
+
+    - Perspective deformation of square vertices yields extra point [\#244](https://github.com/diagrams/diagrams-lib/issues/244)
+
+    - Local fontsize renders inconsistentl on diffrent backends [\#243](https://github.com/diagrams/diagrams-lib/issues/243)
+
+    - Factor out Diagrams.Solve into a package? [\#235](https://github.com/diagrams/diagrams-lib/issues/235)
+
+* **Merged pull requests:**
+
+    - add pathPoints and pathVertices' functions [\#245](https://github.com/diagrams/diagrams-lib/pull/245) ([byorgey](https://github.com/byorgey))
+
+    - New loop [\#242](https://github.com/diagrams/diagrams-lib/pull/242) ([cchalmers](https://github.com/cchalmers))
+
+    - Pre 1.3 [\#241](https://github.com/diagrams/diagrams-lib/pull/241) ([cchalmers](https://github.com/cchalmers))
+
+    - Update CubicSpline.hs [\#240](https://github.com/diagrams/diagrams-lib/pull/240) ([fryguybob](https://github.com/fryguybob))
+
+    - updated changes for GHC-7.10 [\#239](https://github.com/diagrams/diagrams-lib/pull/239) ([bergey](https://github.com/bergey))
+
+    - split out new package diagrams-solve [\#237](https://github.com/diagrams/diagrams-lib/pull/237) ([byorgey](https://github.com/byorgey))
+
+    - Lens style [\#236](https://github.com/diagrams/diagrams-lib/pull/236) ([cchalmers](https://github.com/cchalmers))
+
+    - Half-dart arrowheads [\#234](https://github.com/diagrams/diagrams-lib/pull/234) ([byorgey](https://github.com/byorgey))
+
+    - TwoD.Points: Needs TypeFamilies [\#233](https://github.com/diagrams/diagrams-lib/pull/233) ([bgamari](https://github.com/bgamari))
+
+    - Projections [\#229](https://github.com/diagrams/diagrams-lib/pull/229) ([cchalmers](https://github.com/cchalmers))
+
+[SVGFonts-1.5.0.0](http://hackage.haskell.org/package/SVGFonts-1.5.0.0)
+
+- Split functionality out of `ReadFont`, into `Fonts` (built-in fonts) and
+  `Text` (rendering text to Diagrams).
+- `textSVG'` and `textSVG_` now have the text as a separate argument,
+  distinct from `TextOptions`.
+- `ReadFont` does not use `unsafePerformIO` any more. `unsafePerformIO` is
+  now only used to load built-in fonts.
+
+[diagrams-contrib-1.3.0](http://hackage.haskell.org/package/diagrams-contrib-1.3.0)
+
+* **New features**
+
+    - Generalized `Diagrams.TwoD.IteratedSubset` and added more examples.
+    - New module `Diagrams.TwoD.Layout.Grid`.
+
+* **API changes**
+
+    - `Diagrams.Lens` has had a lot of its lenses removed because
+      they're either invalid lenses or are now in diagrams-lib.
+
+* **Dependency/version changes**
+
+    - Allow `diagrams-core-1.3`
+    - Allow `diarams-lib-1.3`
+    - use `linear` instead of `vector-space`
+
+[diagrams-cairo-1.3](http://hackage.haskell.org/package/diagrams-cairo-1.3)
+
+* **Fixed bugs:**
+
+    - loop when rendering text [\#59](https://github.com/diagrams/diagrams-cairo/issues/59)
+
+    - loop disables generating multiple files [\#50](https://github.com/diagrams/diagrams-cairo/issues/50)
+
+* **Dependency/version changes**
+
+    - allow `lens-4.9`
+
+* **Merged pull requests:**
+
+    - remove Text module [\#60](https://github.com/diagrams/diagrams-cairo/pull/60) ([bergey](https://github.com/bergey))
+
+    - Bump lens upper version bounds [\#58](https://github.com/diagrams/diagrams-cairo/pull/58) ([RyanGlScott](https://github.com/RyanGlScott))
+
+    - Update for new measure and size spec. [\#57](https://github.com/diagrams/diagrams-cairo/pull/57) ([cchalmers](https://github.com/cchalmers))
+
+    - Diagram B [\#56](https://github.com/diagrams/diagrams-cairo/pull/56) ([jeffreyrosenbluth](https://github.com/jeffreyrosenbluth))
+
+    - port to linear instead of vector-space [\#54](https://github.com/diagrams/diagrams-cairo/pull/54) ([bergey](https://github.com/bergey))
+
+    - loop using fsnotify [\#53](https://github.com/diagrams/diagrams-cairo/pull/53) ([bergey](https://github.com/bergey))
+
+* **Closed issues:**
+
+    - expose gifRender [\#55](https://github.com/diagrams/diagrams-cairo/issues/55)
+
+    - Problems with yellow color in gif animation [\#51](https://github.com/diagrams/diagrams-cairo/issues/51)
+
+[diagrams-gtk-1.3](http://hackage.haskell.org/package/diagrams-gtk-1.3)
+
+* Updates for diagrams 1.3:
+  - allow `base-4.8`
+  - require `diagrams-lib-1.3`
+  - require `diagrams-cairo-1.3`
+
+[diagrams-postscript-1.3.0.0](http://hackage.haskell.org/package/diagrams-postscript-1.3.0.0)
+
+- Require `diagrams-core-1.3` and `diagrams-lib-1.3`
+- allow `lens-4.9`
+- Allow `semigroups-0.16`
+
+[diagrams-rasterific-1.3.0.0](http://hackage.haskell.org/package/diagrams-rasterific-1.3.0.0)
+
+* **Merged pull requests:**
+
+    - Generalise float [\#26](https://github.com/diagrams/diagrams-rasterific/pull/26) ([cchalmers](https://github.com/cchalmers))
+
+    - Twinside master [\#25](https://github.com/diagrams/diagrams-rasterific/pull/25) ([jeffreyrosenbluth](https://github.com/jeffreyrosenbluth))
+
+    - Preparing for float text size and PointSize new type in FontyFruity. [\#24](https://github.com/diagrams/diagrams-rasterific/pull/24) ([Twinside](https://github.com/Twinside))
+
+    - Lower bound on hashable. [\#19](https://github.com/diagrams/diagrams-rasterific/pull/19) ([fryguybob](https://github.com/fryguybob))
+
+    - Hashable instance for Options. [\#18](https://github.com/diagrams/diagrams-rasterific/pull/18) ([acowley](https://github.com/acowley))
+
+    - Bump lens upper version bounds [\#14](https://github.com/diagrams/diagrams-rasterific/pull/14) ([RyanGlScott](https://github.com/RyanGlScott))
+
+    - New stuff [\#13](https://github.com/diagrams/diagrams-rasterific/pull/13) ([cchalmers](https://github.com/cchalmers))
+
+    - Diagram B [\#12](https://github.com/diagrams/diagrams-rasterific/pull/12) ([jeffreyrosenbluth](https://github.com/jeffreyrosenbluth))
+
+    - Linear [\#10](https://github.com/diagrams/diagrams-rasterific/pull/10) ([cchalmers](https://github.com/cchalmers))
+
+    - use defaultLoopRender for looping [\#9](https://github.com/diagrams/diagrams-rasterific/pull/9) ([bergey](https://github.com/bergey))
+
+    - call defaultAnimMainRender with ASetter for loop options [\#8](https://github.com/diagrams/diagrams-rasterific/pull/8) ([bergey](https://github.com/bergey))
+
+[diagrams-svg-1.3](http://hackage.haskell.org/package/diagrams-svg-1.3)
+
+* **New features**
+
+    - User settable ID prefixes
+
+    - Support opacity group
+
+    - Fix clipping bug (Issue #70)
+
+* **Internal Changes**
+
+    - Switch rendering engine from `blaze-svg` to `lucid-svg`
+
+    - Use `fsnotify` for looping
+
+    - Add defs tags for clips and gradients
+
+* **Bug Fixes**
+
+    - Clipping broken [\#70](https://github.com/diagrams/diagrams-svg/issues/70)
+
+    - Font size not applied properly in composite diagram [\#66](https://github.com/diagrams/diagrams-svg/issues/66)
+
+* **Implemented enhancements**
+
+    - Put `clip path`, `gradients`, etc in defs tag. [\#73](https://github.com/diagrams/diagrams-svg/issues/73)
+
+* **Merged pull requests:**
+
+    - State [\#74](https://github.com/diagrams/diagrams-svg/pull/74) ([cchalmers](https://github.com/cchalmers))
+
+    - Bump base upper bound [\#72](https://github.com/diagrams/diagrams-svg/pull/72) ([bgamari](https://github.com/bgamari))
+
+    - Allow user to set ID prefixes [\#71](https://github.com/diagrams/diagrams-svg/pull/71) ([mightybyte](https://github.com/mightybyte))
+
+    - Lucid [\#69](https://github.com/diagrams/diagrams-svg/pull/69) ([jeffreyrosenbluth](https://github.com/jeffreyrosenbluth))
+
+    - Use fsnotify for looping, via diagrams-lib [\#67](https://github.com/diagrams/diagrams-svg/pull/67) ([bergey](https://github.com/bergey))
+
+[diagrams-canvas-1.3](http://hackage.haskell.org/package/diagrams-canvas-1.3)
+
+*Initial (official) release*
+
+[diagrams-builder-0.7.0.0](http://hackage.haskell.org/package/diagrams-builder-0.7.0.0)
+
+- Update to `diagrams-lib-1.3`.
+- Add `diagrams-rasterific` support.
+- Add support for `DIAGRAMS_SANDBOX` environment variable.
+- Allow `exceptions-0.8`
+- Fix `diagrams-latex` directory creation on Windows
+
+[diagrams-haddock-0.3](http://hackage.haskell.org/package/diagrams-haddock-0.3)
+
+- Allow `diagrams-builder-0.7`, `diagrams-lib-1.3`, and `diagrams-svg-1.3`
+
 diagrams 1.2: 2 June 2014
 =========================
 
@@ -47,7 +433,7 @@ diagrams 1.2: 2 June 2014
     - Update `adjustDia` to return a transformation, not just a scale factor.
       Add `renderDiaT` which returns a transformation (for use by end
       users, e.g. to convert output coordinates back into local coordinates).
-      
+
 [diagrams-lib-1.2](http://hackage.haskell.org/package/diagrams-lib-1.2)
 
 * **New features**
@@ -124,7 +510,7 @@ diagrams 1.2: 2 June 2014
 
     - Allow `semigroups-0.15`
     - Allow `optparse-applicative-0.9.0`
-  
+
 [diagrams-cairo-1.2](http://hackage.haskell.org/package/diagrams-cairo-1.2)
 
 * **New features**
@@ -140,13 +526,13 @@ diagrams 1.2: 2 June 2014
     - Allow `lens-4.2`
     - Allow `mtl-2.2`
     - Allow `transformers-0.4`
-  
+
 [diagrams-postscript-1.1](http://hackage.haskell.org/package/diagrams-postscript-1.1)
 
   - Changes to reflect `Measure` refactoring.
   - Allow `diagrams-core-1.2` and `diagrams-lib-1.2`
   - Allow `semigroups-0.15`
-    
+
 [diagrams-svg-1.1](http://hackage.haskell.org/package/diagrams-svg-1.1)
 
 * **New features**
@@ -165,11 +551,11 @@ diagrams 1.2: 2 June 2014
 
     - Substantial refactoring of `Backend` instance to support changes in
       `Diagrams.Core`.
-      
+
 [diagrams-rasterific-0.1](http://hackage.haskell.org/package/diagrams-rasterific_0.1)
 
   *Initial release*
-      
+
 [diagrams-builder 0.5.0.10](http://hackage.haskell.org/package/diagrams-builder-0.5,0,10)
 
   - Module parse error messages now include the error location
