@@ -2,8 +2,8 @@
 title: Releases
 ---
 
-diagrams 1.3: XXX
-=============================
+diagrams 1.3: 19 April, 2015
+============================
 
 [monoid-extras-0.4.0.0](http://hackage.haskell.org/package/monoid-extras-0.4.0.0)
 
