@@ -1,4 +1,4 @@
-* Release checklist [6/8]
+* Release checklist [7/8]
 ** DONE go through per-package checklist
 *** monoid-extras [8/8]
 + [X] CHANGES updated
@@ -219,15 +219,15 @@
 ** DONE diagrams-haddock [2/2]
 + [X] make sure all diagrams-haddock examples build
 + [X] rebuild all diagrams-haddock examples and check them in
-** TODO upload packages [24/27]
+** DONE upload packages [27/27]
 For each package:
-+ [ ] List release date in each CHANGES file
-+ [ ] Apply a tag to each repo just before releasing
-        - The tag should have a name like "vX.X.X", with a v prefixed
-          to the version
-        - The tag message should mention the version and give a very
-          short comment describing the release
-        - Use a command like: git tag -a v1.3 -m "1.3 release (update for frozz-wizz)"
++ [X] List release date in each CHANGES file
++ [X] Apply a tag to each repo just before releasing
+  - The tag should have a name like "vX.X.X", with a v prefixed
+    to the version
+  - The tag message should mention the version and give a very
+    short comment describing the release
+  - Use a command like: git tag -a v1.3 -m "1.3 release (update for frozz-wizz)"
 
 Packages uploaded to Hackage:
 + [X] monoid-extras
@@ -244,7 +244,7 @@ Packages uploaded to Hackage:
 + [X] diagrams-cairo
 + [X] diagrams-gtk
 + [X] diagrams-postscript
-+ [ ] diagrams-pgf
++ [X] diagrams-pgf
 + [X] cchalmers/texrunner
 + [X] diagrams-rasterific
 + [X] diagrams-svg
