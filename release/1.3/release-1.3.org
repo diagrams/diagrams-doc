@@ -1,4 +1,4 @@
-* Release checklist [7/8]
+* Release checklist [8/8]
 ** DONE go through per-package checklist
 *** monoid-extras [8/8]
 + [X] CHANGES updated
@@ -255,9 +255,14 @@ Packages uploaded to Hackage:
 + [X] diagrams-builder
 + [X] diagrams-haddock
 + [X] diagrams
-** TODO regenerate combined Haddock documentation and commit to website.
+** DONE regenerate combined Haddock documentation and commit to website.
       NOTE: this must be done AFTER releasing packages to Hackage!
       There is a script, build-haddocks.sh, in the diagrams-doc root
       which can be used to build combined Haddocks.  See the comments
       for more info and prerequisites.
 ** DONE Rebuild and upload new website.
+** TODO Advertise
+  + [ ] Blog post
+  + [ ] Email to haskell-cafe, haskell-art
+  + [ ] Reddit
+  + [ ] Other media (Google+, twitter, etc.)
