@@ -37,13 +37,13 @@
 <a name="line-28"></a><a name="Action"></a><span class='hs-comment'>--</span>
 <a name="line-29"></a><a name="Action"></a><span class='hs-comment'>--   * @act mempty = id@</span>
 <a name="line-30"></a><a name="Action"></a><span class='hs-comment'>--</span>
-<a name="line-31"></a><a name="Action"></a><span class='hs-comment'>--   * @act (m1 ``mappend`` m2) = act m1 . act m2@</span>
+<a name="line-31"></a><a name="Action"></a><span class='hs-comment'>--   * @act (m1 \`mappend\` m2) = act m1 . act m2@</span>
 <a name="line-32"></a><a name="Action"></a><span class='hs-comment'>--</span>
 <a name="line-33"></a><a name="Action"></a><span class='hs-comment'>--   Semigroup instances are required to satisfy the second law but with</span>
 <a name="line-34"></a><a name="Action"></a><span class='hs-comment'>--   ('&lt;&gt;') instead of 'mappend'.  Additionally, if the type @s@ has</span>
 <a name="line-35"></a><a name="Action"></a><span class='hs-comment'>--   any algebraic structure, @act m@ should be a homomorphism.  For</span>
 <a name="line-36"></a><a name="Action"></a><span class='hs-comment'>--   example, if @s@ is also a monoid we should have @act m mempty =</span>
-<a name="line-37"></a><a name="Action"></a><span class='hs-comment'>--   mempty@ and @act m (s1 ``mappend`` s2) = (act m s1) ``mappend``</span>
+<a name="line-37"></a><a name="Action"></a><span class='hs-comment'>--   mempty@ and @act m (s1 \`mappend\` s2) = (act m s1) \`mappend\`</span>
 <a name="line-38"></a><a name="Action"></a><span class='hs-comment'>--   (act m s2)@.</span>
 <a name="line-39"></a><a name="Action"></a><span class='hs-comment'>--</span>
 <a name="line-40"></a><a name="Action"></a><span class='hs-comment'>--   By default, @act = const id@, so for a type @M@ which should have</span>

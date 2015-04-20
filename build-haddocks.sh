@@ -20,8 +20,8 @@ cd ..
 # cabal install cabal-install/ -j8
 # cd ../..
 cabal install -j8 gtk2hs-buildtools
-cabal install -j8 diagrams diagrams-postscript diagrams-cairo diagrams-gtk diagrams-rasterific diagrams-builder diagrams-haddock SVGFonts palette
-for f in vector-space-points monoid-extras dual-tree active core lib svg postscript cairo gtk rasterific contrib SVGFonts builder haddock palette
+cabal install -j8 --constraint='transformers < 0.4' diagrams diagrams-postscript diagrams-cairo diagrams-gtk diagrams-rasterific diagrams-canvas diagrams-builder diagrams-haddock SVGFonts palette
+for f in monoid-extras dual-tree active core solve lib svg postscript cairo gtk rasterific canvas contrib SVGFonts builder haddock palette
 do
   cd $f
   cabal sandbox delete  # be sure to remove any sandboxes so we use the global hsenv one instead
@@ -33,7 +33,7 @@ darcs get --lazy http://hub.darcs.net/byorgey/hproj
 cabal install hproj/ -j8
 cd ..
 mkdir -p haddocks-tmp/haddock
-hproj doc -o haddocks-tmp/haddock -t 'The diagrams framework' vector-space-points monoid-extras dual-tree active core lib svg postscript cairo gtk contrib SVGFonts builder haddock palette
+hproj doc -o haddocks-tmp/haddock -t 'The diagrams framework' monoid-extras dual-tree active core solve lib svg postscript cairo gtk rasterific canvas contrib SVGFonts builder haddock palette
 mkdir -p haddocks-tmp/haddock/diagrams
 for f in core lib contrib SVGFonts haddock
 do

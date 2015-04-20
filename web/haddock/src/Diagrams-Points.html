@@ -7,41 +7,43 @@
 <link type='text/css' rel='stylesheet' href='hscolour.css' />
 </head>
 <body>
-<pre><a name="line-1"></a><span class='hs-comment'>{-# LANGUAGE FlexibleContexts #-}</span>
-<a name="line-2"></a><span class='hs-comment'>{-# LANGUAGE TypeFamilies     #-}</span>
-<a name="line-3"></a>
-<a name="line-4"></a><span class='hs-comment'>-----------------------------------------------------------------------------</span>
-<a name="line-5"></a><span class='hs-comment'>-- |</span>
-<a name="line-6"></a><span class='hs-comment'>-- Module      :  Diagrams.Points</span>
-<a name="line-7"></a><span class='hs-comment'>-- Copyright   :  (c) 2011 diagrams-lib team (see LICENSE)</span>
-<a name="line-8"></a><span class='hs-comment'>-- License     :  BSD-style (see LICENSE)</span>
-<a name="line-9"></a><span class='hs-comment'>-- Maintainer  :  diagrams-discuss@googlegroups.com</span>
+<pre><a name="line-1"></a><span class='hs-comment'>-----------------------------------------------------------------------------</span>
+<a name="line-2"></a><span class='hs-comment'>-- |</span>
+<a name="line-3"></a><span class='hs-comment'>-- Module      :  Diagrams.Points</span>
+<a name="line-4"></a><span class='hs-comment'>-- Copyright   :  (c) 2011 diagrams-lib team (see LICENSE)</span>
+<a name="line-5"></a><span class='hs-comment'>-- License     :  BSD-style (see LICENSE)</span>
+<a name="line-6"></a><span class='hs-comment'>-- Maintainer  :  diagrams-discuss@googlegroups.com</span>
+<a name="line-7"></a><span class='hs-comment'>--</span>
+<a name="line-8"></a><span class='hs-comment'>-- Points in space.  For more tools for working with points and</span>
+<a name="line-9"></a><span class='hs-comment'>-- vectors, see "Linear.Affine".</span>
 <a name="line-10"></a><span class='hs-comment'>--</span>
-<a name="line-11"></a><span class='hs-comment'>-- Points in space.  For more tools for working with points and</span>
-<a name="line-12"></a><span class='hs-comment'>-- vectors, see "Data.AffineSpace" and "Diagrams.Coordinates".</span>
-<a name="line-13"></a><span class='hs-comment'>--</span>
-<a name="line-14"></a><span class='hs-comment'>-----------------------------------------------------------------------------</span>
-<a name="line-15"></a>
-<a name="line-16"></a><span class='hs-keyword'>module</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Points</span>
-<a name="line-17"></a>       <span class='hs-layout'>(</span> <span class='hs-comment'>-- * Points</span>
-<a name="line-18"></a>         <span class='hs-conid'>Point</span><span class='hs-layout'>,</span> <span class='hs-varid'>origin</span><span class='hs-layout'>,</span> <span class='hs-layout'>(</span><span class='hs-varop'>*.</span><span class='hs-layout'>)</span>
-<a name="line-19"></a>
-<a name="line-20"></a>         <span class='hs-comment'>-- * Point-related utilities</span>
-<a name="line-21"></a>       <span class='hs-layout'>,</span> <span class='hs-varid'>centroid</span>
-<a name="line-22"></a>       <span class='hs-layout'>,</span> <span class='hs-varid'>pointDiagram</span>
-<a name="line-23"></a>
-<a name="line-24"></a>       <span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
+<a name="line-11"></a><span class='hs-comment'>-----------------------------------------------------------------------------</span>
+<a name="line-12"></a>
+<a name="line-13"></a><span class='hs-keyword'>module</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Points</span>
+<a name="line-14"></a>       <span class='hs-layout'>(</span> <span class='hs-comment'>-- * Points</span>
+<a name="line-15"></a>         <span class='hs-conid'>Point</span> <span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span><span class='hs-layout'>,</span> <span class='hs-varid'>origin</span><span class='hs-layout'>,</span> <span class='hs-layout'>(</span><span class='hs-varop'>*.</span><span class='hs-layout'>)</span>
+<a name="line-16"></a>
+<a name="line-17"></a>         <span class='hs-comment'>-- * Point-related utilities</span>
+<a name="line-18"></a>       <span class='hs-layout'>,</span> <span class='hs-varid'>centroid</span>
+<a name="line-19"></a>       <span class='hs-layout'>,</span> <span class='hs-varid'>pointDiagram</span>
+<a name="line-20"></a>       <span class='hs-layout'>,</span> <span class='hs-sel'>_Point</span><span class='hs-layout'>,</span> <span class='hs-varid'>lensP</span>
+<a name="line-21"></a>       <span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
+<a name="line-22"></a>
+<a name="line-23"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Core</span>        <span class='hs-layout'>(</span><span class='hs-varid'>pointDiagram</span><span class='hs-layout'>)</span>
+<a name="line-24"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Core</span><span class='hs-varop'>.</span><span class='hs-conid'>Points</span>
 <a name="line-25"></a>
-<a name="line-26"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Core</span>          <span class='hs-layout'>(</span><span class='hs-varid'>pointDiagram</span><span class='hs-layout'>)</span>
-<a name="line-27"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Core</span><span class='hs-varop'>.</span><span class='hs-conid'>Points</span>
-<a name="line-28"></a>
-<a name="line-29"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Control</span><span class='hs-varop'>.</span><span class='hs-conid'>Arrow</span>          <span class='hs-layout'>(</span><span class='hs-layout'>(</span><span class='hs-varop'>&amp;&amp;&amp;</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span>
+<a name="line-26"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Data</span><span class='hs-varop'>.</span><span class='hs-conid'>Foldable</span>        <span class='hs-keyword'>as</span> <span class='hs-conid'>F</span>
+<a name="line-27"></a>
+<a name="line-28"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Linear</span><span class='hs-varop'>.</span><span class='hs-conid'>Affine</span>
+<a name="line-29"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Linear</span><span class='hs-varop'>.</span><span class='hs-conid'>Vector</span>
 <a name="line-30"></a>
-<a name="line-31"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Data</span><span class='hs-varop'>.</span><span class='hs-conid'>AffineSpace</span><span class='hs-varop'>.</span><span class='hs-conid'>Point</span>
-<a name="line-32"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Data</span><span class='hs-varop'>.</span><span class='hs-conid'>VectorSpace</span>
-<a name="line-33"></a>
-<a name="line-34"></a><a name="centroid"></a><span class='hs-comment'>-- | The centroid of a set of /n/ points is their sum divided by /n/.</span>
-<a name="line-35"></a><span class='hs-definition'>centroid</span> <span class='hs-keyglyph'>::</span> <span class='hs-layout'>(</span><span class='hs-conid'>VectorSpace</span> <span class='hs-varid'>v</span><span class='hs-layout'>,</span> <span class='hs-conid'>Fractional</span> <span class='hs-layout'>(</span><span class='hs-conid'>Scalar</span> <span class='hs-varid'>v</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-keyglyph'>[</span><span class='hs-conid'>Point</span> <span class='hs-varid'>v</span><span class='hs-keyglyph'>]</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Point</span> <span class='hs-varid'>v</span>
-<a name="line-36"></a><span class='hs-definition'>centroid</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>P</span> <span class='hs-varop'>.</span> <span class='hs-varid'>uncurry</span> <span class='hs-layout'>(</span><span class='hs-varop'>^/</span><span class='hs-layout'>)</span> <span class='hs-varop'>.</span> <span class='hs-layout'>(</span><span class='hs-varid'>sumV</span> <span class='hs-varop'>&amp;&amp;&amp;</span> <span class='hs-layout'>(</span><span class='hs-varid'>fromIntegral</span> <span class='hs-varop'>.</span> <span class='hs-varid'>length</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span> <span class='hs-varop'>.</span> <span class='hs-varid'>map</span> <span class='hs-varid'>unPoint</span>
+<a name="line-31"></a><a name="centroid"></a><span class='hs-comment'>-- | The centroid of a set of /n/ points is their sum divided by /n/.</span>
+<a name="line-32"></a><span class='hs-definition'>centroid</span> <span class='hs-keyglyph'>::</span> <span class='hs-layout'>(</span><span class='hs-conid'>Additive</span> <span class='hs-varid'>v</span><span class='hs-layout'>,</span> <span class='hs-conid'>Fractional</span> <span class='hs-varid'>n</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-keyglyph'>[</span><span class='hs-conid'>Point</span> <span class='hs-varid'>v</span> <span class='hs-varid'>n</span><span class='hs-keyglyph'>]</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Point</span> <span class='hs-varid'>v</span> <span class='hs-varid'>n</span>
+<a name="line-33"></a><span class='hs-definition'>centroid</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>meanV</span>
+<a name="line-34"></a>
+<a name="line-35"></a><a name="meanV"></a><span class='hs-definition'>meanV</span> <span class='hs-keyglyph'>::</span> <span class='hs-layout'>(</span><span class='hs-conid'>Foldable</span> <span class='hs-varid'>f</span><span class='hs-layout'>,</span> <span class='hs-conid'>Additive</span> <span class='hs-varid'>v</span><span class='hs-layout'>,</span> <span class='hs-conid'>Fractional</span> <span class='hs-varid'>a</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-varid'>f</span> <span class='hs-layout'>(</span><span class='hs-varid'>v</span> <span class='hs-varid'>a</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>v</span> <span class='hs-varid'>a</span>
+<a name="line-36"></a><span class='hs-definition'>meanV</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>uncurry</span> <span class='hs-layout'>(</span><span class='hs-varop'>^/</span><span class='hs-layout'>)</span> <span class='hs-varop'>.</span> <span class='hs-conid'>F</span><span class='hs-varop'>.</span><span class='hs-varid'>foldl'</span> <span class='hs-layout'>(</span><span class='hs-keyglyph'>\</span><span class='hs-layout'>(</span><span class='hs-varid'>s</span><span class='hs-layout'>,</span><span class='hs-varid'>c</span><span class='hs-layout'>)</span> <span class='hs-varid'>e</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-layout'>(</span><span class='hs-varid'>e</span> <span class='hs-varop'>^+^</span> <span class='hs-varid'>s</span><span class='hs-layout'>,</span><span class='hs-varid'>c</span><span class='hs-varop'>+</span><span class='hs-num'>1</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-varid'>zero</span><span class='hs-layout'>,</span><span class='hs-num'>0</span><span class='hs-layout'>)</span>
+<a name="line-37"></a><span class='hs-comment'>{-# INLINE meanV #-}</span>
+<a name="line-38"></a>
 </pre></body>
 </html>

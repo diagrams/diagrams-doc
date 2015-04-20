@@ -7,76 +7,83 @@
 <link type='text/css' rel='stylesheet' href='hscolour.css' />
 </head>
 <body>
-<pre><a name="line-1"></a>
-<a name="line-2"></a><span class='hs-comment'>-----------------------------------------------------------------------------</span>
-<a name="line-3"></a><span class='hs-comment'>-- |</span>
-<a name="line-4"></a><span class='hs-comment'>-- Module      :  Data.Monoid.Cut</span>
-<a name="line-5"></a><span class='hs-comment'>-- Copyright   :  (c) 2012 diagrams-core team (see LICENSE)</span>
-<a name="line-6"></a><span class='hs-comment'>-- License     :  BSD-style (see LICENSE)</span>
-<a name="line-7"></a><span class='hs-comment'>-- Maintainer  :  diagrams-discuss@googlegroups.com</span>
-<a name="line-8"></a><span class='hs-comment'>--</span>
-<a name="line-9"></a><span class='hs-comment'>-- The @Cut@ monoid transformer introduces \"cut points\" such that</span>
-<a name="line-10"></a><span class='hs-comment'>-- all values between any two cut points are thrown away.  That is,</span>
-<a name="line-11"></a><span class='hs-comment'>--</span>
-<a name="line-12"></a><span class='hs-comment'>-- &gt; a b c | d e | f g h i | j k  ==  a b c | j k</span>
-<a name="line-13"></a><span class='hs-comment'>--</span>
-<a name="line-14"></a><span class='hs-comment'>-----------------------------------------------------------------------------</span>
-<a name="line-15"></a>
-<a name="line-16"></a><span class='hs-keyword'>module</span> <span class='hs-conid'>Data</span><span class='hs-varop'>.</span><span class='hs-conid'>Monoid</span><span class='hs-varop'>.</span><span class='hs-conid'>Cut</span>
-<a name="line-17"></a>       <span class='hs-layout'>(</span> <span class='hs-conid'>Cut</span><span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span><span class='hs-layout'>,</span> <span class='hs-varid'>cut</span>
-<a name="line-18"></a>
-<a name="line-19"></a>       <span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
-<a name="line-20"></a>
-<a name="line-21"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Data</span><span class='hs-varop'>.</span><span class='hs-conid'>Semigroup</span>
+<pre><a name="line-1"></a><span class='hs-comment'>{-# LANGUAGE DeriveDataTypeable #-}</span>
+<a name="line-2"></a><span class='hs-comment'>{-# LANGUAGE DeriveFoldable     #-}</span>
+<a name="line-3"></a><span class='hs-comment'>{-# LANGUAGE DeriveFunctor      #-}</span>
+<a name="line-4"></a><span class='hs-comment'>{-# LANGUAGE DeriveTraversable  #-}</span>
+<a name="line-5"></a><span class='hs-comment'>{-# OPTIONS_GHC -fno-warn-unused-imports       #-}</span>
+<a name="line-6"></a><span class='hs-comment'>-----------------------------------------------------------------------------</span>
+<a name="line-7"></a><span class='hs-comment'>-- |</span>
+<a name="line-8"></a><span class='hs-comment'>-- Module      :  Data.Monoid.Cut</span>
+<a name="line-9"></a><span class='hs-comment'>-- Copyright   :  (c) 2012-2015 diagrams-core team (see LICENSE)</span>
+<a name="line-10"></a><span class='hs-comment'>-- License     :  BSD-style (see LICENSE)</span>
+<a name="line-11"></a><span class='hs-comment'>-- Maintainer  :  diagrams-discuss@googlegroups.com</span>
+<a name="line-12"></a><span class='hs-comment'>--</span>
+<a name="line-13"></a><span class='hs-comment'>-- The @Cut@ monoid transformer introduces \"cut points\" such that</span>
+<a name="line-14"></a><span class='hs-comment'>-- all values between any two cut points are thrown away.  That is,</span>
+<a name="line-15"></a><span class='hs-comment'>--</span>
+<a name="line-16"></a><span class='hs-comment'>-- &gt; a b c | d e | f g h i | j k  ==  a b c | j k</span>
+<a name="line-17"></a><span class='hs-comment'>--</span>
+<a name="line-18"></a><span class='hs-comment'>-----------------------------------------------------------------------------</span>
+<a name="line-19"></a>
+<a name="line-20"></a><span class='hs-keyword'>module</span> <span class='hs-conid'>Data</span><span class='hs-varop'>.</span><span class='hs-conid'>Monoid</span><span class='hs-varop'>.</span><span class='hs-conid'>Cut</span>
+<a name="line-21"></a>       <span class='hs-layout'>(</span> <span class='hs-conid'>Cut</span><span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span><span class='hs-layout'>,</span> <span class='hs-varid'>cut</span>
 <a name="line-22"></a>
-<a name="line-23"></a><span class='hs-keyword'>infix</span> <span class='hs-num'>5</span> <span class='hs-conop'>:||:</span>
+<a name="line-23"></a>       <span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
 <a name="line-24"></a>
-<a name="line-25"></a><a name="Cut"></a><span class='hs-comment'>-- | A value of type @Cut m@ is either a single @m@, or a pair of</span>
-<a name="line-26"></a><a name="Cut"></a><span class='hs-comment'>--   @m@'s separated by a divider.  The divider represents a \"cut</span>
-<a name="line-27"></a><a name="Cut"></a><span class='hs-comment'>--   point\".</span>
-<a name="line-28"></a><a name="Cut"></a><span class='hs-comment'>--</span>
-<a name="line-29"></a><a name="Cut"></a><span class='hs-comment'>--   @Cut@ is similar to "Data.Monoid.Split", but split keeps only the</span>
-<a name="line-30"></a><a name="Cut"></a><span class='hs-comment'>--   rightmost divider and accumulates all values, whereas cut always</span>
-<a name="line-31"></a><a name="Cut"></a><span class='hs-comment'>--   keeps the leftmost and rightmost divider, coalescing them into</span>
-<a name="line-32"></a><a name="Cut"></a><span class='hs-comment'>--   one and throwing away all the information in between.</span>
-<a name="line-33"></a><a name="Cut"></a><span class='hs-comment'>--</span>
-<a name="line-34"></a><a name="Cut"></a><span class='hs-comment'>--   @Split@ uses the asymmetric constructor @:|@, and @Cut@ the</span>
-<a name="line-35"></a><a name="Cut"></a><span class='hs-comment'>--   symmetric constructor @:||:@, to emphasize the inherent asymmetry</span>
-<a name="line-36"></a><a name="Cut"></a><span class='hs-comment'>--   of @Split@ and symmetry of @Cut@.  @Split@ keeps only the</span>
-<a name="line-37"></a><a name="Cut"></a><span class='hs-comment'>--   rightmost split and combines everything on the left; @Cut@ keeps</span>
-<a name="line-38"></a><a name="Cut"></a><span class='hs-comment'>--   the outermost splits and throws away everything in between.</span>
-<a name="line-39"></a><a name="Cut"></a><span class='hs-keyword'>data</span> <span class='hs-conid'>Cut</span> <span class='hs-varid'>m</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Uncut</span> <span class='hs-varid'>m</span>
-<a name="line-40"></a>           <span class='hs-keyglyph'>|</span> <span class='hs-varid'>m</span> <span class='hs-conop'>:||:</span> <span class='hs-varid'>m</span>
-<a name="line-41"></a>  <span class='hs-keyword'>deriving</span> <span class='hs-layout'>(</span><span class='hs-conid'>Show</span><span class='hs-layout'>)</span>
-<a name="line-42"></a>
-<a name="line-43"></a><a name="instance%20Semigroup%20(Cut%20m)"></a><span class='hs-comment'>-- | If @m@ is a @Semigroup@, then @Cut m@ is a semigroup which</span>
-<a name="line-44"></a><a name="instance%20Semigroup%20(Cut%20m)"></a><span class='hs-comment'>--   contains @m@ as a sub-semigroup, but also contains elements of</span>
-<a name="line-45"></a><a name="instance%20Semigroup%20(Cut%20m)"></a><span class='hs-comment'>--   the form @m1 :||: m2@.  When elements of @m@ combine with such</span>
-<a name="line-46"></a><a name="instance%20Semigroup%20(Cut%20m)"></a><span class='hs-comment'>--   \"cut\" elements they are combined with the value on the</span>
-<a name="line-47"></a><a name="instance%20Semigroup%20(Cut%20m)"></a><span class='hs-comment'>--   corresponding side of the cut (/e.g./ @(Uncut m1) \&lt;\&gt; (m1' :||:</span>
-<a name="line-48"></a><a name="instance%20Semigroup%20(Cut%20m)"></a><span class='hs-comment'>--   m2) = (m1 \&lt;\&gt; m1') :||: m2@).  When two \"cut\" elements meet, the</span>
-<a name="line-49"></a><a name="instance%20Semigroup%20(Cut%20m)"></a><span class='hs-comment'>--   two inside values are thrown away and only the outside values are</span>
-<a name="line-50"></a><a name="instance%20Semigroup%20(Cut%20m)"></a><span class='hs-comment'>--   kept.</span>
-<a name="line-51"></a><a name="instance%20Semigroup%20(Cut%20m)"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Semigroup</span> <span class='hs-varid'>m</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>Semigroup</span> <span class='hs-layout'>(</span><span class='hs-conid'>Cut</span> <span class='hs-varid'>m</span><span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
-<a name="line-52"></a>  <span class='hs-layout'>(</span><span class='hs-conid'>Uncut</span> <span class='hs-varid'>m1</span><span class='hs-layout'>)</span>    <span class='hs-varop'>&lt;&gt;</span> <span class='hs-layout'>(</span><span class='hs-conid'>Uncut</span> <span class='hs-varid'>m2</span><span class='hs-layout'>)</span>    <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Uncut</span> <span class='hs-layout'>(</span><span class='hs-varid'>m1</span> <span class='hs-varop'>&lt;&gt;</span> <span class='hs-varid'>m2</span><span class='hs-layout'>)</span>
-<a name="line-53"></a>  <span class='hs-layout'>(</span><span class='hs-conid'>Uncut</span> <span class='hs-varid'>m1</span><span class='hs-layout'>)</span>    <span class='hs-varop'>&lt;&gt;</span> <span class='hs-layout'>(</span><span class='hs-varid'>m1'</span> <span class='hs-conop'>:||:</span> <span class='hs-varid'>m2</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>m1</span> <span class='hs-varop'>&lt;&gt;</span> <span class='hs-varid'>m1'</span> <span class='hs-conop'>:||:</span> <span class='hs-varid'>m2</span>
-<a name="line-54"></a>  <span class='hs-layout'>(</span><span class='hs-varid'>m1</span>  <span class='hs-conop'>:||:</span> <span class='hs-varid'>m2</span><span class='hs-layout'>)</span> <span class='hs-varop'>&lt;&gt;</span> <span class='hs-layout'>(</span><span class='hs-conid'>Uncut</span> <span class='hs-varid'>m2'</span><span class='hs-layout'>)</span>   <span class='hs-keyglyph'>=</span> <span class='hs-varid'>m1</span>        <span class='hs-conop'>:||:</span> <span class='hs-varid'>m2</span> <span class='hs-varop'>&lt;&gt;</span> <span class='hs-varid'>m2'</span>
-<a name="line-55"></a>  <span class='hs-layout'>(</span><span class='hs-varid'>m11</span> <span class='hs-conop'>:||:</span> <span class='hs-keyword'>_</span><span class='hs-layout'>)</span>  <span class='hs-varop'>&lt;&gt;</span> <span class='hs-layout'>(</span><span class='hs-keyword'>_</span> <span class='hs-conop'>:||:</span> <span class='hs-varid'>m22</span><span class='hs-layout'>)</span>  <span class='hs-keyglyph'>=</span> <span class='hs-varid'>m11</span>       <span class='hs-conop'>:||:</span> <span class='hs-varid'>m22</span>
-<a name="line-56"></a>
-<a name="line-57"></a><a name="instance%20Monoid%20(Cut%20m)"></a><span class='hs-keyword'>instance</span> <span class='hs-layout'>(</span><span class='hs-conid'>Semigroup</span> <span class='hs-varid'>m</span><span class='hs-layout'>,</span> <span class='hs-conid'>Monoid</span> <span class='hs-varid'>m</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>Monoid</span> <span class='hs-layout'>(</span><span class='hs-conid'>Cut</span> <span class='hs-varid'>m</span><span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
-<a name="line-58"></a>  <span class='hs-varid'>mempty</span>  <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Uncut</span> <span class='hs-varid'>mempty</span>
-<a name="line-59"></a>  <span class='hs-varid'>mappend</span> <span class='hs-keyglyph'>=</span> <span class='hs-layout'>(</span><span class='hs-varop'>&lt;&gt;</span><span class='hs-layout'>)</span>
-<a name="line-60"></a>
-<a name="line-61"></a><a name="cut"></a><span class='hs-comment'>-- | A convenient name for @mempty :||: mempty@, so composing with</span>
-<a name="line-62"></a><span class='hs-comment'>-- @cut@ introduces a cut point.  For example, @Uncut a \&lt;\&gt; cut \&lt;\&gt;</span>
-<a name="line-63"></a><span class='hs-comment'>-- Uncut b == a :||: b@.</span>
-<a name="line-64"></a><span class='hs-definition'>cut</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Monoid</span> <span class='hs-varid'>m</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>Cut</span> <span class='hs-varid'>m</span>
-<a name="line-65"></a><span class='hs-definition'>cut</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>mempty</span> <span class='hs-conop'>:||:</span> <span class='hs-varid'>mempty</span>
-<a name="line-66"></a>
-<a name="line-67"></a><span class='hs-comment'>-- Note that it is impossible for a cut monoid to have an action in</span>
-<a name="line-68"></a><span class='hs-comment'>-- general -- the composition operation can throw away information so</span>
-<a name="line-69"></a><span class='hs-comment'>-- it is impossible to satisfy the law (act (m1 &lt;&gt; m2) x = act m1 (act</span>
-<a name="line-70"></a><span class='hs-comment'>-- m2 x)) in general (although it may be possible for specific types</span>
-<a name="line-71"></a><span class='hs-comment'>-- x).</span>
+<a name="line-25"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Data</span><span class='hs-varop'>.</span><span class='hs-conid'>Data</span>
+<a name="line-26"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Data</span><span class='hs-varop'>.</span><span class='hs-conid'>Semigroup</span>
+<a name="line-27"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Data</span><span class='hs-varop'>.</span><span class='hs-conid'>Foldable</span>
+<a name="line-28"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Data</span><span class='hs-varop'>.</span><span class='hs-conid'>Traversable</span>
+<a name="line-29"></a>
+<a name="line-30"></a><span class='hs-keyword'>infix</span> <span class='hs-num'>5</span> <span class='hs-conop'>:||:</span>
+<a name="line-31"></a>
+<a name="line-32"></a><a name="Cut"></a><span class='hs-comment'>-- | A value of type @Cut m@ is either a single @m@, or a pair of</span>
+<a name="line-33"></a><a name="Cut"></a><span class='hs-comment'>--   @m@'s separated by a divider.  The divider represents a \"cut</span>
+<a name="line-34"></a><a name="Cut"></a><span class='hs-comment'>--   point\".</span>
+<a name="line-35"></a><a name="Cut"></a><span class='hs-comment'>--</span>
+<a name="line-36"></a><a name="Cut"></a><span class='hs-comment'>--   @Cut@ is similar to "Data.Monoid.Split", but split keeps only the</span>
+<a name="line-37"></a><a name="Cut"></a><span class='hs-comment'>--   rightmost divider and accumulates all values, whereas cut always</span>
+<a name="line-38"></a><a name="Cut"></a><span class='hs-comment'>--   keeps the leftmost and rightmost divider, coalescing them into</span>
+<a name="line-39"></a><a name="Cut"></a><span class='hs-comment'>--   one and throwing away all the information in between.</span>
+<a name="line-40"></a><a name="Cut"></a><span class='hs-comment'>--</span>
+<a name="line-41"></a><a name="Cut"></a><span class='hs-comment'>--   @Split@ uses the asymmetric constructor @:|@, and @Cut@ the</span>
+<a name="line-42"></a><a name="Cut"></a><span class='hs-comment'>--   symmetric constructor @:||:@, to emphasize the inherent asymmetry</span>
+<a name="line-43"></a><a name="Cut"></a><span class='hs-comment'>--   of @Split@ and symmetry of @Cut@.  @Split@ keeps only the</span>
+<a name="line-44"></a><a name="Cut"></a><span class='hs-comment'>--   rightmost split and combines everything on the left; @Cut@ keeps</span>
+<a name="line-45"></a><a name="Cut"></a><span class='hs-comment'>--   the outermost splits and throws away everything in between.</span>
+<a name="line-46"></a><a name="Cut"></a><span class='hs-keyword'>data</span> <span class='hs-conid'>Cut</span> <span class='hs-varid'>m</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Uncut</span> <span class='hs-varid'>m</span>
+<a name="line-47"></a>           <span class='hs-keyglyph'>|</span> <span class='hs-varid'>m</span> <span class='hs-conop'>:||:</span> <span class='hs-varid'>m</span>
+<a name="line-48"></a>  <span class='hs-keyword'>deriving</span> <span class='hs-layout'>(</span><span class='hs-conid'>Data</span><span class='hs-layout'>,</span> <span class='hs-conid'>Typeable</span><span class='hs-layout'>,</span> <span class='hs-conid'>Show</span><span class='hs-layout'>,</span> <span class='hs-conid'>Read</span><span class='hs-layout'>,</span> <span class='hs-conid'>Functor</span><span class='hs-layout'>,</span> <span class='hs-conid'>Foldable</span><span class='hs-layout'>,</span> <span class='hs-conid'>Traversable</span><span class='hs-layout'>)</span>
+<a name="line-49"></a>
+<a name="line-50"></a><a name="instance%20Semigroup%20(Cut%20m)"></a><span class='hs-comment'>-- | If @m@ is a @Semigroup@, then @Cut m@ is a semigroup which</span>
+<a name="line-51"></a><a name="instance%20Semigroup%20(Cut%20m)"></a><span class='hs-comment'>--   contains @m@ as a sub-semigroup, but also contains elements of</span>
+<a name="line-52"></a><a name="instance%20Semigroup%20(Cut%20m)"></a><span class='hs-comment'>--   the form @m1 :||: m2@.  When elements of @m@ combine with such</span>
+<a name="line-53"></a><a name="instance%20Semigroup%20(Cut%20m)"></a><span class='hs-comment'>--   \"cut\" elements they are combined with the value on the</span>
+<a name="line-54"></a><a name="instance%20Semigroup%20(Cut%20m)"></a><span class='hs-comment'>--   corresponding side of the cut (/e.g./ @(Uncut m1) \&lt;\&gt; (m1' :||:</span>
+<a name="line-55"></a><a name="instance%20Semigroup%20(Cut%20m)"></a><span class='hs-comment'>--   m2) = (m1 \&lt;\&gt; m1') :||: m2@).  When two \"cut\" elements meet, the</span>
+<a name="line-56"></a><a name="instance%20Semigroup%20(Cut%20m)"></a><span class='hs-comment'>--   two inside values are thrown away and only the outside values are</span>
+<a name="line-57"></a><a name="instance%20Semigroup%20(Cut%20m)"></a><span class='hs-comment'>--   kept.</span>
+<a name="line-58"></a><a name="instance%20Semigroup%20(Cut%20m)"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Semigroup</span> <span class='hs-varid'>m</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>Semigroup</span> <span class='hs-layout'>(</span><span class='hs-conid'>Cut</span> <span class='hs-varid'>m</span><span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
+<a name="line-59"></a>  <span class='hs-layout'>(</span><span class='hs-conid'>Uncut</span> <span class='hs-varid'>m1</span><span class='hs-layout'>)</span>    <span class='hs-varop'>&lt;&gt;</span> <span class='hs-layout'>(</span><span class='hs-conid'>Uncut</span> <span class='hs-varid'>m2</span><span class='hs-layout'>)</span>    <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Uncut</span> <span class='hs-layout'>(</span><span class='hs-varid'>m1</span> <span class='hs-varop'>&lt;&gt;</span> <span class='hs-varid'>m2</span><span class='hs-layout'>)</span>
+<a name="line-60"></a>  <span class='hs-layout'>(</span><span class='hs-conid'>Uncut</span> <span class='hs-varid'>m1</span><span class='hs-layout'>)</span>    <span class='hs-varop'>&lt;&gt;</span> <span class='hs-layout'>(</span><span class='hs-varid'>m1'</span> <span class='hs-conop'>:||:</span> <span class='hs-varid'>m2</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>m1</span> <span class='hs-varop'>&lt;&gt;</span> <span class='hs-varid'>m1'</span> <span class='hs-conop'>:||:</span> <span class='hs-varid'>m2</span>
+<a name="line-61"></a>  <span class='hs-layout'>(</span><span class='hs-varid'>m1</span>  <span class='hs-conop'>:||:</span> <span class='hs-varid'>m2</span><span class='hs-layout'>)</span> <span class='hs-varop'>&lt;&gt;</span> <span class='hs-layout'>(</span><span class='hs-conid'>Uncut</span> <span class='hs-varid'>m2'</span><span class='hs-layout'>)</span>   <span class='hs-keyglyph'>=</span> <span class='hs-varid'>m1</span>        <span class='hs-conop'>:||:</span> <span class='hs-varid'>m2</span> <span class='hs-varop'>&lt;&gt;</span> <span class='hs-varid'>m2'</span>
+<a name="line-62"></a>  <span class='hs-layout'>(</span><span class='hs-varid'>m11</span> <span class='hs-conop'>:||:</span> <span class='hs-keyword'>_</span><span class='hs-layout'>)</span>  <span class='hs-varop'>&lt;&gt;</span> <span class='hs-layout'>(</span><span class='hs-keyword'>_</span> <span class='hs-conop'>:||:</span> <span class='hs-varid'>m22</span><span class='hs-layout'>)</span>  <span class='hs-keyglyph'>=</span> <span class='hs-varid'>m11</span>       <span class='hs-conop'>:||:</span> <span class='hs-varid'>m22</span>
+<a name="line-63"></a>
+<a name="line-64"></a><a name="instance%20Monoid%20(Cut%20m)"></a><span class='hs-keyword'>instance</span> <span class='hs-layout'>(</span><span class='hs-conid'>Semigroup</span> <span class='hs-varid'>m</span><span class='hs-layout'>,</span> <span class='hs-conid'>Monoid</span> <span class='hs-varid'>m</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>Monoid</span> <span class='hs-layout'>(</span><span class='hs-conid'>Cut</span> <span class='hs-varid'>m</span><span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
+<a name="line-65"></a>  <span class='hs-varid'>mempty</span>  <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Uncut</span> <span class='hs-varid'>mempty</span>
+<a name="line-66"></a>  <span class='hs-varid'>mappend</span> <span class='hs-keyglyph'>=</span> <span class='hs-layout'>(</span><span class='hs-varop'>&lt;&gt;</span><span class='hs-layout'>)</span>
+<a name="line-67"></a>
+<a name="line-68"></a><a name="cut"></a><span class='hs-comment'>-- | A convenient name for @mempty :||: mempty@, so composing with</span>
+<a name="line-69"></a><span class='hs-comment'>-- @cut@ introduces a cut point.  For example, @Uncut a \&lt;\&gt; cut \&lt;\&gt;</span>
+<a name="line-70"></a><span class='hs-comment'>-- Uncut b == a :||: b@.</span>
+<a name="line-71"></a><span class='hs-definition'>cut</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Monoid</span> <span class='hs-varid'>m</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>Cut</span> <span class='hs-varid'>m</span>
+<a name="line-72"></a><span class='hs-definition'>cut</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>mempty</span> <span class='hs-conop'>:||:</span> <span class='hs-varid'>mempty</span>
+<a name="line-73"></a>
+<a name="line-74"></a><span class='hs-comment'>-- Note that it is impossible for a cut monoid to have an action in</span>
+<a name="line-75"></a><span class='hs-comment'>-- general -- the composition operation can throw away information so</span>
+<a name="line-76"></a><span class='hs-comment'>-- it is impossible to satisfy the law (act (m1 &lt;&gt; m2) x = act m1 (act</span>
+<a name="line-77"></a><span class='hs-comment'>-- m2 x)) in general (although it may be possible for specific types</span>
+<a name="line-78"></a><span class='hs-comment'>-- x).</span>
 </pre></body>
 </html>

@@ -21,9 +21,9 @@
 <a name="line-12"></a>
 <a name="line-13"></a><span class='hs-keyword'>module</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>TwoD</span><span class='hs-varop'>.</span><span class='hs-conid'>Path</span><span class='hs-varop'>.</span><span class='hs-conid'>Turtle</span><span class='hs-varop'>.</span><span class='hs-conid'>Aliases</span> <span class='hs-keyword'>where</span>
 <a name="line-14"></a>
-<a name="line-15"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>TwoD</span><span class='hs-varop'>.</span><span class='hs-conid'>Path</span><span class='hs-varop'>.</span><span class='hs-conid'>Turtle</span>
+<a name="line-15"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>TwoD</span><span class='hs-varop'>.</span><span class='hs-conid'>Path</span><span class='hs-varop'>.</span><span class='hs-conid'>Turtle</span>
 <a name="line-16"></a>
-<a name="line-17"></a><a name="fd"></a><span class='hs-definition'>fd</span><span class='hs-layout'>,</span> <span class='hs-varid'>bk</span><span class='hs-layout'>,</span> <span class='hs-varid'>lt</span><span class='hs-layout'>,</span> <span class='hs-varid'>rt</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Double</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Turtle</span> <span class='hs-conid'>()</span>
+<a name="line-17"></a><a name="fd"></a><span class='hs-definition'>fd</span><span class='hs-layout'>,</span> <span class='hs-varid'>bk</span><span class='hs-layout'>,</span> <span class='hs-varid'>lt</span><span class='hs-layout'>,</span> <span class='hs-varid'>rt</span> <span class='hs-keyglyph'>::</span> <span class='hs-layout'>(</span><span class='hs-conid'>Floating</span> <span class='hs-varid'>n</span><span class='hs-layout'>,</span> <span class='hs-conid'>Ord</span> <span class='hs-varid'>n</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-varid'>n</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Turtle</span> <span class='hs-varid'>n</span> <span class='hs-conid'>()</span>
 <a name="line-18"></a>
 <a name="line-19"></a><span class='hs-definition'>fd</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>forward</span>
 <a name="line-20"></a><a name="bk"></a><span class='hs-definition'>bk</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>backward</span>
@@ -31,7 +31,7 @@
 <a name="line-22"></a><a name="lt"></a><span class='hs-definition'>lt</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>left</span>
 <a name="line-23"></a><a name="rt"></a><span class='hs-definition'>rt</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>right</span>
 <a name="line-24"></a>
-<a name="line-25"></a><a name="pu"></a><span class='hs-definition'>pu</span><span class='hs-layout'>,</span> <span class='hs-varid'>pd</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Turtle</span> <span class='hs-conid'>()</span>
+<a name="line-25"></a><a name="pu"></a><span class='hs-definition'>pu</span><span class='hs-layout'>,</span> <span class='hs-varid'>pd</span> <span class='hs-keyglyph'>::</span> <span class='hs-layout'>(</span><span class='hs-conid'>Floating</span> <span class='hs-varid'>n</span><span class='hs-layout'>,</span> <span class='hs-conid'>Ord</span> <span class='hs-varid'>n</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=&gt;</span> <span class='hs-conid'>Turtle</span> <span class='hs-varid'>n</span> <span class='hs-conid'>()</span>
 <a name="line-26"></a><span class='hs-definition'>pu</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>penUp</span>
 <a name="line-27"></a><a name="pd"></a><span class='hs-definition'>pd</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>penDown</span>
 </pre></body>

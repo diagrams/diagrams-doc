@@ -7,22 +7,24 @@
 <link type='text/css' rel='stylesheet' href='hscolour.css' />
 </head>
 <body>
-<pre><a name="line-1"></a><span class='hs-comment'>{-# LANGUAGE FlexibleContexts #-}</span>
-<a name="line-2"></a><span class='hs-comment'>{-# LANGUAGE RankNTypes       #-}</span>
-<a name="line-3"></a>
-<a name="line-4"></a><span class='hs-keyword'>module</span> <span class='hs-conid'>Graphics</span><span class='hs-varop'>.</span><span class='hs-conid'>SVGFonts</span>
-<a name="line-5"></a>    <span class='hs-layout'>(</span>
-<a name="line-6"></a>      <span class='hs-comment'>-- * Drawing text</span>
-<a name="line-7"></a>      <span class='hs-varid'>textSVG</span><span class='hs-layout'>,</span> <span class='hs-varid'>textSVG'</span><span class='hs-layout'>,</span> <span class='hs-varid'>textSVG_</span>
+<pre><a name="line-1"></a><span class='hs-keyword'>module</span> <span class='hs-conid'>Graphics</span><span class='hs-varop'>.</span><span class='hs-conid'>SVGFonts</span>
+<a name="line-2"></a>    <span class='hs-layout'>(</span>
+<a name="line-3"></a>      <span class='hs-comment'>-- * Drawing text</span>
+<a name="line-4"></a>      <span class='hs-varid'>textSVG</span><span class='hs-layout'>,</span> <span class='hs-varid'>textSVG'</span><span class='hs-layout'>,</span> <span class='hs-varid'>textSVG_</span>
+<a name="line-5"></a>
+<a name="line-6"></a>      <span class='hs-comment'>-- * Options</span>
+<a name="line-7"></a>    <span class='hs-layout'>,</span> <span class='hs-conid'>TextOpts</span><span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span><span class='hs-layout'>,</span> <span class='hs-conid'>Mode</span><span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span><span class='hs-layout'>,</span> <span class='hs-conid'>Spacing</span><span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span>
 <a name="line-8"></a>
-<a name="line-9"></a>      <span class='hs-comment'>-- * Options</span>
-<a name="line-10"></a>    <span class='hs-layout'>,</span> <span class='hs-conid'>TextOpts</span><span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span><span class='hs-layout'>,</span> <span class='hs-conid'>Mode</span><span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span><span class='hs-layout'>,</span> <span class='hs-conid'>Spacing</span><span class='hs-layout'>(</span><span class='hs-keyglyph'>..</span><span class='hs-layout'>)</span>
+<a name="line-9"></a>      <span class='hs-comment'>-- * Provided fonts</span>
+<a name="line-10"></a>    <span class='hs-layout'>,</span> <span class='hs-varid'>bit</span><span class='hs-layout'>,</span> <span class='hs-varid'>lin</span><span class='hs-layout'>,</span> <span class='hs-varid'>lin2</span>
 <a name="line-11"></a>
-<a name="line-12"></a>      <span class='hs-comment'>-- * Provided fonts</span>
-<a name="line-13"></a>    <span class='hs-layout'>,</span> <span class='hs-varid'>bit</span><span class='hs-layout'>,</span> <span class='hs-varid'>lin</span><span class='hs-layout'>,</span> <span class='hs-varid'>lin2</span>
+<a name="line-12"></a>      <span class='hs-comment'>-- * Loading fonts</span>
+<a name="line-13"></a>    <span class='hs-layout'>,</span> <span class='hs-varid'>loadFont</span>
 <a name="line-14"></a>    <span class='hs-layout'>)</span>
 <a name="line-15"></a>    <span class='hs-keyword'>where</span>
 <a name="line-16"></a>
-<a name="line-17"></a><span class='hs-keyword'>import</span>           <span class='hs-conid'>Graphics</span><span class='hs-varop'>.</span><span class='hs-conid'>SVGFonts</span><span class='hs-varop'>.</span><span class='hs-conid'>ReadFont</span>
+<a name="line-17"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Graphics</span><span class='hs-varop'>.</span><span class='hs-conid'>SVGFonts</span><span class='hs-varop'>.</span><span class='hs-conid'>Text</span>
+<a name="line-18"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Graphics</span><span class='hs-varop'>.</span><span class='hs-conid'>SVGFonts</span><span class='hs-varop'>.</span><span class='hs-conid'>Fonts</span>    <span class='hs-layout'>(</span><span class='hs-varid'>bit</span><span class='hs-layout'>,</span> <span class='hs-varid'>lin</span><span class='hs-layout'>,</span> <span class='hs-varid'>lin2</span><span class='hs-layout'>)</span>
+<a name="line-19"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Graphics</span><span class='hs-varop'>.</span><span class='hs-conid'>SVGFonts</span><span class='hs-varop'>.</span><span class='hs-conid'>ReadFont</span> <span class='hs-layout'>(</span><span class='hs-varid'>loadFont</span><span class='hs-layout'>)</span>
 </pre></body>
 </html>

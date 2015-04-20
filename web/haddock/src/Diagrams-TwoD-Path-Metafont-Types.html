@@ -7,119 +7,123 @@
 <link type='text/css' rel='stylesheet' href='hscolour.css' />
 </head>
 <body>
-<pre><a name="line-1"></a><span class='hs-comment'>{-# LANGUAGE DeriveFunctor #-}</span>
-<a name="line-2"></a><span class='hs-comment'>{-# LANGUAGE GADTs #-}</span>
-<a name="line-3"></a><span class='hs-comment'>{-# LANGUAGE TemplateHaskell #-}</span>
+<pre><a name="line-1"></a><span class='hs-comment'>{-# LANGUAGE CPP                        #-}</span>
+<a name="line-2"></a><span class='hs-comment'>{-# LANGUAGE DeriveFunctor     #-}</span>
+<a name="line-3"></a><span class='hs-comment'>{-# LANGUAGE EmptyDataDecls    #-}</span>
 <a name="line-4"></a><span class='hs-comment'>{-# LANGUAGE FlexibleInstances #-}</span>
-<a name="line-5"></a>
-<a name="line-6"></a><span class='hs-keyword'>module</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>TwoD</span><span class='hs-varop'>.</span><span class='hs-conid'>Path</span><span class='hs-varop'>.</span><span class='hs-conid'>Metafont</span><span class='hs-varop'>.</span><span class='hs-conid'>Types</span> <span class='hs-keyword'>where</span>
+<a name="line-5"></a><span class='hs-comment'>{-# LANGUAGE GADTs             #-}</span>
+<a name="line-6"></a><span class='hs-comment'>{-# LANGUAGE TemplateHaskell   #-}</span>
 <a name="line-7"></a>
-<a name="line-8"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Control</span><span class='hs-varop'>.</span><span class='hs-conid'>Lens</span> <span class='hs-varid'>hiding</span> <span class='hs-layout'>(</span><span class='hs-layout'>(</span><span class='hs-cpp'>#</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span>
-<a name="line-9"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Data</span><span class='hs-varop'>.</span><span class='hs-conid'>Monoid</span>
-<a name="line-10"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Data</span><span class='hs-varop'>.</span><span class='hs-conid'>Semigroup</span>
-<a name="line-11"></a>
-<a name="line-12"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>TwoD</span><span class='hs-varop'>.</span><span class='hs-conid'>Types</span>
-<a name="line-13"></a>
-<a name="line-14"></a><a name="PathJoin"></a><span class='hs-comment'>-- | A @PathJoin@ specifies the directions at both ends of a segment,</span>
-<a name="line-15"></a><a name="PathJoin"></a><span class='hs-comment'>-- and a join which describes the control points explicitly or implicitly.</span>
-<a name="line-16"></a><a name="PathJoin"></a><span class='hs-keyword'>data</span> <span class='hs-conid'>PathJoin</span> <span class='hs-varid'>d</span> <span class='hs-varid'>j</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>PJ</span> <span class='hs-layout'>{</span> <span class='hs-sel'>_d1</span> <span class='hs-keyglyph'>::</span> <span class='hs-varid'>d</span><span class='hs-layout'>,</span> <span class='hs-sel'>_j</span> <span class='hs-keyglyph'>::</span> <span class='hs-varid'>j</span><span class='hs-layout'>,</span> <span class='hs-sel'>_d2</span> <span class='hs-keyglyph'>::</span> <span class='hs-varid'>d</span> <span class='hs-layout'>}</span>
-<a name="line-17"></a>  <span class='hs-keyword'>deriving</span> <span class='hs-layout'>(</span><span class='hs-conid'>Functor</span><span class='hs-layout'>,</span> <span class='hs-conid'>Show</span><span class='hs-layout'>)</span>
+<a name="line-8"></a><span class='hs-keyword'>module</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>TwoD</span><span class='hs-varop'>.</span><span class='hs-conid'>Path</span><span class='hs-varop'>.</span><span class='hs-conid'>Metafont</span><span class='hs-varop'>.</span><span class='hs-conid'>Types</span> <span class='hs-keyword'>where</span>
+<a name="line-9"></a>
+<a name="line-10"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Control</span><span class='hs-varop'>.</span><span class='hs-conid'>Lens</span> <span class='hs-varid'>hiding</span> <span class='hs-layout'>(</span><span class='hs-layout'>(</span> <span class='hs-cpp'>#</span> <span class='hs-layout'>)</span><span class='hs-layout'>)</span>
+<a name="line-11"></a><span class='hs-cpp'>#if __GLASGOW_HASKELL__ &lt; 710</span>
+<a name="line-12"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Data</span><span class='hs-varop'>.</span><span class='hs-conid'>Monoid</span>
+<a name="line-13"></a><span class='hs-cpp'>#endif</span>
+<a name="line-14"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Data</span><span class='hs-varop'>.</span><span class='hs-conid'>Semigroup</span>
+<a name="line-15"></a>
+<a name="line-16"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>Direction</span>
+<a name="line-17"></a><span class='hs-keyword'>import</span> <span class='hs-conid'>Diagrams</span><span class='hs-varop'>.</span><span class='hs-conid'>TwoD</span><span class='hs-varop'>.</span><span class='hs-conid'>Types</span>
 <a name="line-18"></a>
-<a name="line-19"></a><a name="makeLenses"></a><span class='hs-definition'>makeLenses</span> <span class='hs-chr'>'</span><span class='hs-chr'>'</span><span class='hs-conid'>PathJoin</span>
-<a name="line-20"></a>
-<a name="line-21"></a><a name="PathDir"></a><span class='hs-comment'>-- | A direction can be specified at any point of a path.  A /curl/</span>
-<a name="line-22"></a><a name="PathDir"></a><span class='hs-comment'>-- should only be specified at the endpoints.  The endpoints default</span>
-<a name="line-23"></a><a name="PathDir"></a><span class='hs-comment'>-- to curl 1 if not set.</span>
-<a name="line-24"></a><a name="PathDir"></a><span class='hs-keyword'>data</span> <span class='hs-conid'>PathDir</span>
-<a name="line-25"></a>  <span class='hs-keyglyph'>=</span> <span class='hs-conid'>PathDirCurl</span> <span class='hs-conid'>Curl</span>
-<a name="line-26"></a>  <span class='hs-keyglyph'>|</span> <span class='hs-conid'>PathDirDir</span>  <span class='hs-conid'>Dir</span>
-<a name="line-27"></a>    <span class='hs-keyword'>deriving</span> <span class='hs-conid'>Show</span>
-<a name="line-28"></a>
-<a name="line-29"></a><a name="isCurl"></a><span class='hs-comment'>-- | A predicate to determine the constructor used.</span>
-<a name="line-30"></a><span class='hs-definition'>isCurl</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>PathDir</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Bool</span>
-<a name="line-31"></a><span class='hs-definition'>isCurl</span> <span class='hs-layout'>(</span><span class='hs-conid'>PathDirDir</span> <span class='hs-keyword'>_</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>False</span>
-<a name="line-32"></a><span class='hs-definition'>isCurl</span> <span class='hs-layout'>(</span><span class='hs-conid'>PathDirCurl</span> <span class='hs-keyword'>_</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>True</span>
+<a name="line-19"></a><a name="PathJoin"></a><span class='hs-comment'>-- | A @PathJoin@ specifies the directions at both ends of a segment,</span>
+<a name="line-20"></a><a name="PathJoin"></a><span class='hs-comment'>-- and a join which describes the control points explicitly or implicitly.</span>
+<a name="line-21"></a><a name="PathJoin"></a><span class='hs-keyword'>data</span> <span class='hs-conid'>PathJoin</span> <span class='hs-varid'>d</span> <span class='hs-varid'>j</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>PJ</span> <span class='hs-layout'>{</span> <span class='hs-sel'>_d1</span> <span class='hs-keyglyph'>::</span> <span class='hs-varid'>d</span><span class='hs-layout'>,</span> <span class='hs-sel'>_j</span> <span class='hs-keyglyph'>::</span> <span class='hs-varid'>j</span><span class='hs-layout'>,</span> <span class='hs-sel'>_d2</span> <span class='hs-keyglyph'>::</span> <span class='hs-varid'>d</span> <span class='hs-layout'>}</span>
+<a name="line-22"></a>  <span class='hs-keyword'>deriving</span> <span class='hs-layout'>(</span><span class='hs-conid'>Functor</span><span class='hs-layout'>,</span> <span class='hs-conid'>Show</span><span class='hs-layout'>)</span>
+<a name="line-23"></a>
+<a name="line-24"></a><a name="makeLenses"></a><span class='hs-definition'>makeLenses</span> <span class='hs-chr'>'</span><span class='hs-chr'>'</span><span class='hs-conid'>PathJoin</span>
+<a name="line-25"></a>
+<a name="line-26"></a><a name="PathDir"></a><span class='hs-comment'>-- | A direction can be specified at any point of a path.  A /curl/</span>
+<a name="line-27"></a><a name="PathDir"></a><span class='hs-comment'>-- should only be specified at the endpoints.  The endpoints default</span>
+<a name="line-28"></a><a name="PathDir"></a><span class='hs-comment'>-- to curl 1 if not set.</span>
+<a name="line-29"></a><a name="PathDir"></a><span class='hs-keyword'>data</span> <span class='hs-conid'>PathDir</span> <span class='hs-varid'>n</span>
+<a name="line-30"></a>  <span class='hs-keyglyph'>=</span> <span class='hs-conid'>PathDirCurl</span> <span class='hs-varid'>n</span>
+<a name="line-31"></a>  <span class='hs-keyglyph'>|</span> <span class='hs-conid'>PathDirDir</span>  <span class='hs-layout'>(</span><span class='hs-conid'>Dir</span> <span class='hs-varid'>n</span><span class='hs-layout'>)</span>
+<a name="line-32"></a>    <span class='hs-keyword'>deriving</span> <span class='hs-conid'>Show</span>
 <a name="line-33"></a>
-<a name="line-34"></a><a name="Curl"></a><span class='hs-keyword'>type</span> <span class='hs-conid'>Curl</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Double</span>
-<a name="line-35"></a><a name="Dir"></a><span class='hs-keyword'>type</span> <span class='hs-conid'>Dir</span>  <span class='hs-keyglyph'>=</span> <span class='hs-conid'>R2</span>
-<a name="line-36"></a>
-<a name="line-37"></a><a name="BasicJoin"></a><span class='hs-keyword'>type</span> <span class='hs-conid'>BasicJoin</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Either</span> <span class='hs-conid'>TensionJoin</span> <span class='hs-conid'>ControlJoin</span>
+<a name="line-34"></a><a name="isCurl"></a><span class='hs-comment'>-- | A predicate to determine the constructor used.</span>
+<a name="line-35"></a><span class='hs-definition'>isCurl</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>PathDir</span> <span class='hs-varid'>n</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Bool</span>
+<a name="line-36"></a><span class='hs-definition'>isCurl</span> <span class='hs-layout'>(</span><span class='hs-conid'>PathDirDir</span> <span class='hs-keyword'>_</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>False</span>
+<a name="line-37"></a><span class='hs-definition'>isCurl</span> <span class='hs-layout'>(</span><span class='hs-conid'>PathDirCurl</span> <span class='hs-keyword'>_</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>True</span>
 <a name="line-38"></a>
-<a name="line-39"></a><a name="Tension"></a><span class='hs-comment'>-- | Higher /Tension/ brings the path closer to a straight line</span>
-<a name="line-40"></a><a name="Tension"></a><span class='hs-comment'>-- between segments.  Equivalently, it brings the control points</span>
-<a name="line-41"></a><a name="Tension"></a><span class='hs-comment'>-- closer to the endpoints.  @TensionAmt@ introduces a fixed tension.</span>
-<a name="line-42"></a><a name="Tension"></a><span class='hs-comment'>-- @TensionAtLeast@ introduces a tension which will be increased if by</span>
-<a name="line-43"></a><a name="Tension"></a><span class='hs-comment'>-- so doing, an inflection point can be eliminated.</span>
-<a name="line-44"></a><a name="Tension"></a><span class='hs-keyword'>data</span> <span class='hs-conid'>Tension</span>
-<a name="line-45"></a>  <span class='hs-keyglyph'>=</span> <span class='hs-conid'>TensionAmt</span> <span class='hs-conid'>Double</span>
-<a name="line-46"></a>  <span class='hs-keyglyph'>|</span> <span class='hs-conid'>TensionAtLeast</span> <span class='hs-conid'>Double</span>
-<a name="line-47"></a>  <span class='hs-keyword'>deriving</span> <span class='hs-conid'>Show</span>
-<a name="line-48"></a>
-<a name="line-49"></a><a name="getTension"></a><span class='hs-definition'>getTension</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Tension</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>Double</span>
-<a name="line-50"></a><span class='hs-definition'>getTension</span> <span class='hs-layout'>(</span><span class='hs-conid'>TensionAmt</span> <span class='hs-varid'>t</span><span class='hs-layout'>)</span>     <span class='hs-keyglyph'>=</span> <span class='hs-varid'>t</span>
-<a name="line-51"></a><span class='hs-definition'>getTension</span> <span class='hs-layout'>(</span><span class='hs-conid'>TensionAtLeast</span> <span class='hs-varid'>t</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>t</span>
-<a name="line-52"></a>
-<a name="line-53"></a><a name="TensionJoin"></a><span class='hs-comment'>-- | Two tensions and two directions completely determine the control</span>
-<a name="line-54"></a><a name="TensionJoin"></a><span class='hs-comment'>-- points of a segment.</span>
-<a name="line-55"></a><a name="TensionJoin"></a><span class='hs-keyword'>data</span> <span class='hs-conid'>TensionJoin</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>TJ</span> <span class='hs-layout'>{</span> <span class='hs-sel'>_t1</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Tension</span><span class='hs-layout'>,</span> <span class='hs-sel'>_t2</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Tension</span> <span class='hs-layout'>}</span>
-<a name="line-56"></a>                 <span class='hs-keyword'>deriving</span> <span class='hs-conid'>Show</span>
+<a name="line-39"></a><a name="Curl"></a><span class='hs-keyword'>type</span> <span class='hs-conid'>Curl</span> <span class='hs-varid'>n</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>n</span>
+<a name="line-40"></a><a name="Dir"></a><span class='hs-keyword'>type</span> <span class='hs-conid'>Dir</span> <span class='hs-varid'>n</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Direction</span> <span class='hs-conid'>V2</span> <span class='hs-varid'>n</span>
+<a name="line-41"></a>
+<a name="line-42"></a><a name="BasicJoin"></a><span class='hs-keyword'>type</span> <span class='hs-conid'>BasicJoin</span> <span class='hs-varid'>n</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>Either</span> <span class='hs-layout'>(</span><span class='hs-conid'>TensionJoin</span> <span class='hs-varid'>n</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-conid'>ControlJoin</span> <span class='hs-varid'>n</span><span class='hs-layout'>)</span>
+<a name="line-43"></a>
+<a name="line-44"></a><a name="Tension"></a><span class='hs-comment'>-- | Higher /Tension/ brings the path closer to a straight line</span>
+<a name="line-45"></a><a name="Tension"></a><span class='hs-comment'>-- between segments.  Equivalently, it brings the control points</span>
+<a name="line-46"></a><a name="Tension"></a><span class='hs-comment'>-- closer to the endpoints.  @TensionAmt@ introduces a fixed tension.</span>
+<a name="line-47"></a><a name="Tension"></a><span class='hs-comment'>-- @TensionAtLeast@ introduces a tension which will be increased if by</span>
+<a name="line-48"></a><a name="Tension"></a><span class='hs-comment'>-- so doing, an inflection point can be eliminated.</span>
+<a name="line-49"></a><a name="Tension"></a><span class='hs-keyword'>data</span> <span class='hs-conid'>Tension</span> <span class='hs-varid'>n</span>
+<a name="line-50"></a>  <span class='hs-keyglyph'>=</span> <span class='hs-conid'>TensionAmt</span> <span class='hs-varid'>n</span>
+<a name="line-51"></a>  <span class='hs-keyglyph'>|</span> <span class='hs-conid'>TensionAtLeast</span> <span class='hs-varid'>n</span>
+<a name="line-52"></a>  <span class='hs-keyword'>deriving</span> <span class='hs-conid'>Show</span>
+<a name="line-53"></a>
+<a name="line-54"></a><a name="getTension"></a><span class='hs-definition'>getTension</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Tension</span> <span class='hs-varid'>n</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>n</span>
+<a name="line-55"></a><span class='hs-definition'>getTension</span> <span class='hs-layout'>(</span><span class='hs-conid'>TensionAmt</span> <span class='hs-varid'>t</span><span class='hs-layout'>)</span>     <span class='hs-keyglyph'>=</span> <span class='hs-varid'>t</span>
+<a name="line-56"></a><span class='hs-definition'>getTension</span> <span class='hs-layout'>(</span><span class='hs-conid'>TensionAtLeast</span> <span class='hs-varid'>t</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>t</span>
 <a name="line-57"></a>
-<a name="line-58"></a><a name="ControlJoin"></a><span class='hs-comment'>-- | The two intermediate control points of a segment, specified directly.</span>
-<a name="line-59"></a><a name="ControlJoin"></a><span class='hs-keyword'>data</span> <span class='hs-conid'>ControlJoin</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>CJ</span> <span class='hs-layout'>{</span> <span class='hs-sel'>_c1</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>P2</span><span class='hs-layout'>,</span> <span class='hs-sel'>_c2</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>P2</span> <span class='hs-layout'>}</span>
-<a name="line-60"></a>                 <span class='hs-keyword'>deriving</span> <span class='hs-conid'>Show</span>
-<a name="line-61"></a>
-<a name="line-62"></a><span class='hs-definition'>makeLenses</span> <span class='hs-chr'>'</span><span class='hs-chr'>'</span><span class='hs-conid'>TensionJoin</span>
-<a name="line-63"></a><span class='hs-definition'>makeLenses</span> <span class='hs-chr'>'</span><span class='hs-chr'>'</span><span class='hs-conid'>ControlJoin</span>
-<a name="line-64"></a>
-<a name="line-65"></a><a name="P"></a><span class='hs-keyword'>data</span> <span class='hs-conid'>P</span>
-<a name="line-66"></a><a name="J"></a><span class='hs-keyword'>data</span> <span class='hs-conid'>J</span>
-<a name="line-67"></a>
-<a name="line-68"></a><a name="MFPathData"></a><span class='hs-comment'>-- | @MFPathData@ is the type manipulated by the metafont combinators.</span>
-<a name="line-69"></a><a name="MFPathData"></a><span class='hs-keyword'>data</span> <span class='hs-conid'>MFPathData</span> <span class='hs-varid'>a</span> <span class='hs-keyword'>where</span>
-<a name="line-70"></a>  <span class='hs-conid'>MFPathCycle</span><span class='hs-keyglyph'>::</span> <span class='hs-conid'>MFPathData</span> <span class='hs-conid'>P</span>
-<a name="line-71"></a>  <span class='hs-conid'>MFPathEnd</span>  <span class='hs-keyglyph'>::</span> <span class='hs-conid'>P2</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>MFPathData</span> <span class='hs-conid'>P</span>
-<a name="line-72"></a>  <span class='hs-conid'>MFPathPt</span>   <span class='hs-keyglyph'>::</span> <span class='hs-conid'>P2</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>MFPathData</span> <span class='hs-conid'>J</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>MFPathData</span> <span class='hs-conid'>P</span>
-<a name="line-73"></a>  <span class='hs-conid'>MFPathJoin</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>PathJoin</span> <span class='hs-layout'>(</span><span class='hs-conid'>Maybe</span> <span class='hs-conid'>PathDir</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-conid'>Maybe</span> <span class='hs-conid'>BasicJoin</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>MFPathData</span> <span class='hs-conid'>P</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>MFPathData</span> <span class='hs-conid'>J</span>
-<a name="line-74"></a>
-<a name="line-75"></a><a name="MetafontSegment"></a><span class='hs-comment'>-- | @MetafontSegment@ is used internally in solving the metafont</span>
-<a name="line-76"></a><a name="MetafontSegment"></a><span class='hs-comment'>-- equations.  It represents a segment with two known endpoints, and a</span>
-<a name="line-77"></a><a name="MetafontSegment"></a><span class='hs-comment'>-- /join/, which may be specified in various ways.</span>
-<a name="line-78"></a><a name="MetafontSegment"></a><span class='hs-keyword'>data</span> <span class='hs-conid'>MetafontSegment</span> <span class='hs-varid'>d</span> <span class='hs-varid'>j</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>MFS</span> <span class='hs-layout'>{</span> <span class='hs-sel'>_x1</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>P2</span><span class='hs-layout'>,</span> <span class='hs-sel'>_pj</span> <span class='hs-keyglyph'>::</span> <span class='hs-layout'>(</span><span class='hs-conid'>PathJoin</span> <span class='hs-varid'>d</span> <span class='hs-varid'>j</span><span class='hs-layout'>)</span><span class='hs-layout'>,</span> <span class='hs-sel'>_x2</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>P2</span> <span class='hs-layout'>}</span>
-<a name="line-79"></a>                         <span class='hs-keyword'>deriving</span> <span class='hs-layout'>(</span><span class='hs-conid'>Functor</span><span class='hs-layout'>,</span> <span class='hs-conid'>Show</span><span class='hs-layout'>)</span>
-<a name="line-80"></a>
-<a name="line-81"></a><a name="MFPath"></a><span class='hs-comment'>-- | @MFPath@ is the type used internally in solving the metafont</span>
-<a name="line-82"></a><a name="MFPath"></a><span class='hs-comment'>-- equations.  The direction and join types are progressively refined</span>
-<a name="line-83"></a><a name="MFPath"></a><span class='hs-comment'>-- until all control points are known.  The @loop@ flag affects both</span>
-<a name="line-84"></a><a name="MFPath"></a><span class='hs-comment'>-- the equations to be solved and the type of 'Trail' in the result.</span>
-<a name="line-85"></a><a name="MFPath"></a><span class='hs-comment'>-- If constructing an @MFPath@ in new code, the responsibility rests</span>
-<a name="line-86"></a><a name="MFPath"></a><span class='hs-comment'>-- on the user to ensure that successive @MetafontSegment@s share an</span>
-<a name="line-87"></a><a name="MFPath"></a><span class='hs-comment'>-- endpoint.  If this is not true, the result is undefined.</span>
-<a name="line-88"></a><a name="MFPath"></a><span class='hs-keyword'>data</span> <span class='hs-conid'>MFPath</span> <span class='hs-varid'>d</span> <span class='hs-varid'>j</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>MFP</span> <span class='hs-layout'>{</span> <span class='hs-sel'>_loop</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Bool</span><span class='hs-layout'>,</span> <span class='hs-sel'>_segs</span> <span class='hs-keyglyph'>::</span> <span class='hs-keyglyph'>[</span><span class='hs-conid'>MetafontSegment</span> <span class='hs-varid'>d</span> <span class='hs-varid'>j</span><span class='hs-keyglyph'>]</span> <span class='hs-layout'>}</span>
-<a name="line-89"></a>                <span class='hs-keyword'>deriving</span> <span class='hs-conid'>Show</span>
-<a name="line-90"></a>
-<a name="line-91"></a><a name="MFP"></a><span class='hs-comment'>-- | MFP is a type synonym to clarify signatures in Metafont.Internal.</span>
-<a name="line-92"></a><a name="MFP"></a><span class='hs-comment'>-- Note that the type permits segments which are \"overspecified\",</span>
-<a name="line-93"></a><a name="MFP"></a><span class='hs-comment'>-- having one or both directions specified, and also a 'ControlJoin'.</span>
-<a name="line-94"></a><a name="MFP"></a><span class='hs-comment'>-- In this case, "Metafont.Internal" ignores the directions.</span>
-<a name="line-95"></a><a name="MFP"></a><span class='hs-keyword'>type</span> <span class='hs-conid'>MFP</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>MFPath</span> <span class='hs-layout'>(</span><span class='hs-conid'>Maybe</span> <span class='hs-conid'>PathDir</span><span class='hs-layout'>)</span> <span class='hs-conid'>BasicJoin</span>
-<a name="line-96"></a>
-<a name="line-97"></a><a name="MFS"></a><span class='hs-comment'>-- | MFS is a type synonym to clarify signatures in "Metafont.Internal".</span>
-<a name="line-98"></a><a name="MFS"></a><span class='hs-keyword'>type</span> <span class='hs-conid'>MFS</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>MetafontSegment</span> <span class='hs-layout'>(</span><span class='hs-conid'>Maybe</span> <span class='hs-conid'>PathDir</span><span class='hs-layout'>)</span> <span class='hs-conid'>BasicJoin</span>
-<a name="line-99"></a>
-<a name="line-100"></a><span class='hs-definition'>makeLenses</span> <span class='hs-chr'>'</span><span class='hs-chr'>'</span><span class='hs-conid'>MetafontSegment</span>
-<a name="line-101"></a><span class='hs-definition'>makeLenses</span> <span class='hs-chr'>'</span><span class='hs-chr'>'</span><span class='hs-conid'>MFPath</span>
-<a name="line-102"></a>
-<a name="line-103"></a><a name="instance%20Monoid%20(PathJoin%20(Maybe%20PathDir)%20(Maybe%20BasicJoin))"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Monoid</span> <span class='hs-layout'>(</span><span class='hs-conid'>PathJoin</span> <span class='hs-layout'>(</span><span class='hs-conid'>Maybe</span> <span class='hs-conid'>PathDir</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-conid'>Maybe</span> <span class='hs-conid'>BasicJoin</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
-<a name="line-104"></a>    <span class='hs-comment'>-- | The default join, with no directions specified, and both tensions 1.</span>
-<a name="line-105"></a>    <span class='hs-varid'>mempty</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>PJ</span> <span class='hs-conid'>Nothing</span> <span class='hs-conid'>Nothing</span> <span class='hs-conid'>Nothing</span>
-<a name="line-106"></a>    <span class='hs-varid'>l</span> <span class='hs-varop'>`mappend`</span> <span class='hs-varid'>r</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>PJ</span> <span class='hs-layout'>(</span><span class='hs-varid'>c</span> <span class='hs-layout'>(</span><span class='hs-varid'>l</span><span class='hs-varop'>^.</span><span class='hs-varid'>d1</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-varid'>r</span><span class='hs-varop'>^.</span><span class='hs-varid'>d1</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-varid'>c</span> <span class='hs-layout'>(</span><span class='hs-varid'>l</span><span class='hs-varop'>^.</span><span class='hs-varid'>j</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-varid'>r</span><span class='hs-varop'>^.</span><span class='hs-varid'>j</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-varid'>c</span> <span class='hs-layout'>(</span><span class='hs-varid'>l</span><span class='hs-varop'>^.</span><span class='hs-varid'>d2</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-varid'>r</span><span class='hs-varop'>^.</span><span class='hs-varid'>d2</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span>
-<a name="line-107"></a>      <span class='hs-keyword'>where</span>
-<a name="line-108"></a>        <span class='hs-varid'>c</span> <span class='hs-varid'>a</span> <span class='hs-varid'>b</span> <span class='hs-keyglyph'>=</span> <span class='hs-keyword'>case</span> <span class='hs-varid'>b</span> <span class='hs-keyword'>of</span>
-<a name="line-109"></a>            <span class='hs-conid'>Nothing</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span>
-<a name="line-110"></a>            <span class='hs-conid'>Just</span> <span class='hs-keyword'>_</span>  <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>b</span>
-<a name="line-111"></a>
-<a name="line-112"></a><a name="instance%20Semigroup%20(PathJoin%20(Maybe%20PathDir)%20(Maybe%20BasicJoin))"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Semigroup</span> <span class='hs-layout'>(</span><span class='hs-conid'>PathJoin</span> <span class='hs-layout'>(</span><span class='hs-conid'>Maybe</span> <span class='hs-conid'>PathDir</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-conid'>Maybe</span> <span class='hs-conid'>BasicJoin</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
-<a name="line-113"></a>    <span class='hs-layout'>(</span><span class='hs-varop'>&lt;&gt;</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>mappend</span>
-<a name="line-114"></a>
+<a name="line-58"></a><a name="TensionJoin"></a><span class='hs-comment'>-- | Two tensions and two directions completely determine the control</span>
+<a name="line-59"></a><a name="TensionJoin"></a><span class='hs-comment'>-- points of a segment.</span>
+<a name="line-60"></a><a name="TensionJoin"></a><span class='hs-keyword'>data</span> <span class='hs-conid'>TensionJoin</span> <span class='hs-varid'>n</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>TJ</span> <span class='hs-layout'>{</span> <span class='hs-sel'>_t1</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Tension</span> <span class='hs-varid'>n</span><span class='hs-layout'>,</span> <span class='hs-sel'>_t2</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Tension</span> <span class='hs-varid'>n</span> <span class='hs-layout'>}</span>
+<a name="line-61"></a>                 <span class='hs-keyword'>deriving</span> <span class='hs-conid'>Show</span>
+<a name="line-62"></a>
+<a name="line-63"></a><a name="ControlJoin"></a><span class='hs-comment'>-- | The two intermediate control points of a segment, specified directly.</span>
+<a name="line-64"></a><a name="ControlJoin"></a><span class='hs-keyword'>data</span> <span class='hs-conid'>ControlJoin</span> <span class='hs-varid'>n</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>CJ</span> <span class='hs-layout'>{</span> <span class='hs-sel'>_c1</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>P2</span> <span class='hs-varid'>n</span><span class='hs-layout'>,</span> <span class='hs-sel'>_c2</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>P2</span> <span class='hs-varid'>n</span><span class='hs-layout'>}</span>
+<a name="line-65"></a>                 <span class='hs-keyword'>deriving</span> <span class='hs-conid'>Show</span>
+<a name="line-66"></a>
+<a name="line-67"></a><span class='hs-definition'>makeLenses</span> <span class='hs-chr'>'</span><span class='hs-chr'>'</span><span class='hs-conid'>TensionJoin</span>
+<a name="line-68"></a><span class='hs-definition'>makeLenses</span> <span class='hs-chr'>'</span><span class='hs-chr'>'</span><span class='hs-conid'>ControlJoin</span>
+<a name="line-69"></a>
+<a name="line-70"></a><a name="P"></a><span class='hs-keyword'>data</span> <span class='hs-conid'>P</span>
+<a name="line-71"></a><a name="J"></a><span class='hs-keyword'>data</span> <span class='hs-conid'>J</span>
+<a name="line-72"></a>
+<a name="line-73"></a><a name="MFPathData"></a><span class='hs-comment'>-- | @MFPathData@ is the type manipulated by the metafont combinators.</span>
+<a name="line-74"></a><a name="MFPathData"></a><span class='hs-keyword'>data</span> <span class='hs-conid'>MFPathData</span> <span class='hs-varid'>a</span> <span class='hs-varid'>n</span> <span class='hs-keyword'>where</span>
+<a name="line-75"></a>  <span class='hs-conid'>MFPathCycle</span><span class='hs-keyglyph'>::</span> <span class='hs-conid'>MFPathData</span> <span class='hs-conid'>P</span> <span class='hs-varid'>n</span>
+<a name="line-76"></a>  <span class='hs-conid'>MFPathEnd</span>  <span class='hs-keyglyph'>::</span> <span class='hs-conid'>P2</span> <span class='hs-varid'>n</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>MFPathData</span> <span class='hs-conid'>P</span> <span class='hs-varid'>n</span>
+<a name="line-77"></a>  <span class='hs-conid'>MFPathPt</span>   <span class='hs-keyglyph'>::</span> <span class='hs-conid'>P2</span> <span class='hs-varid'>n</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>MFPathData</span> <span class='hs-conid'>J</span> <span class='hs-varid'>n</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>MFPathData</span> <span class='hs-conid'>P</span> <span class='hs-varid'>n</span>
+<a name="line-78"></a>  <span class='hs-conid'>MFPathJoin</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>PathJoin</span> <span class='hs-layout'>(</span><span class='hs-conid'>Maybe</span> <span class='hs-layout'>(</span><span class='hs-conid'>PathDir</span> <span class='hs-varid'>n</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-conid'>Maybe</span> <span class='hs-layout'>(</span><span class='hs-conid'>BasicJoin</span> <span class='hs-varid'>n</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>MFPathData</span> <span class='hs-conid'>P</span> <span class='hs-varid'>n</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-conid'>MFPathData</span> <span class='hs-conid'>J</span> <span class='hs-varid'>n</span>
+<a name="line-79"></a>
+<a name="line-80"></a><a name="MetafontSegment"></a><span class='hs-comment'>-- | @MetafontSegment@ is used internally in solving the metafont</span>
+<a name="line-81"></a><a name="MetafontSegment"></a><span class='hs-comment'>-- equations.  It represents a segment with two known endpoints, and a</span>
+<a name="line-82"></a><a name="MetafontSegment"></a><span class='hs-comment'>-- /join/, which may be specified in various ways.</span>
+<a name="line-83"></a><a name="MetafontSegment"></a><span class='hs-keyword'>data</span> <span class='hs-conid'>MetafontSegment</span> <span class='hs-varid'>d</span> <span class='hs-varid'>j</span> <span class='hs-varid'>n</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>MFS</span> <span class='hs-layout'>{</span> <span class='hs-sel'>_x1</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>P2</span> <span class='hs-varid'>n</span><span class='hs-layout'>,</span> <span class='hs-sel'>_pj</span> <span class='hs-keyglyph'>::</span> <span class='hs-layout'>(</span><span class='hs-conid'>PathJoin</span> <span class='hs-varid'>d</span> <span class='hs-varid'>j</span> <span class='hs-layout'>)</span><span class='hs-layout'>,</span> <span class='hs-sel'>_x2</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>P2</span> <span class='hs-varid'>n</span> <span class='hs-layout'>}</span>
+<a name="line-84"></a>                         <span class='hs-keyword'>deriving</span> <span class='hs-layout'>(</span><span class='hs-conid'>Functor</span><span class='hs-layout'>,</span> <span class='hs-conid'>Show</span><span class='hs-layout'>)</span>
+<a name="line-85"></a>
+<a name="line-86"></a><a name="MFPath"></a><span class='hs-comment'>-- | @MFPath@ is the type used internally in solving the metafont</span>
+<a name="line-87"></a><a name="MFPath"></a><span class='hs-comment'>-- equations.  The direction and join types are progressively refined</span>
+<a name="line-88"></a><a name="MFPath"></a><span class='hs-comment'>-- until all control points are known.  The @loop@ flag affects both</span>
+<a name="line-89"></a><a name="MFPath"></a><span class='hs-comment'>-- the equations to be solved and the type of 'Trail' in the result.</span>
+<a name="line-90"></a><a name="MFPath"></a><span class='hs-comment'>-- If constructing an @MFPath@ in new code, the responsibility rests</span>
+<a name="line-91"></a><a name="MFPath"></a><span class='hs-comment'>-- on the user to ensure that successive @MetafontSegment@s share an</span>
+<a name="line-92"></a><a name="MFPath"></a><span class='hs-comment'>-- endpoint.  If this is not true, the result is undefined.</span>
+<a name="line-93"></a><a name="MFPath"></a><span class='hs-keyword'>data</span> <span class='hs-conid'>MFPath</span> <span class='hs-varid'>d</span> <span class='hs-varid'>j</span> <span class='hs-varid'>n</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>MFP</span> <span class='hs-layout'>{</span> <span class='hs-sel'>_loop</span> <span class='hs-keyglyph'>::</span> <span class='hs-conid'>Bool</span><span class='hs-layout'>,</span> <span class='hs-sel'>_segs</span> <span class='hs-keyglyph'>::</span> <span class='hs-keyglyph'>[</span><span class='hs-conid'>MetafontSegment</span> <span class='hs-varid'>d</span> <span class='hs-varid'>j</span> <span class='hs-varid'>n</span><span class='hs-keyglyph'>]</span> <span class='hs-layout'>}</span>
+<a name="line-94"></a>                <span class='hs-keyword'>deriving</span> <span class='hs-conid'>Show</span>
+<a name="line-95"></a>
+<a name="line-96"></a><a name="MFP"></a><span class='hs-comment'>-- | MFP is a type synonym to clarify signatures in Metafont.Internal.</span>
+<a name="line-97"></a><a name="MFP"></a><span class='hs-comment'>-- Note that the type permits segments which are \"overspecified\",</span>
+<a name="line-98"></a><a name="MFP"></a><span class='hs-comment'>-- having one or both directions specified, and also a 'ControlJoin'.</span>
+<a name="line-99"></a><a name="MFP"></a><span class='hs-comment'>-- In this case, "Metafont.Internal" ignores the directions.</span>
+<a name="line-100"></a><a name="MFP"></a><span class='hs-keyword'>type</span> <span class='hs-conid'>MFP</span> <span class='hs-varid'>n</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>MFPath</span> <span class='hs-layout'>(</span><span class='hs-conid'>Maybe</span> <span class='hs-layout'>(</span><span class='hs-conid'>PathDir</span> <span class='hs-varid'>n</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-conid'>BasicJoin</span> <span class='hs-varid'>n</span><span class='hs-layout'>)</span> <span class='hs-varid'>n</span>
+<a name="line-101"></a>
+<a name="line-102"></a><a name="MFS"></a><span class='hs-comment'>-- | MFS is a type synonym to clarify signatures in "Metafont.Internal".</span>
+<a name="line-103"></a><a name="MFS"></a><span class='hs-keyword'>type</span> <span class='hs-conid'>MFS</span> <span class='hs-varid'>n</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>MetafontSegment</span> <span class='hs-layout'>(</span><span class='hs-conid'>Maybe</span> <span class='hs-layout'>(</span><span class='hs-conid'>PathDir</span> <span class='hs-varid'>n</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-conid'>BasicJoin</span> <span class='hs-varid'>n</span><span class='hs-layout'>)</span> <span class='hs-varid'>n</span>
+<a name="line-104"></a>
+<a name="line-105"></a><span class='hs-definition'>makeLenses</span> <span class='hs-chr'>'</span><span class='hs-chr'>'</span><span class='hs-conid'>MetafontSegment</span>
+<a name="line-106"></a><span class='hs-definition'>makeLenses</span> <span class='hs-chr'>'</span><span class='hs-chr'>'</span><span class='hs-conid'>MFPath</span>
+<a name="line-107"></a>
+<a name="line-108"></a><a name="instance%20Monoid%20(PathJoin%20(Maybe%20(PathDir%20n))%20(Maybe%20(BasicJoin%20n)))"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Monoid</span> <span class='hs-layout'>(</span><span class='hs-conid'>PathJoin</span> <span class='hs-layout'>(</span><span class='hs-conid'>Maybe</span> <span class='hs-layout'>(</span><span class='hs-conid'>PathDir</span> <span class='hs-varid'>n</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-conid'>Maybe</span> <span class='hs-layout'>(</span><span class='hs-conid'>BasicJoin</span> <span class='hs-varid'>n</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
+<a name="line-109"></a>    <span class='hs-comment'>-- | The default join, with no directions specified, and both tensions 1.</span>
+<a name="line-110"></a>    <span class='hs-varid'>mempty</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>PJ</span> <span class='hs-conid'>Nothing</span> <span class='hs-conid'>Nothing</span> <span class='hs-conid'>Nothing</span>
+<a name="line-111"></a>    <span class='hs-varid'>l</span> <span class='hs-varop'>`mappend`</span> <span class='hs-varid'>r</span> <span class='hs-keyglyph'>=</span> <span class='hs-conid'>PJ</span> <span class='hs-layout'>(</span><span class='hs-varid'>c</span> <span class='hs-layout'>(</span><span class='hs-varid'>l</span><span class='hs-varop'>^.</span><span class='hs-varid'>d1</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-varid'>r</span><span class='hs-varop'>^.</span><span class='hs-varid'>d1</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-varid'>c</span> <span class='hs-layout'>(</span><span class='hs-varid'>l</span><span class='hs-varop'>^.</span><span class='hs-varid'>j</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-varid'>r</span><span class='hs-varop'>^.</span><span class='hs-varid'>j</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-varid'>c</span> <span class='hs-layout'>(</span><span class='hs-varid'>l</span><span class='hs-varop'>^.</span><span class='hs-varid'>d2</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-varid'>r</span><span class='hs-varop'>^.</span><span class='hs-varid'>d2</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span>
+<a name="line-112"></a>      <span class='hs-keyword'>where</span>
+<a name="line-113"></a>        <span class='hs-varid'>c</span> <span class='hs-varid'>a</span> <span class='hs-varid'>b</span> <span class='hs-keyglyph'>=</span> <span class='hs-keyword'>case</span> <span class='hs-varid'>b</span> <span class='hs-keyword'>of</span>
+<a name="line-114"></a>            <span class='hs-conid'>Nothing</span> <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>a</span>
+<a name="line-115"></a>            <span class='hs-conid'>Just</span> <span class='hs-keyword'>_</span>  <span class='hs-keyglyph'>-&gt;</span> <span class='hs-varid'>b</span>
+<a name="line-116"></a>
+<a name="line-117"></a><a name="instance%20Semigroup%20(PathJoin%20(Maybe%20(PathDir%20n))%20(Maybe%20(BasicJoin%20n)))"></a><span class='hs-keyword'>instance</span> <span class='hs-conid'>Semigroup</span> <span class='hs-layout'>(</span><span class='hs-conid'>PathJoin</span> <span class='hs-layout'>(</span><span class='hs-conid'>Maybe</span> <span class='hs-layout'>(</span><span class='hs-conid'>PathDir</span> <span class='hs-varid'>n</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span> <span class='hs-layout'>(</span><span class='hs-conid'>Maybe</span> <span class='hs-layout'>(</span><span class='hs-conid'>BasicJoin</span> <span class='hs-varid'>n</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span><span class='hs-layout'>)</span> <span class='hs-keyword'>where</span>
+<a name="line-118"></a>    <span class='hs-layout'>(</span><span class='hs-varop'>&lt;&gt;</span><span class='hs-layout'>)</span> <span class='hs-keyglyph'>=</span> <span class='hs-varid'>mappend</span>
 </pre></body>
 </html>
