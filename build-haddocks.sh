@@ -5,6 +5,9 @@
 # - Release packages on Hackage.
 # - Have all the repos checked out at the release version.
 # - cd to the root, under which all the repo directories live.
+# - note: need to make sure version of 'cabal' being used was built
+#   using same version of Cabal that will be in the haddocks sandbox,
+#   (which will be used to build hproj).
 
 mkdir -p haddocks-tmp
 cd haddocks-tmp
@@ -20,7 +23,7 @@ cd ..
 # cabal install cabal-install/ -j8
 # cd ../..
 cabal install -j8 gtk2hs-buildtools
-cabal install -j8 --constraint='transformers < 0.4' diagrams diagrams-postscript diagrams-cairo diagrams-gtk diagrams-rasterific diagrams-canvas diagrams-builder diagrams-haddock SVGFonts palette
+cabal install -j8 --constraint='transformers < 0.4' diagrams diagrams-postscript diagrams-cairo diagrams-gtk diagrams-rasterific diagrams-canvas diagrams-builder diagrams-haddock SVGFonts palette cabal-install-1.18.0.8
 for f in monoid-extras dual-tree active core solve lib svg postscript cairo gtk rasterific canvas contrib SVGFonts builder haddock palette
 do
   cd $f
