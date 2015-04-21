@@ -33,7 +33,7 @@ the central one.
 >         pCenter  = pentaflake' (n-1)
 >         pOutside = pCenter # opacity (1.7 / fromIntegral n)
 >
-> pentaflake n = pentaflake' n # fillTexture grad # bg silver
+> pentaflake n = pentaflake' n # fillTexture grad # bgFrame 4 silver
 
 A $4$-pentaflake looks nice.  Of course there's an exponential
 blowup in the number of primitives, so generating higher-order

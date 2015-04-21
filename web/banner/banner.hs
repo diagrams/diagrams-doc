@@ -1,12 +1,11 @@
-hilbert :: [Diagram B]
-hilbert = iterate expand mempty
+hilbert 0 = mempty
+hilbert n = hilbert' (n-1) # reflectY <> vrule 1
+         <> hilbert  (n-1) <> hrule 1
+         <> hilbert  (n-1) <> vrule (-1)
+         <> hilbert' (n-1) # reflectX
   where
-    expand t =
-      let u = vcat [ t, alignT (vrule 1)
-                   , rotateBy (3/4) t ]
-      in      hcat [ u, hrule 1, reflectX u ]
-                   # alignBL
+    hilbert' m = hilbert m # rotateBy (1/4)
 
 diagram :: Diagram B
-diagram = hilbert !! 6 # lc silver
-                       # opacity 0.3
+diagram = strokeT (hilbert 6) # lc silver
+                              # opacity 0.3

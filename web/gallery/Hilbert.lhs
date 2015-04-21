@@ -1,8 +1,8 @@
 ---
 title: Hilbert curve
-author: John Tromp
-authorurl: http://homepages.cwi.nl/~tromp/
-date: 2011-05-25
+author: Jeffrey Rosenbluth
+authorurl: https://www.projects.haskell.org/diagrams/
+date: 2015-04-21
 description: An order-5 approximation to the space-filling Hilbert curve.
 tags: fractal, hilbert, curve
 width: 400
@@ -10,10 +10,16 @@ height: 400
 ---
 
 > {-# LANGUAGE NoMonomorphismRestriction #-}
+>
 > import Diagrams.Prelude
 >
-> hilbert = iterate expand mempty where
->   expand t = alignBL $ hcat [u, hrule 1, reflectX u] where
->              u = vcat [t, alignT $ vrule 1, rotateBy (3/4) t]
+> hilbert 0 = mempty
+> hilbert n = hilbert' (n-1) # reflectY <> vrule 1
+>          <> hilbert  (n-1) <> hrule 1
+>          <> hilbert  (n-1) <> vrule (-1)
+>          <> hilbert' (n-1) # reflectX
+>   where
+>     hilbert' m = hilbert m # rotateBy (1/4)
 >
-> example = pad 1.1 . centerXY $ hilbert!!5
+> example = frame 1 . lw medium . lc darkred
+>                   . strokeT $ hilbert 5
