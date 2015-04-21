@@ -103,5 +103,3 @@ diagram "b".
 >                 , ("permgroup","parampermgroup")
 >                 , ("parampermgroup","paramsymgroup")
 >                 ]
-
-> main = mainWith (example :: Diagram B)

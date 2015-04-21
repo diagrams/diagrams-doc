@@ -179,6 +179,3 @@ The line styles.
 > lineStyles = cycle $
 >                [ id, dashingG [0.1,0.1] 0, dashingG [0.02,0.02] 0
 >                , dashingG [0.1,0.1,0.03,0.1] 0, dashingG [0.1,0.1,0.02,0.02,0.02,0.1] 0 ]
-
-
-> main = mainWith (example :: Diagram B)
