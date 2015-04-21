@@ -50,4 +50,4 @@ whose opacity varies with the square root of the pixel value.
 > toSquare n = square 1 # lw medium # fc black # opacity (sqrt o)
 >   where o = fromIntegral n / maxIter
 >
-> example = (vcat . map hcat $ image) # frame 3 # bg red
+> example = (vcat . map hcat $ image) # bgFrame 3 pink

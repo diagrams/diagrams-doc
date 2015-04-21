@@ -17,5 +17,5 @@ To see how this example is implemented, see the source code of the `Diagrams.Two
 
 > import Diagrams.TwoD.Tilings
 >
-> example = drawTiling t3464 10 10 # lc white # lw thick # bg darkorange
+> example = drawTiling t3464 10 10 # lc white # lw thick
 >                                  # centerXY # pad 1.1
