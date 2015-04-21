@@ -223,7 +223,17 @@ main = do
                     <> constField "navbarStyle" "navbar-inverse"
                     <> constField "title" "$title$"
                     <> defaultContext
-            (readTemplate <$>) <$> loadAndApplyTemplate "templates/default.html" ctx h
+            (readTemplate <$>) <$> loadAndApplyTemplate "templates/default.html" ctx
+                                      (escapeForTemplate <$> h)
+                                      -- The .hs source may contain $'s which
+                                      -- will throw off templating, escape them
+                                      -- before this becomes a template.
+
+escapeForTemplate :: String -> String
+escapeForTemplate = concatMap f
+  where
+    f '$' = "$$"
+    f x   = [x]
 
 buildBannerCSS :: Item String -> Compiler (Item String)
 buildBannerCSS b = do
