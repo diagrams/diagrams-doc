@@ -9,6 +9,8 @@ width: 400
 height: 400
 ---
 
+> import Diagrams.Prelude
+
 Some arbitrary points, with a cubic curve passing through them.
 
 > pts = map p2 [(0,0), (1,1), (2,1), (3,0), (3.5,0)]
