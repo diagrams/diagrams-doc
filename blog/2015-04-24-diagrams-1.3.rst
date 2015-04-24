@@ -1,0 +1,70 @@
+.. role:: pkg(literal)
+.. role:: hs(literal)
+.. role:: mod(literal)
+.. role:: repo(literal)
+
+.. default-role:: hs
+
+============
+Diagrams 1.3
+============
+
+Diagrams 1.3 was released a week ago, and by now I think we have most
+of the little kinks ironed out.  This is an exciting release that
+represents a great deal of effort from a lot of people. (XXX link to
+list @ end).  Here's a quick rundown of some of the new features.
+
+XXX link to migration guide
+
+Path intersection
+=================
+
+Affine maps and projections
+===========================
+
+Grouping for transparency
+=========================
+
+Better command-line looping
+===========================
+
+Backends
+========
+
+XXX -postscript, -svg, -cairo, -gtk, -rasterific from before
+Now we also have diagrams-canvas, diagrams-html5, diagrams-pgf.
+
+Generalized numerics
+====================
+
+It used to be that diagrams were hard-coded to use ``Double``.  As of
+version 1.3, ``Double`` is no longer baked in: diagrams are now
+parameterized by a suitable numeric type.  It's too early to tell what
+the full implications of this will be, but in theory it opens up
+opportunities for things like automatic differentiation and use of
+diagrams in conjunction with deeply embedded DSLs.
+
+This feature in particular was a tough nut to crack and is the fruit
+of a lot of labor.  I want to especially highlight the work of `Jan
+Bracker`_, Allan Gardner, and Frank Staals, all of whom did a lot of
+work attempting to generalize diagrams in this way.  Although their
+code ultimately did not get merged, we learned a lot from their
+attempts!  The honor of writing the code that did get merged goes to
+Chris Chalmers; a big factor in his success was to simultaneously
+replace the `vector-space`:pkg: package with `linear`:pkg:, which
+turns out to work very nicely with diagrams and with generalized
+numeric types in particular.
+
+.. _Jan Bracker: https://github.com/jbracker
+
+And lots more
+=============
+
+Of course, there are lots of other miscellaneous improvements, added
+type class instances, new lenses and prisms, bug fixes, and the like.
+For a full rundown see XXX.
+
+Contributors
+============
+
+XXX list of contributors?  Highlight contributions to 1.3?
