@@ -1583,6 +1583,12 @@ results in a diagram `p` times as opaque.
 > reds    = (s darkred ||| s red) === (s pink ||| s indianred)
 > example = hsep 1 . take 4 . iterate (opacity 0.7) $ reds
 
+.. container:: todo
+
+    Update this to reflect the fact that rasterific now supports grouped
+    opacity
+
+
 Grouped opacity can be applied using the `opacityGroup` annotation,
 which is currently supported only by the SVG and PGF backends.  In the
 example to the left below, the section where the two transparent
@@ -5395,7 +5401,8 @@ animated GIF images. It also supports embedded images (see `DImage`) and
 although does not yet have the text handling capabilities of cairo, it does use
 the exact text bounding box for alignment. Gradients are fully supported
 including, repeat and reflect. In addition the Rasterific backend can be used to generate
-in memory images that can be manipulated with `JuicyPixels`.
+in memory images that can be manipulated with `JuicyPixels`. Finally the Rasterific
+backend suppports grouped opacity.
 
 The Rasterific backend can be invoked via
 `Diagrams.Backend.Rasterific.CmdLine`:mod: module, or via the
