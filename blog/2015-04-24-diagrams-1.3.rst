@@ -156,7 +156,10 @@ Visualizing envelopes and traces
 ================================
 
 Some new functions have been added to help visualize (approximations
-of) the *envelope* and *trace* of a diagram.  For example:
+of) the `envelope`_ and `trace`_ of a diagram.  For example:
+
+.. _envelope: /doc/manual.html#envelopes-and-local-vector-spaces
+.. _trace: /doc/manual.html#traces
 
 .. class:: dia-lhs
 
