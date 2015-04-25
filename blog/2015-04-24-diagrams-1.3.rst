@@ -9,30 +9,118 @@
 Diagrams 1.3
 ============
 
-Diagrams 1.3 was released a week ago, and by now I think we have most
-of the little kinks ironed out.  This is an exciting release that
-represents a great deal of effort from a lot of people. (XXX link to
-list @ end).  Here's a quick rundown of some of the new features.
+The diagrams team is very pleased to announce the release of diagrams
+1.3.  The actual release to Hackage happened a week or so ago, and by
+now I think we have most of the little kinks ironed out.  This is an
+exciting release that represents a great deal of effort from a lot of
+people (see the list of contributors at the end of this post).  Here's
+a quick rundown of some of the new features.  If you're just looking
+for help porting your diagrams code to work with 1.3, see the
+`migration guide`_.
 
-XXX link to migration guide
+.. _migration guide: https://wiki.haskell.org/Diagrams/Dev/Migrate1.3
 
 Path intersection
 =================
 
+Using the functions `intersectPointsP` and `intersectPointsT`, it is
+now possible to find the points of intersection between two paths or
+two trails, respectively.  This is not so hard for paths with straight
+segments, but for cubic Bezier curves, finding intersection points is
+nontrivial!
+
+.. class:: dia-lhs
+
+::
+
+> {-# LANGUAGE TupleSections #-}
+>
+> example :: Diagram B
+> example = mconcat (map (place pt) points) <> mconcat ellipses
+>   where
+>     ell = circle 1 # scaleX 2
+>     pt  = circle 0.05 # fc blue # lw none
+>     ellipses = [ ell # rotateBy r # translateX (2*r) | r <- [0, 1/12 .. 5/12] ]
+>     points = allPairs ellipses >>= uncurry intersectPointsP
+>     allPairs [] = []
+>     allPairs (x:xs) = map (x,) xs ++ allPairs xs
+
+Note that this feature is something of a "technology preview" in
+diagrams 1.3: the API will probably change and grow in the next
+release (for example, giving a way to find the *parameters* of
+intersection points).
+
 Affine maps and projections
 ===========================
 
-Grouping for transparency
-=========================
+Affine maps have been added to `Diagrams.LinearMap`:mod: that can map
+between *different* vector spaces. The `Deformable`:mod: class has
+also been generalised to map between spaces. Helper functions have
+been added to `Diagrams.ThreeD.Projection`:mod: for basic orthographic
+and perspective projections.
+
+For example, XXX ?
+
+Grouping for opacity
+====================
+
+A few backends (SVG, PGF, and soon Rasterific) support *grouped
+transparency*.  The idea is that transparency can be applied to *a
+group of diagrams as a whole* rather than to individual diagrams.  The
+difference is in what happens when diagrams overlap: if they are
+individually transparent, the overlapping section will be darker, as
+if two pieces of colored cellophane were overlapped.  If
+transparency is applied to a group instead, the transparency is
+uniformly applied to the rendered output of the group of diagrams, as
+if a single piece of colored cellophane were cut out in the shape of
+the group of diagrams.
+
+An example should help make this clear.  In the example to the left
+below, the section where the two transparent circles overlap is
+darker.  Unfortunately, this blog post is being compiled with the
+`diagrams-rasterific`:pkg: backend, which does not yet support grouped
+opacity (though a forthcoming version soon will).  So the example on
+the right just looks like two opaque overlapping circles; but if
+compiled with a backend that supports grouped opacity, the shape on
+the right would be a uniform light red, the same as the lighter red
+color in the example on the left.
+
+.. class:: dia-lhs
+
+::
+
+> cir = circle 1 # lw none # fc red
+> overlap = (cir <> cir # translateX 1)
+>
+> example = hsep 1 [ overlap # opacity 0.3, overlap # opacityGroup 0.3 ]
 
 Better command-line looping
 ===========================
 
-Backends
-========
+For some time, many diagrams backends have had a "looped compilation
+mode", where the diagram-rendering executables produced take a
+``--loop`` option, causing them to watch for changes to a source file,
+recompile and relaunch themselves.  Support for this feature is now
+greatly improved. We have switched to use `fsnotify`:pkg:, which
+eliminates polling and allows the feature to work on Windows for the
+first time (previous versions depended on the `unix`:pkg: package).
+The output of the ``--loop`` mode has also been improved.
 
-XXX -postscript, -svg, -cairo, -gtk, -rasterific from before
-Now we also have diagrams-canvas, diagrams-html5, diagrams-pgf.
+New backends
+============
+
+The `diagrams-postscript`:pkg:, `diagrams-svg`:pkg:,
+`diagrams-cairo`:pkg:, `diagrams-gtk`:pkg:, and
+`diagrams-rasterific`:pkg: backends are all still going strong and
+fully supported.  We now have several new backends as well:
+`diagrams-html5`:pkg: writes directly to an HTML5 canvas;
+`diagrams-canvas`:pkg: also targets HTML5 canvas, but uses the
+`blank-canvas`:pkg: package, allowing various sorts of interactivity.
+We also have a new backend `diagrams-pgf`:pkg: which generates
+PGF/TikZ code suitable for including in `\TeX`:math: documents---one
+can even have embedded text in diagrams typeset by `\TeX`:math:,
+allowing *e.g.* mathematical formulas as labels for things in your
+diagram.
 
 Generalized numerics
 ====================
@@ -41,30 +129,109 @@ It used to be that diagrams were hard-coded to use ``Double``.  As of
 version 1.3, ``Double`` is no longer baked in: diagrams are now
 parameterized by a suitable numeric type.  It's too early to tell what
 the full implications of this will be, but in theory it opens up
-opportunities for things like automatic differentiation and use of
-diagrams in conjunction with deeply embedded DSLs.
+opportunities for things like automatic differentiation, constraint
+solving, and using diagrams in conjunction with deeply embedded DSLs.
 
 This feature in particular was a tough nut to crack and is the fruit
-of a lot of labor.  I want to especially highlight the work of `Jan
-Bracker`_, Allan Gardner, and Frank Staals, all of whom did a lot of
+of a lot of labor.  I want to especially highlight the work of Jan
+Bracker, Allan Gardner, and Frank Staals, all of whom did a lot of
 work attempting to generalize diagrams in this way.  Although their
 code ultimately did not get merged, we learned a lot from their
-attempts!  The honor of writing the code that did get merged goes to
-Chris Chalmers; a big factor in his success was to simultaneously
-replace the `vector-space`:pkg: package with `linear`:pkg:, which
-turns out to work very nicely with diagrams and with generalized
-numeric types in particular.
+attempts!  The fourth attempt, by Chris Chalmers, actually stuck. A
+big factor in his success was to simultaneously replace the
+`vector-space`:pkg: package with `linear`:pkg:, which turns out to
+work very nicely with diagrams and with generalized numeric types in
+particular.
+
+Note that this is a Very Breaking Change as the types of almost
+everything changed.  Anything which used to take a single type
+representing a vector space (such as `R2`) as an argument now takes
+two arguments, one for the structure/dimension of the vector space
+(*e.g.* `V2`) and one for the numeric/scalar type.  See the `migration
+guide`_ for more specific information and help upgrading!
 
 .. _Jan Bracker: https://github.com/jbracker
 
-And lots more
-=============
+And lots more...
+================
 
 Of course, there are lots of other miscellaneous improvements, added
 type class instances, new lenses and prisms, bug fixes, and the like.
-For a full rundown see XXX.
+For a full rundown see the `release notes`_.
+
+.. _release notes: http://projects.haskell.org/diagrams/releases.html
 
 Contributors
 ============
 
-XXX list of contributors?  Highlight contributions to 1.3?
+We now have a team of 5 people working very actively on diagrams
+(Chris Chalmers, Daniel Bergey, Jeff Rosenbluth, Ryan Yates, and
+myself), with many, many more contributing here and there.  As a way
+to say thank you for all the great contributions and hard work by many
+in the community, here is a (probably incomplete) list of people who
+have contributed to diagrams in any way --- all 64 of them!
+
+Alexis Praga /
+Allan Gardner /
+Andy Gill /
+Anthony Cowley /
+Bartosz Nitka /
+Ben Gamari /
+Brent Yorgey /
+Carlos Scheidegger /
+Carter Tazio Schonwald /
+Chris Mears /
+Christopher Chalmers /
+Claude Heiland-Allen /
+Conal Elliott /
+Daniel Bergey /
+Daniel Kröni /
+Daniel Wagner /
+Daniil Frumin /
+Deepak Jois /
+Denys Duchier /
+Dominic Steinitz /
+Doug Beardsley /
+Felipe Lessa /
+Florent Becker /
+Gabor Greif /
+Hans Höglund /
+Ian Ross /
+Jan Bracker /
+Jeffrey Rosenbluth /
+Jeroen Bransen /
+Jim Snavely /
+Joachim Breitner /
+Joel Burget /
+John Lato /
+Jonas Haag /
+Kanchalai Suveepattananont /
+Kaspar Emanuel /
+Konrad Madej /
+Konstantin Zudov /
+Luite Stegeman /
+Michael Sloan /
+Michael Thompson /
+Moiman /
+Niklas Haas /
+Peter Hall /
+Pontus Granström /
+Robbie Gleichman /
+Robert Vollmert /
+Ryan Scott /
+Ryan Yates /
+Sam Griffin /
+Scott Walck /
+Sergei Trofimovich /
+sleepyMonad /
+soapie /
+Steve Sprang /
+Steven Smith /
+Tad Doxsee /
+Taneb /
+Taru Karttunen /
+Tillmann Vogt /
+Tim Docker /
+Vilhelm Sjöberg /
+Vincent Berthoux /
+Yiding Jia
