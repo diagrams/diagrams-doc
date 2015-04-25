@@ -1,0 +1,5 @@
+title: Diagrams + Cairo + Gtk + Mouse picking, Reloaded
+author: Brent Yorgey
+date: April 26, 2015
+tags: cairo, GTK, mouse, coordinates, transformation, features
+description: How to match up mouse clicks in a GTK window with points in a diagram
