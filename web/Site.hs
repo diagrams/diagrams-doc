@@ -379,7 +379,7 @@ feedConfiguration = FeedConfiguration
     , feedDescription = "Diagrams Blog Posts"
     , feedAuthorName  = "diagrams-discuss"
     , feedAuthorEmail = "diagrams-discuss@googlegroups.com"
-    , feedRoot        = "http://projects.haskell.org/diagrams/blog"
+    , feedRoot        = "http://projects.haskell.org/diagrams"
     }
 
 -- Auxiliary compilers
