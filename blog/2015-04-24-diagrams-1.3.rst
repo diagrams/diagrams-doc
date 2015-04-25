@@ -123,26 +123,23 @@ do projections.
 Grouping for opacity
 ====================
 
-A few backends (SVG, PGF, and soon Rasterific) support *grouped
+A few backends (`diagrams-svg`:pkg:, `diagrams-pgf`:pkg:, and
+`diagrams-rasterific`:pkg: as of version 1.3.1) support *grouped
 transparency*.  The idea is that transparency can be applied to *a
 group of diagrams as a whole* rather than to individual diagrams.  The
 difference is in what happens when diagrams overlap: if they are
 individually transparent, the overlapping section will be darker, as
-if two pieces of colored cellophane were overlapped.  If
-transparency is applied to a group instead, the transparency is
-uniformly applied to the rendered output of the group of diagrams, as
-if a single piece of colored cellophane were cut out in the shape of
-the group of diagrams.
+if two pieces of colored cellophane were overlapped.  If transparency
+is applied to a group instead, the transparency is uniformly applied
+to the rendered output of the group of diagrams, as if a single piece
+of colored cellophane were cut out in the shape of the group of
+diagrams.
 
 An example should help make this clear.  In the example to the left
 below, the section where the two transparent circles overlap is
-darker.  Unfortunately, this blog post is being compiled with the
-`diagrams-rasterific`:pkg: backend, which does not yet support grouped
-opacity (though a forthcoming version soon will).  So the example on
-the right just looks like two opaque overlapping circles; but if
-compiled with a backend that supports grouped opacity, the shape on
-the right would be a uniform light red, the same as the lighter red
-color in the example on the left.
+darker.  On the right, the call to `groupOpacity` means that the
+entire shape formed form the union of the two circles is given a
+uniform opacity; there is no darker region where the circles overlap.
 
 .. class:: dia-lhs
 
@@ -152,6 +149,8 @@ color in the example on the left.
 > overlap = (cir <> cir # translateX 1)
 >
 > example = hsep 1 [ overlap # opacity 0.3, overlap # opacityGroup 0.3 ]
+>           # centerX
+>        <> rect 9 0.1 # fc lightblue # lw none
 
 Visualizing envelopes and traces
 ================================
