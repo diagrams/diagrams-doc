@@ -41,7 +41,7 @@ nontrivial!
 >     ell = circle 1 # scaleX 2
 >     pt  = circle 0.05 # fc blue # lw none
 >     ellipses = [ ell # rotateBy r # translateX (2*r) | r <- [0, 1/12 .. 5/12] ]
->     points = allPairs ellipses >>= uncurry intersectPointsP
+>     points = allPairs ellipses >>= uncurry (intersectPointsP' 1e-8)
 >     allPairs [] = []
 >     allPairs (x:xs) = map (x,) xs ++ allPairs xs
 
@@ -59,7 +59,66 @@ also been generalised to map between spaces. Helper functions have
 been added to `Diagrams.ThreeD.Projection`:mod: for basic orthographic
 and perspective projections.
 
-For example, XXX ?
+In the below example, we construct a 3-dimensional path representing
+the wireframe of a simple house, and then project it into 2 dimensions
+using perspective, orthographic, and isometric projections.
+
+.. class:: dia-lhs
+
+::
+
+> import Diagrams.ThreeD.Transform  (translateZ)
+> import Diagrams.ThreeD.Projection
+> import Diagrams.LinearMap         (amap)
+> import Linear.Matrix              ((!*!))
+>
+> box :: Path V3 Double
+> box = Path [f p1 ~~ f p2 | p1 <- ps, p2 <- ps, quadrance (p1 .-. p2) == 4]
+>   where
+>     ps = getAllCorners $ fromCorners (-1) 1
+>     f  = fmap fromIntegral
+>
+> roof :: Path V3 Double
+> roof = Path
+>   [ mkP3 1 1 1       ~~ mkP3 1 0 1.4
+>   , mkP3 1 (-1) 1    ~~ mkP3 1 0 1.4
+>   , mkP3 1 0 1.4     ~~ mkP3 (-1) 0 1.4
+>   , mkP3 (-1) 1 1    ~~ mkP3 (-1) 0 1.4
+>   , mkP3 (-1) (-1) 1 ~~ mkP3 (-1) 0 1.4
+>   ]
+>
+> door :: Path V3 Double
+> door = fromVertices
+>   [ mkP3 1 (-0.2) (-1)
+>   , mkP3 1 (-0.2) (-0.4)
+>   , mkP3 1 (0.2) (-0.4)
+>   , mkP3 1 (0.2) (-1)
+>   ]
+>
+> house = door <> roof <> box
+>
+> -- Perspective projection
+> -- these bits are from Linear.Projection
+> m  = lookAt (V3 3.4 4 2.2) zero unitZ
+> pm = perspective (pi/3) 0.8 1 3 !*! m
+>
+> pd = m44Deformation pm
+> perspectiveHouse = stroke $ deform pd (translateZ (-1) house)
+>
+> -- Orthogonal projection
+> am = lookingAt (mkP3 3.4 4 2.2) zero zDir
+> orthogonalHouse = stroke $ amap am house
+>
+> -- Isometric projection (specialised orthogonal)
+> isometricHouse = stroke $ isometricApply zDir house
+>
+> example :: Diagram B
+> example = hsep 1 . map (sized (mkHeight 3) . centerXY) $
+>   [ perspectiveHouse, orthogonalHouse, isometricHouse ]
+
+Note that this should also be considered a "technology preview".
+Future releases of diagrams will likely include higher-level ways to
+do projections.
 
 Grouping for opacity
 ====================
@@ -94,6 +153,26 @@ color in the example on the left.
 >
 > example = hsep 1 [ overlap # opacity 0.3, overlap # opacityGroup 0.3 ]
 
+Visualizing envelopes and traces
+================================
+
+Some new functions have been added to help visualize (approximations
+of) the *envelope* and *trace* of a diagram.  For example:
+
+.. class:: dia-lhs
+
+::
+
+> d1, d2 :: Diagram B
+> d1 = circle 1
+> d2 = (pentagon 1 === roundedRect 1.5 0.7 0.3)
+>
+> example = hsep 1
+>   [ (d1 ||| d2)          # showEnvelope' (with & ePoints .~ 360) # showOrigin
+>   , (d1 ||| d2) # center # showEnvelope' (with & ePoints .~ 360) # showOrigin
+>   , (d1 ||| d2) # center # showTrace' (with & tPoints .~ 20) # showOrigin
+>   ]
+
 Better command-line looping
 ===========================
 
@@ -113,14 +192,15 @@ The `diagrams-postscript`:pkg:, `diagrams-svg`:pkg:,
 `diagrams-cairo`:pkg:, `diagrams-gtk`:pkg:, and
 `diagrams-rasterific`:pkg: backends are all still going strong and
 fully supported.  We now have several new backends as well:
-`diagrams-html5`:pkg: writes directly to an HTML5 canvas;
-`diagrams-canvas`:pkg: also targets HTML5 canvas, but uses the
-`blank-canvas`:pkg: package, allowing various sorts of interactivity.
-We also have a new backend `diagrams-pgf`:pkg: which generates
-PGF/TikZ code suitable for including in `\TeX`:math: documents---one
-can even have embedded text in diagrams typeset by `\TeX`:math:,
-allowing *e.g.* mathematical formulas as labels for things in your
-diagram.
+`diagrams-html5`:pkg: generates Javascript which sets up an HTML5
+canvas containing the diagram; `diagrams-canvas`:pkg: also targets
+HTML5 canvas, but uses the `blank-canvas`:pkg: package to interact
+directly with an HTML5 canvas, enabling various sorts of
+interactivity.  We also have a new backend `diagrams-pgf`:pkg: which
+generates PGF/TikZ code suitable for including in `\TeX`:math:
+documents---one can even have embedded text in diagrams typeset by
+`\TeX`:math:, allowing *e.g.* mathematical formulas as labels for
+things in your diagram.
 
 Generalized numerics
 ====================
@@ -157,7 +237,8 @@ And lots more...
 
 Of course, there are lots of other miscellaneous improvements, added
 type class instances, new lenses and prisms, bug fixes, and the like.
-For a full rundown see the `release notes`_.
+For a full rundown see the `release notes`_.  There is also lots more
+exciting stuff in the pipeline!
 
 .. _release notes: http://projects.haskell.org/diagrams/releases.html
 
@@ -168,8 +249,17 @@ We now have a team of 5 people working very actively on diagrams
 (Chris Chalmers, Daniel Bergey, Jeff Rosenbluth, Ryan Yates, and
 myself), with many, many more contributing here and there.  As a way
 to say thank you for all the great contributions and hard work by many
-in the community, here is a (probably incomplete) list of people who
-have contributed to diagrams in any way --- all 64 of them!
+in the community, below is a (probably incomplete) list of people who
+have contributed to diagrams in some way --- all 67 of them!  We
+`welcome involvement`_ from anyone, regardless of experience.  If you'd
+like to get involved, come chat with us on the `#diagrams IRC channel`_
+on freenode, or send a message to the `mailing list`_.
+
+.. _welcome involvement: /community.html
+.. _#diagrams IRC channel: http://webchat.freenode.net/?channels=diagrams
+.. _mailing list: http://groups.google.com/group/diagrams-discuss
+
+Diagrams contributors:
 
 Alexis Praga /
 Allan Gardner /
@@ -196,14 +286,17 @@ Felipe Lessa /
 Florent Becker /
 Gabor Greif /
 Hans Höglund /
+Heinrich Apfelmus /
 Ian Ross /
 Jan Bracker /
 Jeffrey Rosenbluth /
+Jeremy Gibbons /
 Jeroen Bransen /
 Jim Snavely /
 Joachim Breitner /
 Joel Burget /
 John Lato /
+John Tromp /
 Jonas Haag /
 Kanchalai Suveepattananont /
 Kaspar Emanuel /
