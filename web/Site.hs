@@ -216,7 +216,7 @@ main = do
         compile $ do
             b <- getResourceBody
             c <- buildBannerCSS b
-            h <- buildBannerHtml b 
+            h <- buildBannerHtml b
                 >>= loadAndApplyTemplate "templates/banner.html" defaultContext
             let ctx =  constField "bannerCSS"  (itemBody c)
                     <> constField "template" "$body$"
