@@ -45,6 +45,7 @@ main = do
                        , "active"
                        , "diagrams-lib"
                        , "diagrams-contrib"
+                       , "diagrams-solve"
                        ]
   errCode <- docutilsCmdLine (diagramsDoc modMap nameMap)
   exitWith errCode
