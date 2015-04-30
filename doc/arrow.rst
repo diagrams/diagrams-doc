@@ -111,7 +111,10 @@ other transformations such as rotation and translation). The
 `scale-invariance section of the user manual`__ has a good example
 showing why scale-invariance is necessary for the creation of
 arrowheads; detailed documentation explaining scale invariant objects
-is in `Diagrams.TwoD.Transform.ScaleInv`:mod:.  The most important
+is in `Diagrams.TwoD.Transform.ScaleInv`:mod:.  It turns out that this
+module is no longer used internally for the creation of arrowheads, the
+technical details of how arrows are actually created is beyond the scope 
+of this tutorial. The most important
 consequence for day-to-day diagramming with arrows is that arrowheads
 and -tails do not contribute to the envelope of an arrow (arrow
 shafts, on the other hand, do).
