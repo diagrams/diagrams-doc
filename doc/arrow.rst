@@ -130,7 +130,7 @@ Connecting Points
 
 .. container:: warning
 
-  The default length of an arrow head is `Normalized 0.035` which
+  The default length of an arrow head is `normalized 0.035` which
   scales with the size of the diagram. Since the diagrams in this
   tutorial are relatively small and we want to highlight the arrows,
   we often set the head length and tail length to a larger size.
