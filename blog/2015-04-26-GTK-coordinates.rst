@@ -140,11 +140,11 @@ the transformation:
 
 >   gtk2DiaRef <- (newIORef mempty :: IO (IORef (T2 Double)))
 
-We initialize it with `mempty`.  We use the `renderDiaT` function to
-get not only a rendering action but also the transformation from
-diagram to GTK coordinates; we save the inverse of the transformation
-in the ``IORef`` (since we will want to convert from GTK to diagram
-coordinates):
+We initialize it with the identity transformation.  We use the
+`renderDiaT` function to get not only a rendering action but also the
+transformation from diagram to GTK coordinates; we save the inverse of
+the transformation in the ``IORef`` (since we will want to convert
+from GTK to diagram coordinates):
 
 .. class:: lhs
 
