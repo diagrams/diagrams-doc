@@ -376,7 +376,7 @@ feedConfiguration :: FeedConfiguration
 feedConfiguration = FeedConfiguration
     { feedTitle       = "Diagrams Blog - RSS feed"
     , feedDescription = "Diagrams Blog Posts"
-    , feedAuthorName  = "diagrams-discuss"
+    , feedAuthorName  = "diagrams contributors"
     , feedAuthorEmail = "diagrams-discuss@googlegroups.com"
     , feedRoot        = "http://projects.haskell.org/diagrams"
     }
