@@ -197,7 +197,7 @@ compileDiagram outDir src = do
                 (zero :: V2 Double)
 
 #ifdef USE_SVG
-                (SVGOptions (dims $ V2 500 200) [] empty)
+                (SVGOptions (dims $ V2 500 200) Nothing empty)
 #else
                 (RasterificOptions (dims $ V2 1000 400))
 #endif

@@ -63,7 +63,7 @@ compileExample mThumb lhs out = do
                 zero
 
 #ifdef USE_SVG
-                (SVGOptions (mkSizeSpec2D w h) [] empty)
+                (SVGOptions (mkSizeSpec2D w h) Nothing empty)
 #else
                 -- With raster output, double the resolution so it looks
                 -- better on high-res screens
