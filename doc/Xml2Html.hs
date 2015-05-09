@@ -4,6 +4,9 @@ module Xml2Html where
 
 import           Control.Arrow
 import           Control.Monad                      (unless)
+import           Data.Function                      (on)
+import           Data.List                          (findIndex)
+import           Data.Ord                           (Ordering (..))
 import           System.Directory                   (createDirectory,
                                                      doesDirectoryExist)
 import           System.Exit
@@ -45,6 +48,7 @@ main = do
                        , "active"
                        , "diagrams-lib"
                        , "diagrams-contrib"
+                       , "diagrams-solve"
                        ]
   errCode <- docutilsCmdLine (diagramsDoc modMap nameMap)
   exitWith errCode
@@ -57,7 +61,7 @@ diagramsDoc modMap nameMap outDir =
                , highlightBlockHS
                , compileDiagrams outDir
                , compileDiagramsLHS outDir
-               , linkifyHS nameMap modMap
+               , linkifyHS preference nameMap modMap
                ]
   >>> xml2html
   >>> doTransforms [ styleFile "css/default.css"
@@ -72,6 +76,14 @@ diagramsDoc modMap nameMap outDir =
 
                    , sidebarTOC
                    ]
+
+preference :: String -> String -> Ordering
+preference = compare `on` (flip findIndex badModules . (==))
+  -- Nothing < Just, so modules not in the list will be preferred.
+  -- Modules in the list will be preferred in the order listed, from
+  -- most to least preferred.
+  where
+    badModules = ["Diagrams.ThreeD", "Diagrams.TwoD", "Diagrams", "Diagrams.Prelude"]
 
 mkCallout :: ArrowXml a => String -> String -> XmlT a
 mkCallout cls calloutType =
@@ -185,7 +197,7 @@ compileDiagram outDir src = do
                 (zero :: V2 Double)
 
 #ifdef USE_SVG
-                (SVGOptions (dims $ V2 500 200) [] empty)
+                (SVGOptions (dims $ V2 500 200) Nothing empty)
 #else
                 (RasterificOptions (dims $ V2 1000 400))
 #endif

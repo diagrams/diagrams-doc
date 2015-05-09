@@ -136,6 +136,7 @@ main = do
         route idRoute
         compile $ do
             loadAllSnapshots "blog/*" "content"
+                >>= mapM (externalizeUrls (feedRoot feedConfiguration) "blog")
                 >>= recentFirst
                 >>= renderRss feedConfiguration feedCtx
 
@@ -216,7 +217,7 @@ main = do
         compile $ do
             b <- getResourceBody
             c <- buildBannerCSS b
-            h <- buildBannerHtml b 
+            h <- buildBannerHtml b
                 >>= loadAndApplyTemplate "templates/banner.html" defaultContext
             let ctx =  constField "bannerCSS"  (itemBody c)
                     <> constField "template" "$body$"
@@ -290,9 +291,7 @@ mainCompiler ctx = applyDefaultTemplate ctx >=> relativizeUrls
 
 blogCompiler :: Context String -> Item String -> Compiler (Item String)
 blogCompiler ctx = loadAndApplyTemplate "templates/post.html" ctx
-               >=> (externalizeUrls $ feedRoot feedConfiguration)
                >=> saveSnapshot "content"
-               >=> (unExternalizeUrls $ feedRoot feedConfiguration)
 
 setThumbURL, setImgURL, setHtmlURL :: String -> Context String
 setThumbURL  imgExt = setURL "images" ("thumb." ++ imgExt)
@@ -377,32 +376,27 @@ feedConfiguration :: FeedConfiguration
 feedConfiguration = FeedConfiguration
     { feedTitle       = "Diagrams Blog - RSS feed"
     , feedDescription = "Diagrams Blog Posts"
-    , feedAuthorName  = "diagrams-discuss"
+    , feedAuthorName  = "diagrams contributors"
     , feedAuthorEmail = "diagrams-discuss@googlegroups.com"
-    , feedRoot        = "http://projects.haskell.org/diagrams/blog"
+    , feedRoot        = "http://projects.haskell.org/diagrams"
     }
 
 -- Auxiliary compilers
 
-externalizeUrls :: String -> Item String -> Compiler (Item String)
-externalizeUrls root item = return $ fmap (externalizeUrlsWith root) item
+externalizeUrls :: String -> String -> Item String -> Compiler (Item String)
+externalizeUrls root rel item = return $ fmap (externalizeUrlsWith root rel) item
 
 externalizeUrlsWith :: String  -- ^ Path to the site root
+                    -> String  -- ^ Relative path from site root to working dir
                     -> String  -- ^ HTML to externalize
                     -> String  -- ^ Resulting HTML
-externalizeUrlsWith root = withUrls ext
+externalizeUrlsWith root rel = withUrls ext
   where
-    ext x = if isExternal x then x else root ++ x
-
-unExternalizeUrls :: String -> Item String -> Compiler (Item String)
-unExternalizeUrls root item = return $ fmap (unExternalizeUrlsWith root) item
-
-unExternalizeUrlsWith :: String  -- ^ Path to the site root
-                      -> String  -- ^ HTML to unExternalize
-                      -> String  -- ^ Resulting HTML
-unExternalizeUrlsWith root = withUrls unExt
-  where
-    unExt x = if root `isPrefixOf` x then unpack $ replace (pack root) empty (pack x) else x
+    ext x
+      | isExternal x = x
+      | isAbsolute x = root ++ x   -- don't use </>, it ignores root when x starts with / !
+      | otherwise    = root </> rel </> x
+    isAbsolute = isPrefixOf "/"
 
 postList :: Tags -> Pattern -> ([Item String] -> Compiler [Item String])
          -> Compiler String

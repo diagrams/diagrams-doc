@@ -10,11 +10,11 @@ for creating vector graphics, using the
  <div class="row">
 
  <div class="col-md-4">
- <div class="panel panel-default lead-panel" onclick="window.location='/doc/quickstart.html';">
+ <div class="panel panel-default lead-panel" onclick="window.location='doc/quickstart.html';">
  <div class="panel-body">
  <p class="lead text-center" style="font-weight:bold; font-size:24px">Get started</p>
  <p class="text-center">
-Read the [quick start tutorial](/doc/quickstart.html) or the [user manual](http://projects.haskell.org/diagrams/doc/manual.html).
+Read the [quick start tutorial](doc/quickstart.html) or the [user manual](doc/manual.html).
  </p>
  </div>
  </div>

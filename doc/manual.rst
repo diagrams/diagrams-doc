@@ -1584,18 +1584,17 @@ results in a diagram `p` times as opaque.
 > example = hsep 1 . take 4 . iterate (opacity 0.7) $ reds
 
 Grouped opacity can be applied using the `opacityGroup` annotation,
-which is currently supported only by the SVG and PGF backends.  In the
-example to the left below, the section where the two transparent
-circles overlap is darker, just as if *e.g.* two circles made out of
-colored cellophane were overlapped.  If this documentation was
-compiled with a backend that supports opacity grouping (*e.g.* SVG),
-then the example on the right shows two transparent circles without a
-darker section where they overlap---the transparency has been applied
-to the group of diagrams as a whole, as if it were a single piece of
-cellophane cut in the shape of overlapping circles.  Otherwise (*e.g.*
-if this documentation was compiled with the Rasterific backend), the
-example on the right simply shows two opaque overlapping circles,
-*i.e.* the call to `opacityGroup` is ignored.
+which is currently supported by the `diagrams-svg`:pkg:,
+`diagrams-pgf`:pkg:, and (as of version 1.3.1) the
+`diagrams-rasterific`:pkg: backends.  In the example to the left
+below, the section where the two transparent circles overlap is
+darker, just as if *e.g.* two circles made out of colored cellophane
+were overlapped.  If this documentation was compiled with a backend
+that supports opacity grouping (*e.g.* Rasterific or SVG), then the
+example on the right shows two transparent circles without a darker
+section where they overlap---the transparency has been applied to the
+group of diagrams as a whole, as if it were a single piece of
+cellophane cut in the shape of overlapping circles.
 
 .. class:: dia-lhs
 
@@ -1605,6 +1604,8 @@ example on the right simply shows two opaque overlapping circles,
 > overlap = (cir <> cir # translateX 1)
 >
 > example = hsep 1 [ overlap # opacity 0.3, overlap # opacityGroup 0.3 ]
+>           # centerX
+>        <> rect 9 0.1 # fc lightblue # lw none
 
 To "set the background color" of a diagram, use the `bg`
 function---which does not actually set any attributes, but simply
@@ -3678,7 +3679,9 @@ have a width and height of zero. (Note, however, this is not the same
 as having an *empty* envelope.  In particular, they still behave in an
 intuitive manner when included as arguments to things like `hcat`.)
 If we omitted the rectangle from the above example, there would be no
-output.
+output. Except: the PGF backend has the ability to create enveloped text
+as does the Rasterific backend by using the `Diagrams.Backend.Rasterifc.Text`:mod:
+module.
 
 .. container:: warning
 
@@ -5395,7 +5398,8 @@ animated GIF images. It also supports embedded images (see `DImage`) and
 although does not yet have the text handling capabilities of cairo, it does use
 the exact text bounding box for alignment. Gradients are fully supported
 including, repeat and reflect. In addition the Rasterific backend can be used to generate
-in memory images that can be manipulated with `JuicyPixels`.
+in memory images that can be manipulated with `JuicyPixels`. Finally the Rasterific
+backend suppports grouped opacity.
 
 The Rasterific backend can be invoked via
 `Diagrams.Backend.Rasterific.CmdLine`:mod: module, or via the
