@@ -27,6 +27,10 @@ Shake
 HCAR/*.pdf
 doc/icons/*.png
 HCAR/html
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
 *.nav
 *.out
 *.toc
@@ -42,3 +46,5 @@ talks/2014-LGM/LGM.pdf
 talks/2014-LGM/LGM.tex
 talks/2014-LGM/scripts/RepoRainbow
 talks/2014-LGM/scripts/RepoRainbow.pdf
+talks/2015-FARM/abstract.pdf
+talks/2015-FARM/abstract.tex
