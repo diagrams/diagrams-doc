@@ -1,4 +1,4 @@
-%% -*- mode: LaTeX; compile-command: "runhaskell Shake" -*-
+%% -*- mode: LaTeX; compile-command: "runhaskell Shake && open abstract.pdf" -*-
 
 \documentclass[9pt,preprint,authoryear,nocopyrightspace]{sigplanconf}
 
@@ -104,11 +104,12 @@
 %\thispagestyle{empty}
 
 \title{Diagrams---foo bar}
-\subtitle{Demonstration/tutorial proposal}
+\subtitle{Demo proposal}
 
 \authorinfo{Ryan Yates}
-{institution}
-{email}
+{Department of Computer Science \\ University of Rochester \\
+  Rochester, New York, USA}
+{ryates@@cs.rochester.edu}
 
 \authorinfo{Brent A. Yorgey}
 {Dept. of Mathematics and Computer Science\\ Hendrix College\\
@@ -119,16 +120,27 @@ Conway, Arkansas, USA}
 
 \maketitle
 
+% Here's the relevant portion of the FARM CFP:
+%
+% Demo abstracts should describe the demonstration and its context,
+% connecting it with the themes of FARM. A demo could be in the form
+% of a short (10-20 minute) tutorial, presentation of
+% work-in-progress, an exhibition of some work, or even a
+% performance. Abstracts should be no longer than 2 pages, using the
+% ACM SIGPLAN template and will be subject to a light-touch peer
+% review.
+
 \section{Introduction}
 
-We present
-\pkg{diagrams}\footnote{http://projects.haskell.org/diagrams}, a
-\todo{expain what diagrams is}
+\pkg{diagrams}\footnote{http://projects.haskell.org/diagrams}, is a
+\todo{expain what diagrams is}.
+
+We propose to \todo{summary of what we propose to do}.
 
 \section{Section}
 
 \todo{Explain why diagrams is interesting and/or what we will present
-  in our tutorial}
+  in our tutorial, with some pretty pictures.}
 
 
 \bibliographystyle{plainnat}
