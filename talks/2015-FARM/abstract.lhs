@@ -96,6 +96,8 @@
 
 \newcommand{\pkg}[1]{\textsf{#1}}
 
+\newcommand{\diagrams}{\pkg{diagrams}\xspace}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -132,16 +134,130 @@ Conway, Arkansas, USA}
 
 \section{Introduction}
 
-\pkg{diagrams}\footnote{http://projects.haskell.org/diagrams}, is a
-\todo{expain what diagrams is}.
+\diagrams\footnote{http://projects.haskell.org/diagrams} is a
+declarative domain-specific language for creating vector graphics,
+embedded in the Haskell programming language~\cite{haskell}.  Under
+continuous development for the past 4+ years, it serves as a powerful
+platform for creating illustrations, visualizations, and artwork, as
+well as a testbed for new ideas in functional EDSLs and in functional
+approaches to graphics.
 
-We propose to \todo{summary of what we propose to do}.
+We propose to give a short \diagrams tutorial, highlighting
+particularly the benefits of an embedded, functional DSL for the
+representation and generation of vector graphics.  Although \diagrams
+has made an implicit appearance at FARM before, in the context of a
+work-in-progress presentation of a DSL for animation, it has never
+been formally presented in and of itself.  \todo{Why diagrams is
+  particularly appropriate for FARM.}
 
 \section{Section}
+
+\diagrams is
 
 \todo{Explain why diagrams is interesting and/or what we will present
   in our tutorial, with some pretty pictures.}
 
+\todo{Interesting ideas to highlight?: envelopes, DUAL Trees, pervasive use of
+  monoids/monoid actions, affine spaces and related concepts
+  (trails/paths)...}
+
+\begin{figure}
+\begin{center}
+\begin{diagram}[width=150]
+import Diagrams.TwoD.Layout.Tree
+import Data.Tree
+import Data.Char (toLower)
+
+t = nd [ nd [ nd $ leaves [B, B], lf B ]
+       , nd [ nd [ lf H, nd $ leaves [A, A] ]
+            , nd $ leaves [A, A]
+            ]
+       ]
+  where nd     = Node Nothing
+        lf x   = Node (Just x) []
+        leaves = map lf
+
+data Type = A || B || H  deriving Show
+
+drawType x = mconcat
+  [ text (map toLower (show x)) # italic # centerX
+  , drawNode x ]
+drawNode A = square 2 # fc yellow
+drawNode B = circle 1 # fc red
+drawNode H = circle 1 # fc white # dashingG [0.2,0.2] 0
+
+renderT :: Tree (Maybe Type) -> Diagram B
+renderT
+  = renderTree (maybe mempty drawType) (~~)
+  . symmLayout' (with & slHSep .~ 4 & slVSep .~ 3)
+
+dia = renderT t # frame 0.5
+\end{diagram}
+%$
+\begin{verbatim}
+import Diagrams.TwoD.Layout.Tree
+import Data.Tree
+import Data.Char (toLower)
+
+t = nd [ nd [ nd $ leaves [B, B], lf B ]
+       , nd [ nd [ lf H, nd $ leaves [A, A] ]
+            , nd $ leaves [A, A]
+            ]
+       ]
+  where nd     = Node Nothing
+        lf x   = Node (Just x) []
+        leaves = map lf
+
+data Type = A | B | H  deriving Show
+
+drawType x = mconcat
+  [ text (map toLower (show x)) # italic # centerX
+  , drawNode x ]
+drawNode A = square 2 # fc yellow
+drawNode B = circle 1 # fc red
+drawNode H = circle 1 # fc white # dashingG [0.2,0.2] 0
+
+renderT :: Tree (Maybe Type) -> Diagram B
+renderT
+  = renderTree (maybe mempty drawType) (~~)
+  . symmLayout' (with & slHSep .~ 4 & slVSep .~ 3)
+
+dia = renderT t # frame 0.5
+\end{verbatim}
+\end{center}
+\caption{Tree with complete code} \label{fig:foobar}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \begin{diagram}[width=150]
+hilbert 0 = mempty
+hilbert n = hilbert' (n-1) # reflectY <> vrule 1
+         <> hilbert  (n-1) <> hrule 1
+         <> hilbert  (n-1) <> vrule (-1)
+         <> hilbert' (n-1) # reflectX
+  where
+    hilbert' m = hilbert m # rotateBy (1/4)
+
+dia = hilbert 5 # strokeT
+    # lc darkred # lw medium # frame 1
+  \end{diagram}
+
+\begin{verbatim}
+hilbert 0 = mempty
+hilbert n = hilbert' (n-1) # reflectY <> vrule 1
+         <> hilbert  (n-1) <> hrule 1
+         <> hilbert  (n-1) <> vrule (-1)
+         <> hilbert' (n-1) # reflectX
+  where
+    hilbert' m = hilbert m # rotateBy (1/4)
+
+dia = hilbert 5 # strokeT
+    # lc darkred # lw medium # frame 1
+\end{verbatim}
+  \caption{Order-5 Hilbert curve with complete code}
+  \label{fig:barfoo}
+\end{figure}
 
 \bibliographystyle{plainnat}
 \bibliography{abstract}
