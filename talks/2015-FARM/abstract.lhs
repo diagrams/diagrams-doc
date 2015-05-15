@@ -103,7 +103,7 @@
 
 %\thispagestyle{empty}
 
-\title{Diagrams---foo bar}
+\title{Diagrams---a functional EDSL for vector graphics}
 \subtitle{Demo proposal}
 
 \authorinfo{Ryan Yates}
