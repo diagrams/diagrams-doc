@@ -161,6 +161,14 @@ been formally presented in and of itself.  \todo{Why diagrams is
   monoids/monoid actions, affine spaces and related concepts
   (trails/paths)...}
 
+\todo{Tree example illustrates ability to leverage host language
+  abstraction: new data types, functions, etc., as well as use of
+  higher-order functions, e.g. arguments to renderTree; also shows off
+  useful/sophisticated/prepackaged stuff in diagrams libraries,
+  e.g. tree layout}
+
+\todo{Hilbert example illustrates trails (and monoid thereupon)}
+
 \begin{figure}
 \begin{center}
 \begin{diagram}[width=150]
