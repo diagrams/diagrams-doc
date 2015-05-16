@@ -115,15 +115,15 @@ is in `Diagrams.TwoD.Transform.ScaleInv`:mod:.  It turns out that this
 module is no longer used internally for the creation of arrowheads, the
 technical details of how arrows are actually created is beyond the scope 
 of this tutorial. The most important
-consequence for day-to-day diagramming with arrows is that arrowheads
-and -tails do not contribute to the envelope of an arrow (arrow
-shafts, on the other hand, do).
+consequence for day-to-day diagramming with arrows is that only the length of 
+arrowheads and -tails contribute to the envelope of an arrow (the width does not). This is analogous
+to the way line width does not contribute to the envelope of a line.
 
 __ http://projects.haskell.org/diagrams/doc/manual.html#scale-invariance
 
 .. container:: warning
 
-  Arrowheads and tails do not contribute to the envelope of an arrow!
+  Only the length of arrowheads and tails contribute to the envelope of an arrow!
 
 Connecting Points
 =================
