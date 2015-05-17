@@ -10,8 +10,6 @@
 % Use 'arrayhs' mode, so code blocks will not be split across page breaks.
 \arrayhs
 
-\renewcommand{\Conid}[1]{\mathsf{#1}}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Package imports
 
@@ -105,7 +103,7 @@
 
 %\thispagestyle{empty}
 
-\title{Diagrams---a functional EDSL for vector graphics}
+\title{Diagrams---A Functional EDSL for Vector Graphics}
 \subtitle{Demo proposal}
 
 \authorinfo{Ryan Yates}
@@ -147,94 +145,47 @@ particularly the benefits of an embedded, functional DSL for the
 representation and generation of vector graphics.  Although \diagrams
 has made an implicit appearance at FARM before, in the context of a
 work-in-progress presentation of a DSL for animation, it has never
-been formally presented in and of itself.  \todo{Why diagrams is
-  particularly appropriate for FARM.}
+been formally presented in and of itself. We would be particularly
+excited by the opportunity to foster collaboration with other software
+developers and artists through presenting \diagrams at FARM.
 
-\section{Section}
+\section{Proposal}
+\label{sec:proposal}
 
-\diagrams is
+\diagrams is a full-featured domain-specific language for creating
+vector graphics, embedded in Haskell.  Designed with ``power users''
+in mind, it includes support for multiple vector spaces, pluggable
+rendering backends, a full range of standard drawing attributes,
+sophisticated algorithms for working with paths, and support for
+relative positioning of the constituent parts of a diagram.  It makes
+extensive use of Haskell's type system to capture geometric
+invariants, and uses a pure functional paradigm both in its internal
+design (for example, using first-class functions to represent
+information about boundaries) as well as in the design of its API,
+which emphasizes composition rather than mutation.
 
-\todo{Explain why diagrams is interesting and/or what we will present
-  in our tutorial, with some pretty pictures.}
+We propose to give a 20-minute \diagrams tutorial/demo, using the
+first ten minutes to explain just enough of the basics to get started,
+and then using the final ten minutes to show off some more
+sophisticated examples.  In the remainder of this proposal, we include
+a few representative examples, with commentary explaining what
+features of the framework are illustrated by each example, and the
+particular ways in which the examples highlight the power of a
+functional EDSL.
 
-\todo{Interesting ideas to highlight?: envelopes, DUAL Trees, pervasive use of
-  monoids/monoid actions, affine spaces and related concepts
-  (trails/paths)...}
+\section{Examples}
+\label{sec:examples}
 
-\todo{Tree example illustrates ability to leverage host language
-  abstraction: new data types, functions, etc., as well as use of
-  higher-order functions, e.g. arguments to renderTree; also shows off
-  useful/sophisticated/prepackaged stuff in diagrams libraries,
-  e.g. tree layout}
-
-\todo{Hilbert example illustrates trails (and monoid thereupon)}
-
-\begin{figure}
-\begin{center}
-\begin{diagram}[width=150]
-import Diagrams.TwoD.Layout.Tree
-import Data.Tree
-import Data.Char (toLower)
-
-t = nd [ nd [ nd $ leaves [B, B], lf B ]
-       , nd [ nd [ lf H, nd $ leaves [A, A] ]
-            , nd $ leaves [A, A]
-            ]
-       ]
-  where nd     = Node Nothing
-        lf x   = Node (Just x) []
-        leaves = map lf
-
-data Type = A || B || H  deriving Show
-
-drawType x = mconcat
-  [ text (map toLower (show x)) # italic # centerX
-  , drawNode x ]
-drawNode A = square 2 # fc yellow
-drawNode B = circle 1 # fc red
-drawNode H = circle 1 # fc white # dashingG [0.2,0.2] 0
-
-renderT :: Tree (Maybe Type) -> Diagram B
-renderT
-  = renderTree (maybe mempty drawType) (~~)
-  . symmLayout' (with & slHSep .~ 4 & slVSep .~ 3)
-
-dia = renderT t # frame 0.5
-\end{diagram}
-%$
-\begin{verbatim}
-import Diagrams.TwoD.Layout.Tree
-import Data.Tree
-import Data.Char (toLower)
-
-t = nd [ nd [ nd $ leaves [B, B], lf B ]
-       , nd [ nd [ lf H, nd $ leaves [A, A] ]
-            , nd $ leaves [A, A]
-            ]
-       ]
-  where nd     = Node Nothing
-        lf x   = Node (Just x) []
-        leaves = map lf
-
-data Type = A | B | H  deriving Show
-
-drawType x = mconcat
-  [ text (map toLower (show x)) # italic # centerX
-  , drawNode x ]
-drawNode A = square 2 # fc yellow
-drawNode B = circle 1 # fc red
-drawNode H = circle 1 # fc white # dashingG [0.2,0.2] 0
-
-renderT :: Tree (Maybe Type) -> Diagram B
-renderT
-  = renderTree (maybe mempty drawType) (~~)
-  . symmLayout' (with & slHSep .~ 4 & slVSep .~ 3)
-
-dia = renderT t # frame 0.5
-\end{verbatim}
-\end{center}
-\caption{Tree with complete code} \label{fig:foobar}
-\end{figure}
+\pref{fig:hilbert} shows an order-$5$ fractal Hilbert curve, along
+with the complete code used to generate it.  Of course, recursive
+functions such as |hilbert| are the bread and butter of functional
+programming.  This example also shows off the compositional nature of
+the framework, in this case building up a complex \emph{path} by
+concatenating shorter paths using the |<>| operator.  In fact, |<>|
+denotes not just concatenation of paths, but more generally the
+associative combining operation for any \emph{monoid}---of which
+\diagrams has quite a few, including paths, colors, transformations,
+styles, and diagrams themselves.
 
 \begin{figure}
   \centering
@@ -263,8 +214,92 @@ hilbert n = hilbert' (n-1) # reflectY <> vrule 1
 dia = hilbert 5 # strokeT
     # lc darkred # lw medium # frame 1
 \end{verbatim}
-  \caption{Order-5 Hilbert curve with complete code}
-  \label{fig:barfoo}
+  \caption{Order-5 Hilbert curve, with code}
+  \label{fig:hilbert}
+\end{figure}
+
+\pref{fig:tree} shows a binary tree, with different types of nodes at
+its leaves, along with the complete code used to generate it.  The
+first few lines define |t|, an abstract representation of the tree to
+be drawn, and the rest of the lines specify how to render it.  This
+example illustrates the ability of an \emph{embedded} DSL to leverage
+the abstraction facilities of its host language: here we define a new
+data type, |LeafType|, and use it to precisely enumerate the
+possibilities for leaves in the tree to be drawn, and define functions
+to abstract out common patterns (|nd|, |lf|) and to specify custom
+behavior (|drawType|).  We also make use of higher-order functions:
+|map| is higher-order, of course, but more interestingly, so is
+|renderTree|, which takes function arguments specifying how to draw
+nodes and edges of a tree.  Finally, this example shows off the fact
+that a standard installation of \diagrams comes with ``batteries
+included'', such as the tree layout algorithm used here.
+
+\begin{figure}
+\begin{center}
+\begin{diagram}[width=150]
+import Diagrams.TwoD.Layout.Tree
+import Data.Tree
+import Data.Char (toLower)
+
+data LeafType = A || B || H  deriving Show
+
+t = nd [ nd [ nd $ map lf [B, B], lf B ]
+       , nd [ nd [ lf H, nd $ map lf [A, A] ]
+            , nd $ map lf [A, A]
+            ]
+       ]
+  where nd     = Node Nothing
+        lf x   = Node (Just x) []
+
+drawType x = mconcat
+  [ text (map toLower (show x)) # italic # centerX
+  , drawNode x ]
+
+drawNode A = square 2 # fc yellow
+drawNode B = circle 1 # fc red
+drawNode H = circle 1 # fc white # dashingG [0.2,0.2] 0
+
+renderT :: Tree (Maybe LeafType) -> Diagram B
+renderT
+  = renderTree (maybe mempty drawType) (~~)
+  . symmLayout' (with & slHSep .~ 4 & slVSep .~ 3)
+
+dia = renderT t # frame 0.5
+\end{diagram}
+%$
+\begin{verbatim}
+import Diagrams.TwoD.Layout.Tree
+import Data.Tree
+import Data.Char (toLower)
+
+data Type = A | B | H  deriving Show
+
+t = nd [ nd [ nd $ map lf [B, B], lf B ]
+       , nd [ nd [ lf H, nd $ map lf [A, A] ]
+            , nd $ map lf [A, A]
+            ]
+       ]
+  where nd     = Node Nothing
+        lf x   = Node (Just x) []
+
+drawType x = mconcat
+  [ text (map toLower (show x)) # italic # centerX
+  , drawNode x ]
+
+drawNode A = square 2 # fc yellow
+drawNode B = circle 1 # fc red
+drawNode H = circle 1 # fc white
+                      # dashingG [0.2,0.2] 0
+
+renderT :: Tree (Maybe Type) -> Diagram B
+renderT
+  = renderTree (maybe mempty drawType) (~~)
+  . symmLayout' (with & slHSep .~ 4 & slVSep .~ 3)
+
+dia = renderT t # frame 0.5
+\end{verbatim}
+\end{center}
+\caption{Labelled binary tree, with code} \label{fig:tree}
 \end{figure}
 
 \bibliographystyle{plainnat}
