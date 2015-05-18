@@ -176,16 +176,16 @@ functional EDSL.
 \section{Examples}
 \label{sec:examples}
 
-\pref{fig:hilbert} shows an order-$5$ fractal Hilbert curve, along
-with the complete code used to generate it.  Of course, recursive
-functions such as |hilbert| are the bread and butter of functional
-programming.  This example also shows off the compositional nature of
-the framework, in this case building up a complex \emph{path} by
-concatenating shorter paths using the |<>| operator.  In fact, |<>|
-denotes not just concatenation of paths, but more generally the
-associative combining operation for any \emph{monoid}---of which
-\diagrams has quite a few, including paths, colors, transformations,
-styles, and diagrams themselves.
+\pref{fig:hilbert} shows an order-$5$ fractal Hilbert curve
+\cite{hilbert1891ueber}, along with the complete code used to generate
+it.  Of course, recursive functions such as |hilbert| are the bread
+and butter of functional programming.  This example also shows off the
+compositional nature of the framework, in this case building up a
+complex \emph{path} by concatenating shorter paths using the |<>|
+operator.  In fact, |<>| denotes not just concatenation of paths, but
+more generally the associative combining operation for any
+\emph{monoid}---of which \diagrams has quite a few, including paths,
+colors, transformations, styles, and diagrams themselves.
 
 \begin{figure}
   \centering
@@ -219,20 +219,21 @@ dia = hilbert 5 # strokeT
 \end{figure}
 
 \pref{fig:tree} shows a binary tree, with different types of nodes at
-its leaves, along with the complete code used to generate it.  The
-first few lines define |t|, an abstract representation of the tree to
-be drawn, and the rest of the lines specify how to render it.  This
-example illustrates the ability of an \emph{embedded} DSL to leverage
-the abstraction facilities of its host language: here we define a new
-data type, |LeafType|, and use it to precisely enumerate the
-possibilities for leaves in the tree to be drawn, and define functions
-to abstract out common patterns (|nd|, |lf|) and to specify custom
-behavior (|drawType|).  We also make use of higher-order functions:
-|map| is higher-order, of course, but more interestingly, so is
-|renderTree|, which takes function arguments specifying how to draw
-nodes and edges of a tree.  Finally, this example shows off the fact
-that a standard installation of \diagrams comes with ``batteries
-included'', such as the tree layout algorithm used here.
+its leaves, along with the complete code used to generate it
+\cite{piponipolynomial}.  The first few lines define |t|, an abstract
+representation of the tree to be drawn, and the rest of the lines
+specify how to render it.  This example illustrates the ability of an
+\emph{embedded} DSL to leverage the abstraction facilities of its host
+language: here we define a new data type, |LeafType|, and use it to
+precisely enumerate the possibilities for leaves in the tree to be
+drawn, and define functions to abstract out common patterns (|nd|,
+|lf|) and to specify custom behavior (|drawType|).  We also make use
+of higher-order functions: |map| is higher-order, of course, but more
+interestingly, so is |renderTree|, which takes function arguments
+specifying how to draw nodes and edges of a tree.  Finally, this
+example shows off the fact that a standard installation of \diagrams
+comes with ``batteries included'', such as the tree layout algorithm
+used here.
 
 \begin{figure}
 \begin{center}
@@ -302,15 +303,18 @@ dia = renderT t # frame 0.5
 \caption{Labelled binary tree, with code} \label{fig:tree}
 \end{figure}
 
-\pref{fig:bwt} shows a portrait of the Burrows--Wheeler transform that
-was included in the 2014 Joint Mathematics Meeting exhibition.  Having
-the full expressiveness of Haskell helped to shape this work as it was
-created.  Processes like extracting common code and generalizing functions
-allowed rapid exploration of visual patterns and the development of a
-visual language for the work.  The flexibility of diagrams also allowed
-the exploration of various compositions with little changes to the code.
-For example in the |inputToBWT| portion of the diagram can be seen as 
-a composition of other diagrams.
+Finally, \pref{fig:bwt} shows a portrait of the Burrows--Wheeler
+transform \cite{burrows1994block} that was included in the Bridges
+mathematical art exhibition at the 2014 Joint Mathematics Meetings.
+Having the full expressiveness of Haskell helped to shape this work as
+it was created.  Processes like extracting common code and
+generalizing functions allowed rapid exploration of visual patterns
+and the development of a visual language for the work.  The
+flexibility of diagrams also allowed the exploration of various
+compositions with little changes to the code.  Although the full code
+is too long to include in this proposal, a small excerpt is shown
+which illustrates building up part of the diagram as a composition of
+other diagrams.
 
 \begin{figure}
 \begin{center}
@@ -466,7 +470,8 @@ dia = d # centerXY # pad 1.1
     inputToBWT =
       [ block rs # reflectX    -- Rotations of s
       , sorting 7 head rs rs'
-      , block rs'              -- sorted rotations of s
+      , block rs'              -- Sorted rotations
+                               -- of s
       ]
       # map centerXY
       # hcat' (with & sep .~ 0.1)
@@ -481,3 +486,4 @@ the top portion of the image.} \label{fig:bwt}
 \bibliography{abstract}
 
 \end{document}
+
