@@ -1,9 +1,7 @@
 % diagrams-Bd.tex
 \begin{hcarentry}[updated]{diagrams}
-\report{Jeffrey Rosenbluth}%11/14
+\report{Brent Yorgey}
 \status{active development}
-\participants{Daniel Bergey, Jan Bracker, Christopher Chalmers, Daniil Frumin,  Allan Gardner, Andy Gill, 
-  Niklas Haas, John Lato, Chris Mears, Jeff Rosenbluth, Michael Sloan, Ryan Yates, Brent Yorgey}
 
 \makeheader
 
@@ -28,49 +26,21 @@ annotations, named subdiagrams, and more.
 
 \subsubsection*{What's new}
 
-There has been quite a bit going on with diagrams since the last
-HCAR edition. For staters version 1.0 was released.
-We also released version 1.1 and finally in June of 2014
-the current version, 1.2.
+Since the last HCAR edition, diagrams 1.3 was released in April.
 New features include:
 \begin{itemize}
-\item An API for drawing arrows including: several ways to connect diagrams
-  with arrows, arbitrary shaped shafts, and a collection of arrowheads.
-\item Consistent use of the \texttt{lens} package to access and modify 
-  record fields and newtypes.
-\item Performance improvements of about 30\% obtained by the use
-  of better data structures to represent diagram output.
-\item Support for 3D diagrams.
-\item Introduction of a new measurement type and the removal of the
-  freeze function make things like handling line widths and text sizes
-  more flexible and predictable.
-\item New haskell native backends: \texttt{diagrams-rasterific} and
-  \texttt{diagrams-canvas}. 
-\item Many other features including support for: linear and radial gradients, tight alignment of convex
-  shapes, improved clipping, animated GIFs (in cairo and rasterific), creating offsets paths,
-  and both external and embedded images.
+\item Computing intersection points between paths
+\item Support for generalized affine maps between different vector
+  spaces, including projections
+\item New backends: \texttt{diagrams-html5} generates Javascript to draw on an
+  HTML canvas; \texttt{diagrams-pgf} generates PGF code suitable for
+  inclusion in a \TeX document
+\item Better interface for recompilation looping via the command line
+\item Generalized numerics: diagrams are now parameterized by a
+  suitable numeric type, rather than having \texttt{Double} baked in
+\item A refactoring to use the \texttt{linear} package instead of
+  \texttt{vector-space}
 \end{itemize}
-
-% %**<img width=400 src="./diagrams-haddock.jpg">
-% %*ignore
-% \begin{center}
-% \includegraphics[width=0.4\textwidth]{html/diagrams-haddock.jpg}
-% \end{center}
-% %*endignore
-
-There have been many improvements and changes to the core
-diagrams libraries as well.  The next release of diagrams is
-slated to include:
-\begin{itemize}
-\item Support for handling directions (vectors which have forgotten their magnitude).
-  Which will provide a consistent API in all dimensions.
-\item Generic scalars values, i.e. not restricted to type 
-  Double.
-\item A major refactoring of the way vector spaces are handled
-  using the \texttt{linear} package.
-\item a PGF backend with full TeX support.
-\end{itemize}
-
 
 %**<img width=350 src="./kaleidoscope.jpg">
 %*ignore
@@ -79,29 +49,11 @@ slated to include:
 \end{center}
 %*endignore
 
-
-%**<img width=350 src="./FibCalls.png">
-%*ignore
-%\begin{center}
-%\includegraphics[width=0.33\textwidth]{html/FibCalls.png}
-%\end{center}
-%*endignore
 \subsubsection*{GSoC}
 
-We had two Google Summer of Code projects dedicated to diagrams
-projects this past summer.
-
-\begin{itemize}
-\item Allan Gardner laid the groundwork for using numeric types beyond
-Double.  After several iterations, this led to the adoption of the
-\texttt{linear} package. This paves the way for using automatic
-differentiation, constraint solving, and fixed or dynamic precision
-numbers with Diagrams.
-\item Niklas Haas  added lenses to diagrams, in order 
-to make it possible to (efficiently) traverse over diagrams and 
-subdiagrams, modifying them in the process.
-\end{itemize}
-
+This coming summer, Ajay Ramanathan will work under the guidance of
+Chris Chalmers to develop a library/API for working with a layered
+``Grammar of Graphics'', using \texttt{diagrams} as a foundation.
 
 \subsubsection*{Contributing}
 
@@ -128,9 +80,8 @@ hang out in the \texttt{\#diagrams} IRC channel on freenode.
 \begin{compactitem}
 \item \url{http://projects.haskell.org/diagrams}
 \item \url{http://projects.haskell.org/diagrams/gallery.html}
-\item \url{http://haskell.org/haskellwiki/Diagrams}
+\item \url{http://wiki.haskell.org/Diagrams}
 \item \url{http://github.com/diagrams}
-\item \url{https://byorgey.wordpress.com/2012/08/28/creating-documents-with-embedded-diagrams/}
 \item \url{http://www.cis.upenn.edu/~byorgey/pub/monoid-pearl.pdf}
 \item \url{http://www.youtube.com/watch?v=X-8NCkD2vOw}
 \end{compactitem}
