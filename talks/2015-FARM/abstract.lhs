@@ -314,7 +314,7 @@ a composition of other diagrams.
 
 \begin{figure}
 \begin{center}
-\begin{diagram}[width=150]
+\begin{diagram}[width=250]
 import Data.Char
 import Data.List hiding (sort)
 import Data.Maybe
@@ -388,7 +388,8 @@ d = squared
     inputToBWT =
       [ block rs # reflectX    -- Rotations of s
       , sorting 7 head rs rs'
-      , block rs'              -- sorted rotations of s
+      , block rs'              -- Sorted rotations
+                               -- of s
       ]
       # hcatSepCenter hsep
 
