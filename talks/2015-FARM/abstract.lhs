@@ -8,7 +8,7 @@
 %include polycode.fmt
 
 % Use 'arrayhs' mode, so code blocks will not be split across page breaks.
-\arrayhs
+%\arrayhs
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Package imports
@@ -300,6 +300,180 @@ dia = renderT t # frame 0.5
 \end{verbatim}
 \end{center}
 \caption{Labelled binary tree, with code} \label{fig:tree}
+\end{figure}
+
+\pref{fig:bwt} shows a portrait of the Burrows--Wheeler transform that
+was included in the 2014 Joint Mathematics Meeting exhibition.  Having
+the full expressiveness of Haskell helped to shape this work as it was
+created.  Processes like extracting common code and generalizing functions
+allowed rapid exploration of visual patterns and the development of a
+visual language for the work.  The flexibility of diagrams also allowed
+the exploration of various compositions with little changes to the code.
+For example in the |inputToBWT| portion of the diagram can be seen as 
+a composition of other diagrams.
+
+\begin{figure}
+\begin{center}
+\begin{diagram}[width=150]
+import Data.Char
+import Data.List hiding (sort)
+import Data.Maybe
+
+-- Some parts from http://www.iis.sinica.edu.tw/~scm/pub/bwtJFP.pdf
+bwt ws = (bwn, bwp)
+  where
+    bwp = map last . lexsort . rots $ ws
+    bwn = succ . fromJust . findIndex (== ws) . lexsort . rots $ ws
+
+rots xs = take (length xs) (iterate lrot xs)
+
+lrot xs = tail xs ++ [head xs]
+
+sortby f = sortBy (\x y -> if x `f` y then LT else GT)
+
+lexsort ls = sortby (leq (length ls)) ls
+  where
+    leq 0  _      _     = True
+    leq k (x:xs) (y:ys) = x < y |||| (x == y && leq (k-1) xs ys)
+
+recreate :: Ord a => Int -> [a] -> [[a]]
+recreate 0 ys = map (const []) ys
+recreate k ys = sortby leq (join ys (recreate (k-1) ys))
+  where leq us vs = head us <= head vs
+        join xs xss = [y:ys || (y,ys) <- zip xs xss]
+
+unbwt :: Ord a => Int -> [a] -> [a]
+unbwt t ys = take (length ys) (thread (spl ys t))
+  where thread (x,j) = x:thread (spl ys j)
+        spl ys t = fromJust $ lookup t (zip [1..] (sortby (<=) (zip ys [1..])))
+
+-----------
+alphabet' :: Double -> Int -> Diagram B
+alphabet' w (-1) = square 1 # lc red # lwG w # withEnvelope (circle 1 :: Diagram B)
+alphabet' w i    = c # lc (acolor i) # lwG w
+  where
+    m  = abs i `mod` 10
+    c  = mconcat [circle (fromIntegral (m + 1 - r) / fromIntegral (m + 1)) || r <- [0..m]]
+
+alphabet = alphabet' 0.05
+
+acolor :: Int -> Colour Double
+acolor (-1) = red
+acolor i = cs !! (abs i `mod` l)
+  where
+    l  = length cs
+    cs = [red, orange, yellow, green, blue, purple]
+
+d :: Diagram B
+d = squared
+  where
+    vsep = 0.1
+    hsep = 0.1
+
+    vcatSep s = vcat' (with & sep .~ s)
+    hcatSep s = hcat' (with & sep .~ s)
+    hcatSepCenter s = hcatSep s . map centerXY
+    vhcatSep sv sh = vcatSep sv . map (hcatSep sh)
+
+    squared = vcatSep (1.5)
+               [ alignL top
+               , alignL (hcatSep hsep (reverse . map (alphabet' 0.1) $ s))
+               , alignL bottom # translate ((-2-hsep) ^& 0)
+               ]
+      where
+        top    =         [ inputToBWT,          bwtToRLE ] # hcatSepCenter 2 # reflectY
+        bottom = reverse [ bwtToInput, reflectX bwtToRLE ] # hcatSepCenter 2 # reflectY
+                                                           # rotate (1/2 @@@@ turn)
+
+    inputToBWT =
+      [ block rs # reflectX    -- Rotations of s
+      , sorting 7 head rs rs'
+      , block rs'              -- sorted rotations of s
+      ]
+      # hcatSepCenter hsep
+
+    buildUnbwt =
+      [ block [[a,b] || (a,b) <- ps] # reflectX  -- spl table
+      , sorting 23.1 fst ps ps'
+      , block [[a,b,i] || (i,(a,b)) <- ips]      -- continued
+      , mconcat [ (0 ^& 0) ~~ ((7-(2+2*hsep)+fromIntegral j * (2+hsep)) ^& 0)
+                    # lc (acolor x)
+                    # withEnvelope (strutY 2 :: Diagram B)
+                    # lwG 0.05
+                    # moveTo (0 ^& (fromIntegral (length p - i) * (2+vsep)))
+                || (j,(i,x,_)) <- zip [1..] ts
+                ]
+      ]
+      # hcatSepCenter hsep
+
+    bwtToInput = [ buildUnbwt, threads n p ] # map alignB # hcatSep 7
+
+    bwtToRLE = block . groupBy (==) $ p
+
+    threads n p = vcatSep (-1)
+                    [ alignL (hcatSep hsep (map (alphabet . snd) is)) -- map snd is ~ s
+                    , alignL (reflectY $ hcatSep (-2) $ take (length p * 2 - 1) ds)
+                    ]
+      where
+        (is,ds) = mconcat [ ([(i,x)],
+                              [ moveTo (0 ^& (fromIntegral i * (2+vsep))) (centerXY (block [[x,j]]))
+                              , connectW 2 i j # lc (acolor j)
+                              ])
+                          || (i,x,j) <- ts
+                          ]
+
+    row = hcatSep hsep
+    block = vhcatSep hsep vsep . map (map alphabet)
+
+    sorting w f rs rs' = reflectY $ mconcat
+            [ connectH w i j # lc (acolor (f r))
+            || (i,r) <- zip [0..] rs
+            , let j = fromJust . findIndex (== r) $ rs'
+            ]
+    connectH w i j = bez (0 ^& f i) (w*2/5 ^& f i) (w*3/5 ^& f j) (w ^& f j) # lwG 0.05
+      where
+        f x = fromIntegral x * (2+vsep)
+
+    connectW w i j
+      || abs (i - j) < 2 = strutX w
+      || otherwise
+        = bez (0 ^& (f i + y)) (0 ^& (f i + d*2/5)) (w ^& (f j - d*3/5)) (w ^& (f j - y)) # lwG 0.05
+      where
+        d = f j - f i
+        y = signum d
+        f x = fromIntegral x * (2+vsep)
+
+    rs  = rots s
+    rs' = lexsort rs
+
+    s = (-1) : map ((subtract (ord '0')) . ord) "101103107109113"
+    (n,p) = bwt s
+    ps  = zip p [1..]
+    ps' = sortby (<=) ps
+    ips = zip [1..] ps'
+    spl t = fromJust $ lookup t ips
+    thread i (x,j) = (i,x,j) : thread j (spl j)
+    ts = take (length p) (thread n (spl n))
+
+bez a b c d = trailLike $ (fromSegments [bezier3 (b .-. a) (c .-. a) (d .-. a)]) `at` a
+
+dia = d # centerXY # pad 1.1
+\end{diagram}
+%$
+\begin{verbatim}
+...
+    inputToBWT =
+      [ block rs # reflectX    -- Rotations of s
+      , sorting 7 head rs rs'
+      , block rs'              -- sorted rotations of s
+      ]
+      # map centerXY
+      # hcat' (with & sep .~ 0.1)
+...
+\end{verbatim}
+\end{center}
+\caption{A portrait of the Burrows--Wheeler transform.  The small code fragment is
+the top portion of the image.} \label{fig:bwt}
 \end{figure}
 
 \bibliographystyle{plainnat}
