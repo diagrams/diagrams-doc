@@ -427,7 +427,7 @@ d = squared
 
     sorting w f rs rs' = reflectY $ mconcat
             [ connectH w i j # lc (acolor (f r))
-            || (i,r) <- zip [0..] rs
+            || (i,r) <- zip [0 :: Int ..] rs
             , let j = fromJust . findIndex (== r) $ rs'
             ]
     connectH w i j = bez (0 ^& f i) (w*2/5 ^& f i) (w*3/5 ^& f j) (w ^& f j) # lwG 0.05
