@@ -171,7 +171,7 @@ sophisticated examples.  In the remainder of this proposal, we include
 a few representative examples, with commentary explaining what
 features of the framework are illustrated by each example, and the
 particular ways in which the examples highlight the power of a
-functional EDSL.
+functional EDSL \cite{hudak1996building}.
 
 \section{Examples}
 \label{sec:examples}
@@ -185,7 +185,7 @@ complex \emph{path} by concatenating shorter paths using the |<>|
 operator.  In fact, |<>| denotes not just concatenation of paths, but
 more generally the associative combining operation for any
 \emph{monoid}---of which \diagrams has quite a few, including paths,
-colors, transformations, styles, and diagrams themselves.
+colors, transformations, styles, and diagrams themselves \cite{yorgey2012monoids}.
 
 \begin{figure}
   \centering
