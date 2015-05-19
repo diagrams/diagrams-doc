@@ -273,7 +273,7 @@ import Diagrams.TwoD.Layout.Tree
 import Data.Tree
 import Data.Char (toLower)
 
-data Type = A | B | H  deriving Show
+data LeafType = A | B | H  deriving Show
 
 t = nd [ nd [ nd $ map lf [B, B], lf B ]
        , nd [ nd [ lf H, nd $ map lf [A, A] ]
@@ -292,7 +292,7 @@ drawNode B = circle 1 # fc red
 drawNode H = circle 1 # fc white
                       # dashingG [0.2,0.2] 0
 
-renderT :: Tree (Maybe Type) -> Diagram B
+renderT :: Tree (Maybe LeafType) -> Diagram B
 renderT
   = renderTree (maybe mempty drawType) (~~)
   . symmLayout' (with & slHSep .~ 4 & slVSep .~ 3)
