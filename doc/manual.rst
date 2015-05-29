@@ -5393,7 +5393,7 @@ The Rasterific backend
 The Rasterific backend is built on top of the `Rasterific`:pkg: package, which
 is a pure haskell rasterizer that uses `JuicyPixels`:pkg: and `FontyFruity`:pkg:.
 This is a fully featured backend that supports the full APi of the diagrams library.
-It can produce PNG, JPG, BMP, TIF and
+It can produce PNG, JPG, BMP, TIF, PDF and
 animated GIF images. It also supports embedded images (see `DImage`) and
 although does not yet have the text handling capabilities of cairo, it does use
 the exact text bounding box for alignment. Gradients are fully supported
