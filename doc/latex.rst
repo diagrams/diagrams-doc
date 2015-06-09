@@ -12,16 +12,14 @@ Introduction
 ============
 
 Diagrams can be used to easily include pictures in your `\LaTeX`:math:
-documents, using either the `diagrams-cairo`:pkg: or
-`diagrams-postscript`:pkg: backend. (You can also use the
-`diagrams-pgf`:pkg: backend, which allows you to have `\LaTeX`:math:
-typeset any text in your diagrams, although it is not yet supported by
-`diagrams-latex.sty`.) You directly embed diagrams code in your `\LaTeX`:math:
-source, within special ``\begin{diagram} ... \end{diagram}`` blocks;
-the ``diagrams-latex`` package then takes care of automatically
-running your diagrams code and including the generated images in the
-output, so you don't need to worry about maintaining a bunch of source
-files or running special preprocessing tools.
+documents, using the `diagrams-cairo`:pkg:,
+`diagrams-postscript`:pkg:, or `diagrams-pgf`:pkg: backends.  You
+directly embed diagrams code in your `\LaTeX`:math: source, within
+special ``\begin{diagram} ... \end{diagram}`` blocks; the
+``diagrams-latex`` package then takes care of automatically running
+your diagrams code and including the generated images in the output,
+so you don't need to worry about maintaining a bunch of source files
+or running special preprocessing tools.
 
 Installation
 ============
@@ -29,27 +27,20 @@ Installation
 First, you will need the `diagrams-builder`:pkg: package, which
 ``diagrams-latex`` depends on.  `diagrams-builder`:pkg: does not come
 automatically as part of a basic diagrams installation, so you will
-need to install it separately.  You can install it with either of the
-commands
+need to install it separately.  You can install it with a command like
 
 ::
 
   cabal install -fps diagrams-builder
 
-*or*
+Instead of ``-fps`` you may specify whichever backend you plan to use
+(``-fps``, ``-fcairo``, or ``-fpgf``).  If you wish, you may specify
+more than one.
 
-::
-
-  cabal install -fcairo diagrams-builder
-
-Use the flag (``-fps`` or ``-fcairo``) corresponding to the backend
-you would like to use with ``diagrams-latex``.  If you wish, you can
-use both.
-
-These flags (``-fps`` and ``-fcairo``) cause executables to be
-installed (``diagrams-builder-ps`` and
-``diagrams-builder-cairo``, respectively); make sure the appropriate
-executable is installed and accessible via your path.
+These flags (``-fps``, ``-fcairo``, or ``-fpgf``) cause executables to
+be installed (``diagrams-builder-ps``, ``diagrams-builder-cairo``, and
+``diagrams-builder-pgf`` respectively); make sure the appropriate
+executable(s) are installed and accessible via your ``PATH``.
 
 Finally, download diagrams-latex.sty__ and put it somewhere `\LaTeX`:math:
 can find it. One such place is in the same directory as your ``.tex``
@@ -71,8 +62,9 @@ preamble of your `\LaTeX`:math: file, add
   \usepackage{diagrams-latex}
   \usepackage{graphicx}
 
-Note inclusion of the ``graphicx`` package is currently required.
-You can also pass some options to the ``diagrams-latex`` package:
+Note inclusion of the ``graphicx`` package is currently required if
+you are using the PostScript or Cairo backends.  You can also pass
+some options to the ``diagrams-latex`` package:
 
 * ``outputdir`` specifies the name of directory where intermediate and
   final diagram files will be written.  The directory will be created
@@ -81,13 +73,19 @@ You can also pass some options to the ``diagrams-latex`` package:
   not be desirable.
 
 * ``backend`` specifies the backend to be used.  Possible values
-  include ``cairo`` and ``ps``.  The default is ``cairo``.
+  include ``cairo``, ``ps``, and ``pgf``.  The default is ``cairo``.
 
 * ``extension`` specifies the file extension which should be used for
   compiled diagrams.  The default is ``pdf``. Be sure to use an
   extension which is compatible with the chosen backend; forexample,
-  if you specify ``backend=ps`` you likely want to also
-  specify ``extension=eps``.
+  if you specify ``backend=ps`` you likely want to also specify
+  ``extension=eps``; for ``backend=pgf`` you likely want
+  ``extension=pgf``.
+
+* The ``input`` flag causes the generated diagrams to be included in
+  the document via ``\input`` (instead of the default, which is
+  ``\includegraphics``).  This option should be used with the PGF
+  backend.
 
 As a complete example, to specify diagrams compiled with the
 ``postscript`` backend, using the ``diagrams`` directory, one would
@@ -97,6 +95,12 @@ write
 
   \usepackage[backend=ps, extension=eps, outputdir=diagrams]{diagrams-latex}
   \usepackage{graphicx}
+
+To use the ``pgf`` backend, one might write
+
+::
+
+  \usepackage[backend=pgf, extension=pgf, outputdir=diagrams, input]{diagrams-latex}
 
 Diagram blocks
 ==============
@@ -149,6 +153,20 @@ the same directory, and import this module in each ``diagram`` block.
 its imports have changed.  In general, `diagrams-builder`:pkg: tries
 hard to avoid recompiling diagrams when recompilation is not
 necessary, in order to speed build times.
+
+If you use the PGF backend, any `text` diagrams will be typeset by
+`\LaTeX`:math:.  In particular, if your text contains any sections
+surrounded by dollar signs, these will be typeset in math mode.  For
+example,
+
+::
+
+  \begin{diagram}[width=300,height=200]
+    dia = text "hi $\\sqrt{\\pi}$" # scale 0.5 <> circle 1 # fc yellow
+  \end{diagram}
+
+will produce a yellow circle with "hi `\sqrt{\pi}`:math:" in the
+middle.
 
 Using ``diagrams-latex`` with Beamer
 ====================================
