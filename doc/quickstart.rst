@@ -156,6 +156,16 @@ Turning off the Dreaded Monomorphism Restriction is quite important:
 if you don't, you will almost certainly run into it (and be very
 confused by the resulting error messages).
 
+.. container:: warning
+
+  This tutorial assumes the latest version of ``diagrams`` (namely,
+  1.3). If you get an error message saying ``Expecting one more
+  argument to 'Diagram B'``, it means you have an older (pre-1.3)
+  version of ``diagrams`` installed.  We recommend `upgrading to the
+  latest version`__.
+
+__ https://wiki.haskell.org/Diagrams/Dev/Migrate1.3
+
 The first `import` statement brings into scope the entire diagrams DSL
 and standard library, as well as a few things from other libraries
 re-exported for convenience.  The second `import` is so that we can
