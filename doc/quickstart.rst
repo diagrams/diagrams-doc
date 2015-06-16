@@ -72,11 +72,19 @@ Installation
 ------------
 
 Once you have the prerequisites, installing the diagrams libraries
-themselves should be a snap:
+themselves should be a snap. We recommend installing diagrams in a
+sandbox, like so:
 
 ::
 
+    cabal sandbox init
     cabal install diagrams
+    cabal exec bash
+
+The last line will start a new shell (feel free to substitute your
+favorite shell in place of ``bash``) in an environment with all the
+diagrams packages available to GHC.  To exit the sandbox, just exit
+the shell.
 
 `diagrams`:pkg: is just a wrapper package which pulls in the following
 four packages:
