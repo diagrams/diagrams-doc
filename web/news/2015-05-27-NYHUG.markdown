@@ -1,0 +1,8 @@
+---
+published: May 27, 2015
+---
+Jeff spoke about diagrams at the [New York Haskell users'
+group](http://www.meetup.com/NY-Haskell/).  Diagrams: Composition, Envelopes and Alignment.
+[Part 1 is about compositon and envelopes.](https://www.youtube.com/watch?v=5_fCUSOn7m0), and [part 2
+talks about animated GIFs and the design of the arrow API.](https://www.youtube.com/watch?v=nZCzsBOYdis).  The [slides are also
+available](https://github.com/jeffreyrosenbluth/NYC-meetup).
