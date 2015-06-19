@@ -32,8 +32,8 @@ the ``doc`` subdirectory.  For example, the user manual is
 ``doc/your-tutorial-name.rst``, and off you go! You also need a file
 called ``doc/your-tutorial-name.html.metadata``, containing the line
 ``title: Your Title Here``.  To get your tutorial linked on the main
-`diagrams` web page edit the file ``web/documentation.markdown`` by
-adding a line to the *Tutorials* section that looks like
+`diagrams` web page edit the file ``web/tutorials.markdown`` by
+adding a line that looks like
 
 ``* [Name of your tutorial] (/doc/your-tutorial-name.html) --- description``
 
