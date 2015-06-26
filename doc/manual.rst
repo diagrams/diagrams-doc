@@ -5384,9 +5384,9 @@ follow the spec correctly at this point, while Safari does not handle
 reflect and repeat at all and Firefox gets it wrong.
 
 The SVG backend includes an additional module `Diagrams.Backend.SVG.Attributes`:mod: 
-for SVG specific attributes. Currently the module adds two attributes, `SvgId` and `SvgClass
+for SVG specific attributes. Currently the module adds two attributes, `SvgId` and `SvgClass`
 that are used to add class and id to SVG elements. This allows parts of a diagram
-to be referenced for aditional javascript procesing when the SVG ouput is embeeded in
+to be referenced for additional javascript processing when the SVG ouput is embedded in
 an HTML file.
 
 The source code for the SVG backend can be found in the
