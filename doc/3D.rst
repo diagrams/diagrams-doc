@@ -19,23 +19,23 @@ There is currently one 3D Backend, `diagrams-povray`_, which uses
 `diagrams-povray`_ is currently unreleased; you can obtain and build
 it from github.)  Many functions used for 2D diagrams have polymorphic
 types and can also be used in 3D.  Some are specific to three
-dimensions---many of these are introduced below.  And some definitions
-have a 2D and a 3D version, with the same name, such as `unitX`.
+dimensions---many of these are introduced below.
 
 .. _diagrams-povray: https://github.com/diagrams/diagrams-povray
 .. _POV-Ray: http://povray.org/
 
 Every 3D scene rendered by ``diagrams-povray`` needs 3 elements: an
-object, a light, and a camera.  (Future backends may work
-differently.)  Without a light, the scene will appear completely
-black.
+object, a light, and a camera.  (Other backends may work differently.)
+Without a light, the scene will appear completely black.  The
+primitive `sphere` is converted to a `Diagram` by `skin`, similar to
+how `strokePath` works in 2D.
 
 .. class:: lhs
 
 ::
 
-  import Diagrams.Prelude
-  import Diagrams.Backend.POVRay
+  import           Diagrams.Backend.POVRay
+  import           Diagrams.Prelude
 
   cam = mm50Camera # translate (r3 (0,0,10))
 
@@ -44,17 +44,17 @@ black.
 
   light = parallelLight xy white
 
-  example :: Diagram POVRay V3 Double
+  color :: Colour Double -> Diagram POVRay -> Diagram POVRay
+  color c = diffuse 0.5 . ambient 0.1 . sc c
+
+  example :: Diagram POVRay
   example = centerX $ cat unitX
-    [sphere # fc cyan, sphere # fc green, sphere # fc blue]
+    [skin sphere # color cyan, skin sphere # color green, skin sphere # color blue]
 
   main :: IO ()
   main = putStrLn $ renderDia POVRay POVRayOptions $ mconcat [example, cam, light]
 
-Note that we import `Diagrams.Prelude.ThreeD`:mod: instead of
-`Diagrams.Prelude`:mod:.  This module exports all of the definitions
-useful in 3D, and not those, like the 2D `unitX`, which would get in
-the way.  We introduce a camera, a light which casts parallel rays,
+We introduce a camera, a light which casts parallel rays,
 and some spheres (of radius 1).  We move the camera away from the
 origin, so that the spheres are in its field of view.  The translate
 function is polymorphic, and takes a vector `V3 Double` because cameras are
@@ -62,8 +62,7 @@ defined in `V3 Double`.  Now we render our scene.  At the command line:
 
 ::
 
-   ghc 3dtutorial.hs
-   ./3dtutorial > 3dtutorial.pov
+   cabal exec runhaskell 3dtutorial.hs > 3dtutorial.pov
    povray -W640 -H480 3dtutorial.pov
 
 After these commands you should have a file 3dtutorial.png:
@@ -74,32 +73,40 @@ After these commands you should have a file 3dtutorial.png:
 
   Write more about cameras and lights.
 
+
+Besides spheres, Diagrams provides a primitive `cube` (rectangular
+prisms), `cone`, and `cylinder`.  Cones and cylinders are special cases
+of the more general `frustum`, which can have arbitrary radii at the two
+ends.  (A cone has radius 0 at one end, and a cylinder has the same
+radius at each end.)
+
 `ThreeD.Transform`:mod: defines many `Transformation`\s specific to
 three dimensions.  For example, we could have defined the camera above
 as `cam = mm50Camera # translateZ 10`.  The example below uses
-nonuniform scales and rotations to make a slightly more interesting
+boxes, nonuniform scales and rotations to make a slightly more interesting
 scene.
 
 .. class:: lhs
 
 ::
 
-  import Diagrams.Prelude
-  import Diagrams.Backend.POVRay
-  import Data.Colour.Palette.ColorSet
+  import           Data.Colour.Palette.ColorSet
+  import           Diagrams.Backend.POVRay
+  import           Diagrams.Prelude
 
-  cam = mm50Camera # translateZ 40
+  cam = mm50Camera # translateZ 20
 
   xy :: Direction V3 Double
   xy = direction . r3 $ (-1, -1, -0.5)
 
   light = parallelLight xy white
 
-  s = sphere # scaleY 1.6 # translateX 6
+  s = skin cube # scaleY 1.6 # translateX 3 # transform (aboutX (0.25 @@ turn)) # diffuse 1.5 # ambient 0.1
 
-  color theta = fc $ rybColor (floor $ theta * 24)
+  color :: Double -> Diagram POVRay -> Diagram POVRay
+  color theta = sc $ rybColor (floor $ theta * 24)
 
-  example :: Diagram POVRay V3 Double
+  example :: Diagram POVRay
   example = mconcat
               [transform (aboutZ (t @@ turn)) (s # color t) | t <- [0,1/8..7/8]]
 
@@ -108,3 +115,33 @@ scene.
 
 .. image:: /doc/static/3dtutorial2.png
 
+These primitive objects can also be combined using the CSG operations
+`union`, `intersection` and `difference`.  These work on the various
+primitives, before `skin` wraps them in a `Diagram`.  The image below
+subtracts a sphere from a cone (with its apex towards the camera) to
+create a crescent.
+
+.. class:: lhs
+
+::
+
+  import           Diagrams.Backend.POVRay
+  import           Diagrams.Prelude
+
+  cam = mm50Camera # translateZ 10
+
+  xy :: Direction V3 Double
+  xy = direction . r3 $ (-1, -1, -0.5)
+
+  light = parallelLight xy white
+
+  color :: Colour Double -> Diagram POVRay -> Diagram POVRay
+  color c = diffuse 0.5 . ambient 0.1 . sc c
+
+  example :: Diagram POVRay
+  example = centerX . color blue . skin $ difference sphere (sphere # translate (V3 0.5 0 0.5))
+
+  main :: IO ()
+  main = putStrLn $ renderDia POVRay POVRayOptions $ mconcat [example, cam, light]
+
+.. image:: /doc/stack/3dtutorial3.png
