@@ -315,7 +315,7 @@ back to the original inpnut.
 Having the full expressiveness of Haskell helped to shape this work as it was
 created.  Processes like extracting common code and generalizing functions
 allowed rapid exploration of visual patterns and the development of a visual
-language for the work.  For instance, the \code{alphabet} function produces a
+language for the work.  For instance, the |alphabet| function produces a
 diagrams of nested circles for a given number.  Originally it had the colors
 "baked in", but later, when connecting parts of the diagram, Haskell's ease of
 refactoring allowed the extraction of a function with the colors with little
