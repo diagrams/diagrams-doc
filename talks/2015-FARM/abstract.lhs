@@ -1,6 +1,6 @@
 %% -*- mode: LaTeX; compile-command: "runhaskell Shake && open abstract.pdf" -*-
 
-\documentclass[9pt,preprint,authoryear,nocopyrightspace]{sigplanconf}
+\documentclass[9pt,authoryear,nocopyrightspace]{sigplanconf}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% lhs2TeX
@@ -117,6 +117,10 @@ Conway, Arkansas, USA}
 {byorgey@@gmail.com}
 
 \preprintfooter{Submitted to FARM 2015}
+
+\conferenceinfo{FARM '15}{September 5, 2015, Vancouver, British
+  Columbia, Canada}
+\copyrightyear{2015}
 
 \maketitle
 
