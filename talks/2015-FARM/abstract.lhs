@@ -288,7 +288,7 @@ dia = renderT t # frame 0.5
 \end{figure}
 
 Finally, \pref{fig:bwt} shows a portrait of the Burrows--Wheeler
-transform \cite{burrows1994block} (BWT) that was included in the Bridges
+transform (BWT) \cite{burrows1994block} that was included in the Bridges
 mathematical art exhibition at the 2014 Joint Mathematics Meetings.
 This is a portrait in the sense that it captures an aspect of an algorithm
 concretely.  In the middle on the left side an input value starts
@@ -300,21 +300,21 @@ Having the full expressiveness of Haskell helped to shape this work as it was
 created.  Processes like extracting common code and generalizing functions
 allowed rapid exploration of visual patterns and the development of a visual
 language for the work.  For instance, the |alphabet| function produces a
-diagrams of nested circles for a given number.  Originally it had the colors
-"baked in", but later, when connecting parts of the diagram, Haskell's ease of
+diagram of nested circles for a given number.  Originally it had the colors
+``baked in'', but later, when connecting parts of the diagram, Haskell's ease of
 refactoring allowed the extraction of a function with the colors with little
 effort.  Other shapes and even variable sized shapes could easily and rapidly be
 experimented with as the image was being constructed.
 
-The flexibility of diagrams also allowed the exploration of various
-compositions with little changes to the code.  Instead of blocks proceeding
+The flexibility of \diagrams also allowed the exploration of various
+compositions with little change to the code.  Instead of blocks proceeding
 clockwise, we could have a single linear progression, or a radial layout that
 fanned out like a circle.  Most of these variations could be explored
 with small changes to the code responsible for composition.  Indeed, various
 layouts were revisited later in the process even with significant changes in
 the code by keeping the other layouts around and fixing errors caught by type
 checking.  In the end the algorithm's own transition from
-row to column gives an opportunity for the arrangement around a square and 
+row to column gives an opportunity for the arrangement around a square and
 a reflective symmetry of sorts across the horizontal midline.
 
 Although the full code is too long to include, a small excerpt is shown
