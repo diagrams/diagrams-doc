@@ -325,7 +325,7 @@ experimented with as the image was being constructed.
 The flexibility of diagrams also allowed the exploration of various
 compositions with little changes to the code.  Instead of blocks proceeding
 clockwise, we could have a single linear progression, or a radial layout that
-fanned out even more like a circle.  Most of these variations could be explored
+fanned out like a circle.  Most of these variations could be explored
 with small changes to the code responsible for composition.  Indeed, various
 layouts were revisited later in the process even with significant changes in
 the code by keeping the other layouts around and fixing errors caught by type
