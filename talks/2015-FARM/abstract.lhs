@@ -138,40 +138,24 @@ embedded in the Haskell programming language~\cite{haskell}.  Under
 continuous development for the past 4+ years, it serves as a powerful
 platform for creating illustrations, visualizations, and artwork, as
 well as a testbed for new ideas in functional EDSLs and in functional
-approaches to graphics.
+approaches to graphics.  Designed with ``power users'' in mind, it
+includes support for multiple vector spaces, pluggable rendering
+backends, a full range of standard drawing attributes, sophisticated
+algorithms for working with paths, and support for relative
+positioning of the constituent parts of a diagram.  It makes extensive
+use of Haskell's type system to capture geometric invariants, and uses
+a pure functional paradigm both in its internal design (for example,
+using first-class functions to represent information about boundaries)
+as well as in the design of its API, which emphasizes composition
+rather than mutation.
 
-We propose to give a short \diagrams tutorial, highlighting
-particularly the benefits of an embedded, functional DSL for the
-representation and generation of vector graphics.  Although \diagrams
-has made an implicit appearance at FARM before, in the context of a
-work-in-progress presentation of a DSL for animation, it has never
-been formally presented in and of itself. We would be particularly
-excited by the opportunity to foster collaboration with other software
-developers and artists through presenting \diagrams at FARM.
-
-\section{Proposal}
-\label{sec:proposal}
-
-\diagrams is a full-featured domain-specific language for creating
-vector graphics, embedded in Haskell.  Designed with ``power users''
-in mind, it includes support for multiple vector spaces, pluggable
-rendering backends, a full range of standard drawing attributes,
-sophisticated algorithms for working with paths, and support for
-relative positioning of the constituent parts of a diagram.  It makes
-extensive use of Haskell's type system to capture geometric
-invariants, and uses a pure functional paradigm both in its internal
-design (for example, using first-class functions to represent
-information about boundaries) as well as in the design of its API,
-which emphasizes composition rather than mutation.
-
-We propose to give a 20-minute \diagrams tutorial/demo, using the
-first ten minutes to explain just enough of the basics to get started,
-and then using the final ten minutes to show off some more
-sophisticated examples.  In the remainder of this proposal, we include
-a few representative examples, with commentary explaining what
-features of the framework are illustrated by each example, and the
-particular ways in which the examples highlight the power of a
-functional EDSL \cite{hudak1996building}.
+We will give a short \diagrams tutorial/demo, first explaining just
+enough of the basics to get started, and then using the remainder of
+the time to show off some more sophisticated examples.  In what
+follows, we include a few representative examples, with commentary
+explaining what features of the framework are illustrated by each
+example, and the particular ways in which the examples highlight the
+power of a functional EDSL \cite{hudak1996building}.
 
 \section{Examples}
 \label{sec:examples}
