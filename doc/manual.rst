@@ -2561,6 +2561,20 @@ To construct a line, loop, or trail, you can use one of the following:
   >         # glueLine # strokeLoop
   >         # lc green # lw veryThick # fc aqua # center # pad 1.1
 
+* `bspline` creates a smooth curve (a B-spline) controlled by a given
+  list of points; it is also described in more detail in the section
+  on `Splines`_.
+
+  .. class:: dia-lhs
+
+  ::
+
+  > pts = map p2 (zip [0 .. 8] (cycle [0, 1]))
+  > example = mconcat
+  >   [ bspline pts
+  >   , mconcat $ map (place (circle 0.1 # fc blue # lw none)) pts
+  >   ]
+
 * `fromSegments` takes an explicit list of `Segment`\s, which can
   occasionally be useful if, say, you want to generate some Bézier
   curves and assemble them into a trail.
@@ -2649,7 +2663,7 @@ A `Path`, also defined in `Diagrams.Path`:mod:, is a (possibly empty)
 collection of `Located Trail`\s. Paths of a single trail can be
 constructed using the same functions described in the previous
 section: `fromSegments`, `fromOffsets`, `fromVertices`, `(~~)`, and
-`cubicSpline`.
+`cubicSpline`, `bspline`.
 
 `Path`\s also form a `Monoid`\, but the binary operation is
 *superposition* (just like that of diagrams).  Paths with
@@ -3280,11 +3294,14 @@ Splines
 ~~~~~~~
 
 Constructing Bézier segments by hand is tedious.  The
-`Diagrams.CubicSpline`:mod: module provides the `cubicSpline`
-function, which, given a list of points, constructs a smooth curved
-path passing through each point in turn.  The first argument to
-`cubicSpline` is a boolean value indicating whether the path should be
-closed.
+`Diagrams.CubicSpline`:mod: module provides two functions for creating
+smooth curves given a list of points.
+
+The `cubicSpline` function, given a list of points, constructs a
+smooth curved path passing through each point in turn, based on an
+algorithm developed by John Hobby, as implemented in Metafont.  The
+first argument to `cubicSpline` is a boolean value indicating whether
+the path should be closed.
 
 .. class:: dia-lhs
 
@@ -3296,11 +3313,26 @@ closed.
 >              <> cubicSpline closed pts
 > example = mkPath False ||| strutX 2 ||| mkPath True
 
-For more precise control over the generation of curved paths, see the
+For more precise control over the generation of Hobby splines, see the
 `Diagrams.TwoD.Path.Metafont`:mod: module from
 `diagrams-contrib`:pkg:, which also has `its own tutorial`__.
 
 __ metafont.html
+
+`Diagrams.CubicSpline`:mod: also provides the `bspline` function,
+which creates a smooth curve (a B-spline) with the given points as
+control points.  The curve begins and ends at the first and last
+points, but in general does not pass through the intermediate points.
+
+.. class:: dia-lhs
+
+::
+
+> pts = map p2 (zip [0 .. 8] (cycle [0, 1]))
+> example = mconcat
+>   [ bspline pts
+>   , mconcat $ map (place (circle 0.1 # fc blue # lw none)) pts
+>   ]
 
 Fill rules
 ~~~~~~~~~~
