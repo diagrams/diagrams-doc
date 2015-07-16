@@ -193,7 +193,7 @@ main = do
         route $ setExtension "html"
         compile $ getResourceBody
             >>= loadAndApplyTemplate "templates/wrapExample.lhs" defaultContext
-            >>= return . withMathJax
+            >>= withMathJax
             >>= loadAndApplyTemplate "templates/exampleHi.html"
                   ( mconcat
                     [ setImgURL imgExt
@@ -255,15 +255,15 @@ buildBannerHtml b = do
     return $ renderMarkdownPandoc m
 
 renderMarkdownPandocWith :: ReaderOptions -> WriterOptions -> Item String -> Item String
-renderMarkdownPandocWith ropt wopt = writePandocWith wopt . fmap (readMarkdown ropt)
+renderMarkdownPandocWith ropt wopt = writePandocWith wopt . fmap (either (const mempty) id . readMarkdown ropt)
 
 renderMarkdownPandoc :: Item String -> Item String
 renderMarkdownPandoc = renderMarkdownPandocWith
                          defaultHakyllReaderOptions
                          defaultHakyllWriterOptions
 
-withMathJax :: Item String -> Item String
-withMathJax = writePandoc . fmap (bottomUp latexToMathJax) . readPandoc
+withMathJax :: Item String -> Compiler (Item String)
+withMathJax = fmap (writePandoc . fmap (bottomUp latexToMathJax)) . readPandoc
   where latexToMathJax (Math InlineMath str)
           = RawInline "html" ("\\(" ++ str ++ "\\)")
         latexToMathJax (Math DisplayMath str)
@@ -314,10 +314,9 @@ markdownFieldsCtx = mconcat . map markdownFieldCtx
 markdownFieldCtx :: String -> Context String
 markdownFieldCtx f = field f $ \i -> do
   markdown <- fromMaybe "" <$> getMetadataField (itemIdentifier i) f
-  return
-    . writeHtmlString defaultHakyllWriterOptions
-    . readMarkdown defaultHakyllReaderOptions
-    $ markdown
+  return $ case readMarkdown defaultHakyllReaderOptions markdown of
+    Right p -> writeHtmlString defaultHakyllWriterOptions p
+    Left e  -> show e
 
 buildGallery :: String -> Item String -> [Item String] -> Compiler (Item String)
 buildGallery imgExt content lhss = do
