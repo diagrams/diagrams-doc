@@ -61,9 +61,9 @@ Lines are an instance of the `TrailLike` class, so to construct a
 line, you can use any function with a return type like `TrailLike t =>
 ... -> t`. Examples of such functions include `fromOffsets`,
 `fromVertices`, `fromSegments`, `(~~)`, `circle`, `arc`, `triangle`,
-`square`, `pentagon`, `rect`, `roundedRect`, `polygon`, `arc`, and
-`cubicSpline`, among many others (click a function name to see its
-type, its documentation, and other nearby functions).
+`square`, `pentagon`, `rect`, `roundedRect`, `polygon`, `arc`,
+`cubicSpline`, and `bspline`, among many others (click a function name
+to see its type, its documentation, and other nearby functions).
 
 A line can be turned into a diagram with `strokeLine`. Since lines are
 *translation-invariant*, they have no definite location in space, and
