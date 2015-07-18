@@ -1,6 +1,6 @@
 %% -*- mode: LaTeX; compile-command: "runhaskell Shake && open abstract.pdf" -*-
 
-\documentclass[9pt,authoryear,nocopyrightspace]{sigplanconf}
+\documentclass[9pt,authoryear]{sigplanconf}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% lhs2TeX
@@ -100,6 +100,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
+\toappear{}
 
 %\thispagestyle{empty}
 
@@ -134,9 +135,17 @@ Conway, Arkansas, USA}
 % ACM SIGPLAN template and will be subject to a light-touch peer
 % review.
 
+\category{D.3.2}{Programming Languages}{Language
+  Classifications}[Applicative (functional) languages]
+\category{I.3.6}{Computer Graphics}{Methodology and Techniques}[Languages]
+
+\terms Domain-Specific Language, Vector Graphics
+
+\keywords diagrams, Haskell, EDSL, vector
+
 \section{Introduction}
 
-\diagrams\footnote{http://projects.haskell.org/diagrams} is a
+\diagrams (\url{http://projects.haskell.org/diagrams}) is a
 declarative domain-specific language for creating vector graphics,
 embedded in the Haskell programming language~\cite{haskell}.  Under
 continuous development for the past 4+ years, it serves as a powerful
@@ -206,22 +215,22 @@ dia = hilbert 5 # strokeT
   \label{fig:hilbert}
 \end{figure}
 
-\pref{fig:tree} shows a binary tree, with different types of nodes at
-its leaves, along with the complete code used to generate it
-\cite{piponipolynomial}.  The first few lines define |t|, an abstract
-representation of the tree to be drawn, and the rest of the lines
-specify how to render it.  This example illustrates the ability of an
-\emph{embedded} DSL to leverage the abstraction facilities of its host
-language: here we define a new data type, |LeafType|, and use it to
-precisely enumerate the possibilities for leaves in the tree to be
-drawn, and define functions to abstract out common patterns (|nd|,
-|lf|) and to specify custom behavior (|drawType|).  We also make use
-of higher-order functions: |map| is higher-order, of course, but more
-interestingly, so is |renderTree|, which takes function arguments
-specifying how to draw nodes and edges of a tree.  Finally, this
-example shows off the fact that a standard installation of \diagrams
-comes with ``batteries included'', such as the tree layout algorithm
-used here.
+\pref{fig:tree} shows a leaf-labelled binary tree along with the
+complete code used to generate it \cite{piponipolynomial}.  The first
+few lines define |t|, an abstract representation of the tree to be
+drawn, and the rest of the lines specify how to render it.  This
+example illustrates the ability of an \emph{embedded} DSL to leverage
+the abstraction facilities of its host language. Here we define a new
+data type, |LeafType|, and use it to enumerate the possibilities for
+leaves in the tree to be drawn. We define functions to abstract out
+common patterns (|nd|, |lf|) and to specify custom behavior
+(|drawType|). We also make use of higher-order functions: |map| is
+higher-order, of course, but more interestingly, so is |renderTree|,
+which takes function arguments specifying how to draw nodes and edges
+of a tree.
+% Finally, this example shows off the fact that \diagrams
+% comes with ``batteries included'', such as the tree layout algorithm
+% used here.
 
 \begin{figure}
 \begin{center}
@@ -321,9 +330,9 @@ checking.  In the end the algorithm's own transition from
 row to column gives an opportunity for the arrangement around a square and
 a reflective symmetry of sorts across the horizontal midline.
 
-Although the full code is too long to include, a small excerpt is shown
-which illustrates building up part of the diagram as a composition of
-other diagrams.
+Although the full code is too long to include, \pref{fig:bwt} shows an
+excerpt that illustrates building up part of the diagram as a composition
+of other diagrams.
 
 \begin{figure}
 \begin{center}
@@ -475,7 +484,6 @@ dia = d # centerXY # pad 1.1
 \end{diagram}
 %$
 \begin{verbatim}
-...
     inputToBWT =
       [ block rs # reflectX    -- Rotations of s
       , sorting 7 head rs rs'
@@ -484,11 +492,10 @@ dia = d # centerXY # pad 1.1
       ]
       # map centerXY
       # hcat' (with & sep .~ 0.1)
-...
 \end{verbatim}
 \end{center}
-\caption{A portrait of the Burrows--Wheeler transform.  The small code fragment is
-the top portion of the image.} \label{fig:bwt}
+\caption{A portrait of the Burrows--Wheeler transform.  The small code
+  fragment generates the top portion of the image.} \label{fig:bwt}
 \end{figure}
 
 \bibliographystyle{plainnat}
