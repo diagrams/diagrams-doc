@@ -23,4 +23,5 @@ main = shake shakeOptions $ do
         -- need ["Diagrams.hs"]  -- for document-specific diagrams
 
         () <- cmd pdflatex $ ["--enable-write18", input]
-        cmd latexmk $ ["-pdf", input]
+--        cmd latexmk $ ["-pdf", input]
+        cmd "pdflatex" $ [input]
