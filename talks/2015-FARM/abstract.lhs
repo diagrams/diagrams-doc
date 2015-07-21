@@ -104,8 +104,8 @@
 
 %\thispagestyle{empty}
 
-\title{Diagrams---A Functional EDSL for Vector Graphics}
-\subtitle{Demo proposal}
+\title{Diagrams: A Functional EDSL for Vector Graphics}
+%\subtitle{Demo abstract}
 
 \authorinfo{Ryan Yates}
 {Department of Computer Science \\ University of Rochester \\
@@ -139,7 +139,7 @@ Conway, Arkansas, USA}
   Classifications}[Applicative (functional) languages]
 \category{I.3.6}{Computer Graphics}{Methodology and Techniques}[Languages]
 
-\terms Domain-Specific Language, Vector Graphics
+\terms Languages
 
 \keywords diagrams, Haskell, EDSL, vector
 
@@ -228,9 +228,9 @@ common patterns (|nd|, |lf|) and to specify custom behavior
 higher-order, of course, but more interestingly, so is |renderTree|,
 which takes function arguments specifying how to draw nodes and edges
 of a tree.
-% Finally, this example shows off the fact that \diagrams
-% comes with ``batteries included'', such as the tree layout algorithm
-% used here.
+Finally, this example shows off the fact that \diagrams
+comes with ``batteries included'', such as the tree layout algorithm
+used here.
 
 \begin{figure}
 \begin{center}
