@@ -2328,6 +2328,24 @@ rightmost edge of its trace in the diagram on the right, whereas in
 the left diagram the `alignR` function puts it at the edge of the
 envelope.
 
+Aligned composition
+~~~~~~~~~~~~~~~~~~~
+
+Sometimes, it is desirable to compose some diagrams according to a
+certain alignment, but *without* affecting their local origins.  The
+`composeAligned` function can be used for this purpose.  It takes as
+arguments an alignment function (such as `alignT` or `snugL`), a
+composition function of type `[Diagram] -> Diagram`, and produces a
+new composition function which works by first aligning the diagrams
+before composing them.
+
+.. class:: dia-lhs
+
+::
+
+> example = (hsep 2 # composeAligned alignT) (map circle [5,1,3,2])
+>         # showOrigin
+
 Trails and paths
 ----------------
 
