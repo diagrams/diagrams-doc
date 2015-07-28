@@ -135,9 +135,16 @@ Conway, Arkansas, USA}
 % ACM SIGPLAN template and will be subject to a light-touch peer
 % review.
 
+\begin{abstract}
+  \diagrams is a domain-specific language for creating vector
+  graphics.  We will give a short \diagrams tutorial/demo,
+  particularly highlighting the power of a functional, embedded
+  domain-specific language.
+\end{abstract}
+
+\category{I.3.6}{Computer Graphics}{Methodology and Techniques}[Languages]
 \category{D.3.2}{Programming Languages}{Language
   Classifications}[Applicative (functional) languages]
-\category{I.3.6}{Computer Graphics}{Methodology and Techniques}[Languages]
 
 \terms Languages
 
@@ -153,22 +160,21 @@ platform for creating illustrations, visualizations, and artwork, as
 well as a testbed for new ideas in functional EDSLs and in functional
 approaches to graphics.  Designed with ``power users'' in mind, it
 includes support for multiple vector spaces, pluggable rendering
-backends, a full range of standard drawing attributes, sophisticated
-algorithms for working with paths, and support for relative
-positioning of the constituent parts of a diagram.  It makes extensive
-use of Haskell's type system to capture geometric invariants, and uses
-a pure functional paradigm both in its internal design (for example,
-using first-class functions to represent information about boundaries)
-as well as in the design of its API, which emphasizes composition
-rather than mutation.
+backends, sophisticated algorithms for working with paths, and
+relative positioning of the constituent parts of a diagram.  It makes
+extensive use of Haskell's type system to capture geometric
+invariants, and uses a pure functional paradigm both in its internal
+design (for example, using first-class functions to represent
+information about boundaries) as well as in the design of its API,
+which emphasizes composition rather than mutation.
 
-We will give a short \diagrams tutorial/demo, first explaining just
-enough of the basics to get started, and then using the remainder of
-the time to show off some more sophisticated examples.  In what
-follows, we include a few representative examples, with commentary
-explaining what features of the framework are illustrated by each
-example, and the particular ways in which the examples highlight the
-power of a functional EDSL \cite{hudak1996building}.
+We will begin by explaining just enough of the basics to get started,
+and then use the remainder of the time to show off some more
+sophisticated examples.  In what follows, we include a few
+representative examples, with commentary explaining what features of
+the framework are illustrated by each example, and the particular ways
+in which the examples highlight the power of a functional EDSL
+\cite{hudak1996building}.
 
 \section{Examples}
 \label{sec:examples}
@@ -316,8 +322,9 @@ language for the work.  For instance, the |alphabet| function produces a
 diagram of nested circles for a given number.  Originally it had the colors
 ``baked in'', but later, when connecting parts of the diagram, Haskell's ease of
 refactoring allowed the extraction of a function with the colors with little
-effort.  Other shapes and even variable sized shapes could easily and rapidly be
-experimented with as the image was being constructed.
+effort.
+% Other shapes and even variable sized shapes could easily and rapidly be
+% experimented with as the image was being constructed.
 
 The flexibility of \diagrams also allowed the exploration of various
 compositions with little change to the code.  Instead of blocks proceeding
@@ -330,9 +337,9 @@ checking.  In the end the algorithm's own transition from
 row to column gives an opportunity for the arrangement around a square and
 a reflective symmetry of sorts across the horizontal midline.
 
-Although the full code is too long to include, \pref{fig:bwt} shows an
-excerpt that illustrates building up part of the diagram as a composition
-of other diagrams.
+% Although the full code is too long to include, \pref{fig:bwt} shows an
+% excerpt that illustrates building up part of the diagram as a composition
+% of other diagrams.
 
 \begin{figure}
 \begin{center}
