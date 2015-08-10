@@ -5423,6 +5423,68 @@ reference`__.
 .. _`list of backends on the wiki`: https://wiki.haskell.org/Diagrams/Projects#Officially_supported_backends
 __ core.html
 
+Calling backends
+----------------
+
+The simplest way to render a diagram is using either the `defaultMain`
+or `mainWith` functions to generate a default executable that renders
+the diagram.  However, there are other, more flexible ways as well.
+The precise set of methods available will vary with the particular
+backend being used, but there are some things that can be said in
+general.
+
+Many backends provide backend-specific rendering functions.  For
+example, the Cairo backend provides
+
+.. class:: lhs
+
+::
+
+> renderCairo :: FilePath -> SizeSpec V2 Double -> QDiagram Cairo V2 Double Any -> IO ()
+
+This still causes a rendered diagram to be output to a file, just as
+in the case of `mainWith`.  The difference is that this is *all* it
+does---it is not wrapped inside an executable that expects
+command-line arguments, and so on.  This can be useful if you want a
+program that does more than just render a single diagram---perhaps it
+renders multiple diagrams, or perhaps it does things other than just
+render a diagram, for example, fetch some data over a network and then
+use the data to generate a diagram which is rendered, and so on.
+
+The most general way to call a backend is to use `renderDia`, which is
+a method of the `Backend` class.  Its type (omitting a bunch of type
+class constraints) is
+
+.. class:: lhs
+
+::
+
+> renderDia :: (...) => b -> Options b v n -> QDiagram b v n m -> Result b v n
+
+It takes a backend token, an options record, and a diagram, and
+renders it to some sort of result.  Both `Options` and `Result` are
+associated types defined by the `Backend` class, so what types they
+actually resolve to depends on the particular backend.
+
+`renderDiaT` is a variant of `renderDia` with type
+
+.. class:: lhs
+
+::
+
+> renderDiaT :: (...) => b -> Options b v n -> QDiagram b v n m -> (Transformation v n, Result b v n)
+
+The only difference is that in addition to a `Result`, it also returns
+the `Transformation` which was generated to transform the given
+diagram into the coordinates required by the backend (for example,
+flipping it vertically if the backend's y coordinates increase
+downwards, resizing and centering to fit the requested dimensions, and
+so on).  The inverse of this transformation can be used to transform
+output coordinates back into diagram coordinates (for example, in
+order to `map mouse clicks in a GTK window onto a diagram`__).
+
+__ http://projects.haskell.org/diagrams/blog/2015-04-30-GTK-coordinates.html
+
 The SVG backend
 ---------------
 
