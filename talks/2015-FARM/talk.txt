@@ -1,0 +1,22 @@
+3 mins: intro/framing/context
+
+  - Embedded DSL in Haskell for vector graphics
+  - working on it for 7+ years
+  - active community
+  - goals:
+    - powerful.
+    - Viable alternative to things like TikZ, inkscape/illustrator
+  - EDSL enables artistic process.  Art influenced by tools.  How do
+    tools we develop influence what we can make?
+  - link to website, cabal install instructions
+
+12 mins: explore tree visualizations?
+
+  - Show a bunch of visualizations (radial, symmetric, boxes, etc.)
+
+  - box layout (beside, envelope)
+  - binary layout
+  - Dyck paths (vectors, arrows, etc.)
+
+5 mins: more examples
+  - rotating tree (animation, etc.)y
