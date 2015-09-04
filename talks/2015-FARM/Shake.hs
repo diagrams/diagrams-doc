@@ -9,7 +9,7 @@ latexmk  = "latexmk"
 main :: IO ()
 main = shake shakeOptions $ do
 
-    want ["abstract.pdf"]
+    want ["diagrams-FARM-15.pdf"]
 
     "*.tex" %> \output -> do
         let input = replaceExtension output "lhs"
@@ -18,7 +18,7 @@ main = shake shakeOptions $ do
 
     "*.pdf" %> \output -> do
         let input = replaceExtension output "tex"
-        need [input, output -<.> "bib"]
+        need [input]
 
         -- need ["Diagrams.hs"]  -- for document-specific diagrams
 
