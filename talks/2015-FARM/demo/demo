@@ -1,0 +1,10 @@
+#!/bin/zsh
+
+echo "ghc --make $1"
+ghc --make $1
+echo "./$1 -o $1.png -w 600 -h 600"
+./$1 -o $1.png -w 600 -h 600
+echo "firefox $1.png"
+firefox $1.png
+echo "./$1 -o $1.png -w 600 -h 600 -l"
+./$1 -o $1.png -w 600 -h 600 -l

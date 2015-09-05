@@ -1,6 +1,8 @@
 From <https://byorgey.wordpress.com/2013/04/25/random-binary-trees-with-a-size-limited-critical-boltzmann-sampler-2/>
 
 > {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+> {-# LANGUAGE DeriveFoldable             #-}
+> {-# LANGUAGE DeriveFunctor              #-}
 >
 > module BoltzmannTrees where
 >
@@ -10,11 +12,12 @@ From <https://byorgey.wordpress.com/2013/04/25/random-binary-trees-with-a-size-l
 > import           Control.Monad.Reader
 > import           Control.Monad.State
 > import           Control.Monad.Trans.Maybe
+> import           Data.Foldable
 
 So here’s a simple type of binary tree shapes, containing no data:
 
 > data Tree a = Leaf a | Branch a (Tree a) (Tree a)
->   deriving Show
+>   deriving (Show, Functor, Foldable)
 >
 > type Tree' = Tree ()
 

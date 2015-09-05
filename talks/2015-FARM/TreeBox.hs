@@ -9,16 +9,14 @@ module TreeBox where
 import           BoltzmannTrees
 import           Data.Colour.Palette.BrewerSet
 import           Diagrams.Prelude
-import           Diagrams.TwoD.Layout.Tree
 
 colors = brewerSet YlOrRd 9
 
 treeBoxes :: _ => Tree () -> Diagram b
 treeBoxes = treeBoxes' 0
   where
-    treeBoxes' n (Leaf _) = -- pointDiagram origin # named "node"
-      -- square 1 # fc black
-      square 1 # lw none
+    treeBoxes' n (Leaf _) = 
+      square 1 # lw none # fc (colors !! (n `mod` 9))
     treeBoxes' n (Branch _ l r) = children
       -- # (withNameAll "node" $ \subs -> atop $ mconcat (map ((origin ~~) . location) subs))
       -- # localize

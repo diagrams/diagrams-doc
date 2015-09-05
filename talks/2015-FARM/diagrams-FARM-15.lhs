@@ -42,19 +42,19 @@
   %   \end{beamercolorbox}
   % }
 
-  % \AtBeginSection[]
-  % {
-  %   \begin{frame}<beamer>
-  %     \frametitle{}
+  \AtBeginSection[]
+  {
+    \begin{frame}<beamer>
+      \frametitle{}
 
-  %     \begin{center}
-  %       % \includegraphics[width=2in]{\sectionimg}
-  %       % \bigskip
+      \begin{center}
+        % \includegraphics[width=2in]{\sectionimg}
+        % \bigskip
 
-  %       {\Huge \usebeamercolor[fg]{title}\insertsectionhead}
-  %     \end{center}
-  %   \end{frame}
-  % }
+        {\Huge \usebeamercolor[fg]{title}\insertsectionhead}
+      \end{center}
+    \end{frame}
+  }
 }
 
 \defbeamertemplate*{title page}{customized}[1][]
@@ -102,7 +102,7 @@
 \subtitle{A Functional EDSL for Vector Graphics}
 \date{\theschool \\ \thelocation \\ \thedate}
 \author{Ryan Yates \and Brent Yorgey}
-\titlegraphic{\includegraphics[width=1in]{TreeBox}}
+\titlegraphic{\includegraphics[width=1in]{tree}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -112,15 +112,12 @@
    \titlepage
 \end{xframe}
 
-\section{Introduction}
-\label{sec:intro}
-
 \begin{xframe}{What is diagrams?}
   \begin{itemize}
   \item<+-> Domain-specific language for vector graphics
   \item<+-> Embedded in Haskell
   \item<+-> 7+ years of development
-  \item<+-> Active and creative community
+  \item<+-> Large, active, creative community
   \end{itemize}
 \end{xframe}
 
@@ -128,17 +125,17 @@
   \begin{itemize}
   \item<+-> Powerful, programmable alternative to Illustrator,
     Inkscape, PGF/TikZ
-  \item<+-> Enables artistic process.  Art influenced by tools.
+  \item<+-> Tools influence the creative process
   \end{itemize}
 \end{xframe}
 
 \begin{xframe}{}
   \begin{center}
-    \url{http://projects.haskell.org/diagrams} \\
-    (second Google result!)
+    \texttt{cabal install diagrams}
     \bigskip
 
-    \texttt{cabal install diagrams}
+    \url{http://projects.haskell.org/diagrams} \\
+    (second Google result!)
   \end{center}
 \end{xframe}
 
@@ -154,7 +151,12 @@
   \end{center}
 \end{xframe}
 
-% \def\sectionimg{foo bar}   % XXX
+\begin{xframe}{}
+  \begin{center}
+    \includegraphics[width=\textwidth]{user-manual}
+  \end{center}
+\end{xframe}
+
 \section{Demo: visualizing binary trees}
 \label{sec:tree-variations}
 
@@ -163,7 +165,7 @@
     \begin{diagram}[width=200]
       import Diagrams
 
-      dia :: Diagram B
+      dia :: IO (Diagram B)
       dia = treeVisuals (repeat (repeat False))
     \end{diagram}
   \end{center}
@@ -171,13 +173,161 @@
 
 \begin{xframe}{}
   \begin{center}
-    {\Huge \usebeamercolor[fg]{title}Demo!}
+    \begin{diagram}[height=200]
+      import Diagrams
+      import TreeBox
+
+      dia :: Diagram B
+      dia = treeBoxes theTree
+    \end{diagram}
+  \end{center}
+\end{xframe}
+
+% \begin{xframe}{}
+%   \begin{center}
+%     \begin{diagram}[height=200]
+%       import Diagrams
+%       import BinLayout
+
+%       dia :: Diagram B
+%       dia = drawTree theTree
+%     \end{diagram}
+%   \end{center}
+% \end{xframe}
+
+\begin{xframe}{}
+  \begin{center}
+    \begin{diagram}[height=200]
+      import Diagrams
+      import Dyck
+
+      dia :: Diagram B
+      dia = drawDyck False theTree
+    \end{diagram}
+  \end{center}
+\end{xframe}
+
+\begin{xframe}{}
+  \begin{center}
+    \begin{diagram}[width=200]
+      {-# LANGUAGE FlexibleContexts #-}
+      import Dyck
+      import BinLayout
+      import BoltzmannTrees
+      import Diagrams (treeToTree)
+      import qualified Diagrams.TwoD.Layout.Tree as LT
+
+      Just theTree = seedGenM 6 11 0 genTree
+
+      dia :: Diagram B
+      dia = hsep 3 . map (sized (dims2D 10 10) . centerXY)
+          $ [ bt, drawDyck False theTree ]
+
+      bt = LT.renderTree (const mempty) (~~)
+         . LT.symmLayout
+         . treeToTree
+         $ theTree
+    \end{diagram}
   \end{center}
 \end{xframe}
 
 \section{More examples}
 \label{sec:more-examples}
 
+\begin{xframe}{3D Trees}
+  \begin{center}
+    \url{seeds/seeds.html}
+      \bigskip
 
+    \mbox{\url{http://www.cs.rochester.edu/u/ryates/art/seeds/}}
+    \bigskip
+
+    \includegraphics[width=1.5in]{tree}
+  \end{center}
+\end{xframe}
+
+\begin{xframe}{Burrows-Wheeler Transform}
+  \begin{center}
+    \begin{diagram}[width=250]
+      import Diagrams
+
+      dia :: Diagram B
+      dia = bwtDia
+    \end{diagram}
+  \end{center}
+\end{xframe}
+
+\begin{xframe}{Weaving a Torus}
+  \begin{center}
+    \url{http://mathr.co.uk/blog/2013-04-05_weaving_a_torus.html}
+    \bigskip
+
+    \includegraphics[width=1.5in]{2013-04-05_weaving_a_torus_net_72dpi}
+    \includegraphics[width=1.5in]{2013-04-05_weaving_a_torus}
+  \end{center}
+\end{xframe}
+
+\begin{xframe}{Parking in Westminster}
+  \begin{center}
+    \url{https://idontgetoutmuch.wordpress.com/2013/10/23/parking-in-westminster-an-analysis-in-haskell/}
+    \bigskip
+
+    \includegraphics[width=3in]{parking}
+  \end{center}
+\end{xframe}
+
+\begin{xframe}{ghc-events-analyze}
+  \begin{center}
+    \url{http://www.well-typed.com/blog/86/} \\
+    \url{hackage.haskell.org/package/ghc-events-analyze}
+    \bigskip
+
+    \includegraphics[width=3.5in]{ghc-events-analyze}
+  \end{center}
+\end{xframe}
+
+\begin{xframe}{Cretan maze}
+  \begin{center}
+    \url{http://www.corentindupont.info/blog/posts/2014-02-17-Cretan-Maze.html}
+    \bigskip
+
+    \includegraphics[width=2in]{maze}
+  \end{center}
+\end{xframe}
+
+\begin{xframe}{Puzzles}
+  \begin{center}
+    \url{https://maybepuzzles.wordpress.com/2014/04/07/drawing-puzzles-with-the-haskell-diagrams-framework/}
+    \bigskip
+
+    \includegraphics[width=3in]{puzzle}
+  \end{center}
+\end{xframe}
+
+\begin{xframe}{Stencil diagrams}
+  \begin{center}
+    \url{https://readerunner.wordpress.com/2014/04/29/red-black-neighbourhood-stencil-diagrams/}
+    \bigskip
+
+    \includegraphics[width=2in]{neighbourtemplates}
+  \end{center}
+\end{xframe}
+
+\begin{xframe}{Num chart}
+  \begin{center}
+    \url{https://martingalemeasure.wordpress.com/2014/07/07/haskell-numeric-types-quick-reference/}
+    \bigskip
+
+    \includegraphics[width=2in]{Num-chart}
+  \end{center}
+\end{xframe}
+
+\begin{xframe}{}
+  \begin{center}
+    {\Large Happy diagramming!} \bigskip
+
+    \includegraphics[width=1in]{tree}
+  \end{center}
+\end{xframe}
 
 \end{document}

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Trees from random seeds</title>
+    <style type="text/css">
+        body { background-color: #87ceeb } 
+        button { font-size: 14pt }
+        #preload-01 { background: url(treeSpin-31.gif) no-repeat -9999px -9999px; }
+        #preload-02 { background: url(treeSpin-35.gif) no-repeat -9999px -9999px; }
+        #preload-03 { background: url(treeSpin-39.gif) no-repeat -9999px -9999px; }
+        #preload-04 { background: url(treeSpin-42.gif) no-repeat -9999px -9999px; }
+        #preload-05 { background: url(treeSpin-50.gif) no-repeat -9999px -9999px; }
+        #preload-06 { background: url(full.gif) no-repeat -9999px -9999px; }
+    </style>
+    <script type="text/javascript">
+    var trees = [ "treeSpin-31.gif" 
+                , "treeSpin-35.gif"
+                , "treeSpin-39.gif"
+                , "treeSpin-42.gif"
+                , "treeSpin-50.gif"
+                , "full.gif"
+                ];
+    var i = 0;
+    var n = 6;
+
+    function next() {
+        i = i+1;
+        if (i >= n) i = 0;
+        document.getElementById("tree").src = trees[i];
+    }
+    
+    function prev() {
+        i = i - 1;
+        if (i < 0) i = n-1;
+        document.getElementById("tree").src = trees[i];
+    }
+    </script>
+</head>
+<body>
+    <center>
+        <button type="button" onclick="prev()" style="margin-right: 200px">&lt;</button>
+        <button type="button" onclick="next()">&gt;</button>
+    </center>
+    <br />
+    <br />
+    <center>
+        <img id="tree" src="treeSpin-31.gif" alt="spinning tree"
+             style="margin-top: 50px; margin-bottom: 400px"></img>
+    </center>
+</body>
+</html>

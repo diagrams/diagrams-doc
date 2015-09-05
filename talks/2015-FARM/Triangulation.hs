@@ -20,7 +20,7 @@ triangulation :: _ => Tree' -> Diagram b
 triangulation t = mconcat
   [ triangDia
   , head ps ~~ last ps
-  , drawTree labelledT
+--  , drawTree labelledT
   ]
   # lc grey
   where
