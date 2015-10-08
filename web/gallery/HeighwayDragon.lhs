@@ -14,14 +14,17 @@ height: 800
 > import Diagrams.Prelude
 > import Diagrams.TwoD.Layout.Grid
 
-We generate an infinite sequence of increasingly detailed [dragon curves](https://en.wikipedia.org/wiki/Dragon_curve), starting with a simple line. Each curve is two copies of the previous curve rotated, scaled, one of them inverted, and stuck together.
+One way to define the [Heighway dragon](https://en.wikipedia.org/wiki/Dragon_curve) is iteratively. If we have a dragon of a certain level of detail, we can create the next, more detailed, dragon as follows: Take two copies of the previous dragon, rotate them, invert one of them, scale them, and stick them together.
 
-> dragonCurves = map (trailLike . (`at` origin)) (iterate fold initialTrail)
+> nextDragon trail = (trail # rotateBy (-1/8) 
+>                     <> trail # rotateBy (5/8) # reverseTrail) 
+>                    # scale (1/sqrt 2)
+
+With this, we can now generate an infinite sequence of increasingly detailed dragon curves, starting with a straight line.
+
+> dragonCurves = map (trailLike . (`at` origin)) (iterate nextDragon initialTrail)
 >   where
 >     initialTrail = hrule 1
->     fold trail = (trail # rotateBy (-1/8) 
->                     <> trail # rotateBy (5/8) # reverseTrail) 
->                   # scale (1/sqrt 2)
 
 The above is enough to generate a Heighway dragon of arbitrary level of detail, but let's go a little further to show the relation of successive curves in the sequence.
 
