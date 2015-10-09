@@ -18,6 +18,7 @@ import           System.Directory            (canonicalizePath,
 import           System.Environment          (lookupEnv)
 import           System.Process              (readProcess, system)
 
+import           Prelude                     hiding ((*>))
 
 obj, un, dist :: FilePath -> FilePath
 obj = (".make" <//>)
