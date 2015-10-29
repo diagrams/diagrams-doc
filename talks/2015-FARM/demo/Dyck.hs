@@ -22,10 +22,11 @@ grid n = mconcat
          # centerXY
 
 treeToPath :: Tree () -> [V2 Double]
-treeToPath t = []
+treeToPath (Leaf _) = [unitY]
+treeToPath (Branch _ l r) = unitX : treeToPath l ++ treeToPath r
 
 drawPath :: [V2 Double] -> Diagram B
-drawPath vs = mempty
+drawPath vs = mconcat $ zipWith translate (scanl (^+^) zero vs) (map arrowV vs)
 
 upperRegion :: Int -> [V2 Double] -> Trail V2 Double
 upperRegion l vs = mempty
