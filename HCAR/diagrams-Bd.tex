@@ -11,16 +11,16 @@ a viable alternative to DSLs like MetaPost or Asymptote, but with the
 advantages of being \emph{declarative}---describing what to draw, not
 how to draw it---and \emph{embedded}---putting the entire power of
 Haskell (and Hackage) at the service of diagram creation.  There is
-still much more to be done, but diagrams is already quite
-fully-featured, with a comprehensive user manual, a large collection
-of primitive shapes and attributes, many different modes of
-composition, paths, cubic splines, images, text, arbitrary monoidal
-annotations, named subdiagrams, and more.
+always more to be done, but diagrams is already quite fully-featured,
+with a comprehensive user manual and a growing set of tutorials, a
+large collection of primitive shapes and attributes, many different
+modes of composition, paths, cubic splines, images, text, arbitrary
+monoidal annotations, named subdiagrams, and more.
 
-%**<img width=400 src="./arrows.jpg">
+%**<img width=400 src="./3d-cubes.jpg">
 %*ignore
 \begin{center}
-\includegraphics[width=0.47\textwidth]{html/arrows.jpg}
+\includegraphics[width=0.47\textwidth]{html/3d-cubes.jpg}
 \end{center}
 %*endignore
 
@@ -31,11 +31,11 @@ There has not yet been a new major release of diagrams since version
 features already in diagrams HEAD or currently being worked on:
 \begin{compactitem}
 \item B-spline support, and B-spline to cubic Bezier conversion
+\item Path union and intersection
 \item CSG support for 3D diagrams
-\item New techniques and tools for drawing 2D projections of 3D diagrams
+\item New techniques and tools for drawing 2D projections of 3D
+  diagrams, illustrated above
 \item Constraint-based layout
-\item Separate fill and stroke opacity attributes
-\item New aligned composition operator
 \end{compactitem}
 
 \texttt{diagrams-pandoc}, a pandoc filter which can automatically
@@ -68,10 +68,10 @@ to get started, see the Contributing page on the diagrams wiki:
 \url{http://haskell.org/haskellwiki/Diagrams/Contributing}, or come
 hang out in the \texttt{\#diagrams} IRC channel on freenode.
 
-%**<img width=400 src="./topoform.jpg">
+%**<img width=400 src="./arrows.jpg">
 %*ignore
 \begin{center}
-\includegraphics[width=0.4\textwidth]{html/topoform.jpg}
+\includegraphics[width=0.47\textwidth]{html/arrows.jpg}
 \end{center}
 %*endignore
 
