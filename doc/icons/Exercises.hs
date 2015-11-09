@@ -1,5 +1,7 @@
 {-# LANGUAGE CPP                       #-}
+{-# LANGUAGE FlexibleContexts          #-}
 {-# LANGUAGE NoMonomorphismRestriction #-}
+{-# LANGUAGE TypeFamilies              #-}
 
 module Exercises where
 
