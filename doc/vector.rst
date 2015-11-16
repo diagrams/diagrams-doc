@@ -238,7 +238,7 @@ should strive to work on the level of vectors, and only "stoop" to the
 level of working with explicit coordinates when absolutely necessary.
 
 To get the magnitude and direction of a vector, you can use the
-`magnitude` and `direction` functions.  To get the angle between two
+`norm` and `direction` functions.  To get the angle between two
 given vectors, use `angleBetween`.  Additionally, `quadrance` gives
 the *squared* magnitude of a vector, and is more efficient than
 squaring the result of `norm`, since it avoids a call to `sqrt`.
@@ -310,7 +310,7 @@ are open to adding more!).
 
 __ http://en.wikipedia.org/wiki/Dot_product
 
-* The `normalized` function changes the magnitude of a vector to
+* The `normalize` function changes the magnitude of a vector to
   `1`:math:, while keeping the direction fixed.
 
 * `perp` yields a vector perpendicular to (and of the same magnitude
