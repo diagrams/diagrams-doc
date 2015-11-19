@@ -842,7 +842,7 @@ which may indeed be intimidating at first glance, and at any rate
 takes a bit of time and practice to understand!  The essential idea is
 to realize that `hcat` is actually quite a bit more general than
 previously described: it can lay out not just diagrams, but any
-two-dimensional things (``V a ~ V2`` and the constrants on ``N a``)
+two-dimensional things (``V a ~ V2`` and the constraints on ``N a``)
 which can be positioned "next to" one another (`Juxtaposable`), can be
 translated (`HasOrigin`), and are an instance of `Monoid` (`Monoid'`
 is actually a synonym for the combination of `Monoid` and
