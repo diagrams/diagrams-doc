@@ -1883,7 +1883,7 @@ two static attributes are provided:
   into a hyperlink, use the `href` function.
 
 * Transparency grouping via the `opacityGroup` function is supported
-  only by the SVG and PGF backends; see `Color and Opacity`_.
+  only by the SVG, PGF and (as of 1.3) Rasterific backends; see `Color and Opacity`_.
 
 More static attributes (for example, node IDs) and wider backend
 support may be added in future versions.
