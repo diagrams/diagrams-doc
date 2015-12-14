@@ -4436,8 +4436,8 @@ has the type
 
 ::
 
-  lookupName :: IsName n
-             => n -> QDiagram b v m -> Maybe (Subdiagram b v m)
+  lookupName :: IsName name
+             => name -> QDiagram b v n m -> Maybe (Subdiagram b v n m)
 
 This function takes a name and a diagram, and returns the first
 subdiagram associated to that name if any are found, and `Nothing`
