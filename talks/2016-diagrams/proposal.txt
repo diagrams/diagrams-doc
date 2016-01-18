@@ -1,0 +1,101 @@
+Programming Your Pictures: An introduction to the Haskell diagrams framework for declarative drawing
+
+Organizers
+----------
+
+Brent Yorgey
+http://ozark.hendrix.edu/~yorgey/
+yorgey@hendrix.edu
+
+Jeffrey Rosenbluth
+jeffrey.rosenbluth@gmail.com
+
+Main organizer bio
+------------------
+
+Brent Yorgey (http://ozark.hendrix.edu/~yorgey/) is an assistant
+professor of computer science at Hendrix College in Conway, Arkansas,
+and a well-known developer and educator in the open-source functional
+programming community.  He has served on the Haskell core libraries
+committe, on the program committee of the ACM SIGPLAN Haskell
+Symposium, and currently serves on the steering committee for the
+Workshop on Functional Art, Music, Modeling, and Design (FARM).  His
+educational materials are widely recommended and used by beginners
+learning the Haskell programming language.  He has led development of
+the Haskell diagrams framework since its inception in 2008.
+
+Description
+-----------
+
+The tutorial will be a hands-on introduction to the Haskell diagrams
+framework and, incidentally, to the Haskell programming language
+itself.  No previous experience with Haskell or with functional
+programming will be assumed.  As an embedded domain-specific language,
+the framework can be used in basic, productive ways without knowing
+much Haskell; learning Haskell enables more sophisticated uses.  The
+format will consist of presentations of concepts and examples
+interspersed with hands-on exercises for participants.  All necessary
+software is free and open-source, and detailed installation
+instructions will be provided.
+
+The tutorial should be of interest to a wide cross-section of Diagrams
+attendees. The Haskell diagrams framework is a powerful, open-ended,
+open-source exploratory tool that can be used for a variety of
+purposes, and may be directly applicable in many contexts that
+participants care about, both in academic and practical settings,
+enabling them to explore or produce diagrams in more effective ways.
+
+
+Abstract
+--------
+
+The Haskell diagrams framework (http://projects.haskell.org/diagrams)
+is an open-source, domain-specific language for creating vector
+graphics, embedded in the Haskell programming language
+(http://haskell.org).
+
+Under continuous development for the past 4+ years, it serves as a
+powerful platform for creating illustrations, visualizations, and
+artwork, as well as a testbed for new ideas in functional domain
+specific languages and in functional approaches to graphics.  The
+language is declarative, that is, one writes a program describing what
+the desired result is rather than explicitly describing the steps
+needed to draw it.  It allows one to work at a high level and to build
+further abstractions for concisely expressing arbitrary classes of
+diagrams.  The framework can thus be used for rapid prototyping and
+development of visualizations, and can easily serve as a base upon
+which to develop more specialized diagram generation software.
+
+The tutorial will be a hands-on introduction to the Haskell diagrams
+framework and, incidentally, to the Haskell programming language
+itself.  No previous experience with Haskell or with functional
+programming will be assumed.  As an embedded domain-specific language,
+the framework can be used in basic, productive ways without knowing
+much Haskell; learning Haskell enables more sophisticated uses.  The
+format will consist of presentations of concepts and examples
+interspersed with hands-on exercises for participants.  All necessary
+software is free and open-source, and detailed installation
+instructions will also be provided.
+
+Length: the tutorial will run for three hours.
+
+Learning Objectives
+===================
+
+At the end of the tutorial, participants will be familiar with the
+rudiments of the Haskell programming language, and will be able to use
+the Haskell diagrams framework to create their own moderately
+sophisticated vector graphics.  In addition, participants will
+be pointed in the direction of next steps to deepen their knowledge,
+for example, if they wish to develop their own specialized frameworks
+using the given one as a basis.
+
+Prerequisites
+=============
+
+No background in Haskell or functional programming will
+be assumed.  Some experience programming in other languages may be
+helpful, but is not required.  Participants should bring their own
+laptop for use in completing the exercises.  Instructions on
+installing the required software will be available from
+http://projects.haskell.org/diagrams before the conference.
