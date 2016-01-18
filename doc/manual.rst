@@ -1883,7 +1883,7 @@ two static attributes are provided:
   into a hyperlink, use the `href` function.
 
 * Transparency grouping via the `opacityGroup` function is supported
-  only by the SVG and PGF backends; see `Color and Opacity`_.
+  only by the SVG, PGF and (as of 1.3) Rasterific backends; see `Color and Opacity`_.
 
 More static attributes (for example, node IDs) and wider backend
 support may be added in future versions.
@@ -3844,7 +3844,7 @@ its own `textSVG` function which can be used to convert text into a
 
 ::
 
-> text' d s = (strokeP $ textSVG' (TextOpts lin2 INSIDE_H KERN False d d) s)
+> text' d s = (strokeP $ SF.textSVG' (SF.TextOpts SF.lin2 SF.INSIDE_H SF.KERN False d d) s)
 >           # lw none
 >
 > example = text' 5 "Hello" # fc blue ||| text' 3 "world" # fc green
@@ -4436,8 +4436,8 @@ has the type
 
 ::
 
-  lookupName :: IsName n
-             => n -> QDiagram b v m -> Maybe (Subdiagram b v m)
+  lookupName :: IsName name
+             => name -> QDiagram b v n m -> Maybe (Subdiagram b v n m)
 
 This function takes a name and a diagram, and returns the first
 subdiagram associated to that name if any are found, and `Nothing`
