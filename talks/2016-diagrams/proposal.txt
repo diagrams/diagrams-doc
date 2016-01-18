@@ -56,8 +56,8 @@ graphics, embedded in the Haskell programming language
 
 Under continuous development for the past 4+ years, it serves as a
 powerful platform for creating illustrations, visualizations, and
-artwork, as well as a testbed for new ideas in functional domain
-specific languages and in functional approaches to graphics.  The
+artwork, as well as a testbed for new ideas in functional
+domain-specific languages and in functional approaches to graphics.  The
 language is declarative, that is, one writes a program describing what
 the desired result is rather than explicitly describing the steps
 needed to draw it.  It allows one to work at a high level and to build
