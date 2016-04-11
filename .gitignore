@@ -53,3 +53,4 @@ talks/2015-FARM/sources.zip
 talks/2015-FARM/diagrams-FARM-15.tex
 talks/2015-FARM/diagrams-FARM-15.pdf
 *.tgz
+.stack-work

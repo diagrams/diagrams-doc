@@ -1,11 +1,13 @@
 {-# LANGUAGE DeriveDataTypeable         #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE CPP #-}
 
 import           Control.Concurrent          (getNumCapabilities)
-import           Control.Monad               (mplus, when)
+import           Control.Monad               (when)
 import           Control.Parallel.Strategies (NFData)
 import           Data.Functor                ((<$>))
 import           Data.List                   (isPrefixOf, (\\))
+import           Data.Maybe                  (fromMaybe)
 import           Development.Shake           hiding ((<//>))
 import           Development.Shake.Classes   (Binary, Hashable)
 import           Development.Shake.FilePath  (dropDirectory1, dropExtension,
@@ -17,6 +19,7 @@ import           System.Directory            (canonicalizePath,
                                               createDirectoryIfMissing)
 import           System.Environment          (lookupEnv)
 import           System.Process              (readProcess, system)
+import           System.Exit                 (ExitCode(..))
 
 import           Prelude                     hiding ((*>))
 
@@ -24,6 +27,9 @@ obj, un, dist :: FilePath -> FilePath
 obj = (".make" <//>)
 un = dropDirectory1
 dist = ("dist" <//>)
+
+runExe :: [CmdOption] -> FilePath -> [String] -> Action ()
+runExe options exe args = command_ options "stack" (["exec", exe, "--"] ++ args)
 
 -- Like </>, but retain the first argument when the second starts with
 -- a forward slash
@@ -47,9 +53,6 @@ mkModes = modes
   , Clean
   ]
 
-newtype GhcPkg = GhcPkg ()
-               deriving (Show, Typeable, Eq, Hashable, Binary, NFData)
-
 main :: IO ()
 main = do
   m <- cmdArgs mkModes
@@ -57,18 +60,21 @@ main = do
 
   threadsStr <- lookupEnv "DIA_DOC_THREADS"
 
-  let Just numThreads = (threadsStr >>= readMay) `mplus` (Just $ max 2 (n - 1))
+  let numThreads = fromMaybe (max 2 (n-1)) (threadsStr >>= readMay)
 
   putStrLn $ "Using " ++ show numThreads ++ " threads."
 
-  -- Check for diagrams-rasterific
-  rasterificPkg <- readProcess "ghc-pkg" ["list", "--simple-output", "diagrams-rasterific"] ""
-  let useSVG = null rasterificPkg
+  let
+#ifdef USE_SVG
+      useSVG = True
+#else
+      useSVG = False
+#endif
       imgExt | useSVG    = "svg"
              | otherwise = "png"
 
   case useSVG of
-    True  -> putStrLn $ "Falling back to SVG backend."
+    True  -> putStrLn $ "Using SVG backend."
     False -> putStrLn $ "Using rasterific backend."
 
   case m of
@@ -89,6 +95,7 @@ main = do
 
     _ -> shake shakeOptions { shakeThreads = numThreads } $ do
       disk <- newResource "Disk" 4
+      ghcThreads <- newResource "GHC threads" 1
 
       action $ requireRst "doc"
       action $ requireRst "blog"
@@ -99,10 +106,8 @@ main = do
 
       dist "//*.html" *> \out -> do
         let xml = obj . un $ out -<.> "xml"
-            exe = obj "doc/Xml2Html.hs.exe"
-        need [xml, exe]
-        command_ [] exe
-          ([xml, "-o", takeDirectory out </> "images", out] {- ++ ["--keepgoing" | useSVG] -})
+        need [xml]
+        withResource ghcThreads 1 $ command_ [] "stack" ["exec", "Xml2Html", "--", xml, "-o", takeDirectory out </> "images", out]
 
       dist "blog/*.metadata" *> \out -> copyFile' (un out) out
       dist "doc/*.metadata"  *> \out -> copyFile' (un out) out
@@ -112,21 +117,14 @@ main = do
         need [rst]
         command_ [] "rst2xml" ["--input-encoding=utf8", rst, out]
 
-      obj "//*.hs.o" *> \out -> do
-        let hs = un $ dropExtension out
-        need [hs]
-        ghc Compile useSVG disk out hs
+      let
+        makeIcon out = do
+          let exe = takeBaseName out
+          runExe [] exe ["-w", "40", "-h", "40", "-o", out]
 
-      obj "//*.hs.exe" *> \out -> do
-        let o  = out -<.> "o"
-            hs = un $ dropExtension out
-        need [hs,o]
-        ghc Link useSVG disk out hs
-
-      dist ("doc/icons/*" <.> imgExt) *> \out -> do
-        let exe = obj . un $ out -<.> ".hs.exe"
-        need [exe]
-        command_ [] exe ["-w", "40", "-h", "40", "-o", out]
+      dist ("doc/icons/Exercises" <.> imgExt) *> makeIcon
+      dist ("doc/icons/ToWrite"   <.> imgExt) *> makeIcon
+      dist ("doc/icons/Warning"   <.> imgExt) *> makeIcon
 
       copyFiles "doc/static"
 
@@ -142,34 +140,29 @@ main = do
         need [dropExtension (un out) -<.> "hs"]
         compileBanner out
 
-      _ <- addOracle $ \(GhcPkg _) -> do
-        Stdout out <- command [] "ghc-pkg" ["dump"]
-        return $ words out
-
       when (m /= Build) (action $ runWeb m imgExt)
 
       return ()
 
 compileImg :: Bool -> FilePath -> Action ()
 compileImg isThumb outPath = do
-    systemCwdNorm "web/gallery" (obj "web/gallery/BuildGallery.hs.exe")
+    runExe [] "BuildGallery"
       ( (if isThumb then [ "--thumb", "200" ] else [])
-        ++ [(takeBaseName . takeBaseName) outPath, "../.." </> outPath]
+        ++ [(takeBaseName . takeBaseName) outPath, outPath, "web/gallery"]
       )
 
 compileBanner :: FilePath -> Action ()
 compileBanner outPath = do
-    systemCwdNorm "web/banner" (obj "web/banner/BuildBanner.hs.exe")
-      ([(takeBaseName . takeBaseName) outPath, "../.." </> outPath])
+    runExe [] "BuildBanner"
+      [(takeBaseName . takeBaseName) outPath, outPath, "web/banner"]
 
 copyFiles :: String -> Rules ()
 copyFiles dir = dist (dir ++ "/*") *> \out -> copyFile' (un out) out
 
 requireIcons :: String -> Action ()
 requireIcons imgExt = do
-  hsIcons <- getDirectoryFiles "doc/icons" ["*.hs"]
-  let icons = map (\i -> dist $ "doc/icons" </> i -<.> imgExt) hsIcons
-  need icons
+  need [ dist "doc/icons" </> name -<.> imgExt
+       | name <- ["Warning", "ToWrite", "Exercises"]]
 
 requireStatic :: Action ()
 requireStatic = do
@@ -230,7 +223,7 @@ runWeb m imgExt = do
   command_ [] "rm" ["-f", "dist/web/banner/banner"]
   command_ [] "rm" ["-f", "dist/blog/blog"]
 
-  systemCwdNorm "web" (obj "web/Site.hs.exe")
+  runExe [Cwd "web"] "Site"
     [ case m of
         BuildH  -> "build"
         Preview -> "preview"
@@ -243,44 +236,10 @@ needWeb imgExt = do
        , "web/banner"
        , "web/gallery/images"
        , "web/banner/images"
-       , obj "web/Site.hs.exe"
-       , obj "web/gallery/BuildGallery.hs.exe"
-       , obj "web/banner/BuildBanner.hs.exe"
        ]
   requireIcons imgExt
   requireStatic
   requireGallery imgExt
-  requireBanner imgExt  
+  requireBanner imgExt
   requireRst "doc"
   requireRst "blog"
-
-data GhcMode = Compile | Link
-  deriving Eq
-
-ghc :: GhcMode -> Bool -> Resource -> String -> String -> Action ()
-ghc mode useSVG r out hs = do
-  let odir = takeDirectory out
-      base = (takeBaseName . takeBaseName) out
-      mainIs | head base `elem` ['A'..'Z'] = ["-main-is", base]
-             | otherwise                   = []
-
-  -- Rebuild when the package database has changed
-  _ <- askOracleWith (GhcPkg ()) [""]
-
-  -- Run GHC, limiting to four linking invocations at a time
-  resourced mode $ command_ [] "ghc" $
-    concat
-    [ ["--make", "-O2", "-outputdir", odir, "-o", out, "-osuf", "hs.o", hs]
-    , mainIs
-    , ["-c" | mode == Compile ]
-    , ["-DUSE_SVG" | useSVG ]
-    ]
-  where
-    resourced Link = withResource r 1
-    resourced _    = id
-
-systemCwdNorm :: FilePath -> FilePath -> [String] -> Action ()
-systemCwdNorm path exe as = do
-  path' <- liftIO (canonicalizePath path)
-  exe'  <- liftIO (canonicalizePath exe)
-  command_ [Cwd path'] exe' as

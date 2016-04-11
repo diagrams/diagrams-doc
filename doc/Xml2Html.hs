@@ -210,6 +210,7 @@ compileDiagram outDir src = do
 #else
                   , "Diagrams.Backend.Rasterific"
 #endif
+                  , "Graphics.SVGFonts"
                   ]
                 & DB.qimports .~ [("Graphics.SVGFonts", "SF")]
                 & DB.pragmas .~ ["DeriveDataTypeable", "MultiParamTypeClasses"]
@@ -225,13 +226,13 @@ compileDiagram outDir src = do
 
   case res of
     DB.ParseErr err    -> do
-      putStrLn ("\nError while parsing\n" ++ src)
-      putStrLn err
+      hPutStrLn stderr ("\nError while parsing\n" ++ src)
+      hPutStrLn stderr err
       return $ Left "Error while parsing"
 
     DB.InterpErr ierr  -> do
-      putStrLn ("\nError while interpreting\n" ++ src)
-      putStrLn (DB.ppInterpError ierr)
+      hPutStrLn stderr ("\nError while interpreting\n" ++ src)
+      hPutStrLn stderr (DB.ppInterpError ierr)
       return $ Left "Error while interpreting"
 
     DB.Skipped hash    -> do
