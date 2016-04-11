@@ -20,7 +20,7 @@ import           Diagrams.Builder            hiding (Build (..))
 
 import           Data.List.Split
 
-import qualified System.FilePath             as FP
+import           System.FilePath             ((</>), (<.>), dropExtension)
 
 import           Control.Arrow               (second)
 import           Control.Monad               (mplus)
@@ -103,15 +103,25 @@ parseFields s = (fieldMap, unlines $ tail rest)
                        . map ((uncurry M.singleton) . second (drop 2) . break (==':'))
                        $ fields
 
-data Build = Build { thumb :: Maybe Double, name :: String, outFile :: String }
+data Build = Build
+  { thumb   :: Maybe Double
+  , name    :: String
+  , outFile :: FilePath
+  , inPath  :: FilePath
+  }
   deriving (Typeable, Data)
 
 build :: Build
-build = Build { thumb = def, name = def &= argPos 0, outFile = def &= argPos 1 }
+build = Build
+  { thumb   = def
+  , name    = def &= argPos 0
+  , outFile = def &= argPos 1
+  , inPath  = def &= argPos 2
+  }
 
 main :: IO ()
 main = do
   opts <- cmdArgs build
-  let name'   = FP.dropExtension (name opts)
-      lhsName = (FP.<.>) name' "lhs"
+  let name'   = dropExtension (name opts)
+      lhsName = inPath opts </> name' <.> "lhs"
   compileExample (thumb opts) lhsName (outFile opts)

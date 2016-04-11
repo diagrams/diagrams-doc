@@ -20,7 +20,7 @@ import           Diagrams.Builder            hiding (Build (..))
 
 import           Data.List.Split
 
-import qualified System.FilePath             as FP
+import           System.FilePath             ((</>), (<.>), dropExtension)
 
 import           Control.Arrow               (second)
 import           Control.Monad               (mplus)
@@ -84,15 +84,22 @@ compileExample hs out = do
       JP.savePngImage out (JP.ImageRGBA8 build)
 #endif
 
-data Build = Build { name :: String, outFile :: String }
-  deriving (Typeable, Data)
+data Build = Build
+  { name :: String
+  , outFile :: FilePath
+  , inPath :: FilePath
+  } deriving (Typeable, Data)
 
 build :: Build
-build = Build { name = def &= argPos 0, outFile = def &= argPos 1 }
+build = Build
+  { name    = def &= argPos 0
+  , outFile = def &= argPos 1
+  , inPath  = def &= argPos 2
+  }
 
 main :: IO ()
 main = do
   opts <- cmdArgs build
-  let name'   = FP.dropExtension (name opts)
-      hsName = (FP.<.>) name' "hs"
+  let name'  = dropExtension (name opts)
+      hsName = inPath opts </> name' <.> "hs"
   compileExample hsName (outFile opts)

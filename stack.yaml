@@ -1,0 +1,23 @@
+resolver: lts-5.12
+packages:
+- '.'
+
+# Use git version of docutils because docutils is not on Hackage or Stackage
+- location:
+    git: https://github.com/diagrams/docutils
+    commit: 1850209065225b5f2dc70da0574629ce14463e58
+
+# Use git version of diagrams-builder because Hackage and Stackage
+# versions don't have `qimports` function
+- location:
+    git: https://github.com/diagrams/diagrams-builder
+    commit: 30f93fe920102acb1149f244108331f467d972a7
+
+extra-deps:
+# These dependencies are currently on stackage nightly,
+# they might make it in to lts-5.13
+- tuple-0.3.0.2
+- OneTuple-0.2.1
+- SVGFonts-1.5.0.0
+flags: {}
+extra-package-dbs: []
