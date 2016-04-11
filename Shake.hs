@@ -107,7 +107,7 @@ main = do
       dist "//*.html" *> \out -> do
         let xml = obj . un $ out -<.> "xml"
         need [xml]
-        withResource ghcThreads 1 $ command_ [] "stack" ["exec", "Xml2Html", "--", xml, "-o", takeDirectory out </> "images", out]
+        withResource ghcThreads 1 $ runExe [] "Xml2Html" [xml, "-o", takeDirectory out </> "images", out]
 
       dist "blog/*.metadata" *> \out -> copyFile' (un out) out
       dist "doc/*.metadata"  *> \out -> copyFile' (un out) out
