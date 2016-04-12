@@ -1,21 +1,19 @@
 {-# LANGUAGE NoMonomorphismRestriction #-}
 {-# LANGUAGE OverloadedStrings         #-}
 {-# LANGUAGE FlexibleContexts          #-}
+{-# LANGUAGE CPP                       #-}
 
 module Site where
 
 import           Control.Monad   (forM_, (>=>))
-import           Data.Functor    ((<$>))
 import           Data.List       (isPrefixOf, sortBy)
 import           Data.Maybe      (fromMaybe)
-import           Data.Monoid
+import           Data.Monoid     ((<>))
 import           Data.Ord        (comparing)
 import           Data.Text       (empty, pack, replace, unpack)
+import           Data.String     (IsString, fromString)
 
-import           Data.String
-
-import           System.FilePath
-import           System.Process  (readProcess)
+import           System.FilePath ((</>), splitFileName, replaceExtension)
 
 import           Text.Pandoc
 
@@ -33,8 +31,12 @@ pages = map (fromString . (++".markdown"))
 
 main :: IO ()
 main = do
-  rasterificPkg <- readProcess "ghc-pkg" ["list", "--simple-output", "diagrams-rasterific"] ""
-  let useSVG = null rasterificPkg
+  let
+#ifdef USE_SVG
+      useSVG = True
+#else
+      useSVG = False
+#endif
       imgExt | useSVG    = "svg"
              | otherwise = "png"
 

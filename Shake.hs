@@ -94,7 +94,6 @@ main = do
       ]
 
     _ -> shake shakeOptions { shakeThreads = numThreads } $ do
-      disk <- newResource "Disk" 4
       ghcThreads <- newResource "GHC threads" 1
 
       action $ requireRst "doc"
