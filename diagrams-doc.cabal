@@ -31,8 +31,11 @@ executable Xml2Html
                     lens
 
   if flag(UseSVG)
-    ghc-options:   -DUSE_SVG
+    cpp-options:   -DUSE_SVG
     build-depends: diagrams-svg
+                 , bytestring
+                 , text
+                 , lucid-svg
   else
     build-depends: diagrams-rasterific
                  , JuicyPixels
@@ -52,6 +55,9 @@ executable diagrams-doc
                  process,
                  parallel
 
+  if flag(UseSVG)
+    cpp-options:   -DUSE_SVG
+
 executable Warning
   main-is:          Warning.hs
   ghc-options:      -main-is Warning
@@ -61,7 +67,7 @@ executable Warning
                   , diagrams-lib
 
   if flag(UseSVG)
-    ghc-options:   -DUSE_SVG
+    cpp-options:   -DUSE_SVG
     build-depends: diagrams-svg
   else
     build-depends: diagrams-rasterific
@@ -76,7 +82,7 @@ executable ToWrite
                   , lens
 
   if flag(UseSVG)
-    ghc-options:   -DUSE_SVG
+    cpp-options:   -DUSE_SVG
     build-depends: diagrams-svg
   else
     build-depends: diagrams-rasterific
@@ -91,7 +97,7 @@ executable Exercises
                   , lens
 
   if flag(UseSVG)
-    ghc-options:   -DUSE_SVG
+    cpp-options:   -DUSE_SVG
     build-depends: diagrams-svg
   else
     build-depends: diagrams-rasterific
@@ -123,8 +129,11 @@ executable BuildBanner
                   , diagrams-builder
                   , diagrams-lib
   if flag(UseSVG)
-    ghc-options:   -DUSE_SVG
+    cpp-options:   -DUSE_SVG
     build-depends: diagrams-svg
+                 , lucid-svg
+                 , text
+                 , bytestring
   else
     build-depends: diagrams-rasterific
                  , JuicyPixels
@@ -142,8 +151,11 @@ executable BuildGallery
                   , diagrams-builder
                   , diagrams-lib
   if flag(UseSVG)
-    ghc-options:   -DUSE_SVG
+    cpp-options:   -DUSE_SVG
     build-depends: diagrams-svg
+                 , lucid-svg
+                 , text
+                 , bytestring
   else
     build-depends: diagrams-rasterific
                  , JuicyPixels

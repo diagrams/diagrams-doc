@@ -51,7 +51,7 @@ compileExample hs out = do
                 zero
 
 #ifdef USE_SVG
-                (SVGOptions (mkSizeSpec2D (Just w) (Just h)) [] empty)
+                (SVGOptions (mkSizeSpec2D (Just w) (Just h)) Nothing empty)
 #else
                 -- With raster output, double the resolution so it looks
                 -- better on high-res screens
