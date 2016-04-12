@@ -28,6 +28,7 @@ import           Control.Monad               (mplus)
 import qualified Data.Map                    as M
 
 import           System.Console.CmdArgs      hiding (name)
+import           System.IO                   (hPutStrLn, stderr)
 
 -- If the first argument is 'Just', we're making a thumbnail, so use
 -- that as the width and height, and use the 'view' parameters from
@@ -85,9 +86,12 @@ compileExample mThumb lhs out = do
   res <- buildDiagram bopts
 
   case res of
-    ParseErr err    -> putStrLn ("Parse error in " ++ lhs) >> putStrLn err
-    InterpErr err   -> putStrLn ("Error while compiling " ++ lhs) >>
-                       putStrLn (ppInterpError err)
+    ParseErr err    -> do
+      hPutStrLn stderr ("Parse error in " ++ lhs)
+      hPutStrLn stderr err
+    InterpErr err   -> do
+      hPutStrLn stderr ("Error while compiling " ++ lhs)
+      hPutStrLn stderr (ppInterpError err)
     Skipped _       -> return ()
     OK _ build      ->
 #ifdef USE_SVG
