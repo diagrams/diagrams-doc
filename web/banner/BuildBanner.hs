@@ -27,7 +27,6 @@ compileExample hs out = do
                         ,     "(centerXY $ sized (mkSizeSpec2D (Just ", show w, ") Nothing) diagram)"
                         ]
       bopts = mkBuildOpts
-
                 Rasterific
                 zero
                 -- With raster output, double the resolution so it looks
@@ -51,23 +50,3 @@ compileExample hs out = do
     Skipped _       -> return ()
     OK _ build      ->
       JP.savePngImage out (JP.ImageRGBA8 build)
-
-data Build = Build
-  { name :: String
-  , outFile :: FilePath
-  , inPath :: FilePath
-  } deriving (Typeable, Data)
-
-build :: Build
-build = Build
-  { name    = def &= argPos 0
-  , outFile = def &= argPos 1
-  , inPath  = def &= argPos 2
-  }
-
-main :: IO ()
-main = do
-  opts <- cmdArgs build
-  let name'  = dropExtension (name opts)
-      hsName = inPath opts </> name' <.> "hs"
-  compileExample hsName (outFile opts)
