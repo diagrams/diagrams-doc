@@ -22,6 +22,8 @@ import           System.Exit                 (ExitCode(..))
 
 import           Prelude                     hiding ((*>))
 
+import qualified BuildBanner
+
 obj, un, dist :: FilePath -> FilePath
 obj = (".make" <//>)
 un = dropDirectory1
@@ -126,7 +128,9 @@ main = do
 
       dist ("web/banner/banner" <.> imgExt) *> \out -> do
         need [dropExtension (un out) -<.> "hs"]
-        compileBanner out
+        let name = takeBaseName (takeBaseName out)
+            hsName = "web/banner" </> name -<.> "hs"
+        liftIO $ BuildBanner.compileExample hsName out
 
       when (m /= Build) (action $ runWeb m)
 
@@ -138,11 +142,6 @@ compileImg isThumb outPath = do
       ( (if isThumb then [ "--thumb", "200" ] else [])
         ++ [(takeBaseName . takeBaseName) outPath, outPath, "web/gallery"]
       )
-
-compileBanner :: FilePath -> Action ()
-compileBanner outPath = do
-    runExe [] "BuildBanner"
-      [(takeBaseName . takeBaseName) outPath, outPath, "web/banner"]
 
 copyFiles :: String -> Rules ()
 copyFiles dir = dist (dir ++ "/*") *> \out -> copyFile' (un out) out
