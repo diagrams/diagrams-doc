@@ -1,18 +1,13 @@
-{-# LANGUAGE DeriveDataTypeable #-}
-{-# LANGUAGE StandaloneDeriving #-}
-
 module BuildGallery where
 
 import qualified Codec.Picture               as JP
 import           Diagrams.Backend.Rasterific
-import           Diagrams.Prelude            hiding (def)
-import           Diagrams.Builder            hiding (Build (..))
+import           Diagrams.Prelude
+import           Diagrams.Builder
 import           Data.List.Split             (splitOn)
-import           System.FilePath             ((</>), (<.>), dropExtension)
 import           Control.Arrow               (second)
 import           Control.Monad               (mplus)
 import qualified Data.Map                    as M
-import           System.Console.CmdArgs      hiding (name)
 import           System.IO                   (hPutStrLn, stderr)
 
 -- If the first argument is 'Just', we're making a thumbnail, so use

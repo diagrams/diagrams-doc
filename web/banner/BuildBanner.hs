@@ -1,18 +1,9 @@
-{-# LANGUAGE DeriveDataTypeable #-}
-{-# LANGUAGE StandaloneDeriving #-}
-
 module BuildBanner where
 
 import qualified Codec.Picture               as JP
 import           Diagrams.Backend.Rasterific
-import           Diagrams.Prelude            hiding (def)
-import           Diagrams.Builder            hiding (Build (..))
-import           Data.List.Split             (splitOn)
-import           System.FilePath             ((</>), (<.>), dropExtension)
-import           Control.Arrow               (second)
-import           Control.Monad               (mplus)
-import qualified Data.Map                    as M
-import           System.Console.CmdArgs      hiding (name)
+import           Diagrams.Prelude
+import           Diagrams.Builder
 import           System.IO                   (hPutStrLn, stderr)
 
 compileExample :: String -> String -> IO ()
