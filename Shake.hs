@@ -207,7 +207,7 @@ runWeb m = do
   runExe [Cwd "web"] "Site"
     [ case m of
         BuildH  -> "build"
-        Preview -> "preview"
+        Preview -> "watch"
     ]
 
 needWeb :: Action ()
