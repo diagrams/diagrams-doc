@@ -14,21 +14,22 @@ executable Xml2Html
   hs-source-dirs:   doc
   default-language: Haskell2010
   build-depends:    base >= 4.8 && < 5,
-                    diagrams-builder >= 0.7.2 && < 0.8,
-                    docutils >= 0.1 && < 0.2,
-                    directory,
-                    diagrams-lib,
-                    hxt,
-                    filepath,
+                    diagrams-builder >= 0.7.2 && < 0.8
+                  , docutils >= 0.1 && < 0.2
+                  , directory
+                  , diagrams-core == 1.3.0.4
+                  , diagrams-lib == 1.3
+                  , hxt
+                  , filepath
 
                     -- Below packages required by doc/*.rst files, not by Xml2Html.
-                    SVGFonts,
-                    diagrams-contrib,
-                    diagrams-svg,
-                    colour,
-                    palette,
-                    random,
-                    lens
+                  , SVGFonts
+                  , diagrams-contrib
+                  , diagrams-svg
+                  , colour
+                  , palette
+                  , random
+                  , lens
 
   if flag(UseSVG)
     cpp-options:   -DUSE_SVG
@@ -44,16 +45,16 @@ executable diagrams-doc
   main-is: Shake.hs
   hs-source-dirs: .
   default-language: Haskell2010
-  build-depends: base >= 4.8 && < 5,
-                 diagrams-builder >= 0.7.2 && < 0.8,
-                 shake >= 0.15 && < 0.16,
-                 hakyll >= 4.7 && < 4.8,
-                 docutils >= 0.1 && < 0.2,
-                 safe >= 0.3 && < 0.4,
-                 cmdargs >= 0.10 && < 0.11,
-                 directory,
-                 process,
-                 parallel
+  build-depends: base >= 4.8 && < 5
+               , diagrams-builder >= 0.7.2 && < 0.8
+               , shake >= 0.15 && < 0.16
+               , hakyll >= 4.7 && < 4.8
+               , docutils >= 0.1 && < 0.2
+               , safe >= 0.3 && < 0.4
+               , cmdargs >= 0.10 && < 0.11
+               , directory
+               , process
+               , parallel
 
   if flag(UseSVG)
     cpp-options:   -DUSE_SVG
@@ -64,7 +65,8 @@ executable Warning
   hs-source-dirs:   doc/icons
   default-language: Haskell2010
   build-depends:    base >= 4.8 && < 5
-                  , diagrams-lib
+                  , diagrams-core == 1.3.0.4
+                  , diagrams-lib == 1.3
 
   if flag(UseSVG)
     cpp-options:   -DUSE_SVG
@@ -78,7 +80,8 @@ executable ToWrite
   hs-source-dirs:   doc/icons
   default-language: Haskell2010
   build-depends:    base >= 4.8 && < 5
-                  , diagrams-lib
+                  , diagrams-core == 1.3.0.4
+                  , diagrams-lib == 1.3
                   , lens
 
   if flag(UseSVG)
@@ -93,7 +96,8 @@ executable Exercises
   hs-source-dirs:   doc/icons
   default-language: Haskell2010
   build-depends:    base >= 4.8 && < 5
-                  , diagrams-lib
+                  , diagrams-core == 1.3.0.4
+                  , diagrams-lib == 1.3
                   , lens
 
   if flag(UseSVG)
@@ -149,7 +153,8 @@ executable BuildGallery
                   , cmdargs
                   , split
                   , diagrams-builder
-                  , diagrams-lib
+                  , diagrams-core == 1.3.0.4
+                  , diagrams-lib == 1.3
   if flag(UseSVG)
     cpp-options:   -DUSE_SVG
     build-depends: diagrams-svg
