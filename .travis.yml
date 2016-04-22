@@ -1,37 +1,32 @@
-language: haskell
+# Use new container infrastructure to enable caching
+sudo: false
 
-env:
-  matrix:
-    - GHCVER=7.6.3
-    - GHCVER=7.8.3
-    - GHCVER=head
-  global:
-    - CABALVER=1.18
-    - UBUNTU_PKGS="libgtk-3-dev libcairo2-dev python-docutils"
-    - EXTRA_DEPS_PRE="gtk2hs-buildtools"
-    - HEAD_DEPS="diagrams-core diagrams-lib diagrams-cairo diagrams-contrib diagrams-builder docutils palette SVGFonts force-layout"
-    - EXTRA_DEPS="SVGFonts shake hakyll safe"
-#    - secure: "GvSd0Muvr60TAaiBKHuGwFcuGAy4j2gaIV0IK4f9O8rJNyJSRdEpwW9i1MUvY7bSLT0pIx9A7WHHjDPUrtyxRs9uHQ3DcQG8ZF2Nmwf0Mgdd5ehdYcO6EVWRDJsBwk6JqloD7t3tiKJTE7APVbzLiuxxskpddiOb1+q2NQPsSuc="
-
-matrix:
-  allow_failures:
-    - env: GHCVER=head
+cache:
+  directories:
+  - $HOME/.stack
 
 before_install:
-  - git clone http://github.com/diagrams/diagrams-travis travis
-  - source travis/scripts/set_env.sh
-  - ./travis/scripts/before_install.sh
+# Download and unpack the stack executable
+- mkdir -p ~/.local/bin
+- export PATH=$HOME/.local/bin:$PATH
+- travis_retry curl -L https://www.stackage.org/stack/linux-x86_64 | tar xz --wildcards --strip-components=1 -C ~/.local/bin '*/stack'
 
-install: ./travis/scripts/install-deps.sh
+addons:
+  apt:
+    packages:
+      - libgmp3-dev
+      - python-docutils
 
-before_script: ghc --make Shake
+before_script:
+  - stack --no-terminal setup
 
-script: ./Shake buildh
+  # Prebuild this dependency separately because building it takes a lot of memory.
+  # It has caused me out-of-memory errors on Travis several times.
+  - stack build -j 1 haskell-src-exts
 
-# after_success:
-#   - $ENIAC_PASSWORD
-#   - ssh-keyscan eniac.seas.upenn.edu >> ~/.ssh/known_hosts
-#   - rsync -r web/_site/* byorgey@eniac.seas.upenn.edu:public_html/diagrams-doc-HEAD/
+  - stack --no-terminal build
+
+script: stack exec diagrams-doc -- buildh
 
 notifications:
   email: false
