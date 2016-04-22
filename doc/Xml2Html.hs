@@ -1,5 +1,3 @@
-{-# LANGUAGE CPP #-}
-
 module Xml2Html where
 
 import           Control.Arrow
@@ -12,7 +10,7 @@ import           System.Directory                   (createDirectory,
 import           System.Exit
 import           System.FilePath                    (joinPath, splitPath, (<.>),
                                                      (</>))
-import           System.IO
+import           System.IO                          (stdout, stderr, hFlush, hPutStrLn)
 
 import qualified Diagrams.Builder                   as DB
 import           Diagrams.Prelude                   (V2 (..), centerXY, pad,
@@ -24,22 +22,8 @@ import           Text.Docutils.Util
 import           Text.Docutils.Writers.HTML
 import           Text.XML.HXT.Core                  hiding (when)
 
-#ifdef USE_SVG
-import qualified Data.ByteString.Lazy               as BS
-import           Data.Text                          (empty)
-import           Diagrams.Backend.SVG
-import           Lucid.Svg                          (renderBS)
-#else
 import qualified Codec.Picture                      as JP
 import           Diagrams.Backend.Rasterific
-#endif
-
-backendExt :: String
-#ifdef USE_SVG
-backendExt = "svg"
-#else
-backendExt = "png"
-#endif
 
 main :: IO ()
 main = do
@@ -187,29 +171,13 @@ compileDiagram outDir src = do
   ensureDir outDir
 
   let bopts = DB.mkBuildOpts
-
-#ifdef USE_SVG
-                SVG
-#else
                 Rasterific
-#endif
-
                 (zero :: V2 Double)
-
-#ifdef USE_SVG
-                (SVGOptions (dims $ V2 500 200) Nothing empty)
-#else
                 (RasterificOptions (dims $ V2 1000 400))
-#endif
-
                 & DB.snippets .~ [src]
                 & DB.imports  .~
                   [ "Data.Typeable"
-#ifdef USE_SVG
-                  , "Diagrams.Backend.SVG"
-#else
                   , "Diagrams.Backend.Rasterific"
-#endif
                   , "Graphics.SVGFonts"
                   ]
                 & DB.qimports .~ [("Graphics.SVGFonts", "SF")]
@@ -243,15 +211,11 @@ compileDiagram outDir src = do
     DB.OK hash out -> do
       putStr "O"
       hFlush stdout
-#ifdef USE_SVG
-      BS.writeFile (mkFile (DB.hashToHexStr hash)) (renderBS out)
-#else
       JP.savePngImage (mkFile (DB.hashToHexStr hash)) (JP.ImageRGBA8 out)
-#endif
       return $ Right (mkFile (DB.hashToHexStr hash))
 
  where
-  mkFile base = outDir </> base <.> backendExt
+  mkFile base = outDir </> base <.> "png"
   ensureDir dir = do
     b <- doesDirectoryExist dir
     unless b $ createDirectory dir

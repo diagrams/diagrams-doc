@@ -1,7 +1,6 @@
 {-# LANGUAGE NoMonomorphismRestriction #-}
 {-# LANGUAGE OverloadedStrings         #-}
 {-# LANGUAGE FlexibleContexts          #-}
-{-# LANGUAGE CPP                       #-}
 
 module Site where
 
@@ -29,16 +28,11 @@ pages = map (fromString . (++".markdown"))
   , "releases"
   ]
 
+imgExt :: String
+imgExt = "png"
+
 main :: IO ()
 main = do
-  let
-#ifdef USE_SVG
-      useSVG = True
-#else
-      useSVG = False
-#endif
-      imgExt | useSVG    = "svg"
-             | otherwise = "png"
 
   hakyll $ do
     -- Build Tags
@@ -188,7 +182,7 @@ main = do
         compile $ do
           galleryContent <- pandocCompiler
           lhss <- loadAll ("gallery/*.lhs" .&&. hasVersion "gallery")
-          gallery <- buildGallery imgExt galleryContent lhss
+          gallery <- buildGallery galleryContent lhss
           mainCompiler defaultContext gallery
 
       -- build syntax-highlighted source code for examples
@@ -199,8 +193,8 @@ main = do
             >>= withMathJax
             >>= loadAndApplyTemplate "templates/exampleHi.html"
                   ( mconcat
-                    [ setImgURL imgExt
-                    , setHtmlURL imgExt
+                    [ setImgURL
+                    , setHtmlURL
                     , markdownFieldsCtx ["description"]
                     , defaultContext
                     ]
@@ -296,10 +290,10 @@ blogCompiler :: Context String -> Item String -> Compiler (Item String)
 blogCompiler ctx = loadAndApplyTemplate "templates/post.html" ctx
                >=> saveSnapshot "content"
 
-setThumbURL, setImgURL, setHtmlURL :: String -> Context String
-setThumbURL  imgExt = setURL "images" ("thumb." ++ imgExt)
-setImgURL    imgExt = setURL "images" ("big." ++ imgExt)
-setHtmlURL  _imgExt = setURL "" "html"
+setThumbURL, setImgURL, setHtmlURL :: Context String
+setThumbURL  = setURL "images" ("thumb." ++ imgExt)
+setImgURL    = setURL "images" ("big." ++ imgExt)
+setHtmlURL   = setURL "" "html"
 
 setURL :: FilePath -> String -> Context String
 setURL dir ext = field (extNm ++ "url") fieldVal
@@ -321,8 +315,8 @@ markdownFieldCtx f = field f $ \i -> do
     Right p -> writeHtmlString defaultHakyllWriterOptions p
     Left e  -> show e
 
-buildGallery :: String -> Item String -> [Item String] -> Compiler (Item String)
-buildGallery imgExt content lhss = do
+buildGallery :: Item String -> [Item String] -> Compiler (Item String)
+buildGallery content lhss = do
   -- reverse sort by date (most recent first)
   lhss' <- mapM addDate lhss
   let exs = reverse . map snd . sortBy (comparing fst) $ lhss'
@@ -332,8 +326,8 @@ buildGallery imgExt content lhss = do
         , defaultContext
         ]
       exampleCtx = mconcat
-        [ setHtmlURL imgExt
-        , setThumbURL imgExt
+        [ setHtmlURL
+        , setThumbURL
         , defaultContext
         ]
 

@@ -49,19 +49,3 @@ sudo apt-get install python-docutils
 stack build
 stack exec diagrams-doc -- +RTS -N4 -RTS preview
 ```
-
-## Building with `diagrams-svg`
-
-If you would like to build diagrams using `diagrams-svg` instead of
-`diagrams-rasterific`, add the following to your `stack.yaml` file
-before building:
-
-```
-flags:
-  diagrams-doc:
-    UseSVG: true
-```
-
-As of right now, there are no known issues
-with using `diagrams-svg` for building the website (other than the
-fact that some of the output ``.svg`` files are large).

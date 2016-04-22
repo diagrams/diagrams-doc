@@ -1,6 +1,5 @@
 {-# LANGUAGE DeriveDataTypeable         #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
-{-# LANGUAGE CPP #-}
 
 import           Control.Concurrent          (getNumCapabilities)
 import           Control.Monad               (when)
@@ -53,6 +52,9 @@ mkModes = modes
   , Clean
   ]
 
+imgExt :: String
+imgExt = "png"
+
 main :: IO ()
 main = do
   m <- cmdArgs mkModes
@@ -63,19 +65,7 @@ main = do
   let numThreads = fromMaybe (max 2 (n-1)) (threadsStr >>= readMay)
 
   putStrLn $ "Using " ++ show numThreads ++ " threads."
-
-  let
-#ifdef USE_SVG
-      useSVG = True
-#else
-      useSVG = False
-#endif
-      imgExt | useSVG    = "svg"
-             | otherwise = "png"
-
-  case useSVG of
-    True  -> putStrLn $ "Using SVG backend."
-    False -> putStrLn $ "Using rasterific backend."
+  putStrLn "Using Rasterific backend."
 
   case m of
     Clean -> mapM_ system
@@ -98,7 +88,7 @@ main = do
 
       action $ requireRst "doc"
       action $ requireRst "blog"
-      action $ requireIcons imgExt
+      action $ requireIcons
       action $ requireStatic
 
       webRules
@@ -117,9 +107,8 @@ main = do
         command_ [] "rst2xml" ["--input-encoding=utf8", rst, out]
 
       let
-        makeIcon out = do
-          let exe = takeBaseName out
-          runExe [] exe ["-w", "40", "-h", "40", "-o", out]
+        makeIcon out = runExe [] exe ["-w", "40", "-h", "40", "-o", out]
+          where exe = takeBaseName out
 
       dist ("doc/icons/Exercises" <.> imgExt) *> makeIcon
       dist ("doc/icons/ToWrite"   <.> imgExt) *> makeIcon
@@ -139,7 +128,7 @@ main = do
         need [dropExtension (un out) -<.> "hs"]
         compileBanner out
 
-      when (m /= Build) (action $ runWeb m imgExt)
+      when (m /= Build) (action $ runWeb m)
 
       return ()
 
@@ -158,8 +147,8 @@ compileBanner outPath = do
 copyFiles :: String -> Rules ()
 copyFiles dir = dist (dir ++ "/*") *> \out -> copyFile' (un out) out
 
-requireIcons :: String -> Action ()
-requireIcons imgExt = do
+requireIcons :: Action ()
+requireIcons = do
   need [ dist "doc/icons" </> name -<.> imgExt
        | name <- ["Warning", "ToWrite", "Exercises"]]
 
@@ -169,23 +158,16 @@ requireStatic = do
   let static = map (dist . ("doc/static" </>)) staticSrc
   need static
 
--- A list of gallery examples which only build with rasterific, to be
--- excluded when building with SVG.
-rasterificOnly :: [FilePath]
-rasterificOnly = []
-
-requireGallery :: String -> Action ()
-requireGallery imgExt = do
-  gallerySrc <- ( filter (not . (".#" `isPrefixOf`))
-                . if imgExt == "svg" then (\\ rasterificOnly) else id
-                )
+requireGallery :: Action ()
+requireGallery = do
+  gallerySrc <- filter (not . (".#" `isPrefixOf`))
                 <$> getDirectoryFiles "web/gallery" ["*.lhs"]
   let imgs   = map (dist . ("web/gallery" </>) . (-<.> ("big" <.> imgExt))) gallerySrc
       thumbs = map (dist . ("web/gallery" </>) . (-<.> ("thumb" <.> imgExt))) gallerySrc
   need (imgs ++ thumbs)
 
-requireBanner :: String -> Action ()
-requireBanner imgExt = do
+requireBanner :: Action ()
+requireBanner = do
   need [dist $ "web/banner/banner" <.> imgExt]
 
 requireRst :: String -> Action ()
@@ -211,10 +193,10 @@ webRules = do
     liftIO $ createDirectoryIfMissing True "dist/web/banner"
     command_ [] "ln" ["-s", "-f", "../../dist/web/banner", out]
 
-runWeb :: MkMode -> String -> Action ()
-runWeb m imgExt = do
+runWeb :: MkMode -> Action ()
+runWeb m = do
   alwaysRerun
-  needWeb imgExt
+  needWeb
 
   -- work around weird bug(?)
   command_ [] "rm" ["-f", "dist/doc/doc"]
@@ -228,17 +210,17 @@ runWeb m imgExt = do
         Preview -> "preview"
     ]
 
-needWeb :: String -> Action ()
-needWeb imgExt = do
+needWeb :: Action ()
+needWeb = do
   need [ "web/doc"
        , "web/blog"
        , "web/banner"
        , "web/gallery/images"
        , "web/banner/images"
        ]
-  requireIcons imgExt
+  requireIcons
   requireStatic
-  requireGallery imgExt
-  requireBanner imgExt
+  requireGallery
+  requireBanner
   requireRst "doc"
   requireRst "blog"

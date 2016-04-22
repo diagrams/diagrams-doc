@@ -1,16 +1,10 @@
-{-# LANGUAGE CPP                       #-}
 {-# LANGUAGE FlexibleContexts          #-}
 {-# LANGUAGE NoMonomorphismRestriction #-}
 {-# LANGUAGE TypeFamilies              #-}
 
 module ToWrite where
 
-#ifdef USE_SVG
-import           Diagrams.Backend.SVG.CmdLine
-#else
 import           Diagrams.Backend.Rasterific.CmdLine
-#endif
-
 import           Control.Lens                        ((&), (.~))
 import           Diagrams.Prelude
 
