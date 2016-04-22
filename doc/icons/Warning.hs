@@ -1,15 +1,10 @@
-{-# LANGUAGE CPP                       #-}
 {-# LANGUAGE NoMonomorphismRestriction #-}
 {-# LANGUAGE FlexibleContexts          #-}
 {-# LANGUAGE TypeFamilies              #-}
 
 module Warning where
 
-#ifdef USE_SVG
-import           Diagrams.Backend.SVG.CmdLine
-#else
 import           Diagrams.Backend.Rasterific.CmdLine
-#endif
 import           Diagrams.Prelude
 
 signSide = hrule 1 <> arc (rotateBy (-1/4) xDir) (1/3 @@ turn) # scale 0.3

@@ -1,32 +1,17 @@
-{-# LANGUAGE CPP                #-}
 {-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE StandaloneDeriving #-}
 
 module BuildGallery where
 
-#ifdef USE_SVG
-import qualified Data.ByteString.Lazy        as BS
-import           Data.Text                   (empty)
-import           Diagrams.Backend.SVG
-import           Lucid.Svg                   (renderBS)
-#else
 import qualified Codec.Picture               as JP
 import           Diagrams.Backend.Rasterific
-#endif
-
 import           Diagrams.Prelude            hiding (def)
-
 import           Diagrams.Builder            hiding (Build (..))
-
-import           Data.List.Split
-
+import           Data.List.Split             (splitOn)
 import           System.FilePath             ((</>), (<.>), dropExtension)
-
 import           Control.Arrow               (second)
 import           Control.Monad               (mplus)
-
 import qualified Data.Map                    as M
-
 import           System.Console.CmdArgs      hiding (name)
 import           System.IO                   (hPutStrLn, stderr)
 
@@ -54,32 +39,14 @@ compileExample mThumb lhs out = do
             _ -> "example"
 
       bopts = mkBuildOpts
-
-#ifdef USE_SVG
-                SVG
-#else
                 Rasterific
-#endif
-
                 zero
-
-#ifdef USE_SVG
-                (SVGOptions (mkSizeSpec2D w h) Nothing empty)
-#else
                 -- With raster output, double the resolution so it looks
                 -- better on high-res screens
                 (RasterificOptions (mkSizeSpec2D ((2*) <$> w) ((2*) <$> h)))
-#endif
-
                 & snippets .~ [f']
                 & imports  .~
-
-#ifdef USE_SVG
-                  [ "Diagrams.Backend.SVG", "Diagrams.Backend.SVG.CmdLine" ]
-#else
                   [ "Diagrams.Backend.Rasterific", "Diagrams.Backend.Rasterific.CmdLine" ]
-#endif
-
                 & diaExpr .~ toBuild
                 & decideRegen .~ alwaysRegenerate -- XXX use hashedRegenerate?
 
@@ -94,11 +61,7 @@ compileExample mThumb lhs out = do
       hPutStrLn stderr (ppInterpError err)
     Skipped _       -> return ()
     OK _ build      ->
-#ifdef USE_SVG
-      BS.writeFile out (renderBS build)
-#else
       JP.savePngImage out (JP.ImageRGBA8 build)
-#endif
 
 parseFields :: String -> (M.Map String String, String)
 parseFields s = (fieldMap, unlines $ tail rest)
