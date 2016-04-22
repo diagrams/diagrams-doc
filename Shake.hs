@@ -23,6 +23,7 @@ import           System.Exit                 (ExitCode(..))
 import           Prelude                     hiding ((*>))
 
 import qualified BuildBanner
+import qualified BuildGallery
 
 obj, un, dist :: FilePath -> FilePath
 obj = (".make" <//>)
@@ -138,10 +139,11 @@ main = do
 
 compileImg :: Bool -> FilePath -> Action ()
 compileImg isThumb outPath = do
-    runExe [] "BuildGallery"
-      ( (if isThumb then [ "--thumb", "200" ] else [])
-        ++ [(takeBaseName . takeBaseName) outPath, outPath, "web/gallery"]
-      )
+  let name    = takeBaseName . takeBaseName $ outPath
+      lhsName = "web/gallery" </> name -<.> "lhs"
+      thumb   = if isThumb then Just 200 else Nothing
+
+  liftIO $ BuildGallery.compileExample thumb lhsName outPath
 
 copyFiles :: String -> Rules ()
 copyFiles dir = dist (dir ++ "/*") *> \out -> copyFile' (un out) out
