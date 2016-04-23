@@ -3,22 +3,17 @@
 
 import           Control.Concurrent          (getNumCapabilities)
 import           Control.Monad               (when)
-import           Control.Parallel.Strategies (NFData)
-import           Data.Functor                ((<$>))
-import           Data.List                   (isPrefixOf, (\\))
+import           Data.List                   (isPrefixOf)
 import           Data.Maybe                  (fromMaybe)
 import           Development.Shake           hiding ((<//>))
-import           Development.Shake.Classes   (Binary, Hashable)
 import           Development.Shake.FilePath  (dropDirectory1, dropExtension,
                                               takeBaseName, takeDirectory,
                                               (-<.>), (<.>), (</>))
 import           Safe                        (readMay)
 import           System.Console.CmdArgs
-import           System.Directory            (canonicalizePath,
-                                              createDirectoryIfMissing)
+import           System.Directory            (createDirectoryIfMissing)
 import           System.Environment          (lookupEnv)
-import           System.Process              (readProcess, system)
-import           System.Exit                 (ExitCode(..))
+import           System.Process              (system)
 
 import           Prelude                     hiding ((*>))
 
@@ -26,8 +21,8 @@ import qualified BuildBanner
 import qualified BuildGallery
 
 obj, un, dist :: FilePath -> FilePath
-obj = (".make" <//>)
-un = dropDirectory1
+obj  = (".make" <//>)
+un   = dropDirectory1
 dist = ("dist" <//>)
 
 runExe :: [CmdOption] -> FilePath -> [String] -> Action ()
@@ -80,9 +75,6 @@ main = do
       , "rm -f web/banner/images"
       , "rm -rf .make"
       , "rm -rf dist"
-      , "rm -f Shake"
-      , "rm -f Shake.o"
-      , "rm -f Shake.hi"
       , "rm -f .shake.database"
       ]
 
