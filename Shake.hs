@@ -14,11 +14,15 @@ import           System.Console.CmdArgs
 import           System.Directory            (createDirectoryIfMissing)
 import           System.Environment          (lookupEnv)
 import           System.Process              (system)
+import           System.Exit                 (ExitCode(..))
+
+import           Text.Docutils.CmdLine       (DocutilOpts(..))
 
 import           Prelude                     hiding ((*>))
 
 import qualified BuildBanner
 import qualified BuildGallery
+import qualified Xml2Html
 
 obj, un, dist :: FilePath -> FilePath
 obj  = (".make" <//>)
@@ -92,7 +96,20 @@ main = do
       dist "//*.html" *> \out -> do
         let xml = obj . un $ out -<.> "xml"
         need [xml]
-        withResource ghcThreads 1 $ runExe [] "Xml2Html" [xml, "-o", takeDirectory out </> "images", out]
+
+        let opts = DocutilOpts
+                     { outputDir  = takeDirectory out </> "images"
+                     , sourceFile = xml
+                     , destFile   = out
+                     , keepGoing  = False
+                     }
+
+        withResource ghcThreads 1 $ liftIO $ do
+          code <- Xml2Html.xml2Html opts
+          case code of
+            ExitSuccess -> return ()
+            ExitFailure code ->
+              fail ("Xml2Html exited with code " ++ show code ++ " for " ++ out)
 
       dist "blog/*.metadata" *> \out -> copyFile' (un out) out
       dist "doc/*.metadata"  *> \out -> copyFile' (un out) out
