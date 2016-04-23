@@ -2,11 +2,9 @@ module Xml2Html where
 
 import           Control.Arrow
 import           Control.Monad                      (unless)
-import           Data.Function                      (on)
 import           Data.List                          (findIndex)
-import           Data.Ord                           (Ordering (..))
-import           System.Directory                   (createDirectory,
-                                                     doesDirectoryExist)
+import           Data.Ord                           (Ordering (..), comparing)
+import           System.Directory                   (createDirectoryIfMissing)
 import           System.Exit
 import           System.FilePath                    (joinPath, splitPath, (<.>),
                                                      (</>))
@@ -62,7 +60,7 @@ diagramsDoc modMap nameMap outDir =
                    ]
 
 preference :: String -> String -> Ordering
-preference = compare `on` (flip findIndex badModules . (==))
+preference = comparing (flip findIndex badModules . (==))
   -- Nothing < Just, so modules not in the list will be preferred.
   -- Modules in the list will be preferred in the order listed, from
   -- most to least preferred.
@@ -168,7 +166,7 @@ diagramOrPlaceholder outdir =
 --   a file name given by a hash of the source code contents
 compileDiagram :: FilePath -> String -> IO (Either String String)
 compileDiagram outDir src = do
-  ensureDir outDir
+  createDirectoryIfMissing True outDir
 
   let bopts = DB.mkBuildOpts
                 Rasterific
@@ -216,6 +214,3 @@ compileDiagram outDir src = do
 
  where
   mkFile base = outDir </> base <.> "png"
-  ensureDir dir = do
-    b <- doesDirectoryExist dir
-    unless b $ createDirectory dir
