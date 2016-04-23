@@ -87,7 +87,8 @@ main = do
       ]
 
     _ -> shake shakeOptions { shakeThreads = numThreads } $ do
-      ghcThreads <- newResource "GHC threads" 1
+      ghcThreads   <- newResource "GHC threads" 1
+      interpreters <- newResource "Interpreter threads" 1
 
       action $ requireRst "doc"
       action $ requireRst "blog"
@@ -121,17 +122,17 @@ main = do
 
       dist ("web/gallery/*.big" <.> imgExt) *> \out -> do
         need [dropExtension (un out) -<.> "lhs"]
-        compileImg False out
+        withResource interpreters 1 $ compileImg False out
 
       dist ("web/gallery/*.thumb" <.> imgExt) *> \out -> do
         need [dropExtension (un out) -<.> "lhs"]
-        compileImg True out
+        withResource interpreters 1 $ compileImg True out
 
       dist ("web/banner/banner" <.> imgExt) *> \out -> do
         need [dropExtension (un out) -<.> "hs"]
         let name = takeBaseName (takeBaseName out)
             hsName = "web/banner" </> name -<.> "hs"
-        liftIO $ BuildBanner.compileExample hsName out
+        withResource interpreters 1 $ liftIO $ BuildBanner.compileExample hsName out
 
       when (m /= Build) (action $ runWeb m)
 
