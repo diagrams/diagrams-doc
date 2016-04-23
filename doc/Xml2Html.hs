@@ -23,8 +23,9 @@ import           Text.XML.HXT.Core                  hiding (when)
 import qualified Codec.Picture                      as JP
 import           Diagrams.Backend.Rasterific
 
-main :: IO ()
-main = do
+
+xml2Html :: DocutilOpts -> IO ExitCode
+xml2Html opts = do
   (modMap, nameMap) <- buildPackageMaps
                        [ "diagrams-core"
                        , "active"
@@ -32,8 +33,12 @@ main = do
                        , "diagrams-contrib"
                        , "diagrams-solve"
                        ]
-  errCode <- docutilsCmdLine (diagramsDoc modMap nameMap)
-  exitWith errCode
+  let transf = diagramsDoc modMap nameMap
+
+  [rc] <- runX (application [withValidate no] opts transf)
+  if rc >= c_err && not (keepGoing opts)
+    then return (ExitFailure (-1))
+    else return ExitSuccess
 
 diagramsDoc modMap nameMap outDir =
   doTransforms [ linkifyGithub

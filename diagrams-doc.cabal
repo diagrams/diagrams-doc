@@ -5,36 +5,28 @@ Cabal-Version:  >=1.10
 Build-type:     Simple
 
 library
-  hs-source-dirs:   web/banner, web/gallery
+  hs-source-dirs:   web/banner, web/gallery, doc
   exposed-modules:  BuildBanner
                   , BuildGallery
+                  , Xml2Html
   build-depends:    base >= 4.8 && < 5
                   , containers
+                  , directory
                   , filepath
                   , cmdargs
                   , split
                   , diagrams-builder
-                  , diagrams-lib
                   , diagrams-rasterific
                   , JuicyPixels
 
-executable Xml2Html
-  main-is:          Xml2Html.hs
-  ghc-options:      -main-is Xml2Html
-  hs-source-dirs:   doc
-  default-language: Haskell2010
-  build-depends:    base >= 4.8 && < 5,
-                    diagrams-builder >= 0.7.2 && < 0.8
-                  , docutils >= 0.1 && < 0.2
-                  , directory
+                  , diagrams-builder >= 0.7.2 && < 0.8
                   , diagrams-core == 1.3.0.4
                   , diagrams-lib == 1.3
+                  , docutils >= 0.1 && < 0.2
                   , hxt
-                  , filepath
-                  , diagrams-rasterific
-                  , JuicyPixels
 
-                    -- Below packages required by doc/*.rst files, not by Xml2Html.
+                    -- The below packages are required by the doc/*.rst files
+                    -- that Xml2Html interprets.
                   , SVGFonts
                   , diagrams-contrib
                   , diagrams-svg
