@@ -5,16 +5,16 @@
 module Site where
 
 import           Control.Monad   (forM_, (>=>))
-import           Data.List       (isPrefixOf, sortBy)
+import           Data.List       (isPrefixOf, sortOn)
 import           Data.Maybe      (fromMaybe)
 import           Data.Monoid     ((<>))
-import           Data.Ord        (comparing)
-import           Data.Text       (empty, pack, replace, unpack)
 import           Data.String     (IsString, fromString)
 
 import           System.FilePath ((</>), splitFileName, replaceExtension)
 
-import           Text.Pandoc
+import           Text.Pandoc     (writerStandalone, writerTemplate, readMarkdown,
+                                  writeHtmlString, bottomUp, ReaderOptions,
+                                  WriterOptions, MathType(..), Inline(..))
 
 import           Hakyll
 
@@ -123,9 +123,9 @@ main = do
             list <- postList tags pattern recentFirst
             makeItem ""
                 >>= loadAndApplyTemplate "templates/blog.html"
-                  ( constField "body" list `mappend` (blogCtx tags list))
+                  ( constField "body" list <> blogCtx tags list)
                 >>= applyDefaultTemplate
-                  ( constField "title" title `mappend` (blogCtx tags list))
+                  ( constField "title" title <> blogCtx tags list)
                 >>= relativizeUrls
 
     -- Render RSS feed
@@ -319,7 +319,7 @@ buildGallery :: Item String -> [Item String] -> Compiler (Item String)
 buildGallery content lhss = do
   -- reverse sort by date (most recent first)
   lhss' <- mapM addDate lhss
-  let exs = reverse . map snd . sortBy (comparing fst) $ lhss'
+  let exs = reverse . map snd . sortOn fst $ lhss'
 
       galleryCtx = mconcat
         [ listField "examples" exampleCtx (return exs)
@@ -341,30 +341,31 @@ buildGallery content lhss = do
 --------------------------------------------------------------------------------
 postCtx :: Context String
 postCtx =
-    dateField "date" "%B %e, %Y" `mappend`
-    defaultContext
+    dateField "date" "%B %e, %Y"
+ <> defaultContext
 
 allPostsCtx :: Context String
 allPostsCtx =
-    constField "title" "All posts" `mappend`
-    postCtx
+    constField "title" "All posts"
+ <> postCtx
 
 blogCtx :: Tags -> String -> Context String
-blogCtx tags list =
-    constField "posts" list `mappend`
-    constField "title" "Recent Posts" `mappend`
-    field "taglist" (\_ -> renderTagList tags) `mappend`
-    defaultContext
+blogCtx tags list = mconcat
+  [ constField "posts" list
+  , constField "title" "Recent Posts"
+  , field "taglist" (\_ -> renderTagList tags)
+  , defaultContext
+  ]
 
 tagsCtx :: Tags -> Context String
 tagsCtx tags =
-    tagsField "prettytags" tags `mappend`
-    postCtx
+    tagsField "prettytags" tags
+ <> postCtx
 
 feedCtx :: Context String
 feedCtx =
-    bodyField "description" `mappend`
-    postCtx
+    bodyField "description"
+ <> postCtx
 
 -- Feed configuration
 

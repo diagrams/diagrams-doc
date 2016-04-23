@@ -138,7 +138,7 @@ compileImg isThumb outPath = do
 
   liftIO $ BuildGallery.compileExample thumb lhsName outPath
 
-copyFiles :: String -> Rules ()
+copyFiles :: FilePath -> Rules ()
 copyFiles dir = dist (dir ++ "/*") *> \out -> copyFile' (un out) out
 
 requireIcons :: Action ()
@@ -164,7 +164,7 @@ requireBanner :: Action ()
 requireBanner = do
   need [dist $ "web/banner/banner" <.> imgExt]
 
-requireRst :: String -> Action ()
+requireRst :: FilePath -> Action ()
 requireRst dir = do
   rsts <- filter (not . (".#" `isPrefixOf`))
           <$> getDirectoryFiles dir ["*.rst"]

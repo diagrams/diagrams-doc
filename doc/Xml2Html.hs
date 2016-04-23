@@ -157,8 +157,10 @@ dropPrefix :: FilePath -> FilePath -> FilePath
 dropPrefix pre = joinPath . drop (n-1) . splitPath
   where n = length (splitPath pre)
 
+diagramOrPlaceholder :: FilePath -> IOSLA (XIOState s) String String
 diagramOrPlaceholder outdir =
-  arrIO (compileDiagram outdir) >>> (missing ||| passthrough) where
+  arrIO (compileDiagram outdir) >>> (missing ||| passthrough)
+  where
     missing = issueErr "diagram could not be rendered" >>^ (const "default.png")
     passthrough = arr id
 

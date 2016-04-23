@@ -6,7 +6,7 @@ import           Diagrams.Prelude
 import           Diagrams.Builder
 import           System.IO                   (hPutStrLn, stderr)
 
-compileExample :: String -> String -> IO ()
+compileExample :: FilePath -> FilePath -> IO ()
 compileExample hs out = do
   f   <- readFile hs
   let w = 900 :: Double

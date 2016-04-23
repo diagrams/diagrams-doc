@@ -15,7 +15,7 @@ import           System.IO                   (hPutStrLn, stderr)
 -- the LHS file to pick out just a sub-view of the entire diagram.
 -- Otherwise, use the width and height specified in the .lhs file and
 -- build the entire diagram.
-compileExample :: Maybe Double -> String -> String -> IO ()
+compileExample :: Maybe Double -> FilePath -> FilePath -> IO ()
 compileExample mThumb lhs out = do
   f   <- readFile lhs
   let (fields, f') = parseFields f
