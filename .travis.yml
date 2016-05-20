@@ -18,6 +18,7 @@ addons:
       - python-docutils
 
 before_script:
+  - ./generate-stack-yaml.hs
   - stack --no-terminal setup
 
   # Prebuild this dependency separately because building it takes a lot of memory.
