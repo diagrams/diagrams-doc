@@ -4,8 +4,14 @@ title: Sightings
 
 People using diagrams to do stuff.
 
+* [A library for making presentations in Haskell with diagrams](https://hackage.haskell.org/package/Slides)
+  (Luka Horvat, 20 October 2015)
+* [2D Contouring](http://www.mattkeeter.com/projects/contours/)
+  (Matt Keeter, September 2015)
+* [UNIX reference poster](https://github.com/tkvogt/unixPoster) by [Tillmann Vogt](https://groups.google.com/d/msg/diagrams-discuss/_BbmfLg_Y9U/Hlv0x-j1hhgJ)
 * [Haskell programmed music box](http://lurk.org/groups/haskell-art/messages/topic/2yNGM3gEXKit0wJAB0dbt4/) (Henning Thielemann, 27 May 2015)
-*  [UNIX reference poster](https://github.com/tkvogt/unixPoster) by [Tillmann Vogt](https://groups.google.com/d/msg/diagrams-discuss/_BbmfLg_Y9U/Hlv0x-j1hhgJ)
+* [Wedged](http://mathr.co.uk/blog/2015-01-16_calendar_2015_wedged.html)
+  (Claude Heiland-Allen, January 2015)
 * [ReCode Project - Topographic Form animated](http://mathr.co.uk/blog/2014-07-31_recode_project_topographic_form_animated.html) (Claude Heiland-Allen, 31 July 2014)
 * [Tree Derivations](https://www.youtube.com/watch?v=ud_xnX9uixg&feature=youtu.be) (Bob Grudem, 18 July 2014)
 * [ReCode Project - Traveling Through the Square Series](http://mathr.co.uk/blog/2014-07-08_recode_project_traveling_through_the_square_series.html) (Claude Heiland-Allen, 8 July 2014)
@@ -39,7 +45,8 @@ People using diagrams to do stuff.
   (Brent Yorgey, 12 November 2011)
 * [Generating plane tilings with diagrams](http://byorgey.wordpress.com/2011/11/12/generating-plane-tilings-with-diagrams/)
   (Brent Yorgey, 12 November 2011)
-* [Interfacing Haskell to the Concorde solver for Traveling Salesperson Problem](http://mainisusuallyafunction.blogspot.com/2011/10/interfacing-haskell-to-concorde-solver.html) (Keegan McAllister, 21 October 2011)
+* [Interfacing Haskell to the Concorde solver for Traveling Salesperson Problem](http://mainisusuallyafunction.blogspot.com/2011/10/interfacing-haskell-to-concorde-solver.html)
+  (Keegan McAllister, 21 October 2011)
 * [Tic-tac-toe maps with diagrams](http://byorgey.wordpress.com/2011/05/18/tic-tac-toe-maps-with-diagrams/)
   (Brent Yorgey, 18 May 2011)
 * [Announcing diagrams preview release](http://byorgey.wordpress.com/2011/05/17/announcing-diagrams-preview-release/)
