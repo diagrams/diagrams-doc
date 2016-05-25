@@ -60,7 +60,7 @@ wish to set the number to something else, set the `DIA_DOC_THREADS`
 environment variable.
 
 Point your browser at `localhost:8000` to view it.  It works well to
-leave this invocation of `Shake preview` running, and then start
-another process calling `Shake +RTS -NX -RTS build` repeatedly in a
+leave this invocation of `stack exec diagrams-doc -- preview` running, and then start
+another process calling `stack exec diagrams-doc -- build` repeatedly in a
 loop.  The website will now automatically be rebuilt any time any
 source files change.
