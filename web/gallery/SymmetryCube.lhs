@@ -12,7 +12,6 @@ width: 600
 > import Data.List.Split
 > import Data.Maybe
 > import Diagrams.BoundingBox
-> import Diagrams.Core.Envelope
 > import Diagrams.Prelude
 > import Graphics.SVGFonts
 
