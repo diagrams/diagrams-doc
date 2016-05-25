@@ -15,6 +15,8 @@ and more.
 
 ## Building
 
+### Step 1: Get dependencies
+
 To build the website (which includes the gallery, user manual, and
 tutorials), you will need:
 
@@ -22,10 +24,33 @@ tutorials), you will need:
 * the python [docutils suite](http://docutils.sourceforge.net/) (in
   particular `rst2xml.py` should be on your PATH).
 
+On Ubuntu, the docutils suite can be installed using
+```bash
+sudo apt-get install python-docutils
+```
+
+### Step 2: Generate the `stack.yaml` file
+
+Run the command
+
+```bash
+./generate-stack-yaml.hs
+```
+
+This will generate a `stack.yaml` file that contains the necessary
+dependencies to build this project. This includes each Diagrams Github repo,
+so that you can build the documentation against the latest versions of each
+project. If new commits get pushed to the Diagrams repos, you may need to
+re-run `./generate-stack-yaml.hs`.
+
+### Step 3: Run the builder
+
 Once you have all the dependencies, simply do
 
-    stack build
-    stack exec diagrams-doc -- +RTS -N4 -RTS preview
+```bash
+stack build
+stack exec diagrams-doc -- +RTS -N4 -RTS preview
+```
 
 which will build the user manual and website, and run a web server on
 port 8000 serving a preview of the website. In place of `-N4` you
@@ -39,13 +64,3 @@ leave this invocation of `Shake preview` running, and then start
 another process calling `Shake +RTS -NX -RTS build` repeatedly in a
 loop.  The website will now automatically be rebuilt any time any
 source files change.
-
-For example, on a four-core Ubuntu machine, assuming you already have
-stack installed and want to use the rasterific backend, you could
-run the following commands:
-
-```
-sudo apt-get install python-docutils
-stack build
-stack exec diagrams-doc -- +RTS -N4 -RTS preview
-```
