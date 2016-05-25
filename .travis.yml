@@ -18,7 +18,12 @@ addons:
       - python-docutils
 
 before_script:
+  # Set up stack globally (download ghc)
+  - stack setup
+
   - ./generate-stack-yaml.hs
+
+  # Now that there is a stack.yaml file, this command sets up stack locally
   - stack --no-terminal setup
 
   # Prebuild this dependency separately because building it takes a lot of memory.
