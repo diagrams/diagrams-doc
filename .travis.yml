@@ -28,9 +28,9 @@ before_script:
 
   # Prebuild this dependency separately because building it takes a lot of memory.
   # It has caused me out-of-memory errors on Travis several times.
-  - stack build -j 1 haskell-src-exts
+  - stack --no-terminal build -j 1 haskell-src-exts
 
-  - stack --no-terminal build
+  - stack --no-terminal build -j 1
 
 script: stack exec diagrams-doc -- buildh
 
