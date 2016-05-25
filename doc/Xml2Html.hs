@@ -184,7 +184,6 @@ compileDiagram outDir src = do
                   [ "Data.Typeable"
                   , "Diagrams.Backend.Rasterific"
                   , "Graphics.SVGFonts"
-                  , "Diagrams.Prelude"
                   ]
                 & DB.qimports .~ [("Graphics.SVGFonts", "SF")]
                 & DB.pragmas .~ ["DeriveDataTypeable", "MultiParamTypeClasses"]
