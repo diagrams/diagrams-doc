@@ -1,26 +1,24 @@
 {-# LANGUAGE NoMonomorphismRestriction #-}
 {-# LANGUAGE OverloadedStrings         #-}
+{-# LANGUAGE FlexibleContexts          #-}
 
 module Site where
 
 import           Control.Monad   (forM_, (>=>))
-import           Data.Functor    ((<$>))
-import           Data.List       (isPrefixOf, sortBy)
+import           Data.List       (isPrefixOf, sortOn)
 import           Data.Maybe      (fromMaybe)
-import           Data.Monoid
-import           Data.Ord        (comparing)
-import           Data.Text       (empty, pack, replace, unpack)
+import           Data.Monoid     ((<>))
+import           Data.String     (IsString, fromString)
 
-import           Data.String
+import           System.FilePath ((</>), splitFileName, replaceExtension)
 
-import           System.FilePath
-import           System.Process  (readProcess)
-
-import           Text.Pandoc
+import           Text.Pandoc     (writerStandalone, writerTemplate, readMarkdown,
+                                  writeHtmlString, bottomUp, ReaderOptions,
+                                  WriterOptions, MathType(..), Inline(..))
 
 import           Hakyll
 
-pages :: IsString s => [s]
+pages :: [Pattern]
 pages = map (fromString . (++".markdown"))
   [ "download"
   , "tutorials"
@@ -30,12 +28,11 @@ pages = map (fromString . (++".markdown"))
   , "releases"
   ]
 
+imgExt :: String
+imgExt = "png"
+
 main :: IO ()
 main = do
-  rasterificPkg <- readProcess "ghc-pkg" ["list", "--simple-output", "diagrams-rasterific"] ""
-  let useSVG = null rasterificPkg
-      imgExt | useSVG    = "svg"
-             | otherwise = "png"
 
   hakyll $ do
     -- Build Tags
@@ -126,9 +123,9 @@ main = do
             list <- postList tags pattern recentFirst
             makeItem ""
                 >>= loadAndApplyTemplate "templates/blog.html"
-                  ( constField "body" list `mappend` (blogCtx tags list))
+                  ( constField "body" list <> blogCtx tags list)
                 >>= applyDefaultTemplate
-                  ( constField "title" title `mappend` (blogCtx tags list))
+                  ( constField "title" title <> blogCtx tags list)
                 >>= relativizeUrls
 
     -- Render RSS feed
@@ -185,7 +182,7 @@ main = do
         compile $ do
           galleryContent <- pandocCompiler
           lhss <- loadAll ("gallery/*.lhs" .&&. hasVersion "gallery")
-          gallery <- buildGallery imgExt galleryContent lhss
+          gallery <- buildGallery galleryContent lhss
           mainCompiler defaultContext gallery
 
       -- build syntax-highlighted source code for examples
@@ -196,8 +193,8 @@ main = do
             >>= withMathJax
             >>= loadAndApplyTemplate "templates/exampleHi.html"
                   ( mconcat
-                    [ setImgURL imgExt
-                    , setHtmlURL imgExt
+                    [ setImgURL
+                    , setHtmlURL
                     , markdownFieldsCtx ["description"]
                     , defaultContext
                     ]
@@ -293,10 +290,10 @@ blogCompiler :: Context String -> Item String -> Compiler (Item String)
 blogCompiler ctx = loadAndApplyTemplate "templates/post.html" ctx
                >=> saveSnapshot "content"
 
-setThumbURL, setImgURL, setHtmlURL :: String -> Context String
-setThumbURL  imgExt = setURL "images" ("thumb." ++ imgExt)
-setImgURL    imgExt = setURL "images" ("big." ++ imgExt)
-setHtmlURL  _imgExt = setURL "" "html"
+setThumbURL, setImgURL, setHtmlURL :: Context String
+setThumbURL  = setURL "images" ("thumb." ++ imgExt)
+setImgURL    = setURL "images" ("big." ++ imgExt)
+setHtmlURL   = setURL "" "html"
 
 setURL :: FilePath -> String -> Context String
 setURL dir ext = field (extNm ++ "url") fieldVal
@@ -318,19 +315,19 @@ markdownFieldCtx f = field f $ \i -> do
     Right p -> writeHtmlString defaultHakyllWriterOptions p
     Left e  -> show e
 
-buildGallery :: String -> Item String -> [Item String] -> Compiler (Item String)
-buildGallery imgExt content lhss = do
+buildGallery :: Item String -> [Item String] -> Compiler (Item String)
+buildGallery content lhss = do
   -- reverse sort by date (most recent first)
   lhss' <- mapM addDate lhss
-  let exs = reverse . map snd . sortBy (comparing fst) $ lhss'
+  let exs = reverse . map snd . sortOn fst $ lhss'
 
       galleryCtx = mconcat
         [ listField "examples" exampleCtx (return exs)
         , defaultContext
         ]
       exampleCtx = mconcat
-        [ setHtmlURL imgExt
-        , setThumbURL imgExt
+        [ setHtmlURL
+        , setThumbURL
         , defaultContext
         ]
 
@@ -344,30 +341,31 @@ buildGallery imgExt content lhss = do
 --------------------------------------------------------------------------------
 postCtx :: Context String
 postCtx =
-    dateField "date" "%B %e, %Y" `mappend`
-    defaultContext
+    dateField "date" "%B %e, %Y"
+ <> defaultContext
 
 allPostsCtx :: Context String
 allPostsCtx =
-    constField "title" "All posts" `mappend`
-    postCtx
+    constField "title" "All posts"
+ <> postCtx
 
 blogCtx :: Tags -> String -> Context String
-blogCtx tags list =
-    constField "posts" list `mappend`
-    constField "title" "Recent Posts" `mappend`
-    field "taglist" (\_ -> renderTagList tags) `mappend`
-    defaultContext
+blogCtx tags list = mconcat
+  [ constField "posts" list
+  , constField "title" "Recent Posts"
+  , field "taglist" (\_ -> renderTagList tags)
+  , defaultContext
+  ]
 
 tagsCtx :: Tags -> Context String
 tagsCtx tags =
-    tagsField "prettytags" tags `mappend`
-    postCtx
+    tagsField "prettytags" tags
+ <> postCtx
 
 feedCtx :: Context String
 feedCtx =
-    bodyField "description" `mappend`
-    postCtx
+    bodyField "description"
+ <> postCtx
 
 -- Feed configuration
 

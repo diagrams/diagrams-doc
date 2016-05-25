@@ -4,17 +4,97 @@ License:        BSD3
 Cabal-Version:  >=1.10
 Build-type:     Simple
 
+library
+  hs-source-dirs:   web/banner, web/gallery, doc
+  exposed-modules:  BuildBanner
+                  , BuildGallery
+                  , Xml2Html
+  build-depends:    base >= 4.8 && < 5
+                  , containers
+                  , directory
+                  , filepath
+                  , cmdargs
+                  , split
+                  , diagrams-builder
+                  , diagrams-rasterific
+                  , JuicyPixels
+
+                  , diagrams-builder >= 0.7.2 && < 0.8
+                  , diagrams-core >= 1.3
+                  , diagrams-lib >= 1.3
+                  , docutils >= 0.1 && < 0.2
+                  , hxt
+
+                    -- The below packages are required by the doc/*.rst files
+                    -- that Xml2Html interprets.
+                  , SVGFonts
+                  , diagrams-contrib
+                  , diagrams-svg
+                  , colour
+                  , palette
+                  , random
+                  , lens
+  default-language: Haskell2010
+
 executable diagrams-doc
   main-is: Shake.hs
   hs-source-dirs: .
   default-language: Haskell2010
-  build-depends: base >= 4.8 && < 5,
-                 diagrams-builder >= 0.7.2 && < 0.8,
-                 shake >= 0.15 && < 0.16,
-                 hakyll >= 4.7 && < 4.8,
-                 docutils >= 0.1 && < 0.2,
-                 safe >= 0.3 && < 0.4,
-                 cmdargs >= 0.10 && < 0.11,
-                 directory,
-                 process,
-                 parallel
+  ghc-options:  -threaded
+  build-depends: base >= 4.8 && < 5
+               , diagrams-doc
+               , diagrams-builder >= 0.7.2 && < 0.8
+               , shake >= 0.15 && < 0.16
+               , hakyll >= 4.7 && < 4.8
+               , docutils >= 0.1 && < 0.2
+               , safe >= 0.3 && < 0.4
+               , cmdargs >= 0.10 && < 0.11
+               , directory
+               , process
+               , parallel
+
+executable Warning
+  main-is:          Warning.hs
+  ghc-options:      -main-is Warning
+  hs-source-dirs:   doc/icons
+  default-language: Haskell2010
+  build-depends:    base >= 4.8 && < 5
+                  , diagrams-core >= 1.3
+                  , diagrams-lib >= 1.3
+                  , diagrams-rasterific
+
+executable ToWrite
+  main-is:          ToWrite.hs
+  ghc-options:      -main-is ToWrite
+  hs-source-dirs:   doc/icons
+  default-language: Haskell2010
+  build-depends:    base >= 4.8 && < 5
+                  , diagrams-core >= 1.3
+                  , diagrams-lib >= 1.3
+                  , lens
+                  , diagrams-rasterific
+
+executable Exercises
+  main-is:          Exercises.hs
+  ghc-options:      -main-is Exercises
+  hs-source-dirs:   doc/icons
+  default-language: Haskell2010
+  build-depends:    base >= 4.8 && < 5
+                  , diagrams-core >= 1.3
+                  , diagrams-lib >= 1.3
+                  , lens
+                  , diagrams-rasterific
+
+executable Site
+  main-is:          Site.hs
+  ghc-options:      -main-is Site
+  hs-source-dirs:   web
+  default-language: Haskell2010
+  build-depends:    base >= 4.8 && < 5
+                  , hakyll >= 4.7 && < 4.8
+                  , containers
+                  , filepath
+                  , cmdargs
+                  , pandoc
+                  , text
+                  , process

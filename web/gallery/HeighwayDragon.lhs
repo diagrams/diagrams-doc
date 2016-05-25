@@ -10,7 +10,6 @@ height: 800
 ---
 
 > {-# LANGUAGE FlexibleContexts #-}
-> import Diagrams.Backend.SVG.CmdLine
 > import Diagrams.Prelude
 > import Diagrams.TwoD.Layout.Grid
 

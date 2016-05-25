@@ -19,6 +19,7 @@ web/doc
 web/blog
 web/gallery/images
 web/banner/images
+web/haddock
 .make
 .shake.database
 Shake
@@ -53,3 +54,5 @@ talks/2015-FARM/sources.zip
 talks/2015-FARM/diagrams-FARM-15.tex
 talks/2015-FARM/diagrams-FARM-15.pdf
 *.tgz
+.stack-work
+.shake

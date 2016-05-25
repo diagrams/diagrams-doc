@@ -1,18 +1,14 @@
-{-# LANGUAGE CPP #-}
-
 module Xml2Html where
 
 import           Control.Arrow
 import           Control.Monad                      (unless)
-import           Data.Function                      (on)
 import           Data.List                          (findIndex)
-import           Data.Ord                           (Ordering (..))
-import           System.Directory                   (createDirectory,
-                                                     doesDirectoryExist)
+import           Data.Ord                           (Ordering (..), comparing)
+import           System.Directory                   (createDirectoryIfMissing)
 import           System.Exit
 import           System.FilePath                    (joinPath, splitPath, (<.>),
                                                      (</>))
-import           System.IO
+import           System.IO                          (stdout, stderr, hFlush, hPutStrLn)
 
 import qualified Diagrams.Builder                   as DB
 import           Diagrams.Prelude                   (V2 (..), centerXY, pad,
@@ -24,25 +20,12 @@ import           Text.Docutils.Util
 import           Text.Docutils.Writers.HTML
 import           Text.XML.HXT.Core                  hiding (when)
 
-#ifdef USE_SVG
-import qualified Data.ByteString.Lazy               as BS
-import           Data.Text                          (empty)
-import           Diagrams.Backend.SVG
-import           Lucid.Svg                          (renderBS)
-#else
 import qualified Codec.Picture                      as JP
 import           Diagrams.Backend.Rasterific
-#endif
 
-backendExt :: String
-#ifdef USE_SVG
-backendExt = "svg"
-#else
-backendExt = "png"
-#endif
 
-main :: IO ()
-main = do
+xml2Html :: DocutilOpts -> IO ExitCode
+xml2Html opts = do
   (modMap, nameMap) <- buildPackageMaps
                        [ "diagrams-core"
                        , "active"
@@ -50,8 +33,12 @@ main = do
                        , "diagrams-contrib"
                        , "diagrams-solve"
                        ]
-  errCode <- docutilsCmdLine (diagramsDoc modMap nameMap)
-  exitWith errCode
+  let transf = diagramsDoc modMap nameMap
+
+  [rc] <- runX (application [withValidate no] opts transf)
+  if rc >= c_err && not (keepGoing opts)
+    then return (ExitFailure (-1))
+    else return ExitSuccess
 
 diagramsDoc modMap nameMap outDir =
   doTransforms [ linkifyGithub
@@ -78,7 +65,7 @@ diagramsDoc modMap nameMap outDir =
                    ]
 
 preference :: String -> String -> Ordering
-preference = compare `on` (flip findIndex badModules . (==))
+preference = comparing (flip findIndex badModules . (==))
   -- Nothing < Just, so modules not in the list will be preferred.
   -- Modules in the list will be preferred in the order listed, from
   -- most to least preferred.
@@ -175,8 +162,10 @@ dropPrefix :: FilePath -> FilePath -> FilePath
 dropPrefix pre = joinPath . drop (n-1) . splitPath
   where n = length (splitPath pre)
 
+diagramOrPlaceholder :: FilePath -> IOSLA (XIOState s) String String
 diagramOrPlaceholder outdir =
-  arrIO (compileDiagram outdir) >>> (missing ||| passthrough) where
+  arrIO (compileDiagram outdir) >>> (missing ||| passthrough)
+  where
     missing = issueErr "diagram could not be rendered" >>^ (const "default.png")
     passthrough = arr id
 
@@ -184,32 +173,17 @@ diagramOrPlaceholder outdir =
 --   a file name given by a hash of the source code contents
 compileDiagram :: FilePath -> String -> IO (Either String String)
 compileDiagram outDir src = do
-  ensureDir outDir
+  createDirectoryIfMissing True outDir
 
   let bopts = DB.mkBuildOpts
-
-#ifdef USE_SVG
-                SVG
-#else
                 Rasterific
-#endif
-
                 (zero :: V2 Double)
-
-#ifdef USE_SVG
-                (SVGOptions (dims $ V2 500 200) Nothing empty)
-#else
                 (RasterificOptions (dims $ V2 1000 400))
-#endif
-
                 & DB.snippets .~ [src]
                 & DB.imports  .~
                   [ "Data.Typeable"
-#ifdef USE_SVG
-                  , "Diagrams.Backend.SVG"
-#else
                   , "Diagrams.Backend.Rasterific"
-#endif
+                  , "Graphics.SVGFonts"
                   ]
                 & DB.qimports .~ [("Graphics.SVGFonts", "SF")]
                 & DB.pragmas .~ ["DeriveDataTypeable", "MultiParamTypeClasses"]
@@ -225,13 +199,13 @@ compileDiagram outDir src = do
 
   case res of
     DB.ParseErr err    -> do
-      putStrLn ("\nError while parsing\n" ++ src)
-      putStrLn err
+      hPutStrLn stderr ("\nError while parsing\n" ++ src)
+      hPutStrLn stderr err
       return $ Left "Error while parsing"
 
     DB.InterpErr ierr  -> do
-      putStrLn ("\nError while interpreting\n" ++ src)
-      putStrLn (DB.ppInterpError ierr)
+      hPutStrLn stderr ("\nError while interpreting\n" ++ src)
+      hPutStrLn stderr (DB.ppInterpError ierr)
       return $ Left "Error while interpreting"
 
     DB.Skipped hash    -> do
@@ -242,15 +216,8 @@ compileDiagram outDir src = do
     DB.OK hash out -> do
       putStr "O"
       hFlush stdout
-#ifdef USE_SVG
-      BS.writeFile (mkFile (DB.hashToHexStr hash)) (renderBS out)
-#else
       JP.savePngImage (mkFile (DB.hashToHexStr hash)) (JP.ImageRGBA8 out)
-#endif
       return $ Right (mkFile (DB.hashToHexStr hash))
 
  where
-  mkFile base = outDir </> base <.> backendExt
-  ensureDir dir = do
-    b <- doesDirectoryExist dir
-    unless b $ createDirectory dir
+  mkFile base = outDir </> base <.> "png"
