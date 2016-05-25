@@ -25,18 +25,12 @@ import qualified BuildGallery
 import qualified Xml2Html
 
 obj, un, dist :: FilePath -> FilePath
-obj  = (".make" <//>)
+obj  = (".make" </>)
 un   = dropDirectory1
-dist = ("dist" <//>)
+dist = ("dist" </>)
 
 runExe :: [CmdOption] -> FilePath -> [String] -> Action ()
 runExe options exe args = command_ options "stack" (["exec", exe, "--"] ++ args)
-
--- Like </>, but retain the first argument when the second starts with
--- a forward slash
-(<//>) :: String -> String -> String
-d <//> p@('/':_) = d ++ p
-d <//> p = d </> p
 
 data MkMode =
     Build    -- Build pre-Hakyll stuff only.  Works well to first run 'Shake preview',
