@@ -28,15 +28,16 @@ Description
 -----------
 
 The tutorial will be a hands-on introduction to the Haskell diagrams
-framework and, incidentally, to the Haskell programming language
-itself.  No previous experience with Haskell or with functional
-programming will be assumed.  As an embedded domain-specific language,
-the framework can be used in basic, productive ways without knowing
-much Haskell; learning Haskell enables more sophisticated uses.  The
-format will consist of presentations of concepts and examples
-interspersed with hands-on exercises for participants.  All necessary
-software is free and open-source, and detailed installation
-instructions will be provided.
+framework (http://projects.haskell.org/diagrams) and, incidentally, to
+the Haskell programming language itself (http://haskell.org).  No
+previous experience with Haskell or with functional programming will
+be assumed.  As an embedded domain-specific language, the framework
+can be used in basic, productive ways without knowing much Haskell;
+learning Haskell enables more sophisticated uses.  The format will
+consist of presentations of concepts and examples interspersed with
+hands-on exercises for participants.  All necessary software is free
+and open-source, and detailed installation instructions will be
+provided.
 
 The tutorial should be of interest to a wide cross-section of Diagrams
 attendees. The Haskell diagrams framework is a powerful, open-ended,
