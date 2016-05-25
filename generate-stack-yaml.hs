@@ -43,6 +43,7 @@ mkYamlFile deps = Yaml.mapping
           [ "git"    .= Yaml.string ("https://github.com/diagrams/" <> name)
           , "commit" .= Yaml.string sha
           ]
+        , "extra-dep" .= Yaml.bool True
         ]
 
 depsWithShas :: IO [Dep]
