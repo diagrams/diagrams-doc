@@ -9,6 +9,7 @@ import           Control.Arrow               (second)
 import           Control.Monad               (mplus)
 import qualified Data.Map                    as M
 import           System.IO                   (hPutStrLn, stderr)
+import           Control.Exception           (throwIO)
 
 -- If the first argument is 'Just', we're making a thumbnail, so use
 -- that as the width and height, and use the 'view' parameters from
@@ -47,13 +48,20 @@ compileExample mThumb lhs out = do
 
   res <- buildDiagram bopts
 
+  -- If there is an error (ParseErr or InterpErr), we print a readable
+  -- description of the error, and then throw an exception so that Shake knows
+  -- that it failed. If Shake gets the ability to pretty-print exceptions (using
+  -- the Exception typeclass's displayException function), then we could get
+  -- rid of the `hPutStrLn` pretty-printing here.
   case res of
     ParseErr err    -> do
       hPutStrLn stderr ("Parse error in " ++ lhs)
       hPutStrLn stderr err
+      fail ("Parse error in " ++ lhs ++ "\n" ++ err)
     InterpErr err   -> do
       hPutStrLn stderr ("Error while compiling " ++ lhs)
       hPutStrLn stderr (ppInterpError err)
+      throwIO err
     Skipped _       -> return ()
     OK _ build      ->
       JP.savePngImage out (JP.ImageRGBA8 build)

@@ -83,14 +83,14 @@ main = do
       ]
 
     _ -> shake shakeOptions { shakeThreads = numThreads } $ do
-      ghcThreads   <- newResource "GHC threads" 1
+      ghcThreads <- newResource "GHC threads" 1
 
       action $ requireRst "doc"
       action $ requireRst "blog"
       action $ requireIcons
       action $ requireStatic
-
-      webRules
+      action $ requireGallery
+      action $ requireBanner
 
       dist "//*.html" *> \out -> do
         let xml = obj . un $ out -<.> "xml"
@@ -144,8 +144,6 @@ main = do
 
       when (m /= Build) (action $ runWeb m)
 
-      return ()
-
 compileImg :: Bool -> FilePath -> Action ()
 compileImg isThumb outPath = do
   let name    = takeBaseName . takeBaseName $ outPath
@@ -187,26 +185,26 @@ requireRst dir = do
   need (map (dist . (dir </>) . (-<.> "html")) rsts)
   need (map (dist . (dir </>) . (-<.> "html.metadata")) rsts)
 
-webRules :: Rules ()
-webRules = do
-  "web/doc" *> \out ->
-    command_ [] "ln" ["-s", "-f", "../dist/doc", out]
-
-  "web/blog" *> \out ->
-    command_ [] "ln" ["-s", "-f", "../dist/blog", out]
-
-  "web/gallery/images" *> \out -> do
-    liftIO $ createDirectoryIfMissing True "dist/web/gallery"
-    command_ [] "ln" ["-s", "-f", "../../dist/web/gallery", out]
-
-  "web/banner/images" *> \out -> do
-    liftIO $ createDirectoryIfMissing True "dist/web/banner"
-    command_ [] "ln" ["-s", "-f", "../../dist/web/banner", out]
-
 runWeb :: MkMode -> Action ()
 runWeb m = do
   alwaysRerun
-  needWeb
+
+  requireRst "doc"
+  requireRst "blog"
+  requireIcons
+  requireStatic
+  requireGallery
+  requireBanner
+
+  liftIO $ createDirectoryIfMissing True "dist/web/gallery"
+  liftIO $ createDirectoryIfMissing True "dist/web/banner"
+
+  -- Use ../dist and ../../dist so that link is relative to the directory where
+  -- it exists.
+  command_ [] "ln" ["-s", "-f", "../dist/doc",            "web/doc"]
+  command_ [] "ln" ["-s", "-f", "../dist/blog",           "web/blog"]
+  command_ [] "ln" ["-s", "-f", "../../dist/web/gallery", "web/gallery/images"]
+  command_ [] "ln" ["-s", "-f", "../../dist/web/banner",  "web/banner/images"]
 
   -- work around weird bug(?)
   command_ [] "rm" ["-f", "dist/doc/doc"]
@@ -219,18 +217,3 @@ runWeb m = do
         BuildH  -> "build"
         Preview -> "watch"
     ]
-
-needWeb :: Action ()
-needWeb = do
-  need [ "web/doc"
-       , "web/blog"
-       , "web/banner"
-       , "web/gallery/images"
-       , "web/banner/images"
-       ]
-  requireIcons
-  requireStatic
-  requireGallery
-  requireBanner
-  requireRst "doc"
-  requireRst "blog"

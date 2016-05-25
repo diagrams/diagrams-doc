@@ -18,7 +18,7 @@ import           Text.Pandoc     (writerStandalone, writerTemplate, readMarkdown
 
 import           Hakyll
 
-pages :: IsString s => [s]
+pages :: [Pattern]
 pages = map (fromString . (++".markdown"))
   [ "download"
   , "tutorials"
