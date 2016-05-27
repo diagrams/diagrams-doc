@@ -30,7 +30,7 @@ before_script:
   # It has caused me out-of-memory errors on Travis several times.
   - stack --no-terminal build -j 1 haskell-src-exts
 
-  - stack --no-terminal build -j 1
+  - stack --no-terminal build
 
 script: stack exec diagrams-doc -- buildh
 
