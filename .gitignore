@@ -45,3 +45,5 @@ talks/2014-LGM/scripts/RepoRainbow
 talks/2014-LGM/scripts/RepoRainbow.pdf
 .stack-work
 .shake
+
+stack.yaml
