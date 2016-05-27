@@ -41,7 +41,7 @@ First is the simplest case of generating a single diagram:
 Here we just have a diagram and the standard options.  We can invoke
 with just a width and the height is made to match the diagram.
 
-.. code-block:: sh
+::
 
     $ ./Simple -o simple.svg -w 100
 
@@ -63,7 +63,7 @@ The ``--list`` option just lists the available diagrams to render and
 the ``-s`` selection option takes a name and renders the associated
 diagram with the standard options.
 
-.. code-block:: sh
+::
 
     $ ./Multiple --list
     Available diagrams:
@@ -89,7 +89,7 @@ to the name for each frame.  The ``--fpu`` option indicates the desired number
 of frames per unit of time.  If the ``a`` animation above is one second long
 then the following will create files ``a01.png`` through ``a24.png``.
 
-.. code-block:: sh
+::
 
    $ ./Animation -o a.png -w 100 --fpu 24
 
@@ -110,7 +110,7 @@ have each render on its own page.
 We only need the default options here and the interface is the same as a
 single diagram.
 
-.. code-block:: sh
+::
 
     $ ./Pages -o pages.ps -w 400
 
@@ -133,7 +133,7 @@ arguments from the command-line.
 In addition to the standard flags, we can provide arguments ``blue`` and ``42.0`` which
 will be passed along to ``f``.
 
-.. code-block:: sh
+::
 
     $ ./Function -o blue.svg -w 400 blue 42.0
 
@@ -162,7 +162,7 @@ IO that the diagram depends on.
 The program will expect a file name on the command-line which it reads to
 generate a diagram.
 
-.. code-block:: sh
+::
 
     $ ./IO-diagram -o file.svg -w 400 ~/data.log
 
@@ -638,7 +638,7 @@ Note the ``--flipped`` option in the help message:
 
 And running it yields:
 
-.. code-block:: sh
+::
 
     $ ./Flippable -o Flippable.svg -w 400
 
@@ -648,7 +648,7 @@ And running it yields:
 
 > example = square 1 # fc red ||| square 1 # fc blue
 
-.. code-block:: sh
+::
 
     $ ./Flippable -o Flippable.svg -w 400 --flipped
 
