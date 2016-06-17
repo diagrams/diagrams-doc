@@ -78,7 +78,6 @@
 
   Topologically sorted list of packages:
 
-  - vector-space-points
   - monoid-extras
   - dual-tree
   - diagrams-core
@@ -93,8 +92,12 @@
   - diagrams-cairo
   - diagrams-gtk
   - diagrams-postscript
+  - cchalmers/texrunner
+  - diagrams-pgf
   - diagrams-rasterific
+  - jeffreyrosenbluth/svg-builder
   - diagrams-svg
+  - jeffreyrosenbluth/static-canvas
   - diagrams-canvas
   - diagrams-html5
   - diagrams
