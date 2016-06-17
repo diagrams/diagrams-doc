@@ -119,10 +119,6 @@
 + [ ] make sure all new features are described/mentioned in the manual
 ** TODO testing [0/7]
 + [ ] check all travis tests
-      - all tests are passing, except:
-      - [ ] diagrams-doc (hakyll) (this one doesn't matter much)
-      - [ ] diagrams-builder on 7.8.1 (gcc bug?)
-      - [ ] diagrams-haddock on 7.8.1 (gcc bug?)
 + [ ] run diagrams-backend-tests
 + [ ] copy diagrams-backend-tests output to website
 ** TODO update release page on website
