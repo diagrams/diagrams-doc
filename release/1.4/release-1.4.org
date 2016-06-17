@@ -1,0 +1,296 @@
+* Checklist for major releases [0/8]
+** TODO go through per-package checklist
+*** TODO monoid-extras
+  + [ ] CHANGES updated
+  + [ ] all CHANGES in user manual or tutorial
+  + [ ] upper bounds fixed
+  + [ ] lower bounds fixed
+  + [ ] update tested-with field
+  + [ ] Haddocks up to date
+  + [ ] version bump
+  + [ ] LICENSE updated
+*** TODO dual-tree
+  + [ ] CHANGES updated
+  + [ ] all CHANGES in user manual or tutorial
+  + [ ] upper bounds fixed
+  + [ ] lower bounds fixed
+  + [ ] update tested-with field
+  + [ ] Haddocks up to date
+  + [ ] version bump
+  + [ ] LICENSE updated
+*** TODO diagrams-core
+  + [ ] CHANGES updated
+  + [ ] all CHANGES in user manual or tutorial
+  + [ ] upper bounds fixed
+  + [ ] lower bounds fixed
+  + [ ] update tested-with field
+  + [ ] Haddocks up to date
+  + [ ] version bump
+  + [ ] LICENSE updated
+*** TODO active
+  + [ ] CHANGES updated
+  + [ ] all CHANGES in user manual or tutorial
+  + [ ] upper bounds fixed
+  + [ ] lower bounds fixed
+  + [ ] update tested-with field
+  + [ ] Haddocks up to date
+  + [ ] version bump
+  + [ ] LICENSE updated
+*** TODO diagrams-solve
+  + [ ] CHANGES updated
+  + [ ] all CHANGES in user manual or tutorial
+  + [ ] upper bounds fixed
+  + [ ] lower bounds fixed
+  + [ ] update tested-with field
+  + [ ] Haddocks up to date
+  + [ ] version bump
+  + [ ] LICENSE updated
+*** TODO diagrams-lib
+  + [ ] CHANGES updated
+  + [ ] all CHANGES in user manual or tutorial
+  + [ ] upper bounds fixed
+  + [ ] lower bounds fixed
+  + [ ] update tested-with field
+  + [ ] Haddocks up to date
+  + [ ] version bump
+  + [ ] LICENSE updated
+*** TODO SVGFonts
+  + [ ] CHANGES updated
+  + [ ] all CHANGES in user manual or tutorial
+  + [ ] upper bounds fixed
+  + [ ] lower bounds fixed
+  + [ ] update tested-with field
+  + [ ] Haddocks up to date
+  + [ ] version bump
+  + [ ] LICENSE updated
+*** TODO palette
+  + [ ] CHANGES updated
+  + [ ] all CHANGES in user manual or tutorial
+  + [ ] upper bounds fixed
+  + [ ] lower bounds fixed
+  + [ ] update tested-with field
+  + [ ] Haddocks up to date
+  + [ ] version bump
+  + [ ] LICENSE updated
+*** TODO force-layout
+  + [ ] CHANGES updated
+  + [ ] all CHANGES in user manual or tutorial
+  + [ ] upper bounds fixed
+  + [ ] lower bounds fixed
+  + [ ] update tested-with field
+  + [ ] Haddocks up to date
+  + [ ] version bump
+  + [ ] LICENSE updated
+*** TODO diagrams-contrib
+  + [ ] CHANGES updated
+  + [ ] all CHANGES in user manual or tutorial
+  + [ ] upper bounds fixed
+  + [ ] lower bounds fixed
+  + [ ] update tested-with field
+  + [ ] Haddocks up to date
+  + [ ] version bump
+  + [ ] LICENSE updated
+*** TODO statestack
+  + [ ] CHANGES updated
+  + [ ] all CHANGES in user manual or tutorial
+  + [ ] upper bounds fixed
+  + [ ] lower bounds fixed
+  + [ ] update tested-with field
+  + [ ] Haddocks up to date
+  + [ ] version bump
+  + [ ] LICENSE updated
+*** TODO diagrams-cairo
+  + [ ] CHANGES updated
+  + [ ] all CHANGES in user manual or tutorial
+  + [ ] upper bounds fixed
+  + [ ] lower bounds fixed
+  + [ ] update tested-with field
+  + [ ] Haddocks up to date
+  + [ ] version bump
+  + [ ] LICENSE updated
+*** TODO diagrams-gtk
+  + [ ] CHANGES updated
+  + [ ] all CHANGES in user manual or tutorial
+  + [ ] upper bounds fixed
+  + [ ] lower bounds fixed
+  + [ ] update tested-with field
+  + [ ] Haddocks up to date
+  + [ ] version bump
+  + [ ] LICENSE updated
+*** TODO diagrams-postscript
+  + [ ] CHANGES updated
+  + [ ] all CHANGES in user manual or tutorial
+  + [ ] upper bounds fixed
+  + [ ] lower bounds fixed
+  + [ ] update tested-with field
+  + [ ] Haddocks up to date
+  + [ ] version bump
+  + [ ] LICENSE updated
+*** TODO cchalmers/texrunner
+  + [ ] CHANGES updated
+  + [ ] all CHANGES in user manual or tutorial
+  + [ ] upper bounds fixed
+  + [ ] lower bounds fixed
+  + [ ] update tested-with field
+  + [ ] Haddocks up to date
+  + [ ] version bump
+  + [ ] LICENSE updated
+*** TODO diagrams-pgf
+  + [ ] CHANGES updated
+  + [ ] all CHANGES in user manual or tutorial
+  + [ ] upper bounds fixed
+  + [ ] lower bounds fixed
+  + [ ] update tested-with field
+  + [ ] Haddocks up to date
+  + [ ] version bump
+  + [ ] LICENSE updated
+*** TODO diagrams-rasterific
+  + [ ] CHANGES updated
+  + [ ] all CHANGES in user manual or tutorial
+  + [ ] upper bounds fixed
+  + [ ] lower bounds fixed
+  + [ ] update tested-with field
+  + [ ] Haddocks up to date
+  + [ ] version bump
+  + [ ] LICENSE updated
+*** TODO jeffreyrosenbluth/svg-builder
+  + [ ] CHANGES updated
+  + [ ] all CHANGES in user manual or tutorial
+  + [ ] upper bounds fixed
+  + [ ] lower bounds fixed
+  + [ ] update tested-with field
+  + [ ] Haddocks up to date
+  + [ ] version bump
+  + [ ] LICENSE updated
+*** TODO diagrams-svg
+  + [ ] CHANGES updated
+  + [ ] all CHANGES in user manual or tutorial
+  + [ ] upper bounds fixed
+  + [ ] lower bounds fixed
+  + [ ] update tested-with field
+  + [ ] Haddocks up to date
+  + [ ] version bump
+  + [ ] LICENSE updated
+*** TODO jeffreyrosenbluth/static-canvas
+  + [ ] CHANGES updated
+  + [ ] all CHANGES in user manual or tutorial
+  + [ ] upper bounds fixed
+  + [ ] lower bounds fixed
+  + [ ] update tested-with field
+  + [ ] Haddocks up to date
+  + [ ] version bump
+  + [ ] LICENSE updated
+*** TODO diagrams-canvas
+  + [ ] CHANGES updated
+  + [ ] all CHANGES in user manual or tutorial
+  + [ ] upper bounds fixed
+  + [ ] lower bounds fixed
+  + [ ] update tested-with field
+  + [ ] Haddocks up to date
+  + [ ] version bump
+  + [ ] LICENSE updated
+*** TODO diagrams-html5
+  + [ ] CHANGES updated
+  + [ ] all CHANGES in user manual or tutorial
+  + [ ] upper bounds fixed
+  + [ ] lower bounds fixed
+  + [ ] update tested-with field
+  + [ ] Haddocks up to date
+  + [ ] version bump
+  + [ ] LICENSE updated
+*** TODO diagrams
+  + [ ] CHANGES updated
+  + [ ] all CHANGES in user manual or tutorial
+  + [ ] upper bounds fixed
+  + [ ] lower bounds fixed
+  + [ ] update tested-with field
+  + [ ] Haddocks up to date
+  + [ ] version bump
+  + [ ] LICENSE updated
+*** TODO diagrams-builder
+  + [ ] CHANGES updated
+  + [ ] all CHANGES in user manual or tutorial
+  + [ ] upper bounds fixed
+  + [ ] lower bounds fixed
+  + [ ] update tested-with field
+  + [ ] Haddocks up to date
+  + [ ] version bump
+  + [ ] LICENSE updated
+*** TODO diagrams-haddock
+  + [ ] CHANGES updated
+  + [ ] all CHANGES in user manual or tutorial
+  + [ ] upper bounds fixed
+  + [ ] lower bounds fixed
+  + [ ] update tested-with field
+  + [ ] Haddocks up to date
+  + [ ] version bump
+  + [ ] LICENSE updated
+
+*** TODO diagrams-backend-tests
+  + [ ] CHANGES updated
+  + [ ] all CHANGES in user manual or tutorial
+  + [ ] upper bounds fixed
+  + [ ] lower bounds fixed
+  + [ ] update tested-with field
+  + [ ] Haddocks up to date
+  + [ ] version bump
+  + [ ] LICENSE updated
+*** TODO docutils
+  + [ ] CHANGES updated
+  + [ ] all CHANGES in user manual or tutorial
+  + [ ] upper bounds fixed
+  + [ ] lower bounds fixed
+  + [ ] update tested-with field
+  + [ ] Haddocks up to date
+  + [ ] version bump
+  + [ ] LICENSE updated
+*** TODO diagrams-doc
+  + [ ] CHANGES updated
+  + [ ] all CHANGES in user manual or tutorial
+  + [ ] upper bounds fixed
+  + [ ] lower bounds fixed
+  + [ ] update tested-with field
+  + [ ] Haddocks up to date
+  + [ ] version bump
+  + [ ] LICENSE updated
+*** TODO diagrams-povray
+  + [ ] CHANGES updated
+  + [ ] all CHANGES in user manual or tutorial
+  + [ ] upper bounds fixed
+  + [ ] lower bounds fixed
+  + [ ] update tested-with field
+  + [ ] Haddocks up to date
+  + [ ] version bump
+  + [ ] LICENSE updated
+** TODO user manual / tutorials [0/3]
++ [ ] make sure all examples build
++ [ ] make sure documentation is up-to-date
++ [ ] make sure all new features are described/mentioned in the manual
+** TODO testing [0/7]
++ [ ] check all travis tests
++ [ ] run diagrams-backend-tests
++ [ ] copy diagrams-backend-tests output to website
+** TODO update release page on website
+      - See previous versions for format.  Should be possible to
+        essentially paste in the relevant parts of the CHANGES files
+        for individual repos.
+    - We should probably come up with a better format and/or a more
+      automated way of doing this...
+** TODO diagrams-haddock [0/2]
++ [ ] make sure all diagrams-haddock examples build
++ [ ] rebuild all diagrams-haddock examples and check them in
+** TODO upload packages [0/3]
++ [ ] List release date in each CHANGES file
++ [ ] Apply a tag to each repo just before releasing
+        - The tag should have a name like "vX.X.X", with a v prefixed
+          to the version
+        - The tag message should mention the version and give a very
+          short comment describing the release
+        - Use a command like: git tag -a v1.3 -m "1.3 release (update for frozz-wizz)"
++ [ ] Upload
+** TODO regenerate combined Haddock documentation and commit to website.
+      NOTE: this must be done AFTER releasing packages to Hackage!
+      There is a script, build-haddocks.sh, in the diagrams-doc root
+      which can be used to build combined Haddocks.  See the comments
+      for more info and prerequisites.
+** TODO Rebuild and upload new website.
