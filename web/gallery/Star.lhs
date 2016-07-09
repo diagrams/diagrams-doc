@@ -18,22 +18,27 @@ height: 400
 To create one quarter of the diagram, we connect the corresponding
 points with headless arrows and alternate the line colors.
 
-> quarter n = mconcat [arrowBetween' 
->   (with & arrowHead .~ noHead
->         & shaftStyle %~ lw thin . lc (colors !! ((xCoord1 p) `mod` 2)))
->   (fst p) (snd p) | p <- ps]
+> quarter :: Int -> Diagram B
+> quarter n = mconcat [ makeLine (getColor i) (p2 (i, 0)) (p2 (0, n - i)) | i <- [0..n] ]
 >   where
->     xCoord1 = round . fst . unp2 . fst
->     ps = zip xs (reverse ys)
->     (xs, ys) = pts n
+>     getColor :: Int -> Colour
+>     getColor i = colors !! (p1 `mod` 2)
+>
+>     makeLine :: Colour -> P2 Double -> P2 Double -> Diagram B
+>     makeLine color p q =
+>       p \~\~ q
+>         # lc color
+>         # lw thin
 
 The final diagram is created by assembling four copies of the above.
 
-> d n = half === rotateBy (1/2) half
+> dia :: Int -> Diagram B
+> dia n = half === rotateBy (1/2) half
 >   where
 >     half = (rotateBy (1/4) q ||| q) # centerX
 >     q = quarter n
 
-> pts n = (map (p2 . (,0)) [0..n], map (p2 . (0,)) [0..n])
-
-> example = pad 1.1 $ d 20 # centerXY `atop` square 50 # fc whitesmoke
+> example =
+>   pad 1.1
+>     (   dia 20    # centerXY
+>      <> square 50 # fc whitesmoke)
