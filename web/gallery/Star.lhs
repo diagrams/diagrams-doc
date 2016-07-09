@@ -21,12 +21,12 @@ points with headless arrows and alternate the line colors.
 > quarter :: Int -> Diagram B
 > quarter n = mconcat [ makeLine (getColor i) (p2 (i, 0)) (p2 (0, n - i)) | i <- [0..n] ]
 >   where
->     getColor :: Int -> Colour
->     getColor i = colors !! (p1 `mod` 2)
+>     getColor :: Int -> Colour Double
+>     getColor i = colors !! (i `mod` 2)
 >
->     makeLine :: Colour -> P2 Double -> P2 Double -> Diagram B
+>     makeLine :: Colour Double -> P2 Double -> P2 Double -> Diagram B
 >     makeLine color p q =
->       p \~\~ q
+>       p ~~ q
 >         # lc color
 >         # lw thin
 
