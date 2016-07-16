@@ -220,6 +220,16 @@
   + [ ] Haddocks up to date
   + [ ] version bump
   + [ ] LICENSE updated
+*** TODO diagrams-pandoc
+  + [ ] CHANGES updated
+  + [ ] all CHANGES in user manual or tutorial
+  + [ ] upper bounds fixed
+  + [ ] lower bounds fixed
+  + [ ] travis build green
+  + [ ] update tested-with field
+  + [ ] Haddocks up to date
+  + [ ] version bump
+  + [ ] LICENSE updated
 *** TODO diagrams
   + [ ] CHANGES updated
   + [ ] all CHANGES in user manual or tutorial
