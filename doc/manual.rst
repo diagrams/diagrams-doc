@@ -5542,7 +5542,7 @@ platforms, particularly OS X.
 
 The cairo backend can produce PNG, SVG, PDF, postscript,
 and animated GIF output. The cairo backend does support gradients
-however, do to a bug in the cairo package it does not handle reflect
+however, due to a bug in the cairo package it does not handle reflect
 and repeat correctly for radial gradients,
 
 .. _ `Extend`:http://hackage.haskell.org/package/cairo-0.12.5.3/docs/Graphics-Rendering-Cairo.html#t:Extend
