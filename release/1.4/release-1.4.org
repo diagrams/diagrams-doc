@@ -20,16 +20,16 @@
   + [X] Haddocks up to date
   + [X] version bump
   + [X] LICENSE updated
-*** TODO diagrams-core
-  + [ ] CHANGES updated
-  + [ ] all CHANGES in user manual or tutorial
-  + [ ] upper bounds fixed
-  + [ ] lower bounds fixed
-  + [ ] travis build green
-  + [ ] update tested-with field
-  + [ ] Haddocks up to date
+*** DONE diagrams-core
+  + [X] CHANGES updated
+  + [X] all CHANGES in user manual or tutorial
+  + [X] upper bounds fixed
+  + [X] lower bounds fixed
+  + [X] travis build green
+  + [X] update tested-with field
+  + [X] Haddocks up to date
   + [ ] version bump
-  + [ ] LICENSE updated
+  + [X] LICENSE updated
 *** TODO active
   + [ ] CHANGES updated
   + [ ] all CHANGES in user manual or tutorial
