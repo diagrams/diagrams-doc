@@ -283,6 +283,9 @@ some lines and then call `glueLine` on the result.  You try:
      >     d1 = direction (tangentAtEnd t1)
      >     d2 = direction (tangentAtStart t2)
 
+     Alternatively, you can use `Diagrams.TwoD.Path.Follow`:mod: from
+     the `diagrams-contrib`:pkg: package.
+
 The second function for converting from lines to loops, `closeLine`,
 adds an extra (linear) segment from the end of the line to the
 beginning.
