@@ -68,47 +68,50 @@
   + [X] Haddocks up to date
   + [ ] version bump
   + [X] LICENSE updated
-
 *** TODO SVGFonts
+  + [X] CHANGES updated
+  + [X] all CHANGES in user manual or tutorial
+  + [X] upper bounds fixed
+  + [X] lower bounds fixed
+  + [X] travis build green
+  + [X] update tested-with field
+  + [X] Haddocks up to date
+  + [X] version bump
+  + [X] LICENSE updated
+  + [ ] Can upload already, nothing depends on it
+*** DONE palette
+  + [X] CHANGES updated
+  + [X] all CHANGES in user manual or tutorial
+  + [X] upper bounds fixed
+  + [X] lower bounds fixed
+  + [X] travis build green
+  + [X] update tested-with field
+  + [X] Haddocks up to date
+  + [X] version bump
+  + [X] LICENSE updated
+  + [X] UPLOADED
+*** DONE force-layout
   + [ ] CHANGES updated
-  + [ ] all CHANGES in user manual or tutorial
-  + [ ] upper bounds fixed
-  + [ ] lower bounds fixed
-  + [ ] travis build green
-  + [ ] update tested-with field
-  + [ ] Haddocks up to date
+  + [X] all CHANGES in user manual or tutorial
+  + [X] upper bounds fixed
+  + [X] lower bounds fixed
+  + [X] travis build green
+  + [X] update tested-with field
+  + [X] Haddocks up to date
   + [ ] version bump
-  + [ ] LICENSE updated
-*** TODO palette
-  + [ ] CHANGES updated
-  + [ ] all CHANGES in user manual or tutorial
-  + [ ] upper bounds fixed
-  + [ ] lower bounds fixed
-  + [ ] travis build green
-  + [ ] update tested-with field
-  + [ ] Haddocks up to date
-  + [ ] version bump
-  + [ ] LICENSE updated
-*** TODO force-layout
-  + [ ] CHANGES updated
-  + [ ] all CHANGES in user manual or tutorial
-  + [ ] upper bounds fixed
-  + [ ] lower bounds fixed
-  + [ ] travis build green
-  + [ ] update tested-with field
-  + [ ] Haddocks up to date
-  + [ ] version bump
-  + [ ] LICENSE updated
+  + [X] LICENSE updated
+
+  No upload needed!
 *** TODO diagrams-contrib
-  + [ ] CHANGES updated
+  + [X] CHANGES updated
   + [ ] all CHANGES in user manual or tutorial
   + [ ] upper bounds fixed
   + [ ] lower bounds fixed
   + [ ] travis build green
-  + [ ] update tested-with field
+  + [X] update tested-with field
   + [ ] Haddocks up to date
   + [ ] version bump
-  + [ ] LICENSE updated
+  + [X] LICENSE updated
 *** TODO statestack
   + [ ] CHANGES updated
   + [ ] all CHANGES in user manual or tutorial
