@@ -1,7 +1,7 @@
 ---
 title: Appolonian gasket
 author: Brent Yorgey
-authorurl: http://www.cis.upenn.edu/~byorgey/
+authorurl: http://ozark.hendrix.edu/~yorgey
 date: 2011-11-15
 description: Generation of Apollonian gaskets.
 tags: apollonain, gasket

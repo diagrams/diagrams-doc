@@ -1,7 +1,7 @@
 ---
 title: Factorization diagrams
 author: Brent Yorgey
-authorurl: http://www.cis.upenn.edu/~byorgey/
+authorurl: http://ozark.hendrix.edu/~yorgey
 date: 2012-12-29
 description: Factorization diagrams, as seen on the [cover of Hacker Monthly](http://hackermonthly.com/issue-31.html).
 tags: factorization, primes, recursion

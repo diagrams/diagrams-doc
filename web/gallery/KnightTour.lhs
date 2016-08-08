@@ -1,7 +1,7 @@
 ---
 title: Knight tour
 author: Brent Yorgey
-authorurl: http://www.cis.upenn.edu/~byorgey/
+authorurl: http://ozark.hendrix.edu/~yorgey
 date: 2013-08-03
 description: Illustration of a knight tour on an 8x8 chessboard.
 tags: chess, game, knight, tour, Hamiltonian, path

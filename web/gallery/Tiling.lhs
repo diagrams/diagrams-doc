@@ -1,7 +1,7 @@
 ---
 title: Semiregular plane tiling
 author: Brent Yorgey
-authorurl: http://www.cis.upenn.edu/~byorgey/
+authorurl: http://ozark.hendrix.edu/~yorgey
 date: 2011-11-11
 description: An example of a semiregular plane tiling.
 tags: Tilings, plane, regular, polygon

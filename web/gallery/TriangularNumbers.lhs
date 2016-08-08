@@ -1,7 +1,7 @@
 ---
 title: Triangular number identity
 author: Brent Yorgey
-authorurl: http://www.cis.upenn.edu/~byorgey/
+authorurl: http://ozark.hendrix.edu/~yorgey
 date: 2011-04-14
 description: A visual proof of an identity involving triangular numbers, created for [this blog post](http://mathlesstraveled.com/2011/04/14/triangular-number-equations-via-pictures-solutions/), which also contains several other similar proofs.
 tags: triangular, number, proof, identity

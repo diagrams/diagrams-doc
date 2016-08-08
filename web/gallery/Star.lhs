@@ -1,7 +1,7 @@
 ---
 title: Star
 author: Brent Yorgey
-authorurl: http://www.cis.upenn.edu/~byorgey/
+authorurl: http://ozark.hendrix.edu/~yorgey
 date: 2011-06-19
 description: Star construction using straight lines.
 tags: star, arrow

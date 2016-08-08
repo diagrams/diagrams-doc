@@ -1,7 +1,7 @@
 ---
 title: Naive fibonacci call tree
 author: Brent Yorgey
-authorurl: http://www.cis.upenn.edu/~byorgey/
+authorurl: http://ozark.hendrix.edu/~yorgey
 date: 2012-02-25
 description: The tree of function calls made by a naive Fibonacci implementation.
 tags: Fibonacci, recursion, tree

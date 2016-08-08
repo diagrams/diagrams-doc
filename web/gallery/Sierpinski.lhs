@@ -1,7 +1,7 @@
 ---
 title: Sierpinski triangle
 author: Brent Yorgey, Jeffrey Rosenbluth
-authorurl: http://www.cis.upenn.edu/~byorgey/
+authorurl: http://ozark.hendrix.edu/~yorgey
 date: 2011-05-21
 description: Sierpinski's classic fractal.
 tags: fractal, Sierpinski, triangle

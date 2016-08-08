@@ -1,7 +1,7 @@
 ---
 title: Hasse diagrams
 author: Brent Yorgey
-authorurl: http://www.cis.upenn.edu/~byorgey/
+authorurl: http://ozark.hendrix.edu/~yorgey
 date: 2012-02-23
 description: Hasse diagram of all subsets of a four-element set.
 tags: hasse, subsets

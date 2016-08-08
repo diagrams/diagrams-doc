@@ -1,7 +1,7 @@
 ---
 title: Circular gray code
 author: Brent Yorgey
-authorurl: http://www.cis.upenn.edu/~byorgey/
+authorurl: http://ozark.hendrix.edu/~yorgey
 date: 2011-05-21
 description: Circular gray code, like that used on some rotational sensors.
 tags: gray, code

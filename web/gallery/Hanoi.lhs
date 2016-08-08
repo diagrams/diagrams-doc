@@ -1,7 +1,7 @@
 ---
 title: Towers of Hanoi
 author: Brent Yorgey
-authorurl: http://www.cis.upenn.edu/~byorgey/
+authorurl: http://ozark.hendrix.edu/~yorgey
 date: 2012-02-23
 description: Visual solution to the classic Towers of Hanoi puzzle.
 tags: hanoi, puzzle, solution

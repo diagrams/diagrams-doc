@@ -1,7 +1,7 @@
 ---
 title: Pentaflake
 author: Brent Yorgey
-authorurl: http://www.cis.upenn.edu/~byorgey/
+authorurl: http://ozark.hendrix.edu/~yorgey
 date: 2011-05-22
 description: Fractal construction with pentagons.
 tags: fractal, pentagon
