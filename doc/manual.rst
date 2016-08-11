@@ -1570,6 +1570,21 @@ color combinations.
 >
 > example = vsep 1 ([alphaEx, paletteEx] # map centerX)
 
+Another source of predefined color names is the
+`Diagrams.Color.XKCD`:mod: module, containing over 900 common names for
+colors as determined by the `XKCD color name survey`__.
+
+__ https://xkcd.com/color/rgb/
+
+.. class:: dia-lhs
+
+::
+
+> import Data.Color.XKCD
+>
+> colors = [booger, poisonGreen, cinnamon, petrol, vibrantPurple, tomato]
+> example = hcat (zipWith fc colors (repeat (circle 1 # lw none)))
+
 Transparency can also be tweaked with the `Opacity` attribute, which
 sets the opacity/transparency of a diagram as a whole. Applying
 `opacity p` to a diagram, where `p` is a value between `0` and `1`,
