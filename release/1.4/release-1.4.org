@@ -60,7 +60,7 @@
   No upload needed.
 *** TODO diagrams-lib
   + [X] CHANGES updated
-  + [ ] all CHANGES in user manual or tutorial
+  + [X] all CHANGES in user manual or tutorial
   + [ ] upper bounds fixed
   + [ ] lower bounds fixed
   + [X] travis build green
