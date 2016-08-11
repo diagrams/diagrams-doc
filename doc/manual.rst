@@ -2053,7 +2053,9 @@ confusing (does `reflectX` reflect *along* the `x`:math:\-axis or
 `reflectX = scaleX (-1)`, and similarly for `reflectY`; that is,
 ``reflectQ`` affects ``Q``-coordinates.
 
-To reflect in some line other than an axis, use `reflectAbout`.
+`reflectXY` swaps the `x`:math:\- and `y`:math:\-coordinates, that is,
+it reflects across the line `y = x`:math:.  To reflect across any
+other line, use `reflectAbout`.
 
 .. class:: dia-lhs
 
