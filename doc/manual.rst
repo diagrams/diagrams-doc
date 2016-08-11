@@ -1583,6 +1583,9 @@ results in a diagram `p` times as opaque.
 > reds    = (s darkred ||| s red) === (s pink ||| s indianred)
 > example = hsep 1 . take 4 . iterate (opacity 0.7) $ reds
 
+Some backends support setting fill and stroke opacities separately,
+with `fillOpacity` and `strokeOpacity`.
+
 Grouped opacity can be applied using the `opacityGroup` annotation,
 which is currently supported by the `diagrams-svg`:pkg:,
 `diagrams-pgf`:pkg:, and (as of version 1.3.1) the
