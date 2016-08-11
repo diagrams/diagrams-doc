@@ -3749,10 +3749,14 @@ The main reason for this is that computing the size of some text in a
 given font is rather complicated, and ``diagrams`` cannot (yet) do it
 natively.
 
-Various attributes of text can be set using `font`, `bold` (or, more
-generally, `fontWeight`), `italic`, and `oblique` (or, more generally,
-`fontSlant`).  Text is colored with the current fill color (see
-`Color and Opacity`_).
+Text is colored with the current fill color (see `Color and
+Opacity`_).  Various other attributes of text can be set using `font`,
+`fontWeight`, and `fontSlant`.  The convenience function `italic` and
+`oblique` are provided for setting the font slant, and for weight
+there are functions `bold`, `bolder`, `lighter`, `thinWeight`,
+`ultraLight`, `light`, `mediumWeight`, `heavy`, `semiBold`, and
+`ultraBold`.  Note that many backends do not support font weights
+besides `bold`; the SVG backend supports all font weights.
 
 .. class:: dia-lhs
 
