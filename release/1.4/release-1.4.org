@@ -172,9 +172,9 @@
   + [X] Haddocks up to date
   + [ ] version bump
   + [X] LICENSE updated
-*** TODO diagrams-rasterific
+*** DONE diagrams-rasterific
   + [X] CHANGES updated
-  + [ ] all CHANGES in user manual or tutorial
+  + [X] all CHANGES in user manual or tutorial
   + [X] upper bounds fixed
   + [X] lower bounds fixed
   + [X] travis build green
