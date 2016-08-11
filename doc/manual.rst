@@ -3456,8 +3456,8 @@ indicate places where the associated query evaluates to true.
 >
 > illustrate d = ((d # fc grey) `beneath`) . mconcat . map drawPt $ points
 >   where
->     drawPt p | getAny (sample d p) = circle 0.1 # fc blue # moveTo p
->              | otherwise           = circle 0.07 # fc lightblue # moveTo p
+>     drawPt p | inquire d p = circle 0.1 # fc blue # moveTo p
+>              | otherwise   = circle 0.07 # fc lightblue # moveTo p
 >
 > example = illustrate dia1 ||| strutX 1 ||| illustrate dia2
 
@@ -4706,8 +4706,8 @@ identity).  The default query simply indicates which points are
    generally speaking, computationally infeasible---though it may be
    appropriate in some situations.)
 
-The following example queries an ellipse (using the `sample` function
-to sample it at a set of particular points), coloring points inside
+The following example queries an ellipse (using the `inquire` function
+to test it at a set of particular points), coloring points inside
 the ellipse red and points outside it blue.
 
 .. class:: dia-lhs
@@ -4722,9 +4722,9 @@ the ellipse red and points outside it blue.
 >
 > mkPoint p = (p, circle 0.3
 >           	  # lw none
->           	  # fc (case sample c p of
->           	          Any True  -> red
->           	          Any False -> blue
+>           	  # fc (case inquire c p of
+>           	          True  -> red
+>           	          False -> blue
 >           	       )
 >             )
 >
@@ -4743,7 +4743,10 @@ diagram.  For example, the diagram below uses the `Sum` monoid to draw
 dots whose size is determined by the number of overlapping shapes at a
 given point.  Note the use of the `value` function to switch from the
 default `Any` to a different monoid: `value v` replaces `Any True` with `v`
-and `Any False` with `mempty`.
+and `Any False` with `mempty`.  Here we use the `sample` function to
+retrieve the monoidal value associated with a particular point. (The
+`inquire` function from the previous example is just `sample`
+specialized to the `Any` monoid.)
 
 .. class:: dia-lhs
 
@@ -4788,6 +4791,18 @@ pass an extra option to the `stroke'` function to specify the even-odd
 fill rule if you wish.  Be aware that queries are unaffected by
 applications of the `fillRule` attribute, which only affects the way a
 diagram is drawn.
+
+Generalized queries
+~~~~~~~~~~~~~~~~~~~
+
+In fact, diagrams are not the only objects with associated queries: an
+instance of `HasQuery t m` declares that objects of type `t` have a
+value of type `m` associated with each point in space.  Other things
+with `HasQuery` instances include various 3D primitives, images, the
+`Query` type itself, as well as located trails and paths, which can be
+queried for values of type `Crossings`. A `Crossings` value
+essentially records how many times one must cross the trail or path
+from the queried point to reach the outside.
 
 Bounding boxes
 --------------
@@ -5979,6 +5994,22 @@ Instances:
   `Map`.
 
 Further reading: `Traces`_.
+
+HasQuery
+++++++++
+
+`HasQuery` is defined in `Diagrams.Query`:mod:, and governs types with
+an associated `Query`.
+
+.. class:: lhs
+
+::
+
+> class HasQuery t m | t -> m where
+>   -- | Extract the query of an object.
+>   getQuery :: t -> Query (V t) (N t) m
+
+Further reading: `Generalized queries`_.
 
 Classes for attributes and styles
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
