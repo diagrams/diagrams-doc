@@ -58,10 +58,10 @@
   + [X] LICENSE updated
 
   No upload needed.
-*** TODO diagrams-lib
+*** DONE diagrams-lib
   + [X] CHANGES updated
   + [X] all CHANGES in user manual or tutorial
-  + [ ] upper bounds fixed
+  + [X] upper bounds fixed
   + [ ] lower bounds fixed
   + [X] travis build green
   + [X] update tested-with field
@@ -102,14 +102,14 @@
   + [X] LICENSE updated
 
   No upload needed!
-*** TODO diagrams-contrib
+*** DONE diagrams-contrib
   + [X] CHANGES updated
-  + [ ] all CHANGES in user manual or tutorial
-  + [ ] upper bounds fixed
-  + [ ] lower bounds fixed
-  + [ ] travis build green
+  + [X] all CHANGES in user manual or tutorial
+  + [X] upper bounds fixed
+  + [X] lower bounds fixed
+  + [X] travis build green
   + [X] update tested-with field
-  + [ ] Haddocks up to date
+  + [X] Haddocks up to date
   + [ ] version bump
   + [X] LICENSE updated
 *** DONE statestack
