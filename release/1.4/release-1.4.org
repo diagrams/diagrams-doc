@@ -124,7 +124,7 @@
   + [ ] LICENSE updated
 
   Didn't need update at all.
-*** TODO diagrams-cairo
+*** DONE diagrams-cairo
   + [ ] CHANGES updated
   + [X] all CHANGES in user manual or tutorial
   + [X] upper bounds fixed
@@ -137,14 +137,15 @@
   No changes, just updated contributor list.  Can just re-release
   1.3.1 as 1.4.
 
-*** TODO diagrams-gtk
+*** DONE diagrams-gtk
   + [ ] CHANGES updated
   + [X] all CHANGES in user manual or tutorial
   + [X] upper bounds fixed
   + [X] lower bounds fixed
-  + [ ] travis build green
+  + [X] travis build green
     - strangely only 7.8 build fails (though 7.6 succeeds!)
     - ...but only on certain runs?
+    - seems OK now.
   + [X] update tested-with field
   + [X] Haddocks up to date
   + [X] LICENSE updated
@@ -159,22 +160,14 @@
   + [X] update tested-with field
   + [X] Haddocks up to date
   + [X] LICENSE updated
-*** TODO cchalmers/texrunner
-  + [ ] CHANGES updated
-  + [ ] all CHANGES in user manual or tutorial
-  + [ ] upper bounds fixed
-  + [ ] lower bounds fixed
-  + [ ] travis build green
-  + [ ] update tested-with field
-  + [ ] Haddocks up to date
-  + [ ] version bump
-  + [ ] LICENSE updated
-*** TODO diagrams-pgf
+*** DONE cchalmers/texrunner
+  Doesn't seem to need any work since diagrams-pgf is working fine.
+*** DONE diagrams-pgf
   + [X] CHANGES updated
   + [X] all CHANGES in user manual or tutorial
   + [X] upper bounds fixed
   + [X] lower bounds fixed
-  + [ ] travis build green
+  + [X] travis build green
   + [X] update tested-with field
   + [X] Haddocks up to date
   + [ ] version bump
@@ -184,72 +177,56 @@
   + [ ] all CHANGES in user manual or tutorial
   + [X] upper bounds fixed
   + [X] lower bounds fixed
-  + [ ] travis build green
-    - 7.8 build failed with weird error, maybe transient.  Rebuilding.
+  + [X] travis build green
+    - 7.8 build failed with weird error, maybe transient.
+      Rebuilding. OK.
   + [X] update tested-with field
   + [X] Haddocks up to date
   + [ ] version bump
   + [X] LICENSE updated
-*** TODO jeffreyrosenbluth/svg-builder
-  + [ ] CHANGES updated
-  + [ ] all CHANGES in user manual or tutorial
-  + [ ] upper bounds fixed
+*** DONE jeffreyrosenbluth/svg-builder
+    Nothing needed.
+*** DONE diagrams-svg
+  + [X] CHANGES updated
+  + [X] all CHANGES in user manual or tutorial
+  + [X] upper bounds fixed
   + [ ] lower bounds fixed
-  + [ ] travis build green
-  + [ ] update tested-with field
-  + [ ] Haddocks up to date
-  + [ ] version bump
-  + [ ] LICENSE updated
-*** TODO diagrams-svg
-  + [ ] CHANGES updated
-  + [ ] all CHANGES in user manual or tutorial
-  + [ ] upper bounds fixed
+  + [X] travis build green
+  + [X] update tested-with field
+  + [X] Haddocks up to date
+  + [X] version bump
+  + [X] LICENSE updated
+
+  + [ ] Need to bump bounds for other diagrams packages, then upload 1.4.1
+*** DONE jeffreyrosenbluth/static-canvas
+    Nothing needed.
+*** DONE diagrams-canvas
+  + [X] CHANGES updated
+  + [X] all CHANGES in user manual or tutorial
+  + [X] upper bounds fixed
   + [ ] lower bounds fixed
-  + [ ] travis build green
-  + [ ] update tested-with field
-  + [ ] Haddocks up to date
-  + [ ] version bump
-  + [ ] LICENSE updated
-*** TODO jeffreyrosenbluth/static-canvas
-  + [ ] CHANGES updated
-  + [ ] all CHANGES in user manual or tutorial
-  + [ ] upper bounds fixed
+  + [X] travis build green
+  + [X] update tested-with field
+  + [X] Haddocks up to date
+  + [X] version bump
+  + [X] LICENSE updated
+
+  + [ ] Looks good, just need to bump bounds on other diagrams packages,
+    tag, and upload 1.4.
+*** DONE diagrams-html5
+  + [X] CHANGES updated
+  + [X] all CHANGES in user manual or tutorial
+  + [X] upper bounds fixed
   + [ ] lower bounds fixed
-  + [ ] travis build green
-  + [ ] update tested-with field
-  + [ ] Haddocks up to date
-  + [ ] version bump
-  + [ ] LICENSE updated
-*** TODO diagrams-canvas
-  + [ ] CHANGES updated
-  + [ ] all CHANGES in user manual or tutorial
-  + [ ] upper bounds fixed
-  + [ ] lower bounds fixed
-  + [ ] travis build green
-  + [ ] update tested-with field
-  + [ ] Haddocks up to date
-  + [ ] version bump
-  + [ ] LICENSE updated
-*** TODO diagrams-html5
-  + [ ] CHANGES updated
-  + [ ] all CHANGES in user manual or tutorial
-  + [ ] upper bounds fixed
-  + [ ] lower bounds fixed
-  + [ ] travis build green
-  + [ ] update tested-with field
-  + [ ] Haddocks up to date
-  + [ ] version bump
-  + [ ] LICENSE updated
+  + [X] travis build green
+  + [X] update tested-with field
+  + [X] Haddocks up to date
+  + [X] version bump
+  + [X] LICENSE updated
+
+  + [ ] Just need to bump bounds, tag, upload 1.4
 *** TODO diagrams-pandoc
-  + [ ] CHANGES updated
-  + [ ] all CHANGES in user manual or tutorial
-  + [ ] upper bounds fixed
-  + [ ] lower bounds fixed
-  + [ ] travis build green
-  + [ ] update tested-with field
-  + [ ] Haddocks up to date
-  + [ ] version bump
-  + [ ] LICENSE updated
+    + [ ] just need to bump bounds for other diagrams packages etc.
 *** TODO diagrams
   + [ ] CHANGES updated
   + [ ] all CHANGES in user manual or tutorial
