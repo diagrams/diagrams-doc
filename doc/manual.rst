@@ -5578,20 +5578,22 @@ The source code for the SVG backend can be found in the
 The Rasterific backend
 ----------------------
 
-The Rasterific backend is built on top of the `Rasterific`:pkg: package, which
-is a pure haskell rasterizer that uses `JuicyPixels`:pkg: and `FontyFruity`:pkg:.
-This is a fully featured backend that supports the full APi of the diagrams library.
-It can produce PNG, JPG, BMP, TIF, PDF and
-animated GIF images. It also supports embedded images (see `DImage`) and
-although does not yet have the text handling capabilities of cairo, it does use
-the exact text bounding box for alignment. Gradients are fully supported
-including, repeat and reflect. In addition the Rasterific backend can be used to generate
-in memory images that can be manipulated with `JuicyPixels`. Finally the Rasterific
-backend suppports grouped opacity.
+The Rasterific backend is built on top of the `Rasterific`:pkg:
+package, which is a pure haskell rasterizer that uses
+`JuicyPixels`:pkg: and `FontyFruity`:pkg:.  This is a fully featured
+backend that supports the full APi of the diagrams library.  It can
+produce PNG, JPG, BMP, TIF, PDF and animated GIF images. It also
+supports embedded images (see `DImage`) and although it does not yet
+have the text handling capabilities of cairo, it does use the exact
+text bounding box for alignment. Gradients are fully supported
+including repetition and reflection. In addition, the Rasterific
+backend can be used to generate in-memory images that can be
+manipulated with `JuicyPixels`. Finally, the Rasterific backend
+suppports grouped opacity.
 
 The Rasterific backend can be invoked via
 `Diagrams.Backend.Rasterific.CmdLine`:mod: module, or via the
-`renderDia`/`renderRasterific` functions.
+`renderDia` and `renderRasterific` functions.
 
 The cairo backend
 -----------------
