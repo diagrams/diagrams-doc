@@ -3528,6 +3528,31 @@ framework which renders the user manual examples).  If the aspect
 ratios matched the viewed portion would be exactly that specified in
 the call to `rectEnvelope`.
 
+Boolean operations on paths
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The `Diagrams.TwoD.Path.Boolean`:mod: module from
+`diagrams-contrib`:pkg: contains functions for computing boolean
+combinations of paths, such as intersection, union, difference, and
+symmetric difference.
+
+.. class:: dia-lhs
+
+::
+
+> import Diagrams.TwoD.Path.Boolean
+>
+> thing1, thing2 :: Path V2 Double
+> thing1 = square 1
+> thing2 = circle 0.5 # translate (0.5 &^ (-0.5))
+>
+> example = hsep 0.5 . fc green . map strokePath $
+>   [ union        Winding (thing1 <> thing2)
+>   , intersection Winding thing1     thing2
+>   , difference   Winding thing1     thing2
+>   , exclusion    Winding thing1     thing2
+>   ]
+
 Trail and path implementation details
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
