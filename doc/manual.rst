@@ -1580,10 +1580,10 @@ __ https://xkcd.com/color/rgb/
 
 ::
 
-> import Data.Color.XKCD
+> import Diagrams.Color.XKCD
 >
-> colors = [booger, poisonGreen, cinnamon, petrol, vibrantPurple, tomato]
-> example = hcat (zipWith fc colors (repeat (circle 1 # lw none)))
+> colors = [booger, poisonGreen, cinnamon, petrol, vibrantPurple]
+> example = hcat (zipWith fcA colors (repeat (circle 1 # lw none)))
 
 Transparency can also be tweaked with the `Opacity` attribute, which
 sets the opacity/transparency of a diagram as a whole. Applying
@@ -3533,24 +3533,24 @@ Boolean operations on paths
 
 The `Diagrams.TwoD.Path.Boolean`:mod: module from
 `diagrams-contrib`:pkg: contains functions for computing boolean
-combinations of paths, such as intersection, union, difference, and
+combinations of paths, such as union, intersection, difference, and
 symmetric difference.
 
 .. class:: dia-lhs
 
 ::
 
-> import Diagrams.TwoD.Path.Boolean
+> import qualified Diagrams.TwoD.Path.Boolean as B
 >
 > thing1, thing2 :: Path V2 Double
 > thing1 = square 1
-> thing2 = circle 0.5 # translate (0.5 &^ (-0.5))
+> thing2 = circle 0.5 # translate (0.5 ^& (-0.5))
 >
 > example = hsep 0.5 . fc green . map strokePath $
->   [ union        Winding (thing1 <> thing2)
->   , intersection Winding thing1     thing2
->   , difference   Winding thing1     thing2
->   , exclusion    Winding thing1     thing2
+>   [ B.union        Winding (thing1 <> thing2)
+>   , B.intersection Winding thing1     thing2
+>   , B.difference   Winding thing1     thing2
+>   , B.exclusion    Winding thing1     thing2
 >   ]
 
 Trail and path implementation details
