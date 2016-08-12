@@ -7,13 +7,13 @@
     --package process
     --package yaml
 -}
-{-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE OverloadedStrings #-}
 
-import BasicPrelude
+import           BasicPrelude
 import qualified Data.Text         as Text
+import           Data.Yaml.Builder ((.=))
 import qualified Data.Yaml.Builder as Yaml
-import           Data.Yaml.Builder         ((.=))
 import qualified System.Process    as Process
 
 data Dep = Dep
