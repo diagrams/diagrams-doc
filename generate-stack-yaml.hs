@@ -32,6 +32,8 @@ mkYamlFile deps = Yaml.mapping
   , "extra-deps" .= Yaml.array [ Yaml.string "tuple-0.3.0.2"
                                , Yaml.string "OneTuple-0.2.1"
                                , Yaml.string "SVGFonts-1.5.0.0"
+                               , Yaml.string "cubicbezier-0.4.0.2"
+                               , Yaml.string "mfsolve-0.3.2.0"
                                ]
   , "packages"   .= Yaml.array (Yaml.string "." : map mkDepObject deps)
   ]
