@@ -60,6 +60,7 @@ repoNames =
   , "diagrams-lib"
   , "diagrams-rasterific"
   , "diagrams-solve"
+  , "diagrams-contrib"
   , "docutils"
   , "dual-tree"
   , "monoid-extras"
