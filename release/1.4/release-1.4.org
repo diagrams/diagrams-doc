@@ -225,7 +225,7 @@
   + [X] LICENSE updated
 
   + [ ] Just need to bump bounds, tag, upload 1.4
-*** TODO diagrams-pandoc
+*** DONE diagrams-pandoc
     + [ ] just need to bump bounds for other diagrams packages etc.
 *** TODO diagrams
   + [ ] CHANGES updated
@@ -278,16 +278,8 @@
   + [ ] Haddocks up to date
   + [ ] version bump
   + [ ] LICENSE updated
-*** TODO diagrams-doc
-  + [ ] CHANGES updated
-  + [ ] all CHANGES in user manual or tutorial
-  + [ ] upper bounds fixed
-  + [ ] lower bounds fixed
-  + [ ] travis build green
-  + [ ] update tested-with field
-  + [ ] Haddocks up to date
-  + [ ] version bump
-  + [ ] LICENSE updated
+*** DONE diagrams-doc
+  + [X] successfully building!
 *** TODO diagrams-povray
   + [ ] CHANGES updated
   + [ ] all CHANGES in user manual or tutorial
