@@ -29,12 +29,15 @@ main = do
 mkYamlFile :: [Dep] -> Yaml.YamlBuilder
 mkYamlFile deps = Yaml.mapping
   [ "resolver"   .= Yaml.string "lts-5.17"
-  , "extra-deps" .= Yaml.array [ Yaml.string "tuple-0.3.0.2"
-                               , Yaml.string "OneTuple-0.2.1"
-                               , Yaml.string "SVGFonts-1.5.0.0"
-                               , Yaml.string "cubicbezier-0.4.0.2"
-                               , Yaml.string "mfsolve-0.3.2.0"
-                               ]
+  , "extra-deps" .= Yaml.array . map Yaml.string $
+    [ "tuple-0.3.0.2"
+    , "OneTuple-0.2.1"
+    , "SVGFonts-1.5.0.0"
+    , "cubicbezier-0.4.0.2"
+    , "mfsolve-0.3.2.0"
+    , "haskell-src-exts-1.18.2"
+    , "haskell-src-exts-simple-1.18.0.1.1"
+    ]
   , "packages"   .= Yaml.array (Yaml.string "." : map mkDepObject deps)
   ]
   where
