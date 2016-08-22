@@ -37,6 +37,7 @@ mkYamlFile deps = Yaml.mapping
     , "mfsolve-0.3.2.0"
     , "haskell-src-exts-1.18.2"
     , "haskell-src-exts-simple-1.18.0.1.1"
+    , "optparse-applicative-0.13.0.0"
     ])
   , "packages"   .= Yaml.array (Yaml.string "." : map mkDepObject deps)
   ]
