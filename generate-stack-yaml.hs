@@ -65,6 +65,7 @@ repoNames =
   , "diagrams-core"
   , "diagrams-lib"
   , "diagrams-rasterific"
+  , "diagrams-svg"
   , "diagrams-solve"
   , "diagrams-contrib"
   , "docutils"
