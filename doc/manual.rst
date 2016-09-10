@@ -133,33 +133,44 @@ Installation
 
 Before installing ``diagrams``, you will need the following:
 
-* The `Glasgow Haskell Compiler`_ (GHC), version 7.6.x or later
-  (7.8.4 is recommended).
-
-* It is recommended (but not required) to have the latest release of
-  the `Haskell Platform`_ (currently 2014.2.0.0).  At the very least
-  you will want the `cabal-install`_ tool.  Diagrams is always
-  tested on at least two versions of the Haskell Platform (the
-  current and previous releases), and may work on earlier HP
-  releases as well.
+* The `Glasgow Haskell Compiler`_ (GHC), version 7.8.x or later.
+* The `cabal-install`_ tool.
 
 .. _`cabal-install`: http://hackage.haskell.org/trac/hackage/wiki/CabalInstall
-
-If you are on OS X or Windows, GHC itself comes with the Haskell
-Platform; if you are on Linux, you will have to install GHC first.
-
 .. _`Glasgow Haskell Compiler`: http://www.haskell.org/ghc/
-.. _`Haskell Platform`: http://hackage.haskell.org/platform/
 
-Once you have successfully installed the Haskell platform, installing
-``diagrams`` should be as easy as issuing the command:
+If you do not already have these, we recommend following the `minimal
+installer instructions`_.
+
+.. _`minimal installer instructions`: https://www.haskell.org/downloads#minimal
+
+Once you have the prerequisites, we recommend installing diagrams in a
+sandbox, like so:
 
 ::
 
-  cabal install diagrams -jN
+    cabal sandbox init
+    cabal install diagrams
 
-where ``N`` is the number of cores you wish to use for
-compilation.
+To make use of the diagrams libraries in the sandbox, you can use
+commands such as
+
+::
+
+    cabal exec -- ghc --make MyDiagram.hs
+
+which will run ``ghc --make MyDiagram.hs`` in the sandbox environment.
+Alternatively, on any Unix-ish system you should be able to do
+something like
+
+::
+
+    cabal exec bash
+
+(feel free to substitute your favorite shell in place of ``bash``).
+This will start a new shell in an environment with all the diagrams
+packages available to GHC; you can now run ``ghc`` normally, without
+the need for ``cabal exec``.  To exit the sandbox, just exit the shell.
 
 The `diagrams`:pkg: package is a convenience wrapper that simply pulls
 in (by default) four other packages:
@@ -169,10 +180,11 @@ in (by default) four other packages:
 * `diagrams-contrib`:pkg: (user-contributed extensions), and
 * `diagrams-svg`:pkg: (Haskell-native backend generating SVG files).
 
-There are several other Haskell-native backends including a `postscript backend`_,
-which supports all features except transparency, and a `raster
-backend`_ (based on the excellent `Rasterific`_ package).  To get
-them, add the ``-fps`` or ``-frasterific`` flags, respectively:
+There are several other Haskell-native backends including a
+`postscript backend`_, which supports all features except
+transparency, and a `raster backend`_ (based on the excellent
+`Rasterific`_ package).  To get them, add the ``-fps`` or
+``-frasterific`` flags, respectively:
 
 ::
 
@@ -198,11 +210,6 @@ command
   cabal install gtk2hs-buildtools
   cabal install -fcairo diagrams
 
-(You can omit ``gtk2hs-buildtools`` if you have already installed it
-previously, though note that you may need to reinstall it if you are
-building under GHC 7.6 and the last time you installed
-``gtk2hs-buildtools`` was sufficiently long ago---otherwise you may
-get FFI-related errors when building the `cairo`:pkg: package.)
 Add ``-fgtk`` to also get a GTK backend (based on the cairo backend)
 which can render diagrams directly to GTK windows.
 
@@ -231,6 +238,8 @@ the following contents:
 ::
 
   {-# LANGUAGE NoMonomorphismRestriction #-}
+  {-# LANGUAGE FlexibleContexts          #-}
+  {-# LANGUAGE TypeFamilies              #-}
 
   import Diagrams.Prelude
   import Diagrams.Backend.SVG.CmdLine
@@ -248,6 +257,10 @@ quite important when using ``diagrams``: otherwise you will probably
 run into lots of crazy error messages.
 
 .. _`dreaded monomorphism restriction`: http://www.haskell.org/haskellwiki/Monomorphism_restriction
+
+The other two extensions are not needed for this simple example in
+particular, but are often required by diagrams in general, so it
+doesn't hurt to include them as a matter of course.
 
 `Diagrams.Prelude`:mod: re-exports almost everything from the
 ``diagrams`` standard library, along with things from other packages

@@ -159,10 +159,10 @@ with the following contents:
 > import Diagrams.Prelude
 > import Diagrams.Backend.SVG.CmdLine
 >
-> myDia :: Diagram B
-> myDia = circle 1
+> myCircle :: Diagram B
+> myCircle = circle 1
 >
-> main = mainWith myDia
+> main = mainWith myCircle
 
 Turning off the Dreaded Monomorphism Restriction is quite important:
 if you don't, you will almost certainly run into it (and be very
@@ -238,7 +238,7 @@ A few miscellaneous notes:
 
   __ https://wiki.haskell.org/Literate_programming
 
-* The type signature on ``myDia :: Diagram B`` is needed to inform the
+* The type signature on ``myCircle :: Diagram B`` is needed to inform the
   diagrams framework which backend you intend to use for rendering
   (every backend exports ``B`` as a synonym for itself).  Without the
   type signature, you are likely to get type errors about ambiguous
