@@ -4957,6 +4957,69 @@ operations are interpreted in the obvious way.
 Tips and tricks
 ===============
 
+Polymorphic diagrams and ``PartialTypeSignatures``
+--------------------------------------------------
+
+Since all diagrams backends export ``B`` as a type tag synonym, you
+can always give your diagrams type signatures like ``Diagrams B``, and
+switch which backend you use for rendering without having to change
+all your types.
+
+However, this does not help if you want to create some sort of
+*backend-independent library* which exports diagrams or functions for
+creating diagrams.  In that case, you really need to make your
+diagrams polymorphic, to allow the end user to use whatever backend
+they want. (This is still true even if the end user is only you!)
+
+If you ask GHC to display the most general inferred type of various
+diagrams, however, you quickly realize that they have a horrendous
+mess of constraints.  For example:
+
+::
+
+    circle 1
+      :: (RealFloat (N t), Transformable t, TrailLike t, V t ~ V2) => t
+
+    circle 1 # fc red
+      :: (RealFloat (N b), Typeable (N b),
+          Transformable b, HasStyle b, TrailLike b, V b ~ V2) =>
+         b
+
+    \n -> text "Hello world!" <> circle n # fc red
+      :: (RealFloat n, Typeable n,
+          Renderable (Path V2 n) b,
+          Renderable (Diagrams.TwoD.Text.Text n) b) =>
+         n -> QDiagram b V2 n Any
+
+Including such type signatures in your code can be a pain, and they
+aren't necessarily enlightening.  Fortunately, there is a better way:
+using the ``PartialTypeSignatures`` extension (available since GHC
+7.10), it is possible to leave holes in types that GHC will fill in.
+In particular, we can let GHC fill in the necessary constraints
+for a type.  Here is an example:
+
+.. class:: dia-lhs
+
+::
+
+> {-# LANGUAGE PartialTypeSignatures #-}
+> {-# OPTIONS_GHC -fno-warn-partial-type-signatures #-}
+>
+> f :: _ => n -> QDiagram b V2 n Any
+> f n = text "Hello world!" <> circle n # fc red
+>
+> example :: Diagram B
+> example = f 5
+
+Notice how the declared type of ``f`` begins with ``_ => ...``, where
+a wildcard has been used in place of the constraints.  GHC will check
+the part of the type we have specified, but infer the missing
+constraints.
+
+Notice how we also use the ``-fno-warn-partial-type-signatures``
+option to GHC; otherwise, the default is for GHC to issue a warning
+with each type hole that is encountered.
+
 Using absolute coordinates
 --------------------------
 
