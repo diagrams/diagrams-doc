@@ -1,0 +1,6 @@
+---
+published: September 5, 2015
+---
+Ryan Yates and Brent Yorgey gave a [presentation about
+diagrams](https://www.youtube.com/watch?v=oAz8AEf7WDA&list=PLnqUlCo055hWmIvlbzE2zTghLlaeyHnfE&index=4)
+at [FARM 2015](http://functional-art.org/2015/).  The [slides are available here](http://ozark.hendrix.edu/~yorgey/pub/diagrams-FARM-15.pdf).
