@@ -51,22 +51,15 @@ few things:
 GHC/The Haskell Platform
 ------------------------
 
-You'll need a recent version of the `Glasgow Haskell
-Compiler`_ (7.6 or later), as well as some
-standard libraries and tools.  There are several methods for obtaining
-these:
-
-* `The Haskell Platform`_ has everything you need in one convenient
-  package. If you are unsure, you should use this.
-
-* If you already have GHC and/or know what you are doing and want to
-  install things yourself, just make sure you have `GHC`_ and a recent
-  version of the `cabal-install tool`_.
+You'll need a recent version of the `Glasgow Haskell Compiler`_ (7.8
+or later), as well as the `cabal-install tool`_.  If you do not
+already have these, we recommend following the `minimal installer
+instructions`_.
 
 .. _`Glasgow Haskell Compiler`: http://haskell.org/ghc
-.. _`The Haskell Platform`: http://hackage.haskell.org/platform/
-.. _`GHC`: http://haskell.org/ghc
 .. _`cabal-install tool`: http://hackage.haskell.org/trac/hackage/wiki/CabalInstall
+.. _`minimal installer instructions`: https://www.haskell.org/downloads#minimal
+.. _`stack`: https://www.haskell.org/downloads#stack
 
 Installation
 ------------
@@ -79,12 +72,26 @@ sandbox, like so:
 
     cabal sandbox init
     cabal install diagrams
+
+To make use of the diagrams libraries in the sandbox, you can use
+commands such as
+
+::
+
+    cabal exec -- ghc --make MyDiagram.hs
+
+which will run ``ghc --make MyDiagram.hs`` in the sandbox environment.
+Alternatively, on any Unix-ish system you should be able to do
+something like
+
+::
+
     cabal exec bash
 
-The last line will start a new shell (feel free to substitute your
-favorite shell in place of ``bash``) in an environment with all the
-diagrams packages available to GHC.  To exit the sandbox, just exit
-the shell.
+(feel free to substitute your favorite shell in place of ``bash``).
+This will start a new shell in an environment with all the diagrams
+packages available to GHC; you can now run ``ghc`` normally, without
+the need for ``cabal exec``.  To exit the sandbox, just exit the shell.
 
 `diagrams`:pkg: is just a wrapper package which pulls in the following
 four packages:
