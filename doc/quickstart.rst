@@ -228,6 +228,24 @@ creation tutorial`__.
 
 __ cmdline.html
 
+A few miscellaneous notes:
+
+* Diagrams does not require the use of `literate Haskell`__ (``.lhs``)
+  files; normal ``.hs`` files work perfectly well.  However, we
+  suggest using ``.lhs`` while following diagrams tutorials, since you
+  will be able to easily copy and paste sections of text and code from
+  the tutorial page into your editor without reformatting it.
+
+  __ https://wiki.haskell.org/Literate_programming
+
+* The type signature on ``myDia :: Diagram B`` is needed to inform the
+  diagrams framework which backend you intend to use for rendering
+  (every backend exports ``B`` as a synonym for itself).  Without the
+  type signature, you are likely to get type errors about ambiguous
+  type variables.  You can often get away with putting just one type
+  signature on the final diagram to be rendered, and letting GHC infer
+  the rest, though including more type signatures can also be helpful.
+
 Attributes
 ==========
 
@@ -367,6 +385,19 @@ The two diagrams are arranged next to each other so that their local
 origins are on the same horizontal or vertical line.  As you can
 ascertain for yourself with `showOrigin`, the local origin of the new,
 combined diagram coincides with the local origin of the first diagram.
+
+The `hcat` and `vcat` functions are provided for laying out an entire
+*list* of diagrams horizontally or vertically:
+
+.. class:: dia-lhs
+
+::
+
+> circles = hcat (map circle [1..6])
+> example = vcat (replicate 3 circles)
+
+See also `hsep` and `vsep` for including space in between subsequent
+diagrams.
 
 `(|||)` and `(===)` are actually just convenient specializations of
 the more general `beside` combinator. `beside` takes as arguments a
