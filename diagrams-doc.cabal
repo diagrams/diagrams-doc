@@ -19,7 +19,7 @@ library
                   , diagrams-rasterific
                   , JuicyPixels
 
-                  , diagrams-builder >= 0.7.2 && < 0.8
+                  , diagrams-builder >= 0.7.2 && < 0.9
                   , diagrams-core >= 1.3
                   , diagrams-lib >= 1.3
                   , docutils >= 0.1 && < 0.2
@@ -43,7 +43,7 @@ executable diagrams-doc
   ghc-options:  -threaded
   build-depends: base >= 4.8 && < 5
                , diagrams-doc
-               , diagrams-builder >= 0.7.2 && < 0.8
+               , diagrams-builder >= 0.7.2 && < 0.9
                , shake >= 0.15 && < 0.16
                , hakyll >= 4.7 && < 4.8
                , docutils >= 0.1 && < 0.2
