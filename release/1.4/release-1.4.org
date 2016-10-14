@@ -124,6 +124,9 @@
   + [ ] LICENSE updated
 
   Didn't need update at all.
+
+GOING THROUGH UPDATES FOR LENS-4.15 HERE
+
 *** DONE diagrams-cairo
   + [ ] CHANGES updated
   + [X] all CHANGES in user manual or tutorial
