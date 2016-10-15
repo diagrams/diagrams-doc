@@ -184,11 +184,6 @@
   + [X] Haddocks up to date
   + [ ] version bump
   + [X] LICENSE updated
-
-
-GOING THROUGH UPDATES FOR LENS-4.15 HERE
-
-
 *** DONE jeffreyrosenbluth/svg-builder
     Nothing needed.
 *** DONE diagrams-svg
@@ -203,6 +198,11 @@ GOING THROUGH UPDATES FOR LENS-4.15 HERE
   + [X] LICENSE updated
 
   + [ ] Need to bump bounds for other diagrams packages, then upload 1.4.1
+
+
+GOING THROUGH UPDATES FOR LENS-4.15 HERE
+
+
 *** DONE jeffreyrosenbluth/static-canvas
     Nothing needed.
 *** DONE diagrams-canvas
