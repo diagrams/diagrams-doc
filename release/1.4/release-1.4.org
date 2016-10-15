@@ -197,12 +197,8 @@
   + [X] version bump
   + [X] LICENSE updated
 
-  + [ ] Need to bump bounds for other diagrams packages, then upload 1.4.1
-
-
-GOING THROUGH UPDATES FOR LENS-4.15 HERE
-
-
+  + [ ] Need to bump bounds for other diagrams packages, then upload
+    1.4.1
 *** DONE jeffreyrosenbluth/static-canvas
     Nothing needed.
 *** DONE diagrams-canvas
@@ -232,16 +228,6 @@ GOING THROUGH UPDATES FOR LENS-4.15 HERE
   + [ ] Just need to bump bounds, tag, upload 1.4
 *** DONE diagrams-pandoc
     + [ ] just need to bump bounds for other diagrams packages etc.
-*** TODO diagrams
-  + [ ] CHANGES updated
-  + [ ] all CHANGES in user manual or tutorial
-  + [ ] upper bounds fixed
-  + [ ] lower bounds fixed
-  + [ ] travis build green
-  + [ ] update tested-with field
-  + [ ] Haddocks up to date
-  + [ ] version bump
-  + [ ] LICENSE updated
 *** DONE diagrams-builder
   + [X] CHANGES updated
   + [X] all CHANGES in user manual or tutorial
@@ -277,6 +263,16 @@ GOING THROUGH UPDATES FOR LENS-4.15 HERE
 *** DONE diagrams-doc
   + [X] successfully building!
 *** TODO diagrams-povray
+  + [ ] CHANGES updated
+  + [ ] all CHANGES in user manual or tutorial
+  + [ ] upper bounds fixed
+  + [ ] lower bounds fixed
+  + [ ] travis build green
+  + [ ] update tested-with field
+  + [ ] Haddocks up to date
+  + [ ] version bump
+  + [ ] LICENSE updated
+*** TODO diagrams
   + [ ] CHANGES updated
   + [ ] all CHANGES in user manual or tutorial
   + [ ] upper bounds fixed
