@@ -124,9 +124,6 @@
   + [ ] LICENSE updated
 
   Didn't need update at all.
-
-GOING THROUGH UPDATES FOR LENS-4.15 HERE
-
 *** DONE diagrams-cairo
   + [ ] CHANGES updated
   + [X] all CHANGES in user manual or tutorial
@@ -187,6 +184,11 @@ GOING THROUGH UPDATES FOR LENS-4.15 HERE
   + [X] Haddocks up to date
   + [ ] version bump
   + [X] LICENSE updated
+
+
+GOING THROUGH UPDATES FOR LENS-4.15 HERE
+
+
 *** DONE jeffreyrosenbluth/svg-builder
     Nothing needed.
 *** DONE diagrams-svg
