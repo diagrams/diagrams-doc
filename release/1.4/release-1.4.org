@@ -1,4 +1,4 @@
-* Checklist for major releases [0/8]
+* Checklist for major releases [1/8]
 ** TODO go through per-package checklist
 *** DONE monoid-extras
   + [X] CHANGES updated
@@ -250,28 +250,12 @@
   + [X] LICENSE updated
 *** DONE diagrams-backend-tests
     + [X] building
-*** TODO docutils
-  + [ ] CHANGES updated
-  + [ ] all CHANGES in user manual or tutorial
-  + [ ] upper bounds fixed
-  + [ ] lower bounds fixed
-  + [ ] travis build green
-  + [ ] update tested-with field
-  + [ ] Haddocks up to date
-  + [ ] version bump
-  + [ ] LICENSE updated
+*** DONE docutils
+    + [X] builds successfully.  no release.
 *** DONE diagrams-doc
   + [X] successfully building!
-*** TODO diagrams-povray
-  + [ ] CHANGES updated
-  + [ ] all CHANGES in user manual or tutorial
-  + [ ] upper bounds fixed
-  + [ ] lower bounds fixed
-  + [ ] travis build green
-  + [ ] update tested-with field
-  + [ ] Haddocks up to date
-  + [ ] version bump
-  + [ ] LICENSE updated
+*** DONE diagrams-povray
+    + [X] made sure it still builds
 *** TODO diagrams
   + [ ] CHANGES updated
   + [ ] all CHANGES in user manual or tutorial
@@ -282,8 +266,8 @@
   + [ ] Haddocks up to date
   + [ ] version bump
   + [ ] LICENSE updated
-** TODO user manual / tutorials [2/3]
-+ [ ] make sure all examples build
+** DONE user manual / tutorials [3/3]
++ [X] make sure all examples build
 + [X] make sure documentation is up-to-date
 + [X] make sure all new features are described/mentioned in the manual
 ** TODO testing [2/3]
