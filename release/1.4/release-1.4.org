@@ -256,16 +256,15 @@
   + [X] successfully building!
 *** DONE diagrams-povray
     + [X] made sure it still builds
-*** TODO diagrams
-  + [ ] CHANGES updated
-  + [ ] all CHANGES in user manual or tutorial
+*** DONE diagrams
+  + [X] CHANGES updated
+  + [X] all CHANGES in user manual or tutorial
   + [ ] upper bounds fixed
   + [ ] lower bounds fixed
-  + [ ] travis build green
-  + [ ] update tested-with field
-  + [ ] Haddocks up to date
-  + [ ] version bump
-  + [ ] LICENSE updated
+  + [X] update tested-with field
+  + [X] Haddocks up to date
+  + [X] version bump
+  + [X] LICENSE updated
 ** TODO user manual / tutorials [3/4]
 + [X] make sure all examples build
 + [X] make sure documentation is up-to-date
