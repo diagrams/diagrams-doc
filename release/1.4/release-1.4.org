@@ -1,4 +1,4 @@
-* Checklist for major releases [0/8]
+* Checklist for major releases [1/8]
 ** TODO go through per-package checklist
 *** DONE monoid-extras
   + [X] CHANGES updated
@@ -238,12 +238,12 @@
   + [X] Haddocks up to date
   + [X] version bump
   + [X] LICENSE updated
-*** TODO diagrams-haddock
+*** DONE diagrams-haddock
   + [X] CHANGES updated
   + [X] all CHANGES in user manual or tutorial
   + [X] upper bounds fixed
   + [X] lower bounds fixed
-  + [ ] travis build green
+  + [X] travis build green
   + [X] update tested-with field
   + [X] Haddocks up to date
   + [X] version bump
@@ -271,8 +271,8 @@
 + [X] make sure documentation is up-to-date
 + [X] make sure all new features are described/mentioned in the manual
 + [ ] create migration guide
-** TODO testing [2/3]
-+ [ ] check all travis tests
+** DONE testing [3/3]
++ [X] check all travis tests
 + [X] run diagrams-backend-tests
 + [X] copy diagrams-backend-tests output to website
 ** TODO update release page on website
