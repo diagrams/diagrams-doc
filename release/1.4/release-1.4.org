@@ -1,5 +1,5 @@
-* Checklist for major releases [1/8]
-** TODO go through per-package checklist
+* Checklist for major releases [2/8]
+** DONE go through per-package checklist
 *** DONE monoid-extras
   + [X] CHANGES updated
   + [X] all CHANGES in user manual or tutorial
