@@ -1,4 +1,4 @@
-* Checklist for major releases [2/8]
+* Checklist for major releases [3/8]
 ** DONE go through per-package checklist
 *** DONE monoid-extras
   + [X] CHANGES updated
@@ -265,11 +265,11 @@
   + [X] Haddocks up to date
   + [X] version bump
   + [X] LICENSE updated
-** TODO user manual / tutorials [3/4]
+** DONE user manual / tutorials [4/4]
 + [X] make sure all examples build
 + [X] make sure documentation is up-to-date
 + [X] make sure all new features are described/mentioned in the manual
-+ [ ] create migration guide
++ [X] create migration guide
 ** DONE testing [3/3]
 + [X] check all travis tests
 + [X] run diagrams-backend-tests
