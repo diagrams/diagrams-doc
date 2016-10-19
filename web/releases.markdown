@@ -2,6 +2,227 @@
 title: Releases
 ---
 
+diagrams 1.4: XXX
+=================
+
+[diagrams-core-1.4](http://hackage.haskell.org/package/diagrams-core-1.4)
+
+* **New features**
+
+    - New `eachName` traversal, for traversing over parts of a `Name`
+      that match a given type
+
+    - More documentation explaining `HasOrigin` and `Transformable`
+      instances for `Envelope`
+
+* **Dependency/version changes**
+
+    - Allow `lens-4.15`
+    - Many other upper bounds bumped; see minor release changelogs below.
+
+* **New instances**
+
+    - `Transformable` instance for `Measured`
+
+    - A bunch more instances for `Query` (`Distributive`,
+      `Representable`, `Profunctor`, `Coseive`, `Closed`, `Costrong`,
+      `Corepresentable`)
+
+* **API changes**
+
+    - Move some `Query`-related functions to `diagrams-lib` (`sample`,
+      `value`, `resetValue`, `clearValue`)
+
+    - Remove some redundant constraints in type signatures (should not
+      actually affect API)
+
+[diagrams-lib-1.4](http://hackage.haskell.org/package/diagrams-lib-1.4)
+
+* **New features**
+
+    - New `mkText'` function, which allows making a text primitive
+      without recommending a fill colour or font size so users can
+      recommend their own (*e.g.* using the `recommendFontSize`
+      function).
+
+    - New functions `reflectXY` and `reflectionXY`
+
+    - New `composeAligned` combinator for doing composition under an
+      alignment while leaving the local origin unaffected.
+
+    - Add `_LocLoop` and `_LocLine` prisms
+
+    - New `bspline` function for creating uniform cubic B-splines
+
+    - New 3D features:
+        - New `Skinned` class
+        - Improved handling of 3D primitives
+        - CSG
+
+    - New standard attributes for separate fill and stroke opacity
+      (see
+      [#248](https://github.com/diagrams/diagrams-lib/issues/248)).
+
+    - New `HasQuery` class for things which can be spatially queried
+      for values from some monoid.
+
+    - New function `inquire` for testing whether a given point is
+      inside a diagram.
+
+    - New font weights: `bolder`, `lighter`, `thinWeight`,
+      `ultraLight`, `light`, `mediumWeight`, `heavy`, `semiBold`,
+      `ultraBold`.  Note that currently only the SVG backend deals
+      with the new weights.
+
+    - Export `GetSegmentCodomain` and update documentation
+
+    - Improved performance of 2D rotations
+
+* **New instances**
+
+    - `Alignable` instance for `Located`
+
+    - `ToPath` instances for lines and loops
+
+    - `Serialize` instances for `Trail`, `Path`, `Located`, `SegTree`,
+      `Segment`
+
+    - `Generic` instances for `Path`, `Located`
+
+    - `Action` instance for `Angle`: angles act by rotation.
+
+* **API changes**
+
+    - `snugBL`, `snugBR`, `snugTR` and `snugBR` are deprecated.
+      These functions were unintuitive, ad-hoc, and not particularly useful,
+      especially since e.g. `snugL` and `snugB` do not commute. You
+      can use something like `snugB . snugL` directly, or use `snug`
+      with a direction vector.  See
+      [#250](https://github.com/diagrams/diagrams-lib/issues/250) for
+      more details.
+
+* **Dependency/version changes**
+
+    - upgrade `fsnotify` and drop dependency on deprecated
+      `system-filepath`
+    - Allow `lens-4.15`
+    - Many other bumped upper bounds, see release notes for minor releases
+      below
+
+* **Bug fixes**
+
+    - fix `orientPoints` function, which was previously generating NaN
+      values with lists of only one or two
+      points. ([#210](https://github.com/diagrams/diagrams-lib/issues/210))
+
+    - Broken offset joins with non-vertices in loops ([#263](https://github.com/diagrams/diagrams-lib/issues/263))
+
+    - Properly transform arrow shaft styles ([#274](https://github.com/diagrams/diagrams-lib/issues/274))
+
+    - Fix sign error in `reflectionAbout`
+
+[SVGFonts-1.6](http://hackage.haskell.org/package/SVGFonts-1.6)
+
+- Performance improvement: port `ReadPath` to use `attoparsec`
+- New `loadFont'` function, to read font data from an `XmlSource`
+- Export `Kern(..)` from `Graphics.SVGFonts.ReadFont`
+- New `Serialize` instances for `FontData` and `Kern`
+
+[diagrams-contrib-1.4](http://hackage.haskell.org/package/diagrams-contrib-1.4)
+
+* **New features**
+
+    - New modules:
+
+        - `Diagrams.TwoD.Path.LSystem`: module for generating L-system
+          fractals
+
+        - `Diagrams.TwoD.Path.Boolean`: boolean operations on paths
+
+        - `Diagrams.Color.XKCD`: Common names for the 949 most common
+          RGB monitor colors, as determined by the xkcd color name
+          survey.
+
+        - `Diagrams.TwoD.Layout.Constrained`: 2D layout via relative
+          constraint specifications
+
+        - `Diagrams.Anchors`: layout via specified anchor points
+
+        - `Diagrams.TwoD.Path.Follow`: monoid for trails which matches
+          tangent vectors at endpoints
+
+    - `Diagrams.TwoD.Path.IteratedSubset` is greatly expanded, with
+      more tools, examples, and documentation
+
+    - New radial layout algorithm for rose trees, `radialLayout`
+      function in `Diagrams.TwoD.Layout.Tree`
+
+    - Code in `Diagrams.TwoD.Apollonian` cleaned up and generalized
+
+* **API changes**
+
+    - `Diagrams.TwoD.Path.Turtle`: pen width is now a `Measure n`
+      instead of `n`
+
+[diagrams-cairo-1.4](http://hackage.haskell.org/package/diagrams-cairo-1.4)
+
+No changes.
+
+[diagrams-gtk-1.4](http://hackage.haskell.org/package/diagrams-gtk-1.4)
+
+No changes.
+
+[diagrams-postscript-1.4](http://hackage.haskell.org/package/diagrams-postscript-1.4)
+
+No changes.
+
+[diagrams-rasterific-1.4](http://hackage.haskell.org/package/diagrams-rasterific-1.4)
+
+* **New features**
+
+    - Can now output PDFs.
+
+    - Font files are now embedded with `file-embed`.
+
+    - Various functions for better GIF support.
+
+    - Support for group opacity.
+
+* **New instances**
+
+    - `ToResult` instance for animated GIFs.
+
+[diagrams-svg-1.4.1](http://hackage.haskell.org/package/diagrams-svg-1.4.1)
+
+- Handle wider range of font weight specifications
+- Changes for `svg-builder`
+- Deprecate `svgId` and `svgClass`
+
+[diagrams-canvas-1.4](http://hackage.haskell.org/package/diagrams-canvas-1.4)
+
+No changes.
+
+[diagrams-html5-1.4](http://hackage.haskell.org/package/diagrams-html5-1.4)
+
+No changes.
+
+[diagrams-builder-0.8](http://hackage.haskell.org/package/diagrams-builder-0.8)
+
+- Require `haskell-src-exts-1.18` and `haskell-src-exts-simple`
+- `diagrams-builder-pgf`: add catch-all case for file extension
+- Better defaults ([#29](https://github.com/diagrams/diagrams-builder/issues/29)):
+    - default extension will be chosen based on backend
+    - `input` option automatically selected when using `pgf` backend
+    - `diagrams` is now default output directory
+- Modules [can now be imported qualified](https://github.com/diagrams/diagrams-builder/pull/17)
+
+[diagrams-haddock-0.4](http://hackage.haskell.org/package/diagrams-haddock-0.4)
+
+- Build with `ghc-8.0`
+- Improved error message when `setup-config` can't be read
+- Replace `lucid-svg` with `svg-builder`
+
+
 diagrams 1.3: 19 April, 2015
 ============================
 

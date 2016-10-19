@@ -1,4 +1,4 @@
-* Checklist for major releases [3/8]
+* Checklist for major releases [4/8]
 ** DONE go through per-package checklist
 *** DONE monoid-extras
   + [X] CHANGES updated
@@ -152,7 +152,7 @@
 
   Can upload master as 1.4.
 *** DONE diagrams-postscript
-  + [X] CHANGES updated
+  + [ ] CHANGES updated
   + [X] all CHANGES in user manual or tutorial
   + [X] upper bounds fixed
   + [X] lower bounds fixed
@@ -160,6 +160,8 @@
   + [X] update tested-with field
   + [X] Haddocks up to date
   + [X] LICENSE updated
+
+  Just upload as 1.4.
 *** DONE cchalmers/texrunner
   Doesn't seem to need any work since diagrams-pgf is working fine.
 *** DONE diagrams-pgf
@@ -274,7 +276,7 @@
 + [X] check all travis tests
 + [X] run diagrams-backend-tests
 + [X] copy diagrams-backend-tests output to website
-** TODO update release page on website
+** DONE update release page on website
       - See previous versions for format.  Should be possible to
         essentially paste in the relevant parts of the CHANGES files
         for individual repos.
@@ -301,3 +303,4 @@
       which can be used to build combined Haddocks.  See the comments
       for more info and prerequisites.
 ** TODO Rebuild and upload new website.
+*** TODO Put release date in release page
