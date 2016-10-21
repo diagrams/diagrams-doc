@@ -28,11 +28,11 @@ main = do
 
 mkYamlFile :: [Dep] -> Yaml.YamlBuilder
 mkYamlFile deps = Yaml.mapping
-  [ "resolver"   .= Yaml.string "lts-5.17"
+  [ "resolver"   .= Yaml.string "lts-6.22"
   , "extra-deps" .= (Yaml.array . map Yaml.string $
     [ "tuple-0.3.0.2"
     , "OneTuple-0.2.1"
-    , "SVGFonts-1.5.0.0"
+    , "SVGFonts-1.6.0.0"
     , "cubicbezier-0.4.0.2"
     , "mfsolve-0.3.2.0"
     , "haskell-src-exts-1.18.2"
@@ -63,6 +63,7 @@ repoNames :: [Text]
 repoNames =
   [ "active"
   , "diagrams-builder"
+  , "diagrams-haddock"
   , "diagrams-core"
   , "diagrams-lib"
   , "diagrams-rasterific"
