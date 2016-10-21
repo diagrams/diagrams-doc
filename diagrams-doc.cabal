@@ -91,7 +91,7 @@ executable Site
   hs-source-dirs:   web
   default-language: Haskell2010
   build-depends:    base >= 4.8 && < 5
-                  , hakyll >= 4.7 && < 4.8
+                  , hakyll >= 4.7 && < 4.9
                   , containers
                   , filepath
                   , cmdargs
