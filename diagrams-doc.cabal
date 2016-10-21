@@ -45,7 +45,7 @@ executable diagrams-doc
                , diagrams-doc
                , diagrams-builder >= 0.7.2 && < 0.9
                , shake >= 0.15 && < 0.16
-               , hakyll >= 4.7 && < 4.8
+               , hakyll >= 4.7 && < 4.9
                , docutils >= 0.1 && < 0.2
                , safe >= 0.3 && < 0.4
                , cmdargs >= 0.10 && < 0.11
