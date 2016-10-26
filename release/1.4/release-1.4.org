@@ -1,4 +1,4 @@
-* Checklist for major releases [4/8]
+* Checklist for major releases [5/8]
 ** DONE go through per-package checklist
 *** DONE monoid-extras
   + [X] CHANGES updated
@@ -282,9 +282,9 @@
         for individual repos.
     - We should probably come up with a better format and/or a more
       automated way of doing this...
-** TODO diagrams-haddock [0/2]
-+ [ ] make sure all diagrams-haddock examples build
-+ [ ] rebuild all diagrams-haddock examples and check them in
+** DONE diagrams-haddock [2/2]
++ [X] make sure all diagrams-haddock examples build
++ [X] rebuild all diagrams-haddock examples and check them in
 ** TODO upload packages [0/4]
 + [ ] List release date in each CHANGES file
 + [ ] Apply a tag to each repo just before releasing
