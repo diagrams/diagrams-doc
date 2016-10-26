@@ -60,7 +60,7 @@ interface that allows the selection of a particular diagram by name.
 > main = mainWith [("First", d1),("Second", d2),("Third", d3)]
 
 The ``--list`` option just lists the available diagrams to render and
-the ``-s`` selection option takes a name and renders the associated
+the ``-S`` selection option takes a name and renders the associated
 diagram with the standard options.
 
 ::
@@ -68,7 +68,7 @@ diagram with the standard options.
     $ ./Multiple --list
     Available diagrams:
       First Second Third
-    $ ./Multiple -o d1.svg -w 100 -s First
+    $ ./Multiple -o d1.svg -w 100 -S First
 
 Some backends support rendering animations (typically as individually indexed
 files of frames).
