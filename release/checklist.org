@@ -103,6 +103,8 @@
   - diagrams
   - diagrams-builder
   - diagrams-haddock
+  - diagrams-graphviz
+  - diagrams-input
 
   Other packages that should be checked:
 
