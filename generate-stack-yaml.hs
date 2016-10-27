@@ -32,7 +32,7 @@ mkYamlFile deps = Yaml.mapping
   , "extra-deps" .= (Yaml.array . map Yaml.string $
     [ "tuple-0.3.0.2"
     , "OneTuple-0.2.1"
-    , "SVGFonts-1.6.0.0"
+    , "SVGFonts-1.6.0.1"
     , "cubicbezier-0.4.0.2"
     , "mfsolve-0.3.2.0"
     , "haskell-src-exts-1.18.2"
