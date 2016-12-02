@@ -29,6 +29,12 @@ diving in and reading the source code (see the `diagrams-core`:repo:
 repository), which is generally well-commented, but the hope is that
 this document can serve to orient you and supply useful commentary.
 
+Diagrams.Core
+=============
+
+This module simply re-exports many things from the other modules for
+convenience.
+
 Diagrams.Core.V
 ===============
 
@@ -92,14 +98,110 @@ IsName a => a -> q -> q`` for performing qualification.
 Diagrams.Core.HasOrigin
 =======================
 
-Diagrams.Core.Juxtapose
-=======================
+This module defines the `HasOrigin` class (containing the
+`moveOriginTo` method) as well as related functions like
+`moveOriginBy`, `moveTo`, and `place`.  It also defines instances of
+`HasOrigin` for a number of types, including `Point`\s, tuples, lists,
+sets, and maps.
+
+See the `section of the type class reference on HasOrigin`__ for more
+information.
+
+__ manual.html#hasorigin
 
 Diagrams.Core.Transform
 =======================
 
+This module defines a type of generic affine transformations
+parameterized over any vector space, along with a large number of
+methods for working with transformations.
+
+First, the `(:-:)` type consists of a pair of functions, which are
+assumed to be linear and inverse to each other.
+
+A `Transformation` type is then defined to contain three components:
+
+* a linear map and its inverse (stored using `(:-:)`)
+* the transpose of the linear map, with *its* inverse (again stored using `(:-:)`)
+* a vector, representing a translation
+
+The point is that we need transposes and inverses when transforming
+things like `Envelope`\s and `Trace`\s.  While it would be possible in
+theory to simply store a transformation as a matrix and compute its
+transpose or inverse whenever required, this would be computationally
+wasteful (especially computing inverses).  Instead, we simply package
+up a transformation along with its inverse, transpose, and inverse
+transpose (which we can think of as a little 2x2 matrix of functions).
+Such a representation is closed under composition, and we can compute
+its inverse or transpose by just flipping the matrix along the
+appropriate axis.
+
+Along with the definition of the `Transformation` type itself, this
+module exports many functions for generically creating, transforming,
+querying, and applying `Transformation` values.  For example, in
+addition to straightforward things like composing and applying
+transformations, this is where you can find code to convert a
+`Transformation` to a matrix representation or to compute its
+determinant.  (On the other hand, converting a matrix to a
+`Transformation` is only implemented specifically for 2 or 3
+dimensions, and can be found in the `diagrams-lib`:pkg: package, in
+`Diagrams.Transform.Matrix`:mod:.)
+
+This module also defines the important `Transformable` class of things
+to which `Transformation`\s can be applied, along with many generic
+instances.
+
+Finally, the module defines a few specific transformations which are
+polymorphic over the vector space, namely, translation and scaling.
+Other specific transformations (*e.g.* `scaleX` and so on) are defined
+in `diagrams-lib`:pkg:.
+
 Diagrams.Core.Envelope
 ======================
+
+This module defines the `Envelope` type; see the `user manual section
+on envelopes`__ for a general overview of what envelopes are and how
+to use them.
+
+__ manual.html#envelopes
+
+For an explanation of the specific way that `Envelope` is defined, see
+`Brent Yorgey's paper on diagrams and monoids`__.
+
+__ http://ozark.hendrix.edu/~yorgey/pub/monoid-pearl.pdf
+
+The real meat of this module consists of the definitions of
+`HasOrigin` and `Transformable` instances for the `Envelope` type.
+The fact that packaging transformations together with their transpose
+and inverse makes it possible to correctly compute the affine
+transformation of an envelope is one of the key insights making the
+diagrams framework possible.  The source code has `extensive comments
+explaining the instances`__; consult those if you want to understand
+how they actually work.
+
+__ https://github.com/diagrams/diagrams-core/blob/master/src/Diagrams/Core/Envelope.hs#L181
+
+Finally, this module defines the `Enveloped` class for things with
+`Envelope`\s, a number of functions like `envelopeV`, `envelopePMay`,
+and so on for querying envelopes, and size-related functions like
+`diameter`, `extent`, and `size` that are defined in terms of
+envelopes.
+
+Diagrams.Core.Juxtapose
+=======================
+
+This module defines the `Juxtaposable` class, the default
+implementation `juxtaposeDefault` for instances of `Enveloped` and
+`HasOrigin`, and generic instances for `Envelope`, pairs, lists, maps,
+sets, and functions.
+
+See the `type class reference section on Juxtaposable`__ for more
+information.
+
+__ manual.html#juxtaposable
+
+Diagrams.Core.Measure
+=====================
 
 Diagrams.Core.Trace
 ===================
@@ -118,3 +220,6 @@ QDiagram
 
 Backends
 --------
+
+Diagrams.Core.Compile
+=====================
