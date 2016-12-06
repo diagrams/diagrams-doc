@@ -203,11 +203,49 @@ __ manual.html#juxtaposable
 Diagrams.Core.Measure
 =====================
 
+This module defines the `Measured` type along with a number of utility
+functions and instances for working with it.  See the `user manual
+section on measurement units`__.
+
+`Measured` values are implemented as functions from a triple of
+scaling factors to a final value: the local scaling factor, global
+scaling factor, and normalized scaling factor.  XXX write about how
+these are computed
+
+__ manual.html#measurement-units
+
 Diagrams.Core.Trace
 ===================
 
+This module implements the `trace`__ which is associated with every
+diagram.  A trace is essentially an "embedded raytracer" which can
+compute an intersection with a diagram in any direction from any given
+base point.  Note that a trace needs to be able to answer a trace
+query from *any* given base point, not just from some chosen
+particular base point (*e.g.* the origin), since we need to be able to
+apply affine transformations, including translations.
+
+__ manual.html#traces
+
+Often when one thinks about raytracing the basic idea is that you
+follow a ray and return the *first* intersection that occurs.
+However, to allow for also computing the *last* intersection and other
+generalizations, the base framework in this module actually computes a
+*sorted list* of *all* the intersection points.  Hence this module
+defines a small abstraction for sorted lists, as well as the `Trace`
+abstraction itself.  A number of functions for querying `Trace` values
+are defined here, as well as the `Traced` class for things which have
+a `Trace`.
+
 Diagrams.Core.Query
 ===================
+
+A `Query` is a function that associates a value of some (monoidal)
+type to each point in a diagram; see `the user manual section on
+queries`__.  There is not much in this module besides a great many
+type class instances for the `Query` type.
+
+__ manual.html#using-queries
 
 Diagrams.Core.Style
 ===================
