@@ -19,7 +19,6 @@ web/doc
 web/blog
 web/gallery/images
 web/banner/images
-web/haddock
 .make
 .shake.database
 Shake
