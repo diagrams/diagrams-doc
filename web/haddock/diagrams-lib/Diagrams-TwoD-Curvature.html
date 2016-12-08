@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Diagrams.TwoD.Curvature</title><link href="ocean.css" rel="stylesheet" type="text/css" title="Ocean" /><script src="haddock-util.js" type="text/javascript"></script><script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script><script type="text/javascript">//<![CDATA[
+window.onload = function () {pageLoad();setSynopsis("mini_Diagrams-TwoD-Curvature.html");};
+//]]>
+</script></head><body><div id="package-header"><ul class="links" id="page-menu"><li><a href="src/Diagrams-TwoD-Curvature.html">Source</a></li><li><a href="index.html">Contents</a></li><li><a href="doc-index.html">Index</a></li></ul><p class="caption">diagrams-lib-1.4: Embedded domain-specific language for declarative graphics</p></div><div id="content"><div id="module-header"><table class="info"><tr><th>Copyright</th><td>(c) 2013 diagrams-lib team (see LICENSE)</td></tr><tr><th>License</th><td>BSD-style (see LICENSE)</td></tr><tr><th>Maintainer</th><td>diagrams-discuss@googlegroups.com</td></tr><tr><th>Safe Haskell</th><td>None</td></tr><tr><th>Language</th><td>Haskell2010</td></tr></table><p class="caption">Diagrams.TwoD.Curvature</p></div><div id="description"><p class="caption">Description</p><div class="doc"><p>Compute curvature for segments in two dimensions.</p></div></div><div id="synopsis"><p id="control.syn" class="caption expander" onclick="toggleSection('syn')">Synopsis</p><ul id="section.syn" class="hide" onclick="toggleSection('syn')"><li class="src short"><a href="#v:curvature">curvature</a> :: <a href="http://hackage.haskell.org/packages/archive/base/4.9.0.0/doc/html/Prelude.html#t:RealFloat">RealFloat</a> n =&gt; <a href="Diagrams-Segment.html#t:Segment">Segment</a> <a href="Diagrams-Segment.html#t:Closed">Closed</a> <a href="Diagrams-TwoD-Types.html#t:V2">V2</a> n -&gt; n -&gt; <a href="../monoid-extras/Data-Monoid-Inf.html#t:PosInf">PosInf</a> n</li><li class="src short"><a href="#v:radiusOfCurvature">radiusOfCurvature</a> :: <a href="http://hackage.haskell.org/packages/archive/base/4.9.0.0/doc/html/Prelude.html#t:RealFloat">RealFloat</a> n =&gt; <a href="Diagrams-Segment.html#t:Segment">Segment</a> <a href="Diagrams-Segment.html#t:Closed">Closed</a> <a href="Diagrams-TwoD-Types.html#t:V2">V2</a> n -&gt; n -&gt; <a href="../monoid-extras/Data-Monoid-Inf.html#t:PosInf">PosInf</a> n</li><li class="src short"><a href="#v:squaredCurvature">squaredCurvature</a> :: <a href="http://hackage.haskell.org/packages/archive/base/4.9.0.0/doc/html/Prelude.html#t:RealFloat">RealFloat</a> n =&gt; <a href="Diagrams-Segment.html#t:Segment">Segment</a> <a href="Diagrams-Segment.html#t:Closed">Closed</a> <a href="Diagrams-TwoD-Types.html#t:V2">V2</a> n -&gt; n -&gt; <a href="../monoid-extras/Data-Monoid-Inf.html#t:PosInf">PosInf</a> n</li><li class="src short"><a href="#v:squaredRadiusOfCurvature">squaredRadiusOfCurvature</a> :: <a href="http://hackage.haskell.org/packages/archive/base/4.9.0.0/doc/html/Prelude.html#t:RealFloat">RealFloat</a> n =&gt; <a href="Diagrams-Segment.html#t:Segment">Segment</a> <a href="Diagrams-Segment.html#t:Closed">Closed</a> <a href="Diagrams-TwoD-Types.html#t:V2">V2</a> n -&gt; n -&gt; <a href="../monoid-extras/Data-Monoid-Inf.html#t:PosInf">PosInf</a> n</li></ul></div><div id="interface"><h1>Documentation</h1><div class="top"><p class="src"><a id="v:curvature" class="def">curvature</a> <a href="src/Diagrams-TwoD-Curvature.html#curvature" class="link">Source</a> <a href="#v:curvature" class="selflink">#</a></p><div class="subs arguments"><p class="caption">Arguments</p><table><tr><td class="src">:: <a href="http://hackage.haskell.org/packages/archive/base/4.9.0.0/doc/html/Prelude.html#t:RealFloat">RealFloat</a> n</td><td class="doc empty">&nbsp;</td></tr><tr><td class="src">=&gt; <a href="Diagrams-Segment.html#t:Segment">Segment</a> <a href="Diagrams-Segment.html#t:Closed">Closed</a> <a href="Diagrams-TwoD-Types.html#t:V2">V2</a> n</td><td class="doc"><p>Segment to measure on.</p></td></tr><tr><td class="src">-&gt; n</td><td class="doc"><p>Parameter to measure at.</p></td></tr><tr><td class="src">-&gt; <a href="../monoid-extras/Data-Monoid-Inf.html#t:PosInf">PosInf</a> n</td><td class="doc"><p>Result is a <code>PosInf</code> value where <code>PosInfty</code> represents
+   infinite curvature or zero radius of curvature.</p></td></tr></table></div><div class="doc"><p>Curvature measures how curved the segment is at a point.  One intuition
+ for the concept is how much you would turn the wheel when driving a car
+ along the curve.  When the wheel is held straight there is zero curvature.
+ When turning a corner to the left we will have positive curvature.  When
+ turning to the right we will have negative curvature.</p><p>Another way to measure this idea is to find the largest circle that we can
+ push up against the curve and have it touch (locally) at exactly the point
+ and not cross the curve.  This is a tangent circle.  The radius of that
+ circle is the &quot;Radius of Curvature&quot; and it is the reciprocal of curvature.
+ Note that if the circle is on the &quot;left&quot; of the curve, we have a positive
+ radius, and if it is to the right we have a negative radius.  Straight
+ segments have an infinite radius which leads us to our representation.  We
+ result in a pair of numerator and denominator so we can include infinity and
+ zero for both the radius and the curvature.</p><p>Lets consider the following curve:</p><p><img src="diagrams/src_Diagrams_TwoD_Curvature_diagramA.svg#diagram=diagramA&amp;height=200&amp;width=400" /></p><p>The curve starts with positive curvature,</p><p><img src="diagrams/src_Diagrams_TwoD_Curvature_diagramPos.svg#diagram=diagramPos&amp;height=200&amp;width=400" /></p><p>approaches zero curvature</p><p><img src="diagrams/src_Diagrams_TwoD_Curvature_diagramZero.svg#diagram=diagramZero&amp;height=200&amp;width=400" /></p><p>then has negative curvature</p><p><img src="diagrams/src_Diagrams_TwoD_Curvature_diagramNeg.svg#diagram=diagramNeg&amp;height=200&amp;width=400" /></p><pre>{-# LANGUAGE GADTs #-}
+
+import Diagrams.TwoD.Curvature
+import Data.Monoid.Inf
+import Diagrams.Coordinates
+
+segmentA :: Segment Closed V2 Double
+segmentA = Cubic (12 ^&amp; 0) (8 ^&amp; 10) (OffsetClosed (20 ^&amp; 8))
+
+curveA = lw thick . strokeP . fromSegments $ [segmentA]
+
+diagramA = pad 1.1 . centerXY $ curveA
+
+diagramPos = diagramWithRadius 0.2
+
+diagramZero = diagramWithRadius 0.45
+
+diagramNeg = diagramWithRadius 0.8
+
+diagramWithRadius t = pad 1.1 . centerXY
+         $ curveA
+        &lt;&gt; showCurvature segmentA t
+         # withEnvelope (curveA :: D V2 Double)
+         # lc red
+
+showCurvature :: Segment Closed V2 Double -&gt; Double -&gt; Diagram SVG
+showCurvature bez@(Cubic b c (OffsetClosed d)) t
+  | v == (0,0) = mempty
+  | otherwise  = go (radiusOfCurvature bez t)
+  where
+    v@(x,y) = unr2 $ firstDerivative b c d t
+    vp = (-y) ^&amp; x
+
+    firstDerivative b c d t = let tt = t*t in (3*(3*tt-4*t+1))*^b + (3*(2-3*t)*t)*^c + (3*tt)*^d
+
+    go Infinity   = mempty
+    go (Finite r) = (circle (abs r) # translate vpr
+                 &lt;&gt; strokeP (origin ~~ (origin .+^ vpr)))
+                  # moveTo (origin .+^ atParam bez t)
+      where
+        vpr = signorm vp ^* r
+</pre></div></div><div class="top"><p class="src"><a id="v:radiusOfCurvature" class="def">radiusOfCurvature</a> <a href="src/Diagrams-TwoD-Curvature.html#radiusOfCurvature" class="link">Source</a> <a href="#v:radiusOfCurvature" class="selflink">#</a></p><div class="subs arguments"><p class="caption">Arguments</p><table><tr><td class="src">:: <a href="http://hackage.haskell.org/packages/archive/base/4.9.0.0/doc/html/Prelude.html#t:RealFloat">RealFloat</a> n</td><td class="doc empty">&nbsp;</td></tr><tr><td class="src">=&gt; <a href="Diagrams-Segment.html#t:Segment">Segment</a> <a href="Diagrams-Segment.html#t:Closed">Closed</a> <a href="Diagrams-TwoD-Types.html#t:V2">V2</a> n</td><td class="doc"><p>Segment to measure on.</p></td></tr><tr><td class="src">-&gt; n</td><td class="doc"><p>Parameter to measure at.</p></td></tr><tr><td class="src">-&gt; <a href="../monoid-extras/Data-Monoid-Inf.html#t:PosInf">PosInf</a> n</td><td class="doc"><p>Result is a <code>PosInf</code> value where <code>PosInfty</code> represents
+   infinite radius of curvature or zero curvature.</p></td></tr></table></div><div class="doc"><p>Reciprocal of <code>curvature</code>.</p></div></div><div class="top"><p class="src"><a id="v:squaredCurvature" class="def">squaredCurvature</a> :: <a href="http://hackage.haskell.org/packages/archive/base/4.9.0.0/doc/html/Prelude.html#t:RealFloat">RealFloat</a> n =&gt; <a href="Diagrams-Segment.html#t:Segment">Segment</a> <a href="Diagrams-Segment.html#t:Closed">Closed</a> <a href="Diagrams-TwoD-Types.html#t:V2">V2</a> n -&gt; n -&gt; <a href="../monoid-extras/Data-Monoid-Inf.html#t:PosInf">PosInf</a> n <a href="src/Diagrams-TwoD-Curvature.html#squaredCurvature" class="link">Source</a> <a href="#v:squaredCurvature" class="selflink">#</a></p><div class="doc"><p>With <code>squaredCurvature</code> we can compute values in spaces that do not support
+ <code><a href="http://hackage.haskell.org/packages/archive/base/4.9.0.0/doc/html/Numeric.html#v:sqrt">sqrt</a></code> and it is just as useful for relative ordering of curvatures or looking
+ for zeros.</p></div></div><div class="top"><p class="src"><a id="v:squaredRadiusOfCurvature" class="def">squaredRadiusOfCurvature</a> :: <a href="http://hackage.haskell.org/packages/archive/base/4.9.0.0/doc/html/Prelude.html#t:RealFloat">RealFloat</a> n =&gt; <a href="Diagrams-Segment.html#t:Segment">Segment</a> <a href="Diagrams-Segment.html#t:Closed">Closed</a> <a href="Diagrams-TwoD-Types.html#t:V2">V2</a> n -&gt; n -&gt; <a href="../monoid-extras/Data-Monoid-Inf.html#t:PosInf">PosInf</a> n <a href="src/Diagrams-TwoD-Curvature.html#squaredRadiusOfCurvature" class="link">Source</a> <a href="#v:squaredRadiusOfCurvature" class="selflink">#</a></p><div class="doc"><p>Reciprocal of <code>squaredCurvature</code></p></div></div></div></div><div id="footer"><p>Produced by <a href="http://www.haskell.org/haddock/">Haddock</a> version 2.17.2</p></div></body></html>
