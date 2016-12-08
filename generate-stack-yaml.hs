@@ -1,7 +1,7 @@
 #! /usr/bin/env stack
 {-
   stack runghc
-    --resolver lts-5.17
+    --resolver lts-6.22
 
     --package basic-prelude
     --package process
