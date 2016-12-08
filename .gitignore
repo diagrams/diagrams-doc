@@ -58,3 +58,5 @@ talks/2015-FARM/diagrams-FARM-15.pdf
 .shake
 
 stack.yaml
+
+standalone-sandbox/
