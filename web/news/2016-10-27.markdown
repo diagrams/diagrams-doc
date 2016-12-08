@@ -1,0 +1,6 @@
+---
+published: October 27, 2016
+---
+Diagrams 1.4
+[released](http://projects.haskell.org/diagrams/releases.html)!  See
+the [migration guide](https://wiki.haskell.org/Diagrams/Dev/Migrate1.4) for help porting existing diagrams code to 1.4.
