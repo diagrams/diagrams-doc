@@ -1,45 +1,33 @@
 #!/bin/zsh
 
 # prerequisites:
-# - darcs, git, hub, hsenv installed.
+# - standalone-haddock installed.
 # - Release packages on Hackage.
 # - Have all the repos checked out at the release version.
-# - cd to the root, under which all the repo directories live.
-# - note: need to make sure version of 'cabal' being used was built
-#   using same version of Cabal that will be in the haddocks sandbox,
-#   (which will be used to build hproj).
+# - cd into root of diagrams-doc repo.
+# - All other repos are in directories that are siblings of the
+#   diagrams-doc repo.
 
-mkdir -p haddocks-tmp
-cd haddocks-tmp
-rm -r *
-rm -r .hsenv_haddocks
-hsenv --name=haddocks
-source .hsenv_haddocks/bin/activate
-echo 'documentation: True' >> .hsenv_haddocks/cabal/config
-cd ..
-# hub clone byorgey/cabal
-# cd cabal
-# git checkout cabal-1.16-haddock-fix
-# cabal install cabal-install/ -j8
-# cd ../..
-cabal install -j8 gtk2hs-buildtools
-cabal install -j8 --constraint='transformers < 0.4' diagrams diagrams-postscript diagrams-cairo diagrams-gtk diagrams-rasterific diagrams-canvas diagrams-builder diagrams-haddock SVGFonts palette cabal-install-1.18.0.8
-for f in monoid-extras dual-tree active core solve lib svg postscript cairo gtk rasterific canvas contrib SVGFonts builder haddock palette
-do
-  cd $f
-  cabal sandbox delete  # be sure to remove any sandboxes so we use the global hsenv one instead
-  cabal configure
-  cd ..
-done
-cd haddocks-tmp
-darcs get --lazy http://hub.darcs.net/byorgey/hproj
-cabal install hproj/ -j8
-cd ..
-mkdir -p haddocks-tmp/haddock
-hproj doc -o haddocks-tmp/haddock -t 'The diagrams framework' monoid-extras dual-tree active core solve lib svg postscript cairo gtk rasterific canvas contrib SVGFonts builder haddock palette
-mkdir -p haddocks-tmp/haddock/diagrams
-for f in core lib contrib SVGFonts haddock
-do
-  cp $f/diagrams/*.svg haddocks-tmp/haddock/diagrams/
-done
+# After running:
+# - creates diagrams-doc/standalone-sandbox
+# - creates standalone-haddock directory (sibling of all repo dirs)
+#   with standalone haddocks
 
+INSTALL_PKGS="-fcairo -fgtk -fsvg -fps -frasterific -fcanvas diagrams diagrams-builder diagrams-graphviz diagrams-haddock diagrams-html5 diagrams-pgf palette SVGFonts"
+
+DOC_DIRS="active builder cairo canvas contrib core dual-tree force-layout graphviz gtk haddock html5 lib monoid-extras palette pgf postscript rasterific solve svg SVGFonts"
+
+cabal update
+
+rm -rf ../standalone-haddock
+mkdir -p standalone-sandbox
+cd standalone-sandbox
+cabal sandbox delete
+cabal sandbox init
+echo 'documentation: True' > cabal.config
+cabal install gtk2hs-buildtools
+cabal install ${=INSTALL_PKGS}
+PKGDB=`cabal exec printenv CABAL_SANDBOX_PACKAGE_PATH | cut -d ':' -f 1`
+cd ../..
+standalone-haddock --hyperlink-source -o standalone-haddock --package-db=$PKGDB ${=DOC_DIRS}
+sed -i -e 's/Standalone Haskell documentation/The diagrams framework/' standalone-haddock/index.html
