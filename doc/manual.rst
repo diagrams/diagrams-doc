@@ -971,6 +971,13 @@ __ http://tauday.com
 `fullTurn :: Angle` represents one full turn, equivalent to `1 @@
 turn`, `tau @@ rad`, or `360 @@ deg`.
 
+There is no `Num` instance for `Angle`; this is intentional, since,
+for example, it is not clear what units would be used for a bare
+number used as an `Angle`, and multiplying two `Angle`\s is
+meaningless and should not be allowed.  `Angle` does have an
+`Additive` instance, which means you can add and subtract angles using
+`(^+^)` and `(^-^)`, and negate an angle with `negated`.
+
 In two dimensions, the direction of a vector can be represented by an
 angle measured counterclockwise from the positive `x`:math:\-axis (shown in
 green below).  For some vector `u`, this angle can be found by `u ^. _theta`.
@@ -1012,8 +1019,17 @@ unit (length 1) vector in the given direction.
 and y-axes, respectively.
 
 The relationship between `Angle`\s and `Direction`\s is similar to
-that between vectors and points.  The `Angle` between two fixed
-`Direction`\s can be found with `angleBetweenDirs`.
+that between vectors and points, though unfortunately there cannot be
+a law-abiding `Affine` instance.
+
+* The `Angle` between two fixed `Direction`\s can be found with
+  `angleBetweenDirs`, which is commutative and returns a positive
+  angle between $0$ and $1/2$ turn, or `signedAngleBetweenDirs`, which
+  satisfies `signedAngleBetweenDirs d1 d2 == negated (signedAngleBetweenDirs
+  d2 d1)` and returns a positive angle when the second direction is
+  clockwise from the first.
+* An `Angle` can be "added" to a `Direction` by simply using `rotate`
+  to rotate the `Direction` by the `Angle`.
 
 Primitive shapes
 ----------------
