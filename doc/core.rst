@@ -250,6 +250,90 @@ __ manual.html#using-queries
 Diagrams.Core.Style
 ===================
 
+This module implements *styles*, which are collections of *attributes*
+(such as line color, fill color, opacity, ...) that can be applied to
+diagrams.  Diagrams takes a *dynamically typed* approach to attributes
+and styles.  This is in contrast to the approach with backends and
+primitives, where the type of a diagram tells you what backend it is
+to be rendered with---or, if it is polymorphic in the backend, there
+are type class constraints that say what primitives the backend must
+be able to render.  But the type of a diagram never says anything
+about what attributes a backend must support; indeed, by looking only
+at the type of a diagram it is impossible to tell what types of
+attributes it contains.  In general, backends pick out the attributes
+they can handle and simply ignore any others.
+
+Attributes
+----------
+
+Attributes are the primitive values out of which styles are built.
+Almost any type can be used as an attribute, with only a few
+restrictions: attributes must be `Typeable`, to support the use of
+dynamic typing, and a `Semigroup`, so there is some sensible notion of
+combining multiple attributes of the same type (which is used to
+combine attributes applied within the same scope; as we will see, for
+many standard attributes the semigroup is simply the one which keeps
+one attribute and discards the other).  `AttributeClass` is defined as
+a synonym for the combination of `Typeable` and `Semigroup`.
+
+The `Attribute` type is then defined as an existential wrapper around
+`AttributeClass` types.  In a simpler world `Attribute` would be
+defined like this:
+
+.. class:: lhs
+
+::
+
+  data Attribute where
+    Attribute :: AttributeClass a => a -> Attribute
+
+Historically, it did indeed start life defined this way.  However, as
+you can see if you look at the source, by now the actual definition is
+more complicated:
+
+.. class:: lhs
+
+::
+
+  data Attribute (v :: * -> *) n :: * where
+    Attribute  :: AttributeClass a => a -> Attribute v n
+    MAttribute :: AttributeClass a => Measured n a -> Attribute v n
+    TAttribute :: (AttributeClass a, Transformable a, V a ~ v, N a ~ n) => a -> Attribute v n
+
+This looks like the simpler definition if you ignore the type
+parameters and consider only the `Attribute` constructor.  So let's
+consider each of the other constructors.
+
+* `MAttribute` is for attributes that are `Measured`, *i.e.* whose
+  values depend on the size of the final diagram and/or the requested
+  output size; the primary examples are *line width* and *font size*.
+  Recall that a `Measured n a` is actually a function that can produce
+  a value of type `a` once it is provided some measurement factors of
+  type `n`.  The `unmeasureAttribute` function is provided to turn
+  `MAttribute` constructors into `Attribute` constructors; this is
+  typically used when preparing a diagram for rendering.
+
+* `TAttribute` is for attributes that are `Transformable`, *i.e.*
+  which are affected by transformations applied to the objects to
+  which they are attached.  The primary examples are *line* and *fill
+  texture* (*e.g.* gradients), and *clipping paths*.  (Note that
+  `MAttribute`\s can actually be affected by transformations too, in
+  the case of `Local` units.)
+
+The `Attribute` type has instances of `Semigroup` (combine attributes
+of the same type, otherwise take the rightmost) and `Transformable`
+(ignore `Attribute` constructors and do the appropriate thing for the
+other constructors).  There are also various lenses/prisms for
+accessing them.
+
+Note that one does not typically construct an `Attribute` value directly
+using the constructors; instead, the functions `applyAttr`,
+`applyMAttr`, and `applyTAttr` are provided for applying an attribute
+directly to any instance of `HasStyle`.
+
+Styles
+------
+
 Diagrams.Core.Types
 ===================
 
