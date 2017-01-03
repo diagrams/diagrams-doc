@@ -2,8 +2,8 @@
 title: Releases
 ---
 
-diagrams 1.4: XXX
-=================
+diagrams 1.4: 27 October, 2016
+==============================
 
 [diagrams-core-1.4](http://hackage.haskell.org/package/diagrams-core-1.4)
 
