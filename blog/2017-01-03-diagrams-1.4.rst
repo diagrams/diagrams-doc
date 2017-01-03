@@ -1,0 +1,110 @@
+.. role:: pkg(literal)
+.. role:: hs(literal)
+.. role:: mod(literal)
+.. role:: repo(literal)
+
+.. default-role:: hs
+
+============
+Diagrams 1.4
+============
+
+The diagrams team is very pleased to announce the release of diagrams
+1.4.  The release actually happened a few months ago, in October---we
+just hadn't gotten around to writing about it yet.  But in any case
+this was a fairly quiet release, with very few breaking changes;
+mostly 1.4 just introduced new features.  There is a `migration
+guide`_ which lists a few known potentially breaking changes, but most
+users should have no trouble.  The rest of this post highlights some
+of the new features in 1.4.
+
+.. _migration guide: https://wiki.haskell.org/Diagrams/Dev/Migrate1.4
+
+Alignment and layout
+====================
+
+Radial tree layout
+------------------
+
+The existing `Diagrams.TwoD.Layout.Tree`:mod: module from
+`diagrams-contrib`:pkg: has XXX
+
+Aligned composition
+-------------------
+
+Sometimes, it is desirable to compose some diagrams according to a
+certain alignment, but without affecting their local origins. The
+`composeAligned` function can be used for this purpose. It takes as
+arguments an alignment function (such as `alignT` or `snugL`), a
+composition function of type ``[Diagram] -> Diagram``, and produces a
+new composition function which works by first aligning the diagrams
+before composing them.
+
+.. class:: dia-lhs
+
+::
+
+> example :: Diagram B
+> example = (hsep 2 # composeAligned alignT) (map circle [5,1,3,2])
+>         # showOrigin
+
+Notice how the origin of the composed diagram is still at the center
+of the leftmost circle, instead of at its top edge (where it would
+normally be placed by `alignT`).
+
+Constrained layout
+------------------
+
+The new `Diagrams.TwoD.Layout.Constrained`:mod: module from
+`diagrams-contrib`:pkg: implements basic linear constraint-based
+layout.  As a simple example of something that would be tedious to
+draw without some kind of constraint solving, consider this diagram
+which consists of a vertical stack of circles of different sizes,
+along with an accompanying set of squares, such that (1) each square
+is constrained to lie on the same horizontal line as a circle, and (2)
+the squares all lie on a diagonal line.
+
+.. class:: dia-lhs
+
+::
+
+> import Diagrams.TwoD.Layout.Constrained
+> import Control.Monad (zipWithM_)
+>
+> example :: Diagram B
+> example = frame 1 $ layout $ do
+>   let rs = [2,2,4,3,5,6]
+>   cirs <- newDias (map circle rs # fc blue)
+>   sqs  <- newDias (replicate (length rs) (square 2) # fc orange)
+>   constrainWith vcat cirs
+>   zipWithM_ sameY cirs sqs
+>   constrainWith hcat [cirs !! 0, sqs !! 0]
+>   along (direction (1 ^& (-1))) (map centerOf sqs)
+
+See the `package documentation`_ for more examples and documentation.
+
+.. _package documentation: http://projects.haskell.org/diagrams/haddock/diagrams-contrib/Diagrams-TwoD-Layout-Constrained.html
+
+Anchors
+-------
+
+Paths
+=====
+
+Boolean path operations
+-----------------------
+
+Cubic B-splines
+---------------
+
+Following composition
+---------------------
+
+Fun
+===
+
+L-systems
+---------
+
+XKCD colors
+-----------
