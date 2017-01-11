@@ -118,7 +118,7 @@ about ``diagrams``:
   for a list of open tickets.  If you find a bug or would like to
   request a feature, please file a ticket!
 
-.. _`from the diagrams website`: http://projects.haskell.org/reference.html
+.. _`from the diagrams website`: http://projects.haskell.org/diagrams/reference.html
 .. _`report it as a bug`: https://github.com/diagrams/diagrams-doc/issues
 .. _website: http://projects.haskell.org/diagrams
 .. _`list of tutorials`: http://projects.haskell.org/diagrams/documentation.html
