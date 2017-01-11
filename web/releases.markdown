@@ -121,7 +121,7 @@ diagrams 1.4: 27 October, 2016
 
     - Fix sign error in `reflectionAbout`
 
-[SVGFonts-1.6](http://hackage.haskell.org/package/SVGFonts-1.6)
+[SVGFonts-1.6](http://hackage.haskell.org/package/SVGFonts-1.6.0.0)
 
 - Performance improvement: port `ReadPath` to use `attoparsec`
 - New `loadFont'` function, to read font data from an `XmlSource`
@@ -773,11 +773,11 @@ diagrams 1.2: 2 June 2014
     - Substantial refactoring of `Backend` instance to support changes in
       `Diagrams.Core`.
 
-[diagrams-rasterific-0.1](http://hackage.haskell.org/package/diagrams-rasterific_0.1)
+[diagrams-rasterific-0.1](http://hackage.haskell.org/package/diagrams-rasterific-0.1)
 
   *Initial release*
 
-[diagrams-builder 0.5.0.10](http://hackage.haskell.org/package/diagrams-builder-0.5,0,10)
+[diagrams-builder 0.5.0.10](http://hackage.haskell.org/package/diagrams-builder-0.5.0.10)
 
   - Module parse error messages now include the error location
     (thanks to Yiding Jia)
@@ -1449,7 +1449,7 @@ diagrams in Haddock documentation.  It has been released for a while,
 but `0.1.1.1` is the first version officially included in a major
 diagrams release.
 
-[SVGFonts 1.3](http://hackage.haskell.org/package/SVGFonts)
+[SVGFonts 1.3](http://hackage.haskell.org/package/SVGFonts-1.3)
 ----------------
 
 First release as an officially supported diagrams package, adding nice
@@ -1789,7 +1789,7 @@ As of this release everything else Should Work (tm).
 diagrams 0.5: 9 March 2012
 ==========================
 
-[diagrams-core](http://hackage.haskell.org/package/diagrams%2Dcore) 0.5
+[diagrams-core 0.5](http://hackage.haskell.org/package/diagrams-core-0.5)
 -----------------
 
   * New features:
@@ -1832,12 +1832,12 @@ diagrams 0.5: 9 March 2012
   * Bug fixes:
     - Bug fix related to empty envelopes
 
-[active](http://hackage.haskell.org/package/active) 0.1.0.0
+[active 0.1.0.0](http://hackage.haskell.org/package/active-0.1.0.0)
 --------------
 
   * Initial release
 
-[diagrams-lib](http://hackage.haskell.org/package/diagrams%2Dlib) 0.5
+[diagrams-lib 0.5](http://hackage.haskell.org/package/diagrams-lib-0.5)
 ------------
 
   * New features:
@@ -1925,12 +1925,12 @@ diagrams 0.5: 9 March 2012
     - Avoid scale by zero error in `showOrigin`.
     - Base `adjustDia2D` translation on output size rather than diagram size.
 
-[diagrams-contrib](http://hackage.haskell.org/package/diagrams%2Dcontrib) 0.1.0.0
+[diagrams-contrib 0.1.0.0](http://hackage.haskell.org/package/diagrams-contrib-0.1.0.0)
 ----------------
 
   * Initial release
 
-[diagrams-cairo](http://hackage.haskell.org/package/diagrams%2Dcairo) 0.5
+[diagrams-cairo 0.5](http://hackage.haskell.org/package/diagrams-cairo-0.5)
 --------------
 
   * New features
