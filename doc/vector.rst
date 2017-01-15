@@ -479,7 +479,7 @@ There are several ways to construct points.
   > example = atPoints (nonagon 1) (repeat $ circle 0.2 # fc green)
 
   In this case, the type of `nonagon 1` would be inferred as `[P2 Double]`
-  (since `position` expects a list of paired points and diagrams), causing the
+  (since `atPoints` expects a list of points), causing the
   appropriate `TrailLike` instance to be
   chosen.
 
