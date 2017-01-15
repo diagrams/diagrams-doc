@@ -27,11 +27,15 @@ import           Diagrams.Backend.Rasterific
 xml2Html :: DocutilOpts -> IO ExitCode
 xml2Html opts = do
   (modMap, nameMap) <- buildPackageMaps
-                       [ "diagrams-core"
+                       [ "monoid-extras"
+                       , "dual-tree"
+                       , "diagrams-core"
                        , "active"
                        , "diagrams-lib"
                        , "diagrams-contrib"
                        , "diagrams-solve"
+                       , "palette"
+                       , "SVGFonts"
                        ]
   let transf = diagramsDoc modMap nameMap
 
