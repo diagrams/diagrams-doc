@@ -27,7 +27,30 @@ Radial tree layout
 ------------------
 
 The existing `Diagrams.TwoD.Layout.Tree`:mod: module from
-`diagrams-contrib`:pkg: has XXX
+`diagrams-contrib`:pkg: has been extended with a new `radialLayout`
+function, based on an `algorithm by Andy Pavlo`_.
+
+.. _algorithm by Andy Pavlo: http://www.cs.cmu.edu/~pavlo/static/papers/APavloThesis032006.pdf
+
+.. class:: dia-lhs
+
+::
+
+> import Diagrams.TwoD.Layout.Tree
+> import Data.Tree
+>
+> t = Node 'A'
+>     [ Node 'B' (map lf "CDE")
+>     , Node 'F' [Node 'G' (map lf "HIJKLM"), Node 'N' (map lf "OPQRS")]
+>     , Node 'T' (map lf "UVWXYZ")
+>     ]
+>   where lf x = Node x []
+>
+> example =
+>    renderTree (\n -> (text (show n) # fontSizeG 0.5
+>                             <> circle 0.5 # fc white))
+>              (~~) (radialLayout t)
+>    # centerXY # frame 0.5
 
 Aligned composition
 -------------------
@@ -48,9 +71,10 @@ before composing them.
 > example = (hsep 2 # composeAligned alignT) (map circle [5,1,3,2])
 >         # showOrigin
 
-Notice how the origin of the composed diagram is still at the center
-of the leftmost circle, instead of at its top edge (where it would
-normally be placed by `alignT`).
+The example above shows using `hsep 2` to compose a collection of
+top-aligned circles.  Notice how the origin of the composed diagram is
+still at the center of the leftmost circle, instead of at its top edge
+(where it would normally be placed by `alignT`).
 
 Constrained layout
 ------------------
@@ -88,11 +112,18 @@ See the `package documentation`_ for more examples and documentation.
 Anchors
 -------
 
+Another new module in `diagrams-contrib`:pkg:,
+`Diagrams.Anchors`:mod:, provides a convenient interface for aligning
+diagrams relative to named anchor points.  This can be useful, for
+example, when laying out XXX
+
 Paths
 =====
 
 Boolean path operations
 -----------------------
+
+
 
 Cubic B-splines
 ---------------
