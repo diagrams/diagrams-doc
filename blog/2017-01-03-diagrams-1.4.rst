@@ -118,7 +118,8 @@ diagrams relative to named anchor points.  This can be useful, for
 example, when laying out diagrams composed of pieces that should
 "attach" to each other at various points.
 
-XXX example?
+We don't have an example of its use at the moment---if you play with
+it and create a nice example, let us know!
 
 Paths
 =====
@@ -221,5 +222,40 @@ Fun
 L-systems
 ---------
 
+The new module `Diagrams.TwoD.Path.LSystem`:mod: in
+`diagrams-contrib`:pkg: draws L-systems described by recursive string
+rewriting rules, and provides a number of examples that can be used as
+starting points for exploration.
+
+.. class:: dia-lhs
+
+::
+
+> import           Diagrams.TwoD.Path.LSystem
+> import qualified Data.Map as M
+>
+> tree :: RealFloat n => Int -> TurtleState n
+> tree n = lSystem n (1/18 @@ turn) (symbols "F") rules
+>  where
+>    rules  = M.fromList [rule 'F' "F[+>>>F]F[->>>F][>>>F]"]
+>
+> example = getTurtleDiagram $ tree 6
+
+This example is already provided by the module as `tree2`.
+
 XKCD colors
 -----------
+
+Randall Munroe, of xkcd fame, ran a survey to determine commonly used
+names for colors, and published a list of the 954 most common colors
+based on the results.  `Diagrams.Color.XKCD`:mod: from
+`diagrams-contrib`:pkg: provides all these color names.
+
+.. class:: dia-lhs
+
+::
+
+> import Diagrams.Color.XKCD
+>
+> colors = [booger, poisonGreen, cinnamon, petrol, vibrantPurple]
+> example = hsep 0.1 (zipWith fcA colors (repeat (circle 1 # lw none)))
