@@ -334,6 +334,30 @@ directly to any instance of `HasStyle`.
 Styles
 ------
 
+A `Style` is just a dynamically-typed, heterogeneous collection of
+attributes.  The attributes are actually stored as values in a hash
+table, keyed by their type (specifically, a `TypeRep`), so at most one
+attribute of any given type can be stored in a `Style`.
+
+`Style` is an instance of `Semigroup`, with union as a combining
+operation.  If the two styles both have an attribute of a given type,
+those attributes are combined according to the `Semigroup` instance
+for that attribute type.
+
+There are a number of other functions for creating `Style` values and
+extracting attributes from them, which are mostly self-explanatory.
+One function worth mentioning is `unmeasureAttrs`, which maps over a
+`Style` and changes all `MAttribute`\s into `Attributes` (based on the
+provided scaling factors).  This is typically done as a final step
+before rendering.
+
+Finally, the `HasStyle` class governs types which "have a `Style`",
+specifically, types to which a `Style` can be applied.  `Style` itself
+has an instance of `HasStyle`, corresponding to the semigroup
+operation on `Style`.  This module also defines a number of other
+instances for applying styles to entire data structures such as lists,
+tuples, functions, maps, and sets.
+
 Diagrams.Core.Types
 ===================
 
