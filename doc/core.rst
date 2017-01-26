@@ -361,6 +361,12 @@ tuples, functions, maps, and sets.
 Diagrams.Core.Types
 ===================
 
+This is an unfortunately large module which contains definitions and
+utility functions for many of the core data structures of diagrams.
+In principle, it would be nice to break it up into smaller pieces, but
+in fact a lot of things in this module end up cyclically depending on
+one another, so easier said than done.
+
 QDiagram
 --------
 
