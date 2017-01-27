@@ -370,6 +370,81 @@ one another, so easier said than done.
 QDiagram
 --------
 
+The central type in diagrams is the definition of `QDiagram`:
+
+.. class:: lhs
+
+::
+
+  newtype QDiagram b v n m
+    = QD (D.DUALTree (DownAnnots v n) (UpAnnots b v n m) Annotation (QDiaLeaf b v n m))
+
+`DUALTree` is defined in the `dual-tree`:pkg: package.  A value of
+type `DUALTree d u a l` consists of an n-ary (rose) tree, with:
+
+* Values of type `l` at the leaves.
+* Monoidal annotations of type `u` which "travel up" the tree.  Each
+  leaf of type `l` has a corresponding value of type `u`, and the `u`
+  values are combined as one travels up the tree, so that the root
+  would contain the `mconcat` of the `u` values in all the leaves.
+* ...except that there are also values of another monoid, of type `d`,
+  which can be applied at any node and accumulate as one travels down
+  any path from the root to a leaf.  These `d` values *act on* the `u`
+  values, that is, there is a function `d -> u -> u` satisfying
+  certain coherence properties with respect to the monoid structures
+  of `d` and `u`.
+* Finally, there are values of type `a` which can be stored at
+  internal nodes. They are simply "along for the ride", and are not
+  affected by `d` values.  `a` values will never be moved; on the
+  other hand, it is permissible, to push `d` values up or down the
+  tree in a way that preserves all monoid compositions.
+
+The `QDiagram` type specifically instantiates these types as follows:
+
+* `l` values at leaves are `QDiaLeaf` values.  One might think these
+  consist simply of primitives, but actually they are a bit more
+  complicated, because they also handle the case of "delayed" diagrams
+  that need to know something about their context before they can be
+  generated; this is explained in more detail below.
+
+* The inert internal `a` values are of type `Annotation`.  Currently
+  these consist solely of information about hrefs (for backends that
+  support hyperlinks) and opacity grouping.
+
+* The upwards-traveling `u` values are of type `UpAnnots`, explained
+  below.
+
+* The downwards-traveling `d` values are of type `DownAnnots`,
+  explained below.
+
+QDiaLeaf
+~~~~~~~~
+
+The `QDiaLeaf` type has two cases:
+
+.. class:: lhs
+
+::
+
+  data QDiaLeaf b v n m
+    = PrimLeaf (Prim b v n)
+    | DelayedLeaf (DownAnnots v n -> n -> n -> QDiagram b v n m)
+
+The first case, `PrimLeaf`, is simple enough: it contains a `Prim`
+(also defined in this module), which is simply an existential wrapper
+around a `Transformable`, `Typeable`, `Renderable` thing.
+
+The second case is trickier.
+
+Annotation
+~~~~~~~~~~
+
+UpAnnots
+~~~~~~~~
+
+DownAnnots
+~~~~~~~~~~
+
 Backends
 --------
 
