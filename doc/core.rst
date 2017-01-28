@@ -434,16 +434,56 @@ The first case, `PrimLeaf`, is simple enough: it contains a `Prim`
 (also defined in this module), which is simply an existential wrapper
 around a `Transformable`, `Typeable`, `Renderable` thing.
 
-The second case is trickier.
+The second case is trickier.  It represents a diagram which needs to
+know its *global context*, represented by the accumulated `DownAnnots`
+values along the path from the root to this delayed leaf, together
+with the normal-to-output scaling factor and the global-to-output
+scaling factor.  Note that we cannot possibly know this information
+until just before the diagram is to be rendered, at which point it
+becomes fixed and we know we are not going to insert this diagram into
+a yet bigger diagram, and we know the requested output size and hence
+can compute the scaling factors.  So just before rendering, delayed
+leaves are recursively expanded into `QDiagrams`.  For an example of
+`DelayedLeaf` in action, see `Diagrams.TwoD.Arrow`:mod: in
+`diagrams-lib`:pkg:, where it is needed since arrowhead sizes can
+depend on this global context.
 
 Annotation
 ~~~~~~~~~~
 
+The `Annotation` type has two constructors, one for hyperlinks
+(`Href`) and one for opacity groups.  In both of these cases, it's
+important that these annotations stay exactly where the user places
+them in the tree, and they are unaffected by transformations and the
+like.
+
 UpAnnots
 ~~~~~~~~
 
+`UpAnnots` is a heterogeneous list of monoidal values (with an
+elementwise monoidal operation) which serves as the
+"upwards-traveling" monoid in a `QDiagram`.  Every primitive diagram
+at a leaf has an associated `UpAnnots` value, and these get combined
+as one moves up the tree.  An `UpAnnots` value consists of the
+following components:
+
+* An `Envelope` (in a `Deletable` wrapper so we can implement
+  `setEnvelope` monoidally; see
+http://hackage.haskell.org/package/monoid-extras-0.4.2/docs/Data-Monoid-Deletable.html)),
+
+* a `Trace` (similarly `Deletable`),
+
+* a `SubMap` (also `Deletable`) which maps names to subdiagrams (more
+  on these later), and
+
+* a `Query`, which associates a monoidal value of some type `m` to
+  every point in the diagram.
+
 DownAnnots
 ~~~~~~~~~~
+
+Subdiagrams
+-----------
 
 Backends
 --------
