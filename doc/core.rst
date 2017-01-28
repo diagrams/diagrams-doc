@@ -386,18 +386,22 @@ type `DUALTree d u a l` consists of an n-ary (rose) tree, with:
 * Monoidal annotations of type `u` which "travel up" the tree.  Each
   leaf of type `l` has a corresponding value of type `u`, and the `u`
   values are combined as one travels up the tree, so that the root
-  would contain the `mconcat` of the `u` values in all the leaves.
-* ...except that there are also values of another monoid, of type `d`,
-  which can be applied at any node and accumulate as one travels down
-  any path from the root to a leaf.  These `d` values *act on* the `u`
+  would contain the `mconcat` of the `u` values in all the leaves.  We
+  think of each tree (and subtree) as intrinsically posessing a `u`
+  value, which is often some kind of "summary" or "measurement".
+* There are also values of another monoid, of type `d`, which can be
+  *applied* to a tree at the root and accumulate as one travels down
+  any path from the root to a leaf.  These `d` values may *act on* the `u`
   values, that is, there is a function `d -> u -> u` satisfying
   certain coherence properties with respect to the monoid structures
-  of `d` and `u`.
+  of `d` and `u` (though for a particular `d` and `u` the action may
+  be trivial, *i.e.* `const id`).
 * Finally, there are values of type `a` which can be stored at
-  internal nodes. They are simply "along for the ride", and are not
-  affected by `d` values.  `a` values will never be moved; on the
-  other hand, it is permissible, to push `d` values up or down the
-  tree in a way that preserves all monoid compositions.
+  internal nodes. They are simply "along for the ride": they do not
+  have associated `u` values nor are they affected by `d` values.  `a`
+  values will never be moved (on the other hand, it is permissible to
+  push `d` values up or down the tree in a way that preserves all
+  monoid compositions).
 
 The `QDiagram` type specifically instantiates these types as follows:
 
@@ -412,10 +416,12 @@ The `QDiagram` type specifically instantiates these types as follows:
   support hyperlinks) and opacity grouping.
 
 * The upwards-traveling `u` values are of type `UpAnnots`, explained
-  below.
+  in more detail below, which record various summary information about
+  a diagram (envelope, trace, named subdiagrams, *etc.*).
 
 * The downwards-traveling `d` values are of type `DownAnnots`,
-  explained below.
+  explained in more detail below, which record information imposed on
+  a diagram (affine transformations, attributes, *etc.*).
 
 QDiaLeaf
 ~~~~~~~~
@@ -461,15 +467,16 @@ UpAnnots
 ~~~~~~~~
 
 `UpAnnots` is a heterogeneous list of monoidal values (with an
-elementwise monoidal operation) which serves as the
-"upwards-traveling" monoid in a `QDiagram`.  Every primitive diagram
-at a leaf has an associated `UpAnnots` value, and these get combined
+elementwise monoidal operation; see `Data.Monoid.MList`:mod: in the
+`monoid-extras`:pkg: package) which serves as the "upwards-traveling"
+monoid in a `QDiagram`.  That is, every primitive diagram at a leaf
+has an intrinsic associated `UpAnnots` value, and these get combined
 as one moves up the tree.  An `UpAnnots` value consists of the
 following components:
 
 * An `Envelope` (in a `Deletable` wrapper so we can implement
-  `setEnvelope` monoidally; see
-http://hackage.haskell.org/package/monoid-extras-0.4.2/docs/Data-Monoid-Deletable.html)),
+  `setEnvelope` monoidally; see `Data.Monoid.Deletable`:mod: in
+  `monoid-extras`:pkg:),
 
 * a `Trace` (similarly `Deletable`),
 
@@ -481,6 +488,8 @@ http://hackage.haskell.org/package/monoid-extras-0.4.2/docs/Data-Monoid-Deletabl
 
 DownAnnots
 ~~~~~~~~~~
+
+`DownAnnots` is 
 
 Subdiagrams
 -----------
