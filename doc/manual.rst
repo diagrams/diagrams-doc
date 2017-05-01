@@ -969,14 +969,18 @@ operator, as in `someAngle ^. rad`.
 __ http://tauday.com
 
 `fullTurn :: Angle` represents one full turn, equivalent to `1 @@
-turn`, `tau @@ rad`, or `360 @@ deg`.
+turn`, `tau @@ rad`, or `360 @@ deg`.  `halfTurn :: Angle` is also
+provided for convenience.
 
 There is no `Num` instance for `Angle`; this is intentional, since,
 for example, it is not clear what units would be used for a bare
 number used as an `Angle`, and multiplying two `Angle`\s is
 meaningless and should not be allowed.  `Angle` does have an
 `Additive` instance, which means you can add and subtract angles using
-`(^+^)` and `(^-^)`, and negate an angle with `negated`.
+`(^+^)` and `(^-^)`, and negate an angle with `negated`.  The `(*^)`,
+`(^*)`, and `(^/)` operators can also be used to multiply or divide an
+`Angle` by a constant factor: for example, if `theta :: Angle` then
+`theta ^/ 3` is the angle representing one-third of `theta`.
 
 In two dimensions, the direction of a vector can be represented by an
 angle measured counterclockwise from the positive `x`:math:\-axis (shown in
