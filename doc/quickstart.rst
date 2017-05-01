@@ -68,18 +68,39 @@ Once you have the prerequisites, installing the diagrams libraries
 themselves should be a snap. We recommend installing diagrams in a
 sandbox, like so:
 
+*nix:
 ::
 
     cabal sandbox init
     cabal install diagrams
 
+Windows:
+::
+
+    cabal update
+    cabal sandbox init
+    cabal install diagrams -j1
+
+(The `-j1` flag is necessary in Windows to prevent the `package.cache`
+file from being edited multiple times at once.  See
+[here](https://github.com/haskell/cabal/issues/4005#issuecomment-275434975)
+and
+[here](https://github.com/commercialhaskell/stack/issues/2617) for
+more information.)
+
 To make use of the diagrams libraries in the sandbox, you can use
 commands such as
 
+*nix/cmd.exe
 ::
 
     cabal exec -- ghc --make MyDiagram.hs
 
+Powershell:
+::
+
+    cabal exec (ghc --make MyDiagram.hs)
+    
 which will run ``ghc --make MyDiagram.hs`` in the sandbox environment.
 Alternatively, on any Unix-ish system you should be able to do
 something like
