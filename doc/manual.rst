@@ -1028,7 +1028,7 @@ a law-abiding `Affine` instance.
 
 * The `Angle` between two fixed `Direction`\s can be found with
   `angleBetweenDirs`, which is commutative and returns a positive
-  angle between $0$ and $1/2$ turn, or `signedAngleBetweenDirs`, which
+  angle between `0`:math: and `1/2`:math: turn, or `signedAngleBetweenDirs`, which
   satisfies `signedAngleBetweenDirs d1 d2 == negated (signedAngleBetweenDirs
   d2 d1)` and returns a positive angle when the second direction is
   clockwise from the first.
