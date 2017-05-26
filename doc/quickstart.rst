@@ -68,7 +68,7 @@ Once you have the prerequisites, installing the diagrams libraries
 themselves should be a snap. We recommend installing diagrams in a
 sandbox, like so:
 
-*nix:
+\*nix:
 ::
 
     cabal sandbox init
@@ -91,7 +91,7 @@ more information.)
 To make use of the diagrams libraries in the sandbox, you can use
 commands such as
 
-*nix/cmd.exe
+\*nix/cmd.exe:
 ::
 
     cabal exec -- ghc --make MyDiagram.hs
