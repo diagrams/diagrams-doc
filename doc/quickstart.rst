@@ -240,9 +240,27 @@ scale of the diagram itself will be used, which in this case would be
 rather tiny---only 2x2.
 
 There are several more options besides `-o`, `-w`, and `-h`; you can
-see what they are by typing `./DiagramsTutorial --help`.  The
-`mainWith` function is also quite a bit more general than accepting
-just a diagram: it can accept animations, lists of diagrams,
+see what they are by typing `./DiagramsTutorial --help`.  One
+particularly useful option is `-l`, which puts the program into "looped
+mode": it will watch the source file for changes, and then
+automatically recompile and rerun itself, like this:
+
+::
+
+    augustine :: src/diagrams/tmp » ./DiagramsTutorial -o circle.svg -w 400 -l
+    Looping turned on
+    Using sandbox /home/brent/build/diagrams/.cabal-sandbox
+    Watching source file DiagramsTutorial.lhs
+    Compiling target: DiagramsTutorial
+    Program args: -o circle.svg -w 400
+    Modified 02:41:42 ... compiling ... running ... done.
+    Modified 02:41:50 ... compiling ... running ... done.
+
+With looped mode, you only need to edit and save the source code, then
+reload the image in your browser or image viewer.
+
+The `mainWith` function is also quite a bit more general than
+accepting just a diagram: it can accept animations, lists of diagrams,
 association lists of names and diagrams, or functions producing any of
 the above.  For more information, see the `diagrams command-line
 creation tutorial`__.
