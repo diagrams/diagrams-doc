@@ -100,7 +100,7 @@ Powershell:
 ::
 
     cabal exec (ghc --make MyDiagram.hs)
-    
+
 which will run ``ghc --make MyDiagram.hs`` in the sandbox environment.
 Alternatively, on any Unix-ish system you should be able to do
 something like
