@@ -33,12 +33,14 @@ mkYamlFile deps = Yaml.mapping
     [ "tuple-0.3.0.2"
     , "OneTuple-0.2.1"
     , "SVGFonts-1.6.0.1"
-    , "cubicbezier-0.4.0.2"
+    , "cubicbezier-0.6.0.3"
     , "mfsolve-0.3.2.0"
     , "haskell-src-exts-1.18.2"
     , "haskell-src-exts-simple-1.18.0.1.1"
     , "optparse-applicative-0.13.0.0"
     , "svg-builder-0.1.0.1"
+    , "newtype-generics-0.5"
+    , "fast-math-1.0.2"
     ])
   , "packages"   .= Yaml.array (Yaml.string "." : map mkDepObject deps)
   ]
