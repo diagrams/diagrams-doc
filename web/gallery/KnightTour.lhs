@@ -82,7 +82,7 @@ Finally, we load a knight image, size it to fit a square, and then put all the
 previous pieces together:
 
 > example = do
->   res <- loadImageEmb "../../doc/static/white-knight.png"
+>   res <- loadImageEmb "doc/static/white-knight.png"
 >   let knightImg = case res of
 >         Left _    -> mempty
 >         Right img -> image img # sized (mkWidth 1)
