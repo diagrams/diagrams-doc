@@ -12,15 +12,17 @@ height: 400
 > {-# LANGUAGE NoMonomorphismRestriction #-}
 > import Diagrams.Prelude
 
-#### Brent's Original Code
+In the original version from Brent, fractals are placed in a triangular fashion
+and use recursion :
+
 > -- sierpinski 1 = triangle 1
 > -- sierpinski n =     s
 > --                  ===
 > --               (s ||| s) # centerX
 > --   where s = sierpinski (n-1)
 
-#### Code to change color at each level
-##### (Technically this is the complement of the Sierpinski triangle)
+Another version allow to change color at each level :
+
 > import Diagrams.Prelude
 > import Data.Colour.Palette.BrewerSet
 >
