@@ -811,25 +811,37 @@ Output units
 ~~~~~~~~~~~~
 
 Values measured in `output` units are interpreted with respect to the
-*requested output size* of a diagram.  Sometimes you really do know
-that you want your lines to be exactly 1/2 inch wide when printed.  In
-this case, scaling a diagram will preserve its appearance, but
-requesting a different output size might not.
+*requested output size* of a diagram.  Sometimes you really do know,
+for example, that you want your lines to be exactly 1/2 inch wide when
+printed, or exactly 4 pixels wide on the screen. In this case, scaling
+a diagram will preserve its appearance, but requesting a different
+output size might not.
 
 One situation in which `output` units can be particularly useful is
 when preparing a document (paper, blog post, *etc.*) with multiple
 embedded diagrams of various physical sizes.  Using the same `output`
 value for the line width (or arrowhead length, arrow gap, font size,
 *etc.*) of every diagram ensures that the diagrams will all look
-consistent.  On the other hand, if the diagrams all have the same
-physical size (*e.g.* they are all `300 \times 200`:math: pixels), then they
-will also look consistent if the same `normalized` value is used for
-all of them (which is the default for line width).
+consistent.  (The default for line width is to use `normalized` units,
+but this means that by default, lines will only look consistent across
+multiple diagrams if all the diagrams have the same physical size,
+*e.g.* they are all `300 \times 200`:math: pixels.)
 
-.. container:: todo
+.. class:: dia-lhs
 
-  Expand on this.  Show some examples.  Need a better story about
-  physical units.
+::
+
+> theSq = square 1 # lwO 4
+>
+> example =
+>   hsep 0.2
+>     (map (\s -> theSq # scale s) [0.5, 0.8, 1, 1.5, 2])
+>   # scale 20
+
+In the above example, all the squares are drawn with lines exactly 4
+pixels wide (at least in theory; antialiasing makes the details a bit
+more subtle).  Note that the actual units used (in this case, pixels)
+depends on the backend being used.
 
 Types and type classes
 ----------------------
