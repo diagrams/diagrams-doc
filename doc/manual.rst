@@ -576,7 +576,7 @@ certainly *represent* points using vectors. The
 `linear`:pkg: package defines a newtype wrapper around
 vectors called `Point`.  The most important connection between points
 and vectors is given by `(.-.)`, defined in
-`Linear.Affine`:mod:. If `p` and `q` are points, `p .-. q` is
+`Linear.Affine`:mod:. If `p` and `q` are points, `q .-. p` is
 the vector giving the direction and distance from `p` to `q`.
 Offsetting a point by a vector (resulting in a new point) is
 accomplished with `(.+^)`.
