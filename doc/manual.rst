@@ -5154,6 +5154,28 @@ In other words, enclosing diagrams in a list allows them to be
 positioned, aligned, *etc.* as they normally would, *except* that it
 delays actually composing them!
 
+Another example of this technique is when we want to lay out a list of
+diagrams using, say, `hcat'`, but want them to be stacked in a
+different order than what `hcat` produces:
+
+.. class:: dia-lhs
+
+::
+
+> t = triangle   5   # fc orange
+> s = square     3   # fc red
+> o = ellipseXY  2 3 # fc blue
+> c = circle     2   # fc green
+>
+> [t',s',o',c'] = hcat' (with & catMethod .~ Distrib & sep .~ 1)
+>                       (map (:[]) [t,s,o,c])
+>
+> example = mconcat [s',c',o',t']
+
+In this example we position the triangle, square, ellipse, and circle
+in that order from left to right, but then place them with the square
+on top, the circle next, and so on.
+
 This works because lists are instances of `Juxtaposable`, `Alignable`,
 `Enveloped`, `HasOrigin`, `HasStyle`, `Transformable`, and, of course,
 `Monoid`.  All these instances work in the "obvious" way---for
