@@ -53,7 +53,7 @@ all the constituent pieces:
 >       ]
 >       # fc grey
 
-We then put the pieces together, labelling each by its name with the
+We then put the pieces together, labeling each by its name with the
 `value` function. Diagrams can be valuated by any monoid; when two
 diagrams are combined, the value at each point will be the `mappend`
 of the values of the two component diagrams.  In this case, each point

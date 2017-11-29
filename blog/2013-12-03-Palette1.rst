@@ -11,7 +11,7 @@ Introducing the Palette Package, Part I
 
 Introduction
 ============
-Choosing a set of colors that look good together can be quite a challenge. The task comes up in a variety of different contexts including: webiste design, print design, cartography, and as we will discuss here, making diagrams. The problem comes down to a balancing act between two issues; first is that the choosen set of colors is asthetically pleasing, and second is that there is enough contrast between them.
+Choosing a set of colors that look good together can be quite a challenge. The task comes up in a variety of different contexts including: website design, print design, cartography, and as we will discuss here, making diagrams. The problem comes down to a balancing act between two issues; first is that the chosen set of colors is aesthetically pleasing, and second is that there is enough contrast between them.
 
 The easiest approach is to borrow a set of colors from someone who has already put in the time and effort to create it. The Palette package "Data.Colour.Palette.ColorSet" provides access to a few different predefined color sets including `the ones in d3`_ and the package "Data.Colour.Palette.BrewerSet" contains a large variety of color schemes created by Cynthia Brewer for use in map making see `colorbrewer 2.0`_.
 
@@ -131,7 +131,7 @@ Some of the color sets provided in `ColorSet` occur with 2 or 4 brightness level
 > g4 = grid d3Quads
 > example = hcat' (with & sep .~ 0.5) [g2, g4]
 
-The are over 300 colors that W3C recommends that every browser support. These are usually list in alphabetical order, which needless to say does not separate similar colors well.  `Palette` provides the function `webColors` which takes an integer *n* returns the *n* th color in a list which has first been sorted by hue and then travesed by skiping every 61 elements. This cycles through a good amount of colors before repeating similar hues. The variant `infiniteWebColors` recycles this list. When using these colors it's a good idea to pick some random starting point and increment the color number by 1 every time a new color is required.
+The are over 300 colors that W3C recommends that every browser support. These are usually list in alphabetical order, which needless to say does not separate similar colors well.  `Palette` provides the function `webColors` which takes an integer *n* returns the *n* th color in a list which has first been sorted by hue and then traversed by skipping every 61 elements. This cycles through a good amount of colors before repeating similar hues. The variant `infiniteWebColors` recycles this list. When using these colors it's a good idea to pick some random starting point and increment the color number by 1 every time a new color is required.
 
 .. class:: lhs
 
@@ -167,7 +167,7 @@ The are over 300 colors that W3C recommends that every browser support. These ar
 > w2 = grid web2
 > example = hcat' (with & sep .~ 0.5) [w1, w2]
 
-If none of the above color schemes suit your purposes or if you just want to create your own - use the functions in `Data.Colour.Palette.Harmony`. The module provides some basic functions for adjusting colors plus a progammatic interface to tools like `Adobe Kuler`_ and `Color Scheme Designer`_. We'll finish Part 1 of this post by examining some of the functions provided to tweak a color: `shade`, `tone` and `tint`. These three functions mix a given color with black, gray, and white repsectively. So if for example we wanted a darker version of the d3 scheme, we can apply a shade.
+If none of the above color schemes suit your purposes or if you just want to create your own - use the functions in `Data.Colour.Palette.Harmony`. The module provides some basic functions for adjusting colors plus a programmatic interface to tools like `Adobe Kuler`_ and `Color Scheme Designer`_. We'll finish Part 1 of this post by examining some of the functions provided to tweak a color: `shade`, `tone` and `tint`. These three functions mix a given color with black, gray, and white respectively. So if for example we wanted a darker version of the d3 scheme, we can apply a shade.
 Or we can add some gray to the brewer set `GnBu` from above.
 
 .. _Adobe Kuler: https://kuler.adobe.com/create/color-wheel/
@@ -199,4 +199,4 @@ Or we can add some gray to the brewer set `GnBu` from above.
 > t = bar $ map (tone 0.65) (brewerSet GnBu 9)
 > example = hcat' (with & sep .~ 0.5) [s, t]
 
-In part II we will talk just a bit about color theory and explain more of the fucntions in `Harmony`.
+In part II we will talk just a bit about color theory and explain more of the functions in `Harmony`.

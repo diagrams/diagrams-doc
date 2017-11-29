@@ -55,7 +55,7 @@ Affine maps and projections
 
 Affine maps have been added to `Diagrams.LinearMap`:mod: that can map
 between *different* vector spaces. The `Deformable`:mod: class has
-also been generalised to map between spaces. Helper functions have
+also been generalized to map between spaces. Helper functions have
 been added to `Diagrams.ThreeD.Projection`:mod: for basic orthographic
 and perspective projections.
 

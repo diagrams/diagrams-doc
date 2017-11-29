@@ -11,14 +11,14 @@ Introducing the Palette Package, Part II
 
 In part 1 of this post we talked mostly about borrowing a set of colors that was made by someone else. In this part we talk about tools we can use to make our own color schemes.
 
-Most software provides some type of color picker for selecting a single color. To choose a color we are often given the choice between several different color panels, including a clolor wheel, color sliders, and others. The sliders metaphor works well for choosing a single color, but it doesn't provide us with an intuitive way to choose a color scheme.
+Most software provides some type of color picker for selecting a single color. To choose a color we are often given the choice between several different color panels, including a color wheel, color sliders, and others. The sliders metaphor works well for choosing a single color, but it doesn't provide us with an intuitive way to choose a color scheme.
 
-The color wheel is more promising. A color wheel is designed to have pure hues on the perimeter, that means saturation and brightness are set to 100%. If you look at this type of color wheel, that is one based on HSB or HSL, you will notice that the red, green and blue sections are 120 degrees apart. If you look at `Adobe Kuler`_ on the other hand you will see that red and green lie on oposite poles of the wheel. That's a better way to visualize the color wheel since red and green are complimentary colors (They produce black or white when combined in the correct proportions). `Complimentary colors`_
+The color wheel is more promising. A color wheel is designed to have pure hues on the perimeter, that means saturation and brightness are set to 100%. If you look at this type of color wheel, that is one based on HSB or HSL, you will notice that the red, green and blue sections are 120 degrees apart. If you look at `Adobe Kuler`_ on the other hand you will see that red and green lie on opposite poles of the wheel. That's a better way to visualize the color wheel since red and green are complimentary colors (They produce black or white when combined in the correct proportions). `Complimentary colors`_
 
 .. _Adobe Kuler: https://kuler.adobe.com/create/color-wheel/
 .. _Complimentary colors: http://en.wikipedia.org/wiki/Complementary_colors
 
-The point is that when picking colors for a scheme, tradional color harmony defines which colors are chosen by choosing a base color and other colors on the wheel at specific angles apart. The wheel that is used though is one with complimentary colors opposite each other like in Kuler. This is the so called traditional or artist's color wheel. We call it the RYB (red, yellow, blue) wheel since it is based on those three being the primary colors and colors in between as mixtures of those.
+The point is that when picking colors for a scheme, traditional color harmony defines which colors are chosen by choosing a base color and other colors on the wheel at specific angles apart. The wheel that is used though is one with complimentary colors opposite each other like in Kuler. This is the so called traditional or artist's color wheel. We call it the RYB (red, yellow, blue) wheel since it is based on those three being the primary colors and colors in between as mixtures of those.
 
 The RYB color wheel and the color schemes we will design below are easy to view using the `wheel` function. `wheel` takes a list of colors and makes a color wheel out of them by placing the first color in the list at the top of the wheel.
 
@@ -96,7 +96,7 @@ Let's pick a base color to demonstrate the classic color harmonies and how to us
 > base = sRGB24read "#FFC200"
 > example = square 0.5 # fc base # lwG 0
 
-Since we have been talking about complimentary colors, the first scheme we describe is unsurprisingly called *Complimentary*. It's based on two complimentary colors and in the `Harmmony` module three other colors are choosen by shading and tinting those two colors.
+Since we have been talking about complimentary colors, the first scheme we describe is unsurprisingly called *Complimentary*. It's based on two complimentary colors and in the `Harmony` module three other colors are choosen by shading and tinting those two colors.
 
 .. class:: lhs
 
