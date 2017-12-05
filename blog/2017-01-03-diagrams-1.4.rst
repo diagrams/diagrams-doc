@@ -154,7 +154,7 @@ Cubic B-splines
 
 `Diagrams.CubicSpline`:mod: has a new function, `bspline`, which
 creates a smooth curve (to be precise, a [uniform cubic
-B-spline](https://en.wikipedia.org/wiki/B-spline)) with the given
+B-spline](https://en.wikipedia.org/wiki/B-spline) ) with the given
 points as control points. The curve begins and ends at the first and
 last points, and is tangent to the lines to the second-to-last control
 points.  It does not, in general, pass through the intermediate

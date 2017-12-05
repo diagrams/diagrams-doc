@@ -623,7 +623,7 @@ traces...).
 A worked example
 ================
 
-As a way of exhibing a complete example and introducing some
+As a way of exhibiting a complete example and introducing some
 additional features of diagrams, consider trying to draw the following
 picture:
 
