@@ -554,7 +554,7 @@ type parameters, `v` representing the dimension and `n` the scalar
 type.  Occasionally `v` or `n` appears alone in a type signature, with
 the same meaning.  `n` is most commonly `Double`, or some other type
 approximating the real numbers, but this is not required. Many
-functions require than `n` be an instance of `Num`, or one of the
+functions require that `n` be an instance of `Num`, or one of the
 narrower classes `Fractional`, `Floating`, or `Real`.
 
 See `this tutorial for a more in-depth introduction to working with vectors
