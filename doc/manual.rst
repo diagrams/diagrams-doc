@@ -5783,8 +5783,8 @@ The Canvas backend is one of the two backends that target the browser.
 Running a diagram's program that has been compiled using the Canvas backend
 will create a possibly interactive session accessed at `http://localhost:3000/`.
 The Canvas backend is native and uses the `blank-canvas`:pkg: package. It is a full
-freatured backend supporting gradients and external images. Diagrams generated
-with the Canvas backend cannot be saved as graphics files only as programs to
+featured backend supporting gradients and external images. Diagrams generated
+with the Canvas backend cannot be saved as graphics files, only as programs to
 be run locally.
 
 The Canvas backend can be invoked via
@@ -5794,13 +5794,13 @@ The Canvas backend can be invoked via
 The HTML5 backend
 -----------------
 
-Like the Canvas backend the Html5 backend targets the browser. The difference is
-that the Html5 backend creates a file of stand alone javascript and optionally
-html that can be used as a (or part of a) web page. It is based on the
+Like the Canvas backend, the HTML5 backend targets the browser. The difference is
+that the HTML5 backend creates a file of stand alone Javascript and optionally
+HTML that can be used as a (or part of a) web page. It is based on the
 `static-canvas`:pkg: package.  It is a full featured backend supporting
 gradients and external images.
 
-The Canvas backend can be invoked via
+The HTML5 backend can be invoked via
 `Diagrams.Backend.Html5.CmdLine`:mod: module, or via the
 `renderDia`/`renderHtml5` functions.
 
@@ -5948,7 +5948,7 @@ this particular type from right to left:
   families `Typeable` and `RealFloat`, which imply `Real`, `Floating`,
   `Fractional`,  `Num`, and `Ord`.
 
-* `V a ~ V2 Double, N a ~ n`.  These are `type equality constraints`_,
+* `V a ~ V2, N a ~ n`.  These are `type equality constraints`_,
   which say that the types `V a` and `V2` must be equal, and that we
   will refer to `N a` with the type variable `n`.  In this case `V2`
   is the `type of two-dimensional vectors`_, and `V` is a `type
