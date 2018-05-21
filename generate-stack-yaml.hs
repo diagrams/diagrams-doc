@@ -1,7 +1,7 @@
 #! /usr/bin/env stack
 {-
   stack runghc
-    --resolver lts-6.22
+    --resolver lts-11.10
 
     --package basic-prelude
     --package process
@@ -24,26 +24,45 @@ data Dep = Dep
 main :: IO ()
 main = do
   deps <- depsWithShas
-  Yaml.writeYamlFile "stack.yaml" (mkYamlFile deps)
+  Yaml.writeYamlFile "stack.yaml.test" (mkYamlFile deps)
 
 mkYamlFile :: [Dep] -> Yaml.YamlBuilder
 mkYamlFile deps = Yaml.mapping
-  [ "resolver"   .= Yaml.string "lts-6.22"
+  [ "resolver"   .= Yaml.string "lts-11.10"
   , "extra-deps" .= (Yaml.array . map Yaml.string $
     [ "tuple-0.3.0.2"
-    , "OneTuple-0.2.1"
-    , "SVGFonts-1.6.0.1"
-    , "cubicbezier-0.6.0.3"
+    , "SVGFonts-1.7"
+    , "cubicbezier-0.6.0.5"
     , "mfsolve-0.3.2.0"
-    , "haskell-src-exts-1.18.2"
-    , "haskell-src-exts-simple-1.18.0.1.1"
-    , "optparse-applicative-0.13.0.0"
-    , "svg-builder-0.1.0.1"
-    , "newtype-generics-0.5"
+    , "haskell-src-exts-1.20.2"
+    , "haskell-src-exts-simple-1.20.0.0"
     , "fast-math-1.0.2"
+    , "pandoc-2.2.1"
+    , "pandoc-types-1.17.4.2"
     ])
-  , "packages"   .= Yaml.array (Yaml.string "." : map mkDepObject deps)
+  , "packages"   .= Yaml.array
+      ( Yaml.string "."
+      : Yaml.mapping
+          [ "location" .= Yaml.mapping
+            [ "git"    .= Yaml.string "git@github.com:st3ll1s/haddock.git"
+            , "commit" .= Yaml.string "b3912d70f74b0693f1ea8cffb8f547b1303ef325"
+            ]
+          , "subdirs" .= Yaml.array
+            [ Yaml.string "haddock-library" ]
+          , "extra-dep" .= Yaml.bool True
+          ]
+      : map mkDepObject deps
+      )
   ]
+
+  {- - location:
+    git: git@github.com:st3ll1s/haddock.git
+    commit: b3912d70f74b0693f1ea8cffb8f547b1303ef325
+  subdirs:
+    - haddock-library
+  extra-dep: true
+
+-}
   where
     mkDepObject :: Dep -> Yaml.YamlBuilder
     mkDepObject (Dep name sha) =
@@ -75,5 +94,4 @@ repoNames =
   , "docutils"
   , "dual-tree"
   , "monoid-extras"
-  , "statestack"
   ]
