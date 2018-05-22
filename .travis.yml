@@ -22,6 +22,7 @@ before_script:
   - stack setup 8.2.2
 
   - ./generate-stack-yaml.hs
+  - cat stack.yaml
 
   # Now that there is a stack.yaml file, this command sets up stack locally
   - stack --no-terminal setup

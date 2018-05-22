@@ -24,7 +24,7 @@ data Dep = Dep
 main :: IO ()
 main = do
   deps <- depsWithShas
-  Yaml.writeYamlFile "stack.yaml.test" (mkYamlFile deps)
+  Yaml.writeYamlFile "stack.yaml" (mkYamlFile deps)
 
 mkYamlFile :: [Dep] -> Yaml.YamlBuilder
 mkYamlFile deps = Yaml.mapping
