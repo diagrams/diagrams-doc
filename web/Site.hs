@@ -12,9 +12,11 @@ import           Data.String     (IsString, fromString)
 
 import           System.FilePath ((</>), splitFileName, replaceExtension)
 
-import           Text.Pandoc     (writerStandalone, writerTemplate, readMarkdown,
-                                  writeHtmlString, bottomUp, ReaderOptions,
-                                  WriterOptions, MathType(..), Inline(..))
+import           Data.Text       (Text)
+import qualified Data.Text       as T
+import           Text.Pandoc     (writerTemplate, readMarkdown,
+                                  writeHtml5String, bottomUp, ReaderOptions,
+                                  WriterOptions, MathType(..), Inline(..), runPure)
 
 import           Hakyll
 
@@ -79,7 +81,7 @@ main = do
         let b' = renderMarkdownPandocWith
                    defaultHakyllReaderOptions
                    defaultHakyllWriterOptions
-                   b
+                   (T.pack <$> b)
         indexCompiler indexCtx b'
 
     -- Blog ---------------------------------------
@@ -239,22 +241,19 @@ buildBannerCSS b = do
     m <- loadAndApplyTemplate "templates/banner.markdown" defaultContext b
     return $ renderMarkdownPandocWith
                defaultHakyllReaderOptions
-               defaultHakyllWriterOptions
-                 { writerStandalone = True
-                 , writerTemplate = t
-                 }
-               m
+               defaultHakyllWriterOptions { writerTemplate = t }
+               (T.pack <$> m)
 
 buildBannerHtml :: Item String -> Compiler (Item String)
 buildBannerHtml b = do
     b <- getResourceBody
     m <- loadAndApplyTemplate "templates/banner.markdown" defaultContext b
-    return $ renderMarkdownPandoc m
+    return $ renderMarkdownPandoc (T.pack <$> m)
 
-renderMarkdownPandocWith :: ReaderOptions -> WriterOptions -> Item String -> Item String
-renderMarkdownPandocWith ropt wopt = writePandocWith wopt . fmap (either (const mempty) id . readMarkdown ropt)
+renderMarkdownPandocWith :: ReaderOptions -> WriterOptions -> Item Text -> Item String
+renderMarkdownPandocWith ropt wopt = writePandocWith wopt . fmap (either (const mempty) id . runPure . readMarkdown ropt)
 
-renderMarkdownPandoc :: Item String -> Item String
+renderMarkdownPandoc :: Item Text -> Item String
 renderMarkdownPandoc = renderMarkdownPandocWith
                          defaultHakyllReaderOptions
                          defaultHakyllWriterOptions
@@ -311,9 +310,12 @@ markdownFieldsCtx = mconcat . map markdownFieldCtx
 markdownFieldCtx :: String -> Context String
 markdownFieldCtx f = field f $ \i -> do
   markdown <- fromMaybe "" <$> getMetadataField (itemIdentifier i) f
-  return $ case readMarkdown defaultHakyllReaderOptions markdown of
-    Right p -> writeHtmlString defaultHakyllWriterOptions p
-    Left e  -> show e
+  let res = runPure $ do
+        p <- readMarkdown defaultHakyllReaderOptions (T.pack markdown)
+        writeHtml5String defaultHakyllWriterOptions p
+  return $ case res of
+    Left e -> show e
+    Right r -> T.unpack r
 
 buildGallery :: Item String -> [Item String] -> Compiler (Item String)
 buildGallery content lhss = do
