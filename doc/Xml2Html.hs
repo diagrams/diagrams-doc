@@ -26,18 +26,19 @@ import           Diagrams.Backend.Rasterific
 
 xml2Html :: DocutilOpts -> IO ExitCode
 xml2Html opts = do
-  (modMap, nameMap) <- buildPackageMaps
-                       [ "monoid-extras"
-                       , "dual-tree"
-                       , "diagrams-core"
-                       , "active"
-                       , "diagrams-lib"
-                       , "diagrams-contrib"
-                       , "diagrams-solve"
-                       , "palette"
-                       , "SVGFonts"
-                       ]
-  let transf = diagramsDoc modMap nameMap
+  -- (modMap, nameMap) <- buildPackageMaps
+  --                      [ "monoid-extras"
+  --                      , "dual-tree"
+  --                      , "diagrams-core"
+  --                      , "active"
+  --                      , "diagrams-lib"
+  --                      , "diagrams-contrib"
+  --                      , "diagrams-solve"
+  --                      , "palette"
+  --                      , "SVGFonts"
+  --                      ]
+  -- let transf = diagramsDoc modMap nameMap
+  let transf = diagramsDoc () ()
 
   [rc] <- runX (application [withValidate no] opts transf)
   if rc >= c_err && not (keepGoing opts)
@@ -47,12 +48,12 @@ xml2Html opts = do
 diagramsDoc modMap nameMap outDir =
   doTransforms [ linkifyGithub
                , linkifyHackage
-               , linkifyModules modMap
+               -- , linkifyModules modMap
                , highlightInlineHS
                , highlightBlockHS
                , compileDiagrams outDir
                , compileDiagramsLHS outDir
-               , linkifyHS preference nameMap modMap
+               -- , linkifyHS preference nameMap modMap
                ]
   >>> xml2html
   >>> doTransforms [ styleFile "css/default.css"
