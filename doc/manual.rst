@@ -124,7 +124,7 @@ Installation
 
 Before installing ``diagrams``, you will need the following:
 
-* The `Glasgow Haskell Compiler`_ (GHC), version 7.8.x or later.
+* The `Glasgow Haskell Compiler`_ (GHC), version 7.10.x or later.
 * The `cabal-install`_ tool.
 
 .. _`cabal-install`: http://hackage.haskell.org/trac/hackage/wiki/CabalInstall
