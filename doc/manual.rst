@@ -51,17 +51,8 @@ Most sections contain links to relevant modules you can follow to
 read about other functions not covered in the text.
 
 Module names in the text are typeset like this:
-`Diagrams.Prelude`:mod:.  Click on a module name to visit its
-documentation.  You can also click on any function or operator name in
-code examples to take you to its documentation.  Try it:
-
-.. class:: lhs
-
-::
-
-  example = circle 2 ||| pentagon 3
-
-Mathematical equations are typeset using MathJax_:
+`Diagrams.Prelude`:mod:.  Mathematical equations are typeset using
+MathJax_:
 
 `\sum_{k=1}^\infty \frac{1}{k^2} = \frac{\pi^2}{6}`:math:
 
