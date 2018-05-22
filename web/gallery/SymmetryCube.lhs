@@ -14,11 +14,14 @@ width: 600
 > import Diagrams.BoundingBox
 > import Diagrams.Prelude
 > import Graphics.SVGFonts
+> import Graphics.SVGFonts.ReadFont (PreparedFont)
 
 The diagram is the boxes (the "cube") and the lines between the boxes.
 
-> example = let c = sCube
->           in pad 1.1 . centerXY $ c <> drawLines c <> square 30
+> example = do
+>   font <- lin2
+>   let c = sCube font
+>   return $ pad 1.1 . centerXY $ c <> drawLines c <> square 30
 >                                 # fc whitesmoke
 >                                 # scaleY 0.94
 >                                 # translateX 11
@@ -39,18 +42,18 @@ rectangle.
 >         width  = diameter (r2 (1,0)) padded
 >     in centerXY innards <> roundedRect width height 0.1
 >
-> textOpts n = TextOpts lin2 INSIDE_H KERN False 1 n
+> textOpts font n = TextOpts font INSIDE_H KERN False 1 n
 
 A single string of text.
 
-> text' :: String -> Double -> Diagram B
-> text' s n = textSVG_ (textOpts n) s # fc white # lw none
+> text' :: PreparedFont Double -> String -> Double -> Diagram B
+> text' font s n = textSVG_ (textOpts font n) s # fc white # lw none
 
 Several lines of text stacked vertically.
 
-> centredText ls n = vcat' (with & catMethod .~ Distrib & sep .~ n)
->                      (map (\l -> centerX (text' l n)) ls)
-> centredText' s = centredText (splitOn "\n" s)
+> centredText font ls n = vcat' (with & catMethod .~ Distrib & sep .~ n)
+>                      (map (\l -> centerX (text' font l n)) ls)
+> centredText' font s = centredText font (splitOn "\n" s)
 
 Diagram-specific parameters, including the positioning vectors.
 
@@ -64,21 +67,21 @@ Diagram-specific parameters, including the positioning vectors.
 
 A box with some interior text and a name.
 
-> mybox s n = (box (centredText' s 1) padAmount) # named n
+> mybox font s n = (box (centredText' font s 1) padAmount) # named n
 
 The cube is just several boxes superimposed, positioned by adding
 together some positioning vectors.
 
-> sCube :: Diagram B
-> sCube = fc navy $ mconcat
->   [ mybox "Permutation" "perm"
->   , mybox "Permutation\ngroup" "permgroup"                     # translate right
->   , mybox "Symmetry" "sym"                                     # translate upright
->   , mybox "Parameterised\npermutation" "paramperm"             # translate down
->   , mybox "Parameterised\npermutation\ngroup" "parampermgroup" # translate (right ^+^ down)
->   , mybox "Parameterised\nsymmetry" "paramsym"                 # translate (down ^+^ upright)
->   , mybox "Symmetry\ngroup" "symgroup"                         # translate (upright ^+^ right)
->   , mybox "Parameterised\nsymmetry\ngroup" "paramsymgroup"     # translate (down ^+^ right ^+^ upright)
+> sCube :: PreparedFont Double -> Diagram B
+> sCube font = fc navy $ mconcat
+>   [ mybox font "Permutation" "perm"
+>   , mybox font "Permutation\ngroup" "permgroup"                     # translate right
+>   , mybox font "Symmetry" "sym"                                     # translate upright
+>   , mybox font "Parameterised\npermutation" "paramperm"             # translate down
+>   , mybox font "Parameterised\npermutation\ngroup" "parampermgroup" # translate (right ^+^ down)
+>   , mybox font "Parameterised\nsymmetry" "paramsym"                 # translate (down ^+^ upright)
+>   , mybox font "Symmetry\ngroup" "symgroup"                         # translate (upright ^+^ right)
+>   , mybox font "Parameterised\nsymmetry\ngroup" "paramsymgroup"     # translate (down ^+^ right ^+^ upright)
 >                ]
 
 For each pair (a,b) of names, draw an arrow from diagram "a" to

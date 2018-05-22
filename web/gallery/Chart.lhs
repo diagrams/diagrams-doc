@@ -11,6 +11,7 @@ width: 600
 
 > import Diagrams.Prelude
 > import Graphics.SVGFonts
+> import Graphics.SVGFonts.ReadFont (PreparedFont)
 >
 > import Diagrams.Core.Points -- needed to work around bug in GHC 7.4
 
@@ -34,11 +35,14 @@ dashing pattern and shape.
 
 The final diagram is the chart with the legend next to it.
 
-> example :: Dia
-> example = centerXY $
->     (centerY (chart (map snd dataSeries) plotStyles [0,2,4,6,8,10] [0,2,4,6,8,10])
+
+> example :: IO Dia
+> example = do
+>   lin2_ <- lin2
+>   return . centerXY $
+>     (centerY (chart lin2_ (map snd dataSeries) plotStyles [0,2,4,6,8,10] [0,2,4,6,8,10])
 >      ||| strutX 1
->      ||| centerY (legend plotStyles (map fst dataSeries)))
+>      ||| centerY (legend lin2_ plotStyles (map fst dataSeries)))
 >      `atop` square 12 # translateX 5 # scaleY 0.85 -- border
 
 The size of the chart, in logical units.
@@ -53,11 +57,11 @@ horizontal and vertical axes markings.
 "dataToFrac" converts points from the "data" space [0..10] into the
 [0..1] range.
 
-> chart :: [Points] -> [(Dia, Dia -> Dia)] -> [Double] -> [Double] -> Dia
-> chart series styles xs ys = mconcat
+> chart :: PreparedFont Double -> [Points] -> [(Dia, Dia -> Dia)] -> [Double] -> [Double] -> Dia
+> chart font series styles xs ys = mconcat
 >   [ plotMany styles series dataToFrac
->   , horizticks (map (\x -> ((x-minx)/xrange, showFloor x)) xs)
->   , vertticks  (map (\y -> ((y-miny)/yrange, showFloor y)) ys)
+>   , horizticks font (map (\x -> ((x-minx)/xrange, showFloor x)) xs)
+>   , vertticks  font (map (\y -> ((y-miny)/yrange, showFloor y)) ys)
 >   , box
 >   ]
 >   where maxx = last xs
@@ -87,16 +91,16 @@ Plot many data series using the given list of styles.
 
 A string of text, converted to a path and filled.
 
-> text' :: String -> Dia
-> text' s = (strokeP $ textSVG' (TextOpts lin2 INSIDE_H KERN False 0.4 0.4) s) # fc black # lw none
+> text' :: PreparedFont Double -> String -> Dia
+> text' font s = (strokeP $ textSVG' (TextOpts font INSIDE_H KERN False 0.4 0.4) s) # fc black # lw none
 
 The chart's legend.  Each label is drawn next to a little example of
 how the line looks in the chart.
 
-> legend :: [(Dia, Dia -> Dia)] -> [String] -> Dia
-> legend styles labels = centerXY $
+> legend :: PreparedFont Double -> [(Dia, Dia -> Dia)] -> [String] -> Dia
+> legend font styles labels = centerXY $
 >     vcat' with {_sep=0.15} $
->       map (\(l,s) -> littleLine s ||| strutX 0.4 ||| text' l # alignL)
+>       map (\(l,s) -> littleLine s ||| strutX 0.4 ||| text' font l # alignL)
 >         (zip labels (styles ++ plotStyles))
 >   where littleLine (d,l) = (strokeP $ fromVertices [ 0^&0, 1^&0 ]) # l
 >                            <> d # moveTo (0.5^&0)
@@ -110,9 +114,9 @@ Each tick on the vertical axis has a text part, a solid line on the
 left, a solid line on the right, and a long dashed line from left to
 right.
 
-> vertticks :: [(Double, String)] -> Dia
-> vertticks pairs =
->     let textBits = mconcat [ text' t # alignR # moveTo ((-0.2)^&(y*h)) | (y,t) <- pairs ]
+> vertticks :: PreparedFont Double -> [(Double, String)] -> Dia
+> vertticks font pairs =
+>     let textBits = mconcat [ text' font t # alignR # moveTo ((-0.2)^&(y*h)) | (y,t) <- pairs ]
 >         tickBits =    mconcat [ fromVertices [ 0^&(y*h), 0.1    ^&(y*h) ] | (y,_) <- pairs ]
 >                    <> mconcat [ fromVertices [ w^&(y*h), (w-0.1)^&(y*h) ] | (y,_) <- pairs ]
 >                    <> mconcat [ fromVertices [ 0^&(y*h), w^&(y*h)       ] # lc gray # dashingG [ 0.1, 0.1 ] 0 | (y,_) <- pairs ]
@@ -120,9 +124,9 @@ right.
 
 (Similar for the horizontal axis.)
 
-> horizticks :: [(Double, String)] -> Dia
-> horizticks pairs =
->     let textBits = mconcat [ text' t # moveTo ((x*w)^&(-0.3)) | (x,t) <- pairs ]
+> horizticks :: PreparedFont Double -> [(Double, String)] -> Dia
+> horizticks font pairs =
+>     let textBits = mconcat [ text' font t # moveTo ((x*w)^&(-0.3)) | (x,t) <- pairs ]
 >         tickBits =    mconcat [ fromVertices [ (x*w)^&0, (x*w)^&0.1     ] | (x,_) <- pairs ]
 >                    <> mconcat [ fromVertices [ (x*w)^&h, (x*w)^&(h-0.1) ] | (x,_) <- pairs ]
 >                    <> mconcat [ fromVertices [ (x*w)^&0, (x*w)^&h       ] # lc gray # dashingG [ 0.1, 0.1 ] 0 | (x,_) <- pairs ]

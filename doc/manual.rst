@@ -3938,10 +3938,13 @@ its own `textSVG` function which can be used to convert text into a
 
 ::
 
-> text' d s = (strokeP $ SF.textSVG' (SF.TextOpts SF.lin2 SF.INSIDE_H SF.KERN False d d) s)
->           # lw none
+> text' font d s
+>   = (strokeP $ SF.textSVG' (SF.TextOpts font SF.INSIDE_H SF.KERN False d d) s)
+>   # lw none
 >
-> example = text' 5 "Hello" # fc blue ||| text' 3 "world" # fc green
+> example = do
+>   font <- lin2
+>   return $ text' font 5 "Hello" # fc blue ||| text' font 3 "world" # fc green
 
 For more details and examples, see the `Haddock documentation`__.
 
