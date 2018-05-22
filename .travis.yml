@@ -19,7 +19,7 @@ addons:
 
 before_script:
   # Set up stack globally (download ghc)
-  - stack setup 7.10.3
+  - stack setup 8.2.2
 
   - ./generate-stack-yaml.hs
 
