@@ -42,30 +42,33 @@ a *magnitude* (length) and a *direction* (angle).
 
 ::
 
-> drawV v = (    beside unitY (hrule (norm v))
->                             (text' 0.5 "r" === strutY 0.2)
->                # alignR
->             <> triangle 0.3 # rotateBy (-1/4) # scaleY (1/2)
->                # fc black # alignR
->           )
->           # alignL
->           # rotate (angleBetween v unitX)
+> drawV font v =
+>   (    beside unitY (hrule (norm v))
+>                     (text' font 0.5 "r" === strutY 0.2)
+>        # alignR
+>   <> triangle 0.3 # rotateBy (-1/4) # scaleY (1/2)
+>      # fc black # alignR
+>   )
+>   # alignL
+>   # rotate (angleBetween v unitX)
 >
-> vPic v = drawV v <> xComponent <> yComponent <> theta
+> vPic font v = drawV font v <> xComponent <> yComponent <> theta
 >   where
 >     component u = fromOffsets [project u v]
 >                 # dashingG [0.05,0.05] 0
 >     xComponent = component unitX
 >     yComponent = component unitY # translate (project unitX v)
->     theta = text' 0.5 "θ" # translate (0.7 ^& 0.2)
+>     theta = text' font 0.5 "θ" # translate (0.7 ^& 0.2)
 >
-> text' d s = (stroke $ SF.textSVG' (SF.TextOpts SF.lin SF.INSIDE_H SF.KERN False d d) s)
->           # lwG 0 # fc black
+> text' font d s = (stroke $ SF.textSVG' (SF.TextOpts font SF.INSIDE_H SF.KERN False d d) s)
+>                # lw none # fc black
 >
-> example = ( (vPic ((4 ^& 0) # rotateBy (1/12)) # centerXY)
->             ||| strutX 0.2 ||| text' 0.5 "y"
->           )
->           === strutY 0.2 === text' 0.5 "x"
+> example = do
+>   font <- lin2
+>   return $ ( (vPic font ((4 ^& 0) # rotateBy (1/12)) # centerXY)
+>              ||| strutX 0.2 ||| text' font 0.5 "y"
+>            )
+>            === strutY 0.2 === text' font 0.5 "x"
 
 One of the most
 important things to understand about vectors is that they are

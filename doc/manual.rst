@@ -51,17 +51,8 @@ Most sections contain links to relevant modules you can follow to
 read about other functions not covered in the text.
 
 Module names in the text are typeset like this:
-`Diagrams.Prelude`:mod:.  Click on a module name to visit its
-documentation.  You can also click on any function or operator name in
-code examples to take you to its documentation.  Try it:
-
-.. class:: lhs
-
-::
-
-  example = circle 2 ||| pentagon 3
-
-Mathematical equations are typeset using MathJax_:
+`Diagrams.Prelude`:mod:.  Mathematical equations are typeset using
+MathJax_:
 
 `\sum_{k=1}^\infty \frac{1}{k^2} = \frac{\pi^2}{6}`:math:
 
@@ -133,7 +124,7 @@ Installation
 
 Before installing ``diagrams``, you will need the following:
 
-* The `Glasgow Haskell Compiler`_ (GHC), version 7.8.x or later.
+* The `Glasgow Haskell Compiler`_ (GHC), version 7.10.x or later.
 * The `cabal-install`_ tool.
 
 .. _`cabal-install`: http://hackage.haskell.org/trac/hackage/wiki/CabalInstall
@@ -3938,10 +3929,13 @@ its own `textSVG` function which can be used to convert text into a
 
 ::
 
-> text' d s = (strokeP $ SF.textSVG' (SF.TextOpts SF.lin2 SF.INSIDE_H SF.KERN False d d) s)
->           # lw none
+> text' font d s
+>   = (strokeP $ SF.textSVG' (SF.TextOpts font SF.INSIDE_H SF.KERN False d d) s)
+>   # lw none
 >
-> example = text' 5 "Hello" # fc blue ||| text' 3 "world" # fc green
+> example = do
+>   font <- lin2
+>   return $ text' font 5 "Hello" # fc blue ||| text' font 3 "world" # fc green
 
 For more details and examples, see the `Haddock documentation`__.
 
@@ -4447,8 +4441,35 @@ get you a long way, for many tasks it becomes necessary (or, at least,
 much simpler) to have a way to refer to previously placed subdiagrams.
 That is, we want a way to give a name to a particular diagram, combine
 it with some others, and then later be able to refer back to the the
-subdiagram by name. Any diagram can be given a name with the `named`
-function.
+subdiagram by name.
+
+Giving names
+~~~~~~~~~~~~
+
+Any diagram can be given a name with the `named` function, as in
+`circle 1 # named "bob"`.  The name can later be used to access the
+diagram it was attached to, which is useful especially when that
+diagram has been incorporated as a subdiagram in a larger diagram.
+
+.. container:: warning
+
+   The given name attaches to the local origin of the diagram
+   at the point that the `named` function is applied.  This means that
+   `named` does *not* commute with transformations.  Consider the
+   following example:
+
+   .. class:: dia-lhs
+
+   ::
+
+   > dia1 = (square 1 # translateY 4 # named "bob" ||| circle 1 # named "joe")
+   >      # connect "bob" "joe"
+   > dia2 = (square 1 # named "bob" # translateY 4 ||| circle 1 # named "joe")
+   >      # connect "bob" "joe"
+   >
+   > example :: Diagram B
+   > example = hsep 2 [dia1, dia2]
+
 
 User-defined names
 ~~~~~~~~~~~~~~~~~~
