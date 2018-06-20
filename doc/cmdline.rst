@@ -329,7 +329,7 @@ name `Mainable`.
 > class Mainable d where
 >    type MainOpts d :: *
 >
->    mainArgs   :: Parseable (MainOpts d) => d -> IO (MainOpts d)
+>    mainArgs   :: Parseable (MainOpts d) => proxy d -> IO (MainOpts d)
 >    mainRender :: MainOpts d -> d -> IO ()
 >    mainWith   :: Parseable (MainOpts d) => d -> IO ()
 
@@ -367,7 +367,7 @@ only to fix the type so we can use our associated type function `MainOpts`.
 
 ::
 
->     mainArgs :: Parseable (MainOpts d) => d -> IO (MainOpts d)
+>     mainArgs :: Parseable (MainOpts d) => proxy d -> IO (MainOpts d)
 >     mainArgs _ = do
 >       prog <- getProgName
 >       let p = info (helper' <*> parser)
@@ -398,7 +398,7 @@ get away with the default implementation.
 
 >     mainWith :: Parseable (MainOpts d) => d -> IO ()
 >     mainWith d = do
->         opts <- mainArgs d
+>         opts <- mainArgs (Identity d)
 >         mainRender opts d
 
 Now let's try a much harder instance.  We want to be able to handle
