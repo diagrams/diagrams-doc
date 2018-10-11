@@ -25,7 +25,7 @@ cd standalone-sandbox
 cabal sandbox delete
 cabal sandbox init
 echo 'documentation: True' > cabal.config
-cabal install gtk2hs-buildtools
+cabal install alex gtk2hs-buildtools
 cabal install ${=INSTALL_PKGS}
 PKGDB=`cabal exec printenv CABAL_SANDBOX_PACKAGE_PATH | cut -d ':' -f 1`
 cd ../..
