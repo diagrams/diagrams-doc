@@ -1,3 +1,46 @@
+* In-progress updates
+** Lens-4.17, base-4.12 (GHC 8.6)
+
+   + [X] monoid-extras
+   + [X] dual-tree
+   + [X] active
+   + [X] -core
+   + [X] -solve
+   + [X] -lib
+     + [X] bump upper bounds
+     + [X] local test build
+     + [X] upload/revise on Hackage
+     + Note, didn't tag because there is unreleased stuff on the branch...
+   + [X] force-layout
+     + [X] bump upper bounds
+     + [X] local test build
+     + [X] upload/revise on Hackage
+     + [X] tag
+   + [-] -contrib
+     + [ ] needs circle-packing updated
+       + [ ] emailed Joachim
+       + [ ] updated
+     + [X] bump upper bounds
+     + [X] local test build
+     + [ ] upload/revise on Hackage
+     + [ ] tag
+   + [X] svg-builder
+     + [X] bump upper bounds
+     + [X] local test build
+     + [X] upload/revise on Hackage
+     + [X] tag
+   + [-] -svg
+     + [X] bump upper bounds
+     + [ ] local test build
+       - running
+     + [ ] upload/revise on Hackage
+     + [ ] tag
+   + [ ] -rasterific
+   + [ ] -cairo
+   + [ ] -gtk
+   + [ ] -builder
+   + [ ] -haddock
+
 * Current projects
 
   + Metafont paths
