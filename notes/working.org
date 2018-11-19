@@ -43,16 +43,24 @@
    + [ ] -cairo
      + currently cabal solver fails with strange errors about gtk2hs
    + [ ] -gtk
-   + [-] texrunner
+   + [X] texrunner
      + [X] updated
      + [X] PR to cchalmers
-     + [ ] released to Hackage
-   + [-] -pgf
+     + [X] PR merged
+     + [X] released to Hackage
+   + [X] -pgf
+     + [X] updated upper bounds
+     + [X] local test build
+     + [X] upload/edit
+     + [X] tag
+   + [-] -postscript
      + [X] updated upper bounds
      + [X] local test build
      + [ ] upload/edit
      + [ ] tag
-   + [ ] -postscript
+     + [ ] release version in 1.4.1 (release) series (backport
+       updates)
+     + [ ] release 1.5?
    + [ ] -builder
    + [ ] -haddock
    + [ ] BlogLiterately-diagrams
