@@ -1,0 +1,133 @@
+* Packages to check
+
+  - hashable < 1.4
+  - semigroups < 0.20
+  - lens < 4.19
+  - base < 4.14
+  - optparse-applicative < 0.16
+  - QuickCheck < 2.14
+
+* Reinstate stuff to stackage!
+  + [ ] do it
+
+* TODO monoid-extras
+  + [X] semigroups
+  + [X] update travis
+  + [ ] travis
+    - running: https://travis-ci.org/diagrams/monoid-extras/builds/592632072
+  + [ ] upload/edit
+* TODO dual-tree
+  + [X] semigroups
+  + [X] QuickCheck
+  + [ ] travis
+    - running: https://travis-ci.org/diagrams/dual-tree/builds/592635402
+  + [ ] upload/edit
+* TODO diagrams-core
+  + [X] semigroups
+  + [X] lens
+  + [X] base
+  + [X] update travis
+  + [ ] travis build
+    - running: https://travis-ci.org/diagrams/diagrams-core/builds/592636922
+* TODO active (release)
+  + [X] semigroups
+  + [X] QuickCheck
+  + [X] base
+  + [X] lens
+  + [X] update travis
+  + [ ] travis build
+    - building: https://travis-ci.org/diagrams/active/builds/592641312
+* TODO diagrams-solve
+* TODO diagrams-lib
+  + [ ] hashable
+  + [ ] semigroups
+  + [ ] optparse-applicative
+* TODO SVGFonts
+* TODO palette
+* TODO force-layout
+* TODO diagrams-contrib
+  + [ ] hashable
+  + [ ] semigroups
+  + [ ] QuickCheck
+* TODO statestack
+* TODO diagrams-cairo
+* TODO diagrams-gtk
+* TODO diagrams-postscript
+  + [ ] hashable
+  + [ ] semigroups
+* TODO cchalmers/texrunner
+* TODO diagrams-pgf
+* TODO diagrams-rasterific
+  + [ ] hashable
+  + [ ] optparse-applicative
+
+  + [ ] upload 1.4.2? https://byorgey.fogbugz.com/f/cases/12809/Upload-diagrams-rasterific-1-4-2
+* TODO jeffreyrosenbluth/svg-builder
+  + [ ] hashable
+* TODO diagrams-svg
+  + [ ] hashable
+  + [ ] semigroups
+  + [ ] optparse-applicative
+* TODO jeffreyrosenbluth/static-canvas
+* TODO diagrams-canvas
+* TODO diagrams-html5
+* TODO diagrams
+* TODO diagrams-builder
+* TODO diagrams-haddock
+* TODO diagrams-graphviz
+* TODO diagrams-input
+* TODO diagrams-backend-tests
+* TODO docutils
+* TODO diagrams-doc
+* TODO diagrams-povray
+
+* stackage things / tickets
+
+  + [ ] optparse-applicative
+    https://byorgey.fogbugz.com/f/cases/12783/Fwd-commercialhaskell-stackage-optparse-applicative-0-15-4693
+  + [ ] check status of texrunner in Stackage?
+    https://byorgey.fogbugz.com/f/cases/12795/Fwd-cchalmers-texrunner-Stackage-8
+
+  + [ ] https://byorgey.fogbugz.com/f/cases/12787/Fwd-diagrams-diagrams-graphviz-Bump-deps-to-deal-with-ghc-8-6-9
+
+  + [ ] lens https://byorgey.fogbugz.com/f/cases/12922/Fix-lens-upper-bounds
+  + [ ]
+    https://byorgey.fogbugz.com/f/cases/12959/Fwd-diagrams-diagrams-solve-Cut-a-new-release-6
+  + [ ]
+    https://byorgey.fogbugz.com/f/cases/12960/Fwd-diagrams-active-Support-GHC-8-8-26
+  + [ ]
+    https://byorgey.fogbugz.com/f/cases/12961/Fwd-diagrams-monoid-extras-Cut-a-new-release-for-8-8-41
+  + [ ]
+    https://byorgey.fogbugz.com/f/cases/12963/Fwd-diagrams-diagrams-lib-Support-lens-4-18-343
+  + [ ]
+    https://byorgey.fogbugz.com/f/cases/12978/Fwd-diagrams-diagrams-core-New-release-on-Hackage-to-allow-GHC-8-8-1-107
+
+**** Hashable upper bounds
+
+     update to 1.3.  Looked at changelog, shouldn't really affect anything.
+
+     + [ ] -lib
+     + [ ] -contrib
+     + [ ] -postscript
+     + [ ] -rasterific
+     + [ ] svg-builder
+     + [ ] -svg
+**** Semigroups upper bounds
+
+     Update to allow 0.19.  Shouldn't have any bad effects.
+
+     + [X] monoid-extras
+     + [X] dual-tree
+     + [X] active
+     + [ ] -core
+     + [ ] -lib
+     + [ ] -contrib
+     + [ ] -postscript
+     + [ ] -svg
+**** Lens upper bounds
+**** QuickCheck upper bounds
+
+     + [ ] monoid-extras
+     + [ ] dual-tree
+     + [X] active
+     + [ ] diagrams-contrib
