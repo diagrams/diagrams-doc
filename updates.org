@@ -10,41 +10,86 @@
 * Reinstate stuff to stackage!
   + [ ] do it
 
-* TODO monoid-extras
+* DONE monoid-extras
   + [X] semigroups
   + [X] update travis
-  + [ ] travis
+  + [X] travis
     - running: https://travis-ci.org/diagrams/monoid-extras/builds/592632072
-  + [ ] upload/edit
-* TODO dual-tree
+    - failed on GHC 8.8 and 7.8.  8.8 probably due to cabal-3.0 stuff,
+      which should be fixed now with a recent diagrams-travis PR.
+      Rerunning it to see.
+    - Removed support for GHC 7.8; criterion wasn't building.
+    - Rerunning: https://travis-ci.org/diagrams/monoid-extras/builds/599436501
+    - Looks promising!
+  + [X] upload/edit
+    - Uploaded 0.5.1 with GHC 8.8 updates as well as new strict
+      coproduct stuff
+* DONE dual-tree
   + [X] semigroups
   + [X] QuickCheck
-  + [ ] travis
-    - running: https://travis-ci.org/diagrams/dual-tree/builds/592635402
-  + [ ] upload/edit
-* TODO diagrams-core
+  + [X] travis
+    - running:
+      https://travis-ci.org/diagrams/dual-tree/builds/592635402
+    - removed GHC 7.8 support
+    - rerunning: https://travis-ci.org/diagrams/dual-tree/builds/599436940
+  + [X] upload/edit
+    - uploaded 0.2.2.1
+* DONE diagrams-core
   + [X] semigroups
   + [X] lens
   + [X] base
   + [X] update travis
-  + [ ] travis build
-    - running: https://travis-ci.org/diagrams/diagrams-core/builds/592636922
-* TODO active (release)
+  + [X] travis build
+    - running:
+      https://travis-ci.org/diagrams/diagrams-core/builds/592636922
+    - removed GHC 7.8
+    - rerunning: https://travis-ci.org/diagrams/diagrams-core/builds/599437497
+  + [X] upload/edit
+    - uploaded 1.4.2
+* DONE active (release)
   + [X] semigroups
   + [X] QuickCheck
   + [X] base
   + [X] lens
   + [X] update travis
-  + [ ] travis build
+  + [X] travis build
     - building: https://travis-ci.org/diagrams/active/builds/592641312
-* TODO diagrams-solve
+    - something went funky with networking on one of the builds,
+      restarted it.
+    - Builds now!
+  + [X] upload/edit
+* DONE diagrams-solve
+  + [X] base
+  + [X] travis build
+    - https://travis-ci.org/diagrams/diagrams-solve/builds/599438237
+  + [X] edit/upload
+    - revised on hackage (0.1.1-r5)
 * TODO diagrams-lib
-  + [ ] hashable
-  + [ ] semigroups
-  + [ ] optparse-applicative
+  + [X] hashable
+  + [X] semigroups
+  + [X] optparse-applicative
+  + [ ] travis
+    x https://travis-ci.org/diagrams/diagrams-lib/builds/600966091
+    x https://travis-ci.org/diagrams/diagrams-lib/builds/602054010
+    x https://travis-ci.org/diagrams/diagrams-lib/builds/603422463
+    cur: https://travis-ci.org/diagrams/diagrams-lib/builds/604093822
+  + [X] fixed some warnings
+  + [ ] upload/edit
 * TODO SVGFonts
-* TODO palette
+  + [X] looks like no upper bounds needed fixing
+  + [ ] travis build
+    - 8.8.1: Data.Semigroup redundant in TwoD.Arc
+    - 8.6, 8.4: " " in TwoD.Combinators
+    - 8.2, 8.0, 7.10: Could not find Data.Active??
+* DONE palette
+  + [X] update travis
+  + [X] travis build
+  + [X] edit on Hackage
 * TODO force-layout
+  + [X] upper bounds
+  + [X] travis
+    - https://travis-ci.org/diagrams/force-layout/builds/603421524
+  + [ ] upload/edit
 * TODO diagrams-contrib
   + [ ] hashable
   + [ ] semigroups
@@ -93,13 +138,13 @@
   + [ ] lens https://byorgey.fogbugz.com/f/cases/12922/Fix-lens-upper-bounds
   + [ ]
     https://byorgey.fogbugz.com/f/cases/12959/Fwd-diagrams-diagrams-solve-Cut-a-new-release-6
-  + [ ]
+  + [X]
     https://byorgey.fogbugz.com/f/cases/12960/Fwd-diagrams-active-Support-GHC-8-8-26
-  + [ ]
+  + [X]
     https://byorgey.fogbugz.com/f/cases/12961/Fwd-diagrams-monoid-extras-Cut-a-new-release-for-8-8-41
   + [ ]
     https://byorgey.fogbugz.com/f/cases/12963/Fwd-diagrams-diagrams-lib-Support-lens-4-18-343
-  + [ ]
+  + [X]
     https://byorgey.fogbugz.com/f/cases/12978/Fwd-diagrams-diagrams-core-New-release-on-Hackage-to-allow-GHC-8-8-1-107
 
 **** Hashable upper bounds
