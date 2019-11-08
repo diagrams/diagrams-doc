@@ -64,36 +64,38 @@
     - https://travis-ci.org/diagrams/diagrams-solve/builds/599438237
   + [X] edit/upload
     - revised on hackage (0.1.1-r5)
-* TODO diagrams-lib
+* DONE diagrams-lib
   + [X] hashable
   + [X] semigroups
   + [X] optparse-applicative
-  + [ ] travis
+  + [X] travis
     x https://travis-ci.org/diagrams/diagrams-lib/builds/600966091
     x https://travis-ci.org/diagrams/diagrams-lib/builds/602054010
     x https://travis-ci.org/diagrams/diagrams-lib/builds/603422463
-    cur: https://travis-ci.org/diagrams/diagrams-lib/builds/604093822
+    x https://travis-ci.org/diagrams/diagrams-lib/builds/604093822
+    x https://travis-ci.org/diagrams/diagrams-lib/builds/607884505
+      https://travis-ci.org/diagrams/diagrams-lib/builds/607965176
   + [X] fixed some warnings
-  + [ ] upload/edit
+  + [X] upload/edit
 * TODO SVGFonts
   + [X] looks like no upper bounds needed fixing
   + [ ] travis build
-    - 8.8.1: Data.Semigroup redundant in TwoD.Arc
-    - 8.6, 8.4: " " in TwoD.Combinators
-    - 8.2, 8.0, 7.10: Could not find Data.Active??
+    x https://travis-ci.org/diagrams/SVGFonts/builds/602036632
+    - https://travis-ci.org/diagrams/SVGFonts/builds/609467627
 * DONE palette
   + [X] update travis
   + [X] travis build
   + [X] edit on Hackage
-* TODO force-layout
+* DONE force-layout
   + [X] upper bounds
   + [X] travis
     - https://travis-ci.org/diagrams/force-layout/builds/603421524
-  + [ ] upload/edit
+  + [X] upload/edit
+    - edited on Hackage
 * TODO diagrams-contrib
-  + [ ] hashable
-  + [ ] semigroups
-  + [ ] QuickCheck
+  + [ ] merge bounds PR https://github.com/diagrams/diagrams-contrib/pull/82
+  + [ ] travis build
+    - https://travis-ci.org/diagrams/diagrams-contrib/builds/609455785
 * TODO statestack
 * TODO diagrams-cairo
 * TODO diagrams-gtk
