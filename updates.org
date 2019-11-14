@@ -135,7 +135,7 @@
 * TODO cchalmers/texrunner
   + [X] update bounds
   + [ ] travis
-    - https://travis-ci.org/cchalmers/texrunner
+    - https://travis-ci.org/cchalmers/texrunner/builds/611835033
 * TODO diagrams-pgf
 * TODO diagrams-rasterific
   + [ ] hashable
