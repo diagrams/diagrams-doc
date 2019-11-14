@@ -77,9 +77,9 @@
       https://travis-ci.org/diagrams/diagrams-lib/builds/607965176
   + [X] fixed some warnings
   + [X] upload/edit
-* TODO SVGFonts
+* DONE SVGFonts
   + [X] looks like no upper bounds needed fixing
-  + [ ] travis build
+  + [X] travis build
     x https://travis-ci.org/diagrams/SVGFonts/builds/602036632
     - https://travis-ci.org/diagrams/SVGFonts/builds/609467627
 * DONE palette
@@ -92,17 +92,50 @@
     - https://travis-ci.org/diagrams/force-layout/builds/603421524
   + [X] upload/edit
     - edited on Hackage
-* TODO diagrams-contrib
-  + [ ] merge bounds PR https://github.com/diagrams/diagrams-contrib/pull/82
-  + [ ] travis build
-    - https://travis-ci.org/diagrams/diagrams-contrib/builds/609455785
-* TODO statestack
+* DONE diagrams-contrib
+  + [X] merge bounds PR https://github.com/diagrams/diagrams-contrib/pull/82
+  + [X] travis build
+    x https://travis-ci.org/diagrams/diagrams-contrib/builds/609455785
+    - https://travis-ci.org/diagrams/diagrams-contrib/builds/609677856
+  + [X] upload/edit
+    - uploaded as 1.4.4 (includes new IntersectionExtras)
+* DONE statestack
+  - [X] merge bounds bump
+  - [X] travis
+    x https://travis-ci.org/diagrams/statestack/builds/609679068
+    - https://travis-ci.org/diagrams/statestack/builds/611017438
+  - [X] upload
+    - uploaded new 0.3 to Hackage (major bump because of removed ListT
+      instance)
 * TODO diagrams-cairo
+  - [X] bump upper bounds
+  - [ ] travis
+    - https://travis-ci.org/diagrams/diagrams-cairo/builds/609680318
+      - 7.10, 8.0: error with gtk2hs-buildtools, something about Cabal
+        version
+      - 8.8: while building glib, gcc fails with "invalid use of __builtin_va_arg_pack ()"
+  - [ ] edit/upload
 * TODO diagrams-gtk
+  - [ ] update cairo first
+  - [ ] upper bounds
+  - [ ] travis
+  - [ ] edit/upload
 * TODO diagrams-postscript
-  + [ ] hashable
-  + [ ] semigroups
+  + [X] update bounds
+    + [X] hashable
+    + [X] semigroups
+    + [X] lens
+  + [ ] travis
+    - https://travis-ci.org/diagrams/diagrams-postscript/builds/611019905
+      - Fails on GHC 7.10, installed version of binary is 0.7.5, but
+        hashable -> text -> binary and JuicyPixels requires binary >=
+        0.8?
+      - Also failed on GHC 8.8 for what looks like a spurious reason,
+        restarting that job.
 * TODO cchalmers/texrunner
+  + [X] update bounds
+  + [ ] travis
+    - https://travis-ci.org/cchalmers/texrunner
 * TODO diagrams-pgf
 * TODO diagrams-rasterific
   + [ ] hashable
