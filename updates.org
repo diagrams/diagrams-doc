@@ -126,22 +126,34 @@
     + [X] semigroups
     + [X] lens
   + [ ] travis
-    - https://travis-ci.org/diagrams/diagrams-postscript/builds/611019905
+    x https://travis-ci.org/diagrams/diagrams-postscript/builds/611019905
       - Fails on GHC 7.10, installed version of binary is 0.7.5, but
         hashable -> text -> binary and JuicyPixels requires binary >=
         0.8?
       - Also failed on GHC 8.8 for what looks like a spurious reason,
         restarting that job.
-* TODO cchalmers/texrunner
+    x https://travis-ci.org/diagrams/diagrams-postscript/builds/611694329
+    - https://travis-ci.org/diagrams/diagrams-postscript/builds/619615750
+* DONE cchalmers/texrunner
   + [X] update bounds
-  + [ ] travis
-    - https://travis-ci.org/cchalmers/texrunner/builds/611835033
-* TODO diagrams-pgf
-* TODO diagrams-rasterific
-  + [ ] hashable
-  + [ ] optparse-applicative
+  + [X] travis
+    x https://travis-ci.org/cchalmers/texrunner/builds/611835033
+    - https://travis-ci.org/cchalmers/texrunner/builds/614338159
+  + [X] edited on Hackage
 
-  + [ ] upload 1.4.2? https://byorgey.fogbugz.com/f/cases/12809/Upload-diagrams-rasterific-1-4-2
+* TODO diagrams-pgf
+  + [X] bump upper bounds
+  + [ ] travis
+    - https://travis-ci.org/diagrams/diagrams-pgf/builds/619619044
+* TODO diagrams-rasterific
+  + [X] hashable
+  + [X] optparse-applicative
+  + [ ] travis
+    - https://travis-ci.org/diagrams/diagrams-rasterific/builds/619620653
+
+  + [ ] upload 1.4.2?
+    https://byorgey.fogbugz.com/f/cases/12809/Upload-diagrams-rasterific-1-4-2
+
 * TODO jeffreyrosenbluth/svg-builder
   + [ ] hashable
 * TODO diagrams-svg
