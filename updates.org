@@ -107,33 +107,40 @@
   - [X] upload
     - uploaded new 0.3 to Hackage (major bump because of removed ListT
       instance)
-* TODO diagrams-cairo
+* DONE diagrams-cairo
   - [X] bump upper bounds
-  - [ ] travis
+  - [X] travis
     - https://travis-ci.org/diagrams/diagrams-cairo/builds/609680318
       - 7.10, 8.0: error with gtk2hs-buildtools, something about Cabal
         version
-      - 8.8: while building glib, gcc fails with "invalid use of __builtin_va_arg_pack ()"
-  - [ ] edit/upload
-* TODO diagrams-gtk
-  - [ ] update cairo first
-  - [ ] upper bounds
-  - [ ] travis
-  - [ ] edit/upload
-* TODO diagrams-postscript
+      - 8.8: while building glib, gcc fails with "invalid use of
+        __builtin_va_arg_pack ()"
+    - https://travis-ci.org/diagrams/diagrams-cairo/builds/635069299
+    - https://travis-ci.org/diagrams/diagrams-cairo/builds/635469121
+  - [X] edit/upload
+* DONE diagrams-gtk
+  - [X] update cairo first
+  - [X] upper bounds
+  - [X] local build
+  - [X] travis
+    - https://travis-ci.org/diagrams/diagrams-gtk/builds/635733003
+  - [X] edit/upload (revised 1.4 on Hackage)
+* DONE diagrams-postscript
   + [X] update bounds
     + [X] hashable
     + [X] semigroups
     + [X] lens
-  + [ ] travis
+  + [X] travis
     x https://travis-ci.org/diagrams/diagrams-postscript/builds/611019905
-      - Fails on GHC 7.10, installed version of binary is 0.7.5, but
-        hashable -> text -> binary and JuicyPixels requires binary >=
-        0.8?
-      - Also failed on GHC 8.8 for what looks like a spurious reason,
-        restarting that job.
+    - Fails on GHC 7.10, installed version of binary is 0.7.5, but
+      hashable -> text -> binary and JuicyPixels requires binary >=
+      0.8?
+    - Also failed on GHC 8.8 for what looks like a spurious reason,
+      restarting that job.
     x https://travis-ci.org/diagrams/diagrams-postscript/builds/611694329
-    - https://travis-ci.org/diagrams/diagrams-postscript/builds/619615750
+    x https://travis-ci.org/diagrams/diagrams-postscript/builds/619615750
+    - https://travis-ci.org/diagrams/diagrams-postscript/builds/623332598
+  + [X] upload
 * DONE cchalmers/texrunner
   + [X] update bounds
   + [X] travis
@@ -141,30 +148,71 @@
     - https://travis-ci.org/cchalmers/texrunner/builds/614338159
   + [X] edited on Hackage
 
-* TODO diagrams-pgf
+* DONE diagrams-pgf
   + [X] bump upper bounds
-  + [ ] travis
+  + [X] travis
     - https://travis-ci.org/diagrams/diagrams-pgf/builds/619619044
-* TODO diagrams-rasterific
+  + [X] uploaded 1.4.1.1 to Hackage
+* DONE diagrams-rasterific
   + [X] hashable
   + [X] optparse-applicative
-  + [ ] travis
-    - https://travis-ci.org/diagrams/diagrams-rasterific/builds/619620653
+  + [X] travis
+    x https://travis-ci.org/diagrams/diagrams-rasterific/builds/619620653
+      fails on GHC 7.10, conflicts involving Rasterific, JuicyPixels,
+      FontyFruity...
 
-  + [ ] upload 1.4.2?
+      Maybe just drop 7.10 support for rasterific??
+
+      Just noticed a new version of Rasterific was uploaded in the
+      past two days, rerunning the build now, just to see if it makes
+      a difference.
+    - https://travis-ci.org/diagrams/diagrams-rasterific/builds/622464250
+
+      Dropped GHC 7.10 support.
+
+  + [X] upload 1.4.2?
     https://byorgey.fogbugz.com/f/cases/12809/Upload-diagrams-rasterific-1-4-2
 
-* TODO jeffreyrosenbluth/svg-builder
-  + [ ] hashable
-* TODO diagrams-svg
-  + [ ] hashable
-  + [ ] semigroups
-  + [ ] optparse-applicative
+* DONE svg-builder
+  + [X] upper bounds
+    + [X] hashable
+    + [X] base
+  + [X] travis
+  + [X] edited on Hackage
+* DONE diagrams-svg
+  + [X] upper bounds
+    + [X] hashable
+    + [X] semigroups
+    + [X] optparse-applicative
+  + [ ] travis
+    x https://travis-ci.org/diagrams/diagrams-svg/builds/621869924
+
+      8.8: import Codec.Picture.Types (dynamicMap)  is redundant??
+
+      but dynamicMap is definitely used...
+
+      Aha, dynamicMap is re-exported from Codec.Types as of JP-3.3.3.
+
+      Attempted to fix by making imports explicit.
+
+    - https://travis-ci.org/diagrams/diagrams-svg/builds/622871699
+
+      Finally!
+
+  + [X] upload
+    Uploaded 1.4.3 to Hackage.
+
 * TODO jeffreyrosenbluth/static-canvas
 * TODO diagrams-canvas
 * TODO diagrams-html5
 * TODO diagrams
-* TODO diagrams-builder
+* DONE diagrams-builder
+  + [X] upper bounds
+  + [X] travis
+    x https://travis-ci.org/diagrams/diagrams-builder/builds/623921292
+    x https://travis-ci.org/diagrams/diagrams-builder/builds/625635598
+    - https://travis-ci.org/diagrams/diagrams-builder/builds/636631869
+  + [X] upload
 * TODO diagrams-haddock
 * TODO diagrams-graphviz
 * TODO diagrams-input
@@ -172,7 +220,9 @@
 * TODO docutils
 * TODO diagrams-doc
 * TODO diagrams-povray
-
+* TODO diagrams-pandoc
+  - [ ] travis
+    x https://travis-ci.org/diagrams/diagrams-pandoc/builds/634050030
 * stackage things / tickets
 
   + [ ] optparse-applicative
@@ -183,13 +233,13 @@
   + [ ] https://byorgey.fogbugz.com/f/cases/12787/Fwd-diagrams-diagrams-graphviz-Bump-deps-to-deal-with-ghc-8-6-9
 
   + [ ] lens https://byorgey.fogbugz.com/f/cases/12922/Fix-lens-upper-bounds
-  + [ ]
+  + [X]
     https://byorgey.fogbugz.com/f/cases/12959/Fwd-diagrams-diagrams-solve-Cut-a-new-release-6
   + [X]
     https://byorgey.fogbugz.com/f/cases/12960/Fwd-diagrams-active-Support-GHC-8-8-26
   + [X]
     https://byorgey.fogbugz.com/f/cases/12961/Fwd-diagrams-monoid-extras-Cut-a-new-release-for-8-8-41
-  + [ ]
+  + [X]
     https://byorgey.fogbugz.com/f/cases/12963/Fwd-diagrams-diagrams-lib-Support-lens-4-18-343
   + [X]
     https://byorgey.fogbugz.com/f/cases/12978/Fwd-diagrams-diagrams-core-New-release-on-Hackage-to-allow-GHC-8-8-1-107
