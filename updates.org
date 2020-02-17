@@ -214,25 +214,44 @@
     - https://travis-ci.org/diagrams/diagrams-builder/builds/636631869
   + [X] upload
 * TODO diagrams-haddock
+  - Depends on cautious-file
+    - See x https://travis-ci.org/byorgey/cautious-file/builds/640757761
+    - ✓ https://travis-ci.org/byorgey/cautious-file/builds/641819730
+
+  - Convert to unliftio?
+    x https://travis-ci.org/diagrams/diagrams-haddock/builds/650278458
+    ✓ https://travis-ci.org/diagrams/diagrams-haddock/builds/650926020
+
+  - Builds now, but needs more serious updating.  Can't read whatever
+    files cabal configure now generates; what if someone isn't even
+    using cabal?
+
 * TODO diagrams-graphviz
+  - [X] upper bounds
+  - [ ] travis
+    x https://travis-ci.org/diagrams/diagrams-graphviz/builds/641569153
+      needed to allow containers-0.6
+    - https://travis-ci.org/diagrams/diagrams-graphviz/builds/641818952
 * TODO diagrams-input
 * TODO diagrams-backend-tests
 * TODO docutils
 * TODO diagrams-doc
 * TODO diagrams-povray
 * TODO diagrams-pandoc
+  - https://github.com/diagrams/diagrams-pandoc/pull/18
   - [ ] travis
     x https://travis-ci.org/diagrams/diagrams-pandoc/builds/634050030
+    - https://travis-ci.org/diagrams/diagrams-pandoc/builds/641568237
 * stackage things / tickets
 
-  + [ ] optparse-applicative
+  + [X] optparse-applicative
     https://byorgey.fogbugz.com/f/cases/12783/Fwd-commercialhaskell-stackage-optparse-applicative-0-15-4693
   + [ ] check status of texrunner in Stackage?
     https://byorgey.fogbugz.com/f/cases/12795/Fwd-cchalmers-texrunner-Stackage-8
 
   + [ ] https://byorgey.fogbugz.com/f/cases/12787/Fwd-diagrams-diagrams-graphviz-Bump-deps-to-deal-with-ghc-8-6-9
 
-  + [ ] lens https://byorgey.fogbugz.com/f/cases/12922/Fix-lens-upper-bounds
+  + [X] lens https://byorgey.fogbugz.com/f/cases/12922/Fix-lens-upper-bounds
   + [X]
     https://byorgey.fogbugz.com/f/cases/12959/Fwd-diagrams-diagrams-solve-Cut-a-new-release-6
   + [X]
@@ -273,3 +292,20 @@
      + [ ] dual-tree
      + [X] active
      + [ ] diagrams-contrib
+
+
+* Updates for lens 4.19/linear 1.21
+
+  - updated all, now wait for travis jobs to complete
+
+    - all passed!
+
+** DONE core
+** DONE active
+** DONE lib
+** DONE force-layout
+** DONE contrib
+** DONE cairo
+** DONE postscript
+** DONE rasterific
+** DONE svg
