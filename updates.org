@@ -226,12 +226,14 @@
     files cabal configure now generates; what if someone isn't even
     using cabal?
 
-* TODO diagrams-graphviz
+* DONE diagrams-graphviz
   - [X] upper bounds
   - [ ] travis
     x https://travis-ci.org/diagrams/diagrams-graphviz/builds/641569153
       needed to allow containers-0.6
-    - https://travis-ci.org/diagrams/diagrams-graphviz/builds/641818952
+    ✓
+    https://travis-ci.org/diagrams/diagrams-graphviz/builds/641818952
+  - [X] uploaded 1.4.1.1
 * TODO diagrams-input
 * TODO diagrams-backend-tests
 * TODO docutils
