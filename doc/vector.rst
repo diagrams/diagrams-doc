@@ -313,7 +313,7 @@ are open to adding more!).
 
 __ http://en.wikipedia.org/wiki/Dot_product
 
-* The `normalize` function changes the magnitude of a vector to
+* The `signorm` function changes the magnitude of a vector to
   `1`:math:, while keeping the direction fixed.
 
 * `perp` yields a vector perpendicular to (and of the same magnitude
