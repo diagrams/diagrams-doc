@@ -41,10 +41,13 @@ A *Moebius transformation* is a mapping of the (projective) complex plane `C` on
 
 Moebius transformations form a *group*. The composition of Moebius transformations follows the well-known laws for matrix multiplcation
 
+> instance Semigroup Moebius where
+>     (M a b c d) <> (M a1 b1 c1 d1) =
+>         M (a*a1 + b*c1) (a*b1 + b*d1) (c*a1 + d*c1) (c*b1 + d*d1)
+>
 > instance Monoid Moebius where
 >     mempty = M 1 0 0 1
->     mappend (M a b c d) (M a1 b1 c1 d1) =
->         M (a*a1 + b*c1) (a*b1 + b*d1) (c*a1 + d*c1) (c*b1 + d*d1)
+>     mappend = (<>)
 
 and so does taking their inverse.
 

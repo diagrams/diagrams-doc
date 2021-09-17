@@ -1,22 +1,24 @@
+{-# LANGUAGE FlexibleContexts          #-}
 {-# LANGUAGE NoMonomorphismRestriction #-}
 {-# LANGUAGE OverloadedStrings         #-}
-{-# LANGUAGE FlexibleContexts          #-}
 
 module Site where
 
-import           Control.Monad   (forM_, (>=>))
-import           Data.List       (isPrefixOf, sortOn)
-import           Data.Maybe      (fromMaybe)
-import           Data.Monoid     ((<>))
-import           Data.String     (IsString, fromString)
+import           Control.Monad         (forM_, (>=>))
+import           Data.List             (isPrefixOf, sortOn)
+import           Data.Maybe            (fromMaybe)
+import           Data.Monoid           ((<>))
+import           Data.String           (IsString, fromString)
 
-import           System.FilePath ((</>), splitFileName, replaceExtension)
+import           System.FilePath       (replaceExtension, splitFileName, (</>))
 
-import           Data.Text       (Text)
-import qualified Data.Text       as T
-import           Text.Pandoc     (writerTemplate, readMarkdown,
-                                  writeHtml5String, bottomUp, ReaderOptions,
-                                  WriterOptions, MathType(..), Inline(..), runPure)
+import           Data.Text             (Text)
+import qualified Data.Text             as T
+import           Text.Pandoc           (Inline (..), MathType (..),
+                                        ReaderOptions, WriterOptions, bottomUp,
+                                        readMarkdown, runPure, writeHtml5String,
+                                        writerTemplate)
+import qualified Text.Pandoc.Templates as PT
 
 import           Hakyll
 
@@ -237,11 +239,11 @@ escapeForTemplate = concatMap f
 
 buildBannerCSS :: Item String -> Compiler (Item String)
 buildBannerCSS b = do
-    t <- loadBody (fromFilePath "banner/template.css")
+  -- t <- loadBody "banner/template.css"
     m <- loadAndApplyTemplate "templates/banner.markdown" defaultContext b
     return $ renderMarkdownPandocWith
                defaultHakyllReaderOptions
-               defaultHakyllWriterOptions { writerTemplate = t }
+               defaultHakyllWriterOptions -- { writerTemplate = t }
                (T.pack <$> m)
 
 buildBannerHtml :: Item String -> Compiler (Item String)
@@ -261,9 +263,9 @@ renderMarkdownPandoc = renderMarkdownPandocWith
 withMathJax :: Item String -> Compiler (Item String)
 withMathJax = fmap (writePandoc . fmap (bottomUp latexToMathJax)) . readPandoc
   where latexToMathJax (Math InlineMath str)
-          = RawInline "html" ("\\(" ++ str ++ "\\)")
+          = RawInline "html" (T.concat["\\(", str, "\\)"])
         latexToMathJax (Math DisplayMath str)
-          = RawInline "html" ("\\[" ++ str ++ "\\]")
+          = RawInline "html" (T.concat["\\(", str, "\\)"])
         latexToMathJax x = x
 
 indexCompiler :: Context String -> Item String -> Compiler (Item String)
@@ -314,7 +316,7 @@ markdownFieldCtx f = field f $ \i -> do
         p <- readMarkdown defaultHakyllReaderOptions (T.pack markdown)
         writeHtml5String defaultHakyllWriterOptions p
   return $ case res of
-    Left e -> show e
+    Left e  -> show e
     Right r -> T.unpack r
 
 buildGallery :: Item String -> [Item String] -> Compiler (Item String)

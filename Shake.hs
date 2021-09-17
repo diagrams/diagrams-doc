@@ -1,24 +1,22 @@
 {-# LANGUAGE DeriveDataTypeable         #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
-import           Control.Concurrent          (getNumCapabilities)
-import           Control.Monad               (when)
-import           Data.List                   (isPrefixOf)
-import           Data.Maybe                  (fromMaybe)
-import           Development.Shake           hiding ((<//>))
-import           Development.Shake.FilePath  (dropDirectory1, dropExtension,
-                                              takeBaseName, takeDirectory,
-                                              (-<.>), (<.>), (</>))
-import           Safe                        (readMay)
+import           Control.Concurrent         (getNumCapabilities)
+import           Control.Monad              (when)
+import           Data.List                  (isPrefixOf)
+import           Data.Maybe                 (fromMaybe)
+import           Development.Shake          hiding ((<//>))
+import           Development.Shake.FilePath (dropDirectory1, dropExtension,
+                                             takeBaseName, takeDirectory,
+                                             (-<.>), (<.>), (</>))
+import           Safe                       (readMay)
 import           System.Console.CmdArgs
-import           System.Directory            (createDirectoryIfMissing)
-import           System.Environment          (lookupEnv)
-import           System.Process              (system)
-import           System.Exit                 (ExitCode(..))
+import           System.Directory           (createDirectoryIfMissing)
+import           System.Environment         (lookupEnv)
+import           System.Exit                (ExitCode (..))
+import           System.Process             (system)
 
-import           Text.Docutils.CmdLine       (DocutilOpts(..))
-
-import           Prelude                     hiding ((*>))
+import           Text.Docutils.CmdLine      (DocutilOpts (..))
 
 import qualified BuildBanner
 import qualified BuildGallery
@@ -86,7 +84,7 @@ main = do
       action $ requireGallery
       action $ requireBanner
 
-      dist "//*.html" *> \out -> do
+      dist "//*.html" %> \out -> do
         let xml = obj . un $ out -<.> "xml"
         need [xml]
 
@@ -104,10 +102,10 @@ main = do
             ExitFailure code ->
               fail ("Xml2Html exited with code " ++ show code ++ " for " ++ out)
 
-      dist "blog/*.metadata" *> \out -> copyFile' (un out) out
-      dist "doc/*.metadata"  *> \out -> copyFile' (un out) out
+      dist "blog/*.metadata" %> \out -> copyFile' (un out) out
+      dist "doc/*.metadata"  %> \out -> copyFile' (un out) out
 
-      obj "//*.xml" *> \out -> do
+      obj "//*.xml" %> \out -> do
         let rst = un $ out -<.> "rst"
         need [rst]
         command_ [] "rst2xml" ["--input-encoding=utf8", rst, out]
@@ -116,21 +114,21 @@ main = do
         makeIcon out = runExe [] exe ["-w", "40", "-h", "40", "-o", out]
           where exe = takeBaseName out
 
-      dist ("doc/icons/Exercises" <.> imgExt) *> makeIcon
-      dist ("doc/icons/ToWrite"   <.> imgExt) *> makeIcon
-      dist ("doc/icons/Warning"   <.> imgExt) *> makeIcon
+      dist ("doc/icons/Exercises" <.> imgExt) %> makeIcon
+      dist ("doc/icons/ToWrite"   <.> imgExt) %> makeIcon
+      dist ("doc/icons/Warning"   <.> imgExt) %> makeIcon
 
       copyFiles "doc/static"
 
-      dist ("web/gallery/*.big" <.> imgExt) *> \out -> do
+      dist ("web/gallery/*.big" <.> imgExt) %> \out -> do
         need [dropExtension (un out) -<.> "lhs"]
         withResource ghcThreads 1 $ compileImg False out
 
-      dist ("web/gallery/*.thumb" <.> imgExt) *> \out -> do
+      dist ("web/gallery/*.thumb" <.> imgExt) %> \out -> do
         need [dropExtension (un out) -<.> "lhs"]
         withResource ghcThreads 1 $ compileImg True out
 
-      dist ("web/banner/banner" <.> imgExt) *> \out -> do
+      dist ("web/banner/banner" <.> imgExt) %> \out -> do
         need [dropExtension (un out) -<.> "hs"]
         let name = takeBaseName (takeBaseName out)
             hsName = "web/banner" </> name -<.> "hs"
@@ -147,7 +145,7 @@ compileImg isThumb outPath = do
   liftIO $ BuildGallery.compileExample thumb lhsName outPath
 
 copyFiles :: FilePath -> Rules ()
-copyFiles dir = dist (dir ++ "/*") *> \out -> copyFile' (un out) out
+copyFiles dir = dist (dir ++ "/*") %> \out -> copyFile' (un out) out
 
 requireIcons :: Action ()
 requireIcons = do
