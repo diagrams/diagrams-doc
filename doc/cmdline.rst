@@ -316,7 +316,7 @@ Now we can make more progress.
 >   chooseRender opts (f a)
 
 The only parts so far that are backend specific are the type of the final
-diagram and `chooseRender`, though we may want other parts may be subject to
+diagram and `chooseRender`, though we may want other parts to be subject to
 customization.  We will split this into four parts, the type of the options
 needed, the action of parsing the command-line, the backend specific rendering,
 and an entry point for the library consumer.  We will give this the brilliant
