@@ -1,10 +1,10 @@
 ---
-title: Kaleidescope
+title: Kaleidoscope
 author: Jeffrey Rosenbluth
 authorurl: https://www.projects.haskell.org/Diagram Bgrams/
 date: 2013-12-31
-description: A three mirror kaleidescope with random confetti.
-tags: kaleidescope, random, clipping, mainWith
+description: A three mirror kaleidoscope with random confetti.
+tags: kaleidoscope, random, clipping, mainWith
 width: 400
 height: 400
 ---
@@ -26,7 +26,7 @@ A helper function like `iterate` but also takes the list index as a parameter.
 >                in  t' : go f t' (i + 1)
 
 Take any Diagram and cut out an equilateral triangle of side 1 from the center.
-This is the triangle inside of the three mirrors that make up a kaleidescope.
+This is the triangle inside of the three mirrors that make up a kaleidoscope.
 The image is created by first repeatedly refecting this triangle and assembling
 the resulting triagles into a hexagon.
 Then the image plane is tiled with this hexagon.
