@@ -217,11 +217,9 @@ main = do
     match "banner/banner.hs" $ version "template" $ do
         compile $ do
             b <- getResourceBody
-            c <- buildBannerCSS b
             h <- buildBannerHtml b
                 >>= loadAndApplyTemplate "templates/banner.html" defaultContext
-            let ctx =  constField "bannerCSS"  (itemBody c)
-                    <> constField "template" "$body$"
+            let ctx =  constField "template" "$body$"
                     <> constField "navbarStyle" "navbar-inverse"
                     <> constField "title" "$title$"
                     <> defaultContext
@@ -236,15 +234,6 @@ escapeForTemplate = concatMap f
   where
     f '$' = "$$"
     f x   = [x]
-
-buildBannerCSS :: Item String -> Compiler (Item String)
-buildBannerCSS b = do
-  -- t <- loadBody "banner/template.css"
-    m <- loadAndApplyTemplate "templates/banner.markdown" defaultContext b
-    return $ renderMarkdownPandocWith
-               defaultHakyllReaderOptions
-               defaultHakyllWriterOptions -- { writerTemplate = t }
-               (T.pack <$> m)
 
 buildBannerHtml :: Item String -> Compiler (Item String)
 buildBannerHtml b = do
