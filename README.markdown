@@ -24,10 +24,12 @@ tutorials), you will need:
 * the python [docutils suite](http://docutils.sourceforge.net/) (in
   particular `rst2xml.py` should be on your PATH).
 
-On Ubuntu, the docutils suite can be installed using
+For example, on Ubuntu, the docutils suite can be installed using
 ```bash
 sudo apt-get install python-docutils
 ```
+(or possibly `python3-docutils`, depending on what version of Ubuntu
+you have).
 
 ### Step 2: Generate the `stack.yaml` file
 
