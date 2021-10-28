@@ -60,8 +60,9 @@ a *magnitude* (length) and a *direction* (angle).
 >     yComponent = component unitY # translate (project unitX v)
 >     theta = text' font 0.5 "θ" # translate (0.7 ^& 0.2)
 >
-> text' font d s = (stroke $ SF.textSVG' (SF.TextOpts font SF.INSIDE_H SF.KERN False d d) s)
->                # lw none # fc black
+> text' font h s
+>   = (SF.set_envelope . SF.fit_height h . SF.svgText def { SF.textFont = font } $ s)
+>   # lw none # fc black # centerXY
 >
 > example = do
 >   font <- lin2

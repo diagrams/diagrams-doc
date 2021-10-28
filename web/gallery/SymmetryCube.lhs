@@ -41,14 +41,12 @@ rectangle.
 >         height = diameter (r2 (0,1)) padded
 >         width  = diameter (r2 (1,0)) padded
 >     in centerXY innards <> roundedRect width height 0.1
->
-> textOpts font n = TextOpts font INSIDE_H KERN False 1 n
 
 A single string of text.
 
-> text' :: PreparedFont Double -> String -> Double -> Diagram B
-> text' font s n = textSVG_ (textOpts font n) s # fc white # lw none
-
+> text' font s h
+>   = (set_envelope . fit_height h . svgText def { textFont = font } $ s)
+>   # lw none # fc white
 Several lines of text stacked vertically.
 
 > centredText font ls n = vcat' (with & catMethod .~ Distrib & sep .~ n)

@@ -592,8 +592,9 @@ straightforward.
 
 ::
 
-> text' font d s = (strokeP $ textSVG' (TextOpts font INSIDE_H KERN False d d) s)
->                # lw none # fc black
+> text' font h s
+>   = (SF.set_envelope . SF.fit_height h . SF.svgText def { SF.textFont = font } $ s)
+>   # lw none # fc black # centerXY
 >
 > stateLabel font = text' font 6
 > arrowLabel font txt size = text' font size txt

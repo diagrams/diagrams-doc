@@ -41,7 +41,7 @@ mkYamlFile deps = Yaml.mapping
     , "pandoc-types-1.22"
     , "force-layout-0.4.0.6"
     , "svg-builder-0.1.1"
-    , "SVGFonts-1.7.0.1"
+    , "SVGFonts-1.8"
     , "hakyll-4.14.1.0"
     , "palette-0.3.0.2"
     , "active-0.2.0.15"

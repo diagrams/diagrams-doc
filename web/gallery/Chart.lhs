@@ -92,7 +92,9 @@ Plot many data series using the given list of styles.
 A string of text, converted to a path and filled.
 
 > text' :: PreparedFont Double -> String -> Dia
-> text' font s = (strokeP $ textSVG' (TextOpts font INSIDE_H KERN False 0.4 0.4) s) # fc black # lw none
+> text' font s
+>   = (set_envelope . fit_height 0.4 . svgText def { textFont = font } $ s)
+>   # fc black # lw none
 
 The chart's legend.  Each label is drawn next to a little example of
 how the line looks in the chart.

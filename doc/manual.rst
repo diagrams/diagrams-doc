@@ -3929,8 +3929,8 @@ its own `textSVG` function which can be used to convert text into a
 
 ::
 
-> text' font d s
->   = (strokeP $ SF.textSVG' (SF.TextOpts font SF.INSIDE_H SF.KERN False d d) s)
+> text' font h s
+>   = (SF.set_envelope . SF.fit_height h . SF.svgText def { SF.textFont = font } $ s)
 >   # lw none
 >
 > example = do
