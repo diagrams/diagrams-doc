@@ -3920,7 +3920,7 @@ Native font support
 The `SVGFonts package`_ implements native text support for diagrams,
 using fonts in the SVG format (note that it can be used with *any*
 backend, not just the SVG backend). Among other things, it provides
-its own `textSVG` function which can be used to convert text into a
+its own `svgText` function which can be used to convert text into a
 *path* tracing the outline of the text.  Here is a simple example:
 
 .. _`SVGFonts package`: http://hackage.haskell.org/package/SVGFonts
@@ -3929,17 +3929,27 @@ its own `textSVG` function which can be used to convert text into a
 
 ::
 
+> import qualified Graphics.SVGFonts as SF
+>
 > text' font h s
->   = (SF.set_envelope . SF.fit_height h . SF.svgText def { SF.textFont = font } $ s)
+>   = s
+>   # SF.svgText def { SF.textFont = font }
+>   # SF.fit_height h
+>   # SF.set_envelope
 >   # lw none
 >
 > example = do
 >   font <- lin2
 >   return $ text' font 5 "Hello" # fc blue ||| text' font 3 "world" # fc green
 
-For more details and examples, see the `Haddock documentation`__.
+For more details and examples, see the `Haddock documentation`_.
+Note that the API of the `SVGFonts` package changed quite a bit in
+version 1.8.  For help porting your existing `SVGFonts` code to
+version 1.8, see the `SVGFonts README`_.
 
-__ http://hackage.haskell.org/package/SVGFonts
+.. _`Haddock documentation`: http://hackage.haskell.org/package/SVGFonts
+.. _`SVGFonts README`: https://github.com/diagrams/SVGFonts#porting-to-version-18
+
 
 Images
 ------
