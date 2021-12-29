@@ -3964,7 +3964,7 @@ supports embedded PNG images.
 To create an embedded diagram from an image file call `loadImageEmb`
 to read the image from a file path using `JuicyPixels`:pkg: and return
 a `DImage Embedded`. Then use `image` to convert the `DImage Embedded`
-to a diagram. You can also create an a diagram with an embedded image
+to a diagram. You can also create a diagram with an embedded image
 by supplying a function that maps pixel coordinates to `AlphaColour`\s
 plus a width and a height to the `rasterDia` function.  For example,
 the below code uses `rasterDia` to visualize the multiplication table
