@@ -3817,7 +3817,7 @@ as having an *empty* envelope.  In particular, they still behave in an
 intuitive manner when included as arguments to things like `hcat`.)
 If we omitted the rectangle from the above example, there would be no
 output. Except: the PGF backend has the ability to create enveloped text
-as does the Rasterific backend by using the `Diagrams.Backend.Rasterifc.Text`:mod:
+as does the Rasterific backend by using the `Diagrams.Backend.Rasterific.Text`:mod:
 module.
 
 .. container:: warning
