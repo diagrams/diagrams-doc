@@ -73,7 +73,7 @@ this:
 
 If you see a box like this in the place of something you would really
 like to know about, please bug the developers (using the ``#diagrams`` IRC
-channel on Freenode, or the `diagrams mailing list`_) so they can
+channel on Libera.Chat, or the `diagrams mailing list`_) so they can
 prioritize it!
 
 Warnings, "gotchas", and other important asides are in a yellow box with
@@ -101,7 +101,7 @@ about ``diagrams``:
   other documentation.
 * The `diagrams wiki`_ is a good place to find tips and tricks,
   examples, answers to frequently asked questions, and more.
-* The ``#diagrams`` IRC channel on Freenode is a friendly place
+* The ``#diagrams`` `IRC channel on Libera.Chat`_ is a friendly place
   where you can get help from other ``diagrams`` users and developers.
 * Consider joining the `diagrams mailing list`_ for discussions
   and announcements about ``diagrams``.
@@ -115,7 +115,7 @@ about ``diagrams``:
 .. _`list of tutorials`: http://projects.haskell.org/diagrams/documentation.html
 .. _`diagrams wiki`: https://wiki.haskell.org/Diagrams
 .. _`gallery of examples`: http://projects.haskell.org/diagrams/gallery.html
-.. _`IRC channel on Freenode`: http://webchat.freenode.net/?channels=diagrams
+.. _`IRC channel on Libera.Chat`: https://web.libera.chat
 .. _`diagrams mailing list`: http://groups.google.com/group/diagrams-discuss?pli=1
 .. _`diagrams organization on github` : https://github.com/diagrams/
 
@@ -325,7 +325,7 @@ encouraged!  All diagrams-related repositories are in the `diagrams
 organization`_ on github.  The `Contributing page`_ on the
 diagrams wiki explains how to get the repositories and make
 contributions.  To find out about the latest developments, join the
-``#diagrams`` IRC channel on Freenode, and check out the `diagrams
+``#diagrams`` IRC channel on Libera.Chat, and check out the `diagrams
 Trello board`_.
 
 .. _`diagrams organization`: http://github.com/diagrams

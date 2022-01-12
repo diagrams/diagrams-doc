@@ -37,7 +37,7 @@ Some resources that may be helpful to you as you learn about diagrams:
 * The `user manual`_
 * The `API documentation`_
 * The `diagrams-discuss mailing list`_
-* The ``#diagrams`` IRC channel on freenode.org
+* The ``#diagrams`` IRC channel on Libera.Chat
 
 .. _`API documentation`: /haddock/index.html
 .. _`diagrams-discuss mailing list`: http://groups.google.com/group/diagrams-discuss
@@ -837,7 +837,7 @@ possible! Here are pointers to some resources for learning more:
   confusing, please `report it as a bug as well`_!
 
 * If you run into difficulty or have any questions, join the
-  ``#diagrams`` IRC channel on freenode.org, or the `diagrams-discuss
+  ``#diagrams`` IRC channel on Libera.Chat, or the `diagrams-discuss
   mailing list`_.
 
 .. _`other tutorials on more specific topics`: /documentation.html
