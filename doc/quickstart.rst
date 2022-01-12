@@ -48,74 +48,28 @@ Getting started
 Before getting on with generating beautiful diagrams, you'll need a
 few things:
 
-GHC/The Haskell Platform
-------------------------
+GHC/cabal
+---------
 
-You'll need a recent version of the `Glasgow Haskell Compiler`_ (7.8
+You'll need a recent version of the `Glasgow Haskell Compiler`_ (8.4
 or later), as well as the `cabal-install tool`_.  If you do not
-already have these, we recommend following the `minimal installer
-instructions`_.
+already have these, we recommend installing them via `ghcup`_.
+
+You can also easily work with diagrams using `stack`_, though that is
+not covered in these instructions.
 
 .. _`Glasgow Haskell Compiler`: http://haskell.org/ghc
 .. _`cabal-install tool`: http://hackage.haskell.org/trac/hackage/wiki/CabalInstall
-.. _`minimal installer instructions`: https://www.haskell.org/downloads#minimal
-.. _`stack`: https://www.haskell.org/downloads#stack
+.. _`ghcup`: https://www.haskell.org/ghcup/
+.. _`stack`: https://docs.haskellstack.org/en/stable/README/
 
 Installation
 ------------
 
-Once you have the prerequisites, installing the diagrams libraries
-themselves should be a snap. We recommend installing diagrams in a
-sandbox, like so:
-
-\*nix:
-::
-
-    cabal sandbox init
-    cabal install diagrams
-
-Windows:
-::
-
-    cabal update
-    cabal sandbox init
-    cabal install diagrams -j1
-
-(The `-j1` flag is necessary in Windows to prevent the `package.cache`
-file from being edited multiple times at once.  See
-[here](https://github.com/haskell/cabal/issues/4005#issuecomment-275434975)
-and
-[here](https://github.com/commercialhaskell/stack/issues/2617) for
-more information.)
-
-To make use of the diagrams libraries in the sandbox, you can use
-commands such as
-
-\*nix/cmd.exe:
-::
-
-    cabal exec -- ghc --make MyDiagram.hs
-
-Powershell:
-::
-
-    cabal exec (ghc --make MyDiagram.hs)
-
-which will run ``ghc --make MyDiagram.hs`` in the sandbox environment.
-Alternatively, on any Unix-ish system you should be able to do
-something like
-
-::
-
-    cabal exec bash
-
-(feel free to substitute your favorite shell in place of ``bash``).
-This will start a new shell in an environment with all the diagrams
-packages available to GHC; you can now run ``ghc`` normally, without
-the need for ``cabal exec``.  To exit the sandbox, just exit the shell.
-
-`diagrams`:pkg: is just a wrapper package which pulls in the following
-four packages:
+No special installation is needed --- the necessary ``diagrams``
+packages will be automatically downloaded and installed for you by
+``cabal`` or ``stack`` once you create a project.  However, it's worth
+mentioning which packages you will likely need:
 
 * `diagrams-core`:pkg: contains the core data structures and definitions
   that form the abstract heart of the library.
@@ -166,8 +120,7 @@ section for now---but you might want to come back and read it later!)
 Your first diagram
 ==================
 
-Create a file called `DiagramsTutorial.lhs`
-with the following contents:
+Create a file called ``DiagramsTutorial.lhs`` with the following contents:
 
 .. class:: lhs
 
@@ -210,16 +163,31 @@ provides the function `mainWith`, which takes a diagram as input (in
 this case, a circle of radius 1) and creates a command-line-driven
 application for rendering it.
 
-Let's compile and run it:
+To be able to compile and run this code, we'll create a simple
+``.cabal`` file which specifies its dependencies.  Create a file
+called ``diagrams-tutorial.cabal`` with the following contents:
 
 ::
 
-    $ ghc --make DiagramsTutorial.lhs
-    [1 of 1] Compiling Main             ( DiagramsTutorial.lhs, DiagramsTutorial.o )
-    Linking DiagramsTutorial ...
-    $ ./DiagramsTutorial -o circle.svg -w 400
+   cabal-version:      2.4
+   name:               diagrams-tutorial
+   version:            0.1.0.0
+   executable diagrams-tutorial
+       main-is:          DiagramsTutorial.lhs
+       build-depends:    base, diagrams-lib, diagrams-svg
+       default-language: Haskell2010
 
-If you now view `circle.svg` in your favorite web browser, you should
+You should now be able to build and run the example using the
+following commands:
+
+::
+
+    $ cabal build DiagramsTutorial.lhs
+    ... lots of output while it downloads and builds all the dependencies ...
+
+    $ cabal exec diagrams-tutorial -- -o circle.svg -w 400
+
+If you now view ``circle.svg`` in your favorite web browser, you should
 see an unfilled black circle on a white background (actually, it's on
 a transparent background, but most browsers use white):
 
@@ -239,20 +207,20 @@ not match).  If you do not specify a width or a height, the absolute
 scale of the diagram itself will be used, which in this case would be
 rather tiny---only 2x2.
 
-There are several more options besides `-o`, `-w`, and `-h`; you can
-see what they are by typing `./DiagramsTutorial --help`.  One
-particularly useful option is `-l`, which puts the program into "looped
+There are several more options besides ``-o``, ``-w``, and ``-h``; you can
+see what they are by typing ``cabal exec diagrams-tutorial -- --help``.  One
+particularly useful option is ``-l``, which puts the program into "looped
 mode": it will watch the source file for changes, and then
-automatically recompile and rerun itself, like this:
+automatically recompile and rerun itself, like this (note that you may
+need to specify the source file explicitly using ``-s``, as shown here):
 
 ::
 
-    augustine :: src/diagrams/tmp » ./DiagramsTutorial -o circle.svg -w 400 -l
+    $ cabal exec diagrams-tutorial -- -o circle.svg -w 400 -l -s DiagramsTutorial.lhs
     Looping turned on
-    Using sandbox /home/brent/build/diagrams/.cabal-sandbox
     Watching source file DiagramsTutorial.lhs
     Compiling target: DiagramsTutorial
-    Program args: -o circle.svg -w 400
+    Program args: -o circle.svg -w 400 -s DiagramsTutorial.lhs
     Modified 02:41:42 ... compiling ... running ... done.
     Modified 02:41:50 ... compiling ... running ... done.
 
@@ -327,7 +295,7 @@ Just to illustrate,
 
 produces exactly the same diagram as before.  So why bother with
 `(#)`?  First, it's often more natural to write (and easier to read)
-what a diagram *is* first, and what it is *like* second.  Second,
+what a diagram *is* first, and what it is *like* second.  Also,
 `(#)` has a high precedence (namely, 8), making it more convenient to
 combine diagrams with specified attributes.  For example,
 
