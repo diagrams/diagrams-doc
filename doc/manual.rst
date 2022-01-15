@@ -122,101 +122,47 @@ about ``diagrams``:
 Installation
 ------------
 
-Before installing ``diagrams``, you will need the following:
+To use ``diagrams``, you will need the following:
 
-* The `Glasgow Haskell Compiler`_ (GHC), version 7.10.x or later.
-* The `cabal-install`_ tool.
+* The `Glasgow Haskell Compiler`_ (GHC), version 8.4.x or later
+* The `cabal-install`_ tool
+
+If you do not already have these, we recommend installing them via `ghcup`_.
 
 .. _`cabal-install`: http://hackage.haskell.org/trac/hackage/wiki/CabalInstall
 .. _`Glasgow Haskell Compiler`: http://www.haskell.org/ghc/
+.. _`ghcup`: https://www.haskell.org/ghcup/
 
-If you do not already have these, we recommend following the `minimal
-installer instructions`_.
+It is also easy to work with diagrams using `stack`_, although that is
+not covered here.
 
-.. _`minimal installer instructions`: https://www.haskell.org/downloads#minimal
+.. _`stack`: https://docs.haskellstack.org/en/stable/README/
 
-Once you have the prerequisites, we recommend installing diagrams in a
-sandbox, like so:
-
-::
-
-    cabal sandbox init
-    cabal install diagrams
-
-To make use of the diagrams libraries in the sandbox, you can use
-commands such as
-
-::
-
-    cabal exec -- ghc --make MyDiagram.hs
-
-which will run ``ghc --make MyDiagram.hs`` in the sandbox environment.
-Alternatively, on any Unix-ish system you should be able to do
-something like
-
-::
-
-    cabal exec bash
-
-(feel free to substitute your favorite shell in place of ``bash``).
-This will start a new shell in an environment with all the diagrams
-packages available to GHC; you can now run ``ghc`` normally, without
-the need for ``cabal exec``.  To exit the sandbox, just exit the shell.
-
-The `diagrams`:pkg: package is a convenience wrapper that simply pulls
-in (by default) four other packages:
-
-* `diagrams-core`:pkg: (core data type definitions and utilities),
-* `diagrams-lib`:pkg: (standard primitives and combinators),
-* `diagrams-contrib`:pkg: (user-contributed extensions), and
-* `diagrams-svg`:pkg: (Haskell-native backend generating SVG files).
+No special installation step is actually needed --- ``cabal`` or
+``stack`` will automatically download and install the necessary
+diagrams packages for your project.  For a minimal project you will
+need to depend on `diagrams-lib`:pkg: (standard primitives and
+combinators) and a backend such as `diagrams-svg`:pkg:.  Optionally
+you may also depend on other packages in the diagrams ecosystem such as
+`diagrams-contrib`:pkg:, `SVGFonts`:pkg:, or `palette`:pkg:.
 
 There are several other Haskell-native backends including a
 `postscript backend`_, which supports all features except
 transparency, and a `raster backend`_ (based on the excellent
-`Rasterific`_ package).  To get them, add the ``-fps`` or
-``-frasterific`` flags, respectively:
-
-::
-
-  cabal install -fps diagrams
-    OR
-  cabal install -frasterific diagrams
+`Rasterific`_ package).
 
 .. _`postscript backend`: http://hackage.haskell.org/package/diagrams-postscript/
 .. _`raster backend`: http://hackage.haskell.org/package/diagrams-rasterific/
 .. _`Rasterific`: http://hackage.haskell.org/package/Rasterific/
 
-There is also a backend based on the `cairo graphics
-library`_; it has support for more
-features than the SVG backend and additional output formats (PNG, PS,
-PDF), but can be much more difficult to install on some platforms
-(notably OS X).  If you want the cairo backend, you can issue the
-command
+There is also a backend based on the `cairo graphics library`_; it has
+support for more features than the SVG backend and additional output
+formats (PNG, PS, PDF), but can be much more difficult to install on
+some platforms (notably OS X).
 
 .. _`cairo graphics library`: http://www.cairographics.org/
 
-::
-
-  cabal install gtk2hs-buildtools
-  cabal install -fcairo diagrams
-
-Add ``-fgtk`` to also get a GTK backend (based on the cairo backend)
-which can render diagrams directly to GTK windows.
-
-You can also mix and match all the above flags to get multiple
-backends.  Note, if you don't want the SVG backend at all, you must
-add the ``-f-svg`` flag to disable it.
-
 There are other backends as well; see `Rendering backends`_.
-
-`See the wiki for the most up-to-date information`_ regarding
-installation.  If you have trouble installing diagrams, feel free to
-send email to the `diagrams mailing list`_; we would like to collect
-reports of problems and solutions on various platforms.
-
-.. _`See the wiki for the most up-to-date information`: http://wiki.haskell.org/Diagrams/Install
-
 
 Getting started
 ---------------
@@ -268,21 +214,32 @@ help to determine the type of the arugment of `mainWith` so it is important to
 annotate the type of `myCircle` (or whatever argument you pass to `mainWith`)
 as `Diagram B`.
 
-To compile your program, type
+Now create a simple
+``test-diagram.cabal`` file (or similar) with the following contents:
 
 ::
 
-  $ ghc TestDiagram
+   cabal-version:      2.4
+   name:               test-diagram
+   version:            0.1.0.0
+   executable test-diagram
+       main-is:          TestDiagram.hs
+       build-depends:    base, diagrams-lib, diagrams-svg
+       default-language: Haskell2010
+
+You should now be able to build and run the example using the
+following commands:
+
+::
+
+    $ cabal build
+    ... lots of output while it downloads and builds all the dependencies ...
+
+    $ cabal exec test-diagram -- -w 100 -h 100 -o test-diagram.svg
 
 (Note that the ``$`` indicates a command prompt and should not
-actually be typed.)  Then execute ``TestDiagram`` with some
-appropriate options:
-
-::
-
-  $ ./TestDiagram -w 100 -h 100 -o TestDiagram.svg
-
-The above will generate a 100x100 SVG that should look like this:
+actually be typed.)  The above will generate a 100x100 SVG that should
+look like this:
 
 .. class:: dia
 
@@ -300,7 +257,7 @@ Try typing
 
 ::
 
-  $ ./TestDiagram --help
+  $ cabal exec test-diagram -- --help
 
 to see the other options that are supported.
 

@@ -182,7 +182,7 @@ following commands:
 
 ::
 
-    $ cabal build DiagramsTutorial.lhs
+    $ cabal build
     ... lots of output while it downloads and builds all the dependencies ...
 
     $ cabal exec diagrams-tutorial -- -o circle.svg -w 400
