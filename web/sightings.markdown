@@ -4,6 +4,12 @@ title: Sightings
 
 People using diagrams to do stuff.
 
+* [Graphs, Kites, and
+  Darts](https://readerunner.wordpress.com/2022/01/06/graphs-kites-and-darts/)
+  (Chris Reade, January 2022)
+* [Penrose Kite and Dart
+  Tilings](https://readerunner.wordpress.com/2021/09/13/diagrams-for-penrose-tiles/)
+  (Chris Reade, September 2021)
 * [A simulator and analysis engine for bouncing robots](https://github.com/alexandroid000/bounce) (Alli Nilles, July 2016)
 * [A library for making presentations in Haskell with diagrams](https://hackage.haskell.org/package/Slides)
   (Luka Horvat, 20 October 2015)
