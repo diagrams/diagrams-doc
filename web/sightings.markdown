@@ -10,6 +10,9 @@ People using diagrams to do stuff.
 * [Penrose Kite and Dart
   Tilings](https://readerunner.wordpress.com/2021/09/13/diagrams-for-penrose-tiles/)
   (Chris Reade, September 2021)
+* [Understanding Monte Carlo Tree
+  Search](https://github.com/nanonaren/PWL_AlphaGo) (Naren Sundar,
+  August 2019)
 * [A simulator and analysis engine for bouncing robots](https://github.com/alexandroid000/bounce) (Alli Nilles, July 2016)
 * [A library for making presentations in Haskell with diagrams](https://hackage.haskell.org/package/Slides)
   (Luka Horvat, 20 October 2015)
