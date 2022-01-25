@@ -5413,6 +5413,17 @@ so GHC does not know whether they should be `Int`\s or `Integer`\s or
 `Double`\s or... The solution is to annotate the `0` with the desired
 type.
 
+Conversions
+-----------
+
+Diagrams has what must at first seem like a bewildering array of types
+to represent various concepts, and one often ends up needing to
+convert among them.  `This conversion matrix`_ shows what functions
+can be used to convert from one type to another, in cases where that
+makes sense.
+
+.. _`This conversion matrix`: https://docs.google.com/spreadsheets/d/1bIFe8voofnf7hJ-K3Zog7HwwCHpddZNI1u6VMdzh5Ec/edit?usp=sharing
+
 Creating 3D diagrams
 ====================
 
