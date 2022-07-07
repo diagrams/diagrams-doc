@@ -4,6 +4,7 @@ title: Sightings
 
 People using diagrams to do stuff.
 
+* [Visualizing a scanline stack flood-fill algorithm(https://github.com/Matthew-Mosior/Flood-Fill-Diagrams)
 * [Graphs, Kites, and
   Darts](https://readerunner.wordpress.com/2022/01/06/graphs-kites-and-darts/)
   (Chris Reade, January 2022)
