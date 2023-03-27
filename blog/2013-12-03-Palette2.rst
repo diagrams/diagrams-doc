@@ -96,7 +96,7 @@ Let's pick a base color to demonstrate the classic color harmonies and how to us
 > base = sRGB24read "#FFC200"
 > example = square 0.5 # fc base # lwG 0
 
-Since we have been talking about complimentary colors, the first scheme we describe is unsurprisingly called *Complimentary*. It's based on two complimentary colors and in the `Harmony` module three other colors are choosen by shading and tinting those two colors.
+Since we have been talking about complimentary colors, the first scheme we describe is unsurprisingly called *Complimentary*. It's based on two complimentary colors and in the `Harmony` module three other colors are chosen by shading and tinting those two colors.
 
 .. class:: lhs
 
