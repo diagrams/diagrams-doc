@@ -210,7 +210,7 @@ you can switch backends just by changing an import, without having to
 change type annotations on your diagrams; `B` simply refers to
 whichever backend is in scope.  Finally, `mainWith` takes a diagram
 and creates a command-line-driven executable for rendering it. GHC needs some
-help to determine the type of the arugment of `mainWith` so it is important to
+help to determine the type of the argument of `mainWith` so it is important to
 annotate the type of `myCircle` (or whatever argument you pass to `mainWith`)
 as `Diagram B`.
 
@@ -723,7 +723,7 @@ reasonable again would require changing the argument to `lwG`.
 
 In short, `global` units tend to go against ``diagrams`` emphasis on
 local, scale-invariant thinking.  They were left in for backwards
-compatibility, and because they can occasionaly be useful in special
+compatibility, and because they can occasionally be useful in special
 situations where you do already have some absolute, global coordinate
 system in mind: for example, if you know you want to construct a
 100x100 diagram using lines that are 1 unit wide.
@@ -1699,7 +1699,7 @@ ending points towards the corners.
 Radial Gradients
 ++++++++++++++++
 
-Radial gradients are similar, only they begin at the perimeter of an inner cirlce and
+Radial gradients are similar, only they begin at the perimeter of an inner circle and
 end at the perimeter of an outer circle.
 
 .. class:: lhs
@@ -3646,7 +3646,7 @@ to `connect` is `connect'`. These companion functions take an extra
   arrowheads `tri`, `dart`, `spike`, `thorn`, `lineHead`,
   and `noHead`;
   the default is `dart`. For tails we have `quill`, `block`, `lineTail`, and
-  `noTail`; `noTail` is the default. Addtionally, any head can be used
+  `noTail`; `noTail` is the default. Additionally, any head can be used
   as a tail by appending a `'` (e.g. `dart'`). There are also
   functions that can be used to create custom heads and tails (see
   `Diagrams.TwoD.Arrow`:mod:).
@@ -3675,7 +3675,7 @@ to `connect` is `connect'`. These companion functions take an extra
   texture.)
 
 The Lenses `headTexture`, `tailTexture`, and `shaftTexture` are provided
-for conveniently setting the texture of a head or tail. Addtionally, the
+for conveniently setting the texture of a head or tail. Additionally, the
 function `solid` converts a color to a texture. For example,
 `(with & headTexture .~ solid blue)` will set the head color to blue.
 
@@ -3730,7 +3730,7 @@ Text
     Note: The various backends differ substantially in their
     text-handling capabilities.  For this and other reasons, there are
     two ways to add text to diagrams, each with advantages.  The
-    method in this section is heavily dependant on backend support.
+    method in this section is heavily dependent on backend support.
     The Cairo backend has the most complete support; in particular,
     this is the best approach for complex (non-Roman) scripts.  The
     Rasterific backend also has good text support, via the
@@ -4048,7 +4048,7 @@ Envelope-related functions
      origin*.  So if you want the padding to be equal on all sides, use
      `center` first or use `frame` as described next.
 
-* `frame` increases the envelope in all directions by a given amount measued
+* `frame` increases the envelope in all directions by a given amount measured
   in local coordinates.
 
   For example,
@@ -5718,7 +5718,7 @@ text bounding box for alignment. Gradients are fully supported
 including repetition and reflection. In addition, the Rasterific
 backend can be used to generate in-memory images that can be
 manipulated with `JuicyPixels`. Finally, the Rasterific backend
-suppports grouped opacity.
+supports grouped opacity.
 
 The Rasterific backend can be invoked via
 `Diagrams.Backend.Rasterific.CmdLine`:mod: module, or via the

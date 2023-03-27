@@ -364,7 +364,7 @@ Lengths and Gaps
 The fields `headLength` and `tailLength` are for setting the length of
 the head and tail. The head length is measured from the tip of the
 head to the start of the joint connecting the head to the shaft. The
-tail length is measured in an analagous manner. They have type
+tail length is measured in an analogous manner. They have type
 `Measure Double` and the default is `normal`. `headGap` and `tailGap`
 options are fairly self explanatory: they leave space at the end or
 beginning of the arrow and are also of type `Mesure Double`; the

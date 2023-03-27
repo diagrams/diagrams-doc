@@ -387,7 +387,7 @@ type `DUALTree d u a l` consists of an n-ary (rose) tree, with:
   leaf of type `l` has a corresponding value of type `u`, and the `u`
   values are combined as one travels up the tree, so that the root
   would contain the `mconcat` of the `u` values in all the leaves.  We
-  think of each tree (and subtree) as intrinsically posessing a `u`
+  think of each tree (and subtree) as intrinsically possessing a `u`
   value, which is often some kind of "summary" or "measurement".
 * There are also values of another monoid, of type `d`, which can be
   *applied* to a tree at the root and accumulate as one travels down

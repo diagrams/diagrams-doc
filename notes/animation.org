@@ -119,13 +119,13 @@ clearly what we want the binary operations to be.  But in order to
 make these monoids we need to have identity elements: the identity for
 min would be some sort of positive infinity, and for max, negative
 infinity. Rational doesn't have such values so we have to use new
-types with extra infite values adjoined.
+types with extra infinite values adjoined.
 
 So now the implementation of 'pure' just falls out as (pure . pure
 . pure), and this should give us a constant function with a start time
 at negative infinity and end time at positive infinity, right?
 
-Wrong!  It actully gives us a constant function with a start time at
+Wrong!  It actually gives us a constant function with a start time at
 *positive* infinity and end time at *negative* infinity!  Since our
 combining operation corresponds to taking the *union* of intervals,
 the identity would be the *empty* interval rather than the complete

@@ -164,7 +164,7 @@ Solve a quadratic equation.
 >     x1 = -p2 + sqrt (p2*p2 - q)
 >     x2 = -(2*p2 + x1)
 
-Grandma's special recipe to make two Moebius tranformations from two complex parameters. (Box 21, page 226.)
+Grandma's special recipe to make two Moebius transformations from two complex parameters. (Box 21, page 226.)
 
 > grandma :: C -> C -> (Moebius, Moebius)
 > grandma ta tb = (a,b)
