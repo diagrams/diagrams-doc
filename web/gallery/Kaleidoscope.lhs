@@ -27,7 +27,7 @@ A helper function like `iterate` but also takes the list index as a parameter.
 
 Take any Diagram and cut out an equilateral triangle of side 1 from the center.
 This is the triangle inside of the three mirrors that make up a kaleidoscope.
-The image is created by first repeatedly refecting this triangle and assembling
+The image is created by first repeatedly reflecting this triangle and assembling
 the resulting triagles into a hexagon.
 Then the image plane is tiled with this hexagon.
 
@@ -63,7 +63,7 @@ Of course using circles is arbitrary, any shapes and sizes will do.
 > coordValue = getRandomR (-0.5, 0.5)
 
 We use monadRandom to hide the plumbing of the many random numbers we need.
-The colors are choosen from the 330+ `webColors` defined in the package
+The colors are chosen from the 330+ `webColors` defined in the package
 `Data.Colour.Palette.ColorSet`.
 
 > confetti :: Int -> Rand StdGen (Diagram B)

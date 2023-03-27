@@ -89,7 +89,7 @@ Folding with these operators draws a whole picture.
 Pruning with `prune s p` cuts off a picture `p` when its scale gets
 below $1/s$. We keep track of the scale in $x$ and $y$ separately, to cope
 with the non-homogeneous scaling in `HPair` and `VPair`. The definition
-only works properly if `Cycles` are scaled only homogenously; that is
+only works properly if `Cycles` are scaled only homogeneously; that is
 the case in Escher's picture.
 
 > prune :: Double -> Picture -> Picture
