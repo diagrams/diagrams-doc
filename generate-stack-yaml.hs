@@ -1,7 +1,7 @@
 #! /usr/bin/env stack
 {-
   stack runghc
-    --resolver lts-18.8
+    --resolver lts-20.23
 
     --package basic-prelude
     --package process
@@ -28,27 +28,27 @@ main = do
 
 mkYamlFile :: [Dep] -> Yaml.YamlBuilder
 mkYamlFile deps = Yaml.mapping
-  [ "resolver"   .= Yaml.string "lts-18.8"
+  [ "resolver"   .= Yaml.string "lts-20.23"
   , "extra-deps" .= Yaml.array (
     (map Yaml.string
     [ "tuple-0.3.0.2"
     , "cubicbezier-0.6.0.6"
-    , "mfsolve-0.3.2.0"
+    , "mfsolve-0.3.2.1"
     , "haskell-src-exts-1.23.1"
     , "haskell-src-exts-simple-1.23.0.0"
     , "fast-math-1.0.2"
-    , "pandoc-2.14.2"
-    , "pandoc-types-1.22"
+    , "pandoc-3.1.2"
+    , "pandoc-types-1.23"
     , "force-layout-0.4.0.6"
     , "svg-builder-0.1.1"
-    , "SVGFonts-1.8"
-    , "hakyll-4.14.1.0"
+    , "SVGFonts-1.8.0.1"
+    , "hakyll-4.16.0.0"
     , "palette-0.3.0.2"
-    , "active-0.2.0.15"
-    , "citeproc-0.5"
-    , "doctemplates-0.10"
-    , "skylighting-0.11"
-    , "skylighting-core-0.11"
+    , "active-0.2.0.17"
+    , "citeproc-0.8.1"
+    , "doctemplates-0.11"
+    , "skylighting-0.13.2.1"
+    , "skylighting-core-0.13.2.1"
     ])
     ++
     map mkDepObject deps
