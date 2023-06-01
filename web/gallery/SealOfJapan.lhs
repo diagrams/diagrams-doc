@@ -30,7 +30,7 @@ Next, we draw the circle touching the wedge.
 >    touchingCircle = circle circleRadius # translateY yShift
 
 The center (origin) of the wedge, the center of the circle and the
-point where they touch form a right-angled triange with the hypotenuse
+point where they touch form a right-angled triangle with the hypotenuse
 being the line from center_circle to center_wegde, and relative to
 half the wedge's angle at the origin of the wedge, the adjacent leg is
 radius_wedge and the opposite opposite leg is radius_circle.  Thus,

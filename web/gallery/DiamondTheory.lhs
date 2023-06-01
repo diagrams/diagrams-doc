@@ -35,7 +35,7 @@ always black.
 >   )
 >
 
-When defining each triangle, the enveloppe do not take the linewidth (lw) into
+When defining each triangle, the envelope do not take the linewidth (lw) into
 account so we set it to none. This will cause issues later on.
 
 > triangleLeft = triangleRect # rotateBy (1/2) # fc white # lc white # lw none

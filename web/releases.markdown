@@ -279,7 +279,7 @@ diagrams 1.3: 19 April, 2015
 
     - `Measure` has a new internal representation. `Local`, `Global`,
       `Normalized`, and `Output` have been renamed to `local`, `global`,
-      `normalized` and `output` respectivly. `Measure` is now defined in
+      `normalized` and `output` respectively. `Measure` is now defined in
       `Diagrams.Core.Measure`.
 
     - `GTAttribute` has been removed. `MAttribute` now holds measured
@@ -398,7 +398,7 @@ diagrams 1.3: 19 April, 2015
 
     - `Measure` has a new internal representation. `Local`, `Global`,
       `Normalized`, and `Output` have been renamed to `local`, `global`,
-      `normalized` and `output` respectivly.
+      `normalized` and `output` respectively.
 
     - `SizeSpec2D` has moved to `SizeSpec v n` in `Diagrams.SizeSpec`.
       `Dims, Height, Width and `Absolute` have moved to `dims2D`,
@@ -429,7 +429,7 @@ diagrams 1.3: 19 April, 2015
 
     - Perspective deformation of square vertices yields extra point [\#244](https://github.com/diagrams/diagrams-lib/issues/244)
 
-    - Local fontsize renders inconsistentl on diffrent backends [\#243](https://github.com/diagrams/diagrams-lib/issues/243)
+    - Local fontsize renders inconsistentl on different backends [\#243](https://github.com/diagrams/diagrams-lib/issues/243)
 
     - Factor out Diagrams.Solve into a package? [\#235](https://github.com/diagrams/diagrams-lib/issues/235)
 
@@ -1611,7 +1611,7 @@ Bump dependency upper bounds:
 
         - New `sizeSpec2D` function for conveniently calculating the size
           of an object as a `SizeSpec2D` value (for use with the new `sized`
-          funtion).
+          function).
 
     - New `extrudeEnvelope` and `intrudeEnvelope` functions for
       modifying envelopes in a single direction only, as well as new

@@ -58,8 +58,8 @@ Notes from Nov. 13 2009 brainstorming session
    offsets so that the origins of the named primitives coincide, and
    generating unique names. The unique names work by adding numerical
    prefixes, e.g. combining a list of primitives called "bob" and
-   "joe" with a list containing a primitve called "bob" would give
-   names "1.bob", "1.joe", "joe" and "2.bob" but the ambigious name
+   "joe" with a list containing a primitive called "bob" would give
+   names "1.bob", "1.joe", "joe" and "2.bob" but the ambiguous name
    "bob" is dropped.
 
    As another example, 

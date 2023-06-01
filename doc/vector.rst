@@ -460,7 +460,7 @@ There are several ways to construct points.
   discussion of `.+^`).
 
 * An advanced method of generating points is to use any function
-  returning a `TrailLike` result, since `[Point V2 Double]` is an instace of
+  returning a `TrailLike` result, since `[Point V2 Double]` is an instance of
   `TrailLike`. Using a function returning any `TrailLike` at the
   result type `[Point V2 Double]` will result in the list of vertices of the trail.
   For example, here we obtain the list of vertices of a regular

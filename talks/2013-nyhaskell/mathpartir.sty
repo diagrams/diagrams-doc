@@ -39,14 +39,14 @@
 %% PART I: Typesetting maths in paragraphe mode
 
 %% \newdimen \mpr@tmpdim
-%% Dimens are a precious ressource. Uses seems to be local.
+%% Dimens are a precious resource. Uses seems to be local.
 \let \mpr@tmpdim \@tempdima
 
 % To ensure hevea \hva compatibility, \hva should expands to nothing 
 % in mathpar or in inferrule
 \let \mpr@hva \empty
 
-%% normal paragraph parametters, should rather be taken dynamically
+%% normal paragraph parameters, should rather be taken dynamically
 \def \mpr@savepar {%
   \edef \MathparNormalpar
      {\noexpand \lineskiplimit \the\lineskiplimit
@@ -328,7 +328,7 @@
 % line of its conclusion
 % 
 % The second form can be parameterized, using the key=val interface. The
-% folloiwng keys are recognized:
+% following keys are recognized:
 %       
 %  width                set the width of the rule to val
 %  narrower             set the width of the rule to val\hsize
@@ -345,12 +345,12 @@
 %  after                execute val at the end/right
 %  
 %  Note that most options must come in this order to avoid strange
-%  typesetting (in particular  leftskip must preceed left and Left and
+%  typesetting (in particular  leftskip must precede left and Left and
 %  rightskip must follow Right or right; vdots must come last 
 %  or be only followed by rightskip. 
 %  
 
-%% Keys that make sence in all kinds of rules
+%% Keys that make sense in all kinds of rules
 \def \mprset #1{\setkeys{mprset}{#1}}
 \define@key {mprset}{andskip}[]{\mpr@andskip=#1}
 \define@key {mprset}{lineskip}[]{\lineskip=#1}

@@ -17,7 +17,7 @@ Brent Yorgey (http://ozark.hendrix.edu/~yorgey/) is an assistant
 professor of computer science at Hendrix College in Conway, Arkansas,
 and a well-known developer and educator in the open-source functional
 programming community.  He has served on the Haskell core libraries
-committe, on the program committee of the ACM SIGPLAN Haskell
+committee, on the program committee of the ACM SIGPLAN Haskell
 Symposium, and currently serves on the steering committee for the
 Workshop on Functional Art, Music, Modeling, and Design (FARM).  His
 educational materials are widely recommended and used by beginners
