@@ -1,7 +1,7 @@
 #! /usr/bin/env stack
 {-
   stack runghc
-    --resolver lts-20.23
+    --resolver lts-21.7
 
     --package basic-prelude
     --package process
@@ -28,7 +28,7 @@ main = do
 
 mkYamlFile :: [Dep] -> Yaml.YamlBuilder
 mkYamlFile deps = Yaml.mapping
-  [ "resolver"   .= Yaml.string "lts-20.23"
+  [ "resolver"   .= Yaml.string "lts-21.7"
   , "extra-deps" .= Yaml.array (
     (map Yaml.string
     [ "tuple-0.3.0.2"
@@ -39,11 +39,8 @@ mkYamlFile deps = Yaml.mapping
     , "fast-math-1.0.2"
     , "pandoc-3.1.2"
     , "pandoc-types-1.23"
-    , "force-layout-0.4.0.6"
-    , "svg-builder-0.1.1"
     , "SVGFonts-1.8.0.1"
     , "hakyll-4.16.0.0"
-    , "palette-0.3.0.2"
     , "active-0.2.0.17"
     , "citeproc-0.8.1"
     , "doctemplates-0.11"
@@ -87,7 +84,7 @@ mkYamlFile deps = Yaml.mapping
 depsWithShas :: IO [Dep]
 depsWithShas =
   forM repoNames $ \repoName -> do
-    [sha, _] <- words . Text.pack <$> Process.readProcess "git" ["ls-remote", textToString $ "git://github.com/diagrams/" <> repoName, "master"] ""
+    [sha, _] <- words . Text.pack <$> Process.readProcess "git" ["ls-remote", textToString $ "git@github.com:diagrams/" <> repoName, "master"] ""
     return (Dep repoName sha)
 
 repoNames :: [Text]
@@ -103,4 +100,7 @@ repoNames =
   , "docutils"
   , "dual-tree"
   , "monoid-extras"
+  , "force-layout"
+  , "palette"
+  , "svg-builder"
   ]
