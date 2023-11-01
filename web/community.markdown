@@ -39,6 +39,6 @@ project at a wide range of difficulty levels.
 * Contribute something to the
   [diagrams-contrib](http://github.com/diagrams/diagrams-contrib) package!
 
-* Drop by the IRC channel: `#diagrams` on freenode.org.
-
-<iframe src="http://webchat.freenode.net?channels=diagrams" width="647" height="400"></iframe>
+* Drop by the IRC channel: `#diagrams` on
+  [Libera.Chat](https://libera.chat/).  If you don't already have a
+  preferred IRC client, you can easily [connect via the web client](https://web.libera.chat/?channels=#diagrams).
