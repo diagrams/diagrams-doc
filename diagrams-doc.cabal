@@ -21,7 +21,7 @@ library
 
                   , diagrams-builder >= 0.7.2 && < 0.9
                   , diagrams-core >= 1.5 && < 1.6
-                  , diagrams-lib >= 1.4 && < 1.5
+                  , diagrams-lib >= 1.4 && < 1.6
                   , docutils >= 0.2 && < 0.3
                   , hxt
 
@@ -60,7 +60,7 @@ executable Warning
   default-language: Haskell2010
   build-depends:    base >= 4.8 && < 5
                   , diagrams-core >= 1.5 && < 1.6
-                  , diagrams-lib >= 1.4 && < 1.5
+                  , diagrams-lib >= 1.4 && < 1.6
                   , diagrams-rasterific
 
 executable ToWrite
@@ -70,7 +70,7 @@ executable ToWrite
   default-language: Haskell2010
   build-depends:    base >= 4.8 && < 5
                   , diagrams-core >= 1.5 && < 1.6
-                  , diagrams-lib >= 1.4 && < 1.5
+                  , diagrams-lib >= 1.4 && < 1.6
                   , lens
                   , diagrams-rasterific
 
@@ -81,7 +81,7 @@ executable Exercises
   default-language: Haskell2010
   build-depends:    base >= 4.8 && < 5
                   , diagrams-core >= 1.5 && < 1.6
-                  , diagrams-lib >= 1.4 && < 1.5
+                  , diagrams-lib >= 1.4 && < 1.6
                   , lens
                   , diagrams-rasterific
 
@@ -95,6 +95,6 @@ executable Site
                   , containers
                   , filepath
                   , cmdargs
-                  , pandoc >= 2.0 && < 3.2
+                  , pandoc >= 2.0 && < 3.8
                   , text
                   , process
