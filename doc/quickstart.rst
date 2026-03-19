@@ -59,7 +59,7 @@ You can also easily work with diagrams using `stack`_, though that is
 not covered in these instructions.
 
 .. _`Glasgow Haskell Compiler`: http://haskell.org/ghc
-.. _`cabal-install tool`: http://hackage.haskell.org/trac/hackage/wiki/CabalInstall
+.. _`cabal-install tool`: https://www.haskell.org/cabal/
 .. _`ghcup`: https://www.haskell.org/ghcup/
 .. _`stack`: https://docs.haskellstack.org/en/stable/README/
 
