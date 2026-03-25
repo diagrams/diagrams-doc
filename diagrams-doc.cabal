@@ -95,6 +95,6 @@ executable Site
                   , containers
                   , filepath
                   , cmdargs
-                  , pandoc >= 2.0 && < 3.8
+                  , pandoc >= 2.0 && < 3.10
                   , text
                   , process
